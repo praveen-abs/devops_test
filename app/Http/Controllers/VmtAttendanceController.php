@@ -26,18 +26,17 @@ class VmtAttendanceController extends Controller
     public function showDashboard(Request $request)
     {
         return view('attendance_dashboard');
-
     }
 
-    public function showAttendanceLeavePage(Request $request){
+    public function showAttendanceLeavePage(Request $request)
+    {
 
         $allEmployeesList = User::all();
 
         $leaveTypes = VmtLeaves::all();
 
         //dd($leaveTypes->toArray());
-        return view('attendance_leave',compact('allEmployeesList','leaveTypes'));
-
+        return view('attendance_leave', compact('allEmployeesList', 'leaveTypes'));
     }
 
     public function showAttendanceLeaveSettings(Request $request)
@@ -50,31 +49,26 @@ class VmtAttendanceController extends Controller
         return view('attendance_leaveReports');
     }
 
-    public function showLeaveHistoryPage(Request $request){
-        $allEmployeesList = User::all(['id','name']);
+    public function showLeaveHistoryPage(Request $request)
+    {
+        $allEmployeesList = User::all(['id', 'name']);
 
-        if($request->type == 'org')
-        {
-            return view('leave_history_org',compact('allEmployeesList'));
+        if ($request->type == 'org') {
+            return view('leave_history_org', compact('allEmployeesList'));
+        } else
+        if ($request->type == 'team') {
+            return view('leave_history_team', compact('allEmployeesList'));
+        } else
+        if ($request->type == 'employee') {
+            return view('leave_history_employee', compact('allEmployeesList'));
         }
-        else
-        if($request->type == 'team')
-        {
-            return view('leave_history_team',compact('allEmployeesList'));
-        }
-        else
-        if($request->type == 'employee')
-        {
-            return view('leave_history_employee',compact('allEmployeesList'));
-        }
-
     }
 
-    public function showLeaveApprovalPage(Request $request){
-        $allEmployeesList = User::all(['id','name']);
+    public function showLeaveApprovalPage(Request $request)
+    {
+        $allEmployeesList = User::all(['id', 'name']);
 
-        return view('attendance_leave_approvals',compact('allEmployeesList'));
-
+        return view('attendance_leave_approvals', compact('allEmployeesList'));
     }
 
 
@@ -89,7 +83,7 @@ class VmtAttendanceController extends Controller
 
         //Send mail to the employee
         $employee_user_id = VmtEmployeeLeaves::where('id', $request->leave_id)->value('user_id');
-        $employee_mail =  VmtEmployeeOfficeDetails::where('user_id',$employee_user_id)->value('officical_mail');
+        $employee_mail =  VmtEmployeeOfficeDetails::where('user_id', $employee_user_id)->value('officical_mail');
         $manager_user_id = VmtEmployeeLeaves::where('id', $request->leave_id)->value('reviewer_user_id');
 
         $message = "";
@@ -98,22 +92,23 @@ class VmtAttendanceController extends Controller
         $VmtGeneralInfo = VmtGeneralInfo::first();
         $image_view = url('/') . $VmtGeneralInfo->logo_img;
 
-        $isSent    = \Mail::to($employee_mail)->send(new ApproveRejectLeaveMail(
-                                                                auth::user()->name,
-                                                                auth::user()->user_code,
-                                                                User::find($manager_user_id)->value('name'),
-                                                                User::find($manager_user_id)->value('user_code'),
-                                                                request()->getSchemeAndHttpHost(),
-                                                                $image_view,
-                                                                "",
-                                                                $request->status)
-                                                    );
+        $isSent    = \Mail::to($employee_mail)->send(
+            new ApproveRejectLeaveMail(
+                auth::user()->name,
+                auth::user()->user_code,
+                User::find($manager_user_id)->value('name'),
+                User::find($manager_user_id)->value('user_code'),
+                request()->getSchemeAndHttpHost(),
+                $image_view,
+                "",
+                $request->status
+            )
+        );
 
-        if( $isSent) {
+        if ($isSent) {
             $mail_status = "Mail sent successfully";
-
-         } else {
-            $mail_status= "There was one or more failures.";
+        } else {
+            $mail_status = "There was one or more failures.";
         }
 
         $response = [
@@ -121,7 +116,7 @@ class VmtAttendanceController extends Controller
             'message' => 'Leave Request applied successfully',
             'mail_status' => $mail_status,
             'error' => '',
-            'error_verbose' =>''
+            'error_verbose' => ''
         ];
 
 
@@ -130,9 +125,9 @@ class VmtAttendanceController extends Controller
 
         $response = [
             'status' => 'success',
-            'message' => 'Leave '.$request->status,
+            'message' => 'Leave ' . $request->status,
             'error' => '',
-            'error_verbose' =>''
+            'error_verbose' => ''
         ];
 
         return $response;
@@ -141,18 +136,17 @@ class VmtAttendanceController extends Controller
     public function fetchLeaveRequestDetails(Request $request)
     {
         //Convert  'Pending', ' Approved' , 'Rejected' from csv to array
-        $statusArray = explode(",",$request->statusArray);
+        $statusArray = explode(",", $request->statusArray);
 
-        $map_allEmployees = User::all(['id','name'])->keyBy('id');
+        $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
 
-        if($request->type == 'org')
-        {
-            $employeeLeaves_Org='';
+        if ($request->type == 'org') {
+            $employeeLeaves_Org = '';
 
-            $employeeLeaves_Org = VmtEmployeeLeaves::whereIn('status',$statusArray)->get();
+            $employeeLeaves_Org = VmtEmployeeLeaves::whereIn('status', $statusArray)->get();
 
             //dd($map_allEmployees[1]["name"]);
-            foreach($employeeLeaves_Org as $singleItem){
+            foreach ($employeeLeaves_Org as $singleItem) {
                 $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
                 $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->user_id]);
 
@@ -161,22 +155,17 @@ class VmtAttendanceController extends Controller
             }
 
             return $employeeLeaves_Org;
-
-        }
-        else
-        if($request->type == 'team')
-        {
+        } else
+        if ($request->type == 'team') {
             //Get the list of employees for the given Manager
-            $team_employees_ids = VmtEmployeeOfficeDetails::where('l1_manager_code',auth::user()->user_code)->get('user_id');
+            $team_employees_ids = VmtEmployeeOfficeDetails::where('l1_manager_code', auth::user()->user_code)->get('user_id');
 
             //use wherein and fetch the relevant records
-            $employeeLeaves_team = VmtEmployeeLeaves::whereIn('user_id',$team_employees_ids)->
-                                                      whereIn('status',$statusArray)->
-                                                      get();
+            $employeeLeaves_team = VmtEmployeeLeaves::whereIn('user_id', $team_employees_ids)->whereIn('status', $statusArray)->get();
 
 
             //dd($map_allEmployees[1]["name"]);
-            foreach($employeeLeaves_team as $singleItem){
+            foreach ($employeeLeaves_team as $singleItem) {
                 $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
                 $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->user_id]);
 
@@ -186,28 +175,21 @@ class VmtAttendanceController extends Controller
 
             //dd($employeeLeaves_team);
             return $employeeLeaves_team;
-
-
+        } else
+        if ($request->type == 'employee') {
+            return VmtEmployeeLeaves::whereIn('status', $statusArray)->where('user_id', auth::user()->id)->get();
         }
-        else
-        if($request->type == 'employee')
-        {
-            return VmtEmployeeLeaves::whereIn('status',$statusArray)->
-                                    where('user_id',auth::user()->id)->get();
-        }
-
     }
 
     public function fetchSingleLeavePolicyRecord($id)
     {
-        $temp =VmtLeaves::find($id);
+        $temp = VmtLeaves::find($id);
         return $temp;
-
     }
 
     public function updateSingleLeavePolicyRecord(Request $request)
     {
-        $vmtLeave =VmtLeaves::find($request->leave_policy_id);
+        $vmtLeave = VmtLeaves::find($request->leave_policy_id);
         $vmtLeave->days_annual  = $request->days_annual;
         $vmtLeave->days_monthly  = $request->days_month;
         $vmtLeave->days_restricted  = $request->days_restricted;
@@ -218,7 +200,7 @@ class VmtAttendanceController extends Controller
             'status' => 'success',
             'message' => 'Leave details updated',
             'error' => '',
-            'error_verbose' =>''
+            'error_verbose' => ''
         ];
 
         return $response;
@@ -228,7 +210,22 @@ class VmtAttendanceController extends Controller
     {
 
         //dd($request->all());
-        $notification_user = User::where('id',auth::user()->id)->first();
+        //Check if leave already applied for the given date
+        $leaveExistsForCurrentDate = VmtEmployeeLeaves::where('user_id',auth::user()->id)
+                                    ->whereDate('start_date','=',date($request->start_date));
+
+        if ($leaveExistsForCurrentDate->exists()) {
+            return $response = [
+                'status' => 'faliure',
+                'message' => 'Leave Request already applied for this date',
+                'mail_status' => '',
+                'error' => '',
+                'error_verbose' => ''
+            ];
+        } else {
+            //dd("Leave does not exists");
+
+        }
 
         $emp_leave_details =  new VmtEmployeeLeaves;
         $emp_leave_details->user_id = auth::user()->id;
@@ -236,16 +233,18 @@ class VmtAttendanceController extends Controller
         $emp_leave_details->start_date = $request->start_date;
         $emp_leave_details->end_date = $request->end_date;
         $emp_leave_details->leave_reason = $request->leave_reason;
+        $emp_leave_details->total_leave_datetime = $request->total_leave_datetime;
 
         //get manager of this employee
-        $manager_emp_code = VmtEmployeeOfficeDetails::where('user_id',auth::user()->id)->value('l1_manager_code');
-        $manager_id = User::where('user_code',$manager_emp_code)->value('id');
+        $manager_emp_code = VmtEmployeeOfficeDetails::where('user_id', auth::user()->id)->value('l1_manager_code');
+        $manager_name = User::where('user_code', $manager_emp_code)->value('name');
+        $manager_id = User::where('user_code', $manager_emp_code)->value('id');
 
         $emp_leave_details->reviewer_user_id = $manager_id;
+        $emp_avatar = getEmployeeAvatarOrShortName(auth::user()->id);
 
-
-        if(!empty($request->notifications_users_id))
-            $emp_leave_details->notifications_users_id = implode(",",$request->notifications_users_id);
+        if (!empty($request->notifications_users_id))
+            $emp_leave_details->notifications_users_id = implode(",", $request->notifications_users_id);
 
         $emp_leave_details->reviewer_comments = "";
         $emp_leave_details->status = "Pending";
@@ -256,7 +255,7 @@ class VmtAttendanceController extends Controller
         $emp_leave_details->save();
 
         //Need to send mail to 'reviewer' and 'notifications_users_id' list
-        $reviewer_mail =  VmtEmployeeOfficeDetails::where('user_id',$manager_id)->value('officical_mail');
+        $reviewer_mail =  VmtEmployeeOfficeDetails::where('user_id', $manager_id)->value('officical_mail');
 
         $message = "";
         $mail_status = "";
@@ -264,13 +263,23 @@ class VmtAttendanceController extends Controller
         $VmtGeneralInfo = VmtGeneralInfo::first();
         $image_view = url('/') . $VmtGeneralInfo->logo_img;
 
-        $isSent    = \Mail::to($reviewer_mail)->send(new RequestLeaveMail(auth::user()->name, auth::user()->user_code, request()->getSchemeAndHttpHost(), $image_view));
+        $isSent    = \Mail::to($reviewer_mail)->send(new RequestLeaveMail(
+            auth::user()->name,
+            auth::user()->user_code,
+            $emp_avatar,
+            $manager_name,
+            Carbon::parse($request->start_date)->format('M jS Y \\, h:i:s A'),
+            Carbon::parse($request->end_date)->format('M jS Y \\, h:i:s A'),
+            $request->leave_reason,
+            Carbon::parse($request->total_leave_datetime)->format('M jS Y \\, h:i:s A'),
+            request()->getSchemeAndHttpHost(),
+            $image_view
+        ));
 
-        if( $isSent) {
+        if ($isSent) {
             $mail_status = "Mail sent successfully";
-
-         } else {
-            $mail_status= "There was one or more failures.";
+        } else {
+            $mail_status = "There was one or more failures.";
         }
 
         $response = [
@@ -278,11 +287,10 @@ class VmtAttendanceController extends Controller
             'message' => 'Leave Request applied successfully',
             'mail_status' => $mail_status,
             'error' => '',
-            'error_verbose' =>''
+            'error_verbose' => ''
         ];
 
         return $response;
-
     }
 
     /*
@@ -296,7 +304,7 @@ class VmtAttendanceController extends Controller
         $employeeAttendanceData = VmtEmployeeAttendance::all();
 
         //dd($employeeAttendanceData);
-        return view('old_vmt_attendance_timesheet',compact('employeeAttendanceData'));
+        return view('old_vmt_attendance_timesheet', compact('employeeAttendanceData'));
     }
 
     /*
@@ -316,11 +324,11 @@ class VmtAttendanceController extends Controller
     //     return $employeeAttendanceData;
     // }
 
-    public function showAllEmployeesTimesheetPage(Request $request){
+    public function showAllEmployeesTimesheetPage(Request $request)
+    {
 
 
-        return view('vmt_admin_attendance_timesheet',compact('employeeAttendanceData'));
-
+        return view('vmt_admin_attendance_timesheet', compact('employeeAttendanceData'));
     }
 
     public function fetchLeavePolicyDetails(Request $request)
@@ -333,24 +341,25 @@ class VmtAttendanceController extends Controller
      * table: users, vmt_staff_attenndance_device
      * input param: date
      *
-    */
-    protected function dayWiseStaffAttendance(Request $request){
+     */
+    protected function dayWiseStaffAttendance(Request $request)
+    {
         $date = $request->has('date') ? $request->date : Carbon::now()->format('Y-m-d');
 
         $attendanceJoin = \DB::table('vmt_staff_attenndance_device')
-                   ->select('user_Id',\DB::raw('MAX(date) as check_out_time'), \DB::raw('MIN(date) as check_in_time'))
-                   ->whereDate('date', $date)
-                   ->groupBy('user_Id');
+            ->select('user_Id', \DB::raw('MAX(date) as check_out_time'), \DB::raw('MIN(date) as check_in_time'))
+            ->whereDate('date', $date)
+            ->groupBy('user_Id');
 
-        $users = \DB::table('users')->select('id', 'name', 'user_code', 'check_in_time','check_out_time')
+        $users = \DB::table('users')->select('id', 'name', 'user_code', 'check_in_time', 'check_out_time')
             ->leftJoinSub($attendanceJoin, 'vmt_staff_attenndance_device', function ($join) {
                 $join->on('users.user_code', '=', 'vmt_staff_attenndance_device.user_Id');
             })->get();
 
         //Shift timings
-        $shift_timings = VmtWorkShifts::where('shift_type','First Shift')->first();
+        $shift_timings = VmtWorkShifts::where('shift_type', 'First Shift')->first();
 
-        return view('vmt_daily_staff_attendance', compact('users','shift_timings'));
+        return view('vmt_daily_staff_attendance', compact('users', 'shift_timings'));
     }
 
 
@@ -360,31 +369,31 @@ class VmtAttendanceController extends Controller
     /////////////////////// New routing methods
 
 
-    public function showTimesheet(Request $request){
+    public function showTimesheet(Request $request)
+    {
         //$data = VmtEmployeeAttendance::where('user_id',a);
         //dd($data);
 
-        $shift_start_time = VmtWorkShifts::where('shift_type',"First Shift")->value('shift_start_time');
-        $shift_end_time = VmtWorkShifts::where('shift_type',"First Shift")->value('shift_end_time');
+        $shift_start_time = VmtWorkShifts::where('shift_type', "First Shift")->value('shift_start_time');
+        $shift_end_time = VmtWorkShifts::where('shift_type', "First Shift")->value('shift_end_time');
 
         //Show the single employee timesheet detail in sidepanel
 
-        $current_employee_detail = User::leftJoin('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
-        ->where('users.id', auth::user()->id)
-        ->first(['users.id','users.name','vmt_employee_office_details.designation']);
+        $current_employee_detail = User::leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+            ->where('users.id', auth::user()->id)
+            ->first(['users.id', 'users.name', 'vmt_employee_office_details.designation']);
 
         $current_employee_detail->employee_avatar = getEmployeeAvatarOrShortName($current_employee_detail->id);
 
-        return view('attendance_timesheet',compact('current_employee_detail','shift_start_time','shift_end_time'));
-
+        return view('attendance_timesheet', compact('current_employee_detail', 'shift_start_time', 'shift_end_time'));
     }
 
 
     public function fetchUserTimesheet(Request $request)
     {
-        $data = VmtEmployeeAttendance::where('user_id',$request->user_id)
-                    ->whereMonth('checkin_time',$request->month)
-                    ->orderBy('checkin_time', 'asc')->get(['checkin_time','checkout_time']);
+        $data = VmtEmployeeAttendance::where('user_id', $request->user_id)
+            ->whereMonth('checkin_time', $request->month)
+            ->orderBy('checkin_time', 'asc')->get(['checkin_time', 'checkout_time']);
 
         $regularTime  = VmtWorkShifts::where('shift_type', 'First Shift')->first();
         //dd($regularTime->shift_start_time);
@@ -392,8 +401,8 @@ class VmtAttendanceController extends Controller
         foreach ($data as $key => $value) {
             // code...
             $checkinDate  = Carbon::parse($value->checkin_time)->toDateString();
-            $shiftStartTime  = Carbon::parse($checkinDate .' '.$regularTime->shift_start_time);
-            $shiftEndTime    = Carbon::parse($checkinDate .' '.$regularTime->shift_end_time);
+            $shiftStartTime  = Carbon::parse($checkinDate . ' ' . $regularTime->shift_start_time);
+            $shiftEndTime    = Carbon::parse($checkinDate . ' ' . $regularTime->shift_end_time);
             $checkInTime     = Carbon::parse($value->checkin_time);
             $checkOutTime    = Carbon::parse($value->checkout_time);
 
@@ -408,15 +417,15 @@ class VmtAttendanceController extends Controller
 
         //dd($data->toArray());
         return $data;
-
     }
 
-    private function isLateComingRequestApplied($user_id, $attendance_date, $relularizeType){
+    private function isLateComingRequestApplied($user_id, $attendance_date, $relularizeType)
+    {
 
         $existCount = VmtEmployeeAttendanceRegularization::where('attendance_date', $attendance_date)
-                ->where('user_id',  $user_id)->where('regularization_type', $relularizeType)->count();
+            ->where('user_id',  $user_id)->where('regularization_type', $relularizeType)->count();
 
-        if($existCount == 0)
+        if ($existCount == 0)
             return false;
         else
             return true;
@@ -427,14 +436,14 @@ class VmtAttendanceController extends Controller
         //Get the team members of the given user
         $reportees_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $request->user_code)->get('user_id');
 
-        $reportees_details = User::leftJoin('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
-                            ->whereIn('users.id',$reportees_id)->where('users.is_ssa','0')
-                            ->get(['users.id','users.name','vmt_employee_office_details.designation']);
+        $reportees_details = User::leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+            ->whereIn('users.id', $reportees_id)->where('users.is_ssa', '0')
+            ->get(['users.id', 'users.name', 'vmt_employee_office_details.designation']);
 
 
 
         //dd($reportees_details->toArray());
-        foreach($reportees_details as $singleItem){
+        foreach ($reportees_details as $singleItem) {
             $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->id]);
         }
 
@@ -446,13 +455,13 @@ class VmtAttendanceController extends Controller
         //Get the team members of the given user
         //$reportees_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $request->user_code)->get('user_id');
 
-        $all_employees = User::leftJoin('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
-                            ->where('users.is_ssa','0')
-                            ->get(['users.id','users.name','vmt_employee_office_details.designation']);
+        $all_employees = User::leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+            ->where('users.is_ssa', '0')
+            ->get(['users.id', 'users.name', 'vmt_employee_office_details.designation']);
 
 
         //dd($reportees_details->toArray());
-        foreach($all_employees as $singleItem){
+        foreach ($all_employees as $singleItem) {
             $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->id]);
         }
 
@@ -463,11 +472,11 @@ class VmtAttendanceController extends Controller
         Also known as Attendance Regularization
 
     */
-    public function showLateComingApprovalPage(Request $request){
+    public function showLateComingApprovalPage(Request $request)
+    {
 
 
         return view('attendance_latecoming_approvals');
-
     }
 
     public function fetchAttendanceLateComingDetails(Request $request)
@@ -476,19 +485,18 @@ class VmtAttendanceController extends Controller
 
         $allEmployees_lateComing = '';
 
-        $map_allEmployees = User::all(['id','name'])->keyBy('id');
+        $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
 
         $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::all();
 
         //dd($allEmployees_lateComing);
 
-        foreach($allEmployees_lateComing as $singleItem){
+        foreach ($allEmployees_lateComing as $singleItem) {
             $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
             $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->user_id]);
 
             //If reviewer_id = 0, then its not yet reviewed
-            if($singleItem->reviewer_id != 0)
-            {
+            if ($singleItem->reviewer_id != 0) {
                 $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_id]["name"];
                 $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName([$singleItem->reviewer_id]);
             }
@@ -501,20 +509,18 @@ class VmtAttendanceController extends Controller
         Employee send request to HR for attendance regularization
 
     */
-    public function applyRequestAttendanceRegularization(Request $request){
+    public function applyRequestAttendanceRegularization(Request $request)
+    {
         //dd($request->all());
 
         //Check if already request applied
         $data = VmtEmployeeAttendanceRegularization::where('attendance_date', $request->attendance_date)
-                ->where('user_id',  $request->attendance_user)
-                ->where('regularization_type',  $request->regularization_type);
+            ->where('user_id',  $request->attendance_user)
+            ->where('regularization_type',  $request->regularization_type);
 
-        if($data->exists())
-        {
+        if ($data->exists()) {
             dd("Request already applied");
-        }
-        else
-        {
+        } else {
 
             //dd("Request not applied");
 
@@ -522,8 +528,8 @@ class VmtAttendanceController extends Controller
             $attendanceRegularizationRequest->user_id = $request->attendance_user;
             $attendanceRegularizationRequest->attendance_date = $request->attendance_date;
             $attendanceRegularizationRequest->regularization_type =  $request->regularization_type;
-            $attendanceRegularizationRequest->user_time =  Carbon::createFromFormat('Y-m-d H:i:s',$request->attendance_date." ".$request->user_time);
-            $attendanceRegularizationRequest->regularize_time = Carbon::createFromFormat('Y-m-d H:i:s',$request->attendance_date." ".$request->regularize_time);
+            $attendanceRegularizationRequest->user_time =  Carbon::createFromFormat('Y-m-d H:i:s', $request->attendance_date . " " . $request->user_time);
+            $attendanceRegularizationRequest->regularize_time = Carbon::createFromFormat('Y-m-d H:i:s', $request->attendance_date . " " . $request->regularize_time);
             $attendanceRegularizationRequest->reason_type = $request->reason;
             $attendanceRegularizationRequest->custom_reason = $request->custom_reason ?? '';
             $attendanceRegularizationRequest->status = 'Pending';
@@ -537,9 +543,9 @@ class VmtAttendanceController extends Controller
         $mail_status = "";
 
         //Get manager details
-        $manager_usercode = VmtEmployeeOfficeDetails::where('user_id',$request->attendance_user)->value('l1_manager_code');
-        $manager_details = User::join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
-                        ->where('users.user_code',$manager_usercode)->first(['users.name','users.user_code','vmt_employee_office_details.officical_mail']);
+        $manager_usercode = VmtEmployeeOfficeDetails::where('user_id', $request->attendance_user)->value('l1_manager_code');
+        $manager_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+            ->where('users.user_code', $manager_usercode)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
 
         //dd($manager_details->officical_mail);
 
@@ -548,21 +554,21 @@ class VmtAttendanceController extends Controller
         $image_view = url('/') . $VmtGeneralInfo->logo_img;
 
         $isSent    = \Mail::to($manager_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
-                                                                auth::user()->name,
-                                                                auth::user()->user_code,
-                                                                $request->attendance_date,
-                                                                $manager_details->name,
-                                                                $manager_details->user_code,
-                                                                request()->getSchemeAndHttpHost(),
-                                                                $image_view,
-                                                                $request->custom_reason,
-                                                                "Pending"));
+            auth::user()->name,
+            auth::user()->user_code,
+            $request->attendance_date,
+            $manager_details->name,
+            $manager_details->user_code,
+            request()->getSchemeAndHttpHost(),
+            $image_view,
+            $request->custom_reason,
+            "Pending"
+        ));
 
-        if( $isSent) {
+        if ($isSent) {
             $mail_status = "Mail sent successfully";
-
-         } else {
-            $mail_status= "There was one or more failures.";
+        } else {
+            $mail_status = "There was one or more failures.";
         }
 
 
@@ -575,7 +581,8 @@ class VmtAttendanceController extends Controller
         ];
     }
 
-    public function approveRejectAttendanceRegularization(Request $request){
+    public function approveRejectAttendanceRegularization(Request $request)
+    {
 
         //dd($request->all());
 
@@ -584,8 +591,7 @@ class VmtAttendanceController extends Controller
 
         $data = VmtEmployeeAttendanceRegularization::find($request->lc_id);
 
-        if($data->exists())
-        {
+        if ($data->exists()) {
             $data->reviewer_id = auth::user()->id;
             $data->reviewer_reviewed_date = Carbon::today()->setTimezone('Asia/Kolkata');
             $data->status = $request->status;
@@ -595,7 +601,6 @@ class VmtAttendanceController extends Controller
 
             $status = "success";
             $message = "Attendance Regularization is completed.";
-
         }
 
         //Send mail to Employee
@@ -603,8 +608,8 @@ class VmtAttendanceController extends Controller
         $mail_status = "";
 
         //Get employee details
-        $employee_details = User::join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
-                        ->where('users.id',$data->user_id)->first(['users.name','users.user_code','vmt_employee_office_details.officical_mail']);
+        $employee_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+            ->where('users.id', $data->user_id)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
 
         //dd($employee_details->officical_mail);
 
@@ -613,21 +618,21 @@ class VmtAttendanceController extends Controller
         $image_view = url('/') . $VmtGeneralInfo->logo_img;
 
         $isSent    = \Mail::to($employee_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
-                                                                $employee_details->name,
-                                                                $employee_details->user_code,
-                                                                $data->attendance_date,
-                                                                auth::user()->name,
-                                                                auth::user()->user_code,
-                                                                request()->getSchemeAndHttpHost(),
-                                                                $image_view,
-                                                                $request->status_text,
-                                                                $request->status));
+            $employee_details->name,
+            $employee_details->user_code,
+            $data->attendance_date,
+            auth::user()->name,
+            auth::user()->user_code,
+            request()->getSchemeAndHttpHost(),
+            $image_view,
+            $request->status_text,
+            $request->status
+        ));
 
-        if( $isSent) {
+        if ($isSent) {
             $mail_status = "Mail sent successfully";
-
-         } else {
-            $mail_status= "There was one or more failures.";
+        } else {
+            $mail_status = "There was one or more failures.";
         }
 
 
@@ -639,5 +644,4 @@ class VmtAttendanceController extends Controller
             'data' => [],
         ];
     }
-
 }

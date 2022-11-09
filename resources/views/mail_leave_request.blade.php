@@ -56,7 +56,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                 <td colspan="4" align="left" class="border-less"
                                                     style="padding:10px ;">
 
-                                                    <p class="" style="margin: 0px 0px 0px ">SUB – Leave Approval Request from Mr/Ms/Mrs Xyz</p>
+                                                    {{-- <p class="" style="margin: 0px 0px 0px "> {{ $employeeName}}</p> --}}
 
 
 
@@ -67,7 +67,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                 <td colspan="4" align="left" class="border-less"
                                                     style="padding:10px ;">
 
-                                                    <p class="text-strong " style="margin: 0px 0px 0px ">Dear Xyz,</p>
+                                                    <p class="text-strong " style="margin: 0px 0px 0px ">Dear {{ $managerName}}</p>
                                                     <p class="" style="  ">
                                                         You have
                                                         been sent the following leave request for approval. Please
@@ -125,7 +125,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                     <td colspan="8"
                                                         style="color:#002f56;font-weight:600;font-size:20px;padding-bottom:20px;"
                                                         align="center">
-                                                        Max Srirni
+                                                      {{$employeeName}}
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -139,9 +139,9 @@ $bank_names = \DB::table('bank_list')->get();
                                                             </p>
                                                             <p
                                                                 style="font-weight:600;color:#002f56;margin-bottom:0px;margin-top:0px;font-size:14px">
-                                                                <span>Apr</span>
-                                                                <span>21,2022</span>
-                                                                <span>11:33am</span>
+
+                                                                <span>{{$startDate}}</span>
+
                                                             </p>
                                                             <p
                                                                 style="font-weight:500;color:#c1c1c1;margin-bottom:0px;margin-top:0px;font-size:12px">
@@ -160,19 +160,18 @@ $bank_names = \DB::table('bank_list')->get();
                                                             <p
                                                                 style="font-weight:600;color:#002f56;margin-bottom:0px;margin-top:0px;font-size:14px">
 
-                                                                <span>Apr</span>
-                                                                <span>22,2022</span>
+                                                                <span>{{$startDate}}</span>
                                                                 <span>-</span>
-                                                                <span>Apr</span>
-                                                                <span>27,2022</span>
+                                                                <span>{{$endDate}}</span>
+
                                                             </p>
 
                                                             <p
                                                                 style="font-weight:500;color:#c1c1c1;margin-bottom:0px;margin-top:0px;font-size:12px">
-                                                                <span
+                                                                {{-- <span
                                                                     style="text-align:left ;margin-right:10px;">(Thursday)</span>
                                                                 <span
-                                                                    style="text-align:right;margin-left:10px;">(Friday)</span>
+                                                                    style="text-align:right;margin-left:10px;">(Friday)</span> --}}
                                                             </p>
                                                         </div>
                                                     </td>
@@ -185,11 +184,11 @@ $bank_names = \DB::table('bank_list')->get();
                                                         <div>
                                                             <p
                                                                 style="font-weight:500;color:#c1c1c1;margin-bottom:0px;margin-top:0px;font-size:12px">
-                                                                Reason
+                                                               {{$reason}}
                                                             </p>
                                                             <p
                                                                 style="font-weight:600;color:#002f56;margin-bottom:0px;margin-top:0px;font-size:14px">
-                                                                2 Day of sick leave
+                                                                {{$totalLeaveDatetime}} Day of sick leave
                                                             </p>
 
                                                             <p
