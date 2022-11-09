@@ -51,8 +51,8 @@ p {
     opacity: 0.5 !important;
 }
 .border-primary {
-    border: 1px solid #002f56;
-    border: #002f56 !important;
+    border: 1px solid #002f56 !important;
+
 }
 .border-orange {
     border-color: #ee6a04;
