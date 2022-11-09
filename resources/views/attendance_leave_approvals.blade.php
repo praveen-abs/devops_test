@@ -83,7 +83,7 @@
         <div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true"
             style="opacity:1; display:none;background:#00000073;">
             <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true" aria-labelledby="">
-                <div class="modal-content">
+                <div class="modal-content top-line">
                     <div class="modal-header border-0">
                         <h6 class="modal-title" id="modalHeader">
                         </h6>
@@ -96,9 +96,9 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="mt-4">
+                        <div class="">
                             <p class="mb-3 text-muted f-15 text-center" id="modalNot"></p>
-                            <textarea name="reject_content" id="leave_reject_content" class="form-control mb-3"></textarea>
+                            <textarea name="reject_content" id="leave_reject_content" class="form-control border-primary  mb-3"></textarea>
                             <div class="text-end">
                                 <input type="hidden" id="selected_leaveId" />
                                 <input type="hidden" id="selected_userId" />
@@ -106,7 +106,7 @@
 
                                 <button type="button" class="btn btn-primary submit_notify"
                                     id="modal_leave_reject">Submit</button>
-                                <button type="button" class="btn btn-light close-modal"
+                                <button type="button" class="btn btn-border-primary close-modal"
                                     id="closeModal">Cancel</button>
                             </div>
                         </div>
@@ -253,16 +253,47 @@
                 const grid = new gridjs.Grid({
                     columns: [
 
+                        // {
+                        //     id: 'user_id',
+                        //     name: 'Employee Name',
+                        //     formatter: function formatter(cell) {
+
+                        //         for (var i = 0; i < employeesList_array.length; i++) {
+                        //             if (employeesList_array[i].id == cell)
+                        //                 return gridjs.html(employeesList_array[i].name);
+                        //         }
+
+
+                        //     }
+
+                        // },
                         {
-                            id: 'user_id',
+                            id: 'employee_name',
                             name: 'Employee Name',
                             formatter: function formatter(cell) {
 
-                                for (var i = 0; i < employeesList_array.length; i++) {
-                                    if (employeesList_array[i].id == cell)
-                                        return gridjs.html(employeesList_array[i].name);
+                                var output = "";
+
+                                if(cell.employee_avatar.type == "shortname"){
+
+                                    output ='<div class="d-flex align-items-center p-0 page-header-user-dropdown">'+
+                                                '<div class="rounded-circle user-profile col-auto user-profile  me-2 " id="">'+
+                                                    '<i class="topbar_username" class="align-middle ">'+cell.employee_avatar.data+'</i>'+
+                                                '</div>'+
+                                                '<span>'+cell.employee_name+'</span>'+
+                                            '</div>';
+                                }
+                                else
+                                if(cell.employee_avatar.type == "avatar"){
+                                    var imageURL = "images/"+cell.employee_avatar.data;
+
+                                    output ='<div class="col-auto p-0">'+
+                                            '<img class="rounded-circle header-profile-user" src="'+imageURL+'" alt="--">'+
+                                            '<span>&nbsp;&nbsp;'+cell.employee_name+'</span>'+
+                                        '</div>';
                                 }
 
+                                return gridjs.html(output);
 
                             }
                         },
@@ -328,23 +359,28 @@
                                 //console.log(emp);
                                 if (emp.status == "Pending") {
                                     htmlcontent =
-                                        '<input type="button" value="Approve" data-user_id="' + emp
+                                        // '<input type="button" value="Approve" data-user_id="' + emp
+                                        // .user_id +
+                                        // '" data-leave_id="' + emp.id +
+                                        // '" data-leave_status="Approved" class="status btn btn-success py-1 approve-leave-btn">';
+                                        '<button type="button" value="Approve" data-user_id="' + emp
                                         .user_id +
                                         '" data-leave_id="' + emp.id +
-                                        '" data-leave_status="Approved" class="status btn btn-success py-1 approve-leave-btn">';
+                                        '" data-leave_status="Approved" class="status me-2 btn btn-success py-1 approve-leave-btn"><i class="fa me-1 fa-check-circle" aria-hidden="true"></i>Approve</button>';
+
 
                                     htmlcontent = htmlcontent +
-                                        '&nbsp;&nbsp;<input type="button" value="Reject" id="button_activate_"' +
+                                    '<button type="button" value="Reject" id="button_activate_"' +
                                         emp.user_id + '" data-user_id="' + emp.user_id +
                                         '" data-leave_id="' + emp.id +
-                                        '" data-leave_status="Rejected" class="status btn btn-danger py-1 reject-leave-btn "></input>&nbsp;&nbsp;';
+                                        '" data-leave_status="Rejected" class="status btn me-2 btn-danger py-1 reject-leave-btn "><i class="fa fa-times-circle me-1"></i>Reject</button>';
                                 }
 
                                 // if (leave_history.status == "Pending")
                                 //     htmlcontent =
                                 //     '<input type="button" value="Activate" onclick="activateEmployee(this)" id="button_activate_"' +
                                 //     emp.user_id + '" data-user_id="' + emp.user_id +
-                                //     '" class="status btn btn-orange py-1 onboard-employee-btn "></input>';
+                                //     '" class="status btn btn-orange py-1 onboard-employee-btn "></button>';
                                 // else
                                 //     htmlcontent =
                                 //     '<input type="button" value="Activate" class="status btn btn-orange py-1 onboard-employee-btn disabled"></input>';
@@ -353,7 +389,8 @@
                                 //     </button>
 
                                 htmlcontent = htmlcontent +
-                                    '<input type="button" value="View" class="status btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal"></input>';
+                                    // '<input type="button" value="View" class="status btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal"></input>';
+                                    '<button type="button" value="View" class="status btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal">View</button>';
 
 
                                 return gridjs.html(htmlcontent);
@@ -369,8 +406,8 @@
                         url: leaverequest_type,
                         then: data => data.map(
                             leave_history => [
-                                //leave_history.id,
-                                leave_history.user_id,
+                                leave_history,
+                                // leave_history.user_id,
                                 leave_history.leave_type_id,
                                 leave_history.start_date,
                                 leave_history.end_date,
