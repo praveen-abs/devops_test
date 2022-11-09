@@ -183,8 +183,27 @@ class VmtEmployeeService {
         $newEmployee->userid = $user->id;
         $newEmployee->emp_no   =    $row["employee_code"] ?? '';
         $newEmployee->gender   =    $row["gender"] ?? '';
-        $newEmployee->doj   =    \DateTime::createFromFormat('d-m-Y', $row['doj'])->format('Y-m-d');
-        $newEmployee->dol   =    \DateTime::createFromFormat('d-m-Y', $row['doj'])->format('Y-m-d');
+        //dd($row['doj']);
+
+        //Check if its in proper format
+        $processed_DOJ = \DateTime::createFromFormat('d-m-Y', $row['doj']);
+
+        //If date is in 'd-m-y' format, then convert into one
+        if($processed_DOJ)
+        {
+            //Then convert to Y-m-d
+            $processed_DOJ = $processed_DOJ->format('Y-m-d');
+        }
+        else
+        {
+            //If date is not in 'd-m-y' format, then convert into 'd-m-y'
+
+            $processed_DOJ = \DateTime::createFromFormat('Y-m-d', $row['doj'])->format('Y-m-d');
+
+        }
+
+        $newEmployee->doj   =    $processed_DOJ;
+        $newEmployee->dol   =    $processed_DOJ;
         $newEmployee->location   =    $row["work_location"] ?? '';
         $newEmployee->dob   =    $row["dob"] ?? '';
         $newEmployee->father_name   =  $row["father_name"] ?? '';
