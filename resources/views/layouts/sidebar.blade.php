@@ -76,7 +76,7 @@
                 @endif
 
                 <!-- Navigation Menu for attendance-->
-
+                @if(env('CLIENT_NAME') != "vasagroup")
                 <li class="nav-item">
                     <a class="nav-link sidebar menu-link pt-0" href="#attendanceDrop-Down" data-bs-toggle="collapse"
                         role="button" aria-expanded="false" aria-controls="sidebarRoles">
@@ -220,7 +220,7 @@
                         </ul>
                     </div> --}}
                 </li>
-
+                @endif
 
                 <!-- Organization -->
                 @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
@@ -658,6 +658,9 @@
                                         Template<span>
                                         </span></a>
                                 </li>
+
+                                @if(env('CLIENT_NAME') != "vasagroup")
+
                                 <li class="nav-item">
                                     <a href="{{ route('attendance-leavesettings') }}" class="nav-link">Leave
                                         Settings<span>
@@ -666,7 +669,7 @@
                                 <li class="nav-item">
                                     <a href="{{ url('attendance_shift_woff_hday') }}"
                                         class="nav-link sidebar py-1">Attendance</a>
-
+                                @endif
                                 </li>
                             </ul>
                         </div>
