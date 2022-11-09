@@ -89,7 +89,7 @@
                                             0</span>
                                     </div> --}}
 
-                                <button class="btn btn-orange" data-bs-target="#leaveApply_modal" data-bs-toggle="modal">
+                                <button class="btn btn-orange" data-bs-target="#leaveApply_modal" data-bs-toggle="modal" onclick="resetLeaveModalValues()">
                                     Apply Leave
                                 </button>
                             </div>
@@ -553,10 +553,6 @@
                 </div>
                 <div class="modal-body">
 
-
-
-
-
                     <!-- MODEL : Request leave -->
                     <div id="modal_request_leave" class="card top-line mb-0">
                         <div class="card-body">
@@ -564,18 +560,18 @@
                                 <div class="col-xl-8 col-sm-12 col-lg-8 col-xxl-8 col-md-12">
                                     <div class="row mb-3">
                                         <div class="col-md-6 text-md-start mb-md-0 mb-3">
-                                            <h6 class=" mb-1">Set range</h6>
+                                            <h6 class=" mb-1">Leave Type</h6>
                                         </div>
 
 
                                         <div class="col-md-6 text-end mb-md-0 mb-3">
                                             <select name="" id="leave_type_id" class="form-select outline-none">
-                                                <option value="" selected hidden disabled>Choose Leave</option>
-                                                <option value="1">Sick Leave</option>
-                                                <option value="2">LOP Leave</option>
-                                                <option value="3">Casual Leave</option>
-                                                <option value="4">Compensatory Leave</option>
-                                                <option value="5">Flexi day-off Leave</option>
+                                                <option value="" hidden selected disabled>Select Leave Type</option>
+
+                                                    @foreach ($leaveTypes as $item)
+                                                        <option value="{{ $item->id }}"> {{ $item->leave_type }}</option>
+                                                    @endforeach
+
                                             </select>
                                         </div>
                                     </div>
@@ -584,7 +580,7 @@
                                         <div class="col-md-4 text-md-start mb-md-0 mb-3">
                                             <label class="fw-bold">Start Date</label>
                                             <input type="datetime-local" id="start_date"
-                                                class="form-control outline-none border-0 shadow-lite">
+                                                class="form-control outline-none border-0 shadow-lite leave_date">
                                         </div>
                                         <div class="col-md-4 text-md-center mb-md-0 ">
                                             <p class="fw-bold  text-muted">Total Days</p>
@@ -593,7 +589,7 @@
                                         <div class="col-md-4 text-md-end ">
                                             <label class="fw-bold">End Date</label>
                                             <input type="datetime-local" id="end_date"
-                                                class="form-control outline-none border-0 shadow-lite">
+                                                class="form-control outline-none border-0 shadow-lite leave_date">
                                         </div>
                                     </div>
                                     <textarea id="leave_reason" placeholder="Reason here..." class="w-100 outline-none border-0 shadow-lite form-control"
@@ -830,12 +826,55 @@
         var gridTable_team_leaveHistory = "";
         var gridTable_org_leaveHistory = "";
 
+        //leave dates
+        var leave_start_date = '';
+        var leave_end_date = '';
+
+
+        function resetLeaveModalValues(){
+
+            leave_start_date = '';
+            leave_end_date = '';
+            $('#start_date').val('');
+            $('#end_date').val('');
+            $('#leave_reason').val('');
+
+        }
 
         $(document).ready(function() {
             $('#notifications_users_id').select2({
                 dropdownParent: $("#modal_request_leave"),
                 width: '100%'
             });
+
+
+            //When Leave dates are changed
+            $('.leave_date').on('change', function() {
+
+                //Get the date values
+                if($(this).attr('id') == 'start_date')
+                {
+                    leave_start_date =  moment($(this).val());
+                }
+                else
+                if($(this).attr('id') == 'end_date')
+                {
+                    leave_end_date = moment($(this).val());
+                }
+
+                if(leave_start_date != '' && leave_end_date != '')
+                {
+                    //Check whether startdate is less than enddate
+                    totalDays = leave_end_date.diff(leave_start_date, 'days');
+
+                    console.log("Total days : "+totalDays);
+                }
+
+
+
+
+            });
+
 
             // $(document).on('#select-reviewer:open', () => {
             //         $('.select2-search__field').focus();
