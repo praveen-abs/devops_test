@@ -11,7 +11,7 @@
 /* for kpi all table */
 table.kpi_appraisal-table tr th table.kpi_appraisal-table tbody tr th {
     border: 1px solid #fff;
-    /* vertical-align: baseline; */
+    vertical-align:text-top;
 }
 table.kpi_appraisal-table tbody tr:last-child th {
     border-bottom: 1px solid #002f56 !important;
