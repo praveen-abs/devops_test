@@ -25,7 +25,7 @@ function getReviewKpiFormDetails($kpiAssignedId, $assigneeId){
     if(!empty($reviewData)){
       return $reviewData;
     }
-    return '';
+    return null;
 }
 
 // Get Necessary Details like currentLoggedUserRoleOnKpiForm, ReviewersIds, AssigneesIds

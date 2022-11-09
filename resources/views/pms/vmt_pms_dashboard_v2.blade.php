@@ -429,7 +429,7 @@
                                                         $kpiFormAssigneeReview = getReviewKpiFormDetails($pmsKpiAssignee->id, $assigneeId);
 
                                                         ?>
-                                                        @if(!isFormReviewCompleted($kpiFormAssigneeReview))
+                                                        @if($kpiFormAssigneeReview && !isFormReviewCompleted($kpiFormAssigneeReview))
                                                         <tr>
                                                             <td class="d-none">{{ $key1 }}</td>
                                                             <td class="" style="min-width: 185px;">
@@ -588,7 +588,7 @@
                                                         //dd(isFormReviewCompleted($kpiFormAssigneeReview));
                                                         ?>
 
-                                                        @if(isFormReviewCompleted($kpiFormAssigneeReview))
+                                                        @if($kpiFormAssigneeReview && isFormReviewCompleted($kpiFormAssigneeReview))
                                                         <tr>
                                                             <td class="d-none">{{ $key1 }}</td>
                                                             <td class="" style="min-width: 185px;">
