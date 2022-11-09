@@ -450,6 +450,8 @@
                                                         Comments</th>
                                                 @endif
 
+                                                @if($assignedGoals->is_assignee_submitted == '1')
+
                                                 @foreach ($reviewersId as $reviewersReview)
                                                     @if($isAllReviewersSubmittedOrNot)
                                                         <th scope="col" data-name='kpiManagerReview'
@@ -473,6 +475,8 @@
                                                             Achievement % </th>
                                                     @endif
                                                 @endforeach
+
+                                                @endif
                                             </tr>
                                         </thead>
                                         <tbody class="tbody" id="tbody">
@@ -592,6 +596,8 @@
                                                     //dd(Auth::user()->org_role);
                                                     //dd($isAllReviewersSubmittedOrNot);
                                                     ?>
+                                                    @if  ($assignedGoals->is_assignee_submitted == '1')
+
                                                     @foreach ($reviewersId as $reviewersReview)
                                                         {{-- When HR/Admin views --}}
                                                         @if($isAllReviewersSubmittedOrNot)
@@ -663,41 +669,43 @@
                                                             </td>
                                                         @endif
                                                     @endforeach
+
+                                                    @endif
                                                 </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
                                 </div>
 
-                                @if ($isAllReviewersSubmittedOrNot)
-                                    <div class="row mt-3">
-                                        <div class="col-lg-12">
-                                            <h6 class="text-muted">
-                                                Appraiser Feedback:
-                                            </h6>
-                                            <div class="mt-2">
-                                                <textarea class="form-control w-100  h-100 outline-none " placeholder="" id="gen-info-description-input" name="appraiser_comments"
-                                                    readonly
-                                                    >@if (isset($assignedGoals->reviewer_appraisal_comments)){{ $assignedGoals->reviewer_appraisal_comments }}@endif</textarea>
-
-                                                    </textarea>
+                                {{-- Show Appraiser box only when assignee submitted review  --}}
+                                @if($assignedGoals->is_assignee_submitted == '1')
+                                    @if ($isAllReviewersSubmittedOrNot)
+                                        <div class="row mt-3">
+                                            <div class="col-lg-12">
+                                                <h6 class="text-muted">
+                                                    Appraiser Feedback:
+                                                </h6>
+                                                <div class="mt-2">
+                                                    <span>
+                                                        @if (isset($assignedGoals->reviewer_appraisal_comments)){{ $assignedGoals->reviewer_appraisal_comments }}@endif
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                @else
-                                    <div class="row mt-3 mb-2">
-                                        <div class="col-lg-12">
-                                            <h6 class="text-muted">
-                                                Appraiser Feedback:
-                                            </h6>
-                                            <div class="mt-2">
-                                                <textarea class="form-control w-100 h-100 outline-none" placeholder="Comments here..." id="gen-info-description-input" name="appraiser_comments"
-                                                    >@if (isset($assignedGoals->reviewer_appraisal_comments)){{ $assignedGoals->reviewer_appraisal_comments }}@endif</textarea>
+                                    @else
+                                        <div class="row mt-3 mb-2">
+                                            <div class="col-lg-12">
+                                                <h6 class="text-muted">
+                                                    Appraiser Feedback:
+                                                </h6>
+                                                <div class="mt-2">
+                                                    <textarea class="form-control w-100 h-100 outline-none" placeholder="Comments here..." id="gen-info-description-input" name="appraiser_comments"
+                                                        >@if (isset($assignedGoals->reviewer_appraisal_comments)){{ $assignedGoals->reviewer_appraisal_comments }}@endif</textarea>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    @endif
                                 @endif
-
 
                             </form>
                             @if($enableButton)
@@ -873,7 +881,7 @@
                 var result = (kpiAchievementReviewerReview / targetVal) * kpiWeightageVal;
 
                 //update in 'Manager KPI achievements %' column in this format
-                //reviewer_kpi_review{{ $index }}-{{ $reviewersReview }}
+                //reviewer_kpi_review  index - reviewersReview
                // var temp = '#reviewer_kpi_review' + index+'-'+reviewerId;
                // console.log("testing id : "+temp);
                 $('#reviewer_kpi_percentage' + index+'-'+reviewerId).val(Math.round(result));
