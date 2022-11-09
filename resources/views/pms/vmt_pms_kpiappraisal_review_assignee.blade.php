@@ -452,7 +452,7 @@
                                                     <td>
                                                         @if ($assignedGoals->is_assignee_accepted == '1' && $isAllReviewersAcceptedOrNot == true)
                                                             @if ($assignedGoals->is_assignee_submitted == 0)
-                                                                <div>
+                                                                {{-- <div> --}}
                                                                     <textarea  class="inp-text form-control w-100 h-100 outline-none border-0 " id="assignee_kpi_percentage{{ $index }}"
                                                                         name="assignee_kpi_percentage[{{ $kpiRow->id }}]"
                                                                         onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46'
@@ -467,7 +467,7 @@
                                                                         @endif
                                                                     </textarea>
 
-                                                                </div>
+                                                                {{-- </div> --}}
                                                             @else
                                                                 <div>
                                                                     {{ round(json_decode($assignedGoals->assignee_kpi_percentage, true)[$kpiRow->id]) }}%
@@ -478,14 +478,14 @@
                                                     <td>
                                                         @if ($assignedGoals->is_assignee_accepted == '1' && $isAllReviewersAcceptedOrNot == true)
                                                             @if ($assignedGoals->is_assignee_submitted == 0)
-                                                                <div>
+                                                                {{-- <div> --}}
                                                                     <textarea  name="assignee_kpi_comments[{{ $kpiRow->id }}]" class="form-control w-100 h-100 outline-none border-0 "
                                                                         id="assignee_kpi_comments{{ $index }}" placeholder="type here">
 @if (isset(json_decode($assignedGoals->assignee_kpi_comments, true)[$kpiRow->id]))
 {{ json_decode($assignedGoals->assignee_kpi_comments, true)[$kpiRow->id] }}
 @endif
 </textarea>
-                                                                </div>
+                                                                {{-- </div> --}}
                                                             @else
                                                                 <div>
                                                                     {{ json_decode($assignedGoals->assignee_kpi_comments, true)[$kpiRow->id] }}
@@ -523,6 +523,7 @@
                                     </table>
 
                                 </div>
+
                             </form>
                             @if (isset($assignedGoals) && $assignedGoals->is_assignee_submitted != '1')
                                 @if ($assignedGoals->is_assignee_accepted == '1')
@@ -548,10 +549,10 @@
                                     @endif
                                 @elseif($assignedGoals->is_assignee_accepted == null)
                                     <div class="buttons d-flex align-items-center justify-content-end ">
-                                        <button class="btn btn-primary" id="accept_review">
+                                        <button class="btn btn-success me-2" id="accept_review"><i class="fa fa-check-circle me-2" aria-hidden="true"></i>
                                             Accept </button>
-                                        &nbsp;&nbsp;
-                                        <button class="btn btn-primary" id="reject_review">Reject</button>
+
+                                        <button class="btn btn-danger" id="reject_review"><i class="fa fa-times-circle me-2"></i>Reject</button>
                                     </div>
                                 @elseif($assignedGoals->is_assignee_accepted == '0')
                                     <h6>You have Already Rejected this review.</h6>
