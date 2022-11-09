@@ -89,7 +89,8 @@
                                             0</span>
                                     </div> --}}
 
-                                <button class="btn btn-orange" data-bs-target="#leaveApply_modal" data-bs-toggle="modal" onclick="resetLeaveModalValues()">
+                                <button class="btn btn-orange" data-bs-target="#leaveApply_modal" data-bs-toggle="modal"
+                                    onclick="resetLeaveModalValues()">
                                     Apply Leave
                                 </button>
                             </div>
@@ -559,20 +560,32 @@
                             <div class="row">
                                 <div class="col-xl-8 col-sm-12 col-lg-8 col-xxl-8 col-md-12">
                                     <div class="row mb-3">
-                                        <div class="col-md-6 text-md-start mb-md-0 mb-3">
+                                        <div class="col-md-12 text-md-start mb-md-0 mb-3">
                                             <h6 class=" mb-1">Leave Type</h6>
                                         </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6  mb-md-0 mb-3">
+                                            <div class="form-group">
+                                                <label for="">Choose Leave Type <span class="text-danger">*</span> </label>
 
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6  mb-md-0 mb-3">
+                                            <div class="form-group">
 
-                                        <div class="col-md-6 text-end mb-md-0 mb-3">
-                                            <select name="" id="leave_type_id" class="form-select outline-none">
-                                                <option value="" hidden selected disabled>Select Leave Type</option>
+                                                <select name="" id="leave_type_id"
+                                                    class="form-select outline-none">
+                                                    <option value="" hidden selected disabled>Select Leave Type
+                                                    </option>
 
                                                     @foreach ($leaveTypes as $item)
-                                                        <option value="{{ $item->id }}"> {{ $item->leave_type }}</option>
+                                                        <option value="{{ $item->id }}"> {{ $item->leave_type }}
+                                                        </option>
                                                     @endforeach
 
-                                            </select>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -583,8 +596,8 @@
                                                 class="form-control outline-none border-0 shadow-lite leave_date">
                                         </div>
                                         <div class="col-md-4 text-md-center mb-md-0 ">
-                                            <p class="fw-bold  text-muted">Total Days</p>
-                                            <span class="shadow-lite mt-3">-</span>
+                                            <p class="fw-bold  text-muted mb-2">Total Days</p>
+                                            <span class="shadow-lite px-2 py-1" id="total_leave">-</span>
                                         </div>
                                         <div class="col-md-4 text-md-end ">
                                             <label class="fw-bold">End Date</label>
@@ -831,7 +844,7 @@
         var leave_end_date = '';
 
 
-        function resetLeaveModalValues(){
+        function resetLeaveModalValues() {
 
             leave_start_date = '';
             leave_end_date = '';
@@ -852,22 +865,19 @@
             $('.leave_date').on('change', function() {
 
                 //Get the date values
-                if($(this).attr('id') == 'start_date')
-                {
-                    leave_start_date =  moment($(this).val());
-                }
-                else
-                if($(this).attr('id') == 'end_date')
-                {
+                if ($(this).attr('id') == 'start_date') {
+                    leave_start_date = moment($(this).val());
+                } else
+                if ($(this).attr('id') == 'end_date') {
                     leave_end_date = moment($(this).val());
                 }
 
-                if(leave_start_date != '' && leave_end_date != '')
-                {
+                if (leave_start_date != '' && leave_end_date != '') {
                     //Check whether startdate is less than enddate
                     totalDays = leave_end_date.diff(leave_start_date, 'days');
 
-                    console.log("Total days : "+totalDays);
+                    console.log("Total days : " + totalDays);
+                    $('#total_leave').html(totalDays);
                 }
 
 
@@ -881,7 +891,7 @@
             //     });
 
             $('#btn_request_leave').on('click', function(e) {
-                console.log("Selected Button : " + $(this).attr('name'));
+
 
                 $.ajax({
                     url: "{{ url('attendance-applyleave') }}",
@@ -891,6 +901,7 @@
                         'user_id': $('#leave_type_id').val(),
                         'start_date': $('#start_date').val(),
                         'end_date': $('#end_date').val(),
+                        'total_leave_datetime':$('#total_leave').val(),
                         'leave_reason': $('#leave_reason').val(),
                         'leave_type_id': $('#leave_type_id').val(),
                         'notifications_users_id': $('#notifications_users_id').val(),
@@ -900,15 +911,21 @@
                         if (data.status == "success") {
                             console.log("Leave requested successfully");
                             swal({
+                                title: data.message,
+                                text: data.mail_status,
+                                type: "success"
+                            }).then(function() {
+                                location.reload();
+                            });
+                            //alert(data.message + " \n " + data.mail_status);
+                        } else {
+                            swal({
                                     title: data.message,
                                     text: data.mail_status,
-                                    type: "success"
+                                    type: data.failure
                                 }).then(function() {
                                     location.reload();
                                 });
-                            //alert(data.message + " \n " + data.mail_status);
-                        } else {
-                            alert("Leave request failed. Contact your Admin");
                         }
 
                         //Update all the gridjs tables
@@ -1108,7 +1125,7 @@
                     sort: true,
                     search: true,
                     server: {
-                        url: '{{ route('fetch-leaverequests', ['type' => 'employee','statusArray' => 'Approved,Rejected' ]) }}',
+                        url: '{{ route('fetch-leaverequests', ['type' => 'employee', 'statusArray' => 'Approved,Rejected']) }}',
                         then: data => data.map(
                             leave_history => [
                                 leave_history.id,
@@ -1149,23 +1166,26 @@
                             formatter: function formatter(leaveHistoryObj) {
                                 var output = "";
 
-                                if(leaveHistoryObj.employee_avatar.type == "shortname"){
+                                if (leaveHistoryObj.employee_avatar.type == "shortname") {
 
-                                    output ='<div class="col-auto p-0">'+
-                                                '<span class="rounded-circle user-profile  ml-2 " id="">'+
-                                                    '<i class="topbar_username" class="align-middle ">'+leaveHistoryObj.employee_avatar.data+'</i>'+
-                                                '</span>'+
-                                                '<span>&nbsp;&nbsp;'+leaveHistoryObj.employee_name+'</span>'+
-                                            '</div>';
-                                }
-                                else
-                                if(leaveHistoryObj.employee_avatar.type == "avatar"){
-                                    var imageURL = "images/"+leaveHistoryObj.employee_avatar.data;
+                                    output = '<div class="col-auto p-0">' +
+                                        '<span class="rounded-circle user-profile  ml-2 " id="">' +
+                                        '<i class="topbar_username" class="align-middle ">' +
+                                        leaveHistoryObj.employee_avatar.data + '</i>' +
+                                        '</span>' +
+                                        '<span>&nbsp;&nbsp;' + leaveHistoryObj.employee_name +
+                                        '</span>' +
+                                        '</div>';
+                                } else
+                                if (leaveHistoryObj.employee_avatar.type == "avatar") {
+                                    var imageURL = "images/" + leaveHistoryObj.employee_avatar.data;
 
-                                    output ='<div class="col-auto p-0">'+
-                                                '<img class="rounded-circle header-profile-user" src="'+imageURL+'" alt="--">'+
-                                                '<span>&nbsp;&nbsp;'+leaveHistoryObj.employee_name+'</span>'+
-                                            '</div>';
+                                    output = '<div class="col-auto p-0">' +
+                                        '<img class="rounded-circle header-profile-user" src="' +
+                                        imageURL + '" alt="--">' +
+                                        '<span>&nbsp;&nbsp;' + leaveHistoryObj.employee_name +
+                                        '</span>' +
+                                        '</div>';
                                 }
 
                                 return gridjs.html(output);
@@ -1273,7 +1293,7 @@
                     sort: true,
                     search: true,
                     server: {
-                        url: '{{ route('fetch-leaverequests',  ['type' => 'team','statusArray' => 'Approved,Rejected' ]) }}',
+                        url: '{{ route('fetch-leaverequests', ['type' => 'team', 'statusArray' => 'Approved,Rejected']) }}',
                         then: data => data.map(
                             leave_history => [
                                 leave_history.id,
@@ -1315,22 +1335,25 @@
 
                                 var output = "";
 
-                                if(leaveHistoryObj.employee_avatar.type == "shortname"){
+                                if (leaveHistoryObj.employee_avatar.type == "shortname") {
 
-                                    output ='<div class="col-auto p-0">'+
-                                                '<span class="rounded-circle user-profile  ml-2 " id="">'+
-                                                    '<i class="topbar_username" class="align-middle ">'+leaveHistoryObj.employee_avatar.data+'</i>'+
-                                                '</span>'+
-                                                '<span>&nbsp;&nbsp;'+leaveHistoryObj.employee_name+'</span>'+
-                                            '</div>';
-                                }
-                                else
-                                if(leaveHistoryObj.employee_avatar.type == "avatar"){
-                                    var imageURL = "images/"+leaveHistoryObj.employee_avatar.data;
+                                    output = '<div class="col-auto p-0">' +
+                                        '<span class="rounded-circle user-profile  ml-2 " id="">' +
+                                        '<i class="topbar_username" class="align-middle ">' +
+                                        leaveHistoryObj.employee_avatar.data + '</i>' +
+                                        '</span>' +
+                                        '<span>&nbsp;&nbsp;' + leaveHistoryObj.employee_name +
+                                        '</span>' +
+                                        '</div>';
+                                } else
+                                if (leaveHistoryObj.employee_avatar.type == "avatar") {
+                                    var imageURL = "images/" + leaveHistoryObj.employee_avatar.data;
 
-                                    output ='<div class="col-auto p-0">'+
-                                            '<img class="rounded-circle header-profile-user" src="'+imageURL+'" alt="--">'+
-                                            '<span>&nbsp;&nbsp;'+leaveHistoryObj.employee_name+'</span>'+
+                                    output = '<div class="col-auto p-0">' +
+                                        '<img class="rounded-circle header-profile-user" src="' +
+                                        imageURL + '" alt="--">' +
+                                        '<span>&nbsp;&nbsp;' + leaveHistoryObj.employee_name +
+                                        '</span>' +
                                         '</div>';
                                 }
 
@@ -1421,7 +1444,7 @@
                     sort: true,
                     search: true,
                     server: {
-                        url: '{{ route('fetch-leaverequests',  ['type' => 'org','statusArray' => 'Approved,Rejected' ]) }}',
+                        url: '{{ route('fetch-leaverequests', ['type' => 'org', 'statusArray' => 'Approved,Rejected']) }}',
                         then: data => data.map(
                             leave_history => [
                                 leave_history.id,
