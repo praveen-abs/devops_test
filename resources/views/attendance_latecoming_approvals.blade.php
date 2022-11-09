@@ -206,7 +206,7 @@
 
                                 if(cell.employee_avatar.type == "shortname"){
 
-                                    output ='<div class="d-flex p-0 page-header-user-dropdown">'+
+                                    output ='<div class="d-flex align-items-center p-0 page-header-user-dropdown">'+
                                                 '<div class="rounded-circle user-profile col-auto user-profile  me-2 " id="">'+
                                                     '<i class="topbar_username" class="align-middle ">'+cell.employee_avatar.data+'</i>'+
                                                 '</div>'+
@@ -300,15 +300,23 @@
                                 //console.log(emp);
                                 if (req.status == "Pending") {
                                     htmlcontent =
-                                        '<input type="button" value="Approve" data-user_id="' + req.user_id +
+                                        // '<input type="button" value="Approve" data-user_id="' + req.user_id +
+                                        // '" data-lc_id="' + req.id +
+                                        // '" data-lc_status="Approved" class="status btn btn-success py-1 approve-lc-btn">';
+
+                                        '<button type="button" value="Approve" data-user_id="' + req.user_id +
                                         '" data-lc_id="' + req.id +
-                                        '" data-lc_status="Approved" class="status btn btn-success py-1 approve-lc-btn"></input>';
+                                        '" data-lc_status="Approved" class="status me-2 btn btn-success py-1 approve-lc-btn"><i class="fa fa-check-circle me-1" aria-hidden="true"></i>Approve</button>';
 
                                     htmlcontent = htmlcontent +
-                                        '&nbsp;&nbsp;<input type="button" value="Reject" id="button_activate_"' +
+                                        // '<input type="button" value="Reject" id="button_activate_"' +
+                                        // req.user_id + '" data-user_id="' + req.user_id +
+                                        // '" data-lc_id="' + req.id +
+                                        // '" data-lc_status="Rejected" class="status btn btn-danger py-1 reject-lc-btn "></input>&nbsp;&nbsp;';
+                                        '<button type="button" value="Reject" id="button_activate_"' +
                                         req.user_id + '" data-user_id="' + req.user_id +
                                         '" data-lc_id="' + req.id +
-                                        '" data-lc_status="Rejected" class="status btn btn-danger py-1 reject-lc-btn "></input>&nbsp;&nbsp;';
+                                        '" data-lc_status="Rejected" class="status btn btn-danger py-1 reject-lc-btn "><i class="fa fa-times-circle me-1"></i></button>';
                                 }
 
                                 // htmlcontent = htmlcontent +
