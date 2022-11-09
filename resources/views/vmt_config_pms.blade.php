@@ -69,7 +69,7 @@
 
                                     }
                                 ?>
-                                value="{{ $selected_year_value}}" readonly />
+                                value="{{ $data->year ?? ''}}" readonly />
                             <input type="hidden" name="hidden_year" id="hidden_year" value="{{ $selected_year_shortvalue}}">
                         </div>
                     </div>
@@ -497,7 +497,10 @@
     <script>
 
         $(document).ready(function() {
-            //frequencyChange();
+
+
+
+
 
             $('#calendar_type').change(function() {
                 console.log($('#calendar_type').val());
@@ -518,19 +521,20 @@
 
                 if ($('#calendar_type').val() != '') {
                     var frequencyDataResult =
-                        '<option value="monthly">Monthly</option><option value="quarterly">Quarterly</option><option value="halfYearly">Half Yearly</option><option value="yearly">Yearly</option>';
+                        '<option value="" disabled>Select frequency</option><option value="monthly">Monthly</option><option value="quarterly">Quarterly</option><option value="halfYearly">Half Yearly</option><option value="yearly">Yearly</option>';
                     $('#selected_frequency').html(frequencyDataResult);
                 } else {
                     var frequencyDataResult =
-                        '<option value="" selected disabled>Select frequency</option>';
-                    $('#selected_frequency').html(frequencyDataResult);
-                    $('#selected_frequency').val('');
+                        '<option value="" disabled>Select frequency</option>';
+                    $('#selected_frequency').html(frequencyDataResult)
+                    //$('#selected_frequency').trigger('change');
                 }
 
             });
 
             $('#selected_frequency').change(function() {
                 frequencyChange();
+                console.log("Frequency updated");
             });
 
             function frequencyChange() {
