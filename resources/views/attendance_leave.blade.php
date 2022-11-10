@@ -119,7 +119,11 @@
                                     <div class="card  box_shadow_0 border-rtb left-line w-100">
                                         <div class="card-body text-center">
                                             <p class="text-ash-medium mb-2 f-13 ">{{ $singleLeaveType->leave_type }}</p>
-                                            <h5 class="mb-0">0</h5>
+                                            <h5 class="mb-0">
+                                                <?php
+                                                  echo $leaveData_currentUser[ $singleLeaveType->leave_type ]->leave_availed_count ?? '0';
+                                                ?>
+                                            </h5>
 
                                         </div>
                                     </div>

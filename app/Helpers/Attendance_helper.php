@@ -15,16 +15,23 @@ use App\Models\VmtEmployeeOfficeDetails;
 
 function getLeaveCountDetails($user_id){
 
-    $leaveCountDetails_user = VmtEmployeeLeaves::where('user_id', $user_id)->groupBy('leave_type_id');
+    $leaveTypes = VmtLeaves::all()->keyBy('id');
 
-   // dd($leaveCountDetails_user);
+    $leaveCountDetails_user = VmtEmployeeLeaves::select('leave_type_id', DB::raw("SUM(total_leave_datetime) as leave_availed_count"))
+                                                ->where('user_id', $user_id)
+                                                ->groupBy('leave_type_id')->get();
 
-    // $response = [
-    //     "leave_name" => '';
+    //Add leave names to the array
+    foreach($leaveCountDetails_user as $singleData){
+        $singleData->leave_name = $leaveTypes[$singleData->leave_type_id]["leave_type"];
+    }
 
-    // ];
+    //Create map
+    $response = $leaveCountDetails_user->mapWithKeys(function ($item, $key) {
+        return [$item['leave_name'] => $item];
+    });
 
-    return '';
+    return $response;
 }
 
 
