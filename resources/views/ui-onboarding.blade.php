@@ -255,7 +255,7 @@
                                                         id="nationality"
                                                         class="onboard-form form-control textbox  select2_form_without_search"
                                                         required>
-                                                        <option value="" hidden disabled>Choose nationality
+                                                        <option value="Select nationality" hidden disabled>select nationality
                                                         </option>
 
                                                         <option value="indian">Indian</option>
