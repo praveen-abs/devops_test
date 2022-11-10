@@ -1111,7 +1111,10 @@
                             id: 'end_date',
                             name: 'End Date',
                         },
-
+                        {
+                            id: 'total_leave_datetime',
+                            name: 'Total Day(s)',
+                        },
                         {
                             id: 'leave_reason',
                             name: 'Leave Reason',
@@ -1184,6 +1187,7 @@
                                 leave_history.leave_type_id,
                                 leave_history.start_date,
                                 leave_history.end_date,
+                                leave_history.total_leave_datetime,
                                 leave_history.leave_reason,
                                 leave_history.reviewer_user_id,
                                 //leave_history.notifications_users_id,
