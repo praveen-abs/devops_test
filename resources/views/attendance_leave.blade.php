@@ -567,7 +567,8 @@
                                     <div class="row mb-3">
                                         <div class="col-md-6  mb-md-0 mb-3">
                                             <div class="form-group">
-                                                <label for="">Choose Leave Type <span class="text-danger">*</span> </label>
+                                                <label for="">Choose Leave Type <span class="text-danger">*</span>
+                                                </label>
 
                                             </div>
                                         </div>
@@ -644,7 +645,7 @@
                                                         class="_button-container-calendar d-flex align-items-center justify-content-between">
                                                         <button id="_previous" onclick="previous()" class="previous"><i
                                                                 class="fa fa-chevron-left"></i></button>
-                                                        <h6 id="_monthAndYear" class="_monthAndYear"></h6>
+                                                        <h6 id="_monthAndYear" class="_monthAndYear text-white"></h6>
                                                         <button id="_next" onclick="next()" class="next"><i
                                                                 class="fa fa-chevron-right"></i></button>
                                                     </div>
@@ -686,6 +687,34 @@
 
 
 
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- error message details --}}
+
+    <div id="error_notify" class="modal custom-modal fade" role="dialog" aria-hidden="true"
+        style="opacity:1; display:none;background:#00000073;">
+        <div class="modal-dialog modal-dialog-centered   modal-md" role="document">
+            <div class="modal-content top-line">
+                <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
+                    <h6 class="modal-title mb-1 text-primary" id="errors_header" style="border-bottom:5px solid #d0d4e2;">
+                    </h6>
+                    <button type="button" class="close close-modal outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
+                        aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="errors-body" id="errors_body">
+
+                    </div>
+
+                    <div class="text-end">
+                        <button type="button" class="btn btn-light close-modal" data-bs-dismiss="modal">Close</button>
+                    </div>
 
                 </div>
             </div>
@@ -844,6 +873,55 @@
         var leave_end_date = '';
 
 
+        $('#btn_request_leave').on('click', function() {
+
+            // errors array
+            var basic_details_errors = [];
+
+            if ( $('#leave_type_id').find(":selected").val()== ''  )
+                basic_details_errors.push("Leave Type");
+
+            if ($('#start_date').val() == '')
+                basic_details_errors.push("Start Date");
+
+            if ($('#end_date').val() == '')
+                basic_details_errors.push("End Date");
+            if ($('#leave_reason').val() == '')
+                basic_details_errors.push("Leave Reason");
+
+
+            if (basic_details_errors.length > 0) {
+
+                $('#errors_header').html("Please fill the following details");
+                $('#errors_body').html('');
+
+                $('#errors_body').append("<ul class='list-style-numbered list-style-circle px-4'>");
+                basic_details_errors.forEach(function(element) {
+                    $('.list-style-numbered ').append('<li>' + element + '</li>');
+                });
+                $('#errors_body').append("</ul>");
+
+                $('#error_notify').show();
+                $('#error_notify').removeClass('fade');
+
+                return;
+            }
+
+
+        })
+
+        $('.close-modal').on('click',function(){
+            $('#error_notify').fadeOut(100);
+
+        })
+
+
+
+
+
+
+
+
         function resetLeaveModalValues() {
 
             leave_start_date = '';
@@ -901,7 +979,7 @@
                         'user_id': $('#leave_type_id').val(),
                         'start_date': $('#start_date').val(),
                         'end_date': $('#end_date').val(),
-                        'total_leave_datetime':$('#total_leave').val(),
+                        'total_leave_datetime': $('#total_leave').val(),
                         'leave_reason': $('#leave_reason').val(),
                         'leave_type_id': $('#leave_type_id').val(),
                         'notifications_users_id': $('#notifications_users_id').val(),
@@ -920,12 +998,12 @@
                             //alert(data.message + " \n " + data.mail_status);
                         } else {
                             swal({
-                                    title: data.message,
-                                    text: data.mail_status,
-                                    type: data.failure
-                                }).then(function() {
-                                    location.reload();
-                                });
+                                title: data.message,
+                                text: data.mail_status,
+                                type: data.failure
+                            }).then(function() {
+                                location.reload();
+                            });
                         }
 
                         //Update all the gridjs tables

@@ -113,7 +113,7 @@
                                             class="_button-container-calendar d-flex align-items-center justify-content-between">
                                             <button id="_previous" onclick="previous()" class="previous"><i
                                                     class="fa fa-chevron-left"></i></button>
-                                            <h6 id="_monthAndYear" class="_monthAndYear"></h6>
+                                            <h6 id="_monthAndYear" class="_monthAndYear text-white"></h6>
                                             <button id="_next" onclick="next()" class="next"><i
                                                     class="fa fa-chevron-right"></i></button>
                                         </div>
@@ -745,11 +745,11 @@
 
                         } else {
                             cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
-                                "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex justify-content-between'><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span id='checkin_time_" +
+                                "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex '><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span id='checkin_time_" +
                                 year + "-" + (month + 1) + "-" + dateText +
-                                "'></span>    <input type='button' onclick ='showRegularizationModal(this)' class='f-10 w-100 btn lc_btn border-0 btn-danger p-1'  value='Absent' data-cellid ='checkin_time_" +
+                                "'></span>    <input type='button' onclick ='showRegularizationModal(this)' class='f-10 w-100 btn ms-2 lc_btn border-0 btn-danger p-1'  value='Absent' data-cellid ='checkin_time_" +
                                 year + "-" + (month + 1) + "-" + dateText +
-                                "'/></div> <div class='w-100 d-flex justify-content-between check-out mt-2 f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span id='checkout_time_" +
+                                "'/></div> <div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span id='checkout_time_" +
                                 year + "-" + (month + 1) + "-" + dateText + "'></span> </div></div></div>";
                         }
 
@@ -819,7 +819,7 @@
                     calendar_cell_id_value = element.checkout_time.split(" ")[1];
 
                     var egINputButton = $('#checkout_time_' + calendar_cell_id).after(
-                        "<input type='button' onclick ='showRegularizationModal(this)' class='f-10 btn lc_btn border-0 btn-orange p-1'  value='EG' data-checkin_date=" +
+                        "<input type='button' onclick ='showRegularizationModal(this)' class='f-10 ms-2 btn lc_btn border-0 btn-orange p-1'  value='EG' data-checkin_date=" +
                         calendar_cell_id + " data-actual_timing=" + calendar_cell_id_value +
                         " data-shift_timing=" + shift_end_time + " data-cellid ='checkout_time_" +
                         calendar_cell_id +
