@@ -14,6 +14,7 @@ use App\Models\VmtGeneralInfo;
 use App\Models\VmtStaffAttendanceDevice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use App\Mail\WelcomeMail;
 use App\Models\VmtWorkShifts;
 use App\Models\VmtEmployeeAttendanceRegularization;
@@ -32,11 +33,33 @@ class VmtAttendanceController extends Controller
     {
 
         $allEmployeesList = User::all();
-
         $leaveTypes = VmtLeaves::all();
+        $leaveData_Team = null;
+        $leaveData_Org = null;
+
+        $leaveData_currentUser = VmtEmployeeLeaves::where('user_id',auth::user()->id);
+
+        //Get how many leaves taken for each leave_type
+        $leaveData_currentUser = getLeaveCountDetails(auth::user()->id);
+
+        //Generate Team leave data
+        if(Str::contains(currentLoggedInUserRole(), ['Manager']))
+        {
+            //dd(auth::user()->id);
+            $teamMembers_UserIDs = getTeamMembersUserIds(auth::user()->id);
+
+            $leaveData_Team = VmtEmployeeLeaves::whereIn('user_id',$teamMembers_UserIDs)->get();
+        }
+
+        //Generate Org leave data
+        if(Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
+        {
+            $leaveData_Org = VmtEmployeeLeaves::all();
+        }
+
 
         //dd($leaveTypes->toArray());
-        return view('attendance_leave', compact('allEmployeesList', 'leaveTypes'));
+        return view('attendance_leave', compact('allEmployeesList', 'leaveTypes','leaveData_Org','leaveData_Team','leaveData_currentUser'));
     }
 
     public function showAttendanceLeaveSettings(Request $request)

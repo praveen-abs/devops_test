@@ -97,69 +97,37 @@
                         </div>
                         <div class="row">
 
-                            <div class="col-sm-3 col-sm-12 col-xl-4 col-md-4 col-lg-4 d-flex">
-                                <div class="card  box_shadow_0 border-rtb left-line w-100">
-                                    <div class="card-body text-center">
-                                        <p class="text-ash-medium mb-2 f-13 ">Sick Leave</p>
-                                        <h5 class="mb-0">-</h5>
+                            @foreach($leaveTypes as $singleLeaveType)
+                                <div class="col-sm-3 col-sm-12 col-xl-4 col-md-4 col-lg-4 d-flex">
+                                    <div class="card  box_shadow_0 border-rtb left-line w-100">
+                                        <div class="card-body text-center">
+                                            <p class="text-ash-medium mb-2 f-13 ">{{ $singleLeaveType->leave_type }}</p>
+                                            <h5 class="mb-0">{{ $singleLeaveType->days_annual }}</h5>
 
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-3 col-sm-12 col-xl-4 col-md-4 col-lg-4 d-flex">
-                                <div class="card box_shadow_0 border-rtb left-line w-100">
-                                    <div class="card-body text-center">
-                                        <p class="text-ash-medium mb-2 f-13 ">Earned Leave</p>
-                                        <h5 class="mb-0">-</h5>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3 col-sm-12 col-xl-4 col-md-4 col-lg-4 d-flex">
-                                <div class="card box_shadow_0 border-rtb  left-line w-100">
-                                    <div class="card-body text-center">
-                                        <p class="text-ash-medium mb-2 f-13 ">Casual Leave</p>
-                                        <h5 class="mb-0">-</h5>
-
-                                    </div>
-                                </div>
-                            </div>
-
+                            @endforeach
                         </div>
                         <div class="row">
                             <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12 ">
                                 <h6 class="text-left fw-bold">Leave Availed</h6>
                             </div>
-                            <div class="col-sm-3 col-sm-12 col-xl-4 col-md-4 col-lg-4 d-flex">
-                                <div class="card mb-0 box_shadow_0 border-rtb left-line w-100">
-                                    <div class="card-body text-center">
-                                        <p class="text-ash-medium mb-2 f-13 ">Sick Leave </p>
-                                        <h5 class="mb-0">-</h5>
 
+                            @foreach($leaveTypes as $singleLeaveType)
+                                <div class="col-sm-3 col-sm-12 col-xl-4 col-md-4 col-lg-4 d-flex">
+                                    <div class="card  box_shadow_0 border-rtb left-line w-100">
+                                        <div class="card-body text-center">
+                                            <p class="text-ash-medium mb-2 f-13 ">{{ $singleLeaveType->leave_type }}</p>
+                                            <h5 class="mb-0">0</h5>
+
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-3 col-sm-12 col-xl-4 col-md-4 col-lg-4 d-flex">
-                                <div class="card mb-0 box_shadow_0 border-rtb left-line w-100">
-                                    <div class="card-body text-center">
-                                        <p class="text-ash-medium mb-2 f-13 ">Earned Leave </p>
-                                        <h5 class="mb-0">-</h5>
+                            @endforeach
 
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3 col-sm-12 col-xl-4 col-md-4 col-lg-4 d-flex">
-                                <div class="card mb-0 box_shadow_0 border-rtb  left-line w-100">
-                                    <div class="card-body text-center">
-                                        <p class="text-ash-medium mb-2 f-13 ">Casual Leave </p>
-                                        <h5 class="mb-0">-</h5>
-
-                                    </div>
-                                </div>
-                            </div>
 
                         </div>
-
                     </div>
                 </div>
 

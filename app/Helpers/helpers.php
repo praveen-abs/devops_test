@@ -1,4 +1,5 @@
 <?php
+use App\Models\VmtEmployeeLeaveBalance;
 use App\Models\VmtMasterConfig;
 use App\Models\VmtOrgRoles;
 use App\Models\User;
@@ -7,6 +8,7 @@ use App\Models\VmtEmployee;
 use App\Models\VmtBloodGroup;
 use App\Models\VmtLeaves;
 use App\Models\ConfigPms;
+use App\Models\VmtEmployeeOfficeDetails;
 
 function required()
 {
@@ -60,6 +62,15 @@ function currentLoggedInUserRole()
 function getUserRole($org_role_id)
 {
     return $role = VmtOrgRoles::where('id',$org_role_id)->value('name');
+}
+
+function getTeamMembersUserIds($user_id){
+    $user_code = User::find($user_id)->user_code;
+
+    $user_ids = VmtEmployeeOfficeDetails::where('l1_manager_code', $user_code)->pluck('user_id');
+
+    //dd($user_ids);
+    return $user_ids;
 }
 
 function hasSubClients()
@@ -258,6 +269,4 @@ function fetchSubClients(){
         //dd($value);
         return $value;
     }
-
-
 
