@@ -8,6 +8,7 @@ use App\Models\VmtPMS_KPIFormReviewsModel;
 use App\Models\VmtPMSRating;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Arr;
 
 // Get User Name by User ID
 function getUserDetailsById($userId){
@@ -24,7 +25,7 @@ function getReviewKpiFormDetails($kpiAssignedId, $assigneeId){
     if(!empty($reviewData)){
       return $reviewData;
     }
-    return '';
+    return null;
 }
 
 // Get Necessary Details like currentLoggedUserRoleOnKpiForm, ReviewersIds, AssigneesIds
@@ -111,6 +112,8 @@ function calculateOverallReviewRating($user_id){
     $ReviewsForms_currentUser =  VmtPMS_KPIFormReviewsModel::whereIn('id',$FormIDs_assignedforms)->get();
 
     dd($FormIDs_assignedforms);
+
+
 
 
 
@@ -264,6 +267,26 @@ function getEmployeeManager($selectedEmployeeId){
                 ->orderBy('users.name', 'ASC')
                 ->whereIn('emp_no', $currentEmpCode);
     return $users;
+}
+
+
+function isFormReviewCompleted($data_VmtPMS_KPIFormReviewsModel){
+
+    $output = $data_VmtPMS_KPIFormReviewsModel->is_reviewer_submitted;
+
+    $array_reviewers_submitted_values = array_values(json_decode($output,true));
+
+    // dd($array_reviewers_submitted_values);
+
+    //Check if reviewer_submitted value has '0' or null value.
+    if( in_array(null, $array_reviewers_submitted_values, true ) || in_array("0", $array_reviewers_submitted_values, true )){
+        return false;
+    }
+    else
+    {
+        return true;
+    }
+
 }
 
 // PMS V2 API Responses
