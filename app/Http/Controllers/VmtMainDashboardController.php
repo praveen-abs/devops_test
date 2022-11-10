@@ -179,10 +179,10 @@ class VmtMainDashboardController extends Controller
         //New Joinees Count
         $currentDate = Carbon::now();
         $currentDate->setTimezone("Asia/Kolkata");
-        $dateDifferenceForNewJoinees = 2; //Right now, showing 1 week old joinees
+        $dateDifferenceForNewJoinees = 30; //Right now, showing 1 week old joinees
         $newEmployeesCount = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
-                                //->whereRaw('DATEDIFF(? , vmt_employee_details.doj) <= ?',[$currentDate, $dateDifferenceForNewJoinees])
-                                ->where('users.active', '0')
+                                ->whereRaw('DATEDIFF(? , vmt_employee_details.doj) <= ?',[$currentDate, $dateDifferenceForNewJoinees])
+                                //->where('users.active', '0')
                                 ->where('users.is_ssa','0')
                                 ->get()->count();
 
