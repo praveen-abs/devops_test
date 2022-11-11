@@ -1,0 +1,8 @@
+.payroll_wrapper ul.list-style-circle li a {
+    font-size: 13px;
+    color: #002f56;
+    text-decoration: none;
+}
+.payroll_wrapper ul.list-style-circle li {
+    margin-top: 20px !important;
+}
