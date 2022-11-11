@@ -113,7 +113,20 @@ $bank_names = \DB::table('bank_list')->get();
                                                                     width: 100px;
                                                                     background:#1b7df7;color:#ffffff;
                                                                     border-radius: 50%;font-size:20px;font-weight:600;">
-                                                                        MX</td>
+
+                                                                    @if($empAvatar['type'] == "shortname")
+                                                                    {{  $empAvatar['data']  }}
+                                                                    @elseif($empAvatar['type'] == "avatar")
+                                                                        <?php
+
+                                                                            $imageURL = request()->getSchemeAndHttpHost()."/images/".$empAvatar['data'];
+
+                                                                        ?>
+                                                                        <div class="col-auto p-0">
+                                                                            <img class="rounded-circle header-profile-user" src="{{ $imageURL }}" alt="--">
+                                                                        </div>
+                                                                    @endif
+                                                                    </td>
                                                                 </tr>
                                                             </tbody>
 
@@ -188,7 +201,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                             </p>
                                                             <p
                                                                 style="font-weight:600;color:#002f56;margin-bottom:0px;margin-top:0px;font-size:14px">
-                                                                {{$totalLeaveDatetime}} Day of sick leave
+                                                                {{$totalLeaveDatetime}} Day(s) of {{$leaveType}}
                                                             </p>
 
                                                             <p

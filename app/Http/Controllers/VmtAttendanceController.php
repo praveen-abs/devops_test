@@ -230,15 +230,13 @@ class VmtAttendanceController extends Controller
 
     public function saveLeaveRequestDetails(Request $request)
     {
-
-        //dd($request->all());
         //Check if leave already applied for the given date
         $leaveExistsForCurrentDate = VmtEmployeeLeaves::where('user_id',auth::user()->id)
                                     ->whereDate('start_date','=',date($request->start_date));
 
         if ($leaveExistsForCurrentDate->exists()) {
             return $response = [
-                'status' => 'faliure',
+                'status' => 'failure',
                 'message' => 'Leave Request already applied for this date',
                 'mail_status' => '',
                 'error' => '',
@@ -272,8 +270,6 @@ class VmtAttendanceController extends Controller
         $emp_leave_details->reviewer_comments = "";
         $emp_leave_details->status = "Pending";
 
-        //dd($request->notifications_users_id);
-
         //dd($emp_leave_details->toArray());
         $emp_leave_details->save();
 
@@ -291,9 +287,10 @@ class VmtAttendanceController extends Controller
                                                     auth::user()->user_code,
                                                     $emp_avatar,
                                                     $manager_name,
-                                                    Carbon::parse($request->start_date)->format('M jS Y \\, h:i:s A'),
-                                                    Carbon::parse($request->end_date)->format('M jS Y \\, h:i:s A'),
+                                                    Carbon::parse($request->start_date)->format('M jS Y'),
+                                                    Carbon::parse($request->end_date)->format('M jS Y'),
                                                     $request->leave_reason,
+                                                    VmtLeaves::find($request->leave_type_id)->leave_type,
                                                     $request->total_leave_datetime,
                                                     //Carbon::parse($request->total_leave_datetime)->format('M jS Y \\, h:i:s A'),
                                                     request()->getSchemeAndHttpHost(),

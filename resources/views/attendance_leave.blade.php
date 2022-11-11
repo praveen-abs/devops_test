@@ -901,8 +901,11 @@
                 var start_date = $('#start_date').val();
                 var end_date = $('#end_date').val();
 
-                var availableLeaves_ForSelectedLeaveType = $('#leave_type_id').find(":selected").attr('data-remainingLeaves');
+                var availableLeaves_ForSelectedLeaveType = parseInt($('#leave_type_id').find(":selected").attr('data-remainingLeaves'));
+                var totalLeaveDays = parseInt($('#total_leave').html());
+
                 console.log("Available leaves : "+availableLeaves_ForSelectedLeaveType);
+                console.log("totalLeaveDays : "+totalLeaveDays);
 
                 // errors array
                 var basic_details_errors = [];
@@ -951,6 +954,10 @@
                     basic_details_errors.push("No leaves available for the selected leave type.");
                 }
 
+                if(totalLeaveDays > availableLeaves_ForSelectedLeaveType){
+                    basic_details_errors.push("Selected leave days exceeds your available leave days for the selected leave type.");
+                }
+
                 if (basic_details_errors.length > 0) {
 
                     $('#errors_header').html("Please fix the following error");
@@ -991,7 +998,7 @@
                                 text: data.mail_status,
                                 type: "success"
                             }).then(function() {
-                                location.reload();
+                               location.reload();
                             });
                             //alert(data.message + " \n " + data.mail_status);
                         } else {
@@ -1000,7 +1007,7 @@
                                 text: data.mail_status,
                                 type: data.failure
                             }).then(function() {
-                                location.reload();
+                               // location.reload();
                             });
                         }
 
