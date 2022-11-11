@@ -552,8 +552,13 @@
                                                     <option value="" hidden selected disabled>Select Leave Type
                                                     </option>
 
-                                                    @foreach ($leaveTypes as $item)
-                                                        <option value="{{ $item->id }}"> {{ $item->leave_type }}
+                                                    @foreach ($leaveTypes as $singleLeaveType)
+                                                        <?php
+                                                            $leave_availed = $leaveData_currentUser[ $singleLeaveType->leave_type ]->leave_availed_count ?? 0;
+                                                            $remainingLeaves = $singleLeaveType->days_annual - $leave_availed ;
+                                                        ?>
+                                                        <option value="{{ $singleLeaveType->id }}" data-remainingLeaves="{{$remainingLeaves}}">
+                                                            {{ $singleLeaveType->leave_type }}  ( {{ $remainingLeaves }} )
                                                         </option>
                                                     @endforeach
 
@@ -844,54 +849,10 @@
         var leave_start_date = '';
         var leave_end_date = '';
 
-
-        $('#btn_request_leave').on('click', function() {
-
-            // errors array
-            var basic_details_errors = [];
-
-            if ( $('#leave_type_id').find(":selected").val()== ''  )
-                basic_details_errors.push("Leave Type");
-
-            if ($('#start_date').val() == '')
-                basic_details_errors.push("Start Date");
-
-            if ($('#end_date').val() == '')
-                basic_details_errors.push("End Date");
-            if ($('#leave_reason').val() == '')
-                basic_details_errors.push("Leave Reason");
-
-
-            if (basic_details_errors.length > 0) {
-
-                $('#errors_header').html("Please fill the following details");
-                $('#errors_body').html('');
-
-                $('#errors_body').append("<ul class='list-style-numbered list-style-circle px-4'>");
-                basic_details_errors.forEach(function(element) {
-                    $('.list-style-numbered ').append('<li>' + element + '</li>');
-                });
-                $('#errors_body').append("</ul>");
-
-                $('#error_notify').show();
-                $('#error_notify').removeClass('fade');
-
-                return;
-            }
-
-
-        })
-
         $('.close-modal').on('click',function(){
             $('#error_notify').fadeOut(100);
 
         })
-
-
-
-
-
-
 
 
         function resetLeaveModalValues() {
@@ -929,10 +890,6 @@
                     console.log("Total days : " + totalDays);
                     $('#total_leave').html(totalDays);
                 }
-
-
-
-
             });
 
 
@@ -941,6 +898,75 @@
             //     });
 
             $('#btn_request_leave').on('click', function(e) {
+                var start_date = $('#start_date').val();
+                var end_date = $('#end_date').val();
+
+                var availableLeaves_ForSelectedLeaveType = $('#leave_type_id').find(":selected").attr('data-remainingLeaves');
+                console.log("Available leaves : "+availableLeaves_ForSelectedLeaveType);
+
+                // errors array
+                var basic_details_errors = [];
+
+                if ( $('#leave_type_id').find(":selected").val()== ''  )
+                    basic_details_errors.push("Leave Type");
+
+                if (start_date == '')
+                    basic_details_errors.push("Start Date");
+
+                if (end_date == '')
+                    basic_details_errors.push("End Date");
+
+                if ($('#leave_reason').val() == '')
+                    basic_details_errors.push("Leave Reason");
+
+                //check empty data validation
+                if (basic_details_errors.length > 0) {
+
+                    $('#errors_header').html("Please fill the following details");
+                    $('#errors_body').html('');
+
+                    $('#errors_body').append("<ul class='list-style-numbered list-style-circle px-4'>");
+                    basic_details_errors.forEach(function(element) {
+                        $('.list-style-numbered ').append('<li>' + element + '</li>');
+                    });
+                    $('#errors_body').append("</ul>");
+
+                    $('#error_notify').show();
+                    $('#error_notify').removeClass('fade');
+
+                    return;
+                }
+
+                //Reset the array
+                basic_details_errors = [];
+
+                //Check the data validation
+
+                if(moment(start_date) > moment(end_date)){
+                    basic_details_errors.push("Start date should not be greater than or equal to End date.");
+                }
+
+
+                if(availableLeaves_ForSelectedLeaveType <= 0){
+                    basic_details_errors.push("No leaves available for the selected leave type.");
+                }
+
+                if (basic_details_errors.length > 0) {
+
+                    $('#errors_header').html("Please fix the following error");
+                    $('#errors_body').html('');
+
+                    $('#errors_body').append("<ul class='list-style-numbered list-style-circle px-4'>");
+                    basic_details_errors.forEach(function(element) {
+                        $('.list-style-numbered ').append('<li>' + element + '</li>');
+                    });
+                    $('#errors_body').append("</ul>");
+
+                    $('#error_notify').show();
+                    $('#error_notify').removeClass('fade');
+
+                    return;
+                }
 
 
                 $.ajax({
@@ -951,7 +977,7 @@
                         'user_id': $('#leave_type_id').val(),
                         'start_date': $('#start_date').val(),
                         'end_date': $('#end_date').val(),
-                        'total_leave_datetime': $('#total_leave').val(),
+                        'total_leave_datetime': $('#total_leave').html(),
                         'leave_reason': $('#leave_reason').val(),
                         'leave_type_id': $('#leave_type_id').val(),
                         'notifications_users_id': $('#notifications_users_id').val(),

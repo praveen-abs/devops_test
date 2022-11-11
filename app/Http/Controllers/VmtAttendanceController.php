@@ -38,7 +38,6 @@ class VmtAttendanceController extends Controller
         $leaveData_Org = null;
 
         $leaveData_currentUser = VmtEmployeeLeaves::where('user_id',auth::user()->id);
-
         //Get how many leaves taken for each leave_type
         $leaveData_currentUser = getLeaveCountDetails(auth::user()->id);
 
@@ -253,6 +252,7 @@ class VmtAttendanceController extends Controller
         $emp_leave_details =  new VmtEmployeeLeaves;
         $emp_leave_details->user_id = auth::user()->id;
         $emp_leave_details->leave_type_id = $request->leave_type_id;
+        $emp_leave_details->leaverequest_date = Carbon::now();
         $emp_leave_details->start_date = $request->start_date;
         $emp_leave_details->end_date = $request->end_date;
         $emp_leave_details->leave_reason = $request->leave_reason;
@@ -287,17 +287,18 @@ class VmtAttendanceController extends Controller
         $image_view = url('/') . $VmtGeneralInfo->logo_img;
 
         $isSent    = \Mail::to($reviewer_mail)->send(new RequestLeaveMail(
-            auth::user()->name,
-            auth::user()->user_code,
-            $emp_avatar,
-            $manager_name,
-            Carbon::parse($request->start_date)->format('M jS Y \\, h:i:s A'),
-            Carbon::parse($request->end_date)->format('M jS Y \\, h:i:s A'),
-            $request->leave_reason,
-            Carbon::parse($request->total_leave_datetime)->format('M jS Y \\, h:i:s A'),
-            request()->getSchemeAndHttpHost(),
-            $image_view
-        ));
+                                                    auth::user()->name,
+                                                    auth::user()->user_code,
+                                                    $emp_avatar,
+                                                    $manager_name,
+                                                    Carbon::parse($request->start_date)->format('M jS Y \\, h:i:s A'),
+                                                    Carbon::parse($request->end_date)->format('M jS Y \\, h:i:s A'),
+                                                    $request->leave_reason,
+                                                    $request->total_leave_datetime,
+                                                    //Carbon::parse($request->total_leave_datetime)->format('M jS Y \\, h:i:s A'),
+                                                    request()->getSchemeAndHttpHost(),
+                                                    $image_view
+                                                ));
 
         if ($isSent) {
             $mail_status = "Mail sent successfully";
