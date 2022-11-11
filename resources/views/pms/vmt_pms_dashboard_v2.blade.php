@@ -474,7 +474,7 @@
                                                                     {{ $pmsKpiAssignee->getUserDetails($assigneeId)['userEmpIds'] }}
                                                                 </div>
                                                             </td>
-                                                            <td class="" style="min-width: 130px;">
+                                                            <td class="" style="min-width: 150px;">
                                                                 @foreach ($pmsKpiAssigneeData['reviewersIds'] as $keyCheck => $reviewer)
                                                                     @if ($pmsKpiAssigneeData['currentLoggedUserRole'] == 'reviewer' && $reviewer == Auth::id())
                                                                         <div class=" col-auto td_content_center">
