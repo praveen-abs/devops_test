@@ -1,8 +1,7 @@
 .hierarchy-wrapper {
     position: relative;
-    overflow: auto;
     width: -webkit-fill-available;
-    min-height: 500px;
+
 
 }
 .hierarchy-wrapper .department-wise {
@@ -20,11 +19,11 @@
 }
 
 #chart-container {
-    /* height: auto; */
+    height: auto;
     text-align: center;
     border-radius: 6px;
-    overflow: unset !important;
-    min-height: auto;
+    overflow: auto !important;
+    min-height: 500px;
 }
 .orgchart .hierarchy {
     margin: 15px 0px;
