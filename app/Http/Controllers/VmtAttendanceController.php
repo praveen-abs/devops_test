@@ -412,32 +412,115 @@ class VmtAttendanceController extends Controller
 
     public function fetchUserTimesheet(Request $request)
     {
-        $data = VmtEmployeeAttendance::where('user_id', $request->user_id)
-            ->whereMonth('checkin_time', $request->month)
-            ->orderBy('checkin_time', 'asc')->get(['checkin_time', 'checkout_time']);
+        $user = User::find($request->user_id);
+        $userCode = $user->user_code; 
 
         $regularTime  = VmtWorkShifts::where('shift_type', 'First Shift')->first();
-        //dd($regularTime->shift_start_time);
+        $currentyear = date("Y"); 
+        $dt = $currentyear.'-'.$request->month.'-01';
+        $currentDate = Carbon::now();
+        $monthDateObj = Carbon::parse($dt);
+        $startOfMonth = $monthDateObj->startOfMonth(); //->format('Y-m-d');
+        $endOfMonth   = $monthDateObj->endOfMonth(); //->format('Y-m-d');
 
-        foreach ($data as $key => $value) {
+        if($currentDate->lte($endOfMonth)){
+            $lastAttendanceDate  = $currentDate; //->format('Y-m-d');
+        }else{
+            $lastAttendanceDate  = $endOfMonth; //->format('Y-m-d');
+        }
+        
+        $totDays  = $lastAttendanceDate->format('d');
+        $firstDateStr  = $monthDateObj->startOfMonth()->toDateString();
+        
+        // attendance details from vmt_staff_attenndance_device table
+        $deviceData = []; 
+        for ($i=0; $i < ($totDays) ; $i++) { 
             // code...
-            $checkinDate  = Carbon::parse($value->checkin_time)->toDateString();
+            $dayStr = Carbon::parse($firstDateStr)->addDay($i)->format('l');
+            
+            if($dayStr != 'Sunday'){
+
+                $dateString  = Carbon::parse($firstDateStr)->addDay($i)->format('Y-m-d'); 
+
+                $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
+                    ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
+                    ->whereDate('date', $dateString)
+                    ->where('direction', 'out')
+                    ->where('user_Id', $userCode)
+                    ->first(['check_out_time']);
+
+                $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
+                    ->select('user_Id', \DB::raw('MAX(date) as check_in_time'))
+                    ->whereDate('date', $dateString)
+                    ->where('direction', 'in')
+                    ->where('user_Id', $userCode)
+                    ->first(['check_in_time']);
+
+                $deviceCheckOutTime = $attendanceCheckOut->check_out_time; 
+                $deviceCheckInTime  = $attendanceCheckIn->check_in_time;
+
+                if($deviceCheckOutTime  != null || $deviceCheckInTime != null){
+                    $deviceData[] = array(
+                                        'date' => $dateString, 
+                                        'checkin_time' => $deviceCheckInTime, 
+                                        'checkout_time' => $deviceCheckOutTime
+                                    );
+                }
+            }
+            
+        }
+
+        // attendance details from vmt_employee_attenndance table
+        $data = VmtEmployeeAttendance::where('user_id', $request->user_id)
+            ->whereMonth('checkin_time', $request->month)
+            ->orderBy('checkin_time', 'asc')
+            ->get(['date', 'checkin_time', 'checkout_time']);
+
+        $attaendanceResponseArray = []; 
+
+        // merging result from both table
+        if(count($deviceData) > 0){
+            $data = $data->toArray();
+            $data  = array_merge($deviceData, $data);
+            $dateCollectionObj    =  collect($data);
+
+            $sortedCollection   =   $dateCollectionObj->sortBy([
+                                        ['date', 'asc'],
+                                    ]);
+
+            $dateWiseData         =  $sortedCollection->groupBy('date'); //->all();
+            
+           
+            foreach ($dateWiseData  as $key => $value) {
+                // code...
+                $attaendanceResponseArray[] = array(
+                    'checkin_time'  => $value->min('checkin_time'),
+                    'checkout_time' => $value->max('checkout_time')
+                );
+            }
+        }else{
+            $attaendanceResponseArray = $data->toArray();
+        }
+
+        $resData = []; 
+        foreach ($attaendanceResponseArray as $key => $value) {
+            // code...
+            $checkinDate     = Carbon::parse($value['checkin_time'])->toDateString();
             $shiftStartTime  = Carbon::parse($checkinDate . ' ' . $regularTime->shift_start_time);
             $shiftEndTime    = Carbon::parse($checkinDate . ' ' . $regularTime->shift_end_time);
-            $checkInTime     = Carbon::parse($value->checkin_time);
-            $checkOutTime    = Carbon::parse($value->checkout_time);
+            $checkInTime     = Carbon::parse($value['checkin_time']);
+            $checkOutTime    = Carbon::parse($value['checkout_time']);
 
             $isRegular       = $shiftStartTime->lte($checkInTime);
             $isEarlyGoing    = $checkOutTime->lte($shiftEndTime);
 
-            $data[$key]['is_lc'] = $isRegular;
-            $data[$key]['is_eg'] = $isEarlyGoing;
-            $data[$key]['is_eg_applied'] = $this->isLateComingRequestApplied($request->user_id, $checkinDate, 'EG');
-            $data[$key]['is_lc_applied'] = $this->isLateComingRequestApplied($request->user_id, $checkinDate, 'LC');
+            $attaendanceResponseArray[$key]['is_lc'] = $isRegular;
+            $attaendanceResponseArray[$key]['is_eg'] = $isEarlyGoing;
+            $attaendanceResponseArray[$key]['is_eg_applied'] = $this->isLateComingRequestApplied($request->user_id, $checkinDate, 'EG');
+            $attaendanceResponseArray[$key]['is_lc_applied'] = $this->isLateComingRequestApplied($request->user_id, $checkinDate, 'LC');
         }
 
-        //dd($data->toArray());
-        return $data;
+        return $attaendanceResponseArray;
     }
 
     private function isLateComingRequestApplied($user_id, $attendance_date, $relularizeType)

@@ -419,7 +419,7 @@
             var avatar_data = '';
 
             @if($current_employee_detail->employee_avatar['type'] == 'shortname')
-                avatar_data = ;
+                //avatar_data = ;
                 avatar_data =  '<span class="text-white">{{ $current_employee_detail->employee_avatar['data'] }}</span>';
 
             @elseif($current_employee_detail->employee_avatar['type'] == 'avatar')
@@ -786,15 +786,19 @@
                 }
 
                 if (element.is_lc && (!element.is_lc_applied)) {
-                    var lcINputButton = $('#checkin_time_' + calendar_cell_id).parent().parent().find('input');
 
-                    calendar_cell_id_value = element.checkin_time.split(" ")[1];
-                    calendar_cell_id = element.checkin_time.split(" ")[0];
-                    $(lcINputButton).attr('data-checkin_date', calendar_cell_id);
-                    $(lcINputButton).attr('data-actual_timing', calendar_cell_id_value);
-                    $(lcINputButton).attr('data-shift_timing', shift_start_time);
-                    $(lcINputButton).addClass('btn-info');
-                    $(lcINputButton).val("LC");
+                    if (element.checkin_time) {
+                        var lcINputButton = $('#checkin_time_' + calendar_cell_id).parent().parent().find('input');
+
+                        calendar_cell_id_value = element.checkin_time.split(" ")[1];
+                        calendar_cell_id = element.checkin_time.split(" ")[0];
+                        $(lcINputButton).attr('data-checkin_date', calendar_cell_id);
+                        $(lcINputButton).attr('data-actual_timing', calendar_cell_id_value);
+                        $(lcINputButton).attr('data-shift_timing', shift_start_time);
+                        $(lcINputButton).addClass('btn-info');
+                        $(lcINputButton).val("LC");    
+                    }
+                    
                 } else {
                     var lcINputButton = $('#checkin_time_' + calendar_cell_id).parent().parent().find('input');
                     $(lcINputButton).val("");
