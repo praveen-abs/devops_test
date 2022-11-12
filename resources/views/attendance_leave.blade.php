@@ -1255,7 +1255,7 @@
 
                                 if (leaveHistoryObj.employee_avatar.type == "shortname") {
 
-                                    output = '<div class="col-auto p-0">' +
+                                    output = '<div class="d-flex align-items-center page-header-user-dropdown">' +
                                         '<span class="rounded-circle user-profile  ml-2 " id="">' +
                                         '<i class="topbar_username" class="align-middle ">' +
                                         leaveHistoryObj.employee_avatar.data + '</i>' +
@@ -1267,7 +1267,7 @@
                                 if (leaveHistoryObj.employee_avatar.type == "avatar") {
                                     var imageURL = "images/" + leaveHistoryObj.employee_avatar.data;
 
-                                    output = '<div class="col-auto p-0">' +
+                                    output = '<div class="d-flex align-items-center">' +
                                         '<img class="rounded-circle header-profile-user" src="' +
                                         imageURL + '" alt="--">' +
                                         '<span>&nbsp;&nbsp;' + leaveHistoryObj.employee_name +
@@ -1424,7 +1424,7 @@
 
                                 if (leaveHistoryObj.employee_avatar.type == "shortname") {
 
-                                    output = '<div class="col-auto p-0">' +
+                                    output = '<div class="d-flex align-items-center page-header-user-dropdown">' +
                                         '<span class="rounded-circle user-profile  ml-2 " id="">' +
                                         '<i class="topbar_username" class="align-middle ">' +
                                         leaveHistoryObj.employee_avatar.data + '</i>' +
@@ -1436,7 +1436,7 @@
                                 if (leaveHistoryObj.employee_avatar.type == "avatar") {
                                     var imageURL = "images/" + leaveHistoryObj.employee_avatar.data;
 
-                                    output = '<div class="col-auto p-0">' +
+                                    output = '<div class="d-flex align-items-center">' +
                                         '<img class="rounded-circle header-profile-user" src="' +
                                         imageURL + '" alt="--">' +
                                         '<span>&nbsp;&nbsp;' + leaveHistoryObj.employee_name +
