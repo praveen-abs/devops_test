@@ -247,10 +247,12 @@ class VmtAttendanceController extends Controller
 
         }
 
+        $leave_request_date = Carbon::now();
+
         $emp_leave_details =  new VmtEmployeeLeaves;
         $emp_leave_details->user_id = auth::user()->id;
         $emp_leave_details->leave_type_id = $request->leave_type_id;
-        $emp_leave_details->leaverequest_date = Carbon::now();
+        $emp_leave_details->leaverequest_date = $leave_request_date;
         $emp_leave_details->start_date = $request->start_date;
         $emp_leave_details->end_date = $request->end_date;
         $emp_leave_details->leave_reason = $request->leave_reason;
@@ -287,6 +289,7 @@ class VmtAttendanceController extends Controller
                                                     auth::user()->user_code,
                                                     $emp_avatar,
                                                     $manager_name,
+                                                    Carbon::parse($leave_request_date)->format('M jS Y'),
                                                     Carbon::parse($request->start_date)->format('M jS Y'),
                                                     Carbon::parse($request->end_date)->format('M jS Y'),
                                                     $request->leave_reason,
@@ -413,10 +416,10 @@ class VmtAttendanceController extends Controller
     public function fetchUserTimesheet(Request $request)
     {
         $user = User::find($request->user_id);
-        $userCode = $user->user_code; 
+        $userCode = $user->user_code;
 
         $regularTime  = VmtWorkShifts::where('shift_type', 'First Shift')->first();
-        $currentyear = date("Y"); 
+        $currentyear = date("Y");
         $dt = $currentyear.'-'.$request->month.'-01';
         $currentDate = Carbon::now();
         $monthDateObj = Carbon::parse($dt);
@@ -428,19 +431,19 @@ class VmtAttendanceController extends Controller
         }else{
             $lastAttendanceDate  = $endOfMonth; //->format('Y-m-d');
         }
-        
+
         $totDays  = $lastAttendanceDate->format('d');
         $firstDateStr  = $monthDateObj->startOfMonth()->toDateString();
-        
+
         // attendance details from vmt_staff_attenndance_device table
-        $deviceData = []; 
-        for ($i=0; $i < ($totDays) ; $i++) { 
+        $deviceData = [];
+        for ($i=0; $i < ($totDays) ; $i++) {
             // code...
             $dayStr = Carbon::parse($firstDateStr)->addDay($i)->format('l');
-            
+
             if($dayStr != 'Sunday'){
 
-                $dateString  = Carbon::parse($firstDateStr)->addDay($i)->format('Y-m-d'); 
+                $dateString  = Carbon::parse($firstDateStr)->addDay($i)->format('Y-m-d');
 
                 $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
                     ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
@@ -456,18 +459,18 @@ class VmtAttendanceController extends Controller
                     ->where('user_Id', $userCode)
                     ->first(['check_in_time']);
 
-                $deviceCheckOutTime = $attendanceCheckOut->check_out_time; 
+                $deviceCheckOutTime = $attendanceCheckOut->check_out_time;
                 $deviceCheckInTime  = $attendanceCheckIn->check_in_time;
 
                 if($deviceCheckOutTime  != null || $deviceCheckInTime != null){
                     $deviceData[] = array(
-                                        'date' => $dateString, 
-                                        'checkin_time' => $deviceCheckInTime, 
+                                        'date' => $dateString,
+                                        'checkin_time' => $deviceCheckInTime,
                                         'checkout_time' => $deviceCheckOutTime
                                     );
                 }
             }
-            
+
         }
 
         // attendance details from vmt_employee_attenndance table
@@ -476,7 +479,7 @@ class VmtAttendanceController extends Controller
             ->orderBy('checkin_time', 'asc')
             ->get(['date', 'checkin_time', 'checkout_time']);
 
-        $attaendanceResponseArray = []; 
+        $attaendanceResponseArray = [];
 
         // merging result from both table
         if(count($deviceData) > 0){
@@ -489,8 +492,8 @@ class VmtAttendanceController extends Controller
                                     ]);
 
             $dateWiseData         =  $sortedCollection->groupBy('date'); //->all();
-            
-           
+
+
             foreach ($dateWiseData  as $key => $value) {
                 // code...
                 $attaendanceResponseArray[] = array(
@@ -502,7 +505,7 @@ class VmtAttendanceController extends Controller
             $attaendanceResponseArray = $data->toArray();
         }
 
-        $resData = []; 
+        $resData = [];
         foreach ($attaendanceResponseArray as $key => $value) {
             // code...
             $checkinDate     = Carbon::parse($value['checkin_time'])->toDateString();

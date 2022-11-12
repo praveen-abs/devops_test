@@ -122,7 +122,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                                             $imageURL = request()->getSchemeAndHttpHost() . '/images/' . $empAvatar['data'];
 
                                                                             ?>
-                                                                            <div class="col-auto p-0">
+                                                                            <div class="">
                                                                                 <img class="rounded-circle header-profile-user"
                                                                                     src="{{ $imageURL }}"
                                                                                     alt="user_image"
@@ -157,7 +157,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                             <p
                                                                 style="font-weight:600;color:#002f56;margin-bottom:0px;margin-top:0px;font-size:14px">
 
-                                                                <span>{{ $startDate }}</span>
+                                                                <span>{{ $leaveRequestDate }}</span>
 
                                                             </p>
                                                             <p
