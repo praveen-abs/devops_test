@@ -110,12 +110,12 @@ $bank_names = \DB::table('bank_list')->get();
                                                                 <tr>
                                                                     <td align="center"
                                                                         style="height: 100px;
-                                                                        width: 100px;
-                                                                        background:#002f56;color:#ffffff;
-                                                                        border-radius: 50%;font-size:20px;font-weight:600;">
+                                                                        width: 100px;border-radius: 50%;">
 
                                                                         @if ($empAvatar['type'] == 'shortname')
-                                                                            {{ $empAvatar['data'] }}
+                                                                            <div style="background:#002f56;color:#ffffff;font-size:20px;font-weight:600;height: 100%;width: 100%;border-radius: 50%;">
+                                                                                {{ $empAvatar['data'] }}
+                                                                            </div>
                                                                         @elseif($empAvatar['type'] == 'avatar')
                                                                             <?php
 
