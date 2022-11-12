@@ -1255,7 +1255,7 @@
 
                                 if (leaveHistoryObj.employee_avatar.type == "shortname") {
 
-                                    output = '<div class="col-auto p-0">' +
+                                    output = '<div class="d-flex align-items-center page-header-user-dropdown">' +
                                         '<span class="rounded-circle user-profile  ml-2 " id="">' +
                                         '<i class="topbar_username" class="align-middle ">' +
                                         leaveHistoryObj.employee_avatar.data + '</i>' +
@@ -1424,7 +1424,7 @@
 
                                 if (leaveHistoryObj.employee_avatar.type == "shortname") {
 
-                                    output = '<div class="col-auto p-0">' +
+                                    output = '<div class="d-flex align-items-center page-header-user-dropdown">' +
                                         '<span class="rounded-circle user-profile  ml-2 " id="">' +
                                         '<i class="topbar_username" class="align-middle ">' +
                                         leaveHistoryObj.employee_avatar.data + '</i>' +
