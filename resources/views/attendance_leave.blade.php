@@ -1139,11 +1139,19 @@
                         {
                             id: 'start_date',
                             name: 'Start Date',
+                            formatter: function formatter(cell) {
+                                //return gridjs.html(cell);
+                                return gridjs.html( moment(cell).format('DD-MM-YYYY h:mm a'));
+                            }
                         },
 
                         {
                             id: 'end_date',
                             name: 'End Date',
+                            formatter: function formatter(cell) {
+                                //return gridjs.html(cell);
+                                return gridjs.html( moment(cell).format('DD-MM-YYYY h:mm a'));
+                            }
                         },
                         {
                             id: 'total_leave_datetime',
@@ -1293,11 +1301,19 @@
                         {
                             id: 'start_date',
                             name: 'Start Date',
+                            formatter: function formatter(cell) {
+                                //return gridjs.html(cell);
+                                return gridjs.html( moment(cell).format('DD-MM-YYYY h:mm a'));
+                            }
                         },
 
                         {
                             id: 'end_date',
                             name: 'End Date',
+                            formatter: function formatter(cell) {
+                                //return gridjs.html(cell);
+                                return gridjs.html( moment(cell).format('DD-MM-YYYY h:mm a'));
+                            }
                         },
 
                         {
@@ -1462,11 +1478,19 @@
                         {
                             id: 'start_date',
                             name: 'Start Date',
+                            formatter: function formatter(cell) {
+                                //return gridjs.html(cell);
+                                return gridjs.html( moment(cell).format('DD-MM-YYYY h:mm a'));
+                            }
                         },
 
                         {
                             id: 'end_date',
                             name: 'End Date',
+                            formatter: function formatter(cell) {
+                                //return gridjs.html(cell);
+                                return gridjs.html( moment(cell).format('DD-MM-YYYY h:mm a'));
+                            }
                         },
 
                         {
