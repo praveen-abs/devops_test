@@ -26,7 +26,13 @@ class VmtAttendanceController extends Controller
 
     public function showDashboard(Request $request)
     {
-        return view('attendance_dashboard');
+        
+       $Total_Active_Employees= User::where('active','1')
+       
+                                ->where('is_ssa','0')
+                                ->count();
+       
+        return view('attendance_dashboard',compact('Total_Active_Employees'));
     }
 
     public function showAttendanceLeavePage(Request $request)
