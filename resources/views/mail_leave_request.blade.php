@@ -108,28 +108,31 @@ $bank_names = \DB::table('bank_list')->get();
                                                         <table>
                                                             <tbody>
                                                                 <tr>
-                                                                    <td align="center"
-                                                                        style="height: 100px;
-                                                                        width: 100px;border-radius: 50%;">
+                                                                    @if ($empAvatar['type'] == 'shortname')
+                                                                        <td align="center"
+                                                                            style="height: 100px;
+                                                                            width: 100px;border-radius: 50%;background:#002f56;color:#ffffff;font-size:20px;font-weight:600;">
+                                                                            {{ $empAvatar['data'] }}
+                                                                        </td>
+                                                                    @elseif($empAvatar['type'] == 'avatar')
+                                                                        <td align="center"
+                                                                            style="height: 100px;
+                                                                            width: 100px;border-radius: 50%;">
 
-                                                                        @if ($empAvatar['type'] == 'shortname')
-                                                                            <div style="background:#002f56;color:#ffffff;font-size:20px;font-weight:600;height: 100%;width: 100%;border-radius: 50%;">
-                                                                                {{ $empAvatar['data'] }}
-                                                                            </div>
-                                                                        @elseif($empAvatar['type'] == 'avatar')
                                                                             <?php
 
-                                                                            $imageURL = request()->getSchemeAndHttpHost() . '/images/' . $empAvatar['data'];
+                                                                                $imageURL = request()->getSchemeAndHttpHost() . '/images/' . $empAvatar['data'];
 
                                                                             ?>
-                                                                            {{-- <div class=""> --}}
-                                                                                <img class="rounded-circle header-profile-user"
-                                                                                    src="{{ $imageURL }}"
-                                                                                    alt="user_image"
-                                                                                    style="height: 100%;width: 100%;border-radius: 50%;">
-                                                                            {{-- </div> --}}
-                                                                        @endif
-                                                                    </td>
+                                                                                {{-- <div class=""> --}}
+                                                                                    <img class="rounded-circle header-profile-user"
+                                                                                        src="{{ $imageURL }}"
+                                                                                        alt="user_image"
+                                                                                        style="height: 100%;width: 100%;border-radius: 50%;">
+                                                                                {{-- </div> --}}
+                                                                            @endif
+                                                                        </td>
+                                                                    @endif
                                                                 </tr>
                                                             </tbody>
 
