@@ -113,7 +113,7 @@
                                             class="_button-container-calendar d-flex align-items-center justify-content-between">
                                             <button id="_previous" onclick="previous()" class="previous"><i
                                                     class="fa fa-chevron-left"></i></button>
-                                            <h6 id="_monthAndYear" class="_monthAndYear text-white"></h6>
+                                            <h6 id="_monthAndYear" class="_monthAndYear"></h6>
                                             <button id="_next" onclick="next()" class="next"><i
                                                     class="fa fa-chevron-right"></i></button>
                                         </div>
@@ -796,9 +796,9 @@
                         $(lcINputButton).attr('data-actual_timing', calendar_cell_id_value);
                         $(lcINputButton).attr('data-shift_timing', shift_start_time);
                         $(lcINputButton).addClass('btn-info');
-                        $(lcINputButton).val("LC");    
+                        $(lcINputButton).val("LC");
                     }
-                    
+
                 } else {
                     var lcINputButton = $('#checkin_time_' + calendar_cell_id).parent().parent().find('input');
                     $(lcINputButton).val("");
