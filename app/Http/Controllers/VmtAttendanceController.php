@@ -112,6 +112,7 @@ class VmtAttendanceController extends Controller
         //Send mail to the employee
         $employee_user_id = VmtEmployeeLeaves::where('id', $request->leave_id)->value('user_id');
         $employee_mail =  VmtEmployeeOfficeDetails::where('user_id', $employee_user_id)->value('officical_mail');
+        $obj_employee = User::where('id',$employee_user_id);
         $manager_user_id = VmtEmployeeLeaves::where('id', $request->leave_id)->value('reviewer_user_id');
 
         $message = "";
@@ -120,15 +121,18 @@ class VmtAttendanceController extends Controller
         $VmtGeneralInfo = VmtGeneralInfo::first();
         $image_view = url('/') . $VmtGeneralInfo->logo_img;
 
+        $emp_avatar = getEmployeeAvatarOrShortName(auth::user()->id);
+
+
         $isSent    = \Mail::to($employee_mail)->send(
             new ApproveRejectLeaveMail(
-                auth::user()->name,
-                auth::user()->user_code,
-                User::find($manager_user_id)->value('name'),
-                User::find($manager_user_id)->value('user_code'),
+                $obj_employee->value('name'),
+                $obj_employee->value('user_code'),
+                User::find($manager_user_id)->name,
+                User::find($manager_user_id)->user_code,
                 request()->getSchemeAndHttpHost(),
                 $image_view,
-                "",
+                $emp_avatar,
                 $request->status
             )
         );
