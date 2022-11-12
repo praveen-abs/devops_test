@@ -124,13 +124,10 @@ $bank_names = \DB::table('bank_list')->get();
                                                                                 $imageURL = request()->getSchemeAndHttpHost() . '/images/' . $empAvatar['data'];
 
                                                                             ?>
-                                                                                {{-- <div class=""> --}}
-                                                                                    <img class="rounded-circle header-profile-user"
-                                                                                        src="{{ $imageURL }}"
-                                                                                        alt="user_image"
-                                                                                        style="height: 100%;width: 100%;border-radius: 50%;">
-                                                                                {{-- </div> --}}
-                                                                            @endif
+                                                                            <img class="rounded-circle header-profile-user"
+                                                                                src="{{ $imageURL }}"
+                                                                                alt="user_image"
+                                                                                style="height: 100%;width: 100%;border-radius: 50%;">
                                                                         </td>
                                                                     @endif
                                                                 </tr>
