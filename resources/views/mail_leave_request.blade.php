@@ -226,14 +226,14 @@ n-top:0px;font-size:14px">
                                                 <tr>
                                                     <td colspan="4" style="" align="right">
 
-                                                        <a class="" type="button" href="#"
+                                                        <a class="" type="button" href="{{$loginLink}}/attendance-leave-approvals"
                                                             style="text-decoration:none;cursor: pointer; margin-right:30px;color:#ffffff;padding: 7px 30px;border: 2px solid #90f10c;background: #90f10c;border-radius: 4px;font-weight:600">
                                                             Approve
                                                         </a>
                                                     </td>
                                                     <td colspan="4" style="" align="left">
 
-                                                        <a class="" type="button" href="#"
+                                                        <a class="" type="button" href="{{$loginLink}}/attendance-leave-approvals"
                                                             style="text-decoration:none;cursor: pointer;margin-left:30px;color:#ffffff;padding: 7px 30px;border: 2px solid #f12d0c;background: #ff2500;border-radius: 4px;font-weight:600">
                                                             Reject
                                                         </a>
