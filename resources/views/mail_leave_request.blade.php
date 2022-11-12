@@ -157,13 +157,14 @@ $bank_names = \DB::table('bank_list')->get();
                                                                 style="font-weight:600;color:#002f56;margin-bottom:0px;margin-top:0px;font-size:14px">
 
                                                                 <span>{{ $leaveRequestDate }}</span>
+n-top:0px;font-size:14px">
+
+                                                                <span>{{ $startDate }}</span>
 
                                                             </p>
                                                             <p
                                                                 style="font-weight:500;color:#c1c1c1;margin-bottom:0px;margin-top:0px;font-size:12px">
-                                                                (Thursday)
-                                                            </p>
-                                                        </div>
+                               </div>
                                                     </td>
                                                     <td colspan="4"
                                                         style="color:#002f56;font-weight:600;font-size:20px;padding-bottom:10px"
