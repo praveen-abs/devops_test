@@ -26,12 +26,12 @@ class VmtAttendanceController extends Controller
 
     public function showDashboard(Request $request)
     {
-        
+
        $Total_Active_Employees= User::where('active','1')
-       
+
                                 ->where('is_ssa','0')
                                 ->count();
-       
+
         return view('attendance_dashboard',compact('Total_Active_Employees'));
     }
 
@@ -636,7 +636,13 @@ class VmtAttendanceController extends Controller
             ->where('regularization_type',  $request->regularization_type);
 
         if ($data->exists()) {
-            dd("Request already applied");
+            //dd("Request already applied");
+            return $responseJSON = [
+                'status' => 'failure',
+                'message' => 'Request already applied',
+                'mail_status' => 'failure',
+                'data' => [],
+            ];
         } else {
 
             //dd("Request not applied");
@@ -664,7 +670,7 @@ class VmtAttendanceController extends Controller
         $manager_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->where('users.user_code', $manager_usercode)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
 
-        //dd($manager_details->officical_mail);
+        //dd($manager_details);
 
 
         $VmtGeneralInfo = VmtGeneralInfo::first();
