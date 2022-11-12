@@ -1211,7 +1211,7 @@
                     sort: true,
                     search: true,
                     server: {
-                        url: '{{ route('fetch-leaverequests', ['type' => 'employee', 'statusArray' => 'Approved,Rejected']) }}',
+                        url: '{{ route('fetch-leaverequests', ['type' => 'employee', 'statusArray' => 'Approved,Rejected,Pending']) }}',
                         then: data => data.map(
                             leave_history => [
                                 leave_history.id,
@@ -1380,7 +1380,7 @@
                     sort: true,
                     search: true,
                     server: {
-                        url: '{{ route('fetch-leaverequests', ['type' => 'team', 'statusArray' => 'Approved,Rejected']) }}',
+                        url: '{{ route('fetch-leaverequests', ['type' => 'team', 'statusArray' => 'Approved,Rejected,Pending']) }}',
                         then: data => data.map(
                             leave_history => [
                                 leave_history.id,
@@ -1531,7 +1531,7 @@
                     sort: true,
                     search: true,
                     server: {
-                        url: '{{ route('fetch-leaverequests', ['type' => 'org', 'statusArray' => 'Approved,Rejected']) }}',
+                        url: '{{ route('fetch-leaverequests', ['type' => 'org', 'statusArray' => 'Approved,Rejected,Pending']) }}',
                         then: data => data.map(
                             leave_history => [
                                 leave_history.id,
