@@ -780,7 +780,9 @@
                     calendar_cell_id = element.checkin_time.split(" ")[0];
                     calendar_cell_id_value = element.checkin_time.split(" ")[1];
                     //Find the calendar cell ID based on above checkin date
-                    $('#checkin_time_' + calendar_cell_id).html(calendar_cell_id_value);
+                    //$('#checkin_time_' + calendar_cell_id).html(calendar_cell_id_value);
+                    $('#checkin_time_' + calendar_cell_id).html(moment(calendar_cell_id_value,"HH:mm:ss").format('h:mm A'));
+
                 } else {
                     $('#checkin_time_' + calendar_cell_id).html('---');
                 }
@@ -811,9 +813,12 @@
                     calendar_cell_id_value = element.checkout_time.split(" ")[1];
 
                     //Find the calendar cell ID based on above checkin date
-                    $('#checkout_time_' + calendar_cell_id).html(calendar_cell_id_value);
+                   // $('#checkout_time_' + calendar_cell_id).html(calendar_cell_id_value);
+                    $('#checkout_time_' + calendar_cell_id).html(moment(calendar_cell_id_value,"HH:mm:ss").format('h:mm A'));
+
                     //checkin_time_2022-10-1
                 } else {
+
                     $('#checkout_time_' + calendar_cell_id).html('---');
                 }
 

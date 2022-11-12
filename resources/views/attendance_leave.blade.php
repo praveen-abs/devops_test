@@ -1357,33 +1357,11 @@
                                 var htmlcontent = "";
                                 //console.log(emp);
                                 if (emp.status == "Pending") {
-                                    htmlcontent =
-                                        '<input type="button" value="Approve" data-user_id="' + emp
-                                        .user_id +
-                                        '" data-leave_id="' + emp.id +
-                                        '" data-leave_status="Approved" class="status btn btn-success text-center py-1 approve-leave-btn"></input>';
 
-                                    htmlcontent = htmlcontent +
-                                        '&nbsp;&nbsp;<input type="button" value="Reject" id="button_activate_"' +
-                                        emp.user_id + '" data-user_id="' + emp.user_id +
-                                        '" data-leave_id="' + emp.id +
-                                        '" data-leave_status="Rejected" class="status text-center btn btn-danger py-1 reject-leave-btn "></input>&nbsp;&nbsp;';
                                 }
 
-                                // if (leave_history.status == "Pending")
-                                //     htmlcontent =
-                                //     '<input type="button" value="Activate" onclick="activateEmployee(this)" id="button_activate_"' +
-                                //     emp.user_id + '" data-user_id="' + emp.user_id +
-                                //     '" class="status btn btn-orange py-1 onboard-employee-btn "></input>';
-                                // else
-                                //     htmlcontent =
-                                //     '<input type="button" value="Activate" class="status btn btn-orange py-1 onboard-employee-btn disabled"></input>';
-                                // <button class="btn btn-orange" data-bs-target="#leaveDetails_modal" data-bs-toggle="modal">
-                                //       <i class="fa  fa-sticky-note-o"></i>
-                                //     </button>
-
                                 htmlcontent = htmlcontent +
-                                    '<input type="button" value="View" class="status text-center btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal"></input>';
+                                    '<input type="button" value="View" class="status text-center btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal" disabled></input>';
 
 
                                 return gridjs.html(htmlcontent);
