@@ -6,10 +6,10 @@
     <link rel="stylesheet" href="{{ URL::asset('assets/libs/gridjs/gridjs.min.css') }}">
 @endsection
 @section('content')
-@component('components.attendance_breadcrumb')
+{{-- @component('components.attendance_breadcrumb')
 @slot('li_1')@endslot
-@endcomponent
-<div class="leavePolicy_config">
+@endcomponent --}}
+<div class="leavePolicy_config mt-30">
     <div class="card ">
         <div class="card-body">
             <div class="row mb-3">
@@ -40,13 +40,13 @@
                         <div class="col-10">
                             <h6 class="">Leave Policy Settings</h6>
                         </div>
-                        <div class="col-2 text-end">
+                        {{-- <div class="col-2 text-end">
                             <div class="input-group  me-2">
                                 <select class="form-select btn-line-primary" id="inputGroupSelect01">
                                     <option selected>FY 2022-23</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
 
                     <div id="leave-policy-table"></div>

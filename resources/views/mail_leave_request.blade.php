@@ -67,7 +67,8 @@ $bank_names = \DB::table('bank_list')->get();
                                                 <td colspan="4" align="left" class="border-less"
                                                     style="padding:10px ;">
 
-                                                    <p class="text-strong " style="margin: 0px 0px 0px ">Dear {{ $managerName}}</p>
+                                                    <p class="text-strong " style="margin: 0px 0px 0px ">Dear
+                                                        {{ $managerName }}</p>
                                                     <p class="" style="  ">
                                                         You have
                                                         been sent the following leave request for approval. Please
@@ -81,12 +82,11 @@ $bank_names = \DB::table('bank_list')->get();
                                 </td>
                             </tr>
                             <tr>
-                                <td align="center"
-                                    style="padding:0px 40px 0px;"
-                                    colspan="">
+                                <td align="center" style="padding:0px 40px 0px;" colspan="">
                                     <div class=""
                                         style="height:auto;width:90%;border-radius:5px;padding:10px;margin:auto;">
-                                        <table style="table-layout:fixed; width:100%;border:1px solid rgba(44, 43, 43, 0.185);border-radius:5px;padding:10px">
+                                        <table
+                                            style="table-layout:fixed; width:100%;border:1px solid rgba(44, 43, 43, 0.185);border-radius:5px;padding:10px">
                                             <tbody>
 
                                                 <tr>
@@ -111,21 +111,25 @@ $bank_names = \DB::table('bank_list')->get();
                                                                     <td align="center"
                                                                         style="height: 100px;
                                                                     width: 100px;
-                                                                    background:#1b7df7;color:#ffffff;
+                                                                    background:#002f56;color:#ffffff;
                                                                     border-radius: 50%;font-size:20px;font-weight:600;">
 
-                                                                    @if($empAvatar['type'] == "shortname")
-                                                                    {{  $empAvatar['data']  }}
-                                                                    @elseif($empAvatar['type'] == "avatar")
-                                                                        <?php
+                                                                        @if ($empAvatar['type'] == 'shortname')
+                                                                            {{ $empAvatar['data'] }}
+                                                                        @elseif($empAvatar['type'] == 'avatar')
+                                                                            <?php
 
-                                                                            $imageURL = request()->getSchemeAndHttpHost()."/images/".$empAvatar['data'];
+                                                                            $imageURL = request()->getSchemeAndHttpHost() . '/images/' . $empAvatar['data'];
 
-                                                                        ?>
-                                                                        <div class="col-auto p-0">
-                                                                            <img class="rounded-circle header-profile-user" src="{{ $imageURL }}" alt="--">
-                                                                        </div>
-                                                                    @endif
+                                                                            ?>
+                                                                            <div class="col-auto p-0">
+                                                                                <img class="rounded-circle header-profile-user"
+                                                                                    src="{{ $imageURL }}"
+                                                                                    alt="user_image"
+                                                                                    style="height: 100px;
+                                                                            width: 100px;border-radius: 50%;">
+                                                                            </div>
+                                                                        @endif
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
@@ -138,7 +142,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                     <td colspan="8"
                                                         style="color:#002f56;font-weight:600;font-size:20px;padding-bottom:20px;"
                                                         align="center">
-                                                      {{$employeeName}}
+                                                        {{ $employeeName }}
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -153,7 +157,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                             <p
                                                                 style="font-weight:600;color:#002f56;margin-bottom:0px;margin-top:0px;font-size:14px">
 
-                                                                <span>{{$startDate}}</span>
+                                                                <span>{{ $startDate }}</span>
 
                                                             </p>
                                                             <p
@@ -173,9 +177,9 @@ $bank_names = \DB::table('bank_list')->get();
                                                             <p
                                                                 style="font-weight:600;color:#002f56;margin-bottom:0px;margin-top:0px;font-size:14px">
 
-                                                                <span>{{$startDate}}</span>
+                                                                <span>{{ $startDate }}</span>
                                                                 <span>-</span>
-                                                                <span>{{$endDate}}</span>
+                                                                <span>{{ $endDate }}</span>
 
                                                             </p>
 
@@ -197,16 +201,17 @@ $bank_names = \DB::table('bank_list')->get();
                                                         <div>
                                                             <p
                                                                 style="font-weight:500;color:#c1c1c1;margin-bottom:0px;margin-top:0px;font-size:12px">
-                                                               {{$reason}}
+
+
                                                             </p>
                                                             <p
                                                                 style="font-weight:600;color:#002f56;margin-bottom:0px;margin-top:0px;font-size:14px">
-                                                                {{$totalLeaveDatetime}} Day(s) of {{$leaveType}}
+                                                                {{ $totalLeaveDatetime }} Day(s) of {{ $leaveType }}
                                                             </p>
 
                                                             <p
                                                                 style="font-weight:500;color:#c1c1c1;margin-bottom:0px;margin-top:0px;font-size:12px">
-                                                                (Personal Emergency)
+                                                                {{ $reason }}
                                                             </p>
                                                         </div>
                                                     </td>
