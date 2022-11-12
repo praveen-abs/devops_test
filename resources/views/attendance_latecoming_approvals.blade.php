@@ -313,10 +313,9 @@
                                         // req.user_id + '" data-user_id="' + req.user_id +
                                         // '" data-lc_id="' + req.id +
                                         // '" data-lc_status="Rejected" class="status btn btn-danger py-1 reject-lc-btn "></input>&nbsp;&nbsp;';
-                                        '<button type="button" value="Reject" id="button_activate_"' +
-                                        req.user_id + '" data-user_id="' + req.user_id +
+                                        '<button type="button" value="Reject" id="button_activate_"' +req.user_id + '" data-user_id="' + req.user_id +
                                         '" data-lc_id="' + req.id +
-                                        '" data-lc_status="Rejected" class="status btn btn-danger py-1 reject-lc-btn "><i class="fa fa-times-circle me-1"></i></button>';
+                                        '" data-lc_status="Rejected" class="status btn btn-danger py-1 reject-lc-btn "><i class="fa fa-times-circle me-1"></i>Reject</button>';
                                 }
 
                                 // htmlcontent = htmlcontent +
