@@ -18,7 +18,135 @@
                     <ul class="timeline">
                         <li>
                             <div class="circle-line">
-                                <i class="fa fa-check" aria-hidden="true"></i>
+                                <div class="circle-inner active">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="prograssAct_inAct">
+                                <span class="prograss_month">Apr</span>
+                                <span class="prograss_month">2022</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="circle-line ">
+                                <div class="circle-inner active">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="prograssAct_inAct">
+                                <span class="prograss_month">May</span>
+                                <span class="prograss_month">2022</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="circle-line ">
+                                <div class="circle-inner active">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="prograssAct_inAct">
+                                <span class="prograss_month">Jun</span>
+                                <span class="prograss_month">2022</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="circle-line">
+                                <div class="circle-inner active">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="prograssAct_inAct">
+                                <span class="prograss_month">July</span>
+                                <span class="prograss_month">2022</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="circle-line">
+                                <div class="circle-inner active">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="prograssAct_inAct">
+                                <span class="prograss_month">Aug</span>
+                                <span class="prograss_month">2022</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="circle-line">
+                                <div class="circle-inner active">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="prograssAct_inAct">
+                                <span class="prograss_month">Sep</span>
+                                <span class="prograss_month">2022</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="circle-line">
+                                <div class="circle-inner active">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="prograssAct_inAct">
+                                <span class="prograss_month">Oct</span>
+                                <span class="prograss_month">2022</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="circle-line inActive">
+                                <div class="circle-inner prograss">
+                                    <i class="fa fa-ellipsis-h"></i>
+
+                                </div>
+                            </div>
+                            <div class="prograssAct_inAct">
+                                <span class="prograss_month">Nov</span>
+                                <span class="prograss_month">2022</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="circle-line inActive">
+                                <div class="circle-inner ">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="prograssAct_inAct">
+                                <span class="prograss_month">Dec</span>
+                                <span class="prograss_month">2022</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="circle-line inActive">
+                                <div class="circle-inner ">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="prograssAct_inAct">
+                                <span class="prograss_month">Jan</span>
+                                <span class="prograss_month">2023</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="circle-line inActive">
+                                <div class="circle-inner">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="prograssAct_inAct">
+                                <span class="prograss_month">Feb</span>
+                                <span class="prograss_month">2023</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="circle-line inActive">
+                                <div class="circle-inner">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="prograssAct_inAct">
+                                <span class="prograss_month">Mar</span>
+                                <span class="prograss_month">2023</span>
                             </div>
                         </li>
                     </ul>
@@ -170,131 +298,138 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-4 mb-3">
-                            <div class="separate-converter-box">
-                                <a class="hole-box-link" href="#">
-                                    <div tabindex="-1" class="position-relative-box text-secondary">
-                                        <h6>Leaves, Attendance & Daily Wages</h6>
+                        <div class="col-lg-4 col-sm-12 col-xl-4 col-xxl-4 col-md-6 mb-3">
+                            <a href="#">
+                                <div class="card parRoll_widget mb-0">
+                                    <div class="card-body py-1">
+                                        <div class="row">
+                                            <div class="col-2 calendar_icon_container">
+                                                <div class="col-2 calendar_icon-1">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-10">
+                                                <p class="tittle">Leaves, Attendance & Daily Wages</p>
+                                                <p class="sub_cont">Last Changes on Oct 03, 2022, (12:33 pm) By Harpitha
+                                                    Reddy
+                                                </p>
+
+                                            </div>
+                                        </div>
                                     </div>
-                                </a>
-                                <div class="sc-1gyxcpm-0 csDfHB ojwc4z-4 dOHSmX" style="width:32px;height:32px">
-                                    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M0 4C0 1.79086 1.79086 0 4 0H28C30.2091 0 32 1.79086 32 4V28C32 30.2091 30.2091 32 28 32H4C1.79086 32 0 30.2091 0 28V4Z"
-                                            fill="#3D99F5"></path>
-                                        <path
-                                            d="M23.0874 25L28 7H24.0597L21.0661 19.4034H21.0149L17.8934 7H14.1322L10.9595 19.2521H10.9083L8.01706 7H4L8.83582 25H12.9041L15.9488 12.7479H16L19.0959 25H23.0874Z"
-                                            fill="white"></path>
-                                    </svg>
                                 </div>
-                                <p class="ojwc4z-5 jZEeUz f-10">Last Changes on Oct 03, 2022, (12:33 pm) By Harpitha Reddy
-                                </p>
-                            </div>
+                            </a>
                         </div>
-                        <div class="col-lg-4 mb-3">
-                            <div class="separate-converter-box">
-                                <a class="hole-box-link" href="#">
-                                    <div tabindex="-1" class="position-relative-box text-secondary">
-                                        <h6>Bonus, Salary Revision & Overtime</h6>
+
+                        <div class="col-lg-4 col-sm-12 col-xl-4 col-xxl-4 col-md-6 mb-3">
+                            <a href="#">
+                                <div class="card parRoll_widget mb-0">
+                                    <div class="card-body py-1">
+                                        <div class="row">
+                                            <div class="col-2 calendar_icon_container">
+                                                <div class="col-auto calendar_icon-2">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-10">
+                                                <p class="tittle">Bonus, Salary Revision & Overtime</p>
+                                                <p class="sub_cont">Last Changes on Oct 03, 2022, (12:33 pm) By Harpitha
+                                                    Reddy
+                                                </p>
+
+                                            </div>
+                                        </div>
                                     </div>
-                                </a>
-                                <div class="sc-1gyxcpm-0 csDfHB ojwc4z-4 dOHSmX" style="width:32px;height:32px">
-                                    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M0 4C0 1.79086 1.79086 0 4 0H28C30.2091 0 32 1.79086 32 4V28C32 30.2091 30.2091 32 28 32H4C1.79086 32 0 30.2091 0 28V4Z"
-                                            fill="#3D99F5"></path>
-                                        <path
-                                            d="M23.0874 25L28 7H24.0597L21.0661 19.4034H21.0149L17.8934 7H14.1322L10.9595 19.2521H10.9083L8.01706 7H4L8.83582 25H12.9041L15.9488 12.7479H16L19.0959 25H23.0874Z"
-                                            fill="white"></path>
-                                    </svg>
                                 </div>
-                                <p class="ojwc4z-5 jZEeUz f-10">Last Changes on Oct 03, 2022, (12:33 pm) By Harpitha Reddy
-                                </p>
-                            </div>
+                            </a>
                         </div>
-                        <div class="col-lg-4 mb-3">
-                            <div class="separate-converter-box">
-                                <a class="hole-box-link" href="#">
-                                    <div tabindex="-1" class="position-relative-box text-secondary">
-                                        <h6>Salaries on Hold & Arrears</h6>
+                        <div class="col-lg-4 col-sm-12 col-xl-4 col-xxl-4 col-md-6 mb-3">
+                            <a href="#">
+                                <div class="card parRoll_widget mb-0">
+                                    <div class="card-body py-1">
+                                        <div class="row">
+                                            <div class="col-2 calendar_icon_container">
+                                                <div class="col-auto calendar_icon-3">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-10">
+                                                <p class="tittle">Salaries on Hold & Arrears</p>
+                                                <p class="sub_cont">Last Changes on Oct 03, 2022, (12:33 pm) By Harpitha
+                                                    Reddy
+                                                </p>
+
+                                            </div>
+                                        </div>
                                     </div>
-                                </a>
-                                <div class="sc-1gyxcpm-0 csDfHB ojwc4z-4 dOHSmX" style="width:32px;height:32px">
-                                    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M0 4C0 1.79086 1.79086 0 4 0H28C30.2091 0 32 1.79086 32 4V28C32 30.2091 30.2091 32 28 32H4C1.79086 32 0 30.2091 0 28V4Z"
-                                            fill="#3D99F5"></path>
-                                        <path
-                                            d="M23.0874 25L28 7H24.0597L21.0661 19.4034H21.0149L17.8934 7H14.1322L10.9595 19.2521H10.9083L8.01706 7H4L8.83582 25H12.9041L15.9488 12.7479H16L19.0959 25H23.0874Z"
-                                            fill="white"></path>
-                                    </svg>
                                 </div>
-                                <p class="ojwc4z-5 jZEeUz f-10">Last Changes on Oct 03, 2022, (12:33 pm) By Harpitha Reddy
-                                </p>
-                            </div>
+                            </a>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="separate-converter-box">
-                                <a class="hole-box-link" href="#">
-                                    <div tabindex="-1" class="position-relative-box text-secondary">
-                                        <h6>Leaves, Attendance & Daily Wages</h6>
+                        <div class="col-lg-4 col-sm-12 col-xl-4 col-xxl-4 col-md-6 mb-3">
+                            <a href="#">
+                                <div class="card parRoll_widget mb-0">
+                                    <div class="card-body py-1">
+                                        <div class="row">
+                                            <div class="col-2 calendar_icon_container">
+                                                <div class=" col-auto calendar_icon-4">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-10">
+                                                <p class="tittle">Leaves, Attendance & Daily Wages</p>
+                                                <p class="sub_cont">Last Changes on Oct 03, 2022, (12:33 pm) By Harpitha
+                                                    Reddy
+                                                </p>
+
+                                            </div>
+                                        </div>
                                     </div>
-                                </a>
-                                <div class="sc-1gyxcpm-0 csDfHB ojwc4z-4 dOHSmX" style="width:32px;height:32px">
-                                    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M0 4C0 1.79086 1.79086 0 4 0H28C30.2091 0 32 1.79086 32 4V28C32 30.2091 30.2091 32 28 32H4C1.79086 32 0 30.2091 0 28V4Z"
-                                            fill="#3D99F5"></path>
-                                        <path
-                                            d="M23.0874 25L28 7H24.0597L21.0661 19.4034H21.0149L17.8934 7H14.1322L10.9595 19.2521H10.9083L8.01706 7H4L8.83582 25H12.9041L15.9488 12.7479H16L19.0959 25H23.0874Z"
-                                            fill="white"></path>
-                                    </svg>
                                 </div>
-                                <p class="ojwc4z-5 jZEeUz f-10">Last Changes on Oct 03, 2022, (12:33 pm) By Harpitha Reddy
-                                </p>
-                            </div>
+                            </a>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="separate-converter-box">
-                                <a class="hole-box-link" href="#">
-                                    <div tabindex="-1" class="position-relative-box text-secondary">
-                                        <h6>Bonus, Salary Revision & Overtime</h6>
+                        <div class="col-lg-4 col-sm-12 col-xl-4 col-xxl-4 col-md-6 mb-3">
+                            <a href="#">
+                                <div class="card parRoll_widget mb-0">
+                                    <div class="card-body py-1">
+                                        <div class="row">
+                                            <div class="col-2 calendar_icon_container">
+                                                <div class="col-auto calendar_icon-5">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-10">
+                                                <p class="tittle">Bonus, Salary Revision & Overtime</p>
+                                                <p class="sub_cont">Last Changes on Oct 03, 2022, (12:33 pm) By Harpitha
+                                                    Reddy
+                                                </p>
+
+                                            </div>
+                                        </div>
                                     </div>
-                                </a>
-                                <div class="sc-1gyxcpm-0 csDfHB ojwc4z-4 dOHSmX" style="width:32px;height:32px">
-                                    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M0 4C0 1.79086 1.79086 0 4 0H28C30.2091 0 32 1.79086 32 4V28C32 30.2091 30.2091 32 28 32H4C1.79086 32 0 30.2091 0 28V4Z"
-                                            fill="#3D99F5"></path>
-                                        <path
-                                            d="M23.0874 25L28 7H24.0597L21.0661 19.4034H21.0149L17.8934 7H14.1322L10.9595 19.2521H10.9083L8.01706 7H4L8.83582 25H12.9041L15.9488 12.7479H16L19.0959 25H23.0874Z"
-                                            fill="white"></path>
-                                    </svg>
                                 </div>
-                                <p class="ojwc4z-5 jZEeUz f-10">Last Changes on Oct 03, 2022, (12:33 pm) By Harpitha Reddy
-                                </p>
-                            </div>
+                            </a>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="separate-converter-box">
-                                <a class="hole-box-link" href="#">
-                                    <div tabindex="-1" class="position-relative-box text-secondary">
-                                        <h6>Salaries on Hold & Arrears</h6>
+                        <div class="col-lg-4 col-sm-12 col-xl-4 col-xxl-4 col-md-6 mb-3">
+                            <a href="#">
+                                <div class="card parRoll_widget mb-0">
+                                    <div class="card-body py-1">
+                                        <div class="row">
+                                            <div class="col-2 calendar_icon_container">
+                                                <div class="col-auto calendar_icon-6">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-10">
+                                                <p class="tittle">Salaries on Hold & Arrears</p>
+                                                <p class="sub_cont">Last Changes on Oct 03, 2022, (12:33 pm) By Harpitha
+                                                    Reddy
+                                                </p>
+
+                                            </div>
+                                        </div>
                                     </div>
-                                </a>
-                                <div class="sc-1gyxcpm-0 csDfHB ojwc4z-4 dOHSmX" style="width:32px;height:32px">
-                                    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M0 4C0 1.79086 1.79086 0 4 0H28C30.2091 0 32 1.79086 32 4V28C32 30.2091 30.2091 32 28 32H4C1.79086 32 0 30.2091 0 28V4Z"
-                                            fill="#3D99F5"></path>
-                                        <path
-                                            d="M23.0874 25L28 7H24.0597L21.0661 19.4034H21.0149L17.8934 7H14.1322L10.9595 19.2521H10.9083L8.01706 7H4L8.83582 25H12.9041L15.9488 12.7479H16L19.0959 25H23.0874Z"
-                                            fill="white"></path>
-                                    </svg>
                                 </div>
-                                <p class="ojwc4z-5 jZEeUz f-10">Last Changes on Oct 03, 2022, (12:33 pm) By Harpitha Reddy
-                                </p>
-                            </div>
+                            </a>
                         </div>
                     </div>
                 </div>
