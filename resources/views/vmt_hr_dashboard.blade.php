@@ -316,7 +316,7 @@
                         <div class="h-100  _container-calendar">
                             <div class="_button-container-calendar d-flex align-items-center justify-content-between">
                                 <button id="_previous" onclick="previous()" class="previous"><i class="fa fa-chevron-left"></i></button>
-                                <h6 id="_monthAndYear" class="_monthAndYear"></h6>
+                                <h6 id="_monthAndYear" class="_monthAndYear text-white"></h6>
                                 <button id="_next" onclick="next()" class="next"><i class="fa fa-chevron-right"></i></button>
                             </div>
                             <table class="_table-calendar" id="_calendar" data-lang="en">
