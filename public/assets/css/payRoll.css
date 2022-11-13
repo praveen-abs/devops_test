@@ -6,3 +6,94 @@
 .payroll_wrapper ul.list-style-circle li {
     margin-top: 20px !important;
 }
+
+
+ul.timeline{
+    list-style-type: none;
+}
+
+ul.timeline li{
+    height: 40px;
+    width: 40px;
+    background-color: transparent;
+    border: 2px solid #5353533d;
+
+}
+ul.timeline li .circle-line{
+
+    height: 40px;
+    width: 40px;
+    background-color: transparent;
+    border: 2px solid #5353533d;
+
+}
+
+.switch-checkbox input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.slider-checkbox {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    border: 1px solid #d9d0d0;
+    right: 0;
+    bottom: 0;
+    background-color: white;
+    width: 30px;
+    -webkit-transition: 0.4s;
+    height: 4px;
+    box-shadow: inset -5px -5px 9px rgb(255 255 255 / 45%), inset 5px 5px 9px rgb(197 197 197 / 30%),
+        rgb(0 0 0 / 16%) 0px 1px 4px;
+    transition: 0.4s;
+}
+input:checked + .slider > .slider-text:after {
+    content: "Checkout";
+    color: red;
+}
+input + .slider > .slider-text:after {
+    content: "Check In";
+}
+.slider-checkbox:before {
+    position: absolute;
+    height: 15px;
+    width: 15px;
+    left: -1px;
+    border-radius: 50%;
+    bottom: -6px;
+    color: #8e8f91;
+    background-color: #8e8f91;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    content: "\f011";
+    font-family: FontAwesome !important;
+    padding: 0px 4px 0px 3px;
+    font-size: 8px;
+}
+input:checked + .slider-checkbox.check-out {
+    background-color: #f0657070;
+    color: #ff0000;
+}
+input:checked + .slider-checkbox.check-in {
+    background-color: #8e8f91;
+}
+input:focus + .slider-checkbox {
+    box-shadow: 0 0 1px #7cfc00;
+}
+input:checked + .slider-checkbox:before {
+    -webkit-transform: translateX(35px);
+    -ms-transform: translateX(35px);
+    transform: translateX(35px);
+    left: -18px;
+    background-color: #f0f0f6;
+}
+input:checked + .slider-checkbox.check-out:before {
+    color: #ee6a04;
+    background-color: #ee6a04;
+}
+input:checked + .slider-checkbox.check-in:before {
+    color: #ee6a04;
+    background-color: #ee6a04;
+}
