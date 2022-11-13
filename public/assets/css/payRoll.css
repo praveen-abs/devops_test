@@ -28,6 +28,46 @@ ul.timeline li .circle-line{
 
 }
 
+.cost_chart .pie-chart{
+
+    height: 160px;
+    width: 160px;
+}
+.cost_chart .pie-chart svg{
+
+    height: 150px;
+    width: 150px;
+
+}
+
+p.cost_other::before,p.cost_fixed::before,p.cost_contri::before,p.cost_bonus::before{
+
+    content: '';
+    height: 5px;
+    width: 5px;
+    border-radius: 50%;
+    position: absolute;
+    top: 8px;
+
+
+}
+p.cost_bonus::before{
+    background-color: #ff0000;
+    left: 30px;
+}
+p.cost_contri::before{
+    background-color: #002f56;
+    left: 10px;
+}
+p.cost_other::before{
+    background-color: #7cfc00;
+    left: 30px;
+}
+p.cost_fixed::before{
+    background-color: #ee6a04;
+    left: 32px;
+}
+
 .switch-checkbox input {
     opacity: 0;
     width: 0;

@@ -4,6 +4,7 @@
 @endsection
 @section('css')
     <link rel="stylesheet" href="{{ URL::asset('/assets/css/payRoll.css') }}">
+    <link href="{{ URL::asset('assets/css/salary.css') }}" rel="stylesheet">
 @endsection
 @section('content')
     {{-- @component('components.payroll_breadcrumb')
@@ -33,7 +34,7 @@
                                 Competitiveness</a>
                         </li>
                         <li class="nav-item text-muted">
-                            <a class="nav-link" data-bs-toggle="tab" href="#geographicald_ifferetials">Geographical
+                            <a class="nav-link" data-bs-toggle="tab" href="#geographical_differentials">Geographical
                                 Differetials</a>
                         </li>
                     </ul>
@@ -127,41 +128,7 @@
                         <div class="tab-content" id="pills-tabContent">
                             <div class="tab-pane show fade active" id="by_department" role="tabpanel"
                                 aria-labelledby="pills-profile-tab">
-                                <!-- <div class="row">
-                                                                                <div class="col-md-3">
-                                                                                    <div class="bg-smokeywhite mx-auto">
-                                                                                        <h4 class="text-center">Chart Area</h4>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-md-9 pt-100">
-                                                                                    <div class="row">
-                                                                                        <div class="col-md">
-                                                                                            <div class="">
-                                                                                                <div class="card-body text-center">
-                                                                                                    <p class="text-ash-medium mb-2 f-13">Total Compensation</p>
-                                                                                                    <h5 class="mb-0">-</h5>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="col-md">
-                                                                                            <div class="">
-                                                                                                <div class="card-body text-center">
-                                                                                                    <p class="text-ash-medium mb-2 f-13">Higest Compensation</p>
-                                                                                                    <h5 class="mb-0">-</h5>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="col-md">
-                                                                                            <div class="">
-                                                                                                <div class="card-body text-center">
-                                                                                                    <p class="text-ash-medium mb-2 f-13">Higest Compensation</p>
-                                                                                                    <h5 class="mb-0">-</h5>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div> -->
+
                                 <div class="text-center">
                                     <div class="col-md-5 mx-auto">
                                         <img src="{{ URL::asset('assets/images/no_dataFile.svg') }}" class="img-fluid"
@@ -173,7 +140,7 @@
                             <div class="tab-pane fade" id="by_location" role="tabpanel"
                                 aria-labelledby="pills-contact-tab">
                                 <div class="text-center">
-                                    <div class="col-md-5 mx-auto">
+                                    <div class="col-md-3 mx-auto">
                                         <img src="{{ URL::asset('assets/images/Fingerprint.gif') }}" class="img-fluid"
                                             alt="user-pic">
                                     </div>
@@ -387,8 +354,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-2 ">
-                                        <p class="text-start text-primary ">Planned Cost vs Actual Cost</p>
+                                    <div class="col-lg-3 ">
+                                        <p class="text-start text-primary mb-3 ">Planned Cost vs Actual Cost</p>
                                         <div class="border-right border-left px-2">
                                             <div class="card box_shadow_0 border-rtb left-line w-100 mb-3">
                                                 <div class="card-body text-center">
@@ -410,7 +377,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-5">
                                         <div class="d-flex justify-content-between mb-2">
                                             <p class="text-start text-primary ">Planned Compensation Cost</p>
                                             <p style="position: relative;" class="text-end">
@@ -427,10 +394,50 @@
 
                                         <div class="row">
 
+                                            <div class="col-8 mb-5 d-flex justify-content-center">
+                                                <div class="cost_chart">
+                                                    <figure class="pie-chart">
+                                                        <!-- <figcaption>SVG PIE Chart with CSS animation</figcaption> -->
+                                                        <svg viewBox="0 0 63.6619772368 63.6619772368">
+                                                            <circle class="pie1" cx="31.8309886184" cy="31.8309886184"
+                                                                r="15.9154943092" />
+                                                            <!-- <circle class="pie2" cx="31.8309886184" cy="31.8309886184" r="15.9154943092" /> -->
+                                                            <circle class="pie3" cx="31.8309886184" cy="31.8309886184"
+                                                                r="15.9154943092" />
+                                                            <circle class="pie4" cx="31.8309886184" cy="31.8309886184"
+                                                                r="15.9154943092" />
+                                                        </svg>
+                                                    </figure>
+
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="col-4 mb-5 text-center d-flex align-items-center justify-content-center flex-column">
+                                                <p class="text-center text-muted fw-bold f-15 ">Total</p>
+                                                <h6>-</h6>
+                                            </div>
+
+                                            <div class="col-3 text-center ">
+                                                <p class="cost_fixed text-muted">Fixed</p>
+                                                <p class="text-primary f-13 fw-bold">-</p>
+                                            </div>
+                                            <div class="col-3 text-center">
+                                                <p class="cost_bonus text-muted">Bonus</p>
+                                                <p class="text-primary f-13 fw-bold">-</p>
+
+                                            </div>
+                                            <div class="col-3 text-center">
+                                                <p class="cost_contri text-muted">Contribution</p>
+                                                <p class="text-primary f-13 fw-bold">-</p>
 
 
+                                            </div>
+                                            <div class="col-3 text-center">
+                                                <p class="cost_other text-muted">Others</p>
+                                                <p class="text-primary f-13 fw-bold">-</p>
+
+                                            </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -446,6 +453,40 @@
                                     </path>
                                 </svg>
                             </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="employee_competitiveness" class="tab-pane fade">
+
+
+                <div class="card left-line mb-0">
+
+                    <div class="card-body">
+                        <h6>Employee Competitiveness</h6>
+                        <div class="text-center">
+                            <div class="col-md-3 mx-auto">
+                                <img src="{{ URL::asset('assets/images/Fingerprint.gif') }}" class="img-fluid"
+                                    alt="user-pic">
+                            </div>
+                            <h4> <span class="text-orange">Sorry..!</span> No data</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="geographical_differentials" class="tab-pane fade">
+
+
+                <div class="card left-line mb-0">
+
+                    <div class="card-body">
+                        <h6>Employee Competitiveness</h6>
+                        <div class="text-center">
+                            <div class="col-md-3 mx-auto">
+                                <img src="{{ URL::asset('assets/images/Fingerprint.gif') }}" class="img-fluid"
+                                    alt="user-pic">
+                            </div>
+                            <h4> <span class="text-orange">Sorry..!</span> No data</h4>
                         </div>
                     </div>
                 </div>
