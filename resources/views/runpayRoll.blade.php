@@ -6,11 +6,8 @@
     <link rel="stylesheet" href="{{ URL::asset('/assets/css/payRoll.css') }}">
 @endsection
 @section('content')
-    @component('components.payroll_breadcrumb')
-        @slot('li_1')
-        @endslot
-    @endcomponent
-    <div class="cotainer-fluid">
+
+    <div class="cotainer-fluid mt-30">
         <div class="card top-line mb-0">
             <div class="card-body">
                 <h6 class="mb-3">Payroll Progress</h6>
@@ -213,9 +210,43 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="card card-body">
-                            <h6>Activity</h6>
+                        <div class="card " style="min-height: 284px;height:284px;overflow-y:auto;">
+                            <div class="card-body">
+                                <h6 class="pb-3 border-bottom ">Activity</h6>
 
+                                <ul class="activity_log list-unstyled">
+                                    {{-- <li>
+                                        <div class="row">
+                                            <div class="col-2">
+
+                                            </div>
+                                            <div class="col-8">
+
+                                            </div>
+                                            <div class="col-2">
+
+                                            </div>
+                                        </div>
+
+                                    </li> --}}
+                                    <li class=" p-1 w-100">
+                                        <div class="row w-100 m-0    page-header-user-dropdown" data-userid="1">
+                                            <div class="user-profile col-2  activity_shortname">
+                                                <span class="text-white">AU</span>
+                                            </div>
+                                            <div
+                                                class="user_content col-6 text-start d-flex  align-items-center flex-column">
+                                                <p class="fw-bold text-primary f-13">Augustin</p>
+                                                <p class="fw-bold text-muted f-10">CEO</p>
+                                            </div>
+                                            <div class="col-4 text-end pe-0">
+                                                <p class="fw-bold text-muted f-10">Nov 8,4:10pm</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -223,7 +254,7 @@
             <div class="card-body">
                 <h6 class="mb-3">Run Payroll</h6>
                 <div class="card card-body mb-0">
-                    <div class="arrow-steps clearfix d-flex justify-content-center mb-3">
+                    <div class="arrow-steps clearfix d-flex justify-content-center mb-5">
                         <div class="step current border-start-radius">
                             <span>
                                 <span class="svg-algin-crtly">
@@ -297,7 +328,7 @@
                             </span>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row mb-3">
                         <div class="col-lg-4 col-sm-12 col-xl-4 col-xxl-4 col-md-6 mb-3">
                             <a href="#">
                                 <div class="card parRoll_widget mb-0">
@@ -431,6 +462,11 @@
                                 </div>
                             </a>
                         </div>
+                    </div>
+                    <div class="text-end">
+                        <button class="btn-border-orange me-2 btn">Preview Run PayRoll</button>
+                        <button class="btn-border-orange me-2 btn">Preview all PayRoll</button>
+                        <button class="btn-orange btn">Finalize PayRoll</button>
                     </div>
                 </div>
             </div>

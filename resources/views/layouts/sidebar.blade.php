@@ -494,11 +494,32 @@
                             <ul class="nav nav-sm flex-column">
 
                                 <li class="nav-item">
-                                    <a href="{{ route('payRun') }}" class="nav-link sidebar py-1"
+                                    <a href="{{ url('payRoll') }}" class="nav-link sidebar py-1"
                                         role="button"><span>
-                                            Pay Run</span>
+                                         Payroll Analytics</span>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('runpayRoll') }}" class="nav-link sidebar py-1"
+                                        role="button"><span>
+                                         Payroll Run</span>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="{{ url('payRoll_claim') }}" class="nav-link sidebar py-1"
+                                        role="button"><span>
+                                         Payroll Claim</span>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="{{ url('payRoll_reports') }}" class="nav-link sidebar py-1"
+                                        role="button"><span>
+                                            Payroll Reports</span>
+                                    </a>
+                                </li>
+
 
                             </ul>
                         </div>

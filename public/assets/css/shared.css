@@ -249,23 +249,21 @@ p {
     border-color: #002f56;
     color: #fff;
 }
-.btn-orange {
-    background-color: #ee6a04;
-    border-color: #ee6a04;
-    transition: 0.4s ease-in;
-    color: #fff;
-    font-weight: 600;
-    padding: 5px 8px;
-    font-size: 13px !important;
-}
-.btn-border-orange {
-    border-color: 1px solid #ee6a04;
-    background-color: transparent;
-    color: #ee6a04;
+.btn-border-orange,.btn-orange {
     transition: 0.4s ease-in;
     font-weight: 600;
     padding: 5px 8px !important;
     font-size: 13px !important;
+}
+.btn-orange {
+    background-color: #ee6a04;
+    border-color: #ee6a04;
+    color: #fff;
+}
+.btn-border-orange {
+    border: 1px solid #ee6a04;
+    background-color: transparent;
+    color: #ee6a04;
 }
 .btn-border-orange:active {
     background-color: transparent;
@@ -274,8 +272,7 @@ p {
 }
 .btn-border-orange:hover {
     background-color: transparent;
-    border-color: #ee6a04;
-    color: #ee6a04;
+
 }
 .btn-orange:hover {
     background-color: #ee6a04;

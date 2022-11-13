@@ -323,3 +323,9 @@ input:checked + .slider-checkbox.check-in:before {
     font-size: 11px;
     color: #8e8f91;
 }
+
+.activity_log .activity_shortname{
+    height: 40px;
+    width: 40px;
+
+}

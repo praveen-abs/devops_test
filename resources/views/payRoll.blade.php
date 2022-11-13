@@ -7,10 +7,7 @@
     <link href="{{ URL::asset('assets/css/salary.css') }}" rel="stylesheet">
 @endsection
 @section('content')
-    {{-- @component('components.payroll_breadcrumb')
-@slot('li_1')
-@endslot
-@endcomponent --}}
+
     <div class="cotainer-fluid mt-30">
         <div class="card mb-2">
             <div class="py-1">
@@ -480,7 +477,7 @@
                 <div class="card left-line mb-0">
 
                     <div class="card-body">
-                        <h6>Employee Competitiveness</h6>
+                        <h6>Geographical  Competitiveness</h6>
                         <div class="text-center">
                             <div class="col-md-3 mx-auto">
                                 <img src="{{ URL::asset('assets/images/Fingerprint.gif') }}" class="img-fluid"
