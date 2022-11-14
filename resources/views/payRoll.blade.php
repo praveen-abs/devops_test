@@ -10,8 +10,8 @@
 
     <div class="cotainer-fluid mt-30">
         <div class="card mb-2">
-            <div class="py-1">
-                <div class="col-12 align-items-center">
+            <div class="py-1 card-body">
+
                     <ul class="nav nav-pills nav-tabs-dashed">
                         <li class="nav-item text-muted">
                             <a class="nav-link active" data-bs-toggle="tab" href="#analytics">Analytics</a>
@@ -35,7 +35,7 @@
                                 Differetials</a>
                         </li>
                     </ul>
-                </div>
+
             </div>
         </div>
         <div class="tab-content">
@@ -148,7 +148,7 @@
                     </div>
                 </div>
             </div>
-            <div id="compensation_planning" class="tab-pane fade show">
+            <div id="compensation_planning" class="tab-pane fade ">
                 <div class="card top-line mb-0">
                     <div class="card-body">
                         <h6 class="mb-3">Compensation Planning</h6>
