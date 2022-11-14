@@ -494,29 +494,29 @@
                             <ul class="nav nav-sm flex-column">
 
                                 <li class="nav-item">
-                                    <a href="{{ url('payRoll') }}" class="nav-link sidebar py-1"
+                                    <a href="{{ route('analytics') }}" class="nav-link sidebar py-1"
                                         role="button"><span>
-                                         Payroll Analytics</span>
+                                          Analytics</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ url('runpayRoll') }}" class="nav-link sidebar py-1"
+                                    <a href="{{route('run')}}"  class="nav-link sidebar py-1"
                                         role="button"><span>
-                                         Payroll Run</span>
-                                    </a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a href="{{ url('payRoll_claim') }}" class="nav-link sidebar py-1"
-                                        role="button"><span>
-                                         Payroll Claim</span>
+                                        Pay Run</span>
                                     </a>
                                 </li>
 
                                 <li class="nav-item">
-                                    <a href="{{ url('payRoll_reports') }}" class="nav-link sidebar py-1"
+                                    <a  href="{{route('claim')}}"  class="nav-link sidebar py-1"
                                         role="button"><span>
-                                            Payroll Reports</span>
+                                         Claim</span>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a  href="{{route('reports')}}" class="nav-link sidebar py-1"
+                                        role="button"><span>
+                                            Reports</span>
                                     </a>
                                 </li>
 

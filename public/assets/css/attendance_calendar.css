@@ -35,10 +35,9 @@ li.list_employee_attendance .active{
 } */
 .calendar-wrapper ._button-container-calendar .previous,
 .calendar-wrapper ._button-container-calendar .next {
-    color: #c1c1c1;
-    border: 1px solid #c1c1c1;
+    color: #003056;
+    border: 1px solid #003056;
     font-size: 15px;
-
     height: 30px;
     width: 30px;
 }
@@ -54,7 +53,9 @@ li.list_employee_attendance .active{
 ._container-calendar ._table-calendar tr th {
     font-size: 16px;
     padding-bottom: 20px;
+    color: #ff4100;
 }
+
 
 ._container-calendar ._table-calendar tr th:first-child {
     padding-left: 30px;
