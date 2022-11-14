@@ -252,8 +252,8 @@ p {
 .btn-border-orange,.btn-orange {
     transition: 0.4s ease-in;
     font-weight: 600;
-    padding: 5px 8px !important;
-    font-size: 13px !important;
+    padding: 5px 8px ;
+    font-size: 13px ;
 }
 .btn-orange {
     background-color: #ee6a04;
@@ -1254,14 +1254,17 @@ a.editable-click:hover {
     color: #9f0000;
     left: 33px;
 }
+
+
 .button_tabs .nav-link {
     background-color: #dfdfdf;
     color: #c2c1bf;
     font-size: 14px;
-    padding: 6px 25px;
+    padding: 6px 10px;
 }
 .button_tabs .nav-link.active {
     background-color: #002f56;
+    border-radius: 5px;
 }
 .bg-smokeywhite {
     background-color: #e7e7e7;

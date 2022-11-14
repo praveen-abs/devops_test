@@ -144,6 +144,23 @@ Route::get('/vendor', function () {
     return view('vmt_vendor');
 })->name('vmt-vendor-route');
 
+// for payroll
+
+Route::get('payroll/claim', function () {
+    return view('payRoll_claim');
+})->name('claim');
+
+Route::get('payroll/reports', function () {
+    return view('payRoll_reports');
+})->name('reports');
+
+Route::get('payroll/run', function () {
+    return view('runpayRoll');
+})->name('run');
+
+Route::get('payroll/analytics', function () {
+    return view('payRoll');
+})->name('analytics');
 
 Route::get('clients', 'App\Http\Controllers\VmtClientController@showAllClients')->name('vmt-clients-route');;
 Route::get('clients-fetchAll', 'App\Http\Controllers\VmtClientController@fetchAllClients')->name('vmt-clients-fetchall');
