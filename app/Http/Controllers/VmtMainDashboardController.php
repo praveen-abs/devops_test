@@ -233,7 +233,7 @@ class VmtMainDashboardController extends Controller
         else
         if(Str::contains( currentLoggedInUserRole(), ["Manager"]) )
         {
-            return view('vmt_manager_dashboard', compact( 'dashboardEmployeeEventsData','checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData'));
+            return view('vmt_manager_dashboard', compact( 'dashboardEmployeeEventsData','checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData','announcementData'));
         }
         else
         if(Str::contains( currentLoggedInUserRole(), ["Employee"]) )
