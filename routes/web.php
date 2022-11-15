@@ -65,8 +65,8 @@ Route::post('/attendance-req-regularization', [App\Http\Controllers\VmtAttendanc
 
 //Attendance - AJAX
 Route::get('/fetch-attendance-user-timesheet', [App\Http\Controllers\VmtAttendanceController::class, 'fetchUserTimesheet'])->name('fetch-attendance-user-timesheet');
-Route::get('/fetch-attendance-team-timesheet', [App\Http\Controllers\VmtAttendanceController::class, 'fetchTeamTimesheet'])->name('fetch-attendance-team-timesheet');
-Route::get('/fetch-attendance-org-timesheet', [App\Http\Controllers\VmtAttendanceController::class, 'fetchOrgTimesheet'])->name('fetch-attendance-org-timesheet');
+Route::get('/fetch-team-members', [App\Http\Controllers\VmtAttendanceController::class, 'fetchTeamMembers'])->name('fetch-team-members');
+Route::get('/fetch-org-members', [App\Http\Controllers\VmtAttendanceController::class, 'fetchOrgMembers'])->name('fetch-org-members');
 
 
 
