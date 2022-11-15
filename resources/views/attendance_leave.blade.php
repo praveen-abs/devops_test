@@ -98,6 +98,7 @@
                         <div class="row">
 
                             @foreach($leaveTypes as $singleLeaveType)
+                                @if($singleLeaveType->leave_type != 'Permission')
                                 <div class="col-sm-3 col-sm-12 col-xl-4 col-md-4 col-lg-4 d-flex">
                                     <div class="card  box_shadow_0 border-rtb left-line w-100">
                                         <div class="card-body text-center">
@@ -108,6 +109,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                @endif
                             @endforeach
                         </div>
                         <div class="row">
@@ -558,8 +560,12 @@
                                                             $leave_availed = $leaveData_currentUser[ $singleLeaveType->leave_type ]->leave_availed_count ?? 0;
                                                             $remainingLeaves = $singleLeaveType->days_annual - $leave_availed ;
                                                         ?>
-                                                        <option value="{{ $singleLeaveType->id }}" data-remainingLeaves="{{$remainingLeaves}}">
-                                                            {{ $singleLeaveType->leave_type }}  ( {{ $remainingLeaves }} )
+                                                        <option value="{{ $singleLeaveType->id }}" data-leaveType ="{{ $singleLeaveType->leave_type }}" data-remainingLeaves="{{$remainingLeaves}}">
+                                                            {{ $singleLeaveType->leave_type }}
+                                                            {{-- Dont show remaining leave if leave_type == Permissions --}}
+                                                            @if($remainingLeaves !=-1)
+                                                                ( {{  $remainingLeaves }} )
+                                                            @endif
                                                         </option>
                                                     @endforeach
 
@@ -641,7 +647,7 @@
                                     </div>
 
                                     <div class="leave_det_calendar">
-                                        <div class="row">
+                                        {{-- <div class="row">
                                             <div class="col-6">
                                                 <p class="casual_leave">Casual Leave</p>
                                             </div>
@@ -654,7 +660,7 @@
                                             <div class="col-6">
                                                 <p class="maternity_leave">Maternity Leave</p>
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                     </div>
 
@@ -839,6 +845,9 @@
 
     <script>
         var leavetypes_array = <?php echo json_encode(getAllLeaveTypes()); ?>;
+        var permissionTypeIds = <?php echo json_encode(getPermissionLeaveTypeIDs()); ?>;
+        console.log("Permission Leave IDs : "+permissionTypeIds);
+
         var employeesList_array = <?php echo json_encode($allEmployeesList); ?>;
 
         //grid table vars
@@ -945,18 +954,44 @@
                 basic_details_errors = [];
 
                 //Check the data validation
+                ////IF leave_type == Permission
+                console.log("Selected leave type : "+$('#leave_type_id').find(":selected").attr('data-leavetype'));
 
-                if(moment(start_date) > moment(end_date)){
-                    basic_details_errors.push("Start date should not be greater than or equal to End date.");
+                if($('#leave_type_id').find(":selected").attr('data-leavetype') == 'Permission')
+                {
+                    if(totalLeaveDays !=0){
+                        basic_details_errors.push("For Permission leave type : Start date and End date should be same date.");
+                    }
+
+                    let startDate = moment(start_date);
+                    let endDate = moment(end_date);
+
+                    let timeDiff = moment.duration( endDate.diff(startDate) ).asHours();
+                    console.log("Permission TimeDiff : "+timeDiff);
+
+                    //Check if time diff is atleast 1hr
+                    if(timeDiff < 1.0){
+                        basic_details_errors.push("Permission time should be atleast 1hr.");
+                    }
+
+
+
                 }
+                else
+                {
+                    if(moment(start_date) > moment(end_date)){
+                        basic_details_errors.push("Start date should not be greater than or equal to End date.");
+                    }
 
 
-                if(availableLeaves_ForSelectedLeaveType <= 0){
-                    basic_details_errors.push("No leaves available for the selected leave type.");
-                }
+                    if(availableLeaves_ForSelectedLeaveType <= 0){
+                        basic_details_errors.push("No leaves available for the selected leave type.");
+                    }
 
-                if(totalLeaveDays > availableLeaves_ForSelectedLeaveType){
-                    basic_details_errors.push("Selected leave days exceeds your available leave days for the selected leave type.");
+                    if(totalLeaveDays > availableLeaves_ForSelectedLeaveType){
+                        basic_details_errors.push("Selected leave days exceeds your available leave days for the selected leave type.");
+                    }
+
                 }
 
                 if (basic_details_errors.length > 0) {
@@ -975,7 +1010,6 @@
 
                     return;
                 }
-
 
                 $.ajax({
                     url: "{{ url('attendance-applyleave') }}",
@@ -1155,7 +1189,16 @@
                         },
                         {
                             id: 'total_leave_datetime',
-                            name: 'Total Day(s)',
+                            name: 'Total Day(s)/Hour(s)',
+                            formatter: function formatter(leave_history) {
+                                let total_date_hours = leave_history.total_leave_datetime;
+
+                                if(permissionTypeIds.includes(leave_history.leave_type_id))
+                                    return gridjs.html(total_date_hours.split(',')[1]); //For permissions, show only hours
+                                else
+                                    return gridjs.html(total_date_hours.split(',')[0]); //For Leaves, show only days
+
+                            }
                         },
                         {
                             id: 'leave_reason',
@@ -1229,7 +1272,7 @@
                                 leave_history.leave_type_id,
                                 leave_history.start_date,
                                 leave_history.end_date,
-                                leave_history.total_leave_datetime,
+                                leave_history,
                                 leave_history.leave_reason,
                                 leave_history.reviewer_user_id,
                                 //leave_history.notifications_users_id,

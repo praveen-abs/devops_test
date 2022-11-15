@@ -240,24 +240,31 @@ class VmtAttendanceController extends Controller
 
     public function saveLeaveRequestDetails(Request $request)
     {
+
+        //dd($request->all());
         //Check if leave already applied for the given date
-        $leaveExistsForCurrentDate = VmtEmployeeLeaves::where('user_id',auth::user()->id)
-                                    ->whereDate('start_date','=',date($request->start_date));
+        // $leaveExistsForCurrentDate = VmtEmployeeLeaves::where('user_id',auth::user()->id)
+        //                             ->whereDate('start_date','=',date($request->start_date));
 
-        if ($leaveExistsForCurrentDate->exists()) {
-            return $response = [
-                'status' => 'failure',
-                'message' => 'Leave Request already applied for this date',
-                'mail_status' => '',
-                'error' => '',
-                'error_verbose' => ''
-            ];
-        } else {
-            //dd("Leave does not exists");
+        // if ($leaveExistsForCurrentDate->exists()) {
+        //     return $response = [
+        //         'status' => 'failure',
+        //         'message' => 'Leave Request already applied for this date',
+        //         'mail_status' => '',
+        //         'error' => '',
+        //         'error_verbose' => ''
+        //     ];
+        // } else {
+        //     //dd("Leave does not exists");
 
-        }
+        // }
 
         $leave_request_date = Carbon::now();
+
+        //Calculate total leave days...
+        $start = Carbon::parse($request->start_date);
+        $end = Carbon::parse($request->end_date);
+        $diff = $start->diff($end)->format('%D day(s) , %H hour(s)');
 
         $emp_leave_details =  new VmtEmployeeLeaves;
         $emp_leave_details->user_id = auth::user()->id;
@@ -266,7 +273,7 @@ class VmtAttendanceController extends Controller
         $emp_leave_details->start_date = $request->start_date;
         $emp_leave_details->end_date = $request->end_date;
         $emp_leave_details->leave_reason = $request->leave_reason;
-        $emp_leave_details->total_leave_datetime = $request->total_leave_datetime;
+        $emp_leave_details->total_leave_datetime = $diff;
 
         //get manager of this employee
         $manager_emp_code = VmtEmployeeOfficeDetails::where('user_id', auth::user()->id)->value('l1_manager_code');
@@ -294,14 +301,18 @@ class VmtAttendanceController extends Controller
         $VmtGeneralInfo = VmtGeneralInfo::first();
         $image_view = url('/') . $VmtGeneralInfo->logo_img;
 
+
         $isSent    = \Mail::to($reviewer_mail)->send(new RequestLeaveMail(
                                                     auth::user()->name,
                                                     auth::user()->user_code,
                                                     $emp_avatar,
                                                     $manager_name,
-                                                    Carbon::parse($leave_request_date)->format('M jS Y'),
-                                                    Carbon::parse($request->start_date)->format('M jS Y'),
-                                                    Carbon::parse($request->end_date)->format('M jS Y'),
+                                                    // Carbon::parse($leave_request_date)->format('M jS Y'),
+                                                    // Carbon::parse($request->start_date)->format('M jS Y'),
+                                                    // Carbon::parse($request->end_date)->format('M jS Y'),
+                                                    $leave_request_date,
+                                                    $request->start_date,
+                                                    $request->end_date,
                                                     $request->leave_reason,
                                                     VmtLeaves::find($request->leave_type_id)->leave_type,
                                                     $request->total_leave_datetime,

@@ -70,11 +70,15 @@ $bank_names = \DB::table('bank_list')->get();
                                                     <p class="text-strong " style="margin: 0px 0px 0px ">Dear
                                                         {{ $managerName }}</p>
                                                     <p class="" style="  ">
-                                                        You have
-                                                        been sent the following leave request for approval. Please
-                                                        review the below details.</p>
+                                                        @if($leaveType != 'Permission')
+                                                        You have been sent the following leave request for approval. Please
+                                                        review the below details.
+                                                        @else
+                                                        You have been sent the following permission request for approval. Please
+                                                        review the below details.
+                                                        @endif
 
-
+                                                    </p>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -93,7 +97,11 @@ $bank_names = \DB::table('bank_list')->get();
                                                     <td colspan="8"
                                                         style="color:#002f56;font-weight:600;font-size:20px;padding-bottom:20px;"
                                                         align="center">
+                                                        @if($leaveType != 'Permission')
                                                         Leave Request From
+                                                        @else
+                                                        Permission Request From
+                                                        @endif
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -170,15 +178,24 @@ $bank_names = \DB::table('bank_list')->get();
                                                         <div>
                                                             <p
                                                                 style="font-weight:500;color:#adadad;margin-bottom:0px;margin-top:0px;font-size:12px">
+                                                                @if($leaveType != 'Permission')
                                                                 Leave Request Date(s)
+                                                                @else
+                                                                Permission Request Date & Time
+                                                                @endif
                                                             </p>
                                                             <p
                                                                 style="font-weight:600;color:#002f56;margin-bottom:0px;margin-top:0px;font-size:14px">
 
-                                                                <span>{{ $startDate }}</span>
-                                                                <span>-</span>
-                                                                <span>{{ $endDate }}</span>
-
+                                                                @if($leaveType != 'Permission')
+                                                                    <span>{{ \Carbon\Carbon::parse($startDate)->format('M jS Y') }}</span>
+                                                                    <span>-</span>
+                                                                    <span>{{ \Carbon\Carbon::parse($endDate)->format('M jS Y') }}</span>
+                                                                @else
+                                                                    <span>{{ \Carbon\Carbon::parse($startDate)->format('M jS Y \\, h:i:s A') }}</span>
+                                                                    <span>-</span>
+                                                                    <span>{{ \Carbon\Carbon::parse($endDate)->format('M jS Y \\, h:i:s A') }}</span>
+                                                                @endif
                                                             </p>
 
                                                             <p
@@ -204,7 +221,10 @@ $bank_names = \DB::table('bank_list')->get();
                                                             </p>
                                                             <p
                                                                 style="font-weight:600;color:#002f56;margin-bottom:0px;margin-top:0px;font-size:14px">
+                                                                @if($leaveType != 'Permission')
+
                                                                 {{ $totalLeaveDatetime }} Day(s) of {{ $leaveType }}
+                                                                @endif
                                                             </p>
 
                                                             <p

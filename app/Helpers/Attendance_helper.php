@@ -34,5 +34,9 @@ function getLeaveCountDetails($user_id){
     return $response;
 }
 
+function getPermissionLeaveTypeIDs(){
+    return VmtLeaves::where('leave_type','like','%Permission%')->pluck('id');
+}
+
 
 
