@@ -743,11 +743,13 @@
                             cell.innerHTML = " <div class='w-100 h-100 p-2' style='background-color:#f3edef;'> <span class='show_date' >" + date +
                                 "</span> <span>Week Off </span> <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex justify-content-between'> </div> <div class='w-100 d-flex justify-content-between check-out mt-2 f-10 text-danger'> </div></div></div>";
 
-                        } else {
+                        }
+                        else
+                        {
                             cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
                                 "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex '><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span id='checkin_time_" +
                                 year + "-" + (month + 1) + "-" + dateText +
-                                "'></span>    <input type='button' onclick ='showRegularizationModal(this)' class='f-10 w-100 btn ms-2 lc_btn border-0 btn-danger p-1'  value='Absent' data-cellid ='checkin_time_" +
+                                "'></span>    <input type='button' onclick ='showRegularizationModal(this)' class='f-10  btn ms-2 lc_btn border-0 p-1 text-white'  value='' data-cellid ='checkin_time_" +
                                 year + "-" + (month + 1) + "-" + dateText +
                                 "'/></div> <div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span id='checkout_time_" +
                                 year + "-" + (month + 1) + "-" + dateText + "'></span> </div></div></div>";
