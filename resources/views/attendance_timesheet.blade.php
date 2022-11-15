@@ -320,9 +320,9 @@
 
                         var html = '<li class="list_employee_attendance p-1 w-100" >' +
                             '<button class="w-100 btn d-flex employee_list_item" data-userid=' + element.id +'>' +
-                            '<div class="user_pic me-2 d-flex justify-content-center align-items-center bg-primary rounded-circle">' +avatar_data +
+                            '<div class="user_pic me-2 d-flex col-auto justify-content-center align-items-center bg-primary rounded-circle">' +avatar_data +
                             '</div>' +
-                            '<div class="user_content text-start d-flex  align-items-center flex-column">' +
+                            '<div class="user_content text-start">' +
                             '<p class="fw-bold text-primary f-13">' + element.name + '</p>' +
                             '<p class=" text-muted f-11">' + element.designation + '</p>' +
                             '</div>' +
@@ -383,9 +383,9 @@
 
                         var html = '<li class="list_employee_attendance p-1 w-100" >' +
                             '<button class="w-100 btn d-flex employee_list_item" data-userid=' + element.id +'>' +
-                            '<div class="user_pic me-2 d-flex justify-content-center align-items-center bg-primary rounded-circle">' +avatar_data +
+                            '<div class="user_pic col-auto me-2 d-flex justify-content-center align-items-center bg-primary rounded-circle">' +avatar_data +
                             '</div>' +
-                            '<div class="user_content text-start d-flex  align-items-center flex-column">' +
+                            '<div class="user_content text-start ">' +
                             '<p class="fw-bold text-primary f-13">' + element.name + '</p>' +
                             '<p class=" text-muted f-11">' + element.designation + '</p>' +
                             '</div>' +
@@ -434,9 +434,9 @@
 
             var html = '<li class="list_employee_attendance p-1 w-100" >' +
                             '<button class="w-100 btn d-flex employee_list_item" data-userid='+'{{ $current_employee_detail->id }}'+'>' +
-                            '<div class="user_pic me-2 d-flex justify-content-center align-items-center bg-primary rounded-circle">' +avatar_data +
+                            '<div class="user_pic col-auto me-2 d-flex justify-content-center align-items-center bg-primary rounded-circle">' +avatar_data +
                             '</div>' +
-                            '<div class="user_content text-start d-flex  align-items-center flex-column">' +
+                            '<div class="user_content  text-start">' +
                             '<p class="fw-bold text-primary f-13">{{ $current_employee_detail->name }}</p>' +
                             '<p class=" text-muted f-11">{{ $current_employee_detail->designation }}</p>' +
                             '</div>' +

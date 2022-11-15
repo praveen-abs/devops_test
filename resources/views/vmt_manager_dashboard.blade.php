@@ -83,7 +83,7 @@
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 col-xxl-12">
-                    <div class="card profile-box flex-fill card-top-border w-100">
+                    <div class="card profile-box flex-fill card-top-border w-100" style="height: 200px;overflow-y:auto;">
                         <!-- <div class="p-1 bg-primary" ></div> -->
                         <div class="card-body ">
                             <div class="profile-wrapper d-flex p-0">
@@ -141,13 +141,14 @@
                                             </div>
                                             <div class="topbarContent emp-announcement " style="display:none;">
                                                 <div>
-                                                    <form id="announcement-form-submit">
+                                                    @foreach($announcementData as $singleAnnouncement)
                                                         <div class="announcement-content scrollBar">
+                                                            <input class="form-control   w-100 h-100" value="{{ $singleAnnouncement->title_data }}" aria-label="default input example" placeholder="Title of the Announcement" type="text" id="title_data" name="title_data" readonly>
+                                                            <input class="form-control   w-100 h-100" value="Date Posted : {{ \Carbon\Carbon::parse($singleAnnouncement->created_at)->format('M jS Y \\, h:i:s A') }}" aria-label="default input example" placeholder="Title of the Announcement" type="text" id="title_data" name="title_data" readonly>
 
-                                                            <input class="form-control   w-100 h-100" aria-label="default input example" placeholder="Title of the Announcement" type="text" id="title_data" name="title_data" required>
-                                                            <hr>
-                                                            <!-- <input class="form-control" type="text" placeholder="Default input" aria-label="default input example"> -->
-                                                            <textarea class="form-control placeholder-glow w-100 h-100" placeholder="Details of Announcement" aria-label="default input example" type="text" name="details_data" id="details_data" required></textarea>
+                                                            <textarea class="form-control placeholder-glow w-100 h-100" style="text-align:left" placeholder="Details of Announcement"
+                                                             aria-label="default input example" type="text" name="details_data"
+                                                             id="details_data" readonly>{{ $singleAnnouncement->details_data }}</textarea>
 
 
                                                             <div class="bottom-content d-flex mx-2">
@@ -155,43 +156,34 @@
                                                                 <div class="row">
                                                                     <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                                                                         <div class="form-check ps-0">
-                                                                            <input class="form-check-input check-box me-1" type="checkbox" value="1" id="notifyEmp" name="notify_employees">
-                                                                            <label class="form-check-label" for="notifyEmp">
-                                                                                Notify employees
+
                                                                             </label>
 
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                                                                         <div class="form-check ps-0">
-                                                                            <input class="form-check-input check-box  me-1" type="checkbox" value="1" id="requireAcknowledge" name="require_acknowledgement">
-                                                                            <label class="form-check-label" for="requireAcknowledge">
-                                                                                Require Acknowledgement
+
                                                                             </label>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6  col-xxl-6 ">
                                                                         <div class="form-check ps-0">
-                                                                            <input class="form-check-input check-box me-1" type="checkbox" value="1" id="hideAfter" name="hide_after">
-                                                                            <label class="form-check-label" for="hideAfter">
-                                                                                Hide After
+
                                                                             </label>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                                                                         <div class="form-check ps-0">
-                                                                            <input class="form-control me-1 anounce-date " type="date" name="date" placeholder="Select date" id="" required style="background-color:#e9ecef">
+
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <button class="btn btn-primary float-end" id="annon_menu_submit" type="submit">
-                                                            Submit
-                                                        </button>
-                                                    </form>
+                                                    @endforeach
                                                 </div>
-                                            </div>
+
                                             <div class="topbarContent emp-poll" style="display:none;">
                                                 <div>
                                                     <div class="poll-content">
@@ -281,7 +273,7 @@
                         <div class="h-100  _container-calendar">
                             <div class="_button-container-calendar d-flex align-items-center justify-content-between">
                                 <button id="_previous" onclick="previous()" class="previous"><i class="fa fa-chevron-left"></i></button>
-                                <h6 id="_monthAndYear" class="_monthAndYear"></h6>
+                                <h6 id="_monthAndYear" class="_monthAndYear text-white"></h6>
                                 <button id="_next" onclick="next()" class="next"><i class="fa fa-chevron-right"></i></button>
                             </div>
                             <table class="_table-calendar" id="_calendar" data-lang="en">

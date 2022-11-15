@@ -17,7 +17,7 @@
     border-collapse: collapse;
     width: 100%;
     border: 0;
-    margin: 50px 0px;
+    margin: 10px 0px;
     height: 210px;
 }
 ._table-calendar th {
@@ -45,7 +45,7 @@
     width: 2px;
     height: 20px;
     background: #fc4000;
-    
+
 }
 
 ._date-picker ._date-picker.selected span {

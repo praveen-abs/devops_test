@@ -502,7 +502,7 @@
                                 <li class="nav-item">
                                     <a href="{{route('run')}}"  class="nav-link sidebar py-1"
                                         role="button"><span>
-                                         Run</span>
+                                        Pay Run</span>
                                     </a>
                                 </li>
 

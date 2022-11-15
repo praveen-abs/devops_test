@@ -121,7 +121,7 @@ $bank_names = \DB::table('bank_list')->get();
 
                                                                             <?php
 
-                                                                                $imageURL = request()->getSchemeAndHttpHost() . '/images/' . $empAvatar['data'];
+                                                                            $imageURL = request()->getSchemeAndHttpHost() . '/images/' . $empAvatar['data'];
 
                                                                             ?>
                                                                             <img class="rounded-circle header-profile-user"
@@ -155,16 +155,14 @@ $bank_names = \DB::table('bank_list')->get();
                                                             </p>
                                                             <p
                                                                 style="font-weight:600;color:#002f56;margin-bottom:0px;margin-top:0px;font-size:14px">
-
                                                                 <span>{{ $leaveRequestDate }}</span>
-n-top:0px;font-size:14px">
-
-                                                                <span>{{ $startDate }}</span>
+                                                                {{-- <span>{{ $startDate }}</span> --}}
 
                                                             </p>
                                                             <p
                                                                 style="font-weight:500;color:#c1c1c1;margin-bottom:0px;margin-top:0px;font-size:12px">
-                               </div>
+                                                            </p>
+                                                        </div>
                                                     </td>
                                                     <td colspan="4"
                                                         style="color:#002f56;font-weight:600;font-size:20px;padding-bottom:10px"
@@ -226,14 +224,16 @@ n-top:0px;font-size:14px">
                                                 <tr>
                                                     <td colspan="4" style="" align="right">
 
-                                                        <a class="" type="button" href="{{$loginLink}}/attendance-leave-approvals"
+                                                        <a class="" type="button"
+                                                            href="{{ $loginLink }}/attendance-leave-approvals"
                                                             style="text-decoration:none;cursor: pointer; margin-right:30px;color:#ffffff;padding: 7px 30px;border: 2px solid #90f10c;background: #90f10c;border-radius: 4px;font-weight:600">
                                                             Approve
                                                         </a>
                                                     </td>
                                                     <td colspan="4" style="" align="left">
 
-                                                        <a class="" type="button" href="{{$loginLink}}/attendance-leave-approvals"
+                                                        <a class="" type="button"
+                                                            href="{{ $loginLink }}/attendance-leave-approvals"
                                                             style="text-decoration:none;cursor: pointer;margin-left:30px;color:#ffffff;padding: 7px 30px;border: 2px solid #f12d0c;background: #ff2500;border-radius: 4px;font-weight:600">
                                                             Reject
                                                         </a>
