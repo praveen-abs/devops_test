@@ -463,7 +463,7 @@ class VmtAttendanceController extends Controller
                     ->first(['check_out_time']);
 
                 $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
-                    ->select('user_Id', \DB::raw('MAX(date) as check_in_time'))
+                    ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
                     ->whereDate('date', $dateString)
                     ->where('direction', 'in')
                     ->where('user_Id', $userCode)
@@ -548,7 +548,7 @@ class VmtAttendanceController extends Controller
             return true;
     }
 
-    public function fetchTeamTimesheet(Request $request)
+    public function fetchTeamMembers(Request $request)
     {
         //Get the team members of the given user
         $reportees_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $request->user_code)->get('user_id');
@@ -567,7 +567,7 @@ class VmtAttendanceController extends Controller
         return $reportees_details;
     }
 
-    public function fetchOrgTimesheet(Request $request)
+    public function fetchOrgMembers(Request $request)
     {
         //Get the team members of the given user
         //$reportees_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $request->user_code)->get('user_id');

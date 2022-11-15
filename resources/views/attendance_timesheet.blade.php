@@ -287,7 +287,7 @@
 
         function ajaxGetTeamMembersDetails(user_code) {
             $.ajax({
-                url: "{{ route('fetch-attendance-team-timesheet') }}",
+                url: "{{ route('fetch-team-members') }}",
                 type: "GET",
                 data: {
                     user_code: user_code,
@@ -351,7 +351,7 @@
 
         function ajaxGetOrgMembersDetails() {
             $.ajax({
-                url: "{{ route('fetch-attendance-org-timesheet') }}",
+                url: "{{ route('fetch-org-members') }}",
                 type: "GET",
                 data: {
                     _token: '{{ csrf_token() }}'
