@@ -1,5 +1,6 @@
+
 {{-- @section('ui-onboarding') --}}
-<?php //dd($allEmployeesUserCode->toArray()); ?>
+<?php //dd($employee_details->doj); ?>
 <div class="container-fluid ">
     <div class="">
         <div class="row ">
@@ -103,7 +104,7 @@
                                                     @if (isset($employee_details->doj))
                                                         <input type="text" max="9999-12-31"
                                                             placeholder="Date of Joining" name="doj"
-                                                            value="{{ isset($employee_details->doj) ? date('d-m-Y', strtotime($employee_details->doj)) : '' }}"
+                                                            value="{{ isset($employee_details->doj) &&  $employee_details->doj != '0000-00-00' ? date('d-m-Y', strtotime($employee_details->doj)) : date('Y-m-d') }}"
                                                             class="onboard-form  form-control textbox " required
                                                             readonly />
                                                     @else

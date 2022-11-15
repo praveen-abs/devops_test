@@ -147,7 +147,7 @@
                                                             <input class="form-control   w-100 h-100" value="Date Posted : {{ \Carbon\Carbon::parse($singleAnnouncement->created_at)->format('M jS Y \\, h:i:s A') }}" aria-label="default input example" placeholder="Title of the Announcement" type="text" id="title_data" name="title_data" readonly>
 
                                                             <textarea class="form-control placeholder-glow w-100 h-100" style="text-align:left" placeholder="Details of Announcement"
-                                                             aria-label="default input example" type="text" name="details_data" 
+                                                             aria-label="default input example" type="text" name="details_data"
                                                              id="details_data" readonly>{{ $singleAnnouncement->details_data }}</textarea>
 
 
@@ -156,26 +156,26 @@
                                                                 <div class="row">
                                                                     <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                                                                         <div class="form-check ps-0">
-                                                                             
+
                                                                             </label>
 
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                                                                         <div class="form-check ps-0">
-                                                                             
+
                                                                             </label>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6  col-xxl-6 ">
                                                                         <div class="form-check ps-0">
-                                                                            
+
                                                                             </label>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                                                                         <div class="form-check ps-0">
-                                                                             
+
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -273,7 +273,7 @@
                         <div class="h-100  _container-calendar">
                             <div class="_button-container-calendar d-flex align-items-center justify-content-between">
                                 <button id="_previous" onclick="previous()" class="previous"><i class="fa fa-chevron-left"></i></button>
-                                <h6 id="_monthAndYear" class="_monthAndYear"></h6>
+                                <h6 id="_monthAndYear" class="_monthAndYear text-white"></h6>
                                 <button id="_next" onclick="next()" class="next"><i class="fa fa-chevron-right"></i></button>
                             </div>
                             <table class="_table-calendar" id="_calendar" data-lang="en">
