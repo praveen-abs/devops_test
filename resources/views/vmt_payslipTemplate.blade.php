@@ -14,53 +14,6 @@ $bank_names = \DB::table('bank_list')->get();
 
 
     <style>
-        .main-page {
-        width: 210mm;
-        min-height: 297mm;
-        margin: 10mm auto;
-        background: white;
-        box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        -webkit-box-sizing: bo;
-    }
-
-    .sub-page {
-        padding: 1cm;
-
-    }
-
-    @media print {
-        .main-page {
-            page-break-after: always;
-        }
-    }
-
-
-    @page {
-        size: A4;
-        margin: 0;
-    }
-
-    @media print {
-
-        html,
-        body {
-            width: 210mm;
-            height: 297mm;
-        }
-
-        .main-page {
-            margin: 0;
-            border: initial;
-            border-radius: initial;
-            width: initial;
-            min-height: initial;
-            box-shadow: initial;
-            background: initial;
-            page-break-after: always;
-        }
-    }
         table {
             width: 100%;
             vertical-align: middle;
@@ -132,12 +85,6 @@ $bank_names = \DB::table('bank_list')->get();
         td.bg-ash {
             background-color: #c1c1c1;
         }
-
-        .header-cotent p.brand-name {
-            font-weight: 600;
-            color: #002f56;
-            font-size: 16px;
-        }
     </style>
 </head>
 
@@ -148,9 +95,10 @@ $bank_names = \DB::table('bank_list')->get();
                 <tr class="header-row">
                     <td colspan="8" class="border-less">
                         <div class="header-cotent" style="margin: 10px;">
-                            <h6 class="margin-0">Brand Avatar LLP</h6>
-                            <p class= "mb-0" style="padding:0px;">NO-01,Kandasamy Street,</p>
-                            <p class="mb-0" style="padding:0px;">Chandrabagh Ave 2nd St, Dr. Radha Krishnan Salai, </p>
+                            <p class="margin-0   text-strong" style="color: #002f56;font-size:18px;padding:0px;">Brand Avatar LLP</p>
+                            <p class="mb-0" style="padding:0px;">NO-01,Kandasamy Street,</p>
+                            <p class="mb-0" style="padding:0px;">Chandrabagh Ave 2nd St, Dr. Radha Krishnan Salai,
+                            </p>
                             <p class="mb-0" style="padding:0px;">Mylapore, Chennai, Tamil Nadu 600004</p>
                         </div>
                     </td>
@@ -262,15 +210,13 @@ $bank_names = \DB::table('bank_list')->get();
                 <tr>
                     <td colspan="4" class="">
                         <?php
-                            $bank_name = '';
-                            foreach($bank_names as $singleBank)
-                            {
-                                if($singleBank->id == $employee_details->bank_id)
-                                {
-                                    $bank_name = $singleBank->bank_name;
-                                    break;
-                                }
+                        $bank_name = '';
+                        foreach ($bank_names as $singleBank) {
+                            if ($singleBank->id == $employee_details->bank_id) {
+                                $bank_name = $singleBank->bank_name;
+                                break;
                             }
+                        }
                         ?>
                         <p class="txt-center">{{ $bank_name }}</p>
                     </td>
@@ -337,22 +283,22 @@ $bank_names = \DB::table('bank_list')->get();
                 </tr>
                 <tr>
                     <td colspan="2" class="">
-                        <p class="txt-center">{{$employee->SL_Opn_Bal}}</p>
+                        <p class="txt-center">{{ $employee->SL_Opn_Bal }}</p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-center">{{$employee->EL_Opn_Bal}}</p>
+                        <p class="txt-center">{{ $employee->EL_Opn_Bal }}</p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-center">{{$employee->Availed_SL}}</p>
+                        <p class="txt-center">{{ $employee->Availed_SL }}</p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-center">{{$employee->Availed_EL}}</p>
+                        <p class="txt-center">{{ $employee->Availed_EL }}</p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-center">{{$employee->Balance_SL}}</p>
+                        <p class="txt-center">{{ $employee->Balance_SL }}</p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-center">{{$employee->Balance_EL}}</p>
+                        <p class="txt-center">{{ $employee->Balance_EL }}</p>
                     </td>
                 </tr>
                 <tr>
