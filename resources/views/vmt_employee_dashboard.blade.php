@@ -42,12 +42,11 @@
     </div>
     <!-- content middle -->
 
-
     <div class="row">
         <div class="col-sm-12 col-md-12 col-xl-8 col-lg-8 col-xxl-8">
             <div class="row mb-n4">
                 <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 col-xxl-12">
-                    <div class="card " style="height: 200px;overflow-y:auto;">
+                    <div class="card " style="height:200px;overflow-y:auto;">
                         <!-- <div class="p-1 bg-primary" ></div> -->
                         <div class="card-body ">
                             <div class="profile-wrapper d-flex p-0">
@@ -284,7 +283,6 @@
 <!--Sweet alert JS-->
 
 <script src="{{ URL::asset('/assets/premassets/js/progressbar.min.js') }}"></script>
-
 <!--Nice select-->
 <script src="{{ URL::asset('/assets/premassets/js/jquery.nice-select.min.js') }}"></script>
 
