@@ -274,6 +274,7 @@ class HomeController extends Controller
         $file = $request->file('profilePic');
         $user = User::find($request->id);
         $user->name = $request->input('name');
+        $user->email=$request->input('present_email');
         $number = mt_rand(1000000000, 9999999999);
         if ($file) {
             $filename = 'avatar-'.$request->id.$number.'.'. $file->getClientOriginalExtension();
@@ -297,6 +298,7 @@ class HomeController extends Controller
         //dd($details);
         $details->dob = $request->input('dob');
         $details->gender = $request->input('gender');
+
         $details->current_address_line_1 = $request->input('current_address_line_1');
         $details->current_address_line_2 = $request->input('current_address_line_2');
         $details->permanent_address_line_1 = $request->input('permanent_address_line_1');
