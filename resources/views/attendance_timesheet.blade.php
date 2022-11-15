@@ -83,8 +83,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-12 col-md-12 pe-0 col-xl-3 col-lg-3 col-xxl-3 mb-3">
-                <div class="card  mb-0" style="max-height:660px;min-height:660px;overflow-x:auto;">
+            <div class="col-sm-12 col-md-12 pe-0 col-xl-3 col-lg-3 col-xxl-3 ">
+                <div class="card  mb-0" style="height:500px;min-height:657px;overflow-y:auto;">
                     <div class="card-body px-1">
                         <div class="search-content ms-2  mb-3">
                             <i class=" ri-search-line "></i>
@@ -105,7 +105,7 @@
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane show active fade" id="attendanceMonth_tab" role="tabpanel"
                         aria-labelledby="pills-contact-tab">
-                        <div class="calendar-wrapper  box_shadow_0 card mb-0 border-0">
+                        <div class="calendar-wrapper card box_shadow_0 card mb-0 border-0">
                             <div class="card-body ">
                                 <div class="_wrapper vh-100">
                                     <div class=" h-100  _container-calendar">
@@ -747,11 +747,11 @@
                         else
                         {
                             cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
-                                "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex '><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span id='checkin_time_" +
+                                "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex '><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
                                 year + "-" + (month + 1) + "-" + dateText +
                                 "'></span>    <input type='button' onclick ='showRegularizationModal(this)' class='f-10  btn ms-2 lc_btn border-0 p-1 text-white'  value='' data-cellid ='checkin_time_" +
                                 year + "-" + (month + 1) + "-" + dateText +
-                                "'/></div> <div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span id='checkout_time_" +
+                                "'/></div> <div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span class='f-11' id='checkout_time_" +
                                 year + "-" + (month + 1) + "-" + dateText + "'></span> </div></div></div>";
                         }
 
