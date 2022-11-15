@@ -27,12 +27,12 @@ class VmtAttendanceController extends Controller
     public function showDashboard(Request $request)
     {
 
-       $Total_Active_Employees= User::where('active','1')
+        $Total_Active_Employees = User::where('active', '1')
 
-                                ->where('is_ssa','0')
-                                ->count();
+            ->where('is_ssa', '0')
+            ->count();
 
-        return view('attendance_dashboard',compact('Total_Active_Employees'));
+        return view('attendance_dashboard', compact('Total_Active_Employees'));
     }
 
     public function showAttendanceLeavePage(Request $request)
@@ -43,28 +43,26 @@ class VmtAttendanceController extends Controller
         $leaveData_Team = null;
         $leaveData_Org = null;
 
-        $leaveData_currentUser = VmtEmployeeLeaves::where('user_id',auth::user()->id);
+        $leaveData_currentUser = VmtEmployeeLeaves::where('user_id', auth::user()->id);
         //Get how many leaves taken for each leave_type
         $leaveData_currentUser = getLeaveCountDetails(auth::user()->id);
 
         //Generate Team leave data
-        if(Str::contains(currentLoggedInUserRole(), ['Manager']))
-        {
+        if (Str::contains(currentLoggedInUserRole(), ['Manager'])) {
             //dd(auth::user()->id);
             $teamMembers_UserIDs = getTeamMembersUserIds(auth::user()->id);
 
-            $leaveData_Team = VmtEmployeeLeaves::whereIn('user_id',$teamMembers_UserIDs)->get();
+            $leaveData_Team = VmtEmployeeLeaves::whereIn('user_id', $teamMembers_UserIDs)->get();
         }
 
         //Generate Org leave data
-        if(Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
-        {
+        if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR'])) {
             $leaveData_Org = VmtEmployeeLeaves::all();
         }
 
 
         //dd($leaveTypes->toArray());
-        return view('attendance_leave', compact('allEmployeesList', 'leaveTypes','leaveData_Org','leaveData_Team','leaveData_currentUser'));
+        return view('attendance_leave', compact('allEmployeesList', 'leaveTypes', 'leaveData_Org', 'leaveData_Team', 'leaveData_currentUser'));
     }
 
     public function showAttendanceLeaveSettings(Request $request)
@@ -112,7 +110,7 @@ class VmtAttendanceController extends Controller
         //Send mail to the employee
         $employee_user_id = VmtEmployeeLeaves::where('id', $request->leave_id)->value('user_id');
         $employee_mail =  VmtEmployeeOfficeDetails::where('user_id', $employee_user_id)->value('officical_mail');
-        $obj_employee = User::where('id',$employee_user_id);
+        $obj_employee = User::where('id', $employee_user_id);
         $manager_user_id = VmtEmployeeLeaves::where('id', $request->leave_id)->value('reviewer_user_id');
 
         $message = "";
@@ -241,8 +239,8 @@ class VmtAttendanceController extends Controller
     public function saveLeaveRequestDetails(Request $request)
     {
         //Check if leave already applied for the given date
-        $leaveExistsForCurrentDate = VmtEmployeeLeaves::where('user_id',auth::user()->id)
-                                    ->whereDate('start_date','=',date($request->start_date));
+        $leaveExistsForCurrentDate = VmtEmployeeLeaves::where('user_id', auth::user()->id)
+            ->whereDate('start_date', '=', date($request->start_date));
 
         if ($leaveExistsForCurrentDate->exists()) {
             return $response = [
@@ -295,20 +293,20 @@ class VmtAttendanceController extends Controller
         $image_view = url('/') . $VmtGeneralInfo->logo_img;
 
         $isSent    = \Mail::to($reviewer_mail)->send(new RequestLeaveMail(
-                                                    auth::user()->name,
-                                                    auth::user()->user_code,
-                                                    $emp_avatar,
-                                                    $manager_name,
-                                                    Carbon::parse($leave_request_date)->format('M jS Y'),
-                                                    Carbon::parse($request->start_date)->format('M jS Y'),
-                                                    Carbon::parse($request->end_date)->format('M jS Y'),
-                                                    $request->leave_reason,
-                                                    VmtLeaves::find($request->leave_type_id)->leave_type,
-                                                    $request->total_leave_datetime,
-                                                    //Carbon::parse($request->total_leave_datetime)->format('M jS Y \\, h:i:s A'),
-                                                    request()->getSchemeAndHttpHost(),
-                                                    $image_view
-                                                ));
+            auth::user()->name,
+            auth::user()->user_code,
+            $emp_avatar,
+            $manager_name,
+            Carbon::parse($leave_request_date)->format('M jS Y'),
+            Carbon::parse($request->start_date)->format('M jS Y'),
+            Carbon::parse($request->end_date)->format('M jS Y'),
+            $request->leave_reason,
+            VmtLeaves::find($request->leave_type_id)->leave_type,
+            $request->total_leave_datetime,
+            //Carbon::parse($request->total_leave_datetime)->format('M jS Y \\, h:i:s A'),
+            request()->getSchemeAndHttpHost(),
+            $image_view
+        ));
 
         if ($isSent) {
             $mail_status = "Mail sent successfully";
@@ -430,15 +428,15 @@ class VmtAttendanceController extends Controller
 
         $regularTime  = VmtWorkShifts::where('shift_type', 'First Shift')->first();
         $currentyear = date("Y");
-        $dt = $currentyear.'-'.$request->month.'-01';
+        $dt = $currentyear . '-' . $request->month . '-01';
         $currentDate = Carbon::now();
         $monthDateObj = Carbon::parse($dt);
         $startOfMonth = $monthDateObj->startOfMonth(); //->format('Y-m-d');
         $endOfMonth   = $monthDateObj->endOfMonth(); //->format('Y-m-d');
 
-        if($currentDate->lte($endOfMonth)){
+        if ($currentDate->lte($endOfMonth)) {
             $lastAttendanceDate  = $currentDate; //->format('Y-m-d');
-        }else{
+        } else {
             $lastAttendanceDate  = $endOfMonth; //->format('Y-m-d');
         }
 
@@ -447,11 +445,11 @@ class VmtAttendanceController extends Controller
 
         // attendance details from vmt_staff_attenndance_device table
         $deviceData = [];
-        for ($i=0; $i < ($totDays) ; $i++) {
+        for ($i = 0; $i < ($totDays); $i++) {
             // code...
             $dayStr = Carbon::parse($firstDateStr)->addDay($i)->format('l');
 
-            if($dayStr != 'Sunday'){
+            if ($dayStr != 'Sunday') {
 
                 $dateString  = Carbon::parse($firstDateStr)->addDay($i)->format('Y-m-d');
 
@@ -472,15 +470,14 @@ class VmtAttendanceController extends Controller
                 $deviceCheckOutTime = $attendanceCheckOut->check_out_time;
                 $deviceCheckInTime  = $attendanceCheckIn->check_in_time;
 
-                if($deviceCheckOutTime  != null || $deviceCheckInTime != null){
+                if ($deviceCheckOutTime  != null || $deviceCheckInTime != null) {
                     $deviceData[] = array(
-                                        'date' => $dateString,
-                                        'checkin_time' => $deviceCheckInTime,
-                                        'checkout_time' => $deviceCheckOutTime
-                                    );
+                        'date' => $dateString,
+                        'checkin_time' => $deviceCheckInTime,
+                        'checkout_time' => $deviceCheckOutTime
+                    );
                 }
             }
-
         }
 
         // attendance details from vmt_employee_attenndance table
@@ -492,14 +489,14 @@ class VmtAttendanceController extends Controller
         $attaendanceResponseArray = [];
 
         // merging result from both table
-        if(count($deviceData) > 0){
+        if (count($deviceData) > 0) {
             $data = $data->toArray();
             $data  = array_merge($deviceData, $data);
             $dateCollectionObj    =  collect($data);
 
             $sortedCollection   =   $dateCollectionObj->sortBy([
-                                        ['date', 'asc'],
-                                    ]);
+                ['date', 'asc'],
+            ]);
 
             $dateWiseData         =  $sortedCollection->groupBy('date'); //->all();
 
@@ -511,7 +508,7 @@ class VmtAttendanceController extends Controller
                     'checkout_time' => $value->max('checkout_time')
                 );
             }
-        }else{
+        } else {
             $attaendanceResponseArray = $data->toArray();
         }
 
@@ -676,9 +673,14 @@ class VmtAttendanceController extends Controller
         $VmtGeneralInfo = VmtGeneralInfo::first();
         $image_view = url('/') . $VmtGeneralInfo->logo_img;
 
+
+        $emp_avatar = getEmployeeAvatarOrShortName(auth::user()->id);
+
+
         $isSent    = \Mail::to($manager_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
             auth::user()->name,
             auth::user()->user_code,
+            $emp_avatar,
             $request->attendance_date,
             $manager_details->name,
             $manager_details->user_code,

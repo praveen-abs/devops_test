@@ -261,7 +261,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                 <td align="center" style="padding:10px 0px 0px 0px">
                                                     This e-mail was generatd from ABShrms if you think this is
                                                     SPAM,please do report to<a
-                                                        href="https://mail.google.com/mail/u/0/#sent?compose=new"
+                                                    href="info@abshrms.com"
                                                         style="text-decoration: none;color:none;"> info<span
                                                             style="color:#fa9530;">@abshrms.com</span></a>
                                                 </td>
