@@ -221,14 +221,26 @@ $bank_names = \DB::table('bank_list')->get();
                                         <tbody>
                                             <tr>
                                                 <td align="center" width="100%"
-                                                style="padding-bottom:0px !important;" style="margin-right: 10px">
-                                                <div class="fm-sm-container">
-                                                    <a href="https://www.linkedin.com/company/ardenshr-services-private-limited/" target="_blank" style="margin-right: 20px"><img src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-001.png" alt="LinkedIn"></a>
-                                                    <a href="https://www.instagram.com/ardenshr/" target="_blank" style="margin-right: 20px"><img src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-002.png" alt="Instagram"></a>
-                                                    <a href="https://www.facebook.com/ArdensHR" target="_blank" style="margin-right: 20px"><img src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-004.png" alt="Facebook"></a>
-                                                    <a href="https://www.youtube.com/channel/UCgZ7XpBoJvcWWvaiBS5GxHg" target="_blank"><img src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-003.png" alt="Youtube"></a>
-                                                </div>
-                                            </td>
+                                                    style="padding-bottom:0px !important;" style="margin-right: 10px">
+                                                    <div class="fm-sm-container">
+                                                        <a href="https://www.linkedin.com/company/ardenshr-services-private-limited/"
+                                                            target="_blank" style="margin-right: 20px"><img
+                                                                src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-001.png"
+                                                                alt="LinkedIn"></a>
+                                                        <a href="https://www.instagram.com/ardenshr/" target="_blank"
+                                                            style="margin-right: 20px"><img
+                                                                src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-002.png"
+                                                                alt="Instagram"></a>
+                                                        <a href="https://www.facebook.com/ArdensHR" target="_blank"
+                                                            style="margin-right: 20px"><img
+                                                                src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-004.png"
+                                                                alt="Facebook"></a>
+                                                        <a href="https://www.youtube.com/channel/UCgZ7XpBoJvcWWvaiBS5GxHg"
+                                                            target="_blank"><img
+                                                                src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-003.png"
+                                                                alt="Youtube"></a>
+                                                    </div>
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>

@@ -160,7 +160,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                 <td align="center" style="padding:10px 0px 0px 0px">
                                                     This e-mail was generated from ABShrms if you think this is
                                                     SPAM,please do report to<a
-                                                        href="https://mail.google.com/mail/u/0/#sent?compose=new"
+                                                    href="info@abshrms.com"
                                                         style="text-decoration: none;color:none;"> info<span
                                                             style="color:#fa9530;">@abshrms.com</span></a>
                                                 </td>
@@ -177,7 +177,7 @@ $bank_names = \DB::table('bank_list')->get();
                                             <tr>
                                                 <td align="right" colspan="4" style="padding: 0;">
                                                     <a href="#" class="">
-                                                        <img src="{{ URL::asset('assets/images/Google_Play_Store.png') }}"
+                                                        <img src="https://www.google.com/search?q=apple+play+store+icon&sxsrf=ALiCzsZSwDGRUaWhIVHPyEIWAF1rMhliTQ:1668528882836&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjziu-6yrD7AhVTSGwGHW9cA5oQ_AUoAXoECAEQAw&biw=1366&bih=625&dpr=1#imgrc=jcbrOXCevaqqyM"
                                                             alt="" class=""
                                                             style="margin:0px 20px 0px 0px">
                                                     </a>
@@ -201,30 +201,24 @@ $bank_names = \DB::table('bank_list')->get();
                                         <tbody>
                                             <tr>
                                                 <td align="center" width="100%"
-                                                    style="padding-bottom:0px !important;">
-                                                    <div class="d-flex justify-content-center social-icons-wrapper">
-                                                        <a href="https://accounts.google.com/signin" class=""
-                                                            style="margin-right: 50px;text-decoration:none;">
-
-                                                            <img src="http://127.0.0.1:8000/assets/images/login_img/google.png"
-                                                                alt="" class=""
-                                                                style="height:20px;width:20px;">
-                                                        </a>
-                                                        <a href="https://www.linkedin.com/login" class=""
-                                                            style="margin:0px 30px;text-decoration:none;">
-
-                                                            <img src="http://127.0.0.1:8000/assets/images/login_img/linkedIn_PNG39.png"
-                                                                alt="" class=""
-                                                                style="height: 20px;width:20px;">
-                                                        </a>
-                                                        <a class=""
-                                                            href="https://login.live.com/login.srf?wa=wsignin1.0&amp;rpsnv=13&amp;ct=1658217648&amp;rver=7.0.6738.0&amp;wp=MBI_SSL&amp;wreply=https:%2F%2Faccount.microsoft.com%2Fauth%2Fcomplete-signin%3Fru%3Dhttps%253A%252F%252Faccount.microsoft.com%252F%253Frefp%253Dsignedout-index%2526refd%253D127.0.0.1&amp;lc=1033&amp;id=292666&amp;lw=1&amp;fl=easi2"
-                                                            style="margin:0px 0px 0px 50px;text-decoration:none;">
-
-                                                            <img src="http://127.0.0.1:8000/assets/images/login_img/microsoft_PNG18.png"
-                                                                alt="" class=""
-                                                                style="height: 20px;width:20px;">
-                                                        </a>
+                                                    style="padding-bottom:0px !important;" style="margin-right: 10px">
+                                                    <div class="fm-sm-container">
+                                                        <a href="https://www.linkedin.com/company/ardenshr-services-private-limited/"
+                                                            target="_blank" style="margin-right: 20px"><img
+                                                                src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-001.png"
+                                                                alt="LinkedIn"></a>
+                                                        <a href="https://www.instagram.com/ardenshr/" target="_blank"
+                                                            style="margin-right: 20px"><img
+                                                                src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-002.png"
+                                                                alt="Instagram"></a>
+                                                        <a href="https://www.facebook.com/ArdensHR" target="_blank"
+                                                            style="margin-right: 20px"><img
+                                                                src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-004.png"
+                                                                alt="Facebook"></a>
+                                                        <a href="https://www.youtube.com/channel/UCgZ7XpBoJvcWWvaiBS5GxHg"
+                                                            target="_blank"><img
+                                                                src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-003.png"
+                                                                alt="Youtube"></a>
                                                     </div>
                                                 </td>
                                             </tr>
