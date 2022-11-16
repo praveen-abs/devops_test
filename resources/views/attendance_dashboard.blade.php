@@ -106,7 +106,7 @@
                             <div class="col-sm-3 col-sm-12 col-xl-3 col-md-4 col-lg-3 d-flex">
                                 <div class="card box_shadow_0 border-rtb  left-line w-100">
                                     <div class="card-body text-center">
-                                        <p class="text-ash-medium mb-2 f-13 "> Arrivals</p>
+                                        <p class="text-ash-medium mb-2 f-13 "> Absenteeism</p>
                                         <h5 class="mb-0">-</h5>
                                         <div class="text-right">
                                             <button type="button"
