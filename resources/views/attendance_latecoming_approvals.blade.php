@@ -243,7 +243,7 @@
                         },
                         {
                             id: 'user_time',
-                            name: 'Employee Time',
+                            name: 'Actual Time',
                             formatter: function formatter(cell) {
 
                                 return gridjs.html(moment(cell,"HH:mm:ss").format('h:mm a'));
