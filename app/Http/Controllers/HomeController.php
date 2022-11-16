@@ -418,9 +418,9 @@ class HomeController extends Controller
 
             $checked = VmtEmployeeAttendance::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->first();
 
-            $to = Carbon::createFromFormat('Y-m-d H:i:s', $checked->checkout_time);
+            $to = Carbon::createFromFormat('H:i:s', $checked->checkout_time);
 
-            $from = Carbon::createFromFormat('Y-m-d H:i:s', $checked->checkin_time);
+            $from = Carbon::createFromFormat('H:i:s', $checked->checkin_time);
 
             $effective_hours = gmdate('H:i:s', $to->diffInSeconds($from));
 
