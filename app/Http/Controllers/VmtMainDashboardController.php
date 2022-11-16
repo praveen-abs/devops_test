@@ -136,9 +136,9 @@ class VmtMainDashboardController extends Controller
         //If user already checkout, then send time difference to blade
         if(isset($checked->checkout_time))
         {
-            $to = Carbon::createFromFormat('Y-m-d H:i:s', $checked->checkout_time);
+            $to = Carbon::createFromFormat('H:i:s', $checked->checkout_time);
 
-            $from = Carbon::createFromFormat('Y-m-d H:i:s', $checked->checkin_time);
+            $from = Carbon::createFromFormat('H:i:s', $checked->checkin_time);
 
             $effective_hours = gmdate('H:i:s', $to->diffInSeconds($from));
 
