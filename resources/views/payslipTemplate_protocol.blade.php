@@ -92,14 +92,16 @@ $bank_names = \DB::table('bank_list')->get();
 </head>
 
 <body>
-    <div class="main-page">
+    {{-- <div class="main-page"> --}}
         <div class="sub-page" style="text-align: justify;">
-            {{-- <div class="" style="height:100px ;width:100%">
 
-                <img src="{{ URL::asset('assets/images/footerProtocolImg_payslip.svg') }}" class="" alt=""
-                    style="height: 80px;width:80px;max-height:100%;">
-            </div> --}}
             <table cellspacing="0" cellpadding="0" class="payslip_table">
+                <tr class="border-less">
+                    <td class="border-less" colspan="12">
+                        <img src="{{ URL::asset('assets/images/header_protocolo.svg') }}" class="" alt=""
+                        style="width:100%;height:100%;">
+                    </td>
+                </tr>
                 <tr class="header-row" aria-rowcount="">
                     <td colspan="8" class="border-less  p3" rowspan="">
                         <div class="header-cotent">
@@ -581,14 +583,17 @@ $bank_names = \DB::table('bank_list')->get();
                     </td>
                 </tr>
 
-            </table>
-             {{-- <div class="" style="height:100px ;width:100%">
+                <tr class="border-less">
+                    <td colspan="12" class="border-less">
+                        <img src="{{ URL::asset('assets/images/footerProtocolImg_payslip.svg') }}" class="" alt=""
+                        style="height:100%;width:100%;">
+                    </td>
+                </tr>
 
-                <img src="{{ URL::asset('assets/images/footerProtocolImg_payslip.svg') }}" class="" alt=""
-                    style="height: 80px;width:80px;max-height:100%;">
-            </div> --}}
+            </table>
+
         </div>
-    </div>
+    {{-- </div> --}}
 
 </body>
 
