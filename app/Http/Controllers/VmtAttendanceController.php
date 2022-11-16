@@ -752,10 +752,12 @@ class VmtAttendanceController extends Controller
 
         $VmtGeneralInfo = VmtGeneralInfo::first();
         $image_view = url('/') . $VmtGeneralInfo->logo_img;
+        $emp_avatar = getEmployeeAvatarOrShortName(auth::user()->id);
 
         $isSent    = \Mail::to($employee_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
             $employee_details->name,
             $employee_details->user_code,
+            $emp_avatar,
             $data->attendance_date,
             auth::user()->name,
             auth::user()->user_code,
