@@ -779,23 +779,40 @@
                 var calendar_cell_id_value = "";
 
                 if (element.checkin_time) {
-                    calendar_cell_id = element.checkin_time.split(" ")[0];
-                    calendar_cell_id_value = element.checkin_time.split(" ")[1];
+                    calendar_cell_id = element.date;
+                    calendar_cell_id_value = element.checkin_time;
                     //Find the calendar cell ID based on above checkin date
                     //$('#checkin_time_' + calendar_cell_id).html(calendar_cell_id_value);
                     $('#checkin_time_' + calendar_cell_id).html(moment(calendar_cell_id_value,"HH:mm:ss").format('h:mm A'));
+                    //$('#checkin_time_' + calendar_cell_id).html(calendar_cell_id_value);
 
                 } else {
                     $('#checkin_time_' + calendar_cell_id).html('---');
                 }
 
-                if (element.is_lc && (!element.is_lc_applied)) {
-
-                    if (element.checkin_time) {
+                if (element.is_lc) {
+                    if(element.is_lc_applied){
                         var lcINputButton = $('#checkin_time_' + calendar_cell_id).parent().parent().find('input');
+                        calendar_cell_id = element.date;
+                        calendar_cell_id_value = element.checkin_time;
 
-                        calendar_cell_id_value = element.checkin_time.split(" ")[1];
-                        calendar_cell_id = element.checkin_time.split(" ")[0];
+
+                        $(lcINputButton).attr('data-checkin_date', calendar_cell_id);
+                        $(lcINputButton).attr('data-actual_timing', calendar_cell_id_value);
+                        $(lcINputButton).attr('data-shift_timing', shift_start_time);
+                        $(lcINputButton).addClass('btn-info');
+                        $(lcINputButton).val("LC Applied");
+                        //$(lcINputButton).attr("disabled", 'disabled');
+
+
+                    }
+                    else
+                    {
+                        var lcINputButton = $('#checkin_time_' + calendar_cell_id).parent().parent().find('input');
+                        calendar_cell_id = element.date;
+                        calendar_cell_id_value = element.checkin_time;
+
+
                         $(lcINputButton).attr('data-checkin_date', calendar_cell_id);
                         $(lcINputButton).attr('data-actual_timing', calendar_cell_id_value);
                         $(lcINputButton).attr('data-shift_timing', shift_start_time);
@@ -811,8 +828,8 @@
                 }
 
                 if (element.checkout_time) {
-                    calendar_cell_id = element.checkout_time.split(" ")[0];
-                    calendar_cell_id_value = element.checkout_time.split(" ")[1];
+                    calendar_cell_id = element.date;
+                    calendar_cell_id_value = element.checkout_time;
 
                     //Find the calendar cell ID based on above checkin date
                    // $('#checkout_time_' + calendar_cell_id).html(calendar_cell_id_value);
@@ -825,18 +842,32 @@
                 }
 
                 // logic to show Early going button
-                if (element.is_eg && (!element.is_eg_applied)) {
-                    calendar_cell_id = element.checkout_time.split(" ")[0];
-                    calendar_cell_id_value = element.checkout_time.split(" ")[1];
+                if (element.is_eg) {
+                    if(element.is_eg_applied)
+                    {
+                        calendar_cell_id = element.date;
+                        calendar_cell_id_value = element.checkout_time;
 
-                    var egINputButton = $('#checkout_time_' + calendar_cell_id).after(
-                        "<input type='button' onclick ='showRegularizationModal(this)' class='f-10 ms-2 btn lc_btn border-0 btn-orange p-1'  value='EG' data-checkin_date=" +
-                        calendar_cell_id + " data-actual_timing=" + calendar_cell_id_value +
-                        " data-shift_timing=" + shift_end_time + " data-cellid ='checkout_time_" +
-                        calendar_cell_id +
-                        "'/>");
-                    console.log(lcINputButton);
+                        var egINputButton = $('#checkout_time_' + calendar_cell_id).after(
+                            "<input disabled type='button' onclick ='showRegularizationModal(this)' class='f-10 ms-2 btn lc_btn border-0 w-50 btn-secondary p-1'  value='EG Applied' data-checkin_date=" +
+                            calendar_cell_id + " data-actual_timing=" + calendar_cell_id_value +
+                            " data-shift_timing=" + shift_end_time + " data-cellid ='checkout_time_" +
+                            calendar_cell_id +
+                            "'/>");
+                    }
+                    else
+                    {
+                        calendar_cell_id = element.date;
+                        calendar_cell_id_value = element.checkout_time;
 
+                        var egINputButton = $('#checkout_time_' + calendar_cell_id).after(
+                            "<input type='button' onclick ='showRegularizationModal(this)' class='f-10 ms-2 btn lc_btn border-0 btn-orange p-1'  value='EG' data-checkin_date=" +
+                            calendar_cell_id + " data-actual_timing=" + calendar_cell_id_value +
+                            " data-shift_timing=" + shift_end_time + " data-cellid ='checkout_time_" +
+                            calendar_cell_id +
+                            "'/>");
+                        console.log(lcINputButton);
+                    }
                    /* $(lcINputButton).attr('data-checkin_date', calendar_cell_id);
                     $(lcINputButton).attr('data-actual_timing', calendar_cell_id_value);
                     $(lcINputButton).attr('data-shift_timing', shift_start_time);

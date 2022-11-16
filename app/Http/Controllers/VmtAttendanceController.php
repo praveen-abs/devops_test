@@ -478,8 +478,8 @@ class VmtAttendanceController extends Controller
                     ->where('user_Id', $userCode)
                     ->first(['check_in_time']);
 
-                $deviceCheckOutTime = $attendanceCheckOut->check_out_time;
-                $deviceCheckInTime  = $attendanceCheckIn->check_in_time;
+                $deviceCheckOutTime = empty($attendanceCheckOut->check_out_time) ? null : explode(' ', $attendanceCheckOut->check_out_time)[1];
+                $deviceCheckInTime  = empty($attendanceCheckIn->check_in_time) ? null : explode(' ', $attendanceCheckIn->check_in_time)[1];
 
                 if ($deviceCheckOutTime  != null || $deviceCheckInTime != null) {
                     $deviceData[] = array(
@@ -489,11 +489,13 @@ class VmtAttendanceController extends Controller
                     );
                 }
             }
-        }
+        }//for
+
+       //dd($deviceData);
 
         // attendance details from vmt_employee_attenndance table
         $data = VmtEmployeeAttendance::where('user_id', $request->user_id)
-            ->whereMonth('checkin_time', $request->month)
+            ->whereMonth('date', $request->month)
             ->orderBy('checkin_time', 'asc')
             ->get(['date', 'checkin_time', 'checkout_time']);
 
@@ -511,10 +513,10 @@ class VmtAttendanceController extends Controller
 
             $dateWiseData         =  $sortedCollection->groupBy('date'); //->all();
 
-
             foreach ($dateWiseData  as $key => $value) {
                 // code...
                 $attaendanceResponseArray[] = array(
+                    'date' => $value[0]["date"],
                     'checkin_time'  => $value->min('checkin_time'),
                     'checkout_time' => $value->max('checkout_time')
                 );
@@ -526,9 +528,9 @@ class VmtAttendanceController extends Controller
         $resData = [];
         foreach ($attaendanceResponseArray as $key => $value) {
             // code...
-            $checkinDate     = Carbon::parse($value['checkin_time'])->toDateString();
-            $shiftStartTime  = Carbon::parse($checkinDate . ' ' . $regularTime->shift_start_time);
-            $shiftEndTime    = Carbon::parse($checkinDate . ' ' . $regularTime->shift_end_time);
+            $checkinDate     = Carbon::parse($value['date'])->toDateString();
+            $shiftStartTime  = Carbon::parse($regularTime->shift_start_time);
+            $shiftEndTime    = Carbon::parse($regularTime->shift_end_time);
             $checkInTime     = Carbon::parse($value['checkin_time']);
             $checkOutTime    = Carbon::parse($value['checkout_time']);
 
@@ -659,8 +661,8 @@ class VmtAttendanceController extends Controller
             $attendanceRegularizationRequest->user_id = $request->attendance_user;
             $attendanceRegularizationRequest->attendance_date = $request->attendance_date;
             $attendanceRegularizationRequest->regularization_type =  $request->regularization_type;
-            $attendanceRegularizationRequest->user_time =  Carbon::createFromFormat('Y-m-d H:i:s', $request->attendance_date . " " . $request->user_time);
-            $attendanceRegularizationRequest->regularize_time = Carbon::createFromFormat('Y-m-d H:i:s', $request->attendance_date . " " . $request->regularize_time);
+            $attendanceRegularizationRequest->user_time =  Carbon::createFromFormat('H:i:s', $request->user_time);
+            $attendanceRegularizationRequest->regularize_time = Carbon::createFromFormat('H:i:s', $request->regularize_time);
             $attendanceRegularizationRequest->reason_type = $request->reason;
             $attendanceRegularizationRequest->custom_reason = $request->custom_reason ?? '';
             $attendanceRegularizationRequest->status = 'Pending';

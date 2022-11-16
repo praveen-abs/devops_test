@@ -235,13 +235,20 @@
                             }
                         },
                         {
-                            id: 'arrival_time',
-                            name: 'Arrival Time',
+                            id: 'regularization_type',
+                            name: 'Type',
                             formatter: function formatter(cell) {
-                                const date = new Date(cell);
+                                return gridjs.html(cell);
+                            }
+                        },
+                        {
+                            id: 'user_time',
+                            name: 'Employee Time',
+                            formatter: function formatter(cell) {
 
+                                return gridjs.html(moment(cell,"HH:mm:ss").format('h:mm a'));
+                                //return gridjs.html(cell);
 
-                                return gridjs.html(moment(date).format('h:mm a'));
                             }
                         },
 
@@ -249,10 +256,8 @@
                             id: 'regularize_time',
                             name: 'Regularize Time',
                             formatter: function formatter(cell) {
-                                const date = new Date(cell);
 
-
-                                return gridjs.html(moment(date).format('h:mm a'));
+                                return gridjs.html(moment(cell,"HH:mm:ss").format('h:mm a'));
                             }
                         },
 
@@ -262,7 +267,7 @@
                         },
                         {
                             id: 'reviewer_comments',
-                            name: 'Appraisar Comments',
+                            name: 'Reviewer Comments',
                             formatter: function formatter(cell) {
 
                                 return gridjs.html(cell);
@@ -338,7 +343,8 @@
                                 //leave_history.id,
                                 att_regularize,
                                 att_regularize.attendance_date,
-                                att_regularize.arrival_time,
+                                att_regularize.regularization_type ,
+                                att_regularize.user_time,
                                 att_regularize.regularize_time,
                                 att_regularize.custom_reason,
                                 //att_regularize.reviewer_user_id,
