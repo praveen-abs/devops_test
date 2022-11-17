@@ -33,6 +33,7 @@
             padding: 7px;
             border-radius: 2px;
         }
+
     </style>
 @endsection
 @section('content')
@@ -69,14 +70,20 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @if( !empty($documents_filenames[0]->aadhar_card_file))
                                 <tr>
+
                                     <td>Aadhar Card Front</td>
                                     <td>
-                                        <div class="view-file"
-                                            data-src="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->aadhar_card_file) }}"
-                                            style="cursor:pointer">
-                                            {{ 'View Documents' }}
-                                        </div>
+                                        @if (Str::contains($documents_filenames[0]->aadhar_card_file, '.pdf'))
+                                            <a target="_blank" href="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->aadhar_card_file) }}">View Documents</a>
+                                        @else
+                                            <a class="view-file text-info"
+                                                data-src="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->aadhar_card_file) }}"
+                                                style="cursor:pointer">
+                                                {{ 'View Documents' }}
+                                            </a>
+                                        @endif
                                     </td>
                                     <td>
                                         @if ($docs_reviewed != null)
@@ -111,16 +118,21 @@
                                         @endif
                                     </td>
                                 </tr>
+                                @endif
                                 @if( !empty($documents_filenames[0]->aadhar_card_backend_file))
 
                                 <tr>
                                     <td>Aadhar Card Back</td>
                                     <td>
-                                        <div class="view-file"
+                                        @if (Str::contains($documents_filenames[0]->aadhar_card_backend_file, '.pdf'))
+                                            <a target="_blank" href="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->aadhar_card_backend_file) }}">View Documents</a>
+                                        @else
+                                        <a class="view-file"
                                             data-src="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->aadhar_card_backend_file) }}"
                                             style="cursor:pointer">
                                             {{ 'View Documents' }}
-                                        </div>
+                                        </a>
+                                        @endif
                                     </td>
                                     <td>
                                         @if ($docs_reviewed != null)
@@ -161,14 +173,15 @@
                                 <tr>
                                     <td>Pan Card</td>
                                     <td>
-                                        <!-- <img class="w-100 h-100 soc-det-img "
-                                                                    src="{{ URL::asset('images/' . $documents_filenames[0]->pan_card_file) }}"
-                                                                    alt="Aadhar Card Front"> -->
-                                        <div class="view-file"
-                                            data-src="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->pan_card_file) }}"
-                                            style="cursor:pointer">
-                                            {{ 'View Documents' }}
-                                        </div>
+                                        @if (Str::contains($documents_filenames[0]->pan_card_file, '.pdf'))
+                                            <a target="_blank" href="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->pan_card_file) }}">View Documents</a>
+                                        @else
+                                            <div class="view-file"
+                                                data-src="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->pan_card_file) }}"
+                                                style="cursor:pointer">
+                                                {{ 'View Documents' }}
+                                            </div>
+                                        @endif
                                     </td>
                                     <td>
                                         @if ($docs_reviewed != null)
@@ -209,11 +222,15 @@
                                 <tr>
                                     <td>Passport</td>
                                     <td>
-                                        <div class="view-file"
-                                            data-src="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->passport_file) }}"
-                                            style="cursor:pointer">
-                                            {{ 'View Documents' }}
-                                        </div>
+                                        @if (Str::contains($documents_filenames[0]->passport_file, '.pdf'))
+                                            <a target="_blank" href="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->passport_file) }}">View Documents</a>
+                                        @else
+                                            <a class="view-file"
+                                                data-src="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->passport_file) }}"
+                                                style="cursor:pointer">
+                                                {{ 'View Documents' }}
+                                            </a>
+                                        @endif
                                     </td>
                                     <td>
                                         @if ($docs_reviewed != null)
@@ -258,11 +275,15 @@
                                 <tr>
                                     <td>Voters ID</td>
                                     <td>
-                                        <div class="view-file"
-                                            data-src="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->voters_id_file) }}"
-                                            style="cursor:pointer">
-                                            {{ 'View Documents' }}
-                                        </div>
+                                        @if (Str::contains($documents_filenames[0]->voters_id_file, '.pdf'))
+                                            <a target="_blank" href="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->voters_id_file) }}">View Documents</a>
+                                        @else
+                                            <div class="view-file"
+                                                data-src="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->voters_id_file) }}"
+                                                style="cursor:pointer">
+                                                {{ 'View Documents' }}
+                                            </div>
+                                        @endif
                                     </td>
                                     <td>
                                         @if ($docs_reviewed != null)
@@ -306,11 +327,15 @@
                                 <tr>
                                     <td>Driving License</td>
                                     <td>
-                                        <div class="view-file"
-                                            data-src="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->dl_file) }}"
-                                            style="cursor:pointer">
-                                            {{ 'View Documents' }}
-                                        </div>
+                                        @if (Str::contains($documents_filenames[0]->dl_file, '.pdf'))
+                                            <a target="_blank" href="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->dl_file) }}">View Documents</a>
+                                        @else
+                                            <div class="view-file"
+                                                data-src="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->dl_file) }}"
+                                                style="cursor:pointer">
+                                                {{ 'View Documents' }}
+                                            </div>
+                                        @endif
                                     </td>
                                     <td>
                                         @if ($docs_reviewed != null)
@@ -349,14 +374,15 @@
                                 <tr>
                                     <td>Educational Certificate</td>
                                     <td>
-                                        <!-- <img class="w-100 h-100 soc-det-img "
-                                                                    src="{{ URL::asset('images/' . $documents_filenames[0]->education_certificate_file) }}"
-                                                                    alt="Aadhar Card Front"> -->
-                                        <div class="view-file"
-                                            data-src="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->education_certificate_file) }}"
-                                            style="cursor:pointer">
-                                            {{ 'View Documents' }}
-                                        </div>
+                                        @if (Str::contains($documents_filenames[0]->education_certificate_file, '.pdf'))
+                                            <a target="_blank" href="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->education_certificate_file) }}">View Documents</a>
+                                        @else
+                                            <div class="view-file"
+                                                data-src="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->education_certificate_file) }}"
+                                                style="cursor:pointer">
+                                                {{ 'View Documents' }}
+                                            </div>
+                                        @endif
                                     </td>
                                     <td>
                                         @if ($docs_reviewed != null)
@@ -397,17 +423,17 @@
                                 @endif
                                 @if( !empty($documents_filenames[0]->reliving_letter_file))
                                 <tr>
-                                    <td>Reliving Letter</td>
+                                    <td>Relieving Letter</td>
                                     <td>
-                                        <!-- <img class="w-100 h-100 soc-det-img "
-                                                                    src="{{ URL::asset('images/' . $documents_filenames[0]->reliving_letter_file) }}"
-                                                                    alt="Aadhar Card Front"> -->
-
-                                        <div class="view-file"
-                                            data-src="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->reliving_letter_file) }}"
-                                            style="cursor:pointer">
-                                            {{ 'View Documents' }}
-                                        </div>
+                                        @if (Str::contains($documents_filenames[0]->reliving_letter_file, '.pdf'))
+                                            <a target="_blank" href="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->reliving_letter_file) }}">View Documents</a>
+                                        @else
+                                            <div class="view-file"
+                                                data-src="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->reliving_letter_file) }}"
+                                                style="cursor:pointer">
+                                                {{ 'View Documents' }}
+                                            </div>
+                                        @endif
                                     </td>
                                     <td>
                                         @if ($docs_reviewed != null)
@@ -521,6 +547,10 @@
     <script src="{{ URL::asset('/assets/premassets/js/progressbar.min.js') }}"></script>
 
     <script src="{{ URL::asset('/assets/premassets/js/custom.js') }}"></script>
+
+
+
+
 
 
     <script>
