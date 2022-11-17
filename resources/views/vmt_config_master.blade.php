@@ -50,6 +50,8 @@
                                                 <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
                                                     <label class="" >Can send <b>Appointment Letter PDF</b> after Onboard form submit?</label>
                                                 </div>
+
+                                                @if(isAppointmentLetterTemplateAvailable())
                                                 <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
                                                     @if($data['can_send_appointmentletter_after_onboarding'] == "true")
                                                         <input type="radio" id="true_option_can_send_appointmentletter_after_onboarding" name="can_send_appointmentletter_after_onboarding" class="" value="true" checked="checked">
@@ -63,6 +65,13 @@
                                                         <label for="false_option_can_send_appointmentletter_after_onboarding">No</label>
                                                     @endif
                                                 </div>
+                                                @else
+                                                    <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
+
+                                                        <span><b> Error : Appointment letter template missing. Contact Admin.</b></span>
+                                                        <input type="hidden" name="can_send_appointmentletter_after_onboarding" value="false">
+                                                    </div>
+                                                @endif
                                             </div>
                                             <div class="row mt-1">
                                                 <div class="col-md-5 col-xxl-5 col-lg-5 col-sm-5 col-xs-5 col-lg-5 mt-2">

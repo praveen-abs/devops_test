@@ -537,7 +537,17 @@ class VmtEmployeeService {
         $data['net_take_home_yearly'] = intval($employeeData["net_income"]) * 12;
         // download PDF file with download method
         $pdf = new Dompdf();
-        $html =  view('testing', compact('data'));
+
+        //Fetch appointment letter based on client name
+        $client_name = Str::lower(str_replace(' ', '', getCurrentClientName()) );
+        $viewfile_appointmentletter = 'appointmentletter_'.$client_name;
+
+        //Throw error if appointment letter missing for this client
+        if (!view()->exists($viewfile_appointmentletter)) {
+           return false;
+        }
+
+        $html =  view($viewfile_appointmentletter, compact('data'));
         $pdf->loadHtml($html, 'UTF-8');
         $pdf->setPaper('A4', 'portrait');
         $pdf->render();
