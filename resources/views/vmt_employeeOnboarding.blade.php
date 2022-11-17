@@ -1151,11 +1151,36 @@
 
             });
 
+            function showLoader(){
+
+                swal({
+                    title: 'Info',
+                    text: 'Please wait...',
+                    allowOutsideClick: false,
+                    closeOnClickOutside: false,
+                    allowEscapeKey: false,
+                    showConfirmButton: false,
+                    backdrop: `
+                    rgba(0,0,123,0.4)
+                    left top
+                    no-repeat
+                    `,
+                }).then((result) => {
+                    /* Read more about handling dismissals below */
+                        console.log('Loader screen closed');
+
+                });
+
+            }
+
             function saveOrSubmitForm(t_can_onboard_employee, t_form_data1)
             {
+
                 console.log("Aadhar file : "+$('#aadhar_card_file').val());
                 t_form_data1.append('can_onboard_employee', t_can_onboard_employee);
                 t_form_data1.append('user_id', $('#user_id').val());
+
+                showLoader();
 
                 $.ajax({
                         url: "{{url('vmt-employee-onboard')}}",
@@ -1176,6 +1201,7 @@
                         // contentType: false,
                         // processData: false,
                         success: function(data) {
+                            swal.close();
                             $('.loader').hide();
 
                             console.log("Response : "+data.status);
@@ -1220,6 +1246,8 @@
                             //alert(data);
                         },
                         error: function(data) { //NEED TO FIX IT
+                            swal.close();
+
                             $('.loader').hide();
 
                             $('#modalHeader').html("Error");
