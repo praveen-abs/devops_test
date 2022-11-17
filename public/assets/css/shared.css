@@ -875,9 +875,7 @@ button.gridjs-sort-desc {
     margin-left: -8px;
     z-index: 1;
 }
-.form-check-input:checked {
-    background-color: #002f56 !important;
-}
+
 .bottom-content .check-box {
     border: 1px solid #ced4da;
     height: 15px !important;
@@ -1296,6 +1294,17 @@ a.editable-click:hover {
 .resize-none{
     resize: none;
 }
+
+.form-check-input:checked{
+    accent-color: #ee6a04 !important;
+    background-color: #ee6a04 !important;
+    border-color: #ee6a04 !important;
+}
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.25rem rgb(255 96 0 / 24%) !important;
+}
+
+
 
 /* runpayroll */
 .border-bottom-secondary {

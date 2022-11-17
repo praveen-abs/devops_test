@@ -28,9 +28,9 @@
     margin-left: -8px;
     z-index: 1;
 }
-.form-check-input:checked {
+/* .form-check-input:checked {
     background-color: #002f56 !important;
-}
+} */
 .bottom-content .check-box {
     border: 1px solid #ced4da;
     height: 15px !important;

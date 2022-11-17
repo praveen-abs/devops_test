@@ -65,8 +65,12 @@
 
         .payslip_table-protocol tr,
         .payslip_table-protocol td {
-            border: 2px solid #99766f;
+            border: 2px solid #863b28;
         }
+        table.payslip_table tr td{
+            border: 2px solid #863b28;
+        }
+
 
         .border-less {
             border: 0px !important;
@@ -1973,13 +1977,13 @@
 
                                     <table cellspacing="0" cellpadding="0" class="payslip_table">
                                         <tr class="border-less">
-                                            <td class="border-less" colspan="12">
+                                            <td class="border-less " colspan="12" style="padding-bottom:50px">
                                                 <img src="{{ URL::asset('assets/images/header_protocolo.svg') }}" class="" alt=""
                                                 style="width:100%;height:100%;">
                                             </td>
                                         </tr>
                                         <tr class="header-row" aria-rowcount="">
-                                            <td colspan="8" class="border-less  p3" rowspan="">
+                                            <td colspan="8" class="  p3" rowspan="" style="border-right: 0px">
                                                 <div class="header-cotent">
 
                                                     <p class="margin-0   text-strong"
@@ -1993,7 +1997,7 @@
 
                                                 </div>
                                             </td>
-                                            <td colspan="4" class="border-less ">
+                                            <td colspan="4" class=" " style="border-left: 0px">
 
                                                 <div class="header-img txt-right "
                                                     style="height:100px ;width:100%">
@@ -2012,7 +2016,7 @@
                                         <tr>
                                             <td colspan="12" class=" bg-ash">
                                                 <p class=" txt-center text-navyBlue  text-strong">PAYSLIP FOR THE MONTH OF &ndash;
-                                                    {{ strtoupper($employee->PAYROLL_MONTH) }}</p>
+                                                    </p>
                                             </td>
                                         </tr>
                                         <tr>
@@ -2020,13 +2024,13 @@
                                                 <p>EMPLOYEE NAME</p>
                                             </td>
                                             <td colspan="3">
-                                                <p>{{ $employee_name }}</p>
+                                                <p></p>
                                             </td>
                                             <td colspan="3" class="text-navyBlue  bg-ash text-strong">
                                                 <p>EMPLOYEE CODE</p>
                                             </td>
                                             <td colspan="3">
-                                                <p>{{ $employee->EMP_NO }}</p>
+                                                <p></p>
                                             </td>
 
                                         </tr>
@@ -2035,13 +2039,13 @@
                                                 <p>DATE OF BIRTH</p>
                                             </td>
                                             <td colspan="3">
-                                                <p>{{ date('d-m-Y', strtotime($employee_details->dob)) }}</p>
+                                               <p></p>
                                             </td>
                                             <td colspan="3" class="text-navyBlue bg-ash text-strong">
                                                 <p>DATE OF JOINING</p>
                                             </td>
                                             <td colspan="3">
-                                                <p>{{ date('d-m-Y', strtotime($employee->DOJ)) }}</p>
+                                              <p></p>
                                             </td>
 
                                         </tr>
@@ -2050,13 +2054,13 @@
                                                 <p>DESIGNATION</p>
                                             </td>
                                             <td colspan="3">
-                                                <p>{{ $designation }}</p>
+                                                <p></p>
                                             </td>
                                             <td colspan="3" class="text-navyBlue bg-ash text-strong">
                                                 <p>LOCATION</p>
                                             </td>
                                             <td colspan="3">
-                                                <p>{{ $employee->LOCATION }}</p>
+                                                <p></p>
                                             </td>
 
                                         </tr>
@@ -2065,13 +2069,13 @@
                                                 <p>EPF NUMBER</p>
                                             </td>
                                             <td colspan="3">
-                                                <p>{{ $employee->EPF_Number }}</p>
+                                               <p></p>
                                             </td>
                                             <td colspan="3" class="text-navyBlue bg-ash text-strong">
                                                 <p>ESIC NUMBER</p>
                                             </td>
                                             <td colspan="3">
-                                                <p>{{ $employee_details->esic_number }}</p>
+                                               <p></p>
                                             </td>
 
                                         </tr>
@@ -2080,13 +2084,13 @@
                                                 <p>UAN</p>
                                             </td>
                                             <td colspan="3">
-                                                <p>{{ $employee->UAN }}</p>
+                                            <p></p>
                                             </td>
                                             <td colspan="3" class="text-navyBlue bg-ash text-strong">
                                                 <p>PAN</p>
                                             </td>
                                             <td colspan="3">
-                                                <p>{{ $employee_details->pan_number }}</p>
+                                                <p></p>
                                             </td>
 
                                         </tr>
@@ -2105,22 +2109,13 @@
                                         </tr>
                                         <tr>
                                             <td colspan="4" class="">
-                                                <?php
-                                                $bank_name = '';
-                                                foreach ($bank_names as $singleBank) {
-                                                    if ($singleBank->id == $employee_details->bank_id) {
-                                                        $bank_name = $singleBank->bank_name;
-                                                        break;
-                                                    }
-                                                }
-                                                ?>
-                                                <p class="txt-center">{{ $bank_name }}</p>
+                                              <p></p>
                                             </td>
                                             <td colspan="4" class="">
-                                                <p class="txt-center">{{ $employee_details->bank_account_number }}</p>
+                                               <p></p>
                                             </td>
                                             <td colspan="4" class="">
-                                                <p class="txt-center">{{ $employee_details->bank_ifsc_code }}</p>
+                                               <p></p>
                                             </td>
 
 
@@ -2144,16 +2139,16 @@
                                         </tr>
                                         <tr>
                                             <td colspan="3" class="">
-                                                <p class="txt-center">{{ $employee->MONTH_DAYS }}</p>
+<p></p>
                                             </td>
                                             <td colspan="3" class="">
-                                                <p class="txt-center">{{ $employee->Worked_Days }}</p>
+<p></p>
                                             </td>
                                             <td colspan="3" class="">
-                                                <p class="txt-center">{{ $employee->LOP }}</p>
+<p></p>
                                             </td>
                                             <td colspan="3" class="">
-                                                <p class="txt-center">{{ $employee->Arrears_Days }}</p>
+<p></p>
                                             </td>
 
                                         <tr>
@@ -2187,20 +2182,19 @@
                                                 <p class="txt-left text-strong">BASIC</p>
                                             </td>
                                             <td colspan="2" class="">
-                                                <p class="txt-right"> <span class="currency"></span>
-                                                    {{ number_format(round($employee->BASIC), 2) }}</p>
+                                              <p></p>
                                             </td>
                                             <td colspan="2" class="">
-                                                <p class="txt-right">{{ number_format(round($employee->BASIC_ARREAR), 2) }}</p>
+                                                <p></p>
                                             </td>
                                             <td colspan="2" class="">
-                                                <p class="txt-right">{{ number_format(round($employee->Earned_BASIC), 2) }}</p>
+                                               <p></p>
                                             </td>
                                             <td colspan="2" class="">
                                                 <p class="txt-left text-strong">EPF</p>
                                             </td>
                                             <td colspan="2" class="">
-                                                <p class="txt-right">{{ number_format(round($employee->EPFR), 2) }}</p>
+                                               <p></p>
                                             </td>
                                         </tr>
                                         <tr>
@@ -2208,19 +2202,19 @@
                                                 <p class="txt-left text-strong">HRA</p>
                                             </td>
                                             <td colspan="2" class="">
-                                                <p class="txt-right">{{ number_format(round($employee->HRA), 2) }}</p>
+                                               <p></p>
                                             </td>
                                             <td colspan="2" class="">
-                                                <p class="txt-right">{{ number_format(round($employee->HRA_ARREAR), 2) }}</p>
+                                                <p></p>
                                             </td>
                                             <td colspan="2" class="">
-                                                <p class="txt-right">{{ number_format(round($employee->Earned_HRA), 2) }}</p>
+                                               <p></p>
                                             </td>
                                             <td colspan="2" class="">
                                                 <p class="txt-left text-strong">ESIC</p>
                                             </td>
                                             <td colspan="2" class="">
-                                                <p class="txt-right">{{ number_format(round($employee->EMPLOYEE_ESIC), 2) }}</p>
+                                                <p></p>
                                             </td>
                                         </tr>
                                         <tr>
@@ -2228,19 +2222,19 @@
                                                 <p class="txt-left text-strong">SPECIAL ALLOWANCE</p>
                                             </td>
                                             <td colspan="2" class="">
-                                                <p class="txt-right">{{ number_format(round($employee->SPL_ALW), 2) }}</p>
+                                               <p></p>
                                             </td>
                                             <td colspan="2" class="">
-                                                <p class="txt-right">{{ number_format(round($employee->SPL_ALW_ARREAR), 2) }}</p>
+                                              <p></p>
                                             </td>
                                             <td colspan="2" class="">
-                                                <p class="txt-right">{{ number_format(round($employee->Earned_SPL_ALW), 2) }}</p>
+                                              <p></p>
                                             </td>
                                             <td colspan="2" class="">
                                                 <p class="txt-left text-strong">PROF TAX</p>
                                             </td>
                                             <td colspan="2" class="">
-                                                <p class="txt-right">{{ number_format(round($employee->PROF_TAX), 2) }}</p>
+                                               <p></p>
                                             </td>
 
 
@@ -2258,13 +2252,13 @@
                                             </td>
 
                                             <td colspan="2" class="">
-                                                <p class="txt-right">{{ number_format(round($employee->Overtime), 2) }}</p>
+                                              <p></p>
                                             </td>
                                             <td colspan="2" class="">
                                                 <p class="txt-left text-strong">INCOME TAX</p>
                                             </td>
                                             <td colspan="2" class="">
-                                                <p class="txt-right">{{ number_format(round($employee->TDS), 2) }}</p>
+                                               <p></p>
                                             </td>
                                         </tr>
                                         <tr>
@@ -2279,13 +2273,13 @@
                                             </td>
 
                                             <td colspan="2" class="">
-                                                <p class="txt-right">{{ number_format(round($employee->Overtime), 2) }}</p>
+                                               <p></p>
                                             </td>
                                             <td colspan="2" class="">
                                                 <p class="txt-left text-strong">SALARY ADVANCE</p>
                                             </td>
                                             <td colspan="2" class="">
-                                                <p class="txt-right">{{ number_format(round($employee->TDS), 2) }}</p>
+                                               <p></p>
                                             </td>
                                         </tr>
 
@@ -2307,7 +2301,7 @@
                                                 <p class="txt-left text-navyBlue text-strong">OTHER DEDUCTIONS</p>
                                             </td>
                                             <td colspan="2" class="">
-                                                <p class="txt-right ">{{ number_format(round($employee->OTHER_DEDUC), 2) }}</p>
+                                             <p></p>
                                             </td>
                                         </tr>
                                         <tr>
@@ -2315,20 +2309,20 @@
                                                 <p class="txt-left nav text-strong text-navyBlue">TOTAL EARNINGS</p>
                                             </td>
                                             <td colspan="2" class="bg-ash">
-                                                <p class="txt-right  text-navyBlue">{{ number_format(round($employee->TOTAL_EARNED_GROSS), 2) }}</p>
+                                             <p></p>
                                             </td>
                                             <td colspan="2" class="bg-ash">
                                                 <p class="txt-right"></p>
                                             </td>
 
                                             <td colspan="2" class="bg-ash">
-                                                <p class="txt-right text-navyBlue">{{ number_format(round($employee->TOTAL_EARNED_GROSS), 2) }}</p>
+                                              <p></p>
                                             </td>
                                             <td colspan="2" class="bg-ash">
                                                 <p class="txt-left text-strong text-navyBlue">TOTAL DEDUCTION</p>
                                             </td>
                                             <td colspan="2" class="bg-ash">
-                                                <p class="txt-right text-navyBlue">{{ number_format(round($employee->TOTAL_DEDUCTIONS), 2) }}</p>
+                                               <p></p>
                                             </td>
                                         </tr>
                                         <tr>
@@ -2341,7 +2335,7 @@
                                                 <p class="txt-left text-strong">NET PAY</p>
                                             </td>
                                             <td colspan="8" class="">
-                                                <p class="txt-center ">{{ number_format(round($employee->NET_TAKE_HOME), 2) }}</p>
+                                               <p></p>
                                             </td>
                                         </tr>
                                         <tr>
@@ -2349,7 +2343,7 @@
                                                 <p class="txt-left text-strong">NET PAY IN WORDS</p>
                                             </td>
                                             <td colspan="8" class="">
-                                                <p class="txt-center ">{{ $employee->Rupees }}</p>
+                                             <p></p>
                                             </td>
                                         </tr>
                                         <tr>
