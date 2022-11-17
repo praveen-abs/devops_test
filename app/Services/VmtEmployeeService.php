@@ -535,30 +535,33 @@ class VmtEmployeeService {
         $data['employer_pt_yearly'] =  intval($employeeData["professional_tax"]) * 12;
         $data['net_take_home_monthly'] = $employeeData["net_income"];
         $data['net_take_home_yearly'] = intval($employeeData["net_income"]) * 12;
-        // download PDF file with download method
-        $pdf = new Dompdf();
-
-        //Fetch appointment letter based on client name
-        $client_name = Str::lower(str_replace(' ', '', getCurrentClientName()) );
-        $viewfile_appointmentletter = 'appointmentletter_'.$client_name;
-
-        //Throw error if appointment letter missing for this client
-        // if (!view()->exists($viewfile_appointmentletter)) {
-        //    return false;
-        // }
-
-        $html =  view($viewfile_appointmentletter, compact('data'));
-        $pdf->loadHtml($html, 'UTF-8');
-        $pdf->setPaper('A4', 'portrait');
-        $pdf->render();
-        $docUploads =  $pdf->output();
-        \File::put(public_path('appoinmentLetter/') . $filename, $docUploads);
 
         $image_view = url('/') . $VmtGeneralInfo->logo_img;
         $appoinmentPath = "";
+
         if (fetchMasterConfigValue("can_send_appointmentletter_after_onboarding") == "true") {
-            $appoinmentPath = public_path('appoinmentLetter/') . $filename;
+
+            //Fetch appointment letter based on client name
+            $client_name = Str::lower(str_replace(' ', '', getCurrentClientName()) );
+            $viewfile_appointmentletter = 'appointmentletter_'.$client_name;
+
+            //check if template exists
+            if (view()->exists($viewfile_appointmentletter)) {
+
+                $html =  view($viewfile_appointmentletter, compact('data'));
+
+                $pdf = new Dompdf();
+                $pdf->loadHtml($html, 'UTF-8');
+                $pdf->setPaper('A4', 'portrait');
+                $pdf->render();
+                $docUploads =  $pdf->output();
+                \File::put(public_path('appoinmentLetter/') . $filename, $docUploads);
+                $appoinmentPath = public_path('appoinmentLetter/') . $filename;
+
+            }
+
         }
+
         $notification_user = User::where('id',auth::user()->id)->first();
         $message = "Employee Bulk OnBoard was Created   ";
 
