@@ -543,9 +543,9 @@ class VmtEmployeeService {
         $viewfile_appointmentletter = 'appointmentletter_'.$client_name;
 
         //Throw error if appointment letter missing for this client
-        if (!view()->exists($viewfile_appointmentletter)) {
-           return false;
-        }
+        // if (!view()->exists($viewfile_appointmentletter)) {
+        //    return false;
+        // }
 
         $html =  view($viewfile_appointmentletter, compact('data'));
         $pdf->loadHtml($html, 'UTF-8');
