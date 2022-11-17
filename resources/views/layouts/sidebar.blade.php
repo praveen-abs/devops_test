@@ -1,3 +1,4 @@
+<?php //getCurrentClientName() ?>
 <!-- ========== App Menu ========== -->
 <div class="app-menu navbar-menu">
     <!-- LOGO -->
@@ -76,7 +77,7 @@
                 @endif
 
                 <!-- Navigation Menu for attendance-->
-                @if(env('CLIENT_NAME') != "vasagroup")
+                @if (!Str::contains(getCurrentClientName(), 'Vasa'))
                 <li class="nav-item">
                     <a class="nav-link sidebar menu-link pt-0" href="#attendanceDrop-Down" data-bs-toggle="collapse"
                         role="button" aria-expanded="false" aria-controls="sidebarRoles">
@@ -374,7 +375,9 @@
                         </div>
                     </li>
                 @endif
-                <!-- Performance -->
+
+                <!-- PMS module -->
+                @if (!Str::contains(getCurrentClientName(), 'Protocol'))
 
                 <li class="nav-item">
                     <a class="nav-link sidebar menu-link pt-0" href="#PerformanceDrop-Down" data-bs-toggle="collapse"
@@ -420,6 +423,7 @@
                         </ul>
                     </div>
                 </li>
+                @endif
 
                 @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR', 'Manager']))
                     <!-- team -->
@@ -680,7 +684,7 @@
                                         </span></a>
                                 </li>
 
-                                @if(env('CLIENT_NAME') != "vasagroup")
+                                @if (!Str::contains(getCurrentClientName(), 'Vasa'))
 
                                 <li class="nav-item">
                                     <a href="{{ route('attendance-leavesettings') }}" class="nav-link">Leave
