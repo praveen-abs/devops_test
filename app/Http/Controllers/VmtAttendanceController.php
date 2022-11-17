@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\ApproveRejectLeaveMail;
 use App\Mail\RequestLeaveMail;
 use App\Mail\VmtAttendanceMail_Regularization;
+use App\Models\VmtClientMaster;
 use App\Models\User;
 use App\Models\VmtEmployeeAttendance;
 use App\Models\VmtEmployeeLeaves;
@@ -783,5 +784,33 @@ class VmtAttendanceController extends Controller
             'mail_status' => $mail_status,
             'data' => [],
         ];
+    }
+
+    public function showLeavePolicyDocument(Request $request)
+    {
+        $client_name = "";
+
+        //For testing only.
+        if(isset($request->client_name))
+        {
+            $client_name = $request->client_name;
+        }
+        else
+        {
+            //get the client name from client table
+            $client_name = VmtClientMaster::first()->value('client_name');
+            $client_name = str_replace(' ', '', $client_name);
+            //dd($client_name);
+        }
+
+        //choose the blade file
+        $viewPage = 'leave_policy_'.strtolower($client_name);
+
+        if (!view()->exists($viewPage)) {
+            $viewPage = 'leave_policy_default';
+        }
+
+        return view($viewPage);
+
     }
 }

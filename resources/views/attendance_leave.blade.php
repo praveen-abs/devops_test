@@ -59,7 +59,7 @@
                     <div class="col-3  text-md-start text-center">
                         <div>
 
-                            <a href="{{ url('leave_policy_explanation') }}" id=""
+                            <a href="{{ route('attendance-leave-policydocument') }}" id=""
                                 class="nav-link sidebar  btn btn-orange" role="button" aria-expanded="false"><span> Leave
                                     Policy Explanation</span>
                             </a>
