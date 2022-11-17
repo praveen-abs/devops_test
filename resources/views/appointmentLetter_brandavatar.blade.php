@@ -12,7 +12,7 @@
         box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
         box-sizing: border-box;
         -moz-box-sizing: border-box;
-        -webkit-box-sizing: bo;
+        -webkit-box-sizing:border-box;
     }
 
     .sub-page {
