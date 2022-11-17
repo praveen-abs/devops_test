@@ -73,6 +73,12 @@ function getTeamMembersUserIds($user_id){
     return $user_ids;
 }
 
+function getCurrentClientName(){
+    $client_name = VmtClientMaster::all()->value('client_name');
+    //dd($client_name);
+    return $client_name;
+}
+
 function hasSubClients()
 {
     $sub_clients_count = VmtClientMaster::all()->count();
