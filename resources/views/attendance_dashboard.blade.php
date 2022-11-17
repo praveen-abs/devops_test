@@ -1145,15 +1145,15 @@
             }
         });
 
+        var xLabels =  ["ENBL001", "ENBL002", "ENBL003", "ENBL004", "ENBL005", "ENBL005", "ENBL007", "ENBL008",
+                    "ENBL009", "ENBL0010", "ENBL0011", "ENBL0012", "ENBL0013", "ENBL0014", "ENBL0015"];
         var donut = document.getElementById("employeePercentageChart");
         var myChart = new Chart(donut, {
             type: 'doughnut',
             data: {
-                labels: ["ENBL001", "ENBL002", "ENBL003", "ENBL004", "ENBL005", "ENBL005", "ENBL007", "ENBL008",
-                    "ENBL009", "ENBL0010", "ENBL0011", "ENBL0012", "ENBL0013", "ENBL0014", "ENBL0015"
-                ],
+                labels:xLabels,
                 datasets: [{
-                    data: [20, 50, 100,30,10,44,90,100,200,50,120,150,60,54],
+                    data: [20, 50, 100,30,10,44,90,100,200,50,120,150,60,54,10],
                     backgroundColor: [
                         'rgb(255, 99, 132)',
                         'rgb(54, 162, 235)',
@@ -1169,6 +1169,7 @@
                         'rgb(30, 200, 86)',
                         'rgb(233, 93, 100)',
                         'rgb(190, 100, 86)',
+                        'rgb(200, 205, 86)',
                     ],
                     hoverOffset: 4
 
@@ -1176,7 +1177,7 @@
             },
             options: {
                 legend: {
-                    display: false
+                    display: true,
                 },
 
                 title: {
