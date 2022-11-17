@@ -1293,6 +1293,10 @@ a.editable-click:hover {
     height: 25px;
 }
 
+.resize-none{
+    resize: none;
+}
+
 /* runpayroll */
 .border-bottom-secondary {
     border-bottom: 1px solid #cecece;
