@@ -18,7 +18,7 @@
         <div class="card mb-2">
             <div class="py-1 card-body">
                 <!-- <div class="card-header">                                                                         <h5><span class="text-muted">Attendance &gt;</span> <span class="text-danger"> Dashboard </span></h5>
-                                                                                                                                                                                                                             </div> -->
+                                                                                                                                                                                                                                                                                                             </div> -->
                 <div class="row">
                     <div class="col-8 d-flex align-items-center">
                         <ul class="nav nav-pills nav-tabs-dashed">
@@ -69,7 +69,7 @@
                                 <div class="card  box_shadow_0 border-rtb left-line w-100">
                                     <div class="card-body text-center">
                                         <p class="text-ash-medium mb-2 f-13 ">Total Active Employees</p>
-                                        <h5 class="mb-0">{{$Total_Active_Employees}}</h5>
+                                        <h5 class="mb-0">{{ $Total_Active_Employees }}</h5>
 
                                     </div>
                                 </div>
@@ -255,9 +255,9 @@
 
 
                         <div class="tab-content" id="pills-tabContent">
-                            <div class="tab-pane show fade active" id="pills_employeePercentage" role="tabpanel"
+                            <div class="tab-pane show fade active" id="pills_employeeCount" role="tabpanel"
                                 aria-labelledby="pills-profile-tab">
-                                <div class="text-center">
+                                {{-- <div class="text-center">
                                     <div class="d-flex justify-content-center">
                                         <div style="height: 300px;max-width:500px;" class="">
                                             <img src="{{ URL::asset('assets/images/no_dataFile.svg') }}"
@@ -266,22 +266,22 @@
 
                                     </div>
                                     <h4> <span class="text-orange">Sorry !</span> No data</h4>
+                                </div> --}}
+                                <div class="col-10 mx-auto">
+                                    <canvas id="employeeCountChart" style="width:100%;height:300px"></canvas>
                                 </div>
 
+
                             </div>
-                            <div class="tab-pane fade" id="pills_employeeCount" role="tabpanel"
+                            <div class="tab-pane fade" id="pills_employeePercentage" role="tabpanel"
                                 aria-labelledby="pills-contact-tab">
-                                <div class="text-center">
-                                    <div class="d-flex justify-content-center">
-                                        <div style="height: 300px;max-width:500px;" class="">
-                                            <img src="{{ URL::asset('assets/images/no_dataFile.svg') }}"
-                                                class="h-100 w-100" alt="user-pic" </div>
-                                        </div>
-
-                                    </div>
-                                    <h4> <span class="text-orange">Sorry !</span> No data</h4>
+                                <div class="col-10 mx-auto">
+                                    <canvas id="employeePercentageChart" style="width:100%;height:300px"></canvas>
                                 </div>
                             </div>
+
+
+
                         </div>
 
                     </div>
@@ -332,7 +332,7 @@
                                                     data-bs-toggle="tab"href="#employeeCount_chart" aria-selected="true"
                                                     role="tab">
                                                     Employee
-                                                    Percentage</a>
+                                                    Count</a>
                                             </li>
                                             <li class="nav-item text-muted">
 
@@ -731,7 +731,10 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="text-center">
+
+                        <div class="earlyArrivals_table" id="earlyArrivals_table"></div>
+
+                        {{-- <div class="text-center">
                             <div class="d-flex justify-content-center">
                                 <div style="height: 300px;max-width:500px;" class="">
                                     <img src="{{ URL::asset('assets/images/Fingerprint.gif') }}" class="h-100 w-100"
@@ -740,7 +743,7 @@
 
                             </div>
                             <h4> <span class="text-orange">Sorry..!</span> No data</h4>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -759,7 +762,8 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="text-center">
+                        <div class="lateArrivals_table" id="lateArrivals_table"></div>
+                        {{-- <div class="text-center">
                             <div class="d-flex justify-content-center">
                                 <div style="height: 300px;max-width:500px;" class="">
                                     <img src="{{ URL::asset('assets/images/Fingerprint.gif') }}" class="h-100 w-100"
@@ -768,7 +772,7 @@
 
                             </div>
                             <h4> <span class="text-orange">Sorry..!</span> No data</h4>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -786,7 +790,8 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="text-center">
+                        <div class="absenteeism_table" id="absenteeism_table"></div>
+                        {{-- <div class="text-center">
                             <div class="d-flex justify-content-center">
                                 <div style="height: 300px;max-width:500px;" class="">
                                     <img src="{{ URL::asset('assets/images/Fingerprint.gif') }}" class="h-100 w-100"
@@ -795,7 +800,7 @@
 
                             </div>
                             <h4> <span class="text-orange">Sorry..!</span> No data</h4>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -813,7 +818,8 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="text-center">
+                        <div class="remoteClock_table" id="remoteClock_table"></div>
+                        {{-- <div class="text-center">
                             <div class="d-flex justify-content-center">
                                 <div style="height: 300px;max-width:500px;" class="">
                                     <img src="{{ URL::asset('assets/images/Fingerprint.gif') }}" class="h-100 w-100"
@@ -822,7 +828,7 @@
 
                             </div>
                             <h4> <span class="text-orange">Sorry..!</span> No data</h4>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -868,16 +874,7 @@
 
                     ],
                     data: [
-                        // {
-                        //     name: 'John',
-                        //     email: 'john@example.com',
-                        //     phoneNumber: '(353) 01 222 3333'
-                        // },
-                        // {
-                        //     name: 'Mark',
-                        //     email: 'mark@gmail.com',
-                        //     phoneNumber: '(01) 22 888 4444'
-                        // },
+
                     ],
                     pagination: {
                         limit: 10
@@ -885,6 +882,308 @@
                     sort: true,
                     search: true,
                 }).render(document.getElementById("leaveAnalytics_table"));
+            }
+        });
+        $(document).ready(function() {
+            if (document.getElementById("remoteClock_table")) {
+                const grid = new gridjs.Grid({
+                    columns: [{
+                            id: 'employee',
+                            name: 'Employee Name',
+
+                        },
+                        {
+                            id: 'unit',
+                            name: 'Employee Code',
+                        },
+                        {
+                            id: 'unit',
+                            name: 'Manager Name',
+                        },
+                        {
+                            id: 'department',
+                            name: 'Time',
+                        },
+                        // {
+                        //     id: 'location',
+                        //     name: '',
+                        // },
+                        // {
+                        //     id: 'leave_instances',
+                        //     name: 'Leave Instances',
+                        // },
+                        // {
+                        //     id: '',
+                        //     name: 'Total Leave Taken',
+                        // }
+
+
+                    ],
+                    data: [
+
+                    ],
+                    pagination: {
+                        limit: 10
+                    },
+                    sort: true,
+                    search: true,
+                }).render(document.getElementById("remoteClock_table"));
+            }
+        });
+        $(document).ready(function() {
+            if (document.getElementById("leaveAnalytics_table")) {
+                const grid = new gridjs.Grid({
+                    columns: [{
+                            id: 'employee',
+                            name: 'Employee',
+
+                        },
+                        {
+                            id: 'unit',
+                            name: 'Business Unit',
+                        },
+                        {
+                            id: 'department',
+                            name: 'Department',
+                        },
+                        {
+                            id: 'location',
+                            name: ' location',
+                        },
+                        {
+                            id: 'leave_instances',
+                            name: 'Leave Instances',
+                        },
+                        {
+                            id: '',
+                            name: 'Total Leave Taken',
+                        }
+
+
+                    ],
+                    data: [
+
+                    ],
+                    pagination: {
+                        limit: 10
+                    },
+                    sort: true,
+                    search: true,
+                }).render(document.getElementById("leaveAnalytics_table"));
+            }
+        });
+        $(document).ready(function() {
+            if (document.getElementById("leaveAnalytics_table")) {
+                const grid = new gridjs.Grid({
+                    columns: [{
+                            id: 'employee',
+                            name: 'Employee',
+
+                        },
+                        {
+                            id: 'unit',
+                            name: 'Business Unit',
+                        },
+                        {
+                            id: 'department',
+                            name: 'Department',
+                        },
+                        {
+                            id: 'location',
+                            name: ' location',
+                        },
+                        {
+                            id: 'leave_instances',
+                            name: 'Leave Instances',
+                        },
+                        {
+                            id: '',
+                            name: 'Total Leave Taken',
+                        }
+
+
+                    ],
+                    data: [
+
+                    ],
+                    pagination: {
+                        limit: 10
+                    },
+                    sort: true,
+                    search: true,
+                }).render(document.getElementById("leaveAnalytics_table"));
+            }
+        });
+        $(document).ready(function() {
+            if (document.getElementById("leaveAnalytics_table")) {
+                const grid = new gridjs.Grid({
+                    columns: [{
+                            id: 'employee',
+                            name: 'Employee',
+
+                        },
+                        {
+                            id: 'unit',
+                            name: 'Business Unit',
+                        },
+                        {
+                            id: 'department',
+                            name: 'Department',
+                        },
+                        {
+                            id: 'location',
+                            name: ' location',
+                        },
+                        {
+                            id: 'leave_instances',
+                            name: 'Leave Instances',
+                        },
+                        {
+                            id: '',
+                            name: 'Total Leave Taken',
+                        }
+
+
+                    ],
+                    data: [
+
+                    ],
+                    pagination: {
+                        limit: 10
+                    },
+                    sort: true,
+                    search: true,
+                }).render(document.getElementById("leaveAnalytics_table"));
+            }
+        });
+
+
+        // for chart
+
+
+        var yLabels = {
+            0: '9:00 AM',
+            2: '10:00 AM',
+            4: '11:00 AM',
+            6: '12:00 PM',
+            8: '1:00 PM',
+            10: '2:00 PM',
+            12: '3:00 PM',
+            14: '4:00 PM',
+            16: '5:00 PM',
+            18: '6:00 PM',
+
+        }
+
+        var ctx = document.getElementById("employeeCountChart");
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ["ENBL001", "ENBL002", "ENBL003", "ENBL004", "ENBL005", "ENBL005", "ENBL007", "ENBL008",
+                    "ENBL009", "ENBL0010", "ENBL0011", "ENBL0012", "ENBL0013", "ENBL0014", "ENBL0015"
+                ],
+                datasets: [{
+                    data: [12, 19, 3, 10, 12, 19, 3, 10, 12, 19, 3, 10, 20, 10, 12],
+                    backgroundColor: [
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(54, 162, 235, 1)',
+
+
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            callback: function(value, index, values) {
+                                return yLabels[value];
+                            }
+                        }
+                    }]
+                },
+                title: {
+                    display: true,
+                    // text: 'Employees Arrival Status Chart'
+                }
+            }
+        });
+
+        var xLabels =  ["ENBL001", "ENBL002", "ENBL003", "ENBL004", "ENBL005", "ENBL005", "ENBL007", "ENBL008",
+                    "ENBL009", "ENBL0010", "ENBL0011", "ENBL0012", "ENBL0013", "ENBL0014", "ENBL0015"];
+        var donut = document.getElementById("employeePercentageChart");
+        var myChart = new Chart(donut, {
+            type: 'doughnut',
+            data: {
+                labels:xLabels,
+                datasets: [{
+                    data: [20, 50, 100,30,10,44,90,100,200,50,120,150,60,54,10],
+                    backgroundColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(54, 162, 235)',
+                        'rgb(255, 205, 86)',
+                        'rgb(255, 205, 86)',
+                        'rgb(200, 205, 86)',
+                        'rgb(210, 25, 16)',
+                        'rgb(100, 25, 96)',
+                        'rgb(45, 205, 86)',
+                        'rgb(60, 215, 56)',
+                        'rgb(10, 245, 16)',
+                        'rgb(90, 215, 76)',
+                        'rgb(30, 200, 86)',
+                        'rgb(233, 93, 100)',
+                        'rgb(190, 100, 86)',
+                        'rgb(200, 205, 86)',
+                    ],
+                    hoverOffset: 4
+
+                }]
+            },
+            options: {
+                legend: {
+                    display: true,
+                },
+
+                title: {
+                    display: true,
+                    // text: 'Employees Arrival Status Chart'
+                }
             }
         });
     </script>
