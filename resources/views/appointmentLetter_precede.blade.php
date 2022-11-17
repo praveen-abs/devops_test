@@ -1,3 +1,4 @@
+
 <?php
 //$employee = \DB::table('vmt_employee_payslip')->first();
 $general_info = \DB::table('vmt_general_info')->first();

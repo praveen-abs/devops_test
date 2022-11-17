@@ -1,3 +1,5 @@
+
+
 @extends('layouts.master')
 @section('title')
 @lang('translation.settings')
@@ -12,7 +14,7 @@
         box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
         box-sizing: border-box;
         -moz-box-sizing: border-box;
-        -webkit-box-sizing: border-box; 
+        -webkit-box-sizing: border-box;
     }
 
     .sub-page {
