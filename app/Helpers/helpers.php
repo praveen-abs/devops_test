@@ -202,7 +202,7 @@ function fetchSubClients(){
     function isAppointmentLetterTemplateAvailable(){
 
         $client_name = Str::lower(str_replace(' ', '', getCurrentClientName()) );
-        $viewfile_appointmentletter = 'appointmentletter_'.$client_name;
+        $viewfile_appointmentletter = 'mailtemplate_appointmentletter_'.$client_name;
 
         //Throw error if appointment letter missing for this client
         if (view()->exists($viewfile_appointmentletter)) {
