@@ -52,10 +52,7 @@
                 }
             }
 
-            p {
-                text-align: justify;
 
-            }
 
             .avatar_table tr,
             .avatar_table tr td {
@@ -75,7 +72,7 @@
 
             }
 
-            .payslip_table td:last-child {}
+
 
             .border-less {
                 border: 0px !important;
@@ -95,11 +92,12 @@
                 margin: 0px;
             }
 
-            p {
+            table.payslip_table tr td  p {
                 font-size: 9pt;
                 margin-top: 3pt;
                 margin-bottom: 3pt;
                 padding: 0px 5px;
+                text-align: justify;
             }
 
             .txt-left {
