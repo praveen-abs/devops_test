@@ -552,7 +552,7 @@ class HomeController extends Controller
 
         //choose the blade file
 
-        return view('document_template_'.strtolower($client_name) );
+        return view('vmt_preview_templates.previewtemplate_'.strtolower($client_name) );
 
     }
 
