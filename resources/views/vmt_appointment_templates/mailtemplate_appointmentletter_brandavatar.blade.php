@@ -26,7 +26,7 @@ $bank_names = \DB::table('bank_list')->get();
 
         }
 
-        table td:last-child {}
+
 
         .border-less {
             border: 0px !important;
@@ -54,7 +54,7 @@ $bank_names = \DB::table('bank_list')->get();
             padding: 5px;
         }
 
-        p {
+        .avatar_table tr td   p {
             font-size: 9pt;
             margin-top: 3pt;
             margin-bottom: 3pt;
@@ -62,11 +62,7 @@ $bank_names = \DB::table('bank_list')->get();
         }
 
 
-        .sm {}
 
-        .md {}
-
-        .lg {}
 
         .txt-left {
             text-align: left;
