@@ -525,11 +525,16 @@ th.gridjs-th .gridjs-th-content {
     padding: 12px 0 0;
     box-shadow: none !important;
 }
-.gridjs-table {
+
+
+.gridjs-table tr td:first-child {
     width: 100% !important;
     text-align: center !important;
     table-layout: unset !important;
 
+}
+.gridjs-table tr td:first-child {
+    text-align: left !important;
 }
 .js-pagination .gridjs-summary {
     font-size: 14px !important;
