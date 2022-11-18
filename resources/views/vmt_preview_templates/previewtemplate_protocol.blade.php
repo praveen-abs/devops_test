@@ -240,10 +240,7 @@
     </style>
 @endsection
 @section('content')
-    @component('components.configuration_breadcrumb')
-        @slot('li_1')
-        @endslot
-    @endcomponent
+
     <div class="card mt-30">
         <div class="card-body">
             <div class="fill salary-header nav-tab-header">
