@@ -543,7 +543,7 @@ class VmtEmployeeService {
 
             //Fetch appointment letter based on client name
             $client_name = Str::lower(str_replace(' ', '', getCurrentClientName()) );
-            $viewfile_appointmentletter = 'appointmentletter_'.$client_name;
+            $viewfile_appointmentletter = 'mailtemplate_appointmentletter_'.$client_name;
 
             //check if template exists
             if (view()->exists($viewfile_appointmentletter)) {
