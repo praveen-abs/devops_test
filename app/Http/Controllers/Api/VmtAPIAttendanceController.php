@@ -44,44 +44,66 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
     */
     public function attendanceCheckin(Request $request){
 
-        // date,checkin_time,shift_type,work_mode, seflie_checkin,checkin_comments
+        //Check if user already checked-in
+        $attendanceCheckin  = VmtEmployeeAttendance::where('user_id', auth::user()->id)->where("date", $request->date)->first();
 
-        $attendanceCheckin           = new VmtEmployeeAttendance;
-        $attendanceCheckin->date          = $request->date;
-        $attendanceCheckin->checkin_time  = $request->checkin_time;
-        $attendanceCheckin->user_id       = auth::user()->id;
-        $attendanceCheckin->shift_type    = $request->shift_type;
-        $attendanceCheckin->work_mode      = $request->work_mode;
-        //$attendanceCheckin->selfie_checkin = $request->selfie_checkin; ////Need to save the image in folder and add path here
-        $attendanceCheckin->checkin_comments = $request->checkin_comments;
-        $attendanceCheckin->save();
+        if($attendanceCheckin)
+        {
 
-        // processing and storing base64 files in public/selfies folder
-        if($request->has('selfie_checkin')){
+            $emptyObj  = new \stdClass;
 
-            $emp_selfiedir_path = public_path('employees/'.auth::user()->user_code.'/selfies/');
+            return response()->json([
+                'status' => 'failure',
+                'message'=> 'Check in already done',
+                'data'   => $emptyObj
+            ]);
+        }
+        else
+        {
 
-            // dd($emp_document_path);
-            if(!File::isDirectory($emp_selfiedir_path))
-                File::makeDirectory($emp_selfiedir_path, 0777, true, true);
-
-
-            $selfieFileEncoded  =  $request->selfie_checkin;
-
-            $fileName = $attendanceCheckin->id.'_checkin.png';
-
-            \File::put($emp_selfiedir_path.$fileName, base64_decode($selfieFileEncoded));
-
-            $attendanceCheckin->selfie_checkin = $fileName;
+            $attendanceCheckin           = new VmtEmployeeAttendance;
+            $attendanceCheckin->date          = $request->date;
+            $attendanceCheckin->checkin_time  = $request->checkin_time;
+            $attendanceCheckin->user_id       = auth::user()->id;
+            $attendanceCheckin->shift_type    = $request->shift_type;
+            $attendanceCheckin->work_mode      = $request->work_mode;
+            //$attendanceCheckin->selfie_checkin = $request->selfie_checkin; ////Need to save the image in folder and add path here
+            $attendanceCheckin->checkin_comments = $request->checkin_comments;
             $attendanceCheckin->save();
+
+
+            // processing and storing base64 files in public/selfies folder
+            if($request->has('selfie_checkin')){
+
+                $emp_selfiedir_path = public_path('employees/'.auth::user()->user_code.'/selfies/');
+
+                // dd($emp_document_path);
+                if(!File::isDirectory($emp_selfiedir_path))
+                    File::makeDirectory($emp_selfiedir_path, 0777, true, true);
+
+
+                $selfieFileEncoded  =  $request->selfie_checkin;
+
+                $fileName = $attendanceCheckin->id.'_checkin.png';
+
+                \File::put($emp_selfiedir_path.$fileName, base64_decode($selfieFileEncoded));
+
+                $attendanceCheckin->selfie_checkin = $fileName;
+                $attendanceCheckin->save();
+            }
+
+            $emptyObj  = new \stdClass;
+
+            return response()->json([
+                'status' => 'success',
+                'message'=> 'Check in success',
+                'data'   => $emptyObj
+            ]);
+
         }
 
-        $emptyObj  = new \stdClass;
-        return response()->json([
-            'status' => 'success',
-            'message'=> 'Check in success',
-            'data'   => $emptyObj
-        ]);
+
+
     }
 
     /*
