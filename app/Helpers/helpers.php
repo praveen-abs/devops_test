@@ -204,8 +204,9 @@ function fetchSubClients(){
         $client_name = Str::lower(str_replace(' ', '', getCurrentClientName()) );
         $viewfile_appointmentletter = 'mailtemplate_appointmentletter_'.$client_name;
 
+        //dd('vmt_appointment_templates.'.$viewfile_appointmentletter);
         //Throw error if appointment letter missing for this client
-        if (view()->exists($viewfile_appointmentletter)) {
+        if (view()->exists('vmt_appointment_templates.'.$viewfile_appointmentletter)) {
            return true;
         }
         else
