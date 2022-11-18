@@ -60,6 +60,7 @@
             .avatar_table tr,
             .avatar_table tr td {
                 border: 2px solid #dee2e6 !important;
+                padding: 5px !important;
             }
 
             .payslip_table {
@@ -394,7 +395,7 @@
 
 
 
-                                            <hr style=" margin-top: 388px;">
+                                            <hr style=" margin-top: 184px;">
                                             <div class="divFooter" style="text-align:center;font-size: 13px;"> <span>
                                                     <b>Registered Office Address</b> – Brand
                                                     Avatar LLP, No-01, Kandasamy Street, Chandrabagh
