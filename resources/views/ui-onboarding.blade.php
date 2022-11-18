@@ -256,7 +256,7 @@
                                                         id="nationality"
                                                         class="onboard-form form-control textbox  select2_form_without_search"
                                                         required>
-                                                        <option value="Select nationality" hidden disabled>select nationality
+                                                        <option value="Select nationality" disabled hidden disabled>select nationality
                                                         </option>
 
                                                         <option value="indian">Indian</option>
@@ -279,7 +279,7 @@
                                                         value="{{ !empty($employee_details) && $employee_details->passport_number ? $employee_details->passport_number : '' }}"
                                                         minlength="8" maxlength="8" class="form-control textbox"
                                                         style='text-transform:uppercase' />
-                                                    <span class="" id="error_passport_no"></span>
+                                                    <span class="error" id="error_passport_no"></span>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -418,7 +418,8 @@
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <div class="floating">
                                                     <label for="" class="float-label">PF
-                                                        Applicable</label>
+                                                        Applicable<span
+                                                        class="text-danger">*</span></label>
                                                     <select placeholder="PF Applicable" name="pf_applicable"
                                                         id="pf_applicable"
                                                         class="onboard-form form-control textbox  select2_form_without_search"
@@ -454,7 +455,8 @@
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <div class="floating">
                                                     <label for="" class="float-label">ESIC
-                                                        Applicable</label>
+                                                        Applicable<span
+                                                        class="text-danger">*</span></label>
                                                     <?php
                                                     $value = '';
 
@@ -506,7 +508,8 @@
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-lg-3 col-xl-3 mb-2">
                                                 <div class="floating">
-                                                    <label for="" class="float-label">TAX Regime</label>
+                                                    <label for="" class="float-label">TAX Regime<span
+                                                        class="text-danger">*</span>    </label>
 
                                                     <select placeholder="TAX Regime" name="tax_regime"
                                                         id="tax_regime"
@@ -561,7 +564,8 @@
                                             <div class="col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6 mb-2">
                                                 <!-- <label class="" for="current_address">Current Address{!! required() !!}</label> -->
                                                 <div class="floating">
-                                                    <label for="" class="float-label">Address 2</label>
+                                                    <label for="" class="float-label">Address 2<span
+                                                        class="text-danger">*</span></label>
 
                                                     <textarea placeholder="Current Address" name="current_address_line_2" id="current_address_line_2"
                                                         class="form-control textbox capitalize" required id="" cols="" rows="1">{{ !empty($employee_details) && $employee_details->current_address_line_2 ? $employee_details->current_address_line_2 : '' }}</textarea>
@@ -596,7 +600,7 @@
                                                             class="text-danger">*</span></label>
                                                     <select placeholder="State" name="current_state"
                                                         id="current_state"
-                                                        class="onboard-form form-control textbox  select2_form_without_search"
+                                                        class="onboard-form form-control textbox error select2_form_without_search"
                                                         required>
                                                         <option value="" hidden selected disabled>Select
                                                             State</option>
@@ -758,7 +762,8 @@
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 col-xxl-3 mb-2">
                                                 <!-- <label class="" for="process">Process{!! required() !!}</label> -->
                                                 <div class="floating">
-                                                    <label for="" class="float-label">Process</label>
+                                                    <label for="" class="float-label">Process<span
+                                                        class="text-danger">*</span></label>
                                                     <input type="text" placeholder="Process" name="process"
                                                         class="onboard-form form-control" pattern="name" required
                                                         value="{{ !empty($emp_office_details) && $emp_office_details->process ? $emp_office_details->process : '' }}" />

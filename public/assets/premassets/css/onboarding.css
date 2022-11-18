@@ -573,6 +573,6 @@ text-transform: none;
 .float-label{
     font-weight: 600;
 }
-.floating input.error{
+.floating input.error,.floating select.error,.floating textarea.error{
     border: 1px solid red;
 }
