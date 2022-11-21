@@ -38,6 +38,8 @@
 
                 <!-- CRM -->
                 @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
+                    @if (!Str::contains(getCurrentClientName(), 'Vasa'))
+
                     <li class="nav-item">
 
                         <a class="nav-link sidebar menu-link pt-0" href="#crmDrop-Down" data-bs-toggle="collapse"
@@ -74,6 +76,7 @@
                             </ul>
                         </div>
                     </li>
+                    @endif
                 @endif
 
                 <!-- Navigation Menu for attendance-->
@@ -334,6 +337,8 @@
 
                                     </li>
 
+                                    @if (!Str::contains(getCurrentClientName(), 'Vasa'))
+
                                     <li class="nav-item">
                                         <a href="{{ route('attendance-leave-approvals') }}" id=""
                                             class="nav-link sidebar py-1" data-bs-toggle="" role="button"
@@ -348,6 +353,7 @@
                                                 Attendance Regularization </span> </a>
 
                                     </li>
+                                    @endif
 
                                     <li class="nav-item">
                                         <a href="#" id=""
@@ -473,62 +479,66 @@
 
                 @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
                     <!-- pay roll -->
+                    @if (!Str::contains(getCurrentClientName(), 'Vasa'))
 
-                    <li class="nav-item">
-                        <a class="nav-link sidebar menu-link pt-0" href="#payRollDrop-Down" data-bs-toggle="collapse"
-                            role="button" aria-expanded="false" aria-controls="sidebarRoles">
-                            <i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="12.652"
-                                    viewBox="0 0 16 12.652">
-                                    <g id="Group_34184" data-name="Group 34184" transform="translate(-18 -404.98)">
-                                        <path id="hand-holding-dollar-solid_1_"
-                                            data-name="hand-holding-dollar-solid (1)"
-                                            d="M15.867,12.712a1.114,1.114,0,0,0-1.562-.236l-3.343,2.462H7.595a.429.429,0,0,1-.422-.447.446.446,0,0,1,.422-.447H9.78a.95.95,0,0,0,.932-.743.9.9,0,0,0-.883-1.044H5.336a3.339,3.339,0,0,0-2.07.733l-1.3,1.054L.422,14.019A.471.471,0,0,0,0,14.491v2.68a.445.445,0,0,0,.422.447h9.665a2.926,2.926,0,0,0,1.723-.566C16.126,13.907,16.232,13.209,15.867,12.712Z"
-                                            transform="translate(18 400.015)" fill="#686363" />
-                                        <path id="bx-rupee"
-                                            d="M12.493,6.635V6H9v.635h1.112a.951.951,0,0,1,.894.635H9v.635h2.006a.951.951,0,0,1-.894.635H9v.767l1.774,1.774h.9L9.767,9.176h.345a1.59,1.59,0,0,0,1.556-1.27h.826V7.27h-.826a1.567,1.567,0,0,0-.293-.635Z"
-                                            transform="translate(15.253 398.98)" fill="#686363" />
-                                    </g>
-                                </svg>
-                            </i>
-
-
-                            <span>Payroll</span>
-                        </a>
-                        <div class="collapse menu-dropdown" id="payRollDrop-Down">
-                            <ul class="nav nav-sm flex-column">
-
-                                <li class="nav-item">
-                                    <a href="{{ route('analytics') }}" class="nav-link sidebar py-1"
-                                        role="button"><span>
-                                          Analytics</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{route('run')}}"  class="nav-link sidebar py-1"
-                                        role="button"><span>
-                                        Pay Run</span>
-                                    </a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a  href="{{route('claim')}}"  class="nav-link sidebar py-1"
-                                        role="button"><span>
-                                         Claim</span>
-                                    </a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a  href="{{route('reports')}}" class="nav-link sidebar py-1"
-                                        role="button"><span>
-                                            Reports</span>
-                                    </a>
-                                </li>
+                        <li class="nav-item">
+                            <a class="nav-link sidebar menu-link pt-0" href="#payRollDrop-Down" data-bs-toggle="collapse"
+                                role="button" aria-expanded="false" aria-controls="sidebarRoles">
+                                <i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="12.652"
+                                        viewBox="0 0 16 12.652">
+                                        <g id="Group_34184" data-name="Group 34184" transform="translate(-18 -404.98)">
+                                            <path id="hand-holding-dollar-solid_1_"
+                                                data-name="hand-holding-dollar-solid (1)"
+                                                d="M15.867,12.712a1.114,1.114,0,0,0-1.562-.236l-3.343,2.462H7.595a.429.429,0,0,1-.422-.447.446.446,0,0,1,.422-.447H9.78a.95.95,0,0,0,.932-.743.9.9,0,0,0-.883-1.044H5.336a3.339,3.339,0,0,0-2.07.733l-1.3,1.054L.422,14.019A.471.471,0,0,0,0,14.491v2.68a.445.445,0,0,0,.422.447h9.665a2.926,2.926,0,0,0,1.723-.566C16.126,13.907,16.232,13.209,15.867,12.712Z"
+                                                transform="translate(18 400.015)" fill="#686363" />
+                                            <path id="bx-rupee"
+                                                d="M12.493,6.635V6H9v.635h1.112a.951.951,0,0,1,.894.635H9v.635h2.006a.951.951,0,0,1-.894.635H9v.767l1.774,1.774h.9L9.767,9.176h.345a1.59,1.59,0,0,0,1.556-1.27h.826V7.27h-.826a1.567,1.567,0,0,0-.293-.635Z"
+                                                transform="translate(15.253 398.98)" fill="#686363" />
+                                        </g>
+                                    </svg>
+                                </i>
 
 
-                            </ul>
-                        </div>
-                    </li>
+                                <span>Payroll</span>
+                            </a>
+                            <div class="collapse menu-dropdown" id="payRollDrop-Down">
+                                <ul class="nav nav-sm flex-column">
+
+                                    <li class="nav-item">
+                                        <a href="{{ route('analytics') }}" class="nav-link sidebar py-1"
+                                            role="button"><span>
+                                            Analytics</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{route('run')}}"  class="nav-link sidebar py-1"
+                                            role="button"><span>
+                                            Pay Run</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a  href="{{route('claim')}}"  class="nav-link sidebar py-1"
+                                            role="button"><span>
+                                            Claim</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a  href="{{route('reports')}}" class="nav-link sidebar py-1"
+                                            role="button"><span>
+                                                Reports</span>
+                                        </a>
+                                    </li>
+
+
+                                </ul>
+                            </div>
+                        </li>
+                    @endif
                 @endif
+
+                @if (!Str::contains(getCurrentClientName(), 'Vasa'))
 
                 <!-- pay check -->
                 <li class="nav-item">
@@ -567,8 +577,9 @@
                         </ul>
                     </div>
                 </li>
+                @endif
 
-
+                @if (!Str::contains(getCurrentClientName(), 'Vasa'))
 
                 <!-- claims -->
                 <li class="nav-item">
@@ -593,6 +604,9 @@
                     </a>
                 </li>
 
+                @endif
+
+                @if (!Str::contains(getCurrentClientName(), 'Vasa'))
 
                 <!-- reports -->
                 <li class="nav-item">
@@ -626,7 +640,7 @@
                     </div>
                 </li>
 
-
+                @endif
 
 
                 <!-- help desk -->
