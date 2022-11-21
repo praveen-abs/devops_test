@@ -277,6 +277,8 @@
                                     <a href="{{ route('page-not-found') }}" id="tds"
                                         class="nav-link sidebar py-1"><span>Exit</span></a>
                                 </li>
+                                @if (!Str::contains(getCurrentClientName(), 'Vasa'))
+
                                 <li class="nav-item ">
                                     <a href="{{ route('vmt-documents-route') }}" id="tds"
                                         class="nav-link sidebar py-1"><span>Documents</span></a>
@@ -285,6 +287,7 @@
                                     <a href="{{ route('assetinventory-index') }}" id="tds"
                                         class="nav-link sidebar py-1"><span>Assets</span></a>
                                 </li>
+                                @endif
                             </ul>
                         </div>
                     </li>
@@ -362,6 +365,8 @@
                                                 OKR /PMS</span> </a>
                                         {{-- PMS forms are approved here. Redirect to PMS dashboard --}}
                                     </li>
+                                    @if (!Str::contains(getCurrentClientName(), 'Vasa'))
+
                                     <li class="nav-item">
                                         <a href="#" id=""
                                             class="nav-link sidebar py-1" data-bs-toggle="" role="button"
@@ -374,7 +379,7 @@
                                             class="nav-link sidebar py-1" data-bs-toggle="" role="button"
                                             aria-expanded="false"><span>
                                                 Taxations</span> </a>
-
+                                    @endif
                                     </li>
                                 @endif
                             </ul>
