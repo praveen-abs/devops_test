@@ -1,4 +1,3 @@
-
 .pay-summary-border svg {
     border: 1px solid #c9cede;
     border-radius: 50%;
@@ -171,13 +170,13 @@ p.th-three::before {
 figure {
     background-color: transparent;
     display: block;
-    height: 140px ;
+    height: 140px;
     border: 1px solid #eee;
     border-radius: 50%;
     position: relative;
     font-size: 16px;
     font-size: 1vw;
-    width: 140px ;
+    width: 140px;
     /* padding-bottom: 40em; */
     margin: 0 !important;
 }
@@ -349,4 +348,32 @@ h6 {
     right: 0;
     height: 44px;
     padding-left: 0;
+}
+
+/* investments  */
+
+table tr td .upload_file {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+table tr td .upload_file i.fa-upload {
+    font-size: 16px;
+    cursor: pointer;
+    color: #338fed;
+}
+table tr td .upload_file i.fa-upload input[type="file"] {
+    left: 0px;
+    opacity: 0;
+    position: absolute;
+    width: -webkit-fill-available;
+}
+
+.investment_dropDown .dropdown-toggle:after{
+    display: none;
+}
+
+.investment_dropDown  .dropdown-menu{
+    min-width: 120px;
 }

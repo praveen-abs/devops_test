@@ -552,6 +552,7 @@ th.gridjs-th,
     padding: 0.75rem 0.6rem;
     white-space: nowrap !important;
     width: 100%;
+    text-align: center;
 }
 th.gridjs-th {
     border-top: 0;
@@ -890,11 +891,11 @@ button.gridjs-sort-desc {
     margin: 5px;
 }
 .badge {
-    height: 18px;
+    /* height: 18px;
     width: 18px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center; */
 }
 .ember-view i {
     font-size: 15px;

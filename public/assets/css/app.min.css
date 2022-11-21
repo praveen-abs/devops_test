@@ -6972,37 +6972,7 @@ button {
     display: none;
 }
 
-.dropdown-toggle:after {
-    display: inline-block;
-    margin-left: 0.255em;
-    font-size: 15px;
-    line-height: 15px;
-    content: "\f0140";
-    font-family: Material Design Icons;
-}
 
-.dropdown-menu {
-    box-shadow: 0 5px 10px rgba(30, 32, 37, 0.12);
-    -webkit-animation-name: DropDownSlide;
-    animation-name: DropDownSlide;
-    -webkit-animation-duration: 0.3s;
-    animation-duration: 0.3s;
-    -webkit-animation-fill-mode: both;
-    animation-fill-mode: both;
-    position: absolute;
-    z-index: 1000;
-}
-
-.dropdown-menu.dropdown-megamenu {
-    padding: 20px;
-    left: 0 !important;
-    right: 0 !important;
-}
-
-.dropdown-menu[data-popper-placement="top-start"] {
-    -webkit-animation-name: DropDownSlideDown;
-    animation-name: DropDownSlideDown;
-}
 
 @-webkit-keyframes DropDownSlide {
     to {
@@ -16411,16 +16381,6 @@ span.flatpickr-weekday {
     -moz-osx-font-smoothing: grayscale;
 }
 
-.dropdown-toggle::after {
-    display: inline-block;
-    margin-left: 0.255em;
-    vertical-align: 0.255em;
-    content: "";
-    border-top: 0.3em solid;
-    border-right: 0.3em solid transparent;
-    border-bottom: 0;
-    border-left: 0.3em solid transparent;
-}
 
 .dropdown-action .dropdown-toggle::after {
     border: 0;
@@ -18012,13 +17972,14 @@ white-space:nowrap;
     height: 180px;
 }
 
-.close {
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    justify-content: center;
-    align-items: center;
+.close,.close-modal{
+    background: #e1e1e1 !important;
+    height: 15px;
+    width: 15px;
     display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
 }
 
 

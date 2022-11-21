@@ -2,14 +2,10 @@
 @extends('layouts.master')
 @section('css')
 
-<link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
+
 <link href="{{ URL::asset('public\assets\css\payCheck.css') }}" rel="stylesheet">
 
-<style>
-    .cursor-pointer {
-        cursor: pointer;
-    }
-</style>
+
 @endsection
 @section('content')
 @component('components.paycheck_breadcrumb')
