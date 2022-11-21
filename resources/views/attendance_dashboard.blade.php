@@ -9,16 +9,11 @@
 @endsection
 
 @section('content')
-    {{-- @component('components.attendance_breadcrumb')
-        @slot('li_1')
-        @endslot
-    @endcomponent --}}
 
     <div class="cotainer-fluid attandance-wrapper mt-30">
         <div class="card mb-2">
             <div class="py-1 card-body">
-                <!-- <div class="card-header">                                                                         <h5><span class="text-muted">Attendance &gt;</span> <span class="text-danger"> Dashboard </span></h5>
-                                                                                                                                                                                                                                                                                                             </div> -->
+
                 <div class="row">
                     <div class="col-8 d-flex align-items-center">
                         <ul class="nav nav-pills nav-tabs-dashed">
@@ -838,9 +833,7 @@
     </div>
 @endsection
 @section('script')
-    <script src="{{ URL::asset('assets/libs/gridjs/gridjs.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/js/pages/dashboard-projects.init.js') }}"></script>
-    <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
+
     <script>
         $(document).ready(function() {
             if (document.getElementById("leaveAnalytics_table")) {

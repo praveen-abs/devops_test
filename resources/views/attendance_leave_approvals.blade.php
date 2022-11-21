@@ -120,7 +120,7 @@
 
 @section('script')
     <script src="{{ URL::asset('assets/libs/gridjs/gridjs.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
+
     <script>
         var leavetypes_array = <?php echo json_encode(getAllLeaveTypes()); ?>;
 
