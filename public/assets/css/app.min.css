@@ -17972,7 +17972,7 @@ white-space:nowrap;
     height: 180px;
 }
 
-.close,.close-modal{
+.close{
     background: #e1e1e1 !important;
     height: 15px;
     width: 15px;

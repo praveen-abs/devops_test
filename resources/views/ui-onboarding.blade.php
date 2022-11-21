@@ -102,14 +102,14 @@
                                                     <label for="" class="float-label">Date of Joining<span
                                                             class="text-danger">*</span></label>
                                                     @if (isset($employee_details->doj))
-                                                        <input type="text" max="9999-12-31"
+                                                        <input type="text" id="doj"  max="9999-12-31"
                                                             placeholder="Date of Joining" name="doj"
                                                             value="{{ isset($employee_details->doj) &&  $employee_details->doj != '0000-00-00' ? date('d-m-Y', strtotime($employee_details->doj)) : date('Y-m-d') }}"
                                                             class="onboard-form  form-control textbox " required
                                                             readonly />
                                                     @else
                                                         <input type="text" max="9999-12-31"
-                                                            placeholder="Date of Joining" name="doj"
+                                                            placeholder="Date of Joining"  id="doj" name="doj"
                                                             class="onboard-form  form-control textbox "
                                                             onfocus="(this.type='date')" required />
                                                     @endif
@@ -981,7 +981,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                                                <!-- <label class="" for="father_name">Father Name{!! required() !!}</label> -->
+
                                                 <div class="floating">
                                                     <label for="" class="float-label">Age </label>
 

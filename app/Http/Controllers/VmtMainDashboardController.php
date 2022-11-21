@@ -94,6 +94,7 @@ class VmtMainDashboardController extends Controller
         $employeesEventDetails = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
                                 ->join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
                                 ->select(
+                                    'users.id',
                                     'users.name',
                                     'users.avatar',
                                     'vmt_employee_details.emp_no',
