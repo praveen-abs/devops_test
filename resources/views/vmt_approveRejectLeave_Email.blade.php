@@ -3,8 +3,6 @@
 $general_info = \DB::table('vmt_general_info')->first();
 //$employee_name =  \DB::table('users')->where('user_code','=',$employee->EMP_NO)->first('name');
 $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
-// dd(request()->getSchemeAndHttpHost()."".$general_info->logo_img);
-$bank_names = \DB::table('bank_list')->get();
 
 ?>
 
@@ -141,7 +139,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                         Kindly visit the HRMS portal for more details.
                                                         <a class="" type="button" href="#"
                                                             style="text-decoration:none;cursor: pointer;font-weight:600">
-                                                            demo.abshrms.com
+                                                            {{ $loginLink }}
                                                         </a>
                                                     </td>
                                                 </tr>
