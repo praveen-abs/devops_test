@@ -115,7 +115,7 @@
                         </table>
                     </div>
                     <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
-                        <button type="submit" class="btn btn-orange table-btn mx-2" id="save-table">Save</button>
+                        <button type="submit" class="btn btn-orange table-btn mx-2" id="save-table">Submit</button>
                     </div>
                 </form>
             </div>
