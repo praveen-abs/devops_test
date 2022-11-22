@@ -18,6 +18,8 @@ class ApproveRejectLeaveMail extends Mailable
      */
     protected $employeeName;
     protected $empCode;
+
+    protected $leaveType;
     protected $managerName;
     protected $managerCode;
     protected $loginLink;
@@ -26,11 +28,12 @@ class ApproveRejectLeaveMail extends Mailable
     protected $empAvatar;
     protected $leave_status;
 
-    public function __construct($uEmployeeName, $uEmpCode, $managerName , $managerCode, $loginLink, $image_view ,$uEmpAvatar, $leave_status)
+    public function __construct($uEmployeeName, $uEmpCode, $uLeaveType, $managerName , $managerCode, $loginLink, $image_view ,$uEmpAvatar, $leave_status)
     {
         //
         $this->employeeName  = $uEmployeeName;
         $this->empCode  = $uEmpCode;
+        $this->leaveType = $uLeaveType;
         $this->managerName  = $managerName;
         $this->managerCode  = $managerCode;
         $this->loginLink  = $loginLink;
@@ -47,10 +50,14 @@ class ApproveRejectLeaveMail extends Mailable
      */
     public function build()
     {
+        //
+        $subject = "Your ".$this->leaveType." has been ";
+
         $output = $this->view('vmt_approveRejectLeave_Email')
-                    ->subject("Your Leave has been ".$this->leave_status)
+                    ->subject($subject.$this->leave_status)
                     ->with('employeeName', $this->employeeName)
                     ->with('empCode', $this->empCode)
+                    ->with('leaveType', $this->leaveType)
                     ->with('managerName', $this->managerName)
                     ->with('managerCode', $this->managerCode)
                     ->with('loginLink', $this->loginLink)

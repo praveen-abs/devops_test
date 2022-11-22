@@ -60,7 +60,7 @@ class RequestLeaveMail extends Mailable
         $MAIL_FROM_ADDRESS = env('MAIL_FROM_ADDRESS');
         $MAIL_FROM_NAME    = env('MAIL_FROM_NAME');
 
-        $subject = "Leave Approval Request from ";
+        $subject = $this->leaveType." Leave Approval Request from ";
 
         if($this->leaveType == 'Permission')
             $subject = "Permission Approval Request from ";
