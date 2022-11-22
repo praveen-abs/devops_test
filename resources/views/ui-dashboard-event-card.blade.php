@@ -1,5 +1,8 @@
 <div class="event-wrapper">
-    <div class="card profile-box border-0 mb-0">
+    <div class="card profile-box border-0 mb-0" style="height: 280px;
+    overflow-y: auto;
+
+    overflow-x: hidden;">
         <div class="card-body">
             <h6 class="text-primary">Events</h6>
             <div class="row">
@@ -7,79 +10,148 @@
 
                 @if ($dashboardEmployeeEventsData['hasData'] == 'true')
                     @foreach ($dashboardEmployeeEventsData['birthday'] as $employee)
+                        <?php $text = null; ?>
 
-                            <?php $text = null; ?>
+                        @if (\Carbon\Carbon::parse($employee['dob'])->month == date('m') &&
+                            \Carbon\Carbon::parse($employee['dob'])->day == date('d'))
+                            <?php $text = 'Today'; ?>
+                        @elseif (\Carbon\Carbon::parse($employee['dob'])->month >= date('m') &&
+                            \Carbon\Carbon::parse($employee['dob'])->day > date('d'))
+                            <?php $text = 'Upcoming'; ?>
+                        @endif
 
-                            @if (\Carbon\Carbon::parse($employee['dob'])->month == date('m')  && \Carbon\Carbon::parse($employee['dob'])->day == date('d'))
-                                <?php $text = "Today"; ?>
+                        @if ($text != null)
+                            <?php $anyUpcoming_Current_Events = true; ?>
+                            <div class="col-sm-6 col-md-4 col-xxl-3 col-xl-3 col-lg-3">
+                                <div class="card wishes_content  topOrange-line mb-3">
+                                    <div class="card-body ">
+                                        <div class="flip-card ">
+                                            <div class="flip-card-inner">
+                                                <div class="flip-card-front">
 
-                            @elseif ( \Carbon\Carbon::parse($employee['dob'])->month >= date('m')  && \Carbon\Carbon::parse($employee['dob'])->day > date('d'))
-                                <?php $text = "Upcoming"; ?>
-                            @endif
+                                                    <p class="badge text-orange text-right">{{ $text }}</p>
 
-                            @if($text != null)
-                                <?php $anyUpcoming_Current_Events = true; ?>
-                                <div class="col-sm-6 col-md-6 col-xl-3 col-lg-3">
-                                    <div class="card profile-box flex-fill mb-3" style="border-top: 5px solid #E54E0D;">
-                                        <!-- <div class="p-1 bg-danger" ></div> -->
-                                        <div class="card-body ">
-                                            <div class="wishes-card-wrapper">
-                                                <p class="text-muted f-12 m-0"><i class="ri-cake-2-fill f-13 mr-2"
-                                                        style="color:#E54E0D;"></i> Happy
-                                                    Birthday</p>
-                                                <div class="mt-2 ">
-                                                    <div class="px-2 d-flex ">
-                                                        <img src="{{ URL::asset('images/' . $employee->avatar) }}"
-                                                            alt="" class="img-round">
-                                                        <p class=" text-primary fw-bold f-12 mx-3 mt-3">{{ $employee->name }}</p>
-                                                    </div>
-                                                    <p class="text-danger f-12 fw-bold text-right program-day "
-                                                        style="color:#E54E0D;">
-                                                            {{ $text }}
-                                                            {{ $employee['dob'] }}
-                                                    </p>
+                                                    <?php
+                                                    $empAvatar = getEmployeeAvatarOrShortName($employee->id);
+                                                    //dd($empAvatar);
+                                                    ?>
+                                                    @if ($empAvatar['type'] == 'shortname')
+                                                        <div
+                                                            class="d-flex text-center justify-content-center flex-column ">
+
+                                                            <div class="bgImg-lg mb-3">
+                                                                {{ $empAvatar['data'] }}
+                                                            </div>
+                                                            <p class="fw-bold f-14 text-muted ">
+                                                                {{ $employee->name }}
+                                                            </p>
+                                                            <p
+                                                                class="f-12 fw-bold text-orange  program-day ">
+                                                                {{ \Carbon\Carbon::parse($employee['dob'])->format('jS M') }}
+                                                            </p>
+                                                            <div class="row social_content">
+                                                                <div class="col-6 text-start">
+                                                                    <i class="fa text-orange fa-birthday-cake"></i>
+                                                                </div>
+                                                                <div class="col-6 text-right">
+                                                                    <button
+                                                                        class="outline-none p-2 shadow-lite rounded-circle msg_box bg-ash border-0 text-orange" data-bs-target="#wishes_popup" data-bs-toggle="modal">
+                                                                        <i
+                                                                            class=" f-15 fa fa-commenting-o "></i></button>
+                                                                </div>
+
+
+                                                            </div>
+                                                        </div>
+                                                    @elseif($empAvatar['type'] == 'avatar')
+                                                        <?php
+
+                                                        $imageURL = request()->getSchemeAndHttpHost() . '/images/' . $empAvatar['data'];
+
+                                                        ?>
+                                                        <img class="rounded-circle header-profile-user"
+                                                            src="{{ $imageURL }}" alt="user_image"
+                                                            style="height: 100%;width: 100%;border-radius: 50%;">
+                                                    @endif
                                                 </div>
-                                                <i class="float-right bg-icon text-danger ri-cake-2-fill"></i>
+
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
-                            @endif
+                            </div>
+                        @endif
                     @endforeach
 
                     @foreach ($dashboardEmployeeEventsData['work_anniversary'] as $employee)
                         <?php $text = null; ?>
 
-                        @if (\Carbon\Carbon::parse($employee['doj'])->month == date('m')  && \Carbon\Carbon::parse($employee['doj'])->day == date('d'))
-                            <?php $text = "Today"; ?>
-
-                        @elseif ( \Carbon\Carbon::parse($employee['doj'])->month >= date('m')  && \Carbon\Carbon::parse($employee['doj'])->day > date('d'))
-                            <?php $text = "Upcoming"; ?>
+                        @if (\Carbon\Carbon::parse($employee['doj'])->month == date('m') &&
+                            \Carbon\Carbon::parse($employee['doj'])->day == date('d'))
+                            <?php $text = 'Today'; ?>
+                        @elseif (\Carbon\Carbon::parse($employee['doj'])->month >= date('m') &&
+                            \Carbon\Carbon::parse($employee['doj'])->day > date('d'))
+                            <?php $text = 'Upcoming'; ?>
                         @endif
 
-                        @if($text != null)
+                        @if ($text != null)
                             <?php $anyUpcoming_Current_Events = true; ?>
-                            <div class="col-sm-6 col-md-6 col-xl-3 col-lg-3">
-                                <div class="card profile-box flex-fill mb-3" style="border-top: 5px solid #037B5A;">
+                            <div class="col-sm-6 col-md-4 col-xxl-3 col-xl-3 col-lg-3">
+                                <div class="card wishes_content  borderTop-green mb-3">
                                     <div class="card-body ">
-                                        <div class="wishes-card-wrapper">
-                                            <p class="text-muted f-12   m-0"><i class=" f-12 mr-2 ri-shopping-bag-fill"
-                                                    style="color:#037B5A;"></i>
-                                                Work Anniversary</p>
-                                            <div class="mt-2 ">
-                                                <div class="px-2 d-flex ">
-                                                    <img src="{{ URL::asset('images/' . $employee->avatar) }}"
-                                                        alt="" class="img-round">
-                                                    <p class=" text-primary f-12 fw-bold mx-3 mt-3">{{ $employee->name }}</p>
+                                        <div class="flip-card ">
+                                            <div class="flip-card-inner">
+                                                <div class="flip-card-front">
+
+                                                    <p class="badge text-green text-right">{{ $text }}</p>
+
+                                                    <?php
+                                                    $empAvatar = getEmployeeAvatarOrShortName($employee->id);
+                                                    //dd($empAvatar);
+                                                    ?>
+                                                    @if ($empAvatar['type'] == 'shortname')
+                                                        <div
+                                                            class="d-flex text-center justify-content-center flex-column ">
+
+                                                            <div class="bgImg-lg mb-3">
+                                                                {{ $empAvatar['data'] }}
+                                                            </div>
+                                                            <p class="fw-bold f-14 text-muted ">
+                                                                {{ $employee->name }}
+                                                            </p>
+                                                            <p
+                                                                class="f-12 fw-bold text-green  program-day ">
+                                                                {{ \Carbon\Carbon::parse($employee['dob'])->format('jS M') }}
+                                                            </p>
+                                                            <div class="row social_content">
+                                                                <div class="col-6 text-start">
+                                                                    <i class="text-green ri-shopping-bag-fill"></i>
+                                                                </div>
+                                                                <div class="col-6 text-right">
+                                                                    <button
+                                                                        class="outline-none p-2 shadow-lite rounded-circle msg_box bg-ash border-0 text-green" data-bs-target="#wishes_popup" data-bs-toggle="modal">
+                                                                        <i class=" f-15 fa fa-commenting-o "></i></button>
+                                                                </div>
+
+
+                                                            </div>
+                                                        </div>
+                                                    @elseif($empAvatar['type'] == 'avatar')
+                                                        <?php
+
+                                                        $imageURL = request()->getSchemeAndHttpHost() . '/images/' . $empAvatar['data'];
+
+                                                        ?>
+                                                        <img class="rounded-circle header-profile-user"
+                                                            src="{{ $imageURL }}" alt="user_image"
+                                                            style="height: 100%;width: 100%;border-radius: 50%;">
+                                                    @endif
                                                 </div>
-                                                <p class="fw-bold f-12 text-right program-day " style="color:#037B5A;">
-                                                    {{ $text }}
-                                                    {{ $employee['doj'] }}
-                                                </p>
 
                                             </div>
-                                            <i class="float-right bg-icon  ri-shopping-bag-fill" style="color:#037B5A"></i>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -92,7 +164,7 @@
 
                 @endif
 
-                @if(empty($anyUpcoming_Current_Events))
+                @if (empty($anyUpcoming_Current_Events))
                     <div
                         class="wishes-card-wrapper no-events d-flex align-items-center justify-content-center flex-column">
                         <img id="" src="{{ URL::asset('assets/images/event/cancel-event.png') }}" />
@@ -103,5 +175,27 @@
             </div>
         </div>
     </div>
-</div>
 
+
+    <div id="wishes_popup" class="modal  fade" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-md">
+            <div class="modal-content">
+                <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
+                    <h6 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
+                        Chatter box</h6>
+                    <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
+                        aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{-- <p for="" class="text-muted f-14 fw-bold">Commants here</p> --}}
+                    <textarea name="" id="" cols="" placeholder="Commants here...." rows="2" class="resize-none form-control"></textarea>
+                    <div class="text-end">
+                        <button class="btn btn-border-orange mt-2" id="">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -33,6 +33,9 @@ p {
 .hid {
     display: none;
 }
+.bg-ash {
+    background-color: #f0f3f4;
+}
 .top-mar {
     margin-top: 15px;
 }
@@ -52,7 +55,6 @@ p {
 }
 .border-primary {
     border: 1px solid #002f56 !important;
-
 }
 .border-orange {
     border-color: #ee6a04;
@@ -249,11 +251,12 @@ p {
     border-color: #002f56;
     color: #fff;
 }
-.btn-border-orange,.btn-orange {
+.btn-border-orange,
+.btn-orange {
     transition: 0.4s ease-in;
     font-weight: 600;
-    padding: 5px 8px ;
-    font-size: 13px ;
+    padding: 5px 8px;
+    font-size: 13px;
 }
 .btn-orange {
     background-color: #ee6a04;
@@ -272,7 +275,6 @@ p {
 }
 .btn-border-orange:hover {
     background-color: transparent;
-
 }
 .btn-orange:hover {
     background-color: #ee6a04;
@@ -302,6 +304,9 @@ p {
 }
 .top-line {
     border-top: 5px solid #002f56;
+}
+.topOrange-line {
+    border-top: 5px solid #e54e0d;
 }
 .left-line {
     border-left: 5px solid #002f56;
@@ -422,11 +427,11 @@ th.gridjs-th .gridjs-th-content {
 }
 
 .gridjs-table > tbody > tr > td:last-child {
-  text-align: center;
+    text-align: center;
 }
 
-.gridjs-table > thead > tr > th{
-  text-align: center;
+.gridjs-table > thead > tr > th {
+    text-align: center;
 }
 .gridjs-table > thead > tr > th:nth-child(1) {
     width: auto !important;
@@ -489,9 +494,10 @@ th.gridjs-th .gridjs-th-content {
     min-width: auto !important;
 }
 
-.gridjs-table > tbody > tr > td:nth-child(5),.gridjs-table > tbody > tr > td:nth-child(7) {
-   white-space: pre-wrap;
-   width: 150px;
+.gridjs-table > tbody > tr > td:nth-child(5),
+.gridjs-table > tbody > tr > td:nth-child(7) {
+    white-space: pre-wrap;
+    width: 150px;
 }
 
 .table.gridjs-table {
@@ -526,12 +532,10 @@ th.gridjs-th .gridjs-th-content {
     box-shadow: none !important;
 }
 
-
 .gridjs-table tr td:first-child {
     width: 100% !important;
     text-align: center !important;
     table-layout: unset !important;
-
 }
 .gridjs-table tr td:first-child {
     /* text-align: left !important; */
@@ -554,7 +558,9 @@ th.gridjs-th,
     /* width: 100%; */
     text-align: center;
     vertical-align: middle;
-
+}
+table.gridjs-table {
+    width: 100%;
 }
 th.gridjs-th {
     border-top: 0;
@@ -566,7 +572,6 @@ th.gridjs-th-sort:hover {
     background-color: rgba(var(--vz-light-rgb), 0.85);
 }
 .gridjs-head {
-
     width: 100% !important;
     text-align: end;
     position: relative;
@@ -805,13 +810,12 @@ button.gridjs-sort-desc {
 
 .nav-tabs-dashed .nav-item .nav-link {
     position: relative;
-    color: #a9a6a7 ;
+    color: #a9a6a7;
     background-color: transparent !important;
     padding-bottom: 10px;
     border-radius: 0px !important;
     transition-timing-function: linear;
     font-weight: 600;
-
 }
 .nav-tabs-dashed .nav-item .nav-link.active::after {
     content: "";
@@ -819,7 +823,7 @@ button.gridjs-sort-desc {
     width: 100%;
     left: 0px;
     position: absolute;
-    background-color: #ee6a05 ;
+    background-color: #ee6a05;
     bottom: 0px;
     border-top-left-radius: 8px;
     border-top-right-radius: 5px;
@@ -1262,7 +1266,6 @@ a.editable-click:hover {
     left: 33px;
 }
 
-
 .button_tabs .nav-link {
     background-color: #dfdfdf;
     color: #c2c1bf;
@@ -1289,7 +1292,7 @@ a.editable-click:hover {
 .border-right {
     border-right: 1px solid #cecece;
 }
-.border-left{
+.border-left {
     border-left: 1px solid #cecece;
 }
 
@@ -1300,11 +1303,11 @@ a.editable-click:hover {
     height: 25px;
 }
 
-.resize-none{
+.resize-none {
     resize: none;
 }
 
-.form-check-input:checked{
+.form-check-input:checked {
     accent-color: #ee6a04 !important;
     background-color: #ee6a04 !important;
     border-color: #ee6a04 !important;
@@ -1312,8 +1315,6 @@ a.editable-click:hover {
 .form-check-input:focus {
     box-shadow: 0 0 0 0.25rem rgb(255 96 0 / 24%) !important;
 }
-
-
 
 /* runpayroll */
 .border-bottom-secondary {
@@ -1325,7 +1326,6 @@ a.editable-click:hover {
     display: block;
     height: 0;
 }
-
 
 .border-start-radius {
     border-radius: 45px 0px 0px 45px !important;
@@ -1447,12 +1447,9 @@ table.dataTable td {
 }
 .dataTables_wrapper .dataTables_paginate .paginate_button,
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-
-    background: transparent ;
+    background: transparent;
     border-radius: 5px !important;
-
 }
-
 
 .dataTables_wrapper .dataTables_length label {
     display: flex;
@@ -1466,12 +1463,13 @@ table.dataTable td {
 }
 
 /* modal */
-.custom-modal,.popUp-close{
+.custom-modal,
+.popUp-close {
     background: rgb(0 0 0 / 15%);
-    transition:ease 0.25s all;
+    transition: ease 0.25s all;
 }
 
-.lc_btn{
+.lc_btn {
     padding: 1px !important;
     height: 14px;
     width: 18px;
@@ -1480,3 +1478,73 @@ table.dataTable td {
     text-align: center;
 }
 
+/* for flip card */
+
+/* .flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  }
+
+  .flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+
+  .flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  .flip-card-front {
+    background-color: transparent;
+    color: black;
+    border-radius: 5px;
+  }
+
+  .flip-card-back {
+    background-color: transparent;
+    color: white;
+    transform: rotateY(180deg);
+    border-radius: 5px;
+  } */
+
+.bgImg-lg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 70px;
+    background-color: #002f54;
+    width: 70px;
+    border-radius: 50%;
+    color: #ffffff;
+    margin: auto;
+    margin-top: 10px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+
+.msg_box {
+    height: 40px;
+    width: 40px;
+
+}
+.wishes_content {
+    position: relative;
+    overflow: hidden;
+    width: 200px;
+}
+.wishes_content .social_content i.fa-birthday-cake,.wishes_content .social_content i.ri-shopping-bag-fill {
+    font-size: 45px;
+    transform: rotate(45deg);
+    position: absolute;
+    opacity: 0.2;
+
+}
