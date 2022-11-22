@@ -127,6 +127,7 @@ class VmtAttendanceController extends Controller
             new ApproveRejectLeaveMail(
                 $obj_employee->value('name'),
                 $obj_employee->value('user_code'),
+                VmtLeaves::find($leave_record->leave_type_id)->leave_type,
                 User::find($manager_user_id)->name,
                 User::find($manager_user_id)->user_code,
                 request()->getSchemeAndHttpHost(),
