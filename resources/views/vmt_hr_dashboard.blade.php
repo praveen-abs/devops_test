@@ -46,7 +46,7 @@
                 @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR', 'Manager']))
                     <div class="row mb-n4">
                         <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
-                            <a class="" href="#" data-bs-toggle="modal">
+                            <a class="" data-bs-toggle="modal">
                                 <div class="card shadow profile-box top-line">
                                     <div class="card-body text-center d-flex flex-column">
                                         <h6 class="">New Employees</h6>
@@ -59,14 +59,16 @@
 
                         </div>
                         <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
-                            <div class="card shadow  profile-box top-line ">
-                                <div class="card-body d-flex text-center  flex-column">
-                                    <div class="x">
+                            <a class="" data-bs-toggle="modal">
+                                <div class="card shadow  profile-box top-line ">
+                                    <div class="card-body d-flex text-center  flex-column">
+
                                         <h6 class="">Offline</h6>
                                         <p class="number-increment text-muted f-15 fw-bold">0</p>
+
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                         <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
                             <div class=" card shadow profile-box top-line ">
@@ -118,8 +120,8 @@
                                                 <div>
                                                     <ul class="nav sub-topnav">
                                                         <!-- <li class="title active topbarNav fw-bold" id="post_view"><a>View
-                                                                                                                                                    Post</a>
-                                                                                                                                            </li> -->
+                                                                                                                                                        Post</a>
+                                                                                                                                                </li> -->
                                                         <li class="title  topbarNav fw-bold active" id="post">
                                                             <a>Post</a>
                                                         </li>
@@ -418,15 +420,13 @@
     <!--  -->
 @endsection
 @section('script')
-
     <!--Nice select-->
     <script src="{{ URL::asset('/assets/premassets/js/jquery.nice-select.min.js') }}"></script>
 
     <!--Custom Js Script-->
     <script src="{{ URL::asset('/assets/premassets/js/custom.js') }}"></script>
     <script src="{{ URL::asset('/assets/premassets/js/holiday.js') }}"></script>
-    <script src="{{ URL::asset('/assets/premassets/js/calendar.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/premassets/js/calendar.js') }}"></script>
+
 
     <!-- Prem assets ends -->
 
