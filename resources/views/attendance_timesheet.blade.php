@@ -536,6 +536,10 @@
 
         }
 
+        function showMissedInMissedOutPunchModal(element){
+            alert("Not yet implemented");
+        }
+
         function showRegularizationModal(element) {
 
             if ($(element).val() == "LC") {
@@ -748,47 +752,71 @@
                         else
                         {
 
+
                             let currentDate = year + "-" + (month + 1) + "-" + dateText;
-                            let isCurrentDateAvailable = false;
 
-                            ajax_monthly_data.find((element) => {
-                                if(element.date == currentDate)
-                                {
-                                    isCurrentDateAvailable = true;
-                                    console.log("Date "+element.date+" found");
-                                }
-                            });
+                            let ajax_data_currentdate = ajax_monthly_data[currentDate];
 
-                            if(ajax_monthly_data.length > 0)
+                            console.log("Check-in time : "+ajax_data_currentdate.checkin_time);
+
+                            if(ajax_data_currentdate.isAbsent)
                             {
-                                if(isCurrentDateAvailable)
-                                {
-                                    cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
-                                    "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex '><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
-                                    year + "-" + (month + 1) + "-" + dateText +
-                                    "'></span>    <input type='button' id='btn_checkin_time_" +year + "-" + (month + 1) + "-" + dateText +"' onclick ='showRegularizationModal(this)' class='f-10 btn-primary bn ms-2 lc_btn border-0 p-1 text-white'  value='' data-cellid ='checkin_time_" +
-                                    year + "-" + (month + 1) + "-" + dateText +
-                                    "'/></div> <div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span class='f-11' id='checkout_time_" +
-                                    year + "-" + (month + 1) + "-" + dateText + "'></span> </div></div></div>";
-                                }
-                                else
-                                {
-                                    cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
-                                    "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' ><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><span class='f-11' id='checkout_time_" +
-                                    year + "-" + (month + 1) + "-" + dateText + "'>Absent</span> </div></div></div>";
+                                cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
+                                "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' ><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><span class='f-11' id='checkout_time_" +
+                                year + "-" + (month + 1) + "-" + dateText + "'>Absent</span> </div></div></div>";
 
-                                }
                             }
                             else
                             {
-                                //Just show the date
+                                //If not absent, show the dates
+                                let html_LC_Button = "<input type='button' id='btn_checkin_time_" +year + "-" + (month + 1) + "-" + dateText +
+                                                     "' onclick ='showRegularizationModal(this)' class='f-10 btn-primary bn ms-2 lc_btn border-0 p-1 text-white'  value='LC' data-cellid ='checkin_time_" +
+                                                     year + "-" + (month + 1) + "-" + dateText +"'/>"
+
+                                let html_MIP_Button = "<input type='button' id='mipmop" +year + "-" + (month + 1) + "-" + dateText +
+                                                     "' onclick ='showMissedInMissedOutPunchModal(this)' class='f-10 btn-primary bn ms-2 lc_btn border-0 p-1 text-white'  value='MIP' data-cellid ='mipmop_" +
+                                                     year + "-" + (month + 1) + "-" + dateText +"'/>"
+
+                                let html_EG_Button = "<input type='button' id='btn_checkout_time_" +year + "-" + (month + 1) + "-" + dateText +
+                                                    "' onclick ='showRegularizationModal(this)' class='f-10 btn-orange bn ms-2 lc_btn border-0 p-1 text-white'  value='EG' data-cellid ='checkout_time_" +
+                                                    year + "-" + (month + 1) + "-" + dateText +"'/>"
+
+                                let html_MOP_Button = "<input type='button' id='mipmop" +year + "-" + (month + 1) + "-" + dateText +
+                                                     "' onclick ='showMissedInMissedOutPunchModal(this)' class='f-10 btn-orange bn ms-2 lc_btn border-0 p-1 text-white '  value='MOP' data-cellid ='mipmop_" +
+                                                     year + "-" + (month + 1) + "-" + dateText +"'/>"
+
+                                let final_checkin_button_code = "";
+                                let final_checkout_button_code = "";
+                                let final_checkin_time = ajax_data_currentdate.checkin_time ?? "--:--:--";
+
+                                let final_checkout_time = ajax_data_currentdate.checkout_time ?? "--:--:--";
+
+                                if(ajax_data_currentdate.isLC){
+                                    final_checkin_button_code = html_LC_Button;
+                                }
+                                else
+                                if(ajax_data_currentdate.isMIP){
+                                    final_checkin_button_code = html_MIP_Button;
+                                }
+
+                                if(ajax_data_currentdate.isEG){
+                                    final_checkout_button_code = html_EG_Button;
+                                }
+                                else
+                                if(ajax_data_currentdate.isMOP){
+                                    final_checkout_button_code = html_MOP_Button;
+                                }
+
+
                                 cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
-                                    "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' ><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><span class='f-11' id='checkout_time_" +
-                                    year + "-" + (month + 1) + "-" + dateText + "'></span> </div></div></div>";
-
+                                "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex '><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
+                                year + "-" + (month + 1) + "-" + dateText +"'>"+final_checkin_time+"</span>"+
+                                final_checkin_button_code+
+                                "</div> <div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span class='f-11' id='checkout_time_" +
+                                year + "-" + (month + 1) + "-" + dateText + "'>"+final_checkout_time+"</span>"+
+                                final_checkout_button_code+
+                                "</div></div></div>";
                             }
-
-
 
                         }
 
@@ -810,6 +838,7 @@
 
             ///Logic for showing MIP,MOP,LC,EG,Absent
 
+            /*
             ajax_monthly_data.forEach((element) => {
                 //Get the date from the checkin time
                 //console.log(element);
@@ -915,15 +944,12 @@
                             "'/>");
                         console.log(lcINputButton);
                     }
-                   /* $(lcINputButton).attr('data-checkin_date', calendar_cell_id);
-                    $(lcINputButton).attr('data-actual_timing', calendar_cell_id_value);
-                    $(lcINputButton).attr('data-shift_timing', shift_start_time);
-                    $(lcINputButton).val("LC");*/
+
                 }
 
+                */
 
-
-            });
+            //});
 
         }
 

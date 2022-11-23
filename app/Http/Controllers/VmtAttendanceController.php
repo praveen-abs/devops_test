@@ -519,9 +519,8 @@ class VmtAttendanceController extends Controller
 
            $fulldate = $year."-".$month."-".$date;
 
-           $single_date_json["date"] =
 
-           $attendanceResponseArray[$fulldate] = array( "isAbsent"=>true, "absent_status"=>"Pending",
+           $attendanceResponseArray[$fulldate] = array( "isAbsent"=>false, "absent_status"=>null,
                                                         "checkin_time"=>null, "checkout_time"=>null,
                                                         "isLC"=>false, "lc_status"=>null, "isEG"=>false, "eg_status"=>null,
                                                         "isMIP"=>false, "mip_status"=>null, "isMOP"=>false, "mop_status"=>null);
@@ -555,7 +554,7 @@ class VmtAttendanceController extends Controller
         foreach ($attendanceResponseArray as $key => $value) {
 
             $checkin_time = $attendanceResponseArray[$key]["checkin_time"];
-            $checkout_time = $attendanceResponseArray[$key]["checkin_time"];
+            $checkout_time = $attendanceResponseArray[$key]["checkout_time"];
 
             //for absent
             if($checkin_time == null && $checkout_time == null){
@@ -567,12 +566,12 @@ class VmtAttendanceController extends Controller
             }
             elseif($checkin_time != null && $checkout_time == null)
             {
-                //Since its MOP
-                $attendanceResponseArray[$key]["isMOP"] = false;
 
+                //Since its MOP
+                $attendanceResponseArray[$key]["isMOP"] = true;
 
                 ////Is any permission applied
-                $attendanceResponseArray[$key]["mop_status"] = null;
+                $attendanceResponseArray[$key]["mop_status"] = "MOP";
 
 
                 //check if its LC
@@ -590,38 +589,60 @@ class VmtAttendanceController extends Controller
                 else
                 {
                     //then LC
-                    array_push($attendanceResponseArray[$key]["attendance_state_type"], "lc");
+                    $attendanceResponseArray[$key]["isLC"] = true;
+
+                    //$attendanceResponseArray[$key]["lc_status"] = $this->isLeaveRequestApplied($request->user_id, $key);
 
                     //check whether regularization applied.
-                    $regularization_status = $this->isRegularizationRequestApplied($request->user_id, $value['date'], 'LC');
+                    $regularization_status = $this->isRegularizationRequestApplied($request->user_id, $key, 'LC');
 
                     //check regularization status
-                    array_push($attendanceResponseArray[$key]["attendance_state_data"], $regularization_status);
+                    $attendanceResponseArray[$key]["lc_status"] = $regularization_status;
 
                 }
 
             }
             elseif($checkin_time == null && $checkout_time != null){
-                $attendanceResponseArray[$key]["attendance_state_type"] = "mip";
+
+                //Since its MOP
+                $attendanceResponseArray[$key]["isMIP"] = true;
+
+                ////Is any permission applied
+                $attendanceResponseArray[$key]["mip_status"] = "MIP";
 
 
+                //check if its EG
+                $shiftEndTime  = Carbon::parse($regularTime->shift_end_time);
+                $checkOutTime     = Carbon::parse($value['checkout_time']);
+
+                $isCheckout_done_early = $checkOutTime->lte($shiftEndTime);
+
+
+                //Check whether checkin done on-time
+                if($isCheckout_done_early)
+                {
+                    //employee left office early....
+
+                    //then EG
+                    $attendanceResponseArray[$key]["isEG"] = true;
+
+                    //$attendanceResponseArray[$key]["lc_status"] = $this->isLeaveRequestApplied($request->user_id, $key);
+
+                    //check whether regularization applied.
+                    $regularization_status = $this->isRegularizationRequestApplied($request->user_id, $key, 'EG');
+
+                    //check regularization status
+                    $attendanceResponseArray[$key]["eg_status"] = $regularization_status;
+
+                }
+                else
+                {
+                    //then employee didnt leave early
+
+                }
             }
 
-
-            // // code...
-            // $checkinDate     = Carbon::parse($value['date'])->toDateString();
-            // $shiftEndTime    = Carbon::parse($regularTime->shift_end_time);
-            // $checkOutTime    = Carbon::parse($value['checkout_time']);
-
-            // $isRegular       = $shiftStartTime->lte($checkInTime);
-            // $isEarlyGoing    = $checkOutTime->lte($shiftEndTime);
-
-            // $attendanceResponseArray[$key]['is_lc'] = $isRegular;
-            // $attendanceResponseArray[$key]['is_eg'] = $isEarlyGoing;
-            // $attendanceResponseArray[$key]['is_eg_applied'] = $this->isRegularizationRequestApplied($request->user_id, $checkinDate, 'EG');
-            // $attendanceResponseArray[$key]['is_lc_applied'] = $this->isRegularizationRequestApplied($request->user_id, $checkinDate, 'LC');
-
-        }
+        }//for each
 
         return $attendanceResponseArray;
     }
@@ -630,8 +651,8 @@ class VmtAttendanceController extends Controller
 
 
         //check whether leave applied.If yes, check leave status
-        $leave_record = VmtEmployeeLeaves::where('user_id',$request->user_id)->
-                            whereDate('leaverequest_date',$value['date']);
+        $leave_record = VmtEmployeeLeaves::where('user_id',$user_id)->
+                            whereDate('leaverequest_date',$attendance_date);
 
         if($leave_record->exists()){
 
