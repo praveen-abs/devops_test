@@ -10,8 +10,8 @@
     @endcomponent --}}
 
 
-    <div class="approvals_wrapper mt-30">
-        <div class="card ">
+
+        <div class="card mb-0 approvals_wrapper mt-30">
             <div class="card-body ">
                 <div class="filter-content">
                     <div class="row">
@@ -75,7 +75,7 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <div class="" id="table_leaveHistory"></div>
+                    <div class="leave_table" id="table_leaveHistory"></div>
                 </div>
             </div>
         </div>
@@ -115,7 +115,7 @@
             </div>
         </div>
 
-    </div>
+
 @endsection
 
 @section('script')
@@ -325,7 +325,7 @@
                         },
                         {
                             id: 'reviewer_user_id',
-                            name: 'Reviewer Name',
+                            name: 'Approver Name',
                             formatter: function formatter(cell) {
 
                                 for (var i = 0; i < employeesList_array.length; i++) {
@@ -336,7 +336,7 @@
                         },
                         {
                             id: 'reviewer_comments',
-                            name: 'Reviewer Comments',
+                            name: 'Approver Comments',
                         },
                         {
                             id: 'status',

@@ -45,7 +45,7 @@ p {
 .text-ash {
     color: #b9b9b9;
 }
-.noWhite-space{
+.noWhite-space {
     white-space: nowrap !important;
 }
 .boxshadow_lite4 {
@@ -496,11 +496,15 @@ th.gridjs-th .gridjs-th-content {
     width: auto !important;
     min-width: auto !important;
 }
+.leave_table .gridjs-table > tbody > tr > td:nth-child(5){
+    text-align: left;
+    white-space:normal !important;
+    min-width: 350px;
+}
 
 .gridjs-table > tbody > tr > td:nth-child(5),
 .gridjs-table > tbody > tr > td:nth-child(7) {
-    white-space: pre-wrap;
-    width: 150px;
+    width: 200px;
 }
 
 .table.gridjs-table {
@@ -561,9 +565,10 @@ th.gridjs-th,
     /* width: 100%; */
     text-align: center;
     vertical-align: middle;
+    border: 1px solid #e9e8e8;
 }
 table.gridjs-table {
-    width: 100%;
+    /* width: 100%; */
 }
 th.gridjs-th {
     border-top: 0;
@@ -1212,16 +1217,17 @@ button.gridjs-sort-desc {
     border-bottom-right-radius: 5px;
     left: 2px !important;
 }
-.userImg_bg,.usershortName_bg{
+.userImg_bg,
+.usershortName_bg {
     height: 70px !important;
     width: 70px !important;
-
 }
 /* for user shorthand img and user img  */
 .page-header-user-dropdown .user-profile,
 .notify-user-bg .user-profile,
 .profile-page .user-profile,
-.userImg_bg,.usershortName_bg,
+.userImg_bg,
+.usershortName_bg,
 .kpi_userImg {
     height: 30px;
     width: 30px;
@@ -1308,11 +1314,24 @@ a.editable-click:hover {
 .resize-none {
     resize: none;
 }
-
+.form-check-input.toggle_sm {
+    height: 15px;
+    width: 30px;
+}
+.form-check-input{
+    margin-top: 0px !important;
+}
 .form-check-input:checked {
     accent-color: #ee6a04 !important;
     background-color: #ee6a04 !important;
     border-color: #ee6a04 !important;
+
+}
+.form-switch .form-check-input:focus{
+
+}
+.form-check-input:focus{
+    border-color:#ee6a04 !important;
 }
 .form-check-input:focus {
     box-shadow: 0 0 0 0.25rem rgb(255 96 0 / 24%) !important;
@@ -1532,21 +1551,19 @@ table.dataTable td {
     font-weight: 600;
 }
 
-
 .msg_box {
     height: 40px;
     width: 40px;
-
 }
 .wishes_content {
     position: relative;
     overflow: hidden;
     width: 200px;
 }
-.wishes_content .social_content i.fa-birthday-cake,.wishes_content .social_content i.ri-shopping-bag-fill {
+.wishes_content .social_content i.fa-birthday-cake,
+.wishes_content .social_content i.ri-shopping-bag-fill {
     font-size: 45px;
     transform: rotate(45deg);
     position: absolute;
     opacity: 0.2;
-
 }

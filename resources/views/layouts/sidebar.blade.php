@@ -359,7 +359,7 @@
                                     @endif
 
                                     <li class="nav-item">
-                                        <a href="#" id=""
+                                        <a href="{{ route('page-not-found') }}" id=""
                                             class="nav-link sidebar py-1" data-bs-toggle="" role="button"
                                             aria-expanded="false"><span>
                                                 OKR /PMS</span> </a>
@@ -368,14 +368,14 @@
                                     @if (!Str::contains(getCurrentClientName(), 'Vasa'))
 
                                     <li class="nav-item">
-                                        <a href="#" id=""
+                                        <a href="{{ route('page-not-found') }}" id=""
                                             class="nav-link sidebar py-1" data-bs-toggle="" role="button"
                                             aria-expanded="false"><span>
                                                 Reimbursement</span> </a>
 
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#" id=""
+                                        <a href="{{ route('page-not-found') }}" id=""
                                             class="nav-link sidebar py-1" data-bs-toggle="" role="button"
                                             aria-expanded="false"><span>
                                                 Taxations</span> </a>
