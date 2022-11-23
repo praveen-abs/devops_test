@@ -501,7 +501,35 @@ class VmtAttendanceController extends Controller
             ->orderBy('checkin_time', 'asc')
             ->get(['date', 'checkin_time', 'checkout_time']);
 
-        $attaendanceResponseArray = [];
+        $attendanceResponseArray = [];
+
+        //Create empty month array with all dates.
+        $month = $request->month;
+        $year = $request->year;
+        $days_count = cal_days_in_month(CAL_GREGORIAN,$month,$year);
+
+         for($i=1 ; $i <=$days_count ;$i++)
+         {
+           $date = "";
+
+           if($i<10)
+             $date = "0".$i;
+           else
+             $date = $i;
+
+           $fulldate = $year."-".$month."-".$date;
+
+           $single_date_json["date"] =
+
+           $attendanceResponseArray[$fulldate] = array( "isAbsent"=>true, "absent_status"=>"Pending",
+                                                        "checkin_time"=>null, "checkout_time"=>null,
+                                                        "isLC"=>false, "lc_status"=>null, "isEG"=>false, "eg_status"=>null,
+                                                        "isMIP"=>false, "mip_status"=>null, "isMOP"=>false, "mop_status"=>null);
+
+           //echo "Date is ".$fulldate."\n";
+           ///$month_array[""]
+         }
+
 
         // merging result from both table
         if (count($deviceData) > 0) {
@@ -516,48 +544,129 @@ class VmtAttendanceController extends Controller
             $dateWiseData         =  $sortedCollection->groupBy('date'); //->all();
 
             foreach ($dateWiseData  as $key => $value) {
-                // code...
-                $attaendanceResponseArray[] = array(
-                    'date' => $value[0]["date"],
-                    'checkin_time'  => $value->min('checkin_time'),
-                    'checkout_time' => $value->max('checkout_time')
-                );
+
+                $attendanceResponseArray[$value[0]["date"]]["checkin_time"] = $value->min('checkin_time') ;
+                $attendanceResponseArray[$value[0]["date"]]["checkout_time"] = $value->max('checkout_time');
+
             }
-        } else {
-            $attaendanceResponseArray = $data->toArray();
         }
 
-        $resData = [];
-        foreach ($attaendanceResponseArray as $key => $value) {
-            // code...
-            $checkinDate     = Carbon::parse($value['date'])->toDateString();
-            $shiftStartTime  = Carbon::parse($regularTime->shift_start_time);
-            $shiftEndTime    = Carbon::parse($regularTime->shift_end_time);
-            $checkInTime     = Carbon::parse($value['checkin_time']);
-            $checkOutTime    = Carbon::parse($value['checkout_time']);
+        //dd($attendanceResponseArray);
 
-            $isRegular       = $shiftStartTime->lte($checkInTime);
-            $isEarlyGoing    = $checkOutTime->lte($shiftEndTime);
+        foreach ($attendanceResponseArray as $key => $value) {
 
-            $attaendanceResponseArray[$key]['is_lc'] = $isRegular;
-            $attaendanceResponseArray[$key]['is_eg'] = $isEarlyGoing;
-            $attaendanceResponseArray[$key]['is_eg_applied'] = $this->isLateComingRequestApplied($request->user_id, $checkinDate, 'EG');
-            $attaendanceResponseArray[$key]['is_lc_applied'] = $this->isLateComingRequestApplied($request->user_id, $checkinDate, 'LC');
+            $checkin_time = $attendanceResponseArray[$key]["checkin_time"];
+            $checkout_time = $attendanceResponseArray[$key]["checkin_time"];
+
+            $attendanceResponseArray[$value[0]["date"]]["checkout_time"] = $value->max('checkout_time');
+
+            //for absent/mip/mop
+            if($checkin_time == null && $checkout_time == null){
+                $attendanceResponseArray[$key]["attendance_state_type"] = "absent";
+
+
+            }
+            elseif($checkin_time != null && $checkout_time == null)
+            {
+                array_push($attendanceResponseArray[$key]["attendance_state_type"], "mop");
+                array_push($attendanceResponseArray[$key]["attendance_state_data"], "none");
+
+
+                //Since its MOP
+                ////Is any permission applied
+
+
+                //check if its LC
+                $shiftStartTime  = Carbon::parse($regularTime->shift_start_time);
+                $checkInTime     = Carbon::parse($value['checkin_time']);
+
+                $isCheckin_done_ontime = $checkInTime->lte($shiftStartTime);
+
+
+                //Check whether checkin done on-time
+                if($isCheckin_done_ontime)
+                {
+                    //employee came on time....
+                }
+                else
+                {
+                    //then LC
+                    array_push($attendanceResponseArray[$key]["attendance_state_type"], "lc");
+
+                    //check whether regularization applied.
+                    $regularization_status = $this->isRegularizationRequestApplied($request->user_id, $value['date'], 'LC');
+
+                    //check regularization status
+                    array_push($attendanceResponseArray[$key]["attendance_state_data"], $regularization_status);
+
+                }
+
+            }
+            elseif($checkin_time == null && $checkout_time != null){
+                $attendanceResponseArray[$key]["attendance_state_type"] = "mip";
+
+
+
+
+
+
+
+
+            }
+
+
+            // // code...
+            // $checkinDate     = Carbon::parse($value['date'])->toDateString();
+            // $shiftEndTime    = Carbon::parse($regularTime->shift_end_time);
+            // $checkOutTime    = Carbon::parse($value['checkout_time']);
+
+            // $isRegular       = $shiftStartTime->lte($checkInTime);
+            // $isEarlyGoing    = $checkOutTime->lte($shiftEndTime);
+
+            // $attendanceResponseArray[$key]['is_lc'] = $isRegular;
+            // $attendanceResponseArray[$key]['is_eg'] = $isEarlyGoing;
+            // $attendanceResponseArray[$key]['is_eg_applied'] = $this->isRegularizationRequestApplied($request->user_id, $checkinDate, 'EG');
+            // $attendanceResponseArray[$key]['is_lc_applied'] = $this->isRegularizationRequestApplied($request->user_id, $checkinDate, 'LC');
+
         }
 
-        return $attaendanceResponseArray;
+        return $attendanceResponseArray;
     }
 
-    private function isLateComingRequestApplied($user_id, $attendance_date, $relularizeType)
+    public function isLeaveRequestApplied($user_id, $attendance_date){
+
+
+        //check whether leave applied.If yes, check leave status
+        $leave_record = VmtEmployeeLeaves::where('user_id',$request->user_id)->
+                            whereDate('leaverequest_date',$value['date']);
+
+        if($leave_record->exists()){
+
+            return $leave_record->first()->value('status');
+
+        }
+        else
+        {
+            return "Not Applied";
+        }
+    }
+
+
+
+    private function isRegularizationRequestApplied($user_id, $attendance_date, $regularizeType)
     {
 
-        $existCount = VmtEmployeeAttendanceRegularization::where('attendance_date', $attendance_date)
-            ->where('user_id',  $user_id)->where('regularization_type', $relularizeType)->count();
+        $regularize_record = VmtEmployeeAttendanceRegularization::where('attendance_date', $attendance_date)
+            ->where('user_id',  $user_id)->where('regularization_type', $regularizeType);
 
-        if ($existCount == 0)
-            return false;
+        if ($regularize_record->exists())
+        {
+            return $regularize_record->first()->value('status');
+        }
         else
-            return true;
+        {
+            return "none";
+        }
     }
 
     public function fetchTeamMembers(Request $request)

@@ -256,6 +256,7 @@
                 type: "GET",
                 data: {
                     month: selectedMonth + 1,
+                    year: new Date().getFullYear(),
                     user_id: selectedUserID,
                     _token: '{{ csrf_token() }}'
                 },
@@ -687,6 +688,7 @@
 
         function showCalendar(month, year, ajax_monthly_data) {
 
+
             var firstDay = (new Date(year, month)).getDay();
 
             tbl = document.getElementById("_calendar-body");
@@ -711,7 +713,6 @@
                 for (var j = 0; j < 7; j++) {
 
                     var isWeekEnd = isWeekEndDays(date, month, year);
-
 
 
                     if (i === 0 && j < firstDay) {
@@ -746,13 +747,49 @@
                         }
                         else
                         {
-                            cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
-                                "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex '><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
-                                year + "-" + (month + 1) + "-" + dateText +
-                                "'></span>    <input type='button' onclick ='showRegularizationModal(this)' class='f-10  btn ms-2 lc_btn border-0 p-1 text-white'  value='' data-cellid ='checkin_time_" +
-                                year + "-" + (month + 1) + "-" + dateText +
-                                "'/></div> <div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span class='f-11' id='checkout_time_" +
-                                year + "-" + (month + 1) + "-" + dateText + "'></span> </div></div></div>";
+
+                            let currentDate = year + "-" + (month + 1) + "-" + dateText;
+                            let isCurrentDateAvailable = false;
+
+                            ajax_monthly_data.find((element) => {
+                                if(element.date == currentDate)
+                                {
+                                    isCurrentDateAvailable = true;
+                                    console.log("Date "+element.date+" found");
+                                }
+                            });
+
+                            if(ajax_monthly_data.length > 0)
+                            {
+                                if(isCurrentDateAvailable)
+                                {
+                                    cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
+                                    "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex '><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
+                                    year + "-" + (month + 1) + "-" + dateText +
+                                    "'></span>    <input type='button' id='btn_checkin_time_" +year + "-" + (month + 1) + "-" + dateText +"' onclick ='showRegularizationModal(this)' class='f-10 btn-primary bn ms-2 lc_btn border-0 p-1 text-white'  value='' data-cellid ='checkin_time_" +
+                                    year + "-" + (month + 1) + "-" + dateText +
+                                    "'/></div> <div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span class='f-11' id='checkout_time_" +
+                                    year + "-" + (month + 1) + "-" + dateText + "'></span> </div></div></div>";
+                                }
+                                else
+                                {
+                                    cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
+                                    "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' ><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><span class='f-11' id='checkout_time_" +
+                                    year + "-" + (month + 1) + "-" + dateText + "'>Absent</span> </div></div></div>";
+
+                                }
+                            }
+                            else
+                            {
+                                //Just show the date
+                                cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
+                                    "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' ><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><span class='f-11' id='checkout_time_" +
+                                    year + "-" + (month + 1) + "-" + dateText + "'></span> </div></div></div>";
+
+                            }
+
+
+
                         }
 
 
@@ -771,6 +808,8 @@
                 tbl.appendChild(row);
             }
 
+            ///Logic for showing MIP,MOP,LC,EG,Absent
+
             ajax_monthly_data.forEach((element) => {
                 //Get the date from the checkin time
                 //console.log(element);
@@ -778,9 +817,32 @@
                 var calendar_cell_id = "";
                 var calendar_cell_id_value = "";
 
-                if (element.checkin_time) {
+                if (element.checkin_time != null)
+                 {
+                    let lc_array_index = element.attendance_state_type.includes('lc');
+
+                    if (lc_array_index != -1)
+                    {
+                        var LC_InputButton = $('#btn_checkin_time_' + element.date);
+
+                        calendar_cell_id = element.date;
+                        calendar_cell_id_value = element.checkin_time;
+
+
+                        $(LC_InputButton).attr('data-checkin_date', calendar_cell_id);
+                        $(LC_InputButton).attr('data-actual_timing', calendar_cell_id_value);
+                        $(LC_InputButton).attr('data-shift_timing', shift_start_time);
+                        $(LC_InputButton).addClass('btn-info');
+
+                        $(LC_InputButton).val("LC "+element.attendance_state_data.at(lc_array_index));
+                        //$(LC_InputButton).attr("disabled", 'disabled');
+                        //console.log("Debug at cell : "+element.checkin_time+" , "+LC_InputButton.id);
+
+                    }
+
                     calendar_cell_id = element.date;
                     calendar_cell_id_value = element.checkin_time;
+
                     //Find the calendar cell ID based on above checkin date
                     //$('#checkin_time_' + calendar_cell_id).html(calendar_cell_id_value);
                     $('#checkin_time_' + calendar_cell_id).html(moment(calendar_cell_id_value,"HH:mm:ss").format('h:mm A'));
@@ -790,42 +852,27 @@
                     $('#checkin_time_' + calendar_cell_id).html('---');
                 }
 
-                if (element.is_lc) {
-                    if(element.is_lc_applied){
-                        var lcINputButton = $('#checkin_time_' + calendar_cell_id).parent().parent().find('input');
-                        calendar_cell_id = element.date;
-                        calendar_cell_id_value = element.checkin_time;
+
+                //     else
+                //     {
+                //         var lcINputButton = $('#checkin_time_' + calendar_cell_id).parent().parent().find('input');
+                //         calendar_cell_id = element.date;
+                //         calendar_cell_id_value = element.checkin_time;
 
 
-                        $(lcINputButton).attr('data-checkin_date', calendar_cell_id);
-                        $(lcINputButton).attr('data-actual_timing', calendar_cell_id_value);
-                        $(lcINputButton).attr('data-shift_timing', shift_start_time);
-                        $(lcINputButton).addClass('btn-info');
-                        $(lcINputButton).val("LC Applied");
-                        //$(lcINputButton).attr("disabled", 'disabled');
+                //         $(lcINputButton).attr('data-checkin_date', calendar_cell_id);
+                //         $(lcINputButton).attr('data-actual_timing', calendar_cell_id_value);
+                //         $(lcINputButton).attr('data-shift_timing', shift_start_time);
+                //         $(lcINputButton).addClass('btn-info');
+                //         $(lcINputButton).val("LC");
+                //     }
 
-
-                    }
-                    else
-                    {
-                        var lcINputButton = $('#checkin_time_' + calendar_cell_id).parent().parent().find('input');
-                        calendar_cell_id = element.date;
-                        calendar_cell_id_value = element.checkin_time;
-
-
-                        $(lcINputButton).attr('data-checkin_date', calendar_cell_id);
-                        $(lcINputButton).attr('data-actual_timing', calendar_cell_id_value);
-                        $(lcINputButton).attr('data-shift_timing', shift_start_time);
-                        $(lcINputButton).addClass('btn-info');
-                        $(lcINputButton).val("LC");
-                    }
-
-                } else {
-                    var lcINputButton = $('#checkin_time_' + calendar_cell_id).parent().parent().find('input');
-                    $(lcINputButton).val("");
-                    $(lcINputButton).remove();
-                    //console.log("Button to be removed : "+lcINputButton);
-                }
+                //  else {
+                //     var lcINputButton = $('#checkin_time_' + calendar_cell_id).parent().parent().find('input');
+                //     $(lcINputButton).val("");
+                //     $(lcINputButton).remove();
+                //     //console.log("Button to be removed : "+lcINputButton);
+                // }
 
                 if (element.checkout_time) {
                     calendar_cell_id = element.date;
