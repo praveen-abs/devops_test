@@ -568,7 +568,7 @@ th.gridjs-th,
     border: 1px solid #e9e8e8;
 }
 table.gridjs-table {
-    /* width: 100%; */
+    width: -webkit-fill-available;
 }
 th.gridjs-th {
     border-top: 0;
