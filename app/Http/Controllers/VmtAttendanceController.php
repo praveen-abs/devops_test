@@ -551,29 +551,28 @@ class VmtAttendanceController extends Controller
             }
         }
 
-        //dd($attendanceResponseArray);
-
+        ////Logic to check LC,EG,MIP,MOP,Leave status
         foreach ($attendanceResponseArray as $key => $value) {
 
             $checkin_time = $attendanceResponseArray[$key]["checkin_time"];
             $checkout_time = $attendanceResponseArray[$key]["checkin_time"];
 
-            $attendanceResponseArray[$value[0]["date"]]["checkout_time"] = $value->max('checkout_time');
-
-            //for absent/mip/mop
+            //for absent
             if($checkin_time == null && $checkout_time == null){
-                $attendanceResponseArray[$key]["attendance_state_type"] = "absent";
+                $attendanceResponseArray[$key]["isAbsent"] = true;
 
+                //Check whether leave is applied or not.
+                $attendanceResponseArray[$key]["absent_status"] = $this->isLeaveRequestApplied($request->user_id, $key);
 
             }
             elseif($checkin_time != null && $checkout_time == null)
             {
-                array_push($attendanceResponseArray[$key]["attendance_state_type"], "mop");
-                array_push($attendanceResponseArray[$key]["attendance_state_data"], "none");
-
-
                 //Since its MOP
+                $attendanceResponseArray[$key]["isMOP"] = false;
+
+
                 ////Is any permission applied
+                $attendanceResponseArray[$key]["mop_status"] = null;
 
 
                 //check if its LC
@@ -604,12 +603,6 @@ class VmtAttendanceController extends Controller
             }
             elseif($checkin_time == null && $checkout_time != null){
                 $attendanceResponseArray[$key]["attendance_state_type"] = "mip";
-
-
-
-
-
-
 
 
             }
