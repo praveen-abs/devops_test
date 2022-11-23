@@ -49,10 +49,10 @@
 @endsection
 
 @section('content')
-    @component('components.organization_breadcrumb')
+    {{-- @component('components.organization_breadcrumb')
         @slot('li_1')
         @endslot
-    @endcomponent
+    @endcomponent --}}
     <div class="loader" style="display:none;"></div>
 
     {{-- Show Only if employee is already onboarded --}}

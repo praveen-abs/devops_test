@@ -9,13 +9,13 @@
 
 
 @section('content')
-    @component('components.organization_breadcrumb')
+    {{-- @component('components.organization_breadcrumb')
         @slot('li_1')
         @endslot
-    @endcomponent
+    @endcomponent --}}
 
 
-    <div class="card">
+    <div class="card mt-30">
         <div class="card-body">
             <h6 class="text-muted fw-bold">Yet to Active Employees</h6>
 

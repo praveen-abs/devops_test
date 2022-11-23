@@ -1,5 +1,5 @@
 {{-- @section('ui-onboarding') --}}
-<div class="container-fluid">
+<div class="container-fluid mt-30">
 
 
                     <div id="msform">

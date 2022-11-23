@@ -6,11 +6,11 @@
 @endsection
 @section('content')
 
-@component('components.organization_breadcrumb')
+{{-- @component('components.organization_breadcrumb')
 @slot('li_1') @endslot
-@endcomponent
+@endcomponent --}}
 
-    <div class="uploadEmployee-wrpper  ">
+    <div class="uploadEmployee-wrpper mt-30 ">
         <div class="card shadow profile-box card-top-border border-0">
             <div class="form-control">
                 <div class="row">
