@@ -182,7 +182,7 @@
             <div class="modal-content">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
                     <h6 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
-                        Chatter box</h6>
+                        Wishes Text</h6>
                     <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
                         aria-label="Close">
                         <span aria-hidden="true">×</span>
@@ -192,7 +192,7 @@
                     {{-- <p for="" class="text-muted f-14 fw-bold">Commants here</p> --}}
                     <textarea name="" id="" cols="" placeholder="Commants here...." rows="2" class="resize-none form-control"></textarea>
                     <div class="text-end">
-                        <button class="btn btn-border-orange mt-2" id="">Save</button>
+                        <button class="btn btn-border-orange mt-2" id=""><i class="fa fa-paper-plane me" aria-hidden="true"></i> Send</button>
                     </div>
                 </div>
             </div>

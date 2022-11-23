@@ -1212,17 +1212,16 @@ button.gridjs-sort-desc {
     border-bottom-right-radius: 5px;
     left: 2px !important;
 }
-.wel_userImg {
+.userImg_bg,.usershortName_bg{
     height: 70px !important;
     width: 70px !important;
-    border-radius: 50%;
-    position: relative;
+
 }
 /* for user shorthand img and user img  */
 .page-header-user-dropdown .user-profile,
 .notify-user-bg .user-profile,
 .profile-page .user-profile,
-.wel_userImg,
+.userImg_bg,.usershortName_bg,
 .kpi_userImg {
     height: 30px;
     width: 30px;

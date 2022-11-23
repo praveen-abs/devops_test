@@ -48,13 +48,9 @@
     border-radius: 50%;
     background: #003156;
     font-size: 35px;
-    /* color: #212529; */
-    text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
-    line-height: 70px;
-    margin: 0px 0;
     font-weight: 600;
     color: #ffffff;
 }

@@ -138,7 +138,7 @@
 
                         </div>
 
-                        <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 ">
+                        <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
                             <div class="card profile-box flex-fill">
                                 <div class="card-body">
                                     <form action="{{ route('updatePersonalInformation', $user->id) }}" Method="POST"
@@ -350,8 +350,8 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
-                            <div class="card profile-box flex-fill ">
+                        <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex  ">
+                            <div class="card profile-box flex-fill mb-0 ">
                                 <div class="card-body">
                                     <h6 class="">Emergency Contact <a href="#" class="edit-icon"
                                             data-bs-toggle="modal" data-bs-target="#emergency_contact_modal"><i
