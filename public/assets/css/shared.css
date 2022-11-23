@@ -45,6 +45,9 @@ p {
 .text-ash {
     color: #b9b9b9;
 }
+.noWhite-space{
+    white-space: nowrap !important;
+}
 .boxshadow_lite4 {
     box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em !important;
 }
@@ -1209,17 +1212,16 @@ button.gridjs-sort-desc {
     border-bottom-right-radius: 5px;
     left: 2px !important;
 }
-.wel_userImg {
+.userImg_bg,.usershortName_bg{
     height: 70px !important;
     width: 70px !important;
-    border-radius: 50%;
-    position: relative;
+
 }
 /* for user shorthand img and user img  */
 .page-header-user-dropdown .user-profile,
 .notify-user-bg .user-profile,
 .profile-page .user-profile,
-.wel_userImg,
+.userImg_bg,.usershortName_bg,
 .kpi_userImg {
     height: 30px;
     width: 30px;

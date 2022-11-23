@@ -55,10 +55,10 @@
 
 @endsection
 @section('content')
-@component('components.organization_breadcrumb')
+{{-- @component('components.organization_breadcrumb')
 @slot('li_1') @endslot
-@endcomponent
-<div class="hierarchy-wrapper">
+@endcomponent --}}
+<div class="hierarchy-wrapper mt-30">
     <div id="chart-container" class="">
     </div>
     <div class="form-check  department-wise">

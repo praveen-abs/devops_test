@@ -6,7 +6,7 @@
 @endsection
 @section('content')
 
-<div class="card shadow top-line under_review-wrapper">
+<div class="card shadow top-line under_review-wrapper mt-30">
     <div class="fill salary-header nav-tab-header">
         <div class="row">
             <div class="col-xs-6">

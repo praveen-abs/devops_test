@@ -40,6 +40,12 @@
 <!-- Layout config Js -->
 <script src="{{ URL::asset('assets/js/layout.js') }}"></script>
 
+
+{{-- for calendar --}}
+
+<script src="{{ URL::asset('/assets/premassets/js/calendar.min.js') }}"></script>
+<script src="{{ URL::asset('/assets/premassets/js/calendar.js') }}"></script>
+
 <script>
     $(document).ready(function() {
         $('.common-toast-close').click(function() {

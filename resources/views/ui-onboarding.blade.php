@@ -1,7 +1,7 @@
 
 {{-- @section('ui-onboarding') --}}
 <?php //dd($employee_details->doj); ?>
-<div class="container-fluid ">
+<div class="container-fluid mt-30">
     <div class="">
         <div class="row ">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
