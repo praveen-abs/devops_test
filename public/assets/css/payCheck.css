@@ -370,10 +370,22 @@ table tr td .upload_file i.fa-upload input[type="file"] {
     width: -webkit-fill-available;
 }
 
-.investment_dropDown .dropdown-toggle:after{
+.investment_dropDown .dropdown-toggle:after {
     display: none;
 }
 
-.investment_dropDown  .dropdown-menu{
+.investment_dropDown .dropdown-menu {
     min-width: 120px;
+}
+table.investment_table tr td {
+    text-align: left;
+    white-space: nowrap;
+}
+table.investment_table tr td:nth-child(2) {
+    width:     350px;
+    white-space: pre-line;
+}
+table.investment_table tr th {
+    text-align: center;
+    white-space: nowrap;
 }

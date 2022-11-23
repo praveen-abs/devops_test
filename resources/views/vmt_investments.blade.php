@@ -70,7 +70,7 @@
                                 <div class="col-sm-3 col-sm-12 col-xl-3 col-md-3 col-lg-3 d-flex">
                                     <div class="card box_shadow_0 border-rtb  left-line w-100">
                                         <div class="card-body text-center">
-                                            <p class="text-ash-medium mb-2 f-13 ">Max Limit</p>
+                                            <p class="text-ash-medium mb-2 f-13 ">Maximum Limit</p>
                                             <h5 class="mb-0">INR 1,50,000</h5>
 
                                         </div>
@@ -125,6 +125,13 @@
                                             aria-selected="true">
                                             Section 80C & 80CCC</a>
                                     </li>
+                                    <li class="nav-item  ember-view " role="presentation">
+                                        <a class="nav-link  ember-view " id="" data-bs-toggle="pill"
+                                            href="" data-bs-target="#other_exemptions" role="tab"
+                                            aria-controls="" aria-selected="true">
+                                            Other Exemptions
+                                        </a>
+                                    </li>
                                     <li class="nav-item  ember-view me-2" role="presentation">
                                         <a class="nav-link  ember-view " id="pills-home-tab" data-bs-toggle="pill"
                                             href="" data-bs-target="#house_property" role="tab"
@@ -153,13 +160,7 @@
                                             Other source of income
                                         </a>
                                     </li>
-                                    <li class="nav-item  ember-view " role="presentation">
-                                        <a class="nav-link  ember-view " id="" data-bs-toggle="pill"
-                                            href="" data-bs-target="#other_exemptions" role="tab"
-                                            aria-controls="" aria-selected="true">
-                                            Other Exemptions
-                                        </a>
-                                    </li>
+
                                 </ul>
                             </div>
                         </div>
@@ -168,16 +169,16 @@
                             <div class="tab-pane fade active show " id="c_cc" role="tabpanel"
                                 aria-labelledby="pills-home-tab">
                                 <div class="table-responsive">
-                                    <table class="table">
+                                    <table class="table investment_table">
                                         <thead>
                                             <tr>
                                                 <th scope="col">Sections</th>
                                                 <th scope="col">Particulars</th>
                                                 <th scope="col">References</th>
-                                                <th scope="col">Max Limit</th>
+                                                <th scope="col">Maximum Limit</th>
                                                 <th scope="col">Declaration Amount</th>
-                                                <th scope="col">Proof</th>
-                                                <th scope="col">Upload Document</th>
+                                                <th scope="col">Proofs</th>
+                                                {{-- <th scope="col">Upload Document</th> --}}
                                                 <th scope="col">Status</th>
                                                 <th scope="col">Action</th>
                                             </tr>
@@ -201,23 +202,13 @@
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
                                                 </td>
+
                                                 <td align="">
 
                                                     <div class="upload_file ">
 
                                                         <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id=""></i>
-
-
-                                                    </div>
-
-                                                </td>
-                                                <td align="">
-
-                                                    <div class="upload_file ">
-
-                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id=""></i>
+                                                                name="" id="" multiple></i>
 
 
                                                     </div>
@@ -245,8 +236,8 @@
                                                                     aria-hidden="true"></i> Edit</a>
                                                             <a class="dropdown-item" href="#"><i
                                                                     class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Cancel</a>
-                                                            <a class="dropdown-item" href="#"></a>
+                                                                    aria-hidden="true"></i> Clear</a>
+
                                                         </div>
                                                     </div>
                                                 </td>
@@ -270,24 +261,12 @@
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
                                                 </td>
+
                                                 <td align="">
 
                                                     <div class="upload_file ">
-
                                                         <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id=""></i>
-
-
-                                                    </div>
-
-                                                </td>
-                                                <td align="">
-
-                                                    <div class="upload_file ">
-
-                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id=""></i>
-
+                                                                name="" id="" multiple></i>
 
                                                     </div>
 
@@ -312,8 +291,8 @@
                                                                     aria-hidden="true"></i> Edit</a>
                                                             <a class="dropdown-item" href="#"><i
                                                                     class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Cancel</a>
-                                                            <a class="dropdown-item" href="#"></a>
+                                                                    aria-hidden="true"></i> Clear</a>
+
                                                         </div>
                                                     </div>
                                                 </td>
@@ -336,23 +315,13 @@
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
                                                 </td>
+
                                                 <td align="">
 
                                                     <div class="upload_file ">
 
                                                         <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id=""></i>
-
-
-                                                    </div>
-
-                                                </td>
-                                                <td align="">
-
-                                                    <div class="upload_file ">
-
-                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id=""></i>
+                                                                name="" id="" multiple></i>
 
 
                                                     </div>
@@ -378,8 +347,8 @@
                                                                     aria-hidden="true"></i> Edit</a>
                                                             <a class="dropdown-item" href="#"><i
                                                                     class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Cancel</a>
-                                                            <a class="dropdown-item" href="#"></a>
+                                                                    aria-hidden="true"></i> Clear</a>
+
                                                         </div>
                                                     </div>
                                                 </td>
@@ -408,23 +377,13 @@
                                                     <div class="upload_file ">
 
                                                         <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id=""></i>
+                                                                name="" id="" multiple></i>
 
 
                                                     </div>
 
                                                 </td>
-                                                <td align="">
 
-                                                    <div class="upload_file ">
-
-                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id=""></i>
-
-
-                                                    </div>
-
-                                                </td>
                                                 <td>
                                                     <p>Not Submitted</p>
                                                 </td>
@@ -445,8 +404,8 @@
                                                                     aria-hidden="true"></i> Edit</a>
                                                             <a class="dropdown-item" href="#"><i
                                                                     class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Cancel</a>
-                                                            <a class="dropdown-item" href="#"></a>
+                                                                    aria-hidden="true"></i> Clear</a>
+
                                                         </div>
                                                     </div>
                                                 </td>
@@ -474,23 +433,13 @@
                                                     <div class="upload_file ">
 
                                                         <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id=""></i>
+                                                                name="" id="" multiple></i>
 
 
                                                     </div>
 
                                                 </td>
-                                                <td align="">
 
-                                                    <div class="upload_file ">
-
-                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id=""></i>
-
-
-                                                    </div>
-
-                                                </td>
                                                 <td>
                                                     <p>Not Submitted</p>
                                                 </td>
@@ -511,8 +460,7 @@
                                                                     aria-hidden="true"></i> Edit</a>
                                                             <a class="dropdown-item" href="#"><i
                                                                     class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Cancel</a>
-                                                            <a class="dropdown-item" href="#"></a>
+                                                                    aria-hidden="true"></i> Clear</a>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -535,23 +483,13 @@
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
                                                 </td>
+
                                                 <td align="">
 
                                                     <div class="upload_file ">
 
                                                         <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id=""></i>
-
-
-                                                    </div>
-
-                                                </td>
-                                                <td align="">
-
-                                                    <div class="upload_file ">
-
-                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id=""></i>
+                                                                name="" id="" multiple></i>
 
 
                                                     </div>
@@ -577,8 +515,7 @@
                                                                     aria-hidden="true"></i> Edit</a>
                                                             <a class="dropdown-item" href="#"><i
                                                                     class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Cancel</a>
-                                                            <a class="dropdown-item" href="#"></a>
+                                                                    aria-hidden="true"></i> Clear</a>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -601,23 +538,13 @@
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
                                                 </td>
+
                                                 <td align="">
 
                                                     <div class="upload_file ">
 
                                                         <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id=""></i>
-
-
-                                                    </div>
-
-                                                </td>
-                                                <td align="">
-
-                                                    <div class="upload_file ">
-
-                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id=""></i>
+                                                                name="" id="" multiple></i>
 
 
                                                     </div>
@@ -643,8 +570,7 @@
                                                                     aria-hidden="true"></i> Edit</a>
                                                             <a class="dropdown-item" href="#"><i
                                                                     class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Cancel</a>
-                                                            <a class="dropdown-item" href="#"></a>
+                                                                    aria-hidden="true"></i> Clear</a>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -667,23 +593,13 @@
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
                                                 </td>
+
                                                 <td align="">
 
                                                     <div class="upload_file ">
 
                                                         <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id=""></i>
-
-
-                                                    </div>
-
-                                                </td>
-                                                <td align="">
-
-                                                    <div class="upload_file ">
-
-                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id=""></i>
+                                                                name="" id="" multiple></i>
 
 
                                                     </div>
@@ -709,8 +625,7 @@
                                                                     aria-hidden="true"></i> Edit</a>
                                                             <a class="dropdown-item" href="#"><i
                                                                     class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Cancel</a>
-                                                            <a class="dropdown-item" href="#"></a>
+                                                                    aria-hidden="true"></i> Clear</a>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -738,23 +653,13 @@
                                                     <div class="upload_file ">
 
                                                         <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id=""></i>
+                                                                name="" id="" multiple></i>
 
 
                                                     </div>
 
                                                 </td>
-                                                <td align="">
 
-                                                    <div class="upload_file ">
-
-                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id=""></i>
-
-
-                                                    </div>
-
-                                                </td>
                                                 <td>
                                                     <p>Not Submitted</p>
                                                 </td>
@@ -775,8 +680,7 @@
                                                                     aria-hidden="true"></i> Edit</a>
                                                             <a class="dropdown-item" href="#"><i
                                                                     class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Cancel</a>
-                                                            <a class="dropdown-item" href="#"></a>
+                                                                    aria-hidden="true"></i> Clear</a>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -799,23 +703,13 @@
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
                                                 </td>
+
                                                 <td align="">
 
                                                     <div class="upload_file ">
 
                                                         <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id=""></i>
-
-
-                                                    </div>
-
-                                                </td>
-                                                <td align="">
-
-                                                    <div class="upload_file ">
-
-                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id=""></i>
+                                                                name="" id="" multiple></i>
 
 
                                                     </div>
@@ -841,8 +735,7 @@
                                                                     aria-hidden="true"></i> Edit</a>
                                                             <a class="dropdown-item" href="#"><i
                                                                     class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Cancel</a>
-                                                            <a class="dropdown-item" href="#"></a>
+                                                                    aria-hidden="true"></i> Clear</a>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -865,23 +758,13 @@
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
                                                 </td>
+
                                                 <td align="">
 
                                                     <div class="upload_file ">
 
                                                         <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id=""></i>
-
-
-                                                    </div>
-
-                                                </td>
-                                                <td align="">
-
-                                                    <div class="upload_file ">
-
-                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id=""></i>
+                                                                name="" id="" multiple></i>
 
 
                                                     </div>
@@ -907,8 +790,7 @@
                                                                     aria-hidden="true"></i> Edit</a>
                                                             <a class="dropdown-item" href="#"><i
                                                                     class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Cancel</a>
-                                                            <a class="dropdown-item" href="#"></a>
+                                                                    aria-hidden="true"></i> Clear</a>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -931,15 +813,6 @@
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
                                                 </td>
-                                                <td align="">
-
-                                                    <div class="upload_file ">
-
-                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id=""></i>
-
-
-                                                    </div>
 
                                                 </td>
                                                 <td align="">
@@ -947,7 +820,7 @@
                                                     <div class="upload_file ">
 
                                                         <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id=""></i>
+                                                                name="" id="" multiple></i>
 
 
                                                     </div>
@@ -973,8 +846,7 @@
                                                                     aria-hidden="true"></i> Edit</a>
                                                             <a class="dropdown-item" href="#"><i
                                                                     class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Cancel</a>
-                                                            <a class="dropdown-item" href="#"></a>
+                                                                    aria-hidden="true"></i> Clear</a>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -997,23 +869,13 @@
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
                                                 </td>
+
                                                 <td align="">
 
                                                     <div class="upload_file ">
 
                                                         <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id=""></i>
-
-
-                                                    </div>
-
-                                                </td>
-                                                <td align="">
-
-                                                    <div class="upload_file ">
-
-                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id=""></i>
+                                                                name="" id="" multiple></i>
 
 
                                                     </div>
@@ -1039,8 +901,7 @@
                                                                     aria-hidden="true"></i> Edit</a>
                                                             <a class="dropdown-item" href="#"><i
                                                                     class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Cancel</a>
-                                                            <a class="dropdown-item" href="#"></a>
+                                                                    aria-hidden="true"></i> Clear</a>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -1068,23 +929,13 @@
                                                     <div class="upload_file ">
 
                                                         <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id=""></i>
+                                                                name="" id="" multiple></i>
 
 
                                                     </div>
 
                                                 </td>
-                                                <td align="">
 
-                                                    <div class="upload_file ">
-
-                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id=""></i>
-
-
-                                                    </div>
-
-                                                </td>
                                                 <td>
                                                     <p>Not Submitted</p>
                                                 </td>
@@ -1105,8 +956,7 @@
                                                                     aria-hidden="true"></i> Edit</a>
                                                             <a class="dropdown-item" href="#"><i
                                                                     class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Cancel</a>
-                                                            <a class="dropdown-item" href="#"></a>
+                                                                    aria-hidden="true"></i> Clear</a>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -1134,23 +984,13 @@
                                                     <div class="upload_file ">
 
                                                         <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id=""></i>
+                                                                name="" id="" multiple></i>
 
 
                                                     </div>
 
                                                 </td>
-                                                <td align="">
 
-                                                    <div class="upload_file ">
-
-                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id=""></i>
-
-
-                                                    </div>
-
-                                                </td>
                                                 <td>
                                                     <p>Not Submitted</p>
                                                 </td>
@@ -1171,8 +1011,7 @@
                                                                     aria-hidden="true"></i> Edit</a>
                                                             <a class="dropdown-item" href="#"><i
                                                                     class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Cancel</a>
-                                                            <a class="dropdown-item" href="#"></a>
+                                                                    aria-hidden="true"></i> Clear</a>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -1200,21 +1039,12 @@
                                                     <div class="upload_file ">
 
                                                         <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id=""></i>
+                                                                name="" id="" multiple></i>
 
 
                                                     </div>
 
                                                 </td>
-                                                <td align="">
-
-                                                    <div class="upload_file ">
-
-                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id=""></i>
-
-
-                                                    </div>
 
                                                 </td>
                                                 <td>
@@ -1237,8 +1067,7 @@
                                                                     aria-hidden="true"></i> Edit</a>
                                                             <a class="dropdown-item" href="#"><i
                                                                     class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Cancel</a>
-                                                            <a class="dropdown-item" href="#"></a>
+                                                                    aria-hidden="true"></i> Clear</a>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -1251,7 +1080,7 @@
                             <div class="tab-pane fade  " id="house_property" role="tabpanel"
                                 aria-labelledby="pills-home-tab">
                                 <div class="table-responsive mb-3">
-                                    <table class="table">
+                                    <table class="table investment_table">
                                         <thead>
                                             <tr>
                                                 <th scope="col">Sections</th>
@@ -1259,8 +1088,8 @@
                                                 <th scope="col">References</th>
                                                 <th scope="col">Max Limit</th>
                                                 <th scope="col">Declaration Amount</th>
-                                                <th scope="col">Proof</th>
-                                                <th scope="col">Upload Document</th>
+                                                <th scope="col">Proofs</th>
+
                                                 <th scope="col">Status</th>
                                                 <th scope="col">Action</th>
                                             </tr>
@@ -1294,18 +1123,7 @@
                                                     <div class="upload_file ">
 
                                                         <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id=""></i>
-
-
-                                                    </div>
-
-                                                </td>
-                                                <td align="">
-
-                                                    <div class="upload_file ">
-
-                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id=""></i>
+                                                                name="" id="" multiple></i>
 
 
                                                     </div>
@@ -1333,8 +1151,7 @@
                                                                     aria-hidden="true"></i> Edit</a>
                                                             <a class="dropdown-item" href="#"><i
                                                                     class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Cancel</a>
-                                                            <a class="dropdown-item" href="#"></a>
+                                                                    aria-hidden="true"></i> Clear</a>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -1365,24 +1182,14 @@
 
                                                     <div class="upload_file ">
 
-                                                        <i class="fa fa-upload" aria-hidden="true"><input
-                                                                type="file" name="" id=""></i>
+                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
+                                                                name="" id="" multiple></i>
 
 
                                                     </div>
 
                                                 </td>
-                                                <td align="">
 
-                                                    <div class="upload_file ">
-
-                                                        <i class="fa fa-upload" aria-hidden="true"><input
-                                                                type="file" name="" id=""></i>
-
-
-                                                    </div>
-
-                                                </td>
 
                                                 <td>
                                                     <p>Not Submitted</p>
@@ -1405,8 +1212,7 @@
                                                                     aria-hidden="true"></i> Edit</a>
                                                             <a class="dropdown-item" href="#"><i
                                                                     class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Cancel</a>
-                                                            <a class="dropdown-item" href="#"></a>
+                                                                    aria-hidden="true"></i> Clear</a>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -1589,7 +1395,7 @@
                                 <div class="card top-line mb-0 border-bottom-0 border-end-0 border-start-0">
                                     <div class="card-body">
                                         <div class="table-responsive">
-                                            <table class="table">
+                                            <table class="table investment_table">
                                                 <thead>
                                                     <tr>
                                                         <th scope="col">Sections</th>
@@ -1597,8 +1403,8 @@
                                                         <th scope="col">References</th>
                                                         <th scope="col">Max Limit</th>
                                                         <th scope="col">Declaration Amount</th>
-                                                        <th scope="col">Proof</th>
-                                                        <th scope="col">Upload Document</th>
+                                                        <th scope="col">Proofs</th>
+
                                                         <th scope="col">Status</th>
                                                         <th scope="col">Action</th>
                                                     </tr>
@@ -1607,7 +1413,7 @@
 
                                                     <tr>
                                                         <td> 17(2)</td>
-                                                        <td>
+                                                        <td class="noWhite-space">
 
                                                             <p>Vehicle Reimbursement</p>
                                                             <div class="d-flex">
@@ -1623,7 +1429,7 @@
                                                                         name="cc" id="above_cc">
                                                                     <label class="form-check-label" for="above_cc">
 
-                                                                        Above 1600 CC
+                                                                        Above 2400 CC
                                                                     </label>
                                                                 </div>
 
@@ -1645,25 +1451,14 @@
                                                             <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
+
                                                         <td align="">
 
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
                                                                         type="file" name=""
-                                                                        id=""></i>
-
-
-                                                            </div>
-
-                                                        </td>
-                                                        <td align="">
-
-                                                            <div class="upload_file ">
-
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id=""></i>
+                                                                        id="" multiple></i>
 
 
                                                             </div>
@@ -1686,11 +1481,11 @@
                                                                 <div class="dropdown-menu"
                                                                     aria-labelledby="dropdownMenuButton">
                                                                     <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-secondary me-2"
+                                                                            class="fa fa-pencil-square-o text-info me-2"
                                                                             aria-hidden="true"></i> Edit</a>
                                                                     <a class="dropdown-item" href="#"><i
                                                                             class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Cancel</a>
+                                                                            aria-hidden="true"></i> Clear</a>
                                                                     <a class="dropdown-item" href="#"></a>
                                                                 </div>
                                                             </div>
@@ -1717,25 +1512,14 @@
                                                             <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
+
                                                         <td align="">
 
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
                                                                         type="file" name=""
-                                                                        id=""></i>
-
-
-                                                            </div>
-
-                                                        </td>
-                                                        <td align="">
-
-                                                            <div class="upload_file ">
-
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id=""></i>
+                                                                        id="" multiple></i>
 
 
                                                             </div>
@@ -1758,11 +1542,11 @@
                                                                 <div class="dropdown-menu"
                                                                     aria-labelledby="dropdownMenuButton">
                                                                     <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-secondary me-2"
+                                                                            class="fa fa-pencil-square-o text-info me-2"
                                                                             aria-hidden="true"></i> Edit</a>
                                                                     <a class="dropdown-item" href="#"><i
                                                                             class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Cancel</a>
+                                                                            aria-hidden="true"></i> Clear</a>
                                                                     <a class="dropdown-item" href="#"></a>
                                                                 </div>
                                                             </div>
@@ -1789,25 +1573,14 @@
                                                             <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
+
                                                         <td align="">
 
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
                                                                         type="file" name=""
-                                                                        id=""></i>
-
-
-                                                            </div>
-
-                                                        </td>
-                                                        <td align="">
-
-                                                            <div class="upload_file ">
-
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id=""></i>
+                                                                        id="" multiple></i>
 
 
                                                             </div>
@@ -1830,11 +1603,11 @@
                                                                 <div class="dropdown-menu"
                                                                     aria-labelledby="dropdownMenuButton">
                                                                     <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-secondary me-2"
+                                                                            class="fa fa-pencil-square-o text-info me-2"
                                                                             aria-hidden="true"></i> Edit</a>
                                                                     <a class="dropdown-item" href="#"><i
                                                                             class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Cancel</a>
+                                                                            aria-hidden="true"></i> Clear</a>
                                                                     <a class="dropdown-item" href="#"></a>
                                                                 </div>
                                                             </div>
@@ -1854,7 +1627,7 @@
                                 <div class="card top-line mb-0 border-bottom-0 border-end-0 border-start-0">
                                     <div class="card-body">
                                         <div class="table-responsive">
-                                            <table class="table">
+                                            <table class="table investment_table">
                                                 <thead>
                                                     <tr>
                                                         <th scope="col">Sections</th>
@@ -1862,8 +1635,8 @@
                                                         <th scope="col">References</th>
                                                         <th scope="col">Max Limit</th>
                                                         <th scope="col">Declaration Amount</th>
-                                                        <th scope="col">Proof</th>
-                                                        <th scope="col">Upload Document</th>
+                                                        <th scope="col">Proofs</th>
+
                                                         <th scope="col">Status</th>
                                                         <th scope="col">Action</th>
                                                     </tr>
@@ -1891,18 +1664,12 @@
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-                                                        <td align="">
-                                                            <div class="upload_file ">
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name="" id="">
-                                                                </i>
-                                                            </div>
-                                                        </td>
+
                                                         <td align="">
                                                             <div class="upload_file ">
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
                                                                         type="file" name=""
-                                                                        id=""></i>
+                                                                        id="" multiple></i>
 
 
                                                             </div>
@@ -1925,11 +1692,11 @@
                                                                 <div class="dropdown-menu"
                                                                     aria-labelledby="dropdownMenuButton">
                                                                     <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-secondary me-2"
+                                                                            class="fa fa-pencil-square-o text-info me-2"
                                                                             aria-hidden="true"></i> Edit</a>
                                                                     <a class="dropdown-item" href="#"><i
                                                                             class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Cancel</a>
+                                                                            aria-hidden="true"></i> Clear</a>
                                                                     <a class="dropdown-item" href="#"></a>
                                                                 </div>
                                                             </div>
@@ -1958,25 +1725,14 @@
                                                             <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
+
                                                         <td align="">
 
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
                                                                         type="file" name=""
-                                                                        id=""></i>
-
-
-                                                            </div>
-
-                                                        </td>
-                                                        <td align="">
-
-                                                            <div class="upload_file ">
-
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id=""></i>
+                                                                        id="" multiple></i>
 
 
                                                             </div>
@@ -1999,11 +1755,11 @@
                                                                 <div class="dropdown-menu"
                                                                     aria-labelledby="dropdownMenuButton">
                                                                     <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-secondary me-2"
+                                                                            class="fa fa-pencil-square-o text-info me-2"
                                                                             aria-hidden="true"></i> Edit</a>
                                                                     <a class="dropdown-item" href="#"><i
                                                                             class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Cancel</a>
+                                                                            aria-hidden="true"></i> Clear</a>
                                                                     <a class="dropdown-item" href="#"></a>
                                                                 </div>
                                                             </div>
@@ -2032,25 +1788,14 @@
                                                             <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
+
                                                         <td align="">
 
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
                                                                         type="file" name=""
-                                                                        id=""></i>
-
-
-                                                            </div>
-
-                                                        </td>
-                                                        <td align="">
-
-                                                            <div class="upload_file ">
-
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id=""></i>
+                                                                        id="" multiple></i>
 
 
                                                             </div>
@@ -2073,11 +1818,11 @@
                                                                 <div class="dropdown-menu"
                                                                     aria-labelledby="dropdownMenuButton">
                                                                     <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-secondary me-2"
+                                                                            class="fa fa-pencil-square-o text-info me-2"
                                                                             aria-hidden="true"></i> Edit</a>
                                                                     <a class="dropdown-item" href="#"><i
                                                                             class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Cancel</a>
+                                                                            aria-hidden="true"></i> Clear</a>
                                                                     <a class="dropdown-item" href="#"></a>
                                                                 </div>
                                                             </div>
@@ -2104,25 +1849,14 @@
                                                             <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
+
                                                         <td align="">
 
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
                                                                         type="file" name=""
-                                                                        id=""></i>
-
-
-                                                            </div>
-
-                                                        </td>
-                                                        <td align="">
-
-                                                            <div class="upload_file ">
-
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id=""></i>
+                                                                        id="" multiple></i>
 
 
                                                             </div>
@@ -2145,11 +1879,11 @@
                                                                 <div class="dropdown-menu"
                                                                     aria-labelledby="dropdownMenuButton">
                                                                     <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-secondary me-2"
+                                                                            class="fa fa-pencil-square-o text-info me-2"
                                                                             aria-hidden="true"></i> Edit</a>
                                                                     <a class="dropdown-item" href="#"><i
                                                                             class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Cancel</a>
+                                                                            aria-hidden="true"></i> Clear</a>
                                                                     <a class="dropdown-item" href="#"></a>
                                                                 </div>
                                                             </div>
@@ -2176,25 +1910,14 @@
                                                             <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
+
                                                         <td align="">
 
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
                                                                         type="file" name=""
-                                                                        id=""></i>
-
-
-                                                            </div>
-
-                                                        </td>
-                                                        <td align="">
-
-                                                            <div class="upload_file ">
-
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id=""></i>
+                                                                        id="" multiple></i>
 
 
                                                             </div>
@@ -2217,11 +1940,11 @@
                                                                 <div class="dropdown-menu"
                                                                     aria-labelledby="dropdownMenuButton">
                                                                     <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-secondary me-2"
+                                                                            class="fa fa-pencil-square-o text-info me-2"
                                                                             aria-hidden="true"></i> Edit</a>
                                                                     <a class="dropdown-item" href="#"><i
                                                                             class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Cancel</a>
+                                                                            aria-hidden="true"></i> Clear</a>
                                                                     <a class="dropdown-item" href="#"></a>
                                                                 </div>
                                                             </div>
@@ -2242,7 +1965,7 @@
                                 <div class="card top-line mb-0 border-bottom-0 border-end-0 border-start-0">
                                     <div class="card-body">
                                         <div class="table-responsive">
-                                            <table class="table">
+                                            <table class="table investment_table">
                                                 <thead>
                                                     <tr>
                                                         <th scope="col">Sections</th>
@@ -2250,8 +1973,8 @@
                                                         <th scope="col">References</th>
                                                         <th scope="col">Max Limit</th>
                                                         <th scope="col">Declaration Amount</th>
-                                                        <th scope="col">Proof</th>
-                                                        <th scope="col">Upload Document</th>
+                                                        <th scope="col">Proofs</th>
+
                                                         <th scope="col">Status</th>
                                                         <th scope="col">Action</th>
                                                     </tr>
@@ -2276,25 +1999,14 @@
                                                             <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
+
                                                         <td align="">
 
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
                                                                         type="file" name=""
-                                                                        id=""></i>
-
-
-                                                            </div>
-
-                                                        </td>
-                                                        <td align="">
-
-                                                            <div class="upload_file ">
-
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id=""></i>
+                                                                        id="" multiple></i>
 
 
                                                             </div>
@@ -2317,11 +2029,11 @@
                                                                 <div class="dropdown-menu"
                                                                     aria-labelledby="dropdownMenuButton">
                                                                     <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-secondary me-2"
+                                                                            class="fa fa-pencil-square-o text-info me-2"
                                                                             aria-hidden="true"></i> Edit</a>
                                                                     <a class="dropdown-item" href="#"><i
                                                                             class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Cancel</a>
+                                                                            aria-hidden="true"></i> Clear</a>
                                                                     <a class="dropdown-item" href="#"></a>
                                                                 </div>
                                                             </div>
@@ -2349,25 +2061,14 @@
                                                             <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
+
                                                         <td align="">
 
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
                                                                         type="file" name=""
-                                                                        id=""></i>
-
-
-                                                            </div>
-
-                                                        </td>
-                                                        <td align="">
-
-                                                            <div class="upload_file ">
-
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id=""></i>
+                                                                        id="" multiple></i>
 
 
                                                             </div>
@@ -2390,11 +2091,11 @@
                                                                 <div class="dropdown-menu"
                                                                     aria-labelledby="dropdownMenuButton">
                                                                     <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-secondary me-2"
+                                                                            class="fa fa-pencil-square-o text-info me-2"
                                                                             aria-hidden="true"></i> Edit</a>
                                                                     <a class="dropdown-item" href="#"><i
                                                                             class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Cancel</a>
+                                                                            aria-hidden="true"></i> Clear</a>
                                                                     <a class="dropdown-item" href="#"></a>
                                                                 </div>
                                                             </div>
@@ -2422,25 +2123,14 @@
                                                             <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
+
                                                         <td align="">
 
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
                                                                         type="file" name=""
-                                                                        id=""></i>
-
-
-                                                            </div>
-
-                                                        </td>
-                                                        <td align="">
-
-                                                            <div class="upload_file ">
-
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id=""></i>
+                                                                        id="" multiple></i>
 
 
                                                             </div>
@@ -2463,11 +2153,11 @@
                                                                 <div class="dropdown-menu"
                                                                     aria-labelledby="dropdownMenuButton">
                                                                     <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-secondary me-2"
+                                                                            class="fa fa-pencil-square-o text-info me-2"
                                                                             aria-hidden="true"></i> Edit</a>
                                                                     <a class="dropdown-item" href="#"><i
                                                                             class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Cancel</a>
+                                                                            aria-hidden="true"></i> Clear</a>
                                                                     <a class="dropdown-item" href="#"></a>
                                                                 </div>
                                                             </div>
@@ -2488,8 +2178,8 @@
 
                                 <div class="card top-line mb-0 border-bottom-0 border-end-0 border-start-0">
                                     <div class="card-body">
-                                        <div class="table-responsive">
-                                            <table class="table">
+                                        <div class="table-responsive ">
+                                            <table class="table investment_table">
                                                 <thead>
                                                     <tr>
                                                         <th scope="col">Sections</th>
@@ -2497,8 +2187,8 @@
                                                         <th scope="col">References</th>
                                                         <th scope="col">Max Limit</th>
                                                         <th scope="col">Declaration Amount</th>
-                                                        <th scope="col">Proof</th>
-                                                        <th scope="col">Upload Document</th>
+                                                        <th scope="col">Proofs</th>
+
                                                         <th scope="col">Status</th>
                                                         <th scope="col">Action</th>
                                                     </tr>
@@ -2523,25 +2213,14 @@
                                                             <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
+
                                                         <td align="">
 
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
                                                                         type="file" name=""
-                                                                        id=""></i>
-
-
-                                                            </div>
-
-                                                        </td>
-                                                        <td align="">
-
-                                                            <div class="upload_file ">
-
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id=""></i>
+                                                                        id="" multiple></i>
 
 
                                                             </div>
@@ -2564,11 +2243,11 @@
                                                                 <div class="dropdown-menu"
                                                                     aria-labelledby="dropdownMenuButton">
                                                                     <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-secondary me-2"
+                                                                            class="fa fa-pencil-square-o text-info me-2"
                                                                             aria-hidden="true"></i> Edit</a>
                                                                     <a class="dropdown-item" href="#"><i
                                                                             class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Cancel</a>
+                                                                            aria-hidden="true"></i> Clear</a>
                                                                     <a class="dropdown-item" href="#"></a>
                                                                 </div>
                                                             </div>
@@ -2595,25 +2274,14 @@
                                                             <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
+
                                                         <td align="">
 
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
                                                                         type="file" name=""
-                                                                        id=""></i>
-
-
-                                                            </div>
-
-                                                        </td>
-                                                        <td align="">
-
-                                                            <div class="upload_file ">
-
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id=""></i>
+                                                                        id="" multiple></i>
 
 
                                                             </div>
@@ -2636,11 +2304,11 @@
                                                                 <div class="dropdown-menu"
                                                                     aria-labelledby="dropdownMenuButton">
                                                                     <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-secondary me-2"
+                                                                            class="fa fa-pencil-square-o text-info me-2"
                                                                             aria-hidden="true"></i> Edit</a>
                                                                     <a class="dropdown-item" href="#"><i
                                                                             class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Cancel</a>
+                                                                            aria-hidden="true"></i> Clear</a>
                                                                     <a class="dropdown-item" href="#"></a>
                                                                 </div>
                                                             </div>
@@ -2667,25 +2335,14 @@
                                                             <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
+
                                                         <td align="">
 
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
                                                                         type="file" name=""
-                                                                        id=""></i>
-
-
-                                                            </div>
-
-                                                        </td>
-                                                        <td align="">
-
-                                                            <div class="upload_file ">
-
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id=""></i>
+                                                                        id="" multiple></i>
 
 
                                                             </div>
@@ -2712,7 +2369,7 @@
                                                                             aria-hidden="true"></i> Edit</a>
                                                                     <a class="dropdown-item" href="#"><i
                                                                             class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Cancel</a>
+                                                                            aria-hidden="true"></i> Clear</a>
                                                                     <a class="dropdown-item" href="#"></a>
                                                                 </div>
                                                             </div>
@@ -2739,25 +2396,14 @@
                                                             <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
+
                                                         <td align="">
 
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
                                                                         type="file" name=""
-                                                                        id=""></i>
-
-
-                                                            </div>
-
-                                                        </td>
-                                                        <td align="">
-
-                                                            <div class="upload_file ">
-
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id=""></i>
+                                                                        id="" multiple></i>
 
 
                                                             </div>
@@ -2780,11 +2426,11 @@
                                                                 <div class="dropdown-menu"
                                                                     aria-labelledby="dropdownMenuButton">
                                                                     <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-secondary me-2"
+                                                                            class="fa fa-pencil-square-o text-info me-2"
                                                                             aria-hidden="true"></i> Edit</a>
                                                                     <a class="dropdown-item" href="#"><i
                                                                             class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Cancel</a>
+                                                                            aria-hidden="true"></i> Clear</a>
                                                                     <a class="dropdown-item" href="#"></a>
                                                                 </div>
                                                             </div>
@@ -2811,25 +2457,14 @@
                                                             <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
+
                                                         <td align="">
 
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
                                                                         type="file" name=""
-                                                                        id=""></i>
-
-
-                                                            </div>
-
-                                                        </td>
-                                                        <td align="">
-
-                                                            <div class="upload_file ">
-
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id=""></i>
+                                                                        id="" multiple></i>
 
 
                                                             </div>
@@ -2856,7 +2491,7 @@
                                                                             aria-hidden="true"></i> Edit</a>
                                                                     <a class="dropdown-item" href="#"><i
                                                                             class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Cancel</a>
+                                                                            aria-hidden="true"></i> Clear</a>
                                                                     <a class="dropdown-item" href="#"></a>
                                                                 </div>
                                                             </div>
@@ -2884,25 +2519,14 @@
                                                             <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
+
                                                         <td align="">
 
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
                                                                         type="file" name=""
-                                                                        id=""></i>
-
-
-                                                            </div>
-
-                                                        </td>
-                                                        <td align="">
-
-                                                            <div class="upload_file ">
-
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id=""></i>
+                                                                        id="" multiple></i>
 
 
                                                             </div>
@@ -2929,7 +2553,7 @@
                                                                             aria-hidden="true"></i> Edit</a>
                                                                     <a class="dropdown-item" href="#"><i
                                                                             class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Cancel</a>
+                                                                            aria-hidden="true"></i> Clear</a>
                                                                     <a class="dropdown-item" href="#"></a>
                                                                 </div>
                                                             </div>
@@ -2960,25 +2584,14 @@
                                                             <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
+
                                                         <td align="">
 
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
                                                                         type="file" name=""
-                                                                        id=""></i>
-
-
-                                                            </div>
-
-                                                        </td>
-                                                        <td align="">
-
-                                                            <div class="upload_file ">
-
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id=""></i>
+                                                                        id="" multiple></i>
 
 
                                                             </div>
@@ -3001,12 +2614,12 @@
                                                                 <div class="dropdown-menu"
                                                                     aria-labelledby="dropdownMenuButton">
                                                                     <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-secondary me-2"
+                                                                            class="fa fa-pencil-square-o text-info me-2"
                                                                             aria-hidden="true"></i> Edit</a>
                                                                     <a class="dropdown-item" href="#"><i
                                                                             class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Cancel</a>
-                                                                    <a class="dropdown-item" href="#"></a>
+                                                                            aria-hidden="true"></i> Clear</a>
+
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -3015,8 +2628,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td> DDB</td>
-                                                        <td>Medical Expenditure on Self or Dependant for Specified Disease
-                                                            Age <60 yrs>60 yrs</td>
+                                                        <td>Medical Expenditure on Self or Dependant for Specified Disease Age < 60 yrs >60 yrs</td>
                                                         <td>
 
                                                             <button type="button"
@@ -3038,25 +2650,14 @@
                                                             <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
+
                                                         <td align="">
 
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
                                                                         type="file" name=""
-                                                                        id=""></i>
-
-
-                                                            </div>
-
-                                                        </td>
-                                                        <td align="">
-
-                                                            <div class="upload_file ">
-
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id=""></i>
+                                                                        id="" multiple></i>
 
 
                                                             </div>
@@ -3079,12 +2680,12 @@
                                                                 <div class="dropdown-menu"
                                                                     aria-labelledby="dropdownMenuButton">
                                                                     <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-secondary me-2"
+                                                                            class="fa fa-pencil-square-o text-info me-2"
                                                                             aria-hidden="true"></i> Edit</a>
                                                                     <a class="dropdown-item" href="#"><i
                                                                             class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Cancel</a>
-                                                                    <a class="dropdown-item" href="#"></a>
+                                                                            aria-hidden="true"></i> Clear</a>
+
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -3112,25 +2713,14 @@
                                                             <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
+
                                                         <td align="">
 
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
                                                                         type="file" name=""
-                                                                        id=""></i>
-
-
-                                                            </div>
-
-                                                        </td>
-                                                        <td align="">
-
-                                                            <div class="upload_file ">
-
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id=""></i>
+                                                                        id="" multiple></i>
 
 
                                                             </div>
@@ -3153,11 +2743,11 @@
                                                                 <div class="dropdown-menu"
                                                                     aria-labelledby="dropdownMenuButton">
                                                                     <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-secondary me-2"
+                                                                            class="fa fa-pencil-square-o text-info me-2"
                                                                             aria-hidden="true"></i> Edit</a>
                                                                     <a class="dropdown-item" href="#"><i
                                                                             class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Cancel</a>
+                                                                            aria-hidden="true"></i> Clear</a>
                                                                     <a class="dropdown-item" href="#"></a>
                                                                 </div>
                                                             </div>
@@ -3191,25 +2781,14 @@
                                                             <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
+
                                                         <td align="">
 
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
                                                                         type="file" name=""
-                                                                        id=""></i>
-
-
-                                                            </div>
-
-                                                        </td>
-                                                        <td align="">
-
-                                                            <div class="upload_file ">
-
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id=""></i>
+                                                                        id="" multiple></i>
 
 
                                                             </div>
@@ -3232,12 +2811,12 @@
                                                                 <div class="dropdown-menu"
                                                                     aria-labelledby="dropdownMenuButton">
                                                                     <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-secondary me-2"
+                                                                            class="fa fa-pencil-square-o text-info me-2"
                                                                             aria-hidden="true"></i> Edit</a>
                                                                     <a class="dropdown-item" href="#"><i
                                                                             class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Cancel</a>
-                                                                    <a class="dropdown-item" href="#"></a>
+                                                                            aria-hidden="true"></i> Clear</a>
+
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -3272,25 +2851,14 @@
                                                             <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
+
                                                         <td align="">
 
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
                                                                         type="file" name=""
-                                                                        id=""></i>
-
-
-                                                            </div>
-
-                                                        </td>
-                                                        <td align="">
-
-                                                            <div class="upload_file ">
-
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id=""></i>
+                                                                        id="" multiple></i>
 
 
                                                             </div>
@@ -3313,12 +2881,12 @@
                                                                 <div class="dropdown-menu"
                                                                     aria-labelledby="dropdownMenuButton">
                                                                     <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-secondary me-2"
+                                                                            class="fa fa-pencil-square-o text-info me-2"
                                                                             aria-hidden="true"></i> Edit</a>
                                                                     <a class="dropdown-item" href="#"><i
                                                                             class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Cancel</a>
-                                                                    <a class="dropdown-item" href="#"></a>
+                                                                            aria-hidden="true"></i> Clear</a>
+
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -3347,25 +2915,14 @@
                                                             <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
+
                                                         <td align="">
 
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
                                                                         type="file" name=""
-                                                                        id=""></i>
-
-
-                                                            </div>
-
-                                                        </td>
-                                                        <td align="">
-
-                                                            <div class="upload_file ">
-
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id=""></i>
+                                                                        id="" multiple></i>
 
 
                                                             </div>
@@ -3388,11 +2945,11 @@
                                                                 <div class="dropdown-menu"
                                                                     aria-labelledby="dropdownMenuButton">
                                                                     <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-secondary me-2"
+                                                                            class="fa fa-pencil-square-o text-info me-2"
                                                                             aria-hidden="true"></i> Edit</a>
                                                                     <a class="dropdown-item" href="#"><i
                                                                             class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Cancel</a>
+                                                                            aria-hidden="true"></i> Clear</a>
                                                                     <a class="dropdown-item" href="#"></a>
                                                                 </div>
                                                             </div>
