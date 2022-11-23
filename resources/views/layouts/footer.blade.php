@@ -8,7 +8,7 @@
         <a href="{{ url('vmt_privacy_policy') }}" class="text-ash f-12 privacy-policy" role="button">
             Privacy Policy
         </a>
-        <a href="{{ url('vmt_privacy_policy') }}" class="text-ash  f-12" role="button">
+        <a href="{{ url('vmt_privacy_policy') }}" class="text-ash faq  f-12" role="button">
             FAQ
         </a>
 
