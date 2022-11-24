@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\PMS;
 
+
 use App\Exports\PMSV2ReviewerReviewFormExport;
 use App\Exports\PMSV2ReviewFormExport;
 use App\Mail\VmtPMSMail_HR;
@@ -134,6 +135,15 @@ class VmtPMSModuleController extends Controller
         $loggedUserDetails = User::findorfail($loggedUserId);
         $existingKPIForms = VmtPMS_KPIFormModel::where('author_id', $loggedUserId)->get(['id','form_name']);
 
+        $table_pmsConfig = ConfigPms::find('1');
+
+        $calendar_type =  $table_pmsConfig->calendar_type;
+        $year = $table_pmsConfig->year;
+        $frequency = $table_pmsConfig->frequency;
+        $assignment_period = $table_pmsConfig->assignment_period;
+
+
+
         // get Departments data
         $departments = Department::where('is_active', 1)->get();
 
@@ -193,7 +203,7 @@ class VmtPMSModuleController extends Controller
         $loggedInUser = Auth::user();
 
         $flowCheck = 2;
-        return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','existingKPIForms','departments','employees','pmsKpiAssigneeDetails','loggedManagerEmployees','loggedUserDetails','getSameLevelManagers','flowCheck','loggedInUser','loggedManagerEmployeesIDs'));
+        return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','existingKPIForms','departments','employees','pmsKpiAssigneeDetails','loggedManagerEmployees','loggedUserDetails','getSameLevelManagers','flowCheck','loggedInUser','loggedManagerEmployeesIDs','calendar_type','year','frequency','assignment_period'));
     }
 
     // flow 3 pms V2
@@ -482,7 +492,7 @@ class VmtPMSModuleController extends Controller
     public function publishKPIForm(Request $request)
     {
 
-        //dd($request->all());
+        dd($request->all());
 
         $validator = Validator::make($request->all(), [
             'calendar_type' => 'required',
