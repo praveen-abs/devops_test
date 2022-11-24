@@ -15,13 +15,13 @@
             <div class="card-body ">
                 <div class="filter-content">
                     <div class="row">
-                        <div class="col-sm-12 col-xxl-6 col-md-6 col-xl-6 col-lg-6">
+                        <div class="col-sm-12 col-xxl-4 col-md-6 col-xl-4 col-lg-4">
                             <h6 class="mb-0 text-muted text-start">Attendance Regularization Approvals</h6>
                         </div>
-                        <div class="col-sm-12 col-xxl-6 col-md-6 col-xl-6 col-lg-6">
+                        <div class="col-sm-12 col-xxl-8 col-md-6 col-xl-8 col-lg-8">
                             <div class="row">
                                 <div class="col-sm-12 col-xxl-3 col-md-6 col-xl-3 col-lg-3">
-                                    <select name="" id="" class="form-select border-orange disabled_focus">
+                                    <select name="" id="" class="form-select  border-orange disabled_focus">
                                         <option value="" selected hidden disabled>Department</option>
                                     </select>
                                 </div>

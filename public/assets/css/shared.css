@@ -548,13 +548,12 @@ th.gridjs-th .gridjs-th-content {
 }
 
 .gridjs-table tr td:first-child {
-    width: 100% !important;
-    text-align: center !important;
-    table-layout: unset !important;
+    width: 100% ;
 }
-.gridjs-table tr td:first-child {
-    /* text-align: left !important; */
+.w-130{
+    width: 130px;
 }
+
 .js-pagination .gridjs-summary {
     font-size: 14px !important;
 }

@@ -4,6 +4,7 @@
 @endsection
 @section('css')
     <link rel="stylesheet" href="{{ URL::asset('assets/libs/gridjs/gridjs.min.css') }}">
+    <link href="{{ URL::asset('assets/css/attendance.css') }}" rel="stylesheet">
 @endsection
 @section('content')
 {{-- @component('components.attendance_breadcrumb')
@@ -49,7 +50,7 @@
                         </div> --}}
                     </div>
 
-                    <div id="leave-policy-table"></div>
+                    <div id="leave-policy-table" class="leaveSettings_table"></div>
                 </div>
             </div>
         </div>
