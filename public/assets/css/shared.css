@@ -1123,7 +1123,7 @@ button.gridjs-sort-desc {
 .modal-title::after {
 
     content: "";
-    background-color:var(--color-primary_blue) ;
+    background-color:var(--color-primary_orange) ;
     height: 20px;
     width: 3px;
     position: absolute;

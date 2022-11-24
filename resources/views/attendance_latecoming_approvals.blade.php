@@ -267,7 +267,7 @@
                         },
                         {
                             id: 'reviewer_comments',
-                            name: 'Reviewer Comments',
+                            name: 'Approver Comments',
                             formatter: function formatter(cell) {
 
                                 return gridjs.html(cell);
