@@ -1,4 +1,12 @@
 @import url(../../assets/css/_button.scss);
+
+:root{
+    --color-primary_blue:#002f54;
+    --color-primary_orange:#e54e0d;
+}
+
+
+
 :hover,
 a:focus,
 input,
@@ -86,7 +94,7 @@ p {
     border-bottom: 0px;
 }
 .disabled_focus:focus {
-    border-color: #002f54;
+    border-color: var(--color-primary_blue);
     outline: 0;
     box-shadow: none;
 }
@@ -496,10 +504,10 @@ th.gridjs-th .gridjs-th-content {
     width: auto !important;
     min-width: auto !important;
 }
-.leave_table .gridjs-table > tbody > tr > td:nth-child(5){
-    text-align: left;
-    white-space:normal !important;
-    min-width: 350px;
+.custom_gridJs .gridjs-table > tbody > tr > td:nth-child(5) {
+    text-align: center;
+    white-space: normal !important;
+    min-width: 250px;
 }
 
 .gridjs-table > tbody > tr > td:nth-child(5),
@@ -813,7 +821,7 @@ button.gridjs-sort-desc {
     padding: 0px;
 }
 .nav-tabs-dashed .nav-item .nav-link.active {
-    color: #002f54 !important ;
+    color: var(--color-primary_blue) !important ;
 }
 
 .nav-tabs-dashed .nav-item .nav-link {
@@ -1083,10 +1091,11 @@ button.gridjs-sort-desc {
 .leave-request-section .modal .modal-dialog .modal-content .modal-footer {
     border-top: none !important;
 }
+
 .leave-request-section .modal .modal-dialog .modal-content .modal-header h5 {
     font-size: 22px;
     font-weight: 600;
-    color: #002f54;
+    color: var(--color-primary_blue);
 }
 .leave-request-section .modal .modal-dialog .modal-content .modal-body {
     padding: 0 1rem !important;
@@ -1096,7 +1105,7 @@ button.gridjs-sort-desc {
     background-color: #ffffff;
     border-radius: 8px;
     padding: 20px;
-    border-top: 7px solid #002f54;
+    border-top: 7px solid var(--color-primary_blue);
     margin-bottom: 20px;
 }
 .leave-request-section .modal .modal-dialog .modal-content .modal-body .border-top-blue .border-left-blue {
@@ -1104,11 +1113,28 @@ button.gridjs-sort-desc {
     background-color: #ffffff;
     border-radius: 8px;
     padding: 15px 15px 1px 15px;
-    border-left: 7px solid #002f54;
+    border-left: 7px solid var(--color-primary_blue);
+}
+
+.modal-title{
+    position: relative;
+    padding-left: 10px;
+}
+
+.modal-title::after {
+
+    content: "";
+    background-color:var(--color-primary_blue) ;
+    height: 20px;
+    width: 3px;
+    position: absolute;
+    top: 1px;
+    left: 0px;
+
 }
 .border-top-blue .modal-sub-title {
     font-size: 20px;
-    color: #002f54;
+    color: var(--color-primary_blue);
     margin-bottom: 0;
     font-weight: 600;
 }
@@ -1134,7 +1160,7 @@ button.gridjs-sort-desc {
     color: #1e1e1e;
 }
 .leave-request-section .modal .modal-dialog .modal-content .modal-body .border-top-blue .border-left-blue span {
-    color: #002f54;
+    color: var(--color-primary_blue);
     font-size: 16px;
 }
 .leave-request-section
@@ -1318,20 +1344,18 @@ a.editable-click:hover {
     height: 15px;
     width: 30px;
 }
-.form-check-input{
+.form-check-input {
     margin-top: 0px !important;
 }
 .form-check-input:checked {
     accent-color: #ee6a04 !important;
     background-color: #ee6a04 !important;
     border-color: #ee6a04 !important;
-
 }
-.form-switch .form-check-input:focus{
-
+.form-switch .form-check-input:focus {
 }
-.form-check-input:focus{
-    border-color:#ee6a04 !important;
+.form-check-input:focus {
+    border-color: #ee6a04 !important;
 }
 .form-check-input:focus {
     box-shadow: 0 0 0 0.25rem rgb(255 96 0 / 24%) !important;
@@ -1541,7 +1565,7 @@ table.dataTable td {
     align-items: center;
     justify-content: center;
     height: 70px;
-    background-color: #002f54;
+    background-color: var(--color-primary_blue);
     width: 70px;
     border-radius: 50%;
     color: #ffffff;

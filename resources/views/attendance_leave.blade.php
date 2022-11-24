@@ -145,7 +145,7 @@
                                 <h6 class="mb-2">Leave history</h6>
 
                                 <div class="table-responsive">
-                                    <div id="emp_leaveHistory"></div>
+                                    <div id="emp_leaveHistory" class="custom_gridJs"></div>
                                 </div>
                             </div>
                         </div>
@@ -259,7 +259,7 @@
                                 <h6 class="mb-2">Team Leave history</h6>
 
                                 <div class="table-responsive">
-                                    <div id="team_leaveHistory"></div>
+                                    <div id="team_leaveHistory" class="custom_gridJs"></div>
                                 </div>
                             </div>
                         </div>
@@ -275,7 +275,7 @@
                                 <h6 class="mb-2">Org Leave history</h6>
 
                                 <div class="table-responsive">
-                                    <div id="org_leaveHistory"></div>
+                                    <div id="org_leaveHistory" class="custom_gridJs"></div>
                                 </div>
                             </div>
                         </div>
@@ -486,7 +486,7 @@
                             </select>
                         </div>
                     </div>
-                    <div id="viewEmp_history_balance_table"></div>
+                    <div id="viewEmp_history_balance_table" class="custom_gridJs"></div>
 
 
                 </div>
@@ -520,7 +520,7 @@
         <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable  modal-xl" role="document">
             <div class="modal-content top-line">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h6 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
+                    <h6 class="modal-title mb-1 text-primary">
                         Leave Request</h6>
                     <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
                         aria-label="Close">
@@ -706,11 +706,11 @@
     </div>
 
 
-    {{-- <div id="leaveDetails_modal" class="modal custom-modal fade" role="dialog">
+    <div id="leaveDetails_modal" class="modal custom-modal fade" role="dialog">
         <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable  modal-lg" role="document">
             <div class="modal-content top-line">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h6 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
+                    <h6 class="modal-title mb-1 text-primary" >
                         Leave Request Details</h6>
                     <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
                         aria-label="Close">
@@ -829,19 +829,14 @@
                 </div>
             </div>
         </div>
-    </div> --}}
+    </div>
 
 
     </div>
 @endsection
 @section('script')
-    <script src="{{ URL::asset('assets/libs/gridjs/gridjs.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/js/pages/dashboard-projects.init.js') }}"></script>
-    <script src="{{ URL::asset('/assets/premassets/js/calendar.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/premassets/js/calendar.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"
-        integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
 
     <script>
         var leavetypes_array = <?php echo json_encode(getAllLeaveTypes()); ?>;
@@ -1251,7 +1246,9 @@
                                 //     </button>
 
                                 htmlcontent =
-                                    '<input type="button" value="View" class="status btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal" disabled></input>';
+                                    '<input type="button" value="View" class="status btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal">';
+                                    // '<button  value="View" class="status btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal"></button>' ;
+
 
                                 return gridjs.html(htmlcontent);
                             }
@@ -1404,7 +1401,8 @@
                                 }
 
                                 htmlcontent = htmlcontent +
-                                    '<input type="button" value="View" class="status text-center btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal" disabled></input>';
+                                    // '<input type="button" value="View" class="status text-center btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal" >';
+                                    '<button   class="status btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal">View</button>' ;
 
 
                                 return gridjs.html(htmlcontent);
@@ -1565,8 +1563,8 @@
                                 //     </button>
 
                                 htmlcontent =
-                                    '<input type="button" value="View" class="status btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal" disabled></input>';
-
+                                    // '<input type="button" value="View" class="status btn btn-custom_gridJsorange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal">';
+                                    '<button   class="status btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal">View</button>' ;
                                 return gridjs.html(htmlcontent);
                             }
                         },
