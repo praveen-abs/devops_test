@@ -238,6 +238,14 @@ class VmtAttendanceController extends Controller
         return $response;
     }
 
+    /*
+     AJAX : Get leave details based on given leave_id
+    */
+    public function fetchLeaveDetails(Request $request){
+        $leave_details = VmtEmployeeLeaves::find($request->leave_id);
+        return $leave_details;
+    }
+
     public function saveLeaveRequestDetails(Request $request)
     {
 
