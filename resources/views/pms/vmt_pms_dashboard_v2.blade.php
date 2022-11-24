@@ -735,12 +735,6 @@
                                 <input type="hidden" name="assignment_period_year" id="assignment_period_year"
                                     value="<?php echo date('Y'); ?>">
 
-                                        <input type="hidden" name="hidden_calendar_year" id="hidden_calendar_year" value="{{ $year }}">
-                                        <input type="hidden" name="calendar_type" id="calendar_type" value="{{ $calendar_type }}">
-                                        <input type="hidden" name="frequency" id="frequency" value="{{ $frequency }}">
-                                        <input type="hidden" name="assignment_period_start" id="" value="{{ $assignment_period }}">
-
-{{-- 
                                 <div class="row ">
                                     <div class=" col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
 
@@ -783,7 +777,7 @@
                                             class="form-control form-select">
                                             <option value="" selected disabled>Select Assignment Period</option>
                                         </select>
-                                    </div> --}}
+                                    </div>
 
 
                                     <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4  mb-2">
@@ -1699,7 +1693,7 @@
 
             if (!assignmentPeriod || assignmentPeriod == '') {
                 $('.employeeEditButton').css({
-                    "background-color": "#ee6a04"
+                    "background-color": "#B0B0B0"
                 });
             }
 
