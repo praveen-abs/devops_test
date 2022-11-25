@@ -284,7 +284,7 @@
                                     processData: false,
                                     data: form_data,
                                     success: function(data) {
-                                        swal('Success', 'Form Upadtes Successfully!', 'success');
+                                        swal('Success', 'Form Updated Successfully!', 'success');
 
                                         $('.loader').hide();
                                     },
