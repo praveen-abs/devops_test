@@ -10,14 +10,14 @@
 
 @section('content')
     <div class="loader" style="display:none;"></div>
-    @component('components.performance_breadcrumb')
+    {{-- @component('components.performance_breadcrumb')
         @slot('li_1')
         @endslot
-    @endcomponent
+    @endcomponent --}}
 
 
 
-    <div class="container-fluid assign-goal-wrapper">
+    <div class="container-fluid assign-goal-wrapper mt-30">
         <div class="cards-wrapper">
 
             @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR', 'Manager']))
@@ -432,10 +432,10 @@
                                                         @if($kpiFormAssigneeReview && !isFormReviewCompleted($kpiFormAssigneeReview))
                                                         <tr>
                                                             <td class="d-none">{{ $key1 }}</td>
-                                                            <td class="" style="min-width: 185px;">
+                                                            <td class="" >
                                                                 {{-- <div class="td_content_center">{{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</div> --}}
                                                                 <div
-                                                                    class="row page-header-user-dropdown align-items-center">
+                                                                    class="row page-header-user-dropdown align-items-center" style="width:200px;min-width: 230px;">
                                                                     <?php
                                                                     $employee_icon = getEmployeeAvatarOrShortName($assigneeId);
                                                                     //    dd($employee_icon);
@@ -714,7 +714,7 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
+                    <h6 class="modal-title mb-1 text-primary" >
                         New Assign Goals</h5>
                     <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
                         aria-label="Close">

@@ -704,6 +704,7 @@
     </div>
 
 
+
     <div id="leaveDetails_modal" class="modal custom-modal fade" role="dialog">
         <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable  modal-lg" role="document">
             <div class="modal-content top-line">
@@ -719,16 +720,16 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <input type="hidden" name="row_id" id="row_id">
-                            <input type="hidden" name="id" id="id">
+
                             <div class="d-flex profile-wrapper">
                                 <div class="profile-img d-flex align-items-center justify-content-center me-3">
-                                    <span>GN</span>
+                                    <span id="">GN</span>
                                 </div>
 
                                 <div class="content d-flex flex-column align-items-center justify-content-center">
-                                    <p class="text-primary fw-bold">Augustin</p>
-                                    <p class="text-muted">Requested on Sep 21,2022 </p>
+                                    <p class="text-primary fw-bold" id="employee_name">Augustin</p>
+                                    <p class="text-muted" >Requested on <span  class="text-muted" id="leaveRequested_date"></span>
+                                    </p>
                                 </div>
 
 
@@ -740,22 +741,23 @@
                             <div class="d-flex ">
                                 <div class="date-wrapper shadow-lite d-flex flex-column justify-content-center me-2">
 
-                                    <div class="month text-center bg-primary text-white">
+                                    <div class="month text-center bg-primary text-white" id="leave_month">
                                         Apr
                                     </div>
-                                    <div class="date text-center fw-bold f-14 text-primary ">
+                                    <div class="date text-center fw-bold f-14 text-primary " id="leave_date">
                                         22
                                     </div>
-                                    <div class="day text-center f-12 fw-bold text-muted ">
+                                    <div class="day text-center f-12 fw-bold text-muted " id="leave_day">
 
                                         Fri
                                     </div>
 
                                 </div>
                                 <div class="content-det">
-                                    <h6>1 Day Sick Leave</h6>
-                                    <p>Leave Ended 40 days ago</p>
-                                    <p>No teammates are no leave on this day</p>
+                                    <h6 id=""><span id="totalLeave_days"> 1 </span>Day <span
+                                            id="leave_type"></span> </h6>
+                                    {{-- <p >Leave Ended 40 days ago</p> --}}
+                                    {{-- <p>No teammates are no leave on this day</p> --}}
                                 </div>
                             </div>
 
@@ -768,13 +770,13 @@
                                             <img src="http://images.equipboard.com/uploads/user/image/524/big_calvin-harris.jpg?v=1466072866"
                                                 alt="" />
                                             <div class="profile-details">
-                                                <p>Dillip Kumar</p>
-                                                <h5 class="description">Designation</h5>
+                                                <p id="notifyUser_name">Dillip Kumar</p>
+                                                <h5 class="description" id="notifyUser_designation">Designation</h5>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-6 mb-md-0 mb-3">
+                                {{-- <div class="col-6 mb-md-0 mb-3">
                                     <div class="profile-wrapper center">
                                         <div class="profile-body">
                                             <img src="http://images.equipboard.com/uploads/user/image/524/big_calvin-harris.jpg?v=1466072866"
@@ -785,7 +787,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
 
                             </div>
 
@@ -1573,7 +1575,8 @@
                                 htmlcontent =
                                     // '<input type="button"  class="status btn btn-orange py-1 onboard-employee-btn leavebutton" value="View" />';
                                     // '<button   class="status btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal"  data-bs-toggle="modal">View</button>';
-                                    '<button   class="status btn btn-orange py-1 onboard-employee-btn leavebutton " onClick="getLeaveDetails('+emp.id+')" >View</button>';
+                                    '<button   class="status btn btn-orange py-1 onboard-employee-btn leavebutton " onClick="getLeaveDetails(' +
+                                    emp.id + ')" >View</button>';
                                 return gridjs.html(htmlcontent);
                             },
                         },
@@ -1611,8 +1614,10 @@
 
         });
 
+        // $('#leaveDetails_modal').hide();
+
         function getLeaveDetails(leave_id) {
-            console.log("Getting date for leave_id : "+leave_id);
+            console.log("Getting date for leave_id : " + leave_id);
             $.ajax({
                 url: "{{ route('attendance-leave-getdetails') }}",
                 type: "GET",
@@ -1622,7 +1627,28 @@
                     "_token": "{{ csrf_token() }}",
                 },
                 success: function(data) {
+
+                    // var leaveMonth=moment(data.leaverequest_date, 'M').format('MMMM');
+
+                    // var oneDate = moment(data.leaverequest_date).format('MMM');
+
+
+                    // leaverequest_date
+                    console.log(data.leave_reason);
+                    $('#employee_name').text(data.user_name);
+                    $('#leaveRequested_date').text(moment(data.leaverequest_date).format('MMM d , YYYY'));
+                    $('#leave_month').text(moment(data.leaverequest_date).format('MMM'));
+                    $('#leave_date').text(moment(data.leaverequest_date).format('d'));
+                    $('#leave_day').text(moment(data.leaverequest_date).format('ddd'));
+                    // $('#totalLeave_days').text(data.user_name);
+                    $('#notifyUser_name').text(data.notification_userName);
+                    $('#notifyUser_designation').text(data.user_designation);
+                    $('#totalLeave_days').text(data.total_leave_datetime[0]);
+
                     console.log("Leave details for ID : " + leave_id + " :: " + data);
+
+                    $('#leaveDetails_modal').modal('show');
+
                     // if (data.status == "success") {
 
                     //     alert(data.message + " \n ");

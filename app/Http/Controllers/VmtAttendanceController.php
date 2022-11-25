@@ -243,6 +243,16 @@ class VmtAttendanceController extends Controller
     */
     public function fetchLeaveDetails(Request $request){
         $leave_details = VmtEmployeeLeaves::find($request->leave_id);
+
+        $leave_details['user_name'] = User::find($leave_details->user_id)->name;
+        $leave_details['leave_type'] = VmtLeaves::find($leave_details->leave_type_id)->leave_type;
+        $leave_details['reviewer_name'] = User::find($leave_details->reviewer_user_id)->name;
+        $leave_details['notification_userName'] = User::find($leave_details->notifications_users_id)->name;
+        $leave_details['user_designation'] = VmtEmployeeOfficeDetails::where('user_id',$leave_details->user_id)->first()->value('designation');
+
+
+
+
         return $leave_details;
     }
 
