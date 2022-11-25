@@ -715,7 +715,7 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
+                    <h5 class="modal-title mb-1 text-primary" >
                         New Assign Goals</h5>
                     <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
                         aria-label="Close">
@@ -954,7 +954,7 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable fad  modal-md" role="document">
             <div class="modal-content top-line">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
+                    <h5 class="modal-title mb-1 text-primary"  >
                         Change Reviewer</h5>
                     <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
                         aria-label="Close">
@@ -1001,7 +1001,7 @@
         <div class="modal-dialog modal-dialog-centered   modal-md" role="document">
             <div class="modal-content top-line">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
+                    <h5 class="modal-title mb-1 text-primary"  >
                         Success</h5>
                     <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
                         aria-label="Close">
@@ -1027,7 +1027,7 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-md" role="document">
             <div class="modal-content top-line">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
+                    <h5 class="modal-title mb-1 text-primary" >
                         Edit Employee</h5>
                     <button type="button" id="closebtn_editEmployees"
                         class="close outline-none bg-transparent border-0 h3 " data-bs-dismiss="modal"
@@ -1223,18 +1223,7 @@
             });
         }
 
-        $(document).on("click", ".employeeEditButton", function() {
-            var assignmentPeriod = $('#assignment_period_start').val();
-            console.log(assignmentPeriod);
-
-            if (assignmentPeriod && assignmentPeriod != '') {
-                $("#add-goals-modal").modal('hide');
-                $('#employeeSelectionModal').show();
-                $('#employeeSelectionModal').removeClass('fade');
-            } else {
-                console.log("Error : Please select the assignment period.")
-            }
-        })
+        
 
 
         $(document).on('click', '#employeeSelectionModal .close', function() {
@@ -1545,34 +1534,6 @@
 
             });
 
-            $('#calendar_type').change(function() {
-                if ($('#calendar_type').val() == 'financial_year') {
-                    $('#year').val('Apr-Mar');
-                } else
-                if ($('#calendar_type').val() == 'calendar_year') {
-                    $('#year').val('Jan-Dec');
-                } else {
-                    $('#year').val('');
-                }
-                $('#hidden_calendar_year').val($("#year option:selected").text())
-                if ($('#calendar_type').val() != '') {
-                    var frequencyDataResult =
-                        '<option value="" selected disabled>Select frequency</option><option value="monthly">Monthly</option><option value="quarterly">Quarterly</option><option value="halfYearly">Half Yearly</option><option value="yearly">Yearly</option>';
-                    $('#frequency').html(frequencyDataResult);
-                } else {
-                    var frequencyDataResult =
-                        '<option value="" selected disabled>Select frequency</option>';
-                    $('#frequency').html(frequencyDataResult);
-                    $('#frequency').val('');
-                }
-                frequencyChange();
-
-            });
-
-            $('#frequency').change(function() {
-                frequencyChange();
-            });
-
             $('#assignment_period_start').change(function() {
                 //When assignment period has value, then change EDIT button color to orange
                 $('.employeeEditButton').css({
@@ -1580,66 +1541,6 @@
                 });
             });
 
-            function frequencyChange() {
-                var data = "";
-                var year = "<?= date('Y') ?>";
-                var nextyear = "<?= date('Y', strtotime('+1 year')) ?>";
-                if ($('#frequency').val() == 'monthly') {
-
-                    if ($('#calendar_type').val() == 'financial_year') {
-                        data =
-                            "<option value='' selected disabled>Select frequency</option><option value='apr'>April - " +
-                            year +
-                            "</option><option value='may'>May - " + year + "</option><option value='june'>June - " +
-                            year + "</option><option value='july'>July - " + year +
-                            "</option><option value='aug'>August - " + year +
-                            "</option><option value='sept'>September - " + year +
-                            "</option><option value='oct'>October - " + year +
-                            "</option><option value='nov'>November - " + year +
-                            "</option><option value='dec'>December - " + year +
-                            "</option><option value='jan'>January - " + nextyear +
-                            "</option><option value='feb'>February - " + nextyear +
-                            "</option><option value='mar'>March - " + nextyear + "</option>";
-                    } else {
-                        data =
-                            "<option value='' selected disabled>Select frequency</option><option value='jan'>January - " +
-                            year +
-                            "</option><option value='feb'>February - " + year +
-                            "</option><option value='mar'>March - " + year +
-                            "</option><option value='apr'>April - " + year + "</option><option value='may'>May - " +
-                            year + "</option><option value='june'>June - " + year +
-                            "</option><option value='july'>July - " + year +
-                            "</option><option value='aug'>August - " + year +
-                            "</option><option value='sept'>September - " + year +
-                            "</option><option value='oct'>October - " + year +
-                            "</option><option value='nov'>November - " + year +
-                            "</option><option value='dec'>December - " + year + "</option>";
-                    }
-                } else if ($('#frequency').val() == 'quarterly') {
-                    if ($('#calendar_type').val() == 'financial_year')
-                        data =
-                        "<option value='' selected disabled>Select Assignment Period</option><option value='q1'>Q1 " +
-                        year + "(Apr-Jun)</option><option value='q2'>Q2 " + year +
-                        "(July-Sept)</option><option value='q3'>Q3 " + year +
-                        "(Oct-Dec)</option><option value='q4'>Q4 " + nextyear + "(Jan-Mar)</option>";
-                    else
-                        data =
-                        "<option value='' selected disabled>Select Assignment Period</option><option value='q1'>Q1(Jan-Mar)</option><option value='q2'>Q2(Apr-June)</option><option value='q3'>Q3(July-Sept)</option><option value='q4'>Q4(Oct-Dec)</option>";
-                } else if ($('#frequency').val() == 'halfYearly') {
-                    if ($('#calendar_type').val() == 'financial_year')
-                        data =
-                        "<option value='' selected disabled>Select Assignment Period</option><option value='h1'>H1(Apr " +
-                        year + " - Sept " + year + ")</option><option value='h2'>H2(Oct " + year + "- Mar " +
-                        nextyear + ")</option>";
-                    else
-                        data =
-                        "<option value=''>Select</option><option value='h1'>H1(Jan-June)</option><option value='h2'>H2(July-Dec)</option>";
-
-                } else {
-                    data = "<option value=''>Select</option><option value='yearly'>Yearly</option>";
-                }
-                $('#assignment_period_start').html(data);
-            }
         });
 
         $(function() {
@@ -1682,10 +1583,10 @@
 
             //Reset the old values in 'add-goals-model'
             $('.select-employee-dropdown').val('');
-            $('#calendar_type').val('');
-            $('#assignment_period_start').val('');
-            $('#year').val('');
-            $('#frequency').val('');
+            //$('#calendar_type').val('');
+            //$('#assignment_period_start').val('');
+            //$('#year').val('');
+            //$('#frequency').val('');
             $('#department').val('');
 
 
