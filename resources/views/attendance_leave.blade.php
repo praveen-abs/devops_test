@@ -800,15 +800,15 @@
                                             <img src="http://images.equipboard.com/uploads/user/image/524/big_calvin-harris.jpg?v=1466072866"
                                                 alt="" />
                                             <div class="profile-details">
-                                                <p>Dillip Kumar</p>
-                                                <h5 class="description">Designation</h5>
+                                                <p id="approver_name"></p>
+                                                <h5 class="description" id="approver_desgination"></h5>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <hr class="text-muted p-0">
-                            <h6 class="modal-sub-title py-2">Approved by</h6>
+                            <h6 class="modal-sub-title py-2">Reason</h6>
                             <div class="row mb-3">
                                 <div class="col-12 mb-md-0 mb-3">
                                     <textarea placeholder="Add Comment" class="form-control outline-none border-0 shadow-lite" name=""
@@ -1643,6 +1643,8 @@
                     // $('#totalLeave_days').text(data.user_name);
                     $('#notifyUser_name').text(data.notification_userName);
                     $('#notifyUser_designation').text(data.user_designation);
+                    $('#approver_name').text(data.approver_name);
+                    $('#approver_desgination').text(data.notification_designation);
                     $('#totalLeave_days').text(data.total_leave_datetime[0]);
 
                     console.log("Leave details for ID : " + leave_id + " :: " + data);
