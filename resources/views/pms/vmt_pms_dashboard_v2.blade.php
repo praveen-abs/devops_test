@@ -739,7 +739,7 @@
                                         <input type="hidden" name="hidden_calendar_year" id="hidden_calendar_year" value="{{ $year }}">
                                         <input type="hidden" name="calendar_type" id="calendar_type" value="{{ $calendar_type }}">
                                         <input type="hidden" name="frequency" id="frequency" value="{{ $frequency }}">
-                                        <input type="hidden" name="assignment_period_start" id="" value="{{ $assignment_period }}">
+                                        <input type="hidden" name="assignment_period_start" id="assignment_period_start" value="{{ $assignment_period }}">
 
 {{--
                                 <div class="row ">
@@ -1223,6 +1223,19 @@
             });
         }
 
+        $(document).on("click", ".employeeEditButton", function() {
+            var assignmentPeriod = $('#assignment_period_start').val();
+
+            console.log(assignmentPeriod);
+
+            if (assignmentPeriod && assignmentPeriod != '') {
+                $("#add-goals-modal").modal('hide');
+                $('#employeeSelectionModal').show();
+                $('#employeeSelectionModal').removeClass('fade');
+            } else {
+                console.log("Error : Please select the assignment period.")
+            }
+        });
         
 
 
