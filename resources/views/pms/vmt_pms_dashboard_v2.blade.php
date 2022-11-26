@@ -549,9 +549,9 @@
                     <div id="review_completed" class="tab-pane fade ">
                         <div class="card mb-0" style="position:relative;">
                             <div class="card-body">
-                                <button id="add-goals" class="btn btn-orange add-goals"><i
+                                {{-- <button id="add-goals" class="btn btn-orange add-goals"><i
                                         class="text-white fa fa-plus mx-1"></i>Add
-                                    Goals</button>
+                                    Goals</button> --}}
                                 <div class="table-responsive">
                                     <table id='reviewCompleted_table' class=' table Fem table-borderd w-100  mb-0 '
                                         style="width:revert !important">

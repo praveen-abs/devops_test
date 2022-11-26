@@ -14,14 +14,13 @@
                     <div class="col-md-12 col-sm-12 col-lg-3 col-xl-3 col-xxl-3 d-flex ">
                         <div class="mb-0 card w-100 border-0 boxshadow_lite4">
                             <div class="card-body  text-center">
+                                <div class="d-flex justify-content-center profile-img ">
 
-                                <div class="d-flex justify-content-center">
-                                    <div class="profile-img d-flex">
                                         <?php $currentUserDetails = App\Models\User::find($assignedUserDetails->id);?>
                                         @include('ui-profile-avatar-lg', [
                                             'currentUser' => $currentUserDetails ,
                                         ])
-                                    </div>
+
                                 </div>
 
                                 <div class="appraisal_userDet mt-3">
@@ -39,11 +38,11 @@
                         <div class="card mb-0 w-100 border-0 boxshadow_lite4">
                             <div class="card-body">
                                 <p class="f-14 text-ash  ">Business Unit/Process/Function</p>
-                                <p class="mb-4 f-15 fw-bold text-primary">{{ $assignedUserDetails->getEmployeeOfficeDetails->department_id }}</p>
+                                <p class="mb-4 f-14 fw-bold text-primary">{{ $assignedUserDetails->getEmployeeOfficeDetails->department_id }}</p>
                                 <p class="f-14 text-ash  ">Reporting Manager</p>
-                                <p class="mb-4 f-15 fw-bold text-primary ">{{ $assignersName }}</p>
+                                <p class="mb-4 f-14 fw-bold text-primary ">{{ $assignersName }}</p>
                                 <p class="f-14 text-ash  ">Review Period</p>
-                                <p class="mb-4 f-15 fw-bold text-primary">{{ $assignedGoals->year }} -
+                                <p class="mb-4 f-14 fw-bold text-primary">{{ $assignedGoals->year }} -
                                     {{ strtoupper($assignedGoals->assignment_period) }}</p>
                             </div>
                         </div>
