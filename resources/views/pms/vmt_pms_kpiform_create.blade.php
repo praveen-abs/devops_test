@@ -53,7 +53,7 @@
                             </div>
                         </div>
                         <div class="table-responsive">
-                            <table id='kpiTable' class="table kpi_appraisal-table table-borderd align-middle mb-0" data-paging="true" data-paging-size="10" data-paging-limit="3" data-paging-container="#paging-ui-container" data-paging-count-format="{PF} to {PL}" data-sorting="true" data-filtering="false" data-empty="No Results" data-filter-container="#filter-form-container" data-editing-add-text="Add New">
+                            <table id='kpiTable' class="table kpi_appraisal-table table-borderd no-padding no_borderRadius align-middle mb-0" data-paging="true" data-paging-size="10" data-paging-limit="3" data-paging-container="#paging-ui-container" data-paging-count-format="{PF} to {PL}" data-sorting="true" data-filtering="false" data-empty="No Results" data-filter-container="#filter-form-container" data-editing-add-text="Add New">
                                 @csrf
                                 <thead class="bg-primary thead" id="tHead">
                                     <tr class="text-uppercase">
@@ -583,7 +583,7 @@ $(function () {
                 return $(this).val();
             }).get();
         $('#percentage-header').html('&nbsp;&nbsp;( '+totalKPIPercentage+'% )');
-       
+
 
         $('.content-container').append('<tr class="addition-content cursor-pointer" id="content'+length+'">'+dimension+kpi+operational+measure+frequency+target+stretchTarget+source+kpiWeightage+'</tr>');
     });

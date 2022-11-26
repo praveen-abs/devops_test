@@ -17568,9 +17568,6 @@ tr:first-child th:first-child {
     border-top-left-radius: 6px ;
 }
 
-tr:first-child th:first-child {
-    border-bottom-left-radius: 6px ;
-}
 
 tr:last-child td:first-child {
     border-bottom-left-radius: 6px ;

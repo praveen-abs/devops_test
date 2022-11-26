@@ -1,11 +1,9 @@
 @import url(../../assets/css/_button.scss);
 
-:root{
-    --color-primary_blue:#002f54;
-    --color-primary_orange:#e54e0d;
+:root {
+    --color-primary_blue: #002f54;
+    --color-primary_orange: #e54e0d;
 }
-
-
 
 :hover,
 a:focus,
@@ -53,6 +51,11 @@ p {
 .text-ash {
     color: #b9b9b9;
 }
+
+table.no-padding tr td {
+    padding: 0px;
+}
+
 .noWhite-space {
     white-space: nowrap !important;
 }
@@ -548,9 +551,9 @@ th.gridjs-th .gridjs-th-content {
 }
 
 .gridjs-table tr td:first-child {
-    width: 100% ;
+    width: 100%;
 }
-.w-130{
+.w-130 {
     width: 130px;
 }
 
@@ -1115,21 +1118,19 @@ button.gridjs-sort-desc {
     border-left: 7px solid var(--color-primary_blue);
 }
 
-.modal-title{
+.modal-title {
     position: relative;
     padding-left: 10px;
 }
 
 .modal-title::after {
-
     content: "";
-    background-color:var(--color-primary_orange) ;
+    background-color: var(--color-primary_orange);
     height: 20px;
     width: 3px;
     position: absolute;
     top: 1px;
     left: 0px;
-
 }
 .border-top-blue .modal-sub-title {
     font-size: 20px;
@@ -1589,4 +1590,19 @@ table.dataTable td {
     transform: rotate(45deg);
     position: absolute;
     opacity: 0.2;
+}
+
+/*appraisal  table*/
+
+table.kpi_appraisal-table tr th {
+    border: 1px solid #fff;
+}
+table.kpi_appraisal-table tr th:first-child {
+    border-left: 0px;
+}
+table.kpi_appraisal-table tr th:last-child {
+    border-right: 0px;
+}
+table.no_borderRadius tr th:last-child {
+    border-radius: 0px !important;
 }
