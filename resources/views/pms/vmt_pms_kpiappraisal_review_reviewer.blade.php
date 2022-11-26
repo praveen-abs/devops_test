@@ -286,27 +286,27 @@
             <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true"
                 aria-labelledby="exampleModalToggleLabel2">
                 <div class="modal-content">
-                    <div class="modal-header py-2 bg-primary">
+                    <div class="modal-header border-0 d-flex align-items-center py-2">
 
-                        <div class="w-100 modal-header-content d-flex align-items-center py-2">
-                            <h5 class="modal-title text-white" id="modalHeader">Rejected
-                            </h5>
-                            <button type="button" class="btn-close btn-close-white close-modal" data-bs-dismiss="modal"
-                                aria-label="Close">
-                            </button>
-                        </div>
-                    </div>
+                      
+                        <h6 class="modal-title text-primary" id="modalHeader">Rejected
+                        </h6>
+                        <button type="button" class="btn-close btn-close-white close-modal" data-bs-dismiss="modal"
+                            aria-label="Close">
+                        </button>
+                  
+                </div>
                     <div class="modal-body">
-                        <div class="mt-4">
-                            <h4 class="mb-3" id="modalNot"></h4>
-                            <textarea name="reject_comment" id="reject_comment" class="form-control w-100 outline-none border-0 h-100"></textarea>
-                            <div class="hstack gap-2 justify-content-center">
+                      
+                            <h6 class="mb-3" id="modalNot"></h6>
+                            <textarea name="reject_comment" id="reject_comment" class="form-control mb-2 w-100 outline-none border-primary h-100"></textarea>
+                            <div class="text-end">
                                 <button type="button" class="btn btn-primary" id="rejection_submit"
                                     disabled>Save</button>
                                 <button type="button" class="btn btn-light close-modal"
                                     data-bs-dismiss="modal">Close</button>
                             </div>
-                        </div>
+                       
                     </div>
                 </div>
             </div>
