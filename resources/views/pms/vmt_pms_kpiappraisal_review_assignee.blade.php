@@ -325,7 +325,7 @@
                                                 <th scope="col" data-name='kpiSelfReview' data-filterable="false"
                                                     data-visible="true">KPI - Achievement (Self Review)</th>
                                                 <th scope="col" data-name='kpiSelfAchivement' data-filterable="false"
-                                                    data-visible="true">Self KPI Achievement %</th>
+                                                    data-visible="true">Self KPI Achievement %<br/><span id="overall_self_kpi_percentage"></span></th>
                                                 <th scope="col" data-name='comments' data-filterable="false"
                                                     data-visible="true">Comments</th>
                                                 @if ($isAllReviewersSubmittedOrNot)
@@ -452,7 +452,7 @@
                                                         @if ($assignedGoals->is_assignee_accepted == '1' && $isAllReviewersAcceptedOrNot == true)
                                                             @if ($assignedGoals->is_assignee_submitted == 0)
                                                                 {{-- <div> --}}
-                                                                    <textarea  class="inp-text form-control w-100 h-100 outline-none border-0 " id="assignee_kpi_percentage{{ $index }}"
+                                                                    <textarea  class="inp-text form-control w-100 h-100 outline-none border-0 assignee_kpi_percentage" id="assignee_kpi_percentage{{ $index }}"
                                                                         name="assignee_kpi_percentage[{{ $kpiRow->id }}]"
                                                                         onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46'
                                                                         @if(is_numeric($kpiRow->target))
@@ -652,6 +652,12 @@
     <script src="{{ URL::asset('/assets/premassets/js/footable.min.js') }}"></script>
     <script src="{{ URL::asset('/assets/premassets/css/footable.bootstrap.min.css') }}"></script>
     <script type="text/javascript">
+
+
+        $(document).ready(function() {
+            calculateOverallSelfKpiPercentage();
+        });
+
         /*
          * for calculating Self KPI Achievement % If Target is Number
          * formula :-
@@ -681,6 +687,20 @@
             } else {
                 $('#assignee_kpi_percentage' + index).val('');
             }
+
+            calculateOverallSelfKpiPercentage();
+        }
+
+        function calculateOverallSelfKpiPercentage(){
+            //Get all the 'Self KPI Achievements %' textarea values
+            var array_selfKpiAchievementsPercentage = $('.assignee_kpi_percentage').map((_, element) => $.trim(element.value)).get();
+            var total_percentage = _.sumBy(array_selfKpiAchievementsPercentage, item => Number(item));
+
+            console.log(" array_selfKpiAchievementsPercentage : "+array_selfKpiAchievementsPercentage);
+            console.log("SUM of array_selfKpiAchievementsPercentage : "+ total_percentage);
+            //Also update Self KPI Achievement %
+            $("#overall_self_kpi_percentage").html("Total : "+Math.round(total_percentage));
+
         }
 
         // Upload file enable upload button
