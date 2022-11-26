@@ -8,17 +8,16 @@
 @endsection
 
 
-
 @section('content')
     <div class="loader" style="display:none;"></div>
-    @component('components.performance_breadcrumb')
+    {{-- @component('components.performance_breadcrumb')
         @slot('li_1')
         @endslot
-    @endcomponent
+    @endcomponent --}}
 
 
 
-    <div class="container-fluid assign-goal-wrapper">
+    <div class="container-fluid assign-goal-wrapper mt-30">
         <div class="cards-wrapper">
 
             @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR', 'Manager']))
@@ -433,10 +432,10 @@
                                                         @if($kpiFormAssigneeReview && !isFormReviewCompleted($kpiFormAssigneeReview))
                                                         <tr>
                                                             <td class="d-none">{{ $key1 }}</td>
-                                                            <td class="" style="min-width: 185px;">
+                                                            <td class="" >
                                                                 {{-- <div class="td_content_center">{{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</div> --}}
                                                                 <div
-                                                                    class="row page-header-user-dropdown align-items-center">
+                                                                    class="row page-header-user-dropdown align-items-center" style="width:200px;min-width: 230px;">
                                                                     <?php
                                                                     $employee_icon = getEmployeeAvatarOrShortName($assigneeId);
                                                                     //    dd($employee_icon);
@@ -715,7 +714,7 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h5 class="modal-title mb-1 text-primary" >
+                    <h6 class="modal-title mb-1 text-primary" >
                         New Assign Goals</h5>
                     <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
                         aria-label="Close">
@@ -736,56 +735,10 @@
                                 <input type="hidden" name="assignment_period_year" id="assignment_period_year"
                                     value="<?php echo date('Y'); ?>">
 
-                                        <input type="hidden" name="hidden_calendar_year" id="hidden_calendar_year" value="{{ $year }}">
-                                        <input type="hidden" name="calendar_type" id="calendar_type" value="{{ $calendar_type }}">
-                                        <input type="hidden" name="frequency" id="frequency" value="{{ $frequency }}">
-                                        <input type="hidden" name="assignment_period_start" id="assignment_period_start" value="{{ $assignment_period }}">
-
-{{--
-                                <div class="row ">
-                                    <div class=" col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
-
-                                        <label class="" for="calendar_type">Calendar Type</label>
-                                        <select name="calendar_type" id="calendar_type"
-                                            class="form-select  form-control">
-                                            <option value="" selected disabled>Select Calendar Type</option>
-                                            <option name="financial_year" value="financial_year">Financial Year</option>
-                                            <option name="calendar_year" value="calendar_year">Calendar Year</option>
-                                        </select>
-
-                                    </div>
-                                    <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
-
-                                        <label class="" for="year">Year</label>
-                                        <input type="hidden" name="hidden_calendar_year" id="hidden_calendar_year"
-                                            value="">
-
-                                        <select name="year" id="year" disabled class="form-select form-control">
-                                            <option value="" selected disabled>Select year</option>
-                                            <option value="Jan-Dec">January - <?php echo date('Y'); ?> to December -
-                                                <?= date('Y') ?> </option>
-                                            <option value="Apr-Mar">April - <?php echo date('Y'); ?> to March -
-                                                <?= date('Y') + 1 ?></option>
-                                        </select>
-
-                                    </div>
-                                    <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
-
-                                        <label class="" for="frequency">Frequency</label>
-                                        <select name="frequency" id="frequency" class="form-control form-select">
-                                            <option value="" selected disabled>Select Frequency</option>
-                                        </select>
-
-                                    </div>
-                                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4  mb-2">
-
-                                        <label class="" for="assignment_period_start">Assignment Period</label>
-                                        <select name="assignment_period_start" id="assignment_period_start"
-                                            class="form-control form-select">
-                                            <option value="" selected disabled>Select Assignment Period</option>
-                                        </select>
-                                    </div> --}}
-
+                                    <input type="hidden" name="hidden_calendar_year" id="hidden_calendar_year" value="{{ $year }}">
+                                    <input type="hidden" name="calendar_type" id="calendar_type" value="{{ $calendar_type }}">
+                                    <input type="hidden" name="frequency" id="frequency" value="{{ $frequency }}">
+                                    <input type="hidden" name="assignment_period_start" id="assignment_period_start" value="{{ $assignment_period }}">
 
                                     <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4  mb-2">
                                         <label class="" for="department">Department</label>
@@ -954,7 +907,7 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable fad  modal-md" role="document">
             <div class="modal-content top-line">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h5 class="modal-title mb-1 text-primary"  >
+                    <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
                         Change Reviewer</h5>
                     <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
                         aria-label="Close">
@@ -1001,7 +954,7 @@
         <div class="modal-dialog modal-dialog-centered   modal-md" role="document">
             <div class="modal-content top-line">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h5 class="modal-title mb-1 text-primary"  >
+                    <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
                         Success</h5>
                     <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
                         aria-label="Close">
@@ -1027,7 +980,7 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-md" role="document">
             <div class="modal-content top-line">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h5 class="modal-title mb-1 text-primary" >
+                    <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
                         Edit Employee</h5>
                     <button type="button" id="closebtn_editEmployees"
                         class="close outline-none bg-transparent border-0 h3 " data-bs-dismiss="modal"
@@ -1225,7 +1178,6 @@
 
         $(document).on("click", ".employeeEditButton", function() {
             var assignmentPeriod = $('#assignment_period_start').val();
-
             console.log(assignmentPeriod);
 
             if (assignmentPeriod && assignmentPeriod != '') {
@@ -1235,8 +1187,7 @@
             } else {
                 console.log("Error : Please select the assignment period.")
             }
-        });
-        
+        })
 
 
         $(document).on('click', '#employeeSelectionModal .close', function() {
@@ -1261,14 +1212,29 @@
         });
 
         $('#edit-employee-based-on-reviewer').click(function() {
+         
             var selectedEmployeesId = $('.select-employee-dropdown').val();
-            var assignmentPeriod = $('#assignment_period_start option:selected').val();
-            var year = $('#year option:selected').text();
+            var assignmentPeriod = $('#assignment_period_start').val();
+            var year = $('#hidden_calendar_year').val();            
 
+            console.log("Checking if KPI already assigned :: ")
             console.log("assignmentPeriod : " + assignmentPeriod);
             console.log("Year : " + year);
 
+            $(document).on("click", ".employeeEditButton", function() {
+            var assignmentPeriod = $('#assignment_period_start').val();
 
+            console.log(assignmentPeriod);
+
+            if (assignmentPeriod && assignmentPeriod != '') {
+                $("#add-goals-modal").modal('hide');
+                $('#employeeSelectionModal').show();
+                $('#employeeSelectionModal').removeClass('fade');
+            } else {
+                console.log("Error : Please select the assignment period.")
+            }
+        });
+        
             /*
             Need to check whether KPI Goals are already assigned for the selected 'Assignment Period and Year'.
             If already assigned, then show error and ask the user to remove those emps
@@ -1546,6 +1512,7 @@
             $('#reviewCompleted_table').DataTable({
 
             });
+ 
 
             $('#assignment_period_start').change(function() {
                 //When assignment period has value, then change EDIT button color to orange
@@ -1554,7 +1521,7 @@
                 });
             });
 
-        });
+              });
 
         $(function() {
             $("#kpiTable").sortable({
@@ -1596,10 +1563,10 @@
 
             //Reset the old values in 'add-goals-model'
             $('.select-employee-dropdown').val('');
-            //$('#calendar_type').val('');
-            //$('#assignment_period_start').val('');
-            //$('#year').val('');
-            //$('#frequency').val('');
+            // $('#calendar_type').val('');
+            // $('#assignment_period_start').val('');
+            // $('#year').val('');
+            // $('#frequency').val('');
             $('#department').val('');
 
 
@@ -1614,7 +1581,7 @@
 
             if (!assignmentPeriod || assignmentPeriod == '') {
                 $('.employeeEditButton').css({
-                    "background-color": "#ee6a04"
+                    "background-color": "#B0B0B0"
                 });
             }
 
@@ -1827,8 +1794,8 @@
 
             e.preventDefault();
             var t_selectedEmployeesId = $('.select-employee-dropdown').val();
-            var assignmentPeriod = $('#assignment_period_start option:selected').val();
-            var year = $('#year option:selected').text();
+            var assignmentPeriod = $('#assignment_period_start').val();
+            var year = $('#hidden_calendar_year').val();
 
             $.ajax({
                 url: "{{ route('isKPIAlreadyAssignedForGivenAssignmentPeriod') }}",
@@ -1841,13 +1808,14 @@
                 },
                 success: function(data) {
 
-                    console.log("Submitting the form");
 
                     if (data) {
                         $('#edit-employee-error-message').html('');
+                        console.log("[ isKPIAlreadyAssignedForGivenAssignmentPeriod ] : "+data);
 
                         //If KPI's already assigned to the selected emps, then show their names
                         if (data.status == true) {
+                            console.log("KPI already assigned...! ");
                             $('#edit-employee-error-message').append("<b><u>" + data.message +
                                 "</u></b><br/>");
                             $('#edit-employee-error-message').append("<ul>");
