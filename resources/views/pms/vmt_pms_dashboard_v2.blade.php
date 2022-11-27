@@ -1218,10 +1218,16 @@
         })
 
         $('#edit-employee').click(function() {
+
             var selectedEmployeesId = $('.select-employee-dropdown').val();
+            var assignmentPeriod = $('#assignment_period_start').val();
+            var year = $('#hidden_calendar_year').val();
             // getReviewerOfSelectedEmployee(selectedEmployeesId);
             $('#add-goals-modal').modal('show');
-            changeAssigneeProfilePicOnSelection(selectedEmployeesId);
+            //changeAssigneeProfilePicOnSelection(selectedEmployeesId);
+
+            isKPIAlreadyAssignedForGivenAssignmentPeriod(selectedEmployeesId, assignmentPeriod, year, true);
+
         });
 
         //Called when EDIT EMPLOYEES modal's close button is pressed instead of SAVE button.
@@ -1232,10 +1238,10 @@
         });
 
         $('#edit-employee-based-on-reviewer').click(function() {
-         
+
             var selectedEmployeesId = $('.select-employee-dropdown').val();
             var assignmentPeriod = $('#assignment_period_start').val();
-            var year = $('#hidden_calendar_year').val();            
+            var year = $('#hidden_calendar_year').val();
 
             console.log("Checking if KPI already assigned :: ")
             console.log("assignmentPeriod : " + assignmentPeriod);
@@ -1254,7 +1260,7 @@
                 console.log("Error : Please select the assignment period.")
             }
         });
-        
+
             /*
             Need to check whether KPI Goals are already assigned for the selected 'Assignment Period and Year'.
             If already assigned, then show error and ask the user to remove those emps
@@ -1532,7 +1538,7 @@
             $('#reviewCompleted_table').DataTable({
 
             });
- 
+
 
             $('#assignment_period_start').change(function() {
                 //When assignment period has value, then change EDIT button color to orange

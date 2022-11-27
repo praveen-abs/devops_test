@@ -251,7 +251,7 @@ class VmtAttendanceController extends Controller
         $leave_details['approver_designation'] = VmtEmployeeOfficeDetails::where('user_id',$leave_details->user_id)->first()->value('designation');
         $leave_details['notification_userName'] = User::find($leave_details->notifications_users_id)->name;
         $leave_details['notification_designation'] = VmtEmployeeOfficeDetails::where('user_id',$leave_details->user_id)->first()->value('designation');
-
+        $leave_details['avatar'] = getEmployeeAvatarOrShortName($leave_details->user_id);
 
 
 

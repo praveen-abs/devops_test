@@ -469,6 +469,8 @@
                                                                 {{-- </div> --}}
                                                             @else
                                                                 <div>
+                                                                    <input type="hidden" class="assignee_kpi_percentage"  value="{{ round(json_decode($assignedGoals->assignee_kpi_percentage, true)[$kpiRow->id]) }}">
+
                                                                     {{ round(json_decode($assignedGoals->assignee_kpi_percentage, true)[$kpiRow->id]) }}%
                                                                 </div>
                                                             @endif
@@ -532,12 +534,11 @@
                                                 @if ($assignedGoals->is_assignee_submitted == '')
                                                     Save
                                                 @else
-                                                    Edit
+                                                    Save
                                                 @endif
                                             </button>
                                             &nbsp;&nbsp;
-                                            <button class="btn btn-primary" id="publish_table"
-                                                @if ($assignedGoals->is_assignee_submitted == '') disabled @endif>Submit</button>
+                                            <button class="btn btn-primary" id="publish_table" disabled>Submit</button>
                                         </div>
                                     @else
                                         @if (in_array('0', $isAllReviewersAcceptedData))
@@ -699,7 +700,7 @@
             console.log(" array_selfKpiAchievementsPercentage : "+array_selfKpiAchievementsPercentage);
             console.log("SUM of array_selfKpiAchievementsPercentage : "+ total_percentage);
             //Also update Self KPI Achievement %
-            $("#overall_self_kpi_percentage").html("Total : "+Math.round(total_percentage));
+            $("#overall_self_kpi_percentage").html("Total : "+Math.round(total_percentage)+"%");
 
         }
 
@@ -778,8 +779,9 @@
                 data: $('#employee_self_review').serialize(),
                 success: function(data) {
                     if (data.status == true) {
+                        $('#publish_table').removeAttr('disabled');
                         swal("Success!", data.message, "success").then(function() {
-                            location.reload();
+                            //location.reload();
                         });
                     } else {
                         swal("Error!", data.message, "error");

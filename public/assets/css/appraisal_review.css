@@ -58,10 +58,9 @@ table.kpi_appraisal-table tbody tr th textarea {
     background: transparent;
     width: 300px;
 }
-/* table#kpiTable tbody tr td:nth-child(2) textarea {
-    width: 300px;
-    text-align: left;
-} */
+table#kpiTable tbody tr td textarea {
+    padding: 3px 4px;
+}
 
 
 
