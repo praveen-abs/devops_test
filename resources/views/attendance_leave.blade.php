@@ -720,22 +720,8 @@
 
                     <div class="card">
                         <div class="card-body">
-
-                            <div class="d-flex profile-wrapper">
-                                <div class="profile-img d-flex align-items-center justify-content-center me-3">
-                                    <span id="">GN</span>
-                                </div>
-
-                                <div class="content d-flex flex-column align-items-center justify-content-center">
-                                    <p class="text-primary fw-bold" id="employee_name">Augustin</p>
-                                    <p class="text-muted" >Requested on <span  class="text-muted" id="leaveRequested_date"></span>
-                                    </p>
-                                </div>
-
-
+                            <div id="show_img">
                             </div>
-
-
                             <hr class="text-muted p-0">
 
                             <div class="d-flex ">
@@ -1632,10 +1618,22 @@
 
                     // var oneDate = moment(data.leaverequest_date).format('MMM');
 
+                    var imagePath = '{{ URL::asset('images/') }}' + '/' + data.avatar.data;
 
-                    // leaverequest_date
-                    console.log(data.leave_reason);
+                    console.log(data.avatar);
+                    if(data.avatar['type'] =="shortname"){
+                        $('#show_img').text(data.avatar.data);
+                    }
+                    else{
+                        var html_image_tag = '<img data-leave_id="' + leave_id +
+                                    '" data-emp_name="' + data.user_name + '" id="img_' + leave_id +
+                                    '" class="h-10 w-10"  alt=" " src="' + imagePath + '" />'
+
+                        $('#show_img').append( html_image_tag);
+
+                    }
                     $('#employee_name').text(data.user_name);
+
                     $('#leaveRequested_date').text(moment(data.leaverequest_date).format('MMM d , YYYY'));
                     $('#leave_month').text(moment(data.leaverequest_date).format('MMM'));
                     $('#leave_date').text(moment(data.leaverequest_date).format('d'));

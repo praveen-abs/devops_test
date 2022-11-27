@@ -16713,6 +16713,8 @@ ul {
 
 .form-control:focus {
     border-color: #002f56 !important;
+    box-shadow:0 0 0 0.2rem rgb(0 48 86 / 17%)!important;
+
 }
 
 /* for paycheckDashboard */
