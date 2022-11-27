@@ -735,14 +735,34 @@
                                 <input type="hidden" name="assignment_period_year" id="assignment_period_year"
                                     value="<?php echo date('Y'); ?>">
 
-                                    <input type="hidden" name="hidden_calendar_year" id="hidden_calendar_year" value="{{ $year }}">
-                                    <input type="hidden" name="calendar_type" id="calendar_type" value="{{ $calendar_type }}">
-                                    <input type="hidden" name="frequency" id="frequency" value="{{ $frequency }}">
-                                    <input type="hidden" name="assignment_period_start" id="assignment_period_start" value="{{ $assignment_period }}">
-
-                                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4  mb-2">
-                                        <label class="" for="department">Department</label>
-                                        <select name="department" id="department" class="form-control form-select">
+                                   
+                                    <div class="row ">
+                                        <div class=" col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
+                                              <label for="calendar_type">Calendar Type</label>
+                                              <input name="calendar_type" id="calendar_type"
+                                                class="form-control"   value="{{ $calendar_type }}" {{ $calendar_type }} readonly>
+                                               
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
+                                             <label class="" for="year">Year</label>
+                                             <input name="year" name="hidden_calendar_year" id="hidden_calendar_year" class="form-control"
+                                                value="{{$year}}" {{$year}} readonly>
+                                        
+                                            </div>
+                                        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
+                                            <label class="" for="frequency">Frequency</label>
+                                            <input name="frequency" id="frequency" class="form-control " value="{{ $frequency }}" {{ $frequency }} readonly>
+                                      
+                                           </div>
+                                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4  mb-2">
+                                            <label class="" for="assignment_period_start">Assignment Period</label>
+                                            <input name="assignment_period_start" id="assignment_period_start"
+                                                class="form-control "value="{{ $assignment_period }}"{{ $frequency }} readonly>
+                                        
+                                            </div>
+                                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4  mb-2">
+                                             <label class="" for="department">Department</label>
+                                             <select name="department" id="department" class="form-control form-select">
                                             <option value="" selected disabled>Select Department</option>
                                             @foreach ($departments as $dept)
                                                 <option value="{{ $dept->id }}">{{ $dept->name }}</option>
@@ -980,7 +1000,7 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-md" role="document">
             <div class="modal-content top-line">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
+                    <h5 class="modal-title mb-1 text-primary"  >
                         Edit Employee</h5>
                     <button type="button" id="closebtn_editEmployees"
                         class="close outline-none bg-transparent border-0 h3 " data-bs-dismiss="modal"
