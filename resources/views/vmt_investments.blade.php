@@ -2998,9 +2998,9 @@
 
             <div id="AddRendted_modal" class="modal  fade" role="dialog">
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg">
-                    <div class="modal-content">
+                    <div class="modal-content top-line">
                         <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                            <h6 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
+                            <h6 class="modal-title mb-1 text-primary" ">
                                 Add new rental details</h6>
                             <button type="button" class="close outline-none bg-transparent border-0 h3"
                                 data-bs-dismiss="modal" aria-label="Close">

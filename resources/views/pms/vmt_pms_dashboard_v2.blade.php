@@ -412,6 +412,7 @@
                                                 <th scope="col">Manager Status</th>
                                                 <th scope="col">Score</th>
                                                 <th scope="col">Review </th>
+                                                <th scope="col">Action </th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -533,6 +534,25 @@
                                                                             echo $checkViewReviewText;
                                                                             ?>
                                                                         </button></a>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="dropdown investment_dropDown">
+                                                                    <button
+                                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                        type="button" id="dropdownMenuButton"
+                                                                        data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                        aria-expanded="false">
+                                                                        <i class="fa fa-ellipsis-v f-14 text-muted" aria-hidden="true"></i>
+                                                                    </button>
+                                                                    <div class="dropdown-menu"
+                                                                        aria-labelledby="dropdownMenuButton">
+                                                                        <a class="dropdown-item" href="#"><i
+                                                                                class="fa fa-pencil-square-o text-info me-2"
+                                                                                aria-hidden="true"></i> Edit</a>
+                                                                        <a class="dropdown-item" href="#"><i class="fa fa-trash text-danger me-2" aria-hidden="true"></i> Delete</a>
+                                                                        <a class="dropdown-item" href="#"></a>
+                                                                    </div>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -735,35 +755,35 @@
                                 <input type="hidden" name="assignment_period_year" id="assignment_period_year"
                                     value="<?php echo date('Y'); ?>">
 
-                                     
+
                                       <div class="row ">
                                         <div class=" col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
                                               <label for="calendar_type">Calendar Type</label>
                                               <input name="calendar_type" id="calendar_type"
                                                 class="form-control"   value="{{ $calendar_type }}" {{ $calendar_type }} readonly>
-                                               
+
                                         </div>
                                         <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
                                              <label class="" for="year">Year</label>
                                              <input name="hidden_calendar_year" id="hidden_calendar_year" class="form-control"
                                                 value="{{$year}}" {{$year}} readonly>
-                                        
+
                                             </div>
                                         <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
                                             <label class="" for="frequency">Frequency</label>
                                             <input name="frequency" id="frequency" class="form-control " value="{{ $frequency }}" {{ $frequency }} readonly>
-                                      
+
                                            </div>
                                         <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4  mb-2">
                                             <label class="" for="assignment_period_start">Assignment Period</label>
                                             <input name="assignment_period_start" id="assignment_period_start"
                                                 class="form-control "value="{{ $assignment_period }}"{{ $frequency }} readonly>
-                                        
+
                                             </div>
 
 
 
-                                            
+
                                     <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4  mb-2">
                                         <label class="" for="department">Department</label>
                                         <select name="department" id="department" class="form-control form-select">
@@ -1236,10 +1256,10 @@
         });
 
         $('#edit-employee-based-on-reviewer').click(function() {
-         
+
             var selectedEmployeesId = $('.select-employee-dropdown').val();
             var assignmentPeriod = $('#assignment_period_start').val();
-            var year = $('#hidden_calendar_year').val();            
+            var year = $('#hidden_calendar_year').val();
 
             console.log("Checking if KPI already assigned :: ")
             console.log("assignmentPeriod : " + assignmentPeriod);
@@ -1258,7 +1278,7 @@
                 console.log("Error : Please select the assignment period.")
             }
         });
-        
+
             /*
             Need to check whether KPI Goals are already assigned for the selected 'Assignment Period and Year'.
             If already assigned, then show error and ask the user to remove those emps
@@ -1536,7 +1556,7 @@
             $('#reviewCompleted_table').DataTable({
 
             });
- 
+
 
             $('#assignment_period_start').change(function() {
                 //When assignment period has value, then change EDIT button color to orange
