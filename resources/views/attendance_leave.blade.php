@@ -717,95 +717,89 @@
                     </button>
                 </div>
                 <div class="modal-body">
-
                     <div class="card">
                         <div class="card-body">
-                            <div id="show_img">
+                            <div class="row border-bottom mb-2 pb-3 align-items-center">
+                                <div class="col-auto">
+                                    <div id="" class="show_img">
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <p class="text-primary f-15 fw-bold" id="employee_name"></p>
+                                    <p class="text-muted f-13 ">Requsted on <span id="leaveRequested_date"></span></p>
+
+                                </div>
                             </div>
-                            <hr class="text-muted p-0">
-
-                            <div class="d-flex ">
-                                <div class="date-wrapper shadow-lite d-flex flex-column justify-content-center me-2">
-
-                                    <div class="month text-center bg-primary text-white" id="leave_month">
-                                        Apr
-                                    </div>
-                                    <div class="date text-center fw-bold f-14 text-primary " id="leave_date">
-                                        22
-                                    </div>
-                                    <div class="day text-center f-12 fw-bold text-muted " id="leave_day">
-
-                                        Fri
-                                    </div>
-
+                            <div class="d-flex border-bottom mb-2 pb-3 ">
+                                <div class="date-wrapper text-center rounded shadow-lite  me-2 border-bottom mb-2">
+                                    <p class="bg-primary rounded  text-center text-white py-1" id="leave_month"> Apr</p>
+                                    <p id="leave_date"> </p>
+                                    <p id="leave_day"> </p>
                                 </div>
                                 <div class="content-det">
-                                    <h6 id=""><span id="totalLeave_days"> 1 </span>Day <span
-                                            id="leave_type"></span> </h6>
-                                    {{-- <p >Leave Ended 40 days ago</p> --}}
-                                    {{-- <p>No teammates are no leave on this day</p> --}}
+                                    <p id="">
+                                    <h6 id="totalLeave_days"></h6> <span id="leave_type"></span> </p>
+
                                 </div>
                             </div>
 
-                            <hr class="text-muted p-0">
-                            <h6 class="modal-sub-title py-2">Notify to</h6>
-                            <div class="row mb-3">
-                                <div class="col-6 mb-md-0 mb-3">
-                                    <div class="profile-wrapper center">
-                                        <div class="profile-body">
-                                            <img src="http://images.equipboard.com/uploads/user/image/524/big_calvin-harris.jpg?v=1466072866"
-                                                alt="" />
+                            <div class="row border-bottom mb-2 pb-3">
+                                <div class="col-12">
+                                    <h6 class="">Notify to</h6>
+                                </div>
+                                <div class="col-4 col-sm-12 col-lg-6 col-md-6 col-xxl-4 col-xl-4 mb-md-0 mb-3">
+                                    <div class="card mb-sm-3 mb-0 mb-sm-3 mb-xxl-0 mb-xl-0">
+                                        <div class="card-body align-items-center  py-1 px-2 d-flex">
+                                            {{-- <img class="float-right rounded-circle img-md"
+                                                src="http://images.equipboard.com/uploads/user/image/524/big_calvin-harris.jpg?v=1466072866"
+                                                alt="" /> --}}
+                                            <div id="" class="show_img">
+                                            </div>
                                             <div class="profile-details">
                                                 <p id="notifyUser_name">Dillip Kumar</p>
                                                 <h5 class="description" id="notifyUser_designation">Designation</h5>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                {{-- <div class="col-6 mb-md-0 mb-3">
-                                    <div class="profile-wrapper center">
-                                        <div class="profile-body">
-                                            <img src="http://images.equipboard.com/uploads/user/image/524/big_calvin-harris.jpg?v=1466072866"
-                                                alt="" />
-                                            <div class="profile-details">
-                                                <p>Praveen</p>
-                                                <h5 class="description">Designation</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> --}}
 
+                                </div>
                             </div>
 
-                            <hr class="text-muted p-0">
-                            <h6 class="modal-sub-title py-2">Approved by</h6>
-                            <div class="row mb-3">
-                                <div class="col-6 mb-md-0 mb-3">
-                                    <div class="profile-wrapper center">
-                                        <div class="profile-body">
-                                            <img src="http://images.equipboard.com/uploads/user/image/524/big_calvin-harris.jpg?v=1466072866"
-                                                alt="" />
+                            <div class="row border-bottom mb-2 pb-3">
+                                <div class="col-12">
+                                    <h6 class="">Approved by</h6>
+                                </div>
+                                <div class="col-4 col-sm-12 col-lg-6 col-md-6 col-xxl-4 col-xl-4 mb-md-0 mb-3">
+                                    <div class="card mb-sm-3 mb-0 mb-sm-3 mb-xxl-0 mb-xl-0">
+                                        <div class="card-body align-items-center  py-1 px-2 d-flex">
+                                            <div id="" class="show_img">
+                                            </div>
+
+                                            {{-- <img class="float-right rounded-circle img-md"
+                                                src="http://images.equipboard.com/uploads/user/image/524/big_calvin-harris.jpg?v=1466072866"
+                                                alt="" /> --}}
                                             <div class="profile-details">
                                                 <p id="approver_name"></p>
                                                 <h5 class="description" id="approver_desgination"></h5>
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
+
                             </div>
-                            <hr class="text-muted p-0">
-                            <h6 class="modal-sub-title py-2">Reason</h6>
-                            <div class="row mb-3">
+                            <div class="row ">
+                                <div class="col-12">
+                                    <h6 class="">Reason</h6>
+                                </div>
                                 <div class="col-12 mb-md-0 mb-3">
-                                    <textarea placeholder="Add Comment" class="form-control outline-none border-0 shadow-lite" name=""
+                                    <textarea placeholder="Add Comment" class="form-control mb-2 outline-none border-0 shadow-lite" name=""
                                         id="" cols="30" rows="3"></textarea>
 
                                 </div>
-                            </div>
-
-                            <div class="row mb-3">
                                 <div class="col-12 mb-md-0 mb-3 text-end">
-                                    <button class="btn btn-orange">Post</button>
+                                    <button class="btn btn-orange"><i class="fa fa-paper-plane me"
+                                            aria-hidden="true"></i> Send</button>
 
                                 </div>
                             </div>
@@ -1619,17 +1613,28 @@
                     // var oneDate = moment(data.leaverequest_date).format('MMM');
 
                     var imagePath = '{{ URL::asset('images/') }}' + '/' + data.avatar.data;
+                    $('#show_img').html('');
 
-                    console.log(data.avatar);
-                    if(data.avatar['type'] =="shortname"){
-                        $('#show_img').text(data.avatar.data);
-                    }
-                    else{
-                        var html_image_tag = '<img data-leave_id="' + leave_id +
-                                    '" data-emp_name="' + data.user_name + '" id="img_' + leave_id +
-                                    '" class="h-10 w-10"  alt=" " src="' + imagePath + '" />'
+                    if (data.avatar['type'] == "shortname") {
+                        // $('.show_img').text(data.avatar.data);
 
-                        $('#show_img').append( html_image_tag);
+
+                        var html_shortName = $(
+                            '<div class="bg-primary text-white d-flex justify-content-center align-items-center f-13 fw-bold img-lg rounded-circle"></div>'
+                            ).text(data.avatar.data);
+                        $('.show_img').append(html_shortName);
+                        // var html_shortName = ' <div class="bg-primary text-white f-13 fw-bold ">'data.avatar.data'</div>';
+                        // $('#show_img').append(html_shortName);
+
+
+                    } else {
+                        var html_image_tag = '<img data-leave_id="' +
+                            +
+                            '" data-emp_name="' + data.user_name + '" id="img_' + leave_id +
+                            '" class="rounded-circle img-lg"  alt=" " src="' + imagePath +
+                            '"  />'
+
+                        $('#show_img').append(html_image_tag);
 
                     }
                     $('#employee_name').text(data.user_name);

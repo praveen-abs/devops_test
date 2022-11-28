@@ -1,11 +1,10 @@
 <div class="event-wrapper">
-    <div class="card profile-box border-0 mb-0" style="height: 280px;
+    <div class="card  border-0 mb-0" style="height:270px;
     overflow-y: auto;
-
     overflow-x: hidden;">
         <div class="card-body">
             <h6 class="text-primary">Events</h6>
-            <div class="row">
+            <div class="row ">
                 <?php $anyUpcoming_Current_Events = false; ?>
 
                 @if ($dashboardEmployeeEventsData['hasData'] == 'true')
@@ -166,7 +165,8 @@
 
                 @if (empty($anyUpcoming_Current_Events))
                     <div
-                        class="wishes-card-wrapper no-events d-flex align-items-center justify-content-center flex-column">
+
+                    class="wishes-card-wrapper no-events d-flex align-items-center justify-content-center flex-column">
                         <img id="" src="{{ URL::asset('assets/images/event/cancel-event.png') }}" />
                         <span class="text-muted h6  m-0">No upcoming events
                         </span>
