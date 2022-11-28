@@ -716,9 +716,9 @@
 
         <div id="earlyTimeArivals_modal" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                        <h6 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
+                <div class="modal-content top-line">
+                    <div class="modal-header py-2 border-0">
+                        <h6 class="modal-title mb-1 text-primary">
                             Early/On Time Arrivals</h6>
                         <button type="button" class="close outline-none bg-transparent border-0 h3"
                             data-bs-dismiss="modal" aria-label="Close">
@@ -747,9 +747,9 @@
 
         <div id="lateArraivals_modal" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                        <h6 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
+                <div class="modal-content top-line">
+                    <div class="modal-header py-2 border-0">
+                        <h6 class="modal-title mb-1 text-primary">
                             Late Arrivals</h6>
                         <button type="button" class="close outline-none bg-transparent border-0 h3"
                             data-bs-dismiss="modal" aria-label="Close">
@@ -775,9 +775,9 @@
 
         <div id="arrivals_modal" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                        <h6 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
+                <div class="modal-content top-line">
+                    <div class="modal-header py-2 border-0">
+                        <h6 class="modal-title mb-1 text-primary">
                             Arrivals</h6>
                         <button type="button" class="close outline-none bg-transparent border-0 h3"
                             data-bs-dismiss="modal" aria-label="Close">
@@ -803,9 +803,9 @@
 
         <div id="remorteClock_modal" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                        <h6 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
+                <div class="modal-content top-line">
+                    <div class="modal-header py-2 border-0">
+                        <h6 class="modal-title mb-1 text-primary">
                             Remote Clock-In</h6>
                         <button type="button" class="close outline-none bg-transparent border-0 h3"
                             data-bs-dismiss="modal" aria-label="Close">

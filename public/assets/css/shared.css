@@ -459,6 +459,8 @@ th.gridjs-th .gridjs-th-content {
     min-width: auto !important;
 }
 
+
+
 .gridjs-table > tbody > tr > td:last-child {
     text-align: center;
 }
@@ -575,6 +577,9 @@ th.gridjs-th .gridjs-th-content {
 .w-130 {
     width: 130px;
 }
+.noCustomize_gridjs .gridjs-table tr td:first-child {
+    width: 0 !important;
+ }
 
 .js-pagination .gridjs-summary {
     font-size: 14px !important;
@@ -1625,3 +1630,6 @@ table.kpi_appraisal-table tr th:last-child {
 table.no_borderRadius tr th:last-child {
     border-radius: 0px !important;
 }
+
+
+
