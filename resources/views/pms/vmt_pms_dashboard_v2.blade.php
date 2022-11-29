@@ -1145,8 +1145,8 @@
             console.log("Deleting Assigned KPI Form");
 
             Swal.fire({
-                    title: 'Are you sure?',
-                    text: "",
+                    title: 'Are you sure you want to delete?',
+                    text: "The data cannot be retrieved",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
