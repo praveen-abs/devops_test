@@ -22,6 +22,8 @@ use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
+use function PHPUnit\Framework\isEmpty;
+
 class VmtAPIPMSModuleController extends HRMSBaseAPIController
 {
 
@@ -363,20 +365,21 @@ class VmtAPIPMSModuleController extends HRMSBaseAPIController
         //     return sendError($validation->errors()->first());
         // }
         $userId  = auth::user()->id;
+        //dd($userId);
         // if($request->assignee_id != $userId){
         //     return sendError('Assignee Id is not matched');
         // }
 
-        $assigneeDetails = User::where('id',$userId)->with('getEmployeeDetails')->first();
+        $assigneeDetails = User::where('id',$userId)->first();
 
+        //dd($assigneeDetails);
 
         // check user id in Assignee, Assigner and Reviewer
-        $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews.getUserAssigneeDetails.getEmployeeDetails')->WhereRaw("find_in_set(".$userId.", assignee_id)")
+        $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::where("assignee_id", $userId)
                                 ->orderBy('id','DESC')
                                 ->get();
 
-
-//dd($pmsKpiAssigneeDetails);
+        //dd($pmsKpiAssigneeDetails);
         $result = [];
 
         // get necessary details for display in V2 dashboard of assignees data
@@ -398,8 +401,8 @@ class VmtAPIPMSModuleController extends HRMSBaseAPIController
                 foreach($kpiAssignee->getPmsKpiFormReviews as $reviewData){
 
                     if($reviewData->assignee_id == $userId){
-                        $isAssigneeAccepted = (int)$reviewData->is_assignee_accepted;
-                        $isAssigneeSubmitted = (int)$reviewData->is_assignee_submitted;
+                        $isAssigneeAccepted = (int)$reviewData->is_assignee_accepted ?? 0;
+                        $isAssigneeSubmitted = (int)$reviewData->is_assignee_submitted ?? 0;
 
                         $arrayIsReviewerSubmitted = json_decode($reviewData->is_reviewer_submitted,true);
                         $arrayIsReviewerAccepted = json_decode($reviewData->is_reviewer_accepted,true);
@@ -414,8 +417,10 @@ class VmtAPIPMSModuleController extends HRMSBaseAPIController
                     $rating = calculateOverallReviewRatings($kpiAssignee->id, $userId);
                 }
             }
-            $result[$key]['is_employee_submitted'] = $isAssigneeSubmitted;
-            $result[$key]['is_employee_accepted'] = $isAssigneeAccepted;
+
+            $result[$key]['is_employee_submitted'] = isEmpty($isAssigneeSubmitted) ? 0 : $isAssigneeSubmitted;
+            $result[$key]['is_employee_accepted'] = isEmpty($isAssigneeAccepted) ? 0 : $isAssigneeAccepted;
+
             $result[$key]['rating'] = (int)$rating;
             $result[$key]['completion_status'] = 55; //Hard-coded for now.Need to write logic
             foreach($arrayReviewers as $reviewerKey => $reviewer){
@@ -507,8 +512,8 @@ class VmtAPIPMSModuleController extends HRMSBaseAPIController
                         }
                     }
                     if($reviewData->assignee_id == $assignee){
-                        $result[$i]['is_employee_submitted'] = (int)$reviewData->is_assignee_submitted;
-                        $result[$i]['is_employee_accepted'] = (int)$reviewData->is_assignee_accepted;
+                        $result[$i]['is_employee_submitted'] = (int)$reviewData->is_assignee_submitted ?? 0;
+                        $result[$i]['is_employee_accepted'] = (int)$reviewData->is_assignee_accepted ?? 0;
 
                         $rating = calculateOverallReviewRatings($kpiAssignee->id, $assignee);
                         $result[$i]['rating'] = $rating;
