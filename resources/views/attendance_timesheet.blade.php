@@ -595,7 +595,7 @@
 
 
                     //alert(data.message);
-                    swal({
+                    Swal.fire({
                         title: "Info",
                         text: data.message,
                         type: data.status

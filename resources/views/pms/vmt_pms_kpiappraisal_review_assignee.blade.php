@@ -752,12 +752,12 @@
 
                         });
                         if (validationCheck == true) {
-                            swal("Wrong!",
+                            Swal.fire("Wrong!",
                                 "Only Numbers are Allowed in KPI Achievement (Self Review) when Target is Number",
                                 "error");
                         }
                     } else {
-                        swal("Error!", data.message, "error");
+                        Swal.fire("Error!", data.message, "error");
                     }
                     $('.loader').hide();
                 },
@@ -780,11 +780,11 @@
                 success: function(data) {
                     if (data.status == true) {
                         $('#publish_table').removeAttr('disabled');
-                        swal("Success!", data.message, "success").then(function() {
+                        Swal.fire("Success!", data.message, "success").then(function() {
                             //location.reload();
                         });
                     } else {
-                        swal("Error!", data.message, "error");
+                        Swal.fire("Error!", data.message, "error");
                     }
                     $('.loader').hide();
                 },
@@ -807,11 +807,11 @@
                 data: $('#employee_self_review').serialize(),
                 success: function(data) {
                     if (data.status == true) {
-                        swal("Success!", data.message, "success").then(function() {
+                        Swal.fire("Success!", data.message, "success").then(function() {
                             location.reload();
                         });
                     } else {
-                        swal("Error!", data.message, "error");
+                        Swal.fire("Error!", data.message, "error");
                     }
                     $('.loader').hide();
                 },
@@ -824,7 +824,7 @@
         // Accept Review
         $('#accept_review').click(function(e) {
             e.preventDefault();
-            swal({
+            Swal.fire({
                 title: 'Are you sure?',
                 text: 'You want to Accept!',
                 icon: 'warning',
@@ -845,11 +845,11 @@
                         },
                         success: function(data) {
                             if (data.status == true) {
-                                swal("Success!", data.message, "success").then(function() {
+                                Swal.fire("Success!", data.message, "success").then(function() {
                                     location.reload();
                                 });
                             } else {
-                                swal("Error!", data.message, "error");
+                                Swal.fire("Error!", data.message, "error");
                             }
                             $('.loader').hide();
                         },
@@ -888,7 +888,7 @@
         // Accept Review
         $('#rejection_submit').click(function(e) {
             e.preventDefault();
-            swal({
+            Swal.fire({
                 title: 'Are you sure?',
                 text: 'You want to Reject!',
                 icon: 'warning',
@@ -910,11 +910,11 @@
                         },
                         success: function(data) {
                             if (data.status == true) {
-                                swal("Success!", data.message, "success").then(function() {
+                                Swal.fire("Success!", data.message, "success").then(function() {
                                     location.reload();
                                 });
                             } else {
-                                swal("Error!", data.message, "error");
+                                Swal.fire("Error!", data.message, "error");
                             }
                             $('.loader').hide();
                         },
