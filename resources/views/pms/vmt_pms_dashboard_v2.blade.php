@@ -550,7 +550,7 @@
                                                                         <a target="_self" href="{{ route('republishForm', $pmsKpiAssignee->id) }}" class="dropdown-item" href="#"><i
                                                                                 class="fa fa-pencil-square-o text-info me-2"
                                                                                 aria-hidden="true"></i> Edit</a>
-                                                                        <a class="dropdown-item" href="#"><i class="fa fa-trash text-danger me-2"  aria-hidden="true"></i> Delete</a>
+                                                                        <a class="dropdown-item" href="#" onclick="deleteAssignedKPIForm({{$pmsKpiAssignee->id}})"><i class="fa fa-trash text-danger me-2"  aria-hidden="true"></i> Delete</a>
                                                                         <a class="dropdown-item" href="#"></a>
                                                                     </div>
                                                                 </div>
@@ -1140,6 +1140,66 @@
     </script>
     <?php } ?>
     <script>
+        function deleteAssignedKPIForm(assignedKPIFormID){
+
+            console.log("Deleting Assigned KPI Form");
+
+            Swal.fire({
+                    title: 'Are you sure?',
+                    text: "",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+
+                            $.ajax({
+                                type: "POST",
+                                url: "{{ route('deleteAssignedKPIForm') }}",
+                                data: {
+                                    "_token": "{{ csrf_token() }}",
+                                    "assignedKPIFormID": assignedKPIFormID,
+                                },
+                                success: function(data) {
+                                    if (data.status == 'success') {
+
+                                        Swal.fire(
+                                                'Deleted!',
+                                                'Assigned KPI Form has been deleted.',
+                                                'success'
+                                                ).then((result) => {
+                                                    window.location.reload();
+                                                });
+                                    }
+                                    else
+                                    {
+
+                                        if (data.status == 'success') {
+
+                                        Swal.fire(
+                                                'Error!',
+                                                'Failed to delete the assigned KPI Form',
+                                                'failure'
+                                                )
+                                        }
+                                    }
+                                },
+                                error: function(error) {
+                                    console.log('something went wrong');
+                                }
+                            });
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    });
+
+        }
+
+
         function generateProfileShortName_Topbar() {
             var username =
                 '{{ auth()->user()->name ??
@@ -1167,6 +1227,8 @@
         })
 
         getKPIFormDetails();
+
+
 
         function getKPIFormDetails() {
             $.ajax({

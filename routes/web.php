@@ -445,6 +445,7 @@ Route::post('acceptRejectReviewerReview', [VmtPMSModuleController::class,'accept
 
 // republish form flow 2
 Route::get('/republishForm/{kpiAssignedId}',[VmtPMSModuleController::class, 'republishForm'])->name('republishForm');
+Route::post('/deleteAssignedKPIForm',[VmtPMSModuleController::class, 'deleteAssignedKPIForm'])->name('deleteAssignedKPIForm');
 Route::post('/republishFormEdited',[VmtPMSModuleController::class, 'republishFormEdited'])->name('republishFormEdited');
 
 // routes for get related manager of employee in Flow 1

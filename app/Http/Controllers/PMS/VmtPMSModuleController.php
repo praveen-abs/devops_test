@@ -106,7 +106,7 @@ class VmtPMSModuleController extends Controller
         $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')->orderBy('id','DESC')->get();
 
         $flowCheck = 1;
-        
+
 
         $allEmployeesList = User::leftJoin('vmt_employee_office_details','users.id','=','vmt_employee_office_details.user_id')
             ->leftJoin('vmt_employee_details','users.id','=','vmt_employee_details.userid')
@@ -461,6 +461,34 @@ class VmtPMSModuleController extends Controller
 
         }
         return "Question Created Successfully";
+
+    }
+
+
+    public function deleteAssignedKPIForm(Request $request){
+
+        $status="failure";
+        $message = "Failed to delete the Assigned KPI form";
+
+        //Delete the data from VmtPMS_KPIFormAssignedModel and VmtPMS_KPIFormReviewsModel
+        if(VmtPMS_KPIFormAssignedModel::where('id', $request->assignedKPIFormID)->first()->exists()){
+
+            $deleted_row_count = VmtPMS_KPIFormAssignedModel::where('id', $request->assignedKPIFormID)->first()->delete();
+
+            if($deleted_row_count > 0)
+            {
+                VmtPMS_KPIFormReviewsModel::where('vmt_pms_kpiform_assigned_id',$request->assignedKPIFormID)->first()->delete();
+
+                $message = "Assigned KPI form deleted successfully";
+                $status = "success";
+            }
+        }
+
+
+       return $response = [
+            'status' => $status,
+            'message' => $message,
+        ];
 
     }
 

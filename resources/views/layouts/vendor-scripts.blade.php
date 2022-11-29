@@ -14,7 +14,7 @@
 
 {{-- sweet alert --}}
 <script src="{{ URL::asset('/assets/premassets/js/sweetalert.js') }}"></script>
-
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!--Nice select-->
 <script src="{{ URL::asset('/assets/premassets/js/jquery.nice-select.min.js') }}"></script>
