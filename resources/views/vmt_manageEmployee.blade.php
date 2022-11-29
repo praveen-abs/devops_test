@@ -21,7 +21,7 @@
 
 
 
-            <div id="yet-to-active-directory-table"></div>
+            <div id="yet-to-active-directory-table" class="noCustomize_gridjs"></div>
 
 
         </div>
@@ -31,7 +31,7 @@
         <div class="card-body">
 
             <h6 class="text-muted fw-bold">Active Employees</h6>
-            <div id="active-directory-table"></div>
+            <div id="active-directory-table" class="noCustomize_gridjs"></div>
         </div>
     </div>
 @endsection

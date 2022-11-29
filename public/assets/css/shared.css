@@ -1394,6 +1394,9 @@ a.editable-click:hover {
 .border-bottom-secondary {
     border-bottom: 1px solid #cecece;
 }
+.border-bottom-liteAsh {
+    border-bottom: 1px solid #ebe8e8;
+}
 .clearfix:after {
     clear: both;
     content: "";

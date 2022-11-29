@@ -16385,7 +16385,7 @@ span.flatpickr-weekday {
 }
 
 .personal-info li .title {
-    color: #333333;
+    color: #afacac;
     float: left;
     font-size: 13px;
     width: 50%;
@@ -16396,6 +16396,7 @@ span.flatpickr-weekday {
     font-size: 13px;
     width: 50%;
     text-align: start;
+    color: #003056;
 }
 
 #bank_statutory .card .card-title,
@@ -17812,9 +17813,6 @@ white-space:nowrap;
     content: "";
     height: 100%;
     border-left: 1px solid #c1d1d1;
-    /* font-weight: 600; */
-    /* background: #c1d1d1; */
-    /* position: absolute; */
     margin: 0px 5px;
 }
 
@@ -17822,9 +17820,8 @@ white-space:nowrap;
 
 .progress-wrapper .progress-bar-content {
     box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
-    /* background: #405189; */
     border-radius: 10px;
-    height: 10px;
+    height: 7px;
 }
 
 .progress-bar-content .progress-bar {

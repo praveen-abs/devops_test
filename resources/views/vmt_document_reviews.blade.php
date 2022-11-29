@@ -37,14 +37,8 @@
     </style>
 @endsection
 @section('content')
-
-    @component('components.organization_breadcrumb')
-        @slot('li_1')
-        @endslot
-    @endcomponent
-
     {{-- @section('ui-onboarding') --}}
-    <div class="container-fluid documentReview_wrapper">
+    <div class="container-fluid documentReview_wrapper mt-30">
         <div id="msform">
             @csrf
             <input type="hidden" name="hidden_user_code" id="hidden_user_code" value="{{ $user_code }}" />
