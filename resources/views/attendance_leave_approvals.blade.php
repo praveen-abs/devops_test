@@ -189,7 +189,7 @@
                     success: function(data) {
                         if (data.status == "success") {
 
-                            swal({
+                            Swal.fire({
                                     title: "Info",
                                     text: data.message,
                                     type: "success"

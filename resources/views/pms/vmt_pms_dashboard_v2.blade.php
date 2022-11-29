@@ -1243,7 +1243,7 @@
                         })
                         $('.selectedKpiFormClass').html(finalResult);
                     } else {
-                        swal('Wrong!', data.message, 'error');
+                        Swal.fire('Wrong!', data.message, 'error');
                     }
                     $('.loader').hide();
                 },
@@ -1990,7 +1990,7 @@
 
                         $("kpitable_id").val(data.table_id);
                     } else {
-                        swal('Wrong!', data.message, 'error');
+                        Swal.fire('Wrong!', data.message, 'error');
                     }
                 }
             });

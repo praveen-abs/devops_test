@@ -269,10 +269,10 @@
 
                     if (isKPIFormValid == true) {
                         if (!kpiWeightagePerc) {
-                            swal('Wrong!', 'KPI Weightage Values are should be in %.', 'error');
+                            Swal.fire('Wrong!', 'KPI Weightage Values are should be in %.', 'error');
                         } else {
                             if (kpiWeightageTotal != 100) {
-                                swal('Wrong!', 'Please make sure that KPI Weightage is exactly 100%.', 'error');
+                                Swal.fire('Wrong!', 'Please make sure that KPI Weightage is exactly 100%.', 'error');
                             } else {
                                 var form_data = new FormData(document.getElementById("kpiTableForm"));
                                 $('.loader').show();
@@ -284,7 +284,7 @@
                                     processData: false,
                                     data: form_data,
                                     success: function(data) {
-                                        swal('Success', 'Form Updated Successfully!', 'success');
+                                        Swal.fire('Success', 'Form Updated Successfully!', 'success');
 
                                         $('.loader').hide();
                                     },
@@ -295,7 +295,7 @@
                             }
                         }
                     } else {
-                        swal('Wrong!', 'Please fill all the fields in KPI Form.', 'error');
+                        Swal.fire('Wrong!', 'Please fill all the fields in KPI Form.', 'error');
                     }
                 });
             });
