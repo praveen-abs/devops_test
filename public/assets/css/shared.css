@@ -1075,6 +1075,11 @@ button.gridjs-sort-desc {
 .dropdown-item:hover {
     color: #003156 !important;
 }
+.dropdown-item:active {
+    color: #c1c1c1;
+    text-decoration: none;
+    background-color: #f1f1f1;
+}
 .position_absolute-count span {
     background-color: #f62008;
     font-size: 12px;
