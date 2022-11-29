@@ -547,10 +547,10 @@
                                                                     </button>
                                                                     <div class="dropdown-menu"
                                                                         aria-labelledby="dropdownMenuButton">
-                                                                        <a class="dropdown-item" href="#"><i
+                                                                        <a target="_self" href="{{ route('republishForm', $pmsKpiAssignee->id) }}" class="dropdown-item" href="#"><i
                                                                                 class="fa fa-pencil-square-o text-info me-2"
                                                                                 aria-hidden="true"></i> Edit</a>
-                                                                        <a class="dropdown-item" href="#"><i class="fa fa-trash text-danger me-2" aria-hidden="true"></i> Delete</a>
+                                                                        <a class="dropdown-item" href="#"><i class="fa fa-trash text-danger me-2"  aria-hidden="true"></i> Delete</a>
                                                                         <a class="dropdown-item" href="#"></a>
                                                                     </div>
                                                                 </div>
