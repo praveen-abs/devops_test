@@ -401,10 +401,10 @@ $(document).ready(function(){
                             length++;
                     });
                     if(validationCheck == true){
-                        swal("Wrong!", "KPI Weightage allows only percentage value", "error");
+                        Swal.fire("Wrong!", "KPI Weightage allows only percentage value", "error");
                     }
                 }else{
-                    swal("Wrong!", data.message, "error");
+                    Swal.fire("Wrong!", data.message, "error");
                 }
                 // var getAvaibleColumnHeader = getAvailableColumns();
                 // getAvailableColumns();

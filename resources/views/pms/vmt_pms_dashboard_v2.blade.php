@@ -1145,8 +1145,8 @@
             console.log("Deleting Assigned KPI Form");
 
             Swal.fire({
-                    title: 'Are you sure?',
-                    text: "",
+                    title: 'Are you sure you want to delete?',
+                    text: "The data cannot be retrieved",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -1243,7 +1243,7 @@
                         })
                         $('.selectedKpiFormClass').html(finalResult);
                     } else {
-                        swal('Wrong!', data.message, 'error');
+                        Swal.fire('Wrong!', data.message, 'error');
                     }
                     $('.loader').hide();
                 },
@@ -1990,7 +1990,7 @@
 
                         $("kpitable_id").val(data.table_id);
                     } else {
-                        swal('Wrong!', data.message, 'error');
+                        Swal.fire('Wrong!', data.message, 'error');
                     }
                 }
             });

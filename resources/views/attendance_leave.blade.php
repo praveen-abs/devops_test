@@ -1004,7 +1004,7 @@
                     success: function(data) {
                         if (data.status == "success") {
                             console.log("Leave requested successfully");
-                            swal({
+                            Swal.fire({
                                 title: data.message,
                                 text: data.mail_status,
                                 type: "success"
@@ -1013,7 +1013,7 @@
                             });
                             //alert(data.message + " \n " + data.mail_status);
                         } else {
-                            swal({
+                            Swal.fire({
                                 title: data.message,
                                 text: data.mail_status,
                                 type: data.failure

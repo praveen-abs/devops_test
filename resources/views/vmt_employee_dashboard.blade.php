@@ -351,7 +351,7 @@
                         $("#annon_menu_submit").attr("disabled", true);
                     },
                     success: function(data) {
-                        swal("Success!", "Announcement added successfully", "success");
+                        Swal.fire("Success!", "Announcement added successfully", "success");
                         document.getElementById("announcement-form-submit").reset();
                         $("#annon_menu_submit").attr("disabled", false);
                     }
@@ -379,10 +379,10 @@
                     },
                     success: function(data) {
                         if (data.status == true) {
-                            swal("Success!", data.message, "success");
+                            Swal.fire("Success!", data.message, "success");
                             $('.delete-row').parent().remove();
                         } else {
-                            swal("Error!", data.message, "error");
+                            Swal.fire("Error!", data.message, "error");
                         }
                         document.getElementById("polling-questions-form-submit").reset();
                         $("#polling-submit-btn").attr("disabled", false);
@@ -415,9 +415,9 @@
                     },
                     success: function(data) {
                         if (data.status == true) {
-                            swal("Success!", data.message, "success");
+                            Swal.fire("Success!", data.message, "success");
                         } else {
-                            swal("Error!", data.message, "error");
+                            Swal.fire("Error!", data.message, "error");
                         }
                         document.getElementById("praise-form-submit").reset();
                         $("#praise-submit-btn").attr("disabled", false);
