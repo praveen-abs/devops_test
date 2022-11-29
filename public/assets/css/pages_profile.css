@@ -35,7 +35,7 @@
     border-radius: 50%;
     background: #f1f1f1;
     font-size: 20px;
-    /* color: #212529; */
+
     text-align: center;
     line-height: 60px;
     margin: 0px 0;
@@ -56,7 +56,7 @@
 }
 
 #pencil-on-avatar {
-    margin-top: 45px;
+    margin-top: 65px;
     margin-left: -15px;
 }
 
@@ -67,8 +67,6 @@
 #experience-detail-table::-webkit-scrollbar-thumb {
     background-color: red;
 }
-
-
 
 .edit-icon {
     box-shadow: rgb(0 0 0 / 15%) 0px 2px 8px;
