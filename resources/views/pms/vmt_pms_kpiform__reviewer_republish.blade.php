@@ -284,9 +284,12 @@
                                     processData: false,
                                     data: form_data,
                                     success: function(data) {
-                                        Swal.fire('Success', 'Form Updated Successfully!', 'success');
+                                        Swal.fire('Success', 'Form Updated Successfully!', 'success') .then(function() {
+                                            history.back();
+                                         });
 
                                         $('.loader').hide();
+                                        
                                     },
                                     error: function(error) {
                                         $('.loader').hide();

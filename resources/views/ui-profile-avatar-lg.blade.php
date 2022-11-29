@@ -1,8 +1,8 @@
 @if( empty($currentUser->avatar) || !file_exists(public_path('images/'. $currentUser->avatar)) )
     <!-- <span class=" rounded-circle h-100 w-100 d-flex align-items-center justify-content-center" id="shorthand_name_bg"> -->
-    <div class=" rounded-circle  user_profile-wrapper  img-xl" id="">
-        <div id="profileShortNameLargeCircle-profile" class="align-middle "></div>
-    </div>
+    {{-- <div class=" rounded-circle  user_profile-wrapper  img-xl" id=""> --}}
+        <div id="profileShortNameLargeCircle-profile" class="align-middle img-xl "></div>
+    {{-- </div> --}}
 @else
     <img class="rounded-circle header-profile-user img-xl" src=" {{URL::asset('images/'. $currentUser->avatar)}}" alt="Header Avatar" >
 @endif

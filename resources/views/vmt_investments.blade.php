@@ -175,7 +175,8 @@
                                                 <th scope="col">Sections</th>
                                                 <th scope="col">Particulars</th>
                                                 <th scope="col">References</th>
-                                                <th scope="col">Maximum Limit</th>
+                                                <th scope="col">Maximum Limit <span class="f-12">(<i
+                                                            class="fa fa-rupee mx-1"></i>150000</span>)</th>
                                                 <th scope="col">Declaration Amount</th>
                                                 <th scope="col">Proofs</th>
                                                 {{-- <th scope="col">Upload Document</th> --}}
@@ -197,7 +198,7 @@
                                                             aria-hidden="true"></i>
                                                     </button>
                                                 </td>
-                                                <td>150000</td>
+                                                <td></td>
                                                 <td>
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
@@ -255,7 +256,7 @@
                                                             aria-hidden="true"></i>
                                                     </button>
                                                 </td>
-                                                <td>150000</td>
+                                                <td></td>
 
                                                 <td>
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
@@ -310,7 +311,7 @@
                                                             aria-hidden="true"></i>
                                                     </button>
                                                 </td>
-                                                <td>150000</td>
+                                                <td></td>
                                                 <td>
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
@@ -367,7 +368,7 @@
                                                             aria-hidden="true"></i>
                                                     </button>
                                                 </td>
-                                                <td>150000</td>
+                                                <td></td>
                                                 <td>
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
@@ -423,7 +424,7 @@
                                                             aria-hidden="true"></i>
                                                     </button>
                                                 </td>
-                                                <td>150000</td>
+                                                <td></td>
                                                 <td>
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
@@ -478,7 +479,7 @@
                                                             aria-hidden="true"></i>
                                                     </button>
                                                 </td>
-                                                <td>150000</td>
+                                                <td></td>
                                                 <td>
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
@@ -533,7 +534,7 @@
                                                             aria-hidden="true"></i>
                                                     </button>
                                                 </td>
-                                                <td>150000</td>
+                                                <td></td>
                                                 <td>
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
@@ -588,7 +589,7 @@
                                                             aria-hidden="true"></i>
                                                     </button>
                                                 </td>
-                                                <td>150000</td>
+                                                <td></td>
                                                 <td>
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
@@ -643,7 +644,7 @@
                                                             aria-hidden="true"></i>
                                                     </button>
                                                 </td>
-                                                <td>150000</td>
+                                                <td></td>
                                                 <td>
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
@@ -698,7 +699,7 @@
                                                             aria-hidden="true"></i>
                                                     </button>
                                                 </td>
-                                                <td>150000</td>
+                                                <td></td>
                                                 <td>
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
@@ -753,7 +754,7 @@
                                                             aria-hidden="true"></i>
                                                     </button>
                                                 </td>
-                                                <td>150000</td>
+                                                <td></td>
                                                 <td>
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
@@ -808,7 +809,7 @@
                                                             aria-hidden="true"></i>
                                                     </button>
                                                 </td>
-                                                <td>150000</td>
+                                                <td></td>
                                                 <td>
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
@@ -864,7 +865,7 @@
                                                             aria-hidden="true"></i>
                                                     </button>
                                                 </td>
-                                                <td>150000</td>
+                                                <td></td>
                                                 <td>
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
@@ -919,7 +920,7 @@
                                                             aria-hidden="true"></i>
                                                     </button>
                                                 </td>
-                                                <td>150000</td>
+                                                <td></td>
                                                 <td>
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
@@ -974,7 +975,7 @@
                                                             aria-hidden="true"></i>
                                                     </button>
                                                 </td>
-                                                <td>150000</td>
+                                                <td></td>
                                                 <td>
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
@@ -1029,7 +1030,7 @@
                                                             aria-hidden="true"></i>
                                                     </button>
                                                 </td>
-                                                <td>150000</td>
+                                                <td></td>
                                                 <td>
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
@@ -1115,7 +1116,7 @@
                                                 </td>
                                                 <td>28800</td>
                                                 <td>
-                                                    <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                    <textarea name="" id="" class="text-box outline-none border-0 form-control resize-none " disabled
                                                         cols="5" rows="1"></textarea>
                                                 </td>
                                                 <td align="">
@@ -1175,7 +1176,7 @@
                                                 </td>
                                                 <td>200000</td>
                                                 <td>
-                                                    <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                    <textarea name="" id="" class="text-box outline-none border-0 form-control resize-none " disabled
                                                         cols="5" rows="1"></textarea>
                                                 </td>
                                                 <td align="">
@@ -1228,13 +1229,13 @@
                                                 <a class="nav-link active ember-view " id="pills-home-tab"
                                                     data-bs-toggle="pill" href="" data-bs-target="#house_rent"
                                                     role="tab" aria-controls="" aria-selected="true">
-                                                    Rentel </a>
+                                                    Rentel Property</a>
                                             </li>
                                             <li class="nav-item  ember-view mx-4" role="presentation">
                                                 <a class="nav-link  ember-view " id="pills-home-tab"
                                                     data-bs-toggle="pill" href="" data-bs-target="#house_own"
                                                     role="tab" aria-controls="" aria-selected="true">
-                                                    Own</a>
+                                                    Owner Property</a>
                                             </li>
 
 
@@ -1262,22 +1263,20 @@
                                                                 <div class="row border-bottom-secondary mb-2 ">
 
                                                                     <div
-                                                                        class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-2">
+                                                                        class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 ">
                                                                         <h6 class="mt-1 mb-0">Rental Details</h6>
                                                                     </div>
                                                                     <div
-                                                                        class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-2 text-end">
+                                                                        class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6  text-end">
 
                                                                         <span class="badge bg-primary me-2">Rented</span>
                                                                         <button
-                                                                            class="btn outline-none border-0 bg-ash rounded-circle"><i
-                                                                                class="fa fa-pencil-square-o text-orange"></i></button>
-
-
-
+                                                                            class="btn outline-none border-0 bg-transparent"><i
+                                                                                class="fa fa-pencil-square-o text-orange"></i>
+                                                                        </button>
                                                                     </div>
                                                                     <div
-                                                                        class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-3">
+                                                                        class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-2">
                                                                         <label for=""
                                                                             class="form-label text-primary fw-bold">From</label>
 
@@ -1285,7 +1284,7 @@
 
                                                                     </div>
                                                                     <div
-                                                                        class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-3">
+                                                                        class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-2">
 
                                                                         <label for=""
                                                                             class="form-label text-primary fw-bold">To</label>
@@ -1294,7 +1293,7 @@
                                                                     </div>
 
                                                                     <div
-                                                                        class="col-sm-12 col-md-12 col-xl-12 col-xxl-12 col-lg-12 mb-3">
+                                                                        class="col-sm-12 col-md-12 col-xl-12 col-xxl-12 col-lg-12 mb-2">
                                                                         <label for=""
                                                                             class="form-label text-primary fw-bold">Address</label>
                                                                         <p class="text-muted">No:21 joe street,Guindy </p>
@@ -1302,7 +1301,7 @@
 
                                                                     </div>
                                                                     <div
-                                                                        class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-3">
+                                                                        class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-2">
                                                                         <label for=""
                                                                             class="form-label text-primary fw-bold">City</label>
 
@@ -1310,7 +1309,7 @@
 
                                                                     </div>
                                                                     <div
-                                                                        class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-3">
+                                                                        class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-2">
                                                                         <label for=""
                                                                             class="form-label text-primary fw-bold">Rent
                                                                             Declared</label>
@@ -1323,11 +1322,11 @@
                                                                 <div class="row ">
 
                                                                     <div
-                                                                        class="col-sm-12 col-md-12 col-xl-12 col-xxl-12 col-lg-12 mb-3">
+                                                                        class="col-sm-12 col-md-12 col-xl-12 col-xxl-12 col-lg-12 ">
                                                                         <h6 class="">Owner Details</h6>
                                                                     </div>
                                                                     <div
-                                                                        class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-3">
+                                                                        class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-2">
                                                                         <label for=""
                                                                             class="form-label text-primary fw-bold">Name</label>
 
@@ -1335,7 +1334,7 @@
 
                                                                     </div>
                                                                     <div
-                                                                        class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-3">
+                                                                        class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-2">
                                                                         <label for=""
                                                                             class="form-label text-primary fw-bold">PAN
                                                                             NUMBER</label>
@@ -1416,7 +1415,7 @@
                                                         <td class="noWhite-space">
 
                                                             <p>Vehicle Reimbursement</p>
-                                                            <div class="d-flex">
+                                                            <div class="d-flex justify-content-center">
                                                                 <div class="form-check me-2">
                                                                     <input class="form-check-input" type="radio"
                                                                         name="cc" id="below_cc">
@@ -1457,8 +1456,8 @@
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id="" multiple></i>
+                                                                        type="file" name="" id=""
+                                                                        multiple></i>
 
 
                                                             </div>
@@ -1518,8 +1517,8 @@
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id="" multiple></i>
+                                                                        type="file" name="" id=""
+                                                                        multiple></i>
 
 
                                                             </div>
@@ -1579,8 +1578,8 @@
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id="" multiple></i>
+                                                                        type="file" name="" id=""
+                                                                        multiple></i>
 
 
                                                             </div>
@@ -1635,8 +1634,6 @@
                                                         <th scope="col">References</th>
                                                         <th scope="col">Max Limit</th>
                                                         <th scope="col">Declaration Amount</th>
-                                                        <th scope="col">Proofs</th>
-
                                                         <th scope="col">Status</th>
                                                         <th scope="col">Action</th>
                                                     </tr>
@@ -1665,16 +1662,7 @@
                                                         </td>
 
 
-                                                        <td align="">
-                                                            <div class="upload_file ">
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id="" multiple></i>
 
-
-                                                            </div>
-
-                                                        </td>
                                                         <td>
                                                             <p>-</p>
                                                         </td>
@@ -1726,18 +1714,7 @@
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-                                                        <td align="">
 
-                                                            <div class="upload_file ">
-
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id="" multiple></i>
-
-
-                                                            </div>
-
-                                                        </td>
                                                         <td>
                                                             <p>-</p>
                                                         </td>
@@ -1789,18 +1766,7 @@
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-                                                        <td align="">
 
-                                                            <div class="upload_file ">
-
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id="" multiple></i>
-
-
-                                                            </div>
-
-                                                        </td>
                                                         <td>
                                                             <p>-</p>
                                                         </td>
@@ -1850,18 +1816,7 @@
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-                                                        <td align="">
 
-                                                            <div class="upload_file ">
-
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id="" multiple></i>
-
-
-                                                            </div>
-
-                                                        </td>
                                                         <td>
                                                             <p>-</p>
                                                         </td>
@@ -1911,18 +1866,7 @@
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-                                                        <td align="">
 
-                                                            <div class="upload_file ">
-
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id="" multiple></i>
-
-
-                                                            </div>
-
-                                                        </td>
                                                         <td>
                                                             <p>-</p>
                                                         </td>
@@ -2005,8 +1949,8 @@
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id="" multiple></i>
+                                                                        type="file" name="" id=""
+                                                                        multiple></i>
 
 
                                                             </div>
@@ -2067,8 +2011,8 @@
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id="" multiple></i>
+                                                                        type="file" name="" id=""
+                                                                        multiple></i>
 
 
                                                             </div>
@@ -2129,8 +2073,8 @@
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id="" multiple></i>
+                                                                        type="file" name="" id=""
+                                                                        multiple></i>
 
 
                                                             </div>
@@ -2219,8 +2163,8 @@
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id="" multiple></i>
+                                                                        type="file" name="" id=""
+                                                                        multiple></i>
 
 
                                                             </div>
@@ -2280,8 +2224,8 @@
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id="" multiple></i>
+                                                                        type="file" name="" id=""
+                                                                        multiple></i>
 
 
                                                             </div>
@@ -2341,8 +2285,8 @@
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id="" multiple></i>
+                                                                        type="file" name="" id=""
+                                                                        multiple></i>
 
 
                                                             </div>
@@ -2402,8 +2346,8 @@
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id="" multiple></i>
+                                                                        type="file" name="" id=""
+                                                                        multiple></i>
 
 
                                                             </div>
@@ -2463,8 +2407,8 @@
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id="" multiple></i>
+                                                                        type="file" name="" id=""
+                                                                        multiple></i>
 
 
                                                             </div>
@@ -2525,8 +2469,8 @@
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id="" multiple></i>
+                                                                        type="file" name="" id=""
+                                                                        multiple></i>
 
 
                                                             </div>
@@ -2535,7 +2479,7 @@
                                                         <td>
                                                             <p>-</p>
                                                         </td>
-                                                        <td>
+                                                        <td class="">
 
 
                                                             <div class="dropdown investment_dropDown">
@@ -2563,8 +2507,27 @@
                                                     </tr>
                                                     <tr>
                                                         <td> DD</td>
-                                                        <td>Medical Expenditure for a Disabled Dependant
-                                                            Disability>40% <80%>80% </td>
+                                                        <td>
+                                                            <p> Medical Expenditure for a Disabled Dependant Disability
+                                                            </p>
+                                                            <div class="d-flex justify-content-center">
+                                                                <div class="form-check me-2">
+                                                                    <input class="form-check-input" type="radio"
+                                                                        name="cc" id="below_cc">
+                                                                    <label class="form-check-label" for="below_cc">
+                                                                        40% To 80%
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio"
+                                                                        name="cc" id="above_cc">
+                                                                    <label class="form-check-label" for="above_cc">
+                                                                        More than 80%
+                                                                    </label>
+                                                                </div>
+
+                                                            </div>
+                                                        </td>
                                                         <td>
 
                                                             <button type="button"
@@ -2590,8 +2553,8 @@
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id="" multiple></i>
+                                                                        type="file" name="" id=""
+                                                                        multiple></i>
 
 
                                                             </div>
@@ -2628,7 +2591,32 @@
                                                     </tr>
                                                     <tr>
                                                         <td> DDB</td>
-                                                        <td>Medical Expenditure on Self or Dependant for Specified Disease Age < 60 yrs >60 yrs</td>
+                                                        <td>
+
+                                                            <p> Medical Expenditure on Self or Dependant for Specified
+                                                                Disease
+                                                                Age
+                                                            </p>
+                                                            <div class="d-flex justify-content-center">
+                                                                <div class="form-check me-2">
+                                                                    <input class="form-check-input" type="radio"
+                                                                        name="cc" id="below_cc">
+                                                                    <label class="form-check-label" for="below_cc">
+                                                                        Age Below 60
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio"
+                                                                        name="cc" id="above_cc">
+                                                                    <label class="form-check-label" for="above_cc">
+                                                                        Age More than 60
+                                                                    </label>
+                                                                </div>
+
+                                                            </div>
+
+                                                        </td>
+
                                                         <td>
 
                                                             <button type="button"
@@ -2656,8 +2644,8 @@
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id="" multiple></i>
+                                                                        type="file" name="" id=""
+                                                                        multiple></i>
 
 
                                                             </div>
@@ -2719,8 +2707,8 @@
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id="" multiple></i>
+                                                                        type="file" name="" id=""
+                                                                        multiple></i>
 
 
                                                             </div>
@@ -2787,8 +2775,8 @@
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id="" multiple></i>
+                                                                        type="file" name="" id=""
+                                                                        multiple></i>
 
 
                                                             </div>
@@ -2857,8 +2845,8 @@
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id="" multiple></i>
+                                                                        type="file" name="" id=""
+                                                                        multiple></i>
 
 
                                                             </div>
@@ -2921,8 +2909,8 @@
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name=""
-                                                                        id="" multiple></i>
+                                                                        type="file" name="" id=""
+                                                                        multiple></i>
 
 
                                                             </div>
@@ -3001,117 +2989,117 @@
                     <div class="modal-content top-line">
                         <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
                             <h6 class="modal-title mb-1 text-primary" ">
-                                Add new rental details</h6>
-                            <button type="button" class="close outline-none bg-transparent border-0 h3"
-                                data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-
-                            <form>
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-3">
-
-                                        <label for="" class="form-label">From</label>
-                                        <div class="input-group mb-3">
-
-                                            <select class="form-select" id="inputGroupSelect03"
-                                                aria-label="Example select with button addon">
-                                                <option selected hidden disabled>Choose month</option>
-                                                <option value="1">Mar-2022</option>
-                                                <option value="1">Apr-2022</option>
-                                                <option value="1">Jun-2022</option>
-                                                <option value="1">July-2022</option>
-                                                <option value="1">Aug-2022</option>
-                                                <option value="1">Sep-2022</option>
-                                            </select>
-                                            <button class="btn btn-outline-secondary" type="button"><i
-                                                    class="fa fa-calendar" aria-hidden="true"></i> </button>
+                                                Add new rental details</h6>
+                                            <button type="button" class="close outline-none bg-transparent border-0 h3"
+                                                data-bs-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
                                         </div>
+                                        <div class="modal-body">
 
-                                    </div>
-                                    <div class="col-sm-12 col-md-6 col-xl-6 col-xxl-6 col-lg-6 mb-3">
+                                            <form>
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-3">
 
-                                        <label for="" class="form-label">To</label>
-                                        <div class="input-group mb-3">
+                                                        <label for="" class="form-label">From</label>
+                                                        <div class="input-group mb-3">
 
-                                            <select class="form-select" id=""
-                                                aria-label="Example select with button addon">
-                                                <option selected hidden disabled>Choose month</option>
-                                                <option value="1">Mar-2022</option>
-                                                <option value="1">Apr-2022</option>
-                                                <option value="1">Jun-2022</option>
-                                            </select>
-                                            <button class="btn btn-outline-secondary" type="button"><i
-                                                    class="fa fa-calendar" aria-hidden="true"></i> </button>
-                                        </div>
+                                                            <select class="form-select" id="inputGroupSelect03"
+                                                                aria-label="Example select with button addon">
+                                                                <option selected hidden disabled>Choose month</option>
+                                                                <option value="1">Mar-2022</option>
+                                                                <option value="1">Apr-2022</option>
+                                                                <option value="1">Jun-2022</option>
+                                                                <option value="1">July-2022</option>
+                                                                <option value="1">Aug-2022</option>
+                                                                <option value="1">Sep-2022</option>
+                                                            </select>
+                                                            <button class="btn btn-outline-secondary" type="button"><i
+                                                                    class="fa fa-calendar" aria-hidden="true"></i> </button>
+                                                        </div>
 
-                                    </div>
-                                    <div class="col-sm-12 col-md-12 col-xl-12 col-xxl-12 col-lg-12 mb-3">
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-6 col-xl-6 col-xxl-6 col-lg-6 mb-3">
 
-                                        <label for="" class="form-label">Address</label>
-                                        <textarea name="" id="" cols="" rows="2" class="resize-none form-control"></textarea>
-                                    </div>
-                                    <div class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-3">
+                                                        <label for="" class="form-label">To</label>
+                                                        <div class="input-group mb-3">
 
-                                        <label for="" class="form-label">City</label>
-                                        <select class="form-select" id="" aria-label="">
-                                            <option selected>Chennai</option>
-                                            {{-- <option value="1"></option>
+                                                            <select class="form-select" id=""
+                                                                aria-label="Example select with button addon">
+                                                                <option selected hidden disabled>Choose month</option>
+                                                                <option value="1">Mar-2022</option>
+                                                                <option value="1">Apr-2022</option>
+                                                                <option value="1">Jun-2022</option>
+                                                            </select>
+                                                            <button class="btn btn-outline-secondary" type="button"><i
+                                                                    class="fa fa-calendar" aria-hidden="true"></i> </button>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-12 col-xl-12 col-xxl-12 col-lg-12 mb-3">
+
+                                                        <label for="" class="form-label">Address</label>
+                                                        <textarea name="" id="" cols="" rows="2" class="resize-none form-control"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-3">
+
+                                                        <label for="" class="form-label">City</label>
+                                                        <select class="form-select" id="" aria-label="">
+                                                            <option selected>Chennai</option>
+                                                            {{-- <option value="1"></option>
                                         <option value="2"></option>
                                         <option value="3"></option> --}}
-                                        </select>
-                                    </div>
-                                    <div class="col-sm-12 col-md-6 col-xl-6 col-xxl-6 col-lg-6 mb-3">
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-6 col-xl-6 col-xxl-6 col-lg-6 mb-3">
 
-                                        <label for="" class="form-label">Total Rent</label>
-                                        <div class="input-group mb-3">
+                                                        <label for="" class="form-label">Total Rent</label>
+                                                        <div class="input-group mb-3">
 
-                                            <input type="text" name="" id=""
-                                                class="form-control">
-                                            <button class="btn btn-outline-secondary" type="button"><i
-                                                    class="fa fa-rupee"></i></button>
+                                                            <input type="text" name="" id=""
+                                                                class="form-control">
+                                                            <button class="btn btn-outline-secondary" type="button"><i
+                                                                    class="fa fa-rupee"></i></button>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xxl-12 col-xl-12 text-end">
+                                                        <button class="btn btn-border-orange mt-2" id="">Save</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+
+
                                         </div>
-
-                                    </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xxl-12 col-xl-12 text-end">
-                                        <button class="btn btn-border-orange mt-2" id="">Save</button>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
+
+                            <div id="AddOwned_modal" class="modal  fade" role="dialog">
+                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
+                                            <h6 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
+                                                details</h6>
+                                            <button type="button" class="close outline-none bg-transparent border-0 h3"
+                                                data-bs-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
 
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div id="AddOwned_modal" class="modal  fade" role="dialog">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                            <h6 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
-                                details</h6>
-                            <button type="button" class="close outline-none bg-transparent border-0 h3"
-                                data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
-    </div>
 @endsection
 @section('script')
     <script src="{{ URL::asset('assets/libs/gridjs/gridjs.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/js/pages/dashboard-projects.init.js') }}"></script>
+                    <script src="{{ URL::asset('/assets/js/pages/dashboard-projects.init.js') }}"></script>
 
-    <script></script>
+                    <script></script>
 @endsection
