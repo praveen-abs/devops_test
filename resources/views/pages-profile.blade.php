@@ -446,29 +446,410 @@
                                         <th>Action</th>
                                     </thead>
                                     <tbody>
+                                        @if( !empty($documents_filenames[0]->aadhar_card_file))
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td>
-                                                <div class="dropdown investment_dropDown">
-                                                    <button
-                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                        type="button" id="dropdownMenuButton"
-                                                        data-bs-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false">
-                                                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu"
-                                                        aria-labelledby="dropdownMenuButton">
-                                                        <a class="dropdown-item" href="#"><i
-                                                                class="fa fa-pencil-square-o text-info me-2"
-                                                                aria-hidden="true"></i> Edit</a>
-                                                        <a class="dropdown-item" href="#"><i class="fa fa-eye text-success me-2" aria-hidden="true"></i>View</a>
 
-                                                    </div>
-                                                </div>
+                                            <td>Aadhar Card Front</td>
+                                            <td>
+                                                @if (Str::contains($documents_filenames[0]->aadhar_card_file, '.pdf'))
+                                                    <a target="_blank" href="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->aadhar_card_file) }}">View Documents</a>
+                                                @else
+                                                    <a class="view-file text-info"
+                                                        data-src="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->aadhar_card_file) }}"
+                                                        style="cursor:pointer">
+                                                        {{ 'View Documents' }}
+                                                    </a>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($docs_reviewed != null)
+                                                    @if ($docs_reviewed->aadhar_card_file == 1)
+                                                        {{ 'Approved' }}
+                                                    @elseif($docs_reviewed->aadhar_card_file == 0)
+                                                        {{ 'Rejected' }}
+                                                    @else
+                                                        {{ 'Not Reviewed' }}
+                                                    @endif
+                                                @else
+                                                    {{ 'Not Reviewed' }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if (isset($docs_reviewed) && $docs_reviewed->aadhar_card_file == -1)
+                                                    <button class="btn btn-border-primary"
+                                                        onclick="approveOrRejectDocument('aadhar_card_file', 1)">
+                                                        Approve</button>
+                                                    <button class="btn btn-danger"
+                                                        onclick="approveOrRejectDocument('aadhar_card_file', 0)">
+                                                        Reject</button>
+                                                @endif
+
+                                                @if ($docs_reviewed == null)
+                                                    <button class="btn btn-success"
+                                                        onclick="approveOrRejectDocument('aadhar_card_file', 1)">
+                                                        Approve</button>
+                                                    <button class="btn btn-danger"
+                                                        onclick="approveOrRejectDocument('aadhar_card_file', 0)">
+                                                        Reject</button>
+                                                @endif
                                             </td>
                                         </tr>
+                                        @endif
+                                        @if( !empty($documents_filenames[0]->aadhar_card_backend_file))
+
+                                        <tr>
+                                            <td>Aadhar Card Back</td>
+                                            <td>
+                                                @if (Str::contains($documents_filenames[0]->aadhar_card_backend_file, '.pdf'))
+                                                    <a target="_blank" href="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->aadhar_card_backend_file) }}">View Documents</a>
+                                                @else
+                                                <a class="view-file"
+                                                    data-src="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->aadhar_card_backend_file) }}"
+                                                    style="cursor:pointer">
+                                                    {{ 'View Documents' }}
+                                                </a>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($docs_reviewed != null)
+                                                    @if ($docs_reviewed->aadhar_card_backend_file == 1)
+                                                        {{ 'Approved' }}
+                                                    @elseif($docs_reviewed->aadhar_card_backend_file == 0)
+                                                        {{ 'Rejected' }}
+                                                    @else
+                                                        {{ 'Not Reviewed' }}
+                                                    @endif
+                                                @else
+                                                    {{ 'Not Reviewed' }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if (isset($docs_reviewed) && $docs_reviewed->aadhar_card_backend_file == -1)
+                                                    <button class="btn btn-success"
+                                                        onclick="approveOrRejectDocument('aadhar_card_backend_file', 1)">
+                                                        Approve</button>
+                                                    <button class="btn btn-danger"
+                                                        onclick="approveOrRejectDocument('aadhar_card_backend_file', 0)">
+                                                        Reject</button>
+                                                @endif
+
+                                                @if ($docs_reviewed == null)
+                                                    <button class="btn btn-success"
+                                                        onclick="approveOrRejectDocument('aadhar_card_backend_file', 1)">
+                                                        Approve</button>
+                                                    <button class="btn btn-danger"
+                                                        onclick="approveOrRejectDocument('aadhar_card_backend_file', 0)">
+                                                        Reject</button>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        @endif
+                                        @if( !empty($documents_filenames[0]->pan_card_file))
+
+                                        <tr>
+                                            <td>Pan Card</td>
+                                            <td>
+                                                @if (Str::contains($documents_filenames[0]->pan_card_file, '.pdf'))
+                                                    <a target="_blank" href="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->pan_card_file) }}">View Documents</a>
+                                                @else
+                                                    <div class="view-file"
+                                                        data-src="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->pan_card_file) }}"
+                                                        style="cursor:pointer">
+                                                        {{ 'View Documents' }}
+                                                    </div>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($docs_reviewed != null)
+                                                    @if ($docs_reviewed->pan_card_file == 1)
+                                                        {{ 'Approved' }}
+                                                    @elseif($docs_reviewed->pan_card_file == 0)
+                                                        {{ 'Rejected' }}
+                                                    @else
+                                                        {{ 'Not Reviewed' }}
+                                                    @endif
+                                                @else
+                                                    {{ 'Not Reviewed' }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if (isset($docs_reviewed) && $docs_reviewed->pan_card_file == -1)
+                                                    <button class="btn btn-success"
+                                                        onclick="approveOrRejectDocument('pan_card_file', 1)">
+                                                        Approve</button>
+                                                    <button class="btn btn-danger"
+                                                        onclick="approveOrRejectDocument('pan_card_file', 0)">
+                                                        Reject</button>
+                                                @endif
+
+                                                @if ($docs_reviewed == null)
+                                                    <button class="btn btn-success"
+                                                        onclick="approveOrRejectDocument('pan_card_file', 1)">
+                                                        Approve</button>
+                                                    <button class="btn btn-danger"
+                                                        onclick="approveOrRejectDocument('pan_card_file', 0)">
+                                                        Reject</button>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        @endif
+                                        @if( !empty($documents_filenames[0]->passport_file))
+
+                                        <tr>
+                                            <td>Passport</td>
+                                            <td>
+                                                @if (Str::contains($documents_filenames[0]->passport_file, '.pdf'))
+                                                    <a target="_blank" href="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->passport_file) }}">View Documents</a>
+                                                @else
+                                                    <a class="view-file"
+                                                        data-src="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->passport_file) }}"
+                                                        style="cursor:pointer">
+                                                        {{ 'View Documents' }}
+                                                    </a>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($docs_reviewed != null)
+                                                    @if ($docs_reviewed->passport_file == 1)
+                                                        {{ 'Approved' }}
+                                                    @elseif($docs_reviewed->passport_file == 0)
+                                                        {{ 'Rejected' }}
+                                                    @else
+                                                        {{ 'Not Reviewed' }}
+                                                    @endif
+                                                @else
+                                                    {{ 'Not Reviewed' }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if (isset($docs_reviewed) && $docs_reviewed->passport_file == -1)
+                                                    <button class="btn btn-success"
+                                                        onclick="approveOrRejectDocument('passport_file', 1)">
+                                                        Approve</button>
+
+                                                    <button class="btn btn-danger"
+                                                        onclick="approveOrRejectDocument('passport_file', 0)">
+                                                        Reject</button>
+                                                @endif
+
+                                                @if ($docs_reviewed == null)
+                                                    <button class="btn btn-success"
+                                                        onclick="approveOrRejectDocument('passport_file', 1)">
+                                                        Approve</button>
+
+                                                    <button class="btn btn-danger"
+                                                        onclick="approveOrRejectDocument('passport_file', 0)">
+                                                        Reject</button>
+                                                @endif
+                                            </td>
+
+                                        </tr>
+
+                                        @endif
+                                        @if( !empty($documents_filenames[0]->voters_id_file))
+
+                                        <tr>
+                                            <td>Voters ID</td>
+                                            <td>
+                                                @if (Str::contains($documents_filenames[0]->voters_id_file, '.pdf'))
+                                                    <a target="_blank" href="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->voters_id_file) }}">View Documents</a>
+                                                @else
+                                                    <div class="view-file"
+                                                        data-src="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->voters_id_file) }}"
+                                                        style="cursor:pointer">
+                                                        {{ 'View Documents' }}
+                                                    </div>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($docs_reviewed != null)
+                                                    @if ($docs_reviewed->voters_id_file == 1)
+                                                        {{ 'Approved' }}
+                                                    @elseif($docs_reviewed->voters_id_file == 0)
+                                                        {{ 'Rejected' }}
+                                                    @else
+                                                        {{ 'Not Reviewed' }}
+                                                    @endif
+                                                @else
+                                                    {{ 'Not Reviewed' }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if (isset($docs_reviewed) && $docs_reviewed->voters_id_file == -1)
+                                                    <button class="btn btn-success"
+                                                        onclick="approveOrRejectDocument('voters_id_file', 1)">
+                                                        Approve</button>
+
+                                                    <button class="btn btn-danger"
+                                                        onclick="approveOrRejectDocument('voters_id_file', 0)">
+                                                        Reject</button>
+                                                @endif
+
+                                                @if ($docs_reviewed == null)
+                                                    <button class="btn btn-success"
+                                                        onclick="approveOrRejectDocument('voters_id_file', 1)">
+                                                        Approve</button>
+
+                                                    <button class="btn btn-danger"
+                                                        onclick="approveOrRejectDocument('voters_id_file', 0)">
+                                                        Reject</button>
+                                                @endif
+                                            </td>
+
+                                        </tr>
+                                        @endif
+                                        @if( !empty($documents_filenames[0]->dl_file))
+
+                                        <tr>
+                                            <td>Driving License</td>
+                                            <td>
+                                                @if (Str::contains($documents_filenames[0]->dl_file, '.pdf'))
+                                                    <a target="_blank" href="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->dl_file) }}">View Documents</a>
+                                                @else
+                                                    <div class="view-file"
+                                                        data-src="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->dl_file) }}"
+                                                        style="cursor:pointer">
+                                                        {{ 'View Documents' }}
+                                                    </div>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($docs_reviewed != null)
+                                                    @if ($docs_reviewed->dl_file == 1)
+                                                        {{ 'Approved' }}
+                                                    @elseif($docs_reviewed->dl_file == 0)
+                                                        {{ 'Rejected' }}
+                                                    @else
+                                                        {{ 'Not Reviewed' }}
+                                                    @endif
+                                                @else
+                                                    {{ 'Not Reviewed' }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if (isset($docs_reviewed) && $docs_reviewed->dl_file == -1)
+                                                    <button class="btn btn-success" onclick="approveOrRejectDocument('dl_file', 1)">
+                                                        Approve</button>
+
+                                                    <button class="btn btn-danger" onclick="approveOrRejectDocument('dl_file', 0)">
+                                                        Reject</button>
+                                                @endif
+
+                                                @if ($docs_reviewed == null)
+                                                    <button class="btn btn-success"onclick="approveOrRejectDocument('dl_file', 1)">
+                                                        Approve</button>
+
+                                                    <button class="btn btn-danger" onclick="approveOrRejectDocument('dl_file', 0)">
+                                                        Reject</button>
+                                                @endif
+                                            </td>
+
+                                        </tr>
+                                        @endif
+                                        @if( !empty($documents_filenames[0]->education_certificate_file))
+                                        <tr>
+                                            <td>Educational Certificate</td>
+                                            <td>
+                                                @if (Str::contains($documents_filenames[0]->education_certificate_file, '.pdf'))
+                                                    <a target="_blank" href="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->education_certificate_file) }}">View Documents</a>
+                                                @else
+                                                    <div class="view-file"
+                                                        data-src="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->education_certificate_file) }}"
+                                                        style="cursor:pointer">
+                                                        {{ 'View Documents' }}
+                                                    </div>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($docs_reviewed != null)
+                                                    @if ($docs_reviewed->education_certificate_file == 1)
+                                                        {{ 'Approved' }}
+                                                    @elseif($docs_reviewed->education_certificate_file == 0)
+                                                        {{ 'Rejected' }}
+                                                    @else
+                                                        {{ 'Not Reviewed' }}
+                                                    @endif
+                                                @else
+                                                    {{ 'Not Reviewed' }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if (isset($docs_reviewed) && $docs_reviewed->education_certificate_file == -1)
+                                                    <button class="btn btn-success"
+                                                        onclick="approveOrRejectDocument('education_certificate_file', 1)">
+                                                        Approve</button>
+
+                                                    <button class="btn btn-danger"
+                                                        onclick="approveOrRejectDocument('education_certificate_file', 0)">
+                                                        Reject</button>
+                                                @endif
+
+                                                @if ($docs_reviewed == null)
+                                                    <button class="btn btn-success"
+                                                        onclick="approveOrRejectDocument('education_certificate_file', 1)">
+                                                        Approve</button>
+
+                                                    <button class="btn btn-danger"
+                                                        onclick="approveOrRejectDocument('education_certificate_file', 0)">
+                                                        Reject</button>
+                                                @endif
+                                            </td>
+
+                                        </tr>
+                                        @endif
+                                        @if( !empty($documents_filenames[0]->reliving_letter_file))
+                                        <tr>
+                                            <td>Relieving Letter</td>
+                                            <td>
+                                                @if (Str::contains($documents_filenames[0]->reliving_letter_file, '.pdf'))
+                                                    <a target="_blank" href="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->reliving_letter_file) }}">View Documents</a>
+                                                @else
+                                                    <div class="view-file"
+                                                        data-src="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->reliving_letter_file) }}"
+                                                        style="cursor:pointer">
+                                                        {{ 'View Documents' }}
+                                                    </div>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($docs_reviewed != null)
+                                                    @if ($docs_reviewed->reliving_letter_file == 1)
+                                                        {{ 'Approved' }}
+                                                    @elseif($docs_reviewed->reliving_letter_file == 0)
+                                                        {{ 'Rejected' }}
+                                                    @else
+                                                        {{ 'Not Reviewed' }}
+                                                    @endif
+                                                @else
+                                                    {{ 'Not Reviewed' }}
+                                                @endif
+                                            </td>
+                                            <td>
+
+                                                @if (isset($docs_reviewed) && $docs_reviewed->reliving_letter_file == -1)
+                                                    <button class="btn btn-success"
+                                                        onclick="approveOrRejectDocument('reliving_letter_file', 1)">
+                                                        Approve</button>
+
+                                                    <button class="btn btn-danger"
+                                                        onclick="approveOrRejectDocument('reliving_letter_file', 0)">
+                                                        Reject</button>
+                                                @endif
+
+                                                @if ($docs_reviewed == null)
+                                                    <button class="btn btn-success"
+                                                        onclick="approveOrRejectDocument('reliving_letter_file', 1)">
+                                                        Approve</button>
+
+                                                    <button class="btn btn-danger"
+                                                        onclick="approveOrRejectDocument('reliving_letter_file', 0)">
+                                                        Reject</button>
+                                                @endif
+
+                                            </td>
+                                        </tr>
+                                        @endif
+
                                     </tbody>
                                 </table>
                             </div>
@@ -1979,5 +2360,69 @@
         // $(".progress-bar").animate({
         // style="width: {{ $profileCompletenessValue }}%"
         // }, 2500);
+
+        $('body').on('click', '.close-modal', function() {
+            $('#notificationModal').hide();
+            $('#notificationModal').addClass('fade');
+        });
+
+
+        $('.view-file').on('click', function(e) {
+            console.log($(this).data('src'));
+            var docHtmlString = "<img src=" + $(this).data('src') + " width='100%' / style='width:100%;height:400px;'>";
+            $('#modalBody').html(docHtmlString);
+
+            $('#notificationModal').show();
+        })
+
+        function approveOrRejectDocument(docName, aproveStatus) {
+            $.ajax({
+                url: "{{ route('vmt-store-documents-review') }}",
+                type: "POST",
+                data: {
+                    user_code: $('#hidden_user_code').val(),
+                    doc_name: docName,
+                    approve_status: aproveStatus,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(data) {
+                    alert("Document reviewed successfully");
+                    //window.location.href = "/";
+                    location.reload();
+                }
+            });
+        }
+
+        function approveAllDocument() {
+            //e.preventDefault();
+            console.log('aprove_All');
+
+            var doc_reviewed = {
+                aadhar_card_file: 1,
+                aadhar_card_backend_file: 1,
+                pan_card_file: 1,
+                passport_file: 1,
+                voters_id_file: 1,
+                dl_file: 1,
+                education_certificate_file: 1,
+                reliving_letter_file: 1
+            }
+
+            $.ajax({
+                url: "{{ route('vmt-store-documents-review-approve-all') }}",
+                type: "POST",
+                data: {
+                    user_code: $('#hidden_user_code').val(),
+                    doc_array: doc_reviewed,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(data) {
+                    alert("All Documents approved successfully");
+                    //window.location.href = "/";
+                    location.reload();
+                }
+            });
+        }
+
     </script>
 @endsection
