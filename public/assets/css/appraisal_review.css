@@ -29,7 +29,10 @@ table.kpi_appraisal-table tr th textarea {
 }
 table.kpi_republish_table tbody tr th textarea,
 table.kpi_republish_table tbody tr td textarea {
-    height: 70px !important;
+    height: 50px ;
+}
+table.kpi_republish_table tbody tr td {
+    padding: 0px 4px;
 }
 
 
@@ -58,19 +61,17 @@ table.kpi_appraisal-table tbody tr th textarea {
     background: transparent;
     width: 300px;
 }
-table#kpiTable tbody tr td textarea {
+/* table#kpiTable tbody tr td textarea {
     padding: 3px 4px;
-}
+} */
 
 
 
 table.kpi_appraisal-table tbody tr th textarea,
 table.kpi_appraisal-table tbody tr td:nth-child(2) textarea,
 table.kpi_appraisal-table tbody tr td textarea {
-
     resize: none;
-
-    min-height: 65px;
+    min-height: 50px;
 }
 /* tr:first-child  th:nth-child(2) {
     border-top-left-radius: 6px !important;
