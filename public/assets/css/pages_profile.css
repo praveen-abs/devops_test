@@ -11,13 +11,13 @@
     justify-content: center;
 }
 
-.user_profile-wrapper{
+/* .user_profile-wrapper{
     height: 75px;
     width: 75px ;
     background: #f1f1f1;
     border-radius: 50%;
     background: #f1f1f1;
-}
+} */
 
 .profile-img-wrap .fileupload .upload {
     cursor: pointer;
