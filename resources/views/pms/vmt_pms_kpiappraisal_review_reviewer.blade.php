@@ -288,16 +288,16 @@
                 <div class="modal-content">
                     <div class="modal-header border-0 d-flex align-items-center py-2">
 
-                      
+
                         <h6 class="modal-title text-primary" id="modalHeader">Rejected
                         </h6>
                         <button type="button" class="btn-close btn-close-white close-modal" data-bs-dismiss="modal"
                             aria-label="Close">
                         </button>
-                  
+
                 </div>
                     <div class="modal-body">
-                      
+
                             <h6 class="mb-3" id="modalNot"></h6>
                             <textarea name="reject_comment" id="reject_comment" class="form-control mb-2 w-100 outline-none border-primary h-100"></textarea>
                             <div class="text-end">
@@ -306,7 +306,7 @@
                                 <button type="button" class="btn btn-light close-modal"
                                     data-bs-dismiss="modal">Close</button>
                             </div>
-                       
+
                     </div>
                 </div>
             </div>
@@ -472,7 +472,7 @@
                                                         <th scope="col" data-name='kpiManagerAchivement'
                                                             data-filterable="false" data-visible="true">Manager
                                                             KPI
-                                                            Achievement % </th>
+                                                            Achievement  <br><span id="overall_Employee_kpi_percentage"></span></th>
                                                     @endif
                                                 @endforeach
 
@@ -643,7 +643,7 @@
                                                                     $reviewersReview == Auth::id() &&
                                                                     ($decodedKpiReviewSubmittedStatus[$reviewersReview] == '' ||
                                                                         $decodedKpiReviewSubmittedStatus[$reviewersReview] == '0'))
-                                                                    <textarea type="number" class="inp-text form-control h-100 border-0 outline-none w-100 "
+                                                                    <textarea type="number" class="inp-text form-control h-100 border-0 outline-none w-100 reviewer_kpi_percentage "
                                                                         name="reviewer_kpi_percentage[{{ $reviewersReview }}][{{ $kpiRow->id }}]"
                                                                         id="reviewer_kpi_percentage{{ $index }}-{{ $reviewersReview }}"
                                                                         onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46'
@@ -889,6 +889,19 @@
             } else {
                 $('#reviewer_kpi_percentage' + index+'-'+kpiAchievementReviewerReview).val('');
             }
+            calculateOverallReviewerKpiPercentage();
+        }
+
+        function calculateOverallReviewerKpiPercentage(){
+            //Get all the 'Self KPI Achievements %' textarea values
+            var array_selfKpiAchievementsPercentage = $('.reviewer_kpi_percentage').map((_, element) => $.trim(element.value)).get();
+            var total_percentage = _.sumBy(array_selfKpiAchievementsPercentage, item => Number(item));
+
+            console.log(" array_selfKpiAchievementsPercentage : "+array_selfKpiAchievementsPercentage);
+            console.log("SUM of array_selfKpiAchievementsPercentage : "+ total_percentage);
+            //Also update Self KPI Achievement %
+            $("#overall_Employee_kpi_percentage").html("Total : "+Math.round(total_percentage)+"%");
+
         }
 
         $('#upload_file').change(function() {
