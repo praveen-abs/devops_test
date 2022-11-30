@@ -155,7 +155,7 @@
                                         <div class="col-6"><label class="text-ash-medium fs-15">Date</label></div>
                                         <div class="col-6">
                                             <span class="text-ash-medium fs-15"
-                                                id="actual_checkin_date">--/--/----,Monday</span>
+                                                id="current_date">--/--/----,Monday</span>
 
                                             <input type="hidden" class="text-ash-medium form-control fs-15"
                                                 name="attendance_date" id="attendance_date">
@@ -170,7 +170,7 @@
                                             </label>
                                         </div>
                                         <div class="col-6">
-                                            <span class="text-ash-medium fs-15" id="actual_checkin_time"></span>
+                                            <span class="text-ash-medium fs-15" id="actual_user_time"></span>
                                             <input type="hidden" name="attendance_user" id="attendance_user">
                                             <input type="hidden" class="text-ash-medium form-control fs-15"
                                                 name="user_time" id="user_time">
@@ -553,8 +553,8 @@
 
             if ($(element).val() == "LC") {
                 //On modal popup
-                $('#actual_checkin_date').html($(element).data('checkindate'));
-                $('#actual_checkin_time').html(moment($(element).data('checkintime'), ["HH:mm"]).format('h:mm A'));
+                $('#current_date').html($(element).data('checkindate'));
+                $('#actual_user_time').html(moment($(element).data('checkintime'), ["HH:mm"]).format('h:mm A'));
                 $('#timing_label_suffix').html('( Late Arrival )');
                 $('#regular_shift_time').val(shift_start_time);
 
@@ -567,15 +567,17 @@
                 $('#regularizationModal').fadeIn(100);
             } else
             if ($(element).val() == "EG") {
-                $('#actual_checkin_date').html($(element).data('checkin_date'));
-                $('#actual_checkin_time').html($(element).data('actual_timing'));
+                $('#current_date').html($(element).data('checkoutdate'));
+                $('#actual_user_time').html(moment($(element).data('checkouttime'), ["HH:mm"]).format('h:mm A'));
+                $('#timing_label_suffix').html('( Early Going )');
                 $('#regular_shift_time').val(shift_end_time);
-                $('#attendance_date').val($(element).data('checkin_date'));
-                $('#user_time').val($(element).data('actual_timing'));
+                
+                //Hidden vars
+                $('#attendance_date').val($(element).data('checkoutdate'));
+                $('#user_time').val($(element).data('checkouttime'));
                 $('#attendance_user').val(currentlySelectedUser);
                 $('#regularization_type').val("EG");
-                $('#timing_label_suffix').html('( Early Going )');
-                //$('#')
+                
                 $('#regularizationModal').fadeIn(100);
             }else
             if ($(element).val() == "MIP") {
@@ -824,7 +826,7 @@
                                                         year + "-" + (month + 1) + "-" + dateText +"'/>"
 
                                     let html_EG_Button = "<input type='button' id='btn_checkout_time_" +year + "-" + (month + 1) + "-" + dateText +
-                                                        "' onclick ='showRegularizationModal(this)' class='f-10 btn-orange bn ms-2 lc_btn border-0 p-1 text-white'  value='EG' data-cellid ='checkout_time_" +
+                                                        "' onclick ='showRegularizationModal(this)' class='f-10 btn-orange bn ms-2 lc_btn border-0 p-1 text-white' data-checkoutdate='"+currentDate+"' data-checkouttime='"+final_checkout_time+"' value='EG' data-cellid ='checkout_time_" +
                                                         year + "-" + (month + 1) + "-" + dateText +"'/>"
 
                                     let html_MOP_Button = "<input type='button' id='mipmop" +year + "-" + (month + 1) + "-" + dateText +
