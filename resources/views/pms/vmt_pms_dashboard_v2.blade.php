@@ -412,7 +412,11 @@
                                                 <th scope="col">Manager Status</th>
                                                 <th scope="col">Score</th>
                                                 <th scope="col">Review </th>
+                                                @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
+
                                                 <th scope="col">Action </th>
+
+                                                @endif
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -536,7 +540,9 @@
                                                                         </button></a>
                                                                 </div>
                                                             </td>
+                                                            @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
                                                             <td>
+
                                                                 <div class="dropdown investment_dropDown">
                                                                     <button
                                                                         class="btn  bg-transparent outline-none border-0 dropdown-toggle"
@@ -554,7 +560,10 @@
                                                                         <a class="dropdown-item" href="#"></a>
                                                                     </div>
                                                                 </div>
+
                                                             </td>
+                                                            @endif
+
                                                         </tr>
                                                         @endif
                                                     @endif
