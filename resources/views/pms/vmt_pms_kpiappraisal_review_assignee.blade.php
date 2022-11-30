@@ -562,11 +562,28 @@
                             <h4>Goals Not Assigned</h4>
                         @endif
                     </div>
+
+                    @if ($isAllReviewersSubmittedOrNot)
+
+                    <div class="row mt-3 mb-2">
+                        <div class="col-lg-12">
+                            <h6 class="text-muted">
+                                &nbsp;&nbsp; Appraiser Feedback:
+                            </h6>
+                            <div class="mt-2">
+                                <span>
+                                    @if (isset($assignedGoals->reviewer_appraisal_comments))
+                                    &nbsp;&nbsp; {{ $assignedGoals->reviewer_appraisal_comments }}
+                                    @endif
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
                 </div>
+
+
             </div>
-
-
-
 
 
             <!-- Rating grid after submitted review by All Reviewers -->

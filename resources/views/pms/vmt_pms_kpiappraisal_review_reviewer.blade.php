@@ -720,7 +720,7 @@
                                                 @if ($decodedKpiReviewSubmittedStatus[Auth::id()] == '')
                                                     Save
                                                 @else
-                                                    Edit
+                                                    Save
                                                 @endif
                                             </button>
                                             &nbsp;&nbsp;
