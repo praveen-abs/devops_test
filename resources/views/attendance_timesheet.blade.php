@@ -155,7 +155,7 @@
                                         <div class="col-6"><label class="text-ash-medium fs-15">Date</label></div>
                                         <div class="col-6">
                                             <span class="text-ash-medium fs-15"
-                                                id="actual_checkin_date">27-10-2022,Monday</span>
+                                                id="actual_checkin_date">--/--/----,Monday</span>
 
                                             <input type="hidden" class="text-ash-medium form-control fs-15"
                                                 name="attendance_date" id="attendance_date">
@@ -170,7 +170,7 @@
                                             </label>
                                         </div>
                                         <div class="col-6">
-                                            <span class="text-ash-medium fs-15" id="actual_checkin_time">8:10</span>
+                                            <span class="text-ash-medium fs-15" id="actual_checkin_time"></span>
                                             <input type="hidden" name="attendance_user" id="attendance_user">
                                             <input type="hidden" class="text-ash-medium form-control fs-15"
                                                 name="user_time" id="user_time">
@@ -279,7 +279,6 @@
                     //             '</li>';
 
                     // $('#sidepanel_employees_list').append(html);
-
                     showCalendar(selectedMonth, '2022', data);
 
                 }
@@ -551,20 +550,47 @@
 
         function showRegularizationModal(element) {
 
+
             if ($(element).val() == "LC") {
-                $('#actual_checkin_date').html($(element).data('checkin_date'));
-                $('#actual_checkin_time').html($(element).data('actual_timing'));
-                $('#regular_shift_time').val(shift_start_time);
-                $('#attendance_date').val($(element).data('checkin_date'));
-                $('#user_time').val($(element).data('actual_timing'));
-                $('#attendance_user').val(currentlySelectedUser);
+                //On modal popup
+                $('#actual_checkin_date').html($(element).data('checkindate'));
+                $('#actual_checkin_time').html(moment($(element).data('checkintime'), ["HH:mm"]).format('h:mm A'));
                 $('#timing_label_suffix').html('( Late Arrival )');
-                //$('#')
+                $('#regular_shift_time').val(shift_start_time);
+
+                //Hidden vars
+                $('#attendance_date').val($(element).data('checkindate'));
+                $('#user_time').val($(element).data('checkintime'));
+                $('#attendance_user').val(currentlySelectedUser);
                 $('#regularization_type').val("LC");
 
                 $('#regularizationModal').fadeIn(100);
             } else
             if ($(element).val() == "EG") {
+                $('#actual_checkin_date').html($(element).data('checkin_date'));
+                $('#actual_checkin_time').html($(element).data('actual_timing'));
+                $('#regular_shift_time').val(shift_end_time);
+                $('#attendance_date').val($(element).data('checkin_date'));
+                $('#user_time').val($(element).data('actual_timing'));
+                $('#attendance_user').val(currentlySelectedUser);
+                $('#regularization_type').val("EG");
+                $('#timing_label_suffix').html('( Early Going )');
+                //$('#')
+                $('#regularizationModal').fadeIn(100);
+            }else
+            if ($(element).val() == "MIP") {
+                $('#actual_checkin_date').html($(element).data('checkin_date'));
+                $('#actual_checkin_time').html($(element).data('actual_timing'));
+                $('#regular_shift_time').val(shift_end_time);
+                $('#attendance_date').val($(element).data('checkin_date'));
+                $('#user_time').val($(element).data('actual_timing'));
+                $('#attendance_user').val(currentlySelectedUser);
+                $('#regularization_type').val("EG");
+                $('#timing_label_suffix').html('( Early Going )');
+                //$('#')
+                $('#regularizationModal').fadeIn(100);
+            }else
+            if ($(element).val() == "MOP") {
                 $('#actual_checkin_date').html($(element).data('checkin_date'));
                 $('#actual_checkin_time').html($(element).data('actual_timing'));
                 $('#regular_shift_time').val(shift_end_time);
@@ -768,66 +794,72 @@
 
                             let ajax_data_currentdate = ajax_monthly_data[currentDate];
 
-                            console.log("Check-in time : "+ajax_data_currentdate.checkin_time);
-
-                            if(ajax_data_currentdate.isAbsent)
+                            if(ajax_data_currentdate)
                             {
-                                cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
-                                "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' ><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><span class='f-11' id='checkout_time_" +
-                                year + "-" + (month + 1) + "-" + dateText + "'>Absent</span> </div></div></div>";
 
-                            }
-                            else
-                            {
-                                //If not absent, show the dates
-                                let html_LC_Button = "<input type='button' id='btn_checkin_time_" +year + "-" + (month + 1) + "-" + dateText +
-                                                     "' onclick ='showRegularizationModal(this)' class='f-10 btn-primary bn ms-2 lc_btn border-0 p-1 text-white'  value='LC' data-cellid ='checkin_time_" +
-                                                     year + "-" + (month + 1) + "-" + dateText +"'/>"
+                                if(ajax_data_currentdate.isAbsent)
+                                {
+                                    cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
+                                    "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' ><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><span class='f-11' id='checkout_time_" +
+                                    year + "-" + (month + 1) + "-" + dateText + "'>Absent</span> </div></div></div>";
 
-                                let html_MIP_Button = "<input type='button' id='mipmop" +year + "-" + (month + 1) + "-" + dateText +
-                                                     "' onclick ='showMissedInMissedOutPunchModal(this)' class='f-10 btn-primary bn ms-2 lc_btn border-0 p-1 text-white'  value='MIP' data-cellid ='mipmop_" +
-                                                     year + "-" + (month + 1) + "-" + dateText +"'/>"
-
-                                let html_EG_Button = "<input type='button' id='btn_checkout_time_" +year + "-" + (month + 1) + "-" + dateText +
-                                                    "' onclick ='showRegularizationModal(this)' class='f-10 btn-orange bn ms-2 lc_btn border-0 p-1 text-white'  value='EG' data-cellid ='checkout_time_" +
-                                                    year + "-" + (month + 1) + "-" + dateText +"'/>"
-
-                                let html_MOP_Button = "<input type='button' id='mipmop" +year + "-" + (month + 1) + "-" + dateText +
-                                                     "' onclick ='showMissedInMissedOutPunchModal(this)' class='f-10 btn-orange bn ms-2 lc_btn border-0 p-1 text-white '  value='MOP' data-cellid ='mipmop_" +
-                                                     year + "-" + (month + 1) + "-" + dateText +"'/>"
-
-                                let final_checkin_button_code = "";
-                                let final_checkout_button_code = "";
-                                let final_checkin_time = ajax_data_currentdate.checkin_time ?? "--:--:--";
-
-                                let final_checkout_time = ajax_data_currentdate.checkout_time ?? "--:--:--";
-
-                                if(ajax_data_currentdate.isLC){
-                                    final_checkin_button_code = html_LC_Button;
                                 }
                                 else
-                                if(ajax_data_currentdate.isMIP){
-                                    final_checkin_button_code = html_MIP_Button;
+                                {
+                                    let final_checkin_button_code = "";
+                                    let final_checkout_button_code = "";
+                                    let final_checkin_time = ajax_data_currentdate.checkin_time ?? "";
+                                    let ui_final_checkin_time = final_checkin_time == "" ? "--:--:--" : moment(final_checkin_time, ["HH:mm"]).format('h:mm a');
+
+                                    let final_checkout_time = ajax_data_currentdate.checkout_time ?? "";
+                                    let ui_final_checkout_time = final_checkout_time == "" ? "--:--:--" : moment(final_checkout_time, ["HH:mm"]).format('h:mm a');
+
+                                    //If not absent, show the dates
+                                    let html_LC_Button = "<input type='button' id='btn_checkin_time_" +currentDate+
+                                                        "' onclick ='showRegularizationModal(this)' class='f-10 btn-primary bn ms-2 lc_btn border-0 p-1 text-white' data-checkindate='"+currentDate+"' data-checkintime='"+final_checkin_time+"' value='LC' data-cellid ='checkin_time_" +
+                                                        currentDate+"'/>"
+
+                                    let html_MIP_Button = "<input type='button' id='mipmop" +year + "-" + (month + 1) + "-" + dateText +
+                                                        "' onclick ='showRegularizationModal(this)' class='f-10 btn-primary bn ms-2 lc_btn border-0 p-1 text-white'  value='MIP' data-cellid ='mipmop_" +
+                                                        year + "-" + (month + 1) + "-" + dateText +"'/>"
+
+                                    let html_EG_Button = "<input type='button' id='btn_checkout_time_" +year + "-" + (month + 1) + "-" + dateText +
+                                                        "' onclick ='showRegularizationModal(this)' class='f-10 btn-orange bn ms-2 lc_btn border-0 p-1 text-white'  value='EG' data-cellid ='checkout_time_" +
+                                                        year + "-" + (month + 1) + "-" + dateText +"'/>"
+
+                                    let html_MOP_Button = "<input type='button' id='mipmop" +year + "-" + (month + 1) + "-" + dateText +
+                                                        "' onclick ='showRegularizationModal(this)' class='f-10 btn-orange bn ms-2 lc_btn border-0 p-1 text-white '  value='MOP' data-cellid ='mipmop_" +
+                                                        year + "-" + (month + 1) + "-" + dateText +"'/>"
+
+
+
+                                    if(ajax_data_currentdate.isLC){
+                                        final_checkin_button_code = html_LC_Button;
+                                    }
+                                    else
+                                    if(ajax_data_currentdate.isMIP){
+                                        final_checkin_button_code = html_MIP_Button;
+                                    }
+
+                                    if(ajax_data_currentdate.isEG){
+                                        final_checkout_button_code = html_EG_Button;
+                                    }
+                                    else
+                                    if(ajax_data_currentdate.isMOP){
+                                        final_checkout_button_code = html_MOP_Button;
+                                    }
+
+
+                                    cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
+
+                                    "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex '><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
+                                    year + "-" + (month + 1) + "-" + dateText +"'>"+ui_final_checkin_time+"</span>"+
+                                    final_checkin_button_code+
+                                    "</div> <div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span class='f-11' id='checkout_time_" +
+                                    year + "-" + (month + 1) + "-" + dateText + "'>"+ui_final_checkout_time+"</span>"+
+                                    final_checkout_button_code+
+                                    "</div></div></div>";
                                 }
-
-                                if(ajax_data_currentdate.isEG){
-                                    final_checkout_button_code = html_EG_Button;
-                                }
-                                else
-                                if(ajax_data_currentdate.isMOP){
-                                    final_checkout_button_code = html_MOP_Button;
-                                }
-
-
-                                cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
-
-                                "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex '><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
-                                year + "-" + (month + 1) + "-" + dateText +"'>"+final_checkin_time+"</span>"+
-                                final_checkin_button_code+
-                                "</div> <div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span class='f-11' id='checkout_time_" +
-                                year + "-" + (month + 1) + "-" + dateText + "'>"+final_checkout_time+"</span>"+
-                                final_checkout_button_code+
-                                "</div></div></div>";
                             }
 
                         }
@@ -847,118 +879,6 @@
 
                 tbl.appendChild(row);
             }
-
-            ///Logic for showing MIP,MOP,LC,EG,Absent
-
-            /*
-            ajax_monthly_data.forEach((element) => {
-                //Get the date from the checkin time
-                //console.log(element);
-
-                var calendar_cell_id = "";
-                var calendar_cell_id_value = "";
-
-                if (element.checkin_time != null)
-                 {
-                    let lc_array_index = element.attendance_state_type.includes('lc');
-
-                    if (lc_array_index != -1)
-                    {
-                        var LC_InputButton = $('#btn_checkin_time_' + element.date);
-
-                        calendar_cell_id = element.date;
-                        calendar_cell_id_value = element.checkin_time;
-
-
-                        $(LC_InputButton).attr('data-checkin_date', calendar_cell_id);
-                        $(LC_InputButton).attr('data-actual_timing', calendar_cell_id_value);
-                        $(LC_InputButton).attr('data-shift_timing', shift_start_time);
-                        $(LC_InputButton).addClass('btn-info');
-
-                        $(LC_InputButton).val("LC "+element.attendance_state_data.at(lc_array_index));
-                        //$(LC_InputButton).attr("disabled", 'disabled');
-                        //console.log("Debug at cell : "+element.checkin_time+" , "+LC_InputButton.id);
-
-                    }
-
-                    calendar_cell_id = element.date;
-                    calendar_cell_id_value = element.checkin_time;
-
-                    //Find the calendar cell ID based on above checkin date
-                    //$('#checkin_time_' + calendar_cell_id).html(calendar_cell_id_value);
-                    $('#checkin_time_' + calendar_cell_id).html(moment(calendar_cell_id_value, "HH:mm:ss").format(
-                        'h:mm A'));
-                    //$('#checkin_time_' + calendar_cell_id).html(calendar_cell_id_value);
-
-                } else {
-                    $('#checkin_time_' + calendar_cell_id).html('---');
-                }
-
-                //     else
-                //     {
-                //         var lcINputButton = $('#checkin_time_' + calendar_cell_id).parent().parent().find('input');
-                //         calendar_cell_id = element.date;
-                //         calendar_cell_id_value = element.checkin_time;
-
-                //         $(lcINputButton).attr('data-checkin_date', calendar_cell_id);
-                //         $(lcINputButton).attr('data-actual_timing', calendar_cell_id_value);
-                //         $(lcINputButton).attr('data-shift_timing', shift_start_time);
-                //         $(lcINputButton).addClass('btn-info');
-                //         $(lcINputButton).val("LC");
-                //     }
-
-                //  else {
-                //     var lcINputButton = $('#checkin_time_' + calendar_cell_id).parent().parent().find('input');
-                //     $(lcINputButton).val("");
-                //     $(lcINputButton).remove();
-                //     //console.log("Button to be removed : "+lcINputButton);
-                // }
-
-                if (element.checkout_time) {
-                    calendar_cell_id = element.date;
-                    calendar_cell_id_value = element.checkout_time;
-
-                    //Find the calendar cell ID based on above checkin date
-                    // $('#checkout_time_' + calendar_cell_id).html(calendar_cell_id_value);
-                    $('#checkout_time_' + calendar_cell_id).html(moment(calendar_cell_id_value, "HH:mm:ss").format(
-                        'h:mm A'));
-
-                    //checkin_time_2022-10-1
-                } else {
-
-                    $('#checkout_time_' + calendar_cell_id).html('---');
-                }
-
-                // logic to show Early going button
-                if (element.is_eg) {
-                    if (element.is_eg_applied) {
-                        calendar_cell_id = element.date;
-                        calendar_cell_id_value = element.checkout_time;
-
-                        var egINputButton = $('#checkout_time_' + calendar_cell_id).after(
-                            "<input disabled type='button' onclick ='showRegularizationModal(this)' class='f-10 ms-2 btn lc_btn border-0 w-50 btn-secondary p-1'  value='EG Applied' data-checkin_date=" +
-                            calendar_cell_id + " data-actual_timing=" + calendar_cell_id_value +
-                            " data-shift_timing=" + shift_end_time + " data-cellid ='checkout_time_" +
-                            calendar_cell_id +
-                            "'/>");
-                    } else {
-                        calendar_cell_id = element.date;
-                        calendar_cell_id_value = element.checkout_time;
-
-                        var egINputButton = $('#checkout_time_' + calendar_cell_id).after(
-                            "<input type='button' onclick ='showRegularizationModal(this)' class='f-10 ms-2 btn lc_btn border-0 btn-orange p-1'  value='EG' data-checkin_date=" +
-                            calendar_cell_id + " data-actual_timing=" + calendar_cell_id_value +
-                            " data-shift_timing=" + shift_end_time + " data-cellid ='checkout_time_" +
-                            calendar_cell_id +
-                            "'/>");
-                        console.log(lcINputButton);
-                    }
-
-                }
-
-
-
-            //});
 
         }
 
