@@ -110,6 +110,16 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         'attendanceCheckout']);
 
     /*
+        attendanceCheckout():
+        Input : date, checkout_time,
+        DB Table : vmt_employee_attendance
+        Output : success/failure response.
+
+    */
+    Route::post('save_reimbursement_data', [VmtAPIAttendanceController::class,
+        'saveReimbursementData']);
+
+    /*
         attendanceApplyLeave():
         Input : date, leave_type_id
         DB Table : vmt_employee_attendance

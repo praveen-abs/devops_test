@@ -75,7 +75,7 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <div class="leave_table" id="table_leaveHistory"></div>
+                    <div class="custom_gridJs" id="table_leaveHistory"></div>
                 </div>
             </div>
         </div>
@@ -189,7 +189,7 @@
                     success: function(data) {
                         if (data.status == "success") {
 
-                            swal({
+                            Swal.fire({
                                     title: "Info",
                                     text: data.message,
                                     type: "success"

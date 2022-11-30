@@ -305,23 +305,25 @@
 
                         var avatar_data = '';
 
-                        if(element.employee_avatar.type == 'shortname'){
+                        if (element.employee_avatar.type == 'shortname') {
 
-                            avatar_data =  '<span class="text-white">'+element.employee_avatar.data+'</span>';
+                            avatar_data =  '<div class="user_pic d-flex justify-content-center align-items-center  rounded-circle"><span class="text-white fw-bold">' + element.employee_avatar.data +
+                                '</span></div>';
 
-                        }
-                        else
-                        if(element.employee_avatar.type == 'avatar')
-                        {
+                        } else
+                        if (element.employee_avatar.type == 'avatar') {
+                            var imageURL = "images/" + element.employee_avatar.data;
 
-                            var imageURL = "images/"+element.employee_avatar.data;
-
-                            avatar_data = '<img class="rounded-circle w-100 h-100 header-profile-user" src="'+imageURL+'" alt="--">';
+                            avatar_data =
+                                ' <div class="user_pic bg-ash rounded-circle"><img class=" w-100 h-100 header-profile-user" src="' +
+                                imageURL + '" alt="--"></div>';
                         }
 
                         var html = '<li class="list_employee_attendance p-1 w-100" >' +
-                            '<button class="w-100 btn d-flex employee_list_item" data-userid=' + element.id +'>' +
-                            '<div class="user_pic me-2 d-flex col-auto justify-content-center align-items-center bg-primary rounded-circle">' +avatar_data +
+                            '<button class="w-100 btn d-flex employee_list_item border-0" data-userid=' + element
+                            .id + '>' +
+                            '<div class=" me-2 d-flex col-auto">' +
+                            avatar_data +
                             '</div>' +
                             '<div class="user_content text-start">' +
                             '<p class="fw-bold text-primary f-13">' + element.name + '</p>' +
@@ -367,24 +369,29 @@
 
                         var avatar_data = '';
 
-                        if(element.employee_avatar.type == 'shortname'){
+                        if (element.employee_avatar.type == 'shortname') {
 
-                            avatar_data =  '<span class="text-white">'+element.employee_avatar.data+'</span>';
+                            avatar_data = ' <div class="bg-primary user_pic d-flex  justify-content-center align-items-center  rounded-circle"> <span class="text-white">' + element.employee_avatar.data +
+                                '</span></div>';
+
+
+                        } else
+                        if (element.employee_avatar.type == 'avatar') {
+
+                            var imageURL = "images/" + element.employee_avatar.data;
+
+                            avatar_data ='<div class="user_pic bg-ash rounded-circle"><img class=" w-100 h-100 header-profile-user" src="' +
+                                imageURL + '" alt="--"></div>';
+
 
                         }
-                        else
-                        if(element.employee_avatar.type == 'avatar')
-                        {
-
-                            var imageURL = "images/"+element.employee_avatar.data;
-
-                            avatar_data = '<img class="rounded-circle w-100 h-100 header-profile-user" src="'+imageURL+'" alt="--">';
-                        }
 
 
-                        var html = '<li class="list_employee_attendance p-1 w-100" >' +
-                            '<button class="w-100 btn d-flex employee_list_item" data-userid=' + element.id +'>' +
-                            '<div class="user_pic col-auto me-2 d-flex justify-content-center align-items-center bg-primary rounded-circle">' +avatar_data +
+                        var html = '<li class="list_employee_attendance p-1 " >' +
+                            '<button class=" btn d-flex employee_list_item border-0" data-userid=' + element
+                            .id + '>' +
+                            '<div class="col-auto me-2 ">' +
+                            avatar_data +
                             '</div>' +
                             '<div class="user_content text-start ">' +
                             '<p class="fw-bold text-primary f-13">' + element.name + '</p>' +
@@ -419,30 +426,32 @@
 
             var avatar_data = '';
 
-            @if($current_employee_detail->employee_avatar['type'] == 'shortname')
-                //avatar_data = ;
-                avatar_data =  '<span class="text-white">{{ $current_employee_detail->employee_avatar['data'] }}</span>';
+            @if ($current_employee_detail->employee_avatar['type'] == 'shortname')
 
-            @elseif($current_employee_detail->employee_avatar['type'] == 'avatar')
-                var imageURL = "images/"+'{{ $current_employee_detail->employee_avatar['data'] }}';
+                avatar_data = '<div class="bg-primary user_pic d-flex justify-content-center align-items-center  rounded-circle"> <span class="text-white">{{ $current_employee_detail->employee_avatar['data'] }}</span></div>';
+            @elseif ($current_employee_detail->employee_avatar['type'] == 'avatar')
+                var imageURL = "images/" + '{{ $current_employee_detail->employee_avatar['data'] }}';
 
-                avatar_data = '<img class="rounded-circle w-100 h-100 header-profile-user" src="'+imageURL+'" alt="--">';
+                avatar_data = ' <div class="user_pic bg-ash rounded-circle "><img class=" w-100 h-100 header-profile-user" src="' + imageURL +
+                '" alt="--"></div>';
             @endif
 
             //show the current user in sidepanel for TimeSheet tab
             $('#sidepanel_employees_list').html('');
 
 
-            var html = '<li class="list_employee_attendance p-1 w-100" >' +
-                            '<button class="w-100 btn d-flex employee_list_item" data-userid='+'{{ $current_employee_detail->id }}'+'>' +
-                            '<div class="user_pic col-auto me-2 d-flex justify-content-center align-items-center bg-primary rounded-circle">' +avatar_data +
-                            '</div>' +
-                            '<div class="user_content  text-start">' +
-                            '<p class="fw-bold text-primary f-13">{{ $current_employee_detail->name }}</p>' +
-                            '<p class=" text-muted f-11">{{ $current_employee_detail->designation }}</p>' +
-                            '</div>' +
-                            '</button>' +
-                            '</li>';
+            var html = '<li class="list_employee_attendance p-1 " >' +
+                '<button class=" btn d-flex employee_list_item border-0" data-userid=' + '{{ $current_employee_detail->id }}' +
+                '>' +
+                '<div class="col-auto me-2 ">' +
+                avatar_data +
+                '</div>' +
+                '<div class="user_content  text-start">' +
+                '<p class="fw-bold text-primary f-13">{{ $current_employee_detail->name }}</p>' +
+                '<p class=" text-muted f-11">{{ $current_employee_detail->designation }}</p>' +
+                '</div>' +
+                '</button>' +
+                '</li>';
 
             $('#sidepanel_employees_list').append(html);
 
@@ -591,7 +600,7 @@
 
 
                     //alert(data.message);
-                    swal({
+                    Swal.fire({
                         title: "Info",
                         text: data.message,
                         type: data.status
@@ -745,7 +754,9 @@
 
 
                         if (isWeekEnd) {
-                            cell.innerHTML = " <div class='w-100 h-100 p-2' style='background-color:#f3edef;'> <span class='show_date' >" + date +
+                            cell.innerHTML =
+                                " <div class='w-100 h-100 p-2' style='background-color:#f3edef;'> <span class='show_date' >" +
+                                date +
                                 "</span> <span>Week Off </span> <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex justify-content-between'> </div> <div class='w-100 d-flex justify-content-between check-out mt-2 f-10 text-danger'> </div></div></div>";
 
                         }
@@ -809,6 +820,7 @@
 
 
                                 cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
+
                                 "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex '><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
                                 year + "-" + (month + 1) + "-" + dateText +"'>"+final_checkin_time+"</span>"+
                                 final_checkin_button_code+
@@ -874,20 +886,19 @@
 
                     //Find the calendar cell ID based on above checkin date
                     //$('#checkin_time_' + calendar_cell_id).html(calendar_cell_id_value);
-                    $('#checkin_time_' + calendar_cell_id).html(moment(calendar_cell_id_value,"HH:mm:ss").format('h:mm A'));
+                    $('#checkin_time_' + calendar_cell_id).html(moment(calendar_cell_id_value, "HH:mm:ss").format(
+                        'h:mm A'));
                     //$('#checkin_time_' + calendar_cell_id).html(calendar_cell_id_value);
 
                 } else {
                     $('#checkin_time_' + calendar_cell_id).html('---');
                 }
 
-
                 //     else
                 //     {
                 //         var lcINputButton = $('#checkin_time_' + calendar_cell_id).parent().parent().find('input');
                 //         calendar_cell_id = element.date;
                 //         calendar_cell_id_value = element.checkin_time;
-
 
                 //         $(lcINputButton).attr('data-checkin_date', calendar_cell_id);
                 //         $(lcINputButton).attr('data-actual_timing', calendar_cell_id_value);
@@ -908,8 +919,9 @@
                     calendar_cell_id_value = element.checkout_time;
 
                     //Find the calendar cell ID based on above checkin date
-                   // $('#checkout_time_' + calendar_cell_id).html(calendar_cell_id_value);
-                    $('#checkout_time_' + calendar_cell_id).html(moment(calendar_cell_id_value,"HH:mm:ss").format('h:mm A'));
+                    // $('#checkout_time_' + calendar_cell_id).html(calendar_cell_id_value);
+                    $('#checkout_time_' + calendar_cell_id).html(moment(calendar_cell_id_value, "HH:mm:ss").format(
+                        'h:mm A'));
 
                     //checkin_time_2022-10-1
                 } else {
@@ -919,8 +931,7 @@
 
                 // logic to show Early going button
                 if (element.is_eg) {
-                    if(element.is_eg_applied)
-                    {
+                    if (element.is_eg_applied) {
                         calendar_cell_id = element.date;
                         calendar_cell_id_value = element.checkout_time;
 
@@ -930,9 +941,7 @@
                             " data-shift_timing=" + shift_end_time + " data-cellid ='checkout_time_" +
                             calendar_cell_id +
                             "'/>");
-                    }
-                    else
-                    {
+                    } else {
                         calendar_cell_id = element.date;
                         calendar_cell_id_value = element.checkout_time;
 
@@ -947,7 +956,7 @@
 
                 }
 
-                */
+                
 
             //});
 

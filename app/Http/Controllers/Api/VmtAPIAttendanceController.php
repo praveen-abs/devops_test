@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\VmtEmployeeReimbursements;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\HRMSBaseAPIController;
 use App\Models\VmtEmployeeAttendance;
+use App\Models\VmtReimbursements;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
@@ -140,12 +142,45 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
             $attendanceCheckout->save();
         }
 
+        ////Store Reimbursement details if available
+        $reimbursement_type = $request->reimbursement_type;
+
+
+        //Get the reimbursement type
+
+
+
+
         $emptyObj  = new \stdClass;
         return response()->json([
             'status' => 'success',
             'message'=> 'Check out success',
             'data'   => $emptyObj
         ]);
+
+    }
+
+    public function saveReimbursementData(Request $request){
+
+
+        //Save the reimbursement data
+        $emp_reimbursement_data = new VmtEmployeeReimbursements;
+        $emp_reimbursement_data->date = $request->date;
+        $emp_reimbursement_data->reimbursement_type_id = VmtReimbursements::where('reimbursement_type',$request->reimbursement_type)->first()->value('id');
+        $emp_reimbursement_data->user_id = Auth::user()->id;
+        $emp_reimbursement_data->status = $request->status;
+        $emp_reimbursement_data->user_data = $request->user_data;
+
+        $emp_reimbursement_data->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message'=> 'Reimbursement detailed saved',
+            'data'=> $request->all()
+        ]);
+
+
+
 
     }
 

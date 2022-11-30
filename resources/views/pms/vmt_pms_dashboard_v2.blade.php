@@ -10,14 +10,14 @@
 
 @section('content')
     <div class="loader" style="display:none;"></div>
-    @component('components.performance_breadcrumb')
+    {{-- @component('components.performance_breadcrumb')
         @slot('li_1')
         @endslot
-    @endcomponent
+    @endcomponent --}}
 
 
 
-    <div class="container-fluid assign-goal-wrapper">
+    <div class="container-fluid assign-goal-wrapper mt-30">
         <div class="cards-wrapper">
 
             @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR', 'Manager']))
@@ -412,6 +412,7 @@
                                                 <th scope="col">Manager Status</th>
                                                 <th scope="col">Score</th>
                                                 <th scope="col">Review </th>
+                                                <th scope="col">Action </th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -432,10 +433,10 @@
                                                         @if($kpiFormAssigneeReview && !isFormReviewCompleted($kpiFormAssigneeReview))
                                                         <tr>
                                                             <td class="d-none">{{ $key1 }}</td>
-                                                            <td class="" style="min-width: 185px;">
+                                                            <td class="" >
                                                                 {{-- <div class="td_content_center">{{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</div> --}}
                                                                 <div
-                                                                    class="row page-header-user-dropdown align-items-center">
+                                                                    class="row page-header-user-dropdown align-items-center" style="width:200px;min-width: 230px;">
                                                                     <?php
                                                                     $employee_icon = getEmployeeAvatarOrShortName($assigneeId);
                                                                     //    dd($employee_icon);
@@ -535,6 +536,25 @@
                                                                         </button></a>
                                                                 </div>
                                                             </td>
+                                                            <td>
+                                                                <div class="dropdown investment_dropDown">
+                                                                    <button
+                                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                        type="button" id="dropdownMenuButton"
+                                                                        data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                        aria-expanded="false">
+                                                                        <i class="fa fa-ellipsis-v f-14 text-muted" aria-hidden="true"></i>
+                                                                    </button>
+                                                                    <div class="dropdown-menu"
+                                                                        aria-labelledby="dropdownMenuButton">
+                                                                        <a target="_self" href="{{ route('republishForm', $pmsKpiAssignee->id) }}" class="dropdown-item" href="#"><i
+                                                                                class="fa fa-pencil-square-o text-info me-2"
+                                                                                aria-hidden="true"></i> Edit</a>
+                                                                        <a class="dropdown-item" href="#" onclick="deleteAssignedKPIForm({{$pmsKpiAssignee->id}})"><i class="fa fa-trash text-danger me-2"  aria-hidden="true"></i> Delete</a>
+                                                                        <a class="dropdown-item" href="#"></a>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
                                                         </tr>
                                                         @endif
                                                     @endif
@@ -549,9 +569,9 @@
                     <div id="review_completed" class="tab-pane fade ">
                         <div class="card mb-0" style="position:relative;">
                             <div class="card-body">
-                                <button id="add-goals" class="btn btn-orange add-goals"><i
+                                {{-- <button id="add-goals" class="btn btn-orange add-goals"><i
                                         class="text-white fa fa-plus mx-1"></i>Add
-                                    Goals</button>
+                                    Goals</button> --}}
                                 <div class="table-responsive">
                                     <table id='reviewCompleted_table' class=' table Fem table-borderd w-100  mb-0 '
                                         style="width:revert !important">
@@ -714,7 +734,7 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
+                    <h6 class="modal-title mb-1 text-primary" >
                         New Assign Goals</h5>
                     <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
                         aria-label="Close">
@@ -735,49 +755,33 @@
                                 <input type="hidden" name="assignment_period_year" id="assignment_period_year"
                                     value="<?php echo date('Y'); ?>">
 
-                                <div class="row ">
-                                    <div class=" col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
 
-                                        <label class="" for="calendar_type">Calendar Type</label>
-                                        <select name="calendar_type" id="calendar_type"
-                                            class="form-select  form-control">
-                                            <option value="" selected disabled>Select Calendar Type</option>
-                                            <option name="financial_year" value="financial_year">Financial Year</option>
-                                            <option name="calendar_year" value="calendar_year">Calendar Year</option>
-                                        </select>
+                                      <div class="row ">
+                                        <div class=" col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
+                                              <label for="calendar_type">Calendar Type</label>
+                                              <input name="calendar_type" id="calendar_type"
+                                                class="form-control"   value="{{ $calendar_type }}" {{ $calendar_type }} readonly>
 
-                                    </div>
-                                    <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
+                                             <label class="" for="year">Year</label>
+                                             <input name="hidden_calendar_year" id="hidden_calendar_year" class="form-control"
+                                                value="{{$year}}" {{$year}} readonly>
 
-                                        <label class="" for="year">Year</label>
-                                        <input type="hidden" name="hidden_calendar_year" id="hidden_calendar_year"
-                                            value="">
+                                            </div>
+                                        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
+                                            <label class="" for="frequency">Frequency</label>
+                                            <input name="frequency" id="frequency" class="form-control " value="{{ $frequency }}" {{ $frequency }} readonly>
 
-                                        <select name="year" id="year" disabled class="form-select form-control">
-                                            <option value="" selected disabled>Select year</option>
-                                            <option value="Jan-Dec">January - <?php echo date('Y'); ?> to December -
-                                                <?= date('Y') ?> </option>
-                                            <option value="Apr-Mar">April - <?php echo date('Y'); ?> to March -
-                                                <?= date('Y') + 1 ?></option>
-                                        </select>
+                                           </div>
+                                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4  mb-2">
+                                            <label class="" for="assignment_period_start">Assignment Period</label>
+                                            <input name="assignment_period_start" id="assignment_period_start"
+                                                class="form-control "value="{{ $assignment_period }}"{{ $frequency }} readonly>
 
-                                    </div>
-                                    <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
+                                            </div>
 
-                                        <label class="" for="frequency">Frequency</label>
-                                        <select name="frequency" id="frequency" class="form-control form-select">
-                                            <option value="" selected disabled>Select Frequency</option>
-                                        </select>
 
-                                    </div>
-                                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4  mb-2">
-
-                                        <label class="" for="assignment_period_start">Assignment Period</label>
-                                        <select name="assignment_period_start" id="assignment_period_start"
-                                            class="form-control form-select">
-                                            <option value="" selected disabled>Select Assignment Period</option>
-                                        </select>
-                                    </div>
 
 
                                     <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4  mb-2">
@@ -1136,6 +1140,66 @@
     </script>
     <?php } ?>
     <script>
+        function deleteAssignedKPIForm(assignedKPIFormID){
+
+            console.log("Deleting Assigned KPI Form");
+
+            Swal.fire({
+                    title: 'Are you sure you want to delete?',
+                    text: "The data cannot be retrieved",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+
+                            $.ajax({
+                                type: "POST",
+                                url: "{{ route('deleteAssignedKPIForm') }}",
+                                data: {
+                                    "_token": "{{ csrf_token() }}",
+                                    "assignedKPIFormID": assignedKPIFormID,
+                                },
+                                success: function(data) {
+                                    if (data.status == 'success') {
+
+                                        Swal.fire(
+                                                'Deleted!',
+                                                'Assigned KPI Form has been deleted.',
+                                                'success'
+                                                ).then((result) => {
+                                                    window.location.reload();
+                                                });
+                                    }
+                                    else
+                                    {
+
+                                        if (data.status == 'success') {
+
+                                        Swal.fire(
+                                                'Error!',
+                                                'Failed to delete the assigned KPI Form',
+                                                'failure'
+                                                )
+                                        }
+                                    }
+                                },
+                                error: function(error) {
+                                    console.log('something went wrong');
+                                }
+                            });
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    });
+
+        }
+
+
         function generateProfileShortName_Topbar() {
             var username =
                 '{{ auth()->user()->name ??
@@ -1164,6 +1228,8 @@
 
         getKPIFormDetails();
 
+
+
         function getKPIFormDetails() {
             $.ajax({
                 type: "GET",
@@ -1177,7 +1243,7 @@
                         })
                         $('.selectedKpiFormClass').html(finalResult);
                     } else {
-                        swal('Wrong!', data.message, 'error');
+                        Swal.fire('Wrong!', data.message, 'error');
                     }
                     $('.loader').hide();
                 },
@@ -1252,13 +1318,28 @@
         });
 
         $('#edit-employee-based-on-reviewer').click(function() {
-            var selectedEmployeesId = $('.select-employee-dropdown').val();
-            var assignmentPeriod = $('#assignment_period_start option:selected').val();
-            var year = $('#year option:selected').text();
 
+            var selectedEmployeesId = $('.select-employee-dropdown').val();
+            var assignmentPeriod = $('#assignment_period_start').val();
+            var year = $('#hidden_calendar_year').val();
+
+            console.log("Checking if KPI already assigned :: ")
             console.log("assignmentPeriod : " + assignmentPeriod);
             console.log("Year : " + year);
 
+            $(document).on("click", ".employeeEditButton", function() {
+            var assignmentPeriod = $('#assignment_period_start').val();
+
+            console.log(assignmentPeriod);
+
+            if (assignmentPeriod && assignmentPeriod != '') {
+                $("#add-goals-modal").modal('hide');
+                $('#employeeSelectionModal').show();
+                $('#employeeSelectionModal').removeClass('fade');
+            } else {
+                console.log("Error : Please select the assignment period.")
+            }
+        });
 
             /*
             Need to check whether KPI Goals are already assigned for the selected 'Assignment Period and Year'.
@@ -1538,33 +1619,6 @@
 
             });
 
-            $('#calendar_type').change(function() {
-                if ($('#calendar_type').val() == 'financial_year') {
-                    $('#year').val('Apr-Mar');
-                } else
-                if ($('#calendar_type').val() == 'calendar_year') {
-                    $('#year').val('Jan-Dec');
-                } else {
-                    $('#year').val('');
-                }
-                $('#hidden_calendar_year').val($("#year option:selected").text())
-                if ($('#calendar_type').val() != '') {
-                    var frequencyDataResult =
-                        '<option value="" selected disabled>Select frequency</option><option value="monthly">Monthly</option><option value="quarterly">Quarterly</option><option value="halfYearly">Half Yearly</option><option value="yearly">Yearly</option>';
-                    $('#frequency').html(frequencyDataResult);
-                } else {
-                    var frequencyDataResult =
-                        '<option value="" selected disabled>Select frequency</option>';
-                    $('#frequency').html(frequencyDataResult);
-                    $('#frequency').val('');
-                }
-                frequencyChange();
-
-            });
-
-            $('#frequency').change(function() {
-                frequencyChange();
-            });
 
             $('#assignment_period_start').change(function() {
                 //When assignment period has value, then change EDIT button color to orange
@@ -1573,67 +1627,7 @@
                 });
             });
 
-            function frequencyChange() {
-                var data = "";
-                var year = "<?= date('Y') ?>";
-                var nextyear = "<?= date('Y', strtotime('+1 year')) ?>";
-                if ($('#frequency').val() == 'monthly') {
-
-                    if ($('#calendar_type').val() == 'financial_year') {
-                        data =
-                            "<option value='' selected disabled>Select frequency</option><option value='apr'>April - " +
-                            year +
-                            "</option><option value='may'>May - " + year + "</option><option value='june'>June - " +
-                            year + "</option><option value='july'>July - " + year +
-                            "</option><option value='aug'>August - " + year +
-                            "</option><option value='sept'>September - " + year +
-                            "</option><option value='oct'>October - " + year +
-                            "</option><option value='nov'>November - " + year +
-                            "</option><option value='dec'>December - " + year +
-                            "</option><option value='jan'>January - " + nextyear +
-                            "</option><option value='feb'>February - " + nextyear +
-                            "</option><option value='mar'>March - " + nextyear + "</option>";
-                    } else {
-                        data =
-                            "<option value='' selected disabled>Select frequency</option><option value='jan'>January - " +
-                            year +
-                            "</option><option value='feb'>February - " + year +
-                            "</option><option value='mar'>March - " + year +
-                            "</option><option value='apr'>April - " + year + "</option><option value='may'>May - " +
-                            year + "</option><option value='june'>June - " + year +
-                            "</option><option value='july'>July - " + year +
-                            "</option><option value='aug'>August - " + year +
-                            "</option><option value='sept'>September - " + year +
-                            "</option><option value='oct'>October - " + year +
-                            "</option><option value='nov'>November - " + year +
-                            "</option><option value='dec'>December - " + year + "</option>";
-                    }
-                } else if ($('#frequency').val() == 'quarterly') {
-                    if ($('#calendar_type').val() == 'financial_year')
-                        data =
-                        "<option value='' selected disabled>Select Assignment Period</option><option value='q1'>Q1 " +
-                        year + "(Apr-Jun)</option><option value='q2'>Q2 " + year +
-                        "(July-Sept)</option><option value='q3'>Q3 " + year +
-                        "(Oct-Dec)</option><option value='q4'>Q4 " + nextyear + "(Jan-Mar)</option>";
-                    else
-                        data =
-                        "<option value='' selected disabled>Select Assignment Period</option><option value='q1'>Q1(Jan-Mar)</option><option value='q2'>Q2(Apr-June)</option><option value='q3'>Q3(July-Sept)</option><option value='q4'>Q4(Oct-Dec)</option>";
-                } else if ($('#frequency').val() == 'halfYearly') {
-                    if ($('#calendar_type').val() == 'financial_year')
-                        data =
-                        "<option value='' selected disabled>Select Assignment Period</option><option value='h1'>H1(Apr " +
-                        year + " - Sept " + year + ")</option><option value='h2'>H2(Oct " + year + "- Mar " +
-                        nextyear + ")</option>";
-                    else
-                        data =
-                        "<option value=''>Select</option><option value='h1'>H1(Jan-June)</option><option value='h2'>H2(July-Dec)</option>";
-
-                } else {
-                    data = "<option value=''>Select</option><option value='yearly'>Yearly</option>";
-                }
-                $('#assignment_period_start').html(data);
-            }
-        });
+              });
 
         $(function() {
             $("#kpiTable").sortable({
@@ -1675,10 +1669,10 @@
 
             //Reset the old values in 'add-goals-model'
             $('.select-employee-dropdown').val('');
-            $('#calendar_type').val('');
-            $('#assignment_period_start').val('');
-            $('#year').val('');
-            $('#frequency').val('');
+            // $('#calendar_type').val('');
+            // $('#assignment_period_start').val('');
+            // $('#year').val('');
+            // $('#frequency').val('');
             $('#department').val('');
 
 
@@ -1906,8 +1900,8 @@
 
             e.preventDefault();
             var t_selectedEmployeesId = $('.select-employee-dropdown').val();
-            var assignmentPeriod = $('#assignment_period_start option:selected').val();
-            var year = $('#year option:selected').text();
+            var assignmentPeriod = $('#assignment_period_start').val();
+            var year = $('#hidden_calendar_year').val();
 
             $.ajax({
                 url: "{{ route('isKPIAlreadyAssignedForGivenAssignmentPeriod') }}",
@@ -1920,13 +1914,14 @@
                 },
                 success: function(data) {
 
-                    console.log("Submitting the form");
 
                     if (data) {
                         $('#edit-employee-error-message').html('');
+                        console.log("[ isKPIAlreadyAssignedForGivenAssignmentPeriod ] : "+data);
 
                         //If KPI's already assigned to the selected emps, then show their names
                         if (data.status == true) {
+                            console.log("KPI already assigned...! ");
                             $('#edit-employee-error-message').append("<b><u>" + data.message +
                                 "</u></b><br/>");
                             $('#edit-employee-error-message').append("<ul>");
@@ -1995,7 +1990,7 @@
 
                         $("kpitable_id").val(data.table_id);
                     } else {
-                        swal('Wrong!', data.message, 'error');
+                        Swal.fire('Wrong!', data.message, 'error');
                     }
                 }
             });

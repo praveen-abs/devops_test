@@ -86,6 +86,10 @@ Route::post('/set-singleleavepolicy-record', [App\Http\Controllers\VmtAttendance
 Route::post('/attendance-applyleave', [App\Http\Controllers\VmtAttendanceController::class, 'saveLeaveRequestDetails'])->name('attendance-applyleave');
 
 Route::post('/attendance-approve-rejectleave', [App\Http\Controllers\VmtAttendanceController::class, 'approveRejectLeaveRequest']);
+Route::get('/attendance-leave-getdetails', [App\Http\Controllers\VmtAttendanceController::class, 'fetchLeaveDetails'])->name('attendance-leave-getdetails');
+
+
+
 
 //Att Regularize
 Route::get('/attendance-regularization-approvals', [App\Http\Controllers\VmtAttendanceController::class, 'showLateComingApprovalPage'])->name('attendance-regularization-approvals');
@@ -441,6 +445,7 @@ Route::post('acceptRejectReviewerReview', [VmtPMSModuleController::class,'accept
 
 // republish form flow 2
 Route::get('/republishForm/{kpiAssignedId}',[VmtPMSModuleController::class, 'republishForm'])->name('republishForm');
+Route::post('/deleteAssignedKPIForm',[VmtPMSModuleController::class, 'deleteAssignedKPIForm'])->name('deleteAssignedKPIForm');
 Route::post('/republishFormEdited',[VmtPMSModuleController::class, 'republishFormEdited'])->name('republishFormEdited');
 
 // routes for get related manager of employee in Flow 1

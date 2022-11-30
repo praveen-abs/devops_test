@@ -4,223 +4,255 @@
 @endsection
 @section('css')
     <link rel="stylesheet" href="{{ URL::asset('/assets/css/pages_profile.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('/assets/css/payCheck.css') }}">
 @endsection
 @section('content')
 
     <div class="container-fluid user-details-wrapper mt-30 ">
-        <div class="row">
-            <div class="col-12">
-                <div class="pro-overview">
-                    <div class="row">
-                        <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
-                            <div class="card profile-box border-0 flex-fill ">
-                                <div class="card-body">
-                                    <div class="profile-wrapper d-flex w-100 ">
-                                        <div class="profile-img d-flex">
-                                            @include('ui-profile-avatar-lg', [
-                                                'currentUser' => $user,
-                                            ])
-                                            <span class="personal-edit img-edit"><a href="#" class="edit-icon"
-                                                    data-bs-toggle="modal" data-bs-target="#personal_info"
-                                                    id="pencil-on-avatar">
-                                                    <i class="ri-pencil-fill"></i></a></span>
-                                        </div>
-                                        <div class="profile-info w-75 ">
-                                            <h6 class="fw-bold mb-2 pt-1">{{ $user->name }}
-                                            </h6>
-                                            <p class="departmnet fw-bold f-15 text-muted">
-                                                {{ !empty($user_full_details->department) ? $user_full_details->department : '' }}
-                                            </p>
-                                            <p class="role text-muted f-15 fw-bold">
-                                                {{ !empty($user_full_details->designation) ? $user_full_details->designation : '' }}
-                                            </p>
-                                        </div>
+        <div class="card  left-line mb-3">
+            <div class="card-body px-2 py-2">
+                <div class="row">
+                    <div class="col-6 d-flex align-items-center">
+                        <ul class="nav nav-pills nav-tabs-dashed" role="tablist">
+                            <li class="nav-item text-muted" role="presentation">
+                                <a class="nav-link active pb-2" data-bs-toggle="tab" href="#basic_info" aria-selected="true"
+                                    role="tab">
+                                    Info</a>
+                            </li>
+                            <li class="nav-item text-muted" role="presentation">
+                                <a class="nav-link  pb-2" data-bs-toggle="tab" href="#info_document" aria-selected="true"
+                                    role="tab">
+                                    Document</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane show fade active" id="basic_info" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="pro-overview">
+                            <div class="row">
+                                <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
+                                    <div class="card profile-box border-0 flex-fill ">
+                                        <div class="card-body">
+                                            <div class="profile-wrapper d-flex w-100 ">
+                                                <div class="profile-img d-flex">
+                                                    @include('ui-profile-avatar-lg', [
+                                                        'currentUser' => $user,
+                                                    ])
+                                                    <span class="personal-edit img-edit"><a href="#" class="edit-icon"
+                                                            data-bs-toggle="modal" data-bs-target="#personal_info"
+                                                            id="pencil-on-avatar">
+                                                            <i class="ri-pencil-fill"></i></a></span>
+                                                </div>
+                                                <div class="profile-info w-75 ">
+                                                    <h6 class="fw-bold mb-2 pt-1">{{ $user->name }}
+                                                    </h6>
+                                                    <p class="departmnet fw-bold f-15 text-muted">
+                                                        {{ !empty($user_full_details->department) ? $user_full_details->department : '' }}
+                                                    </p>
+                                                    <p class="role text-muted f-15 fw-bold">
+                                                        {{ !empty($user_full_details->designation) ? $user_full_details->designation : '' }}
+                                                    </p>
+                                                </div>
 
-                                    </div>
-
-                                    <div class="mt-4">
-                                        <h6 class="mb-2">Profile Completeness</h6>
-
-                                        <div class="progress-wrapper">
-
-                                            <div class="mb-1 d-flex -justify-content-between ">
-                                                <p class="text-muted f-12">Profile Percentage</p>
-                                                <p class="text-muted text-end f-12 fw-bold">{{ $profileCompletenessValue }}%
-                                                </p>
                                             </div>
-                                            <div class="progress progress-bar-content mb-2">
-                                                <div class="progress-bar " role="progressbar"
-                                                    style="width:{{ $profileCompletenessValue }}%"
-                                                    aria-valuenow="{{ $profileCompletenessValue }}" aria-valuemin="0"
-                                                    aria-valuemax="100"></div>
-                                            </div>
-                                            <p class="text-muted f-12 fw-bold">Your profile is completed</p>
-                                        </div>
 
+                                            <div class="mt-4">
+                                                <h6 class="mb-2">Profile Completeness</h6>
+
+                                                <div class="progress-wrapper">
+
+                                                    <div class="mb-1 d-flex -justify-content-between ">
+                                                        <p class="text-muted f-12">Profile Percentage</p>
+                                                        <p class="text-muted text-end f-12 fw-bold">
+                                                            {{ $profileCompletenessValue }}%
+                                                        </p>
+                                                    </div>
+                                                    <div class="progress progress-bar-content mb-2">
+                                                        <div class="progress-bar " role="progressbar"
+                                                            style="width:{{ $profileCompletenessValue }}%"
+                                                            aria-valuenow="{{ $profileCompletenessValue }}"
+                                                            aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                    <p class="text-muted f-12 fw-bold">Your profile is completed</p>
+                                                </div>
+
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 d-flex col-xl-4 col-lg-6 col-sm-12s">
-                            <div class="card  profile-box employee-info-card flex-fill">
-                                <div class="card-body">
-                                    <h6 class="">Employee Informations
-                                        <span class="personal-edit"><a  class="edit-icon"
-                                                data-bs-toggle="modal" data-bs-target="#employee_info"><i
-                                                    class="ri-pencil-fill"></i></a></span>
-                                    </h6>
-                                    <ul class="personal-info">
-                                        <li>
-                                            <div class="title">Phone:</div>
-                                            <div class="text"><a
-                                                    href="">{{ !empty($user_full_details->mobile_number) ? $user_full_details->mobile_number : '' }}</a>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Email:</div>
-                                            <div class="text"><a href="">{{ $user->email }}</a></div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Birthday:</div>
-                                            @if (!empty($user_full_details->dob))
-                                                <div class="text">{{ date('d F', strtotime($user_full_details->dob)) }}
-                                                </div>
-                                            @endif
-                                        </li>
-                                        <li>
-                                            <div class="title">Current Address:</div>
-                                            <div class="text">
-                                                {{ $user_full_details->current_address_line_1 ?? '' }}
-                                                <br />
-                                                {{ $user_full_details->current_address_line_2 ?? '' }}
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Gender:</div>
-                                            <div class="text">{{ $user_full_details->gender ?? '' }}</div>
-                                        </li>
-                                        {{-- <li>
+                                <div class="col-md-6 d-flex col-xl-4 col-lg-6 col-sm-12s">
+                                    <div class="card  profile-box employee-info-card flex-fill">
+                                        <div class="card-body">
+                                            <h6 class="">Employee Informations
+                                                <span class="personal-edit"><a class="edit-icon" data-bs-toggle="modal"
+                                                        data-bs-target="#employee_info"><i
+                                                            class="ri-pencil-fill"></i></a></span>
+                                            </h6>
+                                            <ul class="personal-info">
+                                                <li>
+                                                    <div class="title">Phone:</div>
+                                                    <div class="text"><a
+                                                            href="">{{ !empty($user_full_details->mobile_number) ? $user_full_details->mobile_number : '' }}</a>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">Email:</div>
+                                                    <div class="text"><a href="">{{ $user->email }}</a></div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">Birthday:</div>
+                                                    @if (!empty($user_full_details->dob))
+                                                        <div class="text">
+                                                            {{ date('d F', strtotime($user_full_details->dob)) }}
+                                                        </div>
+                                                    @endif
+                                                </li>
+                                                <li>
+                                                    <div class="title">Current Address:</div>
+                                                    <div class="text">
+                                                        {{ $user_full_details->current_address_line_1 ?? '' }}
+                                                        <br />
+                                                        {{ $user_full_details->current_address_line_2 ?? '' }}
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">Gender:</div>
+                                                    <div class="text">{{ $user_full_details->gender ?? '' }}</div>
+                                                </li>
+                                                {{-- <li>
                                             <div class="title">Gender:</div>
                                             <div class="text">{{ $user_full_details->gender ?? '' }}</div>
                                         </li> --}}
-                                        <li>
-                                            <div class="title">Reports to:</div>
-                                            <div class="text d-flex align-items-center">
-                                                <div class="avatar-box">
-                                                    <div
-                                                        class="avatar avatar-xs d-flex align-items-center page-header-user-dropdown me-2">
-                                                        @if (!empty($reportingManager) &&
-                                                            $reportingManager->avatar &&
-                                                            file_exists(public_path('images/' . $reportingManager->avatar)))
-                                                            <img class="w-100 h-100 soc-det-img "
-                                                                src="{{ URL::asset('images/' . $reportingManager->avatar) }}"
-                                                                alt="Header Avatar">
+                                                <li>
+                                                    <div class="title">Reports to:</div>
+                                                    <div class="text d-flex align-items-center">
+                                                        <div class="avatar-box">
+                                                            <div
+                                                                class="avatar avatar-xs d-flex align-items-center page-header-user-dropdown me-2">
+                                                                @if (!empty($reportingManager) &&
+                                                                    $reportingManager->avatar &&
+                                                                    file_exists(public_path('images/' . $reportingManager->avatar)))
+                                                                    <img class="w-100 h-100 soc-det-img "
+                                                                        src="{{ URL::asset('images/' . $reportingManager->avatar) }}"
+                                                                        alt="Header Avatar">
+                                                                @else
+                                                                    <span class="rounded-circle user-profile  ml-2 "
+                                                                        id="">
+                                                                        <i id="manager_shortname" class="align-middle "></i>
+                                                                    </span>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                        @if (!empty($reportingManager) && $reportingManager->name)
+                                                            <a href="{{ $reportingManager->id }}">
+                                                                {{ $reportingManager->name }}
+                                                            </a>
                                                         @else
-                                                            <span class="rounded-circle user-profile  ml-2 " id="">
-                                                                <i id="manager_shortname" class="align-middle "></i>
-                                                            </span>
+                                                            ---
                                                         @endif
                                                     </div>
-                                                </div>
-                                                @if (!empty($reportingManager) && $reportingManager->name)
-                                                    <a href="{{ $reportingManager->id }}">
-                                                        {{ $reportingManager->name }}
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
+                                    <div class="card profile-box flex-fill">
+                                        <div class="card-body">
+                                            <form action="{{ route('updatePersonalInformation', $user->id) }}"
+                                                Method="POST" enctype="multipart/form-data">
+                                                <h6 class="">Personal Informations
+                                                    <span class="personal-edit"><a href="#" class="edit-icon"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#personal_info_modal"><i
+                                                                class="ri-pencil-fill"></i></a></span>
+                                                </h6>
+                                                <ul class="personal-info">
+                                                    <li>
+                                                        <div class="title">Passport No.</div>
+                                                        <div class="text">
+                                                            {{ $user_full_details->passport_number ?? '' }}
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Passport Exp Date.</div>
+                                                        <div class="text">{{ $user_full_details->passport_date ?? '' }}
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Tel</div>
+                                                        <div class="text">{{ $user_full_details->mobile_number ?? '' }}
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Nationality</div>
+                                                        <div class="text">{{ $user_full_details->nationality ?? '' }}
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Religion</div>
+                                                        <div class="text">{{ $user_full_details->religion ?? '' }}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Marital status</div>
+                                                        <div class="text text-capitalize">
+                                                            {{ $user_full_details->marital_status ?? '' }}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Spouse Name</div>
+                                                        <div class="text">{{ $user_full_details->spouse_name ?? '' }}
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">No. of children</div>
+                                                        <div class="text">{{ $user_full_details->no_of_children ?? '' }}
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                        </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
+                                    <div class="card profile-box flex-fill">
+                                        <div class="card-body">
+                                            <h6 class="">Experience Details
+                                                <span class="personal-edit">
+                                                    <a href="#" class="edit-icon" data-bs-toggle="modal"
+                                                        data-bs-target="#experience_info">
+                                                        <i class="ri-pencil-fill"></i>
                                                     </a>
-                                                @else
-                                                    ---
-                                                @endif
-                                            </div>
-                                        </li>
-
-                                    </ul>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
-                            <div class="card profile-box flex-fill">
-                                <div class="card-body">
-                                    <form action="{{ route('updatePersonalInformation', $user->id) }}" Method="POST"
-                                        enctype="multipart/form-data">
-                                        <h6 class="">Personal Informations
-                                            <span class="personal-edit"><a href="#" class="edit-icon"
-                                                    data-bs-toggle="modal" data-bs-target="#personal_info_modal"><i
-                                                        class="ri-pencil-fill"></i></a></span>
-                                        </h6>
-                                        <ul class="personal-info">
-                                            <li>
-                                                <div class="title">Passport No.</div>
-                                                <div class="text">
-                                                    {{ $user_full_details->passport_number ?? '' }}
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="title">Passport Exp Date.</div>
-                                                <div class="text">{{ $user_full_details->passport_date ?? '' }}</div>
-                                            </li>
-                                            <li>
-                                                <div class="title">Tel</div>
-                                                <div class="text">{{ $user_full_details->mobile_number ?? '' }}</div>
-                                            </li>
-                                            <li>
-                                                <div class="title">Nationality</div>
-                                                <div class="text">{{ $user_full_details->nationality ?? '' }}</div>
-                                            </li>
-                                            <li>
-                                                <div class="title">Religion</div>
-                                                <div class="text">{{ $user_full_details->religion ?? '' }}</div>
-                                            </li>
-                                            <li>
-                                                <div class="title">Marital status</div>
-                                                <div class="text text-capitalize">
-                                                    {{ $user_full_details->marital_status ?? '' }}</div>
-                                            </li>
-                                            <li>
-                                                <div class="title">Spouse Name</div>
-                                                <div class="text">{{ $user_full_details->spouse_name ?? '' }}</div>
-                                            </li>
-                                            <li>
-                                                <div class="title">No. of children</div>
-                                                <div class="text">{{ $user_full_details->no_of_children ?? '' }}</div>
-                                            </li>
-                                        </ul>
-                                </div>
-                                </form>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
-                            <div class="card profile-box flex-fill">
-                                <div class="card-body">
-                                    <h6 class="">Experience Details
-                                        <span class="personal-edit">
-                                            <a href="#" class="edit-icon" data-bs-toggle="modal"
-                                                data-bs-target="#experience_info">
-                                                <i class="ri-pencil-fill"></i>
-                                            </a>
-                                        </span>
-                                    </h6>
-                                    <div class="table-responsive" id="experience-detail-table">
-                                        <table class="table table-nowrap">
-                                            <thead>
-                                                <tr>
-                                                    <th>Organization</th>
-                                                    <th>Designation</th>
-                                                    <th>From</th>
-                                                    <th>To</th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @if ($exp)
-                                                    @foreach ($exp as $k => $info)
+                                                </span>
+                                            </h6>
+                                            <div class="table-responsive" id="experience-detail-table">
+                                                <table class="table table-nowrap">
+                                                    <thead>
                                                         <tr>
-                                                            <td>{{ $info['company_name'] }}</td>
-                                                            <td>{{ $info['job_position'] }}</td>
-                                                            <td>{{ $info['period_from'] }}</td>
-                                                            <td>{{ $info['period_to'] }}</td>
-                                                            {{-- <td class="text-end">
+                                                            <th>Organization</th>
+                                                            <th>Designation</th>
+                                                            <th>From</th>
+                                                            <th>To</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if ($exp)
+                                                            @foreach ($exp as $k => $info)
+                                                                <tr>
+                                                                    <td>{{ $info['company_name'] }}</td>
+                                                                    <td>{{ $info['job_position'] }}</td>
+                                                                    <td>{{ $info['period_from'] }}</td>
+                                                                    <td>{{ $info['period_to'] }}</td>
+                                                                    {{-- <td class="text-end">
                                                     <div class="dropdown dropdown-action">
                                                         <a aria-expanded="false" data-bs-toggle="dropdown"
                                                             class="action-icon dropdown-toggle" href="#"><i
@@ -235,58 +267,58 @@
                                                         </div>
                                                     </div>
                                                 </td> --}}
-                                                        </tr>
-                                                    @endforeach
-                                                @endif
-                                            </tbody>
-                                        </table>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
 
-                        <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 col-xxl-12 d-flex">
-                            <div class="card top-line w-100">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center justify-content-between mb-2">
-                                        <h6 class="fw-bold mb-0 ">Family Informations
-                                        </h6>
-                                        <a href="#" class="edit-icon" data-bs-toggle="modal"
-                                            data-bs-target="#family_info_modal">
-                                            <i class=" ri-pencil-fill"></i>
-                                        </a>
-                                    </div>
-                                    <div class="table-responsive">
-                                        <table class="table table-nowrap">
-                                            <thead>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Relationship</th>
-                                                    <th>Date of Birth</th>
-                                                    <th>Phone</th>
-                                                    {{-- <th></th> --}}
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @if (!empty($familydetails))
-                                                    @foreach ($familydetails as $singledetail)
+                                <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 col-xxl-12 d-flex">
+                                    <div class="card top-line w-100">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                                <h6 class="fw-bold mb-0 ">Family Informations
+                                                </h6>
+                                                <a href="#" class="edit-icon" data-bs-toggle="modal"
+                                                    data-bs-target="#family_info_modal">
+                                                    <i class=" ri-pencil-fill"></i>
+                                                </a>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table table-nowrap">
+                                                    <thead>
                                                         <tr>
-                                                            <td>{{ $singledetail->name }}</td>
-                                                            <td>{{ $singledetail->relationship }}</td>
-                                                            <td>{{ $singledetail->dob }}</td>
-                                                            <td>{{ $singledetail->phone_number }}</td>
+                                                            <th>Name</th>
+                                                            <th>Relationship</th>
+                                                            <th>Date of Birth</th>
+                                                            <th>Phone</th>
+                                                            {{-- <th></th> --}}
                                                         </tr>
-                                                    @endforeach
-                                                @endif
-                                            </tbody>
-                                        </table>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (!empty($familydetails))
+                                                            @foreach ($familydetails as $singledetail)
+                                                                <tr>
+                                                                    <td>{{ $singledetail->name }}</td>
+                                                                    <td>{{ $singledetail->relationship }}</td>
+                                                                    <td>{{ $singledetail->dob }}</td>
+                                                                    <td>{{ $singledetail->phone_number }}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
+
                                 </div>
-                            </div>
 
-                        </div>
-
-                        {{-- <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
+                                {{-- <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
                         <div class="card profile-box flex-fill">
                             <div class="card-body">
                                 <h3 class="card-title fw-bold">Leave Details
@@ -318,81 +350,516 @@
                         </div>
                     </div> --}}
 
-                        <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
-                            <div class="card profile-box flex-fill">
-                                <div class="card-body">
-                                    <h6 class="">Bank information
-                                        <span class="personal-edit"><a href="#" class="edit-icon"
-                                                data-bs-toggle="modal" data-bs-target="#Bank_info"><i
-                                                    class="ri-pencil-fill"></i></a></span>
+                                <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
+                                    <div class="card profile-box flex-fill">
+                                        <div class="card-body">
+                                            <h6 class="">Bank information
+                                                <span class="personal-edit"><a href="#" class="edit-icon"
+                                                        data-bs-toggle="modal" data-bs-target="#Bank_info"><i
+                                                            class="ri-pencil-fill"></i></a></span>
 
-                                    </h6>
-                                    <ul class="personal-info">
-                                        <li>
-                                            <div class="title">Bank name</div>
-                                            <?php $bank_name = App\Models\Bank::where('id', $user_full_details->bank_id)->value('bank_name'); ?>
-                                            <div class="text">{{ $bank_name ?? '' }}</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Bank account No.</div>
-                                            <div class="text">{{ $user_full_details->bank_account_number ?? '' }}</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">IFSC Code</div>
-                                            <div class="text">{{ $user_full_details->bank_ifsc_code ?? '' }}</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">PAN No</div>
-                                            <div class="text">{{ $user_full_details->pan_number ?? '' }}</div>
-                                        </li>
-                                    </ul>
+                                            </h6>
+                                            <ul class="personal-info">
+                                                <li>
+                                                    <div class="title">Bank name</div>
+                                                    <?php $bank_name = App\Models\Bank::where('id', $user_full_details->bank_id)->value('bank_name'); ?>
+                                                    <div class="text">{{ $bank_name ?? '' }}</div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">Bank account No.</div>
+                                                    <div class="text">
+                                                        {{ $user_full_details->bank_account_number ?? '' }}</div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">IFSC Code</div>
+                                                    <div class="text">{{ $user_full_details->bank_ifsc_code ?? '' }}
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">PAN No</div>
+                                                    <div class="text">{{ $user_full_details->pan_number ?? '' }}</div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
 
-                        <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex  ">
-                            <div class="card profile-box flex-fill mb-0 ">
-                                <div class="card-body">
-                                    <h6 class="">Emergency Contact <a href="#" class="edit-icon"
-                                            data-bs-toggle="modal" data-bs-target="#emergency_contact_modal"><i
-                                                class=" ri-pencil-fill"></i></a></h6>
+                                <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex  ">
+                                    <div class="card profile-box flex-fill mb-0 ">
+                                        <div class="card-body">
+                                            <h6 class="">Emergency Contact <a href="#" class="edit-icon"
+                                                    data-bs-toggle="modal" data-bs-target="#emergency_contact_modal"><i
+                                                        class=" ri-pencil-fill"></i></a></h6>
 
-                                    @if (!empty($emergencyContactDetails))
-                                        <ul class="personal-info">
+                                            @if (!empty($emergencyContactDetails))
+                                                <ul class="personal-info">
 
 
-                                            <li>
-                                                <div class="title">Name</div>
-                                                <div class="text">{{ $emergencyContactDetails->name ?? '' }}</div>
-                                            </li>
-                                            <li>
-                                                <div class="title">Relationship</div>
-                                                <div class="text">{{ $emergencyContactDetails->relationship ?? '' }}
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="title">Phone</div>
-                                                <div class="text">{{ $emergencyContactDetails->phone_number_1 ?? '' }}
-                                                </div>
-                                            </li>
-                                            {{-- <li>
+                                                    <li>
+                                                        <div class="title">Name</div>
+                                                        <div class="text">{{ $emergencyContactDetails->name ?? '' }}
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Relationship</div>
+                                                        <div class="text">
+                                                            {{ $emergencyContactDetails->relationship ?? '' }}
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Phone</div>
+                                                        <div class="text">
+                                                            {{ $emergencyContactDetails->phone_number_1 ?? '' }}
+                                                        </div>
+                                                    </li>
+                                                    {{-- <li>
                                                 <div class="title">Phone - 2</div>
                                                 <div class="text">{{ $emergencyContactDetails->phone_number_2 ?? '' }}
                                                 </div>
                                             </li> --}}
-                                        </ul>
-                                    @endif
+                                                </ul>
+                                            @endif
 
+                                        </div>
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
+            <div class="tab-pane  fade " id="info_document" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <div class="card profile-box flex-fill">
+                    <div class="card-body">
+                        <form action="{{ route('updatePersonalInformation', $user->id) }}" Method="POST"
+                            enctype="multipart/form-data">
+                            <h6 class="">Document Of Employee
+
+                            </h6>
+
+                            <div class="table responsive">
+                                <table class="table">
+                                    <thead class="bg-primary text-white">
+                                        <th>Document Type</th>
+                                        <th>Number/ID</th>
+                                        <th>Action</th>
+                                    </thead>
+                                    <tbody>
+                                        @if( !empty($documents_filenames[0]->aadhar_card_file))
+                                        <tr>
+
+                                            <td>Aadhar Card Front</td>
+                                            <td>
+                                                @if (Str::contains($documents_filenames[0]->aadhar_card_file, '.pdf'))
+                                                    <a target="_blank" href="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->aadhar_card_file) }}">View Documents</a>
+                                                @else
+                                                    <a class="view-file text-info"
+                                                        data-src="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->aadhar_card_file) }}"
+                                                        style="cursor:pointer">
+                                                        {{ 'View Documents' }}
+                                                    </a>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($docs_reviewed != null)
+                                                    @if ($docs_reviewed->aadhar_card_file == 1)
+                                                        {{ 'Approved' }}
+                                                    @elseif($docs_reviewed->aadhar_card_file == 0)
+                                                        {{ 'Rejected' }}
+                                                    @else
+                                                        {{ 'Not Reviewed' }}
+                                                    @endif
+                                                @else
+                                                    {{ 'Not Reviewed' }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if (isset($docs_reviewed) && $docs_reviewed->aadhar_card_file == -1)
+                                                    <button class="btn btn-border-primary"
+                                                        onclick="approveOrRejectDocument('aadhar_card_file', 1)">
+                                                        Approve</button>
+                                                    <button class="btn btn-danger"
+                                                        onclick="approveOrRejectDocument('aadhar_card_file', 0)">
+                                                        Reject</button>
+                                                @endif
+
+                                                @if ($docs_reviewed == null)
+                                                    <button class="btn btn-success"
+                                                        onclick="approveOrRejectDocument('aadhar_card_file', 1)">
+                                                        Approve</button>
+                                                    <button class="btn btn-danger"
+                                                        onclick="approveOrRejectDocument('aadhar_card_file', 0)">
+                                                        Reject</button>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        @endif
+                                        @if( !empty($documents_filenames[0]->aadhar_card_backend_file))
+
+                                        <tr>
+                                            <td>Aadhar Card Back</td>
+                                            <td>
+                                                @if (Str::contains($documents_filenames[0]->aadhar_card_backend_file, '.pdf'))
+                                                    <a target="_blank" href="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->aadhar_card_backend_file) }}">View Documents</a>
+                                                @else
+                                                <a class="view-file"
+                                                    data-src="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->aadhar_card_backend_file) }}"
+                                                    style="cursor:pointer">
+                                                    {{ 'View Documents' }}
+                                                </a>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($docs_reviewed != null)
+                                                    @if ($docs_reviewed->aadhar_card_backend_file == 1)
+                                                        {{ 'Approved' }}
+                                                    @elseif($docs_reviewed->aadhar_card_backend_file == 0)
+                                                        {{ 'Rejected' }}
+                                                    @else
+                                                        {{ 'Not Reviewed' }}
+                                                    @endif
+                                                @else
+                                                    {{ 'Not Reviewed' }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if (isset($docs_reviewed) && $docs_reviewed->aadhar_card_backend_file == -1)
+                                                    <button class="btn btn-success"
+                                                        onclick="approveOrRejectDocument('aadhar_card_backend_file', 1)">
+                                                        Approve</button>
+                                                    <button class="btn btn-danger"
+                                                        onclick="approveOrRejectDocument('aadhar_card_backend_file', 0)">
+                                                        Reject</button>
+                                                @endif
+
+                                                @if ($docs_reviewed == null)
+                                                    <button class="btn btn-success"
+                                                        onclick="approveOrRejectDocument('aadhar_card_backend_file', 1)">
+                                                        Approve</button>
+                                                    <button class="btn btn-danger"
+                                                        onclick="approveOrRejectDocument('aadhar_card_backend_file', 0)">
+                                                        Reject</button>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        @endif
+                                        @if( !empty($documents_filenames[0]->pan_card_file))
+
+                                        <tr>
+                                            <td>Pan Card</td>
+                                            <td>
+                                                @if (Str::contains($documents_filenames[0]->pan_card_file, '.pdf'))
+                                                    <a target="_blank" href="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->pan_card_file) }}">View Documents</a>
+                                                @else
+                                                    <div class="view-file"
+                                                        data-src="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->pan_card_file) }}"
+                                                        style="cursor:pointer">
+                                                        {{ 'View Documents' }}
+                                                    </div>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($docs_reviewed != null)
+                                                    @if ($docs_reviewed->pan_card_file == 1)
+                                                        {{ 'Approved' }}
+                                                    @elseif($docs_reviewed->pan_card_file == 0)
+                                                        {{ 'Rejected' }}
+                                                    @else
+                                                        {{ 'Not Reviewed' }}
+                                                    @endif
+                                                @else
+                                                    {{ 'Not Reviewed' }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if (isset($docs_reviewed) && $docs_reviewed->pan_card_file == -1)
+                                                    <button class="btn btn-success"
+                                                        onclick="approveOrRejectDocument('pan_card_file', 1)">
+                                                        Approve</button>
+                                                    <button class="btn btn-danger"
+                                                        onclick="approveOrRejectDocument('pan_card_file', 0)">
+                                                        Reject</button>
+                                                @endif
+
+                                                @if ($docs_reviewed == null)
+                                                    <button class="btn btn-success"
+                                                        onclick="approveOrRejectDocument('pan_card_file', 1)">
+                                                        Approve</button>
+                                                    <button class="btn btn-danger"
+                                                        onclick="approveOrRejectDocument('pan_card_file', 0)">
+                                                        Reject</button>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        @endif
+                                        @if( !empty($documents_filenames[0]->passport_file))
+
+                                        <tr>
+                                            <td>Passport</td>
+                                            <td>
+                                                @if (Str::contains($documents_filenames[0]->passport_file, '.pdf'))
+                                                    <a target="_blank" href="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->passport_file) }}">View Documents</a>
+                                                @else
+                                                    <a class="view-file"
+                                                        data-src="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->passport_file) }}"
+                                                        style="cursor:pointer">
+                                                        {{ 'View Documents' }}
+                                                    </a>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($docs_reviewed != null)
+                                                    @if ($docs_reviewed->passport_file == 1)
+                                                        {{ 'Approved' }}
+                                                    @elseif($docs_reviewed->passport_file == 0)
+                                                        {{ 'Rejected' }}
+                                                    @else
+                                                        {{ 'Not Reviewed' }}
+                                                    @endif
+                                                @else
+                                                    {{ 'Not Reviewed' }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if (isset($docs_reviewed) && $docs_reviewed->passport_file == -1)
+                                                    <button class="btn btn-success"
+                                                        onclick="approveOrRejectDocument('passport_file', 1)">
+                                                        Approve</button>
+
+                                                    <button class="btn btn-danger"
+                                                        onclick="approveOrRejectDocument('passport_file', 0)">
+                                                        Reject</button>
+                                                @endif
+
+                                                @if ($docs_reviewed == null)
+                                                    <button class="btn btn-success"
+                                                        onclick="approveOrRejectDocument('passport_file', 1)">
+                                                        Approve</button>
+
+                                                    <button class="btn btn-danger"
+                                                        onclick="approveOrRejectDocument('passport_file', 0)">
+                                                        Reject</button>
+                                                @endif
+                                            </td>
+
+                                        </tr>
+
+                                        @endif
+                                        @if( !empty($documents_filenames[0]->voters_id_file))
+
+                                        <tr>
+                                            <td>Voters ID</td>
+                                            <td>
+                                                @if (Str::contains($documents_filenames[0]->voters_id_file, '.pdf'))
+                                                    <a target="_blank" href="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->voters_id_file) }}">View Documents</a>
+                                                @else
+                                                    <div class="view-file"
+                                                        data-src="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->voters_id_file) }}"
+                                                        style="cursor:pointer">
+                                                        {{ 'View Documents' }}
+                                                    </div>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($docs_reviewed != null)
+                                                    @if ($docs_reviewed->voters_id_file == 1)
+                                                        {{ 'Approved' }}
+                                                    @elseif($docs_reviewed->voters_id_file == 0)
+                                                        {{ 'Rejected' }}
+                                                    @else
+                                                        {{ 'Not Reviewed' }}
+                                                    @endif
+                                                @else
+                                                    {{ 'Not Reviewed' }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if (isset($docs_reviewed) && $docs_reviewed->voters_id_file == -1)
+                                                    <button class="btn btn-success"
+                                                        onclick="approveOrRejectDocument('voters_id_file', 1)">
+                                                        Approve</button>
+
+                                                    <button class="btn btn-danger"
+                                                        onclick="approveOrRejectDocument('voters_id_file', 0)">
+                                                        Reject</button>
+                                                @endif
+
+                                                @if ($docs_reviewed == null)
+                                                    <button class="btn btn-success"
+                                                        onclick="approveOrRejectDocument('voters_id_file', 1)">
+                                                        Approve</button>
+
+                                                    <button class="btn btn-danger"
+                                                        onclick="approveOrRejectDocument('voters_id_file', 0)">
+                                                        Reject</button>
+                                                @endif
+                                            </td>
+
+                                        </tr>
+                                        @endif
+                                        @if( !empty($documents_filenames[0]->dl_file))
+
+                                        <tr>
+                                            <td>Driving License</td>
+                                            <td>
+                                                @if (Str::contains($documents_filenames[0]->dl_file, '.pdf'))
+                                                    <a target="_blank" href="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->dl_file) }}">View Documents</a>
+                                                @else
+                                                    <div class="view-file"
+                                                        data-src="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->dl_file) }}"
+                                                        style="cursor:pointer">
+                                                        {{ 'View Documents' }}
+                                                    </div>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($docs_reviewed != null)
+                                                    @if ($docs_reviewed->dl_file == 1)
+                                                        {{ 'Approved' }}
+                                                    @elseif($docs_reviewed->dl_file == 0)
+                                                        {{ 'Rejected' }}
+                                                    @else
+                                                        {{ 'Not Reviewed' }}
+                                                    @endif
+                                                @else
+                                                    {{ 'Not Reviewed' }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if (isset($docs_reviewed) && $docs_reviewed->dl_file == -1)
+                                                    <button class="btn btn-success" onclick="approveOrRejectDocument('dl_file', 1)">
+                                                        Approve</button>
+
+                                                    <button class="btn btn-danger" onclick="approveOrRejectDocument('dl_file', 0)">
+                                                        Reject</button>
+                                                @endif
+
+                                                @if ($docs_reviewed == null)
+                                                    <button class="btn btn-success"onclick="approveOrRejectDocument('dl_file', 1)">
+                                                        Approve</button>
+
+                                                    <button class="btn btn-danger" onclick="approveOrRejectDocument('dl_file', 0)">
+                                                        Reject</button>
+                                                @endif
+                                            </td>
+
+                                        </tr>
+                                        @endif
+                                        @if( !empty($documents_filenames[0]->education_certificate_file))
+                                        <tr>
+                                            <td>Educational Certificate</td>
+                                            <td>
+                                                @if (Str::contains($documents_filenames[0]->education_certificate_file, '.pdf'))
+                                                    <a target="_blank" href="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->education_certificate_file) }}">View Documents</a>
+                                                @else
+                                                    <div class="view-file"
+                                                        data-src="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->education_certificate_file) }}"
+                                                        style="cursor:pointer">
+                                                        {{ 'View Documents' }}
+                                                    </div>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($docs_reviewed != null)
+                                                    @if ($docs_reviewed->education_certificate_file == 1)
+                                                        {{ 'Approved' }}
+                                                    @elseif($docs_reviewed->education_certificate_file == 0)
+                                                        {{ 'Rejected' }}
+                                                    @else
+                                                        {{ 'Not Reviewed' }}
+                                                    @endif
+                                                @else
+                                                    {{ 'Not Reviewed' }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if (isset($docs_reviewed) && $docs_reviewed->education_certificate_file == -1)
+                                                    <button class="btn btn-success"
+                                                        onclick="approveOrRejectDocument('education_certificate_file', 1)">
+                                                        Approve</button>
+
+                                                    <button class="btn btn-danger"
+                                                        onclick="approveOrRejectDocument('education_certificate_file', 0)">
+                                                        Reject</button>
+                                                @endif
+
+                                                @if ($docs_reviewed == null)
+                                                    <button class="btn btn-success"
+                                                        onclick="approveOrRejectDocument('education_certificate_file', 1)">
+                                                        Approve</button>
+
+                                                    <button class="btn btn-danger"
+                                                        onclick="approveOrRejectDocument('education_certificate_file', 0)">
+                                                        Reject</button>
+                                                @endif
+                                            </td>
+
+                                        </tr>
+                                        @endif
+                                        @if( !empty($documents_filenames[0]->reliving_letter_file))
+                                        <tr>
+                                            <td>Relieving Letter</td>
+                                            <td>
+                                                @if (Str::contains($documents_filenames[0]->reliving_letter_file, '.pdf'))
+                                                    <a target="_blank" href="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->reliving_letter_file) }}">View Documents</a>
+                                                @else
+                                                    <div class="view-file"
+                                                        data-src="{{ URL::asset('employee_documents/' . $user_code . '/' . $documents_filenames[0]->reliving_letter_file) }}"
+                                                        style="cursor:pointer">
+                                                        {{ 'View Documents' }}
+                                                    </div>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($docs_reviewed != null)
+                                                    @if ($docs_reviewed->reliving_letter_file == 1)
+                                                        {{ 'Approved' }}
+                                                    @elseif($docs_reviewed->reliving_letter_file == 0)
+                                                        {{ 'Rejected' }}
+                                                    @else
+                                                        {{ 'Not Reviewed' }}
+                                                    @endif
+                                                @else
+                                                    {{ 'Not Reviewed' }}
+                                                @endif
+                                            </td>
+                                            <td>
+
+                                                @if (isset($docs_reviewed) && $docs_reviewed->reliving_letter_file == -1)
+                                                    <button class="btn btn-success"
+                                                        onclick="approveOrRejectDocument('reliving_letter_file', 1)">
+                                                        Approve</button>
+
+                                                    <button class="btn btn-danger"
+                                                        onclick="approveOrRejectDocument('reliving_letter_file', 0)">
+                                                        Reject</button>
+                                                @endif
+
+                                                @if ($docs_reviewed == null)
+                                                    <button class="btn btn-success"
+                                                        onclick="approveOrRejectDocument('reliving_letter_file', 1)">
+                                                        Approve</button>
+
+                                                    <button class="btn btn-danger"
+                                                        onclick="approveOrRejectDocument('reliving_letter_file', 0)">
+                                                        Reject</button>
+                                                @endif
+
+                                            </td>
+                                        </tr>
+                                        @endif
+
+                                    </tbody>
+                                </table>
+                            </div>
+                    </div>
+                    </form>
+                </div>
+
+            </div>
         </div>
         <div class="tab-content">
-
             <div class="tab-pane fade" id="bank_statutory">
                 <div class="card">
                     <div class="card-body">
@@ -821,10 +1288,8 @@
                                                     <option selected hidden disabled>Choose Gender</option>
                                                     @foreach ($genderArray as $item)
                                                         <option value="{{ $item }}"
-                                                        @if(!empty($user_full_details->gender) && $user_full_details->gender == $item)
-                                                            selected
-                                                        @endif
-                                                        >{{ $item }}</option>
+                                                            @if (!empty($user_full_details->gender) && $user_full_details->gender == $item) selected @endif>
+                                                            {{ $item }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -873,25 +1338,25 @@
                                 <div class="col-md-12">
                                     <div class="form-group mb-3">
                                         <label>Current Address Line - 1</label>
-                                        <textarea name="current_address_line_1" id="current_address_line_1" cols="30" rows="3" class="form-control"
-                                            value="{{ $user_full_details->current_address_line_1 ?? '' }}">{{ $user_full_details->current_address_line_1 ?? '' }}</textarea>
+                                        <textarea name="current_address_line_1" id="current_address_line_1" cols="30" rows="3"
+                                            class="form-control" value="{{ $user_full_details->current_address_line_1 ?? '' }}">{{ $user_full_details->current_address_line_1 ?? '' }}</textarea>
                                     </div>
                                     <div class="form-group mb-3">
                                         <label>Current Address Line - 2</label>
-                                        <textarea name="current_address_line_2" id="current_address_line_2" cols="30" rows="3" class="form-control"
-                                            value="{{ $user_full_details->current_address_line_2 ?? '' }}">{{ $user_full_details->current_address_line_2 ?? '' }}</textarea>
+                                        <textarea name="current_address_line_2" id="current_address_line_2" cols="30" rows="3"
+                                            class="form-control" value="{{ $user_full_details->current_address_line_2 ?? '' }}">{{ $user_full_details->current_address_line_2 ?? '' }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group mb-3">
                                         <label>Permanent Address Line - 1</label>
-                                        <textarea name="permanent_address_line_1" id="permanent_address_line_1" cols="30" rows="3" class="form-control"
-                                            value="{{ $user_full_details->permanent_address_line_1 ?? '' }}">{{ $user_full_details->permanent_address_line_1 ?? '' }}</textarea>
+                                        <textarea name="permanent_address_line_1" id="permanent_address_line_1" cols="30" rows="3"
+                                            class="form-control" value="{{ $user_full_details->permanent_address_line_1 ?? '' }}">{{ $user_full_details->permanent_address_line_1 ?? '' }}</textarea>
                                     </div>
                                     <div class="form-group mb-3">
                                         <label>Permanent Address Line - 2</label>
-                                        <textarea name="permanent_address_line_2" id="permanent_address_line_2" cols="30" rows="3" class="form-control"
-                                            value="{{ $user_full_details->permanent_address_line_2 ?? '' }}">{{ $user_full_details->permanent_address_line_2 ?? '' }}</textarea>
+                                        <textarea name="permanent_address_line_2" id="permanent_address_line_2" cols="30" rows="3"
+                                            class="form-control" value="{{ $user_full_details->permanent_address_line_2 ?? '' }}">{{ $user_full_details->permanent_address_line_2 ?? '' }}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -1130,8 +1595,11 @@
                                             class="onboard-form form-control textbox form-select  select2_form_without_search"
                                             required>
                                             <option value="" hidden selected disabled>Choose nationality</option>
-                                            <option value="Indian"  @if($user_full_details->nationality == 'Indian') selected @endif>Indian</option>
-                                            <option value="Other Nationality" @if($user_full_details->nationality == 'Other Nationality') selected @endif>Other Nationality</option>
+                                            <option value="Indian" @if ($user_full_details->nationality == 'Indian') selected @endif>
+                                                Indian</option>
+                                            <option value="Other Nationality"
+                                                @if ($user_full_details->nationality == 'Other Nationality') selected @endif>Other Nationality
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -1206,13 +1674,13 @@
                                     <div class="card-body">
                                         <div class="row">
 
-                                                <div class="text-end col-md-12">
-                                                    <button
-                                                        class="btn text-danger delete-btn p-0 bg-transparent outline-none border-0 f-12 plus-sign"
-                                                        type="button"><i class="f-12 me-1 fa text-danger  fa-trash"
-                                                            aria-hidden="true"></i>Delete
-                                                        </i></button>
-                                                </div>
+                                            <div class="text-end col-md-12">
+                                                <button
+                                                    class="btn text-danger delete-btn p-0 bg-transparent outline-none border-0 f-12 plus-sign"
+                                                    type="button"><i class="f-12 me-1 fa text-danger  fa-trash"
+                                                        aria-hidden="true"></i>Delete
+                                                    </i></button>
+                                            </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-group mb-3">
@@ -1328,8 +1796,9 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group ">
                                                             <label>Phone <span class="text-danger">*</span></label>
-                                                            <input name="phone_number[]" class="form-control onboard-form"
-                                                                type="number" maxlength="10" minlength="10" required
+                                                            <input name="phone_number[]"
+                                                                class="form-control onboard-form" type="number"
+                                                                maxlength="10" minlength="10" required
                                                                 value="{{ $singledetail->phone_number }}">
                                                         </div>
                                                     </div>
@@ -1346,7 +1815,8 @@
                                     </div> --}}
                                     <button id="add_more"
                                         class="btn text-primary p-0 bg-transparent outline-none border-0 f-12 plus-sign"
-                                        type="button"><i class="f-12 me-1 fa  fa-plus-circle" aria-hidden="true"></i>Add
+                                        type="button"><i class="f-12 me-1 fa  fa-plus-circle"
+                                            aria-hidden="true"></i>Add
                                         More</i></button>
                                 </div>
                             @else
@@ -1354,8 +1824,8 @@
                                     <div class="card mb-3 addition-content" id="content1">
                                         <div class="card-body">
                                             <!-- <h3 class="card-title fw-bold">Education Informations <a href="javascript:void(0);"
-                                                                            {{-- class="delete-icon"><i class="   ri-delete-bin-line"></i></a> --}}
-                                                                    </h3> -->
+                                                                                    {{-- class="delete-icon"><i class="   ri-delete-bin-line"></i></a> --}}
+                                                                            </h3> -->
 
                                             <div class="row ">
                                                 <div class="col-md-12 m-0 text-end">
@@ -1369,14 +1839,16 @@
                                                     <div class="form-group mb-3">
                                                         <label>Name<span class="text-danger">*</span></label>
                                                         <input name="name[]" class="form-control onboard-form"
-                                                            type="text" pattern-data="name" required value="">
+                                                            type="text" pattern-data="name" required
+                                                            value="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group mb-3">
                                                         <label>Relationship <span class="text-danger">*</span></label>
                                                         <input name="relationship[]" class="form-control onboard-form"
-                                                            type="text" pattern-data="alpha" required value="">
+                                                            type="text" pattern-data="alpha" required
+                                                            value="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -1684,7 +2156,7 @@
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="{{ URL::asset('assets/js/pages/profile-setting.init.js') }}"></script>
-    <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
+     
     <script>
         $(document).ready(function() {
 
@@ -1888,5 +2360,69 @@
         // $(".progress-bar").animate({
         // style="width: {{ $profileCompletenessValue }}%"
         // }, 2500);
+
+        $('body').on('click', '.close-modal', function() {
+            $('#notificationModal').hide();
+            $('#notificationModal').addClass('fade');
+        });
+
+
+        $('.view-file').on('click', function(e) {
+            console.log($(this).data('src'));
+            var docHtmlString = "<img src=" + $(this).data('src') + " width='100%' / style='width:100%;height:400px;'>";
+            $('#modalBody').html(docHtmlString);
+
+            $('#notificationModal').show();
+        })
+
+        function approveOrRejectDocument(docName, aproveStatus) {
+            $.ajax({
+                url: "{{ route('vmt-store-documents-review') }}",
+                type: "POST",
+                data: {
+                    user_code: $('#hidden_user_code').val(),
+                    doc_name: docName,
+                    approve_status: aproveStatus,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(data) {
+                    alert("Document reviewed successfully");
+                    //window.location.href = "/";
+                    location.reload();
+                }
+            });
+        }
+
+        function approveAllDocument() {
+            //e.preventDefault();
+            console.log('aprove_All');
+
+            var doc_reviewed = {
+                aadhar_card_file: 1,
+                aadhar_card_backend_file: 1,
+                pan_card_file: 1,
+                passport_file: 1,
+                voters_id_file: 1,
+                dl_file: 1,
+                education_certificate_file: 1,
+                reliving_letter_file: 1
+            }
+
+            $.ajax({
+                url: "{{ route('vmt-store-documents-review-approve-all') }}",
+                type: "POST",
+                data: {
+                    user_code: $('#hidden_user_code').val(),
+                    doc_array: doc_reviewed,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(data) {
+                    alert("All Documents approved successfully");
+                    //window.location.href = "/";
+                    location.reload();
+                }
+            });
+        }
+
     </script>
 @endsection

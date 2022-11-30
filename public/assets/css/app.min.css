@@ -16361,9 +16361,7 @@ span.flatpickr-weekday {
     line-height: 1.35;
 }
 
-.dropdown {
-    position: relative;
-}
+
 
 .material-icons {
     font-weight: normal;
@@ -16387,7 +16385,7 @@ span.flatpickr-weekday {
 }
 
 .personal-info li .title {
-    color: #333333;
+    color: #afacac;
     float: left;
     font-size: 13px;
     width: 50%;
@@ -16398,6 +16396,7 @@ span.flatpickr-weekday {
     font-size: 13px;
     width: 50%;
     text-align: start;
+    color: #003056;
 }
 
 #bank_statutory .card .card-title,
@@ -16713,6 +16712,8 @@ ul {
 
 .form-control:focus {
     border-color: #002f56 !important;
+    box-shadow:0 0 0 0.2rem rgb(0 48 86 / 17%)!important;
+
 }
 
 /* for paycheckDashboard */
@@ -17568,9 +17569,6 @@ tr:first-child th:first-child {
     border-top-left-radius: 6px ;
 }
 
-tr:first-child th:first-child {
-    border-bottom-left-radius: 6px ;
-}
 
 tr:last-child td:first-child {
     border-bottom-left-radius: 6px ;
@@ -17815,9 +17813,6 @@ white-space:nowrap;
     content: "";
     height: 100%;
     border-left: 1px solid #c1d1d1;
-    /* font-weight: 600; */
-    /* background: #c1d1d1; */
-    /* position: absolute; */
     margin: 0px 5px;
 }
 
@@ -17825,9 +17820,8 @@ white-space:nowrap;
 
 .progress-wrapper .progress-bar-content {
     box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
-    /* background: #405189; */
     border-radius: 10px;
-    height: 10px;
+    height: 7px;
 }
 
 .progress-bar-content .progress-bar {

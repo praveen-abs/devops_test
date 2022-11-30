@@ -20,26 +20,23 @@ table.kpi_appraisal-table tbody tr:last-child th {
 table.kpi_appraisal-table tr td {
     border: 1px solid #002f56;
 }
-tr:first-child th:last-child {
-    border-top-right-radius: 6px;
-    border-bottom-right-radius: 6px;
-    /* border: 0px; */
-}
+
 table.kpi_appraisal-table tr td textarea,
 table.kpi_appraisal-table tr th textarea {
     width: 100%;
-    border: 1px solid #c1d3e3;
-    border-radius: 5px;
+    border:none;
+
 }
 table.kpi_republish_table tbody tr th textarea,
 table.kpi_republish_table tbody tr td textarea {
-    height: 70px !important;
+    height: 50px ;
+}
+table.kpi_republish_table tbody tr td {
+    padding: 0px 4px;
 }
 
 
-table.kpi_appraisal-table tr th{
-    border: 1px solid #fff;
-}
+
 table.kpi_appraisal-table tr th:nth-child(1),
 table.kpi_appraisal-table tr th:nth-child(2) {
     text-align: left;
@@ -56,7 +53,7 @@ table.kpi_appraisal-table tbody tr td textarea {
 }
 
 table.kpi_appraisal-table tbody tr th {
-    /* border-radius: 0px !important; */
+
     border-bottom-left-radius: 0px !important;
 }
 table.kpi_appraisal-table tbody tr th textarea {
@@ -64,17 +61,17 @@ table.kpi_appraisal-table tbody tr th textarea {
     background: transparent;
     width: 300px;
 }
-table.kpi_appraisal-table tbody tr td:nth-child(2) textarea {
-    width: 300px;
-    text-align: left;
-}
+/* table#kpiTable tbody tr td textarea {
+    padding: 3px 4px;
+} */
+
+
 
 table.kpi_appraisal-table tbody tr th textarea,
 table.kpi_appraisal-table tbody tr td:nth-child(2) textarea,
 table.kpi_appraisal-table tbody tr td textarea {
-    outline: none;
-    height: 100%;
     resize: none;
+    min-height: 50px;
 }
 /* tr:first-child  th:nth-child(2) {
     border-top-left-radius: 6px !important;
@@ -189,15 +186,12 @@ table.kpi_appraisal-table tr,
 table.kpi_appraisal-table th,
 table.kpi_appraisal-table th div {
     text-align: center;
-}
-/* table.kpi_appraisal-table th div {
-    min-width: 200px;
-    width: 100px;
-} */
-/* table.kpi_appraisal-table tr:nth-child(1n) th div,table.kpi_appraisal-table tr:nth-child(1n) th:first-child  {
 
-    text-align: initial;
-} */
+}
+table.kpi_appraisal-table tr td{
+    vertical-align:top;
+}
+
 table.kpi_appraisal-table tr:nth-child(1n) th div {
     text-align: initial;
 }

@@ -1174,7 +1174,7 @@
 
                 function showLoader() {
 
-                    swal({
+                    Swal.fire({
                         title: 'Info',
                         text: 'Please wait...',
                         allowOutsideClick: false,
@@ -1221,7 +1221,7 @@
                         // contentType: false,
                         // processData: false,
                         success: function(data) {
-                            swal.close();
+                            Swal.fire.close();
                             $('.loader').hide();
 
                             console.log("Response : " + data.status);
@@ -1265,7 +1265,7 @@
                             //alert(data);
                         },
                         error: function(data) { //NEED TO FIX IT
-                            swal.close();
+                            Swal.fire.close();
 
                             $('.loader').hide();
 

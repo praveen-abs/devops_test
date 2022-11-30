@@ -111,7 +111,7 @@
 
 
             <div class="vendor-table-wrapper">
-                <div id="vendor-table"></div>
+                <div id="vendor-table" class="noCustomize_gridjs"></div>
             </div>
             <!-- modal for import  -->
             <div class="modal fade" id="importVendor" tabindex="-1" aria-labelledby="newLead" aria-hidden="true">

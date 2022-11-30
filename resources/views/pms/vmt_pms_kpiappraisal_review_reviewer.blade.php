@@ -40,11 +40,11 @@
                         <div class="card mb-0 w-100 border-0 boxshadow_lite4">
                             <div class="card-body">
                                 <p class="f-14 text-ash  ">Business Unit/Process/Function</p>
-                                <p class="mb-4 f-15 fw-bold text-primary">{{ $assignedUserDetails->getEmployeeOfficeDetails->department_id }}</p>
+                                <p class="mb-4 f-14 fw-bold text-primary">{{ $assignedUserDetails->getEmployeeOfficeDetails->department_id }}</p>
                                 <p class="f-14 text-ash  ">Reporting Manager</p>
-                                <p class="mb-4 f-15 fw-bold text-primary ">{{ $assignersName }}</p>
+                                <p class="mb-4 f-14 fw-bold text-primary ">{{ $assignersName }}</p>
                                 <p class="f-14 text-ash  ">Review Period</p>
-                                <p class="mb-4 f-15 fw-bold text-primary">{{ $assignedGoals->year }} -
+                                <p class="mb-4 f-14 fw-bold text-primary">{{ $assignedGoals->year }} -
                                     {{ strtoupper($assignedGoals->assignment_period) }}</p>
                             </div>
                         </div>
@@ -286,27 +286,27 @@
             <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true"
                 aria-labelledby="exampleModalToggleLabel2">
                 <div class="modal-content">
-                    <div class="modal-header py-2 bg-primary">
+                    <div class="modal-header border-0 d-flex align-items-center py-2">
 
-                        <div class="w-100 modal-header-content d-flex align-items-center py-2">
-                            <h5 class="modal-title text-white" id="modalHeader">Rejected
-                            </h5>
-                            <button type="button" class="btn-close btn-close-white close-modal" data-bs-dismiss="modal"
-                                aria-label="Close">
-                            </button>
-                        </div>
-                    </div>
+
+                        <h6 class="modal-title text-primary" id="modalHeader">Rejected
+                        </h6>
+                        <button type="button" class="btn-close btn-close-white close-modal" data-bs-dismiss="modal"
+                            aria-label="Close">
+                        </button>
+
+                </div>
                     <div class="modal-body">
-                        <div class="mt-4">
-                            <h4 class="mb-3" id="modalNot"></h4>
-                            <textarea name="reject_comment" id="reject_comment" class="form-control w-100 outline-none border-0 h-100"></textarea>
-                            <div class="hstack gap-2 justify-content-center">
+
+                            <h6 class="mb-3" id="modalNot"></h6>
+                            <textarea name="reject_comment" id="reject_comment" class="form-control mb-2 w-100 outline-none border-primary h-100"></textarea>
+                            <div class="text-end">
                                 <button type="button" class="btn btn-primary" id="rejection_submit"
                                     disabled>Save</button>
                                 <button type="button" class="btn btn-light close-modal"
                                     data-bs-dismiss="modal">Close</button>
                             </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -472,7 +472,7 @@
                                                         <th scope="col" data-name='kpiManagerAchivement'
                                                             data-filterable="false" data-visible="true">Manager
                                                             KPI
-                                                            Achievement % </th>
+                                                            Achievement  <br><span id="overall_Employee_kpi_percentage"></span></th>
                                                     @endif
                                                 @endforeach
 
@@ -643,7 +643,7 @@
                                                                     $reviewersReview == Auth::id() &&
                                                                     ($decodedKpiReviewSubmittedStatus[$reviewersReview] == '' ||
                                                                         $decodedKpiReviewSubmittedStatus[$reviewersReview] == '0'))
-                                                                    <textarea type="number" class="inp-text form-control h-100 border-0 outline-none w-100 "
+                                                                    <textarea type="number" class="inp-text form-control h-100 border-0 outline-none w-100 reviewer_kpi_percentage "
                                                                         name="reviewer_kpi_percentage[{{ $reviewersReview }}][{{ $kpiRow->id }}]"
                                                                         id="reviewer_kpi_percentage{{ $index }}-{{ $reviewersReview }}"
                                                                         onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46'
@@ -889,6 +889,19 @@
             } else {
                 $('#reviewer_kpi_percentage' + index+'-'+kpiAchievementReviewerReview).val('');
             }
+            calculateOverallReviewerKpiPercentage();
+        }
+
+        function calculateOverallReviewerKpiPercentage(){
+            //Get all the 'Self KPI Achievements %' textarea values
+            var array_selfKpiAchievementsPercentage = $('.reviewer_kpi_percentage').map((_, element) => $.trim(element.value)).get();
+            var total_percentage = _.sumBy(array_selfKpiAchievementsPercentage, item => Number(item));
+
+            console.log(" array_selfKpiAchievementsPercentage : "+array_selfKpiAchievementsPercentage);
+            console.log("SUM of array_selfKpiAchievementsPercentage : "+ total_percentage);
+            //Also update Self KPI Achievement %
+            $("#overall_Employee_kpi_percentage").html("Total : "+Math.round(total_percentage)+"%");
+
         }
 
         $('#upload_file').change(function() {
@@ -923,7 +936,7 @@
                                 countIndex + 1]);
                         });
                     } else {
-                        swal("Error!", data.message, "error");
+                        Swal.fire("Error!", data.message, "error");
                     }
                     $('.loader').hide();
                 },
@@ -947,11 +960,11 @@
                 data: $('#employee_self_review').serialize(),
                 success: function(data) {
                     if (data.status == true) {
-                        swal("Success!", data.message, "success").then(function() {
+                        Swal.fire("Success!", data.message, "success").then(function() {
                             location.reload();
                         });
                     } else {
-                        swal("Error!", data.message, "error");
+                        Swal.fire("Error!", data.message, "error");
                     }
                     $('.loader').hide();
                     // window.location.reload();
@@ -975,11 +988,11 @@
                 data: $('#employee_self_review').serialize(),
                 success: function(data) {
                     if (data.status == true) {
-                        swal("Success!", data.message, "success").then(function() {
+                        Swal.fire("Success!", data.message, "success").then(function() {
                             location.reload();
                         });
                     } else {
-                        swal("Error!", data.message, "error");
+                        Swal.fire("Error!", data.message, "error");
                     }
                     $('.loader').hide();
                     // window.location.reload();
@@ -994,7 +1007,7 @@
         // Accept Review
         $('#accept_review').click(function(e) {
             e.preventDefault();
-            swal({
+            Swal.fire({
                 title: 'Are you sure?',
                 text: 'You want to Approve?',
                 icon: 'warning',
@@ -1015,11 +1028,11 @@
                         },
                         success: function(data) {
                             if (data.status == true) {
-                                swal("Success!", data.message, "success").then(function() {
+                                Swal.fire("Success!", data.message, "success").then(function() {
                                     location.reload();
                                 });
                             } else {
-                                swal("Error!", data.message, "error");
+                                Swal.fire("Error!", data.message, "error");
                             }
                             $('.loader').hide();
                         },
@@ -1058,7 +1071,7 @@
         // Accept Review
         $('#rejection_submit').click(function(e) {
             e.preventDefault();
-            swal({
+            Swal.fire({
                 title: 'Are you sure?',
                 text: 'You want to Reject!',
                 icon: 'warning',
@@ -1080,11 +1093,11 @@
                         },
                         success: function(data) {
                             if (data.status == true) {
-                                swal("Success!", data.message, "success").then(function() {
+                                Swal.fire("Success!", data.message, "success").then(function() {
                                     location.reload();
                                 });
                             } else {
-                                swal("Error!", data.message, "error");
+                                Swal.fire("Error!", data.message, "error");
                             }
                             $('.loader').hide();
                         },

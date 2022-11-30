@@ -6,11 +6,11 @@
 @endsection
 
 @section('content')
-    @component('components.payroll_breadcrumb')
+    {{-- @component('components.payroll_breadcrumb')
         @slot('li_1')
         @endslot
-    @endcomponent
-    <div class="upload-payslip-wrapper ">
+    @endcomponent --}}
+    <div class="upload-payslip-wrapper mt-30">
         <div class="row">
             <div class="col-xl-12">
                 <div class="card shadow profile-box ">

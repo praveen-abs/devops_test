@@ -13,8 +13,7 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
 
 {{-- sweet alert --}}
-<script src="{{ URL::asset('/assets/premassets/js/sweetalert.js') }}"></script>
-
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!--Nice select-->
 <script src="{{ URL::asset('/assets/premassets/js/jquery.nice-select.min.js') }}"></script>
@@ -22,8 +21,14 @@
 
 {{-- grid js --}}
 <script src="{{ URL::asset('assets/libs/gridjs/gridjs.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+
 
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"
+integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A=="
+crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 
 <script src="{{ URL::asset('assets/libs/simplebar/simplebar.min.js') }}"></script>
 <script src="{{ URL::asset('assets/libs/node-waves/node-waves.min.js') }}"></script>

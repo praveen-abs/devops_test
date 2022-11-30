@@ -515,12 +515,20 @@
                                             Analytics</span>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
+                                    {{-- <li class="nav-item">
                                         <a href="{{route('run')}}"  class="nav-link sidebar py-1"
                                             role="button"><span>
                                             Pay Run</span>
                                         </a>
-                                    </li>
+                                    </li> --}}
+                                    {{-- <li class="nav-item">
+                                        <a  href="{{ url('runpayRoll') }}"  class="nav-link sidebar py-1"
+                                            role="button"><span>
+                                            Pay Run</span>
+                                        </a>
+                                    </li> --}}
+                                    <a href="{{route('payRun')}}" class="nav-link sidebar py-1" role="button"><span>Pay
+                                        Run</span></a>
 
                                     <li class="nav-item">
                                         <a  href="{{route('claim')}}"  class="nav-link sidebar py-1"

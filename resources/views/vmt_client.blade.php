@@ -19,10 +19,6 @@
 
         }
 
-        /* .directory-right button {
-                        background-color: #b0bff1!important;
-
-                    } */
 
         .switch-field input {
             position: absolute !important;
@@ -123,7 +119,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <hr class="text-muted my-2">
+
                             <div class="row">
                                 <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                                     <div class="mb-2 floating-label">
@@ -182,7 +178,7 @@
             </div>
 
             <div class="client-table-wrapper">
-                <div class="" id="client-table"></div>
+                <div     id="client-table" class="noCustomize_gridjs"></div>
             </div>
 
 

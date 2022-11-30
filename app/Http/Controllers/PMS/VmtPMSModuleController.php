@@ -51,6 +51,12 @@ class VmtPMSModuleController extends Controller
     // flow 1 pms V2
     public function showPMSDashboard()
     {
+        $table_pmsConfig = ConfigPms::find('1');
+
+        $calendar_type =  $table_pmsConfig->calendar_type;
+        $year = $table_pmsConfig->year;
+        $frequency = $table_pmsConfig->frequency;
+        $assignment_period = $table_pmsConfig->assignment_period;
 
         // checkConfigPms();
 
@@ -101,6 +107,7 @@ class VmtPMSModuleController extends Controller
 
         $flowCheck = 1;
 
+
         $allEmployeesList = User::leftJoin('vmt_employee_office_details','users.id','=','vmt_employee_office_details.user_id')
             ->leftJoin('vmt_employee_details','users.id','=','vmt_employee_details.userid')
             ->select('users.name','users.id','vmt_employee_details.emp_no','vmt_employee_office_details.designation')
@@ -114,7 +121,7 @@ class VmtPMSModuleController extends Controller
 
         $loggedInUser = Auth::user();
 
-        return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','existingKPIForms','departments','employees','pmsKpiAssigneeDetails','flowCheck','allEmployeesList','allEmployeesWithoutLoggedUserList','loggedInUser'));
+        return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','existingKPIForms','departments','employees','pmsKpiAssigneeDetails','flowCheck','allEmployeesList','allEmployeesWithoutLoggedUserList','loggedInUser','calendar_type','year','frequency','assignment_period'));
     }
 
     // function uised for get KPI Form Names in Dashboard Dropdown  through AJAX
@@ -134,6 +141,12 @@ class VmtPMSModuleController extends Controller
         $loggedUserDetails = User::findorfail($loggedUserId);
         $existingKPIForms = VmtPMS_KPIFormModel::where('author_id', $loggedUserId)->get(['id','form_name']);
 
+        $table_pmsConfig = ConfigPms::find('1');
+
+        $calendar_type =  $table_pmsConfig->calendar_type;
+        $year = $table_pmsConfig->year;
+        $frequency = $table_pmsConfig->frequency;
+        $assignment_period = $table_pmsConfig->assignment_period;
         // get Departments data
         $departments = Department::where('is_active', 1)->get();
 
@@ -193,7 +206,7 @@ class VmtPMSModuleController extends Controller
         $loggedInUser = Auth::user();
 
         $flowCheck = 2;
-        return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','existingKPIForms','departments','employees','pmsKpiAssigneeDetails','loggedManagerEmployees','loggedUserDetails','getSameLevelManagers','flowCheck','loggedInUser','loggedManagerEmployeesIDs'));
+        return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','existingKPIForms','departments','employees','pmsKpiAssigneeDetails','loggedManagerEmployees','loggedUserDetails','getSameLevelManagers','flowCheck','loggedInUser','loggedManagerEmployeesIDs','calendar_type','year','frequency','assignment_period'));
     }
 
     // flow 3 pms V2
@@ -201,6 +214,11 @@ class VmtPMSModuleController extends Controller
         $loggedUserId = Auth::id();
 
         $existingKPIForms = VmtPMS_KPIFormModel::where('author_id', $loggedUserId)->get(['id','form_name']);
+        $table_pmsConfig = ConfigPms::find('1');
+        $calendar_type =  $table_pmsConfig->calendar_type;
+        $year = $table_pmsConfig->year;
+        $frequency = $table_pmsConfig->frequency;
+        $assignment_period = $table_pmsConfig->assignment_period;
 
         // get Departments data
         $departments = Department::where('is_active', 1)->get();
@@ -373,7 +391,7 @@ class VmtPMSModuleController extends Controller
         //dd($ratingDetail);
         $canShowOverallScoreCard_SelfAppraisal_Dashboard = fetchPMSConfigValue('can_show_overallscorecard_in_selfappraisal_dashboard');
 
-        return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','canShowOverallScoreCard_SelfAppraisal_Dashboard','ratingDetail','reportingManagerName','existingKPIForms','assignedUserDetails','departments','employees','pmsKpiAssigneeDetails','flowCheck','loggedInUser','parentReviewerIds','parentReviewerNames','parentReviewerIds'));
+        return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','canShowOverallScoreCard_SelfAppraisal_Dashboard','ratingDetail','reportingManagerName','existingKPIForms','assignedUserDetails','departments','employees','pmsKpiAssigneeDetails','flowCheck','loggedInUser','parentReviewerIds','parentReviewerNames','parentReviewerIds','calendar_type','year','frequency','assignment_period'));
     }
 
     // KPI Form
@@ -443,6 +461,34 @@ class VmtPMSModuleController extends Controller
 
         }
         return "Question Created Successfully";
+
+    }
+
+
+    public function deleteAssignedKPIForm(Request $request){
+
+        $status="failure";
+        $message = "Failed to delete the Assigned KPI form";
+
+        //Delete the data from VmtPMS_KPIFormAssignedModel and VmtPMS_KPIFormReviewsModel
+        if(VmtPMS_KPIFormAssignedModel::where('id', $request->assignedKPIFormID)->first()->exists()){
+
+            $deleted_row_count = VmtPMS_KPIFormAssignedModel::where('id', $request->assignedKPIFormID)->first()->delete();
+
+            if($deleted_row_count > 0)
+            {
+                VmtPMS_KPIFormReviewsModel::where('vmt_pms_kpiform_assigned_id',$request->assignedKPIFormID)->first()->delete();
+
+                $message = "Assigned KPI form deleted successfully";
+                $status = "success";
+            }
+        }
+
+
+       return $response = [
+            'status' => $status,
+            'message' => $message,
+        ];
 
     }
 
@@ -633,6 +679,8 @@ class VmtPMSModuleController extends Controller
     */
     public function showKPIReviewPage_Assignee(Request $request)
     {
+
+        //dd($request->all());
         // Flow 1 HR creates Form and Assignee
         $kpiFormAssignedDetails = VmtPMS_KPIFormAssignedModel::findorfail($request->assignedFormid);
 
@@ -1208,7 +1256,7 @@ class VmtPMSModuleController extends Controller
         for the given assignment period
     */
     public function isKPIAlreadyAssignedForGivenAssignmentPeriod(Request $request){
-       // dd($request->all());
+        //dd($request->all());
         try{
             if(!empty($request->selectedEmployeeId)){
 

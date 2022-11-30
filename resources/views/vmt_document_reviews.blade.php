@@ -37,14 +37,8 @@
     </style>
 @endsection
 @section('content')
-
-    @component('components.organization_breadcrumb')
-        @slot('li_1')
-        @endslot
-    @endcomponent
-
     {{-- @section('ui-onboarding') --}}
-    <div class="container-fluid documentReview_wrapper">
+    <div class="container-fluid documentReview_wrapper mt-30">
         <div id="msform">
             @csrf
             <input type="hidden" name="hidden_user_code" id="hidden_user_code" value="{{ $user_code }}" />
@@ -486,16 +480,16 @@
 
 
 <div id="notificationModal" class="modal custom-modal fade" role="dialog"  style="opacity:1; display:none;background:#00000073;">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-md" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-xl" role="document">
         <div class="modal-content top-line">
             <div id="modalHeader" class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                <h6 class="modal-title mb-1 text-primary"  style="border-bottom:5px solid #d0d4e2;">
+                <h6 class="modal-title mb-1 text-primary"  >
                  Documents Review</h6>
                 <button type="button" class="close-modal outline-none bg-transparent border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body"  id="modalBody">
 
 
 
@@ -515,9 +509,7 @@
                     </div>
                     <div class="modal-body"> --}}
 
-                            <div class="mb-2 col-md mx-auto text-center" id="modalBody">
 
-                            </div>
                             <div class="text-end">
                                 <button type="button" id="button_close" class="btn btn-border-primary close-modal"
                                     data-bs-dismiss="modal">Close</button>
@@ -562,7 +554,7 @@
 
         $('.view-file').on('click', function(e) {
             console.log($(this).data('src'));
-            var docHtmlString = "<img src=" + $(this).data('src') + " width='100%' />";
+            var docHtmlString = "<img src=" + $(this).data('src') + " width='100%' / style='width:100%;height:400px;'>";
             $('#modalBody').html(docHtmlString);
 
             $('#notificationModal').show();

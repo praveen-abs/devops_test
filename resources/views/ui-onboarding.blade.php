@@ -1794,9 +1794,9 @@
     <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable  modal-md" role="document">
         <div class="modal-content top-line">
             <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                <hp class="modal-title mb-1 text-primary" id="modalHeader"
-                    style="border-bottom:5px solid #d0d4e2;">
-                </hp>
+                <h6 class="modal-title mb-1 text-primary" id="modalHeader"
+                   >
+                </h6>
                 <button type="button" class="close-modal outline-none bg-transparent border-0 h3"
                     data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>

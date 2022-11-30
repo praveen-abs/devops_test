@@ -14,14 +14,13 @@
                     <div class="col-md-12 col-sm-12 col-lg-3 col-xl-3 col-xxl-3 d-flex ">
                         <div class="mb-0 card w-100 border-0 boxshadow_lite4">
                             <div class="card-body  text-center">
+                                <div class="d-flex justify-content-center profile-img ">
 
-                                <div class="d-flex justify-content-center">
-                                    <div class="profile-img d-flex">
                                         <?php $currentUserDetails = App\Models\User::find($assignedUserDetails->id);?>
                                         @include('ui-profile-avatar-lg', [
                                             'currentUser' => $currentUserDetails ,
                                         ])
-                                    </div>
+
                                 </div>
 
                                 <div class="appraisal_userDet mt-3">
@@ -39,11 +38,11 @@
                         <div class="card mb-0 w-100 border-0 boxshadow_lite4">
                             <div class="card-body">
                                 <p class="f-14 text-ash  ">Business Unit/Process/Function</p>
-                                <p class="mb-4 f-15 fw-bold text-primary">{{ $assignedUserDetails->getEmployeeOfficeDetails->department_id }}</p>
+                                <p class="mb-4 f-14 fw-bold text-primary">{{ $assignedUserDetails->getEmployeeOfficeDetails->department_id }}</p>
                                 <p class="f-14 text-ash  ">Reporting Manager</p>
-                                <p class="mb-4 f-15 fw-bold text-primary ">{{ $assignersName }}</p>
+                                <p class="mb-4 f-14 fw-bold text-primary ">{{ $assignersName }}</p>
                                 <p class="f-14 text-ash  ">Review Period</p>
-                                <p class="mb-4 f-15 fw-bold text-primary">{{ $assignedGoals->year }} -
+                                <p class="mb-4 f-14 fw-bold text-primary">{{ $assignedGoals->year }} -
                                     {{ strtoupper($assignedGoals->assignment_period) }}</p>
                             </div>
                         </div>
@@ -174,27 +173,27 @@
             <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true"
                 aria-labelledby="exampleModalToggleLabel2">
                 <div class="modal-content">
-                    <div class="modal-header py-2 bg-primary">
+                    <div class="modal-header border-0 d-flex align-items-center py-2">
 
-                        <div class="w-100 modal-header-content d-flex align-items-center py-2">
-                            <h5 class="modal-title text-white" id="modalHeader">Rejected
-                            </h5>
-                            <button type="button" class="btn-close btn-close-white close-modal" data-bs-dismiss="modal"
-                                aria-label="Close">
-                            </button>
-                        </div>
-                    </div>
+                      
+                        <h6 class="modal-title text-primary" id="modalHeader">Rejected
+                        </h6>
+                        <button type="button" class="btn-close btn-close-white close-modal" data-bs-dismiss="modal"
+                            aria-label="Close">
+                        </button>
+                  
+                </div>
                     <div class="modal-body">
-                        <div class="mt-4">
-                            <h4 class="mb-3" id="modalNot"></h4>
-                            <textarea name="reject_comment" id="reject_comment" class="form-control h-100 w-100 border-0 outline-none"></textarea>
-                            <div class="hstack gap-2 justify-content-center">
+                        
+                            <h6 class="mb-3" id="modalNot"></h6>
+                            <textarea name="reject_comment" id="reject_comment" class="form-control mb-2  h-100 w-100 border-primary outline-none"></textarea>
+                            <div class="text-end">
                                 <button type="button" class="btn btn-primary" id="rejection_submit"
                                     disabled>Save</button>
                                 <button type="button" class="btn btn-light close-modal"
                                     data-bs-dismiss="modal">Close</button>
                             </div>
-                        </div>
+                       
                     </div>
                 </div>
             </div>
@@ -326,7 +325,7 @@
                                                 <th scope="col" data-name='kpiSelfReview' data-filterable="false"
                                                     data-visible="true">KPI - Achievement (Self Review)</th>
                                                 <th scope="col" data-name='kpiSelfAchivement' data-filterable="false"
-                                                    data-visible="true">Self KPI Achievement %</th>
+                                                    data-visible="true">Self KPI Achievement %<br/><span id="overall_self_kpi_percentage"></span></th>
                                                 <th scope="col" data-name='comments' data-filterable="false"
                                                     data-visible="true">Comments</th>
                                                 @if ($isAllReviewersSubmittedOrNot)
@@ -453,7 +452,7 @@
                                                         @if ($assignedGoals->is_assignee_accepted == '1' && $isAllReviewersAcceptedOrNot == true)
                                                             @if ($assignedGoals->is_assignee_submitted == 0)
                                                                 {{-- <div> --}}
-                                                                    <textarea  class="inp-text form-control w-100 h-100 outline-none border-0 " id="assignee_kpi_percentage{{ $index }}"
+                                                                    <textarea  class="inp-text form-control w-100 h-100 outline-none border-0 assignee_kpi_percentage" id="assignee_kpi_percentage{{ $index }}"
                                                                         name="assignee_kpi_percentage[{{ $kpiRow->id }}]"
                                                                         onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46'
                                                                         @if(is_numeric($kpiRow->target))
@@ -470,6 +469,8 @@
                                                                 {{-- </div> --}}
                                                             @else
                                                                 <div>
+                                                                    <input type="hidden" class="assignee_kpi_percentage"  value="{{ round(json_decode($assignedGoals->assignee_kpi_percentage, true)[$kpiRow->id]) }}">
+
                                                                     {{ round(json_decode($assignedGoals->assignee_kpi_percentage, true)[$kpiRow->id]) }}%
                                                                 </div>
                                                             @endif
@@ -533,12 +534,11 @@
                                                 @if ($assignedGoals->is_assignee_submitted == '')
                                                     Save
                                                 @else
-                                                    Edit
+                                                    Save
                                                 @endif
                                             </button>
                                             &nbsp;&nbsp;
-                                            <button class="btn btn-primary" id="publish_table"
-                                                @if ($assignedGoals->is_assignee_submitted == '') disabled @endif>Submit</button>
+                                            <button class="btn btn-primary" id="publish_table" disabled>Submit</button>
                                         </div>
                                     @else
                                         @if (in_array('0', $isAllReviewersAcceptedData))
@@ -653,6 +653,12 @@
     <script src="{{ URL::asset('/assets/premassets/js/footable.min.js') }}"></script>
     <script src="{{ URL::asset('/assets/premassets/css/footable.bootstrap.min.css') }}"></script>
     <script type="text/javascript">
+
+
+        $(document).ready(function() {
+            calculateOverallSelfKpiPercentage();
+        });
+
         /*
          * for calculating Self KPI Achievement % If Target is Number
          * formula :-
@@ -682,6 +688,20 @@
             } else {
                 $('#assignee_kpi_percentage' + index).val('');
             }
+
+            calculateOverallSelfKpiPercentage();
+        }
+
+        function calculateOverallSelfKpiPercentage(){
+            //Get all the 'Self KPI Achievements %' textarea values
+            var array_selfKpiAchievementsPercentage = $('.assignee_kpi_percentage').map((_, element) => $.trim(element.value)).get();
+            var total_percentage = _.sumBy(array_selfKpiAchievementsPercentage, item => Number(item));
+
+            console.log(" array_selfKpiAchievementsPercentage : "+array_selfKpiAchievementsPercentage);
+            console.log("SUM of array_selfKpiAchievementsPercentage : "+ total_percentage);
+            //Also update Self KPI Achievement %
+            $("#overall_self_kpi_percentage").html("Total : "+Math.round(total_percentage)+"%");
+
         }
 
         // Upload file enable upload button
@@ -732,12 +752,12 @@
 
                         });
                         if (validationCheck == true) {
-                            swal("Wrong!",
+                            Swal.fire("Wrong!",
                                 "Only Numbers are Allowed in KPI Achievement (Self Review) when Target is Number",
                                 "error");
                         }
                     } else {
-                        swal("Error!", data.message, "error");
+                        Swal.fire("Error!", data.message, "error");
                     }
                     $('.loader').hide();
                 },
@@ -759,11 +779,12 @@
                 data: $('#employee_self_review').serialize(),
                 success: function(data) {
                     if (data.status == true) {
-                        swal("Success!", data.message, "success").then(function() {
-                            location.reload();
+                        $('#publish_table').removeAttr('disabled');
+                        Swal.fire("Success!", data.message, "success").then(function() {
+                            //location.reload();
                         });
                     } else {
-                        swal("Error!", data.message, "error");
+                        Swal.fire("Error!", data.message, "error");
                     }
                     $('.loader').hide();
                 },
@@ -786,11 +807,11 @@
                 data: $('#employee_self_review').serialize(),
                 success: function(data) {
                     if (data.status == true) {
-                        swal("Success!", data.message, "success").then(function() {
+                        Swal.fire("Success!", data.message, "success").then(function() {
                             location.reload();
                         });
                     } else {
-                        swal("Error!", data.message, "error");
+                        Swal.fire("Error!", data.message, "error");
                     }
                     $('.loader').hide();
                 },
@@ -803,7 +824,7 @@
         // Accept Review
         $('#accept_review').click(function(e) {
             e.preventDefault();
-            swal({
+            Swal.fire({
                 title: 'Are you sure?',
                 text: 'You want to Accept!',
                 icon: 'warning',
@@ -824,11 +845,11 @@
                         },
                         success: function(data) {
                             if (data.status == true) {
-                                swal("Success!", data.message, "success").then(function() {
+                                Swal.fire("Success!", data.message, "success").then(function() {
                                     location.reload();
                                 });
                             } else {
-                                swal("Error!", data.message, "error");
+                                Swal.fire("Error!", data.message, "error");
                             }
                             $('.loader').hide();
                         },
@@ -867,7 +888,7 @@
         // Accept Review
         $('#rejection_submit').click(function(e) {
             e.preventDefault();
-            swal({
+            Swal.fire({
                 title: 'Are you sure?',
                 text: 'You want to Reject!',
                 icon: 'warning',
@@ -889,11 +910,11 @@
                         },
                         success: function(data) {
                             if (data.status == true) {
-                                swal("Success!", data.message, "success").then(function() {
+                                Swal.fire("Success!", data.message, "success").then(function() {
                                     location.reload();
                                 });
                             } else {
-                                swal("Error!", data.message, "error");
+                                Swal.fire("Error!", data.message, "error");
                             }
                             $('.loader').hide();
                         },

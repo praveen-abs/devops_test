@@ -378,12 +378,12 @@ table tr td .upload_file i.fa-upload input[type="file"] {
     min-width: 120px;
 }
 table.investment_table tr td {
-    text-align: left;
+    text-align: center;
     white-space: nowrap;
 }
 table.investment_table tr td:nth-child(2) {
-    width:     350px;
-    white-space: pre-line;
+    width: 350px;
+    white-space:initial;
 }
 table.investment_table tr th {
     text-align: center;
