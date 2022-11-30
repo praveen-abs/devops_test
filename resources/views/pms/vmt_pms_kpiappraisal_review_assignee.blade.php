@@ -131,7 +131,7 @@
 
 
                                 <div class="mb-3">
-                                    <p class="f-14 text-ash mt-2 ">Review Period</p>
+                                    <p class="f-14 text-ash mt-2 ">Action</p>
                                     <div class="row">
                                         <div class="col-10 mt-2">
                                             <div class="progress">
