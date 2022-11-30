@@ -359,7 +359,7 @@
                                     @endif
 
                                     <li class="nav-item">
-                                        <a href="{{ route('page-not-found') }}" id=""
+                                        <a href="{{ route('showPMSApprovalPage') }}" id=""
                                             class="nav-link sidebar py-1" data-bs-toggle="" role="button"
                                             aria-expanded="false"><span>
                                                 OKR /PMS</span> </a>

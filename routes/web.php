@@ -395,12 +395,20 @@ Route::get('/documents-review-page/{user_code}', 'App\Http\Controllers\VmtApprov
 Route::post('documents-review', 'App\Http\Controllers\VmtApprovalsController@storeDocumentsReviewByAdmin')->name('vmt-store-documents-review');
 Route::post('documents-review-approve-all', 'App\Http\Controllers\VmtApprovalsController@approveAllDocumentByAdmin')->name('vmt-store-documents-review-approve-all');
 
+
+
+
 //
 Route::post('vmt_clientOnboarding', 'App\Http\Controllers\VmtClientController@store');
 Route::get('/department', 'App\Http\Controllers\VmtDepartmentController@showPage')->name('department');
 
 
 Route::get('/getPMSRatingJSON',  [App\Http\Controllers\ConfigPmsController::class, 'getPMSRating'])->name('getPMSRatingJSON');
+
+//PMS Approvals
+Route::get('/approvals_pms',  [App\Http\Controllers\VmtApprovalsController::class, 'showPMSApprovalPage'])->name('showPMSApprovalPage');
+
+
 
 //PMS v2
 Route::get('/pms',  [App\Http\Controllers\PMS\VmtPMSModuleController::class, 'showPMSDashboard'])->name('pms-dashboard');
