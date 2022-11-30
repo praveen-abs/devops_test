@@ -18,9 +18,9 @@
 
                                 <div class="d-flex justify-content-center">
                                     <div class="profile-img d-flex">
-                                        <?php $currentUserDetails = App\Models\User::find($assignedUserDetails->id);?>
+                                        <?php $currentUserDetails = App\Models\User::find($assignedUserDetails->id); ?>
                                         @include('ui-profile-avatar-lg', [
-                                            'currentUser' => $currentUserDetails ,
+                                            'currentUser' => $currentUserDetails,
                                         ])
                                     </div>
                                 </div>
@@ -40,7 +40,8 @@
                         <div class="card mb-0 w-100 border-0 boxshadow_lite4">
                             <div class="card-body">
                                 <p class="f-14 text-ash  ">Business Unit/Process/Function</p>
-                                <p class="mb-4 f-14 fw-bold text-primary">{{ $assignedUserDetails->getEmployeeOfficeDetails->department_id }}</p>
+                                <p class="mb-4 f-14 fw-bold text-primary">
+                                    {{ $assignedUserDetails->getEmployeeOfficeDetails->department_id }}</p>
                                 <p class="f-14 text-ash  ">Reporting Manager</p>
                                 <p class="mb-4 f-14 fw-bold text-primary ">{{ $assignersName }}</p>
                                 <p class="f-14 text-ash  ">Review Period</p>
@@ -50,118 +51,121 @@
                         </div>
 
                     </div>
-                    @if($canShowOverallScoreCard_ReviewPage == 'true')
+                    @if ($canShowOverallScoreCard_ReviewPage == 'true')
 
-                    <div class="col-md-12 col-sm-12 col-lg-5 col-xl-5 col-xxl-5   d-flex">
-                        <div class="card mb-0 w-100 appraisal_rating border-0 boxshadow_lite4">
-                            <div class="card-body">
-                                <p class="mb-2 fw-bold f-14 text-primary">Ratings</p>
-                                <div class="mb-3">
-                                    <p class="f-14 text-ash mt-2 ">Overall Annual Score</p>
-                                    <div class="row">
-                                        <div class="col-10 mt-2">
-                                            <div class="progress">
-                                                <div class="progress-bar bg-success" role="progressbar" style="width:25%"
-                                                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="col-md-12 col-sm-12 col-lg-5 col-xl-5 col-xxl-5   d-flex">
+                            <div class="card mb-0 w-100 appraisal_rating border-0 boxshadow_lite4">
+                                <div class="card-body">
+                                    <p class="mb-2 fw-bold f-14 text-primary">Ratings</p>
+                                    <div class="mb-3">
+                                        <p class="f-14 text-ash mt-2 ">Overall Annual Score</p>
+                                        <div class="row">
+                                            <div class="col-10 mt-2">
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-success" role="progressbar"
+                                                        style="width:25%" aria-valuenow="25" aria-valuemin="0"
+                                                        aria-valuemax="100"></div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-2">
-                                            {{-- <span class="text-primary f-15 fw-bold">1/3</span> --}}
-                                            <b class="f-15 text-primary">
-                                                @if ($isAllReviewersSubmittedOrNot)
-                                                    @if ($ratingDetail)
-                                                        {{ $ratingDetail['score'] }}
+                                            <div class="col-2">
+                                                {{-- <span class="text-primary f-15 fw-bold">1/3</span> --}}
+                                                <b class="f-15 text-primary">
+                                                    @if ($isAllReviewersSubmittedOrNot)
+                                                        @if ($ratingDetail)
+                                                            {{ $ratingDetail['score'] }}
+                                                        @else
+                                                            -
+                                                        @endif
                                                     @else
                                                         -
                                                     @endif
-                                                @else
-                                                    -
-                                                @endif
-                                            </b>
+                                                </b>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                </div>
-                                <div class="mb-3">
-                                    <p class="f-14 text-ash mt-2 ">Corresponding ANNUAL PERFORMANCE Rating</p>
-                                    <div class="row">
-                                        {{-- <div class="col-10 mt-2">
+                                    </div>
+                                    <div class="mb-3">
+                                        <p class="f-14 text-ash mt-2 ">Corresponding ANNUAL PERFORMANCE Rating</p>
+                                        <div class="row">
+                                            {{-- <div class="col-10 mt-2">
                                             <div class="progress">
                                                 <div class="progress-bar bg-info" role="progressbar" style="width: 50%"
                                                     aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
                                         </div> --}}
-                                        <div class="col-12">
-                                            <b class="f-15 text-primary">
-                                                @if ($isAllReviewersSubmittedOrNot)
-                                                    @if ($ratingDetail)
-                                                        {{ $ratingDetail['performance_rating'] }}
+                                            <div class="col-12">
+                                                <b class="f-15 text-primary">
+                                                    @if ($isAllReviewersSubmittedOrNot)
+                                                        @if ($ratingDetail)
+                                                            {{ $ratingDetail['performance_rating'] }}
+                                                        @else
+                                                            -
+                                                        @endif
                                                     @else
                                                         -
                                                     @endif
-                                                @else
-                                                    -
-                                                @endif
-                                            </b>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <p class="f-14 text-ash mt-2 ">Ranking</p>
-                                    <div class="row">
-                                        <div class="col-10 mt-2">
-                                            <div class="progress">
-                                                <div class="progress-bar bg-warning" role="progressbar" style="width: 75%"
-                                                    aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </b>
                                             </div>
                                         </div>
-                                        <div class="col-2">
-                                            <b class="f-15 text-primary">
-                                                @if ($isAllReviewersSubmittedOrNot)
-                                                    @if ($ratingDetail)
-                                                        {{ $ratingDetail['rank'] }}
+                                    </div>
+                                    <div class="mb-3">
+                                        <p class="f-14 text-ash mt-2 ">Ranking</p>
+                                        <div class="row">
+                                            <div class="col-10 mt-2">
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-warning" role="progressbar"
+                                                        style="width: 75%" aria-valuenow="75" aria-valuemin="0"
+                                                        aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <b class="f-15 text-primary">
+                                                    @if ($isAllReviewersSubmittedOrNot)
+                                                        @if ($ratingDetail)
+                                                            {{ $ratingDetail['rank'] }}
+                                                        @else
+                                                            -
+                                                        @endif
                                                     @else
                                                         -
                                                     @endif
-                                                @else
-                                                    -
-                                                @endif
-                                            </b>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-
-                                <div class="mb-3">
-                                    <p class="f-14 text-ash mt-2 ">Review Period</p>
-                                    <div class="row">
-                                        <div class="col-10 mt-2">
-                                            <div class="progress">
-                                                <div class="progress-bar bg-danger" role="progressbar" style="width: 100%"
-                                                    aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </b>
                                             </div>
                                         </div>
-                                        <div class="col-2">
-                                            <b class="f-15 text-primary">
-                                            @if ($isAllReviewersSubmittedOrNot)
-                                                @if ($ratingDetail)
-                                                    {{ $ratingDetail['action'] }}
-                                                @else
-                                                    -
-                                                @endif
-                                            @else
-                                                -
-                                            @endif
-                                        </b>
+
+                                    </div>
+
+
+                                    <div class="mb-3">
+                                        <p class="f-14 text-ash mt-2 ">Review Period</p>
+                                        <div class="row">
+                                            <div class="col-10 mt-2">
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-danger" role="progressbar"
+                                                        style="width: 100%" aria-valuenow="100" aria-valuemin="0"
+                                                        aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <b class="f-15 text-primary">
+                                                    @if ($isAllReviewersSubmittedOrNot)
+                                                        @if ($ratingDetail)
+                                                            {{ $ratingDetail['action'] }}
+                                                        @else
+                                                            -
+                                                        @endif
+                                                    @else
+                                                        -
+                                                    @endif
+                                                </b>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
+                                </div>
                             </div>
-                        </div>
 
-                    </div>
+                        </div>
                     @endif
                 </div>
 
@@ -295,17 +299,16 @@
                             aria-label="Close">
                         </button>
 
-                </div>
+                    </div>
                     <div class="modal-body">
 
-                            <h6 class="mb-3" id="modalNot"></h6>
-                            <textarea name="reject_comment" id="reject_comment" class="form-control mb-2 w-100 outline-none border-primary h-100"></textarea>
-                            <div class="text-end">
-                                <button type="button" class="btn btn-primary" id="rejection_submit"
-                                    disabled>Save</button>
-                                <button type="button" class="btn btn-light close-modal"
-                                    data-bs-dismiss="modal">Close</button>
-                            </div>
+                        <h6 class="mb-3" id="modalNot"></h6>
+                        <textarea name="reject_comment" id="reject_comment" class="form-control mb-2 w-100 outline-none border-primary h-100"></textarea>
+                        <div class="text-end">
+                            <button type="button" class="btn btn-primary" id="rejection_submit" disabled>Save</button>
+                            <button type="button" class="btn btn-light close-modal"
+                                data-bs-dismiss="modal">Close</button>
+                        </div>
 
                     </div>
                 </div>
@@ -318,7 +321,7 @@
                 <!-- appraisal table -->
                 <div class="card mb-0">
                     <div class="card-body pb-2">
-                        @if($enableButton)
+                        @if ($enableButton)
                             @if (isset($isAllReviewersSubmittedData) &&
                                 count($isAllReviewersSubmittedData) > 0 &&
                                 $isAllReviewersSubmittedData[Auth::id()] != '1' &&
@@ -339,8 +342,8 @@
                                                         accept=".xls,.xlsx" class="form-control" required>
                                                 </div>
                                                 <div class="col">
-                                                    <button type="button" class="btn btn-orange pull-right" id="upload-goal"
-                                                        disabled>Upload</button>
+                                                    <button type="button" class="btn btn-orange pull-right"
+                                                        id="upload-goal" disabled>Upload</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -450,32 +453,29 @@
                                                         Comments</th>
                                                 @endif
 
-                                                @if($assignedGoals->is_assignee_submitted == '1')
-
-                                                @foreach ($reviewersId as $reviewersReview)
-                                                    @if($isAllReviewersSubmittedOrNot)
-                                                        <th scope="col" data-name='kpiManagerReview'
-                                                            data-filterable="false" data-visible=true> KPI -
-                                                            Achievement
-                                                            Manager Review</th>
-                                                        <th scope="col" data-name='kpiManagerAchivement'
-                                                            data-filterable="false" data-visible="true">Manager
-                                                            KPI
-                                                            Achievement % </th>
-
-
-                                                    @elseif ($reviewersReview == Auth::id())
-                                                        <th scope="col" data-name='kpiManagerReview'
-                                                            data-filterable="false" data-visible=true> KPI -
-                                                            Achievement
-                                                            Manager Review</th>
-                                                        <th scope="col" data-name='kpiManagerAchivement'
-                                                            data-filterable="false" data-visible="true">Manager
-                                                            KPI
-                                                            Achievement  <br><span id="overall_Employee_kpi_percentage"></span></th>
-                                                    @endif
-                                                @endforeach
-
+                                                @if ($assignedGoals->is_assignee_submitted == '1')
+                                                    @foreach ($reviewersId as $reviewersReview)
+                                                        @if ($isAllReviewersSubmittedOrNot)
+                                                            <th scope="col" data-name='kpiManagerReview'
+                                                                data-filterable="false" data-visible=true> KPI -
+                                                                Achievement
+                                                                Manager Review</th>
+                                                            <th scope="col" data-name='kpiManagerAchivement'
+                                                                data-filterable="false" data-visible="true">Manager
+                                                                KPI
+                                                                Achievement % </th>
+                                                        @elseif ($reviewersReview == Auth::id())
+                                                            <th scope="col" data-name='kpiManagerReview'
+                                                                data-filterable="false" data-visible=true> KPI -
+                                                                Achievement
+                                                                Manager Review</th>
+                                                            <th scope="col" data-name='kpiManagerAchivement'
+                                                                data-filterable="false" data-visible="true">Manager
+                                                                KPI
+                                                                Achievement % <br /><span
+                                                                    id="overall_manager_kpi_percentage"></span></th>
+                                                        @endif
+                                                    @endforeach
                                                 @endif
                                             </tr>
                                         </thead>
@@ -483,7 +483,7 @@
                                             @foreach ($kpiRows as $index => $kpiRow)
                                                 <tr>
                                                     <th scope="row" style="border-radius: 0px">
-                                                        <div  style="width:300px">
+                                                        <div style="width:300px">
                                                             {{ \Str::words($kpiRow->dimension, 15, '') }}
                                                             @if (strlen(substr($kpiRow->dimension, strlen(\Str::words($kpiRow->dimension, 15, '')))) > 0)
                                                                 <span class="{{ 'collapse-' . $index }}"
@@ -596,80 +596,78 @@
                                                     //dd(Auth::user()->org_role);
                                                     //dd($isAllReviewersSubmittedOrNot);
                                                     ?>
-                                                    @if  ($assignedGoals->is_assignee_submitted == '1')
-
-                                                    @foreach ($reviewersId as $reviewersReview)
-                                                        {{-- When HR/Admin views --}}
-                                                        @if($isAllReviewersSubmittedOrNot)
-                                                            <td>
-                                                                <div>
-                                                                    @if (isset($decodedKpiReview[$reviewersReview]))
-                                                                        {{ $decodedKpiReview[$reviewersReview][$kpiRow->id] }}
-                                                                    @endif
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div>
-                                                                    @if (isset($decodedKpiReviewPerc[$reviewersReview]))
-                                                                        {{ $decodedKpiReviewPerc[$reviewersReview][$kpiRow->id] }}%
-                                                                    @endif
-                                                                </div>
-                                                            </td>
-                                                        @elseif ($reviewersReview == Auth::id())
-                                                            <td>
-                                                                @if (isset($assignedGoals->is_assignee_submitted) &&
-                                                                    $assignedGoals->is_assignee_submitted == '1' &&
-                                                                    $reviewersReview == Auth::id() &&
-                                                                    ($decodedKpiReviewSubmittedStatus[$reviewersReview] == '' ||
-                                                                        $decodedKpiReviewSubmittedStatus[$reviewersReview] == '0'))
-                                                                    <textarea name="reviewer_kpi_review[{{ $reviewersReview }}][{{ $kpiRow->id }}]" data-index="{{ $index }}" data-reviewerid="{{$reviewersReview}}"
-                                                                        data-targetval="{{ $kpiRow->target }}" data-kpiweightageval="{{ $kpiRow->kpi_weightage }}"
-                                                                        id="reviewer_kpi_review{{ $index }}-{{ $reviewersReview }}"
-                                                                        @if (is_numeric($kpiRow->target)) onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46' class="form-control  h-100 border-0 outline-none w-100 calculateReviewerKPIPercentage" placeholder="type numbers only" @else placeholder="type here"
-                                                                        @endif>@if (isset($decodedKpiReview[$reviewersReview])){{ $decodedKpiReview[$reviewersReview][$kpiRow->id] }}@endif</textarea>
-                                                                @else
+                                                    @if ($assignedGoals->is_assignee_submitted == '1')
+                                                        @foreach ($reviewersId as $reviewersReview)
+                                                            {{-- When HR/Admin views --}}
+                                                            @if ($isAllReviewersSubmittedOrNot)
+                                                                <td>
                                                                     <div>
                                                                         @if (isset($decodedKpiReview[$reviewersReview]))
                                                                             {{ $decodedKpiReview[$reviewersReview][$kpiRow->id] }}
                                                                         @endif
                                                                     </div>
-                                                                @endif
-
-                                                            </td>
-                                                            <td>
-
-                                                                @if (isset($assignedGoals->is_assignee_submitted) &&
-                                                                    $assignedGoals->is_assignee_submitted == '1' &&
-                                                                    $reviewersReview == Auth::id() &&
-                                                                    ($decodedKpiReviewSubmittedStatus[$reviewersReview] == '' ||
-                                                                        $decodedKpiReviewSubmittedStatus[$reviewersReview] == '0'))
-                                                                    <textarea type="number" class="inp-text form-control h-100 border-0 outline-none w-100 reviewer_kpi_percentage "
-                                                                        name="reviewer_kpi_percentage[{{ $reviewersReview }}][{{ $kpiRow->id }}]"
-                                                                        id="reviewer_kpi_percentage{{ $index }}-{{ $reviewersReview }}"
-                                                                        onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46'
-
-                                                                        @if(is_numeric($kpiRow->target))
-                                                                            readonly placeholder="Calculate based on Target and Manager Review"
-                                                                        @else
-                                                                            placeholder="type number here"
-                                                                        @endif
-
-                                                                        >
-                                                                    @if (isset($decodedKpiReviewPerc[$reviewersReview]))
-                                                                    {{ $decodedKpiReviewPerc[$reviewersReview][$kpiRow->id] }}
-                                                                    @endif
-                                                                    </textarea>
-                                                                @else
+                                                                </td>
+                                                                <td>
                                                                     <div>
                                                                         @if (isset($decodedKpiReviewPerc[$reviewersReview]))
                                                                             {{ $decodedKpiReviewPerc[$reviewersReview][$kpiRow->id] }}%
                                                                         @endif
                                                                     </div>
-                                                                @endif
-                                                            </td>
-                                                        @endif
-                                                    @endforeach
+                                                                </td>
+                                                            @elseif ($reviewersReview == Auth::id())
+                                                                <td>
+                                                                    @if (isset($assignedGoals->is_assignee_submitted) &&
+                                                                        $assignedGoals->is_assignee_submitted == '1' &&
+                                                                        $reviewersReview == Auth::id() &&
+                                                                        ($decodedKpiReviewSubmittedStatus[$reviewersReview] == '' ||
+                                                                            $decodedKpiReviewSubmittedStatus[$reviewersReview] == '0'))
+                                                                        <textarea name="reviewer_kpi_review[{{ $reviewersReview }}][{{ $kpiRow->id }}]" data-index="{{ $index }}"
+                                                                            data-reviewerid="{{ $reviewersReview }}" data-targetval="{{ $kpiRow->target }}"
+                                                                            data-kpiweightageval="{{ $kpiRow->kpi_weightage }}"
+                                                                            id="reviewer_kpi_review{{ $index }}-{{ $reviewersReview }}"
+                                                                            @if (is_numeric($kpiRow->target)) onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46' class="form-control  h-100 border-0 outline-none w-100 calculateReviewerKPIPercentage" placeholder="type numbers only" @else placeholder="type here" @endif>
+@if (isset($decodedKpiReview[$reviewersReview]))
+{{ $decodedKpiReview[$reviewersReview][$kpiRow->id] }}
+@endif
+</textarea>
+                                                                    @else
+                                                                        <div>
+                                                                            @if (isset($decodedKpiReview[$reviewersReview]))
+                                                                                {{ $decodedKpiReview[$reviewersReview][$kpiRow->id] }}
+                                                                            @endif
+                                                                        </div>
+                                                                    @endif
 
+                                                                </td>
+                                                                <td>
+
+                                                                    @if (isset($assignedGoals->is_assignee_submitted) &&
+                                                                        $assignedGoals->is_assignee_submitted == '1' &&
+                                                                        $reviewersReview == Auth::id() &&
+                                                                        ($decodedKpiReviewSubmittedStatus[$reviewersReview] == '' ||
+                                                                            $decodedKpiReviewSubmittedStatus[$reviewersReview] == '0'))
+                                                                        <textarea type="number" class="inp-text form-control h-100 border-0 outline-none w-100 reviewer_kpi_percentage "
+                                                                            name="reviewer_kpi_percentage[{{ $reviewersReview }}][{{ $kpiRow->id }}]"
+                                                                            id="reviewer_kpi_percentage{{ $index }}-{{ $reviewersReview }}"
+                                                                            onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46'
+                                                                            @if(is_numeric($kpiRow->target))
+                                                                                readonly placeholder="Calculate based on Target and Manager Review"
+                                                                            @else
+                                                                                placeholder="type number here" @endif>
+                                                                    @if (isset($decodedKpiReviewPerc[$reviewersReview]))
+{{ $decodedKpiReviewPerc[$reviewersReview][$kpiRow->id] }}
+@endif
+                                                                    </textarea>
+                                                                    @else
+                                                                        <div>
+                                                                            @if (isset($decodedKpiReviewPerc[$reviewersReview]))
+                                                                                {{ $decodedKpiReviewPerc[$reviewersReview][$kpiRow->id] }}%
+                                                                            @endif
+                                                                        </div>
+                                                                    @endif
+                                                                </td>
+                                                            @endif
+                                                        @endforeach
                                                     @endif
                                                 </tr>
                                             @endforeach
@@ -678,7 +676,7 @@
                                 </div>
 
                                 {{-- Show Appraiser box only when assignee submitted review  --}}
-                                @if($assignedGoals->is_assignee_submitted == '1')
+                                @if ($assignedGoals->is_assignee_submitted == '1')
                                     @if ($isAllReviewersSubmittedOrNot)
                                         <div class="row mt-3">
                                             <div class="col-lg-12">
@@ -687,7 +685,9 @@
                                                 </h6>
                                                 <div class="mt-2">
                                                     <span>
-                                                        @if (isset($assignedGoals->reviewer_appraisal_comments)){{ $assignedGoals->reviewer_appraisal_comments }}@endif
+                                                        @if (isset($assignedGoals->reviewer_appraisal_comments))
+                                                            {{ $assignedGoals->reviewer_appraisal_comments }}
+                                                        @endif
                                                     </span>
                                                 </div>
                                             </div>
@@ -699,8 +699,12 @@
                                                     Appraiser Feedback:
                                                 </h6>
                                                 <div class="mt-2">
-                                                    <textarea class="form-control w-100 h-100 outline-none" placeholder="Comments here..." id="gen-info-description-input" name="appraiser_comments"
-                                                        >@if (isset($assignedGoals->reviewer_appraisal_comments)){{ $assignedGoals->reviewer_appraisal_comments }}@endif</textarea>
+                                                    <textarea class="form-control w-100 h-100 outline-none" placeholder="Comments here..."
+                                                        id="gen-info-description-input" name="appraiser_comments">
+@if (isset($assignedGoals->reviewer_appraisal_comments))
+{{ $assignedGoals->reviewer_appraisal_comments }}
+@endif
+</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -708,7 +712,7 @@
                                 @endif
 
                             </form>
-                            @if($enableButton)
+                            @if ($enableButton)
                                 @if ($assignedGoals->is_assignee_submitted == '1')
                                     @if ($decodedKpiReviewSubmittedStatus[Auth::id()] != '1')
                                         <div class="buttons d-flex align-items-center justify-content-end ">
@@ -728,9 +732,10 @@
                                     @if (isset($isAllReviewersAcceptedData) && $isAllReviewersAcceptedData[Auth::id()] == null)
                                         <div class="buttons d-flex align-items-center justify-content-end ">
                                             <button class="btn btn-success me-2" id="accept_review">
-                                                <i class="fa fa-check-circle me-2"></i>  Approve </button>
+                                                <i class="fa fa-check-circle me-2"></i> Approve </button>
 
-                                            <button class="btn btn-danger" id="reject_review"><i class="fa fa-times-circle me-2"></i> Reject</button>
+                                            <button class="btn btn-danger" id="reject_review"><i
+                                                    class="fa fa-times-circle me-2"></i> Reject</button>
                                         </div>
                                     @elseif($isAllReviewersAcceptedData[Auth::id()] == '0')
                                         <h6 class="mt-3 text-muted">You have Already Rejected this review.</h6>
@@ -746,10 +751,9 @@
                 </div>
             </div>
 
-            @if($canShowRatingCard == 'true')
+            @if ($canShowRatingCard == 'true')
 
-            @if ($isAllReviewersSubmittedOrNot && count($pmsRatingDetails) > 0)
-
+                @if ($isAllReviewersSubmittedOrNot && count($pmsRatingDetails) > 0)
                     <div class="col-12">
                         <div class="card mt-3 mb-0">
 
@@ -763,36 +767,41 @@
 
                                         <tbody class="tbody" id="tbody">
                                             <tr>
-                                                <th scope="col" style="width:350px;border-radius:0px;">Overall Annual Score</th>
+                                                <th scope="col" style="width:350px;border-radius:0px;">Overall Annual
+                                                    Score</th>
                                                 @foreach ($pmsRatingDetails as $ratingDetails)
-                                                    <td scope="col" style="border:1px solid #002f56">{{ $ratingDetails->score_range }}</td>
+                                                    <td scope="col" style="border:1px solid #002f56">
+                                                        {{ $ratingDetails->score_range }}</td>
                                                 @endforeach
                                             </tr>
                                             <tr>
                                                 <th class="" style="width:350px">
-                                                     ANNUAL PERFORMANCE Rating
+                                                    ANNUAL PERFORMANCE Rating
                                                 </th>
                                                 @foreach ($pmsRatingDetails as $ratingDetails)
-                                                    <td class="" style="border:1px solid #002f56">{{ $ratingDetails->performance_rating }}
+                                                    <td class="" style="border:1px solid #002f56">
+                                                        {{ $ratingDetails->performance_rating }}
                                                     </td>
                                                 @endforeach
                                             </tr>
 
                                             <tr>
-                                                <th class=""  style="width:350px">
+                                                <th class="" style="width:350px">
                                                     Ranking
                                                 </th>
                                                 @foreach ($pmsRatingDetails as $ratingDetails)
-                                                    <td class="" style="border:1px solid #002f56">{{ $ratingDetails->ranking }}</td>
+                                                    <td class="" style="border:1px solid #002f56">
+                                                        {{ $ratingDetails->ranking }}</td>
                                                 @endforeach
                                             </tr>
                                             <tr>
 
-                                                <th class=""  style="width:350px">
+                                                <th class="" style="width:350px">
                                                     Action
                                                 </th>
                                                 @foreach ($pmsRatingDetails as $ratingDetails)
-                                                    <td class="" style="border:1px solid #002f56">{{ $ratingDetails->action }}</td>
+                                                    <td class="" style="border:1px solid #002f56">
+                                                        {{ $ratingDetails->action }}</td>
                                                 @endforeach
                                             </tr>
                                         </tbody>
@@ -801,8 +810,7 @@
                             </div>
                         </div>
                     </div>
-
-            @endif
+                @endif
             @endif
 
             <!-- Modal -->
@@ -840,7 +848,7 @@
 
 
 @section('script')
-@yield('script-profile-avatar')
+    @yield('script-profile-avatar')
 
     <!--Sweet alert JS-->
     <script src="{{ URL::asset('/assets/premassets/js/sweetalert.js') }}"></script>
@@ -852,15 +860,23 @@
 
 
     <script src="{{ URL::asset('/assets/premassets/js/footable.min.js') }}"></script>
-<script src="{{ URL::asset('/assets/premassets/css/footable.bootstrap.min.css') }}"></script>
+    <script src="{{ URL::asset('/assets/premassets/css/footable.bootstrap.min.css') }}"></script>
     <script type="text/javascript">
-         /*
+        $(document).ready(function() {
+            calculateOverallReviewerKpiPercentage();
+        });
+
+
+        /*
          * for calculating Self KPI Achievement % If Target is Number
          * formula :-
          * Self KPI Achievement %' = (KPI - Achievement Self-Review (this) / Target (targetVal)) * KPI Weightage (kpiWeightageVal);
          */
-         $(document).on('keyup', '.calculateReviewerKPIPercentage', function() {
+        $(document).on('keyup', '.calculateReviewerKPIPercentage', function() {
             getCalculationResult($(this));
+        })
+        $(document).on('keyup', '.reviewer_kpi_percentage', function() {
+            calculateOverallReviewerKpiPercentage();
         })
 
         function getCalculationResult(idValue) {
@@ -874,33 +890,34 @@
 
             if (kpiAchievementReviewerReview != '') {
                 console.log("KPI Achieved Calculation ");
-                console.log("kpiAchievementReviewerReview : "+kpiAchievementReviewerReview);
-                console.log("targetVal : "+targetVal);
-                console.log("kpiWeightageVal : "+kpiWeightageVal);
+                console.log("kpiAchievementReviewerReview : " + kpiAchievementReviewerReview);
+                console.log("targetVal : " + targetVal);
+                console.log("kpiWeightageVal : " + kpiWeightageVal);
 
                 var result = (kpiAchievementReviewerReview / targetVal) * kpiWeightageVal;
 
                 //update in 'Manager KPI achievements %' column in this format
                 //reviewer_kpi_review  index - reviewersReview
-               // var temp = '#reviewer_kpi_review' + index+'-'+reviewerId;
-               // console.log("testing id : "+temp);
-                $('#reviewer_kpi_percentage' + index+'-'+reviewerId).val(Math.round(result));
-                console.log("OUTPUT :: reviewer_kpi_percentage : "+result);
+                // var temp = '#reviewer_kpi_review' + index+'-'+reviewerId;
+                // console.log("testing id : "+temp);
+                $('#reviewer_kpi_percentage' + index + '-' + reviewerId).val(Math.round(result));
+                console.log("OUTPUT :: reviewer_kpi_percentage : " + result);
             } else {
-                $('#reviewer_kpi_percentage' + index+'-'+kpiAchievementReviewerReview).val('');
+                $('#reviewer_kpi_percentage' + index + '-' + kpiAchievementReviewerReview).val('');
             }
             calculateOverallReviewerKpiPercentage();
         }
 
-        function calculateOverallReviewerKpiPercentage(){
+        function calculateOverallReviewerKpiPercentage() {
             //Get all the 'Self KPI Achievements %' textarea values
-            var array_selfKpiAchievementsPercentage = $('.reviewer_kpi_percentage').map((_, element) => $.trim(element.value)).get();
+            var array_selfKpiAchievementsPercentage = $('.reviewer_kpi_percentage').map((_, element) => $.trim(element
+                .value)).get();
             var total_percentage = _.sumBy(array_selfKpiAchievementsPercentage, item => Number(item));
 
-            console.log(" array_selfKpiAchievementsPercentage : "+array_selfKpiAchievementsPercentage);
-            console.log("SUM of array_selfKpiAchievementsPercentage : "+ total_percentage);
+            console.log(" array_selfKpiAchievementsPercentage : " + array_selfKpiAchievementsPercentage);
+            console.log("SUM of array_selfKpiAchievementsPercentage : " + total_percentage);
             //Also update Self KPI Achievement %
-            $("#overall_Employee_kpi_percentage").html("Total : "+Math.round(total_percentage)+"%");
+            $("#overall_manager_kpi_percentage").html("Total : " + Math.round(total_percentage) + "%");
 
         }
 
@@ -1111,26 +1128,26 @@
 
 
         // show or hide table data
-        function showOrHideDescription(rowIndex,element) {
+        function showOrHideDescription(rowIndex, element) {
 
             //$(collapse-'.$index)
             if ($('.collapse-' + rowIndex).css('display') == 'none') {
                 $('.collapse-' + rowIndex).css('display', 'inline');
 
-               // element.innerText = "Less"
+                // element.innerText = "Less"
                 console.log(rowIndex + ' Less');
 
-                element.innerText="Less";
+                element.innerText = "Less";
             } else {
                 $('.collapse-' + rowIndex).css('display', 'none');
                 //element.innerHTML = "More"
                 console.log(rowIndex + ' More');
-                element.innerText="...More";
+                element.innerText = "...More";
 
             }
-           // console.log("showOrHide : "+element.innerText);
+            // console.log("showOrHide : "+element.innerText);
 
-           // console.log("showOrHide :  %o"+element);
+            // console.log("showOrHide :  %o"+element);
         }
     </script>
 @endsection
