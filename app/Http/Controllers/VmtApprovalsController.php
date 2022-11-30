@@ -144,7 +144,7 @@ class VmtApprovalsController extends Controller
     public function showPMSApprovalPage(Request $request)
     {
 
-        return  redirect()->route('page-not-found');
+        return view("vmt_approval_pms");
 
     }
 
