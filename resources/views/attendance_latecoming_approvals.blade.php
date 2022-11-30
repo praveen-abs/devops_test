@@ -3,6 +3,11 @@
 @section('title')
     @lang('translation.dashboards')
 @endsection
+@section('css')
+
+    <link href="{{ URL::asset('assets/css/attendance.css') }}" rel="stylesheet">
+
+@endsection
 @section('content')
     {{-- @component('components.attendance_breadcrumb')
         @slot('li_1')
@@ -46,7 +51,7 @@
                 </div>
 
                 <div class="table-responsive">
-                    <div class="" id="table_lateComingTable"></div>
+                    <div class="attendance_gridjs" id="table_lateComingTable"></div>
                 </div>
             </div>
         </div>
