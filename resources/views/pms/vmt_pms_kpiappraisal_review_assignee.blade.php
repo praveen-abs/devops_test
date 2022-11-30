@@ -175,16 +175,16 @@
                 <div class="modal-content">
                     <div class="modal-header border-0 d-flex align-items-center py-2">
 
-                      
+
                         <h6 class="modal-title text-primary" id="modalHeader">Rejected
                         </h6>
                         <button type="button" class="btn-close btn-close-white close-modal" data-bs-dismiss="modal"
                             aria-label="Close">
                         </button>
-                  
+
                 </div>
                     <div class="modal-body">
-                        
+
                             <h6 class="mb-3" id="modalNot"></h6>
                             <textarea name="reject_comment" id="reject_comment" class="form-control mb-2  h-100 w-100 border-primary outline-none"></textarea>
                             <div class="text-end">
@@ -193,7 +193,7 @@
                                 <button type="button" class="btn btn-light close-modal"
                                     data-bs-dismiss="modal">Close</button>
                             </div>
-                       
+
                     </div>
                 </div>
             </div>
@@ -666,6 +666,10 @@
          */
         $(document).on('keyup', '.calculateSelfKPIPercentage', function() {
             getCalculationResult($(this));
+        })
+
+        $(document).on('keyup', '.assignee_kpi_percentage', function() {
+            calculateOverallSelfKpiPercentage();
         })
 
         function getCalculationResult(idValue) {
