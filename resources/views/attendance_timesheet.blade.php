@@ -550,10 +550,11 @@
 
         function showRegularizationModal(element) {
 
+
             if ($(element).val() == "LC") {
                 //On modal popup
                 $('#actual_checkin_date').html($(element).data('checkindate'));
-                $('#actual_checkin_time').html($(element).data('checkintime'));
+                $('#actual_checkin_time').html(moment($(element).data('checkintime'), ["HH:mm"]).format('h:mm A'));
                 $('#timing_label_suffix').html('( Late Arrival )');
                 $('#regular_shift_time').val(shift_start_time);
 
@@ -807,9 +808,11 @@
                                 {
                                     let final_checkin_button_code = "";
                                     let final_checkout_button_code = "";
-                                    let final_checkin_time = ajax_data_currentdate.checkin_time ?? "--:--:--";
+                                    let final_checkin_time = ajax_data_currentdate.checkin_time ?? "";
+                                    let ui_final_checkin_time = final_checkin_time == "" ? "--:--:--" : moment(final_checkin_time, ["HH:mm"]).format('h:mm a');
 
-                                    let final_checkout_time = ajax_data_currentdate.checkout_time ?? "--:--:--";
+                                    let final_checkout_time = ajax_data_currentdate.checkout_time ?? "";
+                                    let ui_final_checkout_time = final_checkout_time == "" ? "--:--:--" : moment(final_checkout_time, ["HH:mm"]).format('h:mm a');
 
                                     //If not absent, show the dates
                                     let html_LC_Button = "<input type='button' id='btn_checkin_time_" +currentDate+
@@ -850,10 +853,10 @@
                                     cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
 
                                     "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex '><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
-                                    year + "-" + (month + 1) + "-" + dateText +"'>"+final_checkin_time+"</span>"+
+                                    year + "-" + (month + 1) + "-" + dateText +"'>"+ui_final_checkin_time+"</span>"+
                                     final_checkin_button_code+
                                     "</div> <div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span class='f-11' id='checkout_time_" +
-                                    year + "-" + (month + 1) + "-" + dateText + "'>"+final_checkout_time+"</span>"+
+                                    year + "-" + (month + 1) + "-" + dateText + "'>"+ui_final_checkout_time+"</span>"+
                                     final_checkout_button_code+
                                     "</div></div></div>";
                                 }
