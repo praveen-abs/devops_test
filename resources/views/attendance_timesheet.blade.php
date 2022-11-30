@@ -315,7 +315,7 @@
                             var imageURL = "images/" + element.employee_avatar.data;
 
                             avatar_data =
-                                ' <div class="user_pic bg-ash rounded-circle"><img class=" w-100 h-100 header-profile-user" src="' +
+                                ' <div class="user_pic bg-ash rounded-circle"><img class=" w-100 h-100 rounded-circle header-profile-user" src="' +
                                 imageURL + '" alt="--"></div>';
                         }
 
@@ -380,7 +380,7 @@
 
                             var imageURL = "images/" + element.employee_avatar.data;
 
-                            avatar_data ='<div class="user_pic bg-ash rounded-circle"><img class=" w-100 h-100 header-profile-user" src="' +
+                            avatar_data ='<div class="user_pic bg-ash rounded-circle"><img class=" w-100 rounded-circle  h-100 header-profile-user" src="' +
                                 imageURL + '" alt="--"></div>';
 
 
@@ -432,7 +432,7 @@
             @elseif ($current_employee_detail->employee_avatar['type'] == 'avatar')
                 var imageURL = "images/" + '{{ $current_employee_detail->employee_avatar['data'] }}';
 
-                avatar_data = ' <div class="user_pic bg-ash rounded-circle "><img class=" w-100 h-100 header-profile-user" src="' + imageURL +
+                avatar_data = ' <div class="user_pic bg-ash rounded-circle "><img class=" rounded-circle w-100 h-100 header-profile-user" src="' + imageURL +
                 '" alt="--"></div>';
             @endif
 
@@ -956,7 +956,7 @@
 
                 }
 
-                
+
 
             //});
 

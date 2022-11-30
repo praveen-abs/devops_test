@@ -731,7 +731,7 @@
                                 </div>
                             </div>
                             <div class="d-flex border-bottom mb-2 pb-3 ">
-                                <div class="date-wrapper text-center rounded shadow-lite  me-2 border-bottom mb-2">
+                                <div class="date-wrapper text-center rounded shadow-lite  me-2 border-bottom mb-2" style="width:75px">
                                     <p class="bg-primary rounded  text-center text-white py-1" id="leave_month"> Apr</p>
                                     <p id="leave_date"> </p>
                                     <p id="leave_day"> </p>
@@ -1620,7 +1620,7 @@
 
 
                         var html_shortName = $(
-                            '<div class="bg-primary text-white d-flex justify-content-center align-items-center f-13 fw-bold img-lg rounded-circle"></div>'
+                            '<div class="bg-primary text-white d-flex justify-content-center align-items-center f-13 fw-bold img-md rounded-circle"></div>'
                             ).text(data.avatar.data);
                         $('.show_img').append(html_shortName);
                         // var html_shortName = ' <div class="bg-primary text-white f-13 fw-bold ">'data.avatar.data'</div>';
