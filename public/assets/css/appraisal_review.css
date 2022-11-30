@@ -72,6 +72,7 @@ table.kpi_appraisal-table tbody tr td:nth-child(2) textarea,
 table.kpi_appraisal-table tbody tr td textarea {
     resize: none;
     min-height: 50px;
+    text-align: center;
 }
 /* tr:first-child  th:nth-child(2) {
     border-top-left-radius: 6px !important;

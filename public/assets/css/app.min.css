@@ -17612,7 +17612,7 @@ tr:last-child td:last-child {
     line-height: 1.6;
     vertical-align: baseline;
     border-top: 1px solid #eee;
-    /* text-align: center; */
+    text-align: center;
     /* white-space:nowrap  ; */
 }
 
