@@ -36,12 +36,19 @@
                                     <div class="mx-2 d-flex justify-content-center align-items-center profile-name-icon">
                                         @if( empty($employee->avatar) || !file_exists(public_path('images/'. $employee->avatar)) )
                                         @php
-                                        $splitArray = explode(" ",$employee->emp_name);
-                                        if(count($splitArray) == 1)
-                                        $name = strtoupper($splitArray[0][0].$splitArray[0][1]);
-                                        else
-                                        $name = strtoupper($splitArray[0][0].$splitArray[1][0]);
+                                        try{
+                                            $splitArray = explode(" ",trim($employee->emp_name));
 
+                                            if(count($splitArray) == 1)
+                                            $name = strtoupper($splitArray[0][0].$splitArray[0][1]);
+                                            else
+                                            $name = strtoupper($splitArray[0][0].$splitArray[1][0]);
+                                            // $name = $employee->emp_name;
+                                        }
+                                        catch(Exception $e) {
+                                           echo 'Error for username ,arraysize: '.$employee->emp_name." , ".count($splitArray);
+                                           echo '\nMessage: ' .$e->getMessage();
+                                        }
                                         @endphp
                                         <span class="align-middle fw-bold text-white">{{$name}}</span>
                                         <!--/span-->
