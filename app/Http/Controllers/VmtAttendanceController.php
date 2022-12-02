@@ -540,9 +540,10 @@ class VmtAttendanceController extends Controller
            $fulldate = $year."-".$month."-".$date;
 
 
-           $attendanceResponseArray[$fulldate] = array( "isAbsent"=>false, "absent_status"=>null,
+           $attendanceResponseArray[$fulldate] = array( "user_id"=>$request->user_id,"isAbsent"=>false, "absent_status"=>null,
                                                         "checkin_time"=>null, "checkout_time"=>null,
-                                                        "isLC"=>false, "lc_status"=>null, "isEG"=>false, "eg_status"=>null,
+                                                        "isLC"=>false, "lc_status"=>null, "lc_reason"=>null,"lc_reason_custom"=>null,
+                                                        "isEG"=>false, "eg_status"=>null, "eg_reason"=>null,"eg_reason_custom"=>null,
                                                         "isMIP"=>false, "mip_status"=>null, "isMOP"=>false, "mop_status"=>null);
 
            //echo "Date is ".$fulldate."\n";
@@ -591,7 +592,7 @@ class VmtAttendanceController extends Controller
                 $attendanceResponseArray[$key]["isMOP"] = true;
 
                 ////Is any permission applied
-                $attendanceResponseArray[$key]["mop_status"] = "MOP";
+                $attendanceResponseArray[$key]["mop_status"] = $this->isRegularizationRequestApplied($request->user_id, $key, 'MOP');
 
 
                 //check if its LC
@@ -624,11 +625,11 @@ class VmtAttendanceController extends Controller
             }
             elseif($checkin_time == null && $checkout_time != null){
 
-                //Since its MOP
+                //Since its MIP
                 $attendanceResponseArray[$key]["isMIP"] = true;
 
                 ////Is any permission applied
-                $attendanceResponseArray[$key]["mip_status"] = "MIP";
+                $attendanceResponseArray[$key]["mip_status"] = $this->isRegularizationRequestApplied($request->user_id, $key, 'MIP');
 
 
                 //check if its EG
@@ -699,8 +700,19 @@ class VmtAttendanceController extends Controller
         }
         else
         {
-            return "none";
+            return "None";
         }
+    }
+
+    public function fetchRegularizationData(Request $request){
+
+        //dd($request->all());
+
+        $regularize_record = VmtEmployeeAttendanceRegularization::where('attendance_date', $request->selected_date)
+        ->where('user_id',  $request->user_id)->where('regularization_type', $request->regularization_type)->first();
+
+        return $regularize_record;
+
     }
 
     public function fetchTeamMembers(Request $request)
@@ -744,11 +756,11 @@ class VmtAttendanceController extends Controller
         Also known as Attendance Regularization
 
     */
-    public function showLateComingApprovalPage(Request $request)
+    public function showRegularizationApprovalPage(Request $request)
     {
 
 
-        return view('attendance_latecoming_approvals');
+        return view('attendance_regularization_approvals');
     }
 
     public function fetchAttendanceLateComingDetails(Request $request)
