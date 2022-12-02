@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\User;
 use App\Models\VmtEmployee;
+use App\Models\VmtPMS_KPIFormReviewsModel;
 
 class VmtApprovalsController extends Controller
 {
@@ -146,6 +147,12 @@ class VmtApprovalsController extends Controller
 
         return view("vmt_approval_pms");
 
+    }
+
+    public function fetchPendingPMSForms(Request $request)
+    {
+        //Get the PMS pending forms.
+       return  VmtPMS_KPIFormReviewsModel::all(['id','is_assignee_accepted', 'is_reviewer_accepted']);
     }
 
 }

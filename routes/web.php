@@ -407,6 +407,7 @@ Route::get('/getPMSRatingJSON',  [App\Http\Controllers\ConfigPmsController::clas
 
 //PMS Approvals
 Route::get('/vmt_approval_pms',  [App\Http\Controllers\VmtApprovalsController::class, 'showPMSApprovalPage'])->name('showPMSApprovalPage');
+Route::get('/fetch_pending_pmsforms',  [App\Http\Controllers\VmtApprovalsController::class, 'fetchPendingPMSForms'])->name('fetchPendingPMSForms');
 
 
 
