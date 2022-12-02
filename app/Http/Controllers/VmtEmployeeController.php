@@ -728,7 +728,7 @@ class VmtEmployeeController extends Controller
                 'pf_applicable' => 'required|in:yes,Yes,no,No',
                 'esic_applicable' => 'required|in:yes,Yes,no,No',
                 'ptax_location' => 'required',
-                'tax_regime' => 'required|in:yes,Yes,no,No',
+                'tax_regime' => 'required|in:old,Old,new,New',
                 'lwf_location' => 'required',
                 'esic_employer_contribution' => 'required|numeric',
 
