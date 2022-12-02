@@ -193,7 +193,7 @@
                                         </div>
                                         <div class="col-6">
                                             <input class="text-ash-medium form-control fs-15" name="regularize_time"
-                                                id="regular_shift_time">
+                                                id="regularize_time">
                                         </div>
                                     </div>
                                 </div>
@@ -565,7 +565,7 @@
                 $('#current_date').html($(element).data('checkindate'));
                 $('#actual_user_time').html(moment($(element).data('checkintime'), ["HH:mm"]).format('h:mm A'));
                 $('#timing_label_suffix').html('( Late Arrival )');
-                $('#regular_shift_time').val(shift_start_time);
+                $('#regularize_time').val(shift_start_time);
 
                 //Hidden vars
                 $('#attendance_date').val($(element).data('checkindate'));
@@ -579,7 +579,7 @@
                 $('#current_date').html($(element).data('checkoutdate'));
                 $('#actual_user_time').html(moment($(element).data('checkouttime'), ["HH:mm"]).format('h:mm A'));
                 $('#timing_label_suffix').html('( Early Going )');
-                $('#regular_shift_time').val(shift_end_time);
+                $('#regularize_time').val(shift_end_time);
 
                 //Hidden vars
                 $('#attendance_date').val($(element).data('checkoutdate'));
@@ -592,7 +592,7 @@
             if ($(element).val() == "MIP") {
                 $('#actual_checkin_date').html($(element).data('checkin_date'));
                 $('#actual_checkin_time').html($(element).data('actual_timing'));
-                $('#regular_shift_time').val(shift_end_time);
+                $('#regularize_time').val(shift_end_time);
                 $('#attendance_date').val($(element).data('checkin_date'));
                 $('#user_time').val($(element).data('actual_timing'));
                 $('#attendance_user').val(currentlySelectedUser);
@@ -604,7 +604,7 @@
             if ($(element).val() == "MOP") {
                 $('#actual_checkin_date').html($(element).data('checkin_date'));
                 $('#actual_checkin_time').html($(element).data('actual_timing'));
-                $('#regular_shift_time').val(shift_end_time);
+                $('#regularize_time').val(shift_end_time);
                 $('#attendance_date').val($(element).data('checkin_date'));
                 $('#user_time').val($(element).data('actual_timing'));
                 $('#attendance_user').val(currentlySelectedUser);
