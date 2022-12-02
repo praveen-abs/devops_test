@@ -591,7 +591,7 @@ class VmtAttendanceController extends Controller
                 $attendanceResponseArray[$key]["isMOP"] = true;
 
                 ////Is any permission applied
-                $attendanceResponseArray[$key]["mop_status"] = "MOP";
+                $attendanceResponseArray[$key]["mop_status"] = $this->isRegularizationRequestApplied($request->user_id, $key, 'MOP');
 
 
                 //check if its LC
@@ -624,11 +624,11 @@ class VmtAttendanceController extends Controller
             }
             elseif($checkin_time == null && $checkout_time != null){
 
-                //Since its MOP
+                //Since its MIP
                 $attendanceResponseArray[$key]["isMIP"] = true;
 
                 ////Is any permission applied
-                $attendanceResponseArray[$key]["mip_status"] = "MIP";
+                $attendanceResponseArray[$key]["mip_status"] = $this->isRegularizationRequestApplied($request->user_id, $key, 'MIP');
 
 
                 //check if its EG
@@ -699,7 +699,7 @@ class VmtAttendanceController extends Controller
         }
         else
         {
-            return "none";
+            return "None";
         }
     }
 

@@ -1,5 +1,14 @@
 @extends('layouts.master')
 
+
+<?php
+//Icons for calendar
+    $svg_icon_rejected = "/images/icons/svg_icon_rejected.svg";
+    $svg_icon_approved = "/images/icons/svg_icon_accepted.svg";
+    $svg_icon_pending = "/images/icons/svg_icon_pending.svg";
+    $svg_icon_notApplied = "/images/icons/svg_icon_notApplied.svg";
+
+?>
 @section('title')
     @lang('translation.dashboards')
 @endsection
@@ -571,13 +580,13 @@
                 $('#actual_user_time').html(moment($(element).data('checkouttime'), ["HH:mm"]).format('h:mm A'));
                 $('#timing_label_suffix').html('( Early Going )');
                 $('#regular_shift_time').val(shift_end_time);
-                
+
                 //Hidden vars
                 $('#attendance_date').val($(element).data('checkoutdate'));
                 $('#user_time').val($(element).data('checkouttime'));
                 $('#attendance_user').val(currentlySelectedUser);
                 $('#regularization_type').val("EG");
-                
+
                 $('#regularizationModal').fadeIn(100);
             }else
             if ($(element).val() == "MIP") {
@@ -817,38 +826,41 @@
                                     let ui_final_checkout_time = final_checkout_time == "" ? "--:--:--" : moment(final_checkout_time, ["HH:mm"]).format('h:mm a');
 
                                     //If not absent, show the dates
+                                    let html_LC_Status = ajax_data_currentdate.isLC ? "<img src='{{URL::asset($svg_icon_pending)}}' class='calendar_icon'>" : "";
+
                                     let html_LC_Button = "<input type='button' id='btn_checkin_time_" +currentDate+
-                                                        "' onclick ='showRegularizationModal(this)' class='f-10 btn-primary bn ms-2 lc_btn border-0 p-1 text-white' data-checkindate='"+currentDate+"' data-checkintime='"+final_checkin_time+"' value='LC' data-cellid ='checkin_time_" +
-                                                        currentDate+"'/>"
+                                                        "' onclick ='showRegularizationModal(this)' data-applystatus='"+ajax_data_currentdate.lc_status+ "' class='f-10 btn-primary bn ms-2 lc_btn border-0 p-1 text-white' data-checkindate='"+currentDate+"' data-checkintime='"+final_checkin_time+"' value='LC' data-cellid ='checkin_time_" +
+                                                        currentDate+"'/>";
 
                                     let html_MIP_Button = "<input type='button' id='mipmop" +year + "-" + (month + 1) + "-" + dateText +
                                                         "' onclick ='showRegularizationModal(this)' class='f-10 btn-primary bn ms-2 lc_btn border-0 p-1 text-white'  value='MIP' data-cellid ='mipmop_" +
-                                                        year + "-" + (month + 1) + "-" + dateText +"'/>"
+                                                        year + "-" + (month + 1) + "-" + dateText +"'/>";
 
                                     let html_EG_Button = "<input type='button' id='btn_checkout_time_" +year + "-" + (month + 1) + "-" + dateText +
                                                         "' onclick ='showRegularizationModal(this)' class='f-10 btn-orange bn ms-2 lc_btn border-0 p-1 text-white' data-checkoutdate='"+currentDate+"' data-checkouttime='"+final_checkout_time+"' value='EG' data-cellid ='checkout_time_" +
-                                                        year + "-" + (month + 1) + "-" + dateText +"'/>"
+                                                        year + "-" + (month + 1) + "-" + dateText +"'/>";
 
                                     let html_MOP_Button = "<input type='button' id='mipmop" +year + "-" + (month + 1) + "-" + dateText +
                                                         "' onclick ='showRegularizationModal(this)' class='f-10 btn-orange bn ms-2 lc_btn border-0 p-1 text-white '  value='MOP' data-cellid ='mipmop_" +
-                                                        year + "-" + (month + 1) + "-" + dateText +"'/>"
+                                                        year + "-" + (month + 1) + "-" + dateText +"'/>";
+
 
 
 
                                     if(ajax_data_currentdate.isLC){
-                                        final_checkin_button_code = html_LC_Button;
+                                        final_checkin_button_code = html_LC_Button + getStatusIcon(ajax_data_currentdate.lc_status);
                                     }
                                     else
                                     if(ajax_data_currentdate.isMIP){
-                                        final_checkin_button_code = html_MIP_Button;
+                                        final_checkin_button_code = html_MIP_Button + getStatusIcon(ajax_data_currentdate.mip_status);
                                     }
 
                                     if(ajax_data_currentdate.isEG){
-                                        final_checkout_button_code = html_EG_Button;
+                                        final_checkout_button_code = html_EG_Button + getStatusIcon(ajax_data_currentdate.eg_status);
                                     }
                                     else
                                     if(ajax_data_currentdate.isMOP){
-                                        final_checkout_button_code = html_MOP_Button;
+                                        final_checkout_button_code = html_MOP_Button + getStatusIcon(ajax_data_currentdate.mop_status);
                                     }
 
 
@@ -882,6 +894,25 @@
                 tbl.appendChild(row);
             }
 
+        }
+
+        function getStatusIcon(status){
+            if(status == "None"){
+                return "<img src='{{URL::asset($svg_icon_notApplied)}}' alt='Not Applied' class='calendar_icon' title='Not Applied'>";
+            }
+            else
+            if(status == "Pending"){
+                return "<img src='{{URL::asset($svg_icon_pending)}}' alt='Pending' title='Pending' class='calendar_icon'>";
+            }
+            else
+            if(status == "Approved"){
+                return "<img src='{{URL::asset($svg_icon_approved)}}' alt='Approved' title='Approved' class='calendar_icon'>";
+
+            }
+            else
+            if(status == "Rejected"){
+                return "<img src='{{URL::asset($svg_icon_rejected)}}' alt='Rejected' text='Rejected' class='calendar_icon'>";
+            }
         }
 
         function daysInMonth(iMonth, iYear) {
