@@ -197,45 +197,81 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 mb-2">
-                                    <div class="row">
-                                        <div class="col-6"><label class="text-ash-medium fs-15">Reason</label></div>
-                                        <div class="col-6">
-                                            <select name="reason" class="form-select btn-line-orange" id=""
-                                                onchange="showReasonBox(this)">
-                                                <option selected hidden disabled>
-                                                    Choose Reason
-                                                </option>
-                                                <option value="Permission">Permission</option>
-                                                <option value="Forgot to Punch">Forgot to Punch</option>
-                                                <option value="Technical Error">Technical Error</option>
-                                                <option value="Others">Others</option>
-                                            </select>
+                                <div id="div_reason_editable">
+                                    <div class="col-12 mb-2" >
+                                        <div class="row">
+                                            <div class="col-6"><label class="text-ash-medium fs-15">Reason</label></div>
+                                            <div class="col-6">
+                                                <select name="reason" class="form-select btn-line-orange" id=""
+                                                    onchange="showReasonBox(this)">
+                                                    <option selected hidden disabled>
+                                                        Choose Reason
+                                                    </option>
+                                                    <option value="Permission">Permission</option>
+                                                    <option value="Forgot to Punch">Forgot to Punch</option>
+                                                    <option value="Technical Error">Technical Error</option>
+                                                    <option value="Others">Others</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 ">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <textarea name="custom_reason" id="reasonBox" cols="30" rows="3" class="form-control "
+                                                    placeholder="Reason here...." style="display:none"></textarea>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 ">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <textarea name="custom_reason" id="reasonBox" cols="30" rows="3" class="form-control "
-                                                placeholder="Reason here...." style="display:none"></textarea>
+
+                                <div id="div_reason_noneditable">
+                                    <div class="col-12 mb-2" >
+                                        <div class="row">
+                                            <div class="col-6"><label class="text-ash-medium fs-15">Reason</label>
+                                            </div>
+                                            <div class="col-6">
+                                                <input class="text-ash-medium form-control fs-15" name="txt_reason_noneditable"
+                                                    id="txt_reason_noneditable" value="EMPTY" readonly>
+                                            </div>
                                         </div>
+                                    </div>
 
+                                    <div class="col-12 mb-2" id="div_custom_reason">
+                                        <div class="row">
+                                            <div class="col-6"><label class="text-ash-medium fs-15">Custom Reason</label>
+                                            </div>
+                                            <div class="col-6">
+                                                <input class="text-ash-medium form-control fs-15" name="txt_customreason_noneditable"
+                                                    id="txt_customreason_noneditable" value="EMPTY" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
 
-
+                                    <div class="col-12 mb-2" >
+                                        <div class="row">
+                                            <div class="col-6"><label class="text-ash-medium fs-15">Status</label>
+                                            </div>
+                                            <div class="col-6">
+                                                <input class="text-ash-medium form-control fs-15" name="txt_apply_status"
+                                                    id="txt_apply_status" value="EMPTY" readonly>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
                             </div>
                         </form>
 
 
 
                     </div>
-                    <div class="modal-footer border-0 py-2">
+                    <div class="modal-footer border-0 py-2" id="div_btn_applyRegularize">
 
                         <button type="button" class="btn btn-orange" onclick="attendanceRegularize()">Apply
                             Request</button>
                     </div>
+
                 </div>
             </div>
 
@@ -558,60 +594,144 @@
         }
 
         function showRegularizationModal(element) {
+            let t_regularization_type = $(element).val();
+            let selected_date = $(element).data('currentdate');
+            let t_user_id  = $(element).data('userid');
+
+            //Based on data-applystatus, we will fetch the value from server.
+            //If data-applystatus != None, then make Ajax request
+            if($(element).data('applystatus') != 'None')
+            {
+                ////UI changes in modal popup
+
+                    //Disable textbox
+                    $('#regularize_time').attr('disabled', 'disabled');
+
+                    //Hide Reason dropdown div
+                    $('#div_reason_editable').hide();
+
+                    //Enable Non-editable reason div
+                    $('#div_reason_noneditable').show();
+
+                    //Hide the Apply Regulaize button
+                    $('#div_btn_applyRegularize').hide();
+
+                    /*
+                        Input params : selectedDate, regularization_type
+                        Output params : reason,custom_reason, status
+
+                    */
+                    $.ajax({
+                        url: "{{ route('fetch-regularization-data') }}",
+                        type: "POST",
+                        data: {
+                            user_id: t_user_id,
+                            selected_date: selected_date,
+                            regularization_type: t_regularization_type,
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(data) {
+                            console.log(data);
+                            console.log("Reason Type : "+data.reason_type);
+
+                            //Update the non-editable UIs
+                            $('#txt_reason_noneditable').val(data.reason_type); //editable
+
+                            if(data.custom_reason != "")
+                                $('#div_custom_reason').show();
+                            else
+                                $('#div_custom_reason').hide();
+
+
+                            $('#txt_customreason_noneditable').val(data.custom_reason); //editable
+                            $('#txt_apply_status').val(data.status); //editable
+
+                            //show Modal
+                            $('#regularizationModal').fadeIn(0);
+
+                        }
+                    });
+            }
+            else{
+                //Hide non-editable stuffs
+                //Reset modal element states
+                //Enable textbox
+                $('#regularize_time').attr('disabled', false);
+
+                //Show Reason dropdown div
+                $('#div_reason_editable').show();
+
+                //Disable Non-editable reason div
+                $('#div_reason_noneditable').hide();
+                $('#div_custom_reason').hide();
+
+                //Show the Apply Regularize button
+                $('#div_btn_applyRegularize').show();
+
+                //remove old values
+                $('#txt_reason_noneditable').val(''); //editable
+                $('#txt_customreason_noneditable').val(''); //editable
+                $('#txt_apply_status').val(''); //editable
+
+
+
+                //show Modal
+                $('#regularizationModal').fadeIn(0);
+            }
+
+            //Set UI elements
+            $('#current_date').html(selected_date);
+
 
 
             if ($(element).val() == "LC") {
                 //On modal popup
-                $('#current_date').html($(element).data('checkindate'));
                 $('#actual_user_time').html(moment($(element).data('checkintime'), ["HH:mm"]).format('h:mm A'));
                 $('#timing_label_suffix').html('( Late Arrival )');
-                $('#regularize_time').val(shift_start_time);
+                $('#regularize_time').val(shift_start_time); //editable
+
 
                 //Hidden vars
-                $('#attendance_date').val($(element).data('checkindate'));
+                $('#attendance_date').val(selected_date);
                 $('#user_time').val($(element).data('checkintime'));
                 $('#attendance_user').val(currentlySelectedUser);
                 $('#regularization_type').val("LC");
 
-                $('#regularizationModal').fadeIn(100);
             } else
             if ($(element).val() == "EG") {
-                $('#current_date').html($(element).data('checkoutdate'));
                 $('#actual_user_time').html(moment($(element).data('checkouttime'), ["HH:mm"]).format('h:mm A'));
                 $('#timing_label_suffix').html('( Early Going )');
                 $('#regularize_time').val(shift_end_time);
 
                 //Hidden vars
-                $('#attendance_date').val($(element).data('checkoutdate'));
+                $('#attendance_date').val(selected_date);
                 $('#user_time').val($(element).data('checkouttime'));
                 $('#attendance_user').val(currentlySelectedUser);
                 $('#regularization_type').val("EG");
 
-                $('#regularizationModal').fadeIn(100);
             }else
             if ($(element).val() == "MIP") {
-                $('#actual_checkin_date').html($(element).data('checkin_date'));
-                $('#actual_checkin_time').html($(element).data('actual_timing'));
+                $('#actual_user_time').html($(element).data('actual_timing'));
                 $('#regularize_time').val(shift_end_time);
-                $('#attendance_date').val($(element).data('checkin_date'));
+
+                $('#attendance_date').val(selected_date);
                 $('#user_time').val($(element).data('actual_timing'));
                 $('#attendance_user').val(currentlySelectedUser);
                 $('#regularization_type').val("EG");
                 $('#timing_label_suffix').html('( Early Going )');
                 //$('#')
-                $('#regularizationModal').fadeIn(100);
             }else
             if ($(element).val() == "MOP") {
-                $('#actual_checkin_date').html($(element).data('checkin_date'));
-                $('#actual_checkin_time').html($(element).data('actual_timing'));
+                $('#actual_user_time').html($(element).data('actual_timing'));
                 $('#regularize_time').val(shift_end_time);
-                $('#attendance_date').val($(element).data('checkin_date'));
+
+                $('#attendance_date').val(selected_date);
                 $('#user_time').val($(element).data('actual_timing'));
                 $('#attendance_user').val(currentlySelectedUser);
                 $('#regularization_type').val("EG");
                 $('#timing_label_suffix').html('( Early Going )');
                 //$('#')
-                $('#regularizationModal').fadeIn(100);
+
             }
 
             // $('#regularizationModal').addClass('fade');
@@ -647,6 +767,8 @@
                     $('#regularizationModal').fadeOut(400);
                     //update sidepanel
 
+                    //Update the calendar for this user
+                    ajaxGetMonthlyDate_TimeSheet(currentMonth, $('#attendance_user').val());
 
                 }
             });
@@ -654,7 +776,10 @@
 
 
         $('.modal-close').click(function() {
-            $('#regularizationModal').fadeOut(400);
+            $('#regularizationModal').fadeOut(0);
+
+
+
         })
 
         function generate_year_range(start, end) {
@@ -828,21 +953,13 @@
                                     //If not absent, show the dates
                                     let html_LC_Status = ajax_data_currentdate.isLC ? "<img src='{{URL::asset($svg_icon_pending)}}' class='calendar_icon'>" : "";
 
-                                    let html_LC_Button = "<input type='button' id='btn_checkin_time_" +currentDate+
-                                                        "' onclick ='showRegularizationModal(this)' data-applystatus='"+ajax_data_currentdate.lc_status+ "' class='f-10 btn-primary bn ms-2 lc_btn border-0 p-1 text-white' data-checkindate='"+currentDate+"' data-checkintime='"+final_checkin_time+"' value='LC' data-cellid ='checkin_time_" +
-                                                        currentDate+"'/>";
+                                    let html_LC_Button = "<input type='button' onclick ='showRegularizationModal(this)' class='f-10 btn-primary bn ms-2 lc_btn border-0 p-1 text-white' data-userid='"+ajax_data_currentdate.user_id+ "' data-applystatus='"+ajax_data_currentdate.lc_status+ "' data-currentdate='"+currentDate+"' data-checkintime='"+final_checkin_time+"' value='LC' />";
 
-                                    let html_MIP_Button = "<input type='button' id='mipmop" +year + "-" + (month + 1) + "-" + dateText +
-                                                        "' onclick ='showRegularizationModal(this)' class='f-10 btn-primary bn ms-2 lc_btn border-0 p-1 text-white'  value='MIP' data-cellid ='mipmop_" +
-                                                        year + "-" + (month + 1) + "-" + dateText +"'/>";
+                                    let html_MIP_Button = "<input type='button' onclick ='showRegularizationModal(this)' class='f-10 btn-primary bn ms-2 lc_btn border-0 p-1 text-white'  value='MIP' />";
 
-                                    let html_EG_Button = "<input type='button' id='btn_checkout_time_" +year + "-" + (month + 1) + "-" + dateText +
-                                                        "' onclick ='showRegularizationModal(this)' class='f-10 btn-orange bn ms-2 lc_btn border-0 p-1 text-white' data-checkoutdate='"+currentDate+"' data-checkouttime='"+final_checkout_time+"' value='EG' data-cellid ='checkout_time_" +
-                                                        year + "-" + (month + 1) + "-" + dateText +"'/>";
+                                    let html_EG_Button = "<input type='button' onclick ='showRegularizationModal(this)' class='f-10 btn-orange bn ms-2 lc_btn border-0 p-1 text-white' data-currentdate='"+currentDate+"' data-checkouttime='"+final_checkout_time+"' value='EG'/>";
 
-                                    let html_MOP_Button = "<input type='button' id='mipmop" +year + "-" + (month + 1) + "-" + dateText +
-                                                        "' onclick ='showRegularizationModal(this)' class='f-10 btn-orange bn ms-2 lc_btn border-0 p-1 text-white '  value='MOP' data-cellid ='mipmop_" +
-                                                        year + "-" + (month + 1) + "-" + dateText +"'/>";
+                                    let html_MOP_Button = "<input type='button' onclick ='showRegularizationModal(this)' class='f-10 btn-orange bn ms-2 lc_btn border-0 p-1 text-white '  value='MOP' />";
 
 
 
