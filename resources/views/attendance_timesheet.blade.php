@@ -600,6 +600,7 @@
 
             //Based on data-applystatus, we will fetch the value from server.
             //If data-applystatus != None, then make Ajax request
+            console.log("Status : "+$(element).data('applystatus'));
             if($(element).data('applystatus') != 'None')
             {
                 ////UI changes in modal popup
@@ -957,7 +958,7 @@
 
                                     let html_MIP_Button = "<input type='button' onclick ='showRegularizationModal(this)' class='f-10 btn-primary bn ms-2 lc_btn border-0 p-1 text-white'  value='MIP' />";
 
-                                    let html_EG_Button = "<input type='button' onclick ='showRegularizationModal(this)' class='f-10 btn-orange bn ms-2 lc_btn border-0 p-1 text-white' data-currentdate='"+currentDate+"' data-checkouttime='"+final_checkout_time+"' value='EG'/>";
+                                    let html_EG_Button = "<input type='button' onclick ='showRegularizationModal(this)' class='f-10 btn-orange bn ms-2 lc_btn border-0 p-1 text-white' data-userid='"+ajax_data_currentdate.user_id+ "' data-applystatus='"+ajax_data_currentdate.eg_status+ "' data-currentdate='"+currentDate+"' data-checkouttime='"+final_checkout_time+"' value='EG'/>";
 
                                     let html_MOP_Button = "<input type='button' onclick ='showRegularizationModal(this)' class='f-10 btn-orange bn ms-2 lc_btn border-0 p-1 text-white '  value='MOP' />";
 
