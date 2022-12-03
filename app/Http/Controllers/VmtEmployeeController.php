@@ -789,6 +789,14 @@ class VmtEmployeeController extends Controller
         return response()->json($responseJSON);
     }
 
+
+    private function storeSingleRecord_BulkEmployee_v2($row){
+
+
+
+    }
+
+
     /*
 
         $outputArray should be passed from parent function.
@@ -1098,21 +1106,26 @@ class VmtEmployeeController extends Controller
         $data['employer_pt_yearly'] =  intval($employeeData["professional_tax"]) * 12;
         $data['net_take_home_monthly'] = $employeeData["net_income"];
         $data['net_take_home_yearly'] = intval($employeeData["net_income"]) * 12;
-        // download PDF file with download method
-        $pdf = new Dompdf();
-        $html =  view('testing', compact('data'));
-        $pdf->loadHtml($html, 'UTF-8');
-        $pdf->setPaper('A4', 'portrait');
-        $pdf->render();
-        $docUploads =  $pdf->output();
-        \File::put(public_path('appoinmentLetter/') . $filename, $docUploads);
+
 
         $VmtGeneralInfo = VmtGeneralInfo::first();
         $image_view = url('/') . $VmtGeneralInfo->logo_img;
         $appoinmentPath = "";
+
         if (fetchMasterConfigValue("can_send_appointmentletter_after_onboarding") == "true") {
+            // download PDF file with download method
+            $pdf = new Dompdf();
+            $html =  view('testing', compact('data'));
+            $pdf->loadHtml($html, 'UTF-8');
+            $pdf->setPaper('A4', 'portrait');
+            $pdf->render();
+            $docUploads =  $pdf->output();
+
+            \File::put(public_path('appoinmentLetter/') . $filename, $docUploads);
+
             $appoinmentPath = public_path('appoinmentLetter/') . $filename;
         }
+
         $notification_user = User::where('id',auth::user()->id)->first();
         $message = "Employee Bulk OnBoard was Created   ";
 
