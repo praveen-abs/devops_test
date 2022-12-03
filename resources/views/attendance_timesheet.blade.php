@@ -171,7 +171,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 mb-2">
+                                <div class="col-12 mb-2"  id="div_actual_user_time">
                                     <div class="row">
                                         <div class="col-6">
                                             <label class="text-ash-medium fs-15">
@@ -662,6 +662,10 @@
                 //Show Reason dropdown div
                 $('#div_reason_editable').show();
 
+                //Show actual time
+                $('#div_actual_user_time').show();
+
+
                 //Disable Non-editable reason div
                 $('#div_reason_noneditable').hide();
                 $('#div_custom_reason').hide();
@@ -712,25 +716,30 @@
 
             }else
             if ($(element).val() == "MIP") {
-                $('#actual_user_time').html($(element).data('actual_timing'));
-                $('#regularize_time').val(shift_end_time);
+
+                $('#div_actual_user_time').hide();
+
+                //$('#actual_user_time').html($(element).data('actual_timing'));
+                $('#regularize_time').val(shift_start_time);
 
                 $('#attendance_date').val(selected_date);
                 $('#user_time').val($(element).data('actual_timing'));
                 $('#attendance_user').val(currentlySelectedUser);
-                $('#regularization_type').val("EG");
-                $('#timing_label_suffix').html('( Early Going )');
+                $('#regularization_type').val("MIP");
+                $('#timing_label_suffix').html('( MIP )');
                 //$('#')
             }else
             if ($(element).val() == "MOP") {
-                $('#actual_user_time').html($(element).data('actual_timing'));
+                $('#div_actual_user_time').hide();
+
+                //$('#actual_user_time').html($(element).data('actual_timing'));
                 $('#regularize_time').val(shift_end_time);
 
                 $('#attendance_date').val(selected_date);
                 $('#user_time').val($(element).data('actual_timing'));
                 $('#attendance_user').val(currentlySelectedUser);
-                $('#regularization_type').val("EG");
-                $('#timing_label_suffix').html('( Early Going )');
+                $('#regularization_type').val("MOP");
+                $('#timing_label_suffix').html('( MOP )');
                 //$('#')
 
             }
@@ -948,19 +957,22 @@
                                     let final_checkin_time = ajax_data_currentdate.checkin_time ?? "";
                                     let ui_final_checkin_time = final_checkin_time == "" ? "--:--:--" : moment(final_checkin_time, ["HH:mm"]).format('h:mm a');
 
+                                    if(ajax_data_currentdate.lc_status == "Approved" || ajax_data_currentdate.mip_status == "Approved" )
+                                        final_checkin_time == "" ? "--:--:--" : moment(final_checkin_time, ["HH:mm"]).format('h:mm a');
+
                                     let final_checkout_time = ajax_data_currentdate.checkout_time ?? "";
                                     let ui_final_checkout_time = final_checkout_time == "" ? "--:--:--" : moment(final_checkout_time, ["HH:mm"]).format('h:mm a');
 
                                     //If not absent, show the dates
                                     let html_LC_Status = ajax_data_currentdate.isLC ? "<img src='{{URL::asset($svg_icon_pending)}}' class='calendar_icon'>" : "";
 
-                                    let html_LC_Button = "<input type='button' onclick ='showRegularizationModal(this)' class='f-10 btn-primary bn ms-2 lc_btn border-0 p-1 text-white' data-userid='"+ajax_data_currentdate.user_id+ "' data-applystatus='"+ajax_data_currentdate.lc_status+ "' data-currentdate='"+currentDate+"' data-checkintime='"+final_checkin_time+"' value='LC' />";
+                                    let html_LC_Button = "<input type='button' onclick ='showRegularizationModal(this)' class='f-10 btn-primary bn ms-2 lc_btn border-0 p-1 text-white' data-userid='"+ajax_data_currentdate.user_id+ "' data-applystatus='"+ajax_data_currentdate.lc_status+ "' data-currentdate='"+currentDate+"' data-checkintime='"+final_checkin_time+"' value='LC' />&nbsp;&nbsp;";
 
-                                    let html_MIP_Button = "<input type='button' onclick ='showRegularizationModal(this)' class='f-10 btn-primary bn ms-2 lc_btn border-0 p-1 text-white'  value='MIP' />";
+                                    let html_MIP_Button = "<input type='button' onclick ='showRegularizationModal(this)' class='f-10 btn-primary bn ms-2 lc_btn border-0 p-1 text-white' data-userid='"+ajax_data_currentdate.user_id+ "' data-applystatus='"+ajax_data_currentdate.mip_status+ "' data-currentdate='"+currentDate+"' value='MIP' />&nbsp;&nbsp;";
 
-                                    let html_EG_Button = "<input type='button' onclick ='showRegularizationModal(this)' class='f-10 btn-orange bn ms-2 lc_btn border-0 p-1 text-white' data-userid='"+ajax_data_currentdate.user_id+ "' data-applystatus='"+ajax_data_currentdate.eg_status+ "' data-currentdate='"+currentDate+"' data-checkouttime='"+final_checkout_time+"' value='EG'/>";
+                                    let html_EG_Button = "<input type='button' onclick ='showRegularizationModal(this)' class='f-10 btn-orange bn ms-2 lc_btn border-0 p-1 text-white' data-userid='"+ajax_data_currentdate.user_id+ "' data-applystatus='"+ajax_data_currentdate.eg_status+ "' data-currentdate='"+currentDate+"' data-checkouttime='"+final_checkout_time+"' value='EG'/>&nbsp;&nbsp;";
 
-                                    let html_MOP_Button = "<input type='button' onclick ='showRegularizationModal(this)' class='f-10 btn-orange bn ms-2 lc_btn border-0 p-1 text-white '  value='MOP' />";
+                                    let html_MOP_Button = "<input type='button' onclick ='showRegularizationModal(this)' class='f-10 btn-orange bn ms-2 lc_btn border-0 p-1 text-white ' data-userid='"+ajax_data_currentdate.user_id+ "' data-applystatus='"+ajax_data_currentdate.mop_status+ "' data-currentdate='"+currentDate+"' value='MOP' />&nbsp;&nbsp;";
 
 
 
