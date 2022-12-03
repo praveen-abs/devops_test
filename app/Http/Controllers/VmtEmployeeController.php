@@ -1113,17 +1113,26 @@ class VmtEmployeeController extends Controller
         $appoinmentPath = "";
 
         if (fetchMasterConfigValue("can_send_appointmentletter_after_onboarding") == "true") {
-            // download PDF file with download method
-            $pdf = new Dompdf();
-            $html =  view('testing', compact('data'));
-            $pdf->loadHtml($html, 'UTF-8');
-            $pdf->setPaper('A4', 'portrait');
-            $pdf->render();
-            $docUploads =  $pdf->output();
 
-            \File::put(public_path('appoinmentLetter/') . $filename, $docUploads);
+            //Fetch appointment letter based on client name
+            $client_name = Str::lower(str_replace(' ', '', getCurrentClientName()) );
+            $viewfile_appointmentletter = 'vmt_appointment_templates.mailtemplate_appointmentletter_'.$client_name;
 
-            $appoinmentPath = public_path('appoinmentLetter/') . $filename;
+            //check if template exists
+            if (view()->exists($viewfile_appointmentletter)) {
+
+                $html =  view($viewfile_appointmentletter, compact('data'));
+
+                $pdf = new Dompdf();
+                $pdf->loadHtml($html, 'UTF-8');
+                $pdf->setPaper('A4', 'portrait');
+                $pdf->render();
+                $docUploads =  $pdf->output();
+                \File::put(public_path('appoinmentLetter/') . $filename, $docUploads);
+                $appoinmentPath = public_path('appoinmentLetter/') . $filename;
+
+            }
+
         }
 
         $notification_user = User::where('id',auth::user()->id)->first();
