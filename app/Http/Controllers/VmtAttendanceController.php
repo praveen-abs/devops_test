@@ -667,6 +667,15 @@ class VmtAttendanceController extends Controller
                 ////Is any permission applied
                 $attendanceResponseArray[$key]["mop_status"] = $this->isRegularizationRequestApplied($request->user_id, $key, 'MOP');
 
+                if($attendanceResponseArray[$key]["mop_status"] == "Approved"){
+
+                    //If Approved, then set the regularize time as checkin time
+                    $attendanceResponseArray[$key]["checkout_time"] =  VmtEmployeeAttendanceRegularization::where('attendance_date', $key)
+                                                 ->where('user_id',  $request->user_id)->where('regularization_type', 'MOP')->value('regularize_time');
+
+                  //  $attendanceResponseArray[$key]["checkin_time"] = ""
+                }
+
 
             }
             elseif($checkin_time == null && $checkout_time != null){
@@ -676,6 +685,15 @@ class VmtAttendanceController extends Controller
 
                 ////Is any permission applied
                 $attendanceResponseArray[$key]["mip_status"] = $this->isRegularizationRequestApplied($request->user_id, $key, 'MIP');
+
+                if($attendanceResponseArray[$key]["mip_status"] == "Approved"){
+
+                    //If Approved, then set the regularize time as checkin time
+                    $attendanceResponseArray[$key]["checkin_time"] =  VmtEmployeeAttendanceRegularization::where('attendance_date', $key)
+                                                 ->where('user_id',  $request->user_id)->where('regularization_type', 'MIP')->value('regularize_time');
+
+                  //  $attendanceResponseArray[$key]["checkin_time"] = ""
+                }
 
 
             }
@@ -713,9 +731,11 @@ class VmtAttendanceController extends Controller
         $regularize_record = VmtEmployeeAttendanceRegularization::where('attendance_date', $attendance_date)
             ->where('user_id',  $user_id)->where('regularization_type', $regularizeType);
 
+       // dd($user_id ." , ". $attendance_date." , ".$regularizeType);
+
         if ($regularize_record->exists())
         {
-            return $regularize_record->first()->value('status');
+            return $regularize_record->value('status');
         }
         else
         {
@@ -729,6 +749,8 @@ class VmtAttendanceController extends Controller
 
         $regularize_record = VmtEmployeeAttendanceRegularization::where('attendance_date', $request->selected_date)
         ->where('user_id',  $request->user_id)->where('regularization_type', $request->regularization_type)->first();
+
+        //dd($regularize_record);
 
         return $regularize_record;
 
@@ -833,11 +855,18 @@ class VmtAttendanceController extends Controller
 
             //dd("Request not applied");
 
+            if ($request->regularization_type == 'MIP' || $request->regularization_type == 'MOP')
+                $user_time = null;
+            else
+                $user_time = $request->user_time;
+
+
+
             $attendanceRegularizationRequest = new VmtEmployeeAttendanceRegularization;
             $attendanceRegularizationRequest->user_id = $request->attendance_user;
             $attendanceRegularizationRequest->attendance_date = $request->attendance_date;
             $attendanceRegularizationRequest->regularization_type =  $request->regularization_type;
-            $attendanceRegularizationRequest->user_time =  Carbon::createFromFormat('H:i:s', $request->user_time);
+            $attendanceRegularizationRequest->user_time =  empty($user_time) ? null : Carbon::createFromFormat('H:i:s', $user_time);
             $attendanceRegularizationRequest->regularize_time = Carbon::createFromFormat('H:i:s', $request->regularize_time);
             $attendanceRegularizationRequest->reason_type = $request->reason;
             $attendanceRegularizationRequest->custom_reason = $request->custom_reason ?? '';
