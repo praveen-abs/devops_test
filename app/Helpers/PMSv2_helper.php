@@ -105,13 +105,30 @@ function calculateAppraisalReviewRating_BasedOnHR(){
 function calculateOverallReviewRating($user_id){
 
     //Get all the assigned form's id for the given user_id
-    $FormIDs_assignedforms = VmtPMS_KPIFormAssignedModel::where('assignee_id',$user_id)->get('id');
+    $FormIDs_assignedforms = VmtPMS_KPIFormAssignedModel::where('assignee_id','141')->get('id');
 
 
     //Get all the reviewform id for the given assignedform id's
-    $ReviewsForms_currentUser =  VmtPMS_KPIFormReviewsModel::whereIn('id',$FormIDs_assignedforms)->get();
+    $query_reviewedForms_user =  VmtPMS_KPIFormReviewsModel::whereIn('id',$FormIDs_assignedforms)->get();
+    //dd($query_reviewedForms_user->toArray());
 
-    dd($FormIDs_assignedforms);
+    if($query_reviewedForms_user->count() > 0)
+    {
+        //Check whether the form is reviewed
+        foreach($query_reviewedForms_user as $singleReviewedForm){
+            //Get all the forms that reviewed
+          //var_dump( calculateReviewRatings($singleReviewedForm->id, $user_id) );
+         // var_dump("<br/><br/>");
+        }
+
+    }
+    else
+    {
+        dd("No Review forms the given User ID : ".$user_id);
+    }
+
+
+   // $reviewedForms_user->toArray()
 
 
 
@@ -120,7 +137,7 @@ function calculateOverallReviewRating($user_id){
 }
 
 // get Average rating of particular ReviewedForm and for review given by First Reveiwer for that Kpi Form
-function calculateReviewRatings($assigneeReviewTableId=null,$assigneeId)
+function calculateReviewRatings($assigneeReviewTableId,$assigneeId)
 {
     try{
         $totalRatingScore = 0;
