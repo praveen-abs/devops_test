@@ -3,10 +3,10 @@
 
 <?php
 //Icons for calendar
-    $svg_icon_rejected = "/images/icons/svg_icon_rejected.svg";
-    $svg_icon_approved = "/images/icons/svg_icon_accepted.svg";
-    $svg_icon_pending = "/images/icons/svg_icon_pending.svg";
-    $svg_icon_notApplied = "/images/icons/svg_icon_notApplied.svg";
+$svg_icon_rejected = '/images/icons/svg_icon_rejected.svg';
+$svg_icon_approved = '/images/icons/svg_icon_accepted.svg';
+$svg_icon_pending = '/images/icons/svg_icon_pending.svg';
+$svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
 ?>
 @section('title')
@@ -163,15 +163,14 @@
                                     <div class="row">
                                         <div class="col-6"><label class="text-ash-medium fs-15">Date</label></div>
                                         <div class="col-6">
-                                            <span class="text-ash-medium fs-15"
-                                                id="current_date">--/--/----,Monday</span>
+                                            <span class="text-ash-medium fs-15" id="current_date">--/--/----,Monday</span>
 
                                             <input type="hidden" class="text-ash-medium form-control fs-15"
                                                 name="attendance_date" id="attendance_date">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 mb-2"  id="div_actual_user_time">
+                                <div class="col-12 mb-2" id="div_actual_user_time">
                                     <div class="row">
                                         <div class="col-6">
                                             <label class="text-ash-medium fs-15">
@@ -198,7 +197,7 @@
                                     </div>
                                 </div>
                                 <div id="div_reason_editable">
-                                    <div class="col-12 mb-2" >
+                                    <div class="col-12 mb-2">
                                         <div class="row">
                                             <div class="col-6"><label class="text-ash-medium fs-15">Reason</label></div>
                                             <div class="col-6">
@@ -226,13 +225,14 @@
                                 </div>
 
                                 <div id="div_reason_noneditable">
-                                    <div class="col-12 mb-2" >
+                                    <div class="col-12 mb-2">
                                         <div class="row">
                                             <div class="col-6"><label class="text-ash-medium fs-15">Reason</label>
                                             </div>
                                             <div class="col-6">
-                                                <input class="text-ash-medium form-control fs-15" name="txt_reason_noneditable"
-                                                    id="txt_reason_noneditable" value="EMPTY" readonly>
+                                                <input class="text-ash-medium form-control fs-15"
+                                                    name="txt_reason_noneditable" id="txt_reason_noneditable"
+                                                    value="EMPTY" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -242,13 +242,14 @@
                                             <div class="col-6"><label class="text-ash-medium fs-15">Custom Reason</label>
                                             </div>
                                             <div class="col-6">
-                                                <input class="text-ash-medium form-control fs-15" name="txt_customreason_noneditable"
-                                                    id="txt_customreason_noneditable" value="EMPTY" readonly>
+                                                <input class="text-ash-medium form-control fs-15"
+                                                    name="txt_customreason_noneditable" id="txt_customreason_noneditable"
+                                                    value="EMPTY" readonly>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="col-12 mb-2" >
+                                    <div class="col-12 mb-2">
                                         <div class="row">
                                             <div class="col-6"><label class="text-ash-medium fs-15">Status</label>
                                             </div>
@@ -351,7 +352,9 @@
 
                         if (element.employee_avatar.type == 'shortname') {
 
-                            avatar_data =  '<div class="user_pic d-flex justify-content-center align-items-center  rounded-circle"><span class="text-white fw-bold">' + element.employee_avatar.data +
+                            avatar_data =
+                                '<div class="user_pic d-flex justify-content-center align-items-center  rounded-circle"><span class="text-white fw-bold">' +
+                                element.employee_avatar.data +
                                 '</span></div>';
 
                         } else
@@ -364,7 +367,8 @@
                         }
 
                         var html = '<li class="list_employee_attendance p-1 w-100" >' +
-                            '<button class="w-100 btn d-flex employee_list_item border-0" data-userid=' + element
+                            '<button class="w-100 btn d-flex employee_list_item border-0" data-userid=' +
+                            element
                             .id + '>' +
                             '<div class=" me-2 d-flex col-auto">' +
                             avatar_data +
@@ -415,7 +419,9 @@
 
                         if (element.employee_avatar.type == 'shortname') {
 
-                            avatar_data = ' <div class="bg-primary user_pic d-flex  justify-content-center align-items-center  rounded-circle"> <span class="text-white">' + element.employee_avatar.data +
+                            avatar_data =
+                                ' <div class="bg-primary user_pic d-flex  justify-content-center align-items-center  rounded-circle"> <span class="text-white">' +
+                                element.employee_avatar.data +
                                 '</span></div>';
 
 
@@ -424,7 +430,8 @@
 
                             var imageURL = "images/" + element.employee_avatar.data;
 
-                            avatar_data ='<div class="user_pic bg-ash rounded-circle"><img class=" w-100 rounded-circle  h-100 header-profile-user" src="' +
+                            avatar_data =
+                                '<div class="user_pic bg-ash rounded-circle"><img class=" w-100 rounded-circle  h-100 header-profile-user" src="' +
                                 imageURL + '" alt="--"></div>';
 
 
@@ -432,7 +439,8 @@
 
 
                         var html = '<li class="list_employee_attendance p-1 " >' +
-                            '<button class=" btn d-flex employee_list_item border-0" data-userid=' + element
+                            '<button class=" btn d-flex employee_list_item border-0" data-userid=' +
+                            element
                             .id + '>' +
                             '<div class="col-auto me-2 ">' +
                             avatar_data +
@@ -472,12 +480,15 @@
 
             @if ($current_employee_detail->employee_avatar['type'] == 'shortname')
 
-                avatar_data = '<div class="bg-primary user_pic d-flex justify-content-center align-items-center  rounded-circle"> <span class="text-white">{{ $current_employee_detail->employee_avatar['data'] }}</span></div>';
+                avatar_data =
+                    '<div class="bg-primary user_pic d-flex justify-content-center align-items-center  rounded-circle"> <span class="text-white">{{ $current_employee_detail->employee_avatar['data'] }}</span></div>';
             @elseif ($current_employee_detail->employee_avatar['type'] == 'avatar')
                 var imageURL = "images/" + '{{ $current_employee_detail->employee_avatar['data'] }}';
 
-                avatar_data = ' <div class="user_pic bg-ash rounded-circle "><img class=" rounded-circle w-100 h-100 header-profile-user" src="' + imageURL +
-                '" alt="--"></div>';
+                avatar_data =
+                    ' <div class="user_pic bg-ash rounded-circle "><img class=" rounded-circle w-100 h-100 header-profile-user" src="' +
+                    imageURL +
+                    '" alt="--"></div>';
             @endif
 
             //show the current user in sidepanel for TimeSheet tab
@@ -485,7 +496,8 @@
 
 
             var html = '<li class="list_employee_attendance p-1 " >' +
-                '<button class=" btn d-flex employee_list_item border-0" data-userid=' + '{{ $current_employee_detail->id }}' +
+                '<button class=" btn d-flex employee_list_item border-0" data-userid=' +
+                '{{ $current_employee_detail->id }}' +
                 '>' +
                 '<div class="col-auto me-2 ">' +
                 avatar_data +
@@ -589,71 +601,69 @@
 
         }
 
-        function showMissedInMissedOutPunchModal(element){
+        function showMissedInMissedOutPunchModal(element) {
             alert("Not yet implemented");
         }
 
         function showRegularizationModal(element) {
             let t_regularization_type = $(element).val();
             let selected_date = $(element).data('currentdate');
-            let t_user_id  = $(element).data('userid');
+            let t_user_id = $(element).data('userid');
 
             //Based on data-applystatus, we will fetch the value from server.
             //If data-applystatus != None, then make Ajax request
-            console.log("Status : "+$(element).data('applystatus'));
-            if($(element).data('applystatus') != 'None')
-            {
+            console.log("Status : " + $(element).data('applystatus'));
+            if ($(element).data('applystatus') != 'None') {
                 ////UI changes in modal popup
 
-                    //Disable textbox
-                    $('#regularize_time').attr('disabled', 'disabled');
+                //Disable textbox
+                $('#regularize_time').attr('disabled', 'disabled');
 
-                    //Hide Reason dropdown div
-                    $('#div_reason_editable').hide();
+                //Hide Reason dropdown div
+                $('#div_reason_editable').hide();
 
-                    //Enable Non-editable reason div
-                    $('#div_reason_noneditable').show();
+                //Enable Non-editable reason div
+                $('#div_reason_noneditable').show();
 
-                    //Hide the Apply Regulaize button
-                    $('#div_btn_applyRegularize').hide();
+                //Hide the Apply Regulaize button
+                $('#div_btn_applyRegularize').hide();
 
-                    /*
-                        Input params : selectedDate, regularization_type
-                        Output params : reason,custom_reason, status
+                /*
+                    Input params : selectedDate, regularization_type
+                    Output params : reason,custom_reason, status
 
-                    */
-                    $.ajax({
-                        url: "{{ route('fetch-regularization-data') }}",
-                        type: "POST",
-                        data: {
-                            user_id: t_user_id,
-                            selected_date: selected_date,
-                            regularization_type: t_regularization_type,
-                            _token: '{{ csrf_token() }}'
-                        },
-                        success: function(data) {
-                            console.log(data);
-                            console.log("Reason Type : "+data.reason_type);
+                */
+                $.ajax({
+                    url: "{{ route('fetch-regularization-data') }}",
+                    type: "POST",
+                    data: {
+                        user_id: t_user_id,
+                        selected_date: selected_date,
+                        regularization_type: t_regularization_type,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        console.log("Reason Type : " + data.reason_type);
 
-                            //Update the non-editable UIs
-                            $('#txt_reason_noneditable').val(data.reason_type); //editable
+                        //Update the non-editable UIs
+                        $('#txt_reason_noneditable').val(data.reason_type); //editable
 
-                            if(data.custom_reason != "")
-                                $('#div_custom_reason').show();
-                            else
-                                $('#div_custom_reason').hide();
+                        if (data.custom_reason != "")
+                            $('#div_custom_reason').show();
+                        else
+                            $('#div_custom_reason').hide();
 
 
-                            $('#txt_customreason_noneditable').val(data.custom_reason); //editable
-                            $('#txt_apply_status').val(data.status); //editable
+                        $('#txt_customreason_noneditable').val(data.custom_reason); //editable
+                        $('#txt_apply_status').val(data.status); //editable
 
-                            //show Modal
-                            $('#regularizationModal').fadeIn(0);
+                        //show Modal
+                        $('#regularizationModal').fadeIn(0);
 
-                        }
-                    });
-            }
-            else{
+                    }
+                });
+            } else {
                 //Hide non-editable stuffs
                 //Reset modal element states
                 //Enable textbox
@@ -714,7 +724,7 @@
                 $('#attendance_user').val(currentlySelectedUser);
                 $('#regularization_type').val("EG");
 
-            }else
+            } else
             if ($(element).val() == "MIP") {
 
                 $('#div_actual_user_time').hide();
@@ -728,7 +738,7 @@
                 $('#regularization_type').val("MIP");
                 $('#timing_label_suffix').html('( MIP )');
                 //$('#')
-            }else
+            } else
             if ($(element).val() == "MOP") {
                 $('#div_actual_user_time').hide();
 
@@ -931,78 +941,108 @@
                                 date +
                                 "</span> <span>Week Off </span> <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex justify-content-between'> </div> <div class='w-100 d-flex justify-content-between check-out mt-2 f-10 text-danger'> </div></div></div>";
 
-                        }
-                        else
-                        {
+                        } else {
 
 
                             let currentDate = year + "-" + (month + 1) + "-" + dateText;
 
                             let ajax_data_currentdate = ajax_monthly_data[currentDate];
+                            //console.log("testing " + currentDate);
+                            let todayDate = new Date().toISOString().slice(0, 10)
+                            //console.log("today" + todayDate);
 
-                            if(ajax_data_currentdate)
-                            {
+                            if (ajax_data_currentdate) {
 
-                                if(ajax_data_currentdate.isAbsent)
-                                {
-                                    cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
-                                    "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' ><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><span class='f-11' id='checkout_time_" +
-                                    year + "-" + (month + 1) + "-" + dateText + "'>Absent</span> </div></div></div>";
+                                if (ajax_data_currentdate.isAbsent) {
+                                    if (todayDate > currentDate) {
+                                        cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
+                                            "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' ><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><span class='f-11' id='checkout_time_" +
+                                            year + "-" + (month + 1) + "-" + dateText +
+                                            "'>Absent</span> </div></div></div>";
 
-                                }
-                                else
-                                {
+                                    }else{
+                                        cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
+                                            "</p>  </div>"
+
+                                    }
+
+
+
+                                } else {
                                     let final_checkin_button_code = "";
                                     let final_checkout_button_code = "";
                                     let final_checkin_time = ajax_data_currentdate.checkin_time ?? "";
-                                    let ui_final_checkin_time = final_checkin_time == "" ? "--:--:--" : moment(final_checkin_time, ["HH:mm"]).format('h:mm a');
+                                    let ui_final_checkin_time = final_checkin_time == "" ? "--:--:--" : moment(
+                                        final_checkin_time, ["HH:mm"]).format('h:mm a');
 
-                                    if(ajax_data_currentdate.lc_status == "Approved" || ajax_data_currentdate.mip_status == "Approved" )
-                                        final_checkin_time == "" ? "--:--:--" : moment(final_checkin_time, ["HH:mm"]).format('h:mm a');
+                                    if (ajax_data_currentdate.lc_status == "Approved" || ajax_data_currentdate.mip_status ==
+                                        "Approved")
+                                        final_checkin_time == "" ? "--:--:--" : moment(final_checkin_time, ["HH:mm"])
+                                        .format('h:mm a');
 
                                     let final_checkout_time = ajax_data_currentdate.checkout_time ?? "";
-                                    let ui_final_checkout_time = final_checkout_time == "" ? "--:--:--" : moment(final_checkout_time, ["HH:mm"]).format('h:mm a');
+                                    let ui_final_checkout_time = final_checkout_time == "" ? "--:--:--" : moment(
+                                        final_checkout_time, ["HH:mm"]).format('h:mm a');
 
                                     //If not absent, show the dates
-                                    let html_LC_Status = ajax_data_currentdate.isLC ? "<img src='{{URL::asset($svg_icon_pending)}}' class='calendar_icon'>" : "";
+                                    let html_LC_Status = ajax_data_currentdate.isLC ?
+                                        "<img src='{{ URL::asset($svg_icon_pending) }}' class='calendar_icon'>" : "";
 
-                                    let html_LC_Button = "<input type='button' onclick ='showRegularizationModal(this)' class='f-10 btn-primary bn ms-2 lc_btn border-0 p-1 text-white' data-userid='"+ajax_data_currentdate.user_id+ "' data-applystatus='"+ajax_data_currentdate.lc_status+ "' data-currentdate='"+currentDate+"' data-checkintime='"+final_checkin_time+"' value='LC' />&nbsp;&nbsp;";
+                                    let html_LC_Button =
+                                        "<input type='button' onclick ='showRegularizationModal(this)' class='f-10 btn-primary bn ms-2 lc_btn border-0 p-1 text-white' data-userid='" +
+                                        ajax_data_currentdate.user_id + "' data-applystatus='" + ajax_data_currentdate
+                                        .lc_status + "' data-currentdate='" + currentDate + "' data-checkintime='" +
+                                        final_checkin_time + "' value='LC' />&nbsp;&nbsp;";
 
-                                    let html_MIP_Button = "<input type='button' onclick ='showRegularizationModal(this)' class='f-10 btn-primary bn ms-2 lc_btn border-0 p-1 text-white' data-userid='"+ajax_data_currentdate.user_id+ "' data-applystatus='"+ajax_data_currentdate.mip_status+ "' data-currentdate='"+currentDate+"' value='MIP' />&nbsp;&nbsp;";
+                                    let html_MIP_Button =
+                                        "<input type='button' onclick ='showRegularizationModal(this)' class='f-10 btn-primary bn ms-2 lc_btn border-0 p-1 text-white' data-userid='" +
+                                        ajax_data_currentdate.user_id + "' data-applystatus='" + ajax_data_currentdate
+                                        .mip_status + "' data-currentdate='" + currentDate + "' value='MIP' />&nbsp;&nbsp;";
 
-                                    let html_EG_Button = "<input type='button' onclick ='showRegularizationModal(this)' class='f-10 btn-orange bn ms-2 lc_btn border-0 p-1 text-white' data-userid='"+ajax_data_currentdate.user_id+ "' data-applystatus='"+ajax_data_currentdate.eg_status+ "' data-currentdate='"+currentDate+"' data-checkouttime='"+final_checkout_time+"' value='EG'/>&nbsp;&nbsp;";
+                                    let html_EG_Button =
+                                        "<input type='button' onclick ='showRegularizationModal(this)' class='f-10 btn-orange bn ms-2 lc_btn border-0 p-1 text-white' data-userid='" +
+                                        ajax_data_currentdate.user_id + "' data-applystatus='" + ajax_data_currentdate
+                                        .eg_status + "' data-currentdate='" + currentDate + "' data-checkouttime='" +
+                                        final_checkout_time + "' value='EG'/>&nbsp;&nbsp;";
 
-                                    let html_MOP_Button = "<input type='button' onclick ='showRegularizationModal(this)' class='f-10 btn-orange bn ms-2 lc_btn border-0 p-1 text-white ' data-userid='"+ajax_data_currentdate.user_id+ "' data-applystatus='"+ajax_data_currentdate.mop_status+ "' data-currentdate='"+currentDate+"' value='MOP' />&nbsp;&nbsp;";
+                                    let html_MOP_Button =
+                                        "<input type='button' onclick ='showRegularizationModal(this)' class='f-10 btn-orange bn ms-2 lc_btn border-0 p-1 text-white ' data-userid='" +
+                                        ajax_data_currentdate.user_id + "' data-applystatus='" + ajax_data_currentdate
+                                        .mop_status + "' data-currentdate='" + currentDate + "' value='MOP' />&nbsp;&nbsp;";
 
 
 
 
-                                    if(ajax_data_currentdate.isLC){
-                                        final_checkin_button_code = html_LC_Button + getStatusIcon(ajax_data_currentdate.lc_status);
+                                    if (ajax_data_currentdate.isLC) {
+                                        final_checkin_button_code = html_LC_Button + getStatusIcon(ajax_data_currentdate
+                                            .lc_status);
+                                    } else
+                                    if (ajax_data_currentdate.isMIP) {
+                                        final_checkin_button_code = html_MIP_Button + getStatusIcon(ajax_data_currentdate
+                                            .mip_status);
                                     }
-                                    else
-                                    if(ajax_data_currentdate.isMIP){
-                                        final_checkin_button_code = html_MIP_Button + getStatusIcon(ajax_data_currentdate.mip_status);
-                                    }
 
-                                    if(ajax_data_currentdate.isEG){
-                                        final_checkout_button_code = html_EG_Button + getStatusIcon(ajax_data_currentdate.eg_status);
-                                    }
-                                    else
-                                    if(ajax_data_currentdate.isMOP){
-                                        final_checkout_button_code = html_MOP_Button + getStatusIcon(ajax_data_currentdate.mop_status);
+                                    if (ajax_data_currentdate.isEG) {
+                                        final_checkout_button_code = html_EG_Button + getStatusIcon(ajax_data_currentdate
+                                            .eg_status);
+                                    } else
+                                    if (ajax_data_currentdate.isMOP) {
+                                        final_checkout_button_code = html_MOP_Button + getStatusIcon(ajax_data_currentdate
+                                            .mop_status);
                                     }
 
 
                                     cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
 
-                                    "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex '><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
-                                    year + "-" + (month + 1) + "-" + dateText +"'>"+ui_final_checkin_time+"</span>"+
-                                    final_checkin_button_code+
-                                    "</div> <div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span class='f-11' id='checkout_time_" +
-                                    year + "-" + (month + 1) + "-" + dateText + "'>"+ui_final_checkout_time+"</span>"+
-                                    final_checkout_button_code+
-                                    "</div></div></div>";
+                                        "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex '><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
+                                        year + "-" + (month + 1) + "-" + dateText + "'>" + ui_final_checkin_time +
+                                        "</span>" +
+                                        final_checkin_button_code +
+                                        "</div> <div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span class='f-11' id='checkout_time_" +
+                                        year + "-" + (month + 1) + "-" + dateText + "'>" + ui_final_checkout_time +
+                                        "</span>" +
+                                        final_checkout_button_code +
+                                        "</div></div></div>";
                                 }
                             }
 
@@ -1026,22 +1066,19 @@
 
         }
 
-        function getStatusIcon(status){
-            if(status == "None"){
-                return "<img src='{{URL::asset($svg_icon_notApplied)}}' alt='Not Applied' class='calendar_icon' title='Not Applied'>";
-            }
-            else
-            if(status == "Pending"){
-                return "<img src='{{URL::asset($svg_icon_pending)}}' alt='Pending' title='Pending' class='calendar_icon'>";
-            }
-            else
-            if(status == "Approved"){
-                return "<img src='{{URL::asset($svg_icon_approved)}}' alt='Approved' title='Approved' class='calendar_icon'>";
+        function getStatusIcon(status) {
+            if (status == "None") {
+                return "<img src='{{ URL::asset($svg_icon_notApplied) }}' alt='Not Applied' class='calendar_icon' title='Not Applied'>";
+            } else
+            if (status == "Pending") {
+                return "<img src='{{ URL::asset($svg_icon_pending) }}' alt='Pending' title='Pending' class='calendar_icon'>";
+            } else
+            if (status == "Approved") {
+                return "<img src='{{ URL::asset($svg_icon_approved) }}' alt='Approved' title='Approved' class='calendar_icon'>";
 
-            }
-            else
-            if(status == "Rejected"){
-                return "<img src='{{URL::asset($svg_icon_rejected)}}' alt='Rejected' text='Rejected' class='calendar_icon'>";
+            } else
+            if (status == "Rejected") {
+                return "<img src='{{ URL::asset($svg_icon_rejected) }}' alt='Rejected' text='Rejected' class='calendar_icon'>";
             }
         }
 
