@@ -8,6 +8,7 @@ use Session as Ses;
 use App\Models\Bank;
 use App\Models\User;
 use App\Mail\TestEmail;
+use App\Mail\AttendanceCheckinCheckoutNotifyMail;
 use App\Models\Experience;
 use App\Models\PollVoting;
 use App\Models\VmtEmployee;
@@ -404,9 +405,36 @@ class HomeController extends Controller
             $attendance->checkin_time = $currentTime;
             $attendance->save();
 
+            //Check whether if its LC/EG
+            $regularization_type = checkRegularizationType($currentTime, "check-in");
+            $isSent = null;
+            $user_mail = VmtEmployeeOfficeDetails::where('user_id',$attendance->user_id)->first()->officical_mail;
+
+            //Send mail if its LC
+            if( !empty($checkRegularizationType) &&  $regularization_type == "LC")
+            {
+                //dd("adsf");
+                $VmtGeneralInfo = VmtGeneralInfo::first();
+                $image_view = url('/') . $VmtGeneralInfo->logo_img;
+
+                $isSent    = \Mail::to($user_mail)->send(new AttendanceCheckinCheckoutNotifyMail(
+                    auth::user()->name,
+                    auth::user()->user_code,
+                    $attendance->date,
+                    $currentTime,
+                    $image_view,
+                    // Carbon::parse($leave_request_date)->format('M jS Y'),
+                    $regularization_type
+                ));
+            }
+
+
+
             return response()->json([
                 'message' => 'You have successfully checkedin!',
                 'time' => $attendance->checkin_time,
+                'regularization_type' => $regularization_type,
+                'regularization_mail_sent' => $isSent ? "True" : $isSent
             ]);
         } else {
             $attendance = VmtEmployeeAttendance::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->first();
