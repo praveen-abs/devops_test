@@ -42,32 +42,33 @@ class AttendanceCheckinCheckoutNotifyMail extends Mailable
     public function build()
     {
 
-        $message = "---";
+        $mail_message = "---";
 
         switch ($this->regularization_type) {
 
             case "LC":
-                $message = "You have checked-in late on ".$attendance_date." at ".$user_time;
+                $mail_message = "You have checked-in late on <b>".$this->attendance_date."</b> at <b>".$this->user_time."</b>";
                 break;
             case "EG":
-                $message = "You have checked-out early on ".$attendance_date." at ".$user_time;
+                $mail_message = "You have checked-out early on ".$this->attendance_date."</b> at <b>".$this->user_time."</b>";
                 break;
             case "MIP":
-                $message = "You have missed your Check-in punch on ".$attendance_date;
+                $mail_message = "You have missed your Check-in punch on <b>".$this->attendance_date."</b>";
                 break;
             case "MOP":
-                $message = "You have missed your Check-out punch on ".$attendance_date;
+                $mail_message = "You have missed your Check-out punch on <b>".$this->attendance_date."</b>";
                 break;
             default:
-                $message="Invalid Regularization Type : ".$this->regularization_type;
+                $mail_message="Invalid Regularization Type : ".$this->regularization_type;
         }
 
+        //dd($message);
 
         $output = $this->view('vmt_mail_attendance_regularization_notify')
+                    ->subject('Late Attendance Notify')
                     ->with('employeeName', $this->employeeName)
                     ->with('empCode', $this->empCode)
-                    ->with('message', $this->message)
-                    ->with('url_attendanceTimeSheet', $this->url_attendanceTimeSheet)
+                    ->with('mail_message', $mail_message)
                     ->with('attendance_date', $this->attendance_date)
                     ->with('image_view', $this->image_view);
 

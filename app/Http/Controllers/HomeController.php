@@ -411,7 +411,7 @@ class HomeController extends Controller
             $user_mail = VmtEmployeeOfficeDetails::where('user_id',$attendance->user_id)->first()->officical_mail;
 
             //Send mail if its LC
-            if( !empty($checkRegularizationType) &&  $regularization_type == "LC")
+            if( !empty($regularization_type) &&  $regularization_type == "LC")
             {
                 //dd("adsf");
                 $VmtGeneralInfo = VmtGeneralInfo::first();
@@ -420,8 +420,8 @@ class HomeController extends Controller
                 $isSent    = \Mail::to($user_mail)->send(new AttendanceCheckinCheckoutNotifyMail(
                     auth::user()->name,
                     auth::user()->user_code,
-                    $attendance->date,
-                    $currentTime,
+                    Carbon::parse($attendance->date)->format('M jS, Y'),
+                    Carbon::parse($currentTime)->format('h:i:s A'),
                     $image_view,
                     // Carbon::parse($leave_request_date)->format('M jS Y'),
                     $regularization_type

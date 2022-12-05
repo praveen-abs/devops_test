@@ -90,10 +90,7 @@
                                 </tr>
                                 <tr>
                                     <td style="padding:0 35px;">
-                                        <h1  style="color: #fff;">Password Reset Mail
-                                        </h1>
-                                        <p style="color: #fff;" >
-                                            Password Reset Mail</strong>.</p>
+                                        <h1  style="color: #fff;">Attendance Regularization Mail</h1>
                                        <br>
                                     </td>
                                 </tr>
@@ -112,7 +109,7 @@
 
                                       <h5 class="card-title fw-bold text-center m-3"></h5>
                                       <p class="text-start ">Hello, {{ $employeeName}} - {{ $empCode}} </p>
-                                      <p class="text-start ">{{message}}</p>
+                                      <p class="text-start ">{!! $mail_message !!}</p>
                                       <p class="text-start ">Please click the below link to regularize your attendance</p>
 
 
