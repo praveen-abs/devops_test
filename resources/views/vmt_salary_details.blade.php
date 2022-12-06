@@ -221,12 +221,12 @@
                                         <td>₹{{$d->TOTAL_DEDUCTIONS}}</td>
                                         <td>₹{{$d->NET_TAKE_HOME}}</td>
                                         <td>
-                                            <div data="{{$d->PAYROLL_MONTH}}" data-url="{{route('vmt_employee_payslip')}}" class="ember-view cursor-pointer paySlipView text-info">
+                                            <div data="{{$d->PAYROLL_MONTH}}" data-url="{{route('vmt_employee_payslip')}}" style="cursor: pointer" class="ember-view  paySlipView text-info">
                                                 View
                                             </div>
                                         </td>
                                         <td>
-                                            <a href="#/salary-details/payslips/335214000001040001/details?isPayslip=false" id="ember134" class="ember-view text-info">
+                                            <a href="#/salary-details/payslips/335214000001040001/details?isPayslip=false" id="ember134" class="ember-view  text-info">
                                                 View
                                             </a>
                                         </td>
