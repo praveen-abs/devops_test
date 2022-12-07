@@ -145,7 +145,7 @@ class VmtApprovalsController extends Controller
 
     public function showPMSApprovalPage(Request $request)
     {
-        
+
         return view("vmt_approval_pms");
 
     }
@@ -154,13 +154,20 @@ class VmtApprovalsController extends Controller
     {
 
         $query_pendingforms = VmtPMS_KPIFormAssignedModel::join('vmt_pms_kpiform_reviews','vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id','=', 'vmt_pms_kpiform_assigned.id')
-                        ->join('users','users.id','=','vmt_pms_kpiform_assigned.assignee_id')
-                       // ->select('assignee_id.name as reviewer_id')
+                        ->join('users as t1','t1.id','=','vmt_pms_kpiform_assigned.assignee_id')
+                        ->join('users as t2','t2.id','=','vmt_pms_kpiform_assigned.reviewer_id')
+                        ->select('vmt_pms_kpiform_reviews.id as id',
+                            't1.name as assignee_name','t2.name as reviewer_name',
+                            'vmt_pms_kpiform_assigned.assignment_period',
+                            'vmt_pms_kpiform_reviews.is_reviewer_submitted',
+
+                        )
                         ->get();
 
+        //dd($query_pendingforms->toArray());
         return $query_pendingforms;
+
 
     }
 }
 
-  
