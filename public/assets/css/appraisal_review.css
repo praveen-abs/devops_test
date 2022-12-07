@@ -56,11 +56,15 @@ table.kpi_appraisal-table tbody tr th {
 
     border-bottom-left-radius: 0px !important;
 }
-table.kpi_appraisal-table tbody tr th textarea {
+table.kpi_appraisal-table tbody tr th  textarea{
     color: #fff;
     background: transparent;
-    width: 300px;
+
 }
+table.kpi_appraisal-table tbody tr th {
+    min-width: 250px;
+}
+
 /* table#kpiTable tbody tr td textarea {
     padding: 3px 4px;
 } */
