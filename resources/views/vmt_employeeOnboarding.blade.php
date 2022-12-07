@@ -1180,12 +1180,8 @@
                         allowOutsideClick: false,
                         closeOnClickOutside: false,
                         allowEscapeKey: false,
-                        showConfirmButton: false,
-                        backdrop: `
-                    rgba(0,0,123,0.4)
-                    left top
-                    no-repeat
-                    `,
+                        showConfirmButton: true,
+                
                     }).then((result) => {
                         /* Read more about handling dismissals below */
                         console.log('Loader screen closed');
@@ -1221,7 +1217,7 @@
                         // contentType: false,
                         // processData: false,
                         success: function(data) {
-                            Swal.fire.close();
+                            Swal.fire.close;
                             $('.loader').hide();
 
                             console.log("Response : " + data.status);
@@ -1265,7 +1261,7 @@
                             //alert(data);
                         },
                         error: function(data) { //NEED TO FIX IT
-                            Swal.fire.close();
+                            Swal.fire.close;
 
                             $('.loader').hide();
 

@@ -1,7 +1,6 @@
 @extends('layouts.master')
 @section('css')
-    <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
-    <!-- for styling -->
+
     <link href="{{ URL::asset('assets/css/appraisal_review.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ URL::asset('/assets/css/pages_profile.css') }}">
 @endsection
@@ -361,7 +360,7 @@
                                 <input type="hidden" name="kpiReviewId" value="{{ $assignedGoals->id }}">
                                 <div class="table-content table-responsive">
                                     <table id="table_review"
-                                        class="table  kpi_appraisal-table align-middle mb-0 table-bordered  "
+                                        class="table  kpi_appraisal-table appraisal_reviewer  mb-0 table-bordered  "
                                         data-paging="true" data-paging-size="100" data-paging-limit="3"
                                         data-paging-container="#paging-ui-container"
                                         data-paging-count-format="{PF} to {PL}" data-sorting="true"
@@ -582,9 +581,22 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <div>
+
+                                                            <div style="width:300px">
                                                                 @if (isset($assigneeKPIComments) && isset($assigneeKPIComments[$kpiRow->id]))
-                                                                    {{ $assigneeKPIComments[$kpiRow->id] }}
+                                                                    {{-- {{ $assigneeKPIComments[$kpiRow->id] }} --}}
+
+                                                                    {{ \Str::words($assigneeKPIComments[$kpiRow->id] , 15, '') }}
+                                                                    @if (strlen(substr($assigneeKPIComments[$kpiRow->id] , strlen(\Str::words($assigneeKPIComments[$kpiRow->id] , 15, '')))) > 0)
+                                                                        <span class="{{ 'collapse-' . $index }}"
+                                                                            style="display: none;">
+                                                                            {{ substr($assigneeKPIComments[$kpiRow->id] , strlen(\Str::words($assigneeKPIComments[$kpiRow->id] , 15, ''))) }}
+                                                                        </span>
+                                                                        <span
+                                                                            class="btn bg-transparent text-orange outline-none border-0 fw-bold f-12 more_btn"
+                                                                            id="less_more-btn-{{ $index }}"
+                                                                            onclick="showOrHideDescription('{{ $index }}',this)">...More</span>
+                                                                    @endif
                                                                 @endif
                                                             </div>
                                                         </td>

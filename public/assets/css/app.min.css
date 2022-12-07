@@ -17941,13 +17941,13 @@ white-space:nowrap;
 
 /* card sizes */
 
-.card-md {
-    height: 180px;
+
+.card-sm{
+    width: 200px;
 }
 
-.card-lg {
-    height: 180px;
-}
+
+
 
 .close{
     background: #e1e1e1 !important;

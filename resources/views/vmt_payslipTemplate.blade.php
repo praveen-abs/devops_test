@@ -116,7 +116,8 @@ $bank_names = \DB::table('bank_list')->get();
                 <tr>
                     <td colspan="12">
                         <p class="sub-header txt-center bg-ash text-strong">PAYSLIP FOR THE MONTH OF &ndash;
-                            {{ strtoupper($employee->PAYROLL_MONTH) }}</p>
+                            {{\Carbon\Carbon::parse($employee->PAYROLL_MONTH)->format('M  y') }}</p>
+                            
                     </td>
                 </tr>
                 <tr>
