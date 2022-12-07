@@ -1,3 +1,4 @@
+ 
 @extends('layouts.master')
 @section('title')
     @lang('translation.dashboards')
@@ -54,6 +55,23 @@ $(document).ready(function(){
                             name: 'ID',
                         },
                         {
+                            id:'name',
+                            name:'Assignee Name'
+                        },
+                        {
+                           id:'assignment_period',
+                           name:'Assignment Period',
+
+                        },
+                        {
+                            id:' approval_status',
+                            name:' Approval Status'
+                        },
+                        {
+                            id:'reviewer_name',
+                            name:'Reviewer Name'
+                        },
+                        {
                             id: 'is_assignee_accepted',
                             name: 'Assignee Accepted',
                         },
@@ -87,8 +105,12 @@ $(document).ready(function(){
                         then: data => data.map(
                             approvals_pms => [
                                 // Assignee name, Assignment period, Approval Status, Reviewer Name, BUTTON(View, Approve, Reject)
-                                // Temporary : is_assignee_accepted, is_reviewer_accepted
+                                 
                                 approvals_pms.id,
+                                approvals_pms.name,
+                                approvals_pms.assignment_period,
+                                approvals_pms.approval_status,
+                                approvals_pms.reviewer_name,
                                 approvals_pms.is_assignee_accepted,
                                 approvals_pms.is_reviewer_accepted,
                                 //approvals_pms.status,

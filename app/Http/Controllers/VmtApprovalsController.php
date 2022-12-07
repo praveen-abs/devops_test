@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\VmtEmployee;
 use App\Models\VmtPMS_KPIFormReviewsModel;
+use App\Models\VmtPMS_KPIFormAssignedModel;
 
 class VmtApprovalsController extends Controller
 {
@@ -144,7 +145,7 @@ class VmtApprovalsController extends Controller
 
     public function showPMSApprovalPage(Request $request)
     {
-
+        
         return view("vmt_approval_pms");
 
     }
@@ -152,7 +153,29 @@ class VmtApprovalsController extends Controller
     public function fetchPendingPMSForms(Request $request)
     {
         //Get the PMS pending forms.
-       return  VmtPMS_KPIFormReviewsModel::all(['id','is_assignee_accepted', 'is_reviewer_accepted']);
-    }
+        //$user = User::find($request->user_id);
+     
+        // return VmtPMS_KPIFormReviewsModel::all(['id','is_assignee_accepted', 'is_reviewer_accepted']);
+      
+   // dd($pms);
 
-}
+    // $all_employees = User::leftJoin('vmt_pms_kpiform_assigned', 'vmt_pms_kpiform_assigned.user_id', '=', 'users.id')
+    // ->where('0')
+    // ->get(['users.id', 'users.name' ]);
+
+    // return $all_employees;
+
+
+      
+     $pms = VmtPMS_KPIFormReviewsModel::all(['id','is_assignee_accepted', 'is_reviewer_accepted']);
+    $kpi= VmtPMS_KPIFormAssignedModel::all('assignment_period');
+ 
+    //  ->select('users.id','users.name')
+    //  ->join('vmt_pms_kpiform_assigned.assignee_id','=','users.id')->get();
+        //dd($kpi);
+        // $assignee_name=user::find()
+       return view('vmt_approval_pms',compact('kpi','pms'));
+//return $kpi;
+         }}
+
+  
