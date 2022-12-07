@@ -159,12 +159,11 @@ class VmtApprovalsController extends Controller
                         ->select('vmt_pms_kpiform_reviews.id as id',
                             't1.name as assignee_name','t2.name as reviewer_name',
                             'vmt_pms_kpiform_assigned.assignment_period',
-                            'vmt_pms_kpiform_reviews.is_reviewer_submitted',
-
+                            'vmt_pms_kpiform_reviews.is_reviewer_accepted'
                         )
+                        ->where( 'vmt_pms_kpiform_reviews.is_reviewer_accepted', 'LIKE','%null%')
                         ->get();
 
-        //dd($query_pendingforms->toArray());
         return $query_pendingforms;
 
 

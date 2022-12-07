@@ -1,4 +1,4 @@
- 
+
 @extends('layouts.master')
 @section('title')
     @lang('translation.dashboards')
@@ -12,7 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endsection
 @section('content')
-   
+
                     <div class="row mt-3">
                     <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12 ">
                         <div class="card mb-0 leave-history">
@@ -34,15 +34,15 @@
     <script>
 
 $(document).ready(function(){
-        
+
         $("#btn_submit").on('click', function(){
-            
+
             $.ajax({
-                url: "{{ url('showPMSApprovalPage') }}",  
-                type : "POST", 
-                dataType : 'json',  
-                data :$("").serialize(), 
-                
+                url: "{{ url('showPMSApprovalPage') }}",
+                type : "POST",
+                dataType : 'json',
+                data :$("").serialize(),
+
             })
         });
     });
@@ -63,22 +63,30 @@ $(document).ready(function(){
                            name:'Assignment Period',
 
                         },
-                        
+
                         {
                             id:'reviewer_id',
                             name:'Reviewer Name'
                         },
-                         
+
                         {
-                            id: 'is_reviewer_accepted',
+                            id: 'attr_reviewer_accepted_status',
                             name: 'Reviewer Status',
+                            formatter: function formatter(cell) {
+                                if(cell == -1)
+                                    return "Pending";
+                                elseif(cell == 0)
+                                    return "Rejected";
+                                elseif(cell == 1)
+                                    return "Approved";
+                            }
                         },
                         {
                             id: 'actions',
                             name: 'Action',
                             formatter: function formatter(emp) {
                                 var htmlcontent = "";
-                                
+
                                     htmlcontent =
                                         '<button type="button" value="Approve" data-user_id="' + emp
                                         .user_id +
@@ -88,10 +96,10 @@ $(document).ready(function(){
 
                                     htmlcontent = htmlcontent +
                                     '<button type="button" value="Reject" id="button_activate_"' +
-                                         
+
                                         '" data-leave_status="Rejected" class="status btn me-2 btn-danger py-1 reject-leave-btn "><i class="fa fa-times-circle me-1"></i>Reject</button>';
                                     htmlcontent = htmlcontent +
-                                     
+
                                     '<button type="button" value="View" class="status btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal">View</button>';
 
 
@@ -99,8 +107,8 @@ $(document).ready(function(){
                             }
                         },
                     ],
-                        
-               
+
+
                     pagination: {
                         limit: 10
                     },
@@ -111,21 +119,21 @@ $(document).ready(function(){
                         then: data => data.map(
                             approvals_pms => [
                                 // Assignee name, Assignment period, Approval Status, Reviewer Name, BUTTON(View, Approve, Reject)
-                                 
+
                                 approvals_pms.id,
                                 approvals_pms.assignee_name,
                                 approvals_pms.assignment_period,
                                 approvals_pms.reviewer_name,
-                                approvals_pms.is_reviewer_accepted,
+                                approvals_pms.attr_reviewer_accepted_status,
                                 approvals_pms,
                                 //approvals_pms.status,
-                                
+
                             ]
                         )
                     }
                 }).render(document.getElementById("table_pms_approvals"));
             }
 
- 
+
 </script>
 @endsection
