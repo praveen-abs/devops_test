@@ -73,27 +73,34 @@ $(document).ready(function(){
                             id: 'is_reviewer_accepted',
                             name: 'Reviewer Status',
                         },
-                         
                         {
-                            id:'action',
-                            name:'Action',
+                            id: 'actions',
+                            name: 'Action',
+                            formatter: function formatter(emp) {
+                                var htmlcontent = "";
+                                
+                                    htmlcontent =
+                                        '<button type="button" value="Approve" data-user_id="' + emp
+                                        .user_id +
+                                        '" data-leave_id="' + emp.id +
+                                        '" data-leave_status="Approved" class="status me-2 btn btn-success py-1 approve-leave-btn"><i class="fa me-1 fa-check-circle" aria-hidden="true"></i>Approve</button>';
+
+
+                                    htmlcontent = htmlcontent +
+                                    '<button type="button" value="Reject" id="button_activate_"' +
+                                         
+                                        '" data-leave_status="Rejected" class="status btn me-2 btn-danger py-1 reject-leave-btn "><i class="fa fa-times-circle me-1"></i>Reject</button>';
+                                    htmlcontent = htmlcontent +
+                                     
+                                    '<button type="button" value="View" class="status btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal">View</button>';
+
+
+                                return gridjs.html(htmlcontent);
+                            }
                         },
-                        // {
-                        //     id: 'actions',
-                        //     name: 'Action',
-                        //     formatter: function formatter(emp) {
-                        //         var htmlcontent = "";
- 
-
-                        //         htmlcontent =
-                        //             '<input type="button" value="View" class="status btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal">';
-                        //         // '<button  value="View" class="status btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal"></button>' ;
-
-
-                        //         return gridjs.html(htmlcontent);
-                        //     }
-                        // },
                     ],
+                        
+               
                     pagination: {
                         limit: 10
                     },
@@ -106,12 +113,13 @@ $(document).ready(function(){
                                 // Assignee name, Assignment period, Approval Status, Reviewer Name, BUTTON(View, Approve, Reject)
                                  
                                 approvals_pms.id,
-                                approvals_pms.name,
+                                approvals_pms.assignee_name,
                                 approvals_pms.assignment_period,
-                                approvals_pms.reviewer_id,
+                                approvals_pms.reviewer_name,
                                 approvals_pms.is_reviewer_accepted,
-                                approvals_pms.action,
+                                approvals_pms,
                                 //approvals_pms.status,
+                                
                             ]
                         )
                     }
