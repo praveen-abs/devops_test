@@ -152,35 +152,14 @@ class VmtApprovalsController extends Controller
 
     public function fetchPendingPMSForms(Request $request)
     {
-        //Get the PMS pending forms.
-        //$user = User::find($request->user_id);
-     
-        // return VmtPMS_KPIFormReviewsModel::all(['id','is_assignee_accepted', 'is_reviewer_accepted']);
-      
-   // dd($pms);
 
-    $query_pendingforms = VmtPMS_KPIFormAssignedModel::join('vmt_pms_kpiform_reviews','vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id','=', 'vmt_pms_kpiform_assigned.id')
-                    ->join('users','users.id','=','vmt_pms_kpiform_assigned.assignee_id')
-                    ->get();
-        
-    // ->get(['users.id', 'users.name' ]);
-//dd($query_pendingforms);
-    return $query_pendingforms;
+        $query_pendingforms = VmtPMS_KPIFormAssignedModel::join('vmt_pms_kpiform_reviews','vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id','=', 'vmt_pms_kpiform_assigned.id')
+                        ->join('users','users.id','=','vmt_pms_kpiform_assigned.assignee_id')
+                       // ->select('assignee_id.name as reviewer_id')
+                        ->get();
 
+        return $query_pendingforms;
 
-      
-    //  $pms = VmtPMS_KPIFormReviewsModel::all(['id','is_assignee_accepted', 'is_reviewer_accepted']);
-    // $kpi= VmtPMS_KPIFormAssignedModel::all('assignment_period');
-
-        
- 
-    //  ->select('users.id','users.name')
-    //  ->join('vmt_pms_kpiform_assigned.assignee_id','=','users.id')->get();
-        //dd($kpi);
-       // return $pms;
-        // $assignee_name=user::find()
-      // return view('vmt_approval_pms',compact('kpi','pms'));
-        return $kpi;
     }
 }
 

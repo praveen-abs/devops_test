@@ -63,21 +63,20 @@ $(document).ready(function(){
                            name:'Assignment Period',
 
                         },
+                        
                         {
-                            id:' approval_status',
-                            name:' Approval Status'
-                        },
-                        {
-                            id:'reviewer_name',
+                            id:'reviewer_id',
                             name:'Reviewer Name'
                         },
-                        {
-                            id: 'is_assignee_accepted',
-                            name: 'Assignee Accepted',
-                        },
+                         
                         {
                             id: 'is_reviewer_accepted',
-                            name: 'Reviewer Accepted',
+                            name: 'Reviewer Status',
+                        },
+                         
+                        {
+                            id:'action',
+                            name:'Action',
                         },
                         // {
                         //     id: 'actions',
@@ -109,10 +108,9 @@ $(document).ready(function(){
                                 approvals_pms.id,
                                 approvals_pms.name,
                                 approvals_pms.assignment_period,
-                                approvals_pms.approval_status,
-                                approvals_pms.reviewer_name,
-                                approvals_pms.is_assignee_accepted,
+                                approvals_pms.reviewer_id,
                                 approvals_pms.is_reviewer_accepted,
+                                approvals_pms.action,
                                 //approvals_pms.status,
                             ]
                         )
