@@ -3,7 +3,13 @@
 :root {
     --color-primary_blue: #002f54;
     --color-primary_orange: #e54e0d;
+    --color-white: #ffffff;
 }
+
+.h_80{
+    height: 80px;
+}
+
 
 :hover,
 a:focus,
@@ -189,14 +195,14 @@ table.no-padding tr td {
     color: #444;
 }
 .btn-danger {
-    color: #fff;
+    color:var(--color-white);
     font-size: 13px;
     font-weight: 600;
     padding: 5px 8px !important;
     font-size: 13px !important;
 }
 .btn-secondary {
-    color: #fff;
+    color:var(--color-white);
     font-size: 13px;
     font-weight: 600;
     padding: 5px 8px !important;
@@ -206,7 +212,7 @@ table.no-padding tr td {
     background-color: #23c931;
     border-color: #23c931;
     transition: 0.4s ease-in;
-    color: #fff;
+    color: var(--color-white);
     font-size: 13px;
     font-weight: 600;
     padding: 5px 8px !important;
@@ -250,19 +256,19 @@ table.no-padding tr td {
 }
 
 .btn-border-primary {
-    border: 1px solid #002f56;
-    background-color: #fff;
-    color: #002f56;
+    border: 1px solid var(--color-primary_blue);
+    background-color: var(--color-white);
+    color: var(--color-primary_blue);
     padding: 5px 8px;
     font-size: 14px;
     padding: 5px 8px !important;
     font-size: 13px !important;
 }
 .btn-primary {
-    background-color: #002f56 !important;
-    border-color: #002f56 !important;
+    background-color:var(--color-primary_blue) !important;
+    border-color: var(--color-primary_blue) !important;
     transition: 0.4s ease-in;
-    color: #fff;
+    color: var(--color-white);
     font-size: 13px;
     font-weight: 600;
     padding: 5px 8px !important;
@@ -271,13 +277,13 @@ table.no-padding tr td {
     position: relative;
 }
 .btn-primary:hover {
-    background-color: #002f56;
-    border-color: #002f56;
-    color: #fff;
+    background-color: var(--color-primary_blue);
+    border-color:var(--color-primary_blue);
+    color: var(--color-white);
 }
 .btn-primary:active {
-    background-color: #002f56 !important;
-    border-color: #002f56 !important;
+    background-color: var(--color-primary_blue) !important;
+    border-color: var(--color-primary_blue) !important;
 }
 .btn-primary:focus {
     background-color: #002f56;
@@ -1555,42 +1561,6 @@ table.dataTable td {
     text-align: center;
 }
 
-/* for flip card */
-
-/* .flip-card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    transition: transform 0.6s;
-    transform-style: preserve-3d;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  }
-
-  .flip-card:hover .flip-card-inner {
-    transform: rotateY(180deg);
-  }
-
-  .flip-card-front, .flip-card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-  }
-
-  .flip-card-front {
-    background-color: transparent;
-    color: black;
-    border-radius: 5px;
-  }
-
-  .flip-card-back {
-    background-color: transparent;
-    color: white;
-    transform: rotateY(180deg);
-    border-radius: 5px;
-  } */
 
 .userShort_name {
     display: flex;
@@ -1636,6 +1606,7 @@ table.kpi_appraisal-table tr th:last-child {
 table.no_borderRadius tr th:last-child {
     border-radius: 0px !important;
 }
+
 
 
 
