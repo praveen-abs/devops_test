@@ -4,8 +4,6 @@
     @lang('translation.dashboards')
 @endsection
 @section('css')
-    <link rel="stylesheet" href="{{ URL::asset('/assets/css/calendar-vanila.css') }}">
-    <script src="{{ URL::asset('assets/js/calendar-vanila.js') }}" defer></script>
     <link href="{{ URL::asset('assets/css/attendance.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ URL::asset('/assets/css/pages_profile.css') }}">
 
