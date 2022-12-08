@@ -27,6 +27,8 @@
                     </div>
                 </div>
             </div>
+           
+            
 @endsection
 @section('script')
     <script src="{{ URL::asset('assets/libs/gridjs/gridjs.min.js') }}"></script>
@@ -91,19 +93,14 @@ $(document).ready(function(){
                                         '<button type="button" value="Approve" data-user_id="' + emp
                                         .user_id +
                                         '" data-leave_id="' + emp.id +
-                                        '" data-leave_status="Approved" class="status me-2 btn btn-success py-1 approve-leave-btn"><i class="fa me-1 fa-check-circle" aria-hidden="true"></i>Approve</button>';
+                                        '" data-leave_status="Approved" class="status me-2 btn btn-success py-1 approve-btn"><i class="fa me-1 fa-check-circle" aria-hidden="true"></i>Approve</button>';
 
 
                                     htmlcontent = htmlcontent +
                                     '<button type="button" value="Reject" id="button_activate_"' +
 
-                                        '" data-leave_status="Rejected" class="status btn me-2 btn-danger py-1 reject-leave-btn "><i class="fa fa-times-circle me-1"></i>Reject</button>';
-                                    htmlcontent = htmlcontent +
-
-                                    '<button type="button" value="View" class="status btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal">View</button>';
-
-
-                                return gridjs.html(htmlcontent);
+                                        '" data-leave_status="Rejected" class="status btn me-2 btn-danger py-1 reject-btn "><i class="fa fa-times-circle me-1"></i>Reject</button>';
+                                    return gridjs.html(htmlcontent);
                             }
                         },
                     ],
@@ -118,7 +115,7 @@ $(document).ready(function(){
                         url: '{{ route('fetchPendingPMSForms') }}',
                         then: data => data.map(
                             approvals_pms => [
-                                // Assignee name, Assignment period, Approval Status, Reviewer Name, BUTTON(View, Approve, Reject)
+                                // Assignee name, Assignment period, Approval Status      Reviewer Name, BUTTON(View, Approve, Reject)
 
                                 approvals_pms.id,
                                 approvals_pms.assignee_name,
@@ -134,6 +131,37 @@ $(document).ready(function(){
                 }).render(document.getElementById("table_pms_approvals"));
             }
 
+            $(document).ready(function(){
+        
+                $(document).on('click','.approve-btn', function(e){
+             e.preventDefault();
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You want to Approve?',
+                icon: 'warning',
+                buttons: ["Cancel", "Yes!"],
+            }).then(function(value) {
 
+            $.ajax({
+                url: "{{ url('showPMSApprovalPage') }}",  
+                type : "GET", 
+                dataType : 'json',  
+                data :$("#table_pms_approvals ").serialize(), 
+            })
+            })
+            })
+        });
+        
+        $(document).on('click','.reject-btn', function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You want to Reject!',
+                icon: 'warning',
+                buttons: ["Cancel", "Yes!"],
+            })
+    });    
+
+ 
 </script>
 @endsection
