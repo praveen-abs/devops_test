@@ -534,8 +534,13 @@
 
             $('#selected_frequency').change(function() {
                 frequencyChange();
-                console.log("Frequency updated");
             });
+
+
+            
+            setTimeout(() => {
+                $('#selected_frequency').trigger('change')
+            }, 500);
 
             function frequencyChange() {
                 var data = "";
