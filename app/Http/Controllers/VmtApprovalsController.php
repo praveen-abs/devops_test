@@ -156,7 +156,7 @@ class VmtApprovalsController extends Controller
         $query_pendingforms = VmtPMS_KPIFormAssignedModel::join('vmt_pms_kpiform_reviews','vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id','=', 'vmt_pms_kpiform_assigned.id')
                         ->join('users as t1','t1.id','=','vmt_pms_kpiform_assigned.assignee_id')
                         ->join('users as t2','t2.id','=','vmt_pms_kpiform_assigned.reviewer_id')
-                        ->select('vmt_pms_kpiform_reviews.id as id',
+                        ->select('vmt_pms_kpiform_reviews.id as pms_kpiform_review_id',
                             't1.name as assignee_name','t2.name as reviewer_name',
                             'vmt_pms_kpiform_assigned.assignment_period',
                             'vmt_pms_kpiform_reviews.is_reviewer_accepted'
@@ -167,6 +167,43 @@ class VmtApprovalsController extends Controller
         return $query_pendingforms;
 
 
+    }
+
+    public function approveRejectPMSForm(Request $request){
+
+        $query_review_form = VmtPMS_KPIFormReviewsModel::find($request->kpiform_review_id);
+        $status = null;
+
+        if($request->status == "Approve")
+            $status = "1";
+        else
+        if($request->status == "Reject")
+            $status = "0";
+
+
+        //decode the json string
+        $json_column_value = json_decode($query_review_form->is_reviewer_accepted, true);
+
+        //get the keys
+        $keys = array_keys($json_column_value);
+
+        //update each review status
+        foreach($keys as $reviewer_id){
+            $json_column_value[$reviewer_id] = $status;
+        }
+
+        //dd(json_encode($json_column_value));
+        $query_review_form->is_reviewer_accepted = json_encode($json_column_value);
+        $query_review_form->save();
+
+
+        $response = [
+            "status" => "success",
+            "message" => "PMS ".$request->status." successfully"
+
+        ];
+
+        return $response;
     }
 }
 

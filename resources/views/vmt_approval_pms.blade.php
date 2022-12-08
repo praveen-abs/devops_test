@@ -27,8 +27,8 @@
                     </div>
                 </div>
             </div>
-           
-            
+
+
 @endsection
 @section('script')
     <script src="{{ URL::asset('assets/libs/gridjs/gridjs.min.js') }}"></script>
@@ -53,7 +53,7 @@ $(document).ready(function(){
                 gridTable_pms_approvals = new gridjs.Grid({
                     columns: [
                         {
-                            id: 'id',
+                            id: 'pms_kpiform_review_id',
                             name: 'ID',
                         },
                         {
@@ -90,16 +90,13 @@ $(document).ready(function(){
                                 var htmlcontent = "";
 
                                     htmlcontent =
-                                        '<button type="button" value="Approve" data-user_id="' + emp
-                                        .user_id +
-                                        '" data-leave_id="' + emp.id +
-                                        '" data-leave_status="Approved" class="status me-2 btn btn-success py-1 approve-btn"><i class="fa me-1 fa-check-circle" aria-hidden="true"></i>Approve</button>';
+                                        '<button type="button" value="Approve" data-kpiform_review_id="' + emp.pms_kpiform_review_id
+                                        +'" data-status="Approve" class="status me-2 btn btn-success py-1 process-btn"><i class="fa me-1 fa-check-circle" aria-hidden="true"></i>Approve</button>';
 
 
                                     htmlcontent = htmlcontent +
-                                    '<button type="button" value="Reject" id="button_activate_"' +
-
-                                        '" data-leave_status="Rejected" class="status btn me-2 btn-danger py-1 reject-btn "><i class="fa fa-times-circle me-1"></i>Reject</button>';
+                                    '<button type="button" value="Reject" data-kpiform_review_id="' + emp.pms_kpiform_review_id
+                                    +'" data-status="Reject" class="status btn me-2 btn-danger py-1 process-btn"><i class="fa fa-times-circle me-1"></i>Reject</button>';
                                     return gridjs.html(htmlcontent);
                             }
                         },
@@ -117,7 +114,7 @@ $(document).ready(function(){
                             approvals_pms => [
                                 // Assignee name, Assignment period, Approval Status      Reviewer Name, BUTTON(View, Approve, Reject)
 
-                                approvals_pms.id,
+                                approvals_pms.pms_kpiform_review_id,
                                 approvals_pms.assignee_name,
                                 approvals_pms.assignment_period,
                                 approvals_pms.reviewer_name,
@@ -132,36 +129,51 @@ $(document).ready(function(){
             }
 
             $(document).ready(function(){
-        
-                $(document).on('click','.approve-btn', function(e){
-             e.preventDefault();
-            Swal.fire({
-                title: 'Are you sure?',
-                text: 'You want to Approve?',
-                icon: 'warning',
-                buttons: ["Cancel", "Yes!"],
-            }).then(function(value) {
 
-            $.ajax({
-                url: "{{ url('showPMSApprovalPage') }}",  
-                type : "GET", 
-                dataType : 'json',  
-                data :$("#table_pms_approvals ").serialize(), 
-            })
-            })
-            })
-        });
-        
-        $(document).on('click','.reject-btn', function(e) {
-            e.preventDefault();
-            Swal.fire({
-                title: 'Are you sure?',
-                text: 'You want to Reject!',
-                icon: 'warning',
-                buttons: ["Cancel", "Yes!"],
-            })
-    });    
+                $(document).on('click','.process-btn', function(e)
+                {
+                    let status_type =  $(this).attr('data-status');
+                    let message = 'Do you want to '+status_type+'?';
+                    let kpiform_review_id = $(this).attr('data-kpiform_review_id');
 
- 
+                    e.preventDefault();
+
+                    Swal.fire({
+                        title: 'Info',
+                        text: message,
+                        icon: 'warning',
+                        showDenyButton: true,
+                        confirmButtonText: 'Yes',
+                        denyButtonText: 'No',
+                    }).then(function(value) {
+                        console.log(value);
+
+                        if(value.isConfirmed == true)
+                        {
+                            console.log("Sending AJAX request");
+
+                            $.ajax({
+                                url: "{{ route('vmt-approvals-pms') }}",
+                                type : "POST",
+                                data :{
+                                    kpiform_review_id : kpiform_review_id,
+                                    status : status_type,
+                                    _token: '{{ csrf_token() }}'
+
+                                },
+                                success: function(data) {
+                                    console.log(data);
+
+                                    location.reload();
+                                }
+                            });
+
+                        }
+
+                    });
+
+                });
+            });
+
 </script>
 @endsection
