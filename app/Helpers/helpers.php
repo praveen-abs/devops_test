@@ -22,11 +22,12 @@ function fetchMasterConfigValue($config_name)
 
 }
 
-function getOrganization_HR_Email(){
+function getOrganization_HR_Details(){
     $master_config_value = VmtMasterConfig::where('config_name', 'hr_userid')->first()->config_value;
-    $hr_email = VmtEmployeeOfficeDetails::where('user_id',$master_config_value)->value('officical_mail');
-    //dd($hr_email);
-    return $hr_email;
+    $hr_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id','=','users.id')
+                        ->where('users.id',$master_config_value)->first(['users.name','vmt_employee_office_details.officical_mail']);
+
+    return $hr_details;
 
 }
 
