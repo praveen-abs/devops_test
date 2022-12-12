@@ -145,9 +145,9 @@
         <div class="modal-content">
             <div class="modal-header py-2 bg-primary">
 
-                <div class="w-100 modal-header-content d-flex align-items-center py-2">
-                    <h5 class="modal-title text-white" id="modalHeader">Failure
-                    </h5>
+                <div class="modal-header  border-0 d-flex align-items-center">
+                    <h6 class="modal-title text-white" id="modalHeader">Failure
+                    </h6>
                     <button type="button" class="btn-close btn-close-white close-modal" data-bs-dismiss="modal" aria-label="Close">
                     </button>
                 </div>
@@ -156,7 +156,7 @@
                 <div class="mt-4">
                     <h4 class="mb-3" id="modalNot">Data Saved Successfully!</h4>
                     <p class="text-muted mb-4" id="modalBody"></p>
-                    <div class="hstack gap-2 justify-content-center">
+                    <div class="text-end">
                         <button type="button" id="button_close" class="btn btn-light close-modal" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
