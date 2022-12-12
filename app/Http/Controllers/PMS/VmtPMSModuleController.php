@@ -1176,7 +1176,7 @@ class VmtPMSModuleController extends Controller
                 if($vmtAssignedFormReview->is_assignee_accepted == "1")
                 {
                     \Mail::to($mailingList)
-                    ->cc($hr_details)
+                    ->cc($hr_details->officical_mail)
                     ->send(new VmtPMSMail_Assignee( "approved",$assignedUserDetails->name,$vmtAssignedDetails->year." - ".strtoupper($vmtAssignedDetails->assignment_period),$reviewerUserDetails->name,$command_emp));
                     $returnMsg = 'KPI has been accepted. Mail notification sent';
                     $message = "KPI has been accepted.  ";
