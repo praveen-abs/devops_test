@@ -801,7 +801,7 @@
                                     <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4  mb-2">
                                         <label class="" for="assignment_period_start">Assignment Period</label>
                                         <span
-                                            class="form-control">{{ \Carbon\Carbon::parse($assignment_period)->format('F') }}</span>
+                                            class="form-control">{{  ucfirst($assignment_period) }}</span>
 
                                         <input type="hidden" name="assignment_period_start" id="assignment_period_start"
                                             class="form-control "value="{{ $assignment_period }}">
