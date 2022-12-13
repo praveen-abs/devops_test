@@ -23,9 +23,21 @@ function fetchMasterConfigValue($config_name)
 }
 
 function getOrganization_HR_Details(){
-    $master_config_value = VmtMasterConfig::where('config_name', 'hr_userid')->first()->config_value;
-    $hr_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id','=','users.id')
-                        ->where('users.id',$master_config_value)->first(['users.name','vmt_employee_office_details.officical_mail']);
+    $master_config_value = VmtMasterConfig::where('config_name', 'hr_userid')->first();
+
+    if(empty($master_config_value))
+    {
+       // dd("HR not set");
+       return null;
+    }
+    else
+    {
+        $master_config_value = $master_config_value->config_value;
+    
+        $hr_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id','=','users.id')
+        ->where('users.id',$master_config_value)->first(['users.name','vmt_employee_office_details.officical_mail']);
+
+    }
 
     return $hr_details;
 

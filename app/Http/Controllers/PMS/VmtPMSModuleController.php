@@ -557,6 +557,10 @@ class VmtPMSModuleController extends Controller
         try{
             $hr_details = getOrganization_HR_Details();
             //dd($hr_details);
+            if(empty($hr_details))
+            {
+                return response()->json(['status' => false,'message'=>'Please assign an HR in Master Configuration settings']);
+            }
 
             $loggedUser = Auth::user();
 
