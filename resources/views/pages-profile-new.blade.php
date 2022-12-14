@@ -1800,8 +1800,8 @@
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content profile-box top-line">
                 <div class="modal-header border-0">
-                    <h6 class="modal-title">Personal
-                        Information</h6>
+                    <h6 class="modal-title">General Information
+                    </h6>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -2373,3 +2373,4 @@
         }
     </script>
 @endsection
+ 
