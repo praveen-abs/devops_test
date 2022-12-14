@@ -251,6 +251,8 @@ class VmtProfilePagesController extends Controller
        // dd($request->all());
         $reDetails = VmtEmployee::where('userid', $request->id)->first();
         $details = VmtEmployee::find($reDetails->id);
+        $details->dob = $request->input('dob');
+        $details->gender = $request->input('gender');
         $details->marital_status = $request->input('marital_status');
         $details->mobile_number = $request->input('mobile_number');
         $details->no_of_children = $request->input('no_of_children');
@@ -318,12 +320,7 @@ class VmtProfilePagesController extends Controller
         //dd($details);
         $details->dob = $request->input('dob');
         $details->gender = $request->input('gender');
-
-        $details->current_address_line_1 = $request->input('current_address_line_1');
-        $details->current_address_line_2 = $request->input('current_address_line_2');
-        $details->permanent_address_line_1 = $request->input('permanent_address_line_1');
-        $details->permanent_address_line_2 = $request->input('permanent_address_line_2');
-        $details->mobile_number = $request->input('mobile_number');
+        $details->doj =$request->input('doj');
         $details->save();
 
         //dd($request->all());

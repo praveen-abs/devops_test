@@ -1579,8 +1579,8 @@
         <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
             <div class="modal-content top-line">
                 <div class="modal-header border-0 ">
-                    <h6 class="">Employee
-                        Information</h6>
+                    <h6 class=""> Address
+                         </h6>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -1589,89 +1589,8 @@
                     <form action="{{ route('updatePersonalInformation', $user->id) }}" Method="POST"
                         enctype="multipart/form-data">
                         @csrf
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="d-flex align-items-center justify-content-center">
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group mb-3">
-                                            <label>Name</label>
-                                            <input type="text" class="form-control" name="name"
-                                                value="{{ $user->name }}" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group mb-3">
-                                            <label>Birth Date</label>
-                                            <div class="cal-icon">
-                                                @if (!empty($user_full_details->dob))
-                                                    <input class="form-control datetimepicker" type="date"
-                                                        max="9999-12-31" name="dob"
-                                                        value="{{ date('Y-m-d', strtotime($user_full_details->dob)) }}"
-                                                        readonly>
-                                                @else
-                                                    <input class="form-control datetimepicker" type="date"
-                                                        max="9999-12-31" name="dob" value="">
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group mb-3">
-                                            <label>Gender</label>
-
-                                            <select class="form-select form-control" name="gender"
-                                                aria-label="Default select">
-                                                <option selected hidden disabled>Choose Gender</option>
-                                                @foreach ($genderArray as $item)
-                                                    <option value="{{ $item }}"
-                                                        @if (!empty($user_full_details->gender) && $user_full_details->gender == $item) selected @endif>
-                                                        {{ $item }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group mb-3">
-
-                                            <label>Reports To <span class="text-danger">*</span></label>
-                                            <select class="form-select form-control" name="report">
-                                                <option disabled hidden selected>Select Report</option>
-
-                                                @foreach ($allEmployees as $singleEmp)
-                                                    <option value="{{ $singleEmp->user_code }}"
-                                                        @if (!empty($reportingManager) && $reportingManager->user_code == $singleEmp->user_code) selected @endif>
-                                                        {{ $singleEmp->user_code . ' (' . $singleEmp->name . ')' }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label>Phone Number</label>
-                                    <input type=text size=20 maxlength=10 onkeypress='return isNumberKey(event)'
-                                        class="form-control" name="mobile_number"
-                                        value="{{ $user_full_details->mobile_number ?? '' }}">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-
-                                <div class="form-group mb-3">
-                                    <label>Email</label>
-                                    <input type="email" name="present_email" onkeypress='return isValidEmail(email)'
-                                        class="form-control" value="{{ $user->email ?? '' }}">
-                                </div>
-                            </div>
+                        
+                                    
                             <div class="col-md-12">
                                 <div class="form-group mb-3">
                                     <label>Current Address Line - 1</label>
@@ -1809,89 +1728,69 @@
                 <div class="modal-body">
                     <form action="{{ route('updatePersonalInfo', $user->id) }}" Method="POST">
                         @csrf
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label>Passport No</label>
-                                    <input type="text" class="form-control" name="passport_number"
-                                        value="{{ $user_full_details->passport_number ?? '' }}">
+                         
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label>Birth Date</label>
+                                <div class="cal-icon">
+                                    @if (!empty($user_full_details->dob))
+                                        <input class="form-control datetimepicker" type="date"
+                                            max="9999-12-31" name="dob"
+                                            value="{{ date('Y-m-d', strtotime($user_full_details->dob)) }}"
+                                            >
+                                    @else
+                                        <input class="form-control datetimepicker" type="date"
+                                            max="9999-12-31" name="dob" value="">
+                                    @endif
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label>Passport Expiry Date</label>
-                                    <div class="cal-icon">
-                                        @if (!empty($user_full_details->passport_date))
-                                            <input class="form-control datetimepicker" name="passport_date"
-                                                type="date" max="9999-12-31"
-                                                value="{{ date('Y-m-d', strtotime($user_full_details->passport_date)) }}">
-                                        @else
-                                            <input class="form-control datetimepicker" name="passport_date"
-                                                type="date" max="9999-12-31" value="">
-                                        @endif
-                                    </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label>Gender</label>
+
+                                <select class="form-select form-control" name="gender"
+                                    aria-label="Default select">
+                                    <option selected hidden disabled>Choose Gender</option>
+                                    @foreach ($genderArray as $item)
+                                        <option value="{{ $item }}"
+                                            @if (!empty($user_full_details->gender) && $user_full_details->gender == $item) selected @endif>
+                                            {{ $item }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label>Date Of Joining(DOJ)</label>
+                                <div class="cal-icon">
+                                    @if (!empty($user_full_details->doj))
+                                        <input class="form-control onboard" type="date"
+                                            max="9999-12-31" name="doj"
+                                            value="{{ date('Y-m-d', strtotime($user_full_details->doj)) }}"
+                                            >
+                                    @else
+                                        <input class="form-control onboard" type="date"
+                                            max="9999-12-31" name="doj" value="">
+                                    @endif
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label>Tel</label>
-                                    <input class="form-control" value="{{ $user_full_details->mobile_number ?? '' }}"
-                                        name="mobile_number" minlength="10" maxlength="10" type="number"
-                                        maxlength="10" minlength="10" required>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label>Nationality <span class="text-danger">*</span></label>
-                                    <select placeholder="Choose nationality" name="nationality" id="nationality"
-                                        class="onboard-form form-control textbox form-select  select2_form_without_search"
-                                        required>
-                                        <option value="" hidden selected disabled>Choose nationality</option>
-                                        <option value="Indian" @if ($user_full_details->nationality == 'Indian') selected @endif>
-                                            Indian</option>
-                                        <option value="Other Nationality"
-                                            @if ($user_full_details->nationality == 'Other Nationality') selected @endif>Other Nationality
+                        </div>
+
+
+                         <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label>Marital status <span class="text-danger">*</span></label>
+                                <select class="form-select form-control text-capitalize" name="marital_status"
+                                    required>
+                                    <option class="" selected hidden disabled>Select Marital</option>
+                                    @foreach ($maritalStatus as $item_maritalStatus)
+                                        <option @if (!empty($user_full_details->marital_status) && $user_full_details->marital_status == $item_maritalStatus) selected @endif
+                                            value="{{ $item_maritalStatus }}">{{ ucfirst($item_maritalStatus) }}
                                         </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label>Religion</label>
-                                    <div class="cal-icon">
-                                        <input class="form-control onboard-form" pattern-data="name" name="religion"
-                                            type="text" pattern-data="alpha"
-                                            value="{{ $user_full_details->religion ?? '' }}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label>Marital status <span class="text-danger">*</span></label>
-                                    <select class="form-select form-control text-capitalize" name="marital_status"
-                                        required>
-                                        <option class="" selected hidden disabled>Select Marital</option>
-                                        @foreach ($maritalStatus as $item_maritalStatus)
-                                            <option @if (!empty($user_full_details->marital_status) && $user_full_details->marital_status == $item_maritalStatus) selected @endif
-                                                value="{{ $item_maritalStatus }}">{{ ucfirst($item_maritalStatus) }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label>Spouse Name</label>
-                                    <input class="form-control onboard-form" type="text" name="spouse"
-                                        pattern-data="alpha" value="{{ $user_full_details->spouse_name ?? '' }}">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label>No. of children </label>
-                                    <input class="form-control onboard-form" type="number" name="no_of_children"
-                                        maxlength="2" value="{{ $user_full_details->no_of_children ?? '' }}">
-                                </div>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="col-12">
