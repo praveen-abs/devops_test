@@ -109,17 +109,42 @@ Route::post('/update-bank-info/{id}', [App\Http\Controllers\HomeController::clas
 Route::post('/update-personal-info/{id}', [App\Http\Controllers\HomeController::class, 'updatePersonalInfo'])->name('updatePersonalInfo');
 Route::post('/update-leave-info/{id}', [App\Http\Controllers\HomeController::class, 'updateLeaveInfo'])->name('updateLeaveInfo');
 Route::post('/update-experience-info/{id}', [App\Http\Controllers\HomeController::class, 'updateExperienceInfo'])->name('updateExperienceInfo');
-Route::post('/update-emergency-info/{id}', [App\Http\Controllers\HomeController::class, 'updtaeEmergencyInfo'])->name('updtaeEmergencyInfo');
-Route::post('/update-family-info/{id}', [App\Http\Controllers\HomeController::class, 'updtaeFamilyInfo'])->name('updtaeFamilyInfo');
+Route::post('/update-emergency-info/{id}', [App\Http\Controllers\HomeController::class, 'updateEmergencyInfo'])->name('updateEmergencyInfo');
+Route::post('/update-family-info/{id}', [App\Http\Controllers\HomeController::class, 'updateFamilyInfo'])->name('updateFamilyInfo');
 Route::post('/update-checkin', [App\Http\Controllers\HomeController::class, 'updateCheckin'])->name('updateCheckin');
 Route::get('/topbar-settings', [App\Http\Controllers\HomeController::class, 'vmt_topbar_settings'])->name('vmt_topbar_settings');
+
+
+ 
+//new profile page
+Route::post('/update-profile/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'updateProfile'])->name('updateProfile');
+Route::post('/update-password/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'updatePassword'])->name('updatePassword');
+Route::post('/store-personal-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'storePersonalInfo'])->name('updatePersonalInformation');
+Route::post('/store-profile-image/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'storeProfileImage'])->name('storeProfileImage');
+Route::post('/update-bank-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'updateBankInfo'])->name('updateBankInfo');
+Route::post('/update-personal-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'updatePersonalInfo'])->name('updatePersonalInfo');
+Route::post('/update-leave-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'updateLeaveInfo'])->name('updateLeaveInfo');
+Route::post('/update-experience-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'updateExperienceInfo'])->name('updateExperienceInfo');
+Route::post('/update-emergency-info/{id}', [App\Http\Controllers\HVmtProfilePagesController::class, 'updateeEmergencyInfo'])->name('updateEmergencyInfo');
+Route::post('/update-family-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'updateFamilyInfo'])->name('updateFamilyInfo');
+Route::post('/update-checkin', [App\Http\Controllers\VmtProfilePagesController::class, 'updateCheckin'])->name('updateCheckin');
+Route::get('/topbar-settings', [App\Http\Controllers\VmtProfilePagesController::class, 'vmt_topbar_settings'])->name('vmt_topbar_settings');
+
 // notifications
 Route::get('/notifications/{id}', [App\Http\Controllers\HomeController::class, 'delete'])->name('delete');
+
+//new 
+Route::get('/notifications/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'delete'])->name('delete');
 
 //notifications
 Route::post('/poll-voting', [App\Http\Controllers\HomeController::class, 'poll_voting'])->name('poll_voting');
 Route::post('/signin', [App\Http\Controllers\HomeController::class, 'signin'])->name('signin');
 
+//new
+Route::post('/poll-voting', [App\Http\Controllers\VmtProfilePagesController::class, 'poll_voting'])->name('poll_voting');
+Route::post('/signin', [App\Http\Controllers\VmtProfilePagesController::class, 'signin'])->name('signin');
+
+//
 Route::get('/registerNewAccount', function(){
     return view('/auth/register');
 })->name('registerNewAccount');
@@ -134,15 +159,20 @@ Route::get('/signed-passwordresetlink', 'App\Http\Controllers\Auth\LoginControll
 
 Route::get('pages-profile', [App\Http\Controllers\HomeController::class, 'showProfile'])->name('pages-profile');
 Route::get('pages-impersonate-profile/{id}', [App\Http\Controllers\HomeController::class, 'showImpersonateProfile'])->name('pages_impersonate_profile');
+
+Route::get('pages-profile-new',[App\Http\Controllers\VmtProfilePagesController::class,'showProfile'])->name('pages-profile-new');
+Route::get('pages-impersonate-profile/{id}',[App\Http\Controllers\VmtProfilePagesController::class, 'showImpersonateProfile'])->name('pages_impersonate_profile');
 // Route::get('pages-profile-settings', [App\Http\Controllers\HomeController::class, 'showProfilePage'])->name('pages-profile-settings');
 
 Route::get('test-email', 'App\Http\Controllers\HomeController@testEmail');
+Route::get('test-email', 'App\Http\Controllers\VmtProfilePagesController@testEmail');
 
 // General Settings
 Route::get('vmt-general-settings', [App\Http\Controllers\HomeController::class, 'generalSettings']);
 Route::post('vmt-general-settings', [App\Http\Controllers\HomeController::class, 'storeGeneralSettings']);
 
-
+Route::get('vmt-general-settings', [App\Http\Controllers\VmtProfilePagesController::class, 'generalSettings']);
+Route::post('vmt-general-settings', [App\Http\Controllers\VmtProfilePagesController::class, 'storeGeneralSettings']);
 
 // Route::get('/vendor', function () {
 //     return view('vmt_vendor');
@@ -317,11 +347,11 @@ Route::get('vmt-payslip-pdf', 'App\Http\Controllers\VmtPaySlipController@payslip
 // sample xl download  11/08/2022  //
 Route::get( '/download/{filename}', 'App\Http\Controllers\VmtPaySlipController@download');
 
-// end rout //
+// end rout // 
 
 // General Info
 Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 'storeGeneralInfo']);
-
+Route::post('vmt-general-info',  [App\Http\Controllers\VmtProfilePagesController::class, 'storeGeneralInfo']);
 // self appraisal review for employees
 Route::get('vmt-pmsappraisal-review', 'App\Http\Controllers\VmtPmsController@showEmployeeApraisalReview');
 
@@ -385,7 +415,7 @@ Route::get('/clientOnboarding', function () {
 
 // config menu (document tamplate view)
 Route::get('/document_preview', 'App\Http\Controllers\HomeController@showDocumentTemplate')->name('document_preview');
-
+Route::get('/document_preview', 'App\Http\Controllers\VmtProfilePagesController@showDocumentTemplate')->name('document_preview');
 Route::get('/documents',  [App\Http\Controllers\VmtEmployeeController::class, 'showEmployeeDocumentsPage'])->name('vmt-documents-route');
 
 Route::post('vmt-documents-route', 'App\Http\Controllers\VmtEmployeeController@storeEmployeeDocuments')->name('vmt-storedocuments-route');
@@ -474,7 +504,7 @@ Route::get('syncStaffAttendanceFromDeviceDatabase', [App\Http\Controllers\VmtSta
 
 Route::get('dayWiseStaffAttendance', [App\Http\Controllers\VmtAttendanceController::class, 'dayWiseStaffAttendance'])->name('dayWiseStaffAttendance');
 
-//DONT WRITE ANT ROUTES BELOW THIS
+//DONT WRITE ANT ROUTES BELOW THIS   VmtProfilePagesController
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index']);
-
+Route::get('{any}', [App\Http\Controllers\VmtProfilePagesController::class, 'index']);
 

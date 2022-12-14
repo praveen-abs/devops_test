@@ -64,19 +64,24 @@
                                     <div class="profile-mid-right-content mb-4 text-center ">
                                         <div class="border-bottom-liteAsh py-2">
                                             <p class="text-muted f-12 fw-bold">Employee Code</p>
-                                            <p class="text-primary f-15 fw-bold">Employee</p>
+                                            <p class="text-primary f-15 fw-bold">{{ $user_full_details->user_code ?? '-' }}
+                                            </p>
+
                                         </div>
                                         <div class="border-bottom-liteAsh py-2">
                                             <p class="text-muted f-12 fw-bold">Location</p>
-                                            <p class="text-primary f-15 fw-bold">Location</p>
+                                            <p class="text-primary f-15 fw-bold">
+                                                {{ $user_full_details->work_location ?? '-' }}</p>
                                         </div>
                                         <div class="border-bottom-liteAsh py-2">
                                             <p class="text-muted f-12 fw-bold">Department</p>
-                                            <p class="text-primary f-15 fw-bold">Department</p>
+                                            <p class="text-primary f-15 fw-bold">
+                                                {{ $user_full_details->department_id ?? '-' }}</p>
                                         </div>
                                         <div class="border-bottom-liteAsh py-2">
                                             <p class="text-muted f-12 fw-bold">Reporting To</p>
-                                            <p class="text-primary f-15 fw-bold">Reporting</p>
+                                            <p class="text-primary f-15 fw-bold">
+                                                {{ $user_full_details->l1_manager_name ?? '-' }}</p>
                                         </div>
                                     </div>
                                     <div class="profile-bottom-right-content  text-center ">
@@ -153,35 +158,35 @@
                                         <li class="border-bottom-liteAsh pb-1">
                                             <div class="title">Birthday</div>
                                             <div class="text">
-                                                {{ date('d F', strtotime($user_full_details->dob)) }}
+                                                {{ date('d F', strtotime($user_full_details->dob ?? '-')) }}
                                             </div>
                                         </li>
                                         <li class="border-bottom-liteAsh pb-1">
                                             <div class="title">Gender </div>
-                                            <div class="text">{{ $user_full_details->gender ?? '' }}</div>
+                                            <div class="text">{{ $user_full_details->gender ?? '-' }}</div>
                                         </li>
                                         <li class="border-bottom-liteAsh pb-1">
                                             <div class="title">Date Of Joining (DOJ)</div>
                                             <div class="text">
-
+                                                {{ date('d F', strtotime($user_full_details->doj ?? '-')) }}
                                             </div>
                                         </li>
                                         <li class="border-bottom-liteAsh pb-1">
                                             <div class="title">Marital Status </div>
                                             <div class="text text-capitalize">
-                                                {{ $user_full_details->marital_status ?? '' }}</div>
+                                                {{ $user_full_details->marital_status ?? '-' }}</div>
                                         </li>
                                         <li class="border-bottom-liteAsh pb-1">
                                             <div class="title"> Blood Group</div>
                                             <div class="text">
 
-                                            </div>
+                                                {{ $user_full_details->blood_group_id ?? '-' }}</div>
                                         </li>
                                         <li class=" pb-1">
                                             <div class="title">Physically Handicapped</div>
                                             <div class="text">
 
-                                            </div>
+                                                {{ $user_full_details->physically_challenged ?? '-' }}</div>
                                         </li>
 
 
@@ -211,13 +216,13 @@
                                         <li class="border-bottom-liteAsh pb-1">
                                             <div class="title">Office Email</div>
                                             <div class="text">
-
+                                                {{ !empty($user_full_details->officical_mail) ? $user_full_details->officical_mail : '-' }}
                                             </div>
                                         </li>
                                         <li class=" pb-1">
                                             <div class="title">Mobile Number</div>
                                             <div class="text">
-                                                {{ !empty($user_full_details->mobile_number) ? $user_full_details->mobile_number : '' }}
+                                                {{ !empty($user_full_details->mobile_number) ? $user_full_details->mobile_number : '-' }}
                                             </div>
                                         </li>
                                     </ul>
@@ -337,7 +342,16 @@
                                                 </th>
                                             </thead>
                                             <tbody>
-                                                <tr>
+                                                @if ($exp)
+                                                            @foreach ($exp as $k => $info)
+                                                                <tr>
+                                                                    <td>{{ $info['company_name'] }}</td>
+                                                                    <td>{{ $info['job_position'] }}</td>
+                                                                    <td>{{ $info['period_from'] }}</td>
+                                                                    <td>{{ $info['period_to'] }}</td>
+                                                                </tr>
+                                                                @endforeach
+                                                                @endif
                                                     <td></td>
                                                     <td></td>
 
@@ -603,17 +617,31 @@
                                                             <div class="col-6 text-end mb-2">
                                                                 <button class="btn btn-orange">Revise Salary</button>
                                                             </div>
+                                                            <div class="col-2">
+                                                                <ul class="timeLine_period">
+                                                                    <li class="period active text-center">
+                                                                        <p class="f-12  text-center period-month fw-bold">
+                                                                            Mar 01,2022</p>
+                                                                        <span
+                                                                            class="period-status badge bg-info">Current</span>
+                                                                    </li>
+                                                                    <li class="period  text-center">
+                                                                        <p class="f-12  text-center period-month fw-bold">
+                                                                            Mar 01,2022</p>
 
-                                                            <div class="col-12">
-                                                                <div class="accordion" id="salaryTimeline_accoridian">
-                                                                    <div class="accordion-item">
-                                                                        <h2 class="accordion-header " id="">
-                                                                            <button
-                                                                                class="accordion-button outline-none border-0"
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="col-10">
+                                                                <div class="accordion"
+                                                                    id="accordionPanelsStayOpenExample">
+                                                                    <div class="accordion-item mb-4">
+                                                                        <h2 class="accordion-header"
+                                                                            id="panelsStayOpen-headingOne">
+                                                                            <button class="accordion-button collapsed"
                                                                                 type="button" data-bs-toggle="collapse"
-                                                                                data-bs-target="#collapse_timeline"
-                                                                                aria-expanded="true"
-                                                                                aria-controls="collapse_timeline">
+                                                                                data-bs-target="#timeLine-collapseOne"
+                                                                                aria-expanded="true" aria-controls="">
                                                                                 <div class="d-flex me-3 justify-content-center align-items-center rounded-circle"
                                                                                     style="height: 40px;width:40px;background-color:#91ddbe;">
                                                                                     <svg xmlns="http://www.w3.org/2000/svg"
@@ -632,7 +660,7 @@
                                                                                             class="text-dark_green  mb-2 f-12 text-center">
                                                                                             Regular Salary</p>
                                                                                         <p
-                                                                                            class="mb-0 text-dark_green  f-15 fw-bold">
+                                                                                            class="mb-0 text-dark_green  f-14 fw-bold">
                                                                                             INR
                                                                                             1,15,91,555
                                                                                         </p>
@@ -645,54 +673,51 @@
                                                                                             class="text-dark_green  mb-2 f-12 text-center">
                                                                                             Others</p>
                                                                                         <p
-                                                                                            class="mb-0 text-dark_green  f-15 fw-bold">
+                                                                                            class="mb-0 text-dark_green  f-14 fw-bold">
                                                                                             INR
                                                                                             54,00,000
                                                                                         </p>
                                                                                     </div>
                                                                                     <div
-                                                                                        class="f-15 mx-4 text-dark_green d-flex align-items-center ">
+                                                                                        class="f-15 mx-3 text-dark_green d-flex align-items-center ">
                                                                                         +</div>
                                                                                     <div class="">
                                                                                         <p
                                                                                             class="text-dark_green  mb-2 f-12 text-center">
                                                                                             Bonus</p>
                                                                                         <p
-                                                                                            class="mb-0 text-dark_green  f-15 fw-bold">
+                                                                                            class="mb-0 text-dark_green  f-14 fw-bold">
                                                                                             INR
                                                                                             26,91,555
                                                                                         </p>
                                                                                     </div>
                                                                                     <div
-                                                                                        class="f-15 mx-4 text-dark_green  d-flex align-items-center ">
+                                                                                        class="f-15 mx-3 text-dark_green  d-flex align-items-center ">
                                                                                         =</div>
                                                                                     <div class="">
                                                                                         <p
                                                                                             class="text-dark_green  mb-2 f-12 text-center">
                                                                                             Total </p>
                                                                                         <p
-                                                                                            class="mb-0 text-dark_green  f-15 fw-bold">
+                                                                                            class="mb-0 text-dark_green  f-14 fw-bold">
                                                                                             INR
                                                                                             35,00,00
                                                                                         </p>
                                                                                     </div>
                                                                                 </div>
-
                                                                             </button>
                                                                         </h2>
-                                                                        <div id="collapse_timeline"
-                                                                            class="accordion-collapse collapse show "
-                                                                            aria-labelledby=""
-                                                                            data-bs-parent="#salaryTimeline_accoridian">
+                                                                        <div id="timeLine-collapseOne"
+                                                                            class="accordion-collapse collapse "
+                                                                            aria-labelledby="panelsStayOpen-headingOne">
                                                                             <div class="accordion-body">
-
                                                                                 <div class="row">
                                                                                     <div class="col-4">
                                                                                         <p
                                                                                             class="text-dark_green  mb-2 f-12 text-center">
                                                                                             Regular Salary</p>
                                                                                         <p
-                                                                                            class="mb-0 text-dark_green  f-15 fw-bold text-center">
+                                                                                            class="mb-0 text-dark_green  f-14 fw-bold text-center">
                                                                                             INR
                                                                                             35,00,00 / Annum
                                                                                         </p>
@@ -702,7 +727,7 @@
                                                                                             class="text-dark_green  mb-2 f-12 text-center">
                                                                                             Other</p>
                                                                                         <p
-                                                                                            class="mb-0 text-dark_green  f-15 fw-bold text-center">
+                                                                                            class="mb-0 text-dark_green  f-14 fw-bold text-center">
                                                                                             INR
                                                                                             35,00,00 / Annum
                                                                                         </p>
@@ -726,7 +751,7 @@
                                                                                                 <div
                                                                                                     class="card-body text-center">
                                                                                                     <p
-                                                                                                        class="text-ash-medium  f-13 ">
+                                                                                                        class="text-ash-medium  f-11 ">
                                                                                                         Salary Per Month
                                                                                                     </p>
                                                                                                     <p
@@ -742,7 +767,7 @@
                                                                                                 <div
                                                                                                     class="card-body text-center">
                                                                                                     <p
-                                                                                                        class="text-ash-medium  f-13 ">
+                                                                                                        class="text-ash-medium  f-11 ">
                                                                                                         ESIC Employer
                                                                                                     </p>
                                                                                                     <p
@@ -758,7 +783,7 @@
                                                                                                 <div
                                                                                                     class="card-body text-center">
                                                                                                     <p
-                                                                                                        class="text-ash-medium  f-13 ">
+                                                                                                        class="text-ash-medium  f-11 ">
                                                                                                         PF-Employeer
                                                                                                     </p>
                                                                                                     <p
@@ -775,7 +800,7 @@
                                                                                                 <div
                                                                                                     class="card-body text-center">
                                                                                                     <p
-                                                                                                        class="text-ash-medium  f-13 ">
+                                                                                                        class="text-ash-medium  f-11 ">
                                                                                                         Effective Form
                                                                                                     </p>
                                                                                                     <p
@@ -793,9 +818,190 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
+                                                                    <div class="accordion-item mb-4">
+                                                                        <h2 class="accordion-header"
+                                                                            id="panelsStayOpen-headingOne">
+                                                                            <button class="accordion-button collapsed"
+                                                                                type="button" data-bs-toggle="collapse"
+                                                                                data-bs-target="#timeLine-collapseTwo"
+                                                                                aria-expanded="true" aria-controls="">
+                                                                                <div class="d-flex me-3 justify-content-center align-items-center rounded-circle"
+                                                                                    style="height: 40px;width:40px;background-color:#91ddbe;">
+                                                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                        width="22.058" height="12.253"
+                                                                                        viewBox="0 0 22.058 12.253">
+                                                                                        <path id="arrow-trend-up-solid"
+                                                                                            d="M14.705,98.451a1.225,1.225,0,0,1,0-2.451h6.127a1.224,1.224,0,0,1,1.225,1.225v6.127a1.225,1.225,0,0,1-2.451,0v-3.167l-6.487,6.483a1.223,1.223,0,0,1-1.731,0l-4.071-4.032-5.226,5.258a1.225,1.225,0,0,1-1.733-1.731l6.128-6.127a1.223,1.223,0,0,1,1.731,0l4.036,4.032,5.618-5.652Z"
+                                                                                            transform="translate(0 -96)"
+                                                                                            fill="#686363" />
+                                                                                    </svg>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="d-flex justify-content-between">
+                                                                                    <div class="">
+                                                                                        <p
+                                                                                            class="text-dark_green  mb-2 f-12 text-center">
+                                                                                            Regular Salary</p>
+                                                                                        <p
+                                                                                            class="mb-0 text-dark_green  f-14 fw-bold">
+                                                                                            INR
+                                                                                            1,15,91,555
+                                                                                        </p>
+                                                                                    </div>
+                                                                                    <div
+                                                                                        class="f-15 text-dark_green  mx-4  d-flex align-items-center">
+                                                                                        +</div>
+                                                                                    <div class="">
+                                                                                        <p
+                                                                                            class="text-dark_green  mb-2 f-12 text-center">
+                                                                                            Others</p>
+                                                                                        <p
+                                                                                            class="mb-0 text-dark_green  f-14 fw-bold">
+                                                                                            INR
+                                                                                            54,00,000
+                                                                                        </p>
+                                                                                    </div>
+                                                                                    <div
+                                                                                        class="f-15 mx-3 text-dark_green d-flex align-items-center ">
+                                                                                        +</div>
+                                                                                    <div class="">
+                                                                                        <p
+                                                                                            class="text-dark_green  mb-2 f-12 text-center">
+                                                                                            Bonus</p>
+                                                                                        <p
+                                                                                            class="mb-0 text-dark_green  f-14 fw-bold">
+                                                                                            INR
+                                                                                            26,91,555
+                                                                                        </p>
+                                                                                    </div>
+                                                                                    <div
+                                                                                        class="f-15 mx-3 text-dark_green  d-flex align-items-center ">
+                                                                                        =</div>
+                                                                                    <div class="">
+                                                                                        <p
+                                                                                            class="text-dark_green  mb-2 f-12 text-center">
+                                                                                            Total </p>
+                                                                                        <p
+                                                                                            class="mb-0 text-dark_green  f-14 fw-bold">
+                                                                                            INR
+                                                                                            35,00,00
+                                                                                        </p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </button>
+                                                                        </h2>
+                                                                        <div id="timeLine-collapseTwo"
+                                                                            class="accordion-collapse collapse "
+                                                                            aria-labelledby="panelsStayOpen-headingOne">
+                                                                            <div class="accordion-body">
+                                                                                <div class="row">
+                                                                                    <div class="col-4">
+                                                                                        <p
+                                                                                            class="text-dark_green  mb-2 f-12 text-center">
+                                                                                            Regular Salary</p>
+                                                                                        <p
+                                                                                            class="mb-0 text-dark_green  f-14 fw-bold text-center">
+                                                                                            INR
+                                                                                            35,00,00 / Annum
+                                                                                        </p>
+                                                                                    </div>
+                                                                                    <div class="col-4">
+                                                                                        <p
+                                                                                            class="text-dark_green  mb-2 f-12 text-center">
+                                                                                            Other</p>
+                                                                                        <p
+                                                                                            class="mb-0 text-dark_green  f-14 fw-bold text-center">
+                                                                                            INR
+                                                                                            35,00,00 / Annum
+                                                                                        </p>
+                                                                                    </div>
+                                                                                    <div
+                                                                                        class="col-4 d-flex    justify-content-end align-items-center">
+                                                                                        <button
+                                                                                            class="btn btn-border-orange">Salary-breakup</button>
+                                                                                    </div>
+                                                                                </div>
 
+
+
+                                                                                <div class="salaryTimeline_container mt-4">
+
+                                                                                    <div class="row">
+
+                                                                                        <div
+                                                                                            class="col-sm-3 col-sm-12 col-xl-3 col-md-3 col-lg-3 ">
+                                                                                            <div class="card mb-0">
+                                                                                                <div
+                                                                                                    class="card-body text-center">
+                                                                                                    <p
+                                                                                                        class="text-ash-medium  f-11 ">
+                                                                                                        Salary Per Month
+                                                                                                    </p>
+                                                                                                    <p
+                                                                                                        class="mb-0 f-14 fw-bold text-primary">
+                                                                                                        -</p>
+
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div
+                                                                                            class="col-sm-3 col-sm-12 col-xl-3 col-md-3 col-lg-3 ">
+                                                                                            <div class="card mb-0">
+                                                                                                <div
+                                                                                                    class="card-body text-center">
+                                                                                                    <p
+                                                                                                        class="text-ash-medium  f-11 ">
+                                                                                                        ESIC Employer
+                                                                                                    </p>
+                                                                                                    <p
+                                                                                                        class="mb-0 f-14 fw-bold text-primary">
+                                                                                                        -</p>
+
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div
+                                                                                            class="col-sm-3 col-sm-12 col-xl-3 col-md-3 col-lg-3 ">
+                                                                                            <div class="card mb-0">
+                                                                                                <div
+                                                                                                    class="card-body text-center">
+                                                                                                    <p
+                                                                                                        class="text-ash-medium  f-11 ">
+                                                                                                        PF-Employeer
+                                                                                                    </p>
+                                                                                                    <p
+                                                                                                        class="mb-0 f-14 fw-bold text-primary">
+                                                                                                        -</p>
+
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                        </div>
+                                                                                        <div
+                                                                                            class="col-sm-3 col-sm-12 col-xl-3 col-md-3 col-lg-3 ">
+                                                                                            <div class="card mb-0">
+                                                                                                <div
+                                                                                                    class="card-body text-center">
+                                                                                                    <p
+                                                                                                        class="text-ash-medium  f-11 ">
+                                                                                                        Effective Form
+                                                                                                    </p>
+                                                                                                    <p
+                                                                                                        class="mb-0 f-14 fw-bold text-primary">
+                                                                                                        -</p>
+
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+
+
+                                                                                    </div>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-
                                                             </div>
                                                         </div>
                                                     </div>
@@ -912,9 +1118,9 @@
                                                                 <div class="card-body text-center">
                                                                     <p class="text-ash-medium  f-13 ">Auto Approved
                                                                         Amount</p>
-                                                                        <p class="mb-0 f-14 fw-bold text-primary">INR 1,50,000
+                                                                    <p class="mb-0 f-14 fw-bold text-primary">INR 1,50,000
 
-                                                                        </p>
+                                                                    </p>
 
 
                                                                 </div>
@@ -1309,6 +1515,66 @@
         </div>
     </div>
 
+
+    <div id="personal_info_modal" class="modal custom-modal fade" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
+            <div class="modal-content top-line">
+                <div class="modal-header border-0 ">
+                    <h6 class=""> Contact Information
+                         </h6>
+                    <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('updatePersonalInformation', $user->id) }}" Method="POST"
+                        enctype="multipart/form-data">
+                        @csrf
+                  <div class="row">
+
+        <div class="col-md-6">
+            <div class="form-group mb-3">
+                <label>Personal Email</label>
+                <input type="email"  onkeypress='return isValidEmail (email)'
+                    class="form-control" name="present_email"
+                    value="{{ $user->email ?? '' }}">
+            </div>
+        </div>
+        <div class="col-md-6">
+
+            <div class="form-group mb-3">
+                <label>Office Email</label>
+                <input type="email" name="present_email" onkeypress='return isValidEmail(email)'
+                    class="form-control" value="{{ $user->email ?? '' }}">
+            </div>
+        </div>
+
+
+        
+
+        <div class="col-md-6">
+
+            <div class="form-group mb-3">
+                <label>Mobile Number</label>
+                <input type="text" size=20 maxlength=10 name="mobile_number" onkeypress='return isNumberKey(event)'
+                    class="form-control" value="{{ $user_full_details->mobile_number ?? '' }}"> 
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="text-right">
+                <button class="btn btn-orange submit-btn">Submit</button>
+            </div>
+        </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
     <div id="edit_addressInfo" class="modal custom-modal fade" role="dialog">
         <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
             <div class="modal-content top-line">
@@ -1474,8 +1740,8 @@
                                             <div class="col-md-6">
                                                 <div class="form-group mb-3 form-focus focused">
                                                     <label class="focus-label">Location</label>
-                                                    <input type="text" name="location[]" class="form-control floating"
-                                                        value="" required>
+                                                    <input type="text" name="location[]"
+                                                        class="form-control floating" value="" required>
 
                                                 </div>
                                             </div>
@@ -1650,7 +1916,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('updtaeFamilyInfo', $user->id) }}" Method="POST"
+                    <form action="{{ route('updateFamilyInfo', $user->id) }}" Method="POST"
                         enctype="multipart/form-data">
                         @csrf
 
@@ -1721,8 +1987,8 @@
                                 <div class="card mb-3 addition-content" id="content1">
                                     <div class="card-body">
                                         <!-- <h3 class="card-title fw-bold">Education Informations <a href="javascript:void(0);"
-                                                                                                                                                                                                                                {{-- class="delete-icon"><i class="   ri-delete-bin-line"></i></a> --}}
-                                                                                                                                                                                                                        </h3> -->
+                                                                                                                                                                                                                                                            {{-- class="delete-icon"><i class="   ri-delete-bin-line"></i></a> --}}
+                                                                                                                                                                                                                                                    </h3> -->
 
                                         <div class="row ">
                                             <div class="col-md-12 m-0 text-end">
