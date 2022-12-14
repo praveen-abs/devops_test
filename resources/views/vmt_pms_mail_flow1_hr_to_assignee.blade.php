@@ -56,12 +56,12 @@
 
                                         <table cellpadding="20" cellspacing="0" width="100%" align="center">
                                             <tbody>
-                                                <tr>
+                                                {{-- <tr>
                                                     <td colspan="4" align="center" class="border-less">
                                                         <img src={{ $client_logo }} style="height:45px;width:150px;"
                                                             title="">
                                                     </td>
-                                                </tr>
+                                                </tr> --}}
 
 
                                                 <tr>
@@ -199,23 +199,7 @@
         </table>
     @elseif ($approvalStatus == 'approved')
         {{-- <p>Personal Assessment goal has been approved by your Manager</p> --}}
-        <p>Dear @php echo $user_emp_name; @endphp , </p>
-        <p>
-            Greetings from the HR Team!!!</p>
-        <p>
-            &nbsp;&nbsp;&nbsp;This is the inform you that your manager @php echo $user_manager_name; @endphp has approved the submitted
-            KRA/KPI in the HRMS Portal.
-            Please find few tips which needs to be taken care throughout this year.
-            Take note of your achievement throughout the year.
-            Be Specific and use numbers to your advantage
-            Provide evidence to back up and statements of the results.
-            Reference your job description to account for the company objectives.
-            If you have any questions or concerns, don’t hesitate to reach out your reporting manager or the HR team.
-        </p>
-        <p>
-            Regards <br>
-            Team HR.
-        </p>
+
     @elseif ($approvalStatus == 'rejected')
         {{-- <p>Personal Assessment goal has been rejected by your Manager</p> --}}
 
