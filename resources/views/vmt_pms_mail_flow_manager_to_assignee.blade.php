@@ -74,23 +74,20 @@ $bank_names = \DB::table('bank_list')->get();
 
                                         <table cellpadding="20" cellspacing="0" width="100%" align="center">
                                             <tbody>
-                                                {{-- <tr>
-                                                <td colspan="8" align="center" class="border-less">
-                                                    <img src={{ $client_logo }} style="height:45px;width:150px;"
-                                                        title="">
-                                                </td>
-                                            </tr> --}}
-
-
+                                                <tr>
+                                                    <td colspan="8" align="center" class="border-less">
+                                                        <img src={{ $client_logo }} style="height:45px;width:150px;"
+                                                            title="">
+                                                    </td>
+                                                </tr>
                                                 <tr>
                                                     <td colspan="8" align="left" class="border-less">
 
-                                                        <p class="" style="margin: 0px 0px 0px ">Dear </p>
-                                                        <p>The purpose of this mail is to inform you that, your
-                                                            respective
-                                                            OKR/Goals as well as your reporting manager's expectations
-                                                            and
-                                                            directions for
+                                                        <p class="" style="margin: 0px 0px 0px ">Dear <b> Mr. /
+                                                                Ms. @php echo $user_emp_name; @endphp</b> </p>
+                                                        <p>The purpose of this mail is to inform you that, <b> Mr. /
+                                                                Ms. @php echo $user_emp_name; @endphp</b> has updated his/ herOKR/Goals
+                                                            for <b>@php echo $appraisal_period; @endphp </b>
                                                         </p>
                                                         <p>Request you to Accept or Reject this OKR/PMS forms using the
                                                             buttons below.</p>
@@ -130,8 +127,8 @@ $bank_names = \DB::table('bank_list')->get();
                                                 </tr>
                                                 <tr>
                                                     <td colspan="
-                                                8"
-                                                        align="right" class="padding-t-b_0 ">
+                                    8" align="right"
+                                                        class="padding-t-b_0 ">
                                                         <p class="tet-right margin-t-b_0 " class="margin:0px;">Cheers,
                                                         </p>
                                                         <p class="tet-right margin-t-b_0 ">ABS_OKR Automated System.
@@ -261,12 +258,13 @@ $bank_names = \DB::table('bank_list')->get();
                                                     <td colspan="8" align="left" class="border-less">
 
                                                         <p class="" style="margin: 0px ">Dear <b> Mr. / Ms.
-                                                                @php echo $user_manager_name; @endphp</b></p>
+                                                                @php echo $user_emp_name; @endphp</b></p>
                                                         <p>This is to inform you that <b>Mr. /Mrs. @php echo $user_emp_name; @endphp
-                                                            </b> has
+                                                            </b>,<b> Mr. / Ms. @php echo $user_manager_name; @endphp</b> has
                                                             accepted his/ her OKR/ PMS forms.
                                                         </p>
-                                                        <p>Request you to kindly have a “Great Conversation” with <b>“Mr. /Mrs. @php echo $user_emp_name; @endphp </b> and
+                                                        <p>Request you to kindly have a “Great Conversation” with
+                                                            <b>“Mr. /Mrs. @php echo $user_manager_name; @endphp </b> and
                                                             Complete the OKR/PMS
                                                             within the time
                                                             frame.
@@ -411,15 +409,16 @@ $bank_names = \DB::table('bank_list')->get();
                                                     <td colspan="8" align="left" class="border-less">
 
                                                         <p class="" style="margin:0px ">Dear <b> Mr. / Ms.
-                                                                @php echo $user_manager_name; @endphp</b></p>
-                                                        <p>This is to inform you that <b> Mr. / Ms.
-                                                                @php echo $user_emp_name; @endphp</b>
-                                                            has been
-                                                            rejected his/ her OKR/ PMS forms due to.</p>
-                                                        <p class="txt-center"><b>“Mr. /Mrs. @php echo $command_emp; @endphp </b></p>
+                                                                @php echo $user_emp_name; @endphp</b></p>
+                                                        <p>This is to inform you that,<b> Mr. / Ms.
+                                                                @php echo $user_emp_name; @endphp</b> ,<b> Mr. / Ms.
+                                                                @php echo $user_manager_name; @endphp</b> has rejected your OKR/ PMS forms
+                                                            due to
+                                                        </p>
+                                                        <p class="txt-center"><b>@php echo $command_emp; @endphp </b></p>
                                                         <p>Request you to kindly have a “Great Conversation” with <b>
                                                                 Mr. / Ms.
-                                                                @php echo $user_emp_name; @endphp</b> and Complete the OKR/PMS within
+                                                                @php echo $user_manager_name; @endphp</b> and Complete the OKR/PMS within
                                                             the time
                                                             frame.</p>
 
