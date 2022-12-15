@@ -1,3 +1,14 @@
+<?php
+//$employee = \DB::table('vmt_employee_payslip')->first();
+$general_info = \DB::table('vmt_general_info')->first();
+//$employee_name =  \DB::table('users')->where('user_code','=',$employee->EMP_NO)->first('name');
+$client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
+// dd(request()->getSchemeAndHttpHost()."".$general_info->logo_img);
+$bank_names = \DB::table('bank_list')->get();
+
+?>
+
+
 <!DOCTYPE html>
 <html>
 
@@ -30,14 +41,24 @@
             padding-bottom: 0px;
         }
 
+        .padding-t-b_0 {
+            padding-bottom: 0px;
+            padding-top: 0px;
+        }
+
         .margin-t-b_0 {
             margin-top: 0px;
             margin-bottom: 0px;
+        }
+
+        .padding-0 {
+            padding: 0px;
         }
     </style>
 </head>
 
 <body>
+
     @if ($approvalStatus == 'none')
         <table id="wrapper" cellpadding="0" cellspacing="0" width="552"
             style="max-width:552px; height: auto; margin: 0 auto;   font-size: 14px !important; color: #403e3c; line-height: 24px;table-layout:fixed; width:100%;border:1px solid rgba(44, 43, 43, 0.185);border-radius:5px;padding:10px">
@@ -54,23 +75,22 @@
                                         <table cellpadding="20" cellspacing="0" width="100%" align="center">
                                             <tbody>
                                                 {{-- <tr>
-                                                    <td colspan="8" align="center" class="border-less">
-                                                        <img src={{ $client_logo }} style="height:45px;width:150px;"
-                                                            title="">
-                                                    </td>
-                                                </tr> --}}
+                                                <td colspan="8" align="center" class="border-less">
+                                                    <img src={{ $client_logo }} style="height:45px;width:150px;"
+                                                        title="">
+                                                </td>
+                                            </tr> --}}
 
 
                                                 <tr>
-                                                    <td colspan="8" align="left" class="border-less"
-                                                        style="padding:10px ;">
+                                                    <td colspan="8" align="left" class="border-less">
 
-                                                        <p class="text-strong " style="margin: 0px 0px 0px ">Dear  @php echo $user_emp_name; @endphp ,</p>
+                                                        <p class="" style="margin: 0px 0px 0px ">Dear </p>
                                                         <p>The purpose of this mail is to inform you that, your
                                                             respective
                                                             OKR/Goals as well as your reporting manager's expectations
                                                             and
-                                                            directions for  <b>@php echo $appraisal_period; @endphp ,</b>
+                                                            directions for
                                                         </p>
                                                         <p>Request you to Accept or Reject this OKR/PMS forms using the
                                                             buttons below.</p>
@@ -80,7 +100,7 @@
 
                                                 <tr>
                                                     <td colspan="4" style="" align="right"
-                                                        class="  padding-t_0 ">
+                                                        class="  padding-t-b_0  ">
 
                                                         <a class="" type="button"
                                                             style="text-decoration:none;cursor: pointer; margin-right:10px;color:#ffffff;padding: 7px 30px;border: 2px solid #90f10c;background: #90f10c;border-radius: 4px;font-weight:600">
@@ -88,7 +108,7 @@
                                                         </a>
                                                     </td>
                                                     <td colspan="4" style="" align="left"
-                                                        class="padding-t_0   ">
+                                                        class="padding-t-b_0 ">
 
                                                         <a class="" type="button"
                                                             style="text-decoration:none;cursor: pointer;margin-left:10px;color:#ffffff;padding: 7px 30px;border: 2px solid #f12d0c;background: #ff2500;border-radius: 4px;font-weight:600">
@@ -97,20 +117,21 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="8" class="padding-b_0  padding-t_0 ">
+                                                    <td colspan="8" class="">
 
                                                         <p> <span style="color:#fa9530;">Note - </span>When rejecting
                                                             anOKR/PMS form, kindly include the reason for rejection in
                                                             the
                                                             response email/HRMS portal. </p>
-                                                        <p class="txt-center">We wish you achieve your greatest goals
+                                                        <p class="txt-center">"We wish you achieve your greatest goals
                                                             moving
-                                                            forward.</p>
+                                                            forward."</p>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="8" align="right" style="padding: 10px 50px"
-                                                        class="padding-top_0 padding-b_0">
+                                                    <td colspan="
+                                                8"
+                                                        align="right" class="padding-t-b_0 ">
                                                         <p class="tet-right margin-t-b_0 " class="margin:0px;">Cheers,
                                                         </p>
                                                         <p class="tet-right margin-t-b_0 ">ABS_OKR Automated System.
@@ -127,7 +148,7 @@
                                         <table>
                                             <tbody>
                                                 <tr>
-                                                    <td align="center" style="padding:10px 0px 0px 0px">
+                                                    <td align="center" style="padding-top:10px ">
                                                         This e-mail was generated from ABShrms if you think this is
                                                         SPAM,please do report to <a href="info@abshrms.com"
                                                             style="text-decoration: none;color:none;">info<span
@@ -181,8 +202,8 @@
                                                                 target="_blank" style="margin-right: 20px"><img
                                                                     src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-002.png"
                                                                     alt="Instagram"></a>
-                                                            <a href="https://www.facebook.com/ArdensHR"
-                                                                target="_blank" style="margin-right: 20px"><img
+                                                            <a href="https://www.facebook.com/ArdensHR" target="_blank"
+                                                                style="margin-right: 20px"><img
                                                                     src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-004.png"
                                                                     alt="Facebook"></a>
                                                             <a href="https://www.youtube.com/channel/UCgZ7XpBoJvcWWvaiBS5GxHg"
@@ -203,13 +224,10 @@
 
                     </td>
                 </tr>
-                {{-- @endif --}}
-
 
             </tbody>
         </table>
     @elseif ($approvalStatus == 'approved')
-        {{-- <p>Personal Assessment goal has been approved by your Manager</p> --}}
         <table id="wrapper" cellpadding="0" cellspacing="0" width="552"
             style="max-width:552px; height: auto; margin: 0 auto;   font-size: 14px !important; color: #403e3c; line-height: 24px;table-layout:fixed; width:100%;border:1px solid rgba(44, 43, 43, 0.185);border-radius:5px;padding:10px">
             <tbody>
@@ -230,26 +248,32 @@
                                                             title="">
                                                     </td>
                                                 </tr>
-
                                                 <tr>
                                                     <td colspan="8" align="center" class="border-less"
                                                         style="padding:10px ;">
 
-                                                        <p class="text-strong  txt-center"
-                                                            style="color:#008000;font-size:16px">Accepted</p>
+                                                        <p class="text-strong margin-t-b_0  txt-center"
+                                                            style="color:#008000;font-size:20px">Accepted</p>
                                                     </td>
                                                 </tr>
 
                                                 <tr>
-                                                    <td colspan="8" align="left" class="border-less"
-                                                        style="padding:10px ;">
+                                                    <td colspan="8" align="left" class="border-less">
 
-                                                        <p class="text-strong " style="margin: 0px 0px 0px ">Dear</p>
-                                                        <p>This is to inform you that <b> Mr. / Ms. @php echo $user_emp_name; @endphp </b> has
-                                                            accepted his/ her OKR/ PMS forms.</p>
-                                                        <p>Request you to kindly have a “Great Conversation” with <b> “Mr. /
-                                                            Mrs. @php echo $user_emp_name; @endphp </b> and Complete the OKR/PMS within the time
-                                                            frame.</p>
+                                                        <p class="" style="margin: 0px ">Dear <b> Mr. / Ms.
+                                                                @php echo $user_manager_name; @endphp</b></p>
+                                                        <p>This is to inform you that <b>Mr. /Mrs. @php echo $user_emp_name; @endphp
+                                                            </b> has
+                                                            accepted his/ her OKR/ PMS forms.
+                                                        </p>
+                                                        <p>Request you to kindly have a “Great Conversation” with <b>“Mr. /Mrs. @php echo $user_emp_name; @endphp </b> and
+                                                            Complete the OKR/PMS
+                                                            within the time
+                                                            frame.
+                                                        </p>
+                                                        <p>
+                                                            Kindly visit the HRMS portal for more details
+                                                        </p>
 
                                                     </td>
                                                 </tr>
@@ -257,8 +281,7 @@
 
 
                                                 <tr>
-                                                    <td colspan="8" align="right" style="padding: 10px 50px"
-                                                        class="padding-top_0 padding-b_0">
+                                                    <td colspan="8" align="right" class="padding-t-b_0">
                                                         <p class="tet-right margin-t-b_0 " class="margin:0px;">Cheers,
                                                         </p>
                                                         <p class="tet-right margin-t-b_0 ">ABS_OKR Automated System.
@@ -351,14 +374,9 @@
 
                     </td>
                 </tr>
-                {{-- @endif --}}
-
-
             </tbody>
         </table>
     @elseif ($approvalStatus == 'rejected')
-        {{-- <p>Personal Assessment goal has been rejected by your Manager</p> --}}
-
         <table id="wrapper" cellpadding="0" cellspacing="0" width="552"
             style="max-width:552px; height: auto; margin: 0 auto;   font-size: 14px !important; color: #403e3c; line-height: 24px;table-layout:fixed; width:100%;border:1px solid rgba(44, 43, 43, 0.185);border-radius:5px;padding:10px">
             <tbody>
@@ -371,44 +389,49 @@
                                 <tr>
                                     <td align="center" style="padding:0;">
 
-                                        <table cellpadding="20" cellspacing="0" width="100%" align="center">
+                                        <table cellpadding="10" cellspacing="0" width="100%" align="center">
                                             <tbody>
-                                                {{-- <tr>
+                                                <tr>
                                                     <td colspan="8" align="center" class="border-less">
                                                         <img src={{ $client_logo }} style="height:45px;width:150px;"
                                                             title="">
                                                     </td>
-                                                </tr> --}}
+                                                </tr>
 
                                                 <tr>
                                                     <td colspan="8" align="center" class="border-less"
                                                         style="padding:10px ;">
 
-                                                        <p class="text-strong  txt-center"
-                                                            style="color: #ff0000;font-size:18px">Rejected</p>
+                                                        <p class="text-strong margin-t-b_0  txt-center"
+                                                            style="color: #ff0000;font-size:20px">Rejected</p>
                                                     </td>
                                                 </tr>
 
                                                 <tr>
-                                                    <td colspan="8" align="left" class="border-less"
-                                                        style="padding:10px ;">
+                                                    <td colspan="8" align="left" class="border-less">
 
-                                                        <p class="text-strong " style="margin: 0px 0px 0px ">Dear</p>
-                                                        <p>This is to inform you that <b> Mr. / Ms. {Employee Name}  </b> has been
-                                                            rejected his/ her OKR/ PMS forms due to “{Mentioned the
-                                                            rejections reason}”.</p>
-                                                        <p>Request you to kindly have a “Great Conversation” with “Mr. /
-                                                            Mrs. Employee Name” and Complete the OKR/PMS within the time
+                                                        <p class="" style="margin:0px ">Dear <b> Mr. / Ms.
+                                                                @php echo $user_manager_name; @endphp</b></p>
+                                                        <p>This is to inform you that <b> Mr. / Ms.
+                                                                @php echo $user_emp_name; @endphp</b>
+                                                            has been
+                                                            rejected his/ her OKR/ PMS forms due to.</p>
+                                                        <p class="txt-center"><b>“Mr. /Mrs. @php echo $command_emp; @endphp </b></p>
+                                                        <p>Request you to kindly have a “Great Conversation” with <b>
+                                                                Mr. / Ms.
+                                                                @php echo $user_emp_name; @endphp</b> and Complete the OKR/PMS within
+                                                            the time
                                                             frame.</p>
 
+                                                        <p>Kindly visit the HRMS portal for more details </p>
+
                                                     </td>
                                                 </tr>
 
 
 
                                                 <tr>
-                                                    <td colspan="8" align="right" style="padding: 10px 50px"
-                                                        class="padding-top_0 padding-b_0">
+                                                    <td colspan="8" align="right" class="padding-t-b_0">
                                                         <p class="tet-right margin-t-b_0 " class="margin:0px;">Cheers,
                                                         </p>
                                                         <p class="tet-right margin-t-b_0 ">ABS_OKR Automated System.
@@ -501,34 +524,9 @@
 
                     </td>
                 </tr>
-                {{-- @endif --}}
-
-
             </tbody>
         </table>
-    @elseif ($approvalStatus == 'completed')
-        <p>
-            Dear {{ $user_emp_name }},</p>
-        <p>
-            Greetings from the HR Team!!!
-
-            Thank you for participating in our performance review. Your time, honesty and cooperation were really
-            appreciated. The session won’t be successful without you.
-
-            Your Manager review has ended.
-
-            Thank you once again and have a wonderful day.
-
-            Regards
-        <p>
-            Regards<br />
-            Team HR
-        </p>
     @endif
-
-
-
-
 
 </body>
 
