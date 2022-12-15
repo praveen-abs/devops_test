@@ -1616,3 +1616,6 @@ table.no_borderRadius tr th:last-child {
 
 
 
+table.dataTable.no-footer {
+    border-bottom: transparent !important;
+}
