@@ -750,7 +750,7 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h6 class="modal-title mb-1 text-primary">
+                    <h6 class="modal-title">
                         New Assign Goals</h6>
                         <button type="button" class="close outline-none bg-transparent border-0 h3"
                             data-bs-dismiss="modal" aria-label="Close">
@@ -976,8 +976,8 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable fad  modal-md" role="document">
             <div class="modal-content top-line">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
-                        Change Reviewer</h5>
+                    <h6 class="modal-title " >
+                        Change Reviewer</h6>
                     <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
                         aria-label="Close">
                         <span aria-hidden="true">×</span>
@@ -1023,8 +1023,8 @@
         <div class="modal-dialog modal-dialog-centered   modal-md" role="document">
             <div class="modal-content top-line">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
-                        Success</h5>
+                    <h6 class="modal-title ">
+                        Success</h6>
                     <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
                         aria-label="Close">
                         <span aria-hidden="true">×</span>
@@ -1049,8 +1049,8 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-md" role="document">
             <div class="modal-content top-line">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
-                        Edit Employee</h5>
+                    <h6 class="modal-title " >
+                        Edit Employee</h6>
                     <button type="button" id="closebtn_editEmployees"
                         class="close outline-none bg-transparent border-0 h3 " data-bs-dismiss="modal"
                         aria-label="Close">
