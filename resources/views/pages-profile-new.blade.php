@@ -20,6 +20,8 @@
     ?> --}}
 
 
+
+
     <div class="profile_page-wrapper mt-30 container-fluid">
         <div class="row">
             <div class="col-3 col-sm-12 col-md-3 col-lg-3 col-xxl-3 col-xl-3">
@@ -141,8 +143,8 @@
                     </div>
 
                 </div>
-
-
+                
+                    
                 <div class="tab-content " id="pills-tabContent">
                     <div class="tab-pane fade active show" id="employee_det" role="tabpanel" aria-labelledby="">
                         <div class="card mb-2">
@@ -1731,7 +1733,7 @@
                          
                         <div class="col-md-6">
                             <div class="form-group mb-3">
-                                <label>Birth Date</label>
+                                <label>Birth Date<span class="text-danger">*</span></label>
                                 <div class="cal-icon">
                                     @if (!empty($user_full_details->dob))
                                         <input class="form-control datetimepicker" type="date"
@@ -1747,7 +1749,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group mb-3">
-                                <label>Gender</label>
+                                <label>Gender<span class="text-danger">*</span></label>
 
                                 <select class="form-select form-control" name="gender"
                                     aria-label="Default select">
@@ -1763,7 +1765,7 @@
 
                         <div class="col-md-6">
                             <div class="form-group mb-3">
-                                <label>Date Of Joining(DOJ)</label>
+                                <label>Date Of Joining(DOJ)<span class="text-danger">*</span></label>
                                 <div class="cal-icon">
                                     @if (!empty($user_full_details->doj))
                                         <input class="form-control onboard" type="date"
@@ -2270,6 +2272,10 @@
                 }
             });
         }
+        
+
+
+        
     </script>
 @endsection
  
