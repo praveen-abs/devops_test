@@ -1547,8 +1547,8 @@
             <div class="form-group mb-3">
                 <label> Office Email</label>
                 <input type="email"  onkeypress='return isValidEmail (email)'
-                    class="form-control" name=""
-                    value="{{ $user->email ?? '' }}">
+                    class="form-control" name="office_email"
+                    value="{{ !empty($user_full_details->officical_mail) ? $user_full_details->officical_mail : '-' }}">
             </div>
         </div>
        
@@ -1557,7 +1557,7 @@
             <div class="form-group mb-3">
                 <label>Mobile Number</label>
                 <input type="text" size=20 maxlength=10 name="mobile_number" onkeypress='return isNumberKey(event)'
-                    class="form-control" value="{{ $user_full_details->mobile_number ?? '' }}"> 
+                    class="form-control" value="{{ !empty($user_full_details->mobile_number) ? $user_full_details->mobile_number : '-' }}"> 
             </div>
         </div>
 
