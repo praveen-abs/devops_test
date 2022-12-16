@@ -258,7 +258,7 @@
                                                 <li class="border-bottom-liteAsh pb-1 flex-column">
                                                     <div class="title">permanent Address </div>
                                                     <div class="text">
-                                                        {{ $user_full_details->current_address_line_2 ?? '' }}
+                                                        {{ $user_full_details->permanent_address_line_1 ?? '' }}
                                                     </div>
                                                 </li>
                                             </ul>
@@ -1599,8 +1599,8 @@
                                 </div>
                                 <div class="form-group mb-3">
                                     <label>Permanent Address </label>
-                                    <textarea name="current_address_line_2" id="current_address_line_2" cols="30" rows="3"
-                                        class="form-control" value="{{ $user_full_details->current_address_line_2 ?? '' }}">{{ $user_full_details->current_address_line_2 ?? '' }}</textarea>
+                                    <textarea name="permanent_address_line_1" id="permanent_address_line_1" cols="30" rows="3"
+                                        class="form-control" value="{{ $user_full_details->permanent_address_line_1 ?? '' }}">{{ $user_full_details->permanent_address_line_1 ?? '' }}</textarea>
                                 </div>
                             </div>
                             

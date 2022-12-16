@@ -106,9 +106,11 @@ use Illuminate\Support\Str;
         $reDetails = VmtEmployee::where('userid', $request->id)->first();
         $details = VmtEmployee::find($reDetails->id);
         $details->mobile_number = $request->input('mobile_number');
+        $details->current_address_line_1 = $request->input('current_address_line_1');
+        $details->permanent_address_line_1 = $request->input('permanent_address_line_1');
         $details->save();
 
-        
+    
          return redirect()->back();
     }
 
