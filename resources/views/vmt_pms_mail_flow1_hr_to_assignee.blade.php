@@ -68,13 +68,13 @@
                                                     <td colspan="4" align="left" class="border-less"
                                                         style="padding:10px ;">
 
-                                                        <p class="text-strong " style="margin: 0px 0px 0px ">Dear</p>
+                                                        <p class="" style="margin:0px ">Dear <b>“Mr. /Mrs. @php echo $user_emp_name; @endphp </b></p>
                                                         <p class="" style="  ">
                                                             The purpose of this mail is to inform you that, your
                                                             respective
                                                             OKR/Goals as well as your reporting manager's expectations
                                                             and
-                                                            directions for {Month Name/ Quarter Name/ Half Year Name}
+                                                            directions for <b>@php echo $appraisal_period; @endphp </b>
                                                         </p>
                                                         <p>
                                                             As you all must be aware that this is a mandate process that
