@@ -1593,29 +1593,17 @@
                                     
                             <div class="col-md-12">
                                 <div class="form-group mb-3">
-                                    <label>Current Address Line - 1</label>
+                                    <label>Current Address</label>
                                     <textarea name="current_address_line_1" id="current_address_line_1" cols="30" rows="3"
                                         class="form-control" value="{{ $user_full_details->current_address_line_1 ?? '' }}">{{ $user_full_details->current_address_line_1 ?? '' }}</textarea>
                                 </div>
                                 <div class="form-group mb-3">
-                                    <label>Current Address Line - 2</label>
+                                    <label>Permanent Address </label>
                                     <textarea name="current_address_line_2" id="current_address_line_2" cols="30" rows="3"
                                         class="form-control" value="{{ $user_full_details->current_address_line_2 ?? '' }}">{{ $user_full_details->current_address_line_2 ?? '' }}</textarea>
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <div class="form-group mb-3">
-                                    <label>Permanent Address Line - 1</label>
-                                    <textarea name="permanent_address_line_1" id="permanent_address_line_1" cols="30" rows="3"
-                                        class="form-control" value="{{ $user_full_details->permanent_address_line_1 ?? '' }}">{{ $user_full_details->permanent_address_line_1 ?? '' }}</textarea>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label>Permanent Address Line - 2</label>
-                                    <textarea name="permanent_address_line_2" id="permanent_address_line_2" cols="30" rows="3"
-                                        class="form-control" value="{{ $user_full_details->permanent_address_line_2 ?? '' }}">{{ $user_full_details->permanent_address_line_2 ?? '' }}</textarea>
-                                </div>
-                            </div>
-                        </div>
+                            
                         <div class="col-12">
                             <div class="text-right">
                                 <button class="btn btn-orange submit-btn">Submit</button>
