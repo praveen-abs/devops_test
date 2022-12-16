@@ -1534,27 +1534,25 @@
                         @csrf
                   <div class="row">
 
+                    <div class="col-md-6">
+
+                        <div class="form-group mb-3">
+                            <label>Personal Email</label>
+                            <input type="email" name="present_email" onkeypress='return isValidEmail(email)'
+                                class="form-control" value="{{ $user->email ?? '' }}">
+                        </div>
+                    </div>
+
         <div class="col-md-6">
             <div class="form-group mb-3">
-                <label>Personal Email</label>
+                <label> Office Email</label>
                 <input type="email"  onkeypress='return isValidEmail (email)'
-                    class="form-control" name="present_email"
+                    class="form-control" name=""
                     value="{{ $user->email ?? '' }}">
             </div>
         </div>
-        <div class="col-md-6">
-
-            <div class="form-group mb-3">
-                <label>Office Email</label>
-                <input type="email" name="present_email" onkeypress='return isValidEmail(email)'
-                    class="form-control" value="{{ $user->email ?? '' }}">
-            </div>
-        </div>
-
-
-        
-
-        <div class="col-md-6">
+       
+      <div class="col-md-6">
 
             <div class="form-group mb-3">
                 <label>Mobile Number</label>
