@@ -102,6 +102,13 @@ use Illuminate\Support\Str;
         $report = $request->input('report');
         $code = VmtEmployee::select('emp_no', 'name', 'designation')->join('vmt_employee_office_details', 'user_id', '=', 'vmt_employee_details.userid')->join('users', 'users.id', '=', 'vmt_employee_details.userid')->where('emp_no', $report)->first();
          
+
+        $reDetails = VmtEmployee::where('userid', $request->id)->first();
+        $details = VmtEmployee::find($reDetails->id);
+        $details->mobile_number = $request->input('mobile_number');
+        $details->save();
+
+        
          return redirect()->back();
     }
 
