@@ -92,10 +92,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
+                        <div onClick="showOnlineUsers(this)" class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
                             <div class="card shadow profile-box topOrange-line  ">
                                 <div class="card-body d-flex text-center  flex-column">
-                                    <h6 class="fw-bold title">Online</h6>
+                                    <h6 class="fw-bold title" >Online</h6>
                                     <p class="number-increment text-muted f-15 fw-bold">
                                         {{ json_decode($json_dashboardCountersData)->todayEmployeesCheckedInCount }}</p>
                                 </div>
@@ -438,6 +438,33 @@
 
 
     <script>
+            function showOnlineUsers(element) {
+
+                //create table
+                <?php
+                    $online_users = json_decode($json_dashboardCountersData)->todayEmployeesCheckedIn;
+                    $html = "<ul>";
+                    foreach($online_users as $singleUser )
+                    {
+                        $html = $html."<li>".$singleUser->name."</li>";
+                    }
+                    $html = $html."</ul>";
+                ?>
+
+                //
+
+
+                // console.log(user_content);
+
+                Swal.fire({
+                    title: 'Online Employees',
+                    html: '{!! $html!!}'
+                });
+
+                //alert("karthick");
+            }
+
+
         $(document).ready(function() {
 
             $('body').on('click', '.plus-sign', function() {
@@ -445,6 +472,7 @@
                     '<div class="mt-3 d-flex align-items-center"><input type="text" name="options[]"id="" class="form-control" placeholder="Add option here" required><i class="delete-row ri-delete-bin-7-fill mx-2 text-danger"></i></div>'
                 );
             });
+
 
             $('body').on('click', '.delete-row', function() {
                 $(this).parent().remove();

@@ -196,6 +196,14 @@ class VmtMainDashboardController extends Controller
                                 ->get()->count();
 
         //Employees Leave today count
+        $todayEmployeesCheckedIn = User::join('vmt_employee_attendance','vmt_employee_attendance.user_id','=','users.id')
+                                ->whereDate('vmt_employee_attendance.checkin_time','=', $currentDate )
+                                ->whereNull('vmt_employee_attendance.checkout_time')
+                                ->where('users.is_ssa','0')
+                                ->get(['name','user_code']);
+
+        //dd($todayEmployeesCheckedIn->toArray());
+
         $todayEmployeesOnLeaveCount =  $totalEmployeesCount - $todayEmployeesCheckedInCount;
         //dd($newEmployeesCount);
 
@@ -204,6 +212,7 @@ class VmtMainDashboardController extends Controller
             $dashboardCountersData['totalEmployeesCount'] = $totalEmployeesCount;
             $dashboardCountersData['newEmployeesCount'] = $newEmployeesCount;
             $dashboardCountersData['todayEmployeesCheckedInCount'] = $todayEmployeesCheckedInCount;
+            $dashboardCountersData['todayEmployeesCheckedIn'] = $todayEmployeesCheckedIn;
             $dashboardCountersData['todayEmployeesOnLeaveCount'] = $todayEmployeesOnLeaveCount;
 
         $json_dashboardCountersData = json_encode($dashboardCountersData);
