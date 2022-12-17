@@ -41,6 +41,11 @@ use Illuminate\Support\Facades\Validator;
            $user->email=$request->input('present_email');
            $user->save();
 
+           $employee_office_details=VmtEmployeeOfficeDetails::where('user_id',$request->id)->first();
+           $employee=VmtEmployeeOfficeDetails::find($employee_office_details->id);
+           $employee->officical_mail=$request->input('officical_mail');
+           $employee->save();
+
            $reDetails = VmtEmployee::where('userid', $request->id)->first();
            $details = VmtEmployee::find($reDetails->id);
            //dd($details);
