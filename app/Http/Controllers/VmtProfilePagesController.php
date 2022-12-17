@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\VmtEmployeeFamilyDetails;
 use App\Models\VmtEmployeeOfficeDetails;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
 
  class VmtProfilePagesController extends Controller
 {
@@ -33,6 +34,25 @@ use Illuminate\Support\Str;
          
          return redirect()->back();
      }
+
+     public function updateContactInformation(Request $request){
+ 
+           $user = User::find($request->id);
+           $user->email=$request->input('present_email');
+           $user->save();
+
+           $reDetails = VmtEmployee::where('userid', $request->id)->first();
+           $details = VmtEmployee::find($reDetails->id);
+           //dd($details);
+           if($details->exists())
+           {
+               $details->mobile_number = $request->input('mobile_number');
+               $details->save();
+            }
+        
+              return redirect()->back();
+             }
+        
  
     
     public function updateFamilyInfo(Request $request) {
@@ -95,27 +115,23 @@ use Illuminate\Support\Str;
         $file = $request->file('profilePic');
         $user = User::find($request->id);
         $user->name = $request->input('name');
-        $user->email=$request->input('present_email');
         $number = mt_rand(1000000000, 9999999999);
-        
         $user->save();
         $report = $request->input('report');
         $code = VmtEmployee::select('emp_no', 'name', 'designation')->join('vmt_employee_office_details', 'user_id', '=', 'vmt_employee_details.userid')->join('users', 'users.id', '=', 'vmt_employee_details.userid')->where('emp_no', $report)->first();
          
-
         $reDetails = VmtEmployee::where('userid', $request->id)->first();
         $details = VmtEmployee::find($reDetails->id);
-        $details->mobile_number = $request->input('mobile_number');
         $details->current_address_line_1 = $request->input('current_address_line_1');
         $details->permanent_address_line_1 = $request->input('permanent_address_line_1');
         $details->save();
-
+         
     
          return redirect()->back();
     }
 
     // Show Profile info
-    public function showProfile(Request $request){
+    public function showProfilePage(Request $request){
         $user = Auth::user();
         $user_full_details = User::leftjoin('vmt_employee_details','vmt_employee_details.userid', '=', 'users.id')
                         ->leftjoin('vmt_employee_office_details','vmt_employee_office_details.user_id', '=', 'users.id')

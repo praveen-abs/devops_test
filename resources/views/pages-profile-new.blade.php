@@ -144,7 +144,7 @@
 
                 </div>
                 
-                    
+                  <form id="form1"></form>  
                 <div class="tab-content " id="pills-tabContent">
                     <div class="tab-pane fade active show" id="employee_det" role="tabpanel" aria-labelledby="">
                         <div class="card mb-2">
@@ -200,8 +200,8 @@
 
                         <div class="card mb-2">
                             <div class="card-body">
-                                <form action="{{ route('updatePersonalInformation', $user->id) }}" Method="POST"
-                                    enctype="multipart/form-data">
+                                {{-- <form action="{{ route('updatePersonalInformation', $user->id) }}" Method="POST"
+                                    enctype="multipart/form-data"> --}}
                                     <h6 class="">Contact Information
                                         <span class="personal-edit"><a href="#" class="edit-icon"
                                                 data-bs-toggle="modal" data-bs-target="#personal_info_modal"><i
@@ -1529,8 +1529,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('updatePersonalInformation', $user->id) }}" Method="POST"
-                        enctype="multipart/form-data">
+                    {{-- <form action="{{ route('updatePersonalInformation', $user->id) }}" Method="POST"
+                        enctype="multipart/form-data"> --}}
                         @csrf
                   <div class="row">
 
@@ -1547,7 +1547,7 @@
             <div class="form-group mb-3">
                 <label> Office Email</label>
                 <input type="email"  onkeypress='return isValidEmail (email)'
-                    class="form-control" name="office_email"
+                    class="form-control" name="officical_mail"
                     value="{{ !empty($user_full_details->officical_mail) ? $user_full_details->officical_mail : '-' }}">
             </div>
         </div>
@@ -1563,7 +1563,7 @@
 
         <div class="col-12">
             <div class="text-right">
-                <button class="btn btn-orange submit-btn">Submit</button>
+                <button id=btn_submit class="btn btn-orange submit-btn">Submit</button>
             </div>
         </div>
                   </div>
@@ -2259,7 +2259,30 @@
             });
         }
         
-
+        $(document).ready(function(){
+        $("#btn_submit").on('click',function(e){
+            e.preventDefault();
+       
+            var present_email=$("input[name='present_email']").val();
+            var officical_mail=$("input[name='officical_mail']").val();
+            var mobile_number = $("input[name='mobile_number']").val();
+       
+            $.ajax({
+                url: "{{ route('updateContactInformation', $user->id) }}",
+                type:'POST',
+                data: {
+                        present_email : present_email,
+                        officical_mail  : officical_mail,
+                        mobile_number : mobile_number,
+                        _token : '{{ csrf_token() }}'
+                    },
+                    success: function(data) {
+                    location.reload();
+                }
+                
+            });
+       
+        }); });
 
         
     </script>

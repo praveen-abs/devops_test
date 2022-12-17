@@ -121,7 +121,8 @@ Route::post('/update-personal-info/{id}', [App\Http\Controllers\VmtProfilePagesC
 Route::post('/update-family-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'updateFamilyInfo'])->name('updateFamilyInfo');
 Route::post('/update-experience-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'updateExperienceInfo'])->name('updateExperienceInfo');
 Route::post('/store-personal-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'storePersonalInfo'])->name('updatePersonalInformation');
-Route::get('pages-profile-new',[App\Http\Controllers\VmtProfilePagesController::class,'showProfile'])->name('pages-profile-new');
+Route::get('pages-profile-new',[App\Http\Controllers\VmtProfilePagesController::class,'showProfilePage'])->name('pages-profile-new');
+Route::post('/profile-pages-update-contactinfo/{id}',[App\Http\Controllers\VmtProfilePagesController::class,'updateContactInformation'])->name('updateContactInformation');
 
 
 Route::get('pages-profile', [App\Http\Controllers\HomeController::class, 'showProfile'])->name('pages-profile');
