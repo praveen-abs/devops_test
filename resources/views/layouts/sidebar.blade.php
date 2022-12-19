@@ -80,7 +80,7 @@
                 @endif
 
                 <!-- Navigation Menu for attendance-->
-                @if (!Str::contains(getCurrentClientName(), 'Vasa'))
+                {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}
                 <li class="nav-item">
                     <a class="nav-link sidebar menu-link pt-0" href="#attendanceDrop-Down" data-bs-toggle="collapse"
                         role="button" aria-expanded="false" aria-controls="sidebarRoles">
@@ -224,7 +224,7 @@
                         </ul>
                     </div> --}}
                 </li>
-                @endif
+                {{-- @endif --}}
 
                 <!-- Organization -->
                 @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
