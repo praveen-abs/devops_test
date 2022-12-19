@@ -30,7 +30,7 @@ Route::middleware(['auth'])->group(function () {
 
     //Department
     Route::post('/department-add', [App\Http\Controllers\VmtDepartmentController::class, 'addDepartment'])->name('department-add');
-
+    Route::post('/session-update-globalClient', [App\Http\Controllers\VmtMainDashboardController::class, 'updateGlobalClientSelection'])->name('session-update-globalClient');
 
     Route::get('/isEmailExists/{email?}', function($email){
 
