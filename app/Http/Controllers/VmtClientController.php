@@ -67,7 +67,7 @@ class VmtClientController extends Controller
                 $docUploadsPath = public_path('/images/');
                 $docUploads->move($docUploadsPath, $docUploadsName);
             }
-            $vmtClient->doc_uploads  = $docUploadsName;
+            $vmtClient->doc_uploads  = $request->docUploadsName;
             $vmtClient->product  = $request->product;
             $vmtClient->subscription_type   = $request->subscription_type;
             $vmtClient->save();

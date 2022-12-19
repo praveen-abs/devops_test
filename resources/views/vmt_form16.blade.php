@@ -6,11 +6,9 @@
 
 @endsection
 @section('content')
-@component('components.paycheck_breadcrumb')
-@slot('li_1') @endslot
-@endcomponent
 
-<div class="card shadow top-line under_review-wrapper">
+
+<div class="card mt-30 shadow top-line under_review-wrapper">
     <div class="fill salary-header nav-tab-header">
         <div class="row">
             <div class="col-xs-6">
