@@ -149,8 +149,8 @@
                     <div class="tab-pane fade active show" id="employee_det" role="tabpanel" aria-labelledby="">
                         <div class="card mb-2">
                             <div class="card-body">
-                                <form action="{{ route('updatePersonalInformation', $user->id) }}" Method="POST"
-                                    enctype="multipart/form-data">
+                                {{-- <form action="{{ route('updatePersonalInformation', $user->id) }}" Method="POST"
+                                    enctype="multipart/form-data"> --}}
                                     <h6 class="">General Information
                                         <span class="personal-edit"><a href="#" class="edit-icon"
                                                 data-bs-toggle="modal" data-bs-target="#edit_generalInfo"><i
@@ -1705,8 +1705,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('updatePersonalInfo', $user->id) }}" Method="POST">
-                        @csrf
+                    @csrf
                          
                         <div class="col-md-6">
                             <div class="form-group mb-3">
@@ -1774,7 +1773,7 @@
                         </div>
                         <div class="col-12">
                             <div class="text-right">
-                                <button class="btn btn-orange submit-btn">Submit</button>
+                                <button id="btn_submit_generalInfo" class="btn btn-orange submit-btn">Submit</button>
                             </div>
                         </div>
                     </form>
@@ -2249,6 +2248,33 @@
                 }
             });
         }
+
+        $(document).ready(function(){
+        $("#btn_submit_generalInfo").on('click',function(e){
+            e.preventDefault();
+       
+            var dob=$("input[name='dob']").val();
+            var gender=$("select[name='gender']").val();
+            var doj=$("input[name='doj']").val();
+            var marital_status=$("select[name='marital_status']").val();
+            
+         $.ajax({
+                url: "{{ route('updateGeneralInfo', $user->id) }}",
+                type:'POST',
+                data: {
+                        dob    : dob,
+                        gender : gender,
+                        doj    :  doj,
+                        marital_status : marital_status,
+                        _token : '{{ csrf_token() }}'
+                    },
+                    success: function(data) {
+                    location.reload();
+                }
+                     });
+                });
+             });
+
 
         $(document).ready(function(){
         $("#btn_submit_contact_info").on('click',function(e){

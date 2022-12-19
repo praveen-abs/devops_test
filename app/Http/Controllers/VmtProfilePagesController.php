@@ -20,10 +20,9 @@ use Illuminate\Support\Facades\Validator;
 
  class VmtProfilePagesController extends Controller
 {
-    public function updatePersonalInfo(Request $request) {
+    public function updateGeneralInfo(Request $request) {
         // dd($request->all());
-         $reDetails = VmtEmployee::where('userid', $request->id)->first();
-         $details = VmtEmployee::find($reDetails->id);
+         $details = VmtEmployee::where('userid', $request->id)->first();
          $details->dob = $request->input('dob');
          $details->gender = $request->input('gender');
          $details->marital_status = $request->input('marital_status');
@@ -44,8 +43,8 @@ use Illuminate\Support\Facades\Validator;
            $employee_office_details->officical_mail=$request->input('officical_mail');
            $employee_office_details->save();
 
-           $reDetails = VmtEmployee::where('userid', $request->id)->first();
-           $details = VmtEmployee::find($reDetails->id);
+           $details = VmtEmployee::where('userid', $request->id)->first();
+           
            //dd($details);
            if($details->exists())
            {
