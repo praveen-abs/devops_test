@@ -85,7 +85,7 @@
                             ?>
 
                             <select id="dropdown_client" class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                <option value="none">Choose Client</option>
+                                <option value="">All Clients</option>
                                 @foreach($clientsList as $client)
                                     <option value="{{ $client->id }}"  @if( !empty($currentClientID) && $currentClientID == $client->id) selected  @endif>
                                         {{$client->client_name}}
@@ -197,11 +197,10 @@
         //location.reload();
     }
 
-
+    //$('#dropdown_client').selectpicker("refresh");
     $('#dropdown_client').on('change', function() {
         console.log("Client chosen : "+this.value);
 
-        if(this.value != "none")
-            updateGlobalClient(this.value);
+        updateGlobalClient(this.value);
     });
 </script>
