@@ -82,15 +82,16 @@
         <div class="card-body">
             <h6 class="mb-0">Client List</h6>
             <div class=" text-end">
-                <button class="btn btn-orange me-2" data-bs-toggle="modal" data-bs-target="#newClient">New
+                <button class="btn btn-orange me-2" data-bs-toggle="modal" data-bs-target="#newClient"
+                onclick="window.location='{{ route('vmt_clientOnboarding-route'); }}'">New
                     Client</button>
-                <button class="btn btn-orange " data-bs-toggle="modal" data-bs-target="#importClient">
+                {{-- <button class="btn btn-orange " data-bs-toggle="modal" data-bs-target="#importClient">
                     Import Client
-                </button>
+                </button> --}}
             </div>
 
 
-            <div class="modal fade" id="newClient" tabindex="-1" aria-labelledby="newInventry" aria-hidden="true">
+            {{-- <div class="modal fade" id="newClient" tabindex="-1" aria-labelledby="newInventry" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-scrollable  modal-lg">
                     <div class="modal-content top-line">
                         <div class="modal-header border-0 py-2">
@@ -175,7 +176,7 @@
                 </div>
 
 
-            </div>
+            </div> --}}
 
             <div class="client-table-wrapper">
                 <div     id="client-table" class="noCustomize_gridjs"></div>
@@ -183,7 +184,7 @@
 
 
             <!-- modal for import  -->
-            <div class="modal fade" id="importClient" tabindex="-1" aria-labelledby="newLead" aria-hidden="true">
+            {{-- <div class="modal fade" id="importClient" tabindex="-1" aria-labelledby="newLead" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-scrollable modal-lg modal-md">
                     <div class="modal-content top-line ">
                         <div class="modal-header border-0">
@@ -288,7 +289,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 @endsection

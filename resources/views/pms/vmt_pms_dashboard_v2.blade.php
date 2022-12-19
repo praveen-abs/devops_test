@@ -755,11 +755,12 @@
             <div class="modal-content">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
                     <h6 class="modal-title mb-1 text-primary">
-                        New Assign Goals</h5>
+                        New Assign Goals</h6>
                         <button type="button" class="close outline-none bg-transparent border-0 h3"
                             data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
+
                 </div>
                 <div class="modal-body">
                     <div class="card profile-box p-2 top-line">
@@ -801,6 +802,7 @@
                                     <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4  mb-2">
                                         <label class="" for="assignment_period_start">Assignment Period</label>
                                         <span
+
                                             class="form-control">{{  ucfirst($assignment_period) }}</span>
 
                                         <input type="hidden" name="assignment_period_start" id="assignment_period_start"
