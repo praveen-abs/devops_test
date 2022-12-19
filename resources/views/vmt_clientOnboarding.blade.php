@@ -41,9 +41,7 @@
                         <div class="card shadow  profile-box card-top-border">
                             <div class="card-body justify-content-center align-items-center mb-2">
                                 <div class="form-card p-2">
-                                    <div class="text-primary header-card-text">
-                                        <h6>Client Details</h6>
-                                    </div>
+
                                     <div class="row mt-1">
                                         <div class="col-md-6 col-sm-12 col-xs-12 col-xl-3 col-lg-3 mb-2 dashBoard">
                                             <!-- <label class="" for="client_code ">Client Code{!! required() !!}</label> -->
