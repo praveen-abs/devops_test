@@ -484,7 +484,7 @@
 
                 @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
                     <!-- pay roll -->
-                    @if (!Str::contains(getCurrentClientName(), 'Vasa'))
+                    {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}
 
                         <li class="nav-item">
                             <a class="nav-link sidebar menu-link pt-0" href="#payRollDrop-Down" data-bs-toggle="collapse"
@@ -548,10 +548,10 @@
                                 </ul>
                             </div>
                         </li>
-                    @endif
+                    {{-- @endif --}}
                 @endif
 
-                @if (!Str::contains(getCurrentClientName(), 'Vasa'))
+                {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}
 
                 <!-- pay check -->
                 <li class="nav-item">
@@ -569,10 +569,10 @@
                     </a>
                     <div class="collapse menu-dropdown" id="paycheckDrop-Down">
                         <ul class="nav nav-sm flex-column">
-                            {{-- <li class="nav-item">
+                            <li class="nav-item">
                                 <a href="{{ route('paycheckDashboard') }}" class="nav-link sidebar py-1"
                                     role="button"><span>Dashboard</span></a>
-                            </li> --}}
+                            </li>
                             <li class="nav-item">
                                 <a href="{{ route('vmt_salary_details') }}" class="nav-link sidebar py-1"
                                     role="button"><span>Salary
@@ -590,7 +590,7 @@
                         </ul>
                     </div>
                 </li>
-                @endif
+                {{-- @endif --}}
 
                 @if (!Str::contains(getCurrentClientName(), 'Vasa'))
 
