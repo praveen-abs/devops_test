@@ -22,6 +22,13 @@ function fetchMasterConfigValue($config_name)
 
 }
 
+function sessionGetSelectedClientCode(){
+    if (session('client_id'))
+        return VmtClientMaster::find(session('client_id'))->client_code;
+    else
+        return "";
+}
+
 function getOrganization_HR_Details(){
     $master_config_value = VmtMasterConfig::where('config_name', 'hr_userid')->first();
 

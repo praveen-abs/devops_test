@@ -78,19 +78,20 @@
                         @if( Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR","Manager"]) && hasSubClients() )
 
                         <div class="dropdown topbar-user ">
-                            <button type="button" class="btn border-0  mx-1 shadow-sm " id="choose_client" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <?php
+                                $clientsList = fetchClients();
+                                $currentClientID = session('client_id');
+                                //dd($currentClientID);
+                            ?>
 
-                                <p class=" " id="">
-                                    Choose Client <i class="fa fa-caret-down ms-2" aria-hidden="true"></i>
-                                </p>
-
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <?php $clientsList = fetchClients() ?>
+                            <select id="dropdown_client" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                <option value="none">Choose Client</option>
                                 @foreach($clientsList as $client)
-                                <a class="dropdown-item " onclick="updateGlobalClient('{{$client->id}}');">{{$client->client_name}}</a>
+                                    <option value="{{ $client->id }}"  @if( !empty($currentClientID) && $currentClientID == $client->id) selected  @endif>
+                                        {{$client->client_name}}
+                                    </option>
                                 @endforeach
-                            </div>
+                            </select>
                         </div>
                         @endif
 
@@ -178,7 +179,6 @@
 
 
     function updateGlobalClient(client_id) {
-        console.log("Loading for client id: " + client_id);
 
         $.ajax({
                 url: "{{ route('session-update-globalClient') }}",
@@ -196,4 +196,12 @@
 
         //location.reload();
     }
+
+
+    $('#dropdown_client').on('change', function() {
+        console.log("Client chosen : "+this.value);
+
+        if(this.value != "none")
+            updateGlobalClient(this.value);
+    });
 </script>

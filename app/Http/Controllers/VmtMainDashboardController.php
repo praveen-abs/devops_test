@@ -256,9 +256,10 @@ class VmtMainDashboardController extends Controller
     public function updateGlobalClientSelection(Request $request){
 
         //dd($request->all());
-        $request->session()->put('client_id', $request->client_id);
 
-        return redirect()->back();
+        $request->session()->put('client_id', $request->client_id);
+        //Session(['client_id' => 'asd']);
+        return "client_id saved in session";
     }
 
     public function  DashBoardPost(Request $request){
