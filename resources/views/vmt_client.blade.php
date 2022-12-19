@@ -1,4 +1,4 @@
-@extends('layouts.master')
+{{-- @extends('layouts.master') --}}
 @section('css')
     <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('assets/css/crm.css') }}" rel="stylesheet">
@@ -77,10 +77,10 @@
     </style>
 @endsection
 
-@section('content')
-    <div class="client-wrapper mt-30 card ">
+{{-- @section('content') --}}
+    <div class="client-wrapper card ">
         <div class="card-body">
-            <h6 class="mb-0">Client List</h6>
+
             <div class=" text-end">
                 <button class="btn btn-orange me-2" data-bs-toggle="modal" data-bs-target="#newClient"
                 onclick="window.location='{{ route('vmt_clientOnboarding-route'); }}'">New
@@ -292,7 +292,7 @@
             </div> --}}
         </div>
     </div>
-@endsection
+{{-- @endsection --}}
 @section('script')
     <script>
         $(document).ready(function() {
