@@ -5,7 +5,7 @@ use App\Http\Controllers\VmtClientController;
 
 use App\Models\VmtMasterConfig;
 use App\Models\VmtClientMaster;
-
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class VmtMasterConfigController extends Controller
@@ -13,7 +13,12 @@ class VmtMasterConfigController extends Controller
     public function index(Request $request) {
         //Fetch all master configs
         $masterData = VmtMasterConfig::all(['config_name','config_value']);
+        $employees_hr = User::where('is_ssa','0')->whereIn('org_role',['3','2'])->
+                        select('id','name','user_code')
+                        ->get();
 
+        //$employees_hr = json_encode($employees_hr);
+        //dd($employees_hr);
 
         //Convert to KV pair
         $data = $masterData->mapWithKeys(function ($item, $key) {
@@ -23,7 +28,7 @@ class VmtMasterConfigController extends Controller
 
         //dd($data);
 
-        return view('vmt_config_master', compact('data'));
+        return view('vmt_config_master', compact('data','employees_hr'));
     }
 
     public function store(Request $request) {

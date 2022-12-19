@@ -704,22 +704,22 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    @else
-                                        <div class="row mt-3 mb-2">
-                                            <div class="col-lg-12">
-                                                <h6 class="text-muted">
-                                                    Appraiser Feedback:
-                                                </h6>
-                                                <div class="mt-2">
-                                                    <textarea class="form-control w-100 h-100 outline-none" placeholder="Comments here..."
-                                                        id="gen-info-description-input" name="appraiser_comments">
+                                    @elseif ($reviewersReview == Auth::id() && $decodedKpiReviewSubmittedStatus[$reviewersReview] != '1')
+                                            <div class="row mt-3 mb-2">
+                                                <div class="col-lg-12">
+                                                    <h6 class="text-muted">
+                                                        Appraiser Feedback:
+                                                    </h6>
+                                                    <div class="mt-2">
+                                                        <textarea class="form-control w-100 h-100 outline-none" placeholder="Comments here..."
+                                                            id="gen-info-description-input" name="appraiser_comments">
 @if (isset($assignedGoals->reviewer_appraisal_comments))
 {{ $assignedGoals->reviewer_appraisal_comments }}
 @endif
 </textarea>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
                                     @endif
                                 @endif
 

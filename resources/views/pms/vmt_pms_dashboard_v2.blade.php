@@ -518,7 +518,11 @@
                                                                 </td>
                                                                 <td class="">
                                                                     <div class="td_content_center">
-                                                                        <?php echo calculateReviewRatings($pmsKpiAssignee->id, $assigneeId)['score']; ?>
+                                                                        @if (!empty($kpiFormAssigneeReview) && $kpiFormAssigneeReview->is_reviewer_submitted == '1')
+                                                                            <?php echo calculateReviewRatings($pmsKpiAssignee->id, $assigneeId)['score']; ?>
+                                                                        @else
+                                                                            -
+                                                                        @endif
                                                                     </div>
                                                                 </td>
                                                                 <td>
@@ -798,7 +802,8 @@
                                     <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4  mb-2">
                                         <label class="" for="assignment_period_start">Assignment Period</label>
                                         <span
-                                            class="form-control">{{ ucfirst($assignment_period) }}</span>
+
+                                            class="form-control">{{  ucfirst($assignment_period) }}</span>
 
                                         <input type="hidden" name="assignment_period_start" id="assignment_period_start"
                                             class="form-control "value="{{ $assignment_period }}">
@@ -824,7 +829,7 @@
                                             <!-- flow 1 -->
                                             <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
                                                 <label class="" for="">Employees</label>
-                                                <input type="hidden" name="employees" value="{{ $loggedInUser->id }}">
+                                                <input type="hidden" id="hidden_selectedEmployees" name="employees" value="{{ $loggedInUser->id }}">
                                                 <input type="text" disabled class="form-control increment-input"
                                                     placeholder="Employee" value="{{ $loggedInUser->name }}">
                                             </div>
@@ -1946,6 +1951,17 @@
 
             e.preventDefault();
             var t_selectedEmployeesId = $('.select-employee-dropdown').val();
+
+            //For flow 3, fetch from 'employees' elementname
+            if(t_selectedEmployeesId == '')
+            {
+                t_selectedEmployeesId = [$('#hidden_selectedEmployees').val()];
+                console.log("Fetched selected employees from hidden vars : "+t_selectedEmployeesId);
+            }
+            else
+                console.log("Selected Employees : "+t_selectedEmployeesId);
+
+
             var assignmentPeriod = $('#assignment_period_start').val();
             var year = $('#hidden_calendar_year').val();
 
@@ -1968,23 +1984,38 @@
                         //If KPI's already assigned to the selected emps, then show their names
                         if (data.status == true) {
                             console.log("KPI already assigned...! ");
-                            $('#edit-employee-error-message').append("<b><u>" + data.message +
-                                "</u></b><br/>");
-                            $('#edit-employee-error-message').append("<ul>");
 
-                            $.each(data.result, function(i, value) {
-                                $('#edit-employee-error-message').append("<li>" + value +
-                                    "</li>");
-                            });
+                            if($('#flowCheck').val() == '3')
+                            {
+                                console.log("PMS Flow 3 : Show Error message");
 
-                            $('#edit-employee-error-message').append("</ul>");
-                            $('#edit-employee-error-message').append(
-                                "<b>Please remove these employees before proceeding.</b>");
+                                Swal.fire(
+                                    '<b>Error</b>',
+                                    '<span>KPI Form has already been assigned for the selected Assignment Period.<br/> Please check your <b>Current/Completed</b> tabs in PMS dashboard</span>',
+                                    'warning'
+                                );
 
-                            //Open the Employee Edit Modal
-                            $("#add-goals-modal").modal('hide');
-                            $('#employeeSelectionModal').show();
-                            $('#employeeSelectionModal').removeClass('fade');
+                            }
+                            else
+                            {
+                                $('#edit-employee-error-message').append("<b><u>" + data.message +
+                                    "</u></b><br/>");
+                                $('#edit-employee-error-message').append("<ul>");
+
+                                $.each(data.result, function(i, value) {
+                                    $('#edit-employee-error-message').append("<li>" + value +
+                                        "</li>");
+                                });
+
+                                $('#edit-employee-error-message').append("</ul>");
+                                $('#edit-employee-error-message').append(
+                                    "<b>Please remove these employees before proceeding.</b>");
+
+                                //Open the Employee Edit Modal
+                                $("#add-goals-modal").modal('hide');
+                                $('#employeeSelectionModal').show();
+                                $('#employeeSelectionModal').removeClass('fade');
+                            }
 
                         } else
                         if (data.status == false || data.status ==
