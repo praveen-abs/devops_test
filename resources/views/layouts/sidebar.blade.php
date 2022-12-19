@@ -101,48 +101,14 @@
                     </a>
                     <div class="collapse menu-dropdown" id="attendanceDrop-Down">
                         <ul class="nav nav-sm flex-column">
-                            <li class="nav-item active">
-                                <a href="{{ route('attendance-dashboard') }}" class="nav-link sidebar py-1">
-                                    <span>Dashboard</span>
-                                </a>
-                            </li>
-                            {{-- <li class="nav-item">
-                                <a href="{{ url('email_attendance_leaverequest') }}"
-                                    class="nav-link sidebar py-1">Leave Request</a>
-                            </li> --}}
+                            @if (!Str::contains(getCurrentClientName(), 'Vasa'))
 
-
-
-
-                            @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
-                                {{-- <li class="nav-item">
-                                                                <a href="{{url('attendance_shift_woff_hday')}}" class="nav-link sidebar py-1">Shift/WeeklyOff/Holidays</a>
-                                                            </li> --}}
-                                {{-- <li class="nav-item">
-                                                                <a href="{{url('attendance_tracking')}}" class="nav-link sidebar py-1">Tracking</a>
-                                                            </li> --}}
-                                {{-- <li class="nav-item">
-                                                                <a href="{{url('attendance_overtime')}}" class="nav-link sidebar py-1">OverTime</a>
-                                                            </li> --}}
-                                {{-- <li class="nav-item">
-                                    <a href="{{ url('email_attendance_leaverequest') }}"
-                                        class="nav-link sidebar py-1">Leave Request</a>
-                                </li> --}}
-                                {{-- <li class="nav-item">
-                                    <a href="apps-calendar" class="nav-link sidebar py-1" role="button">
-                                        <span>Attendance</span>
+                                <li class="nav-item active">
+                                    <a href="{{ route('attendance-dashboard') }}" class="nav-link sidebar py-1">
+                                        <span>Dashboard</span>
                                     </a>
-                                </li> --}}
-                                {{--
-                                <li class="nav-item">
-                                    <a href="{{ route('dayWiseStaffAttendance') }}" class="nav-link sidebar py-1"
-                                        role="button"><span>Org Timesheet</span></a>
-                                </li> --}}
+                                </li>
                             @endif
-                            {{-- <li class="nav-item">
-                                <a href="{{ route('attendance-employee-timesheet') }}"
-                                    class="nav-link sidebar py-1">Time Sheet</a>
-                            </li> --}}
                             <li class="nav-item">
                                 <a href="{{ route('attendance-timesheet') }}"
                                     class="nav-link sidebar py-1">Timesheet</a>
