@@ -551,7 +551,7 @@
                     @endif
                 @endif
 
-                @if (!Str::contains(getCurrentClientName(), 'Vasa'))
+                {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}
 
                 <!-- pay check -->
                 <li class="nav-item">
@@ -590,7 +590,7 @@
                         </ul>
                     </div>
                 </li>
-                @endif
+                {{-- @endif --}}
 
                 @if (!Str::contains(getCurrentClientName(), 'Vasa'))
 
