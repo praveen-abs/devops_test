@@ -484,7 +484,7 @@
 
                 @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
                     <!-- pay roll -->
-                    @if (!Str::contains(getCurrentClientName(), 'Vasa'))
+                    {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}
 
                         <li class="nav-item">
                             <a class="nav-link sidebar menu-link pt-0" href="#payRollDrop-Down" data-bs-toggle="collapse"
@@ -548,7 +548,7 @@
                                 </ul>
                             </div>
                         </li>
-                    @endif
+                    {{-- @endif --}}
                 @endif
 
                 {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}
