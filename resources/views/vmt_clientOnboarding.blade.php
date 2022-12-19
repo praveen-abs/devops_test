@@ -15,9 +15,9 @@
         <div id="msform">
             <!-- progressbar -->
             <!-- <ul id="progressbar">
-                                                                <li class="active" id="account"><strong class="f-9">Client Details</strong></li>
-                                                                <li id="endClientForm"><strong class="f-9 onboard-detail" >Authorized Details</strong></li>
-                                                            </ul> -->
+                                                                    <li class="active" id="account"><strong class="f-9">Client Details</strong></li>
+                                                                    <li id="endClientForm"><strong class="f-9 onboard-detail" >Authorized Details</strong></li>
+                                                                </ul> -->
             <form id="form-1" enctype="multipart/form-data">
                 @csrf
                 <div class="card shadow  profile-box card-top-border">
@@ -353,7 +353,7 @@
             });
             console.log("testing: " + flag);
             if ($('#form-1').valid() && pan_val) {
-                console.log("SUCCESS"+ pan_val)
+                console.log("SUCCESS" + pan_val)
                 var form_data1 = new FormData(document.getElementById("form-1"));
                 // var form_data2 = new FormData(document.getElementById("form-2"));
                 // for (var pair of form_data2.entries()) {
@@ -368,8 +368,14 @@
                     processData: false,
                     success: function(data) {
                         alert(data);
+                        console.log("test 2:" + data);
                     }
                 });
+
+                Swal.fire('You have updated client onboarding successfuully.').then(function() {
+                    location.reload();
+                });
+
             } else {
 
                 Swal.fire('You have error in form.Recheck And Fill the Correct Infos.')

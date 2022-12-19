@@ -8,11 +8,8 @@
 
 @endsection
 @section('content')
-@component('components.paycheck_breadcrumb')
-@slot('li_1')
-@endslot
-@endcomponent
-<div class="container-fluid salary-details-wrapper ">
+
+<div class="mt-30 salary-details-wrapper ">
     <div class="card">
         <div class="card-body">
 

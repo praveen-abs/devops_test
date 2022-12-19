@@ -100,6 +100,8 @@ table.rating_table tbody {
 }
 table.rating_table tr:first-child th:first-child {
     border-top: 1px solid #002f56;
+    border-left: 1px solid #002f56;
+    border-right: 1px solid #002f56;
     border-radius: 0;
 }
 table.rating_table tr:last-child th:first-child {

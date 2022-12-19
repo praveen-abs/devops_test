@@ -16,6 +16,9 @@
     height: 80px;
 }
 
+.form-control,.form-select{
+    font-size: 13px;
+}
 
 :hover,
 a:focus,
@@ -1616,3 +1619,6 @@ table.no_borderRadius tr th:last-child {
 
 
 
+table.dataTable.no-footer {
+    border-bottom: transparent !important;
+}
