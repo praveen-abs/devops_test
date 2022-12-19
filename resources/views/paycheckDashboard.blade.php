@@ -27,15 +27,12 @@
     <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/onboarding.css') }}">
     @endsection
     @section('content')
-    @component('components.paycheck_breadcrumb')
-    @slot('li_1')
-    @endslot
-    @endcomponent
 
-    <div class="home-wrapper ">
+
+    <div class="home-wrapper mt-30">
         <div class="row">
-            <div class="col-sm-12 col-md-12 col-xl-6 col-lg-6 ">
-                <div class="card shadow profile-box card-top-border p-2">
+            <div class="col-sm-12 col-md-12 col-xl-6 col-lg-6  d-flex">
+                <div class="card shadow profile-box card-top-border p-2 w-100">
                     <div class="card-body">
                         <div class="d-flex align-items-center justify-content-between">
                             <h6 class="">
@@ -165,7 +162,7 @@
                         </div>
                         <div class="scrollBar" id="wrapper">
 
-                            <ul class="personal-info force-overflow pr-2">
+                            {{-- <ul class="personal-info force-overflow pr-2">
                                 @foreach ($data as $d)
                                 <li>
                                     <div class="title text-muted ">
@@ -182,17 +179,18 @@
 
                                     </div>
                                 </li>
-                                {{-- <li>
-                                        <div class="title f-15 text-muted ">September Salary Slip</div>
 
-                                        <div class="text h4 text-end"><i class="text-orange fa fa-download"></i> </div>
-                                    </li>
-                                    <li>
-                                        <div class="title f-15 text-muted ">October Salary Slip</div>
+                            </ul> --}}
+                            <div class="text-center">
+                                <div class=" row">
+                                    <div style="" class="sm-4 mx-auto">
+                                        <img src="{{ URL::asset('assets/images/no_dataFile.svg') }}"
+                                            class="" alt="" style="height: 150px">
+                                    </div>
 
-                                        <div class="text h4 text-end "><i class="text-orange  fa fa-download"></i> </div>
-                                    </li> --}}
-                            </ul>
+                                </div>
+                                <h4> <span class="text-orange">Sorry !</span> No data</h4>
+                            </div>
 
 
                         </div>
@@ -228,7 +226,7 @@
                             </div>
                         </div>
 
-                        <ul class="personal-info">
+                        {{-- <ul class="personal-info">
                             <li>
                                 <div class="title f-15 text-muted ">August Salary Slip</div>
 
@@ -247,7 +245,21 @@
                                 <div class="text h4 text-end "><i class="text-orange fa fa-download"></i>
                                 </div>
                             </li>
-                        </ul>
+                            <li>
+
+                            </li>
+                        </ul> --}}
+
+                        <div class="text-center">
+                            <div class=" row">
+                                <div style="" class="sm-4 mx-auto">
+                                    <img src="{{ URL::asset('assets/images/no_dataFile.svg') }}"
+                                        class="" alt="" style="height: 150px">
+                                </div>
+
+                            </div>
+                            <h4> <span class="text-orange">Sorry !</span> No data</h4>
+                        </div>
                     </div>
 
                 </div>
