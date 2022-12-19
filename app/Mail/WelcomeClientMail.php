@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class WelcomeMail extends Mailable
+class WelcomeClientMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -22,9 +22,10 @@ class WelcomeMail extends Mailable
     protected $filename;
     protected $image_view;
 
-    public function __construct($uEmail, $uPassowrd, $loginLink, $filename , $image_view )
+    public function __construct($uClientName, $uEmail, $uPassowrd, $loginLink, $filename , $image_view )
     {
         //
+        $this->clientName = $uClientName;
         $this->uEmail  = $uEmail;
         $this->uPassowrd  = $uPassowrd;
         $this->loginLink  = $loginLink;
@@ -39,8 +40,9 @@ class WelcomeMail extends Mailable
      */
     public function build()
     {
-        $output = $this->view('vmt_welcomeemployee_email')
-                    ->subject('ABShrms - Welcome')
+        $output = $this->view('vmt_welcomeclient_email')
+                    ->subject('ABShrms - Welcome '.$this->clientName)
+                    ->with('clientName', $this->clientName)
                     ->with('uEmail', $this->uEmail)
                     ->with('uPassowrd', $this->uPassowrd)
                     ->with('loginLink', $this->loginLink)
