@@ -129,7 +129,7 @@
                         if (data.status == "success") {
                             $("#notificationModal").hide();
 
-                            Swal.fire({
+                            swal({
                                     title: "Info",
                                     text: data.message,
                                     type: data.status
@@ -140,7 +140,7 @@
                             // location.reload();
                         } else {
                            // alert("Leave request failed. Contact your Admin");
-                            Swal.fire({
+                            swal({
                                     title: "Info",
                                     text: data.message,
                                     type: data.status
