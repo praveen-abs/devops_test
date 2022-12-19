@@ -235,9 +235,7 @@
                         </div>
                         <div class="card mb-2">
                             <div class="card-body">
-                                <form action="{{ route('updatePersonalInformation', $user->id) }}" Method="POST"
-                                    enctype="multipart/form-data">
-                                    <h6 class="">Address
+                              <h6 class="">Address
                                         <span class="personal-edit"><a href="#" class="edit-icon"
                                                 data-bs-toggle="modal" data-bs-target="#edit_addressInfo"><i
                                                     class="ri-pencil-fill"></i></a></span>
@@ -1563,7 +1561,7 @@
 
         <div class="col-12">
             <div class="text-right">
-                <button id=btn_submit class="btn btn-orange submit-btn">Submit</button>
+                <button id=btn_submit_contact_info class="btn btn-orange submit-btn">Submit</button>
             </div>
         </div>
                   </div>
@@ -1586,12 +1584,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('updatePersonalInformation', $user->id) }}" Method="POST"
-                        enctype="multipart/form-data">
-                        @csrf
-                        
-                                    
-                            <div class="col-md-12">
+                  @csrf
+                        <div class="col-md-12">
                                 <div class="form-group mb-3">
                                     <label>Current Address</label>
                                     <textarea name="current_address_line_1" id="current_address_line_1" cols="30" rows="3"
@@ -1606,7 +1600,7 @@
                             
                         <div class="col-12">
                             <div class="text-right">
-                                <button class="btn btn-orange submit-btn">Submit</button>
+                                <button id="btn_submit_address"class="btn btn-orange submit-btn">Submit</button>
                             </div>
                         </div>
                     </form>
@@ -2258,9 +2252,9 @@
                 }
             });
         }
-        
+
         $(document).ready(function(){
-        $("#btn_submit").on('click',function(e){
+        $("#btn_submit_contact_info").on('click',function(e){
             e.preventDefault();
        
             var present_email=$("input[name='present_email']").val();
@@ -2275,6 +2269,30 @@
                         officical_mail  : officical_mail,
                         mobile_number : mobile_number,
                         _token : '{{ csrf_token() }}'
+                    },
+                    success: function(data) {
+                    location.reload();
+                }
+                
+            });
+       
+        }); });
+
+
+        $(document).ready(function(){
+        $("#btn_submit_address").on('click',function(e){
+            e.preventDefault();
+       
+            var current_address_line_1=$("textarea[name='current_address_line_1']").val();
+            var permanent_address_line_1=$("textarea[name='permanent_address_line_1']").val();
+            
+            $.ajax({
+                url: "{{ route('addressInfo', $user->id) }}",
+                type:'POST',
+                data: {
+                    current_address_line_1    : current_address_line_1,
+                    permanent_address_line_1  : permanent_address_line_1,
+                    _token : '{{ csrf_token() }}'
                     },
                     success: function(data) {
                     location.reload();

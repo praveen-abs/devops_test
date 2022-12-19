@@ -56,8 +56,19 @@ use Illuminate\Support\Facades\Validator;
         
               return redirect()->back();
              }
+
+             
         
- 
+    public function updateAddressInfo(Request $request){
+
+             $details = VmtEmployee::where('userid', $request->id)->first();
+             $details->current_address_line_1 = $request->input('current_address_line_1');
+             $details->permanent_address_line_1 = $request->input('permanent_address_line_1');
+             $details->save();
+           
+             return redirect()->back();
+             }
+
     
     public function updateFamilyInfo(Request $request) {
       
@@ -124,11 +135,11 @@ use Illuminate\Support\Facades\Validator;
         $report = $request->input('report');
         $code = VmtEmployee::select('emp_no', 'name', 'designation')->join('vmt_employee_office_details', 'user_id', '=', 'vmt_employee_details.userid')->join('users', 'users.id', '=', 'vmt_employee_details.userid')->where('emp_no', $report)->first();
          
-        $reDetails = VmtEmployee::where('userid', $request->id)->first();
-        $details = VmtEmployee::find($reDetails->id);
-        $details->current_address_line_1 = $request->input('current_address_line_1');
-        $details->permanent_address_line_1 = $request->input('permanent_address_line_1');
-        $details->save();
+        // $reDetails = VmtEmployee::where('userid', $request->id)->first();
+        // $details = VmtEmployee::find($reDetails->id);
+        // $details->current_address_line_1 = $request->input('current_address_line_1');
+        // $details->permanent_address_line_1 = $request->input('permanent_address_line_1');
+        // $details->save();
          
     
          return redirect()->back();
