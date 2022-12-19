@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\VmtClientMaster;
-use App\Mail\WelcomeMail;
+use App\Mail\WelcomeClientMail;
 use App\Models\VmtGeneralInfo;
 
 class VmtClientController extends Controller
@@ -73,13 +73,21 @@ class VmtClientController extends Controller
             $vmtClient->save();
 
             $image_view = url('/').$VmtGeneralInfo->logo_img;
-            if (\Mail::to($request->auth_person_email)->send(new WelcomeMail($request->auth_person_email, '123123123', request()->getSchemeAndHttpHost() ,"",$image_view))) {
+            if (\Mail::to($request->auth_person_email)->send(new WelcomeClientMail(
+                                                            $request->client_name ,
+                                                            $request->auth_person_email,
+                                                            'Abs@123123',
+                                                             request()->getSchemeAndHttpHost() ,
+                                                             "",
+                                                             $image_view)
+                                                        )
+                ) {
                 return "Saved";
             } else {
                 return "Error";
             }
         }
-        catch (Throwable $e) {
+        catch (\Throwable $e) {
             return "Error";
         }
     }
