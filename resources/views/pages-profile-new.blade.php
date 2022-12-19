@@ -149,9 +149,7 @@
                     <div class="tab-pane fade active show" id="employee_det" role="tabpanel" aria-labelledby="">
                         <div class="card mb-2">
                             <div class="card-body">
-                                {{-- <form action="{{ route('updatePersonalInformation', $user->id) }}" Method="POST"
-                                    enctype="multipart/form-data"> --}}
-                                    <h6 class="">General Information
+                                <h6 class="">General Information
                                         <span class="personal-edit"><a href="#" class="edit-icon"
                                                 data-bs-toggle="modal" data-bs-target="#edit_generalInfo"><i
                                                     class="ri-pencil-fill"></i></a></span>
@@ -190,9 +188,7 @@
 
                                                 {{ $user_full_details->physically_challenged ?? '-' }}</div>
                                         </li>
-
-
-                                    </ul>
+                                      </ul>
                                 </form>
                             </div>
 
@@ -1512,7 +1508,93 @@
             </div>
         </div>
     </div>
+    <div id="edit_generalInfo" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content profile-box top-line">
+                <div class="modal-header border-0">
+                    <h6 class="modal-title">General Information
+                    </h6>
+                    <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @csrf
+                         
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label>Birth Date<span class="text-danger">*</span></label>
+                                <div class="cal-icon">
+                                    @if (!empty($user_full_details->dob))
+                                        <input class="form-control datetimepicker" type="date"
+                                            max="9999-12-31" name="dob"
+                                            value="{{ date('Y-m-d', strtotime($user_full_details->dob)) }}"
+                                            >
+                                    @else
+                                        <input class="form-control datetimepicker" type="date"
+                                            max="9999-12-31" name="dob" value="">
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label>Gender<span class="text-danger">*</span></label>
 
+                                <select class="form-select form-control" name="gender"
+                                    aria-label="Default select">
+                                    <option selected hidden disabled>Choose Gender</option>
+                                    @foreach ($genderArray as $item)
+                                        <option value="{{ $item }}"
+                                            @if (!empty($user_full_details->gender) && $user_full_details->gender == $item) selected @endif>
+                                            {{ $item }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label>Date Of Joining(DOJ)<span class="text-danger">*</span></label>
+                                <div class="cal-icon">
+                                    @if (!empty($user_full_details->doj))
+                                        <input class="form-control onboard" type="date"
+                                            max="9999-12-31" name="doj"
+                                            value="{{ date('Y-m-d', strtotime($user_full_details->doj)) }}"
+                                            >
+                                    @else
+                                        <input class="form-control onboard" type="date"
+                                            max="9999-12-31" name="doj" value="">
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+
+
+                         <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label>Marital status <span class="text-danger">*</span></label>
+                                <select class="form-select form-control text-capitalize" name="marital_status"
+                                    required>
+                                    <option class="" selected hidden disabled>Select Marital</option>
+                                    @foreach ($maritalStatus as $item_maritalStatus)
+                                        <option @if (!empty($user_full_details->marital_status) && $user_full_details->marital_status == $item_maritalStatus) selected @endif
+                                            value="{{ $item_maritalStatus }}">{{ ucfirst($item_maritalStatus) }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="text-right">
+                                <button id="btn_submit_generalInfo" class="btn btn-orange submit-btn">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id="personal_info_modal" class="modal custom-modal fade" role="dialog">
         <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
@@ -1606,181 +1688,7 @@
         </div>
     </div>
 
-    <div id="edit_experienceInfo" class="modal custom-modal fade " role="dialog" aria-modal="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content profile-box top-line">
-                <div class="modal-header border-0">
-                    <h6 class="modal-title">Experience
-                        Information</h6>
-                    <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('updateExperienceInfo', $user->id) }}" Method="POST">
-                        @csrf
-                        <div class="form-scroll">
-                            <div class="card">
-                                <div class="card-body">
-                                    <a href="javascript:void(0);" class="delete-icon text-end"><i
-                                            class="   ri-delete-bin-line"></i></a>
-
-                                    <div class="exp-content-container">
-                                        <div class="row exp-addition-content" id="content1">
-                                            <input type="hidden" name="ids[]">
-                                            <div class="col-md-6">
-                                                <div class="form-group mb-3 form-focus focused">
-                                                    <label class="focus-label">Company Name</label>
-                                                    <input type="text" name="company_name[]"
-                                                        class="form-control floating" value="" required>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group mb-3 form-focus focused">
-                                                    <label class="focus-label">Location</label>
-                                                    <input type="text" name="location[]"
-                                                        class="form-control floating" value="" required>
-
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group mb-3 form-focus focused">
-                                                    <label class="focus-label">Job Position</label>
-                                                    <input type="text" name="job_position[]"
-                                                        class="form-control floating" value="" required>
-
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group mb-3 form-focus focused">
-                                                    <label class="focus-label">Period From</label>
-                                                    <div class="cal-icon">
-                                                        <input type="date" max="9999-12-31" name="period_from[]"
-                                                            class="form-control floating datetimepicker" value=""
-                                                            required>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group mb-3 form-focus focused">
-                                                    <div class="cal-icon">
-                                                        <label class="focus-label">Period To</label>
-                                                        <input type="date" max="9999-12-31" name="period_to[]"
-                                                            class="form-control floating datetimepicker" value=""
-                                                            required>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="add-more text-end">
-                                        <div class="text-primary f-13" id="exp-add-more">
-                                            <i class=" ri-add-circle-fill"></i> Add More
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="text-right">
-                                <button class="btn btn-orange submit-btn">Submit</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="edit_generalInfo" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content profile-box top-line">
-                <div class="modal-header border-0">
-                    <h6 class="modal-title">General Information
-                    </h6>
-                    <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    @csrf
-                         
-                        <div class="col-md-6">
-                            <div class="form-group mb-3">
-                                <label>Birth Date<span class="text-danger">*</span></label>
-                                <div class="cal-icon">
-                                    @if (!empty($user_full_details->dob))
-                                        <input class="form-control datetimepicker" type="date"
-                                            max="9999-12-31" name="dob"
-                                            value="{{ date('Y-m-d', strtotime($user_full_details->dob)) }}"
-                                            >
-                                    @else
-                                        <input class="form-control datetimepicker" type="date"
-                                            max="9999-12-31" name="dob" value="">
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group mb-3">
-                                <label>Gender<span class="text-danger">*</span></label>
-
-                                <select class="form-select form-control" name="gender"
-                                    aria-label="Default select">
-                                    <option selected hidden disabled>Choose Gender</option>
-                                    @foreach ($genderArray as $item)
-                                        <option value="{{ $item }}"
-                                            @if (!empty($user_full_details->gender) && $user_full_details->gender == $item) selected @endif>
-                                            {{ $item }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group mb-3">
-                                <label>Date Of Joining(DOJ)<span class="text-danger">*</span></label>
-                                <div class="cal-icon">
-                                    @if (!empty($user_full_details->doj))
-                                        <input class="form-control onboard" type="date"
-                                            max="9999-12-31" name="doj"
-                                            value="{{ date('Y-m-d', strtotime($user_full_details->doj)) }}"
-                                            >
-                                    @else
-                                        <input class="form-control onboard" type="date"
-                                            max="9999-12-31" name="doj" value="">
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-
-
-                         <div class="col-md-6">
-                            <div class="form-group mb-3">
-                                <label>Marital status <span class="text-danger">*</span></label>
-                                <select class="form-select form-control text-capitalize" name="marital_status"
-                                    required>
-                                    <option class="" selected hidden disabled>Select Marital</option>
-                                    @foreach ($maritalStatus as $item_maritalStatus)
-                                        <option @if (!empty($user_full_details->marital_status) && $user_full_details->marital_status == $item_maritalStatus) selected @endif
-                                            value="{{ $item_maritalStatus }}">{{ ucfirst($item_maritalStatus) }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="text-right">
-                                <button id="btn_submit_generalInfo" class="btn btn-orange submit-btn">Submit</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 
     <div id="edit_familyInfo" class="modal custom-modal fade " role="dialog" aria-modal="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -1931,7 +1839,95 @@
             </div>
         </div>
     </div>
+    <div id="edit_experienceInfo" class="modal custom-modal fade " role="dialog" aria-modal="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content profile-box top-line">
+                <div class="modal-header border-0">
+                    <h6 class="modal-title">Experience
+                        Information</h6>
+                    <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('updateExperienceInfo', $user->id) }}" Method="POST">
+                        @csrf
+                        <div class="form-scroll">
+                            <div class="card">
+                                <div class="card-body">
+                                    <a href="javascript:void(0);" class="delete-icon text-end"><i
+                                            class="   ri-delete-bin-line"></i></a>
 
+                                    <div class="exp-content-container">
+                                        <div class="row exp-addition-content" id="content1">
+                                            <input type="hidden" name="ids[]">
+                                            <div class="col-md-6">
+                                                <div class="form-group mb-3 form-focus focused">
+                                                    <label class="focus-label">Company Name</label>
+                                                    <input type="text" name="company_name[]"
+                                                        class="form-control floating" value="" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group mb-3 form-focus focused">
+                                                    <label class="focus-label">Location</label>
+                                                    <input type="text" name="location[]"
+                                                        class="form-control floating" value="" required>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group mb-3 form-focus focused">
+                                                    <label class="focus-label">Job Position</label>
+                                                    <input type="text" name="job_position[]"
+                                                        class="form-control floating" value="" required>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group mb-3 form-focus focused">
+                                                    <label class="focus-label">Period From</label>
+                                                    <div class="cal-icon">
+                                                        <input type="date" max="9999-12-31" name="period_from[]"
+                                                            class="form-control floating datetimepicker" value=""
+                                                            required>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group mb-3 form-focus focused">
+                                                    <div class="cal-icon">
+                                                        <label class="focus-label">Period To</label>
+                                                        <input type="date" max="9999-12-31" name="period_to[]"
+                                                            class="form-control floating datetimepicker" value=""
+                                                            required>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="add-more text-end">
+                                        <div class="text-primary f-13" id="exp-add-more">
+                                            <i class=" ri-add-circle-fill"></i> Add More
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="text-right">
+                                <button class="btn btn-orange submit-btn">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
 
     <div id="show_idCard" class="modal custom-modal fade" aria-hidden="true">
         <div class="modal-dialog  modal-dialog-centered modal-md" role="document">
