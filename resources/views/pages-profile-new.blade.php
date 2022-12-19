@@ -200,9 +200,7 @@
 
                         <div class="card mb-2">
                             <div class="card-body">
-                                {{-- <form action="{{ route('updatePersonalInformation', $user->id) }}" Method="POST"
-                                    enctype="multipart/form-data"> --}}
-                                    <h6 class="">Contact Information
+                                <h6 class="">Contact Information
                                         <span class="personal-edit"><a href="#" class="edit-icon"
                                                 data-bs-toggle="modal" data-bs-target="#personal_info_modal"><i
                                                     class="ri-pencil-fill"></i></a></span>
@@ -1527,8 +1525,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    {{-- <form action="{{ route('updatePersonalInformation', $user->id) }}" Method="POST"
-                        enctype="multipart/form-data"> --}}
+                    
                         @csrf
                   <div class="row">
 
@@ -2262,7 +2259,7 @@
             var mobile_number = $("input[name='mobile_number']").val();
        
             $.ajax({
-                url: "{{ route('updateContactInformation', $user->id) }}",
+                url: "{{ route('updateContactInfo', $user->id) }}",
                 type:'POST',
                 data: {
                         present_email : present_email,

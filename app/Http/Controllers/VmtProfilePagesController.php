@@ -27,7 +27,6 @@ use Illuminate\Support\Facades\Validator;
          $details->dob = $request->input('dob');
          $details->gender = $request->input('gender');
          $details->marital_status = $request->input('marital_status');
-         $details->mobile_number = $request->input('mobile_number');
          $details->doj=$request->input('doj');
          
          $details->save();
@@ -35,7 +34,7 @@ use Illuminate\Support\Facades\Validator;
          return redirect()->back();
      }
 
-     public function updateContactInformation(Request $request){
+     public function updateContactInfo(Request $request){
  
            $user = User::find($request->id);
            $user->email=$request->input('present_email');

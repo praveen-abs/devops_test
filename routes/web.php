@@ -122,7 +122,7 @@ Route::post('/update-personal-info/{id}', [App\Http\Controllers\VmtProfilePagesC
 Route::post('/update-family-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'updateFamilyInfo'])->name('updateFamilyInfo');
 Route::post('/update-experience-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'updateExperienceInfo'])->name('updateExperienceInfo');
 Route::post('/store-personal-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'storePersonalInfo'])->name('updatePersonalInformation');
-Route::post('/profile-pages-update-contactinfo/{id}',[App\Http\Controllers\VmtProfilePagesController::class,'updateContactInformation'])->name('updateContactInformation');
+Route::post('/profile-pages-update-contactinfo/{id}',[App\Http\Controllers\VmtProfilePagesController::class,'updateContactInfo'])->name('updateContactInfo');
 Route::post('/profile-pages-update-address_information/{id}',[App\Http\Controllers\VmtProfilePagesController::class,'updateAddressInfo'])->name('addressInfo');
 
 
