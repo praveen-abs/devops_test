@@ -23,8 +23,10 @@ function fetchMasterConfigValue($config_name)
 }
 
 function sessionGetSelectedClientCode(){
-    if (session('client_id'))
-        return VmtClientMaster::find(session('client_id'))->client_code;
+    $query_client = VmtClientMaster::find(session('client_id'));
+
+    if (session('client_id') && !empty($query_client))
+        return $query_client->client_code;
     else
         return "";
 }
