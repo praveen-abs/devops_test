@@ -86,9 +86,9 @@
 
                             </button>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <?php $subclientsList = fetchSubClients() ?>
-                                @foreach($subclientsList as $subClient)
-                                <a class="dropdown-item " onclick="refreshCurrentPage('{{$subClient->id}}');">{{$subClient->client_name}}</a>
+                                <?php $clientsList = fetchClients() ?>
+                                @foreach($clientsList as $client)
+                                <a class="dropdown-item " onclick="updateGlobalClient('{{$client->id}}');">{{$client->client_name}}</a>
                                 @endforeach
                             </div>
                         </div>
@@ -177,8 +177,23 @@
     $('#shorthand_name_bg').css("backgroundColor", getRandomColor());
 
 
-    function refreshCurrentPage(sub_client_id) {
-        console.log("Loading for sub-client id: " + sub_client_id);
-        location.reload();
+    function updateGlobalClient(client_id) {
+        console.log("Loading for client id: " + client_id);
+
+        $.ajax({
+                url: "{{ route('session-update-globalClient') }}",
+                type: "POST",
+                data: {
+                    client_id: client_id,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(data) {
+                    console.log("Response : " + data);
+
+                    location.reload();
+                }
+            });
+
+        //location.reload();
     }
 </script>

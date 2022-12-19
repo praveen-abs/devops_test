@@ -1032,6 +1032,8 @@ class VmtEmployeeController extends Controller
 
     public function fetchAllYetToActiveEmployees(Request $request)
     {
+        dd($request);
+
         $vmtEmployees = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
             ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->select(
@@ -1068,7 +1070,10 @@ class VmtEmployeeController extends Controller
     //
     public function showManageEmployeePage(Request $request)
     {
-        return view('vmt_manageEmployee');
+        //Read session value
+        $client_id = 0;
+
+        return view('vmt_manageEmployee',compact('client_id'));
     }
 
     public function isUserExist($t_emp_code)

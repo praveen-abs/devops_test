@@ -253,6 +253,14 @@ class VmtMainDashboardController extends Controller
 
     }
 
+    public function updateGlobalClientSelection(Request $request){
+
+        //dd($request->all());
+        $request->session()->put('client_id', $request->client_id);
+
+        return redirect()->back();
+    }
+
     public function  DashBoardPost(Request $request){
         $id = auth()->user()->id;
         $file = $request->file('image_src');
