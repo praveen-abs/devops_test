@@ -579,7 +579,7 @@ class HomeController extends Controller
 
         $viewfile = 'vmt_preview_templates.previewtemplate_'.strtolower($client_name);
 
-
+        //dd($viewfile);
         if (view()->exists($viewfile))
             return view($viewfile);
         else
