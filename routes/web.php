@@ -23,6 +23,14 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/',  [App\Http\Controllers\VmtMainDashboardController::class, 'index'])->name('index');
 
+    //Export Employee attendance
+
+
+    // Route::controller(VmtEmployeeAttendanceController::class)->group(function(){
+    //     Route::get('empolyeeAttendanceReport', 'export')->name('attendance.export');
+    // });
+    Route::get('attendance/export/', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'export'])->name('attendanceReport');
+
     //404 error page
     Route::get('/page-not-found', function () {
         return view('page404');
@@ -30,6 +38,7 @@ Route::middleware(['auth'])->group(function () {
 
     //Department
     Route::post('/department-add', [App\Http\Controllers\VmtDepartmentController::class, 'addDepartment'])->name('department-add');
+
 
 
     Route::get('/isEmailExists/{email?}', function($email){
