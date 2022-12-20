@@ -573,14 +573,17 @@ class HomeController extends Controller
         else
         {
             //get the client name from client table
-            $client_name = VmtClientMaster::first()->value('client_name');
-            $client_name = str_replace(' ', '', $client_name);
+            $client_name = str_replace(' ', '', sessionGetSelectedClientName());
             //dd($client_name);
         }
 
-        //choose the blade file
+        $viewfile = 'vmt_preview_templates.previewtemplate_'.strtolower($client_name);
 
-        return view('vmt_preview_templates.previewtemplate_'.strtolower($client_name) );
+
+        if (view()->exists($viewfile))
+            return view($viewfile);
+        else
+            return view('vmt_preview_templates.previewtemplate_nodata');
 
     }
 

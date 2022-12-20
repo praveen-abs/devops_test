@@ -85,7 +85,6 @@
                             ?>
 
                             <select id="dropdown_client" class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                <option value="">All Clients</option>
                                 @foreach($clientsList as $client)
                                     <option value="{{ $client->id }}"  @if( !empty($currentClientID) && $currentClientID == $client->id) selected  @endif>
                                         {{$client->client_name}}

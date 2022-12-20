@@ -31,6 +31,16 @@ function sessionGetSelectedClientCode(){
         return "";
 }
 
+function sessionGetSelectedClientName(){
+
+    $query_client = VmtClientMaster::find(session('client_id'));
+
+    if (!empty($query_client))
+        return $query_client->client_name;
+    else
+        return "";
+}
+
 function getOrganization_HR_Details(){
     $master_config_value = VmtMasterConfig::where('config_name', 'hr_userid')->first();
 
