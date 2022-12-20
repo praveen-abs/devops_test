@@ -265,9 +265,7 @@
                     <div class="tab-pane fade" id="family_det" role="tabpanel" aria-labelledby="">
                         <div class="card mb-2">
                             <div class="card-body">
-                                <form action="{{ route('updatePersonalInformation', $user->id) }}" Method="POST"
-                                    enctype="multipart/form-data">
-                                    <h6 class="">Family Information
+                                 <h6 class="">Family Information
                                         <span class="personal-edit"><a href="#" class="edit-icon"
                                                 data-bs-toggle="modal" data-bs-target="#edit_familyInfo"><i
                                                     class="ri-pencil-fill"></i></a></span>
@@ -1688,9 +1686,7 @@
         </div>
     </div>
 
-    
-
-    <div id="edit_familyInfo" class="modal custom-modal fade " role="dialog" aria-modal="true">
+<div id="edit_familyInfo" class="modal custom-modal fade " role="dialog" aria-modal="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content profile-box">
                 <div class="modal-header  border-0">
@@ -1701,8 +1697,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('updateFamilyInfo', $user->id) }}" Method="POST"
-                        enctype="multipart/form-data">
+                    
                         @csrf
 
                         @if (!empty($familydetails) && count($familydetails) > 0)
@@ -1831,7 +1826,7 @@
 
                         <div class="col-12">
                             <div class="text-right">
-                                <button class="btn btn-orange submit-btn">Submit</button>
+                                <button id="btn_submit_family_info" class="btn btn-orange submit-btn">Submit</button>
                             </div>
                         </div>
                     </form>
@@ -2312,6 +2307,45 @@
                     current_address_line_1    : current_address_line_1,
                     permanent_address_line_1  : permanent_address_line_1,
                     _token : '{{ csrf_token() }}'
+                    },
+                    success: function(data) {
+                    location.reload();
+                }
+                
+            });
+       
+        }); });
+
+        $(document).ready(function(){
+        $("#btn_submit_family_info").on('click',function(e){
+            e.preventDefault();
+
+            var name = $('input[name="name[]"]').map(function(){ 
+                    return this.value; 
+                }).get();
+       
+            var relationship = $('input[name="relationship[]"]').map(function(){ 
+                    return this.value; 
+                }).get();
+
+            var dob = $('input[name="dob[]"]').map(function(){ 
+                    return this.value; 
+                }).get();
+
+            var phone_number = $('input[name="phone_number[]"]').map(function(){ 
+                    return this.value; 
+                }).get();
+       
+       
+            $.ajax({
+                url: "{{ route('updateFamilyInfo', $user->id) }}",
+                type:'POST',
+                data: {
+                        'name[]'          : name,
+                        'relationship[]'  :  relationship,
+                        'dob[]'           : dob,
+                        'phone_number[]'  : phone_number,
+                        _token : '{{ csrf_token() }}'
                     },
                     success: function(data) {
                     location.reload();

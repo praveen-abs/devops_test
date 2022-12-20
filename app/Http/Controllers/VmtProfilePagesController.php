@@ -57,7 +57,7 @@ use Illuminate\Support\Facades\Validator;
 
              
         
-    public function updateAddressInfo(Request $request){
+     public function updateAddressInfo(Request $request){
 
              $details = VmtEmployee::where('userid', $request->id)->first();
              $details->current_address_line_1 = $request->input('current_address_line_1');
@@ -73,8 +73,6 @@ use Illuminate\Support\Facades\Validator;
         $familyDetails = VmtEmployeeFamilyDetails::where('user_id',$request->id)->delete();
 
         $count = sizeof($request->input('name'));
-       
-
         for($i=0 ; $i < $count ; $i++)
         {
             $emp_familydetails = new VmtEmployeeFamilyDetails;
@@ -86,6 +84,7 @@ use Illuminate\Support\Facades\Validator;
             $emp_familydetails->phone_number = $request->input('phone_number')[$i];
 
             $emp_familydetails->save();
+            
         }
 
         return redirect()->back();
