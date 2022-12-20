@@ -34,6 +34,7 @@ use App\Models\VmtEmployeeOfficeDetails;
 use App\Mail\PMSReviewCompleted;
 use App\Models\VmtPraise;
 use App\Http\Controllers\VmtEmployeeController;
+use App\Models\VmtClientMaster;
 use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
@@ -238,6 +239,12 @@ class VmtMainDashboardController extends Controller
 
         if(Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]) )
         {
+            //dd(session());
+
+            //Set the session client_id to default client if not set
+            if (!$request->session()->has('client_id'))
+                    $request->session()->put('client_id', VmtClientMaster::first()->id);
+
             return view('vmt_hr_dashboard', compact( 'dashboardEmployeeEventsData', 'checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData'));
         }
         else
@@ -259,7 +266,7 @@ class VmtMainDashboardController extends Controller
 
         $request->session()->put('client_id', $request->client_id);
         //Session(['client_id' => 'asd']);
-        return "client_id saved in session";
+        return "client_id : ".$request->client_id." saved in session";
     }
 
     public function  DashBoardPost(Request $request){
