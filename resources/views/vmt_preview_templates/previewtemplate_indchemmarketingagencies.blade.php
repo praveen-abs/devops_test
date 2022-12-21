@@ -165,11 +165,11 @@
                         <div class="carousel-inner">
                             <div class="carousel-item active">
                                 <div class="main-page d-flex flex-column view-policy justify-content-center align-items-center">
-                                     {{-- <h5>Template not found for the client : {{ sessionGetSelectedClientName() }}</h5>
+                                      <h5>Template not found for the client  {{ sessionGetSelectedClientName() }}</h5>
 
 
-                                        <h6>Leave Policy</h6>
-                                        <a href="{{ URL::asset('assets/images/client_logos/vasa/Leave Policy _ Inchem India_VasaGroup.docx') }}" class="btn btn-border-orange"><i class="fa fa-file me-2"></i>Download</a> --}}
+                                        {{-- <h6>Leave Policy</h6>
+                                        <a href="{{ URL::asset('assets/images/client_logos/vasa/Leave Policy _ Inchem India_VasaGroup.docx') }}" class="btn btn-border-orange"><i class="fa fa-file me-2"></i>Download</a>  --}}
 
 
                                 </div>
