@@ -166,11 +166,11 @@
                         <div class="carousel-inner">
                             <div class="carousel-item active">
                                 <div class="main-page d-flex flex-column view-policy justify-content-center align-items-center">
-                                    {{-- <h5>Template not found for the client : {{ sessionGetSelectedClientName() }}</h5> --}}
+                                    {{-- <h5>Template not found for the client : {{ sessionGetSelectedClientName() }}</h5>
 
 
                                         <h6>Leave Policy</h6>
-                                        <a href="{{ URL::asset('assets/images/client_logos/vasa/Leave_Policy_Langro India_VasaGroup.docx') }}" class="btn btn-border-orange"><i class="fa fa-file me-2"></i>Download</a>
+                                        <a href="{{ URL::asset('assets/images/client_logos/vasa/Leave_Policy_Langro India_VasaGroup.docx') }}" class="btn btn-border-orange"><i class="fa fa-file me-2"></i>Download</a> --}}
 
 
                                 </div>
@@ -408,7 +408,7 @@
                                             <p class="txt-right"></p>
                                         </td>
                                         <td colspan="2" class="">
-                                            <p class="txt-left text-strong">ESIC</p>
+                                            <p class="txt-left text-strong">VPF</p>
                                         </td>
                                         <td colspan="2" class="">
                                             <p class="txt-right"></p>
@@ -417,6 +417,28 @@
                                     <tr>
                                         <td colspan="2" class="">
                                             <p class="txt-left text-strong">SPECIAL ALLOWANCE </p>
+                                        </td>
+                                        <td colspan="2" class="">
+                                            <p class="txt-right"></p>
+                                        </td>
+                                        <td colspan="2" class="">
+                                            <p class="txt-right"></p>
+                                        </td>
+                                        <td colspan="2" class="">
+                                            <p class="txt-right"></p>
+                                        </td>
+                                        <td colspan="2" class="">
+                                            <p class="txt-left text-strong">ESIC</p>
+                                        </td>
+                                        <td colspan="2" class="">
+                                            <p class="txt-right"></p>
+                                        </td>
+
+
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="">
+                                            <p class="txt-left text-strong">OTHER ALLOWANCE </p>
                                         </td>
                                         <td colspan="2" class="">
                                             <p class="txt-right"></p>
@@ -438,7 +460,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="2" class="">
-                                            <p class="txt-left text-strong">OVERTIME </p>
+                                            <p class="txt-left text-strong"> OTHER EARNINGS </p>
                                         </td>
                                         <td colspan="2" class="">
                                             <p class="txt-right"></p>
@@ -446,6 +468,7 @@
                                         <td colspan="2" class="">
                                             <p class="txt-right"></p>
                                         </td>
+
                                         <td colspan="2" class="">
                                             <p class="txt-right"></p>
                                         </td>
@@ -455,13 +478,10 @@
                                         <td colspan="2" class="">
                                             <p class="txt-right"></p>
                                         </td>
-
-
                                     </tr>
-
                                     <tr>
                                         <td colspan="2" class="">
-                                            <p class="txt-left text-strong"> OTHER EARNINGS </p>
+                                            <p class="txt-left text-strong">  </p>
                                         </td>
                                         <td colspan="2" class="">
                                             <p class="txt-right"></p>
@@ -482,7 +502,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="2" class="">
-                                            <p class="txt-left text-strong"> TRAVEL CONVEYANCE </p>
+                                            <p class="txt-left text-strong">  </p>
                                         </td>
                                         <td colspan="2" class="">
                                             <p class="txt-right"></p>
