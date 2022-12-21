@@ -41,9 +41,9 @@
                         </button>
                         <div class="topbar-logo mx-2 d-felx align-items-center">
                             <?php
-                                   // dd(sessionGetSelectedClientLogo());
+                                  // dd(session()->get('client_logo_url'));
                             ?>
-                            <img src=" {{URL::asset(sessionGetSelectedClientLogo())}}" alt="" class="">
+                            <img src=" {{URL::asset(session()->get('client_logo_url'))}}" alt="" class="">
                         </div>
 
                         <div class="search-content ms-2 ">
@@ -72,7 +72,7 @@
 
                             <img src="{{ URL::asset('assets/images/megaphone.png') }}" class="" alt="user-pic" style="height:20px;width:20px;">
                         </button> --}}
-                        @if( Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR","Manager"]) && hasSubClients() )
+                        @if( Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]) && hasSubClients() )
 
                         <div class="dropdown topbar-user ">
                             <?php

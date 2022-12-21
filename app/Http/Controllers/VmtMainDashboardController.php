@@ -242,30 +242,59 @@ class VmtMainDashboardController extends Controller
             //dd(session());
 
             //Set the session client_id to default client if not set
-            if (!$request->session()->has('client_id'))
-                    $request->session()->put('client_id', VmtClientMaster::first()->id);
+            if (!$request->session()->has('client_id')) {
+                $this->updateSessionVariables(null);
+            }
 
             return view('vmt_hr_dashboard', compact( 'dashboardEmployeeEventsData', 'checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData'));
         }
         else
         if(Str::contains( currentLoggedInUserRole(), ["Manager"]) )
         {
+            if (!$request->session()->has('client_id')) {
+                //get the employee client_code
+                $assigned_client_id = getEmployeeClientDetails(auth()->id())->id;
+
+                $this->updateSessionVariables($assigned_client_id);
+            }
+
+
             return view('vmt_manager_dashboard', compact( 'dashboardEmployeeEventsData','checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData','announcementData'));
         }
         else
         if(Str::contains( currentLoggedInUserRole(), ["Employee"]) )
         {
+            if (!$request->session()->has('client_id')) {
+                //get the employee client_code
+                $assigned_client_id = getEmployeeClientDetails(auth()->id())->id;
+
+                $this->updateSessionVariables($assigned_client_id);
+            }
+
             return view('vmt_employee_dashboard', compact( 'dashboardEmployeeEventsData','checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData','announcementData','praiseData'));
         }
 
     }
 
+    private function updateSessionVariables($client_id){
+
+        if (empty($client_id)) {
+
+            session()->put('client_id', VmtClientMaster::first()->id);
+            session()->put('client_logo_url', VmtClientMaster::first()->client_logo);
+        }
+        else
+        {
+            $query_client = VmtClientMaster::find($client_id);
+            session()->put('client_id', $query_client->id);
+            session()->put('client_logo_url', $query_client->client_logo);
+        }
+    }
+
     public function updateGlobalClientSelection(Request $request){
 
-        //dd($request->all());
+        $this->updateSessionVariables($request->client_id);
 
-        $request->session()->put('client_id', $request->client_id);
-        //Session(['client_id' => 'asd']);
         return "client_id : ".$request->client_id." saved in session";
     }
 
