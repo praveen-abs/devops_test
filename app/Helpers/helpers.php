@@ -9,6 +9,7 @@ use App\Models\VmtBloodGroup;
 use App\Models\VmtLeaves;
 use App\Models\ConfigPms;
 use App\Models\VmtEmployeeOfficeDetails;
+use Illuminate\Support\Facades\Auth;
 
 function required()
 {
@@ -22,27 +23,17 @@ function fetchMasterConfigValue($config_name)
 
 }
 
-function sessionGetSelectedClientLogo(){
-    $query_client = VmtClientMaster::find(session('client_id'));
+function getEmployeeClientDetails($emp_id){
+    $emp_code = User::find($emp_id)->user_code;
+    $client_code = preg_replace('/\d/', '', $emp_code);
 
-    if (!empty($query_client))
-    {
+    $query_client_details = VmtClientMaster::where('client_code', '=', $client_code);
 
-        //check if clientlogo file exists
-        if( file_exists(public_path($query_client->client_logo)) )
-        {
-           //dd($query_client->client_logo);
-            return $query_client->client_logo;
-        }
-        else{
-            return "FILE_MISSING";
-        }
-
-    }
+    if ($query_client_details->exists())
+        return $query_client_details->first();
     else
-    {
-        dd("System Error : Session is invalid");
-    }
+        return null;
+
 }
 
 function getClientList(){
