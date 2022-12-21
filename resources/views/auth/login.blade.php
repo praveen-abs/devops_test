@@ -134,7 +134,7 @@
 
 
                                         <div class="form-outline mb-1 form-row">
-                                            @if (!empty($clientList) && $clientList->count() > 1)
+                                            {{-- @if (!empty($clientList) && $clientList->count() > 1)
 
                                                     <select class="form-select" aria-label="Default select example"
                                                         name="client_code">
@@ -145,7 +145,7 @@
                                                         @endforeach
                                                     </select>
 
-                                            @endif
+                                            @endif --}}
                                             @error('client_code')
                                                 <span class="invalid-feedback" role="">
                                                     <strong>{{ $message }}</strong>
