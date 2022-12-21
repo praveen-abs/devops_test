@@ -618,8 +618,7 @@
 
                                     <tr class="border-less">
                                         <td colspan="8" class="border-less">
-                                            <p class="txt-left">Please
-                                                reach out to us for any payroll queries at -payroll@ardens.in</p>
+                                            <p class="txt-left">Please reach out to us for any payroll queries at -hr.admin@imcvasa.in</p>
                                         </td>
                                         <td colspan="2" class="border-less ">
                                             <p class="txt-right">Powered By</p>
