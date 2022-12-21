@@ -40,13 +40,10 @@
                             </span>
                         </button>
                         <div class="topbar-logo mx-2 d-felx align-items-center">
-                            @php
-                            $client_logo = App\Models\VmtGeneralInfo::first()->logo_img;
-                            @endphp
-
-                            @if( file_exists(public_path($client_logo)) )
-                            <img src=" {{URL::asset($client_logo)}}" alt="" class="">
-                            @endif
+                            <?php
+                                   // dd(sessionGetSelectedClientLogo());
+                            ?>
+                            <img src=" {{URL::asset(sessionGetSelectedClientLogo())}}" alt="" class="">
                         </div>
 
                         <div class="search-content ms-2 ">
@@ -83,7 +80,6 @@
                                 $currentClientID = session('client_id');
                                 //dd($currentClientID);
                             ?>
-
                             <select id="dropdown_client" class="form-select form-select-sm" aria-label=".form-select-sm example">
                                 @foreach($clientsList as $client)
                                     <option value="{{ $client->id }}"  @if( !empty($currentClientID) && $currentClientID == $client->id) selected  @endif>

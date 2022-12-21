@@ -569,12 +569,14 @@
                     doc_name: docName,
                     approve_status: aproveStatus,
                     _token: '{{ csrf_token() }}'
+
                 },
                 success: function(data) {
                     alert("Document reviewed successfully");
                     //window.location.href = "/";
-                    location.reload();
+                    //location.reload();
                 }
+
             });
         }
 

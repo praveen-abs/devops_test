@@ -22,6 +22,33 @@ function fetchMasterConfigValue($config_name)
 
 }
 
+function sessionGetSelectedClientLogo(){
+    $query_client = VmtClientMaster::find(session('client_id'));
+
+    if (!empty($query_client))
+    {
+
+        //check if clientlogo file exists
+        if( file_exists(public_path($query_client->client_logo)) )
+        {
+           //dd($query_client->client_logo);
+            return $query_client->client_logo;
+        }
+        else{
+            return "FILE_MISSING";
+        }
+
+    }
+    else
+    {
+        dd("System Error : Session is invalid");
+    }
+}
+
+function getClientList(){
+    return VmtClientMaster::all();
+}
+
 function sessionGetSelectedClientCode(){
     $query_client = VmtClientMaster::find(session('client_id'));
 

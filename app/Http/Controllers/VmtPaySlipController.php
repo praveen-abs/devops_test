@@ -7,6 +7,7 @@ use App\Models\VmtEmployee;
 use Illuminate\Http\Request;
 use App\Models\VmtEmployeePaySlip;
 use App\Models\Compensatory;
+use App\Models\VmtEmployeeStatutoryDetails;
 use App\Imports\VmtPaySlip;
 use Dompdf\Options;
 use Dompdf\Dompdf;
@@ -107,20 +108,16 @@ class VmtPaySlipController extends Controller
                         ])->first();
 
         $data['employee_name'] = auth()->user()->name;
-        $data['designation'] = VmtEmployeeOfficeDetails::where('user_id',auth()->user()->id)->value('designation');
+        $data['employee_office_details'] = VmtEmployeeOfficeDetails::where('user_id',auth()->user()->id)->first();
         $data['employee_details'] = VmtEmployee::where('userid',auth()->user()->id)->first();
+        $data['employee_statutory_details'] = VmtEmployeeStatutoryDetails::where('user_id',auth()->user()->id)->first();
+
+
+        //TODO : Need to show client specific payslip template.
 
         $html =  view('vmt_payslipTemplate', $data);
-        // $pdf->loadHtml($html, 'UTF-8');
-        // $pdf->setPaper('A4', 'portrait');
-        // $pdf->render();
-        // $filename = $data['employee']->Rename;
-        // return $pdf->stream($filename, ["Attachment" => false]);
-        // dd($html);
 
-        // return $pdf->download($data['employee']->Rename.'.pdf');
         return $html;
-        // return view('vmt_employee_pay_slip', compact('employees', 'html'));
     }
 
      public function pdfview(Request $request)
