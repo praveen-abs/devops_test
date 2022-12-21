@@ -40,6 +40,9 @@
                             </span>
                         </button>
                         <div class="topbar-logo mx-2 d-felx align-items-center">
+                            <?php
+                                   // dd(sessionGetSelectedClientLogo());
+                            ?>
                             <img src=" {{URL::asset(sessionGetSelectedClientLogo())}}" alt="" class="">
                         </div>
 
