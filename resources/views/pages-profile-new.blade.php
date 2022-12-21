@@ -310,8 +310,8 @@
                     <div class="tab-pane fade" id="experience_det" role="tabpanel" aria-labelledby="">
                         <div class="card mb-2">
                             <div class="card-body">
-                                <form action="{{ route('updatePersonalInformation', $user->id) }}" Method="POST"
-                                    enctype="multipart/form-data">
+                                {{-- <form action="{{ route('updatePersonalInformation', $user->id) }}" Method="POST"
+                                    enctype="multipart/form-data"> --}}
                                     <h6 class="">Experience Information
                                         <span class="personal-edit"><a href="#" class="edit-icon"
                                                 data-bs-toggle="modal" data-bs-target="#edit_experienceInfo"><i
@@ -1845,7 +1845,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('updateExperienceInfo', $user->id) }}" Method="POST">
+                    {{-- <form action="{{ route('updateExperienceInfo', $user->id) }}" Method="POST"> --}}
                         @csrf
                         <div class="form-scroll">
                             <div class="card">
@@ -1913,7 +1913,7 @@
                         </div>
                         <div class="col-12">
                             <div class="text-right">
-                                <button class="btn btn-orange submit-btn">Submit</button>
+                                <button id=btn_submit_experience_info class="btn btn-orange submit-btn">Submit</button>
                             </div>
                         </div>
                     </form>
@@ -2355,6 +2355,53 @@
        
         }); });
 
+        $(document).ready(function(){
+        $("#btn_submit_experience_info").on('click',function(e){
+            e.preventDefault();
+            var ids = $('input[name="ids[]"]').map(function(){
+                return this.value;
+            }).get();
+
+            var company_name = $('input[name="company_name[]"]').map(function(){ 
+                    return this.value; 
+                }).get();
+       
+            var location = $('input[name="location[]"]').map(function(){ 
+                    return this.value; 
+                }).get();
+
+            var job_position = $('input[name="job_position[]"]').map(function(){ 
+                    return this.value; 
+                }).get();
+
+            var period_from = $('input[name="period_from[]"]').map(function(){ 
+                    return this.value; 
+                }).get();
+            
+            var period_to = $('input[name="period_to[]"]').map(function(){
+                    return this.value;
+                }).get();
+       
+       
+            $.ajax({
+                url: "{{ route('updateExperienceInfo', $user->id) }}",
+                type:'POST',
+                data: {
+                         'ids[]':ids,
+                        'company_name[]'  : company_name,
+                        'location[]'      : location,
+                        'job_position[]'  : job_position,
+                        'period_from[]'   : period_from,
+                        'period_to[]'     : period_to,
+                        _token : '{{ csrf_token() }}'
+                    },
+                    success: function(data) {
+                    window.reload();
+                }
+                
+            });
+       
+        }); });
         
     </script>
 @endsection
