@@ -5,14 +5,27 @@
 
         @vite(['resources/js/app.js'])
 
+
+        {{-- @vite('resources/js/hrms/pages/LocalCompTest.js') --}}
+
     </head>
     <body>
-        <h2>VUE JS Testing</h2>
+        <h2>VUE JS Testings</h2>
         <div class="container">
-            <div id="apps">
+            <div id="app">
+                <Counter />
+                {{-- <Localcomp></Localcomp> --}}
+            </div>
+            <div id="counter">
 
             </div>
-            @vite('resources/js/hrms/pages/about.js')
+            <div id="localcomp">
+                {{-- <LocalCompTest> </LocalCompTest> --}}
+
+            </div>
+
+            {{-- @vite('resources/js/hrms/pages/Counter.js')
+            @vite('resources/js/hrms/pages/LocalCompTest.js') --}}
         </div>
     </body>
     </html>
