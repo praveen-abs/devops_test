@@ -19,6 +19,12 @@ Auth::routes();
 //Language Translation
 //Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
 
+Route::get('/vuejs', function () {
+
+    return view('test_vuejs.app');
+});
+
+
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/',  [App\Http\Controllers\VmtMainDashboardController::class, 'index'])->name('index');
