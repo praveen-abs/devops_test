@@ -74,19 +74,19 @@ class VmtEmployeePayslipService {
 
         $rules = [
             'emp_no' => 'required|exists:users,user_code',
-            'gender' => 'required',
-            'doj' => 'required',
-            'location' => 'required',
-            'dob' => 'required',
-            'father_name' => 'required',
-            'pan_number' => 'required',
-            'aadhar_number' => 'required',
-            'uan' => 'required',
-            'epf_number' => 'required',
-            'esic_number' => 'required',
-            'bank_name' => 'required',
-            'account_number' => 'required',
-            'bank_ifsc_code' => 'required',
+            //'gender' => 'required',
+            //'doj' => 'required',
+            //'location' => 'required',
+            //'dob' => 'required',
+            //'father_name' => 'required',
+            //'pan_number' => 'required',
+            //'aadhar_number' => 'required',
+            //'uan' => 'required',
+            //'epf_number' => 'required',
+            //'esic_number' => 'required',
+            //'bank_name' => 'required',
+            //'account_number' => 'required',
+            //'bank_ifsc_code' => 'required',
             'payroll_month' => 'required',
             'basic' => 'required',
             'hra' => 'required',
@@ -137,7 +137,7 @@ class VmtEmployeePayslipService {
             'availed_sl' => 'required',
             'balance_sl' => 'required',
             'rename' => 'required',
-            'email' => 'required',
+            //'email' => 'required',
             'greetings' => 'required',
         ];
 
@@ -288,22 +288,23 @@ class VmtEmployeePayslipService {
 
             $empPaySlip->EMP_NO = $row['emp_no'];
             $empPaySlip->user_id = $user_id;
-            $empPaySlip->Gender = $row['gender'];
-            $empPaySlip->DESIGNATION = $row['designation'];
-            $empPaySlip->DEPARTMENT = $row['department'];
-            $empPaySlip->DOJ =  \DateTime::createFromFormat('d-m-Y', $row['doj'])->format('Y-m-d');
+            // $empPaySlip->Gender = $row['gender'];
+            // $empPaySlip->DESIGNATION = $row['designation'];
+            // $empPaySlip->DEPARTMENT = $row['department'];
+            // $empPaySlip->DOJ =  \DateTime::createFromFormat('d-m-Y', $row['doj'])->format('Y-m-d');
 
-            $empPaySlip->LOCATION = $row['location'];
-            $empPaySlip->DOB =\DateTime::createFromFormat('d-m-Y', $row['dob'])->format('Y-m-d');
-            $empPaySlip->Father_Name = $row['father_name'];
-            $empPaySlip->PAN_Number = $row['pan_number'];
-            $empPaySlip->Aadhar_Number = $row['aadhar_number'];
-            $empPaySlip->UAN = $row['uan'];
-            $empPaySlip->EPF_Number = $row["epf_number"]; // => "EPF123"
-            $empPaySlip->ESIC_Number = $row["esic_number"]; // => "Not Applicable",
-            $empPaySlip->Bank_Name = $row["bank_name"];
-            $empPaySlip->Account_Number = $row["account_number"];
-            $empPaySlip->Bank_IFSC_Code = $row["bank_ifsc_code"];
+            // $empPaySlip->LOCATION = $row['location'];
+
+            // $empPaySlip->DOB =\DateTime::createFromFormat('d-m-Y', $row['dob'])->format('Y-m-d');
+            // $empPaySlip->Father_Name = $row['father_name'];
+            // $empPaySlip->PAN_Number = $row['pan_number'];
+            // $empPaySlip->Aadhar_Number = $row['aadhar_number'];
+            // $empPaySlip->UAN = $row['uan'];
+            // $empPaySlip->EPF_Number = $row["epf_number"]; // => "EPF123"
+            // $empPaySlip->ESIC_Number = $row["esic_number"]; // => "Not Applicable",
+            // $empPaySlip->Bank_Name = $row["bank_name"];
+            // $empPaySlip->Account_Number = $row["account_number"];
+            // $empPaySlip->Bank_IFSC_Code = $row["bank_ifsc_code"];
             $empPaySlip->PAYROLL_MONTH = $row["payroll_month"];
             $empPaySlip->BASIC = $row["basic"];
             $empPaySlip->HRA = $row["hra"];
@@ -354,7 +355,7 @@ class VmtEmployeePayslipService {
             $empPaySlip->Availed_SL = $row["availed_sl"];
             $empPaySlip->Balance_SL = $row["balance_sl"];
             $empPaySlip->Rename = $row['rename'];
-            $empPaySlip->Email = $row['email'];
+            //$empPaySlip->Email = $row['email'];
             $empPaySlip->Greetings = $row['greetings'];
 
             $empPaySlip->save();
