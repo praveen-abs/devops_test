@@ -131,6 +131,9 @@ function getTeamMembersUserIds($user_id){
     return $user_ids;
 }
 
+/*
+    !!!! TODO :  Need to remove this function
+*/
 function getCurrentClientName(){
     $client_name = VmtClientMaster::all()->value('client_name');
     //dd($client_name);

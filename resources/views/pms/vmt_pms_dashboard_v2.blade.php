@@ -4,17 +4,12 @@
 <link rel="stylesheet" href="{{ URL::asset('/assets/css/pages_profile.css') }}">
 <link rel="stylesheet" href="{{ URL::asset('/assets/css/assign_goals.css') }}">
 
-
-
 @endsection
 
 
 @section('content')
     <div class="loader" style="display:none;"></div>
-    {{-- @component('components.performance_breadcrumb')
-        @slot('li_1')
-        @endslot
-    @endcomponent --}}
+
 
 
 
@@ -438,7 +433,7 @@
                                                                 <td class="d-none">{{ $key1 }}</td>
                                                                 <td class="">
                                                                     {{-- <div class="td_content_center">{{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</div> --}}
-                                                                    <div class="row page-header-user-dropdown align-items-center"
+                                                                    <div class="row page-header-user-dropdown ms-4 align-items-center"
                                                                         style="width:200px;min-width: 230px;">
                                                                         <?php
                                                                         $employee_icon = getEmployeeAvatarOrShortName($assigneeId);
@@ -446,7 +441,7 @@
                                                                         ?>
                                                                         @if (!empty($employee_icon))
                                                                             @if ($employee_icon['type'] == 'shortname')
-                                                                                <div class="col-auto p-0">
+                                                                                <div class="col-auto p-0 me-1">
                                                                                     <span
                                                                                         class="rounded-circle user-profile  ml-2 "
                                                                                         id="">
@@ -455,14 +450,14 @@
                                                                                     </span>
                                                                                 </div>
                                                                             @elseif($employee_icon['type'] == 'avatar')
-                                                                                <div class="col-auto p-0">
+                                                                                <div class="col-auto p-0 me-1">
                                                                                     <img class="rounded-circle header-profile-user"
                                                                                         src=" {{ URL::asset('images/' . $employee_icon['data']) }}"
                                                                                         alt="--">
                                                                                 </div>
                                                                             @endif
                                                                         @endif
-                                                                        <div class="col-auto p-0">
+                                                                        <div class="col-auto me-1 p-0">
                                                                             <span class="f-12 ml-3">
                                                                                 <span class="">
                                                                                     {{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</span>
