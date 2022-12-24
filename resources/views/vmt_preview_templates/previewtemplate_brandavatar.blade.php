@@ -97,7 +97,7 @@
                 margin-top: 3pt;
                 margin-bottom: 3pt;
                 padding: 0px 5px;
-                text-align: justify;
+                /* text-align: justify; */
             }
 
             .txt-left {
@@ -130,7 +130,7 @@
         </style>
     @endsection
     @section('content')
-        <div class="card mb-2 mt-30">
+        <div class="card mb-2 mt-30 left-line">
             <div class="card-body py-1 px-0 ">
 
                 <ul class="nav nav-pills    nav-tabs-dashed" id="pills-tab" role="tablist">
@@ -720,7 +720,7 @@
                                             <td colspan="8" class="border-less p3">
                                                 <div class="header-cotent">
 
-                                                    <h6 class="margin-0">Brand Avatar LLP</h6>
+                                                    <h6 class="margin-0"  style="padding-left: 5px">Brand Avatar LLP</h6>
                                                     <p class="mb-0">NO-01,Kandasamy Street,</p>
                                                     <p class="mb-0">Chandrabagh Ave 2nd St, Dr. Radha Krishnan Salai,
                                                     </p>

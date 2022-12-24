@@ -6,15 +6,16 @@
 @section('content')
     <div class="vendor-wrapper mt-30 card">
         <div class="card-body">
-            <h6 class="">Vendor List</h6>
-            <div class=" text-end mb-2">
-                <button class="btn btn-orange me-2" data-bs-toggle="modal" data-bs-target="#newVendor">New
-                    Vendor</button>
-                <button class="btn btn-orange " data-bs-toggle="modal" data-bs-target="#importVendor">
-                    Import Vendor
-                </button>
+            <div class="d-flex align-items-center justify-content-between">
+                <h6 class="">Vendor List</h6>
+                <div class=" text-end mb-2">
+                    <button class="btn btn-orange me-2" data-bs-toggle="modal" data-bs-target="#newVendor">New
+                        Vendor</button>
+                    <button class="btn btn-orange " data-bs-toggle="modal" data-bs-target="#importVendor">
+                        Import Vendor
+                    </button>
+                </div>
             </div>
-
             <div class="modal fade " id="newVendor" tabindex="-1" aria-labelledby="newVendor" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-scrollable  modal-lg ">
                     <div class="modal-content  top-line">
