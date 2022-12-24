@@ -139,9 +139,14 @@ class VmtPaySlipController extends Controller
             ['PAYROLL_MONTH','=', $request->selectedPaySlipMonth],
             ])->first();
 
+        // $data['employee_name'] = auth()->user()->name;
+        // $data['designation'] = VmtEmployeeOfficeDetails::where('user_id',auth()->user()->id)->value('designation');
+        // $data['employee_details'] = VmtEmployee::where('userid',auth()->user()->id)->first();
+
         $data['employee_name'] = auth()->user()->name;
-        $data['designation'] = VmtEmployeeOfficeDetails::where('user_id',auth()->user()->id)->value('designation');
+        $data['employee_office_details'] = VmtEmployeeOfficeDetails::where('user_id',auth()->user()->id)->first();
         $data['employee_details'] = VmtEmployee::where('userid',auth()->user()->id)->first();
+        $data['employee_statutory_details'] = VmtEmployeeStatutoryDetails::where('user_id',auth()->user()->id)->first();
 
         $processed_clientName = strtolower(str_replace(' ', '', sessionGetSelectedClientName()));
         $view = view('vmt_payslip_templates.template_payslip_'.$processed_clientName, $data);
