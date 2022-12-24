@@ -14,6 +14,31 @@ class VmtPMS_KPIFormAssignedModel extends Model
 
     protected $table = 'vmt_pms_kpiform_assigned';
 
+    protected $appends = ['attr_reviewer_accepted_status'];
+
+    function getAttrReviewerAcceptedStatusAttribute(){
+
+        $json_is_reviewer_accepted = $this->is_reviewer_accepted;
+
+        $array = json_decode($json_is_reviewer_accepted, true);
+        $array_values = array_values($array);
+
+        //Check for null
+        if(in_array(null, $array_values)){
+            return -1;
+        }
+        else         //Check for 0
+        if(in_array(0, $array_values)){
+            return 0;
+        }
+        else         //Check for 1
+        if(in_array(1, $array_values)){
+            return 1;
+        }
+
+    }
+
+
     function getPmsKpiFormReviews(){
         return $this->hasMany(VmtPMS_KPIFormReviewsModel::class,'vmt_pms_kpiform_assigned_id');
     }

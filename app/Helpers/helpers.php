@@ -9,6 +9,7 @@ use App\Models\VmtBloodGroup;
 use App\Models\VmtLeaves;
 use App\Models\ConfigPms;
 use App\Models\VmtEmployeeOfficeDetails;
+use Illuminate\Support\Facades\Auth;
 
 function required()
 {
@@ -19,6 +20,63 @@ function required()
 function fetchMasterConfigValue($config_name)
 {
     return VmtMasterConfig::where('config_name','=',$config_name)->get()->value('config_value');
+
+}
+
+function getEmployeeClientDetails($emp_id){
+    $emp_code = User::find($emp_id)->user_code;
+    $client_code = preg_replace('/\d/', '', $emp_code);
+
+    $query_client_details = VmtClientMaster::where('client_code', '=', $client_code);
+
+    if ($query_client_details->exists())
+        return $query_client_details->first();
+    else
+        return null;
+
+}
+
+function getClientList(){
+    return VmtClientMaster::all();
+}
+
+function sessionGetSelectedClientCode(){
+    $query_client = VmtClientMaster::find(session('client_id'));
+
+    if (session('client_id') && !empty($query_client))
+        return $query_client->client_code;
+    else
+        return "";
+}
+
+function sessionGetSelectedClientName(){
+
+    $query_client = VmtClientMaster::find(session('client_id'));
+
+    if (!empty($query_client))
+        return $query_client->client_name;
+    else
+        return "";
+}
+
+function getOrganization_HR_Details(){
+    $master_config_value = VmtMasterConfig::where('config_name', 'hr_userid')->first();
+
+    if(empty($master_config_value))
+    {
+       // dd("HR not set");
+       return null;
+    }
+    else
+    {
+        $master_config_value = $master_config_value->config_value;
+
+        $hr_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id','=','users.id')
+        ->where('users.id',$master_config_value)->first(['users.name','vmt_employee_office_details.officical_mail']);
+
+    }
+
+    return $hr_details;
 
 }
 
@@ -93,7 +151,7 @@ function getAllLeaveTypes()
     return VmtLeaves::all(['id','leave_type']);
 }
 
-function fetchSubClients(){
+function fetchClients(){
 
     return VmtClientMaster::all(['id','client_name']);
 

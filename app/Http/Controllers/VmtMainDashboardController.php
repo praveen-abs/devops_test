@@ -34,6 +34,7 @@ use App\Models\VmtEmployeeOfficeDetails;
 use App\Mail\PMSReviewCompleted;
 use App\Models\VmtPraise;
 use App\Http\Controllers\VmtEmployeeController;
+use App\Models\VmtClientMaster;
 use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
@@ -196,6 +197,14 @@ class VmtMainDashboardController extends Controller
                                 ->get()->count();
 
         //Employees Leave today count
+        $todayEmployeesCheckedIn = User::join('vmt_employee_attendance','vmt_employee_attendance.user_id','=','users.id')
+                                ->whereDate('vmt_employee_attendance.checkin_time','=', $currentDate )
+                                ->whereNull('vmt_employee_attendance.checkout_time')
+                                ->where('users.is_ssa','0')
+                                ->get(['name','user_code']);
+
+        //dd($todayEmployeesCheckedIn->toArray());
+
         $todayEmployeesOnLeaveCount =  $totalEmployeesCount - $todayEmployeesCheckedInCount;
         //dd($newEmployeesCount);
 
@@ -204,6 +213,7 @@ class VmtMainDashboardController extends Controller
             $dashboardCountersData['totalEmployeesCount'] = $totalEmployeesCount;
             $dashboardCountersData['newEmployeesCount'] = $newEmployeesCount;
             $dashboardCountersData['todayEmployeesCheckedInCount'] = $todayEmployeesCheckedInCount;
+            $dashboardCountersData['todayEmployeesCheckedIn'] = $todayEmployeesCheckedIn;
             $dashboardCountersData['todayEmployeesOnLeaveCount'] = $todayEmployeesOnLeaveCount;
 
         $json_dashboardCountersData = json_encode($dashboardCountersData);
@@ -229,19 +239,63 @@ class VmtMainDashboardController extends Controller
 
         if(Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]) )
         {
+            //dd(session());
+
+            //Set the session client_id to default client if not set
+            if (!$request->session()->has('client_id')) {
+                $this->updateSessionVariables(null);
+            }
+
             return view('vmt_hr_dashboard', compact( 'dashboardEmployeeEventsData', 'checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData'));
         }
         else
         if(Str::contains( currentLoggedInUserRole(), ["Manager"]) )
         {
+            if (!$request->session()->has('client_id')) {
+                //get the employee client_code
+                $assigned_client_id = getEmployeeClientDetails(auth()->id())->id;
+
+                $this->updateSessionVariables($assigned_client_id);
+            }
+
+
             return view('vmt_manager_dashboard', compact( 'dashboardEmployeeEventsData','checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData','announcementData'));
         }
         else
         if(Str::contains( currentLoggedInUserRole(), ["Employee"]) )
         {
+            if (!$request->session()->has('client_id')) {
+                //get the employee client_code
+                $assigned_client_id = getEmployeeClientDetails(auth()->id())->id;
+
+                $this->updateSessionVariables($assigned_client_id);
+            }
+
             return view('vmt_employee_dashboard', compact( 'dashboardEmployeeEventsData','checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData','announcementData','praiseData'));
         }
 
+    }
+
+    private function updateSessionVariables($client_id){
+
+        if (empty($client_id)) {
+
+            session()->put('client_id', VmtClientMaster::first()->id);
+            session()->put('client_logo_url', VmtClientMaster::first()->client_logo);
+        }
+        else
+        {
+            $query_client = VmtClientMaster::find($client_id);
+            session()->put('client_id', $query_client->id);
+            session()->put('client_logo_url', $query_client->client_logo);
+        }
+    }
+
+    public function updateGlobalClientSelection(Request $request){
+
+        $this->updateSessionVariables($request->client_id);
+
+        return "client_id : ".$request->client_id." saved in session";
     }
 
     public function  DashBoardPost(Request $request){

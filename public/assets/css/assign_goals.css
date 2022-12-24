@@ -176,9 +176,7 @@ td .btn i {
     resize: none;
 }
 
-table.dataTable.no-footer {
-    border-bottom: transparent !important;
-}
+
 
 /* pagination */
 .add-goals {

@@ -1,9 +1,9 @@
 @extends('layouts.master')
 @section('css')
-    <link href="{{ URL::asset('assets/css/assign_goals.css') }}" rel="stylesheet">
-    <link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ URL::asset('/assets/css/pages_profile.css') }}">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.15/tailwind.min.css" rel="stylesheet" />
+<link href="{{ URL::asset('assets/css/appraisal_review.css') }}" rel="stylesheet">
+<link rel="stylesheet" href="{{ URL::asset('/assets/css/pages_profile.css') }}">
+
+
 @endsection
 
 
@@ -436,7 +436,7 @@
                                                                 <td class="d-none">{{ $key1 }}</td>
                                                                 <td class="">
                                                                     {{-- <div class="td_content_center">{{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</div> --}}
-                                                                    <div class="row page-header-user-dropdown align-items-center"
+                                                                    <div class="row page-header-user-dropdown justify-content-center d-flex align-items-center"
                                                                         style="width:200px;min-width: 230px;">
                                                                         <?php
                                                                         $employee_icon = getEmployeeAvatarOrShortName($assigneeId);
@@ -518,7 +518,11 @@
                                                                 </td>
                                                                 <td class="">
                                                                     <div class="td_content_center">
-                                                                        <?php echo calculateReviewRatings($pmsKpiAssignee->id, $assigneeId)['score']; ?>
+                                                                        @if (!empty($kpiFormAssigneeReview) && $kpiFormAssigneeReview->is_reviewer_submitted == '1')
+                                                                            <?php echo calculateReviewRatings($pmsKpiAssignee->id, $assigneeId)['score']; ?>
+                                                                        @else
+                                                                            -
+                                                                        @endif
                                                                     </div>
                                                                 </td>
                                                                 <td>
@@ -630,7 +634,7 @@
                                                                 <td class="" style="min-width: 185px;">
                                                                     {{-- <div class="td_content_center">{{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</div> --}}
                                                                     <div
-                                                                        class="row page-header-user-dropdown align-items-center">
+                                                                        class="row page-header-user-dropdown d-flex justify-content-center align-items-center">
                                                                         <?php
                                                                         $employee_icon = getEmployeeAvatarOrShortName($assigneeId);
                                                                         //    dd($employee_icon);
@@ -750,7 +754,7 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h6 class="modal-title mb-1 text-primary">
+                    <h6 class="modal-title">
                         New Assign Goals</h6>
                         <button type="button" class="close outline-none bg-transparent border-0 h3"
                             data-bs-dismiss="modal" aria-label="Close">
@@ -798,7 +802,8 @@
                                     <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4  mb-2">
                                         <label class="" for="assignment_period_start">Assignment Period</label>
                                         <span
-                                            class="form-control">{{ \Carbon\Carbon::parse($assignment_period)->format('F') }}</span>
+
+                                            class="form-control">{{  ucfirst($assignment_period) }}</span>
 
                                         <input type="hidden" name="assignment_period_start" id="assignment_period_start"
                                             class="form-control "value="{{ $assignment_period }}">
@@ -824,7 +829,7 @@
                                             <!-- flow 1 -->
                                             <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
                                                 <label class="" for="">Employees</label>
-                                                <input type="hidden" name="employees" value="{{ $loggedInUser->id }}">
+                                                <input type="hidden" id="hidden_selectedEmployees" name="employees" value="{{ $loggedInUser->id }}">
                                                 <input type="text" disabled class="form-control increment-input"
                                                     placeholder="Employee" value="{{ $loggedInUser->name }}">
                                             </div>
@@ -976,8 +981,8 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable fad  modal-md" role="document">
             <div class="modal-content top-line">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
-                        Change Reviewer</h5>
+                    <h6 class="modal-title " >
+                        Change Reviewer</h6>
                     <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
                         aria-label="Close">
                         <span aria-hidden="true">×</span>
@@ -1023,8 +1028,8 @@
         <div class="modal-dialog modal-dialog-centered   modal-md" role="document">
             <div class="modal-content top-line">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
-                        Success</h5>
+                    <h6 class="modal-title ">
+                        Success</h6>
                     <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
                         aria-label="Close">
                         <span aria-hidden="true">×</span>
@@ -1049,8 +1054,8 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-md" role="document">
             <div class="modal-content top-line">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
-                        Edit Employee</h5>
+                    <h6 class="modal-title " >
+                        Edit Employee</h6>
                     <button type="button" id="closebtn_editEmployees"
                         class="close outline-none bg-transparent border-0 h3 " data-bs-dismiss="modal"
                         aria-label="Close">
@@ -1946,6 +1951,17 @@
 
             e.preventDefault();
             var t_selectedEmployeesId = $('.select-employee-dropdown').val();
+
+            //For flow 3, fetch from 'employees' elementname
+            if(t_selectedEmployeesId == '')
+            {
+                t_selectedEmployeesId = [$('#hidden_selectedEmployees').val()];
+                console.log("Fetched selected employees from hidden vars : "+t_selectedEmployeesId);
+            }
+            else
+                console.log("Selected Employees : "+t_selectedEmployeesId);
+
+
             var assignmentPeriod = $('#assignment_period_start').val();
             var year = $('#hidden_calendar_year').val();
 
@@ -1968,23 +1984,38 @@
                         //If KPI's already assigned to the selected emps, then show their names
                         if (data.status == true) {
                             console.log("KPI already assigned...! ");
-                            $('#edit-employee-error-message').append("<b><u>" + data.message +
-                                "</u></b><br/>");
-                            $('#edit-employee-error-message').append("<ul>");
 
-                            $.each(data.result, function(i, value) {
-                                $('#edit-employee-error-message').append("<li>" + value +
-                                    "</li>");
-                            });
+                            if($('#flowCheck').val() == '3')
+                            {
+                                console.log("PMS Flow 3 : Show Error message");
 
-                            $('#edit-employee-error-message').append("</ul>");
-                            $('#edit-employee-error-message').append(
-                                "<b>Please remove these employees before proceeding.</b>");
+                                Swal.fire(
+                                    '<b>Error</b>',
+                                    '<span>KPI Form has already been assigned for the selected Assignment Period.<br/> Please check your <b>Current/Completed</b> tabs in PMS dashboard</span>',
+                                    'warning'
+                                );
 
-                            //Open the Employee Edit Modal
-                            $("#add-goals-modal").modal('hide');
-                            $('#employeeSelectionModal').show();
-                            $('#employeeSelectionModal').removeClass('fade');
+                            }
+                            else
+                            {
+                                $('#edit-employee-error-message').append("<b><u>" + data.message +
+                                    "</u></b><br/>");
+                                $('#edit-employee-error-message').append("<ul>");
+
+                                $.each(data.result, function(i, value) {
+                                    $('#edit-employee-error-message').append("<li>" + value +
+                                        "</li>");
+                                });
+
+                                $('#edit-employee-error-message').append("</ul>");
+                                $('#edit-employee-error-message').append(
+                                    "<b>Please remove these employees before proceeding.</b>");
+
+                                //Open the Employee Edit Modal
+                                $("#add-goals-modal").modal('hide');
+                                $('#employeeSelectionModal').show();
+                                $('#employeeSelectionModal').removeClass('fade');
+                            }
 
                         } else
                         if (data.status == false || data.status ==

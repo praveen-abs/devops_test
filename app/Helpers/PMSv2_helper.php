@@ -54,36 +54,34 @@ function getPmsKpiAssigneeDetails($pmsKpiAssigneeId){
 // check current logged user is Reviewer or Not and Add reviewd or not yet reviewed
 function checkCurrentLoggedUserReviewerOrNot($reviewersIds,$currentLoggedUserRole,$kpiAssigneeReviewDetails){
     try{
+        //dd($reviewersIds);
         $result = '';
         $decodedReviewSubmitted = isset($kpiAssigneeReviewDetails->is_reviewer_submitted) ? json_decode($kpiAssigneeReviewDetails->is_reviewer_submitted,true) : '';
         $decodedReviewAccepted = isset($kpiAssigneeReviewDetails->is_reviewer_accepted) ? json_decode($kpiAssigneeReviewDetails->is_reviewer_accepted,true) : '';
 
-        foreach($reviewersIds as $keyCheck => $singleReviewerSubmittedStatus)
+        foreach($reviewersIds as $singleReviewerId)
         {
-            if($currentLoggedUserRole == 'reviewer')
-            {
-                if($singleReviewerSubmittedStatus == Auth::id())
+                //Check if reviewer accepted the form or not
+                if($decodedReviewAccepted[$singleReviewerId] == null)
                 {
-                    if(isset($decodedReviewSubmitted[$singleReviewerSubmittedStatus]) && $decodedReviewSubmitted[$singleReviewerSubmittedStatus] == '1')
-                    {
+                    $result .= 'Not yet Accepted<br>';
+                }
+                elseif($decodedReviewAccepted[$singleReviewerId] == '0')
+                {
+                    $result .= 'Rejected<br>';
+                }
+                elseif($decodedReviewAccepted[$singleReviewerId] == '1')//accepted
+                {
+
+                    //Check if the Reviewer submitted this form or not
+                    if($decodedReviewSubmitted[$singleReviewerId] == '1'){
                         $result .= 'Reviewed<br>';
-                    }elseif($decodedReviewSubmitted[$singleReviewerSubmittedStatus] == '0'){
-                        $result .= 'Rejected<br>';
-                    }else{
-                        $result .= 'Not yet reviewed<br>';
+                    }
+                    else
+                    {
+                        $result .= 'Not yet Reviewed<br>';
                     }
                 }
-            }else{
-                if($keyCheck != 0) $result .= '<br>';
-                if(isset($decodedReviewSubmitted[$singleReviewerSubmittedStatus]) && $decodedReviewSubmitted[$singleReviewerSubmittedStatus] == '1')
-                {
-                    $result .= 'Reviewed<br>';
-                }elseif($decodedReviewAccepted[$singleReviewerSubmittedStatus] == '0'){
-                    $result .= 'Rejected<br>';
-                }else{
-                    $result .= 'Not yet reviewed<br>';
-                }
-            }
         }
 
         return $result;

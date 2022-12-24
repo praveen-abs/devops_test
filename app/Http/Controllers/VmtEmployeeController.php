@@ -997,6 +997,7 @@ class VmtEmployeeController extends Controller
 
     public function fetchAllActiveEmployees(Request $request)
     {
+
         $vmtEmployees = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
             ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->select(
@@ -1016,6 +1017,7 @@ class VmtEmployeeController extends Controller
                 'vmt_employee_office_details.l1_manager_designation'
             )
             ->orderBy('users.name', 'ASC')
+            ->where('users.user_code','LIKE',sessionGetSelectedClientCode().'%')
             ->where('users.active', '1')
             ->where('users.is_ssa', '0')
             ->whereNotNull('emp_no')
@@ -1032,6 +1034,7 @@ class VmtEmployeeController extends Controller
 
     public function fetchAllYetToActiveEmployees(Request $request)
     {
+
         $vmtEmployees = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
             ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->select(
@@ -1051,6 +1054,7 @@ class VmtEmployeeController extends Controller
                 'vmt_employee_office_details.l1_manager_designation'
             )
             ->orderBy('users.name', 'ASC')
+            ->where('users.user_code','LIKE',sessionGetSelectedClientCode().'%')
             ->where('users.active', '0')
             ->where('users.is_ssa', '0')
             ->whereNotNull('emp_no')
@@ -1068,7 +1072,10 @@ class VmtEmployeeController extends Controller
     //
     public function showManageEmployeePage(Request $request)
     {
-        return view('vmt_manageEmployee');
+        //Read session value
+        $client_id = 0;
+
+        return view('vmt_manageEmployee',compact('client_id'));
     }
 
     public function isUserExist($t_emp_code)
