@@ -342,10 +342,10 @@
     </div>
 @endsection
 @section('script')
+@yield('script-gridjs-clients')
+
     <!-- ui notifications -->
 
-    <script src="{{ URL::asset('/assets/libs/prismjs/prismjs.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/js/pages/notifications.init.js') }}"></script>
     <!-- apexcharts -->
 
 
@@ -354,6 +354,7 @@
     <script src="{{ URL::asset('/assets/premassets/js/onboarding.js') }}"></script>
     <script>
         $('#client_name').keyup(function() {
+
             var val = $(this).val();
             if (val.length <= 4) {
                 $('#client_code').val(val);
