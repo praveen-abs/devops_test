@@ -2,6 +2,8 @@
 @section('css')
 <link href="{{ URL::asset('assets/css/appraisal_review.css') }}" rel="stylesheet">
 <link rel="stylesheet" href="{{ URL::asset('/assets/css/pages_profile.css') }}">
+<link rel="stylesheet" href="{{ URL::asset('/assets/css/assign_goals.css') }}">
+
 
 
 @endsection
@@ -436,7 +438,7 @@
                                                                 <td class="d-none">{{ $key1 }}</td>
                                                                 <td class="">
                                                                     {{-- <div class="td_content_center">{{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</div> --}}
-                                                                    <div class="row page-header-user-dropdown justify-content-center d-flex align-items-center"
+                                                                    <div class="row page-header-user-dropdown align-items-center"
                                                                         style="width:200px;min-width: 230px;">
                                                                         <?php
                                                                         $employee_icon = getEmployeeAvatarOrShortName($assigneeId);
@@ -634,7 +636,7 @@
                                                                 <td class="" style="min-width: 185px;">
                                                                     {{-- <div class="td_content_center">{{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</div> --}}
                                                                     <div
-                                                                        class="row page-header-user-dropdown d-flex justify-content-center align-items-center">
+                                                                        class="row page-header-user-dropdown align-items-center">
                                                                         <?php
                                                                         $employee_icon = getEmployeeAvatarOrShortName($assigneeId);
                                                                         //    dd($employee_icon);
