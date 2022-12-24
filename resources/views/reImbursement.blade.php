@@ -9,18 +9,19 @@
                 <div class="row">
                     <div class="col-6 d-flex align-items-center">
                         <ul class="nav nav-pills nav-tabs-dashed" role="tablist">
-                            <li class="nav-item text-muted me-5" role="presentation">
-                                <a class="nav-link active pb-2" data-bs-toggle="tab" href="#active_reimbursment"
-                                    aria-selected="true" role="tab">
-                                    Approve
-                                </a>
-                            </li>
-                            <li class="nav-item text-muted" role="presentation">
-                                <a class="nav-link  pb-2" data-bs-toggle="tab" href="#not_active_reimbursment"
+                            <li class="nav-item text-muted  me-5" role="presentation">
+                                <a class="nav-link active  pb-2" data-bs-toggle="tab" href="#not_active_reimbursment"
                                     aria-selected="true" role="tab">
                                     Yet To Approve
                                 </a>
                             </li>
+                            <li class="nav-item text-muted" role="presentation">
+                                <a class="nav-link  pb-2" data-bs-toggle="tab" href="#active_reimbursment"
+                                    aria-selected="true" role="tab">
+                                    Approved
+                                </a>
+                            </li>
+
                         </ul>
                     </div>
                 </div>
@@ -29,12 +30,13 @@
         <div class="card">
             <div class="card-body">
                 <div class="tab-content" id="pills-tabContent">
-                    <div class="tab-pane show fade active" id="active_reimbursment" role="tabpanel" aria-labelledby="">
-                        <div id="active_reimbursment-table" class="noCustomize_gridjs"></div>
-                    </div>
-                    <div class="tab-pane  fade " id="not_active_reimbursment" role="tabpanel" aria-labelledby="">
+                    <div class="tab-pane  show fade active " id="not_active_reimbursment" role="tabpanel" aria-labelledby="">
                         <div id="notActive_reimbursment-table" class="noCustomize_gridjs"></div>
                     </div>
+                    <div class="tab-pane fade" id="active_reimbursment" role="tabpanel" aria-labelledby="">
+                        <div id="active_reimbursment-table" class="noCustomize_gridjs"></div>
+                    </div>
+
                 </div>
             </div>
         </div>
