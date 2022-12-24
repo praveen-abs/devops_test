@@ -10,10 +10,7 @@
 
 @section('content')
     <div class="loader" style="display:none;"></div>
-    {{-- @component('components.performance_breadcrumb')
-        @slot('li_1')
-        @endslot
-    @endcomponent --}}
+
 
 
 
