@@ -1,11 +1,7 @@
 <?php
-//$employee = \DB::table('vmt_employee_payslip')->first();
-$general_info = \DB::table('vmt_general_info')->first();
-//$employee_name =  \DB::table('users')->where('user_code','=',$employee->EMP_NO)->first('name');
-$client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
-// dd(request()->getSchemeAndHttpHost()."".$general_info->logo_img);
-$bank_names = \DB::table('bank_list')->get();
-
+    $client_logo = request()->getSchemeAndHttpHost() . session()->get('client_logo_url');
+    $bank_names = \DB::table('bank_list')->get();
+    //dd($client_logo);
 ?>
 <html>
 
@@ -95,7 +91,7 @@ $bank_names = \DB::table('bank_list')->get();
                 <tr class="header-row">
                     <td colspan="8" class="border-less">
                         <div class="header-cotent" style="margin: 10px;">
-                            <h6 class="margin-0" style="padding-left: 5px">Priti Sales Corporation.</h6>
+                            <h6 class="margin-0" style="padding-left: 5px">Langro India Pvt Ltd</h6>
                             <p class="mb-0">Dugar Towers, 2nd floor,</p>
                             <p class="mb-0">#34/123, Marshalls Road, Egmore,</p>
                             <p class="mb-0">Chennai, Tamil Nadu, India 600 008. </p>
