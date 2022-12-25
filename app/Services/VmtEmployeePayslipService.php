@@ -289,9 +289,11 @@ class VmtEmployeePayslipService {
             if($emp_details->exists()){
                 $emp_details = $emp_details->first();
 
-                $emp_details->bank_id = Bank::where('bank_name',$row['bank_name'])->first()->id;
-                $emp_details->bank_account_number =  $row['account_number'];
-                $emp_details->bank_ifsc_code = $row['bank_ifsc_code'];
+                if(!empty($row['bank_name']) && Bank::where('bank_name',$row['bank_name'])->exists())
+                     $emp_details->bank_id =  Bank::where('bank_name',$row['bank_name'])->first()->id;
+
+                $emp_details->bank_account_number =  $row['account_number'] ?? '---';
+                $emp_details->bank_ifsc_code = $row['bank_ifsc_code'] ?? '---';
 
                 $emp_details->save();
 
@@ -412,12 +414,13 @@ class VmtEmployeePayslipService {
         } catch (\Exception $e) {
             //$this->deleteUser($user->id);
 
-            //dd($e);
+            //dd("For Usercode : ".$row['emp_no']."  -----  ".$e);
             return $rowdata_response = [
                 'row_number' => '',
                 'status' => 'failure',
                 'message' => 'Payslip for '. $empNo . ' not added',
-                'error_fields' => json_encode(['error' => $e->getMessage()]),
+                'error_fields' => json_encode(['error' =>$e->getMessage()]),
+                'stack_trace' => $e->getTraceAsString()
             ];
         }
     }
