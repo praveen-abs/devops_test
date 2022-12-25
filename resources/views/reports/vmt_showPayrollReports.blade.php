@@ -34,7 +34,7 @@
 
 
             <div class="vendor-table-wrapper">
-                <div id="vendor-table" class="noCustomize_gridjs"></div>
+                <div id="employee-table" class="noCustomize_gridjs"></div>
             </div>
 
         </div>
@@ -51,88 +51,46 @@
 
            // $('#dropdown_payroll_month').find(":selected");
 
-            if (document.getElementById("vendor-table")) {
-                const grid = new gridjs.Grid({
-                    columns: [{
-                            id: 'number',
-                            name: 'id',
-                            hidden: true
+            // if (document.getElementById("employee-table")) {
+            //     const grid = new gridjs.Grid({
+            //         columns: [{
+            //                 id: 'number',
+            //                 name: 'id',
+            //                 hidden: true
 
-                        },
-                        {
-                            id: 'name ',
-                            name: ' Name',
+            //             },
+            //             {
+            //                 id: 'name ',
+            //                 name: 'Employee Name',
 
-                        },
-                        {
-                            id: 'month',
-                            name: 'Month',
-                        },
-                        {
-                            id: 'reporting_to',
-                            name: ' Email',
-                        },
-                        {
-                            id: 'reporting_to',
-                            name: ' Company Name',
-                        },
-                        {
-                            id: 'reporting_to',
-                            name: 'Vendor Category',
-                        },
-                        {
-                            id: 'reporting_to',
-                            name: 'Status ',
-                        }, {
-                            id: '',
-                            name: 'Action ',
-                        },
+            //             },
+            //             {
+            //                 id: 'month',
+            //                 name: 'Month',
+            //             },
 
-                    ],
-                    data: [
-                        // {
-                        //     name: 'John',
-                        //     email: 'john@example.com',
-                        //     phoneNumber: '(353) 01 222 3333'
-                        // },
-                        // {
-                        //     name: 'Mark',
-                        //     email: 'mark@gmail.com',
-                        //     phoneNumber: '(01) 22 888 4444'
-                        // },
-                    ],
-
-                    pagination: {
-                        limit: 10
-                    },
-                    sort: true,
-                    search: true,
-                    server: {
-                        url: '{{ route('fetchAllEmployeePayrollDetails', ['payroll_month' => 'sss']) }}',
-                        then: data => data.map(
-                            leave_history => [
-                                leave_history.id,
-                                leave_history,
-                                leave_history.leave_type_id,
-                                leave_history.start_date,
-                                leave_history.end_date,
-                                leave_history.leave_reason,
-                                leave_history.reviewer_user_id,
-                                //leave_history.notifications_users_id,
-                                leave_history.reviewer_comments,
-                                leave_history.status,
-                                leave_history,
-
-                            ]
-                        )
-                    }
+            //         ],
+            //         pagination: {
+            //             limit: 10
+            //         },
+            //         sort: true,
+            //         search: true,
+            //         server: {
+            //             url: '{{ route('fetchAllEmployeePayrollDetails', ['payroll_month' => 'sss']) }}',
+            //             then: data => data.map(
+            //                 employee => [
+            //                     employee.id,
+            //                     employee.name,
+            //                 ]
+            //             )
+            //         }
 
 
 
-                }).render(document.getElementById("vendor-table"));
+            //     }).render(document.getElementById("employee-table"));
 
 
-            }
+            // }
 
 
 

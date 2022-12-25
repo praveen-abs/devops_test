@@ -18,9 +18,9 @@ class VmtPayrollReports implements FromCollection
  }
     public function collection()
     {
-        $query_payroll_data = VmtEmployeePaySlip::leftjoin('vmt_employee_compensatory_details','vmt_employee_compensatory_details.user_id','=','vmt_employee_payslip.user_id')
+        $query_payroll_data = VmtEmployeePaySlip::leftJoin('vmt_employee_compensatory_details','vmt_employee_compensatory_details.user_id','=','vmt_employee_payslip.user_id')
                             ->where('vmt_employee_payslip.PAYROLL_MONTH', $this->payroll_month)->get();
-        dd($query_payroll_data);
+       // dd($query_payroll_data);
 
         return $query_payroll_data;
 
