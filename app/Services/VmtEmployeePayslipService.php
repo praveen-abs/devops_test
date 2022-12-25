@@ -290,7 +290,7 @@ class VmtEmployeePayslipService {
                 $emp_details = $emp_details->first();
 
                 if(!empty($row['bank_name']) && Bank::where('bank_name',$row['bank_name'])->exists())
-                     $emp_details->bank_id =  Bank::where('bank_nasme',$row['bank_name'])->first()->id;
+                     $emp_details->bank_id =  Bank::where('bank_name',$row['bank_name'])->first()->id;
 
                 $emp_details->bank_account_number =  $row['account_number'] ?? '---';
                 $emp_details->bank_ifsc_code = $row['bank_ifsc_code'] ?? '---';
