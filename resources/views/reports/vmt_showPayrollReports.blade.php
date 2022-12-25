@@ -43,6 +43,45 @@
     <script>
         $(document).ready(function() {
 
+            $('#btn_downloadReport').on('click', function(e) {
+
+                console.log("Download payroll reports....");
+                let selectedPayRollMonth = $('#dropdown_payroll_month').find(":selected").val();
+                let URL = '/reports/generatePayrollReports?payroll_month='+selectedPayRollMonth+'&_token={{ csrf_token() }}';
+                console.log("Generated URL : "+URL);
+
+                window.location = URL;
+
+
+                // $.ajax({
+                //         url: "{{ route('generatePayrollReports') }}",
+                //         type: "GET",
+                //         dataType: "json",
+                //         cache: false,
+                //         xhrFields:{
+                //             responseType: 'blob'
+                //         },
+                //         data: {
+                //             "payroll_month":selectedPayRollMonth,
+                //             "_token": "{{ csrf_token() }}",
+                //         },
+                //         success: function(data) {
+                //             console.log("Downloading excelsheet....");
+                //             var link = document.createElement('a');
+                //             link.href = window.URL.createObjectURL(response);
+                //             link.download = `bulk_orders.xlsx`;
+                //             link.click();
+
+                //         },
+                //         error: function(data) {
+
+
+                //         }
+                // });
+
+            });
+
+
             // $('#dropdown_payroll_month').on('change', function() {
             //     console.log("Selected payroll month : "+$(this).find(":selected").val());
             // });
@@ -91,30 +130,6 @@
             // }
 
 
-
-        });
-        $('#btn_downloadReport').on('click', function(e) {
-            let selectedPayRollMonth = $('#dropdown_payroll_month').find(":selected").val();
-            $.ajax({
-                    url: "{{ route('generatePayrollReports') }}",
-                    type: "POST",
-                    dataType: "json",
-                    data: {
-                        "payroll_month":selectedPayRollMonth,
-                        "_token": "{{ csrf_token() }}",
-                    },
-                    success: function(data) {
-                        console.log("Downloading excelsheet....");
-                        var url = window.URL || window.webkitURL;
-                        var objectUrl = url.createObjectURL(data);
-                        window.open(objectUrl);
-
-                    },
-                    error: function(data) {
-
-
-                    }
-            });
 
         });
     </script>
