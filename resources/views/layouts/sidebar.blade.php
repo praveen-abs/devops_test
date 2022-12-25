@@ -590,6 +590,12 @@
                                     role="button"><span>Attendance
                                         Report</span></a>
                             </li>
+                            <li class="nav-item">
+
+                                <a href="{{ route('showPayrollReportsPage') }}" class="nav-link sidebar py-1"
+                                    role="button"><span>Payroll Reports</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>

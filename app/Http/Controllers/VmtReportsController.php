@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class VmtReportsController extends Controller
 {
     public function showPayrollReportsPage(Request $request){
-        dd("This is payroll reports page");
+        return view('reports.vmt_showPayrollReports');
     }
 
     public function generatePayrollReports(Request $request){
