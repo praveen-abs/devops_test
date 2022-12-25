@@ -41,6 +41,16 @@ function getPermissionLeaveTypeIDs(){
     return VmtLeaves::where('leave_type','like','%Permission%')->pluck('id');
 }
 
+// Check whether the given ID is permission or leave type
+function isPermissionLeaveType($id){
+    $type = VmtLeaves::where('id', $id)->where('leave_type', 'like', '%Permission%');
+
+    if ($type->exists())
+        return true;
+    else
+        return false;
+}
+
 
 function getAllLeaveTypes()
 {

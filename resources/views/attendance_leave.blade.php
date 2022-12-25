@@ -579,11 +579,11 @@
                                         </div>
                                         <div class="col-md-4 text-md-center mb-md-0 " id="div_totaldays">
                                             <p class="fw-bold  text-muted mb-2">Total Days</p>
-                                            <span class="shadow-lite px-2 py-1" id="total_leave">-</span>
+                                            <span class="shadow-lite px-2 py-1" id="total_leave_days">-</span>
                                         </div>
                                         <div class="col-md-4 text-md-center mb-md-0 " id="div_totalhours">
                                             <p class="fw-bold  text-muted mb-2">Total Hours</p>
-                                            <span class="shadow-lite px-2 py-1" id="total_leave">-</span>
+                                            <span class="shadow-lite px-2 py-1" id="total_permission_hours">-</span>
                                         </div>
                                         <div class="col-md-4 text-md-end ">
                                             <label class="fw-bold">End Date</label>
@@ -851,7 +851,8 @@
             $('#start_date').val('');
             $('#end_date').val('');
             $('#leave_reason').val('');
-            $('#total_leave').val('0');
+            $('#total_leave_days').val('0');
+            $('#total_permission_hours').val('0');
 
             $('#div_totalhours').hide();
 
@@ -886,13 +887,13 @@
 
                         var totalPermissionHours =  moment.duration(leave_end_date.diff(leave_start_date)).asHours(); // +1 added so that 1 day leave can applied when startdate and enddate are same
                         console.log("Total permission hours : " + totalPermissionHours);
-                        $('#total_leave').html(totalPermissionHours);
+                        $('#total_permission_hours').html(Math.ceil(totalPermissionHours));
                     }
                     else
                     {
                         var totalDays = leave_end_date.diff(leave_start_date, 'days')+1; // +1 added so that 1 day leave can applied when startdate and enddate are same
                         console.log("Total leave days : " + totalDays);
-                        $('#total_leave').html(totalDays);
+                        $('#total_leave_days').html(totalDays);
 
                     }
 
@@ -925,15 +926,14 @@
                 var start_date = $('#start_date').val();
                 var end_date = $('#end_date').val();
 
+                let total_leave = 0;//Both leave and permission types are stored here
                 let selectedLeaveTypeID = $('#leave_type_id').find(":selected").val();
 
 
                 var availableLeaves_ForSelectedLeaveType = parseInt($('#leave_type_id').find(":selected")
                     .attr('data-remainingLeaves'));
-                var totalLeaveDays = parseInt($('#total_leave').html());
 
                 console.log("Available leaves : " + availableLeaves_ForSelectedLeaveType);
-                console.log("totalLeaveDays : " + totalLeaveDays);
 
                 // errors array
                 var basic_details_errors = [];
@@ -971,32 +971,45 @@
                 //Reset the array
                 basic_details_errors = [];
 
-                //Check the data validation
-                ////IF leave_type == Permission
                 console.log("Selected leave type : " + $('#leave_type_id').find(":selected").attr(
                     'data-leavetype'));
 
+
                 //for permission types
                 if (permissionTypeIds.includes(parseInt(selectedLeaveTypeID))){
-                    if (totalLeaveDays != 1) {
-                        basic_details_errors.push(
-                            "For Permission leave type : Start date and End date should be same date.");
-                    }
 
                     let startDate = moment(start_date);
                     let endDate = moment(end_date);
+                    let daysDiff = moment.duration(endDate.diff(startDate)).asDays();
+                    console.log("Days diff : "+daysDiff);
 
-                    let timeDiff = moment.duration(endDate.diff(startDate)).asHours();
-                    console.log("Permission TimeDiff : " + timeDiff);
+                    var totalPermissionHours = parseInt($('#total_permission_hours').html());
 
-                    //Check if time diff is atleast 1hr
-                    if (timeDiff < 1.0) {
-                        basic_details_errors.push("Permission time should be atleast 1hr.");
+                    if (Math.floor(daysDiff) != 0) {
+                        basic_details_errors.push(
+                            "For Permission leave type : Start date and End date should be same date.");
+                    }
+                    else
+                    {
+                        //If day difference is less than 1, then check timediff
+
+
+                        //let timeDiff = moment.duration(endDate.diff(startDate)).asHours();
+                        console.log("Permission TimeDiff : " + totalPermissionHours);
+
+                        //Check if time diff is atleast 1hr
+                        if (totalPermissionHours < 1.0) {
+                            basic_details_errors.push("Permission time should be atleast 1hr.");
+                        }
+
+
                     }
 
 
-
                 } else {
+
+                    var totalLeaveDays = parseInt($('#total_leave_days').html());
+
                     //For leave types
                     if (moment(start_date) > moment(end_date)) {
                         basic_details_errors.push(
@@ -1007,7 +1020,7 @@
                     if (availableLeaves_ForSelectedLeaveType <= 0) {
                         basic_details_errors.push("No leaves available for the selected leave type.");
                     }
-
+                    else
                     if (totalLeaveDays > availableLeaves_ForSelectedLeaveType) {
                         basic_details_errors.push(
                             "Selected leave days exceeds your available leave days for the selected leave type."
@@ -1041,7 +1054,6 @@
                         'user_id': $('#leave_type_id').val(),
                         'start_date': $('#start_date').val(),
                         'end_date': $('#end_date').val(),
-                        'total_leave_datetime': $('#total_leave').html(),
                         'leave_reason': $('#leave_reason').val(),
                         'leave_type_id': $('#leave_type_id').val(),
                         'notifications_users_id': $('#notifications_users_id').val(),
@@ -1221,11 +1233,9 @@
                                 if(total_date_hours)
                                 {
                                     if (permissionTypeIds.includes(leave_history.leave_type_id))
-                                        return gridjs.html(total_date_hours.split(',')[
-                                            1]); //For permissions, show only hours
+                                        return gridjs.html(total_date_hours+" Hrs"); //For permissions, show only hours
                                     else
-                                        return gridjs.html(total_date_hours.split(',')[
-                                            0]); //For Leaves, show only days
+                                        return gridjs.html(total_date_hours+" Days"); //For Leaves, show only days
                                 }
                                 else
                                 {

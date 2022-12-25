@@ -45,8 +45,11 @@ class VmtAttendanceController extends Controller
         $leaveData_Org = null;
 
         $leaveData_currentUser = VmtEmployeeLeaves::where('user_id', auth::user()->id);
+
         //Get how many leaves taken for each leave_type
         $leaveData_currentUser = getLeaveCountDetails(auth::user()->id);
+
+        //dd($leaveData_currentUser->toArray());
 
         //Generate Team leave data
         if (Str::contains(currentLoggedInUserRole(), ['Manager'])) {
@@ -284,7 +287,21 @@ class VmtAttendanceController extends Controller
         //Calculate total leave days...
         $start = Carbon::parse($request->start_date);
         $end = Carbon::parse($request->end_date);
-        $diff = $start->diff($end)->format('%D day(s) , %H hour(s)');
+
+        //$diff = $start->diff($end)->format('%D day(s) , %H hour(s)');
+        $diff="ERROR";
+        $mailtext_total_leave = " 0-0";
+
+        //Check if its Leave or Permission
+        if (isPermissionLeaveType($request->leave_type_id)) {
+            $diff = intval( $start->diff($end)->format('%H'));
+            $mailtext_total_leave = $diff . " Hour(s)";
+        } else {
+            $diff = intval( $start->diff($end)->format('%D')) + 1; //day adjusted by adding '1'
+            $mailtext_total_leave = $diff . " Day(s)";
+        }
+
+        //dd($diff);
 
         $emp_leave_details =  new VmtEmployeeLeaves;
         $emp_leave_details->user_id = auth::user()->id;
@@ -335,7 +352,7 @@ class VmtAttendanceController extends Controller
                                                     $request->end_date,
                                                     $request->leave_reason,
                                                     VmtLeaves::find($request->leave_type_id)->leave_type,
-                                                    $request->total_leave_datetime,
+                                                    $mailtext_total_leave,
                                                     //Carbon::parse($request->total_leave_datetime)->format('M jS Y \\, h:i:s A'),
                                                     request()->getSchemeAndHttpHost(),
                                                     $image_view
