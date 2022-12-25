@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Exports\VmtPayrollReports;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class VmtReportsController extends Controller
 {
@@ -16,7 +20,8 @@ class VmtReportsController extends Controller
     }
 
     public function generatePayrollReports(Request $request){
-        dd("This generates payroll ");
+        $filename = 'PayrollReports_'.$request->payroll_month.'.xlsx';
+        return Excel::download(new VmtPayrollReports($request->payroll_month), $filename );
     }
 
 

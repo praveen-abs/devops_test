@@ -10,7 +10,9 @@
             <h6 class="">Payroll Reports</h6>
 
             <div class=" text-end mb-2">
-                <button class="btn btn-orange me-2" data-bs-toggle="modal" data-bs-target="#newVendor">Download Report</button>
+                <button class="btn btn-orange me-2" id="btn_downloadReport"
+                    data-bs-toggle="modal" data-bs-target="#newVendor">Download Report</button>
+
             </div>
 
 
@@ -43,9 +45,9 @@
     <script>
         $(document).ready(function() {
 
-            $('#dropdown_payroll_month').on('change', function() {
-                console.log("Selected payroll month : "+$(this).find(":selected").val());
-            });
+            // $('#dropdown_payroll_month').on('change', function() {
+            //     console.log("Selected payroll month : "+$(this).find(":selected").val());
+            // });
 
            // $('#dropdown_payroll_month').find(":selected");
 
@@ -133,6 +135,27 @@
             }
 
 
+
+        });
+        $('#btn_downloadReport').on('click', function(e) {
+            let selectedPayRollMonth = $('#dropdown_payroll_month').find(":selected").val();
+            $.ajax({
+                    url: "{{ route('generatePayrollReports') }}",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+            "payroll_month":selectedPayRollMonth,
+                        "_token": "{{ csrf_token() }}",
+                    },
+                    success: function(data) {
+
+
+              },
+                    error: function(data) {
+
+
+                    }
+                });
 
         });
     </script>
