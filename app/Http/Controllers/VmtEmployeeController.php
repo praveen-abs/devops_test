@@ -854,7 +854,7 @@ class VmtEmployeeController extends Controller
             $newEmployee->aadhar_number = $row["aadhar"];
             $newEmployee->marital_status = $row["marital_status"];
             $newEmployee->mobile_number  = strval($row["mobile_no"]);
-            $newEmployee->bank_id   = $row["bank_name"];
+            $newEmployee->bank_id   = Bank::where('bank_name',$row['bank_name'])->first()->id;
             $newEmployee->bank_ifsc_code  = $row["bank_ifsc"];
             $newEmployee->bank_account_number  = $row["account_no"];
             $newEmployee->current_address_line_1   = $row["current_address"];
