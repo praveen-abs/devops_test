@@ -43,11 +43,18 @@
     <script>
         $(document).ready(function() {
 
+            $('#dropdown_payroll_month').on('change', function() {
+                console.log("Selected payroll month : "+$(this).find(":selected").val());
+            });
+
+           // $('#dropdown_payroll_month').find(":selected");
+
             if (document.getElementById("vendor-table")) {
                 const grid = new gridjs.Grid({
                     columns: [{
                             id: 'number',
-                            name: 'Supplier Id',
+                            name: 'id',
+                            hidden: true
 
                         },
                         {
@@ -56,8 +63,8 @@
 
                         },
                         {
-                            id: 'job_title',
-                            name: 'Contact',
+                            id: 'month',
+                            name: 'Month',
                         },
                         {
                             id: 'reporting_to',
