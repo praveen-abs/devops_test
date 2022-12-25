@@ -5,17 +5,38 @@
 
 @section('content')
     <div class="vendor-wrapper mt-30 card">
-        <div class="card-body">
+
+         <div class="card-body">
             <h6 class="">Payroll Reports</h6>
+
             <div class=" text-end mb-2">
                 <button class="btn btn-orange me-2" data-bs-toggle="modal" data-bs-target="#newVendor">Download Report</button>
             </div>
+
+
+            <div class=" text-start mb-2">
+                <span>
+                    <b>Payroll Month</b>
+                    <select id="dropdown_payroll_month" class="form-select form-select-sm" style="width:auto;" aria-label=".form-select-sm example">
+                        @foreach($payroll_months as $key => $value)
+                            <option value="{{ $value }}"
+                            {{-- @if( !empty($currentClientID) && $currentClientID == $client->id) selected  @endif --}}
+                            >
+                                {{$key}}
+                            </option>
+                        @endforeach
+                    </select>
+                </span>
+            </div>
+
+
 
             <div class="vendor-table-wrapper">
                 <div id="vendor-table" class="noCustomize_gridjs"></div>
             </div>
 
         </div>
+
     </div>
 @endsection
 @section('script')
