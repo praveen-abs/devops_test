@@ -467,6 +467,15 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('dayWiseStaffAttendance', [App\Http\Controllers\VmtAttendanceController::class, 'dayWiseStaffAttendance'])->name('dayWiseStaffAttendance');
 
+
+    ////Reports
+    //payroll reports
+    Route::get('/reports/payroll',  [App\Http\Controllers\VmtReportsController::class, 'showPayrollReportsPage'])->name('showPayrollReportsPage');
+    Route::post('/reports/generatePayrollReports',  [App\Http\Controllers\VmtReportsController::class, 'generatePayrollReports'])->name('generatePayrollReports');
+    Route::get('/reports/fetchAllEmployeePayrollDetails',  [App\Http\Controllers\VmtReportsController::class, 'fetchAllEmployeePayrollDetails'])->name('fetchAllEmployeePayrollDetails');
+
+
+
 });
 
 Route::post('updatePassword', 'App\Http\Controllers\VmtEmployeeController@updatePassword')->name('vmt-updatepassword');
@@ -480,11 +489,6 @@ Route::get('/signed-passwordresetlink', 'App\Http\Controllers\Auth\LoginControll
 Route::get('syncStaffAttendanceFromDeviceDatabase', [App\Http\Controllers\VmtStaffAttendanceController::class, 'syncStaffAttendanceFromDeviceDatabase']);
 
 
-////Reports
-//payroll reports
-Route::get('/reports/payroll',  [App\Http\Controllers\VmtReportsController::class, 'showPayrollReportsPage'])->name('showPayrollReportsPage');
-Route::post('/reports/generatePayrollReports',  [App\Http\Controllers\VmtReportsController::class, 'generatePayrollReports'])->name('generatePayrollReports');
-Route::get('/reports/fetchAllEmployeePayrollDetails',  [App\Http\Controllers\VmtReportsController::class, 'fetchAllEmployeePayrollDetails'])->name('fetchAllEmployeePayrollDetails');
 
 
 //Internal stuffs
