@@ -97,6 +97,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                         class="  padding-t-b_0  ">
 
                                                         <a class="" type="button"
+                                                        href="{{ $loginLink }}/team-appraisal"
                                                             style="text-decoration:none;cursor: pointer; margin-right:10px;color:#ffffff;padding: 7px 30px;border: 2px solid #90f10c;background: #90f10c;border-radius: 4px;font-weight:600">
                                                             Approve
                                                         </a>
@@ -105,6 +106,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                         class="padding-t-b_0 ">
 
                                                         <a class="" type="button"
+                                                        href="{{ $loginLink }}/team-appraisal"
                                                             style="text-decoration:none;cursor: pointer;margin-left:10px;color:#ffffff;padding: 7px 30px;border: 2px solid #f12d0c;background: #ff2500;border-radius: 4px;font-weight:600">
                                                             Reject
                                                         </a>
