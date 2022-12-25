@@ -10,9 +10,7 @@
             <h6 class="">Payroll Reports</h6>
 
             <div class=" text-end mb-2">
-                <button class="btn btn-orange me-2" id="btn_downloadReport"
-                    data-bs-toggle="modal" data-bs-target="#newVendor">Download Report</button>
-
+                <button class="btn btn-orange me-2" id="btn_downloadReport">Download Report</button>
             </div>
 
 
@@ -102,18 +100,21 @@
                     type: "POST",
                     dataType: "json",
                     data: {
-            "payroll_month":selectedPayRollMonth,
+                        "payroll_month":selectedPayRollMonth,
                         "_token": "{{ csrf_token() }}",
                     },
                     success: function(data) {
+                        console.log("Downloading excelsheet....");
+                        var url = window.URL || window.webkitURL;
+                        var objectUrl = url.createObjectURL(data);
+                        window.open(objectUrl);
 
-
-              },
+                    },
                     error: function(data) {
 
 
                     }
-                });
+            });
 
         });
     </script>

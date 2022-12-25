@@ -22,7 +22,7 @@ class VmtReportsController extends Controller
     public function generatePayrollReports(Request $request){
 
         $filename = 'PayrollReports_'.$request->payroll_month.'.xlsx';
-        return Excel::download(new VmtPayrollReports($request->payroll_month), $filename );
+        return Excel::download(new VmtPayrollReports($request->payroll_month), $filename ,null, [\Maatwebsite\Excel\Excel::XLSX]);
     }
 
 
