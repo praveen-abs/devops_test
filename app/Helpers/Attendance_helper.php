@@ -41,6 +41,12 @@ function getPermissionLeaveTypeIDs(){
     return VmtLeaves::where('leave_type','like','%Permission%')->pluck('id');
 }
 
+
+function getAllLeaveTypes()
+{
+    return VmtLeaves::all(['id','leave_type']);
+}
+
 /*
     Based on user_time, return LC/EG
     TODO : In Future, add $shift_type parameter

@@ -146,10 +146,6 @@ function hasSubClients()
         return false;
 }
 
-function getAllLeaveTypes()
-{
-    return VmtLeaves::all(['id','leave_type']);
-}
 
 function fetchClients(){
 
