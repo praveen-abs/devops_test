@@ -18,7 +18,7 @@
                                 <h6 class="mb-2">Reimbursements</h6>
 
                                 <div class="table-responsive">
-                                    <div id="table_pms_approvals" class="custom_gridJs"></div>
+                                    <div id="table_reimbursement_approvals" class="custom_gridJs"></div>
                                 </div>
                             </div>
                         </div>
@@ -38,7 +38,7 @@ $(document).ready(function(){
         $("#btn_submit").on('click', function(){
 
             $.ajax({
-                url: "{{ url('showPMSApprovalPage') }}",
+                url: "{{ url('showReimbursementApprovalPage') }}",
                 type : "POST",
                 dataType : 'json',
                 data :$("").serialize(),
@@ -47,53 +47,79 @@ $(document).ready(function(){
         });
     });
 
-            if (document.getElementById("table_pms_approvals")) {
-                gridTable_pms_approvals = new gridjs.Grid({
+            if (document.getElementById("table_reimbursement_approvals")) {
+                gridTable_reimbursement_approvals = new gridjs.Grid({
                     columns: [
                         {
-                            id: 'pms_kpiform_review_id',
+                            id: 'id',
                             name: 'ID',
                         },
                         {
-                            id:'name',
-                            name:'Assignee Name'
+                            id:'user_id',
+                            name:'User Id',
                         },
                         {
-                           id:'assignment_period',
-                           name:'Assignment Period',
+                            id:'reimbursement_type_id',
+                            name:'reimbursement_type_id',
+                        },
+                        {
+                            id:'name',
+                            name:'Name',
+                        },
+                        {
+                           id:'date',
+                           name:'Date',
 
                         },
 
+                        {
+                            id:'user_data',
+                            name:'User Data',
+                        },
+                        {
+                            id:'user_comments',
+                            name:'User Comments',
+
+                        },
                         {
                             id:'reviewer_id',
-                            name:'Reviewer Name'
+                            name:'Reviewer id'
                         },
-
                         {
-                            id: 'attr_reviewer_accepted_status',
-                            name: 'Reviewer Status',
+                            id:'reviewed_date',
+                            name:'Reviewed Date',
+                        },
+                        {
+                            id: 'status',
+                            name: 'Status',
                             formatter: function formatter(cell) {
                                 if(cell == -1)
                                     return "Pending";
-                                elseif(cell == 0)
+                                else
+                                if(cell == 0)
                                     return "Rejected";
-                                elseif(cell == 1)
+                                else
+                                if(cell == 1)
                                     return "Approved";
                             }
                         },
                         {
+                            id:'reviewer_comments',
+                            name:'Reviewer Comments',
+                        },
+                        {
                             id: 'actions',
                             name: 'Action',
-                            formatter: function formatter(emp) {
+                            formatter: function formatter(cell) {
                                 var htmlcontent = "";
 
                                     htmlcontent =
-                                        '<button type="button" value="Approve" data-kpiform_review_id="' + emp.pms_kpiform_review_id
+                                        '<button type="button" value="Approve" data-reimbursement_id="' + cell.id
                                         +'" data-status="Approve" class="status me-2 btn btn-success py-1 process-btn"><i class="fa me-1 fa-check-circle" aria-hidden="true"></i>Approve</button>';
 
 
                                     htmlcontent = htmlcontent +
-                                    '<button type="button" value="Reject" data-kpiform_review_id="' + emp.pms_kpiform_review_id
+                                    '<button type="button" value="Reject" data-reimbursement_id="' + cell.id
                                     +'" data-status="Reject" class="status btn me-2 btn-danger py-1 process-btn"><i class="fa fa-times-circle me-1"></i>Reject</button>';
                                     return gridjs.html(htmlcontent);
                             }
@@ -107,23 +133,27 @@ $(document).ready(function(){
                     sort: true,
                     search: true,
                     server: {
-                        url: '{{ route('fetchPendingPMSForms') }}',
+                        url: '{{ route('fetchPendingReimbursements') }}',
                         then: data => data.map(
-                            approvals_pms => [
-                                // Assignee name, Assignment period, Approval Status      Reviewer Name, BUTTON(View, Approve, Reject)
-
-                                approvals_pms.pms_kpiform_review_id,
-                                approvals_pms.assignee_name,
-                                approvals_pms.assignment_period,
-                                approvals_pms.reviewer_name,
-                                approvals_pms.attr_reviewer_accepted_status,
-                                approvals_pms,
-                                //approvals_pms.status,
+                            approvals_reimbursement => [
+                                approvals_reimbursement.id,
+                                approvals_reimbursement.user_id,
+                                approvals_reimbursement.reimbursement_type_id,
+                                approvals_reimbursement.name,
+                                approvals_reimbursement.date,
+                                approvals_reimbursement.user_data,
+                                approvals_reimbursement.user_comments,
+                                approvals_reimbursement.reviewer_id,
+                                approvals_reimbursement.reviewed_date,
+                                approvals_reimbursement.attr_reviewer_accepted_status,
+                                approvals_reimbursement.reviewer_comments,
+                                approvals_reimbursement,
+                                 
 
                             ]
                         )
                     }
-                }).render(document.getElementById("table_pms_approvals"));
+                }).render(document.getElementById("table_reimbursement_approvals"));
             }
 
             $(document).ready(function(){
@@ -132,7 +162,7 @@ $(document).ready(function(){
                 {
                     let status_type =  $(this).attr('data-status');
                     let message = 'Do you want to '+status_type+'?';
-                    let kpiform_review_id = $(this).attr('data-kpiform_review_id');
+                    let reimbursement_id = $(this).attr('data-reimbursement_id');
 
                     e.preventDefault();
 
@@ -151,10 +181,10 @@ $(document).ready(function(){
                             console.log("Sending AJAX request");
 
                             $.ajax({
-                                url: "{{ route('vmt-approvals-pms') }}",
+                                url: "{{ route('showReimbursementApprovalPage') }}",
                                 type : "POST",
                                 data :{
-                                    kpiform_review_id : kpiform_review_id,
+                                    reimbursement_id : reimbursement_id,
                                     status : status_type,
                                     _token: '{{ csrf_token() }}'
 
