@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\User;
 use App\Models\VmtEmployee;
+use App\Models\VmtEmployeeReimbursements;
 use App\Models\VmtPMS_KPIFormReviewsModel;
 use App\Models\VmtPMS_KPIFormAssignedModel;
 
@@ -204,6 +205,19 @@ class VmtApprovalsController extends Controller
         ];
 
         return $response;
+    }
+
+    function showReimbursementApprovalPage(){
+
+        return view("approvals.vmt_approval_reimbursements");
+    }
+
+    function fetchPendingReimbursements(){
+        //VmtEmployeeReimbursements
+    }
+
+    function approveRejectReimbursements(){
+
     }
 }
 
