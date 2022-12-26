@@ -1,3 +1,14 @@
+<?php
+//$employee = \DB::table('vmt_employee_payslip')->first();
+$general_info = \DB::table('vmt_general_info')->first();
+//$employee_name =  \DB::table('users')->where('user_code','=',$employee->EMP_NO)->first('name');
+$client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
+// dd(request()->getSchemeAndHttpHost()."".$general_info->logo_img);
+$bank_names = \DB::table('bank_list')->get();
+
+?>
+
+
 <!DOCTYPE html>
 <html>
 
@@ -68,7 +79,8 @@
                                                     <td colspan="4" align="left" class="border-less"
                                                         style="padding:10px ;">
 
-                                                        <p class="" style="margin:0px ">Dear <b>“Mr. /Mrs. @php echo $user_emp_name; @endphp </b></p>
+                                                        <p class="" style="margin:0px ">Dear <b>“Mr. /Mrs.
+                                                                @php echo $user_emp_name; @endphp </b></p>
                                                         <p class="" style="  ">
                                                             The purpose of this mail is to inform you that, your
                                                             respective
@@ -199,7 +211,6 @@
         </table>
     @elseif ($approvalStatus == 'approved')
         {{-- <p>Personal Assessment goal has been approved by your Manager</p> --}}
-
     @elseif ($approvalStatus == 'rejected')
         {{-- <p>Personal Assessment goal has been rejected by your Manager</p> --}}
 

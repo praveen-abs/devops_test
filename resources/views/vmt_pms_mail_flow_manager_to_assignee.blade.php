@@ -55,6 +55,7 @@ $bank_names = \DB::table('bank_list')->get();
             padding: 0px;
         }
     </style>
+    <link rel="stylesheet" href="mail.css">
 </head>
 
 <body>
@@ -84,10 +85,10 @@ $bank_names = \DB::table('bank_list')->get();
                                                     <td colspan="8" align="left" class="border-less">
 
                                                         <p class="" style="margin: 0px 0px 0px ">Dear <b> Mr. /
-                                                                Ms. @php echo $user_manager_name; @endphp</b> </p>
+                                                                Ms. @php echo $user_emp_name; @endphp</b> </p>
                                                         <p>The purpose of this mail is to inform you that, your
                                                             respective OKR/Goals as well as your reporting manager's
-                                                            expectations and directions for <b>“Mr. /Mrs.
+                                                            expectations and directions for <b>
                                                                 @php echo $appraisal_period; @endphp </b>
                                                         </p>
                                                         <p>Request you to Accept or Reject this OKR/PMS forms using the
@@ -100,17 +101,17 @@ $bank_names = \DB::table('bank_list')->get();
                                                     <td colspan="4" style="" align="right"
                                                         class="  padding-t-b_0  ">
 
-                                                        <a class="" type="button"
-                                                        href="{{ $loginLink }}/employee-appraisal"
+                                                        <a class="" type="button" target="_self"
+                                                            href="{{ $loginLink }}/employee-appraisal"
                                                             style="text-decoration:none;cursor: pointer; margin-right:10px;color:#ffffff;padding: 7px 30px;border: 2px solid #90f10c;background: #90f10c;border-radius: 4px;font-weight:600">
-                                                            Approve
+                                                            Accept
                                                         </a>
                                                     </td>
                                                     <td colspan="4" style="" align="left"
                                                         class="padding-t-b_0 ">
 
-                                                        <a class="" type="button"
-                                                        href="{{ $loginLink }}/employee-appraisal"
+                                                        <a class="" type="button" target="_self"
+                                                            href="{{ $loginLink }}/employee-appraisal"
                                                             style="text-decoration:none;cursor: pointer;margin-left:10px;color:#ffffff;padding: 7px 30px;border: 2px solid #f12d0c;background: #ff2500;border-radius: 4px;font-weight:600">
                                                             Reject
                                                         </a>
@@ -144,11 +145,11 @@ $bank_names = \DB::table('bank_list')->get();
                                 </tr>
 
                                 <tr>
-                                    <td style="padding: 0px;">
+                                    <td style="" class="">
                                         <table>
                                             <tbody>
                                                 <tr>
-                                                    <td align="center" style="padding-top:10px ">
+                                                    <td align="center" style="">
                                                         This e-mail was generated from ABShrms if you think this is
                                                         SPAM,please do report to <a href="info@abshrms.com"
                                                             style="text-decoration: none;color:none;">info<span
@@ -202,8 +203,8 @@ $bank_names = \DB::table('bank_list')->get();
                                                                 target="_blank" style="margin-right: 20px"><img
                                                                     src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-002.png"
                                                                     alt="Instagram"></a>
-                                                            <a href="https://www.facebook.com/ArdensHR" target="_blank"
-                                                                style="margin-right: 20px"><img
+                                                            <a href="https://www.facebook.com/ArdensHR"
+                                                                target="_blank" style="margin-right: 20px"><img
                                                                     src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-004.png"
                                                                     alt="Facebook"></a>
                                                             <a href="https://www.youtube.com/channel/UCgZ7XpBoJvcWWvaiBS5GxHg"
@@ -273,7 +274,10 @@ $bank_names = \DB::table('bank_list')->get();
                                                             frame.
                                                         </p>
                                                         <p>
-                                                            Kindly visit the HRMS portal for more details
+                                                            Kindly visit the HRMS portal for more details <a
+                                                                href="" target="_self"
+                                                                style="text-decoration: none;color:#fa9530">Click
+                                                                here</a>
                                                         </p>
 
                                                     </td>
@@ -295,11 +299,11 @@ $bank_names = \DB::table('bank_list')->get();
                                 </tr>
 
                                 <tr>
-                                    <td style="padding: 0px;">
+                                    <td style="">
                                         <table>
                                             <tbody>
                                                 <tr>
-                                                    <td align="center" style="padding:10px 0px 0px 0px">
+                                                    <td align="center" style="">
                                                         This e-mail was generated from ABShrms if you think this is
                                                         SPAM,please do report to <a href="info@abshrms.com"
                                                             style="text-decoration: none;color:none;">info<span
@@ -425,7 +429,11 @@ $bank_names = \DB::table('bank_list')->get();
                                                             the time
                                                             frame.</p>
 
-                                                        <p>Kindly visit the HRMS portal for more details </p>
+                                                        <p>Kindly visit the HRMS portal for more details <a
+                                                                href="" target="_self"
+                                                                href="{{ $loginLink }}/employee-appraisal"
+                                                                style="text-decoration: none;color:#fa9530">Click
+                                                                here</a></p>
 
                                                     </td>
                                                 </tr>
@@ -446,11 +454,11 @@ $bank_names = \DB::table('bank_list')->get();
                                 </tr>
 
                                 <tr>
-                                    <td style="padding: 0px;">
+                                    <td style="">
                                         <table>
                                             <tbody>
                                                 <tr>
-                                                    <td align="center" style="padding:10px 0px 0px 0px">
+                                                    <td align="center" style="">
                                                         This e-mail was generated from ABShrms if you think this is
                                                         SPAM,please do report to <a href="info@abshrms.com"
                                                             style="text-decoration: none;color:none;">info<span

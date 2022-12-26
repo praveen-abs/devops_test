@@ -1033,8 +1033,8 @@
                 <div class="modal-body">
 
                     <h4 class="mb-3" id="modalNot">Data Saved Successfully!</h4>
-                    <p class="text-muted mb-4" id="modalBody"> Table Saved, Please publish goals.</p>
-                    <div class="hstack gap-2 justify-content-center">
+                    <p class="text-muted mb-2" id="modalBody"> Table Saved, Please publish goals.</p>
+                    <div class="modal-footer p-0 border-0">
                         <button type="button" class="btn btn-light close-modal" data-bs-dismiss="modal">Close</button>
                     </div>
 
