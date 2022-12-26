@@ -853,6 +853,8 @@ button.gridjs-sort-desc {
     border-radius: 0px !important;
     transition-timing-function: linear;
     font-weight: 600;
+    margin: 0px 5px;
+    padding: 6px 0px 8px 0px;
 }
 .nav-tabs-dashed .nav-item .nav-link.active::after {
     content: "";
