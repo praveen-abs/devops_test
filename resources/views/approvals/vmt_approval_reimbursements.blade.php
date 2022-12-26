@@ -54,14 +54,14 @@ $(document).ready(function(){
                             id: 'id',
                             name: 'ID',
                         },
-                        {
-                            id:'user_id',
-                            name:'User Id',
-                        },
-                        {
-                            id:'reimbursement_type_id',
-                            name:'reimbursement_type_id',
-                        },
+                        // {
+                        //     id:'user_id',
+                        //     name:'User Id',
+                        // },
+                        // {
+                        //     id:'reimbursement_type_id',
+                        //     name:'reimbursement_type_id',
+                        // },
                         {
                             id:'name',
                             name:'Name',
@@ -83,7 +83,7 @@ $(document).ready(function(){
                         },
                         {
                             id:'reviewer_id',
-                            name:'Reviewer id'
+                            name:'Reviewer Name'
                         },
                         {
                             id:'reviewed_date',
@@ -137,8 +137,8 @@ $(document).ready(function(){
                         then: data => data.map(
                             approvals_reimbursement => [
                                 approvals_reimbursement.id,
-                                approvals_reimbursement.user_id,
-                                approvals_reimbursement.reimbursement_type_id,
+                                //approvals_reimbursement.user_id,
+                               // approvals_reimbursement.reimbursement_type_id,
                                 approvals_reimbursement.name,
                                 approvals_reimbursement.date,
                                 approvals_reimbursement.user_data,
