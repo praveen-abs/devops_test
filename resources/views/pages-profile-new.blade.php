@@ -310,8 +310,6 @@
                     <div class="tab-pane fade" id="experience_det" role="tabpanel" aria-labelledby="">
                         <div class="card mb-2">
                             <div class="card-body">
-                                {{-- <form action="{{ route('updatePersonalInformation', $user->id) }}" Method="POST"
-                                    enctype="multipart/form-data"> --}}
                                     <h6 class="">Experience Information
                                         <span class="personal-edit"><a href="#" class="edit-icon"
                                                 data-bs-toggle="modal" data-bs-target="#edit_experienceInfo"><i
@@ -2396,7 +2394,7 @@
                         _token : '{{ csrf_token() }}'
                     },
                     success: function(data) {
-                    window.reload();
+                    window.location.reload();
                 }
                 
             });
