@@ -134,12 +134,12 @@
             <div class="card-body py-1 px-0 ">
 
                 <ul class="nav nav-pills    nav-tabs-dashed" id="pills-tab" role="tablist">
-                    <li class="nav-item active ember-view mx-4" role="presentation">
+                    <li class="nav-item  ember-view me-4" role="presentation">
                         <a class="nav-link active ember-view " id="pills-home-tab" data-bs-toggle="pill" href=""
                             data-bs-target="#appointment" role="tab" aria-controls="pills-home" aria-selected="true">
                             Appointment Letter</a>
                     </li>
-                    <li class="nav-item mx-4 ember-view" role="presentation ">
+                    <li class="nav-item  ember-view" role="presentation ">
                         <a class="nav-link ember-view" id="payslips-tab" data-bs-toggle="pill" data-bs-target="#payslips"
                             type="button" role="tab" aria-controls="payslips" aria-selected="false">Pay Slip</a>
                     </li>

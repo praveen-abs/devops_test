@@ -3,156 +3,155 @@
     @lang('translation.settings')
 @endsection
 @section('css')
-<style>
-    .main-page {
-        width: 210mm;
-        min-height: 297mm;
-        margin: 10mm auto;
-        background: white;
-        box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        -webkit-box-sizing: bo;
-    }
-    .main-page.view-policy{
-        min-height: 200px;
-    }
-
-    .sub-page {
-        padding: 1cm;
-
-    }
-
-    @media print {
+    <style>
         .main-page {
-            page-break-after: always;
-        }
-    }
-
-
-    @page {
-        size: A4;
-        margin: 0;
-    }
-
-    @media print {
-
-        html,
-        body {
             width: 210mm;
-            height: 297mm;
+            min-height: 297mm;
+            margin: 10mm auto;
+            background: white;
+            box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: bo;
         }
 
-        .main-page {
+        .main-page.view-policy {
+            min-height: 200px;
+        }
+
+        .sub-page {
+            padding: 1cm;
+
+        }
+
+        @media print {
+            .main-page {
+                page-break-after: always;
+            }
+        }
+
+
+        @page {
+            size: A4;
             margin: 0;
-            border: initial;
-            border-radius: initial;
-            width: initial;
-            min-height: initial;
-            box-shadow: initial;
-            background: initial;
-            page-break-after: always;
         }
-    }
+
+        @media print {
+
+            html,
+            body {
+                width: 210mm;
+                height: 297mm;
+            }
+
+            .main-page {
+                margin: 0;
+                border: initial;
+                border-radius: initial;
+                width: initial;
+                min-height: initial;
+                box-shadow: initial;
+                background: initial;
+                page-break-after: always;
+            }
+        }
 
 
 
-    .avatar_table tr,
-    .avatar_table tr td {
-        border: 2px solid #dee2e6 !important;
-        padding: 5px !important;
-    }
+        .avatar_table tr,
+        .avatar_table tr td {
+            border: 2px solid #dee2e6 !important;
+            padding: 5px !important;
+        }
 
-    .payslip_table {
-        width: 100%;
-        vertical-align: middle;
-        font-family: sans-serif;
-    }
+        .payslip_table {
+            width: 100%;
+            vertical-align: middle;
+            font-family: sans-serif;
+        }
 
-    table.payslip_table tr,
-    table.payslip_table tr td {
-        border: 2px solid #008fc7;
+        table.payslip_table tr,
+        table.payslip_table tr td {
+            border: 2px solid #008fc7;
 
-    }
-
-
-
-    .border-less {
-        border: 0px !important;
-    }
-
-    .payslip_table tr {
-        height: 12.55pt;
-    }
-
-    .payslip_table td {
-        width: 81.35pt
-    }
+        }
 
 
 
-    .margin-0 {
-        margin: 0px;
-    }
+        .border-less {
+            border: 0px !important;
+        }
 
-    table.payslip_table tr td  p {
-        font-size: 9pt;
-        margin-top: 3pt;
-        margin-bottom: 3pt;
-        padding: 0px 5px;
-        /* text-align: justify; */
-    }
+        .payslip_table tr {
+            height: 12.55pt;
+        }
 
-    .txt-left {
-        text-align: left;
-    }
+        .payslip_table td {
+            width: 81.35pt
+        }
 
-    .txt-right {
-        text-align: right;
-    }
 
-    .txt-center {
-        text-align: center;
-    }
 
-    .text-strong {
-        font-weight: 600;
-    }
+        .margin-0 {
+            margin: 0px;
+        }
 
-    .header-row {
-        height: 50px;
-    }
+        table.payslip_table tr td p {
+            font-size: 9pt;
+            margin-top: 3pt;
+            margin-bottom: 3pt;
+            padding: 0px 5px;
+            /* text-align: justify; */
+        }
 
-    td.bg-ash {
-        background-color: #9e9e9e5c;
-    }
+        .txt-left {
+            text-align: left;
+        }
 
-    .p3 {
-        padding: 3px;
-    }
-</style>
+        .txt-right {
+            text-align: right;
+        }
+
+        .txt-center {
+            text-align: center;
+        }
+
+        .text-strong {
+            font-weight: 600;
+        }
+
+        .header-row {
+            height: 50px;
+        }
+
+        td.bg-ash {
+            background-color: #9e9e9e5c;
+        }
+
+        .p3 {
+            padding: 3px;
+        }
+    </style>
 @endsection
 @section('content')
-    <div class="card  left-line mb-2 mt-30">
+<div class="template-wrapper mt-30">
+    <div class="card  left-line mb-2 ">
         <div class="card-body px-2 pb-1 pt-2">
-            <div class="row">
-                <div class="col-6 d-flex align-items-center">
-                    <ul class="nav nav-pills nav-tabs-dashed" role="tablist">
-                        <li class="nav-item text-muted me-5" role="presentation">
-                            <a class="nav-link active pb-2" data-bs-toggle="tab" href="#appointment" aria-selected="true"
-                                role="tab">
-                                Appointment Letter
-                            </a>
-                        </li>
-                        <li class="nav-item text-muted" role="presentation">
-                            <a class="nav-link  pb-2" data-bs-toggle="tab" href="#payslips" aria-selected="true"
-                                role="tab">
-                                Pay Slip
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+
+            <ul class="nav nav-pills nav-tabs-dashed" role="tablist">
+                <li class="nav-item text-muted me-4" role="presentation">
+                    <a class="nav-link active pb-2" data-bs-toggle="tab" href="#appointment" aria-selected="true"
+                        role="tab">
+                        Appointment Letter
+                    </a>
+                </li>
+                <li class="nav-item text-muted" role="presentation">
+                    <a class="nav-link  pb-2" data-bs-toggle="tab" href="#payslips" aria-selected="true" role="tab">
+                        Pay Slip
+                    </a>
+                </li>
+            </ul>
+
         </div>
     </div>
 
@@ -161,21 +160,11 @@
         <div class="tab-content " id="pills-tabContent">
             <div class="tab-pane fade show active" id="appointment" role="tabpanel" aria-labelledby="pills-home-tab">
                 <div class="tab-pane fade show active" id="appointment" role="tabpanel" aria-labelledby="pills-home-tab">
-                    <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false"
-                        data-bs-interval="false">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <div class="main-page d-flex flex-column view-policy justify-content-center align-items-center">
-                                     <h5>Template not found for the client  {{ sessionGetSelectedClientName() }}</h5>
+                    <div class="col-md-4 mx-auto d-flex justify-content-center text-center flex-column">
+                        <img src="{{ URL::asset('assets/images/no_dataFile.svg') }}" class="">
+                        <h4> <span class="text-orange">Sorry !</span> No data</h4>
 
 
-                                    {{--    <h6>Leave Policy</h6>
-                                        <a href="{{ URL::asset('assets/images/client_logos/vasa/Leave_Policy_Langro India_VasaGroup.docx') }}" class="btn btn-border-orange"><i class="fa fa-file me-2"></i>Download</a> --}}
-
-
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -190,7 +179,8 @@
                                         <td colspan="8" class="border-less p3" rowspan="">
                                             <div class="header-cotent">
 
-                                                <h6 class="margin-0" style="padding-left: 5px">Langro India Private Limited.</h6>
+                                                <h6 class="margin-0" style="padding-left: 5px">Langro India Private Limited
+                                                </h6>
                                                 <p class="mb-0">Dugar Towers, 2nd floor,</p>
                                                 <p class="mb-0">#34/123, Marshalls Road, Egmore,</p>
                                                 <p class="mb-0">Chennai, Tamil Nadu, India 600 008. </p>
@@ -199,10 +189,10 @@
                                         <td colspan="4" class="border-less p3">
 
                                             <div class="header-img txt-right d-flex align-items-center"
-                                                style="height:100px ;">
+                                                >
                                                 <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_langro.jpg') }}"
-                                                class="" alt=""
-                                                style="height: 100px;width:250px;max-height:100%;">
+                                                    class="" alt=""
+                                                    style="height: 100px;width:250px;max-height:100%;">
                                             </div>
 
 
@@ -481,7 +471,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="2" class="">
-                                            <p class="txt-left text-strong">  </p>
+                                            <p class="txt-left text-strong"> </p>
                                         </td>
                                         <td colspan="2" class="">
                                             <p class="txt-right"></p>
@@ -502,7 +492,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="2" class="">
-                                            <p class="txt-left text-strong">  </p>
+                                            <p class="txt-left text-strong"> </p>
                                         </td>
                                         <td colspan="2" class="">
                                             <p class="txt-right"></p>
@@ -646,7 +636,8 @@
 
                                     <tr class="border-less">
                                         <td colspan="8" class="border-less">
-                                            <p class="txt-left">Please reach out to us for any payroll queries at -hr.admin@imcvasa.in</p>
+                                            <p class="txt-left">Please reach out to us for any payroll queries at
+                                                -hr.admin@imcvasa.in</p>
                                         </td>
                                         <td colspan="2" class="border-less ">
                                             <p class="txt-right">Powered By</p>
@@ -654,8 +645,9 @@
 
                                         </td>
                                         <td colspan="2" class="border-less">
-                                            <img src="{{ URL::asset('assets/images/logo.png') }}" alt=""
-                                                class="" style="height: 40px;width:120px;">
+
+                                            <img src="{{ URL::asset('assets/images/footer_logo.png') }}" alt=""
+                                            class="" style="height: 16px;width:95px;">
                                         </td>
                                     </tr>
 
@@ -668,4 +660,5 @@
         </div>
 
     </div>
+</div>
 @endsection
