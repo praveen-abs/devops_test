@@ -209,14 +209,14 @@ class VmtApprovalsController extends Controller
 
     function showReimbursementApprovalPage(Request $request){
 
-        return view("approvals.vmt_approval_reimbursements");
+        return view("vmt_approval_reimbursement");
     }
 
     function fetchPendingReimbursements(Request $request){
       $reimbursement_query= VmtEmployeeReimbursements::join('vmt_reimbursements','vmt_reimbursements.id','=','vmt_employee_reimbursements.reimbursement_type_id')
                             ->join('users','users.id','=','vmt_employee_reimbursements.user_id',)
                             //->join('users','users.id','=','vmt_employee_reimbursements.reviewer_id')
-                            ->where('vmt_employee_reimbursements.status','0')->get();
+                            ->where('vmt_employee_reimbursements.status','pending')->get();
 
                             
 
