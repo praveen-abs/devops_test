@@ -71,55 +71,55 @@ $(document).ready(function(){
                     {
                         id: 'name',
                         name: 'Employee Name',
-                        formatter: function formatter(empObj) {
+//                         formatter: function formatter(empObj) {
 
-var emp_code = empObj.emp_code;
-var emp_name = empObj.emp_name;
+// var emp_code = empObj.emp_code;
+// var emp_name = empObj.emp_name;
 
-var imagePath = '{{ URL::asset('images/') }}' + '/' + empObj.avatar;
+// var imagePath = '{{ URL::asset('images/') }}' + '/' + empObj.avatar;
 
-//Check if spaces present in profile image text
-if ((/\s/).test(imagePath)) {
-    // console.log("White spaces present in : "+imagePath);
+// //Check if spaces present in profile image text
+// if ((/\s/).test(imagePath)) {
+//     // console.log("White spaces present in : "+imagePath);
 
-} else {
-    // console.log(span_id);
+// } else {
+//     // console.log(span_id);
 
-    //  console.log("##### White spaces not present in : "+imagePath);
+//     //  console.log("##### White spaces not present in : "+imagePath);
 
 
-}
+// }
 
-//console.log(emp_name);
-var html_image_tag = '<img data-emp_code="' + emp_code +
-    '" data-emp_name="' + emp_name + '" id="img_' + emp_code +
-    '" class="h-10 w-10"  alt=" " src="' + imagePath + '" />';
-var html_empname = emp_name;
-var htmlContent =
-    '<div class="d-flex align-items-center page-header-user-dropdown" style="width:max-content;">' +
-    '<div id="span_' + emp_code +
-    '" class="rounded-circle user-profile  me-1">' +
-    html_image_tag + '</div>' + html_empname + '</div>';
+// //console.log(emp_name);
+// var html_image_tag = '<img data-emp_code="' + emp_code +
+//     '" data-emp_name="' + emp_name + '" id="img_' + emp_code +
+//     '" class="h-10 w-10"  alt=" " src="' + imagePath + '" />';
+// var html_empname = emp_name;
+// var htmlContent =
+//     '<div class="d-flex align-items-center page-header-user-dropdown" style="width:max-content;">' +
+//     '<div id="span_' + emp_code +
+//     '" class="rounded-circle user-profile  me-1">' +
+//     html_image_tag + '</div>' + html_empname + '</div>';
 
-$('#img_' + emp_code).on('error', function() {
+// $('#img_' + emp_code).on('error', function() {
 
-    console.log("Image missing for " + this.dataset
-        .emp_name);
+//     console.log("Image missing for " + this.dataset
+//         .emp_name);
 
-    $('#span_' + this.dataset.emp_code).html(
-        '<i id="shortname_' + emp_code +
-        '" class="align-middle fw-bold"></i>');
+//     $('#span_' + this.dataset.emp_code).html(
+//         '<i id="shortname_' + emp_code +
+//         '" class="align-middle fw-bold"></i>');
 
-    generateProfileShortName_VendorScript("shortname_" +
-        emp_code, emp_name);
+//     generateProfileShortName_VendorScript("shortname_" +
+//         emp_code, emp_name);
 
-});
+// });
 
-return gridjs.html(htmlContent);
-}
+// return gridjs.html(htmlContent);
+// }
                     },
                      {
-                        id:'id',
+                        id:'user_code',
                         name:'Employee Code',
                     },
                     {
@@ -129,7 +129,7 @@ return gridjs.html(htmlContent);
                     },
 
                     {
-                        id:'user_data',
+                        id:'reviewed_date',
                         name:'To',
                     },
                     {
@@ -196,14 +196,16 @@ return gridjs.html(htmlContent);
                             approvals_reimbursement.name,
                             //approvals_reimbursement.user_id,
                            // approvals_reimbursement.reimbursement_type_id,
-                            approvals_reimbursement.id,
+                            approvals_reimbursement.user_code,
                             approvals_reimbursement.date,
-                            approvals_reimbursement.user_data,
-                            approvals_reimbursement.reviewer_id,
-                            approvals_reimbursement.user_comments,
+                           
+                            // approvals_reimbursement.reviewer_id,
+                            // approvals_reimbursement.user_comments,
                             approvals_reimbursement.reviewed_date,
-                            approvals_reimbursement.attr_reviewer_accepted_status,
-                            approvals_reimbursement.reviewer_comments,
+                            approvals_reimbursement.user_data,
+                            approvals_reimbursement.user_comments,
+                           // approvals_reimbursement.attr_reviewer_accepted_status,
+                           
                             approvals_reimbursement,
                              
 
