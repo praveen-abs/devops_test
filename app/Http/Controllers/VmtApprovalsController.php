@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\User;
 use App\Models\VmtEmployee;
+use App\Models\VmtEmployeeReimbursements;
 use App\Models\VmtPMS_KPIFormReviewsModel;
 use App\Models\VmtPMS_KPIFormAssignedModel;
 
@@ -204,6 +205,37 @@ class VmtApprovalsController extends Controller
         ];
 
         return $response;
+    }
+
+    function showReimbursementApprovalPage(Request $request){
+
+        return view("approvals.vmt_approval_reimbursements");
+    }
+
+    function fetchPendingReimbursements(Request $request){
+      $reimbursement_query= VmtEmployeeReimbursements::join('vmt_reimbursements','vmt_reimbursements.id','=','vmt_employee_reimbursements.reimbursement_type_id')
+                            ->join('users','users.id','=','vmt_employee_reimbursements.user_id',)
+                            //->join('users','users.id','=','vmt_employee_reimbursements.reviewer_id')
+                            ->where('vmt_employee_reimbursements.status','0')->get();
+
+                            
+
+
+      return $reimbursement_query;
+    }
+
+    function approveRejectReimbursements(Request $request){
+        dd($request->all());
+
+     $query_review_reimbursement = VmtEmployeeReimbursements::find($request->status);
+        $status = null;
+
+        if($request->status == "Approve")
+            $status = "1";
+        else
+        if($request->status == "Reject")
+            $status = "0";
+
     }
 }
 

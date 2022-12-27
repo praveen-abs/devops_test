@@ -44,6 +44,7 @@
     <div class="settings-wrapper    mt-30">
         <div class="text-start">
             <!-- href for dashboard -->
+            
 
             <a href="{{ url('vmt_hr_dashboard') }}"><i class=" ri-arrow-left-circle-line mx-2 "></i> Back to dashboard</a>
         </div>
@@ -120,8 +121,8 @@
                                     <div class="card-body">
 
 
-                                        <form method="POST" id='role-form' action="{{ url('/vmt-general-info') }}"
-                                            enctype="multipart/form-data">
+                                        {{-- <form method="POST" id='role-form' action="{{ url('/vmt-general-info') }}"
+                                            enctype="multipart/form-data"> --}}
                                             @csrf
                                             <div class="mb-3">
                                                 <label for="short-name" class="form-label">Short Name</label>
@@ -155,7 +156,7 @@
                                                         </div>
                                                         <div class="logo-img d-flex align-items-center">
                                                             <button type="button" class="btn btn-primary btn-file">
-                                                                Browse <input type="file" id="{{ $singleClient->id }}" name="client_logo_ids"
+                                                                Browse <input type="file" id="{{ $singleClient->id }}" name="client_logo[]"
                                                                     accept=".png,.jpg,.jpeg,.bmp" onchange="readURL(this);"
                                                                     style="width:20px;height:15px;cursor: pointer;">
                                                             </button>
@@ -222,7 +223,7 @@
 
                                             <div class="text-end">
                                                 {{-- <button class="btn btn-default mx-2">Preview</button> --}}
-                                                <button type="submit" class="btn btn-primary">Save</button>
+                                                <button id="btn_submit" type="submit" class="btn btn-primary">Save</button>
                                             </div>
 
                                             <!-- for success message -->
@@ -2041,34 +2042,62 @@
                 reader.readAsDataURL(input.files[0]);
             }
         }
-        $('#role-form').on('submit', function(e) {
+        // $('#role-form').on('submit', function(e) {
 
 
-            //var formData = new FormData(this);
-            var roleUri = $('#role-form').attr('action');
-            // console.log(roleUri);
-            function(e) {
-                $.ajax({
-                    type: "POST",
-                    url: roleUri,
-                    enctype: 'multipart/form-data',
-                    data: new FormData(this),
-                    processData: false,
-                    contentType: false,
+        //     //var formData = new FormData(this);
+        //     var roleUri = $('#role-form').attr('action');
+        //     // console.log(roleUri);
+        //     function(e) {
+        //         $.ajax({
+        //             type: "POST",
+        //             url: roleUri,
+        //             enctype: 'multipart/form-data',
+        //             data: new FormData(this),
+        //             processData: false,
+        //             contentType: false,
+        //             success: function(data) {
+        //                 $('#alert-msg').html(data);
+        //                 var toastLiveExample3 = document.getElementById("borderedToast2");
+        //                 var toast = new bootstrap.Toast(toastLiveExample3);
+        //                 //  toast.show();
+
+
+        //                 //alert(data); // show response from the php script.
+        //             }
+        //             e.preventDefault();
+
+        //         })
+        //     }
+        //     //console.log($('#role-form').serialize());
+        // });
+
+        $(document).ready(function(){
+        $("#btn_submit").on('click',function(e){
+            e.preventDefault();
+       
+           
+            var fields = document.getElementsByName("client_logo[]");
+            let client_logo = $('input[name="client_logo[]"]').map(function() {
+                 return  $(this).val(); 
+                } ).get();
+                
+
+
+            // console.log(client_logo);
+            $.ajax({
+                url: "{{ route('update_client_logo')}}",
+                type:'POST',
+                data_type: "json",
+                data: {
+                    'client_logo[]': client_logo,
+                   _token : '{{ csrf_token() }}'
+                    },
                     success: function(data) {
-                        $('#alert-msg').html(data);
-                        var toastLiveExample3 = document.getElementById("borderedToast2");
-                        var toast = new bootstrap.Toast(toastLiveExample3);
-                        //  toast.show();
-
-
-                        //alert(data); // show response from the php script.
-                    }
-                    e.preventDefault();
-
-                })
-            }
-            //console.log($('#role-form').serialize());
-        });
+                     location.reload();
+                }
+                     });
+       
+        }); });
     </script>
 @endsection

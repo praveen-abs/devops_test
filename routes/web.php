@@ -112,6 +112,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/update-family-info/{id}', [App\Http\Controllers\HomeController::class, 'updtaeFamilyInfo'])->name('updtaeFamilyInfo');
     Route::post('/update-checkin', [App\Http\Controllers\HomeController::class, 'updateCheckin'])->name('updateCheckin');
     Route::get('/topbar-settings', [App\Http\Controllers\HomeController::class, 'vmt_topbar_settings'])->name('vmt_topbar_settings');
+    Route::post('/client_logo', [App\Http\Controllers\HomeController::class, 'update_client_logo'])->name('update_client_logo');
     // notifications
     Route::get('/notifications/{id}', [App\Http\Controllers\HomeController::class, 'delete'])->name('delete');
 
@@ -403,6 +404,11 @@ Route::middleware(['auth'])->group(function () {
     //PMS Approvals
     Route::get('/vmt_approval_pms',  [App\Http\Controllers\VmtApprovalsController::class, 'showPMSApprovalPage'])->name('showPMSApprovalPage');
     Route::get('/fetch_pending_pmsforms',  [App\Http\Controllers\VmtApprovalsController::class, 'fetchPendingPMSForms'])->name('fetchPendingPMSForms');
+
+    //Reimbursement Approvals
+    Route::get('/vmt_approval_reimbursements',  [App\Http\Controllers\VmtApprovalsController::class, 'showReimbursementApprovalPage'])->name('showReimbursementApprovalPage');
+    Route::get('/fetch_pending_reimbursements',  [App\Http\Controllers\VmtApprovalsController::class, 'fetchPendingReimbursements'])->name('fetchPendingReimbursements');
+
 
 
 
