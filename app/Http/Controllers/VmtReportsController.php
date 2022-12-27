@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Exports\VmtPayrollReports;
+use App\Exports\VmtPmsReviewsReport;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -23,6 +24,14 @@ class VmtReportsController extends Controller
 
         $filename = 'PayrollReports_'.$request->payroll_month.'.xlsx';
         return Excel::download(new VmtPayrollReports($request->payroll_month), $filename ,null, [\Maatwebsite\Excel\Excel::XLSX]);
+    }
+
+    public function showPmsReviewsReportPage(){
+            return view('reports.vmt_showPmsReviewsReports');
+    }
+
+    public function generatePmsReviewsReports(){
+        return Excel::download(new VmtPmsReviewsReport, 'report.xlsx',null, [\Maatwebsite\Excel\Excel::XLSX]);
     }
 
 
