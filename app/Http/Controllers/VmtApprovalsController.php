@@ -218,14 +218,14 @@ class VmtApprovalsController extends Controller
                             //->join('users','users.id','=','vmt_employee_reimbursements.reviewer_id')
                             ->where('vmt_employee_reimbursements.status','pending')->get();
 
-                            
+                               // dd($request->all());
 
 
       return $reimbursement_query;
     }
 
     function approveRejectReimbursements(Request $request){
-        dd($request->all());
+       // dd($request->all());
 
      $query_review_reimbursement = VmtEmployeeReimbursements::find($request->status);
         $status = null;
