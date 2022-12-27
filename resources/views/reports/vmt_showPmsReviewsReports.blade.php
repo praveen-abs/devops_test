@@ -7,7 +7,7 @@
     <div class="vendor-wrapper mt-30 card">
 
         <div class="card-body">
-            <h6 class="">Pms Reports</h6>
+            <h6 class="">PMS Reports</h6>
 
             <div class=" text-end mb-2">
                 <button class="btn btn-orange me-2" id="btn_downloadReport">Download Report</button>
