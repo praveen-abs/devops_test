@@ -8,8 +8,14 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
+use PhpOffice\PhpSpreadsheet\Cell\DefaultValueBinder;
+use PhpOffice\PhpSpreadsheet\Cell\Cell;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
 
-class VmtPayrollReports implements FromCollection,WithColumnWidths,WithStyles,WithHeadings
+class VmtPayrollReports extends DefaultValueBinder implements FromCollection,WithColumnWidths,WithStyles,WithHeadings,
+WithCustomValueBinder
 {
     /**
      * @return \Illuminate\Support\Collection
@@ -30,13 +36,13 @@ class VmtPayrollReports implements FromCollection,WithColumnWidths,WithStyles,Wi
             'D' => 11,
             'E' => 11,
             'F' => 12.5,
-            'G' => 20,
+            'G' => 15.5,
             'H' => 13,
             'I' => 20,
             'J' => 25,
             'K' => 8,
             'L' => 14,
-            'M' => 9,
+            'M' => 15.5,
             'N' => 14.5,
             'O' => 14.5,
             'P' => 35,
@@ -58,6 +64,21 @@ class VmtPayrollReports implements FromCollection,WithColumnWidths,WithStyles,Wi
 
 
         ];
+    }
+
+
+    public function bindValue(Cell $cell, $value)
+    {
+        {
+            if (is_numeric($value)) {
+                $cell->setValueExplicit($value, DataType::TYPE_STRING);
+
+                return true;
+            }
+
+            // else return default behavior
+            return parent::bindValue($cell, $value);
+        }
     }
 
     public function headings():array{
@@ -83,6 +104,7 @@ class VmtPayrollReports implements FromCollection,WithColumnWidths,WithStyles,Wi
             'HRA',
             'Special Allowance',
             'Total Fixed Gross',
+            'ESIC Applicablity',
             'Month Days',
             'Worked Days',
             'Arrears Days',
@@ -166,7 +188,9 @@ class VmtPayrollReports implements FromCollection,WithColumnWidths,WithStyles,Wi
                      'vmt_employee_payslip.HRA',
                      'vmt_employee_payslip.SPL_ALW',
                      'vmt_employee_payslip.TOTAL_FIXED_GROSS',
-                     //ESIC Applicablity
+
+                     'vmt_employee_statutory_details.esic_applicable',
+
                      'vmt_employee_payslip.MONTH_DAYS',
                      'vmt_employee_payslip.Worked_Days',
                      'vmt_employee_payslip.Arrears_Days',
