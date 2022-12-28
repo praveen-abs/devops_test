@@ -28,12 +28,16 @@
                 <span>
                     <b>Assignment Period</b>
                     <select placeholder="Select Calendar Type" style="width:auto;" aria-label=".form-select-sm example"
-                        id="dropdownCalender_year" class="form-select form-select-sm">
-                        <option value="">Select</option>
-                        <option name="Q1" value="q1">Q1</option>
-                        <option name="Q2" value="q2"> Q2</option>
-                        <option name="Q3" value="q3"> Q3</option>
-                        <option name="Q4" value="q4"> Q4</option>
+                        id="dropdownAssignment_period" class="form-select form-select-sm">
+                        <option value="" selected >Select</option>
+                        <option data-group="financial_year" name="Q1" value="q1">Q1 (Apr-Jun)</option>
+                        <option data-group="financial_year" name="Q2" value="q2"> Q2 (Jul-Sept)</option>
+                        <option data-group="financial_year" name="Q3" value="q3"> Q3 (Oct-Dec)</option>
+                        <option data-group="financial_year" name="Q4" value="q4"> Q4 (Jan-March)</option>
+                        <option data-group="calendar_year" name="Q1" value="q1">Q1 (Jan-March)</option>
+                        <option data-group="calendar_year" name="Q2" value="q2"> Q2 (Apr-Jun)</option>
+                        <option data-group="calendar_year" name="Q3" value="q3"> Q3 (Jul-Sept)</option>
+                        <option data-group="calendar_year" name="Q4" value="q4"> Q4 (Oct-Dec)</option>
                         </option>
                     </select>
                 </span>
@@ -73,6 +77,34 @@
 
 
 
+            });
+
+           $('#dropdownAssignment_period').on('change', function() {
+                console.log($(this).find(":selected").val());
+           });
+
+            $(function() {
+                $('#dropdownCalender_year').on('change', function() {
+                    var val = $('#dropdownCalender_year').val();
+                    console.log(val);
+                    var sub = $('#dropdownAssignment_period');
+                    if (val == "") {
+                        $('#dropdownAssignment_period').find('option').hide();
+                    } else {
+                        sub.find('option').not(':first').hide();
+
+                        $('option', sub).filter(function() {
+
+                            if ($(this).attr('data-group') == val) {
+                                $(this).show();
+
+                            }
+                        });
+                    }
+
+
+                });
+                $('#dropdownCalender_year').trigger('change');
             });
 
 
