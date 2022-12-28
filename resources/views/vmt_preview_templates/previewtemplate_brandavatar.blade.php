@@ -176,7 +176,7 @@
                                             <div class="appointment-letter">
                                                 <div class="logo" style="width:150px;height: 50px;">
 
-                                                    <img src="{{ URL::asset('assets/images/appoinment/brandavatarlogo.png') }}"
+                                                    <img src="{{ URL::asset('assets/images/appointment/avatar/brandavatarlogo.png') }}"
                                                         class="" style="height:100%;width:100%;">
                                                 </div>
 
@@ -237,7 +237,7 @@
                                                 <p> <b>For Brand Avatar LLP</b></p>
 
                                                 <div style="height:50px;width:100px">
-                                                    <img src="{{ URL::asset('assets/images/appoinment/sign2.png') }}"
+                                                    <img src="{{ URL::asset('assets/images/appointment/avatar/sign2.png') }}"
                                                         class="" alt="user-pic" style="height:100%;width:100%;">
                                                 </div>
 
@@ -278,7 +278,7 @@
                                     <div class="main-page">
                                         <div class="sub-page" style="text-align: justify;font-size: 15px;">
                                             <div class="logo" style="width:150px;height: 50px;margin: 10px 0px;">
-                                                <img src="{{ URL::asset('assets/images/appoinment/brandavatarlogo.png') }}"
+                                                <img src="{{ URL::asset('assets/images/appointment/avatar/brandavatarlogo.png') }}"
                                                     class="" style="height:100%;width:100%;">
                                             </div>
                                             <table cellspacing=2 class="table table-bordered avatar_table">
@@ -409,7 +409,7 @@
                                     <div class="main-page">
                                         <div class="sub-page" style="text-align: justify;font-size: 15px;">
                                             <div class="logo" style="width:150px;height: 50px;margin: 10px 0px;">
-                                                <img src="{{ URL::asset('assets/images/appoinment/brandavatarlogo.png') }}"
+                                                <img src="{{ URL::asset('assets/images/appointment/avatar/brandavatarlogo.png') }}"
                                                     class="" alt="user-pic" style="height:100%;width:100%;">
                                             </div>
                                             <div class="appointment-letter" style="text-align: justify;">
@@ -507,7 +507,7 @@
                                     <div class="main-page">
                                         <div class="sub-page" style="text-align: justify;font-size: 15px;">
                                             <div class="logo" style="width:150px;height: 50px;margin: 10px 0px;">
-                                                <img src="{{ URL::asset('assets/images/appoinment/brandavatarlogo.png') }}"
+                                                <img src="{{ URL::asset('assets/images/appointment/avatar/brandavatarlogo.png') }}"
                                                     class="" alt="user-pic" style="height:100%;width:100%;">
                                             </div>
                                             <b>
@@ -602,7 +602,7 @@
                                     <div class="main-page">
                                         <div class="sub-page" style="text-align: justify;font-size: 15px;">
                                             <div class="logo" style="width:150px;height: 50px;margin: 10px 0px;">
-                                                <img src="{{ URL::asset('assets/images/appoinment/brandavatarlogo.png') }}"
+                                                <img src="{{ URL::asset('assets/images/appointment/avatar/brandavatarlogo.png') }}"
                                                     class="" alt="user-pic" style="height:100%;width:100%;">
                                             </div>
                                             <p><b> TERMINATION
@@ -660,7 +660,7 @@
                                             <p style=""><b>Yours faithfully,</b> <br />
                                             <p style="margin-top:0px"><b>For Brand Avatar LLP</b> <br />
                                             <div style="height:50px;width:100px">
-                                                <img src="{{ URL::asset('assets/images/appoinment/sign2.png') }}"
+                                                <img src="{{ URL::asset('assets/images/appointment/avatar/sign2.png') }}"
                                                     class="" alt="user-pic" style="height:100%;width:100%;">
                                             </div>
                                             <p><b>(Hemachandran L)</br>
@@ -731,7 +731,7 @@
 
                                                 <div class="header-img txt-right">
                                                     <!-- <img src="" title=""> -->
-                                                    <img src="{{ URL::asset('assets/images/appoinment/brandavatarlogo.png') }}"
+                                                    <img src="{{ URL::asset('assets/images/appointment/avatar/brandavatarlogo.png') }}"
                                                         class="" style="height: 40px;width:180px;max-height:100%;">
                                                 </div>
 
