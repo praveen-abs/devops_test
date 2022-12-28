@@ -9,11 +9,21 @@ use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
+
 class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,WithColumnWidths
 {
     /**
     * @return \Illuminate\Support\Collection
     */
+
+    protected $calender_type;
+    protected $assignment_period;
+
+    function __construct($calendar_type,$assignment_period)
+    {
+        $this->calendar_type = $calendar_type;
+        $this->assignment_period = $assignment_period;
+    }
 
     public function headings():array{
         return[
@@ -49,8 +59,10 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
                         leftJoin('users','users.id', '=','vmt_pms_kpiform_reviews.assignee_id')
                         ->leftJoin('vmt_employee_office_details','vmt_employee_office_details.user_id', '=', 'vmt_pms_kpiform_reviews.assignee_id')
                         ->leftJoin('vmt_pms_kpiform_assigned','vmt_pms_kpiform_assigned.assignee_id', '=', 'vmt_pms_kpiform_reviews.assignee_id')
-                        ->where('vmt_pms_kpiform_reviews.is_assignee_submitted','<>',1)
-                        ->orWhereNull('vmt_pms_kpiform_reviews.is_assignee_submitted')
+                        //->where('vmt_pms_kpiform_reviews.is_assignee_submitted','<>',1)
+                        //->whereNull('vmt_pms_kpiform_reviews.is_assignee_submitted')
+                        ->where('vmt_pms_kpiform_assigned.calendar_type','=',$this->calendar_type)
+                        ->where('vmt_pms_kpiform_assigned.assignment_period','=',$this->assignment_period)
                         ->select('users.name','users.user_code','vmt_pms_kpiform_assigned.calendar_type','vmt_pms_kpiform_assigned.assignment_period')
                         ->get();
 

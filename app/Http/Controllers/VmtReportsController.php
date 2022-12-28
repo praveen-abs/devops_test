@@ -30,8 +30,9 @@ class VmtReportsController extends Controller
             return view('reports.vmt_showPmsReviewsReports');
     }
 
-    public function generatePmsReviewsReports(){
-        return Excel::download(new VmtPmsReviewsReport, 'report.xlsx',null, [\Maatwebsite\Excel\Excel::XLSX]);
+    public function generatePmsReviewsReports(Request $request){
+        //$filename = 'PmsReports_'.$request->calender_type.'.xlsx';
+        return Excel::download(new VmtPmsReviewsReport($request->calender_type), 'Reports.xlsx');
     }
 
 
