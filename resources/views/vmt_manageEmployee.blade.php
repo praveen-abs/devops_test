@@ -122,25 +122,13 @@
                         },
                         {
                             id: 'emp',
-                            name: 'Employee Name',
+                            name: '',
                             formatter: function formatter(empObj) {
 
                                 var emp_code = empObj.emp_code;
                                 var emp_name = empObj.emp_name;
 
                                 var imagePath = '{{ URL::asset('images/') }}' + '/' + empObj.avatar;
-
-                                //Check if spaces present in profile image text
-                                if ((/\s/).test(imagePath)) {
-                                    // console.log("White spaces present in : "+imagePath);
-
-                                } else {
-                                    // console.log(span_id);
-
-                                    //  console.log("##### White spaces not present in : "+imagePath);
-
-
-                                }
 
                                 //console.log(emp_name);
                                 var html_image_tag = '<img data-emp_code="' + emp_code +
@@ -152,7 +140,7 @@
                                     '<div class="d-flex align-items-center page-header-user-dropdown" style="width:max-content;">' +
                                     '<div id="span_' + emp_code +
                                     '" class="rounded-circle user-profile  me-1">' +
-                                    html_image_tag + '</div>' + html_empname + '</div>';
+                                    html_image_tag + '</div></div>';
 
                                 $('#img_' + emp_code).on('error', function() {
 
@@ -170,6 +158,10 @@
 
                                 return gridjs.html(htmlContent);
                             }
+                        },
+                        {
+                            id: 'emp_name',
+                            name: 'Employee Name',
                         },
                         {
                             id: 'emp_code',
@@ -291,13 +283,14 @@
 
                     },
                     sort: true,
-                    search: true,
+                    search:true,
                     server: {
                         url: '{{ route('vmt-yet-to-activeemployees-fetchall') }}',
                         then: data => data.map(
                             emp => [
                                 emp.user_id,
                                 emp,
+                                emp.emp_name,
                                 emp.emp_code,
                                 emp.emp_designation,
                                 emp, //L1 manager code
@@ -327,8 +320,8 @@
                             hidden: true,
                         },
                         {
-                            id: 'emp',
-                            name: 'Employee Name',
+                            id: 'emp_avatar',
+                            name: '',
                             formatter: function formatter(empObj) {
 
                                 var emp_code = empObj.emp_code;
@@ -352,12 +345,12 @@
                                 var html_image_tag = '<img data-emp_code="' + emp_code +
                                     '" data-emp_name="' + emp_name + '" id="img_' + emp_code +
                                     '" class="h-10 w-10"  alt=" " src="' + imagePath + '" />';
-                                var html_empname = emp_name;
+
                                 var htmlContent =
                                     '<div class="d-flex align-items-center page-header-user-dropdown" style="width:max-content;">' +
                                     '<div id="span_' + emp_code +
                                     '" class="rounded-circle user-profile  me-1">' +
-                                    html_image_tag + '</div>' + html_empname + '</div>';
+                                    html_image_tag + '</div></div>';
 
                                 $('#img_' + emp_code).on('error', function() {
 
@@ -377,6 +370,10 @@
                             }
                         },
                         {
+                            id: 'emp_name',
+                            name: 'Employee Name',
+                        },
+                        {
                             id: 'emp_code',
                             name: 'Employee Code',
                         },
@@ -385,7 +382,7 @@
                             name: 'Designation',
                         },
                         {
-                            id: 'emp',
+                            id: 'reporting_manager',
                             name: 'Reporting Manager',
                             formatter: function formatter(emp) {
                                 if (emp.l1_manager_code)
@@ -469,6 +466,7 @@
                             emp => [
                                 emp.user_id,
                                 emp,
+                                emp.emp_name,
                                 emp.emp_code,
                                 emp.emp_designation,
                                 emp,
