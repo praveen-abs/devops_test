@@ -18,11 +18,15 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
 
     protected $calender_type;
     protected $assignment_period;
+    protected $year;
+    protected $is_assignee_submitted;
 
-    function __construct($calendar_type,$assignment_period)
+    function __construct($calendar_type,$assignment_period,$year,$is_assignee_submitted)
     {
         $this->calendar_type = $calendar_type;
         $this->assignment_period = $assignment_period;
+        $this->year=$year;
+        $this->is_assignee_submitted=$is_assignee_submitted;
     }
 
     public function headings():array{
@@ -63,6 +67,8 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
                         //->whereNull('vmt_pms_kpiform_reviews.is_assignee_submitted')
                         ->where('vmt_pms_kpiform_assigned.calendar_type','=',$this->calendar_type)
                         ->where('vmt_pms_kpiform_assigned.assignment_period','=',$this->assignment_period)
+                        ->where('vmt_pms_kpiform_assigned.year','=',$this->year)
+                        ->where('vmt_pms_kpiform_reviews.is_assignee_submitted','=',$this->is_assignee_submitted)
                         ->select('users.name','users.user_code','vmt_pms_kpiform_assigned.calendar_type','vmt_pms_kpiform_assigned.assignment_period')
                         ->get();
 

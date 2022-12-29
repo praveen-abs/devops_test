@@ -27,8 +27,7 @@
             <div class=" text-start mb-2">
                 <span>
                     <b>Year</b>
-                    <input type="text"  id="year" readonly
-                        value="{{ $query_configPms->year }}" size="25" />
+                    <input type="text" id="year" readonly value="{{ $query_configPms->year }}" size="25" />
 
                 </span>
             </div>
@@ -53,6 +52,18 @@
             </div>
 
 
+            <div class=" text-start mb-2">
+                <span>
+                    <b>Status</b>
+                    <select placeholder="Select Calendar Type" style="width:auto;" aria-label=".form-select-sm example"
+                        id="dropdownSubmittedStatus" class="form-select form-select-sm">
+                        <option selected>Select</option>
+                        <option value="1">Submitted</option>
+                        <option value=""> Not yet Submitted</option>
+                    </select>
+                </span>
+            </div>
+
 
             <div class=" text-end mb-2">
                 <button class="btn btn-orange me-2" id="btn_downloadReport">Download Report</button>
@@ -72,26 +83,27 @@
     <script>
         $(document).ready(function() {
 
+            let calenderType = $('#dropdownCalender_year').val()
 
-            var calenderType = $('#dropdownCalender_year').val();
+            let year = $('#year').val();
 
             if (calenderType == 'financial_year') {
                 document.getElementById("dropdownCalender_year").value = "Financial Year";
                 console.log("1 " + calenderType);
                 var sub = $('#dropdownAssignment_period');
 
-                    sub.find('option').not(':first').hide();
+                sub.find('option').not(':first').hide();
 
-                    $('option', sub).filter(function() {
-                            console.log("Assign Period"+calenderType);
-                        if ($(this).attr('data-group') == calenderType) {
-                            $(this).show();
+                $('option', sub).filter(function() {
+                    console.log("Assign Period" + calenderType);
+                    if ($(this).attr('data-group') == calenderType) {
+                        $(this).show();
 
-                        }
-                    });
+                    }
+                });
 
 
-                    $('#dropdownCalender_year').trigger('change');
+                $('#dropdownCalender_year').trigger('change');
 
             } else if (calenderType == 'calender_year') {
                 document.getElementById("dropdownCalender_year").innerHTML = "Calender Year";
@@ -103,9 +115,12 @@
             $('#btn_downloadReport').on('click', function(e) {
 
                 console.log("Download payroll reports....");
-                let selectedCalenderType = calenderType.find(":selected").val();
-                console.log(selectedCalenderType);
-                let URL = '/reports/generatePmsReviewsReports?calender_type=' + selectedCalenderType +
+                let selectedAssingementPeriod = $('#dropdownAssignment_period').find(":selected").val();
+                let selectedSubmittedDropdown = $('#dropdownSubmittedStatus').find(":selected").val();
+                console.log(selectedAssingementPeriod + ' '+ selectedSubmittedDropdown);
+                let URL = '/reports/generatePmsReviewsReports?calender_type=' + calenderType + '?year=' +
+                    year + '?assignment_period=' + selectedAssingementPeriod + '? 	is_assignee_submitted=' +
+                    selectedSubmittedDropdown +
                     '&_token={{ csrf_token() }}';
                 console.log("Generated URL : " + URL);
 
