@@ -431,34 +431,33 @@
                                         <form action="" method="POST" enctype="multipart/form-data">
                                             <h6 class="">Bank Information
                                                 <span class="personal-edit"><a href="#" class="edit-icon"
-                                                        data-bs-toggle="modal" data-bs-target="#personal_info_modal"><i
+                                                        data-bs-toggle="modal" data-bs-target="#Bank_info"><i
                                                             class="ri-pencil-fill"></i></a></span>
-                                            </h6>
-
+                                                        </h6>
                                             <ul class="personal-info">
-                                                <li class="border-bottom-liteAsh pb-1">
+                                                <li>
                                                     <div class="title">Bank Name</div>
-                                                    <div class="text">
-
-                                                    </div>
+                                                    <?php $bank_name = App\Models\Bank::where('id', $user_full_details->bank_id)->value('bank_name'); ?>
+                                                    <div class="text">{{ $bank_name ?? '' }}</div>
                                                 </li>
-                                                <li class="border-bottom-liteAsh pb-1">
-                                                    <div class="title">Account Number</div>
+                                                <li>
+                                                    <div class="title">Bank Account No.</div>
                                                     <div class="text">
-
-                                                    </div>
+                                                        {{ $user_full_details->bank_account_number ?? '' }}</div>
                                                 </li>
-                                                <li class=" pb-1">
+                                                <li>
                                                     <div class="title">IFSC Code</div>
-                                                    <div class="text">
-
+                                                    <div class="text">{{ $user_full_details->bank_ifsc_code ?? '' }}
                                                     </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">PAN No</div>
+                                                    <div class="text">{{ $user_full_details->pan_number ?? '' }}</div>
                                                 </li>
                                             </ul>
-
-                                        </form>
-
+                                        </div>
                                     </div>
+                                </div>
                                 </div>
                                 <div class="card mb-2">
                                     <div class="card-body">
@@ -1921,6 +1920,82 @@
     </div>
 
     
+         <!-- bank informatios -->
+         <div id="Bank_info" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content profile-box top-line">
+                    <div class="modal-header d-flex align-items-center border-0">
+                        <h6 class="">Bank Information
+                        </h6>
+                        <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {{-- <form action="{{ route('updateBankInfo', $user->id) }}" Method="POST"> --}}
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label>Bank Name</label>
+                                        @if (!empty($bank))
+                                            <select name="bank_name" id="bank_name"
+                                                class="form-select form-control onboard-form" required>
+                                                <option value="">Select</option>
+                                                @foreach ($bank as $b)
+                                                    @if (!empty($b->bank_name) && !empty($b->min_length) && !empty($b->max_length))
+                                                        <option value="{{ $b->bank_name ?? '' }}"
+                                                            min-data="{{ $b->min_length }}" max-data="{{ $b->max_length }}"
+                                                            @if (!empty($user_full_details->bank_name) && $user_full_details->bank_name == $b->bank_name) selected @endif>
+                                                            {{ $b->bank_name }}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label>Bank Account No</label>
+                                        <div class="cal-icon">
+                                            <input name="account_no" type="number" minlength="9" maxlength="18"
+                                                class="form-control onboard-form"
+                                                value="{{ $user_full_details->bank_account_number ?? '' }}"
+                                                pattern-data="account" required>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label>IFSC Code</label>
+                                        <input name="bank_ifsc" class="form-control onboard-form"
+                                            value="{{ $user_full_details->bank_ifsc_code ?? '' }}" type="text"
+                                            pattern-data="ifsc" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label>PAN No</label>
+                                        <input name="pan_no" class="form-control onboard-form"
+                                            value="{{ $user_full_details->pan_number ?? '' }}" type="text"
+                                            pattern-data="pan" required>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-12">
+                                <div class="text-right">
+                                    <button id="btn_submit_bank_info"class="btn btn-orange submit-btn">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    
 
     <div id="show_idCard" class="modal custom-modal fade" aria-hidden="true">
         <div class="modal-dialog  modal-dialog-centered modal-md" role="document">
@@ -2400,6 +2475,32 @@
             });
        
         }); });
+
+        $(document).ready(function(){
+        $("#btn_submit_bank_info").on('click',function(e){
+            e.preventDefault();
+       
+            var bank_name=$("select[name='bank_name']").val();
+            var account_no=$("input[name='account_no']").val();
+            var bank_ifsc=$("input[name='bank_ifsc']").val();
+            var pan_no=$("input[name='pan_no']").val();
+            
+         $.ajax({
+                url: "{{ route('updateBankInfo', $user->id) }}",
+                type:'POST',
+                data: {
+                        bank_name    : bank_name,
+                        account_no   : account_no,
+                        bank_ifsc    :  bank_ifsc,
+                        pan_no       : pan_no,
+                        _token : '{{ csrf_token() }}'
+                    },
+                    success: function(data) {
+                    location.reload();
+                }
+                     });
+                });
+             });
         
     </script>
 @endsection

@@ -6,6 +6,7 @@ use \Datetime;
 use Carbon\Carbon;
 use Session as Ses;
 use App\Models\User;
+use App\Models\Bank;
 use App\Models\Experience;
 use App\Models\VmtEmployee;
 use Illuminate\Http\Request;
@@ -120,6 +121,20 @@ use Illuminate\Support\Facades\Validator;
     }
 
 
+    public function updateBankInfo(Request $request) {
+        $reDetails = VmtEmployee::where('userid', $request->id)->first();
+        $details = VmtEmployee::find($reDetails->id);
+        $details->bank_id = Bank::where('bank_name',$request->input('bank_name'))->value('id');
+        $details->bank_ifsc_code = $request->input('bank_ifsc');
+        $details->bank_account_number = $request->input('account_no');
+        $details->pan_number = $request->input('pan_no');
+        $details->save();
+        Ses::flash('message', 'Bank Details Updated successfully!');
+        Ses::flash('alert-class', 'alert-success');
+        return redirect()->back();
+    }
+
+
     
     //
     public function storePersonalInfo(Request $request) {
@@ -162,6 +177,7 @@ use Illuminate\Support\Facades\Validator;
                             'seperated');
 
         $genderArray = array("Male", "Female", "Other");
+        $bank = Bank::all();
 
         //dd($maritalStatus);
         if(!empty($user_full_details->l1_manager_code))
@@ -172,7 +188,7 @@ use Illuminate\Support\Facades\Validator;
         $allEmployees = User::where('user_code','<>',$user->id)->where('active',1)->get(['user_code','name']);
         $profileCompletenessValue  = calculateProfileCompleteness($user->id);
 
-        return view('pages-profile-new', compact('user','allEmployees', 'maritalStatus','genderArray','user_full_details', 'familydetails', 'exp', 'reportingManager','profileCompletenessValue'));
+        return view('pages-profile-new', compact('user','allEmployees', 'maritalStatus','genderArray','user_full_details', 'familydetails', 'exp', 'reportingManager','profileCompletenessValue','bank'));
     }
 
     
