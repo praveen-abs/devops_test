@@ -23,6 +23,9 @@
 <script src="{{ URL::asset('assets/libs/gridjs/gridjs.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
 
+{{-- for calendar --}}
+<script src="{{ URL::asset('assets/js/calendar-vanila.js') }}" defer></script>
+
 
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"

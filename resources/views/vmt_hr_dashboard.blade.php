@@ -5,14 +5,9 @@
 @section('css')
     <link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/holiday.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('/assets/css/calendar-vanila.css') }}">
 
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-    <!--Custom style.css-->
-    <!-- <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/hr_dashboard.css') }}"> -->
-
-    <script src="{{ URL::asset('assets/js/calendar-vanila.js') }}" defer></script>
 @endsection
 
 @section('loading')

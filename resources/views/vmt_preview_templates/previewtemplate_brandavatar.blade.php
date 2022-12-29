@@ -131,7 +131,7 @@
     @endsection
     @section('content')
         <div class="card mb-2 mt-30 left-line">
-            <div class="card-body py-1 px-0 ">
+            <div class="card-body pt-1 pb-0 ">
 
                 <ul class="nav nav-pills    nav-tabs-dashed" id="pills-tab" role="tablist">
                     <li class="nav-item  ember-view me-4" role="presentation">
