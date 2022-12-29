@@ -43,7 +43,7 @@ function getClientList(){
 function sessionGetSelectedClientCode(){
     $query_client = VmtClientMaster::find(session('client_id'));
 
-    if (session('client_id') && !empty($query_client))
+    if (!empty($query_client))
         return $query_client->client_code;
     else
         return "";
