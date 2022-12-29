@@ -456,9 +456,10 @@
                                                 </li>
                                             </ul>
                                         </div>
-                                    </div>
+                                    
+                                </form>
                                 </div>
-                                </div>
+                                
                                 <div class="card mb-2">
                                     <div class="card-body">
                                         <form action="" method="POST" enctype="multipart/form-data">
