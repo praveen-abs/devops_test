@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\ConfigPms;
+use Illuminate\Support\Facades\DB;
 use App\Exports\VmtPayrollReports;
 use App\Exports\VmtPmsReviewsReport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -26,8 +28,10 @@ class VmtReportsController extends Controller
         return Excel::download(new VmtPayrollReports($request->payroll_month), $filename ,null, [\Maatwebsite\Excel\Excel::XLSX]);
     }
 
-    public function showPmsReviewsReportPage(){
-            return view('reports.vmt_showPmsReviewsReports');
+    public function showPmsReviewsReportPage(Request $request){
+        $query_configPms= ConfigPms::first();
+        
+        return view('reports.vmt_showPmsReviewsReports', compact('query_configPms'));
     }
 
     public function generatePmsReviewsReports(Request $request){

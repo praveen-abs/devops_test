@@ -12,15 +12,24 @@
             <div class=" text-start mb-2">
                 <span>
                     <b>Calendar Year</b>
-                    <select placeholder="Select Calendar Type" style="width:auto;" aria-label=".form-select-sm example"
+                    <input type="text" name="calendar_type" id="dropdownCalender_year" readonly
+                        value="{{ $query_configPms->calendar_type }}" />
+                    {{-- <select placeholder="Select Calendar Type" style="width:auto;" aria-label=".form-select-sm example"
                         id="dropdownCalender_year" class="form-select form-select-sm">
-                        <option value="">Select</option>
-                        <option name="financial_year" value="financial_year">Financial Year</option>
-                        <option name="calendar_year" value="calendar_year">Calendar Year</option>
+                        <option name="financial_year" @if ($query_configPms->calendar_type == 'financial_year') selected @endif
+                            value="financial_year">Financial Year</option>
+                        <option name="calendar_year" @if ($query_configPms->calendar_type == 'calendar_year') selected @endif
+                            value="calendar_year">Calendar Year</option>
+                    </select> --}}
+                </span>
+            </div>
 
-                        {{-- <option value="hr" @if ($data && $data->selected_head && 'hr' == $data->selected_head) selected @endif>HR --}}
-                        </option>
-                    </select>
+            <div class=" text-start mb-2">
+                <span>
+                    <b>Year</b>
+                    <input type="text"  id="year" readonly
+                        value="{{ $query_configPms->year }}" size="25" />
+
                 </span>
             </div>
 
@@ -29,7 +38,7 @@
                     <b>Assignment Period</b>
                     <select placeholder="Select Calendar Type" style="width:auto;" aria-label=".form-select-sm example"
                         id="dropdownAssignment_period" class="form-select form-select-sm">
-                        <option value="" selected >Select</option>
+                        <option value="" selected>Select</option>
                         <option data-group="financial_year" name="Q1" value="q1">Q1 (Apr-Jun)</option>
                         <option data-group="financial_year" name="Q2" value="q2"> Q2 (Jul-Sept)</option>
                         <option data-group="financial_year" name="Q3" value="q3"> Q3 (Oct-Dec)</option>
@@ -63,10 +72,38 @@
     <script>
         $(document).ready(function() {
 
+
+            var calenderType = $('#dropdownCalender_year').val();
+
+            if (calenderType == 'financial_year') {
+                document.getElementById("dropdownCalender_year").value = "Financial Year";
+                console.log("1 " + calenderType);
+                var sub = $('#dropdownAssignment_period');
+
+                    sub.find('option').not(':first').hide();
+
+                    $('option', sub).filter(function() {
+                            console.log("Assign Period"+calenderType);
+                        if ($(this).attr('data-group') == calenderType) {
+                            $(this).show();
+
+                        }
+                    });
+
+
+                    $('#dropdownCalender_year').trigger('change');
+
+            } else if (calenderType == 'calender_year') {
+                document.getElementById("dropdownCalender_year").innerHTML = "Calender Year";
+                console.log("2" + calenderType);
+            }
+
+
+
             $('#btn_downloadReport').on('click', function(e) {
 
                 console.log("Download payroll reports....");
-                let selectedCalenderType = $('#dropdownCalender_year').find(":selected").val();
+                let selectedCalenderType = calenderType.find(":selected").val();
                 console.log(selectedCalenderType);
                 let URL = '/reports/generatePmsReviewsReports?calender_type=' + selectedCalenderType +
                     '&_token={{ csrf_token() }}';
@@ -79,33 +116,26 @@
 
             });
 
-           $('#dropdownAssignment_period').on('change', function() {
-                console.log($(this).find(":selected").val());
-           });
+            // $('#dropdownAssignment_period').on('change', function() {
+            //     console.log($(this).find(":selected").val());
+            //     var sub = $('#dropdownAssignment_period');
 
-            $(function() {
-                $('#dropdownCalender_year').on('change', function() {
-                    var val = $('#dropdownCalender_year').val();
-                    console.log(val);
-                    var sub = $('#dropdownAssignment_period');
-                    if (val == "") {
-                        $('#dropdownAssignment_period').find('option').hide();
-                    } else {
-                        sub.find('option').not(':first').hide();
+            //         sub.find('option').not(':first').hide();
 
-                        $('option', sub).filter(function() {
+            //         $('option', sub).filter(function() {
+            //                 console.log("Assign Period"+calenderType);
+            //             if ($(this).attr('data-group') == calenderType) {
+            //                 $(this).show();
 
-                            if ($(this).attr('data-group') == val) {
-                                $(this).show();
-
-                            }
-                        });
-                    }
+            //             }
+            //         });
 
 
-                });
-                $('#dropdownCalender_year').trigger('change');
-            });
+            //         $('#dropdownCalender_year').trigger('change');
+
+            // });
+
+
 
 
 
