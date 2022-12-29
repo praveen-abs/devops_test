@@ -1017,7 +1017,7 @@ class VmtEmployeeController extends Controller
                 'vmt_employee_office_details.l1_manager_designation'
             )
             ->orderBy('users.name', 'ASC')
-            ->where('users.user_code','LIKE',sessionGetSelectedClientCode().'%')
+            ->where('users.client_id',session('client_id'))
             ->where('users.active', '1')
             ->where('users.is_ssa', '0')
             ->whereNotNull('emp_no')
@@ -1054,7 +1054,7 @@ class VmtEmployeeController extends Controller
                 'vmt_employee_office_details.l1_manager_designation'
             )
             ->orderBy('users.name', 'ASC')
-            ->where('users.user_code','LIKE',sessionGetSelectedClientCode().'%')
+            ->where('users.client_id',session('client_id'))
             ->where('users.active', '0')
             ->where('users.is_ssa', '0')
             ->whereNotNull('emp_no')
