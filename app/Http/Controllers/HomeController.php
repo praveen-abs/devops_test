@@ -346,6 +346,27 @@ class HomeController extends Controller
         return view('vmt_topbar_settings');
     }
 
+    public function update_client_logo(Request $request){
+        
+     //dd($request->all());
+     // $user = Auth::user();
+        $client_logo_update =VmtClientMaster::first();
+       
+        
+        $count = sizeof($request->input('client_logo'));
+        for($i=0 ; $i < $count ; $i++)
+        {
+           // $client_logo_update = new VmtClientMaster;
+             
+        $client_logo_update->client_logo = $request->input('client_logo')[$i];
+        
+        $client_logo_update->save();
+        }
+        return redirect()->back();
+
+
+    }
+
     public function poll_voting(Request $request) {
         $polling = PollVoting::where('user_id', auth()->user()->id)->where('polling_id', $request->id)->first();
         if ($polling) {
@@ -573,14 +594,17 @@ class HomeController extends Controller
         else
         {
             //get the client name from client table
-            $client_name = VmtClientMaster::first()->value('client_name');
-            $client_name = str_replace(' ', '', $client_name);
+            $client_name = str_replace(' ', '', sessionGetSelectedClientName());
             //dd($client_name);
         }
 
-        //choose the blade file
+        $viewfile = 'vmt_preview_templates.previewtemplate_'.strtolower($client_name);
 
-        return view('vmt_preview_templates.previewtemplate_'.strtolower($client_name) );
+        //dd($viewfile);
+        if (view()->exists($viewfile))
+            return view($viewfile);
+        else
+            return view('vmt_preview_templates.previewtemplate_nodata');
 
     }
 

@@ -7,6 +7,7 @@ use App\Models\VmtEmployee;
 use Illuminate\Http\Request;
 use App\Models\VmtEmployeePaySlip;
 use App\Models\Compensatory;
+use App\Models\VmtEmployeeStatutoryDetails;
 use App\Imports\VmtPaySlip;
 use Dompdf\Options;
 use Dompdf\Dompdf;
@@ -99,7 +100,12 @@ class VmtPaySlipController extends Controller
         // dd($compensatory);
     }
 
+    /*
+        Shown as Pop up
+    */
     public function payslipPdfView(Request $request){
+       //    dd("asd");
+
         //dd($request);
         $data['employee'] = VmtEmployeePaySlip::where([
                         ['user_id','=', auth()->user()->id],
@@ -107,20 +113,19 @@ class VmtPaySlipController extends Controller
                         ])->first();
 
         $data['employee_name'] = auth()->user()->name;
-        $data['designation'] = VmtEmployeeOfficeDetails::where('user_id',auth()->user()->id)->value('designation');
+        $data['employee_office_details'] = VmtEmployeeOfficeDetails::where('user_id',auth()->user()->id)->first();
         $data['employee_details'] = VmtEmployee::where('userid',auth()->user()->id)->first();
+        $data['employee_statutory_details'] = VmtEmployeeStatutoryDetails::where('user_id',auth()->user()->id)->first();
 
-        $html =  view('vmt_payslipTemplate', $data);
-        // $pdf->loadHtml($html, 'UTF-8');
-        // $pdf->setPaper('A4', 'portrait');
-        // $pdf->render();
-        // $filename = $data['employee']->Rename;
-        // return $pdf->stream($filename, ["Attachment" => false]);
-        // dd($html);
 
-        // return $pdf->download($data['employee']->Rename.'.pdf');
+        //TODO : Need to show client specific payslip template.
+
+        $processed_clientName = strtolower(str_replace(' ', '', sessionGetSelectedClientName()));
+
+        //$html =  view('vmt_payslipTemplate', $data);
+        $html =  view('vmt_payslip_templates.template_payslip_'.$processed_clientName, $data);
+
         return $html;
-        // return view('vmt_employee_pay_slip', compact('employees', 'html'));
     }
 
      public function pdfview(Request $request)
@@ -134,11 +139,19 @@ class VmtPaySlipController extends Controller
             ['PAYROLL_MONTH','=', $request->selectedPaySlipMonth],
             ])->first();
 
-        $data['employee_name'] = auth()->user()->name;
-        $data['designation'] = VmtEmployeeOfficeDetails::where('user_id',auth()->user()->id)->value('designation');
-        $data['employee_details'] = VmtEmployee::where('userid',auth()->user()->id)->first();
+        // $data['employee_name'] = auth()->user()->name;
+        // $data['designation'] = VmtEmployeeOfficeDetails::where('user_id',auth()->user()->id)->value('designation');
+        // $data['employee_details'] = VmtEmployee::where('userid',auth()->user()->id)->first();
 
-        $view = view('vmt_payslipTemplate', $data);
+        $data['employee_name'] = auth()->user()->name;
+        $data['employee_office_details'] = VmtEmployeeOfficeDetails::where('user_id',auth()->user()->id)->first();
+        $data['employee_details'] = VmtEmployee::where('userid',auth()->user()->id)->first();
+        $data['employee_statutory_details'] = VmtEmployeeStatutoryDetails::where('user_id',auth()->user()->id)->first();
+
+        $processed_clientName = strtolower(str_replace(' ', '', sessionGetSelectedClientName()));
+        $view = view('vmt_payslip_templates.template_payslip_'.$processed_clientName, $data);
+
+       // $view = view('vmt_payslipTemplate', $data);
 
         $html = $view->render();
         $html = preg_replace('/>\s+</', "><", $html);

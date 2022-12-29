@@ -40,13 +40,10 @@
                             </span>
                         </button>
                         <div class="topbar-logo mx-2 d-felx align-items-center">
-                            @php
-                            $client_logo = App\Models\VmtGeneralInfo::first()->logo_img;
-                            @endphp
-
-                            @if( file_exists(public_path($client_logo)) )
-                            <img src=" {{URL::asset($client_logo)}}" alt="" class="">
-                            @endif
+                            <?php
+                                  // dd(session()->get('client_logo_url'));
+                            ?>
+                            <img src=" {{URL::asset(session()->get('client_logo_url'))}}" alt="" class="">
                         </div>
 
                         <div class="search-content ms-2 ">
@@ -75,7 +72,7 @@
 
                             <img src="{{ URL::asset('assets/images/megaphone.png') }}" class="" alt="user-pic" style="height:20px;width:20px;">
                         </button> --}}
-                        @if( Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR","Manager"]) && hasSubClients() )
+                        @if( Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]) && hasSubClients() )
 
                         <div class="dropdown topbar-user ">
                             <?php
@@ -83,9 +80,7 @@
                                 $currentClientID = session('client_id');
                                 //dd($currentClientID);
                             ?>
-
                             <select id="dropdown_client" class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                <option value="">All Clients</option>
                                 @foreach($clientsList as $client)
                                     <option value="{{ $client->id }}"  @if( !empty($currentClientID) && $currentClientID == $client->id) selected  @endif>
                                         {{$client->client_name}}
