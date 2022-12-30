@@ -1181,7 +1181,7 @@ class VmtPMSModuleController extends Controller
                 {
                     \Mail::to($mailingList)
                     ->cc($hr_details->officical_mail)
-                    ->send(new VmtPMSMail_Assignee( "approved",$assignedUserDetails->name,$vmtAssignedDetails->year." - ".strtoupper($vmtAssignedDetails->assignment_period),$reviewerUserDetails->name,$command_emp));
+                    ->send(new VmtPMSMail_Assignee( "accepted",$assignedUserDetails->name,$vmtAssignedDetails->year." - ".strtoupper($vmtAssignedDetails->assignment_period),$reviewerUserDetails->name,$command_emp,request()->getSchemeAndHttpHost()));
                     $returnMsg = 'KPI has been accepted. Mail notification sent';
                     $message = "KPI has been accepted.  ";
                     Notification::send($assignedUserDetails ,new ViewNotification($message.auth()->user()->name));
@@ -1197,7 +1197,7 @@ class VmtPMSModuleController extends Controller
 
                     \Mail::to($mailingList)
                     ->cc($hr_details->officical_mail)
-                    ->send(new VmtPMSMail_Assignee( "rejected",$assignedUserDetails->name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$reviewerUserDetails->name,$command_emp));
+                    ->send(new VmtPMSMail_Assignee( "rejected",$assignedUserDetails->name,$vmtAssignedDetails->year." - ".strtoupper($vmtAssignedDetails->assignment_period),$reviewerUserDetails->name,$command_emp,request()->getSchemeAndHttpHost()));
 
                     $returnMsg = 'KPI has been rejected. Mail notification sent';
                     $message = "KPI has been rejected.  ";

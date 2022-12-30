@@ -49,7 +49,8 @@ class VmtPMSMail_PublishForm extends Mailable
         $MAIL_FROM_NAME    = env('MAIL_FROM_NAME');
 
         return $this->from($MAIL_FROM_ADDRESS,  $MAIL_FROM_NAME)
-                ->subject($MAIL_FROM_NAME)
+                //SUB : Successful Update of PMS/OKR for the Period of {Month Name/ Quarter Name/ Half Year Name}
+                ->subject("Successful Update of PMS/OKR for the Period of ".$this->appraisal_period)
                 ->view($mail_template)
                 ->with('user_emp_name', $this->user_emp_name)
                 ->with('approvalStatus', $this->approvalStatus)
