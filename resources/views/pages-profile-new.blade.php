@@ -465,7 +465,7 @@
                                         <form action="" method="POST" enctype="multipart/form-data">
                                             <h6 class="">Statutory Information
                                                 <span class="personal-edit"><a href="#" class="edit-icon"
-                                                        data-bs-toggle="modal" data-bs-target="#personal_info_modal"><i
+                                                        data-bs-toggle="modal" data-bs-target="#statutory_info"><i
                                                             class="ri-pencil-fill"></i></a></span>
                                             </h6>
 
@@ -1991,10 +1991,105 @@
                                 </div>
                             </div>
                         </form>
+                      </div>
+                   </div>
+                     </div>
+                        </div>
+          {{-- Statutory Details --}}
+        
+                        <div id="statutory_info" class="modal custom-modal fade"   aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                <div class="modal-content profile-box  ">
+                                    <div class="modal-header   border-0">
+                        <h6>Statutory Details</h6>
+                    </div>
+                    <div class="row ">
+                        <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                            <div class="floating">
+                                <label for="" class="float-label">PF
+                                    Applicable<span
+                                    class="text-danger">*</span></label>
+                                <select placeholder="PF Applicable" name="pf_applicable"
+                                    id="pf_applicable"
+                                    class="onboard-form form-control textbox  select2_form_without_search"
+                                    required>
+                                    <option value="" hidden selected disabled>PF
+                                        Applicable</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                            <div class="floating">
+                                <label for="" class="float-label">EPF Number</label>
+                                <input type="text" placeholder="EPF Number" name="epf_number"
+                                    id="epf_number" class="onboard-form form-control textbox "
+                                    value="{{ !empty($emp_statutory_details) && $emp_statutory_details->epf_number ? $emp_statutory_details->epf_number : '' }}" />
+
+                                <span class="error" id="error_epf_number"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+
+                            <div class="floating">
+                                <label for="" class="float-label">UAN Number</label>
+                                <input type="text" placeholder="UAN Number" name="uan_number"
+                                    id="uan_number" minlength="12" maxlength="12"
+                                    class="onboard-form form-control textbox "
+                                    value="{{ !empty($emp_statutory_details) && $emp_statutory_details->uan_number ? $emp_statutory_details->uan_number : '' }}" />
+
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                            <div class="floating">
+                                <label for="" class="float-label">ESIC
+                                    Applicable<span
+                                    class="text-danger">*</span></label>
+                                <?php
+                                $value = '';
+
+                                if (!empty($emp_statutory_details) && $emp_statutory_details->esic_applicable) {
+                                    $value = $emp_statutory_details->esic_applicable;
+                                }
+
+                                ?>
+                                <select placeholder="ESIC Applicable" name="esic_applicable"
+                                    id="esic_applicable"
+                                    class="onboard-form form-control textbox  select2_form_without_search"
+                                    required>
+                                    <option value="" hidden selected disabled>ESIC
+                                        Applicable</option>
+                                    <option value="yes"
+                                        @if ($value == 'yes') selected @endif>Yes
+                                    </option>
+                                    <option value="no"
+                                        @if ($value == 'no') selected @endif>No
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-3 col-xl-3 mb-2">
+                            <div class="floating">
+                                <label for="" class="float-label">ESIC Number</label>
+
+                                <input type="text" placeholder="ESIC Number"
+                                    name="esic_number" id="esic_number" minlength="10"
+                                    maxlength="10" class="onboard-form form-control textbox "
+                                    value="{{ !empty($emp_statutory_details) && $emp_statutory_details->esic_number ? $emp_statutory_details->esic_number : '' }}" />
+                                <span class="error" id="error_esic_number"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="text-right">
+                            <button id="btn_submit_statutory_info"class="btn btn-orange submit-btn">Submit</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+               </div>
+               
 
     
 
@@ -2494,6 +2589,34 @@
                         account_no   : account_no,
                         bank_ifsc    :  bank_ifsc,
                         pan_no       : pan_no,
+                        _token : '{{ csrf_token() }}'
+                    },
+                    success: function(data) {
+                    location.reload();
+                }
+                     });
+                });
+             });
+
+             $(document).ready(function(){
+        $("#btn_submit_statutory_info").on('click',function(e){
+            e.preventDefault();
+       
+            var pf_applicable=$("select[name='pf_applicable']").val();
+            var epf_number=$("input[name='epf_number']").val();
+            var uan_number=$("input[name='uan_number']").val();
+            var esic_applicable=$("select[name='esic_applicable']").val();
+            var esic_number=$("input[name='esic_number']").val();
+            
+         $.ajax({
+                url: "{{ route('updateStatutoryInfo', $user->id) }}",
+                type:'POST',
+                data: {
+                        pf_applicable    : pf_applicable,
+                        epf_number       : epf_number,
+                        uan_number       : uan_number,
+                        esic_applicable  : esic_applicable,
+                         esic_number     : esic_number,
                         _token : '{{ csrf_token() }}'
                     },
                     success: function(data) {

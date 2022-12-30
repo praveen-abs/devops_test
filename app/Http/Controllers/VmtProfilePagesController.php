@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use App\Models\VmtEmployeeFamilyDetails;
 use App\Models\VmtEmployeeOfficeDetails;
+use App\Models\VmtEmployeeStatutoryDetails;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 
@@ -133,6 +134,27 @@ use Illuminate\Support\Facades\Validator;
         Ses::flash('alert-class', 'alert-success');
         return redirect()->back();
     }
+
+    public function updateStatutoryInfo(Request $request){
+
+        $statutory= VmtEmployeeStatutoryDetails ::where('user_id',$request->id)->first();
+         if($statutory->exists())
+        //     dd("yes");
+        // else
+        //     dd("no");
+//dd($request->all());
+        {
+            $statutory->pf_applicable=$request->input('pf_applicable');
+        $statutory->epf_number=$request->input('epf_number');
+        $statutory->uan_number=$request->input('uan_number');
+        $statutory->esic_applicable=$request->input('esic_applicable');
+        $statutory->esic_number=$request->input('esic_number');
+        $statutory->save();
+        }
+        return redirect()->back();
+    }
+
+
 
 
     
