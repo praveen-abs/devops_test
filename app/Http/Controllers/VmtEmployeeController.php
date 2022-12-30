@@ -854,7 +854,7 @@ class VmtEmployeeController extends Controller
             $newEmployee->aadhar_number = $row["aadhar"];
             $newEmployee->marital_status = $row["marital_status"];
             $newEmployee->mobile_number  = strval($row["mobile_no"]);
-            $newEmployee->bank_id   = $row["bank_name"];
+            $newEmployee->bank_id   = Bank::where('bank_name',$row['bank_name'])->first()->id;
             $newEmployee->bank_ifsc_code  = $row["bank_ifsc"];
             $newEmployee->bank_account_number  = $row["account_no"];
             $newEmployee->current_address_line_1   = $row["current_address"];
@@ -1017,7 +1017,7 @@ class VmtEmployeeController extends Controller
                 'vmt_employee_office_details.l1_manager_designation'
             )
             ->orderBy('users.name', 'ASC')
-            ->where('users.user_code','LIKE',sessionGetSelectedClientCode().'%')
+            ->where('users.client_id',session('client_id'))
             ->where('users.active', '1')
             ->where('users.is_ssa', '0')
             ->whereNotNull('emp_no')
@@ -1054,7 +1054,7 @@ class VmtEmployeeController extends Controller
                 'vmt_employee_office_details.l1_manager_designation'
             )
             ->orderBy('users.name', 'ASC')
-            ->where('users.user_code','LIKE',sessionGetSelectedClientCode().'%')
+            ->where('users.client_id',session('client_id'))
             ->where('users.active', '0')
             ->where('users.is_ssa', '0')
             ->whereNotNull('emp_no')

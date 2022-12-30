@@ -24,10 +24,10 @@ function fetchMasterConfigValue($config_name)
 }
 
 function getEmployeeClientDetails($emp_id){
-    $emp_code = User::find($emp_id)->user_code;
-    $client_code = preg_replace('/\d/', '', $emp_code);
+    $emp_client_id = User::find($emp_id)->client_id;
+    //$client_code = preg_replace('/\d/', '', $emp_code);
 
-    $query_client_details = VmtClientMaster::where('client_code', '=', $client_code);
+    $query_client_details = VmtClientMaster::where('id', '=', $emp_client_id);
 
     if ($query_client_details->exists())
         return $query_client_details->first();
@@ -43,7 +43,7 @@ function getClientList(){
 function sessionGetSelectedClientCode(){
     $query_client = VmtClientMaster::find(session('client_id'));
 
-    if (session('client_id') && !empty($query_client))
+    if (!empty($query_client))
         return $query_client->client_code;
     else
         return "";
@@ -131,6 +131,9 @@ function getTeamMembersUserIds($user_id){
     return $user_ids;
 }
 
+/*
+    !!!! TODO :  Need to remove this function
+*/
 function getCurrentClientName(){
     $client_name = VmtClientMaster::all()->value('client_name');
     //dd($client_name);

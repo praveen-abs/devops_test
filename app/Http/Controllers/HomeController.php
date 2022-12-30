@@ -346,6 +346,27 @@ class HomeController extends Controller
         return view('vmt_topbar_settings');
     }
 
+    public function update_client_logo(Request $request){
+        
+     //dd($request->all());
+     // $user = Auth::user();
+        $client_logo_update =VmtClientMaster::first();
+       
+        
+        $count = sizeof($request->input('client_logo'));
+        for($i=0 ; $i < $count ; $i++)
+        {
+           // $client_logo_update = new VmtClientMaster;
+             
+        $client_logo_update->client_logo = $request->input('client_logo')[$i];
+        
+        $client_logo_update->save();
+        }
+        return redirect()->back();
+
+
+    }
+
     public function poll_voting(Request $request) {
         $polling = PollVoting::where('user_id', auth()->user()->id)->where('polling_id', $request->id)->first();
         if ($polling) {
