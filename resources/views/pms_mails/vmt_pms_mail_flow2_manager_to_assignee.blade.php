@@ -58,6 +58,7 @@ $bank_names = \DB::table('bank_list')->get();
 </head>
 
 <body>
+    <!-- Flow 2 : Mail sent to employee, when manager sets KPI goal -->
 
     @if ($approvalStatus == 'none')
         <table id="wrapper" cellpadding="0" cellspacing="0" width="552"
@@ -84,11 +85,10 @@ $bank_names = \DB::table('bank_list')->get();
                                                     <td colspan="8" align="left" class="border-less">
 
                                                         <p class="" style="margin: 0px 0px 0px ">Dear <b> Mr. /
-                                                                Ms. @php echo $user_manager_name; @endphp</b> </p>
+                                                                Ms. @php echo $user_emp_name; @endphp</b> </p>
                                                         <p>The purpose of this mail is to inform you that, your
                                                             respective OKR/Goals as well as your reporting manager's
-                                                            expectations and directions for <b>“Mr. /Mrs.
-                                                                @php echo $appraisal_period; @endphp </b>
+                                                            expectations and directions for <b>{{ $appraisal_period }}.</b>
                                                         </p>
                                                         <p>Request you to Accept or Reject this OKR/PMS forms using the
                                                             buttons below.</p>
@@ -103,7 +103,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                         <a class="" type="button"
                                                         href="{{ $loginLink }}/employee-appraisal"
                                                             style="text-decoration:none;cursor: pointer; margin-right:10px;color:#ffffff;padding: 7px 30px;border: 2px solid #90f10c;background: #90f10c;border-radius: 4px;font-weight:600">
-                                                            Approve
+                                                            Accept
                                                         </a>
                                                     </td>
                                                     <td colspan="4" style="" align="left"
@@ -120,21 +120,17 @@ $bank_names = \DB::table('bank_list')->get();
                                                     <td colspan="8" class="">
 
                                                         <p> <span style="color:#fa9530;">Note - </span>When rejecting
-                                                            anOKR/PMS form, kindly include the reason for rejection in
-                                                            the
-                                                            response email/HRMS portal. </p>
+                                                            an OKR/PMS form, kindly include the reason for rejection in
+                                                            the response email/HRMS portal. </p>
                                                         <p class="txt-center">"We wish you achieve your greatest goals
-                                                            moving
-                                                            forward."</p>
+                                                            moving forward."</p>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="
-                        8" align="right"
-                                                        class="padding-t-b_0 ">
-                                                        <p class="tet-right margin-t-b_0 " class="margin:0px;">Cheers,
+                                                    <td colspan="8" class="padding-t-b_0 ">
+                                                        <p class="txt-left margin-t-b_0 " class="margin:0px;">Cheers,
                                                         </p>
-                                                        <p class="tet-right margin-t-b_0 ">ABS_OKR Automated System.
+                                                        <p class="txt-left margin-t-b_0 ">ABS_OKR Automated System.
                                                         </p>
                                                     </td>
                                                 </tr>

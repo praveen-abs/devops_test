@@ -40,10 +40,10 @@ class VmtPMSMail_PublishForm extends Mailable
     {
         $mail_template = '';
         if($this->flow_check == 1)
-            $mail_template = 'vmt_pms_mail_flow1_hr_to_assignee';
+            $mail_template = 'pms_mails.vmt_pms_mail_flow1_hr_to_assignee';
         else
         if($this->flow_check == 2)
-            $mail_template = 'vmt_pms_mail_flow_manager_to_assignee';
+            $mail_template = 'pms_mails.vmt_pms_mail_flow2_manager_to_assignee';
 
         $MAIL_FROM_ADDRESS = env('MAIL_FROM_ADDRESS');
         $MAIL_FROM_NAME    = env('MAIL_FROM_NAME');
