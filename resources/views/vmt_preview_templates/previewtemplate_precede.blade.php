@@ -241,17 +241,17 @@
                                             <tr>
                                                 <td colspan="4" class="">
                                                     <p class="fw-600 txt-left " style="">
-                                                        Mr. Joe
+                                                        Mr. Xyz
                                                     </p>
                                                     <p class="fw-600 txt-left">
-                                                        Choolaimedu, Chennai-600094
+                                                        yyy
 
                                                     </p>
 
                                                 </td>
                                                 <td colspan="4" style=" ">
                                                     <p class="fw-600 txt-right " style="">
-                                                        Date: 10/17/2022
+                                                        Date: DD/MM/YYYY
                                                     </p>
 
 
@@ -260,7 +260,7 @@
                                             <tr>
                                                 <td colspan="8" class="pb-pt-5" align="left">
                                                     <p class="fw-600 txt-left " style="">
-                                                        Dear Mr. M A ****,
+                                                        Dear Mr. Xyz,
                                                     </p>
                                                 </td>
 
@@ -287,7 +287,7 @@
                                                     <p class=" txt-left " style="">
                                                         With reference to your application and subsequent discussion, we
                                                         have pleasure in appointing you as a <span class="fw-600 txt-left">
-                                                            Web Developer </span>&nbsp; and place on
+                                                            Xyz </span>&nbsp; and place on
                                                         record the following terms and conditions for your knowledge
                                                         /acceptance:
 
@@ -295,7 +295,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td colspan="8" class="border-bottom-line2 " align="left" style="padding-bottom: 37px">
+                                                <td colspan="8" class="border-bottom-line2 " align="left" style="padding-bottom: 57px">
                                                     <ol type="1">
                                                         <li>
                                                             <p class="  fw-600" style="">DATE OF APPOINTMENT:
@@ -303,7 +303,7 @@
                                                             <p class="  pt-pb-5" style="">
                                                                 Your date of appointment is effective from the date of
                                                                 joining but not later than &nbsp;<span
-                                                                    class="fw-600 ">10/17/2022.</span>&nbsp;
+                                                                    class="fw-600 ">DD/MM/YYYY</span>&nbsp;
                                                             </p>
                                                             <p class=" " style="">
                                                                 At the time of joining, we request you to furnish
@@ -459,7 +459,7 @@
                                                     </p>
                                                     <p class="txt-left pt-pb-5">
                                                         You will be paid an annual package of &nbsp;<span
-                                                            class="fw-600 txt-left"> Rs. 274464/ </span>&nbsp;-and your
+                                                            class="fw-600 txt-left"> YYY </span>&nbsp;-and your
                                                         service
                                                         being placed at any one of the
                                                         client locations in Chennai.
@@ -1340,8 +1340,8 @@
                                     <p class="txt-left">Please
                                         reach out to us for any payroll queries at -payroll@ardens.in</p>
                                 </td>
-                                <td colspan="3" class="border-less txt-right" style="    padding: 10px 0px;">
-                                    <p>Powered By</p>
+                                <td colspan="3" class="border-less txt-right" style="    padding: 10px;">
+                                    <p>Generated By</p>
 
 
                                 </td>
