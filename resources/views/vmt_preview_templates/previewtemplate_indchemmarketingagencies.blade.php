@@ -3,185 +3,8 @@
     @lang('translation.settings')
 @endsection
 @section('css')
-    <style>
-        .main-page {
-            width: 210mm;
-            min-height: 297mm;
-            margin: 10mm auto;
-            background: white;
-            box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
-            box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            -webkit-box-sizing: bo;
-        }
+<link href="{{ URL::asset('assets/css/preview_template.css') }}" rel="stylesheet">
 
-        .main-page.view-policy {
-            min-height: 200px;
-        }
-
-        .sub-page {
-            padding: 1cm;
-
-        }
-
-        @media print {
-            .main-page {
-                page-break-after: always;
-            }
-        }
-
-
-        @page {
-            size: A4;
-            margin: 0;
-        }
-
-        @media print {
-
-            html,
-            body {
-                width: 210mm;
-                height: 297mm;
-            }
-
-            .main-page {
-                margin: 0;
-                border: initial;
-                border-radius: initial;
-                width: initial;
-                min-height: initial;
-                box-shadow: initial;
-                background: initial;
-                page-break-after: always;
-            }
-        }
-
-
-
-        .avatar_table tr,
-        .avatar_table tr td {
-            border: 2px solid #dee2e6 !important;
-            padding: 5px !important;
-        }
-
-        .payslip_table {
-            width: 100%;
-            vertical-align: middle;
-            font-family: sans-serif;
-        }
-
-        table.payslip_table tr,
-        table.payslip_table tr td {
-            border: 2px solid #ea141c;
-
-        }
-
-
-
-        .border-less {
-            border: 0px !important;
-        }
-
-        .payslip_table tr {
-            height: 12.55pt;
-        }
-
-        .payslip_table td {
-            width: 81.35pt
-        }
-
-
-
-        .margin-0 {
-            margin: 0px;
-        }
-
-        table.payslip_table tr td p {
-            font-size: 9pt;
-            margin-top: 3pt;
-            margin-bottom: 3pt;
-            padding: 0px 5px;
-            /* text-align: justify; */
-        }
-
-        .txt-left {
-            text-align: left !important;
-        }
-
-        .txt-right {
-            text-align: right !important;
-        }
-
-        .txt-center {
-            text-align: center !important;
-        }
-
-        .text-strong {
-            font-weight: 600;
-        }
-
-        .header-row {
-            height: 50px;
-        }
-
-
-        td.bg-ash {
-            background-color: #9e9e9e5c;
-        }
-
-        .p3 {
-            padding: 3px;
-        }
-
-        .fw-600 {
-            font-weight: 600;
-        }
-
-        table.letter-format tr td,
-        table.letter-format tr,
-        table.letter-format tr td p {
-            border: 0;
-            font-size: 14px;
-
-        }
-
-        table.letter-format tr td p {
-            text-align: justify;
-        }
-
-        .pt-pb-5 {
-            padding-top: 5px;
-            padding-bottom: 5px;
-        }
-
-        .pt-pb-10 {
-            padding-top: 10px;
-            padding-bottom: 10px;
-        }
-
-        .pt-10 {
-            padding-top: 10px;
-        }
-
-        .pt-30 {
-            padding-top: 30px;
-        }
-
-        .pb-30 {
-            padding-bottom: 30px;
-        }
-
-        table.salary-table tr td {
-            border-collapse: collapse;
-            border: 1px solid;
-            border-radius: 0 !important;
-            padding: 4px;
-        }
-
-        .border-bottom-line {
-            border-bottom: 1px solid !important;
-        }
-    </style>
 @endsection
 @section('content')
     <div class="template-wrapper mt-30">
@@ -210,7 +33,7 @@
             <div class="tab-content " id="pills-tabContent">
                 <div class="tab-pane fade show active" id="appointment" role="tabpanel" aria-labelledby="pills-home-tab">
 
-                    {{-- <div class="col-md-4 mx-auto d-flex justify-content-center text-center flex-column">
+                       {{-- <div class="col-md-4 mx-auto d-flex justify-content-center text-center flex-column">
                         <img src="{{ URL::asset('assets/images/no_dataFile.svg') }}" class="">
                         <h4> <span class="text-orange">Sorry !</span> No data</h4>
 
@@ -220,7 +43,7 @@
                         <div class="carousel-inner">
                             <div class="carousel-item active">
                                 <div class="main-page appointment-letter">
-                                    <div class="sub-page" style="text-align: justify;font-size: 15px;">
+                                    <div class="sub-page" style="text-align: justify;">
                                         <table class="letter-format" style="padding:0;">
                                             <tbody>
                                                 <tr>
@@ -232,7 +55,7 @@
 
                                                                         <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_indchem.jpg') }}"
                                                                             class="" alt=""
-                                                                            style="height: 70px;width:250px;max-height:100%;">
+                                                                            style="height: 50px;width:200px;">
 
                                                                     </td>
 
@@ -475,11 +298,11 @@
                                         <table class="letter-format " style="padding:0;">
                                             <tbody>
                                                 <tr>
-                                                    <td colspan="12" class="pb-30" align="right">
+                                                    <td colspan="12" class="" align="right">
 
                                                         <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_indchem.jpg') }}"
-                                                            class="" alt=""
-                                                            style="height: 70px;width:250px;max-height:100%;">
+                                                        class="" alt=""
+                                                        style="height: 50px;width:200px;">
 
                                                     </td>
 
@@ -824,10 +647,23 @@
                                                             Max) – Subject to conditions </p>
 
                                                         </p>
+                                                        <p class=" txt-left pt-pb-5 " style="">
+                                                            <span class="fw-600">IncomeTax – </span>
+                                                            Income tax will be deducted as per the slab
+
+                                                        </p>
+
+                                                        <p class=" txt-left pt-pb-5 " style="">
+                                                            <span class="fw-600">Full and Final Settlement -</span>
+                                                            F n F will be settle within 7 working days from the Last
+                                                            working
+                                                            day
+                                                        </p>
 
 
                                                     </td>
                                                 </tr>
+
                                                 <tr>
                                                     <td colspan="12" style=" " align="left">
                                                         <p class=" txt-left " style="">
@@ -912,28 +748,11 @@
 
                                                         <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_indchem.jpg') }}"
                                                             class="" alt=""
-                                                            style="height: 70px;width:250px;max-height:100%;">
+                                                            style="height: 50px;width:200px;">
 
                                                     </td>
 
                                                 </tr>
-                                                <tr>
-                                                    <td colspan="12" style=" "class="" align="center">
-                                                        <p class=" txt-left pt-pb-5 " style="">
-                                                            <span class="fw-600">IncomeTax – </span>
-                                                            Income tax will be deducted as per the slab
-
-                                                        </p>
-
-                                                        <p class=" txt-left pt-pb-5 " style="">
-                                                            <span class="fw-600">Full and Final Settlement -</span>
-                                                            F n F will be settle within 7 working days from the Last
-                                                            working
-                                                            day
-                                                        </p>
-                                                    </td>
-                                                </tr>
-
                                                 <tr>
                                                     <td colspan="12" style=" "class="pt-30" align="center">
                                                         <span class="fw-600  border-bottom-line" style="">
@@ -1150,7 +969,7 @@
 
                                                         <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_indchem.jpg') }}"
                                                             class="" alt=""
-                                                            style="height: 70px;width:250px;max-height:100%;">
+                                                            style="height: 50px;width:200px;max-height:100%;">
 
                                                     </td>
 
@@ -1367,7 +1186,7 @@
 
                                                         <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_indchem.jpg') }}"
                                                             class="" alt=""
-                                                            style="height: 70px;width:250px;max-height:100%;">
+                                                            style="height: 50px;width:200px;max-height:100%;">
 
                                                     </td>
 
@@ -1465,7 +1284,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="12" style=" " align="">
+                                                    <td colspan="12" class="border-bottom-line" style=" " align="">
                                                         <p class="fw-600 pt-30  txt-left " style="">
                                                             Yours faithfully,
                                                         </p>
@@ -1512,14 +1331,14 @@
 
                                                     </td>
                                                 </tr>
-                                                <tr>
+                                                {{-- <tr>
                                                     <td colspan="12" style="text-align:initial;padding-bottom:183px;"
                                                         class="pt-pb-5 border-bottom-line " align="">
                                                         <p class="fw-600  " style="">
                                                             INDCHEM MARKETING AGENCIES
                                                         </p>
                                                     </td>
-                                                </tr>
+                                                </tr> --}}
 
                                                 <tr>
                                                     <td colspan="6" class="" align="">

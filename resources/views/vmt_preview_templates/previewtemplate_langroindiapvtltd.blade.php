@@ -3,184 +3,7 @@
     @lang('translation.settings')
 @endsection
 @section('css')
-    <style>
-        .main-page {
-            width: 210mm;
-            min-height: 297mm;
-            margin: 10mm auto;
-            background: white;
-            box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
-            box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            -webkit-box-sizing: bo;
-        }
-
-        .main-page.view-policy {
-            min-height: 200px;
-        }
-
-        .sub-page {
-            padding: 1cm;
-
-        }
-
-        @media print {
-            .main-page {
-                page-break-after: always;
-            }
-        }
-
-
-        @page {
-            size: A4;
-            margin: 0;
-        }
-
-        @media print {
-
-            html,
-            body {
-                width: 210mm;
-                height: 297mm;
-            }
-
-            .main-page {
-                margin: 0;
-                border: initial;
-                border-radius: initial;
-                width: initial;
-                min-height: initial;
-                box-shadow: initial;
-                background: initial;
-                page-break-after: always;
-            }
-        }
-
-
-
-        .avatar_table tr,
-        .avatar_table tr td {
-            border: 2px solid #dee2e6 !important;
-            padding: 5px !important;
-        }
-
-        .payslip_table {
-            width: 100%;
-            vertical-align: middle;
-            font-family: sans-serif;
-        }
-
-        table.payslip_table tr,
-        table.payslip_table tr td {
-            border: 2px solid #008fc7;
-
-        }
-
-
-
-        .border-less {
-            border: 0px !important;
-        }
-
-        .payslip_table tr {
-            height: 12.55pt;
-        }
-
-        .payslip_table td {
-            width: 81.35pt
-        }
-
-
-
-        .margin-0 {
-            margin: 0px;
-        }
-
-        table.payslip_table tr td p {
-            font-size: 9pt;
-            margin-top: 3pt;
-            margin-bottom: 3pt;
-            padding: 0px 5px;
-            /* text-align: justify; */
-        }
-
-        .txt-left {
-            text-align: left ;
-        }
-
-        .txt-right {
-            text-align: right !important;
-        }
-
-        .txt-center {
-            text-align: center !important;
-        }
-
-        .text-strong {
-            font-weight: 600;
-        }
-
-        .header-row {
-            height: 50px;
-        }
-
-        td.bg-ash {
-            background-color: #9e9e9e5c;
-        }
-
-        .p3 {
-            padding: 3px;
-        }
-
-        .fw-600 {
-            font-weight: 600;
-        }
-
-        table.letter-format tr td,
-        table.letter-format tr,
-        table.letter-format tr td p {
-            border: 0;
-            font-size: 14px;
-
-        }
-
-        table.letter-format tr td p {
-            text-align: justify;
-        }
-
-        .pt-pb-5 {
-            padding-top: 5px;
-            padding-bottom: 5px;
-        }
-
-        .pt-pb-10 {
-            padding-top: 10px;
-            padding-bottom: 10px;
-        }
-
-        .pt-10 {
-            padding-top: 10px;
-        }
-
-        .pt-30 {
-            padding-top: 30px;
-        }
-
-        .pb-30 {
-            padding-bottom: 30px;
-        }
-
-       table.salary-table tr td {
-            border-collapse: collapse;
-            border: 1px solid;
-            border-radius: 0 !important;
-            padding: 4px;
-        }
-
-        .border-bottom-line {
-            border-bottom: 1px solid !important;
-        }
-    </style>
+<link href="{{ URL::asset('assets/css/preview_template.css') }}" rel="stylesheet">
 @endsection
 @section('content')
     <div class="template-wrapper mt-30">
@@ -220,11 +43,11 @@
                                                         <table class="table-one">
                                                             <tbody>
                                                                 <tr>
-                                                                    <td colspan="12" class="pb-30" align="right">
+                                                                    <td colspan="12" class="" align="right">
 
                                                                         <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_langro.jpg') }}"
                                                                         class="" alt=""
-                                                                        style="height: 100px;width:250px;max-height:100%;">
+                                                                        style="height: 80px;width:200px;max-height:100%;">
 
                                                                     </td>
 
@@ -372,7 +195,7 @@
                                                                             Yours faithfully,
                                                                         </p>
                                                                         <p class=" pb-30 fw-600">
-                                                                            For LANGRO INDIA PRIVATE LIMITED
+
 
                                                                         </p>
                                                                         <p class="fw-600 pt-10 txt-left "
@@ -476,12 +299,12 @@
                                         <table class="letter-format " style="padding:0;">
                                             <tbody>
                                                 <tr>
-                                                    <td colspan="12" class="pb-30" align="right">
+                                                    <td colspan="12" class="" align="right">
 
 
                                                         <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_langro.jpg') }}"
                                                         class="" alt=""
-                                                        style="height: 100px;width:250px;max-height:100%;">
+                                                        style="height: 80px;width:200px;max-height:100%;">
 
                                                     </td>
 
@@ -852,14 +675,30 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="6" class=" pt-30" style="padding-top: 22px;" align="left">
+                                                    <td colspan="12" style=" "class="" align="center">
+                                                        <p class=" txt-left pt-pb-5 " style="">
+                                                            <span class="fw-600">IncomeTax – </span>
+                                                            Income tax will be deducted as per the slab
+
+                                                        </p>
+
+                                                        <p class=" txt-left pt-pb-5 " style="">
+                                                            <span class="fw-600">Full and Final Settlement -</span>
+                                                            F n F will be settle within 7 working days from the Last
+                                                            working
+                                                            day
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="6" class=" pt-30" style="padding-top: 9px;" align="left">
                                                         <p class="fw-600 txt-left " style="">
                                                             Sign:
                                                         </p>
 
 
                                                     </td>
-                                                    <td colspan="6" class="pt-30" style="padding-top: 22px;" align="right">
+                                                    <td colspan="6" class="pt-30" style="padding-top: 9px;" align="right">
                                                         <p class="fw-600 txt-right " style="">
                                                             Date:
                                                         </p>
@@ -924,27 +763,12 @@
 
                                                         <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_langro.jpg') }}"
                                                         class="" alt=""
-                                                        style="height: 100px;width:250px;max-height:100%;">
+                                                        style="height: 80px;width:200px;max-height:100%;">
 
                                                     </td>
 
                                                 </tr>
-                                                <tr>
-                                                    <td colspan="12" style=" "class="" align="center">
-                                                        <p class=" txt-left pt-pb-5 " style="">
-                                                            <span class="fw-600">IncomeTax – </span>
-                                                            Income tax will be deducted as per the slab
 
-                                                        </p>
-
-                                                        <p class=" txt-left pt-pb-5 " style="">
-                                                            <span class="fw-600">Full and Final Settlement -</span>
-                                                            F n F will be settle within 7 working days from the Last
-                                                            working
-                                                            day
-                                                        </p>
-                                                    </td>
-                                                </tr>
 
                                                 <tr>
                                                     <td colspan="12" style=" "class="pt-30" align="center">
@@ -1167,7 +991,7 @@
 
                                                             <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_langro.jpg') }}"
                                                                 class="" alt=""
-                                                                style="height: 100px;width:250px;max-height:100%;">
+                                                                style="height: 80px;width:200px;max-height:100%;">
 
 
                                                     </td>
@@ -1391,7 +1215,7 @@
 
                                                         <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_langro.jpg') }}"
                                                         class="" alt=""
-                                                        style="height: 100px;width:250px;max-height:100%;">
+                                                        style="height: 80px;width:200px;max-height:100%;">
                                                     </td>
 
                                                 </tr>
