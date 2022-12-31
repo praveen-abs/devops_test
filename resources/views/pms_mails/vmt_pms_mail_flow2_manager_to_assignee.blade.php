@@ -547,47 +547,25 @@ $bank_names = \DB::table('bank_list')->get();
                                                 </tr>
                                                 <tr>
                                                     <td colspan="8" align="left" class="border-less">
-
-
-                                                        <p>Greetings from the HR Team,</p>
-                                                        <p></p>
-                                                        <p>This is to inform you that your team member <b>“Mr. /Mrs.
-                                                                @php echo $user_emp_name; @endphp </b> has successfully submitted
-                                                            his/her Self-Review for<b>@php echo $appraisal_period; @endphp </b></p>
-                                                        <p>Request you to complete the OKR Manager review against OKR
-                                                            /PMS
-                                                            forms using the buttons below</p>
-
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td colspan="8" style="" align="center"
-                                                        class="  padding-t-b_0  ">
-
-                                                        <a class="" type="button"
-                                                            style="text-decoration:none;cursor: pointer; margin-right:10px;color:#ffffff;padding: 7px 30px;border: 2px solid #c5b203;background: #c5b203;border-radius: 4px;font-weight:600">
-                                                            Review
-                                                        </a>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="8" class="">
-
-                                                        <p>Also, kindly have a “Great Conversation” with <b>“Mr. /Mrs.
-                                                                @php echo $user_emp_name; @endphp </b> and Complete the OKR/PMS within
-                                                            the time frame.</p>
-                                                        <p>Kindly visit the HRMS portal for more details </p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="
-                            8" align="right"
-                                                        class="padding-t-b_0 ">
-                                                        <p class="tet-right margin-t-b_0 " class="margin:0px;">Cheers,
+                                                        <p class="" style="margin: 0px ">Greetings from the HR Team,</p>
+                                                        <p>This is to inform you that your Manager  Mr./ Ms. {{ $user_manager_name }} has successfully submitted his/her
+                                                            Manager-Review for {{ $appraisal_year }} - {{ $appraisal_period}}.
                                                         </p>
-                                                        <p class="tet-right margin-t-b_0 ">ABS_OKR Automated System.
+                                                        <p>
+                                                            If you have any questions or concerns, don’t hesitate to reach out to your reporting manager or the HR team.
+                                                        </p>
+                                                        <p>
+                                                            <a class="" href="{{ $loginLink }}/employee-appraisal">
+                                                                Kindly visit the HRMS portal for more details
+                                                            </a>
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="8" class="padding-t-b_0 ">
+                                                        <p class="txt-left margin-t-b_0 " class="margin:0px;">Cheers,
+                                                        </p>
+                                                        <p class="txt-left margin-t-b_0 ">ABS_OKR Automated System.
                                                         </p>
                                                     </td>
                                                 </tr>
