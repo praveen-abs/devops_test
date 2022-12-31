@@ -4,7 +4,6 @@
 $general_info = \DB::table('vmt_general_info')->first();
 $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
 // dd(request()->getSchemeAndHttpHost()."".$general_info->logo_img);
-
 ?>
 
 <!DOCTYPE html>
@@ -82,7 +81,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                                                         <p class="" style="margin: 0px 0px 0px ">Dear <b> Mr. /
                                                                 Ms. @php echo $user_manager_name; @endphp</b> </p>
                                                         <p>The purpose of this mail is to inform you that, <b> Mr. /
-                                                                Ms. @php echo $user_emp_name; @endphp</b> has updated his/ herOKR/Goals
+                                                                Ms. @php echo $user_emp_name; @endphp</b> has updated his/ her OKR/Goals
                                                             for <b>@php echo $appraisal_period; @endphp </b>
                                                         </p>
                                                         <p>Request you to Accept or Reject this OKR/PMS forms using the
@@ -96,7 +95,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                                                         class="  padding-t-b_0  ">
 
                                                         <a class="" type="button"
-                                                        href="{{ $loginLink }}/team-appraisal"
+                                                            href="{{ $loginLink }}/team-appraisal"
                                                             style="text-decoration:none;cursor: pointer; margin-right:10px;color:#ffffff;padding: 7px 30px;border: 2px solid #90f10c;background: #90f10c;border-radius: 4px;font-weight:600">
                                                             Approve
                                                         </a>
@@ -105,7 +104,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                                                         class="padding-t-b_0 ">
 
                                                         <a class="" type="button"
-                                                        href="{{ $loginLink }}/team-appraisal"
+                                                            href="{{ $loginLink }}/team-appraisal"
                                                             style="text-decoration:none;cursor: pointer;margin-left:10px;color:#ffffff;padding: 7px 30px;border: 2px solid #f12d0c;background: #ff2500;border-radius: 4px;font-weight:600">
                                                             Reject
                                                         </a>
@@ -115,7 +114,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                                                     <td colspan="8" class="">
 
                                                         <p> <span style="color:#fa9530;">Note - </span>When rejecting
-                                                            anOKR/PMS form, kindly include the reason for rejection in
+                                                            an OKR/PMS form, kindly include the reason for rejection in
                                                             the
                                                             response email/HRMS portal. </p>
                                                         <p class="txt-center">"We wish you achieve your greatest goals
@@ -124,12 +123,11 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="
-                            8" align="right"
+                                                    <td colspan="8" align="right"
                                                         class="padding-t-b_0 ">
-                                                        <p class="tet-right margin-t-b_0 " class="margin:0px;">Cheers,
+                                                        <p class="txt-left margin-t-b_0 " class="margin:0px;">Cheers,
                                                         </p>
-                                                        <p class="tet-right margin-t-b_0 ">ABS_OKR Automated System.
+                                                        <p class="txt-left margin-t-b_0 ">ABS_OKR Automated System.
                                                         </p>
                                                     </td>
                                                 </tr>
@@ -197,8 +195,8 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                                                                 target="_blank" style="margin-right: 20px"><img
                                                                     src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-002.png"
                                                                     alt="Instagram"></a>
-                                                            <a href="https://www.facebook.com/ArdensHR" target="_blank"
-                                                                style="margin-right: 20px"><img
+                                                            <a href="https://www.facebook.com/ArdensHR"
+                                                                target="_blank" style="margin-right: 20px"><img
                                                                     src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-004.png"
                                                                     alt="Facebook"></a>
                                                             <a href="https://www.youtube.com/channel/UCgZ7XpBoJvcWWvaiBS5GxHg"
@@ -265,7 +263,8 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                                                             Complete the OKR/PMS within the time frame.
                                                         </p>
                                                         <p>
-                                                            <a class="" href="{{ $loginLink }}/team-appraisal">
+                                                            <a class=""
+                                                                href="{{ $loginLink }}/team-appraisal">
                                                                 Kindly visit the HRMS portal for more details
                                                             </a>
                                                         </p>
@@ -408,14 +407,18 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                                                         <p class="" style="margin:0px ">
                                                             Dear <b> Mr. / Ms.{{ $user_manager_name }}</b>
                                                         </p>
-                                                        <p>This is to inform you that <b> Mr. / Ms.{{ $user_emp_name }}</b>
+                                                        <p>This is to inform you that <b> Mr. /
+                                                                Ms.{{ $user_emp_name }}</b>
                                                             has been rejected his/ her OKR/ PMS forms due to.</p>
-                                                        <p class="txt-center"><b> " {{ $comments_employee }} " </b></p>
+                                                        <p class="txt-center"><b> " {{ $comments_employee }} " </b>
+                                                        </p>
                                                         <p>Request you to kindly have a “Great Conversation” with <b>
-                                                                Mr. / Ms.{{$user_emp_name}}</b> and Complete the OKR/PMS within the time frame.
+                                                                Mr. / Ms.{{ $user_emp_name }}</b> and Complete the
+                                                            OKR/PMS within the time frame.
                                                         </p>
                                                         <p>
-                                                            <a class="" href="{{ $loginLink }}/team-appraisal">
+                                                            <a class=""
+                                                                href="{{ $loginLink }}/team-appraisal">
                                                                 Kindly visit the HRMS portal for more details
                                                             </a>
                                                         </p>
@@ -550,7 +553,8 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                                                         <p>This is to inform you that your Manager <b> Mr. / Ms.
                                                                 @php echo $user_manager_name; @endphp</b>
                                                             has successfully submitted his/her “Manager-Review for
-                                                            <b>@php echo $appraisal_period; @endphp </b></p>
+                                                            <b>@php echo $appraisal_period; @endphp </b>
+                                                        </p>
 
                                                         <p>If you have any questions or concerns, don’t hesitate to
                                                             reach
