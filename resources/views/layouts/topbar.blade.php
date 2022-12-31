@@ -59,7 +59,11 @@
                                 $currentClientID = session('client_id');
                                 //dd($currentClientID);
                                 ?>
-                                <label for="" class="me-3 fw-bold f-12 ">Entity</label>
+                                @if (Str::contains(getCurrentClientName(), 'Vasa'))
+                                    <label for="" class="me-3 fw-bold f-12 ">Legal Entity</label>
+                                @else
+                                    <label for="" class="me-3 fw-bold f-12 "></label>
+                                @endif
                                 <select id="dropdown_client" class="form-select btn btn-border-orange"
                                     aria-label=".form-select-sm ">
                                     @foreach ($clientsList as $client)
@@ -145,7 +149,7 @@
     function generateProfileShortName_Topbar() {
         var username = '{{ auth()->user()->name ??
             '
-                ' }}';
+                        ' }}';
         const splitArray = username.split(" ");
         var finalname = "empty111";
 
