@@ -20,7 +20,7 @@ use App\Models\VmtPMS_KPIFormReviewsModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Exports\SampleKPIFormExport;
-use App\Mail\NotifyPMSManager;
+use App\Mail\VmtPMSMail_NotifyManager;
 use App\Mail\PMSV2EmployeeAppraisalGoal;
 use App\Mail\VmtAssignGoals;
 use App\Mail\VmtPMSMail_Assignee;
@@ -870,10 +870,12 @@ class VmtPMSModuleController extends Controller
                             $currentUser_empDetails = VmtEmployeeOfficeDetails::where('user_id', $assigneeUser->id)->first();
                             array_push($kpiFormAssignedReviewersOfficialMails,$userEmployeeDetails->getEmployeeOfficeDetails->officical_mail);
 
+                            $assignment_period =  $kpiReviewCheck->getPmsKpiFormAssigned->year." - ".strtoupper($kpiReviewCheck->getPmsKpiFormAssigned->assignment_period);
                             // Send mail to All Reviewers
                             \Mail::to($userEmployeeDetails->getEmployeeOfficeDetails->officical_mail)
                                     ->cc($hr_details->officical_mail)
-                                    ->send(new NotifyPMSManager($assigneeUser->name, $currentUser_empDetails->designation, $userEmployeeDetails->name,$kpiReviewCheck->year ));
+                                    ->send(new VmtPMSMail_NotifyManager($assigneeUser->name, $currentUser_empDetails->designation, $userEmployeeDetails->name, $assignment_period, request()->getSchemeAndHttpHost() ));
+
                             $message = "Employee has submitted KPI Assessment.  ";
                             // Send notification to All Revie
                                 Notification::send($assigneeUser ,new ViewNotification($message.$assigneeUser->name));
@@ -968,25 +970,6 @@ class VmtPMSModuleController extends Controller
             Log::info('save or submit reviewer review error: '.$e->getMessage());
             return response()->json(['status'=>false,'message'=>$e->getMessage()]);
         }
-    }
-
-    public function saveAssignerReviews(Request $request)
-    {
-
-    }
-
-    public function updateFormApprovalStatus_Assignee(Request $request)
-    {
-
-    }
-
-    public function updateFormApprovalStatus_Reviewer(Request $request)
-    {
-
-    }
-
-    public function getKPIFormDetails(){
-
     }
 
     /*
