@@ -175,7 +175,7 @@ class VmtAttendanceController extends Controller
         if ($request->type == 'org') {
             $employeeLeaves_Org = '';
 
-            $employeeLeaves_Org = VmtEmployeeLeaves::whereIn('status', $statusArray)->get();
+            $employeeLeaves_Org = VmtEmployeeLeaves::whereIn('status', $statusArray)->orderBy('created_at', 'DESC')->get();
 
             //dd($map_allEmployees[1]["name"]);
             foreach ($employeeLeaves_Org as $singleItem) {

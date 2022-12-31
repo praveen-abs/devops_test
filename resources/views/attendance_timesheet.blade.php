@@ -367,7 +367,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                         }
 
                         var html = '<li class="list_employee_attendance p-1 w-100" >' +
-                            '<button class="w-100 btn d-flex employee_list_item border-0" data-userid=' +
+                            '<button class="w-100 btn d-flex employee_list_item w-100" data-userid=' +
                             element
                             .id + '>' +
                             '<div class=" me-2 d-flex col-auto">' +
@@ -439,7 +439,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
 
                         var html = '<li class="list_employee_attendance p-1 " >' +
-                            '<button class=" btn d-flex employee_list_item border-0" data-userid=' +
+                            '<button class=" btn d-flex employee_list_item w-100" data-userid=' +
                             element
                             .id + '>' +
                             '<div class="col-auto me-2 ">' +
@@ -496,7 +496,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
 
             var html = '<li class="list_employee_attendance p-1 " >' +
-                '<button class=" btn d-flex employee_list_item border-0" data-userid=' +
+                '<button class=" btn d-flex employee_list_item w-100" data-userid=' +
                 '{{ $current_employee_detail->id }}' +
                 '>' +
                 '<div class="col-auto me-2 ">' +
