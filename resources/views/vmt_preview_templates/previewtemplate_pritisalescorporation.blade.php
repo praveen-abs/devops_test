@@ -93,8 +93,8 @@
 
 
         /* .margin-0 {
-                                            margin: 0px;
-                                        } */
+                                                margin: 0px;
+                                            } */
 
         table.payslip_table tr td p {
             font-size: 9pt;
@@ -445,7 +445,7 @@
                                                                     </tr>
                                                                     <tr>
                                                                         <td colspan="4" class="" align="">
-                                                                            <p class=" " style="text-align:initial;">
+                                                                            <p class=" " style="text-align:initial;width:263px;">
                                                                                 <span class="fw-600 txt-left"> HeadOffice:
                                                                                 </span>&nbsp;#34/123,Dugar
                                                                                 Towers 2nd Floor
@@ -460,7 +460,7 @@
                                                                         </td>
 
                                                                         <td colspan="8" class="" align="">
-                                                                            <p class=" " style="text-align:initial;">
+                                                                            <p class=" " style="text-align:initial;width:326px;">
                                                                                 <span class="fw-600 txt-left">
                                                                                     WareHouse:</span>&nbsp;
                                                                                 No:63,SidcoIndustrialEstate,
@@ -898,7 +898,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td colspan="4" class="" align="">
-                                                            <p class=" " style="text-align:initial;">
+                                                            <p class=" " style="text-align:initial;width:263px;">
                                                                 <span class="fw-600 txt-left"> HeadOffice:
                                                                 </span>&nbsp;#34/123,Dugar
                                                                 Towers 2nd Floor
@@ -913,7 +913,7 @@
                                                         </td>
 
                                                         <td colspan="8" class="" align="">
-                                                            <p class=" " style="text-align:initial;">
+                                                            <p class=" " style="text-align:initial;width:326px;">
                                                                 <span class="fw-600 txt-left">
                                                                     WareHouse:</span>&nbsp;
                                                                 No:63,SidcoIndustrialEstate,
@@ -1143,7 +1143,7 @@
 
                                                     <tr>
                                                         <td colspan="4" class="" align="">
-                                                            <p class=" " style="text-align:initial;">
+                                                            <p class=" " style="text-align:initial;width:263px;">
                                                                 <span class="fw-600 txt-left"> HeadOffice:
                                                                 </span>&nbsp;#34/123,Dugar
                                                                 Towers 2nd Floor
@@ -1158,7 +1158,7 @@
                                                         </td>
 
                                                         <td colspan="8" class="" align="">
-                                                            <p class=" " style="text-align:initial;">
+                                                            <p class=" " style="text-align:initial;width:326px;">
                                                                 <span class="fw-600 txt-left">
                                                                     WareHouse:</span>&nbsp;
                                                                 No:63,SidcoIndustrialEstate,
@@ -1343,7 +1343,8 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td colspan="12" style="padding-bottom:28px;" class=" border-bottom-line ">
+                                                        <td colspan="12" style="padding-bottom:28px;"
+                                                            class=" border-bottom-line ">
                                                             <p class="  " style="">
                                                                 Your employment may be terminated at any time by yourself,
                                                                 or by
@@ -1370,7 +1371,7 @@
 
                                                     <tr>
                                                         <td colspan="4" class="" align="">
-                                                            <p class=" " style="text-align:initial;">
+                                                            <p class=" " style="text-align:initial;width:263px;">
                                                                 <span class="fw-600 txt-left"> HeadOffice:
                                                                 </span>&nbsp;#34/123,Dugar
                                                                 Towers 2nd Floor
@@ -1385,7 +1386,7 @@
                                                         </td>
 
                                                         <td colspan="8" class="" align="">
-                                                            <p class=" " style="text-align:initial;">
+                                                            <p class=" " style="text-align:initial;width:326px;">
                                                                 <span class="fw-600 txt-left">
                                                                     WareHouse:</span>&nbsp;
                                                                 No:63,SidcoIndustrialEstate,
@@ -1403,7 +1404,6 @@
                                                         </td>
 
                                                     </tr>
-
                                                 </tbody>
                                             </table>
                                         </div>
@@ -1526,8 +1526,7 @@
 
                                                             </p>
 
-                                                            <p class="fw-600 pt-10 txt-left "
-                                                                style="">
+                                                            <p class="fw-600 pt-10 txt-left " style="">
                                                                 Founder and CEO of Priti Sales Corporation
                                                             </p>
                                                         </td>
@@ -1558,7 +1557,7 @@
 
 
                                                         </td>
-                                                        <td colspan="6" style="pt-30" align="right">
+                                                        <td colspan="6" class="pt-30" style="" align="right">
                                                             <p class="fw-600 txt-right " style="">
                                                                 Date:
                                                             </p>
@@ -1567,7 +1566,8 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td colspan="12" style="text-align:initial;padding-bottom:183px;"
+                                                        <td colspan="12"
+                                                            style="text-align:initial;padding-bottom:183px;"
                                                             class="pt-pb-5 border-bottom-line " align="">
                                                             <p class="fw-600  " style="">
                                                                 PRITI SALES CORPORATION
@@ -1576,7 +1576,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td colspan="4" class="" align="">
-                                                            <p class=" " >
+                                                            <p class=" " style="text-align:initial;width:263px;">
                                                                 <span class="fw-600 txt-left"> HeadOffice:
                                                                 </span>&nbsp;#34/123,Dugar
                                                                 Towers 2nd Floor
@@ -1591,7 +1591,7 @@
                                                         </td>
 
                                                         <td colspan="8" class="" align="">
-                                                            <p class=" " style="text-align:initial;">
+                                                            <p class=" " style="text-align:initial;width:326px;">
                                                                 <span class="fw-600 txt-left">
                                                                     WareHouse:</span>&nbsp;
                                                                 No:63,SidcoIndustrialEstate,

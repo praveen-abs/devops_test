@@ -419,7 +419,7 @@
                                                                 </tr>
                                                                 <tr>
                                                                     <td colspan="12"
-                                                                        style="padding-bottom: 30px;
+                                                                        style="padding-bottom: 11px;
                                                                     "
                                                                         class="pt-pb-5 border-bottom-line "
                                                                         align="">
@@ -430,7 +430,7 @@
                                                                 </tr>
                                                                 <tr>
                                                                     <td colspan="4" class="" align="">
-                                                                        <p class=" " style="text-align:initial;">
+                                                                        <p class=" " style="text-align:initial;width:225px">
                                                                             <span class="fw-600 txt-left">Registered Office:</span>&nbsp;#34/123,
                                                                             Dugar Towers 2ndFloor
                                                                             MarshallsRoad,Chennai-600008
@@ -478,9 +478,10 @@
                                                 <tr>
                                                     <td colspan="12" class="pb-30" align="right">
 
-                                                        <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_priti.jpg') }}"
-                                                            class="" alt=""
-                                                            style="height: 40px;width:250px;max-height:100%;">
+
+                                                        <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_langro.jpg') }}"
+                                                        class="" alt=""
+                                                        style="height: 100px;width:250px;max-height:100%;">
 
                                                     </td>
 
@@ -851,14 +852,14 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="6" class=" pt-30" style="" align="left">
+                                                    <td colspan="6" class=" pt-30" style="padding-top: 22px;" align="left">
                                                         <p class="fw-600 txt-left " style="">
                                                             Sign:
                                                         </p>
 
 
                                                     </td>
-                                                    <td colspan="6" class="pt-30" style="" align="right">
+                                                    <td colspan="6" class="pt-30" style="padding-top: 22px;" align="right">
                                                         <p class="fw-600 txt-right " style="">
                                                             Date:
                                                         </p>
@@ -868,7 +869,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td colspan="12"
-                                                        style="padding-bottom:15px;
+                                                        style="padding-bottom:5px;
                                                     "
                                                         class="pt-pb-5 border-bottom-line " align="">
                                                         <p class="fw-600  " style="">
@@ -878,8 +879,8 @@
                                                 </tr>
                                                 <tr>
                                                     <td colspan="4" class="" align="">
-                                                        <p class=" " style="text-align:initial;">
-                                                            <span class="fw-600 txt-left"> Registered Office: </span>&nbsp;#34/123,
+                                                        <p class=" " style="text-align:initial;width:225px">
+                                                            <span class="fw-600 txt-left">Registered Office:</span>&nbsp;#34/123,
                                                             Dugar Towers 2ndFloor
                                                             MarshallsRoad,Chennai-600008
                                                             Ph:044-42661403I/45558608I/8609
@@ -888,7 +889,7 @@
 
                                                     <td colspan="4" class="" align="">
                                                         <p class=" " style="text-align:initial;">
-                                                            <span class="fw-600 txt-left"> BranchOffice:</span>&nbsp; Ambur:2C,KaspaMainRoad,
+                                                            <span class="fw-600 txt-left">    BranchOffice:</span>&nbsp;Ambur:2C,KaspaMainRoad,
                                                             KamarajarNagar,Kaspa-'A',Ambur,
                                                             VelloreDistrict-635802.
                                                             Tel:+9l-04174-245366
@@ -899,8 +900,8 @@
                                                     <td colspan="4" style=" " class=""
                                                         align="">
                                                         <p class=" " style="text-align:initial;">
-                                                            <span class="fw-600 txt-left">  Corporate Identity No:</span>&nbsp;
-                                                            &nbsp;<span
+                                                            <span class="fw-600 txt-left"> Corporate Identity No:</span>&nbsp;
+                                                            <span
                                                                 class="fw-600 txt-left">U19119TN2012PTC086879</span>&nbsp;
                                                             Email:info@langroindia.com
                                                             Internet:www.langroindia.com
@@ -920,9 +921,10 @@
                                                 <tr>
                                                     <td colspan="12" class="pb-30" align="right">
 
-                                                        <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_priti.jpg') }}"
-                                                            class="" alt=""
-                                                            style="height: 40px;width:250px;max-height:100%;">
+
+                                                        <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_langro.jpg') }}"
+                                                        class="" alt=""
+                                                        style="height: 100px;width:250px;max-height:100%;">
 
                                                     </td>
 
@@ -1097,7 +1099,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="12" style="padding-bottom:75px;"
+                                                    <td colspan="12" style="padding-bottom:76px;"
                                                         class="border-bottom-line ">
                                                         <p class="" style="">
                                                             The Company will compensate you for all expenses that are
@@ -1119,8 +1121,8 @@
 
                                                 <tr>
                                                     <td colspan="4" class="" align="">
-                                                        <p class=" " style="text-align:initial;">
-                                                            <span class="fw-600 txt-left">  Registered Office:</span>&nbsp;#34/123,
+                                                        <p class=" " style="text-align:initial;width:225px">
+                                                            <span class="fw-600 txt-left">Registered Office:</span>&nbsp;#34/123,
                                                             Dugar Towers 2ndFloor
                                                             MarshallsRoad,Chennai-600008
                                                             Ph:044-42661403I/45558608I/8609
@@ -1129,7 +1131,7 @@
 
                                                     <td colspan="4" class="" align="">
                                                         <p class=" " style="text-align:initial;">
-                                                            <span class="fw-600 txt-left">  BranchOffice:</span>&nbsp;Ambur:2C,KaspaMainRoad,
+                                                            <span class="fw-600 txt-left">    BranchOffice:</span>&nbsp;Ambur:2C,KaspaMainRoad,
                                                             KamarajarNagar,Kaspa-'A',Ambur,
                                                             VelloreDistrict-635802.
                                                             Tel:+9l-04174-245366
@@ -1141,7 +1143,7 @@
                                                         align="">
                                                         <p class=" " style="text-align:initial;">
                                                             <span class="fw-600 txt-left"> Corporate Identity No:</span>&nbsp;
-                                                            &nbsp;<span
+                                                            <span
                                                                 class="fw-600 txt-left">U19119TN2012PTC086879</span>&nbsp;
                                                             Email:info@langroindia.com
                                                             Internet:www.langroindia.com
@@ -1163,9 +1165,10 @@
                                                 <tr>
                                                     <td colspan="12" class="pb-30" align="right">
 
-                                                        <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_priti.jpg') }}"
-                                                            class="" alt=""
-                                                            style="height: 40px;width:250px;max-height:100%;">
+                                                            <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_langro.jpg') }}"
+                                                                class="" alt=""
+                                                                style="height: 100px;width:250px;max-height:100%;">
+
 
                                                     </td>
 
@@ -1315,7 +1318,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="12" style="padding-bottom:28px;" class=" border-bottom-line ">
+                                                    <td colspan="12" style="padding-bottom:9px;" class=" border-bottom-line ">
                                                         <p class="  " style="">
                                                             Your employment may be terminated at any time by yourself,
                                                             or by
@@ -1342,8 +1345,8 @@
 
                                                 <tr>
                                                     <td colspan="4" class="" align="">
-                                                        <p class=" " style="text-align:initial;">
-                                                            <span class="fw-600 txt-left">  Registered Office: </span>&nbsp;#34/123,
+                                                        <p class=" " style="text-align:initial;width:225px">
+                                                            <span class="fw-600 txt-left">Registered Office:</span>&nbsp;#34/123,
                                                             Dugar Towers 2ndFloor
                                                             MarshallsRoad,Chennai-600008
                                                             Ph:044-42661403I/45558608I/8609
@@ -1352,7 +1355,7 @@
 
                                                     <td colspan="4" class="" align="">
                                                         <p class=" " style="text-align:initial;">
-                                                            <span class="fw-600 txt-left">   BranchOffice:</span>&nbsp;Ambur:2C,KaspaMainRoad,
+                                                            <span class="fw-600 txt-left">    BranchOffice:</span>&nbsp;Ambur:2C,KaspaMainRoad,
                                                             KamarajarNagar,Kaspa-'A',Ambur,
                                                             VelloreDistrict-635802.
                                                             Tel:+9l-04174-245366
@@ -1363,9 +1366,7 @@
                                                     <td colspan="4" style=" " class=""
                                                         align="">
                                                         <p class=" " style="text-align:initial;">
-                                                            <span
-                                                            class="fw-600 txt-left">  Corporate Identity No:
-                                                        </span>&nbsp;
+                                                            <span class="fw-600 txt-left"> Corporate Identity No:</span>&nbsp;
                                                             <span
                                                                 class="fw-600 txt-left">U19119TN2012PTC086879</span>&nbsp;
                                                             Email:info@langroindia.com
@@ -1387,10 +1388,10 @@
                                                 <tr>
                                                     <td colspan="12" class="pb-30" align="right">
 
-                                                        <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_priti.jpg') }}"
-                                                            class="" alt=""
-                                                            style="height: 40px;width:250px;max-height:100%;">
 
+                                                        <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_langro.jpg') }}"
+                                                        class="" alt=""
+                                                        style="height: 100px;width:250px;max-height:100%;">
                                                     </td>
 
                                                 </tr>
@@ -1536,7 +1537,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="12" style="text-align:initial;padding-bottom:183px;"
+                                                    <td colspan="12" style="text-align:initial;padding-bottom:165px;"
                                                         class="pt-pb-5 border-bottom-line " align="">
                                                         <p class="fw-600  " style="">
                                                             LANGRO INDIA PRIVATE LIMITED
@@ -1545,8 +1546,8 @@
                                                 </tr>
                                                 <tr>
                                                     <td colspan="4" class="" align="">
-                                                        <p class=" " style="text-align:initial;">
-                                                            <span class="fw-600 txt-left">  Registered Office:</span>&nbsp;#34/123,
+                                                        <p class=" " style="text-align:initial;width:225px">
+                                                            <span class="fw-600 txt-left">Registered Office:</span>&nbsp;#34/123,
                                                             Dugar Towers 2ndFloor
                                                             MarshallsRoad,Chennai-600008
                                                             Ph:044-42661403I/45558608I/8609
@@ -1565,10 +1566,8 @@
                                                     </td>
                                                     <td colspan="4" style=" " class=""
                                                         align="">
-                                                        <span
-                                                        class="fw-600 txt-left">   <p class=" " style="text-align:initial;">
-                                                        </span>&nbsp;<span
-                                                            class="fw-600 txt-left">   Corporate Identity No:</span>&nbsp;
+                                                        <p class=" " style="text-align:initial;">
+                                                            <span class="fw-600 txt-left"> Corporate Identity No:</span>&nbsp;
                                                             <span
                                                                 class="fw-600 txt-left">U19119TN2012PTC086879</span>&nbsp;
                                                             Email:info@langroindia.com

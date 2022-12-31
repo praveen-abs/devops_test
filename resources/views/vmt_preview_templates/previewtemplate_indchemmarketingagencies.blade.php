@@ -174,6 +174,8 @@
         table.salary-table tr td {
             border-collapse: collapse;
             border: 1px solid;
+            border-radius: 0 !important;
+            padding: 4px;
         }
 
         .border-bottom-line {
@@ -226,12 +228,11 @@
                                                         <table class="table-one">
                                                             <tbody>
                                                                 <tr>
-                                                                    <td colspan="12" align="right">
+                                                                    <td colspan="12" class="pb-30" align="right">
 
-                                                                            <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_indchem.jpg') }}"
-                                                                                class="" alt=""
-                                                                                style="height: 70px;width:250px;max-height:100%;">
-
+                                                                        <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_indchem.jpg') }}"
+                                                                            class="" alt=""
+                                                                            style="height: 70px;width:250px;max-height:100%;">
 
                                                                     </td>
 
@@ -260,9 +261,9 @@
                                                                         </p>
                                                                         <p class="pt-pb-5">We are glad to appoint you as
                                                                             &nbsp;<span class="fw-600 txt-left">" Xyz
-                                                                                "</span>&nbsp; in our company, &nbsp;<span
-                                                                                class="fw-600 txt-left"> Indchem Marketing
-                                                                                Agencies
+                                                                                "</span>&nbsp; in our company,
+                                                                            &nbsp;<span class="fw-600 txt-left">Indchem
+                                                                                Marketing Agencies
                                                                             </span>&nbsp;.</p>
 
                                                                     </td>
@@ -274,9 +275,11 @@
 
                                                                         </p>
                                                                         <p class="pt-pb-5">
-                                                                            Your total remuneration package per annum will
+                                                                            Your total remuneration package per annum
+                                                                            will
                                                                             consist of &nbsp;<span class="fw-600 txt-left">
-                                                                                CTC Rs Xyz- per annum (xyz)</span>&nbsp;.
+                                                                                CTC Rs Xyz- per annum
+                                                                                (xyz)</span>&nbsp;.
                                                                             The
                                                                             breakup of your compensation package shall
                                                                             be as detailed in Annexure A.
@@ -302,7 +305,8 @@
                                                                             initially be placed in &nbsp;<span
                                                                                 class="fw-600 txt-left"> YYY
                                                                             </span>&nbsp;. You may however
-                                                                            be required to travel and maybe positioned or
+                                                                            be required to travel and maybe positioned
+                                                                            or
                                                                             deputed outside within India or abroad.
 
                                                                         </p>
@@ -323,25 +327,31 @@
                                                                                 class="fw-600 txt-left">Annexure
                                                                                 B</span>&nbsp;. You shall
                                                                             serve the Company and shall carry out such
-                                                                            duties which will be explained and defined by
+                                                                            duties which will be explained and defined
+                                                                            by
                                                                             your manager (immediate superior), subject
-                                                                            always to the employee policy and the rules and
+                                                                            always to the employee policy and the rules
+                                                                            and
                                                                             regulations of the Company. Your employment
-                                                                            shall continue to be governed by the terms of
+                                                                            shall continue to be governed by the terms
+                                                                            of
                                                                             this appointment letter in the event of you
                                                                             being deputed or positioned outside India.
 
                                                                         </p>
                                                                         <p class="pt-pb-5">
                                                                             We welcome you to our team. We are confident
-                                                                            that you will make an effective contribution to
-                                                                            the growth of the company and will enjoy working
+                                                                            that you will make an effective contribution
+                                                                            to
+                                                                            the growth of the company and will enjoy
+                                                                            working
                                                                             with us.
                                                                         </p>
                                                                         <p class="pt-pb-5">
                                                                             You will be under probation for a period of
                                                                             &nbsp;<span class="fw-600 txt-left">SIX
-                                                                                MONTHS </span>&nbsp;. Your confirmation will
+                                                                                MONTHS </span>&nbsp;. Your confirmation
+                                                                            will
                                                                             be based on the
                                                                             evaluation during the end of the probation
                                                                             period.
@@ -349,10 +359,13 @@
 
                                                                         </p>
                                                                         <p class="pt-pb-5">
-                                                                            If you are agreeable to the terms and conditions
+                                                                            If you are agreeable to the terms and
+                                                                            conditions
                                                                             of the appointment (Annexure B), then kindly
-                                                                            confirm your acceptance of the appointment by
-                                                                            signing and returning to us the attached copy of
+                                                                            confirm your acceptance of the appointment
+                                                                            by
+                                                                            signing and returning to us the attached
+                                                                            copy of
                                                                             this letter.
 
                                                                         </p>
@@ -362,12 +375,13 @@
 
 
                                                                 <tr>
-                                                                    <td colspan="12" style=" " align="left">
+                                                                    <td colspan="12" style=" "
+                                                                        class="border-bottom-line" align="left">
                                                                         <p class="fw-600 pt-30  txt-left " style="">
                                                                             Yours faithfully,
                                                                         </p>
                                                                         <p class=" pb-30 fw-600">
-                                                                            For INDCHEM MARKETING AGENCIES
+                                                                            For
 
                                                                         </p>
                                                                         <p class="fw-600 pt-10 txt-left " style=" ">
@@ -380,7 +394,8 @@
                                                                         <p class=" pt-10 txt-left " style="">
                                                                             I M Xyz, have read &nbsp;<span
                                                                                 class="fw-600 txt-left">ANNEXURE A &
-                                                                                B,</span>&nbsp; understood, and accept the
+                                                                                B,</span>&nbsp; understood, and accept
+                                                                            the
                                                                             appointment upon the terms and conditions as
                                                                             outlined in this appointment letter for my
                                                                             position at &nbsp;<span
@@ -394,15 +409,16 @@
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td colspan="6" class="pt-30 border-bottom-line" style="padding-bottom:120px "
-                                                                        align="left">
+                                                                    <td colspan="6" class="pt-30 border-bottom-line"
+                                                                        style="    padding-bottom: 62px;">
                                                                         <p class="fw-600 txt-left " style="">
                                                                             Sign:
                                                                         </p>
 
 
                                                                     </td>
-                                                                    <td colspan="6"  style="padding-bottom:120px " class="border-bottom-line" align="right">
+                                                                    <td colspan="6" class="pt-30 border-bottom-line"
+                                                                        style="    padding-bottom: 62px;">
                                                                         <p class="fw-600 txt-right " style="">
                                                                             Date:
                                                                         </p>
@@ -413,7 +429,10 @@
 
                                                                 <tr>
                                                                     <td colspan="6" class="" align="">
-                                                                        <p class=" " style="text-align:initial;">
+                                                                        <p class="" style="padding-top: 2px">
+                                                                        </p>
+                                                                        <p class=" "
+                                                                            style="text-align:initial;width:347px">
                                                                             &nbsp;<span
                                                                                 class="fw-600 txt-left">HeadOffice:</span>&nbsp;
 
@@ -425,8 +444,10 @@
                                                                     </td>
 
                                                                     <td colspan="6" class="" align="">
+                                                                        <p class="" style="padding-top: 2px">
+                                                                        </p>
                                                                         <p class=" " style="text-align:initial;">
-                                                                            &nbsp;<span class="fw-600 txt-left">
+                                                                            <span class="fw-600 txt-left">
                                                                                 AdminOffice:</span>&nbsp;
                                                                             #34/123, DugarTowers,2ndFloorMarshallsRoad,
                                                                             Egmore,Chennai-600008.T:+91-44-42661403,45558608,45558609
@@ -454,21 +475,21 @@
                                         <table class="letter-format " style="padding:0;">
                                             <tbody>
                                                 <tr>
-                                                    <td colspan="8" align="right">
+                                                    <td colspan="12" class="pb-30" align="right">
 
                                                         <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_indchem.jpg') }}"
                                                             class="" alt=""
                                                             style="height: 70px;width:250px;max-height:100%;">
 
-
                                                     </td>
+
                                                 </tr>
                                                 <tr>
-                                                    <td class="" colspan="8">
+                                                    <td class="" colspan="12">
                                                         <table class="salary-table" style="width: 100%">
                                                             <tbody>
                                                                 <tr>
-                                                                    <td colspan="8" style=" "class=""
+                                                                    <td colspan="12" style=" "class=""
                                                                         align="center">
                                                                         <p class="fw-600 txt-center " style="">
                                                                             ANNEXURE A
@@ -478,17 +499,19 @@
 
                                                                 </tr>
                                                                 <tr>
-                                                                    <td colspan="8" style=" "class=""
+                                                                    <td colspan="12" style=" "class=""
                                                                         align="center">
                                                                         <p class="fw-600 txt-center " style="">
-                                                                            &nbsp;
+                                                                            SALARY STRUCTURE
                                                                         </p>
 
                                                                     </td>
+
                                                                 </tr>
+
                                                                 <tr>
 
-                                                                    <td colspan="4" style=" "class="bg-ash "
+                                                                    <td colspan="6" style=" "class="bg-ash "
                                                                         align="left">
                                                                         <p class="fw-600  txt-left" style="">
                                                                             Name:
@@ -496,7 +519,7 @@
 
                                                                     </td>
 
-                                                                    <td colspan="4" style=" "class="bg-ash ">
+                                                                    <td colspan="6" style=" "class="bg-ash ">
                                                                         <p class="fw-600  txt-center" style="">
                                                                             Salary
                                                                         </p>
@@ -512,13 +535,13 @@
                                                                         </p>
 
                                                                     </td>
-                                                                    <td colspan="2" style=" "class="bg-ash ">
+                                                                    <td colspan="4" style=" "class="bg-ash ">
                                                                         <p class="fw-600  txt-center" style="">
                                                                             Per Month
                                                                         </p>
 
                                                                     </td>
-                                                                    <td colspan="2" style=" "class="bg-ash ">
+                                                                    <td colspan="4" style=" "class="bg-ash ">
                                                                         <p class="fw-600   txt-center   " style="">
                                                                             Per Annum
                                                                         </p>
@@ -532,13 +555,13 @@
                                                                         </p>
 
                                                                     </td>
-                                                                    <td colspan="2" style=" "class="">
+                                                                    <td colspan="4" style=" "class="">
                                                                         <p class="  txt-right" style="">
 
                                                                         </p>
 
                                                                     </td>
-                                                                    <td colspan="2" style=" "class="">
+                                                                    <td colspan="4" style=" "class="">
                                                                         <p class="   txt-right   " style="">
 
                                                                         </p>
@@ -552,13 +575,13 @@
                                                                         </p>
 
                                                                     </td>
-                                                                    <td colspan="2" style=" "class="">
+                                                                    <td colspan="4" style=" "class="">
                                                                         <p class=" txt-right" style="">
 
                                                                         </p>
 
                                                                     </td>
-                                                                    <td colspan="2" style=" "class="">
+                                                                    <td colspan="4" style=" "class="">
                                                                         <p class="   txt-right   " style="">
 
                                                                         </p>
@@ -572,13 +595,13 @@
                                                                         </p>
 
                                                                     </td>
-                                                                    <td colspan="2" style=" "class="">
+                                                                    <td colspan="4" style=" "class="">
                                                                         <p class=" txt-right" style="">
 
                                                                         </p>
 
                                                                     </td>
-                                                                    <td colspan="2" style=" "class="">
+                                                                    <td colspan="4" style=" "class="">
                                                                         <p class="   txt-right   " style="">
 
                                                                         </p>
@@ -594,13 +617,13 @@
                                                                         </p>
 
                                                                     </td>
-                                                                    <td colspan="2" style=" "class="bg-ash">
+                                                                    <td colspan="4" style=" "class="bg-ash">
                                                                         <p class="fw-600   txt-center" style="">
 
                                                                         </p>
 
                                                                     </td>
-                                                                    <td colspan="2" style=" "class="bg-ash">
+                                                                    <td colspan="4" style=" "class="bg-ash">
                                                                         <p class="fw-600   txt-center   " style="">
 
                                                                         </p>
@@ -614,13 +637,13 @@
                                                                         </p>
 
                                                                     </td>
-                                                                    <td colspan="2" style=" "class="">
+                                                                    <td colspan="4" style=" "class="">
                                                                         <p class="  txt-center" style="">
 
                                                                         </p>
 
                                                                     </td>
-                                                                    <td colspan="2" style=" "class="">
+                                                                    <td colspan="4" style=" "class="">
                                                                         <p class="   txt-center   " style="">
 
                                                                         </p>
@@ -634,13 +657,13 @@
                                                                         </p>
 
                                                                     </td>
-                                                                    <td colspan="2" style=" "class="">
+                                                                    <td colspan="4" style=" "class="">
                                                                         <p class=" txt-right" style="">
 
                                                                         </p>
 
                                                                     </td>
-                                                                    <td colspan="2" style=" "class="">
+                                                                    <td colspan="4" style=" "class="">
                                                                         <p class="  txt-right   " style="">
 
                                                                         </p>
@@ -655,13 +678,13 @@
                                                                         </p>
 
                                                                     </td>
-                                                                    <td colspan="2" style=" "class="bg-ash">
+                                                                    <td colspan="4" style=" "class="bg-ash">
                                                                         <p class="fw-600  txt-right" style="">
 
                                                                         </p>
 
                                                                     </td>
-                                                                    <td colspan="2" style=" "class="bg-ash">
+                                                                    <td colspan="4" style=" "class="bg-ash">
                                                                         <p class="fw-600   txt-right   " style="">
 
                                                                         </p>
@@ -675,13 +698,13 @@
                                                                         </p>
 
                                                                     </td>
-                                                                    <td colspan="2" style=" "class="">
+                                                                    <td colspan="4" style=" "class="">
                                                                         <p class="txt-right" style="">
 
                                                                         </p>
 
                                                                     </td>
-                                                                    <td colspan="2" style=" "class="">
+                                                                    <td colspan="4" style=" "class="">
                                                                         <p class="ttxt-right   " style="">
 
                                                                         </p>
@@ -695,13 +718,13 @@
                                                                         </p>
 
                                                                     </td>
-                                                                    <td colspan="2" style=" "class="">
+                                                                    <td colspan="4" style=" "class="">
                                                                         <p class="txt-right" style="">
 
                                                                         </p>
 
                                                                     </td>
-                                                                    <td colspan="2" style=" "class="">
+                                                                    <td colspan="4" style=" "class="">
                                                                         <p class="txt-right   " style="">
 
                                                                         </p>
@@ -716,13 +739,13 @@
                                                                         </p>
 
                                                                     </td>
-                                                                    <td colspan="2" style=" "class="">
+                                                                    <td colspan="4" style=" "class="">
                                                                         <p class="txt-right" style="">
 
                                                                         </p>
 
                                                                     </td>
-                                                                    <td colspan="2" style=" "class="">
+                                                                    <td colspan="4" style=" "class="">
                                                                         <p class="ttxt-right   " style="">
 
                                                                         </p>
@@ -736,13 +759,13 @@
                                                                         </p>
 
                                                                     </td>
-                                                                    <td colspan="2" style=" "class=" bg-ash">
+                                                                    <td colspan="4" style=" "class=" bg-ash">
                                                                         <p class="txt-right" style="">
 
                                                                         </p>
 
                                                                     </td>
-                                                                    <td colspan="2" style=" "class=" bg-ash">
+                                                                    <td colspan="4" style=" "class=" bg-ash">
                                                                         <p class="ttxt-right   " style="">
 
                                                                         </p>
@@ -755,7 +778,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="8" class="pt-pb-5" style=" ">
+                                                    <td colspan="12" class="pt-pb-5" style=" ">
                                                         <p class=" txt-left pt-pb-5 " style="">
                                                             <span class="fw-600">Statutory Bonus – </span>
                                                             Will be paid as per the Payment of Bonus Act and
@@ -765,9 +788,12 @@
                                                         </p>
                                                         <p class=" txt-left pt-pb-5 " style="">
                                                             <span class="fw-600">Increment and Promotions – </span>
-                                                            Shall be based on merit considering your periodic and consistent
-                                                            overall performance, business conditions, and other parameters
-                                                            fixed from time to time at the discretion of the management and
+                                                            Shall be based on merit considering your periodic and
+                                                            consistent
+                                                            overall performance, business conditions, and other
+                                                            parameters
+                                                            fixed from time to time at the discretion of the management
+                                                            and
                                                             shall not be considered merely as a matter of right.
 
 
@@ -776,41 +802,35 @@
                                                         <p class=" txt-left pt-pb-5 " style="">
                                                             <span class="fw-600"> Gratuity- </span>
 
-                                                            Will be paid for those who have completed 5 Years of continuous
-                                                            service with our organization as per the Payment of Gratuity Act
+                                                            Will be paid for those who have completed 5 Years of
+                                                            continuous
+                                                            service with our organization as per the Payment of Gratuity
+                                                            Act
                                                             -1972.
 
                                                         </p>
 
                                                         <p class=" txt-left pt-pb-5 " style="">
                                                             <span class="fw-600"> Insurance –</span>
-                                                            <span> Group Mediclaim policy will be an extended benefits to
+                                                            <span> Group Mediclaim policy will be an extended benefits
+                                                                to
                                                                 our employees.
-                                                                ESIC not covered employees – 3,00,000 GMC (Employee +Spouse
+                                                                ESIC not covered employees – 3,00,000 GMC (Employee
+                                                                +Spouse
                                                                 + Kids Max) – Subject to conditions
                                                             </span>
-                                                        <p>ESIC Covered Employees – 1,00,000 GMC (Employee + Spouse + Kids
+                                                        <p>ESIC Covered Employees – 1,00,000 GMC (Employee + Spouse +
+                                                            Kids
                                                             Max) – Subject to conditions </p>
 
-                                                        </p>
-                                                        <p class=" txt-left pt-pb-5 " style="">
-                                                            <span class="fw-600">IncomeTax – </span>
-                                                            Income tax will be deducted as per the slab
-
-                                                        </p>
-
-                                                        <p class=" txt-left pt-pb-5 " style="">
-                                                            <span class="fw-600">Full and Final Settlement -</span>
-                                                            F n F will be settle within 7 working days from the Last working
-                                                            day
                                                         </p>
 
 
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="8" style=" " align="left">
-                                                        <p class=" pt-30 txt-left " style="">
+                                                    <td colspan="12" style=" " align="left">
+                                                        <p class=" txt-left " style="">
                                                             I Xyz, have read &nbsp;<span class="fw-600 txt-left">ANNEXURE A
                                                                 &
                                                                 B,</span>&nbsp; understood, and accept the
@@ -826,14 +846,14 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="4" class="pt-30 border-bottom-line" style="padding-bottom: 111px;" align="left">
+                                                    <td colspan="6" class=" pt-30" style="" align="left">
                                                         <p class="fw-600 txt-left " style="">
                                                             Sign:
                                                         </p>
 
 
                                                     </td>
-                                                    <td colspan="4" style="padding-bottom: 111px;" class="border-bottom-line" align="right">
+                                                    <td colspan="6" class="pt-30" style="" align="right">
                                                         <p class="fw-600 txt-right " style="">
                                                             Date:
                                                         </p>
@@ -842,7 +862,18 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="4" class="" align="">
+                                                    <td colspan="12"
+                                                        style="padding-bottom:15px;
+                                                    "
+                                                        class="pt-pb-5 border-bottom-line " align="">
+                                                        <p class="fw-600  " style="">
+                                                            INDCHEM MARKETING AGENCIES
+                                                        </p>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="6" class="" align="">
                                                         <p class=" " style="text-align:initial;">
                                                             &nbsp;<span class="fw-600 txt-left">HeadOffice:</span>&nbsp;
 
@@ -853,9 +884,10 @@
                                                         </p>
                                                     </td>
 
-                                                    <td colspan="4" class="" align="">
+                                                    <td colspan="6" class="" align="">
                                                         <p class=" " style="text-align:initial;">
-                                                            &nbsp;<span class="fw-600 txt-left"> AdminOffice:</span>&nbsp;
+                                                            &nbsp;<span class="fw-600 txt-left">
+                                                                AdminOffice:</span>&nbsp;
                                                             #34/123, DugarTowers,2ndFloorMarshallsRoad,
                                                             Egmore,Chennai-600008.T:+91-44-42661403,45558608,45558609
                                                             E:info@imavasa.in
@@ -876,17 +908,34 @@
                                         <table class="letter-format " style="padding:0;">
                                             <tbody>
                                                 <tr>
-                                                    <td colspan="12" align="right">
+                                                    <td colspan="12" class="pb-30" align="right">
 
                                                         <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_indchem.jpg') }}"
                                                             class="" alt=""
                                                             style="height: 70px;width:250px;max-height:100%;">
 
-
                                                     </td>
+
                                                 </tr>
                                                 <tr>
                                                     <td colspan="12" style=" "class="" align="center">
+                                                        <p class=" txt-left pt-pb-5 " style="">
+                                                            <span class="fw-600">IncomeTax – </span>
+                                                            Income tax will be deducted as per the slab
+
+                                                        </p>
+
+                                                        <p class=" txt-left pt-pb-5 " style="">
+                                                            <span class="fw-600">Full and Final Settlement -</span>
+                                                            F n F will be settle within 7 working days from the Last
+                                                            working
+                                                            day
+                                                        </p>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="12" style=" "class="pt-30" align="center">
                                                         <span class="fw-600  border-bottom-line" style="">
                                                             ANNEXURE B
                                                         </span>
@@ -894,7 +943,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="12" style=" "class="" align="">
+                                                    <td colspan="12" style=" "class="pt-20" align="">
                                                         <p class="fw-600  " style="">
                                                             DUTIES
                                                         </p>
@@ -904,8 +953,10 @@
                                                 <tr>
                                                     <td colspan="12" style=" "class="" align="">
                                                         <p class="  " style="">
-                                                            You will devote your full-time skill and attention to the work
-                                                            and business of the Company and shall continue to work to the
+                                                            You will devote your full-time skill and attention to the
+                                                            work
+                                                            and business of the Company and shall continue to work to
+                                                            the
                                                             best of your ability.
 
                                                         </p>
@@ -916,8 +967,10 @@
                                                     <td colspan="12" style=" "class="" align="">
                                                         <p class="  " style="">
                                                             You will accept, support, and work within the management,
-                                                            financial, personnel, internal control, and reporting systems,
-                                                            policies, practices, and procedures as determined by the Company
+                                                            financial, personnel, internal control, and reporting
+                                                            systems,
+                                                            policies, practices, and procedures as determined by the
+                                                            Company
                                                             or your Manager, from time to time.
 
                                                         </p>
@@ -938,7 +991,8 @@
                                                             Your actual working hours &nbsp;<span
                                                                 class="fw-600 txt-left">9.45 AM to 6 PM </span>&nbsp;
                                                             including working in
-                                                            Shifts and working days (including working on weekly offs and
+                                                            Shifts and working days (including working on weekly offs
+                                                            and
                                                             public holidays) will be often determined by workflow and
                                                             Company commitments.
 
@@ -948,7 +1002,8 @@
                                                             INDCHEM MARKETING AGENCIES works for &nbsp;<span
                                                                 class="fw-600 txt-left">8
                                                                 hours</span>&nbsp; (Including Break) a day 5 days a
-                                                            week and Saturday &nbsp;<span class="fw-600 txt-left">9.45 AM
+                                                            week and Saturday &nbsp;<span class="fw-600 txt-left">9.45
+                                                                AM
                                                                 to 4 PM </span>&nbsp; (Including Break). However,
                                                             there may be certain work exigencies that may require you to
                                                             work beyond the stipulated hours of work.
@@ -969,7 +1024,8 @@
                                                 <tr>
                                                     <td colspan="12" style=" "class="" align="">
                                                         <p class=" " style="">
-                                                            You shall conduct yourself in a befitting manner and abide by
+                                                            You shall conduct yourself in a befitting manner and abide
+                                                            by
                                                             all the conduct policy, the rules, and regulations of the
                                                             Company.
 
@@ -989,9 +1045,11 @@
                                                 <tr>
                                                     <td colspan="12" style=" "class="">
                                                         <p class=" " style="">
-                                                            Your remuneration shall be reviewed annually and any changes to
+                                                            Your remuneration shall be reviewed annually and any changes
+                                                            to
                                                             your remuneration package shall be determined by considering
-                                                            your performance in the Company, the Company’s performance, and
+                                                            your performance in the Company, the Company’s performance,
+                                                            and
                                                             your contribution to the Company.
 
 
@@ -1012,8 +1070,10 @@
                                                 <tr>
                                                     <td colspan="12" style=" "class="">
                                                         <p class=" " style="">
-                                                            Your salary is the reward for your untiring effort and work. You
-                                                            need to maintain your salary with the utmost confidentiality. In
+                                                            Your salary is the reward for your untiring effort and work.
+                                                            You
+                                                            need to maintain your salary with the utmost
+                                                            confidentiality. In
                                                             the event you do not maintain the confidentiality of your
                                                             salary, you may be subject to disciplinary action. </p>
                                                     </td>
@@ -1027,13 +1087,17 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="12" style=" "class="">
+                                                    <td colspan="12" style="padding-bottom:75px;"
+                                                        class="border-bottom-line ">
                                                         <p class="" style="">
                                                             The Company will compensate you for all expenses that are
                                                             reasonably incurred and that are directly related to the
-                                                            performance of your work, but only insofar as that compensation
-                                                            may be provided tax-free compensation of expenses as contained
-                                                            herein will be made only on the basis of a statement of expenses
+                                                            performance of your work, but only insofar as that
+                                                            compensation
+                                                            may be provided tax-free compensation of expenses as
+                                                            contained
+                                                            herein will be made only on the basis of a statement of
+                                                            expenses
                                                             that have been approved by the Company.
 
 
@@ -1041,6 +1105,57 @@
 
                                                     </td>
                                                 </tr>
+
+
+
+                                                <tr>
+                                                    <td colspan="6" class="" align="">
+                                                        <p class=" " style="text-align:initial;">
+                                                            &nbsp;<span class="fw-600 txt-left">HeadOffice:</span>&nbsp;
+
+                                                            63,SidcoIndustrialEstate,Sipco!Ranipet-632403
+                                                            M:9994370451 Ph:04172-246168I245336
+                                                            E:indchemrpt@yahoo.co.in
+
+                                                        </p>
+                                                    </td>
+
+                                                    <td colspan="6" class="" align="">
+                                                        <p class=" " style="text-align:initial;">
+                                                            &nbsp;<span class="fw-600 txt-left">
+                                                                AdminOffice:</span>&nbsp;
+                                                            #34/123, DugarTowers,2ndFloorMarshallsRoad,
+                                                            Egmore,Chennai-600008.T:+91-44-42661403,45558608,45558609
+                                                            E:info@imavasa.in
+
+
+                                                        </p>
+                                                    </td>
+
+                                                </tr>
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item ">
+                                <div class="main-page appointment-letter">
+                                    <div class="sub-page" style="text-align: justify;">
+                                        <table class="letter-format " style="padding:0;">
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="12" class="pb-30" align="right">
+
+                                                        <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_indchem.jpg') }}"
+                                                            class="" alt=""
+                                                            style="height: 70px;width:250px;max-height:100%;">
+
+                                                    </td>
+
+                                                </tr>
+
                                                 <tr>
                                                     <td colspan="12" style=" "class="pt-10">
                                                         <p class=" fw-600" style="">
@@ -1054,7 +1169,8 @@
                                                     <td colspan="12" style=" "class="">
                                                         <p class=" " style="">
                                                             Employer contributions will be submitted to the Indian
-                                                            Government-approved Provident Fund Scheme on your behalf with
+                                                            Government-approved Provident Fund Scheme on your behalf
+                                                            with
                                                             your equal monthly contribution as detailed in &nbsp;<span
                                                                 class="fw-600 txt-left"> Annexure A .</span>&nbsp;
 
@@ -1062,6 +1178,7 @@
 
                                                     </td>
                                                 </tr>
+
                                                 <tr>
                                                     <td colspan="12" style=" "class="pt-10">
                                                         <p class=" fw-600" style="">
@@ -1071,65 +1188,24 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="12" style=" padding-bottom: 62px;"class="border-bottom-line">
+                                                    <td colspan="12" style=" "class="">
                                                         <p class="" style="">
                                                             Salaries and wages will be paid monthly by electronic funds
                                                             transfer or will be deposited in your Salary Account or any
-                                                            other means on or before the 7th day of each month in arrears.
+                                                            other means on or before the 7th day of each month in
+                                                            arrears.
                                                             The company reserves its right to vary this procedure at its
-                                                            option. However, such variance will be communicated to you in
+                                                            option. However, such variance will be communicated to you
+                                                            in
                                                             due course.
 
                                                         </p>
 
                                                     </td>
                                                 </tr>
+
                                                 <tr>
-                                                    <td colspan="6" class="" align="">
-                                                        <p class=" " style="text-align:initial;">
-                                                            &nbsp;<span class="fw-600 txt-left">HeadOffice:</span>&nbsp;
-
-                                                            63,SidcoIndustrialEstate,Sipco!Ranipet-632403
-                                                            M:9994370451 Ph:04172-246168I245336
-                                                            E:indchemrpt@yahoo.co.in
-
-                                                        </p>
-                                                    </td>
-
-                                                    <td colspan="6" class="" align="">
-                                                        <p class=" " style="text-align:initial;">
-                                                            &nbsp;<span class="fw-600 txt-left"> AdminOffice:</span>&nbsp;
-                                                            #34/123, DugarTowers,2ndFloorMarshallsRoad,
-                                                            Egmore,Chennai-600008.T:+91-44-42661403,45558608,45558609
-                                                            E:info@imavasa.in
-
-
-                                                        </p>
-                                                    </td>
-
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item ">
-                                <div class="main-page appointment-letter">
-                                    <div class="sub-page" style="text-align: justify;">
-                                        <table class="letter-format " style="padding:0;">
-                                            <tbody>
-                                                <tr>
-                                                    <td colspan="12" align="right">
-
-                                                        <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_indchem.jpg') }}"
-                                                            class="" alt=""
-                                                            style="height: 70px;width:250px;max-height:100%;">
-
-
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="12" style=" "class="">
+                                                    <td colspan="12" style=" "class="pt-10">
                                                         <p class="fw-600  " style="">
                                                             LEAVE
                                                         </p>
@@ -1139,14 +1215,15 @@
                                                 <tr>
                                                     <td colspan="12" style=" "class="" align="">
                                                         <p class="  " style="">
-                                                            Leave will be granted as per the prevailing Company's policy.
-                                                            The current Leave Policy is available in the employeehandbook
+                                                            Leave will be granted as per the prevailing Company's
+                                                            policy. The current Leave Policy is available in the
+                                                            employeehandbook
                                                         </p>
                                                     </td>
                                                 </tr>
 
                                                 <tr>
-                                                    <td colspan="12" style=" "class="" align="">
+                                                    <td colspan="12" style=" "class="pt-10" align="">
                                                         <p class="fw-600  " style="">
                                                             INTELLECTUAL PROPERTY RIGHTS
 
@@ -1157,22 +1234,32 @@
                                                 <tr>
                                                     <td colspan="12" style=" "class="" align="">
                                                         <p class="  " style="">
-                                                            All Industrial and intellectual property rights, including but
+                                                            All Industrial and intellectual property rights, including
+                                                            but
                                                             not limited to patent rights, design rights, copyrights, and
                                                             related rights, database rights, trademark rights, and chip
-                                                            rights, ensuring within the framework of the work performed by
+                                                            rights, ensuring within the framework of the work performed
+                                                            by
                                                             you during your employment with the company,
                                                         </p>
                                                         <p class="  " style="">
-                                                            will be exclusively vested in Company. You may not independently
-                                                            during your employment and subsequent to termination disclose,
-                                                            multiply, use, manufacture, bring on the market or sell, lease,
-                                                            deliver, or otherwise trade, offer on behalf of any third party,
-                                                            or commission the registration of the results of your work. To
+                                                            will be exclusively vested in Company. You may not
+                                                            independently
+                                                            during your employment and subsequent to termination
+                                                            disclose,
+                                                            multiply, use, manufacture, bring on the market or sell,
+                                                            lease,
+                                                            deliver, or otherwise trade, offer on behalf of any third
+                                                            party,
+                                                            or commission the registration of the results of your work.
+                                                            To
                                                             the extent that such inventions are performed under the
-                                                            Company’s direction, you shall fully, freely, and immediately
-                                                            communicate any invention to the Company and all rights, title,
-                                                            and interest to any such invention (“Inventions”) shall be the
+                                                            Company’s direction, you shall fully, freely, and
+                                                            immediately
+                                                            communicate any invention to the Company and all rights,
+                                                            title,
+                                                            and interest to any such invention (“Inventions”) shall be
+                                                            the
                                                             sole property of the Company.
 
                                                         </p>
@@ -1184,15 +1271,19 @@
                                                         <ol type="A" style="text-align: justify">
                                                             <li class="pt-pb-5">You will give the Company and its
                                                                 solicitors and/or its
-                                                                patent attorneys all necessary assistance and cooperation in
+                                                                patent attorneys all necessary assistance and
+                                                                cooperation in
                                                                 connection with the preparation and prosecution of any
-                                                                application for patent, design, registration, or copyright
+                                                                application for patent, design, registration, or
+                                                                copyright
                                                                 by the Company in respect of the Invention.
                                                             </li>
-                                                            <li>TeYou irrevocably appoint the Company and any directors of
+                                                            <li>TeYou irrevocably appoint the Company and any directors
+                                                                of
                                                                 the Company jointly and severally your true and lawful
                                                                 attorney to execute all such documents and do all such
-                                                                things as in the opinion of the Company may be necessary or
+                                                                things as in the opinion of the Company may be necessary
+                                                                or
                                                                 requisite for any such purpose.</li>
 
                                                         </ol>
@@ -1201,7 +1292,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="" style=" "class="">
+                                                    <td colspan="" style=" "class="pt-10">
                                                         <p class="fw-600  " style="">
                                                             TERMINATION
                                                         </p>
@@ -1209,61 +1300,33 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="12" style=" "class="">
+                                                    <td colspan="12" style="padding-bottom:28px;"
+                                                        class=" border-bottom-line ">
                                                         <p class="  " style="">
-                                                            Your employment may be terminated at any time by yourself, or by
-                                                            the Company, upon providing one (1) month’s written notice to
+                                                            Your employment may be terminated at any time by yourself,
+                                                            or by
+                                                            the Company, upon providing one (1) month’s written notice
+                                                            to
                                                             the other party. Also, it can be extended according to the
                                                             management’s needs
                                                         </p>
                                                         <p class="pt-pb-5 " style="">
-                                                            In the case of the Company terminating, you for reasons other
-                                                            than a breach of contract by you or for any disciplinary reasons
-                                                            against you, the company shall pay you one month’s salary equal
-                                                            to your notice period not worked as payment in lieu of notice.
-
-                                                        </p>
-                                                        <p class=" " style="">
-                                                            If you seek to terminate your employment with the company, you
-                                                            shall do a proper handover of all the work and responsibilities
-                                                            that you are handling to your manager and the resource
-                                                            identified for replacing you, to the satisfaction of your
-                                                            manager. If you are not able to serve the notice period one (1)
-                                                            month of your CTC to be payable to INDCHEM MARKETING AGENCIES
-
-                                                        </p>
-                                                        <p class="pt-pb-5 " style="">
-                                                            Upon termination of your employment with the company, you agree
-                                                            not to solicit any other team members in the company to the new
-                                                            organization that you are going.
-
-                                                        </p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="12" style=" "class="">
-                                                        <p class="fw-600  " style="">
-                                                            DISPUTE RESOLUTION
+                                                            In the case of the Company terminating, you for reasons
+                                                            other
+                                                            than a breach of contract by you or for any disciplinary
+                                                            reasons
+                                                            against you, the company shall pay you one month’s salary
+                                                            equal
+                                                            to your notice period not worked as payment in lieu of
+                                                            notice.
 
                                                         </p>
 
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td colspan="12" style="padding-bottom:40px "class="border-bottom-line">
-                                                        <p class="  " style="">
-                                                            Any differences and disputes arising out of this appointment
-                                                            letter would be settled by arbitration conducted in accordance
-                                                            with the arbitration and conciliation act 1996 with a person
-                                                            nominated by the company as the sole arbitrator. The arbitrator
-                                                            shall conclude the arbitration within 30 days from the date of
-                                                            reference and shall pass an award. The award passed by the
-                                                            arbitrator shall be conclusive and binding on the parties and
-                                                            shall not be appealable before a court of law.
 
-                                                        </p>
-                                                    </td>
-                                                </tr>
+
+
                                                 <tr>
                                                     <td colspan="6" class="" align="">
                                                         <p class=" " style="text-align:initial;">
@@ -1278,7 +1341,8 @@
 
                                                     <td colspan="6" class="" align="">
                                                         <p class=" " style="text-align:initial;">
-                                                            &nbsp;<span class="fw-600 txt-left"> AdminOffice:</span>&nbsp;
+                                                            &nbsp;<span class="fw-600 txt-left">
+                                                                AdminOffice:</span>&nbsp;
                                                             #34/123, DugarTowers,2ndFloorMarshallsRoad,
                                                             Egmore,Chennai-600008.T:+91-44-42661403,45558608,45558609
                                                             E:info@imavasa.in
@@ -1288,7 +1352,6 @@
                                                     </td>
 
                                                 </tr>
-
                                             </tbody>
                                         </table>
                                     </div>
@@ -1300,17 +1363,69 @@
                                         <table class="letter-format " style="padding:0;">
                                             <tbody>
                                                 <tr>
-                                                    <td colspan="12" align="right">
+                                                    <td colspan="12" class="pb-30" align="right">
 
                                                         <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_indchem.jpg') }}"
                                                             class="" alt=""
                                                             style="height: 70px;width:250px;max-height:100%;">
 
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="12 " style=" "class="">
+                                                        <p class=" " style="">
+                                                            If you seek to terminate your employment with the company,
+                                                            you
+                                                            shall do a proper handover of all the work and
+                                                            responsibilities
+                                                            that you are handling to your manager and the resource
+                                                            identified for replacing you, to the satisfaction of your
+                                                            manager. If you are not able to serve the notice period one
+                                                            (1)
+                                                            month of your CTC to be payable to INDCHEM MARKETING AGENCIES
+
+                                                        </p>
+                                                        <p class="pt-pb-5 " style="">
+                                                            Upon termination of your employment with the company, you
+                                                            agree
+                                                            not to solicit any other team members in the company to the
+                                                            new
+                                                            organization that you are going.
+
+                                                        </p>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="12" style=" "class="pt-10">
+                                                        <p class="fw-600  " style="">
+                                                            DISPUTE RESOLUTION
+                                                        </p>
 
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="12 " style=" "class="">
+                                                    <td colspan="12" style=" "class="">
+                                                        <p class="  " style="">
+                                                            Any differences and disputes arising out of this appointment
+                                                            letter would be settled by arbitration conducted in
+                                                            accordance
+                                                            with the arbitration and conciliation act 1996 with a person
+                                                            nominated by the company as the sole arbitrator. The
+                                                            arbitrator
+                                                            shall conclude the arbitration within 30 days from the date
+                                                            of
+                                                            reference and shall pass an award. The award passed by the
+                                                            arbitrator shall be conclusive and binding on the parties
+                                                            and
+                                                            shall not be appealable before a court of law.
+
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="12 " style=" "class="pt-10">
                                                         <p class="fw-600  " style="">
                                                             GOVERNING LAW AND JURISDICTION
 
@@ -1321,7 +1436,8 @@
                                                 <tr>
                                                     <td colspan="12" style=" "class="">
                                                         <p class="  " style="">
-                                                            This agreement shall be governed by the laws of the Republic of
+                                                            This agreement shall be governed by the laws of the Republic
+                                                            of
                                                             India and courts in Chennai have exclusive jurisdiction over
                                                             this agreement.
 
@@ -1329,7 +1445,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="12" style=" "class="">
+                                                    <td colspan="12" style=" "class="pt-10">
                                                         <p class="fw-600  " style="">
                                                             RETIREMENT AGE
 
@@ -1342,7 +1458,8 @@
                                                     <td colspan="12" style=" "class="">
                                                         <p class="  " style="">
                                                             The general Retirement for employees in the Company is
-                                                            &nbsp;<span class="fw-600 txt-left"> Fifty-Eight (58) years.
+                                                            &nbsp;<span class="fw-600 txt-left"> Fifty-Eight (58)
+                                                                years.
                                                             </span>&nbsp;
                                                         </p>
                                                     </td>
@@ -1357,7 +1474,7 @@
 
                                                         </p>
 
-                                                        <p class="fw-600 pt-10 txt-left " style="border-bottom:1px solid">
+                                                        <p class="fw-600 pt-10 txt-left " style="">
                                                             Founder and CEO of Indchem Marketing Agencies
                                                         </p>
                                                     </td>
@@ -1380,14 +1497,14 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="6" class="pt-30 border-bottom-line" style="    padding-bottom: 543px; " align="left">
+                                                    <td colspan="6" class="pt-30" style=" " align="left">
                                                         <p class="fw-600 txt-left " style="">
                                                             Sign:
                                                         </p>
 
 
                                                     </td>
-                                                    <td colspan="6" style="    padding-bottom: 543px; " class="border-bottom-line" align="right">
+                                                    <td colspan="6" class="pt-30" style="" align="right">
                                                         <p class="fw-600 txt-right " style="">
                                                             Date:
                                                         </p>
@@ -1395,6 +1512,15 @@
 
                                                     </td>
                                                 </tr>
+                                                <tr>
+                                                    <td colspan="12" style="text-align:initial;padding-bottom:183px;"
+                                                        class="pt-pb-5 border-bottom-line " align="">
+                                                        <p class="fw-600  " style="">
+                                                            INDCHEM MARKETING AGENCIES
+                                                        </p>
+                                                    </td>
+                                                </tr>
+
                                                 <tr>
                                                     <td colspan="6" class="" align="">
                                                         <p class=" " style="text-align:initial;">
@@ -1409,7 +1535,8 @@
 
                                                     <td colspan="6" class="" align="">
                                                         <p class=" " style="text-align:initial;">
-                                                            &nbsp;<span class="fw-600 txt-left"> AdminOffice:</span>&nbsp;
+                                                            &nbsp;<span class="fw-600 txt-left">
+                                                                AdminOffice:</span>&nbsp;
                                                             #34/123, DugarTowers,2ndFloorMarshallsRoad,
                                                             Egmore,Chennai-600008.T:+91-44-42661403,45558608,45558609
                                                             E:info@imavasa.in
@@ -1441,7 +1568,6 @@
                             <span class="visually-hidden">Next</span>
                         </button>
                     </div>
-
                 </div>
                 <div class="tab-pane fade  " id="payslips" role="tabpanel" aria-labelledby="pills-home-tab">
 
