@@ -31,6 +31,10 @@ Route::middleware(['auth'])->group(function () {
     // });
     Route::get('attendance/export/', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'export'])->name('attendanceReport');
 
+    Route::get('report/attendanceReport', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showAttendanceReport'])->name('showAttendanceReport');
+
+
+
     //404 error page
     Route::get('/page-not-found', function () {
         return view('page404');

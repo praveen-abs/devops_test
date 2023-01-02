@@ -645,7 +645,7 @@
                             </li>
                             <li class="nav-item">
 
-                                <a href="{{ route('page-not-found') }}" class="nav-link sidebar py-1"
+                                <a href="{{ route('showAttendanceReport') }}" class="nav-link sidebar py-1"
                                     role="button"><span>Attendance
                                         Report</span></a>
                             </li>
