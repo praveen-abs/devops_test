@@ -14,7 +14,7 @@
                         @if (\Carbon\Carbon::parse($employee['dob'])->month == date('m') &&
                             \Carbon\Carbon::parse($employee['dob'])->day == date('d'))
                             <?php $text = 'Today'; ?>
-                        @elseif (\Carbon\Carbon::parse($employee['dob'])->month >= date('m') &&
+                        @elseif (\Carbon\Carbon::parse($employee['dob'])->month > date('m') &&
                             \Carbon\Carbon::parse($employee['dob'])->day > date('d'))
                             <?php $text = 'Upcoming'; ?>
                         @endif

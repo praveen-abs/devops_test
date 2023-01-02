@@ -178,7 +178,7 @@ class VmtAttendanceController extends Controller
         if ($request->type == 'org') {
             $employeeLeaves_Org = '';
 
-            $employeeLeaves_Org = VmtEmployeeLeaves::whereIn('status', $statusArray)->get();
+            $employeeLeaves_Org = VmtEmployeeLeaves::whereIn('status', $statusArray)->orderBy('created_at', 'DESC')->get();
 
             //dd($map_allEmployees[1]["name"]);
             foreach ($employeeLeaves_Org as $singleItem) {
@@ -479,7 +479,7 @@ class VmtAttendanceController extends Controller
         $userCode = $user->user_code;
 
         $regularTime  = VmtWorkShifts::where('shift_type', 'First Shift')->first();
-        $currentyear = date("Y");
+        $currentyear = $request->year;
         $dt = $currentyear . '-' . $request->month . '-01';
         $currentDate = Carbon::now();
         $monthDateObj = Carbon::parse($dt);
