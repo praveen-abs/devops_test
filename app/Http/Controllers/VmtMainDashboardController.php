@@ -188,22 +188,17 @@ class VmtMainDashboardController extends Controller
                                 ->where('users.is_ssa','0')
                                 ->get()->count();
 
-
-        //Employees who checked-in today
-        $todayEmployeesCheckedInCount = User::join('vmt_employee_attendance','vmt_employee_attendance.user_id','=','users.id')
-                                ->whereDate('vmt_employee_attendance.checkin_time','=', $currentDate )
+        $query_todaysCheckedinEmployees = User::join('vmt_employee_attendance', 'vmt_employee_attendance.user_id', '=', 'users.id')
+                                ->whereDate('vmt_employee_attendance.date', '=', $currentDate)
                                 ->whereNull('vmt_employee_attendance.checkout_time')
-                                ->where('users.is_ssa','0')
-                                ->get()->count();
+                                ->where('users.is_ssa', '0');
 
         //Employees Leave today count
-        $todayEmployeesCheckedIn = User::join('vmt_employee_attendance','vmt_employee_attendance.user_id','=','users.id')
-                                ->whereDate('vmt_employee_attendance.checkin_time','=', $currentDate )
-                                ->whereNull('vmt_employee_attendance.checkout_time')
-                                ->where('users.is_ssa','0')
-                                ->get(['name','user_code']);
+        $todayEmployeesCheckedInCount = $query_todaysCheckedinEmployees->get()->count();
 
-        //dd($todayEmployeesCheckedIn->toArray());
+        //Employees who checked-in today
+        $todayEmployeesCheckedIn = $query_todaysCheckedinEmployees->get(['name','user_code']);
+
 
         $todayEmployeesOnLeaveCount =  $totalEmployeesCount - $todayEmployeesCheckedInCount;
         //dd($newEmployeesCount);
@@ -215,6 +210,8 @@ class VmtMainDashboardController extends Controller
             $dashboardCountersData['todayEmployeesCheckedInCount'] = $todayEmployeesCheckedInCount;
             $dashboardCountersData['todayEmployeesCheckedIn'] = $todayEmployeesCheckedIn;
             $dashboardCountersData['todayEmployeesOnLeaveCount'] = $todayEmployeesOnLeaveCount;
+
+        //dd($dashboardCountersData);
 
         $json_dashboardCountersData = json_encode($dashboardCountersData);
 
