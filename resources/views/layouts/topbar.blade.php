@@ -64,7 +64,7 @@
                                 @else
                                     <label for="" class="me-3 fw-bold f-12 "></label>
                                 @endif
-                                <select id="dropdown_client" class="form-select btn btn-border-orange"
+                                <select id="dropdown_client" class="form-select"
                                     aria-label=".form-select-sm ">
                                     @foreach ($clientsList as $client)
                                         <option value="{{ $client->id }}"
