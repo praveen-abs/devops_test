@@ -12,6 +12,8 @@
 <script src="{{ URL::asset('assets/libs/swiper/swiper.min.js') }}"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
 
+<script src="{{ URL::asset('assets/js/calendar-vanila.js') }}" defer></script>
+
 {{-- sweet alert --}}
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
