@@ -309,7 +309,7 @@
                                     {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}
 
                                     <li class="nav-item">
-                                        <a href="{{ route('page-not-found') }}" id=""
+                                        <a href="{{ route('showReimbursementApprovalPage') }}" id=""
                                             class="nav-link sidebar py-1" data-bs-toggle="" role="button"
                                             aria-expanded="false"><span>
                                                 Reimbursement</span> </a>
