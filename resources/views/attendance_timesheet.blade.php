@@ -296,13 +296,13 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
 
 
-        function ajaxGetMonthlyDate_TimeSheet(selectedMonth, selectedUserID) {
+        function ajaxGetMonthlyDate_TimeSheet(selectedMonth, selectedYear, selectedUserID) {
             $.ajax({
                 url: "{{ route('fetch-attendance-user-timesheet') }}",
                 type: "GET",
                 data: {
                     month: selectedMonth + 1,
-                    year: new Date().getFullYear(),
+                    year: selectedYear,
                     user_id: selectedUserID,
                     _token: '{{ csrf_token() }}'
                 },
@@ -325,7 +325,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                     //             '</li>';
 
                     // $('#sidepanel_employees_list').append(html);
-                    showCalendar(selectedMonth, '2022', data);
+                    showCalendar(selectedMonth, selectedYear, data);
 
                 }
             });
@@ -392,7 +392,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                     $('.employee_list_item').click(function() {
                         currentlySelectedUser = $(this).attr('data-userid');
                         console.log("currentlySelectedUser : " + currentlySelectedUser);
-                        ajaxGetMonthlyDate_TimeSheet(currentMonth, currentlySelectedUser);
+                        ajaxGetMonthlyDate_TimeSheet(currentMonth, currentYear, currentlySelectedUser);
 
                     });
 
@@ -464,7 +464,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                     $('.employee_list_item').click(function() {
                         currentlySelectedUser = $(this).attr('data-userid');
                         console.log("currentlySelectedUser : " + currentlySelectedUser);
-                        ajaxGetMonthlyDate_TimeSheet(currentMonth, currentlySelectedUser);
+                        ajaxGetMonthlyDate_TimeSheet(currentMonth, currentYear, currentlySelectedUser);
 
                     });
 
@@ -515,7 +515,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
             $('.employee_list_item').click(function() {
                 console.log($(this).attr('data-userid'));
 
-                ajaxGetMonthlyDate_TimeSheet(currentMonth, "{{ Auth::user()->id }}");
+                ajaxGetMonthlyDate_TimeSheet(currentMonth, currentYear, "{{ Auth::user()->id }}");
 
 
             });
@@ -546,7 +546,9 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
             //For timesheet tab
             updateTimeSheetForCurrentEmployee();
-            ajaxGetMonthlyDate_TimeSheet(currentMonth, {{ Auth::user()->id }});
+            console.log("INIT : Getting timesheet data for the YYYY-MM : "+currentYear+" - "+currentMonth);
+
+            ajaxGetMonthlyDate_TimeSheet(currentMonth, currentYear, {{ Auth::user()->id }});
 
 
             $('#tab_timesheet').click(function() {
@@ -557,7 +559,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                 var selectedMonth = d.getMonth();
 
                 updateTimeSheetForCurrentEmployee();
-                ajaxGetMonthlyDate_TimeSheet(currentMonth, {{ Auth::user()->id }});
+                ajaxGetMonthlyDate_TimeSheet(currentMonth, currentYear, {{ Auth::user()->id }});
 
             });
 
@@ -582,7 +584,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                 console.log($(this).attr('data-userid'));
                 currentlySelectedUser = $(this).attr('data-userid');
                 console.log("currentlySelectedUser : " + currentlySelectedUser);
-                ajaxGetMonthlyDate_TimeSheet(currentMonth, currentlySelectedUser);
+                ajaxGetMonthlyDate_TimeSheet(currentMonth, currentYear, currentlySelectedUser);
 
 
             });
@@ -788,7 +790,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                     //update sidepanel
 
                     //Update the calendar for this user
-                    ajaxGetMonthlyDate_TimeSheet(currentMonth, $('#attendance_user').val());
+                    ajaxGetMonthlyDate_TimeSheet(currentMonth, currentYear,$('#attendance_user').val());
 
                 }
             });
@@ -862,14 +864,14 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
             currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear;
             currentMonth = (currentMonth + 1) % 12;
             //showCalendar(currentMonth, currentYear);
-            ajaxGetMonthlyDate_TimeSheet(currentMonth, currentlySelectedUser);
+            ajaxGetMonthlyDate_TimeSheet(currentMonth, currentYear, currentlySelectedUser);
         }
 
         function previous() {
             currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear;
             currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
             //showCalendar(currentMonth, currentYear);
-            ajaxGetMonthlyDate_TimeSheet(currentMonth, currentlySelectedUser);
+            ajaxGetMonthlyDate_TimeSheet(currentMonth, currentYear, currentlySelectedUser);
 
         }
 
@@ -877,7 +879,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
             currentYear = parseInt(selectYear.value);
             //currentMonth = parseInt(selectMonth.value);
             //showCalendar(currentMonth, currentYear);
-            ajaxGetMonthlyDate_TimeSheet(currentMonth, currentlySelectedUser);
+            ajaxGetMonthlyDate_TimeSheet(currentMonth, currentYear, currentlySelectedUser);
 
         }
 
