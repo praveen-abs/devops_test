@@ -23,10 +23,11 @@ class VmtPMSMail_Reviewer extends Mailable
      * @return void
      */
     // protected $linkUri;
-    public function __construct($approvalStatus, $user_emp_name,$appraisal_year, $appraisal_period,$user_manager_name,$comments_manager,$login_link)
+    public function __construct($approvalStatus,$flowType, $user_emp_name,$appraisal_year, $appraisal_period,$user_manager_name,$comments_manager,$login_link)
     {
         //
         $this->approvalStatus = $approvalStatus;
+        $this->flowType = $flowType;
         $this->user_emp_name = $user_emp_name;
         $this->appraisal_year = $appraisal_year;
         $this->appraisal_period = $appraisal_period;
@@ -46,9 +47,25 @@ class VmtPMSMail_Reviewer extends Mailable
         $MAIL_FROM_ADDRESS = env('MAIL_FROM_ADDRESS');
         $MAIL_FROM_NAME    = env('MAIL_FROM_NAME');
 
+        $mail_subject="  ";
+
+        if($this->flowType == "3")
+        {
+            if($this->approvalStatus == "approved")
+                $mail_subject = "Approved of OKR/PMS for the Period of " . $this->appraisal_period;
+            else
+                $mail_subject = "Rejected of OKR/PMS for the Period of " . $this->appraisal_period;
+        }
+        else
+        if($this->flowType == "2")
+        {
+            $mail_subject = "Successful Update of PMS/OKR for the Period of " . $this->appraisal_period;
+        }
+
+
         return $this->from($MAIL_FROM_ADDRESS,  $MAIL_FROM_NAME)
                 //->subject("Regarding the Manager Review - PMS")
-                ->subject("Submitted Manager Review OKR/PMS for the Period of ".$this->appraisal_year." - ".$this->appraisal_period)
+                ->subject($mail_subject)
                 ->view('pms_mails.vmt_pms_mail_flow2_manager_to_assignee')
                 ->with('approvalStatus', $this->approvalStatus)
                 ->with('user_emp_name', $this->user_emp_name)

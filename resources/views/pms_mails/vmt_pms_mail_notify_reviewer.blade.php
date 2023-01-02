@@ -78,12 +78,23 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                                             <tr>
                                                 <td colspan="8" align="left" class="border-less">
                                                     <p class="" style="margin: 0px ">Greetings from the HR Team</p>
-                                                    <p>This is to inform you that your team member Mr./ Ms. {{ $employeeName }} has successfully submitted his/her
-                                                        Self-Review for {{ $appraisal_period }}.
+                                                    <p>This is to inform you that your team member <b>Mr./ Ms. {{ $employeeName }} </b> successfully submitted his/her
+                                                        Self-Review for <b>{{ $appraisal_period }} </b>.
                                                         Request you to complete the OKR Manager review against OKR /PMS forms using the buttons below.
                                                     </p>
+                                                    <tr>
+                                                          <td colspan="4" style="" align="center"
+                                                            class="padding-t-b_0 ">
+    
+                                                            <a class="" type="button"
+                                                            href="{{ $loginLink }}/team-appraisal"
+                                                                style="text-decoration:none;cursor: pointer;margin-left:10px;color:#ffffff;padding: 7px 30px;border: 2px solid #dbd801;background: #dbd801;border-radius: 4px;font-weight:600">
+                                                                Review
+                                                            </a>
+                                                        </td>
+                                                    </tr>
                                                     <p>
-                                                        Also, kindly have a “Great Conversation” with “Mr. / Ms. {{ $employeeName }}” and
+                                                        Also, kindly have a “Great Conversation” with <b> “Mr. / Ms. {{ $employeeName }}” </b>
                                                         Complete the OKR/PMS within the time frame.
                                                     </p>
                                                     <p>

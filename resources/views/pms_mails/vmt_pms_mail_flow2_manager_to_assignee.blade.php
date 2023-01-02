@@ -249,7 +249,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                         style="padding:10px ;">
 
                                                         <p class="text-strong margin-t-b_0  txt-center"
-                                                            style="color:#008000;font-size:20px">Accepted</p>
+                                                            style="color:#008000;font-size:20px">Approved </p>
                                                     </td>
                                                 </tr>
 
@@ -258,9 +258,9 @@ $bank_names = \DB::table('bank_list')->get();
 
                                                         <p class="" style="margin: 0px ">Dear <b> Mr. / Ms.
                                                                 @php echo $user_emp_name; @endphp</b></p>
-                                                        <p>This is to inform you that <b>Mr. /Mrs. @php echo $user_emp_name; @endphp
-                                                            </b>,<b> Mr. / Ms. @php echo $user_manager_name; @endphp</b> has
-                                                            accepted his/ her OKR/ PMS forms.
+                                                        <p>This is to inform you that <b>Mr. /Ms. @php echo $user_manager_name; @endphp
+                                                            </b>,has
+                                                            Approved your OKR/ PMS forms.
                                                         </p>
                                                         <p>Request you to kindly have a “Great Conversation” with
                                                             <b>“Mr. /Mrs. @php echo $user_manager_name; @endphp </b> and
@@ -269,19 +269,22 @@ $bank_names = \DB::table('bank_list')->get();
                                                             frame.
                                                         </p>
                                                         <p>
-                                                            Kindly visit the HRMS portal for more details
-                                                        </p>
-
-                                                    </td>
+                                                                <a class=""
+                                                                        href="{{ $loginLink }}/employee-appraisal">
+                        
+                                                                        Kindly visit the HRMS portal for more details
+                                                                    </a>
+                                                                </p>
+                                                        </td>
                                                 </tr>
 
 
 
                                                 <tr>
-                                                    <td colspan="8" align="right" class="padding-t-b_0">
-                                                        <p class="tet-right margin-t-b_0 " class="margin:0px;">Cheers,
+                                                    <td colspan="8"   class="padding-t-b_0">
+                                                        <p class="txt-left margin-t-b_0 " class="margin:0px;">Cheers,
                                                         </p>
-                                                        <p class="tet-right margin-t-b_0 ">ABS_OKR Automated System.
+                                                        <p class="txt-left margin-t-b_0 ">ABS_OKR Automated System.
                                                         </p>
                                                     </td>
                                                 </tr>
@@ -409,19 +412,24 @@ $bank_names = \DB::table('bank_list')->get();
 
                                                         <p class="" style="margin:0px ">Dear <b> Mr. / Ms.
                                                                 @php echo $user_emp_name; @endphp</b></p>
-                                                        <p>This is to inform you that,<b> Mr. / Ms.
-                                                                @php echo $user_emp_name; @endphp</b> ,<b> Mr. / Ms.
+                                                        <p>This is to inform you that,
+                                                                <b> Mr. / Ms.
                                                                 @php echo $user_manager_name; @endphp</b> has rejected your OKR/ PMS forms
                                                             due to
                                                         </p>
-                                                        <p class="txt-center"><b>“@php echo $comments_manager; @endphp </b></p>
+                                                        <p class="txt-center"><b>" {{ $comments_manager }} " </b></p>
                                                         <p>Request you to kindly have a “Great Conversation” with <b>
                                                                 Mr. / Ms.
                                                                 @php echo $user_manager_name; @endphp</b> and Complete the OKR/PMS within
                                                             the time
-                                                            frame.</p>
-
-                                                        <p>Kindly visit the HRMS portal for more details </p>
+                                                            frame.</p> 
+                                                        <p>
+                                                        <a class=""
+                                                                href="{{ $loginLink }}/employee-appraisal">
+                
+                                                                Kindly visit the HRMS portal for more details
+                                                            </a>
+                                                        </p>
 
                                                     </td>
                                                 </tr>
@@ -429,10 +437,10 @@ $bank_names = \DB::table('bank_list')->get();
 
 
                                                 <tr>
-                                                    <td colspan="8" align="right" class="padding-t-b_0">
-                                                        <p class="tet-right margin-t-b_0 " class="margin:0px;">Cheers,
+                                                    <td colspan="8"  class="padding-t-b_0">
+                                                        <p class="txt-left margin-t-b_0 " class="margin:0px;">Cheers,
                                                         </p>
-                                                        <p class="tet-right margin-t-b_0 ">ABS_OKR Automated System.
+                                                        <p class="txt-left margin-t-b_0 ">ABS_OKR Automated System.
                                                         </p>
                                                     </td>
                                                 </tr>
