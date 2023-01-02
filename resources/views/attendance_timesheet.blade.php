@@ -13,7 +13,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
     @lang('translation.dashboards')
 @endsection
 @section('css')
-    <link rel="stylesheet" href="{{ URL::asset('/assets/css/calendar-vanila.css') }}">
+<link rel="stylesheet" href="{{ URL::asset('/assets/css/calendar-vanila.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('/assets/css/attendance_calendar.css') }}">
 @endsection
 @section('content')
@@ -368,6 +368,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
                         var html = '<li class="list_employee_attendance p-1 w-100" >' +
                             '<a class="w-100  d-flex employee_list_item w-100 p-2" data-userid=' +
+
                             element
                             .id + '>' +
                             '<div class=" me-2 d-flex col-auto">' +
@@ -440,6 +441,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
                         var html = '<li class="list_employee_attendance p-1 " >' +
                             '<a class="  d-flex employee_list_item w-100 p-2" data-userid=' +
+
                             element
                             .id + '>' +
                             '<div class="col-auto me-2 ">' +

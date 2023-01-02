@@ -11,6 +11,7 @@
 .showEmployee_attendance ul li.list_employee_attendance:hover {
     background-color: #ebebeb;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 /* li.list_employee_attendance .active{
@@ -51,13 +52,11 @@
     margin-top: 50px;
 }
 
-
 ._container-calendar ._table-calendar tr th {
     font-size: 16px;
     padding-bottom: 20px;
     color: #ff4100;
 }
-
 
 ._container-calendar ._table-calendar tr th:first-child {
     padding-left: 30px;
@@ -102,7 +101,7 @@
     color: #ff0900;
 }
 
-.calendar_icon{
+.calendar_icon {
     height: 15px;
     width: 15px;
 }
