@@ -537,18 +537,21 @@
             });
 
 
-            
+
             setTimeout(() => {
                 $('#selected_frequency').trigger('change')
             }, 500);
 
             function frequencyChange() {
                 var data = "";
-                var year = "<?= date('Y') ?>";
-                var nextyear = "<?= date('Y', strtotime('+1 year')) ?>";
+                var year = new Date().getFullYear();
+                var nextyear = year + 1;
                 if ($('#selected_frequency').val() == 'monthly') {
 
                     if ($('#calendar_type').val() == 'financial_year') {
+                        year = year - 1;
+                        nextyear = year + 1;
+
                         data =
                             "<option value='' selected disabled>Select frequency</option><option value='apr'>April - " +
                             year +
@@ -579,14 +582,26 @@
                     }
                 } else if ($('#selected_frequency').val() == 'quarterly') {
                     if ($('#calendar_type').val() == 'financial_year')
+                    {
+                        year = year - 1;
+                        nextyear = year + 1;
                         data ="<option value='' selected disabled>Select Assignment Period</option><option value='q1'>Q1 " +year +"(Apr-Jun)</option><option value='q2'>Q2 " + year +"(July-Sept)</option><option value='q3'>Q3 " + year +"(Oct-Dec)</option><option value='q4'>Q4 " + nextyear + "(Jan-Mar)</option>";
+                    }
                     else
+                    {
                         data ="<option value='' selected disabled>Select Assignment Period</option><option value='q1'>Q1(Jan-Mar)</option><option value='q2'>Q2(Apr-June)</option><option value='q3'>Q3(July-Sept)</option><option value='q4'>Q4(Oct-Dec)</option>";
+                    }
                 } else if ($('#selected_frequency').val() == 'halfYearly') {
                     if ($('#calendar_type').val() == 'financial_year')
+                    {
+                        year = year - 1;
+                        nextyear = year + 1;
                         data = "<option value='' selected disabled>Select Assignment Period</option><option value='h1'>H1(Apr " + year + " - Sept " + year + ")</option><option value='h2'>H2(Oct " + year + "- Mar " + nextyear + ")</option>";
+                    }
                     else
+                    {
                         data = "<option value=''>Select</option><option value='h1'>H1(Jan-June)</option><option value='h2'>H2(July-Dec)</option>";
+                    }
 
                 } else {
                     data = "<option value=''>Select</option><option value='yearly'>Yearly</option>";
