@@ -462,7 +462,7 @@ class VmtAttendanceController extends Controller
         $userCode = $user->user_code;
 
         $regularTime  = VmtWorkShifts::where('shift_type', 'First Shift')->first();
-        $currentyear = date("Y");
+        $currentyear = $request->year;
         $dt = $currentyear . '-' . $request->month . '-01';
         $currentDate = Carbon::now();
         $monthDateObj = Carbon::parse($dt);
