@@ -81,6 +81,7 @@
         td {
             width: 81.35pt
         }
+
         .txt-left {
             text-align: left;
         }
@@ -135,7 +136,8 @@
 
             margin-top: 3pt;
             margin-bottom: 3pt;
-            padding: 0px 5px;
+            padding-right: 5px;
+            padding-left: 5px;
         }
 
         .pt-pb-5 {
@@ -201,6 +203,14 @@
         .bg-dark_ash {
             background-color: #777171;
         }
+
+        .bg-dark_blue {
+            background-color: #002160;
+        }
+
+        .c_white {
+            color: #ffffff;
+        }
     </style>
 @endsection
 @section('content')
@@ -227,7 +237,7 @@
                 <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false"
                     data-bs-interval="false">
                     <div class="carousel-inner">
-                        <div class="carousel-item active">
+                        <div class="carousel-item ">
                             <div class="main-page appointment-letter">
                                 <div class="sub-page" style="text-align: justify;font-size: 15px;">
                                     <table class="letter-format" style="padding:0;" contenteditable="true">
@@ -239,154 +249,128 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td colspan="4" class="">
-                                                    <p class="fw-600 txt-left " style="">
-                                                        Mr. Xyz
+                                                <td colspan="8" style=" " align="left">
+                                                    <p class="fw-600 pt-pb-5 txt-left " style="">
+                                                        Date: <span class="fw-600 ">MM/DD/YYYY</span>
                                                     </p>
-                                                    <p class="fw-600 txt-left">
-                                                        yyy
-
+                                                    <p class="fw-600 pb-pt-15 ">To,</p>
+                                                    <p class=" fw-600" style="">
+                                                        Xyz
                                                     </p>
-
-                                                </td>
-                                                <td colspan="4" style=" ">
-                                                    <p class="fw-600 txt-right " style="">
-                                                        Date: DD/MM/YYYY
+                                                    <p class="fw-600  " style="">
+                                                        Yyy
                                                     </p>
 
 
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="8" class="pb-pt-5" align="left">
-                                                    <p class="fw-600 txt-left " style="">
-                                                        Dear Mr. Xyz,
-                                                    </p>
                                                 </td>
 
                                             </tr>
                                             <tr>
-                                                <td colspan="8" class="" align="left">
-                                                    <p class=" txt-left " style="">
-                                                        We at Precede Workforce Solutions India Pvt Ltd would like to create
-                                                        an environment and culture committed to cooperation, quality, and
-                                                        responsiveness that permeate every activity. We treat business
-                                                        ethics no different from personal ethics leading to an atmosphere
-                                                        that is exciting, transparent, rewarding, and challenging. Above
-                                                        all, we need employees who strongly believe in nurturing a culture
-                                                        of ideas, questions, challenges, feedback, and prudent risk-taking.
-                                                        It also places a demand upon the employees to be active, and
-                                                        innovative with the ability to create, gather and use knowledge.
+                                                <td colspan="8" style=" " class="pt-pb-10" align="left">
+                                                    <span class="fw-600 border-bottom-line  txt-left " style="">
+                                                        Sub: Offer Letter
+
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="8" style=" " class="" align="left">
+                                                    <p class="">We are pleased to offer you the position of
+                                                        &nbsp;<span class="fw-600 txt-left"> Xyz </span>&nbsp; with our
+                                                        client &nbsp;<span class="fw-600 txt-left"> &nbsp;<span
+                                                                class="fw-600 txt-left"> Leather Sector Skill
+                                                                Council.</span>&nbsp;
+                                                            We are all excited about the potential that you will bring to
+                                                            our
+                                                            organization.
 
                                                     </p>
+                                                    <p class="pt-pb-10">
+                                                        As we discussed during your interviews, you will be functionally
+                                                        reporting to the &nbsp;<span class="fw-600 txt-left"> Functional
+                                                            Head, at Leather Sector Skill Council,
+                                                            Nungambakkam </span>&nbsp; Office
+                                                    </p>
+                                                    <p class="">
+                                                        Your initial compensation package includes an annual salary of INR ₹
+                                                        &nbsp;<span class="fw-600 txt-left"> Xyz </span>&nbsp;
+
+
+                                                    </p>
+                                                    <p class=" pt-pb-10">
+                                                        You are required to join us latest by the &nbsp;<span
+                                                            class="fw-600 txt-left"> MM-DD-YYYY </span>&nbsp;, beyond which
+                                                        this offers stands canceled unless otherwise, either party
+                                                        communicates the said delay beforehand.
+
+                                                    </p>
+                                                    <p class="">
+                                                        We look forward to your arrival as an employee of our organization
+                                                        and are confident that you will play a key role in our company’s
+                                                        expansion into national and international markets
+
+                                                    </p>
+                                                    <p class=" pt-pb-10">
+                                                        Your detailed appointment letter will be issued to you at the time
+                                                        of your joining. If this employment offer is acceptable to you,
+                                                        please sign a copy of this letter and return it to us by &nbsp;<span
+                                                            class="fw-600 txt-left"> MM-DD-YYYY </span>&nbsp;
+
+                                                    </p>
+                                                    <p class="pb-pt-15 ">
+                                                        Yours truly,
+
+                                                    </p>
+                                                    <p>
+                                                        For &nbsp;<span class="fw-600 txt-left"> Precede Workforce Solutions
+                                                            India Private Limited,</span>&nbsp;
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="8" style=" " class="" align="left">
+
+                                                    <div style="margin-right:10px;"> <img
+                                                        src="{{ URL::asset('assets/images/appointment/precede/signature.png') }}"
+                                                        class="" alt=""
+                                                        style="height:50px;width:150px;"> </div>
+
                                                 </td>
 
                                             </tr>
                                             <tr>
-                                                <td colspan="8" class="pt-pb-10" align="left">
-                                                    <p class=" txt-left " style="">
-                                                        With reference to your application and subsequent discussion, we
-                                                        have pleasure in appointing you as a <span class="fw-600 txt-left">
-                                                            Xyz </span>&nbsp; and place on
-                                                        record the following terms and conditions for your knowledge
-                                                        /acceptance:
-
+                                                <td colspan="8" style=" " class="" align="left">
+                                                    <p class="fw-600">David Siddharthan </p>
+                                                    <p class="fw-600">Director
                                                     </p>
+
                                                 </td>
+
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="8" style=" " class="" align="left">
+                                                    <p class=" pb-pt-15 ">I accept the above-mentioned employment offer and
+                                                        acknowledge receiving a copy of the same.</p>
+
+
+                                                </td>
+
                                             </tr>
                                             <tr>
-                                                <td colspan="8" class="border-bottom-line2 " align="left" style="padding-bottom: 57px">
-                                                    <ol type="1">
-                                                        <li>
-                                                            <p class="  fw-600" style="">DATE OF APPOINTMENT:
-                                                            </p>
-                                                            <p class="  pt-pb-5" style="">
-                                                                Your date of appointment is effective from the date of
-                                                                joining but not later than &nbsp;<span
-                                                                    class="fw-600 ">DD/MM/YYYY</span>&nbsp;
-                                                            </p>
-                                                            <p class=" " style="">
-                                                                At the time of joining, we request you to furnish
-                                                                testimonials of your educational qualifications and a
-                                                                relieving letter from the previous organization.
-                                                            </p>
-                                                            <p class="  pt-pb-5" style="">
-                                                                This is also conditional upon your being free from any
-                                                                contractual restrictions preventing you from accepting this
-                                                                offer or starting work on the date of joining.
-                                                            </p>
-                                                        </li>
-                                                        <li>
-                                                            <p class="  fw-600" style="">
-                                                                TIMINGS:
-                                                            </p>
-                                                            <p class="  pt-pb-5" style="">
-                                                                Your current timings will be from 09:00 am to 7:00 pm from
-                                                                Monday to Friday.
-                                                            </p>
-                                                        </li>
-                                                        <li>
-                                                            <p class="  fw-600" style="">
-                                                                NOTICE PERIOD:
+                                                <td colspan="8" style=" " class=" border-bottom-line2"
+                                                    align="left">
+                                                    <p class=" ">Signature</p>
+                                                    <p class=" pb-pt-15 ">
+                                                        Name: Xyz
+                                                    </p>
+                                                    <p>
+                                                        Date
 
-                                                            </p>
-                                                            <p class="  pt-pb-5" style="">
-                                                                This contract of employment is terminable by either party by
-                                                                giving two months notice (60 days) period.
+                                                    </p>
 
-                                                            </p>
-                                                            <p class=" " style="">
-                                                                The company shall have the right to terminate your
-                                                                employment without notice if:
-                                                            </p>
-                                                            <p>
-
-                                                            <ol type="a">
-                                                                <li>
-
-                                                                    <p class="  pt-pb-5" style="">
-                                                                        You commit any material breach of any of your duties
-                                                                        and responsibilities under this contract.
-                                                                    </p>
-
-                                                                </li>
-                                                                <li>
-
-                                                                    <p class="  " style="">
-                                                                        Any particulars mentioned in your application are
-                                                                        found false at any point of time or found to have
-                                                                        willfully suppressed any material information.
-
-                                                                    </p>
-
-                                                                </li>
-                                                                <li>
-
-                                                                    <p class="  pt-pb-5" style="">
-                                                                        You become insolvent or bankrupt or any charged with
-                                                                        any criminal offense, which is prejudicial of the
-                                                                        interest of the Company.
-                                                                    </p>
-
-                                                                </li>
-                                                                <li>
-
-                                                                    <p class="  pt-pb-5" style="">
-                                                                        If at any time in our opinion, which is final in
-                                                                        this matter, you are found guilty of dishonesty,
-                                                                        disorderly behavior, negligence, indiscipline, an
-                                                                        absence of duty without permission, or any other
-                                                                        conduct considered by us as detrimental to the
-                                                                        interests of the company.
-
-                                                                    </p>
-                                                                </li>
-                                                            </ol>
-                                                            </p>
-
-                                                        </li>
-                                                    </ol>
                                                 </td>
+
                                             </tr>
 
                                             <tr>
@@ -431,19 +415,15 @@
 
 
 
-
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
-                        <div class="carousel-item ">
+                        <div class="carousel-item active">
                             <div class="main-page appointment-letter">
-                                <div class="sub-page"
-                                    style="text-align: justify;>
-                                    <table class="letter-format"
-                                    style="padding:0;">
-                                    <table class="letter-format" style="padding:0;">
+                                <div class="sub-page" style="text-align: justify;font-size: 15px;">
+                                    <table class="letter-format" style="padding:0;" contenteditable="true">
                                         <tbody>
                                             <tr>
                                                 <td align="left" class="pb-30" colspan="8">
@@ -452,371 +432,336 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td colspan="8" class="">
-                                                    <p class="fw-600 txt-left " style="">
-                                                        4. COMPENSATION PACKAGE:
+                                                <td colspan="8" style=" " align="left">
 
-                                                    </p>
-                                                    <p class="txt-left pt-pb-5">
-                                                        You will be paid an annual package of &nbsp;<span
-                                                            class="fw-600 txt-left"> YYY </span>&nbsp;-and your
-                                                        service
-                                                        being placed at any one of the
-                                                        client locations in Chennai.
-
-
-                                                    </p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="8" class="  pt-pb-5">
-                                                    <table class="salary-table" style="padding:0;">
+                                                    <table class="salary-table " style="padding:0;"
+                                                        contenteditable="true">
                                                         <tbody>
                                                             <tr>
-                                                                <td class="bg-orange" colspan="8">
-                                                                    <p class="txt-center fw-600">Salary Structure</p>
+                                                                <td align="" class="" colspan="8">
+                                                                    <p class="fw-600  txt-center " style="">
+                                                                        ANNEXURE A
+                                                                    </p>
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td class="bg-dark_ash" colspan="4">
-                                                                    <p class="txt-left fw-600">Particulars</p>
+                                                                <td align="" class="" colspan="8">
+                                                                    <p class="fw-600  txt-center " style="">
+                                                                        SALARY STRUCTURE
+                                                                    </p>
                                                                 </td>
-                                                                <td class="bg-dark_ash" colspan="2">
-                                                                    <p class="txt-center fw-600">CTC Per Month Rs</p>
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="" class="" colspan="8">
+                                                                    <p class="fw-600  txt-center  " style="">
+                                                                        Your remuneration shall be paid to you under the
+                                                                        following heads
+                                                                    </p>
                                                                 </td>
-                                                                <td class="bg-dark_ash" colspan="2">
-                                                                    <p class="txt-center fw-600">CTC Per Annum Rs</p>
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="" class="bg-dark_blue" colspan="4">
+                                                                    <p class="fw-600  txt-left c_white" style="">
+                                                                        Name:
+                                                                    </p>
+                                                                </td>
+                                                                <td align="" class="bg-dark_blue " colspan="4">
+                                                                    <p class="fw-600  txt-center c_white " style="">
+                                                                        Salary
+                                                                    </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="" class="bg-dark_blue" colspan="6">
+                                                                    <p class="fw-600 c_white txt-left " style="">
+                                                                        Designation: Executive - Designing
+
+
+                                                                    </p>
+                                                                </td>
+                                                                <td align="" class="bg-dark_blue" colspan="1">
+                                                                    <p class="fw-600 c_white txt-center " style="">
+                                                                        Per Month
+
+
+                                                                    </p>
+                                                                </td>
+                                                                <td align="" class="bg-dark_blue" colspan="1">
+                                                                    <p class="fw-600  c_white txt-center " style="">
+                                                                        Per Annum
+
+
+                                                                    </p>
+                                                                </td>
+
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="" class="" colspan="6">
+                                                                    <p class="  txt-left " style="">
+                                                                        Basic
+
+
+                                                                    </p>
+                                                                </td>
+                                                                <td align="" class="" colspan="1">
+                                                                    <p class="  txt-right " style="">
+
+
+
+                                                                    </p>
+                                                                </td>
+                                                                <td align="" class="" colspan="1">
+                                                                    <p class="  txt-right " style="">
+
+                                                                    </p>
+                                                                </td>
+
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="" class="" colspan="6">
+                                                                    <p class=" txt-left " style="">
+                                                                        HRA
+                                                                    </p>
+                                                                </td>
+                                                                <td align="" class="" colspan="1">
+                                                                    <p class=" txt-right " style="">
+
+
+                                                                    </p>
+                                                                </td>
+                                                                <td align="" class="" colspan="1">
+                                                                    <p class="  txt-right " style="">
+
+                                                                    </p>
+                                                                </td>
+
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="" class="" colspan="6">
+                                                                    <p class=" txt-left " style="">
+                                                                        Special Allowance
+                                                                    </p>
+                                                                </td>
+                                                                <td align="" class="" colspan="1">
+                                                                    <p class=" txt-right " style="">
+
+
+                                                                    </p>
+                                                                </td>
+                                                                <td align="" class="" colspan="1">
+                                                                    <p class="  txt-right " style="">
+
+                                                                    </p>
+                                                                </td>
+
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="" class="" colspan="6">
+                                                                    <p class=" txt-left " style="">
+                                                                        Stats Bonus
+                                                                    </p>
+                                                                </td>
+                                                                <td align="" class="" colspan="1">
+                                                                    <p class=" txt-right " style="">
+
+
+                                                                    </p>
+                                                                </td>
+                                                                <td align="" class="" colspan="1">
+                                                                    <p class="  txt-right " style="">
+
+                                                                    </p>
+                                                                </td>
+
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="" class="bg-dark_blue " colspan="6">
+                                                                    <p class="fw-600 c_white  txt-left " style="">
+                                                                        Gross
+                                                                    </p>
+                                                                </td>
+                                                                <td align="" class="bg-dark_blue" colspan="1">
+                                                                    <p class="fw-600 c_white txt-right " style="">
+
+
+
+                                                                    </p>
+                                                                </td>
+                                                                <td align="" class="bg-dark_blue" colspan="1">
+                                                                    <p class="fw-600 c_white  txt-right " style="">
+
+
+
+                                                                    </p>
+                                                                </td>
+
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="" class="" colspan="6">
+                                                                    <p class=" txt-left " style="">
+                                                                        PF (Employer Contribution)
+                                                                    </p>
+                                                                </td>
+                                                                <td align="" class="" colspan="1">
+                                                                    <p class=" txt-right " style="">
+
+
+                                                                    </p>
+                                                                </td>
+                                                                <td align="" class="" colspan="1">
+                                                                    <p class="  txt-right " style="">
+
+                                                                    </p>
+                                                                </td>
+
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="" class="" colspan="6">
+                                                                    <p class=" txt-left " style="">
+                                                                        ESI (Employer Contribution)
+                                                                    </p>
+                                                                </td>
+                                                                <td align="" class="" colspan="1">
+                                                                    <p class=" txt-right " style="">
+
+
+                                                                    </p>
+                                                                </td>
+                                                                <td align="" class="" colspan="1">
+                                                                    <p class="  txt-right " style="">
+
+                                                                    </p>
+                                                                </td>
+
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="" class="bg-dark_blue" colspan="6">
+                                                                    <p class="fw-600  txt-left c_white" style="">
+                                                                        Cost to Company
+                                                                    </p>
+                                                                </td>
+                                                                <td align="" class="bg-dark_blue" colspan="1">
+                                                                    <p class="fw-600  txt-right c_white " style="">
+
+                                                                    </p>
+                                                                </td>
+                                                                <td align="" class="bg-dark_blue" colspan="1">
+                                                                    <p class="fw-600  txt-right c_white" style="">
+
+                                                                    </p>
+                                                                </td>
+
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="" class="" colspan="6">
+                                                                    <p class=" txt-left " style="">
+                                                                        EPF (Employee Contribution)
+                                                                    </p>
+                                                                </td>
+                                                                <td align="" class="" colspan="1">
+                                                                    <p class=" txt-right " style="">
+
+
+                                                                    </p>
+                                                                </td>
+                                                                <td align="" class="" colspan="1">
+                                                                    <p class="  txt-right " style="">
+
+                                                                    </p>
+                                                                </td>
+
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="" class="" colspan="6">
+                                                                    <p class=" txt-left " style="">
+                                                                        ESI (Employee Contribution)
+                                                                    </p>
+                                                                </td>
+                                                                <td align="" class="" colspan="1">
+                                                                    <p class=" txt-right " style="">
+
+
+                                                                    </p>
+                                                                </td>
+                                                                <td align="" class="" colspan="1">
+                                                                    <p class="  txt-right " style="">
+
+                                                                    </p>
+                                                                </td>
+
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="" class="" colspan="6">
+                                                                    <p class=" txt-left " style="">
+                                                                        Professional Tax
+                                                                    </p>
+                                                                </td>
+                                                                <td align="" class="" colspan="1">
+                                                                    <p class=" txt-right " style="">
+
+
+                                                                    </p>
+                                                                </td>
+                                                                <td align="" class="" colspan="1">
+                                                                    <p class="  txt-right " style="">
+
+                                                                    </p>
+                                                                </td>
+
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="" class="bg-dark_blue" colspan="6">
+                                                                    <p class="fw-600  txt-left c_white" style="">
+                                                                        Net Income
+                                                                    </p>
+                                                                </td>
+                                                                <td align="" class="bg-dark_blue" colspan="1">
+                                                                    <p class="fw-600  txt-right c_white " style="">
+
+                                                                    </p>
+                                                                </td>
+                                                                <td align="" class="bg-dark_blue" colspan="1">
+                                                                    <p class="fw-600  txt-right c_white" style="">
+
+                                                                    </p>
+                                                                </td>
+
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="" class="" colspan="8">
+                                                                    <p class=" txt-center " style="">
+                                                                        Income Tax as applicable will be deducted
+                                                                    </p>
                                                                 </td>
                                                             </tr>
 
-                                                            <tr>
-                                                                <td class="" colspan="4">
-                                                                    <p class="txt-left ">Basic</p>
-                                                                </td>
-                                                                <td class="" colspan="2">
-                                                                    <p class="txt-right "></p>
-                                                                </td>
-                                                                <td class="" colspan="2">
-                                                                    <p class="txt-right "></p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="" colspan="4">
-                                                                    <p class="txt-left ">House Rent Allowance </p>
-                                                                </td>
-                                                                <td class="" colspan="2">
-                                                                    <p class="txt-right "></p>
-                                                                </td>
-                                                                <td class="" colspan="2">
-                                                                    <p class="txt-right "></p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="" colspan="4">
-                                                                    <p class="txt-left ">Statutory Bonus</p>
-                                                                </td>
-                                                                <td class="" colspan="2">
-                                                                    <p class="txt-right "></p>
-                                                                </td>
-                                                                <td class="" colspan="2">
-                                                                    <p class="txt-right "></p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="" colspan="4">
-                                                                    <p class="txt-left ">Special Allowance</p>
-                                                                </td>
-                                                                <td class="" colspan="2">
-                                                                    <p class="txt-right "></p>
-                                                                </td>
-                                                                <td class="" colspan="2">
-                                                                    <p class="txt-right "></p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="bg-ash" colspan="4">
-                                                                    <p class="txt-left fw-600">Gross</p>
-                                                                </td>
-                                                                <td class="bg-ash" colspan="2">
-                                                                    <p class="txt-right fw-600"></p>
-                                                                </td>
-                                                                <td class="bg-ash" colspan="2">
-                                                                    <p class="txt-right fw-600"></p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="" colspan="4">
-                                                                    <p class="txt-left ">Employer EPF</p>
-                                                                </td>
-                                                                <td class="" colspan="2">
-                                                                    <p class="txt-right "></p>
-                                                                </td>
-                                                                <td class="" colspan="2">
-                                                                    <p class="txt-right "></p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="" colspan="4">
-                                                                    <p class="txt-left ">Employer ESC</p>
-                                                                </td>
-                                                                <td class="" colspan="2">
-                                                                    <p class="txt-right "></p>
-                                                                </td>
-                                                                <td class="" colspan="2">
-                                                                    <p class="txt-right "></p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="bg-ash" colspan="4">
-                                                                    <p class="txt-left fw-600">Total Cost to Company</p>
-                                                                </td>
-                                                                <td class="bg-ash" colspan="2">
-                                                                    <p class="txt-right fw-600"></p>
-                                                                </td>
-                                                                <td class="bg-ash" colspan="2">
-                                                                    <p class="txt-right fw-600"></p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="" colspan="4">
-                                                                    <p class="txt-left ">Employee EPF </p>
-                                                                </td>
-                                                                <td class="" colspan="2">
-                                                                    <p class="txt-right "></p>
-                                                                </td>
-                                                                <td class="" colspan="2">
-                                                                    <p class="txt-right "></p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="" colspan="4">
-                                                                    <p class="txt-left ">Employee ESI </p>
-                                                                </td>
-                                                                <td class="" colspan="2">
-                                                                    <p class="txt-right "></p>
-                                                                </td>
-                                                                <td class="" colspan="2">
-                                                                    <p class="txt-right "></p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="bg-ash" colspan="4">
-                                                                    <p class="txt-left fw-600">Net Take Home</p>
-                                                                </td>
-                                                                <td class="bg-ash" colspan="2">
-                                                                    <p class="txt-right fw-600"></p>
-                                                                </td>
-                                                                <td class="bg-ash" colspan="2">
-                                                                    <p class="txt-right fw-600"></p>
-                                                                </td>
-                                                            </tr>
                                                         </tbody>
+
                                                     </table>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td colspan="" style=" ">
-                                                    <p class="fw-600 txt-left pt-pb-5" style="">
-                                                        5. TRANSFER:
-                                                    </p>
-                                                    <p class="">
-                                                        You will be liable to transfer in such capacity as the Company may
-                                                        from time to time determine to
-                                                        any other location, department, and establishment of the Company. In
-                                                        such a case, you will be
-                                                        governed by the terms and conditions of service applicable to the
-                                                        new assignment.
-                                                    </p>
+                                                <td colspan="8" class="pb-pt-15" style="border-bottom:2px solid #ff761b" align="left">
+                                                    <p class="  txt-left " style="">
+                                                        I &nbsp;<span class="fw-600 txt-left">Xyz</span>&nbsp;, have read ANNEXURE A & B, understood, and accept the offer
+                                                        upon the terms and conditions as outlined in this offer letter for
+                                                        my position at Leather Sector Skill Council.
 
+                                                    </p>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td colspan="" style=" ">
-                                                    <p class="fw-600 pt-pb-5 txt-left " style="">
-                                                        6. TRAVEL:
-
-                                                    </p>
-                                                    <p class="">
-                                                        You will be required to undertake travel on Company work and you
-                                                        will be reimbursed travel
-                                                        expenses for this as per Company rules
-                                                    </p>
-
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td colspan=""  class="border-bottom-line2" style="padding-bottom: 49px;">
-                                                    <p class="fw-600 pt-pb-5 txt-left " style="">
-                                                        7. CONFIDENTIAL INFORMATION:
-
-                                                    </p>
-                                                    <p class="">
-                                                        You shall not during your said employment or at any time thereafter
-                                                        divulge to any person
-                                                        whosoever or make any use whatsoever for you own purpose or for any
-                                                        during your said
-                                                        employment as to business or affairs of the Company or its method as
-                                                        to any trade secret or secret
-                                                        processes of the Company and you shall during the said employment
-                                                        also use your best endeavors
-                                                        to prevent any other person from doing so
-                                                    </p>
-
-                                                </td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td colspan="8" style=" " class="">
-                                                    <p class="fw-600 txt-center  margin-0" style="font-size:">
-                                                        PRECEDE WORKFORCE SOLUTIONS INDIA PRIVATE LIMITED
-                                                    </p>
-                                                    <p class=" txt-center margin-0"> <span class="f-11"> <span
-                                                                class="precede_primary_color f-11 fw-600">CIN -
-                                                            </span>U74900TN2015PTC100900</span> &nbsp; <span
-                                                            class="f-11"> <span
-                                                                class="precede_primary_color f-11  fw-600"> GSTIN -
-                                                            </span>33AAICP1477F1ZH</span></p>
-                                                    <p class="margin-0 txt-center"><span class="fw-600 ">Corporate Office:
-                                                        </span>No-2/29, Vengaivasal Main Road, Santhosapuram, East Tambaram,
-                                                        Chennai-600 073. </p>
-                                                    <p class="margin-0 txt-center"><span class="fw-600 ">Branch Office:
-                                                        </span> No-606, 1st B Main Road, Domlur, Bangalore -560071,
-                                                        Karnataka, India.</p>
-                                                    <div style="padding: 0px 5px;display:flex;font-size:95%;">
-                                                        <div style="margin-right:10px;"> <img
-                                                                src="{{ URL::asset('assets/images/appointment/precede/phone.jpg') }}"
-                                                                class="" alt=""
-                                                                style="height:20px;width:20px;">+91-44-2278 2288 </div>
-                                                        <div style="margin-right:10px;"> <img
-                                                                src="{{ URL::asset('assets/images/appointment/precede/mobile.jpg') }}"
-                                                                class="" alt=""
-                                                                style="height:20px;width:20px;">+91-97898 37408 </div>
-                                                        <div style="margin-right:10px;"> <img
-                                                                src="{{ URL::asset('assets/images/appointment/precede/mail.jpg') }}"
-                                                                class="" alt=""
-                                                                style="height:20px;width:20px;">info@precedehrsolutions.com
-                                                        </div>
-                                                        <div> <img
-                                                                src="{{ URL::asset('assets/images/appointment/precede/computer.jpg') }}"
-                                                                class="" alt=""
-                                                                style="height:20px;width:20px;">www.precedehrsolutions.com
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="carousel-item ">
-                            <div class="main-page appointment-letter">
-                                <div class="sub-page" style="text-align: justify;font-size: 15px;">
-                                    <table class="letter-format" style="padding:0;">
-                                        <tbody>
-                                            <tr>
-                                                <td align="left" class="pb-30" colspan="8">
-                                                    <img src="{{ URL::asset('assets/images/precede.png') }}"
-                                                        class="" alt="user-pic" style="height:55px;width:180px;">
-                                                </td>
-                                            </tr>
-                                            <tr>
-
-                                                <td colspan="" style=" ">
+                                            <tr class="">
+                                                <td colspan="4" class="pt-30 border-bottom-line2 " style="padding-bottom:152px"
+                                                    >
                                                     <p class="fw-600 txt-left " style="">
-                                                        8. PROTECTION OF INTEREST:
-
+                                                        Sign:
                                                     </p>
-                                                    <p class="pt-pb-5 ">
-                                                        If you conceive any new or advanced methods of improving
-                                                        process/systems in relation to the
-                                                        operation of the Company, such developments will be fully
-                                                        communicated to the Company and will
-                                                        be and remain sole right/property of the Company.
 
-                                                    </p>
 
                                                 </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="" style=" " class="">
-                                                    <p class="fw-600 txt-left " style="">
-                                                        9. CONFLICT OF INTEREST:
-
-
-                                                    </p>
-                                                    <p class=" pt-pb-5 ">
-                                                        The Company has adopted a conflict-of-interest policy in respect of
-                                                        its employees. This policy is
-                                                        intended to avoid conflict of interest between the personal interest
-                                                        of an employee and the interest of the Company in its dealings with
-                                                        suppliers, customers and all other organizations or individuals
-                                                        doing or seeking to do business with the Company.
-
-                                                    </p>
-
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="" style="border-bottom:5px solid #777171">
-                                                    <p class="fw-600">
-                                                        10. RETIREMENT / TERMINATION / RESIGNATION:
-                                                    </p>
-                                                    <p class=" pt-pb-5 txt-left " style="">
-                                                        You will be retired from the services of the Company on your
-                                                        completing the age of 58 years, or
-                                                        such other retiring age the Management may decide.
-
-                                                    </p>
-                                                    <p class=" pt-pb-5  txt-left " style="">
-                                                        At the time of retirement/termination/resignation, you will
-                                                        immediately hand over to the Company
-                                                        all correspondence, documentation, data, software, etc. belonging to
-                                                        the company or relating to its
-                                                        business and shall not make or retain any copies of these items.
-                                                    </p>
-
-                                                    <p class=" pb-pt-15 txt-left " style="">
-                                                        Yours Sincerely,
-
-                                                    </p>
-                                                    <p class=" pt-pb-5 txt-left fw-600" style="">
-                                                        For PRECEDE WORKFORCE SOLUTIONS INDIA PVT LTD.
-
-                                                    </p>
-                                                    <p class=" pt-pb-5 txt-left fw-600 " style="">
-                                                        David Siddharthan (Director)
-                                                    </p>
-
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="" style=" " class=" pt-30 pb-30   ">
-                                                    <p class="txt-left fw-600"> Acceptance:</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="" style=" " class=" ">
-                                                    <p class="txt-left ">I M A ASHVATH have read and hereby accept the
-                                                        above-mentioned terms and conditions.
-                                                    </p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="" style="border-bottom:5px solid #777171"
-                                                    class=" pt-pb-5 ">
-                                                    <p class="txt-left fw-600 "> Signature:
-                                                    </p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="" style="padding-bottom: 208px;"
-                                                    class="border-bottom-line2 ">
-                                                    <p class="txt-left "> Please indicate your acceptance of the
-                                                        terms by signing and returning the duplicate copy thereof.
+                                                <td colspan="4" class="border-bottom-line2 " style="padding-bottom:152px">
+                                                    <p class="fw-600 txt-right " style="">
+                                                        Date:
                                                     </p>
                                                 </td>
                                             </tr>
@@ -849,22 +794,22 @@
                                                         <div style="margin-right:10px;"> <img
                                                                 src="{{ URL::asset('assets/images/appointment/precede/mail.jpg') }}"
                                                                 class="" alt=""
-                                                                style="height:20px;width:20px;">info@precedehrsolutions.com
-                                                        </div>
-                                                        <div> <img
+                                                                style="height:20px;width:20px;">info@precedehrsolutions.com</div>
+                                                        <div > <img
                                                                 src="{{ URL::asset('assets/images/appointment/precede/computer.jpg') }}"
                                                                 class="" alt=""
-                                                                style="height:20px;width:20px;">www.precedehrsolutions.com
-                                                        </div>
+                                                                style="height:20px;width:20px;">www.precedehrsolutions.com</div>
                                                     </div>
                                                 </td>
                                             </tr>
+
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-
                         </div>
+
+
                         <button class="carousel-control-prev" type="button"
                             data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev">
                             <span class="carousel-control-prev-icon bg-secondary rounded-circle"
@@ -1340,7 +1285,7 @@
                                     <p class="txt-left">Please
                                         reach out to us for any payroll queries at -payroll@ardens.in</p>
                                 </td>
-                                <td colspan="3" class="border-less txt-right" style="    padding: 10px;">
+                                <td colspan="3" class="border-less txt-right" style="    padding: 10px 0px;">
                                     <p>Generated By</p>
 
 

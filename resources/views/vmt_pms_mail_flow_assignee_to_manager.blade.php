@@ -96,7 +96,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                     <td colspan="4" style="" align="right"
                                                         class="  padding-t-b_0  ">
 
-                                                        <a class="" type="button"
+                                                        <a class="" target="_self" type="button"
                                                         href="{{ $loginLink }}/team-appraisal"
                                                             style="text-decoration:none;cursor: pointer; margin-right:10px;color:#ffffff;padding: 7px 30px;border: 2px solid #90f10c;background: #90f10c;border-radius: 4px;font-weight:600">
                                                             Approve
@@ -105,7 +105,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                     <td colspan="4" style="" align="left"
                                                         class="padding-t-b_0 ">
 
-                                                        <a class="" type="button"
+                                                        <a class="" target="_self" type="button"
                                                         href="{{ $loginLink }}/team-appraisal"
                                                             style="text-decoration:none;cursor: pointer;margin-left:10px;color:#ffffff;padding: 7px 30px;border: 2px solid #f12d0c;background: #ff2500;border-radius: 4px;font-weight:600">
                                                             Reject
@@ -269,7 +269,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                             frame.
                                                         </p>
                                                         <p>
-                                                            Kindly visit the HRMS portal for more details
+                                                            Kindly visit the HRMS portal for more details <a href="" target="_self"   style="text-decoration: none;color:#fa9530">Click here</a>
                                                         </p>
 
                                                     </td>
@@ -291,11 +291,11 @@ $bank_names = \DB::table('bank_list')->get();
                                 </tr>
 
                                 <tr>
-                                    <td style="padding: 0px;">
+                                    <td style="">
                                         <table>
                                             <tbody>
                                                 <tr>
-                                                    <td align="center" style="padding:10px 0px 0px 0px">
+                                                    <td align="center" style="">
                                                         This e-mail was generated from ABShrms if you think this is
                                                         SPAM,please do report to <a href="info@abshrms.com"
                                                             style="text-decoration: none;color:none;">info<span
