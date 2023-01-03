@@ -118,8 +118,8 @@
                 let selectedAssingementPeriod = $('#dropdownAssignment_period').find(":selected").val();
                 let selectedSubmittedDropdown = $('#dropdownSubmittedStatus').find(":selected").val();
                 console.log(selectedAssingementPeriod + ' '+ selectedSubmittedDropdown);
-                let URL = '/reports/generatePmsReviewsReports?calender_type=' + calenderType + '?year=' +
-                    year + '?assignment_period=' + selectedAssingementPeriod + '? 	is_assignee_submitted=' +
+                let URL = '/reports/generatePmsReviewsReports?calender_type=' + calenderType + '&year=' +
+                    year + '&assignment_period=' + selectedAssingementPeriod + '&is_assignee_submitted=' +
                     selectedSubmittedDropdown +
                     '&_token={{ csrf_token() }}';
                 console.log("Generated URL : " + URL);

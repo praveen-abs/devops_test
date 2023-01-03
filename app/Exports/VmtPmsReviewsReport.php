@@ -17,17 +17,19 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
     */
 
     protected $calender_type;
-    protected $assignment_period;
     protected $year;
+    protected $assignment_period;
     protected $is_assignee_submitted;
 
-    function __construct($calendar_type,$assignment_period,$year,$is_assignee_submitted)
+    function __construct($calendar_type, $year, $assignment_period, $is_assignee_submitted)
     {
         $this->calendar_type = $calendar_type;
-        $this->assignment_period = $assignment_period;
         $this->year=$year;
+        $this->assignment_period = $assignment_period;
         $this->is_assignee_submitted=$is_assignee_submitted;
     }
+
+
 
     public function headings():array{
         return[
@@ -63,16 +65,21 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
                         leftJoin('users','users.id', '=','vmt_pms_kpiform_reviews.assignee_id')
                         ->leftJoin('vmt_employee_office_details','vmt_employee_office_details.user_id', '=', 'vmt_pms_kpiform_reviews.assignee_id')
                         ->leftJoin('vmt_pms_kpiform_assigned','vmt_pms_kpiform_assigned.assignee_id', '=', 'vmt_pms_kpiform_reviews.assignee_id')
-                        //->where('vmt_pms_kpiform_reviews.is_assignee_submitted','<>',1)
-                        //->whereNull('vmt_pms_kpiform_reviews.is_assignee_submitted')
-                        ->where('vmt_pms_kpiform_assigned.calendar_type','=',$this->calendar_type)
-                        ->where('vmt_pms_kpiform_assigned.assignment_period','=',$this->assignment_period)
-                        ->where('vmt_pms_kpiform_assigned.year','=',$this->year)
-                        ->where('vmt_pms_kpiform_reviews.is_assignee_submitted','=',$this->is_assignee_submitted)
+                        // ->where('vmt_pms_kpiform_assigned.calendar_type','=',$this->calendar_type)
+                        // ->where('vmt_pms_kpiform_assigned.assignment_period','=',$this->assignment_period)
+                        // ->where('vmt_pms_kpiform_assigned.year','=',$this->year)
+                        // ->where('vmt_pms_kpiform_reviews.is_assignee_submitted','=',$this->is_assignee_submitted)
+                        ->where([
+                            ['vmt_pms_kpiform_assigned.calendar_type','=',$this->calendar_type],
+                            ['vmt_pms_kpiform_assigned.year','=',$this->year]
+
+                              ])
                         ->select('users.name','users.user_code','vmt_pms_kpiform_assigned.calendar_type','vmt_pms_kpiform_assigned.assignment_period')
                         ->get();
 
         return $query_pms_data;
+        //print($query_pms_data);exit;
+
 
 
 
