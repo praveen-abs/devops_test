@@ -49,17 +49,19 @@ class VmtPMSMail_Reviewer extends Mailable
 
         $mail_subject="  ";
 
-        if($this->flowType == "3")
+        if($this->approvalStatus == "approved")
         {
-            if($this->approvalStatus == "approved")
-                $mail_subject = "Approved of OKR/PMS for the Period of " . $this->appraisal_period;
-            else
-                $mail_subject = "Rejected of OKR/PMS for the Period of " . $this->appraisal_period;
+            $mail_subject = "Approved of OKR/PMS for the Period of " . $this->appraisal_period;
         }
         else
-        if($this->flowType == "2")
+        if ($this->approvalStatus == "rejected")
         {
-            $mail_subject = "Successful Update of PMS/OKR for the Period of " . $this->appraisal_period;
+            $mail_subject = "Rejected of OKR/PMS for the Period of " . $this->appraisal_period;
+        }
+        else
+        if($this->approvalStatus == "completed")
+        {
+            $mail_subject = "Submitted Manager Review OKR/PMS for the Period of " . $this->appraisal_period;
         }
 
 
