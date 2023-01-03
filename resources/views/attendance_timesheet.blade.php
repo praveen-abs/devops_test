@@ -886,6 +886,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
         function showCalendar(month, year, ajax_monthly_data) {
 
 
+
             var firstDay = (new Date(year, month)).getDay();
 
             tbl = document.getElementById("_calendar-body");
@@ -945,8 +946,17 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
                         } else {
 
+                            let processedMonth = month + 1;
 
-                            let currentDate = year + "-" + (month + 1) + "-" + dateText;
+                            if(processedMonth < 10)
+                            {
+                               // console.log("Month is less than 10 : "+month+". Adding '0' as prefix");
+                                processedMonth = "0"+processedMonth;
+                               // console.log("Processed month value : "+processedMonth);
+                               // return ;
+                            }
+
+                            let currentDate = year + "-" + processedMonth + "-" + dateText;
 
                             let ajax_data_currentdate = ajax_monthly_data[currentDate];
                             //console.log("testing " + currentDate);
@@ -1037,11 +1047,11 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                     cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
 
                                         "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex '><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
-                                        year + "-" + (month + 1) + "-" + dateText + "'>" + ui_final_checkin_time +
+                                        year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkin_time +
                                         "</span>" +
                                         final_checkin_button_code +
                                         "</div> <div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span class='f-11' id='checkout_time_" +
-                                        year + "-" + (month + 1) + "-" + dateText + "'>" + ui_final_checkout_time +
+                                        year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkout_time +
                                         "</span>" +
                                         final_checkout_button_code +
                                         "</div></div></div>";
