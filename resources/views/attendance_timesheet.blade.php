@@ -391,7 +391,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                     //when employee name selected, update the calendar
                     $('.employee_list_item').click(function() {
                         currentlySelectedUser = $(this).attr('data-userid');
-                        console.log("currentlySelectedUser : " + currentlySelectedUser);
+                        console.log("currentlySelectedUser : " + currentlySelectedUser+", Month - Year : "+currentMonth+" , "+currentYear);
                         ajaxGetMonthlyDate_TimeSheet(currentMonth, currentYear, currentlySelectedUser);
 
                     });
@@ -463,7 +463,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                     //when employee name selected, update the calendar
                     $('.employee_list_item').click(function() {
                         currentlySelectedUser = $(this).attr('data-userid');
-                        console.log("currentlySelectedUser : " + currentlySelectedUser);
+                        console.log("currentlySelectedUser : " + currentlySelectedUser+", Month - Year : "+currentMonth+" , "+currentYear);
                         ajaxGetMonthlyDate_TimeSheet(currentMonth, currentYear, currentlySelectedUser);
 
                     });
