@@ -13,7 +13,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
     @lang('translation.dashboards')
 @endsection
 @section('css')
-    <link rel="stylesheet" href="{{ URL::asset('/assets/css/calendar-vanila.css') }}">
+<link rel="stylesheet" href="{{ URL::asset('/assets/css/calendar-vanila.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('/assets/css/attendance_calendar.css') }}">
 @endsection
 @section('content')
@@ -367,7 +367,8 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                         }
 
                         var html = '<li class="list_employee_attendance p-1 w-100" >' +
-                            '<button class="w-100 btn d-flex employee_list_item w-100" data-userid=' +
+                            '<a class="w-100  d-flex employee_list_item w-100 p-2" data-userid=' +
+
                             element
                             .id + '>' +
                             '<div class=" me-2 d-flex col-auto">' +
@@ -377,7 +378,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                             '<p class="fw-bold text-primary f-13">' + element.name + '</p>' +
                             '<p class=" text-muted f-11">' + element.designation + '</p>' +
                             '</div>' +
-                            '</button>' +
+                            '</a>' +
                             '</li>';
 
                         $('#sidepanel_employees_list').append(html);
@@ -391,7 +392,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                     //when employee name selected, update the calendar
                     $('.employee_list_item').click(function() {
                         currentlySelectedUser = $(this).attr('data-userid');
-                        console.log("currentlySelectedUser : " + currentlySelectedUser);
+                        console.log("currentlySelectedUser : " + currentlySelectedUser+", Month - Year : "+currentMonth+" , "+currentYear);
                         ajaxGetMonthlyDate_TimeSheet(currentMonth, currentYear, currentlySelectedUser);
 
                     });
@@ -439,7 +440,8 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
 
                         var html = '<li class="list_employee_attendance p-1 " >' +
-                            '<button class=" btn d-flex employee_list_item w-100" data-userid=' +
+                            '<a class="  d-flex employee_list_item w-100 p-2" data-userid=' +
+
                             element
                             .id + '>' +
                             '<div class="col-auto me-2 ">' +
@@ -449,7 +451,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                             '<p class="fw-bold text-primary f-13">' + element.name + '</p>' +
                             '<p class=" text-muted f-11">' + element.designation + '</p>' +
                             '</div>' +
-                            '</button>' +
+                            '</a>' +
                             '</li>';
 
                         $('#sidepanel_employees_list').append(html);
@@ -463,7 +465,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                     //when employee name selected, update the calendar
                     $('.employee_list_item').click(function() {
                         currentlySelectedUser = $(this).attr('data-userid');
-                        console.log("currentlySelectedUser : " + currentlySelectedUser);
+                        console.log("currentlySelectedUser : " + currentlySelectedUser+", Month - Year : "+currentMonth+" , "+currentYear);
                         ajaxGetMonthlyDate_TimeSheet(currentMonth, currentYear, currentlySelectedUser);
 
                     });
@@ -496,7 +498,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
 
             var html = '<li class="list_employee_attendance p-1 " >' +
-                '<button class=" btn d-flex employee_list_item w-100" data-userid=' +
+                '<a class="  d-flex employee_list_item w-100 p-2" data-userid=' +
                 '{{ $current_employee_detail->id }}' +
                 '>' +
                 '<div class="col-auto me-2 ">' +
@@ -506,7 +508,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                 '<p class="fw-bold text-primary f-13">{{ $current_employee_detail->name }}</p>' +
                 '<p class=" text-muted f-11">{{ $current_employee_detail->designation }}</p>' +
                 '</div>' +
-                '</button>' +
+                '</a>' +
                 '</li>';
 
             $('#sidepanel_employees_list').append(html);
@@ -546,7 +548,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
             //For timesheet tab
             updateTimeSheetForCurrentEmployee();
-            console.log("INIT : Getting timesheet data for the YYYY-MM : "+currentYear+" - "+currentMonth);
+            console.log("INIT : Getting timesheet data for the YYYY-MM : " + currentYear + " - " + currentMonth);
 
             ajaxGetMonthlyDate_TimeSheet(currentMonth, currentYear, {{ Auth::user()->id }});
 
@@ -790,7 +792,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                     //update sidepanel
 
                     //Update the calendar for this user
-                    ajaxGetMonthlyDate_TimeSheet(currentMonth, currentYear,$('#attendance_user').val());
+                    ajaxGetMonthlyDate_TimeSheet(currentMonth, currentYear, $('#attendance_user').val());
 
                 }
             });
@@ -940,7 +942,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
                         if (isWeekEnd) {
                             cell.innerHTML =
-                                " <div class='w-100 h-100 p-2' style='background-color:#f3edef;'> <span class='show_date' >" +
+                                " <div class='w-100 h-100 p-2' style='background-color:#e7e7e7;'> <span class='show_date' >" +
                                 date +
                                 "</span> <span>Week Off </span> <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex justify-content-between'> </div> <div class='w-100 d-flex justify-content-between check-out mt-2 f-10 text-danger'> </div></div></div>";
 
@@ -972,7 +974,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                             year + "-" + (month + 1) + "-" + dateText +
                                             "'>Absent</span> </div></div></div>";
 
-                                    }else{
+                                    } else {
                                         cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
                                             "</p>  </div>"
 
@@ -1117,6 +1119,17 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
+            $('body').on('click', '.list_employee_attendance ', function() {
+                $('.list_employee_attendance ').removeClass('active');
+                $(this).addClass('active');
+
+
+
+            });
+
+
+
+
         });
     </script>
 @endsection

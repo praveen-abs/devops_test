@@ -462,10 +462,10 @@ class VmtAttendanceController extends Controller
         $userCode = $user->user_code;
 
         $regularTime  = VmtWorkShifts::where('shift_type', 'First Shift')->first();
-        $currentyear = date("Y");
-        $dt = $currentyear . '-' . $request->month . '-01';
+
+        $requestedDate = $request->year . '-' . $request->month . '-01';
         $currentDate = Carbon::now();
-        $monthDateObj = Carbon::parse($dt);
+        $monthDateObj = Carbon::parse($requestedDate);
         $startOfMonth = $monthDateObj->startOfMonth(); //->format('Y-m-d');
         $endOfMonth   = $monthDateObj->endOfMonth(); //->format('Y-m-d');
 
@@ -475,12 +475,12 @@ class VmtAttendanceController extends Controller
             $lastAttendanceDate  = $endOfMonth; //->format('Y-m-d');
         }
 
-        $totDays  = $lastAttendanceDate->format('d');
+        $totalDays  = $lastAttendanceDate->format('d');
         $firstDateStr  = $monthDateObj->startOfMonth()->toDateString();
 
         // attendance details from vmt_staff_attenndance_device table
         $deviceData = [];
-        for ($i = 0; $i < ($totDays); $i++) {
+        for ($i = 0; $i < ($totalDays); $i++) {
             // code...
             $dayStr = Carbon::parse($firstDateStr)->addDay($i)->format('l');
 
