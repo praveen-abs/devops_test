@@ -163,7 +163,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                             </p>
                                                             <p
                                                                 style="font-weight:600;color:#002f56;margin-bottom:0px;margin-top:0px;font-size:14px">
-                                                                <span>{{ $leaveRequestDate }}</span>
+                                                                <span>{{ \Carbon\Carbon::parse($leaveRequestDate)->format('M jS Y') }}</span>
                                                                 {{-- <span>{{ $startDate }}</span> --}}
 
                                                             </p>
@@ -221,10 +221,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                             </p>
                                                             <p
                                                                 style="font-weight:600;color:#002f56;margin-bottom:0px;margin-top:0px;font-size:14px">
-                                                                @if($leaveType != 'Permission')
-
-                                                                {{ $totalLeaveDatetime }} Day(s) of {{ $leaveType }}
-                                                                @endif
+                                                                {{ $totalLeaveDatetime }} of {{ $leaveType }}
                                                             </p>
 
                                                             <p

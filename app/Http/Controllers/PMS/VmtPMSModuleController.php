@@ -638,7 +638,8 @@ class VmtPMSModuleController extends Controller
 
                         $assigneeName = User::where('id',$assignee)->pluck('name')->first();
                         $assignerName = User::where('id',auth::user()->id)->pluck('name')->first();
-                        $command_emp = '';
+                        $comments_employee = '';
+                        $loginLink="";
 
                         //Send mail when flow is 1 or 2 (Flow Checked inside VmtPMSMail_PublishForm)
                         if(!empty($assigneeMailId)){
@@ -646,7 +647,7 @@ class VmtPMSModuleController extends Controller
                             //Send mail to assignee
                             \Mail::to($assigneeMailId)
                                   ->cc($hr_details->officical_mail)
-                                  ->send(new VmtPMSMail_PublishForm("none", $assigneeName,$request->hidden_calendar_year,strtoupper($request->assignment_period_start),$assignerName,$command_emp,$request->flowCheck,request()->getSchemeAndHttpHost()));
+                                  ->send(new VmtPMSMail_PublishForm("none", $assigneeName,$request->hidden_calendar_year,strtoupper($request->assignment_period_start),$assignerName,$comments_employee,$request->flowCheck,$loginLink,request()->getSchemeAndHttpHost()));
 
                         }
                     }

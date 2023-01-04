@@ -45,8 +45,11 @@ class VmtAttendanceController extends Controller
         $leaveData_Org = null;
 
         $leaveData_currentUser = VmtEmployeeLeaves::where('user_id', auth::user()->id);
+
         //Get how many leaves taken for each leave_type
         $leaveData_currentUser = getLeaveCountDetails(auth::user()->id);
+
+        //dd($leaveData_currentUser->toArray());
 
         //Generate Team leave data
         if (Str::contains(currentLoggedInUserRole(), ['Manager'])) {
@@ -175,7 +178,7 @@ class VmtAttendanceController extends Controller
         if ($request->type == 'org') {
             $employeeLeaves_Org = '';
 
-            $employeeLeaves_Org = VmtEmployeeLeaves::whereIn('status', $statusArray)->orderBy('created_at', 'DESC')->get();
+            $employeeLeaves_Org = VmtEmployeeLeaves::whereIn('status', $statusArray)->get();
 
             //dd($map_allEmployees[1]["name"]);
             foreach ($employeeLeaves_Org as $singleItem) {
@@ -284,7 +287,21 @@ class VmtAttendanceController extends Controller
         //Calculate total leave days...
         $start = Carbon::parse($request->start_date);
         $end = Carbon::parse($request->end_date);
-        $diff = $start->diff($end)->format('%D day(s) , %H hour(s)');
+
+        //$diff = $start->diff($end)->format('%D day(s) , %H hour(s)');
+        $diff="ERROR";
+        $mailtext_total_leave = " 0-0";
+
+        //Check if its Leave or Permission
+        if (isPermissionLeaveType($request->leave_type_id)) {
+            $diff = intval( $start->diff($end)->format('%H'));
+            $mailtext_total_leave = $diff . " Hour(s)";
+        } else {
+            $diff = intval( $start->diff($end)->format('%D')) + 1; //day adjusted by adding '1'
+            $mailtext_total_leave = $diff . " Day(s)";
+        }
+
+        //dd($diff);
 
         $emp_leave_details =  new VmtEmployeeLeaves;
         $emp_leave_details->user_id = auth::user()->id;
@@ -335,7 +352,7 @@ class VmtAttendanceController extends Controller
                                                     $request->end_date,
                                                     $request->leave_reason,
                                                     VmtLeaves::find($request->leave_type_id)->leave_type,
-                                                    $request->total_leave_datetime,
+                                                    $mailtext_total_leave,
                                                     //Carbon::parse($request->total_leave_datetime)->format('M jS Y \\, h:i:s A'),
                                                     request()->getSchemeAndHttpHost(),
                                                     $image_view
@@ -462,10 +479,10 @@ class VmtAttendanceController extends Controller
         $userCode = $user->user_code;
 
         $regularTime  = VmtWorkShifts::where('shift_type', 'First Shift')->first();
-        $currentyear = date("Y");
-        $dt = $currentyear . '-' . $request->month . '-01';
+
+        $requestedDate = $request->year . '-' . $request->month . '-01';
         $currentDate = Carbon::now();
-        $monthDateObj = Carbon::parse($dt);
+        $monthDateObj = Carbon::parse($requestedDate);
         $startOfMonth = $monthDateObj->startOfMonth(); //->format('Y-m-d');
         $endOfMonth   = $monthDateObj->endOfMonth(); //->format('Y-m-d');
 
@@ -475,12 +492,12 @@ class VmtAttendanceController extends Controller
             $lastAttendanceDate  = $endOfMonth; //->format('Y-m-d');
         }
 
-        $totDays  = $lastAttendanceDate->format('d');
+        $totalDays  = $lastAttendanceDate->format('d');
         $firstDateStr  = $monthDateObj->startOfMonth()->toDateString();
 
         // attendance details from vmt_staff_attenndance_device table
         $deviceData = [];
-        for ($i = 0; $i < ($totDays); $i++) {
+        for ($i = 0; $i < ($totalDays); $i++) {
             // code...
             $dayStr = Carbon::parse($firstDateStr)->addDay($i)->format('l');
 
@@ -529,6 +546,10 @@ class VmtAttendanceController extends Controller
 
         //Create empty month array with all dates.
         $month = $request->month;
+
+        if($month < 10)
+            $month = "0" . $month;
+
         $year = $request->year;
         $days_count = cal_days_in_month(CAL_GREGORIAN,$month,$year);
 
@@ -565,11 +586,12 @@ class VmtAttendanceController extends Controller
         ]);
 
         $dateWiseData         =  $sortedCollection->groupBy('date'); //->all();
-
+        //dd($dateWiseData);
+        //dd($attendanceResponseArray);
         foreach ($dateWiseData  as $key => $value) {
 
-            $attendanceResponseArray[$value[0]["date"]]["checkin_time"] = $value->min('checkin_time') ;
-            $attendanceResponseArray[$value[0]["date"]]["checkout_time"] = $value->max('checkout_time');
+            $attendanceResponseArray[$key]["checkin_time"] = $value->min('checkin_time') ;
+            $attendanceResponseArray[$key]["checkout_time"] = $value->max('checkout_time');
 
         }
         //dd($attendanceResponseArray);
@@ -577,7 +599,7 @@ class VmtAttendanceController extends Controller
         $shiftStartTime  = Carbon::parse($regularTime->shift_start_time);
         $shiftEndTime  = Carbon::parse($regularTime->shift_end_time);
 
-
+        //dd($regularTime);
         ////Logic to check LC,EG,MIP,MOP,Leave status
         foreach ($attendanceResponseArray as $key => $value) {
 
