@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ConfigPms;
+use App\Models\VmtPMS_KPIFormAssignedModel;
 use Illuminate\Support\Facades\DB;
 use App\Exports\VmtPayrollReports;
 use App\Exports\VmtPmsReviewsReport;
@@ -30,8 +31,9 @@ class VmtReportsController extends Controller
 
     public function showPmsReviewsReportPage(Request $request){
         $query_configPms= ConfigPms::first();
-
+        //$query_year= VmtPMS_KPIFormAssignedModel::all('year')->groupby('year');
         return view('reports.vmt_showPmsReviewsReports', compact('query_configPms'));
+        //dd($query_year);
     }
 
     public function generatePmsReviewsReports(Request $request){
