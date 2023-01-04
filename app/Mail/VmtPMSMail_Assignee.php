@@ -44,21 +44,22 @@ class VmtPMSMail_Assignee extends Mailable
 
         $mail_subject = "---";
 
-        if($this->approvalStatus == "accepted")
-        {
-             $mail_subject = "Accepted of OKR/PMS for the Period of " . $this->appraisal_period;
+        if ($this->flowType == "2") {
+            if ($this->approvalStatus == "accepted") {
+                $mail_subject = "Accepted of OKR/PMS for the Period of " . $this->appraisal_period;
+            } else
+                if ($this->approvalStatus == "rejected") {
+                    $mail_subject = "Rejected of OKR/PMS for the Period of " . $this->appraisal_period;
+                } else
+                    if ($this->approvalStatus == "completed") {
+                        $mail_subject = "Submitted Manager Review OKR/PMS for the Period of" . $this->appraisal_period;
+                    }
         }
         else
-        if($this->approvalStatus == "rejected") 
-        {
-                $mail_subject = "Rejected of OKR/PMS for the Period of " . $this->appraisal_period;
-        }
-        else
-        if($this->approvalStatus == "completed")
-        {
-            $mail_subject = "Submitted Manager Review OKR/PMS for the Period of" . $this->appraisal_period;
-        }
+        if ($this->flowType == "3"){
+            $mail_subject = "Submitted Update of OKR/PMS for the Period of " . $this->appraisal_period;
 
+        }
 
         return $this->from($MAIL_FROM_ADDRESS,  $MAIL_FROM_NAME)
                 //Rejected of OKR/PMS for the Period of {Month Name/ Quarter Name/ Half Year Name}

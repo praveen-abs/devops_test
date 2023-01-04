@@ -117,9 +117,9 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                                                             an OKR/PMS form, kindly include the reason for rejection in
                                                             the
                                                             response email/HRMS portal. </p>
-                                                        <p>"We wish you achieve your greatest goals
+                                                        <p>We wish you achieve your greatest goals
                                                             moving
-                                                            forward."</p>
+                                                            forward.</p>
                                                     </td>
                                                 </tr>
                                                 <tr>

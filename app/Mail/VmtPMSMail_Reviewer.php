@@ -23,11 +23,10 @@ class VmtPMSMail_Reviewer extends Mailable
      * @return void
      */
     // protected $linkUri;
-    public function __construct($approvalStatus,$flowType, $user_emp_name,$appraisal_year, $appraisal_period,$user_manager_name,$comments_manager,$login_link)
+    public function __construct($approvalStatus, $user_emp_name,$appraisal_year, $appraisal_period,$user_manager_name,$comments_manager,$login_link)
     {
         //
         $this->approvalStatus = $approvalStatus;
-        $this->flowType = $flowType;
         $this->user_emp_name = $user_emp_name;
         $this->appraisal_year = $appraisal_year;
         $this->appraisal_period = $appraisal_period;
@@ -61,7 +60,7 @@ class VmtPMSMail_Reviewer extends Mailable
         else
         if($this->approvalStatus == "completed")
         {
-            $mail_subject = "Submitted Manager Review OKR/PMS for the Period of " . $this->appraisal_period;
+            $mail_subject = "Submitted Manager Review OKR/PMS for the Period of " .$this->appraisal_year. " - ". $this->appraisal_period;
         }
 
 
