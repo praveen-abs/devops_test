@@ -10,7 +10,7 @@ use Illuminate\Queue\SerializesModels;
 /*
 
 
-    Mail is sent to Employee.
+    Mail is sent to Employee when manager submits review
 
 */
 class VmtPMSMail_Reviewer extends Mailable
@@ -23,7 +23,7 @@ class VmtPMSMail_Reviewer extends Mailable
      * @return void
      */
     // protected $linkUri;
-    public function __construct($approvalStatus, $user_emp_name,$appraisal_year, $appraisal_period,$user_manager_name,$comments_manager)
+    public function __construct($approvalStatus, $user_emp_name,$appraisal_year, $appraisal_period,$user_manager_name,$comments_manager,$login_link)
     {
         //
         $this->approvalStatus = $approvalStatus;
@@ -32,7 +32,7 @@ class VmtPMSMail_Reviewer extends Mailable
         $this->appraisal_period = $appraisal_period;
         $this->user_manager_name = $user_manager_name;
         $this->comments_manager = $comments_manager;
-
+        $this->loginLink = $login_link;
     }
 
     /**
@@ -46,15 +46,35 @@ class VmtPMSMail_Reviewer extends Mailable
         $MAIL_FROM_ADDRESS = env('MAIL_FROM_ADDRESS');
         $MAIL_FROM_NAME    = env('MAIL_FROM_NAME');
 
+        $mail_subject="  ";
+
+        if($this->approvalStatus == "approved")
+        {
+            $mail_subject = "Approved of OKR/PMS for the Period of " . $this->appraisal_period;
+        }
+        else
+        if ($this->approvalStatus == "rejected")
+        {
+            $mail_subject = "Rejected of OKR/PMS for the Period of " . $this->appraisal_period;
+        }
+        else
+        if($this->approvalStatus == "completed")
+        {
+            $mail_subject = "Submitted Manager Review OKR/PMS for the Period of " .$this->appraisal_year. " - ". $this->appraisal_period;
+        }
+
+
         return $this->from($MAIL_FROM_ADDRESS,  $MAIL_FROM_NAME)
                 //->subject("Regarding the Manager Review - PMS")
-                ->subject($MAIL_FROM_NAME)
-                ->view('vmt_pms_mail_flow_manager_to_assignee')
+                ->subject($mail_subject)
+                ->view('pms_mails.vmt_pms_mail_flow2_manager_to_assignee')
                 ->with('approvalStatus', $this->approvalStatus)
                 ->with('user_emp_name', $this->user_emp_name)
                 ->with('appraisal_year', $this->appraisal_year)
                 ->with('appraisal_period', $this->appraisal_period)
                 ->with('user_manager_name', $this->user_manager_name)
-                ->with('comments_manager', $this->comments_manager);
+                ->with('comments_manager', $this->comments_manager)
+                ->with('loginLink', $this->loginLink);
+
     }
 }

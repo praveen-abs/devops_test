@@ -112,9 +112,9 @@ $bank_names = \DB::table('bank_list')->get();
                                                 <tr>
                                                     <td align="right" style="padding: 10px"
                                                         class="padding-top_0 padding-b_0">
-                                                        <p class="tet-right margin-t-b_0 " class="margin:0px;">Cheers,
+                                                        <p class="tet-right margin-t-b_0 " class="margin:0px;"><b>Cheers,</b>
                                                         </p>
-                                                        <p class="tet-right margin-t-b_0 ">ABS_OKR Automated System.
+                                                        <p class="tet-right margin-t-b_0 "><b>ABS_OKR Automated System.</b>
                                                         </p>
                                                     </td>
                                                 </tr>

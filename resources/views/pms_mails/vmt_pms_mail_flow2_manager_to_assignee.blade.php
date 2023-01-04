@@ -55,10 +55,10 @@ $bank_names = \DB::table('bank_list')->get();
             padding: 0px;
         }
     </style>
-    <link rel="stylesheet" href="mail.css">
 </head>
 
 <body>
+    <!-- Flow 2 : Mail sent to employee, when manager sets KPI goal -->
 
     @if ($approvalStatus == 'none')
         <table id="wrapper" cellpadding="0" cellspacing="0" width="552"
@@ -88,8 +88,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                                 Ms. @php echo $user_emp_name; @endphp</b> </p>
                                                         <p>The purpose of this mail is to inform you that, your
                                                             respective OKR/Goals as well as your reporting manager's
-                                                            expectations and directions for <b>
-                                                                @php echo $appraisal_period; @endphp </b>
+                                                            expectations and directions for <b>{{ $appraisal_period }}.</b>
                                                         </p>
                                                         <p>Request you to Accept or Reject this OKR/PMS forms using the
                                                             buttons below.</p>
@@ -101,8 +100,8 @@ $bank_names = \DB::table('bank_list')->get();
                                                     <td colspan="4" style="" align="right"
                                                         class="  padding-t-b_0  ">
 
-                                                        <a class="" type="button" target="_self"
-                                                            href="{{ $loginLink }}/employee-appraisal"
+                                                        <a class="" type="button"
+                                                        href="{{ $loginLink }}/employee-appraisal"
                                                             style="text-decoration:none;cursor: pointer; margin-right:10px;color:#ffffff;padding: 7px 30px;border: 2px solid #90f10c;background: #90f10c;border-radius: 4px;font-weight:600">
                                                             Accept
                                                         </a>
@@ -110,8 +109,8 @@ $bank_names = \DB::table('bank_list')->get();
                                                     <td colspan="4" style="" align="left"
                                                         class="padding-t-b_0 ">
 
-                                                        <a class="" type="button" target="_self"
-                                                            href="{{ $loginLink }}/employee-appraisal"
+                                                        <a class="" type="button"
+                                                        href="{{ $loginLink }}/employee-appraisal"
                                                             style="text-decoration:none;cursor: pointer;margin-left:10px;color:#ffffff;padding: 7px 30px;border: 2px solid #f12d0c;background: #ff2500;border-radius: 4px;font-weight:600">
                                                             Reject
                                                         </a>
@@ -121,22 +120,16 @@ $bank_names = \DB::table('bank_list')->get();
                                                     <td colspan="8" class="">
 
                                                         <p> <span style="color:#fa9530;">Note - </span>When rejecting
-                                                            anOKR/PMS form, kindly include the reason for rejection in
-                                                            the
-                                                            response email/HRMS portal. </p>
-                                                        <p class="txt-center">"We wish you achieve your greatest goals
-                                                            moving
-                                                            forward."</p>
+                                                            an OKR/PMS form, kindly include the reason for rejection in
+                                                            the response email/HRMS portal. </p>
+                                                        <p><span>We wish you achieve your greatest goals
+                                                            moving forward.</span></p>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="
-                        8" align="right"
-                                                        class="padding-t-b_0 ">
-                                                        <p class="tet-right margin-t-b_0 " class="margin:0px;">Cheers,
-                                                        </p>
-                                                        <p class="tet-right margin-t-b_0 ">ABS_OKR Automated System.
-                                                        </p>
+                                                    <td colspan="8" class="padding-t-b_0 ">
+                                                        <p class="txt-left margin-t-b_0 " class="margin:0px;"><b>Cheers,</b></p>
+                                                        <p class="txt-left margin-t-b_0 "><b>ABS_OKR Automated System.</b></p>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -145,11 +138,11 @@ $bank_names = \DB::table('bank_list')->get();
                                 </tr>
 
                                 <tr>
-                                    <td style="" class="">
+                                    <td style="padding: 0px;">
                                         <table>
                                             <tbody>
                                                 <tr>
-                                                    <td align="center" style="">
+                                                    <td align="center" style="padding-top:10px ">
                                                         This e-mail was generated from ABShrms if you think this is
                                                         SPAM,please do report to <a href="info@abshrms.com"
                                                             style="text-decoration: none;color:none;">info<span
@@ -203,8 +196,8 @@ $bank_names = \DB::table('bank_list')->get();
                                                                 target="_blank" style="margin-right: 20px"><img
                                                                     src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-002.png"
                                                                     alt="Instagram"></a>
-                                                            <a href="https://www.facebook.com/ArdensHR"
-                                                                target="_blank" style="margin-right: 20px"><img
+                                                            <a href="https://www.facebook.com/ArdensHR" target="_blank"
+                                                                style="margin-right: 20px"><img
                                                                     src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-004.png"
                                                                     alt="Facebook"></a>
                                                             <a href="https://www.youtube.com/channel/UCgZ7XpBoJvcWWvaiBS5GxHg"
@@ -254,7 +247,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                         style="padding:10px ;">
 
                                                         <p class="text-strong margin-t-b_0  txt-center"
-                                                            style="color:#008000;font-size:20px">Accepted</p>
+                                                            style="color:#008000;font-size:20px">Approved </p>
                                                     </td>
                                                 </tr>
 
@@ -263,9 +256,9 @@ $bank_names = \DB::table('bank_list')->get();
 
                                                         <p class="" style="margin: 0px ">Dear <b> Mr. / Ms.
                                                                 @php echo $user_emp_name; @endphp</b></p>
-                                                        <p>This is to inform you that <b>Mr. /Mrs. @php echo $user_emp_name; @endphp
-                                                            </b>,<b> Mr. / Ms. @php echo $user_manager_name; @endphp</b> has
-                                                            accepted his/ her OKR/ PMS forms.
+                                                        <p>This is to inform you that <b>Mr. /Ms. @php echo $user_manager_name; @endphp
+                                                            </b>,has
+                                                            Approved your OKR/ PMS forms.
                                                         </p>
                                                         <p>Request you to kindly have a “Great Conversation” with
                                                             <b>“Mr. /Mrs. @php echo $user_manager_name; @endphp </b> and
@@ -274,22 +267,22 @@ $bank_names = \DB::table('bank_list')->get();
                                                             frame.
                                                         </p>
                                                         <p>
-                                                            Kindly visit the HRMS portal for more details <a
-                                                                href="" target="_self"
-                                                                style="text-decoration: none;color:#fa9530">Click
-                                                                here</a>
-                                                        </p>
+                                                                <a class=""
+                                                                        href="{{ $loginLink }}/employee-appraisal">
 
-                                                    </td>
+                                                                        Kindly visit the HRMS portal for more details
+                                                                    </a>
+                                                                </p>
+                                                        </td>
                                                 </tr>
 
 
 
                                                 <tr>
-                                                    <td colspan="8" align="right" class="padding-t-b_0">
-                                                        <p class="tet-right margin-t-b_0 " class="margin:0px;">Cheers,
+                                                    <td colspan="8"   class="padding-t-b_0">
+                                                        <p class="txt-left margin-t-b_0 " class="margin:0px;"><b>Cheers,</b>
                                                         </p>
-                                                        <p class="tet-right margin-t-b_0 ">ABS_OKR Automated System.
+                                                        <p class="txt-left margin-t-b_0 "><b>ABS_OKR Automated System.</b>
                                                         </p>
                                                     </td>
                                                 </tr>
@@ -299,11 +292,11 @@ $bank_names = \DB::table('bank_list')->get();
                                 </tr>
 
                                 <tr>
-                                    <td style="">
+                                    <td style="padding: 0px;">
                                         <table>
                                             <tbody>
                                                 <tr>
-                                                    <td align="center" style="">
+                                                    <td align="center" style="padding:10px 0px 0px 0px">
                                                         This e-mail was generated from ABShrms if you think this is
                                                         SPAM,please do report to <a href="info@abshrms.com"
                                                             style="text-decoration: none;color:none;">info<span
@@ -417,23 +410,24 @@ $bank_names = \DB::table('bank_list')->get();
 
                                                         <p class="" style="margin:0px ">Dear <b> Mr. / Ms.
                                                                 @php echo $user_emp_name; @endphp</b></p>
-                                                        <p>This is to inform you that,<b> Mr. / Ms.
-                                                                @php echo $user_emp_name; @endphp</b> ,<b> Mr. / Ms.
+                                                        <p>This is to inform you that,
+                                                                <b> Mr. / Ms.
                                                                 @php echo $user_manager_name; @endphp</b> has rejected your OKR/ PMS forms
                                                             due to
                                                         </p>
-                                                        <p class="txt-center"><b>“@php echo $comments_manager; @endphp </b></p>
+                                                        <p class="txt-center"><b>" {{ $comments_manager }} " </b></p>
                                                         <p>Request you to kindly have a “Great Conversation” with <b>
                                                                 Mr. / Ms.
                                                                 @php echo $user_manager_name; @endphp</b> and Complete the OKR/PMS within
                                                             the time
                                                             frame.</p>
+                                                        <p>
+                                                        <a class=""
+                                                                href="{{ $loginLink }}/employee-appraisal">
 
-                                                        <p>Kindly visit the HRMS portal for more details <a
-                                                                href="" target="_self"
-                                                                href="{{ $loginLink }}/employee-appraisal"
-                                                                style="text-decoration: none;color:#fa9530">Click
-                                                                here</a></p>
+                                                                Kindly visit the HRMS portal for more details
+                                                            </a>
+                                                        </p>
 
                                                     </td>
                                                 </tr>
@@ -441,10 +435,10 @@ $bank_names = \DB::table('bank_list')->get();
 
 
                                                 <tr>
-                                                    <td colspan="8" align="right" class="padding-t-b_0">
-                                                        <p class="tet-right margin-t-b_0 " class="margin:0px;">Cheers,
+                                                    <td colspan="8"  class="padding-t-b_0">
+                                                        <p class="txt-left margin-t-b_0 " class="margin:0px;"><b>Cheers,</b>
                                                         </p>
-                                                        <p class="tet-right margin-t-b_0 ">ABS_OKR Automated System.
+                                                        <p class="txt-left margin-t-b_0 "><b>ABS_OKR Automated System.</b>
                                                         </p>
                                                     </td>
                                                 </tr>
@@ -454,11 +448,11 @@ $bank_names = \DB::table('bank_list')->get();
                                 </tr>
 
                                 <tr>
-                                    <td style="">
+                                    <td style="padding: 0px;">
                                         <table>
                                             <tbody>
                                                 <tr>
-                                                    <td align="center" style="">
+                                                    <td align="center" style="padding:10px 0px 0px 0px">
                                                         This e-mail was generated from ABShrms if you think this is
                                                         SPAM,please do report to <a href="info@abshrms.com"
                                                             style="text-decoration: none;color:none;">info<span
@@ -559,47 +553,25 @@ $bank_names = \DB::table('bank_list')->get();
                                                 </tr>
                                                 <tr>
                                                     <td colspan="8" align="left" class="border-less">
-
-
-                                                        <p>Greetings from the HR Team,</p>
-                                                        <p></p>
-                                                        <p>This is to inform you that your team member <b>“Mr. /Mrs.
-                                                                @php echo $user_emp_name; @endphp </b> has successfully submitted
-                                                            his/her Self-Review for<b>@php echo $appraisal_period; @endphp </b></p>
-                                                        <p>Request you to complete the OKR Manager review against OKR
-                                                            /PMS
-                                                            forms using the buttons below</p>
-
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td colspan="8" style="" align="center"
-                                                        class="  padding-t-b_0  ">
-
-                                                        <a class="" type="button"
-                                                            style="text-decoration:none;cursor: pointer; margin-right:10px;color:#ffffff;padding: 7px 30px;border: 2px solid #c5b203;background: #c5b203;border-radius: 4px;font-weight:600">
-                                                            Review
-                                                        </a>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="8" class="">
-
-                                                        <p>Also, kindly have a “Great Conversation” with <b>“Mr. /Mrs.
-                                                                @php echo $user_emp_name; @endphp </b> and Complete the OKR/PMS within
-                                                            the time frame.</p>
-                                                        <p>Kindly visit the HRMS portal for more details </p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="
-                            8" align="right"
-                                                        class="padding-t-b_0 ">
-                                                        <p class="tet-right margin-t-b_0 " class="margin:0px;">Cheers,
+                                                        <p class="" style="margin: 0px ">Greetings from the HR Team,</p>
+                                                        <p>This is to inform you that your Manager <b> Mr./ Ms. {{ $user_manager_name }} </b> has successfully submitted his/her
+                                                            Manager-Review for {{ $appraisal_year }} - {{ $appraisal_period}}.
                                                         </p>
-                                                        <p class="tet-right margin-t-b_0 ">ABS_OKR Automated System.
+                                                        <p>
+                                                            If you have any questions or concerns, don’t hesitate to reach out to your reporting manager or the HR team.
+                                                        </p>
+                                                        <p>
+                                                            <a class="" href="{{ $loginLink }}/employee-appraisal">
+                                                                Kindly visit the HRMS portal for more details
+                                                            </a>
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="8" class="padding-t-b_0 ">
+                                                        <p class="txt-left margin-t-b_0 " class="margin:0px;"><b>Cheers,</b>
+                                                        </p>
+                                                        <p class="txt-left margin-t-b_0 "><b>ABS_OKR Automated System.</b>
                                                         </p>
                                                     </td>
                                                 </tr>
