@@ -85,7 +85,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                                                     <tr>
                                                           <td colspan="4" style="" align="center"
                                                             class="padding-t-b_0 ">
-    
+
                                                             <a class="" type="button"
                                                             href="{{ $loginLink }}/team-appraisal"
                                                                 style="text-decoration:none;cursor: pointer;margin-left:10px;color:#ffffff;padding: 7px 30px;border: 2px solid #dbd801;background: #dbd801;border-radius: 4px;font-weight:600">
@@ -107,9 +107,9 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
 
                                             <tr>
                                                 <td colspan="8" class="padding-t-b_0">
-                                                    <p class="txt-left margin-t-b_0 " class="margin:0px;">Cheers,
+                                                    <p class="txt-left margin-t-b_0 " class="margin:0px;"><b>Cheers,</b>
                                                     </p>
-                                                    <p class="txt-left margin-t-b_0 ">ABS_OKR Automated System.
+                                                    <p class="txt-left margin-t-b_0 "><b>ABS_OKR Automated System.</b>
                                                     </p>
                                                 </td>
                                             </tr>

@@ -122,16 +122,14 @@ $bank_names = \DB::table('bank_list')->get();
                                                         <p> <span style="color:#fa9530;">Note - </span>When rejecting
                                                             an OKR/PMS form, kindly include the reason for rejection in
                                                             the response email/HRMS portal. </p>
-                                                        <p class="txt-center">"We wish you achieve your greatest goals
-                                                            moving forward."</p>
+                                                        <p><span>We wish you achieve your greatest goals
+                                                            moving forward.</span></p>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="8" class="padding-t-b_0 ">
-                                                        <p class="txt-left margin-t-b_0 " class="margin:0px;">Cheers,
-                                                        </p>
-                                                        <p class="txt-left margin-t-b_0 ">ABS_OKR Automated System.
-                                                        </p>
+                                                        <p class="txt-left margin-t-b_0 " class="margin:0px;"><b>Cheers,</b></p>
+                                                        <p class="txt-left margin-t-b_0 "><b>ABS_OKR Automated System.</b></p>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -271,7 +269,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                         <p>
                                                                 <a class=""
                                                                         href="{{ $loginLink }}/employee-appraisal">
-                        
+
                                                                         Kindly visit the HRMS portal for more details
                                                                     </a>
                                                                 </p>
@@ -282,9 +280,9 @@ $bank_names = \DB::table('bank_list')->get();
 
                                                 <tr>
                                                     <td colspan="8"   class="padding-t-b_0">
-                                                        <p class="txt-left margin-t-b_0 " class="margin:0px;">Cheers,
+                                                        <p class="txt-left margin-t-b_0 " class="margin:0px;"><b>Cheers,</b>
                                                         </p>
-                                                        <p class="txt-left margin-t-b_0 ">ABS_OKR Automated System.
+                                                        <p class="txt-left margin-t-b_0 "><b>ABS_OKR Automated System.</b>
                                                         </p>
                                                     </td>
                                                 </tr>
@@ -422,11 +420,11 @@ $bank_names = \DB::table('bank_list')->get();
                                                                 Mr. / Ms.
                                                                 @php echo $user_manager_name; @endphp</b> and Complete the OKR/PMS within
                                                             the time
-                                                            frame.</p> 
+                                                            frame.</p>
                                                         <p>
                                                         <a class=""
                                                                 href="{{ $loginLink }}/employee-appraisal">
-                
+
                                                                 Kindly visit the HRMS portal for more details
                                                             </a>
                                                         </p>
@@ -438,9 +436,9 @@ $bank_names = \DB::table('bank_list')->get();
 
                                                 <tr>
                                                     <td colspan="8"  class="padding-t-b_0">
-                                                        <p class="txt-left margin-t-b_0 " class="margin:0px;">Cheers,
+                                                        <p class="txt-left margin-t-b_0 " class="margin:0px;"><b>Cheers,</b>
                                                         </p>
-                                                        <p class="txt-left margin-t-b_0 ">ABS_OKR Automated System.
+                                                        <p class="txt-left margin-t-b_0 "><b>ABS_OKR Automated System.</b>
                                                         </p>
                                                     </td>
                                                 </tr>
@@ -556,7 +554,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                 <tr>
                                                     <td colspan="8" align="left" class="border-less">
                                                         <p class="" style="margin: 0px ">Greetings from the HR Team,</p>
-                                                        <p>This is to inform you that your Manager  Mr./ Ms. {{ $user_manager_name }} has successfully submitted his/her
+                                                        <p>This is to inform you that your Manager <b> Mr./ Ms. {{ $user_manager_name }} </b> has successfully submitted his/her
                                                             Manager-Review for {{ $appraisal_year }} - {{ $appraisal_period}}.
                                                         </p>
                                                         <p>
@@ -571,9 +569,9 @@ $bank_names = \DB::table('bank_list')->get();
                                                 </tr>
                                                 <tr>
                                                     <td colspan="8" class="padding-t-b_0 ">
-                                                        <p class="txt-left margin-t-b_0 " class="margin:0px;">Cheers,
+                                                        <p class="txt-left margin-t-b_0 " class="margin:0px;"><b>Cheers,</b>
                                                         </p>
-                                                        <p class="txt-left margin-t-b_0 ">ABS_OKR Automated System.
+                                                        <p class="txt-left margin-t-b_0 "><b>ABS_OKR Automated System.</b>
                                                         </p>
                                                     </td>
                                                 </tr>

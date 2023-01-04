@@ -117,7 +117,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                                                             an OKR/PMS form, kindly include the reason for rejection in
                                                             the
                                                             response email/HRMS portal. </p>
-                                                        <p class="txt-center">"We wish you achieve your greatest goals
+                                                        <p>"We wish you achieve your greatest goals
                                                             moving
                                                             forward."</p>
                                                     </td>
@@ -125,9 +125,9 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                                                 <tr>
                                                     <td colspan="8" align="right"
                                                         class="padding-t-b_0 ">
-                                                        <p class="txt-left margin-t-b_0 " class="margin:0px;">Cheers,
+                                                        <p class="txt-left margin-t-b_0 " class="margin:0px;"><b>Cheers,</b>
                                                         </p>
-                                                        <p class="txt-left margin-t-b_0 ">ABS_OKR Automated System.
+                                                        <p class="txt-left margin-t-b_0 "><b>ABS_OKR Automated System.</b>
                                                         </p>
                                                     </td>
                                                 </tr>
@@ -276,9 +276,9 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
 
                                                 <tr>
                                                     <td colspan="8" class="padding-t-b_0">
-                                                        <p class="txt-left margin-t-b_0 " class="margin:0px;">Cheers,
+                                                        <p class="txt-left margin-t-b_0 " class="margin:0px;"><b>Cheers,</b>
                                                         </p>
-                                                        <p class="txt-left margin-t-b_0 ">ABS_OKR Automated System.
+                                                        <p class="txt-left margin-t-b_0 "><b>ABS_OKR Automated System.</b>
                                                         </p>
                                                     </td>
                                                 </tr>
@@ -430,9 +430,9 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
 
                                                 <tr>
                                                     <td colspan="8" class="padding-t-b_0">
-                                                        <p class="txt-left margin-t-b_0 " class="margin:0px;">Cheers,
+                                                        <p class="txt-left margin-t-b_0 " class="margin:0px;"><b>Cheers,</b>
                                                         </p>
-                                                        <p class="txt-left margin-t-b_0 ">ABS_OKR Automated System.
+                                                        <p class="txt-left margin-t-b_0 "><b>ABS_OKR Automated System.</b>
                                                         </p>
                                                     </td>
                                                 </tr>
@@ -564,9 +564,9 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                                                 </tr>
                                                 <tr>
                                                     <td colspan="8" align="right" class="padding-t-b_0 ">
-                                                        <p class="tet-right margin-t-b_0 " class="margin:0px;">Cheers,
+                                                        <p class="tet-right margin-t-b_0 " class="margin:0px;"><b>Cheers,</b>
                                                         </p>
-                                                        <p class="tet-right margin-t-b_0 ">ABS_OKR Automated System.
+                                                        <p class="tet-right margin-t-b_0 "><b>ABS_OKR Automated System.</b>
                                                         </p>
                                                     </td>
                                                 </tr>
