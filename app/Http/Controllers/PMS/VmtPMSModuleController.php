@@ -942,7 +942,7 @@ class VmtPMSModuleController extends Controller
                 $kpiReviewCheck->update();
 
                 $kpiForAssignedDetails = VmtPMS_KPIFormAssignedModel::where('id',$kpiReviewCheck->vmt_pms_kpiform_assigned_id)->first();
-
+ 
                 //Get the ASSIGNER_ID for sending mail
                 //$hrReview = User::find($kpiForAssignedDetails->assigner_id);
 
@@ -956,7 +956,7 @@ class VmtPMSModuleController extends Controller
                 //Send mail to employee stating that Manager has submitted his review
                 \Mail::to($assigneeOfficeDetails->officical_mail)
                         ->cc($hr_details->officical_mail)
-                        ->send(new VmtPMSMail_Reviewer("completed", $assigneeDetails->name, $kpiForAssignedDetails->year, $kpiForAssignedDetails->assignment_period, auth::user()->name,"",$login_link, request()->getSchemeAndHttpHost() ));
+                        ->send(new VmtPMSMail_Reviewer("completed", $assigneeDetails->name, $kpiForAssignedDetails->year,$kpiForAssignedDetails->user_manager_name, $kpiForAssignedDetails->assignment_period, auth::user()->name,$login_link, request()->getSchemeAndHttpHost() ));
 
                 //Send mail to HR stating that KPI review is completed
                // \Mail::to($hr_details->officical_mail)->send(new VmtPMSMail_HR( $hr_details->name , $assigneeDetails->name, auth::user()->name, $kpiForAssignedDetails->year, $kpiForAssignedDetails->assignment_period, request()->getSchemeAndHttpHost() ));
