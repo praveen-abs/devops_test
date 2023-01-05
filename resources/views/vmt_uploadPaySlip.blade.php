@@ -197,7 +197,7 @@
 
                                 for(var j=0;j<keys.length;j++)
                                 {
-                                        $('#error-msg').append('<ul class="list-unstyled"><li>'+'<span class="text-muted f-14">' + json_error_fields[keys[j]] +'</span>' + '</li></ul>');
+                                        $('#error-msg').append('<ul class="list-unstyled ms-3"><li>'+'<span class="badge bg-primary f-14">' + json_error_fields[keys[j]] +'</span>' + '</li></ul>');
                                 }
                             }
 

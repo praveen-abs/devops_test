@@ -23,7 +23,7 @@ use App\Models\VmtEmployeePaySlip;
 use Illuminate\Support\Facades\Auth;
 
 use App\Imports\VmtPaySlip;
-
+use App\Models\Bank;
 
 class VmtEmployeePayslipService {
 
@@ -231,7 +231,7 @@ class VmtEmployeePayslipService {
                 // 'pan_ack.required_if' =>'Field <b>:attribute</b> is required if <b>pan no</b> not provided ',
                 // 'required_unless' => 'Field <b>:attribute</b> is invalid',
                 'required' => 'Field <b>:attribute</b> is required',
-                'exists' => 'Field <b>:attribute</b> not exist'
+                'exists' => 'Column <b>:attribute</b> with value <b>:input</b> doesnt not exist'
 
             ];
 
@@ -282,6 +282,41 @@ class VmtEmployeePayslipService {
         try {
 
             $user_id = User::where('user_code',$row['emp_no'])->value('id');
+
+            //update employee's details 'vmt_employee_details'
+            $emp_details = VmtEmployee::where('userid', $user_id);
+
+            if($emp_details->exists()){
+                $emp_details = $emp_details->first();
+
+                if(!empty($row['bank_name']) && Bank::where('bank_name',$row['bank_name'])->exists())
+                     $emp_details->bank_id =  Bank::where('bank_name',$row['bank_name'])->first()->id;
+
+                $emp_details->bank_account_number =  $row['account_number'] ?? '---';
+                $emp_details->bank_ifsc_code = $row['bank_ifsc_code'] ?? '---';
+
+                $emp_details->save();
+
+            }
+
+            //update employee's 'vmt_employee_statutory_details'
+            $emp_statutory_details = VmtEmployeeStatutoryDetails::where('user_id', $user_id);
+
+            if($emp_statutory_details->exists()){
+                $emp_statutory_details = $emp_statutory_details->first();
+
+                $emp_statutory_details->uan_number = $row["uan"];
+                $emp_statutory_details->epf_number = $row["epf_number"];
+                $emp_statutory_details->esic_number = $row["esic_number"];
+
+                $emp_statutory_details->save();
+            }
+
+            //update employee's ' vmt_employee_details'
+                //BANK NAME
+                //ACCOUNT NUMBER
+                //IFSC CODE
+
             //Store the data into vmt_employee_payslip table
 
             $empPaySlip = new VmtEmployeePaySlip;
@@ -379,12 +414,13 @@ class VmtEmployeePayslipService {
         } catch (\Exception $e) {
             //$this->deleteUser($user->id);
 
-            //dd($e);
+            //dd("For Usercode : ".$row['emp_no']."  -----  ".$e);
             return $rowdata_response = [
                 'row_number' => '',
                 'status' => 'failure',
                 'message' => 'Payslip for '. $empNo . ' not added',
-                'error_fields' => json_encode(['error' => $e->getMessage()]),
+                'error_fields' => json_encode(['error' =>$e->getMessage()]),
+                'stack_trace' => $e->getTraceAsString()
             ];
         }
     }

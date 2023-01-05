@@ -1,3 +1,14 @@
+<?php
+//$employee = \DB::table('vmt_employee_payslip')->first();
+$general_info = \DB::table('vmt_general_info')->first();
+//$employee_name =  \DB::table('users')->where('user_code','=',$employee->EMP_NO)->first('name');
+$client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
+// dd(request()->getSchemeAndHttpHost()."".$general_info->logo_img);
+$bank_names = \DB::table('bank_list')->get();
+
+?>
+
+
 <!DOCTYPE html>
 <html>
 
@@ -68,13 +79,14 @@
                                                     <td colspan="4" align="left" class="border-less"
                                                         style="padding:10px ;">
 
-                                                        <p class="text-strong " style="margin: 0px 0px 0px ">Dear</p>
+                                                        <p class="" style="margin:0px ">Dear <b>“Mr. /Mrs.
+                                                                @php echo $user_emp_name; @endphp </b></p>
                                                         <p class="" style="  ">
                                                             The purpose of this mail is to inform you that, your
                                                             respective
                                                             OKR/Goals as well as your reporting manager's expectations
                                                             and
-                                                            directions for {Month Name/ Quarter Name/ Half Year Name}
+                                                            directions for <b>@php echo $appraisal_period; @endphp </b>
                                                         </p>
                                                         <p>
                                                             As you all must be aware that this is a mandate process that
@@ -100,9 +112,9 @@
                                                 <tr>
                                                     <td align="right" style="padding: 10px"
                                                         class="padding-top_0 padding-b_0">
-                                                        <p class="tet-right margin-t-b_0 " class="margin:0px;">Cheers,
+                                                        <p class="tet-right margin-t-b_0 " class="margin:0px;"><b>Cheers,</b>
                                                         </p>
-                                                        <p class="tet-right margin-t-b_0 ">ABS_OKR Automated System.
+                                                        <p class="tet-right margin-t-b_0 "><b>ABS_OKR Automated System.</b>
                                                         </p>
                                                     </td>
                                                 </tr>
@@ -199,7 +211,6 @@
         </table>
     @elseif ($approvalStatus == 'approved')
         {{-- <p>Personal Assessment goal has been approved by your Manager</p> --}}
-
     @elseif ($approvalStatus == 'rejected')
         {{-- <p>Personal Assessment goal has been rejected by your Manager</p> --}}
 
