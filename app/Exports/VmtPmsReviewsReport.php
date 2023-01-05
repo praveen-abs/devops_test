@@ -11,12 +11,13 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Maatwebsite\Excel\Concerns\WithCustomStartCell;
 use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Concerns\WithEvents;
-use \Maatwebsite\Excel\Sheet;
+use Maatwebsite\Excel\Sheet;
 use Maatwebsite\Excel\Concerns\FromQuery;
+use App\Models\User;
 
 
 
-class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,WithColumnWidths
+class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,WithColumnWidths,WithCustomStartCell,WithEvents
 {
     /**
     * @return \Illuminate\Support\Collection
@@ -27,12 +28,14 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
     protected $assignment_period;
     protected $is_assignee_submitted;
     //protected $is_reviewer_accepted;
+    protected $manager_id;
 
     function __construct($calendar_type, $year, $assignment_period, $is_assignee_submitted)
     {
         $this->calendar_type = $calendar_type;
         $this->year=$year;
         $this->assignment_period = $assignment_period;
+
 
 
 
@@ -60,25 +63,26 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
         ];
     }
 
-    // public function registerEvents(): array {
-    //     return [
-    //         AfterSheet::class => function(AfterSheet $event) {
-    //             /** @var Sheet $sheet */
-    //             $sheet = $event->sheet;
+       //For first Row Col span
+    public function registerEvents(): array {
+        return [
+            AfterSheet::class => function(AfterSheet $event) {
+                /** @var Sheet $sheet */
+                $sheet = $event->sheet;
 
-    //             $sheet->mergeCells('A1:I1');
-    //             $sheet->setCellValue('A1', "OKR / PMS - Review Report -");
+                $sheet->mergeCells('A1:I1');
+                $sheet->setCellValue('A1', "OKR / PMS - Review Report -");
 
-    //             $styleArray = [
-    //                 'alignment' => [
-    //                     'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-    //                 ],
-    //             ];
-    //             $cellRange = 'A1:I1'; // All headers
-    //             $event->sheet->getDelegate()->getStyle($cellRange)->applyFromArray($styleArray);
-    //         },
-    //     ];
-    // }
+                $styleArray = [
+                    'alignment' => [
+                        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                    ],
+                ];
+                $cellRange = 'A1:I1'; // All headers
+                $event->sheet->getDelegate()->getStyle($cellRange)->applyFromArray($styleArray);
+            },
+        ];
+    }
 
                    // For Headings
     public function headings():array
@@ -98,14 +102,19 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
 
 
 
-
+      //For styles
     public function styles(Worksheet $sheet)
     {
         return [
             // Style the first row as bold text.
-            1    => ['font' => ['bold' => true]],
-            //2    => ['font' => ['italic' => true]],
+            2    => ['font' => ['bold' => true]],
+
         ];
+    }
+
+    public function startCell(): string
+    {
+        return 'A2';
     }
 
     public function collection()
@@ -128,11 +137,14 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
                                   'vmt_pms_kpiform_assigned.frequency',
                                   'vmt_pms_kpiform_assigned.assignment_period',
                                   'vmt_pms_kpiform_reviews.is_assignee_submitted',
-                                //   'vmt_pms_kpiform_reviews.is_reviewer_accepted',
+                                   //'vmt_pms_kpiform_reviews.is_reviewer_accepted',//for manager name
                                    'vmt_pms_kpiform_reviews.is_reviewer_submitted'
 
                                  )
                         ->get();
+
+
+
 
         foreach($query_pms_data as $singleData){
 
@@ -179,13 +191,25 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
                 $singleData->is_assignee_submitted = "Not Yet Submitted";
             }
 
+               //For Manager Name and review Status
             $reviewerStatus=(json_decode($singleData->is_reviewer_submitted, true));
             $array_key = array_keys($reviewerStatus);
+
+              //For Manager Review
             if($reviewerStatus[$array_key[0]]==1){
                 $singleData->is_reviewer_submitted = "Reviewed";
             }else{
                 $singleData->is_reviewer_submitted = "Not Yet Reviewed";
             }
+
+            //For Manager Name
+
+                //   $manager_id=$array_key[0];
+                //   $singleData->is_reviewer_accepted=$array_key[0];
+
+
+
+
 
         }
 
@@ -197,7 +221,9 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
 
 
         return $query_pms_data;
-        //dd($reviewerStatus[$array_key[0]]);
+        // dd($manager_name);
+        //return $manager_name;
+
 
         //dd(substr($singleData->year,24,4));
         // dd($this->calendar_type,
