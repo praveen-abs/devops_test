@@ -639,7 +639,7 @@ class VmtPMSModuleController extends Controller
                         $assigneeName = User::where('id',$assignee)->pluck('name')->first();
                         $assignerName = User::where('id',auth::user()->id)->pluck('name')->first();
                         $comments_employee = '';
-                        $loginLink="";
+                        $login_Link=request()->getSchemeAndHttpHost();
 
                         //Send mail when flow is 1 or 2 (Flow Checked inside VmtPMSMail_PublishForm)
                         if(!empty($assigneeMailId)){
@@ -647,7 +647,7 @@ class VmtPMSModuleController extends Controller
                             //Send mail to assignee
                             \Mail::to($assigneeMailId)
                                   ->cc($hr_details->officical_mail)
-                                  ->send(new VmtPMSMail_PublishForm("none", $assigneeName,$request->hidden_calendar_year,strtoupper($request->assignment_period_start),$assignerName,$comments_employee,$request->flowCheck,$loginLink,request()->getSchemeAndHttpHost()));
+                                  ->send(new VmtPMSMail_PublishForm("none", $assigneeName,$request->hidden_calendar_year,strtoupper($request->assignment_period_start),$assignerName,$comments_employee,$request->flowCheck,$login_Link));
 
                         }
                     }
@@ -659,8 +659,8 @@ class VmtPMSModuleController extends Controller
 
                 $assigneeName = User::where('id',$assignee)->pluck('name')->first();
                 $assignerName = User::where('id',auth::user()->id)->pluck('name')->first();
-                $command_emp = '';
-                $loginLink=request()->getSchemeAndHttpHost();
+                $comments_employee = '';
+                $login_Link=request()->getSchemeAndHttpHost();
 
                 if(count($reviewerMailId) > 0){
                     foreach($reviewerMailId as $reviewerId => $reviewerMailSend){
@@ -669,7 +669,7 @@ class VmtPMSModuleController extends Controller
 
                         \Mail::to($reviewerMailSend)
                         ->cc($hr_details->officical_mail)
-                        ->send(new VmtPMSMail_Assignee("none",$request->flowCheck, $assigneeName,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$receiverName,$command_emp,$loginLink));
+                        ->send(new VmtPMSMail_Assignee("none",$request->flowCheck, $assigneeName,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$receiverName,$comments_employee,$login_Link));    
                     }
                 }
             }
@@ -1149,7 +1149,8 @@ class VmtPMSModuleController extends Controller
             $vmtAssignedFormReview->is_assignee_accepted = $isApproveOrReject;
             $vmtAssignedFormReview->update();
             if(isset($vmtAssignedFormReview->getPmsKpiFormAssigned)){
-                $command_emp = '';
+                $comments_employee = '';
+                $login_Link = request()->getSchemeAndHttpHost();
                 $vmtAssignedDetails = $vmtAssignedFormReview->getPmsKpiFormAssigned;
                 $mailingList = VmtEmployeeOfficeDetails::where('user_id', $vmtAssignedDetails->reviewer_id)->pluck('officical_mail');
                 $assignedUserDetails = User::where('id',$vmtAssignedFormReview->assignee_id)->first();
@@ -1158,7 +1159,7 @@ class VmtPMSModuleController extends Controller
                 {
                     \Mail::to($mailingList)
                     ->cc($hr_details->officical_mail)
-                    ->send(new VmtPMSMail_Assignee( "accepted","2",$assignedUserDetails->name,$vmtAssignedDetails->year." - ".strtoupper($vmtAssignedDetails->assignment_period),$reviewerUserDetails->name,$command_emp,request()->getSchemeAndHttpHost()));
+                    ->send(new VmtPMSMail_Assignee( "accepted","2",$assignedUserDetails->name,$vmtAssignedDetails->year." - ".strtoupper($vmtAssignedDetails->assignment_period),$reviewerUserDetails->name,$comments_employee,$login_Link));
                     $returnMsg = 'KPI has been accepted. Mail notification sent';
                     $message = "KPI has been accepted.  ";
                     Notification::send($assignedUserDetails ,new ViewNotification($message.auth()->user()->name));
@@ -1206,7 +1207,7 @@ class VmtPMSModuleController extends Controller
             $isReviewerAccepted = json_decode($vmtAssignedFormReview->is_reviewer_accepted,true);
             $isReviewerAccepted[Auth::id()] = $isApproveOrReject;
             $vmtAssignedFormReview->is_reviewer_accepted =$isReviewerAccepted;
-            $loginLink = request()->getSchemeAndHttpHost();
+            $login_Link = request()->getSchemeAndHttpHost();
             // dd($vmtAssignedFormReview->is_reviewer_accepted);
 
             // $vmtAssignedFormReview->is_assignee_accepted = $isApproveOrReject;
@@ -1222,13 +1223,13 @@ class VmtPMSModuleController extends Controller
                     \Mail::to($mailingList)
                             ->cc($hr_details->officical_mail)
                             ->send(new VmtPMSMail_Reviewer("approved",
-                                                            "3",
+                                                            
                                                              $receiverDetails->name,
                                                              $request->hidden_calendar_year,
                                                              $vmtAssignedDetails->year." - ".strtoupper($vmtAssignedDetails->assignment_period) ,
                                                              $senderDetails->name,
                                                              $rejectedReason,
-                                                             $loginLink)
+                                                             $login_Link)
                             );
 
                     $returnMsg = 'KPI has been accepted. Mail notification sent';
@@ -1247,12 +1248,12 @@ class VmtPMSModuleController extends Controller
                     \Mail::to($mailingList)
                             ->cc($hr_details->officical_mail)
                             ->send(new VmtPMSMail_Reviewer("rejected",
-                                                            "3",
+                                                            
                                                              $receiverDetails->name,
                                                              $request->hidden_calendar_year,
                                                              $vmtAssignedDetails->year." - ".strtoupper($vmtAssignedDetails->assignment_period) ,
                                                              $senderDetails->name,
-                                                             $rejectedReason,$loginLink)
+                                                             $rejectedReason,$login_Link)
                             );
 
                     $returnMsg = 'KPI has been rejected. Mail notification sent';

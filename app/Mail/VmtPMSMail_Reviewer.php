@@ -32,7 +32,7 @@ class VmtPMSMail_Reviewer extends Mailable
         $this->appraisal_period = $appraisal_period;
         $this->user_manager_name = $user_manager_name;
         $this->comments_manager = $comments_manager;
-        $this->loginLink = $login_link;
+        $this->login_Link = $login_link;
     }
 
     /**
@@ -74,7 +74,7 @@ class VmtPMSMail_Reviewer extends Mailable
                 ->with('appraisal_period', $this->appraisal_period)
                 ->with('user_manager_name', $this->user_manager_name)
                 ->with('comments_manager', $this->comments_manager)
-                ->with('loginLink', $this->loginLink);
+                ->with('login_Link', $this->login_Link);
 
     }
 }
