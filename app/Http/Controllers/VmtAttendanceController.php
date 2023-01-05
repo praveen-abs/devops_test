@@ -1002,19 +1002,28 @@ class VmtAttendanceController extends Controller
         else
         {
             //get the client name from client table
-            $client_name = VmtClientMaster::first()->value('client_name');
+            $client_name = VmtClientMaster::find(session('client_id'))->client_name;
             $client_name = str_replace(' ', '', $client_name);
             //dd($client_name);
         }
 
-        //choose the blade file
-        $viewPage = 'leave_policy_'.strtolower($client_name);
+        //If no sub-client selected, then show a default template
+        if ($client_name == "All")
+        {
+            $viewPage = 'leave_policy_default';
+        }
+        else
+        {
+            //choose the blade file
+            $viewPage = 'leave_policy_'.strtolower($client_name);
+        }
 
-        if (!view()->exists($viewPage)) {
+        if (!view()->exists('leave_policies.'.$viewPage)) {
             $viewPage = 'leave_policy_default';
         }
 
-        return view($viewPage);
+        // dd($viewPage);
+        return view('leave_policies.'.$viewPage);
 
     }
 }
