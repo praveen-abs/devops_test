@@ -8,6 +8,12 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use Maatwebsite\Excel\Concerns\WithCustomStartCell;
+use Maatwebsite\Excel\Events\AfterSheet;
+use Maatwebsite\Excel\Concerns\WithEvents;
+use \Maatwebsite\Excel\Sheet;
+use Maatwebsite\Excel\Concerns\FromQuery;
+
 
 
 class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,WithColumnWidths
@@ -20,12 +26,15 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
     protected $year;
     protected $assignment_period;
     protected $is_assignee_submitted;
+    //protected $is_reviewer_accepted;
 
     function __construct($calendar_type, $year, $assignment_period, $is_assignee_submitted)
     {
         $this->calendar_type = $calendar_type;
         $this->year=$year;
         $this->assignment_period = $assignment_period;
+
+
 
         if($is_assignee_submitted==1 || $is_assignee_submitted==0 ){
             $this->is_assignee_submitted=$is_assignee_submitted;
@@ -36,7 +45,44 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
 
 
 
-    public function headings():array{
+             //For column widths
+    public function columnWidths(): array{
+        return[
+            'A' => 14.29 ,
+            'B' => 27.57,
+            'C' => 13.00,
+            'D' => 24.29,
+            'E' => 9.57,
+            'F' => 22.71,
+            'G' => 27,
+            'H' => 21.43,
+            'I' => 23.57
+        ];
+    }
+
+    // public function registerEvents(): array {
+    //     return [
+    //         AfterSheet::class => function(AfterSheet $event) {
+    //             /** @var Sheet $sheet */
+    //             $sheet = $event->sheet;
+
+    //             $sheet->mergeCells('A1:I1');
+    //             $sheet->setCellValue('A1', "OKR / PMS - Review Report -");
+
+    //             $styleArray = [
+    //                 'alignment' => [
+    //                     'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+    //                 ],
+    //             ];
+    //             $cellRange = 'A1:I1'; // All headers
+    //             $event->sheet->getDelegate()->getStyle($cellRange)->applyFromArray($styleArray);
+    //         },
+    //     ];
+    // }
+
+                   // For Headings
+    public function headings():array
+    {
         return[
             'Employee Code',
             'Employee Name',
@@ -45,18 +91,12 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
             'Frequency',
             'Assignment Period',
             'Employees Submission Status',
-            'Manager Review Status'
-        ];
-    }
+             'Manager Review Status',
+            // 'HR Score Published Status'
+                 ];
+     }
 
-    public function columnWidths(): array{
-        return[
-            'A' => 27.57,
-            'B' => 14.29,
-            'C' => 20.86,
-            'D' => 25.86,
-        ];
-    }
+
 
 
     public function styles(Worksheet $sheet)
@@ -64,7 +104,7 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
         return [
             // Style the first row as bold text.
             1    => ['font' => ['bold' => true]],
-
+            //2    => ['font' => ['italic' => true]],
         ];
     }
 
@@ -88,55 +128,78 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
                                   'vmt_pms_kpiform_assigned.frequency',
                                   'vmt_pms_kpiform_assigned.assignment_period',
                                   'vmt_pms_kpiform_reviews.is_assignee_submitted',
-                                  'vmt_pms_kpiform_reviews.is_reviewer_accepted'
+                                //   'vmt_pms_kpiform_reviews.is_reviewer_accepted',
+                                   'vmt_pms_kpiform_reviews.is_reviewer_submitted'
+
                                  )
                         ->get();
 
-        // foreach($query_pms_data as $singleData){
-
-        //     if($singleData->calendar_type=="financial_year"){
-        //         $singleData->calendar_type=="Financial Year";
-        //     }else if($singleData->calendar_type=="calendar_year"){
-        //         $singleData->calendar_type=="Calendar Year";
-        //     }
-
-        //     if($singleData->frequency=='quarterly'){
-        //         $singleData->frequency='Quarterly';
-        //         if($singleData->assignment_period == "q1"){
-        //             $singleData->assignment_period = "Q1 (Apr-Jun)";
-        //         }
-        //         else if($singleData->assignment_period == "q2")
-        //         {
-        //             $singleData->assignment_period = "Q2 (July-Sept)";
-        //         }
-        //         else if($singleData->assignment_period == "q3")
-        //         {
-        //             $singleData->assignment_period = "Q3 (Oct-Dec)";
-        //         }else if($singleData->assignment_period == "q4")
-        //         {
-        //             $singleData->assignment_period = "Q4 (Jan-Mar)";
-        //         }
-        //     }else if($singleData->frequency=='monthly'){
-        //         $singleData->frequency='Monthly';
-        //     }
+        foreach($query_pms_data as $singleData){
 
 
+            if($singleData->is_reviewer_accepted!=""){
 
-        //     if($singleData->is_assignee_submitted == "1"){
-        //         $singleData->is_assignee_submitted = "Submitted";
-        //     }
-        //     else
-        //     {
-        //         $singleData->is_assignee_submitted = "Not Yet Submitted";
-        //     }
-        // }
+            }
+            if($singleData->calendar_type=="financial_year"){
+                $singleData->calendar_type="Financial Year";
+            }else if($singleData->calendar_type=="calendar_year"){
+                $singleData->calendar_type="Calendar Year";
+            }
+
+
+            if($singleData->frequency=='quarterly'){
+                $singleData->frequency='Quarterly';
+                $start_year=substr($singleData->year,8,4);
+                $end_year=substr($singleData->year,24,4);
+                if($singleData->assignment_period == "q1"){
+                    $singleData->assignment_period = "Q1 (Apr-".$start_year." - Jun-".$start_year .")";
+                }
+                else if($singleData->assignment_period == "q2")
+                {
+                    $singleData->assignment_period = "Q2 (July-".$start_year." - Sept-".$start_year .")";
+                }
+                else if($singleData->assignment_period == "q3")
+                {
+                    $singleData->assignment_period = "Q3 (Oct-".$start_year." - Dec-".$start_year .")";
+                }else if($singleData->assignment_period == "q4")
+                {
+                    $singleData->assignment_period = "Q4 (Jan-".$end_year." - March-".$end_year .")";
+                }
+            }else if($singleData->frequency=='monthly'){
+                $singleData->frequency='Monthly';
+            }
 
 
 
-        dd($query_pms_data->toArray());
+            if($singleData->is_assignee_submitted == "1"){
+                $singleData->is_assignee_submitted = "Submitted";
+            }
+            else
+            {
+                $singleData->is_assignee_submitted = "Not Yet Submitted";
+            }
 
-        //return $query_pms_data;
-        //print($query_pms_data);exit;
+            $reviewerStatus=(json_decode($singleData->is_reviewer_submitted, true));
+            $array_key = array_keys($reviewerStatus);
+            if($reviewerStatus[$array_key[0]]==1){
+                $singleData->is_reviewer_submitted = "Reviewed";
+            }else{
+                $singleData->is_reviewer_submitted = "Not Yet Reviewed";
+            }
+
+        }
+
+
+
+
+        //dd($query_pms_data->toArray());
+
+
+
+        return $query_pms_data;
+        //dd($reviewerStatus[$array_key[0]]);
+
+        //dd(substr($singleData->year,24,4));
         // dd($this->calendar_type,
         //    $this->year,
         //    $this->assignment_period,
