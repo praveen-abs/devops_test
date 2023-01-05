@@ -255,11 +255,11 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
 
                                                         <p class="" style="margin: 0px ">Dear <b> Mr. / Ms.
                                                                 @php echo $user_manager_name; @endphp</b></p>
-                                                        <p>This is to inform you that <b>Mr. /Mrs. @php echo $user_emp_name; @endphp
+                                                        <p>This is to inform you that <b>Mr. /Ms. @php echo $user_emp_name; @endphp
                                                             </b> has accepted his/ her OKR/ PMS forms.
                                                         </p>
                                                         <p>Request you to kindly have a “Great Conversation” with
-                                                            <b>“Mr. /Mrs. @php echo $user_emp_name; @endphp </b> and
+                                                            <b>Mr. /Ms. @php echo $user_emp_name; @endphp </b> and
                                                             Complete the OKR/PMS within the time frame.
                                                         </p>
                                                         <p>

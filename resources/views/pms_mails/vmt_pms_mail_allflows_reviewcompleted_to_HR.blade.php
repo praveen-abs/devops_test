@@ -98,7 +98,7 @@ $bank_names = \DB::table('bank_list')->get();
 
                                                     <p>Greetings from the HR Team,</p>
                                                     <p></p>
-                                                    <p>This is to inform you that your team member <b>“Mr. /Mrs.
+                                                    <p>This is to inform you that your team member <b>Mr. /Ms.
                                                             @php echo $user_emp_name; @endphp </b> has successfully submitted
                                                         his/her Self-Review for<b>@php echo $appraisal_period; @endphp </b></p>
                                                     <p>Request you to complete the OKR Manager review against OKR
@@ -122,7 +122,7 @@ $bank_names = \DB::table('bank_list')->get();
                                             <tr>
                                                 <td colspan="8" class="">
 
-                                                    <p>Also, kindly have a “Great Conversation” with <b>“Mr. /Mrs.
+                                                    <p>Also, kindly have a “Great Conversation” with <b>Mr. /Ms.
                                                             @php echo $user_emp_name; @endphp </b> and Complete the OKR/PMS within
                                                         the time frame.</p>
                                                     <p>Kindly visit the HRMS portal for more details </p>
