@@ -39,11 +39,12 @@ class VmtReportsController extends Controller
     public function generatePmsReviewsReports(Request $request){
         //$filename = 'PmsReports_'.$request->calender_type.'.xlsx';
 
-
+        
         return Excel::download(new VmtPmsReviewsReport($request->calender_type,
                                                        $request->year,
                                                        $request->assignment_period,
-                                                       $request->is_assignee_submitted
+                                                       $request->is_assignee_submitted,
+                                                       $request->getHttpHost()
                                                        ), 'Reports.xlsx');
 
     }

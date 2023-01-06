@@ -29,12 +29,15 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
     protected $is_assignee_submitted;
     //protected $is_reviewer_accepted;
     protected $manager_id;
+    protected $manager_name;
+    protected $getHttpHost;
 
-    function __construct($calendar_type, $year, $assignment_period, $is_assignee_submitted)
+    function __construct($calendar_type, $year, $assignment_period, $is_assignee_submitted,$getHttpHost)
     {
         $this->calendar_type = $calendar_type;
         $this->year=$year;
         $this->assignment_period = $assignment_period;
+        $this->getHttpHost = $getHttpHost;
 
 
 
@@ -71,7 +74,8 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
                 $sheet = $event->sheet;
 
                 $sheet->mergeCells('A1:I1');
-                $sheet->setCellValue('A1', "OKR / PMS - Review Report -");
+                $sheet->setCellValue('A1', "OKR / PMS - Review Report -".$this->getHttpHost);
+
 
                 $styleArray = [
                     'alignment' => [
@@ -95,7 +99,9 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
             'Frequency',
             'Assignment Period',
             'Employees Submission Status',
-             'Manager Review Status',
+            'Manager Review Status',
+            'Manager Name',
+
             // 'HR Score Published Status'
                  ];
      }
@@ -137,8 +143,9 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
                                   'vmt_pms_kpiform_assigned.frequency',
                                   'vmt_pms_kpiform_assigned.assignment_period',
                                   'vmt_pms_kpiform_reviews.is_assignee_submitted',
-                                   //'vmt_pms_kpiform_reviews.is_reviewer_accepted',//for manager name
-                                   'vmt_pms_kpiform_reviews.is_reviewer_submitted'
+                                   //'vmt_pms_kpiform_reviews.is_reviewer_accepted', //For Manager name
+                                   'vmt_pms_kpiform_reviews.is_reviewer_submitted',
+
 
                                  )
                         ->get();
@@ -204,8 +211,11 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
 
             //For Manager Name
 
-                //   $manager_id=$array_key[0];
+                  $manager_id=$array_key[0];
                 //   $singleData->is_reviewer_accepted=$array_key[0];
+                //$manager_name=User::where('user_code','=',$manager_id)->get();
+                $singleData->manager_name= User::find($manager_id)->name;
+
 
 
 
@@ -221,7 +231,8 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
 
 
         return $query_pms_data;
-        // dd($manager_name);
+
+        //dd($manager_name);
         //return $manager_name;
 
 
