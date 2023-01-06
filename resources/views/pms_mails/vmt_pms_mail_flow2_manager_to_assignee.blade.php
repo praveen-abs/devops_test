@@ -88,7 +88,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                                 Ms. @php echo $user_emp_name; @endphp</b> </p>
                                                         <p>The purpose of this mail is to inform you that, your
                                                             respective OKR/Goals as well as your reporting manager's
-                                                            expectations and directions for <b>{{ $appraisal_period }}.</b>
+                                                            expectations and directions for <b>{{ $appraisal_year }} - {{ $appraisal_period }}.</b>
                                                         </p>
                                                         <p>Request you to Accept or Reject this OKR/PMS forms using the
                                                             buttons below.</p>
@@ -100,8 +100,8 @@ $bank_names = \DB::table('bank_list')->get();
                                                     <td colspan="4" style="" align="right"
                                                         class="  padding-t-b_0  ">
 
-                                                        <a class="" type="button"
-                                                        href="{{ $loginLink }}/employee-appraisal"
+                                                        <a class="" type="button"  
+                                                        href="{{ $login_Link }}/employee-appraisal"
                                                             style="text-decoration:none;cursor: pointer; margin-right:10px;color:#ffffff;padding: 7px 30px;border: 2px solid #90f10c;background: #90f10c;border-radius: 4px;font-weight:600">
                                                             Accept
                                                         </a>
@@ -109,8 +109,8 @@ $bank_names = \DB::table('bank_list')->get();
                                                     <td colspan="4" style="" align="left"
                                                         class="padding-t-b_0 ">
 
-                                                        <a class="" type="button"
-                                                        href="{{ $loginLink }}/employee-appraisal"
+                                                        <a class="" type="button"  
+                                                        href="{{ $login_Link }}/employee-appraisal"
                                                             style="text-decoration:none;cursor: pointer;margin-left:10px;color:#ffffff;padding: 7px 30px;border: 2px solid #f12d0c;background: #ff2500;border-radius: 4px;font-weight:600">
                                                             Reject
                                                         </a>
@@ -261,14 +261,14 @@ $bank_names = \DB::table('bank_list')->get();
                                                             Approved your OKR/ PMS forms.
                                                         </p>
                                                         <p>Request you to kindly have a “Great Conversation” with
-                                                            <b>“Mr. /Mrs. @php echo $user_manager_name; @endphp </b> and
+                                                            <b>Mr. /Ms. @php echo $user_manager_name; @endphp </b> and
                                                             Complete the OKR/PMS
                                                             within the time
                                                             frame.
                                                         </p>
                                                         <p>
                                                                 <a class=""
-                                                                        href="{{ $loginLink }}/employee-appraisal">
+                                                                        href="{{ $login_Link }}/employee-appraisal">
 
                                                                         Kindly visit the HRMS portal for more details
                                                                     </a>
@@ -423,7 +423,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                             frame.</p>
                                                         <p>
                                                         <a class=""
-                                                                href="{{ $loginLink }}/employee-appraisal">
+                                                                href="{{ $login_Link }}/employee-appraisal">
 
                                                                 Kindly visit the HRMS portal for more details
                                                             </a>
@@ -555,13 +555,13 @@ $bank_names = \DB::table('bank_list')->get();
                                                     <td colspan="8" align="left" class="border-less">
                                                         <p class="" style="margin: 0px ">Greetings from the HR Team,</p>
                                                         <p>This is to inform you that your Manager <b> Mr./ Ms. {{ $user_manager_name }} </b> has successfully submitted his/her
-                                                            Manager-Review for {{ $appraisal_year }} - {{ $appraisal_period}}.
+                                                            Manager-Review for <b>{{ $appraisal_year }} - {{ $appraisal_period}}</b>.
                                                         </p>
                                                         <p>
                                                             If you have any questions or concerns, don’t hesitate to reach out to your reporting manager or the HR team.
                                                         </p>
                                                         <p>
-                                                            <a class="" href="{{ $loginLink }}/employee-appraisal">
+                                                            <a class="" href="{{ $login_Link }}/employee-appraisal">
                                                                 Kindly visit the HRMS portal for more details
                                                             </a>
                                                         </p>

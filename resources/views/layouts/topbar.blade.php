@@ -60,9 +60,9 @@
                                 //dd($currentClientID);
                                 ?>
                                 @if (Str::contains(getCurrentClientName(), 'Vasa'))
-                                    <label for="" class="me-3 fw-bold f-12 ">Legal Entity</label>
+                                    <p for="" class=" fw-bold f-12 ">Legal Entity</p>
                                 @else
-                                    <label for="" class="me-3 fw-bold f-12 "></label>
+                                    <p for="" class=" fw-bold f-12 "></p>
                                 @endif
                                 <select id="dropdown_client" class="form-select"
                                     aria-label=".form-select-sm ">

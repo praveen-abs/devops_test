@@ -17,7 +17,7 @@ class VmtPMSMail_PublishForm extends Mailable
      * @return void
      */
     // protected $linkUri;
-    public function __construct( $approvalStatus,$user_emp_name,$appraisal_year,$appraisal_period,$user_manager_name,$command_emp,$flow_check,$loginLink)
+    public function __construct( $approvalStatus,$user_emp_name,$appraisal_year,$appraisal_period,$user_manager_name,$command_emp,$flow_check,$login_Link)
     {
         //
 
@@ -28,8 +28,8 @@ class VmtPMSMail_PublishForm extends Mailable
         $this->user_manager_name = $user_manager_name;
         $this->command_emp = $command_emp;
         $this->flow_check = $flow_check;
-        $this->loginLink    = $loginLink;
-    }
+        $this->login_Link    = $login_Link;
+    } 
 
     /**
      * Build the message.
@@ -50,7 +50,7 @@ class VmtPMSMail_PublishForm extends Mailable
 
         return $this->from($MAIL_FROM_ADDRESS,  $MAIL_FROM_NAME)
                 //SUB : Successful Update of PMS/OKR for the Period of {Month Name/ Quarter Name/ Half Year Name}
-                ->subject("Successful Update of PMS/OKR for the Period of ".$this->appraisal_period)
+                ->subject("Successful Update of PMS/OKR for the Period of ".$this->appraisal_year . " - " .$this->appraisal_period)
                 ->view($mail_template)
                 ->with('user_emp_name', $this->user_emp_name)
                 ->with('approvalStatus', $this->approvalStatus)
@@ -58,6 +58,6 @@ class VmtPMSMail_PublishForm extends Mailable
                 ->with('appraisal_period', $this->appraisal_period)
                 ->with('user_manager_name', $this->user_manager_name)
                 ->with('command_emp', $this->command_emp)
-                ->with('loginLink', $this->loginLink);
+                ->with('login_Link', $this->login_Link);
     }
 }

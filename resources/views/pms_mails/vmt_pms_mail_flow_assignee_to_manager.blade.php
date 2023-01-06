@@ -84,7 +84,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                                                                 Ms. @php echo $user_emp_name; @endphp</b> has updated his/ her OKR/Goals
                                                             for <b>@php echo $appraisal_period; @endphp </b>
                                                         </p>
-                                                        <p>Request you to Accept or Reject this OKR/PMS forms using the
+                                                        <p>Request you to Approve or Reject this OKR/PMS forms using the
                                                             buttons below.</p>
 
                                                     </td>
@@ -95,7 +95,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                                                         class="  padding-t-b_0  ">
 
                                                         <a class="" type="button"
-                                                            href="{{ $loginLink }}/team-appraisal"
+                                                            href="{{ $login_Link }}/team-appraisal"
                                                             style="text-decoration:none;cursor: pointer; margin-right:10px;color:#ffffff;padding: 7px 30px;border: 2px solid #90f10c;background: #90f10c;border-radius: 4px;font-weight:600">
                                                             Approve
                                                         </a>
@@ -104,7 +104,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                                                         class="padding-t-b_0 ">
 
                                                         <a class="" type="button"
-                                                            href="{{ $loginLink }}/team-appraisal"
+                                                            href="{{ $login_Link }}/team-appraisal"
                                                             style="text-decoration:none;cursor: pointer;margin-left:10px;color:#ffffff;padding: 7px 30px;border: 2px solid #f12d0c;background: #ff2500;border-radius: 4px;font-weight:600">
                                                             Reject
                                                         </a>
@@ -255,16 +255,16 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
 
                                                         <p class="" style="margin: 0px ">Dear <b> Mr. / Ms.
                                                                 @php echo $user_manager_name; @endphp</b></p>
-                                                        <p>This is to inform you that <b>Mr. /Mrs. @php echo $user_emp_name; @endphp
+                                                        <p>This is to inform you that <b>Mr. /Ms. @php echo $user_emp_name; @endphp
                                                             </b> has accepted his/ her OKR/ PMS forms.
                                                         </p>
                                                         <p>Request you to kindly have a “Great Conversation” with
-                                                            <b>“Mr. /Mrs. @php echo $user_emp_name; @endphp </b> and
+                                                            <b>Mr. /Ms. @php echo $user_emp_name; @endphp </b> and
                                                             Complete the OKR/PMS within the time frame.
                                                         </p>
                                                         <p>
                                                             <a class=""
-                                                                href="{{ $loginLink }}/team-appraisal">
+                                                                href="{{ $login_Link }}/team-appraisal">
                                                                 Kindly visit the HRMS portal for more details
                                                             </a>
                                                         </p>
@@ -418,7 +418,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                                                         </p>
                                                         <p>
                                                             <a class=""
-                                                                href="{{ $loginLink }}/team-appraisal">
+                                                                href="{{ $login_Link }}/team-appraisal">
                                                                 Kindly visit the HRMS portal for more details
                                                             </a>
                                                         </p>
