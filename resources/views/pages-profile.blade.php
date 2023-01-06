@@ -277,7 +277,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 col-xxl-12 d-flex">
+                                <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12  d-flex">
                                     <div class="card top-line w-100">
                                         <div class="card-body">
                                             <div class="d-flex align-items-center justify-content-between mb-2">

@@ -22,8 +22,10 @@ class AttendanceCheckinCheckoutNotifyMail extends Mailable
     protected $user_time;
     protected $image_view;
     protected $regularization_type;
+    protected $emp_avatar;
+    protected $loginLink;
 
-    public function __construct($uEmployeeName, $uEmpCode, $attendance_date, $user_time, $image_view, $regularization_type)
+    public function __construct($uEmployeeName, $uEmpCode, $attendance_date, $user_time, $image_view, $uEmp_avatar,$uLoginLink,$regularization_type)
     {
         //
         $this->employeeName  = $uEmployeeName;
@@ -31,6 +33,8 @@ class AttendanceCheckinCheckoutNotifyMail extends Mailable
         $this->attendance_date = $attendance_date;
         $this->user_time = $user_time;
         $this->image_view   = $image_view;
+        $this->emp_avatar =$uEmp_avatar;
+        $this ->loginLink =$uLoginLink;
         $this->regularization_type = $regularization_type;
     }
 
@@ -70,6 +74,8 @@ class AttendanceCheckinCheckoutNotifyMail extends Mailable
                     ->with('empCode', $this->empCode)
                     ->with('mail_message', $mail_message)
                     ->with('attendance_date', $this->attendance_date)
+                    ->with('empAvatar',$this->emp_avatar)
+                    ->with('loginLink',$this->loginLink)
                     ->with('image_view', $this->image_view);
 
         return $output;

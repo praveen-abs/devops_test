@@ -346,6 +346,27 @@ class HomeController extends Controller
         return view('vmt_topbar_settings');
     }
 
+    public function update_client_logo(Request $request){
+
+     //dd($request->all());
+     // $user = Auth::user();
+        $client_logo_update =VmtClientMaster::first();
+
+
+        $count = sizeof($request->input('client_logo'));
+        for($i=0 ; $i < $count ; $i++)
+        {
+           // $client_logo_update = new VmtClientMaster;
+
+        $client_logo_update->client_logo = $request->input('client_logo')[$i];
+
+        $client_logo_update->save();
+        }
+        return redirect()->back();
+
+
+    }
+
     public function poll_voting(Request $request) {
         $polling = PollVoting::where('user_id', auth()->user()->id)->where('polling_id', $request->id)->first();
         if ($polling) {
@@ -416,6 +437,7 @@ class HomeController extends Controller
                 //dd("adsf");
                 $VmtGeneralInfo = VmtGeneralInfo::first();
                 $image_view = url('/') . $VmtGeneralInfo->logo_img;
+                $emp_avatar = getEmployeeAvatarOrShortName(auth::user()->id);
 
                 $isSent    = \Mail::to($user_mail)->send(new AttendanceCheckinCheckoutNotifyMail(
                     auth::user()->name,
@@ -423,6 +445,8 @@ class HomeController extends Controller
                     Carbon::parse($attendance->date)->format('M jS, Y'),
                     Carbon::parse($currentTime)->format('h:i:s A'),
                     $image_view,
+                    $emp_avatar,
+                    request()->getSchemeAndHttpHost(),
                     // Carbon::parse($leave_request_date)->format('M jS Y'),
                     $regularization_type
                 ));
