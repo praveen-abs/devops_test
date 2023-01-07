@@ -11,16 +11,16 @@
 
             <div class=" text-start mb-2">
                 <span>
-                    <b>Calendar Year</b>
-                    <input type="text" name="calendar_type" id="dropdownCalender_year" readonly
-                        value="{{ $query_configPms->calendar_type }}" />
-                    {{-- <select placeholder="Select Calendar Type" style="width:auto;" aria-label=".form-select-sm example"
-                        id="dropdownCalender_year" class="form-select form-select-sm">
-                        <option name="financial_year" @if ($query_configPms->calendar_type == 'financial_year') selected @endif
-                            value="financial_year">Financial Year</option>
-                        <option name="calendar_year" @if ($query_configPms->calendar_type == 'calendar_year') selected @endif
-                            value="calendar_year">Calendar Year</option>
-                    </select> --}}
+                    <b>Calendar Year : </b>
+                    <?php
+                        if($query_configPms->calendar_type == "financial_year")
+                            echo "Financial Year";
+                        else
+                        if($query_configPms->calendar_type == "calendar_year")
+                            echo "Calendar Year";
+                        else
+                            echo "Error";
+                    ?>
                 </span>
             </div>
 
@@ -30,10 +30,15 @@
                     {{-- <input type="text" id="year" readonly value="{{ $query_configPms-> year}}" size="25" /> --}}
                     <select id="year" class="form-select form-select-sm" style="width:auto;" aria-label=".form-select-sm example">
                         @foreach($query_years as $key => $value)
-                            <option value="{{ $value }}"> {{$key}} </option>
+                            <option value="{{ $value }}"> {{$value}} </option>
                         @endforeach
                     </select>
 
+                </span>
+            </div>
+            <div class=" text-start mb-2">
+                <span>
+                    <b>Frequency : </b>{{ ucfirst($query_configPms->frequency) }}
                 </span>
             </div>
 
@@ -43,21 +48,64 @@
                     <select placeholder="Select Calendar Type" style="width:auto;" aria-label=".form-select-sm example"
                         id="dropdownAssignment_period" class="form-select form-select-sm">
                         <option value="" selected>Select</option>
-                        <option data-group="financial_year" name="Q1" value="q1">Q1 (Apr-Jun)</option>
-                        <option data-group="financial_year" name="Q2" value="q2"> Q2 (Jul-Sept)</option>
-                        <option data-group="financial_year" name="Q3" value="q3"> Q3 (Oct-Dec)</option>
-                        <option data-group="financial_year" name="Q4" value="q4"> Q4 (Jan-March)</option>
-                        <option data-group="calendar_year" name="Q1" value="q1">Q1 (Jan-March)</option>
-                        <option data-group="calendar_year" name="Q2" value="q2"> Q2 (Apr-Jun)</option>
-                        <option data-group="calendar_year" name="Q3" value="q3"> Q3 (Jul-Sept)</option>
-                        <option data-group="calendar_year" name="Q4" value="q4"> Q4 (Oct-Dec)</option>
-                        </option>
+                        @if($query_configPms->calendar_type == "financial_year")
+                            @if($query_configPms->frequency == "monthly")
+                                <option value="apr">Apr</option>
+                                <option value="may">May</option>
+                                <option value="jun">Jun</option>
+                                <option value="jul">Jul</option>
+                                <option value="aug">Aug</option>
+                                <option value="sep">Sep</option>
+                                <option value="oct">Oct</option>
+                                <option value="nov">Nov</option>
+                                <option value="dec">Dec</option>
+                                <option value="jan">Jan</option>
+                                <option value="feb">Feb</option>
+                                <option value="mar">Mar</option>
+                            @elseif($query_configPms->frequency == "quarterly")
+                                <option  name="Q1" value="q1"> Q1 (Apr-Jun)</option>
+                                <option  name="Q2" value="q2"> Q2 (Jul-Sept)</option>
+                                <option  name="Q3" value="q3"> Q3 (Oct-Dec)</option>
+                                <option  name="Q4" value="q4"> Q4 (Jan-March)</option>
+                            @elseif($query_configPms->frequency == "halfYearly")
+                                <option  name="H1" value="h1">H1 (Apr-Sept)</option>
+                                <option  name="H2" value="h2">H2 (Oct-Mar)</option>
+
+                            @elseif($query_configPms->frequency == "annually")
+                                <option name="A" value="A">A (Apr-Mar)</option>
+                            @endif
+                        @elseif($query_configPms->calendar_type == "calendar_year")
+                            @if($query_configPms->frequency == "monthly")
+                                <option value="jan">Jan</option>
+                                <option value="feb">Feb</option>
+                                <option value="mar">Mar</option>
+                                <option value="apr">Apr</option>
+                                <option value="may">May</option>
+                                <option value="jun">Jun</option>
+                                <option value="jul">Jul</option>
+                                <option value="aug">Aug</option>
+                                <option value="sep">Sep</option>
+                                <option value="oct">Oct</option>
+                                <option value="nov">Nov</option>
+                                <option value="dec">Dec</option>
+                            @elseif($query_configPms->frequency == "quarterly")
+                                <option  name="Q1" value="q1"> Q1 (Jan-March)</option>
+                                <option  name="Q2" value="q2"> Q2 (Apr-Jun)</option>
+                                <option  name="Q3" value="q3"> Q3 (Jul-Sept)</option>
+                                <option  name="Q4" value="q4"> Q4 (Oct-Dec)</option>
+                            @elseif($query_configPms->frequency == "halfYearly")
+                                <option  name="H1" value="h1">H1 (Jan-Jun)</option>
+                                <option  name="H2" value="h2">H2 (Jul-Dec)</option>
+                            @elseif($query_configPms->frequency == "annually")
+                                <option name="A" value="A">A (Jan-Dec)</option>
+                            @endif
+                        @endif
                     </select>
                 </span>
             </div>
 
 
-            <div class=" text-start mb-2">
+            {{-- <div class=" text-start mb-2">
                 <span>
                     <b>Status</b>
                     <select placeholder="Select Calendar Type" style="width:auto;" aria-label=".form-select-sm example"
@@ -67,7 +115,7 @@
                         <option value=""> Not yet Submitted</option>
                     </select>
                 </span>
-            </div>
+            </div> --}}
 
 
             <div class=" text-end mb-2">

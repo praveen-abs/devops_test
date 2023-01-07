@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ConfigPms;
 use App\Models\VmtPMS_KPIFormAssignedModel;
+use App\Models\VmtPMS_KPIFormReviewsModel;
 use Illuminate\Support\Facades\DB;
 use App\Exports\VmtPayrollReports;
 use App\Exports\VmtPmsReviewsReport;
@@ -30,19 +31,19 @@ class VmtReportsController extends Controller
     }
 
     public function showPmsReviewsReportPage(Request $request){
-        $query_configPms= ConfigPms::first();
-        //$query_years= VmtPMS_KPIFormAssignedModel::groupby('year')->get('year');
-        $query_years=  VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')->get();
+        $query_configPms= ConfigPms::first(['calendar_type','frequency']);
+        $query_years= VmtPMS_KPIFormAssignedModel::groupby('year')->pluck('year');
+
         //dd($query_years);
         //dd($query_years->value('year'));
 
-        return view('reports.vmt_showPmsReviewsReports', compact('query_configPms','query_years'));
+        return view('reports.vmt_showPmsReviewsReports', compact('query_configPms','query_years','query_configPms'));
 
     }
 
     public function generatePmsReviewsReports(Request $request){
         //$filename = 'PmsReports_'.$request->calender_type.'.xlsx';
-
+        //dd($request->all());
 
         return Excel::download(new VmtPmsReviewsReport($request->calender_type,
                                                        $request->year,

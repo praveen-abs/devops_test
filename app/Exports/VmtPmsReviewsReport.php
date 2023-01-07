@@ -148,7 +148,7 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
                         leftJoin('users','users.id', '=','vmt_pms_kpiform_reviews.assignee_id')
                         ->leftJoin('vmt_pms_kpiform_assigned','vmt_pms_kpiform_assigned.id', '=', 'vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id')
                         ->where([
-                            ['vmt_pms_kpiform_assigned.calendar_type','=',$this->calendar_type],
+                            //['vmt_pms_kpiform_assigned.calendar_type','=',$this->calendar_type],
                             ['vmt_pms_kpiform_assigned.year','=',$this->year],
                             ['vmt_pms_kpiform_assigned.assignment_period','=',$this->assignment_period],
                             //['vmt_pms_kpiform_reviews.is_assignee_submitted','=',$this->is_assignee_submitted]
