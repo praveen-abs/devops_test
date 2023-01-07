@@ -31,8 +31,11 @@ class VmtReportsController extends Controller
 
     public function showPmsReviewsReportPage(Request $request){
         $query_configPms= ConfigPms::first();
-        $query_years= VmtPMS_KPIFormAssignedModel::groupby('year')->select('year')->get();
-        print($query_years->value('year'));exit;
+        //$query_years= VmtPMS_KPIFormAssignedModel::groupby('year')->get('year');
+        $query_years=  VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')->get();
+        //dd($query_years);
+        //dd($query_years->value('year'));
+
         return view('reports.vmt_showPmsReviewsReports', compact('query_configPms','query_years'));
 
     }

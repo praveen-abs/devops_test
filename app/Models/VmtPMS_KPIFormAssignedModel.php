@@ -18,6 +18,9 @@ class VmtPMS_KPIFormAssignedModel extends Model
 
     function getAttrReviewerAcceptedStatusAttribute(){
 
+        if($this->is_reviewer_accepted == null)
+            dd("NULL at ".$this);
+
         $json_is_reviewer_accepted = $this->is_reviewer_accepted;
 
         $array = json_decode($json_is_reviewer_accepted, true);

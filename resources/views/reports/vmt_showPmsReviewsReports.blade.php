@@ -27,14 +27,11 @@
             <div class=" text-start mb-2">
                 <span>
                     <b>Year </b>
-                    <input type="text" id="year" readonly value="{{ $query_configPms-> year}}" size="25" />
-                    {{-- <select id="year" class="form-select form-select-sm" style="width:auto;" aria-label=".form-select-sm example">
-                        @foreach($query_year as $key => $value)
-                            <option value="{{ $value }}"
-                            >
-                                {{$key}}
-                            </option>
-                        @endforeach --}}
+                    {{-- <input type="text" id="year" readonly value="{{ $query_configPms-> year}}" size="25" /> --}}
+                    <select id="year" class="form-select form-select-sm" style="width:auto;" aria-label=".form-select-sm example">
+                        @foreach($query_years as $key => $value)
+                            <option value="{{ $value }}"> {{$key}} </option>
+                        @endforeach
                     </select>
 
                 </span>
