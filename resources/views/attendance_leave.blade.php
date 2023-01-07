@@ -263,6 +263,11 @@
 
             </div>
             <div class="tab-pane show " id="org_leave" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <div id="vue_OrgLeaveBalance">
+                    <Counter />
+
+                </div>
+                <h3>Hello</h3>
                 <div class="row mt-3">
                     <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12 ">
                         <div class="card mb-0 leave-history">
@@ -820,6 +825,7 @@
     </div>
 @endsection
 @section('script')
+    @vite(['resources/js/app.js'])
     <script>
         var leavetypes_array = <?php echo json_encode(getAllLeaveTypes()); ?>;
         const permissionTypeIds = {{ json_encode(getPermissionLeaveTypeIDs()) }};
