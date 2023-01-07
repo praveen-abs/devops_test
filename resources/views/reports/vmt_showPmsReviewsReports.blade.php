@@ -136,32 +136,33 @@
     <script>
         $(document).ready(function() {
 
-            let calenderType = $('#dropdownCalender_year').val()
+            let calenderType ='{{ $query_configPms->calendar_type }}';
+
 
             let year = $('#year').val();
 
-            if (calenderType == 'financial_year') {
-                document.getElementById("dropdownCalender_year").value = "Financial Year";
-                console.log("1 " + calenderType);
-                var sub = $('#dropdownAssignment_period');
+            // if (calenderType == 'financial_year') {
 
-                sub.find('option').not(':first').hide();
+            //     console.log("1 " + calenderType);
+            //     var sub = $('#dropdownAssignment_period');
 
-                $('option', sub).filter(function() {
-                    console.log("Assign Period" + calenderType);
-                    if ($(this).attr('data-group') == calenderType) {
-                        $(this).show();
+            //     sub.find('option').not(':first').hide();
 
-                    }
-                });
+            //     $('option', sub).filter(function() {
+            //         console.log("Assign Period" + calenderType);
+            //         if ($(this).attr('data-group') == calenderType) {
+            //             $(this).show();
+
+            //         }
+            //     });
 
 
-                $('#dropdownCalender_year').trigger('change');
+            //     $('#dropdownCalender_year').trigger('change');
 
-            } else if (calenderType == 'calender_year') {
-                document.getElementById("dropdownCalender_year").innerHTML = "Calender Year";
-                console.log("2" + calenderType);
-            }
+            // } else if (calenderType == 'calender_year') {
+            //     document.getElementById("dropdownCalender_year").innerHTML = "Calender Year";
+            //     console.log("2" + calenderType);
+            // }
 
 
 

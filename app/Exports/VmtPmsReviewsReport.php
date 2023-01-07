@@ -23,6 +23,7 @@ use PhpOffice\PhpSpreadsheet\Style\Border;
 
 
 
+
 class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,WithColumnWidths,WithCustomStartCell,WithEvents
 {
     /**
@@ -179,10 +180,10 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
             }
             if($singleData->calendar_type=="financial_year"){
                 $singleData->calendar_type="Financial Year";
+                $start_year=substr($singleData->year,8,4);
+                $end_year=substr($singleData->year,24,4);
                 if($singleData->frequency=='quarterly'){
                     $singleData->frequency='Quarterly';
-                    $start_year=substr($singleData->year,8,4);
-                    $end_year=substr($singleData->year,24,4);
                     if($singleData->assignment_period == "q1"){
                         $singleData->assignment_period = "Q1 (Apr-".$start_year." - Jun-".$start_year .")";
                     }
@@ -242,7 +243,16 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
 
 
                     }
-                }else if($singleData->frequency=='yearly'){
+                }else if($singleData->frequency=='halfYearly'){
+                    $singleData->frequency='Half Yearly';
+                    if($singleData->assignment_period=='h1'){
+                            $singleData->assignment_period="Apr - ".$start_year."Sept - ".$start_year;
+                    }else if($singleData->assignment_period=='h2'){
+                            $singleData->assignment_period="Oct - ".$start_year."Mar - ".$end_year;
+                    }
+                }else if($singleData->frequency=='annually'){
+                    $singleData->frequency='Annually';
+                    $singleData->assignment_period=$singleData->year;
 
                 }
 
