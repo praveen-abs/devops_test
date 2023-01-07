@@ -12,12 +12,12 @@
 @section('content')
 
     <?php
-    $logoObj = \DB::table('vmt_general_info')->first();
+    $query_clientMaster = \DB::table('vmt_client_master')->first();
 
-    if ($logoObj) {
-        $logoSrc = $logoObj->logo_img;
+    if ($query_clientMaster) {
+        $logoSrc = $query_clientMaster->client_logo;
     } else {
-        $logoSrc = 'assets/images/vasa.jpg';
+        $logoSrc = '';
     }
     //dd($logoSrc);
     ?>
@@ -94,9 +94,7 @@
                                     <form action="{{ route('login') }}" method="POST" class="login-form">
                                         <div class="d-flex align-items-center justify-content-center mb-3 ">
                                             <div class="login-top-img">
-                                                <img src="{{ URL::asset($generalInfo->logo_img) }}" alt=""
-                                                    class="">
-                                                    <!-- <img src="{{ URL::asset('assets/images/vasa.jpg') }}" alt="" class="w-100 h-100"> -->
+                                                <img src="{{ URL::asset($logoSrc) }}" alt=""  class="">
                                             </div>
                                         </div>
                                         <!-- <p class="m-0   h5 fw-bold log">Login <span class="me-1">to</span><span

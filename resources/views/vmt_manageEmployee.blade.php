@@ -121,8 +121,8 @@
                             hidden: true,
                         },
                         {
-                            id: 'emp',
-                            name: 'Employee Name',
+                            id: 'emp_avatar',
+                            name: '',
                             formatter: function formatter(empObj) {
 
                                 var emp_code = empObj.emp_code;
@@ -146,13 +146,13 @@
                                 var html_image_tag = '<img data-emp_code="' + emp_code +
                                     '" data-emp_name="' + emp_name + '" id="img_' + emp_code +
                                     '" class="h-10 w-10"  alt=" " src="' + imagePath + '" />';
-                                var html_empname = emp_name;
-                                // var htmlContent = '<dv id="span_'+emp_code+'">'+html_image_tag+'</dv> &nbsp;&nbsp;'+html_empname;
+
+
                                 var htmlContent =
                                     '<div class="d-flex align-items-center page-header-user-dropdown" style="width:max-content;">' +
                                     '<div id="span_' + emp_code +
                                     '" class="rounded-circle user-profile  me-1">' +
-                                    html_image_tag + '</div>' + html_empname + '</div>';
+                                    html_image_tag + '</div></div>';
 
                                 $('#img_' + emp_code).on('error', function() {
 
@@ -170,6 +170,18 @@
 
                                 return gridjs.html(htmlContent);
                             }
+                        },
+                        {
+                            id:'emp_name',
+                            name:'Employee Name',
+                            formatter: function formatter(emp_name) {
+
+                                var htmlContent =
+                                    '<div class="d-flex align-items-center page-header-user-dropdown" style="width:max-content;">' + emp_name + '</div>';
+
+                                return gridjs.html(htmlContent);
+                            }
+
                         },
                         {
                             id: 'emp_code',
@@ -298,6 +310,7 @@
                             emp => [
                                 emp.user_id,
                                 emp,
+                                emp.emp_name,
                                 emp.emp_code,
                                 emp.emp_designation,
                                 emp, //L1 manager code
@@ -328,7 +341,7 @@
                         },
                         {
                             id: 'emp',
-                            name: 'Employee Name',
+                            name: '',
                             formatter: function formatter(empObj) {
 
                                 var emp_code = empObj.emp_code;
@@ -357,7 +370,7 @@
                                     '<div class="d-flex align-items-center page-header-user-dropdown" style="width:max-content;">' +
                                     '<div id="span_' + emp_code +
                                     '" class="rounded-circle user-profile  me-1">' +
-                                    html_image_tag + '</div>' + html_empname + '</div>';
+                                    html_image_tag + '</div></div>';
 
                                 $('#img_' + emp_code).on('error', function() {
 
@@ -375,6 +388,18 @@
 
                                 return gridjs.html(htmlContent);
                             }
+                        },
+                        {
+                            id:'emp_name',
+                            name:'Employee Name',
+                            formatter: function formatter(emp_name) {
+
+                                var htmlContent =
+                                    '<div class="d-flex align-items-center page-header-user-dropdown" style="width:max-content;">' + emp_name + '</div>';
+
+                                return gridjs.html(htmlContent);
+                            }
+
                         },
                         {
                             id: 'emp_code',
@@ -469,6 +494,7 @@
                             emp => [
                                 emp.user_id,
                                 emp,
+                                emp.emp_name,
                                 emp.emp_code,
                                 emp.emp_designation,
                                 emp,

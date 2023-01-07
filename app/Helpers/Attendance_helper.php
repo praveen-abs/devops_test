@@ -41,6 +41,22 @@ function getPermissionLeaveTypeIDs(){
     return VmtLeaves::where('leave_type','like','%Permission%')->pluck('id');
 }
 
+// Check whether the given ID is permission or leave type
+function isPermissionLeaveType($id){
+    $type = VmtLeaves::where('id', $id)->where('leave_type', 'like', '%Permission%');
+
+    if ($type->exists())
+        return true;
+    else
+        return false;
+}
+
+
+function getAllLeaveTypes()
+{
+    return VmtLeaves::all(['id','leave_type']);
+}
+
 /*
     Based on user_time, return LC/EG
     TODO : In Future, add $shift_type parameter
