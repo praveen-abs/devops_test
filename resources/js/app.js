@@ -14,7 +14,7 @@ import Row from 'primevue/row';                     //optional for row
 
 import HRMSApp from '@/hrms/HRMSApp.vue'
 import Counter from '@/hrms/components/Counter.vue'
-import ButtonCounter from '@/hrms/modules/leave_module/ButtonCounters.vue'
+import ButtonCounter from '@/hrms/modules/leave_module/ButtonCounter.vue'
 import OrgLeaveBalanceTable from '@/hrms/modules/leave_module/OrgLeaveBalanceTable.vue'
 
 const app = createApp({});
@@ -28,8 +28,8 @@ app.use(PrimeVue);
 // app.component('Row', Row);
 
 // app.component('OrgLeaveBalanceTable', OrgLeaveBalanceTable);
-app.component('ButtonCounter', ButtonCounter);
 app.component('Counter', Counter);
+app.component('ButtonCounter', ButtonCounter);
 
 // app.component('Localcomp', LocalCompTest);
 

@@ -264,6 +264,7 @@
             </div>
             <div class="tab-pane show " id="org_leave" role="tabpanel" aria-labelledby="pills-profile-tab">
                 <div id="vue_OrgLeaveBalance">
+                    <ButtonCounter />
                     <Counter />
 
                 </div>
