@@ -1,3 +1,12 @@
+@extends('layouts.master')
+@section('title')
+    @lang('translation.settings')
+@endsection
+@section('css')
+    <link rel="stylesheet" href="{{ URL::asset('/assets/css/pages_profile.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('/assets/css/payCheck.css') }}">
+@endsection
+@section('content')
 
     {{-- <?php
     $logoObj = \DB::table('vmt_general_info')->first();
@@ -1431,8 +1440,23 @@
                                                 </th>
                                                 <th>
                                                     Action
-                                                </th>
-
+                                                </th> 
+                                                <tbody>
+                                                     
+                                    
+                                                                </tbody>
+                                                            </table>
+                                    
+                                                        </div>
+                                    
+                                                    </div>
+                                                </div>
+                                                </form>
+                                            </div>
+                                    
+                                                                {{-- <img src='{{ URL::asset('svg_icon_pending') }}' alt='view' title='view' class='icon'>  --}}
+                                                            
+                                                        </td>
                                             </thead>
                                             <tbody>
                                                 <tr>
