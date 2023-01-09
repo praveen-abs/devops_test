@@ -547,7 +547,7 @@
 
                                                 <select name="" id="leave_type_id"
                                                     class="form-select outline-none">
-                                                    <option value="" hidden selected disabled>Select Leave Type
+                                                    <option value="" selected>Select Leave Type
                                                     </option>
 
                                                     @foreach ($leaveTypes as $singleLeaveType)
@@ -841,13 +841,22 @@
         $('.close-modal').on('click', function() {
             $('#error_notify').fadeOut(100);
 
-        })
+        });
 
 
         function resetLeaveModalValues() {
 
+            //Reset leave dropdown
+            $('#leave_type_id').prop('selectedIndex',0);
+
             leave_start_date = '';
             leave_end_date = '';
+            let currentDate = new Date().toJSON().slice(0,10);
+
+            $('#start_date').attr('type','datetime-local');
+            $('#start_date').attr("min",currentDate+"T09:00:00");
+            $('#end_date').attr('type','datetime-local');
+            $('#start_date').attr("min",currentDate+"T09:00:00");
             $('#start_date').val('');
             $('#end_date').val('');
             $('#leave_reason').val('');
@@ -865,6 +874,37 @@
                 width: '100%'
             });
 
+
+            //When start_date is chosen, then restrict end_date
+            $('#start_date').change(function (){
+                //let selectedStartDate = $('#start_date').attr("min",currentDate+"T09:00:00");
+                //let currentDate = new Date().toJSON().slice(0,10);
+
+                let selectedLeaveTypeID = $('#leave_type_id').find(":selected").val();
+
+                if (permissionTypeIds.includes(parseInt(selectedLeaveTypeID)))
+                {
+                    let endDate_time = new Date($('#start_date').val());
+                    endDate_time.setHours(endDate_time.getHours() + 1);   //add one hour to start date
+                    endDate_time = moment(endDate_time).format('YYYY-MM-DDTHH:mm');
+                    console.log("Enddate_time : "+endDate_time);
+
+                   // $('#end_date').attr("min",endDate_time);
+                    $('#end_date').val(endDate_time);
+
+                    $('#total_permission_hours').html(1);
+                }
+                else
+                {
+                    $('#end_date').attr("min",$('#start_date').val());
+                    $('#end_date').val($('#start_date').val());
+
+                    $('#total_leave_days').html(1); // Set one day as default
+                }
+
+                console.log("Start Date selected : "+$('#start_date').val());
+
+            });
 
             //When Leave dates are changed
             $('.leave_date').on('change', function() {
@@ -907,7 +947,7 @@
                 console.log("permissionTypeIds: "+permissionTypeIds);
 
                 if (permissionTypeIds.includes(parseInt(selectedPermissionTypeID))){
-                    //If permission selected, then show only date in Start and End data dropdown w/o time
+                    //If permission selected, then show date & time in Start and End date dropdown
                     $('#start_date').attr('type','datetime-local');
                     $('#end_date').attr('type','datetime-local');
                     $('#div_totaldays').hide();
@@ -1047,7 +1087,7 @@
                 }
 
                 $.ajax({
-                    url: "{{ url('attendance-applyleave') }}",
+                    url: "{{ route('attendance-applyleave') }}",
                     type: "POST",
                     dataType: "json",
                     data: {
