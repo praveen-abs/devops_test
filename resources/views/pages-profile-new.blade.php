@@ -50,6 +50,9 @@
                                 </div>
                                 <div class="mt-4">
                                     <div class="progress-wrapper border-bottom-liteAsh ">
+                                        <div class="mb-1 text-center">
+                                            <h6 class="text-center">{{ $user->name }}</h6>
+                                        </div>
                                         <div class="mb-1 d-flex justify-content-between ">
                                             <span class="text-muted f-12">Profile Completeness</span>
                                             <span class="text-muted text-end f-12 fw-bold">
@@ -89,7 +92,7 @@
                                         </div>
                                     </div>
                                     <div class="profile-bottom-right-content  text-center ">
-                                        <button class="btn btn-danger"><i class="fa fa-sign-out me-2"></i> Logout </button>
+                                        {{-- <button class="btn btn-danger"><i class="fa fa-sign-out me-2"></i> Logout </button> --}}
                                     </div>
                                 </div>
                             </div>

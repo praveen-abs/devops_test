@@ -267,11 +267,11 @@
                         {
                             id: 'emp_code',
                             name: 'Edit',
-                            formatter: function formatter(user_id) {
+                            formatter: function formatter(enc_user_id) {
 
-                                var routeURL = "{{ route('pages_impersonate_profile', '') }}" +
-                                    "/" +
-                                    user_id;
+                                var routeURL = "{{ route('pages-profile-new') }}"+"/"+enc_user_id;
+                                //routeURL.replace(':user_id',user_id);
+                                //console.log("User URL : "+routeURL);
 
                                 var htmlcontent = '<a href="' + routeURL +
                                     '" class="btn border-0 outline-none bg-transparent p-0  mx-1"><i class="ri-pencil-line text-orange fw-bold"></i></a>';
@@ -320,7 +320,7 @@
                                 emp.profile_completeness,
                                 emp.is_onboarded,
                                 emp.is_docs_approved,
-                                emp.user_id,
+                                emp.enc_user_id,
                                 emp,
                             ]
                         )
@@ -464,7 +464,7 @@
 
                                 var routeURL = "{{ route('pages-profile-new') }}"+"/"+enc_user_id;
                                 //routeURL.replace(':user_id',user_id);
-                                console.log("User URL : "+routeURL);
+                                //console.log("User URL : "+routeURL);
 
                                 var htmlcontent = '<a href="' + routeURL +
                                     '" class="btn border-0 outline-none bg-transparent p-0  mx-1"><i class="ri-pencil-line text-orange fw-bold"></i></a>';

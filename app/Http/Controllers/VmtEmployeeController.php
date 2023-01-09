@@ -1075,7 +1075,9 @@ class VmtEmployeeController extends Controller
         //Add reporting manager name
         foreach($query_vmtEmployees as $singleEmp)
         {
-            $singleEmp['reporting_manager_name']= User::where('user_code',$singleEmp->l1_manager_code)->value('name');
+            $singleEmp['enc_user_id'] = Crypt::encryptString($singleEmp['user_id']);
+            unset($singleEmp['user_id']);
+            $singleEmp['reporting_manager_name'] = User::where('user_code',$singleEmp->l1_manager_code)->value('name');
         }
 
         return json_encode($query_vmtEmployees);
