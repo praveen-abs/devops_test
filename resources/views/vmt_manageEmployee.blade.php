@@ -1,3 +1,4 @@
+<?php use Illuminate\Support\Facades\Crypt; ?>
 @extends('layouts.master')
 @section('title')
     @lang('translation.projects')
@@ -459,10 +460,11 @@
                         {
                             id: 'emp_code',
                             name: 'Edit',
-                            formatter: function formatter(user_id) {
+                            formatter: function formatter(enc_user_id) {
 
-                                var routeURL = "{{ route('pages_impersonate_profile', '') }}" +
-                                    "/" + user_id;
+                                var routeURL = "{{ route('pages-profile-new') }}"+"/"+enc_user_id;
+                                //routeURL.replace(':user_id',user_id);
+                                console.log("User URL : "+routeURL);
 
                                 var htmlcontent = '<a href="' + routeURL +
                                     '" class="btn border-0 outline-none bg-transparent p-0  mx-1"><i class="ri-pencil-line text-orange fw-bold"></i></a>';
@@ -501,7 +503,7 @@
                                 emp.doj,
                                 emp.blood_group_id,
                                 emp.profile_completeness,
-                                emp.user_id,
+                                emp.enc_user_id,
                             ]
                         )
                     },

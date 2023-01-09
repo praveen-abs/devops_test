@@ -17,8 +17,12 @@ use Illuminate\Support\Facades\Session;
 use App\Models\VmtEmployeeFamilyDetails;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtEmployeeStatutoryDetails;
+use App\Models\VmtEmployeePaySlip;
+use App\Imports\VmtPaySlip;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Crypt;
 
  class VmtProfilePagesController extends Controller
 {
@@ -135,6 +139,119 @@ use Illuminate\Support\Facades\Validator;
         return redirect()->back();
     }
 
+
+    public function paySlip(Request $request){
+
+
+        $data =  DB::table('vmt_employee_payslip')
+        ->where('vmt_employee_payslip.user_id', auth()->user()->id)->orderBy('PAYROLL_MONTH', 'DESC')
+        ->get();
+
+        if($data->count()!=0)
+        {
+            $compensatory =  Compensatory::where('user_id', auth()->user()->id)->first();
+            $result['CTC'] = 0;
+            $result['TOTAL_EARNED_GROSS'] = 0;
+            $result['TOTAL_DEDUCTIONS'] = 0;
+            $result['BASIC'] = 0;
+            $result['HRA'] = 0;
+            $result['TOTAL_FIXED_GROSS'] = 0;
+            $result['EPFR'] = 0;
+            $result['TOTAL_PF_WAGES'] = 0;
+
+            if ($data && $data[0]) {
+                $result['CTC'] = $data[0]->CTC;
+                $result['TOTAL_EARNED_GROSS'] = $data[0]->TOTAL_EARNED_GROSS;
+                $result['TOTAL_DEDUCTIONS'] = $data[0]->TOTAL_DEDUCTIONS;
+                $result['BASIC'] = $data[0]->BASIC;
+                $result['HRA'] = $data[0]->HRA;
+                $result['TOTAL_FIXED_GROSS'] = $data[0]->TOTAL_FIXED_GROSS;
+                $result['EPFR'] = $data[0]->EPFR;
+
+                $result['BASIC'] = $data[0]->BASIC;
+                $result['HRA'] = $data[0]->HRA;
+                $result['NET_TAKE_HOME'] = $data[0]->NET_TAKE_HOME;
+                $result['PAYROLL_MONTH'] = $data[0]->PAYROLL_MONTH;
+            }
+            foreach($data as $d) {
+                $result['TOTAL_PF_WAGES'] += $d->PF_WAGES;
+            }
+
+            return view('pages-profile-new', compact('data', 'result', 'compensatory'));
+
+        }
+        else
+        {
+            return view('vmt_nodata_salaryDetails');
+
+        }
+    }
+
+    public function payslipPdfView(Request $request){
+        //    dd("asd");
+ 
+         //dd($request);
+         $data['employee'] = VmtEmployeePaySlip::where([
+                         ['user_id','=', auth()->user()->id],
+                         ['PAYROLL_MONTH','=', $request->selectedPaySlipMonth],
+                         ])->first();
+ 
+         $data['employee_name'] = auth()->user()->name;
+         $data['employee_office_details'] = VmtEmployeeOfficeDetails::where('user_id',auth()->user()->id)->first();
+         $data['employee_details'] = VmtEmployee::where('userid',auth()->user()->id)->first();
+         $data['employee_statutory_details'] = VmtEmployeeStatutoryDetails::where('user_id',auth()->user()->id)->first();
+ 
+ 
+         //TODO : Need to show client specific payslip template.
+ 
+         $processed_clientName = strtolower(str_replace(' ', '', sessionGetSelectedClientName()));
+ 
+         //$html =  view('vmt_payslipTemplate', $data);
+         $html =  view('vmt_payslip_templates.template_payslip_'.$processed_clientName, $data);
+ 
+         return $html;
+     }
+     public function payslipView(Request $request){
+        $employees = VmtEmployeePaySlip::select('EMP_NO','EMP_NAME')->get();
+        return view('pages-profile-new', compact('employees'));
+    }
+
+    public function pdfview(Request $request)
+    {
+        if($request->emp_code != auth()->user()->user_code)
+           // dd("Payslip View : You are not authorized to access this resource");
+
+        $month = $request->selectedPaySlipMonth;
+        $data['employee'] = VmtEmployeePaySlip::where([
+            ['user_id','=', auth()->user()->id],
+            ['PAYROLL_MONTH','=', $request->selectedPaySlipMonth],
+            ])->first();
+
+        // $data['employee_name'] = auth()->user()->name;
+        // $data['designation'] = VmtEmployeeOfficeDetails::where('user_id',auth()->user()->id)->value('designation');
+        // $data['employee_details'] = VmtEmployee::where('userid',auth()->user()->id)->first();
+
+        $data['employee_name'] = auth()->user()->name;
+        $data['employee_office_details'] = VmtEmployeeOfficeDetails::where('user_id',auth()->user()->id)->first();
+        $data['employee_details'] = VmtEmployee::where('userid',auth()->user()->id)->first();
+        $data['employee_statutory_details'] = VmtEmployeeStatutoryDetails::where('user_id',auth()->user()->id)->first();
+
+        $processed_clientName = strtolower(str_replace(' ', '', sessionGetSelectedClientName()));
+        $view = view('vmt_payslip_templates.template_payslip_'.$processed_clientName, $data);
+
+       // $view = view('vmt_payslipTemplate', $data);
+
+        $html = $view->render();
+        $html = preg_replace('/>\s+</', "><", $html);
+        $pdf = PDF::loadHTML($html)->setPaper('a4', 'portrait')->setWarnings(false);
+
+        return $pdf->download(auth()->user()->id."_".$month."_Payslip.pdf");
+        //   return  PDF::loadView('vmt_payslipTemplate', $data)->download($month.'Payslip.pdf');
+
+    }
+
+ 
+
     public function updateStatutoryInfo(Request $request){
 
         $statutory= VmtEmployeeStatutoryDetails ::where('user_id',$request->id)->first();
@@ -181,7 +298,17 @@ use Illuminate\Support\Facades\Validator;
 
     // Show Profile info
     public function showProfilePage(Request $request){
-        $user = Auth::user();
+
+        $user = auth()->user();
+
+        //$user = Auth::user();
+        if(!empty($request->user_id))
+        {
+           $user = User::find(Crypt::decryptString($request->user_id));
+           //dd("Enc User details from request : ".$user);
+        }
+
+        //dd($user);
         $user_full_details = User::leftjoin('vmt_employee_details','vmt_employee_details.userid', '=', 'users.id')
                         ->leftjoin('vmt_employee_office_details','vmt_employee_office_details.user_id', '=', 'users.id')
                         ->where('users.id', $user->id)->first();
@@ -210,7 +337,15 @@ use Illuminate\Support\Facades\Validator;
         $allEmployees = User::where('user_code','<>',$user->id)->where('active',1)->get(['user_code','name']);
         $profileCompletenessValue  = calculateProfileCompleteness($user->id);
 
-        return view('pages-profile-new', compact('user','allEmployees', 'maritalStatus','genderArray','user_full_details', 'familydetails', 'exp', 'reportingManager','profileCompletenessValue','bank'));
+        //Payslip Tab
+        $data =  DB::table('vmt_employee_payslip')
+        ->where('vmt_employee_payslip.user_id', $user->id)->orderBy('PAYROLL_MONTH', 'DESC')
+        ->get();
+        $employees = VmtEmployeePaySlip::select('EMP_NO','EMP_NAME')->get();
+       
+
+
+        return view('pages-profile-new', compact('user','allEmployees', 'maritalStatus','genderArray','user_full_details', 'familydetails', 'exp', 'reportingManager','profileCompletenessValue','bank','data','employees'));
     }
 
     

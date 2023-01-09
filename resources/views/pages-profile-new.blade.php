@@ -1,3 +1,5 @@
+<?php use Carbon\Carbon; ?>
+
 @extends('layouts.master')
 @section('title')
     @lang('translation.settings')
@@ -354,6 +356,101 @@
                             </div>
                         </div>
                     </div>
+
+
+                    {{-- paycheck --}}
+
+
+             <div class="tab-pane fade" id="paycheck_det" role="tabpanel" aria-labelledby="">
+                    <div class="card">
+                        <div>
+
+                            <div id="paycheck_det" class="ember-view">
+                                <div class="fill body p-0 payslip-list-body scroll scroll-x scroll-y scrollbox ">
+                                    <table class="table zp-table paystub-table">
+                                        <thead class="fw-bold text-muted h5">
+                                            <tr>
+                                                <th width="">Month</th>
+                                                <th width="">Gross Pay</th>
+                                                <th width="">Reimbursements</th>
+                                                <th width="">Deductions</th>
+                                                <th width="">Take Home</th>
+                                                <th width="" class="text-capitalize">payslip</th>
+                                                <th width="">Tax Worksheet</th>
+                                                <th width="">Action</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            
+                                            @foreach ($data  as $d)
+                                                <tr data-ember-action="" data-ember-action-131="131">
+                                                    <td>
+                                                        <a href="#/salary-details/payslips/335214000001040001/details"
+                                                            id="ember132" class="ember-view text-secondary">
+                                                            {{ Carbon::parse($d->PAYROLL_MONTH)->format('M-y') }}
+                                                        </a>
+
+                                                        <span class="status-label">
+                                                            <!---->
+                                                        </span>
+                                                    </td>
+                                                    <td>₹{{ $d->TOTAL_EARNED_GROSS }}
+                                                    </td>
+                                                    <td>₹0.00</td>
+                                                    <td>₹{{ $d->TOTAL_DEDUCTIONS }}</td>
+                                                    <td>₹{{ $d->NET_TAKE_HOME }}</td>
+                                                    <td>
+                                                        <div data="{{ $d->PAYROLL_MONTH }}"
+                                                            data-url="{{ route('vmt_employee_payslip') }}"
+                                                            style="cursor: pointer"
+                                                            class="ember-view  paySlipView text-info">
+                                                            View
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <a href="#/salary-details/payslips/335214000001040001/details?isPayslip=false"
+                                                            id="ember134" class="ember-view  text-info">
+                                                            View
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        @php
+
+                                                            $selectedPaySlipMonth = $d->PAYROLL_MONTH;
+                                                        @endphp
+                                                        <a href="{{ url('pdfview/' . strtoupper($d->EMP_NO) . '/' . strtoupper($selectedPaySlipMonth)) }}"
+                                                            class="text-info">Download</a>
+
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="payslipModal" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content profile-box">
+                            <div class="modal-header  ">
+                                <h6 class="modal-title m-0 p-0   text-primary">Pay Slip
+                                </h6>
+                                <button type="button" class="close  border-0 h3" data-bs-dismiss="modal"
+                                    aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div id="slipAfterView">
+                                     </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                       
                     <div class="tab-pane fade" id="paycheck_det" role="tabpanel" aria-labelledby="">
                     </div>
                     <div class="tab-pane fade" id="finance_det" role="tabpanel" aria-labelledby="">
@@ -2640,6 +2737,29 @@
                      });
                 });
              });
+
+
+             $(document).ready(function() {
+            $('.paySlipView').on('click', function() {
+                var url = $(this).attr('data-url');
+                var t_paySlipMonth = $(this).attr('data');
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    data: {
+                        selectedPaySlipMonth: t_paySlipMonth
+                    },
+                    success: function(data) {
+                        var content =
+                            '<div class="row " style=""><div class=""><div class="fill body payslip-filter-pdf mb-4"> <i class="icon icon-blue icon-xlg vertical-align-text-bottom text-secondary ri-filter-2-fill"> </i> <div class="dropdown cursor-pointer payslip-dropdown"><div id="ember127" class="ember-view"><div class="dropdown-toggle" data-toggle="dropdown"><span>Financial Year : </span><span class="font-semibold fw-bold text-dark h5">2022 - 23</span><span class="caret "></span></div><ul class="dropdown-menu dropdown-menu-right"><li data-ember-action="" data-ember-action-129="129"><a>2022 - 23</a></li> </ul></div></div></div></div><div class="">' +
+                            data + '</div></div>';
+                        $("#slipAfterView").html(content);
+                        $('#payslipModal').modal('show');
+                        console.log("Clicked View ");
+                    }
+                });
+            });
+        });
         
     </script>
 @endsection
