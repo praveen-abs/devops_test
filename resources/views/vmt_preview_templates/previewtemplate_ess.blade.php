@@ -137,7 +137,6 @@
     <div class="template-wrapper mt-30">
         <div class="card  left-line mb-2 ">
             <div class="card-body pb-0 pt-1">
-
                 <ul class="nav nav-pills    nav-tabs-dashed" id="pills-tab" role="tablist">
                     <li class="nav-item active ember-view me-4" role="presentation">
                         <a class="nav-link active ember-view " id="pills-home-tab" data-bs-toggle="pill" href=""
@@ -148,7 +147,6 @@
                         <a class="nav-link ember-view" id="payslips-tab" data-bs-toggle="pill" data-bs-target="#payslips"
                             type="button" role="tab" aria-controls="payslips" aria-selected="false">Pay Slip</a>
                     </li>
-
                 </ul>
 
             </div>
