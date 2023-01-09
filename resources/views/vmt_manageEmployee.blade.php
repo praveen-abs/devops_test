@@ -4,36 +4,61 @@
 @endsection
 @section('css')
     <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/employee-directory.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('assets/libs/gridjs/gridjs.min.css') }}">
 @endsection
 
 
 @section('content')
-    {{-- @component('components.organization_breadcrumb')
-        @slot('li_1')
-        @endslot
-    @endcomponent --}}
+    <div class="manage_employee-wrapper mt-30">
+        <div class="card  left-line mb-3">
+            <div class="card-body px-2 pb-1 pt-2">
+                <div class="row">
+                    <div class="col-6 d-flex align-items-center">
+                        <ul class="nav nav-pills nav-tabs-dashed" role="tablist">
+                            <li class="nav-item text-muted me-5" role="presentation">
+                                <a class="nav-link active pb-2" data-bs-toggle="tab" href="#active_employees"
+                                    aria-selected="true" role="tab">
+                                    Active Employees
+                                </a>
+                            </li>
+                            <li class="nav-item text-muted" role="presentation">
+                                <a class="nav-link  pb-2" data-bs-toggle="tab" href="#not_active_employees" aria-selected="true"
+                                    role="tab">
+                                    Yet To Active Employees
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane show fade active" id="active_employees" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <div class="card">
+                    <div class="card-body">
+
+                        {{-- <h6 class="text-muted fw-bold">Active Employees</h6> --}}
+                        <div id="active-directory-table" class="noCustomize_gridjs"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane  fade " id="not_active_employees" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <div class="card ">
+                    <div class="card-body">
+                        {{-- <h6 class="text-muted fw-bold">Yet to Active Employees</h6> --}}
 
 
-    <div class="card mt-30">
-        <div class="card-body">
-            <h6 class="text-muted fw-bold">Yet to Active Employees</h6>
+
+                        <div id="yet-to-active-directory-table" class="noCustomize_gridjs"></div>
 
 
-
-            <div id="yet-to-active-directory-table" class="noCustomize_gridjs"></div>
-
-
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="card">
-        <div class="card-body">
 
-            <h6 class="text-muted fw-bold">Active Employees</h6>
-            <div id="active-directory-table" class="noCustomize_gridjs"></div>
-        </div>
-    </div>
+
 @endsection
 
 @section('script')
@@ -96,8 +121,8 @@
                             hidden: true,
                         },
                         {
-                            id: 'emp',
-                            name: 'Employee Name',
+                            id: 'emp_avatar',
+                            name: '',
                             formatter: function formatter(empObj) {
 
                                 var emp_code = empObj.emp_code;
@@ -121,13 +146,13 @@
                                 var html_image_tag = '<img data-emp_code="' + emp_code +
                                     '" data-emp_name="' + emp_name + '" id="img_' + emp_code +
                                     '" class="h-10 w-10"  alt=" " src="' + imagePath + '" />';
-                                var html_empname = emp_name;
-                                // var htmlContent = '<dv id="span_'+emp_code+'">'+html_image_tag+'</dv> &nbsp;&nbsp;'+html_empname;
+
+
                                 var htmlContent =
                                     '<div class="d-flex align-items-center page-header-user-dropdown" style="width:max-content;">' +
                                     '<div id="span_' + emp_code +
                                     '" class="rounded-circle user-profile  me-1">' +
-                                    html_image_tag + '</div>' + html_empname + '</div>';
+                                    html_image_tag + '</div></div>';
 
                                 $('#img_' + emp_code).on('error', function() {
 
@@ -147,6 +172,18 @@
                             }
                         },
                         {
+                            id:'emp_name',
+                            name:'Employee Name',
+                            formatter: function formatter(emp_name) {
+
+                                var htmlContent =
+                                    '<div class="d-flex align-items-center page-header-user-dropdown" style="width:max-content;">' + emp_name + '</div>';
+
+                                return gridjs.html(htmlContent);
+                            }
+
+                        },
+                        {
                             id: 'emp_code',
                             name: 'Employee Code',
                         },
@@ -158,8 +195,9 @@
                             id: 'emp',
                             name: 'Reporting Manager',
                             formatter: function formatter(emp) {
-                                if(emp.l1_manager_code)
-                                    return gridjs.html(emp.l1_manager_code.toUpperCase()+" - "+emp.reporting_manager_name);
+                                if (emp.l1_manager_code)
+                                    return gridjs.html(emp.l1_manager_code.toUpperCase() + " - " +
+                                        emp.reporting_manager_name);
                                 else
                                     return gridjs.html('');
 
@@ -230,7 +268,8 @@
                             name: 'Edit',
                             formatter: function formatter(user_id) {
 
-                                var routeURL = "{{ route('pages_impersonate_profile', '') }}" + "/" +
+                                var routeURL = "{{ route('pages_impersonate_profile', '') }}" +
+                                    "/" +
                                     user_id;
 
                                 var htmlcontent = '<a href="' + routeURL +
@@ -271,9 +310,10 @@
                             emp => [
                                 emp.user_id,
                                 emp,
+                                emp.emp_name,
                                 emp.emp_code,
                                 emp.emp_designation,
-                                emp,//L1 manager code
+                                emp, //L1 manager code
                                 emp.doj,
                                 emp.blood_group_id,
                                 emp.profile_completeness,
@@ -301,7 +341,7 @@
                         },
                         {
                             id: 'emp',
-                            name: 'Employee Name',
+                            name: '',
                             formatter: function formatter(empObj) {
 
                                 var emp_code = empObj.emp_code;
@@ -330,7 +370,7 @@
                                     '<div class="d-flex align-items-center page-header-user-dropdown" style="width:max-content;">' +
                                     '<div id="span_' + emp_code +
                                     '" class="rounded-circle user-profile  me-1">' +
-                                    html_image_tag + '</div>' + html_empname + '</div>';
+                                    html_image_tag + '</div></div>';
 
                                 $('#img_' + emp_code).on('error', function() {
 
@@ -350,6 +390,18 @@
                             }
                         },
                         {
+                            id:'emp_name',
+                            name:'Employee Name',
+                            formatter: function formatter(emp_name) {
+
+                                var htmlContent =
+                                    '<div class="d-flex align-items-center page-header-user-dropdown" style="width:max-content;">' + emp_name + '</div>';
+
+                                return gridjs.html(htmlContent);
+                            }
+
+                        },
+                        {
                             id: 'emp_code',
                             name: 'Employee Code',
                         },
@@ -361,8 +413,9 @@
                             id: 'emp',
                             name: 'Reporting Manager',
                             formatter: function formatter(emp) {
-                                if(emp.l1_manager_code)
-                                    return gridjs.html(emp.l1_manager_code.toUpperCase()+" - "+emp.reporting_manager_name);
+                                if (emp.l1_manager_code)
+                                    return gridjs.html(emp.l1_manager_code.toUpperCase() + " - " +
+                                        emp.reporting_manager_name);
                                 else
                                     return gridjs.html('');
 
@@ -441,6 +494,7 @@
                             emp => [
                                 emp.user_id,
                                 emp,
+                                emp.emp_name,
                                 emp.emp_code,
                                 emp.emp_designation,
                                 emp,

@@ -1,12 +1,3 @@
-@extends('layouts.master')
-@section('title')
-    @lang('translation.settings')
-@endsection
-@section('css')
-    <link rel="stylesheet" href="{{ URL::asset('/assets/css/pages_profile.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('/assets/css/payCheck.css') }}">
-@endsection
-@section('content')
 
     {{-- <?php
     $logoObj = \DB::table('vmt_general_info')->first();

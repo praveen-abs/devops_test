@@ -100,6 +100,8 @@ table.rating_table tbody {
 }
 table.rating_table tr:first-child th:first-child {
     border-top: 1px solid #002f56;
+    border-left: 1px solid #002f56;
+    border-right: 1px solid #002f56;
     border-radius: 0;
 }
 table.rating_table tr:last-child th:first-child {
@@ -189,9 +191,9 @@ table.kpi_appraisal-table tr td{
     vertical-align:top;
 }
 
-table.kpi_appraisal-table tr:nth-child(1n) td:nth-child(2) {
+/* table.kpi_appraisal-table tr:nth-child(1n) td:nth-child(2) {
     text-align: initial ;
-}
+} */
 .accordion {
     background-color: #eee;
     color: #444;

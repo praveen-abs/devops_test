@@ -34,6 +34,7 @@ use App\Models\VmtEmployeeOfficeDetails;
 use App\Mail\PMSReviewCompleted;
 use App\Models\VmtPraise;
 use App\Http\Controllers\VmtEmployeeController;
+use App\Models\VmtClientMaster;
 use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
@@ -91,33 +92,42 @@ class VmtMainDashboardController extends Controller
 
         }
 
-        $employeesEventDetails = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
-                                ->join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
-                                ->select(
-                                    'users.id',
-                                    'users.name',
-                                    'users.avatar',
-                                    'vmt_employee_details.emp_no',
-                                    'vmt_employee_office_details.designation',
-                                    'vmt_employee_details.dob',
-                                    'vmt_employee_details.doj'
-                                )
-                                ->where('users.is_ssa','=','0')
-                                ->where('users.active','=','1')
-                                ->where('users.is_onboarded','=','1')
-                                ->whereNotNull('vmt_employee_details.doj')
-                                ->whereNotNull('vmt_employee_details.dob');
-
-    //    dd($employeesEventDetails->get('vmt_employee_details.dob')->toArray());
+        $employeesEventDetails = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+            ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+            ->select(
+                'users.id',
+                'users.name',
+                'users.avatar',
+                'vmt_employee_details.emp_no',
+                'vmt_employee_office_details.designation',
+                'vmt_employee_details.dob',
+                'vmt_employee_details.doj'
+            )
+            ->where('users.is_ssa', '=', '0')
+            ->where('users.active', '=', '1')
+            ->where('users.is_onboarded', '=', '1')
+            ->whereNotNull('vmt_employee_details.doj')
+            ->whereNotNull('vmt_employee_details.dob');
 
         //Employee events for the current month only
         $dashboardEmployeeEventsData = [];
-        $dashboardEmployeeEventsData['birthday'] = $employeesEventDetails->get();
-        $dashboardEmployeeEventsData['work_anniversary'] = $employeesEventDetails->whereMonth('vmt_employee_details.doj',Carbon::now()->month)->get();
+        $dashboardEmployeeEventsData['birthday'] = $employeesEventDetails->whereMonth('vmt_employee_details.dob', '>=', Carbon::now()->month)
+                                                ->whereMonth('vmt_employee_details.dob', '<=', Carbon::now()->month + 1)
+                                                ->get()->sortBy(function ($singleData, $key) {
+                                                    return Carbon::createFromFormat('Y-m-d', $singleData["dob"])->dayOfYear;
+                                                });
+
+        $dashboardEmployeeEventsData['work_anniversary'] = $employeesEventDetails->whereMonth('vmt_employee_details.doj','>=',Carbon::now()->month)
+                                                            ->whereMonth('vmt_employee_details.doj','<=',Carbon::now()->month + 1)
+                                                            ->get()->sortBy(function ($singleData, $key) {
+                                                                return Carbon::createFromFormat('Y-m-d', $singleData["doj"])->dayOfYear;
+                                                            });
+
         $dashboardEmployeeEventsData['hasData'] = 'true';
 
 
-        //dd($dashboardEmployeeEventsData['birthday']);
+        //dd($dashboardEmployeeEventsData['birthday']->toArray());
+
         //If any events found, then set 'hasData' to TRUE else FALSE
         if(count($dashboardEmployeeEventsData['birthday']) == 0 &&
            count($dashboardEmployeeEventsData['work_anniversary']) == 0
@@ -187,15 +197,18 @@ class VmtMainDashboardController extends Controller
                                 ->where('users.is_ssa','0')
                                 ->get()->count();
 
-
-        //Employees who checked-in today
-        $todayEmployeesCheckedInCount = User::join('vmt_employee_attendance','vmt_employee_attendance.user_id','=','users.id')
-                                ->whereDate('vmt_employee_attendance.checkin_time','=', $currentDate )
+        $query_todaysCheckedinEmployees = User::join('vmt_employee_attendance', 'vmt_employee_attendance.user_id', '=', 'users.id')
+                                ->whereDate('vmt_employee_attendance.date', '=', $currentDate)
                                 ->whereNull('vmt_employee_attendance.checkout_time')
-                                ->where('users.is_ssa','0')
-                                ->get()->count();
+                                ->where('users.is_ssa', '0');
 
         //Employees Leave today count
+        $todayEmployeesCheckedInCount = $query_todaysCheckedinEmployees->get()->count();
+
+        //Employees who checked-in today
+        $todayEmployeesCheckedIn = $query_todaysCheckedinEmployees->get(['name','user_code']);
+
+
         $todayEmployeesOnLeaveCount =  $totalEmployeesCount - $todayEmployeesCheckedInCount;
         //dd($newEmployeesCount);
 
@@ -204,7 +217,10 @@ class VmtMainDashboardController extends Controller
             $dashboardCountersData['totalEmployeesCount'] = $totalEmployeesCount;
             $dashboardCountersData['newEmployeesCount'] = $newEmployeesCount;
             $dashboardCountersData['todayEmployeesCheckedInCount'] = $todayEmployeesCheckedInCount;
+            $dashboardCountersData['todayEmployeesCheckedIn'] = $todayEmployeesCheckedIn;
             $dashboardCountersData['todayEmployeesOnLeaveCount'] = $todayEmployeesOnLeaveCount;
+
+        //dd($dashboardCountersData);
 
         $json_dashboardCountersData = json_encode($dashboardCountersData);
 
@@ -229,19 +245,63 @@ class VmtMainDashboardController extends Controller
 
         if(Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]) )
         {
+            //dd(session());
+
+            //Set the session client_id to default client if not set
+            if (!$request->session()->has('client_id')) {
+                $this->updateSessionVariables(null);
+            }
+
             return view('vmt_hr_dashboard', compact( 'dashboardEmployeeEventsData', 'checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData'));
         }
         else
         if(Str::contains( currentLoggedInUserRole(), ["Manager"]) )
         {
+            if (!$request->session()->has('client_id')) {
+                //get the employee client_code
+                $assigned_client_id = getEmployeeClientDetails(auth()->id())->id;
+
+                $this->updateSessionVariables($assigned_client_id);
+            }
+
+
             return view('vmt_manager_dashboard', compact( 'dashboardEmployeeEventsData','checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData','announcementData'));
         }
         else
         if(Str::contains( currentLoggedInUserRole(), ["Employee"]) )
         {
+            if (!$request->session()->has('client_id')) {
+                //get the employee client_code
+                $assigned_client_id = getEmployeeClientDetails(auth()->id())->id;
+
+                $this->updateSessionVariables($assigned_client_id);
+            }
+
             return view('vmt_employee_dashboard', compact( 'dashboardEmployeeEventsData','checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData','announcementData','praiseData'));
         }
 
+    }
+
+    private function updateSessionVariables($client_id){
+
+        if (empty($client_id)) {
+
+            session()->put('client_id', VmtClientMaster::first()->id);
+            session()->put('client_logo_url', VmtClientMaster::first()->client_logo);
+        }
+        else
+        {
+            $query_client = VmtClientMaster::find($client_id);
+            session()->put('client_id', $query_client->id);
+            session()->put('client_logo_url', $query_client->client_logo);
+        }
+    }
+
+    public function updateGlobalClientSelection(Request $request){
+
+        $this->updateSessionVariables($request->client_id);
+
+        return "client_id : ".$request->client_id." saved in session";
     }
 
     public function  DashBoardPost(Request $request){
