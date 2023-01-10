@@ -296,7 +296,27 @@
             }
 
             var reviewerstatus = document.getElementsByClassName("reviewerSubmitted");
-            console.log(reviewerstatus[0].innerText);
+            var managerName = document.getElementsByClassName("managerName");
+            for (i = 0; i < reviewerstatus.length; i++) {
+                const myJSON = JSON.parse(reviewerstatus[i].innerText);
+                reviewerArr = Object.entries(myJSON);
+                //console.log(reviewerArr[0][1]);
+                if (reviewerArr[0][1] == "1") {
+                    reviewerstatus[i].innerText = "Reviewed"
+                } else {
+                    reviewerstatus[i].innerText = "Not Yet Reviewed"
+                }
+
+                if(reviewerArr[0][0]>0){
+                    managerName[i].innerText = reviewerArr[0][0];
+                    // var x = "<?php "$username" ?>";
+                    // console.log(x);
+                }else{
+                    managerName[i].innerText=0;
+                }
+            }
+
+            //console.log(Object.entries(reviewerstatus[0].innerText));
             // $('#dropdownAssignment_period').on("change", function() {
             //     assign_per = $(this).val();
             //     console.log(assign_per);

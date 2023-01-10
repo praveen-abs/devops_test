@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\ConfigPms;
 use App\Models\VmtPMS_KPIFormAssignedModel;
 use App\Models\VmtPMS_KPIFormReviewsModel;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use App\Exports\VmtPayrollReports;
 use App\Exports\VmtPmsReviewsReport;
@@ -33,6 +34,7 @@ class VmtReportsController extends Controller
     public function showPmsReviewsReportPage(Request $request){
         $query_configPms= ConfigPms::first(['calendar_type','frequency']);
         $query_years= VmtPMS_KPIFormAssignedModel::groupby('year')->pluck('year');
+        $username=User::groupby('id')->pluck('id','name');
         $query_pms_data=VmtPMS_KPIFormReviewsModel::
         leftJoin('users','users.id', '=','vmt_pms_kpiform_reviews.assignee_id')
         ->leftJoin('vmt_pms_kpiform_assigned','vmt_pms_kpiform_assigned.id', '=', 'vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id')
@@ -58,8 +60,7 @@ class VmtReportsController extends Controller
         ->get();
         //dd($query_years);
         //dd($query_years->value('year'));
-
-        return view('reports.vmt_showPmsReviewsReports', compact('query_configPms','query_years','query_pms_data'));
+        return view('reports.vmt_showPmsReviewsReports', compact('query_configPms','query_years','query_pms_data','username'));
 
     }
 
