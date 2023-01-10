@@ -35,6 +35,9 @@ class VmtReportsController extends Controller
         $query_configPms= ConfigPms::first(['calendar_type','frequency']);
         $query_years= VmtPMS_KPIFormAssignedModel::groupby('year')->pluck('year');
         $username=User::groupby('id')->pluck('id','name');
+        $username=json_decode($username, true);
+        
+
         $query_pms_data=VmtPMS_KPIFormReviewsModel::
         leftJoin('users','users.id', '=','vmt_pms_kpiform_reviews.assignee_id')
         ->leftJoin('vmt_pms_kpiform_assigned','vmt_pms_kpiform_assigned.id', '=', 'vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id')

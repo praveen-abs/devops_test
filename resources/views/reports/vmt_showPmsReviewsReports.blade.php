@@ -1,11 +1,6 @@
 @extends('layouts.master')
 @section('css')
     <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
-    {{-- <style>
-        .APR.d-block{
-            display:block !important;
-        }
-    </style> --}}
 @endsection
 
 @section('content')
@@ -146,20 +141,6 @@
                     <tbody>
 
                         @foreach ($query_pms_data as $query_pms_data)
-                            <?php
-                            $year = $query_pms_data->year;
-
-                            // if ($year == 'April - 2022 to March - 2023'){
-                            //     $year_class = 'APR';
-                            // }
-                            // else{
-                            //     $year_class = 'd-none';
-                            // }
-
-                            $ass_data = $query_pms_data->assignment_period;
-                            ?>
-                            {{-- {{$ass_data = $query_pms_data->assignment_period  }} --}}
-                            {{-- <tr class="<?php echo $year_class . ' ' . $ass_data; ?> d-none"> --}}
                             <tr>
                                 <td class="userCode">
                                     {{ $query_pms_data->user_code }}
@@ -209,6 +190,7 @@
         $(document).ready(function() {
 
             let calenderType = '{{ $query_configPms->calendar_type }}';
+
 
 
             let year = $('#year').val();
@@ -295,6 +277,8 @@
                 }
             }
 
+            //For Manager Name And Status
+
             var reviewerstatus = document.getElementsByClassName("reviewerSubmitted");
             var managerName = document.getElementsByClassName("managerName");
             for (i = 0; i < reviewerstatus.length; i++) {
@@ -307,16 +291,23 @@
                     reviewerstatus[i].innerText = "Not Yet Reviewed"
                 }
 
-                if(reviewerArr[0][0]>0){
-                    managerName[i].innerText = reviewerArr[0][0];
-                    // var x = "<?php "$username" ?>";
-                    // console.log(x);
-                }else{
-                    managerName[i].innerText=0;
+                if (reviewerArr[0][0] > 0) {
+                    var data = <?php echo json_encode($username); ?>;
+                    userName = Object.entries(data);
+                    //console.log(userName.length);
+                    for (j = 0; j < userName.length; j++) {
+                        if (reviewerArr[0][0] == userName[j][1]) {
+                            managerName[i].innerText = userName[j][0];
+                        }
+                    }
+
+                } else {
+                    managerName[i].innerText = 0;
                 }
             }
 
-            //console.log(Object.entries(reviewerstatus[0].innerText));
+
+
             // $('#dropdownAssignment_period').on("change", function() {
             //     assign_per = $(this).val();
             //     console.log(assign_per);
