@@ -277,15 +277,22 @@ class VmtAttendanceController extends Controller
 
     public function saveLeaveRequestDetails(Request $request)
     {
+        //dd($request->toArray());
         $leave_month = date('m',strtotime($request->start_date));
 
-        //get only the Approved/Rejected leaves.
+        //get the existing Pending/Approved leaves. No need to check Rejected
         $existingNonPendingLeaves = VmtEmployeeLeaves::where('user_id', auth::user()->id)
-                                    ->where('status','<>','Pending')
                                     ->whereMonth('start_date','>=',$leave_month)
+                                    ->whereIn('status',['Pending','Approved'])
                                     ->get(['start_date','end_date','status']);
 
         //dd($existingNonPendingLeaves);
+        //coverting start_date and end_date for comparison
+        $processed_leave_start_date = new Carbon($request->start_date);
+        $processed_leave_end_date = new Carbon($request->end_date);
+
+        //dd($processed_leave_start_date->format('Y-m-d'));
+
         foreach($existingNonPendingLeaves as $singleLeaveRange){
             $endDate = new Carbon($singleLeaveRange->end_date);
             $endDate->addDay();
@@ -296,7 +303,7 @@ class VmtAttendanceController extends Controller
             //check with the user given leave range
             foreach ($leave_range as $date) {
                 //if date already exists in previous leaves
-                if ($request->start_date == $date->format('Y-m-d') || $request->end_date == $date->format('Y-m-d'))
+                if ($processed_leave_start_date->format('Y-m-d') == $date->format('Y-m-d') || $processed_leave_end_date->format('Y-m-d') == $date->format('Y-m-d'))
                 {
                     return $response = [
                         'status' => 'failure',
@@ -309,7 +316,7 @@ class VmtAttendanceController extends Controller
             }
         }
 
-       // dd("Leave not found");
+       //dd("Leave not found");
 
 
 
@@ -327,6 +334,8 @@ class VmtAttendanceController extends Controller
         if (isPermissionLeaveType($request->leave_type_id)) {
             $diff = intval( $start->diff($end)->format('%H'));
             $mailtext_total_leave = $diff . " Hour(s)";
+
+            //dd("Time diff : ".$mailtext_total_leave);
         } else {
             $diff = intval( $start->diff($end)->format('%D')) + 1; //day adjusted by adding '1'
             $mailtext_total_leave = $diff . " Day(s)";

@@ -887,7 +887,7 @@
                     let endDate_time = new Date($('#start_date').val());
                     endDate_time.setHours(endDate_time.getHours() + 1);   //add one hour to start date
                     endDate_time = moment(endDate_time).format('YYYY-MM-DDTHH:mm');
-                    console.log("Enddate_time : "+endDate_time);
+                   // console.log("Enddate_time : "+endDate_time);
 
                    // $('#end_date').attr("min",endDate_time);
                     $('#end_date').val(endDate_time);
@@ -907,17 +907,13 @@
             });
 
             //When Leave dates are changed
-            $('.leave_date').on('change', function() {
+            $('#end_date').change(function (){
 
                 let selectedLeaveTypeID = $('#leave_type_id').find(":selected").val();
 
                 //Get the date values
-                if ($(this).attr('id') == 'start_date') {
-                    leave_start_date = moment($(this).val());
-                } else
-                if ($(this).attr('id') == 'end_date') {
-                    leave_end_date = moment($(this).val());
-                }
+                let leave_start_date = moment($('#start_date').val());
+                let leave_end_date = moment($(this).val());
 
                 if (leave_start_date != '' && leave_end_date != '') {
                     //Check whether startdate is less than enddate
@@ -927,7 +923,11 @@
 
                         var totalPermissionHours =  moment.duration(leave_end_date.diff(leave_start_date)).asHours(); // +1 added so that 1 day leave can applied when startdate and enddate are same
                         console.log("Total permission hours : " + totalPermissionHours);
-                        $('#total_permission_hours').html(Math.ceil(totalPermissionHours));
+                        //$('#total_permission_hours').html(Math.ceil(totalPermissionHours));
+                        if( totalPermissionHours < 1)
+                            $('#total_permission_hours').html('0');
+                        else
+                            $('#total_permission_hours').html(Math.ceil(totalPermissionHours));
                     }
                     else
                     {
