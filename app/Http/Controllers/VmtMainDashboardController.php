@@ -92,33 +92,42 @@ class VmtMainDashboardController extends Controller
 
         }
 
-        $employeesEventDetails = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
-                                ->join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
-                                ->select(
-                                    'users.id',
-                                    'users.name',
-                                    'users.avatar',
-                                    'vmt_employee_details.emp_no',
-                                    'vmt_employee_office_details.designation',
-                                    'vmt_employee_details.dob',
-                                    'vmt_employee_details.doj'
-                                )
-                                ->where('users.is_ssa','=','0')
-                                ->where('users.active','=','1')
-                                ->where('users.is_onboarded','=','1')
-                                ->whereNotNull('vmt_employee_details.doj')
-                                ->whereNotNull('vmt_employee_details.dob');
-
-    //    dd($employeesEventDetails->get('vmt_employee_details.dob')->toArray());
+        $employeesEventDetails = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+            ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+            ->select(
+                'users.id',
+                'users.name',
+                'users.avatar',
+                'vmt_employee_details.emp_no',
+                'vmt_employee_office_details.designation',
+                'vmt_employee_details.dob',
+                'vmt_employee_details.doj'
+            )
+            ->where('users.is_ssa', '=', '0')
+            ->where('users.active', '=', '1')
+            ->where('users.is_onboarded', '=', '1')
+            ->whereNotNull('vmt_employee_details.doj')
+            ->whereNotNull('vmt_employee_details.dob');
 
         //Employee events for the current month only
         $dashboardEmployeeEventsData = [];
-        $dashboardEmployeeEventsData['birthday'] = $employeesEventDetails->get();
-        $dashboardEmployeeEventsData['work_anniversary'] = $employeesEventDetails->whereMonth('vmt_employee_details.doj',Carbon::now()->month)->get();
+        $dashboardEmployeeEventsData['birthday'] = $employeesEventDetails->whereMonth('vmt_employee_details.dob', '>=', Carbon::now()->month)
+                                                ->whereMonth('vmt_employee_details.dob', '<=', Carbon::now()->month + 1)
+                                                ->get()->sortBy(function ($singleData, $key) {
+                                                    return Carbon::createFromFormat('Y-m-d', $singleData["dob"])->dayOfYear;
+                                                });
+
+        $dashboardEmployeeEventsData['work_anniversary'] = $employeesEventDetails->whereMonth('vmt_employee_details.doj','>=',Carbon::now()->month)
+                                                            ->whereMonth('vmt_employee_details.doj','<=',Carbon::now()->month + 1)
+                                                            ->get()->sortBy(function ($singleData, $key) {
+                                                                return Carbon::createFromFormat('Y-m-d', $singleData["doj"])->dayOfYear;
+                                                            });
+
         $dashboardEmployeeEventsData['hasData'] = 'true';
 
 
-        //dd($dashboardEmployeeEventsData['birthday']);
+        //dd($dashboardEmployeeEventsData['birthday']->toArray());
+
         //If any events found, then set 'hasData' to TRUE else FALSE
         if(count($dashboardEmployeeEventsData['birthday']) == 0 &&
            count($dashboardEmployeeEventsData['work_anniversary']) == 0
@@ -188,22 +197,17 @@ class VmtMainDashboardController extends Controller
                                 ->where('users.is_ssa','0')
                                 ->get()->count();
 
-
-        //Employees who checked-in today
-        $todayEmployeesCheckedInCount = User::join('vmt_employee_attendance','vmt_employee_attendance.user_id','=','users.id')
-                                ->whereDate('vmt_employee_attendance.checkin_time','=', $currentDate )
+        $query_todaysCheckedinEmployees = User::join('vmt_employee_attendance', 'vmt_employee_attendance.user_id', '=', 'users.id')
+                                ->whereDate('vmt_employee_attendance.date', '=', $currentDate)
                                 ->whereNull('vmt_employee_attendance.checkout_time')
-                                ->where('users.is_ssa','0')
-                                ->get()->count();
+                                ->where('users.is_ssa', '0');
 
         //Employees Leave today count
-        $todayEmployeesCheckedIn = User::join('vmt_employee_attendance','vmt_employee_attendance.user_id','=','users.id')
-                                ->whereDate('vmt_employee_attendance.checkin_time','=', $currentDate )
-                                ->whereNull('vmt_employee_attendance.checkout_time')
-                                ->where('users.is_ssa','0')
-                                ->get(['name','user_code']);
+        $todayEmployeesCheckedInCount = $query_todaysCheckedinEmployees->get()->count();
 
-        //dd($todayEmployeesCheckedIn->toArray());
+        //Employees who checked-in today
+        $todayEmployeesCheckedIn = $query_todaysCheckedinEmployees->get(['name','user_code']);
+
 
         $todayEmployeesOnLeaveCount =  $totalEmployeesCount - $todayEmployeesCheckedInCount;
         //dd($newEmployeesCount);
@@ -215,6 +219,8 @@ class VmtMainDashboardController extends Controller
             $dashboardCountersData['todayEmployeesCheckedInCount'] = $todayEmployeesCheckedInCount;
             $dashboardCountersData['todayEmployeesCheckedIn'] = $todayEmployeesCheckedIn;
             $dashboardCountersData['todayEmployeesOnLeaveCount'] = $todayEmployeesOnLeaveCount;
+
+        //dd($dashboardCountersData);
 
         $json_dashboardCountersData = json_encode($dashboardCountersData);
 

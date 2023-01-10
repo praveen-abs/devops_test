@@ -997,8 +997,7 @@ class VmtEmployeeController extends Controller
 
     public function fetchAllActiveEmployees(Request $request)
     {
-
-        $vmtEmployees = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
+        $query_vmtEmployees = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
             ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->select(
                 'users.name as emp_name',
@@ -1017,25 +1016,29 @@ class VmtEmployeeController extends Controller
                 'vmt_employee_office_details.l1_manager_designation'
             )
             ->orderBy('users.name', 'ASC')
-            ->where('users.user_code','LIKE',sessionGetSelectedClientCode().'%')
             ->where('users.active', '1')
             ->where('users.is_ssa', '0')
-            ->whereNotNull('emp_no')
-            ->get();
+            ->whereNotNull('emp_no');
 
-            //Add reporting manager name
-            foreach($vmtEmployees as $singleEmp)
-            {
-                $singleEmp['reporting_manager_name']= User::where('user_code',$singleEmp->l1_manager_code)->value('name');
-            }
+        //if '1', then show all client's employees
+        if (session('client_id') == '1')
+            $query_vmtEmployees = $query_vmtEmployees->get();
+        else
+            $query_vmtEmployees = $query_vmtEmployees->where('client_id', session('client_id'))->get();
 
-        return json_encode($vmtEmployees);
+        //Add reporting manager name
+        foreach($query_vmtEmployees as $singleEmp)
+        {
+            $singleEmp['reporting_manager_name']= User::where('user_code',$singleEmp->l1_manager_code)->value('name');
+        }
+
+        return json_encode($query_vmtEmployees);
     }
 
     public function fetchAllYetToActiveEmployees(Request $request)
     {
 
-        $vmtEmployees = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
+        $query_vmtEmployees = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
             ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->select(
                 'users.name as emp_name',
@@ -1054,19 +1057,23 @@ class VmtEmployeeController extends Controller
                 'vmt_employee_office_details.l1_manager_designation'
             )
             ->orderBy('users.name', 'ASC')
-            ->where('users.user_code','LIKE',sessionGetSelectedClientCode().'%')
             ->where('users.active', '0')
             ->where('users.is_ssa', '0')
-            ->whereNotNull('emp_no')
-            ->get();
+            ->whereNotNull('emp_no');
+
+        //if '1', then show all client's employees
+        if (session('client_id') == '1')
+            $query_vmtEmployees = $query_vmtEmployees->get();
+        else
+            $query_vmtEmployees = $query_vmtEmployees->where('client_id', session('client_id'))->get();
 
         //Add reporting manager name
-        foreach($vmtEmployees as $singleEmp)
+        foreach($query_vmtEmployees as $singleEmp)
         {
             $singleEmp['reporting_manager_name']= User::where('user_code',$singleEmp->l1_manager_code)->value('name');
         }
 
-        return json_encode($vmtEmployees);
+        return json_encode($query_vmtEmployees);
     }
 
     //
