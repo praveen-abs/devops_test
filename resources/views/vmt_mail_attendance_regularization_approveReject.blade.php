@@ -131,7 +131,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                 <tr>
                                                     <td colspan="8" style="" align="center">
                                                         Kindly visit the HRMS portal for more details.
-                                                        <a class="" type="button" href="#"
+                                                        <a class="" type="button"href="info@abshrms.com"
                                                             style="text-decoration:none;cursor: pointer;font-weight:600">
                                                             demo.abshrms.com
                                                         </a>
