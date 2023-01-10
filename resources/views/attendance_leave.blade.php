@@ -547,7 +547,7 @@
 
                                                 <select name="" id="leave_type_id"
                                                     class="form-select outline-none">
-                                                    <option value="" hidden selected disabled>Select Leave Type
+                                                    <option value="" selected>Select Leave Type
                                                     </option>
 
                                                     @foreach ($leaveTypes as $singleLeaveType)
@@ -841,13 +841,22 @@
         $('.close-modal').on('click', function() {
             $('#error_notify').fadeOut(100);
 
-        })
+        });
 
 
         function resetLeaveModalValues() {
 
+            //Reset leave dropdown
+            $('#leave_type_id').prop('selectedIndex',0);
+
             leave_start_date = '';
             leave_end_date = '';
+            let currentDate = new Date().toJSON().slice(0,10);
+
+            $('#start_date').attr('type','datetime-local');
+            $('#start_date').attr("min",currentDate+"T09:00:00");
+            $('#end_date').attr('type','datetime-local');
+            $('#start_date').attr("min",currentDate+"T09:00:00");
             $('#start_date').val('');
             $('#end_date').val('');
             $('#leave_reason').val('');
@@ -866,18 +875,45 @@
             });
 
 
+            //When start_date is chosen, then restrict end_date
+            $('#start_date').change(function (){
+                //let selectedStartDate = $('#start_date').attr("min",currentDate+"T09:00:00");
+                //let currentDate = new Date().toJSON().slice(0,10);
+
+                let selectedLeaveTypeID = $('#leave_type_id').find(":selected").val();
+
+                if (permissionTypeIds.includes(parseInt(selectedLeaveTypeID)))
+                {
+                    let endDate_time = new Date($('#start_date').val());
+                    endDate_time.setHours(endDate_time.getHours() + 1);   //add one hour to start date
+                    endDate_time = moment(endDate_time).format('YYYY-MM-DDTHH:mm');
+                   // console.log("Enddate_time : "+endDate_time);
+
+                   // $('#end_date').attr("min",endDate_time);
+                    $('#end_date').val(endDate_time);
+
+                    $('#total_permission_hours').html(1);
+                }
+                else
+                {
+                    $('#end_date').attr("min",$('#start_date').val());
+                    $('#end_date').val($('#start_date').val());
+
+                    $('#total_leave_days').html(1); // Set one day as default
+                }
+
+                console.log("Start Date selected : "+$('#start_date').val());
+
+            });
+
             //When Leave dates are changed
-            $('.leave_date').on('change', function() {
+            $('#end_date').change(function (){
 
                 let selectedLeaveTypeID = $('#leave_type_id').find(":selected").val();
 
                 //Get the date values
-                if ($(this).attr('id') == 'start_date') {
-                    leave_start_date = moment($(this).val());
-                } else
-                if ($(this).attr('id') == 'end_date') {
-                    leave_end_date = moment($(this).val());
-                }
+                let leave_start_date = moment($('#start_date').val());
+                let leave_end_date = moment($(this).val());
 
                 if (leave_start_date != '' && leave_end_date != '') {
                     //Check whether startdate is less than enddate
@@ -887,7 +923,11 @@
 
                         var totalPermissionHours =  moment.duration(leave_end_date.diff(leave_start_date)).asHours(); // +1 added so that 1 day leave can applied when startdate and enddate are same
                         console.log("Total permission hours : " + totalPermissionHours);
-                        $('#total_permission_hours').html(Math.ceil(totalPermissionHours));
+                        //$('#total_permission_hours').html(Math.ceil(totalPermissionHours));
+                        if( totalPermissionHours < 1)
+                            $('#total_permission_hours').html('0');
+                        else
+                            $('#total_permission_hours').html(Math.ceil(totalPermissionHours));
                     }
                     else
                     {
@@ -906,8 +946,15 @@
                 console.log("Selected Leave Type : "+selectedPermissionTypeID);
                 console.log("permissionTypeIds: "+permissionTypeIds);
 
+                let currentDate = new Date().toJSON().slice(0,10);
+
                 if (permissionTypeIds.includes(parseInt(selectedPermissionTypeID))){
-                    //If permission selected, then show only date in Start and End data dropdown w/o time
+                    //If permission selected, then show date & time in Start and End date dropdown
+
+                    $('#start_date').attr('type','datetime-local');
+                    $('#start_date').attr("min",currentDate+"T09:00:00");
+
+
                     $('#start_date').attr('type','datetime-local');
                     $('#end_date').attr('type','datetime-local');
                     $('#div_totaldays').hide();
@@ -915,6 +962,7 @@
                 }
                 else
                 {
+                    $('#start_date').attr("min",currentDate);
                     $('#start_date').attr('type','date');
                     $('#end_date').attr('type','date');
                     $('#div_totaldays').show();
@@ -1047,7 +1095,7 @@
                 }
 
                 $.ajax({
-                    url: "{{ url('attendance-applyleave') }}",
+                    url: "{{ route('attendance-applyleave') }}",
                     type: "POST",
                     dataType: "json",
                     data: {
@@ -1210,18 +1258,25 @@
                         {
                             id: 'start_date',
                             name: 'Start Date',
-                            formatter: function formatter(cell) {
+                            formatter: function formatter(leave_history) {
                                 //return gridjs.html(cell);
-                                return gridjs.html(moment(cell).format('DD-MM-YYYY h:mm a'));
+                                if (permissionTypeIds.includes(leave_history.leave_type_id))
+                                    return gridjs.html(moment(leave_history.start_date).format('MMM Do, YYYY, h:mm a')); // Format : Jan 9th, 2023, 3:00 pm
+                                else
+                                    return gridjs.html(moment(leave_history.start_date).format('MMM Do, YYYY'));
+
                             }
                         },
 
                         {
                             id: 'end_date',
                             name: 'End Date',
-                            formatter: function formatter(cell) {
-                                //return gridjs.html(cell);
-                                return gridjs.html(moment(cell).format('DD-MM-YYYY h:mm a'));
+                            formatter: function formatter(leave_history) {
+
+                                if (permissionTypeIds.includes(leave_history.leave_type_id))
+                                    return gridjs.html(moment(leave_history.end_date).format('MMM Do, YYYY, h:mm a'));
+                                else
+                                    return gridjs.html(moment(leave_history.end_date).format('MMM Do, YYYY'));
                             }
                         },
                         {
@@ -1233,9 +1288,9 @@
                                 if(total_date_hours)
                                 {
                                     if (permissionTypeIds.includes(leave_history.leave_type_id))
-                                        return gridjs.html(total_date_hours+" Hrs"); //For permissions, show only hours
+                                        return gridjs.html(total_date_hours+" Hr(s)"); //For permissions, show only hours
                                     else
-                                        return gridjs.html(total_date_hours+" Days"); //For Leaves, show only days
+                                        return gridjs.html(total_date_hours+" Day(s)"); //For Leaves, show only days
                                 }
                                 else
                                 {
@@ -1246,7 +1301,7 @@
                         },
                         {
                             id: 'leave_reason',
-                            name: 'Leave Reason',
+                            name: 'Reason',
                         },
                         {
                             id: 'reviewer_user_id',
@@ -1316,8 +1371,8 @@
                                 // leave_history.user_id,
                                 //leave_history,
                                 leave_history.leave_type_id,
-                                leave_history.start_date,
-                                leave_history.end_date,
+                                leave_history,
+                                leave_history,
                                 leave_history,
                                 leave_history.leave_reason,
                                 leave_history.reviewer_user_id,
