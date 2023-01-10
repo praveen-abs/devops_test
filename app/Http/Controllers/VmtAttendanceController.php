@@ -453,9 +453,6 @@ class VmtAttendanceController extends Controller
 
     public function showTimesheet(Request $request)
     {
-        //$data = VmtEmployeeAttendance::where('user_id',a);
-        //dd($data);
-
         $shift_start_time = VmtWorkShifts::where('shift_type', "First Shift")->value('shift_start_time');
         $shift_end_time = VmtWorkShifts::where('shift_type', "First Shift")->value('shift_end_time');
 
@@ -526,7 +523,8 @@ class VmtAttendanceController extends Controller
                     $deviceData[] = array(
                         'date' => $dateString,
                         'checkin_time' => $deviceCheckInTime,
-                        'checkout_time' => $deviceCheckOutTime
+                        'checkout_time' => $deviceCheckOutTime,
+                        'attendance_mode' => 'biometric'
                     );
                 }
             }
@@ -535,12 +533,13 @@ class VmtAttendanceController extends Controller
        //dd($deviceData);
 
         // attendance details from vmt_employee_attenndance table
-        $data = VmtEmployeeAttendance::where('user_id', $request->user_id)
+        $attendance_WebMobile = VmtEmployeeAttendance::where('user_id', $request->user_id)
             ->whereMonth('date', $request->month)
             ->orderBy('checkin_time', 'asc')
-            ->get(['date', 'checkin_time', 'checkout_time']);
+            ->get(['date', 'checkin_time', 'checkout_time','attendance_mode']);
 
-        //dd($data);
+        //dd($attendance_WebMobile);
+
 
         $attendanceResponseArray = [];
 
@@ -565,11 +564,12 @@ class VmtAttendanceController extends Controller
            $fulldate = $year."-".$month."-".$date;
 
 
-           $attendanceResponseArray[$fulldate] = array( "user_id"=>$request->user_id,"isAbsent"=>false, "absent_status"=>null,
-                                                        "checkin_time"=>null, "checkout_time"=>null,
+           $attendanceResponseArray[$fulldate] = array( "user_id"=>$request->user_id,"isAbsent"=>false, "attendance_mode"=>null,
+                                                        "absent_status"=>null,"checkin_time"=>null, "checkout_time"=>null,
                                                         "isLC"=>false, "lc_status"=>null, "lc_reason"=>null,"lc_reason_custom"=>null,
                                                         "isEG"=>false, "eg_status"=>null, "eg_reason"=>null,"eg_reason_custom"=>null,
-                                                        "isMIP"=>false, "mip_status"=>null, "isMOP"=>false, "mop_status"=>null);
+                                                        "isMIP"=>false, "mip_status"=>null, "isMOP"=>false, "mop_status"=>null
+                                                        );
 
            //echo "Date is ".$fulldate."\n";
            ///$month_array[""]
@@ -577,21 +577,35 @@ class VmtAttendanceController extends Controller
 
 
         // merging result from both table
-        $data = $data->toArray();
-        $data  = array_merge($deviceData, $data);
-        $dateCollectionObj    =  collect($data);
+        $merged_attendanceData  = array_merge($deviceData, $attendance_WebMobile->toArray());
+        $dateCollectionObj    =  collect($merged_attendanceData);
 
         $sortedCollection   =   $dateCollectionObj->sortBy([
             ['date', 'asc'],
         ]);
 
         $dateWiseData         =  $sortedCollection->groupBy('date'); //->all();
+        //dd($merged_attendanceData);
         //dd($dateWiseData);
-        //dd($attendanceResponseArray);
         foreach ($dateWiseData  as $key => $value) {
+            /*
+                Here $key is the date. i.e : 2022-10-01
 
+                $value is ::
+
+                    [
+                        date=>2022-11-05
+                        checkin_time=18:06:00
+                        checkout_time=18:06:00
+                        attendance_mode="web"
+                    ]
+
+            */
+
+            //dd($value[0]["attendance_mode"]);
             $attendanceResponseArray[$key]["checkin_time"] = $value->min('checkin_time') ;
             $attendanceResponseArray[$key]["checkout_time"] = $value->max('checkout_time');
+            $attendanceResponseArray[$key]["attendance_mode"] = $value[0]["attendance_mode"];
 
         }
         //dd($attendanceResponseArray);
