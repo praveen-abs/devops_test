@@ -496,7 +496,7 @@
                                                     Payroll Summary
 
                                                 </h6>
-                                                <button class="btn btn-border-orange">View Payslip </button>
+                                                {{-- <button class="btn btn-border-orange">View Payslip </button> --}}
                                             </div>
 
 
@@ -516,7 +516,7 @@
                                                 <li class=" pb-1">
                                                     <div class="title">Loss Of Pay(LOP)</div>
                                                     <div class="text">
-                                                        9884722900
+                                                       
                                                     </div>
                                                 </li>
                                             </ul>
@@ -568,42 +568,58 @@
                                                         data-bs-toggle="modal" data-bs-target="#statutory_info"><i
                                                             class="ri-pencil-fill"></i></a></span>
                                             </h6>
+                                          
+                                            <tbody>
+                                                @if (!empty($statutory_info))
+                                                    @foreach ($statutory_info as $detail)
+                                                       
+                                                            <td>{{ $detail->pf_applicable  }}</td>
+                                                            <td>{{ $detail->epf_number     }}</td>
+                                                            <td>{{ $detail->uan_number     }}</td>
+                                                            <td>{{ $detail->esic_applicable}}</td>
+                                                            <td>{{ $detail->esic_number    }}</td>
+                                                       
+                                                    @endforeach
+                                                @endif 
+                                            </tbody>
+                                            
 
                                             <ul class="personal-info">
-                                                <li class="border-bottom-liteAsh pb-1">
+                                                <li>
                                                     <div class="title">PF Applicable</div>
-                                                    <div class="text">
+                                                    <div class="text">{{ $detail->pf_applicable ?? ''}}
 
                                                     </div>
                                                 </li>
-                                                <li class="border-bottom-liteAsh pb-1">
+                                                <li >
                                                     <div class="title">EPF Number</div>
-                                                    <div class="text">
+                                                    <div class="text">{{ $detail->epf_number ?? ''}}
 
                                                     </div>
                                                 </li>
 
-                                                <li class="border-bottom-liteAsh pb-1">
+                                                <li>
                                                     <div class="title">UAN Number</div>
-                                                    <div class="text">
+                                                    <div class="text">{{ $detail->uan_number ?? ''}}
 
                                                     </div>
                                                 </li>
-                                                <li class="border-bottom-liteAsh pb-1">
+
+                                                <li>
                                                     <div class="title">ESIC Applicable</div>
-                                                    <div class="text">
+                                                    <div class="text">{{ $detail->esic_applicable ?? ''}}
 
                                                     </div>
                                                 </li>
-                                                <li class="border-bottom-liteAsh pb-1">
+                                                <li >
                                                     <div class="title">ESIC Number</div>
-                                                    <div class="text">
+                                                    <div class="text">{{ $detail->esic_number ?? ''}}
 
                                                     </div>
                                                 </li>
                                             </ul>
-
-                                        </form>
+                                            
+                                     </form>
 
                                     </div>
                                 </div>
@@ -1555,29 +1571,7 @@
                                             </div>
                                     
                                                                 {{-- <img src='{{ URL::asset('svg_icon_pending') }}' alt='view' title='view' class='icon'>  --}}
-                                                            
-                                                        </td>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td></td>
-                                                    <td></td>
-
-
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
+                                                        
     <div id="edit_profileImg" class="modal  custom-modal fade" style="display: none;" aria-hidden="true">
         <div class="modal-dialog  modal-dialog-centered " role="document">
             <div class="modal-content profile-box">
@@ -2118,8 +2112,11 @@
                                     <div class="modal-header   border-0">
                         <h6>Statutory Details</h6>
                     </div>
+                    @csrf
+                    {{-- @foreach ($statutory_info as $detail)
+                    @endforeach --}}
                     <div class="row ">
-                        <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                        <div class="col-md-6">
                             <div class="floating">
                                 <label for="" class="float-label">PF
                                     Applicable<span
@@ -2135,37 +2132,39 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                            <div class="floating">
-                                <label for="" class="float-label">EPF Number</label>
+
+                        
+
+
+                        <div class="col-md-6 ">
+                            <div class="form-group mb-3">
+                                <label >EPF Number</label>
                                 <input type="text" placeholder="EPF Number" name="epf_number"
-                                    id="epf_number" class="onboard-form form-control textbox "
-                                    value="{{ !empty($emp_statutory_details) && $emp_statutory_details->epf_number ? $emp_statutory_details->epf_number : '' }}" />
+                                    id="epf_number" class="onboard-form form-control "
+                                    value=" {{$detail->epf_number??''}}">
+                                </div>
+                        </div>
 
-                                <span class="error" id="error_epf_number"></span>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label>UAN Number</label>
+                                <input name="uan_number"  id="uan_number"  minlength="12" maxlength="12"  class="form-control onboard-form"
+                                    value="{{ $detail->uan_number ?? '' }}" type="text"
+                                    pattern-data="ifsc" required>
                             </div>
                         </div>
-                        <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-
-                            <div class="floating">
-                                <label for="" class="float-label">UAN Number</label>
-                                <input type="text" placeholder="UAN Number" name="uan_number"
-                                    id="uan_number" minlength="12" maxlength="12"
-                                    class="onboard-form form-control textbox "
-                                    value="{{ !empty($emp_statutory_details) && $emp_statutory_details->uan_number ? $emp_statutory_details->uan_number : '' }}" />
-
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                            <div class="floating">
-                                <label for="" class="float-label">ESIC
+                
+                         
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label  class="float-label">ESIC
                                     Applicable<span
                                     class="text-danger">*</span></label>
                                 <?php
                                 $value = '';
 
-                                if (!empty($emp_statutory_details) && $emp_statutory_details->esic_applicable) {
-                                    $value = $emp_statutory_details->esic_applicable;
+                                if (!empty($statutory) && $statutory ->esic_applicable) {
+                                    $value = $statutory->esic_applicable;
                                 }
 
                                 ?>
@@ -2184,18 +2183,24 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-3 col-xl-3 mb-2">
+                        
+                        <div class="col-md-6 ">
                             <div class="floating">
                                 <label for="" class="float-label">ESIC Number</label>
 
                                 <input type="text" placeholder="ESIC Number"
                                     name="esic_number" id="esic_number" minlength="10"
                                     maxlength="10" class="onboard-form form-control textbox "
-                                    value="{{ !empty($emp_statutory_details) && $emp_statutory_details->esic_number ? $emp_statutory_details->esic_number : '' }}" />
+                                    value="{{$detail->esic_number??''}}" />
                                 <span class="error" id="error_esic_number"></span>
                             </div>
                         </div>
+                       
+
+
+
                     </div>
+                    
                     <div class="col-12">
                         <div class="text-right">
                             <button id="btn_submit_statutory_info"class="btn btn-orange submit-btn">Submit</button>

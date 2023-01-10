@@ -210,10 +210,25 @@ use Illuminate\Encryption\Encrypter;
  
 
     public function updateStatutoryInfo(Request $request){
+       // dd($request->all());
 
-        $statutory= VmtEmployeeStatutoryDetails ::where('user_id',$request->id)->first();
+        $statutory= VmtEmployeeStatutoryDetails ::where('user_id',$request->id);
+
+       // dd($statutory->exists());
+
         if($statutory->exists())
         {
+            $statutory = $statutory->first();
+            $statutory->pf_applicable=$request->input('pf_applicable');
+            $statutory->epf_number=$request->input('epf_number');
+            $statutory->uan_number=$request->input('uan_number');
+            $statutory->esic_applicable=$request->input('esic_applicable');
+            $statutory->esic_number=$request->input('esic_number');
+            $statutory->save();
+        }
+        else
+        {
+            $statutory = new VmtEmployeeStatutoryDetails; 
             $statutory->pf_applicable=$request->input('pf_applicable');
             $statutory->epf_number=$request->input('epf_number');
             $statutory->uan_number=$request->input('uan_number');
@@ -271,7 +286,8 @@ use Illuminate\Encryption\Encrypter;
 
          
         $familydetails = VmtEmployeeFamilyDetails::where('user_id',$user->id)->get();
-
+        $statutory_info= VmtEmployeeStatutoryDetails ::where('user_id',$user->id)->get();
+ 
         
         $exp = Experience::where('user_id',$user->id)->get();
 
@@ -302,7 +318,7 @@ use Illuminate\Encryption\Encrypter;
        
 
 
-        return view('pages-profile-new', compact('user','enc_user_id','allEmployees', 'maritalStatus','genderArray','user_full_details', 'familydetails', 'exp', 'reportingManager','profileCompletenessValue','bank','data','employees'));
+        return view('pages-profile-new', compact('user','enc_user_id','allEmployees', 'maritalStatus','genderArray','user_full_details', 'familydetails', 'exp', 'reportingManager','profileCompletenessValue','bank','data','employees','statutory_info'));
     }
 
     
