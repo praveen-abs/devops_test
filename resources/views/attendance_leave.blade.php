@@ -946,8 +946,15 @@
                 console.log("Selected Leave Type : "+selectedPermissionTypeID);
                 console.log("permissionTypeIds: "+permissionTypeIds);
 
+                let currentDate = new Date().toJSON().slice(0,10);
+
                 if (permissionTypeIds.includes(parseInt(selectedPermissionTypeID))){
                     //If permission selected, then show date & time in Start and End date dropdown
+
+                    $('#start_date').attr('type','datetime-local');
+                    $('#start_date').attr("min",currentDate+"T09:00:00");
+
+
                     $('#start_date').attr('type','datetime-local');
                     $('#end_date').attr('type','datetime-local');
                     $('#div_totaldays').hide();
@@ -955,6 +962,7 @@
                 }
                 else
                 {
+                    $('#start_date').attr("min",currentDate);
                     $('#start_date').attr('type','date');
                     $('#end_date').attr('type','date');
                     $('#div_totaldays').show();
@@ -1250,18 +1258,25 @@
                         {
                             id: 'start_date',
                             name: 'Start Date',
-                            formatter: function formatter(cell) {
+                            formatter: function formatter(leave_history) {
                                 //return gridjs.html(cell);
-                                return gridjs.html(moment(cell).format('DD-MM-YYYY h:mm a'));
+                                if (permissionTypeIds.includes(leave_history.leave_type_id))
+                                    return gridjs.html(moment(leave_history.start_date).format('MMM Do, YYYY, h:mm a')); // Format : Jan 9th, 2023, 3:00 pm
+                                else
+                                    return gridjs.html(moment(leave_history.start_date).format('MMM Do, YYYY'));
+
                             }
                         },
 
                         {
                             id: 'end_date',
                             name: 'End Date',
-                            formatter: function formatter(cell) {
-                                //return gridjs.html(cell);
-                                return gridjs.html(moment(cell).format('DD-MM-YYYY h:mm a'));
+                            formatter: function formatter(leave_history) {
+
+                                if (permissionTypeIds.includes(leave_history.leave_type_id))
+                                    return gridjs.html(moment(leave_history.end_date).format('MMM Do, YYYY, h:mm a'));
+                                else
+                                    return gridjs.html(moment(leave_history.end_date).format('MMM Do, YYYY'));
                             }
                         },
                         {
@@ -1273,9 +1288,9 @@
                                 if(total_date_hours)
                                 {
                                     if (permissionTypeIds.includes(leave_history.leave_type_id))
-                                        return gridjs.html(total_date_hours+" Hrs"); //For permissions, show only hours
+                                        return gridjs.html(total_date_hours+" Hr(s)"); //For permissions, show only hours
                                     else
-                                        return gridjs.html(total_date_hours+" Days"); //For Leaves, show only days
+                                        return gridjs.html(total_date_hours+" Day(s)"); //For Leaves, show only days
                                 }
                                 else
                                 {
@@ -1286,7 +1301,7 @@
                         },
                         {
                             id: 'leave_reason',
-                            name: 'Leave Reason',
+                            name: 'Reason',
                         },
                         {
                             id: 'reviewer_user_id',
@@ -1356,8 +1371,8 @@
                                 // leave_history.user_id,
                                 //leave_history,
                                 leave_history.leave_type_id,
-                                leave_history.start_date,
-                                leave_history.end_date,
+                                leave_history,
+                                leave_history,
                                 leave_history,
                                 leave_history.leave_reason,
                                 leave_history.reviewer_user_id,

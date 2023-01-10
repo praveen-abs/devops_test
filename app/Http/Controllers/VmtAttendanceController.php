@@ -21,6 +21,9 @@ use App\Models\VmtWorkShifts;
 use App\Models\VmtEmployeeAttendanceRegularization;
 use \Datetime;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
+use DatePeriod;
+use DateInterval;
 
 class VmtAttendanceController extends Controller
 {
@@ -261,26 +264,54 @@ class VmtAttendanceController extends Controller
         return $leave_details;
     }
 
+    private function createLeaveRange($start_date, $end_date){
+        $start_date = new DateTime($start_date);
+        $end_date = new DateTime($end_date);
+
+        $interval = new DateInterval('P1D');
+        $daterange = new DatePeriod($start_date, $interval ,$end_date);
+
+        return $daterange;
+    }
+
+
     public function saveLeaveRequestDetails(Request $request)
     {
+        $leave_month = date('m',strtotime($request->start_date));
 
-        //dd($request->all());
-        //Check if leave already applied for the given date
-        // $leaveExistsForCurrentDate = VmtEmployeeLeaves::where('user_id',auth::user()->id)
-        //                             ->whereDate('start_date','=',date($request->start_date));
+        //get only the Approved/Rejected leaves.
+        $existingNonPendingLeaves = VmtEmployeeLeaves::where('user_id', auth::user()->id)
+                                    ->where('status','<>','Pending')
+                                    ->whereMonth('start_date','>=',$leave_month)
+                                    ->get(['start_date','end_date','status']);
 
-        // if ($leaveExistsForCurrentDate->exists()) {
-        //     return $response = [
-        //         'status' => 'failure',
-        //         'message' => 'Leave Request already applied for this date',
-        //         'mail_status' => '',
-        //         'error' => '',
-        //         'error_verbose' => ''
-        //     ];
-        // } else {
-        //     //dd("Leave does not exists");
+        //dd($existingNonPendingLeaves);
+        foreach($existingNonPendingLeaves as $singleLeaveRange){
+            $endDate = new Carbon($singleLeaveRange->end_date);
+            $endDate->addDay();
 
-        // }
+            //create leave range
+            $leave_range = $this->createLeaveRange($singleLeaveRange->start_date, $endDate);
+
+            //check with the user given leave range
+            foreach ($leave_range as $date) {
+                //if date already exists in previous leaves
+                if ($request->start_date == $date->format('Y-m-d') || $request->end_date == $date->format('Y-m-d'))
+                {
+                    return $response = [
+                        'status' => 'failure',
+                        'message' => 'Leave Request already applied for this date',
+                        'mail_status' => '',
+                        'error' => '',
+                        'error_verbose' => ''
+                    ];
+                }
+            }
+        }
+
+       // dd("Leave not found");
+
+
 
         $leave_request_date = Carbon::now();
 
