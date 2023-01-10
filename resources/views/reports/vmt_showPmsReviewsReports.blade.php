@@ -247,6 +247,7 @@
                 }
             }
 
+
             var assigneeSubmiited = document.getElementsByClassName("assigneeSubmiited");
             for (var i = 0; i < assigneeSubmiited.length; i++) {
                 if (assigneeSubmiited[i].innerText == 1) {
@@ -260,16 +261,16 @@
             for (var i = 0; i < frequency.length; i++) {
                 if (frequency[i].innerText == "quarterly") {
                     frequency[i].innerText = 'Quarterly'
-                    var assignmentPeriod = document.getElementsByClassName("assignmentPeriod");
-                    if (assignmentPeriod[i].innerText == 'q1') {
-                        assignmentPeriod[i].innerText = "Q1 (Apr-Jun)"
-                    } else if (assignmentPeriod[i].innerText == 'q2') {
-                        assignmentPeriod[i].innerText = "Q1 (Jul-Sep)"
-                    } else if (assignmentPeriod[i].innerText == 'q3') {
-                        assignmentPeriod[i].innerText = "Q3 (Oct-Dec)"
-                    } else if (assignmentPeriod[i].innerText == 'q4') {
-                        assignmentPeriod[i].innerText = "Q4 (Jan-Mar)"
-                    }
+                    // var assignmentPeriod = document.getElementsByClassName("assignmentPeriod");
+                    // if (assignmentPeriod[i].innerText == 'q1') {
+                    //     assignmentPeriod[i].innerText = "Q1 (Apr-Jun)"
+                    // } else if (assignmentPeriod[i].innerText == 'q2') {
+                    //     assignmentPeriod[i].innerText = "Q1 (Jul-Sep)"
+                    // } else if (assignmentPeriod[i].innerText == 'q3') {
+                    //     assignmentPeriod[i].innerText = "Q3 (Oct-Dec)"
+                    // } else if (assignmentPeriod[i].innerText == 'q4') {
+                    //     assignmentPeriod[i].innerText = "Q4 (Jan-Mar)"
+                    // }
 
 
                 } else if (frequency[i].innerText == "monthly") {
@@ -288,13 +289,17 @@
                 if (reviewerArr[0][1] == "1") {
                     reviewerstatus[i].innerText = "Reviewed"
                 } else {
-                    reviewerstatus[i].innerText = "Not Yet Reviewed"
+                    reviewerstatus[i].innerText = "Not Yet Reviewed";
                 }
 
+                //For Manager name
                 if (reviewerArr[0][0] > 0) {
-                    var data = <?php echo json_encode($username); ?>;
+                    var data = '<?php echo json_encode($username); ?>';
+                    //console.log(data);
+                    var data = JSON.parse(data);
+                    //console.log(data);
                     userName = Object.entries(data);
-                    //console.log(userName.length);
+                    //console.log(userName.key());
                     for (j = 0; j < userName.length; j++) {
                         if (reviewerArr[0][0] == userName[j][1]) {
                             managerName[i].innerText = userName[j][0];
@@ -308,22 +313,23 @@
 
 
 
-            // $('#dropdownAssignment_period').on("change", function() {
-            //     assign_per = $(this).val();
-            //     console.log(assign_per);
-            //     table = document.getElementById("pmsReportTable");
-            //     tr = table.getElementsByTagName("tr");
-            //     var col_asign = document.getElementsByClassName("assignmentPeriod");
-            //     console.log(col_asign[0].innerText);
-            //     for (i = 0; i < tr.length; i++) {
-            //         if (col_asign[i].innerText == assign_per) {
-            //             tr[i].style.display = "block";
-            //         } else {
-            //             tr[i].style.display = "none";
-            //         }
-            //     }
-
-            // });
+            var table = document.getElementById("pmsReportTable");
+            var select = document.getElementById("dropdownAssignment_period");
+            select.addEventListener("change", function() {
+                var selectedValue = this.value;
+                console.log("1...." + selectedValue);
+                for (var i = 1; i < table.rows.length; i++) {
+                    var cells = table.rows[i].cells;
+                    console.log("2...." + cells[5].innerText + "  " + selectedValue);
+                    if (cells[5].innerText == selectedValue) {
+                        console.log("working");
+                        table.rows[i].style.display = "table-row";
+                    } else {
+                        console.log("Not working");
+                        table.rows[i].style.display = "none";
+                    }
+                }
+            });
             // table = document.getElementById("pmsReportTable");
             // tr = table.getElementsByTagName("tr");
             // for(i = 1; i < tr.length; i++){
@@ -359,39 +365,39 @@
     <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.print.min.js"></script>
 
-    {{-- <script>
-        var year = $('#year').val();
-        var calender = $('#dropdownAssignment_period').val();
-        var formData = 'year='+year+'&calender='+calender;
-        console.log(formData)
-        var ajax_call
+    // {{-- <script>
+//         var year = $('#year').val();
+//         var calender = $('#dropdownAssignment_period').val();
+//         var formData = 'year='+year+'&calender='+calender;
+//         console.log(formData)
+//         var ajax_call
 
-        $.get('report_data',formData,function(res){
-            ajax_call = res;
-        })
+//         $.get('report_data',formData,function(res){
+//             ajax_call = res;
+//         })
 
 
-        $(document).ready(function() {
-            setTimeout(() => {
-                console.log(ajax_call,"-----")
+//         $(document).ready(function() {
+//             setTimeout(() => {
+//                 console.log(ajax_call,"-----")
 
-                $('#ex').DataTable( {
-                    dom: 'lBfrtip',
-                    buttons: [
-                        'excel', 'pdf', 'print'
-                    ],
-                    "ajax": ajax_call,
-                    "columns": [
-                        {"data": "user_code" },
-                        {"data": "name" },
-                        {"data": "calendar_type" },
-                        {"data": "year" },
-                        {"data": "frequency" },
-                        {"data": "assignment_period" },
-                        {"data": "is_reviewer_submitted" },
-                    ]
-                } );
-            }, 1000);
-} );
-    </script> --}}
+//                 $('#ex').DataTable( {
+//                     dom: 'lBfrtip',
+//                     buttons: [
+//                         'excel', 'pdf', 'print'
+//                     ],
+//                     "ajax": ajax_call,
+//                     "columns": [
+//                         {"data": "user_code" },
+//                         {"data": "name" },
+//                         {"data": "calendar_type" },
+//                         {"data": "year" },
+//                         {"data": "frequency" },
+//                         {"data": "assignment_period" },
+//                         {"data": "is_reviewer_submitted" },
+//                     ]
+//                 } );
+//             }, 1000);
+// } );
+//     </script> --}}
 @endsection
