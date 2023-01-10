@@ -405,14 +405,14 @@
                                                     <td>₹{{ $d->NET_TAKE_HOME }}</td>
                                                     <td>
                                                         <div data="{{ $d->PAYROLL_MONTH }}"
-                                                            data-url="{{ route('vmt_employee_payslip') }}"
+                                                            data-url="{{ route('vmt_employee_payslip_htmlview') }}"
                                                             style="cursor: pointer"
                                                             class="ember-view  paySlipView text-info">
                                                             View
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <a href="#/salary-details/payslips/335214000001040001/details?isPayslip=false"
+                                                        <a href=""
                                                             id="ember134" class="ember-view  text-info">
                                                             View
                                                         </a>
@@ -2750,7 +2750,8 @@
                     type: "GET",
                     url: url,
                     data: {
-                        selectedPaySlipMonth: t_paySlipMonth
+                        selectedPaySlipMonth: t_paySlipMonth,
+                        enc_user_id: "{{ $enc_user_id }}"
                     },
                     success: function(data) {
                         var content =

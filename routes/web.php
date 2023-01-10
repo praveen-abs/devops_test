@@ -126,8 +126,7 @@ Route::post('/update-bank-info/{id}', [App\Http\Controllers\VmtProfilePagesContr
 Route::post('/update-statutory-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'updateStatutoryInfo'])->name('updateStatutoryInfo');
 Route::post('/store-personal-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'storePersonalInfo'])->name('updatePersonalInformation');
 Route::get('/payslip', [App\Http\Controllers\VmtProfilePagesController::class, 'paySlip'])->name('payslip');
-Route::get('/employee_payslip',  [App\Http\Controllers\VmtProfilePagesController::class, 'payslipPdfView'])->name('vmt_employee_payslip');
-Route::get('employee-payslip', 'App\Http\Controllers\VmtProfilePagesController@payslipView');
+Route::get('/employee_payslip/{user_id?}',  [App\Http\Controllers\VmtProfilePagesController::class, 'paySlip_HTMLView'])->name('vmt_employee_payslip_htmlview');
 Route::get('/pdfview/{emp_code}/{selectedPaySlipMonth}',[App\Http\Controllers\VmtProfilePagesController::class, 'pdfview'])->name('pdfview');
  
 
