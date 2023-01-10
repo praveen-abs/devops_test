@@ -1091,7 +1091,8 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
             else
             if(attendance_mode == "mobile")
                 return '&nbsp;<i class="fa fa-mobile-phone"></i>';
-
+            else
+                return ''; // when attendance_mode column is empty.
 
 
         }
