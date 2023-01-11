@@ -34,7 +34,7 @@ class VmtReportsController extends Controller
     public function showPmsReviewsReportPage(Request $request){
         $query_configPms= ConfigPms::first(['calendar_type','frequency']);
         $query_years= VmtPMS_KPIFormAssignedModel::groupby('year')->pluck('year');
-        $username=User::groupby('id')->pluck('id','name');
+        $username=User::groupby('id')->pluck('name','id');
         $username=json_decode($username, true);
 
         //dd($query_years);
