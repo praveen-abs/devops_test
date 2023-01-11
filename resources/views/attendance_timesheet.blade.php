@@ -1049,11 +1049,11 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                     cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
 
                                         "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex '><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
-                                        year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkin_time +
+                                        year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkin_time + getAttendanceModeIcon(ajax_data_currentdate.attendance_mode) +
                                         "</span>" +
                                         final_checkin_button_code +
                                         "</div> <div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span class='f-11' id='checkout_time_" +
-                                        year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkout_time +
+                                        year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkout_time + getAttendanceModeIcon(ajax_data_currentdate.attendance_mode) +
                                         "</span>" +
                                         final_checkout_button_code +
                                         "</div></div></div>";
@@ -1077,6 +1077,23 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
                 tbl.appendChild(row);
             }
+
+        }
+
+        function getAttendanceModeIcon(attendance_mode){
+            console.log("Attendance mode : "+attendance_mode);
+
+            if(attendance_mode == "biometric")
+                return '&nbsp;<i class="fa-solid fa-fingerprint"></i>';
+            else
+            if(attendance_mode == "web")
+                return '&nbsp;<i class="fa fa-laptop"></i>';
+            else
+            if(attendance_mode == "mobile")
+                return '&nbsp;<i class="fa fa-mobile-phone"></i>';
+            else
+                return ''; // when attendance_mode column is empty.
+
 
         }
 

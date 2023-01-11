@@ -558,7 +558,7 @@
                                                             class="text-danger">*</span></label>
 
                                                     <textarea placeholder="Current Address" name="current_address_line_1" id="current_address_line_1"
-                                                        class=" form-control textbox capitalize" required id="" cols="" rows="1">{{ !empty($employee_details) && $employee_details->current_address_line_1 ? $employee_details->current_address_line_1 : '' }}</textarea>
+                                                        class=" form-control textbox capitalize" required id="" cols="" rows="3">{{ !empty($employee_details) && $employee_details->current_address_line_1 ? $employee_details->current_address_line_1 : '' }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6 mb-2">
@@ -568,7 +568,7 @@
                                                         class="text-danger">*</span></label>
 
                                                     <textarea placeholder="Current Address" name="current_address_line_2" id="current_address_line_2"
-                                                        class="form-control textbox capitalize" required id="" cols="" rows="1">{{ !empty($employee_details) && $employee_details->current_address_line_2 ? $employee_details->current_address_line_2 : '' }}</textarea>
+                                                        class="form-control textbox capitalize" required id="" cols="" rows="3">{{ !empty($employee_details) && $employee_details->current_address_line_2 ? $employee_details->current_address_line_2 : '' }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -656,7 +656,7 @@
                                                     <label for="" class="float-label"> Address 1 <span
                                                             class="text-danger">*</span></label>
                                                     <textarea placeholder="Permanent Address" name="permanent_address_line_1" id="permanent_address_line_1"
-                                                        class="form-control textbox capitalize" required cols="5" rows="1">{{ !empty($employee_details) && $employee_details->permanent_address_line_1 ? $employee_details->permanent_address_line_1 : '' }}</textarea>
+                                                        class="form-control textbox capitalize" required cols="5" rows="3">{{ !empty($employee_details) && $employee_details->permanent_address_line_1 ? $employee_details->permanent_address_line_1 : '' }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6 mb-2">
@@ -664,7 +664,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label"> Address 2</label>
                                                     <textarea placeholder="Permanent Address" name="permanent_address_line_2" id="permanent_address_line_2"
-                                                        class="form-control textbox capitalize" required cols="5" rows="1">{{ !empty($employee_details) && $employee_details->permanent_address_line_2 ? $employee_details->permanent_address_line_2 : '' }}</textarea>
+                                                        class="form-control textbox capitalize" required cols="5" rows="3">{{ !empty($employee_details) && $employee_details->permanent_address_line_2 ? $employee_details->permanent_address_line_2 : '' }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 col-xxl-3 mb-2">
