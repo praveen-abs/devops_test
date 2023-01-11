@@ -148,8 +148,8 @@
                     </div>
 
                 </div>
-                
-                  <form id="form1"></form>  
+
+                  <form id="form1"></form>
                 <div class="tab-content " id="pills-tabContent">
                     <div class="tab-pane fade active show" id="employee_det" role="tabpanel" aria-labelledby="">
                         <div class="card mb-2">
@@ -385,7 +385,7 @@
                                         </thead>
 
                                         <tbody>
-                                            
+
                                             @foreach ($data  as $d)
                                                 <tr data-ember-action="" data-ember-action-131="131">
                                                     <td>
@@ -453,7 +453,7 @@
                         </div>
                     </div>
                 </div>
-                       
+
                     <div class="tab-pane fade" id="paycheck_det" role="tabpanel" aria-labelledby="">
                     </div>
                     <div class="tab-pane fade" id="finance_det" role="tabpanel" aria-labelledby="">
@@ -470,7 +470,7 @@
                                         <a class="nav-link " id="" data-bs-toggle="pill" href=""
                                             data-bs-target="#finance_pay" role="tab" aria-controls="pills-home"
                                             aria-selected="true">
-                                            Pay
+                                            Paycheck
                                         </a>
                                     </li>
                                     <li class="nav-item  " role="presentation">
@@ -516,7 +516,7 @@
                                                 <li class=" pb-1">
                                                     <div class="title">Loss Of Pay(LOP)</div>
                                                     <div class="text">
-                                                       
+
                                                     </div>
                                                 </li>
                                             </ul>
@@ -556,10 +556,10 @@
                                                 </li>
                                             </ul>
                                         </div>
-                                    
+
                                 </form>
                                 </div>
-                                
+
                                 <div class="card mb-2">
                                     <div class="card-body">
                                         <form action="" method="POST" enctype="multipart/form-data">
@@ -568,13 +568,13 @@
                                                         data-bs-toggle="modal" data-bs-target="#statutory_info"><i
                                                             class="ri-pencil-fill"></i></a></span>
                                             </h6>
-                                          
+
                                             <tbody>
                                                 @if (!empty($statutory_info))
                                                     @foreach ($statutory_info as $detail)
-                                                    
+
                                             </tbody>
-                                            
+
 
                                             <ul class="personal-info">
                                                 <li>
@@ -610,10 +610,10 @@
                                                     </div>
                                                 </li>
                                             </ul>
-                                                
+
                                             @endforeach
-                                            @endif 
-                                            
+                                            @endif
+
                                      </form>
 
                                     </div>
@@ -1551,22 +1551,22 @@
                                                 </th>
                                                 <th>
                                                     Action
-                                                </th> 
+                                                </th>
                                                 <tbody>
-                                                     
-                                    
+
+
                                                                 </tbody>
                                                             </table>
-                                    
+
                                                         </div>
-                                    
+
                                                     </div>
                                                 </div>
                                                 </form>
                                             </div>
-                                    
+
                                                                 {{-- <img src='{{ URL::asset('svg_icon_pending') }}' alt='view' title='view' class='icon'>  --}}
-                                                        
+
     <div id="edit_profileImg" class="modal  custom-modal fade" style="display: none;" aria-hidden="true">
         <div class="modal-dialog  modal-dialog-centered " role="document">
             <div class="modal-content profile-box">
@@ -1620,7 +1620,7 @@
                 </div>
                 <div class="modal-body">
                     @csrf
-                         
+
                         <div class="col-md-6">
                             <div class="form-group mb-3">
                                 <label>Birth Date<span class="text-danger">*</span></label>
@@ -1707,7 +1707,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    
+
                         @csrf
                   <div class="row">
 
@@ -1728,13 +1728,13 @@
                     value="{{ !empty($user_full_details->officical_mail) ? $user_full_details->officical_mail : '-' }}">
             </div>
         </div>
-       
+
       <div class="col-md-6">
 
             <div class="form-group mb-3">
                 <label>Mobile Number</label>
                 <input type="text" size=20 maxlength=10 name="mobile_number" onkeypress='return isNumberKey(event)'
-                    class="form-control" value="{{ !empty($user_full_details->mobile_number) ? $user_full_details->mobile_number : '-' }}"> 
+                    class="form-control" value="{{ !empty($user_full_details->mobile_number) ? $user_full_details->mobile_number : '-' }}">
             </div>
         </div>
 
@@ -1776,7 +1776,7 @@
                                         class="form-control" value="{{ $user_full_details->permanent_address_line_1 ?? '' }}">{{ $user_full_details->permanent_address_line_1 ?? '' }}</textarea>
                                 </div>
                             </div>
-                            
+
                         <div class="col-12">
                             <div class="text-right">
                                 <button id="btn_submit_address"class="btn btn-orange submit-btn">Submit</button>
@@ -1799,7 +1799,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    
+
                         @csrf
 
                         @if (!empty($familydetails) && count($familydetails) > 0)
@@ -2024,7 +2024,7 @@
         </div>
     </div>
 
-    
+
          <!-- bank informatios -->
          <div id="Bank_info" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -2100,7 +2100,7 @@
                      </div>
                         </div>
           {{-- Statutory Details --}}
-        
+
                         <div id="statutory_info" class="modal custom-modal fade"   aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                                 <div class="modal-content profile-box  ">
@@ -2128,7 +2128,7 @@
                             </div>
                         </div>
 
-                        
+
 
 
                         <div class="col-md-6 ">
@@ -2148,8 +2148,8 @@
                                     pattern-data="ifsc" required>
                             </div>
                         </div>
-                
-                         
+
+
                         <div class="col-md-6">
                             <div class="form-group mb-3">
                                 <label  class="float-label">ESIC
@@ -2178,7 +2178,7 @@
                                 </select>
                             </div>
                         </div>
-                        
+
                         <div class="col-md-6 ">
                             <div class="floating">
                                 <label for="" class="float-label">ESIC Number</label>
@@ -2190,12 +2190,12 @@
                                 <span class="error" id="error_esic_number"></span>
                             </div>
                         </div>
-                       
+
 
 
 
                     </div>
-                    
+
                     <div class="col-12">
                         <div class="text-right">
                             <button id="btn_submit_statutory_info"class="btn btn-orange submit-btn">Submit</button>
@@ -2204,9 +2204,9 @@
                 </div>
             </div>
                </div>
-               
 
-    
+
+
 
     <div id="show_idCard" class="modal custom-modal fade" aria-hidden="true">
         <div class="modal-dialog  modal-dialog-centered modal-md" role="document">
@@ -2527,12 +2527,12 @@
         $(document).ready(function(){
         $("#btn_submit_generalInfo").on('click',function(e){
             e.preventDefault();
-       
+
             var dob=$("input[name='dob']").val();
             var gender=$("select[name='gender']").val();
             var doj=$("input[name='doj']").val();
             var marital_status=$("select[name='marital_status']").val();
-            
+
          $.ajax({
                 url: "{{ route('updateGeneralInfo', $user->id) }}",
                 type:'POST',
@@ -2554,11 +2554,11 @@
         $(document).ready(function(){
         $("#btn_submit_contact_info").on('click',function(e){
             e.preventDefault();
-       
+
             var present_email=$("input[name='present_email']").val();
             var officical_mail=$("input[name='officical_mail']").val();
             var mobile_number = $("input[name='mobile_number']").val();
-       
+
             $.ajax({
                 url: "{{ route('updateContactInfo', $user->id) }}",
                 type:'POST',
@@ -2571,19 +2571,19 @@
                     success: function(data) {
                     location.reload();
                 }
-                
+
             });
-       
+
         }); });
 
 
         $(document).ready(function(){
         $("#btn_submit_address").on('click',function(e){
             e.preventDefault();
-       
+
             var current_address_line_1=$("textarea[name='current_address_line_1']").val();
             var permanent_address_line_1=$("textarea[name='permanent_address_line_1']").val();
-            
+
             $.ajax({
                 url: "{{ route('addressInfo', $user->id) }}",
                 type:'POST',
@@ -2595,32 +2595,32 @@
                     success: function(data) {
                     location.reload();
                 }
-                
+
             });
-       
+
         }); });
 
         $(document).ready(function(){
         $("#btn_submit_family_info").on('click',function(e){
             e.preventDefault();
 
-            var name = $('input[name="name[]"]').map(function(){ 
-                    return this.value; 
-                }).get();
-       
-            var relationship = $('input[name="relationship[]"]').map(function(){ 
-                    return this.value; 
+            var name = $('input[name="name[]"]').map(function(){
+                    return this.value;
                 }).get();
 
-            var dob = $('input[name="dob[]"]').map(function(){ 
-                    return this.value; 
+            var relationship = $('input[name="relationship[]"]').map(function(){
+                    return this.value;
                 }).get();
 
-            var phone_number = $('input[name="phone_number[]"]').map(function(){ 
-                    return this.value; 
+            var dob = $('input[name="dob[]"]').map(function(){
+                    return this.value;
                 }).get();
-       
-       
+
+            var phone_number = $('input[name="phone_number[]"]').map(function(){
+                    return this.value;
+                }).get();
+
+
             $.ajax({
                 url: "{{ route('updateFamilyInfo', $user->id) }}",
                 type:'POST',
@@ -2634,9 +2634,9 @@
                     success: function(data) {
                     location.reload();
                 }
-                
+
             });
-       
+
         }); });
 
         $(document).ready(function(){
@@ -2646,27 +2646,27 @@
                 return this.value;
             }).get();
 
-            var company_name = $('input[name="company_name[]"]').map(function(){ 
-                    return this.value; 
-                }).get();
-       
-            var location = $('input[name="location[]"]').map(function(){ 
-                    return this.value; 
+            var company_name = $('input[name="company_name[]"]').map(function(){
+                    return this.value;
                 }).get();
 
-            var job_position = $('input[name="job_position[]"]').map(function(){ 
-                    return this.value; 
+            var location = $('input[name="location[]"]').map(function(){
+                    return this.value;
                 }).get();
 
-            var period_from = $('input[name="period_from[]"]').map(function(){ 
-                    return this.value; 
+            var job_position = $('input[name="job_position[]"]').map(function(){
+                    return this.value;
                 }).get();
-            
+
+            var period_from = $('input[name="period_from[]"]').map(function(){
+                    return this.value;
+                }).get();
+
             var period_to = $('input[name="period_to[]"]').map(function(){
                     return this.value;
                 }).get();
-       
-       
+
+
             $.ajax({
                 url: "{{ route('updateExperienceInfo', $user->id) }}",
                 type:'POST',
@@ -2682,20 +2682,20 @@
                     success: function(data) {
                     window.location.reload();
                 }
-                
+
             });
-       
+
         }); });
 
         $(document).ready(function(){
         $("#btn_submit_bank_info").on('click',function(e){
             e.preventDefault();
-       
+
             var bank_name=$("select[name='bank_name']").val();
             var account_no=$("input[name='account_no']").val();
             var bank_ifsc=$("input[name='bank_ifsc']").val();
             var pan_no=$("input[name='pan_no']").val();
-            
+
          $.ajax({
                 url: "{{ route('updateBankInfo', $user->id) }}",
                 type:'POST',
@@ -2716,13 +2716,13 @@
              $(document).ready(function(){
         $("#btn_submit_statutory_info").on('click',function(e){
             e.preventDefault();
-       
+
             var pf_applicable=$("select[name='pf_applicable']").val();
             var epf_number=$("input[name='epf_number']").val();
             var uan_number=$("input[name='uan_number']").val();
             var esic_applicable=$("select[name='esic_applicable']").val();
             var esic_number=$("input[name='esic_number']").val();
-            
+
          $.ajax({
                 url: "{{ route('updateStatutoryInfo', $user->id) }}",
                 type:'POST',
@@ -2764,7 +2764,6 @@
                 });
             });
         });
-        
+
     </script>
 @endsection
- 
