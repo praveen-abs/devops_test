@@ -27,6 +27,68 @@ use Illuminate\Encryption\Encrypter;
 
  class VmtProfilePagesController extends Controller
 {
+
+    // Show Profile info
+    public function showProfilePage(Request $request){
+        //dd($request->all());
+        $user = null;
+
+        //If empty, then show current user profile page
+        if(empty($request->user_id))
+        {
+            $user = auth()->user();
+        }
+        else
+        {
+            $user = User::find(Crypt::decryptString($request->user_id));
+            //dd("Enc User details from request : ".$user);
+        }
+
+        $enc_user_id = Crypt::encryptString($user->id);
+
+        //dd($enc_user_id);
+        $user_full_details = User::leftjoin('vmt_employee_details','vmt_employee_details.userid', '=', 'users.id')
+                        ->leftjoin('vmt_employee_office_details','vmt_employee_office_details.user_id', '=', 'users.id')
+                        ->where('users.id', $user->id)->first();
+
+
+        $familydetails = VmtEmployeeFamilyDetails::where('user_id',$user->id)->get();
+        $statutory_info= VmtEmployeeStatutoryDetails ::where('user_id',$user->id)->get();
+
+
+        $exp = Experience::where('user_id',$user->id)->get();
+
+        $maritalStatus = array('unmarried',
+                            'married',
+                            'divorced',
+                            'widowed',
+                            'seperated');
+
+        $genderArray = array("Male", "Female", "Other");
+        $bank = Bank::all();
+
+        //dd($maritalStatus);
+        if(!empty($user_full_details->l1_manager_code))
+            $reportingManager = User::where('user_code',$user_full_details->l1_manager_code)->first();
+        else
+            $reportingManager = null;
+
+        $allEmployees = User::where('user_code','<>',$user->id)->where('active',1)->get(['user_code','name']);
+        $profileCompletenessValue  = calculateProfileCompleteness($user->id);
+
+        //Payslip Tab
+        $data =  DB::table('vmt_employee_payslip')
+                ->where('vmt_employee_payslip.user_id', $user->id)->orderBy('PAYROLL_MONTH', 'DESC')
+                ->get();
+
+        $employees = VmtEmployeePaySlip::select('EMP_NO','EMP_NAME')->get();
+
+
+
+        return view('pages-profile-new', compact('user','enc_user_id','allEmployees', 'maritalStatus','genderArray','user_full_details', 'familydetails', 'exp', 'reportingManager','profileCompletenessValue','bank','data','employees','statutory_info'));
+    }
+
+
     public function updateGeneralInfo(Request $request) {
         // dd($request->all());
          $details = VmtEmployee::where('userid', $request->id)->first();
@@ -141,7 +203,7 @@ use Illuminate\Encryption\Encrypter;
     }
 
 
-    public function paySlip_HTMLView(Request $request){
+    public function showPaySlip_HTMLView(Request $request){
         //dd($request->all());
         $user = null;
 
@@ -176,12 +238,7 @@ use Illuminate\Encryption\Encrypter;
          return $html;
     }
 
-    public function payslipView(Request $request){
-        $employees = VmtEmployeePaySlip::select('EMP_NO','EMP_NAME')->get();
-        return view('pages-profile-new', compact('employees'));
-    }
-
-    public function pdfview(Request $request)
+    public function showPaySlip_PDFView(Request $request)
     {
         if($request->emp_code != auth()->user()->user_code)
            // dd("Payslip View : You are not authorized to access this resource");
@@ -273,65 +330,6 @@ use Illuminate\Encryption\Encrypter;
          return redirect()->back();
     }
 
-    // Show Profile info
-    public function showProfilePage(Request $request){
-        //dd($request->all());
-        $user = null;
-
-        //If empty, then show current user profile page
-        if(empty($request->user_id))
-        {
-            $user = auth()->user();
-        }
-        else
-        {
-            $user = User::find(Crypt::decryptString($request->user_id));
-            //dd("Enc User details from request : ".$user);
-        }
-
-        $enc_user_id = Crypt::encryptString($user->id);
-
-        //dd($enc_user_id);
-        $user_full_details = User::leftjoin('vmt_employee_details','vmt_employee_details.userid', '=', 'users.id')
-                        ->leftjoin('vmt_employee_office_details','vmt_employee_office_details.user_id', '=', 'users.id')
-                        ->where('users.id', $user->id)->first();
-
-
-        $familydetails = VmtEmployeeFamilyDetails::where('user_id',$user->id)->get();
-        $statutory_info= VmtEmployeeStatutoryDetails ::where('user_id',$user->id)->get();
-
-
-        $exp = Experience::where('user_id',$user->id)->get();
-
-        $maritalStatus = array('unmarried',
-                            'married',
-                            'divorced',
-                            'widowed',
-                            'seperated');
-
-        $genderArray = array("Male", "Female", "Other");
-        $bank = Bank::all();
-
-        //dd($maritalStatus);
-        if(!empty($user_full_details->l1_manager_code))
-            $reportingManager = User::where('user_code',$user_full_details->l1_manager_code)->first();
-        else
-            $reportingManager = null;
-
-        $allEmployees = User::where('user_code','<>',$user->id)->where('active',1)->get(['user_code','name']);
-        $profileCompletenessValue  = calculateProfileCompleteness($user->id);
-
-        //Payslip Tab
-        $data =  DB::table('vmt_employee_payslip')
-                ->where('vmt_employee_payslip.user_id', $user->id)->orderBy('PAYROLL_MONTH', 'DESC')
-                ->get();
-
-        $employees = VmtEmployeePaySlip::select('EMP_NO','EMP_NAME')->get();
-
-
-
-        return view('pages-profile-new', compact('user','enc_user_id','allEmployees', 'maritalStatus','genderArray','user_full_details', 'familydetails', 'exp', 'reportingManager','profileCompletenessValue','bank','data','employees','statutory_info'));
-    }
 
 
 

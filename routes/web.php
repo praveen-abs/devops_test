@@ -114,7 +114,7 @@ Route::post('/update-checkin', [App\Http\Controllers\HomeController::class, 'upd
 Route::get('/topbar-settings', [App\Http\Controllers\HomeController::class, 'vmt_topbar_settings'])->name('vmt_topbar_settings');
 
 
- 
+
 //new profile page
 Route::get('pages-profile-new/{user_id?}',[App\Http\Controllers\VmtProfilePagesController::class,'showProfilePage'])->name('pages-profile-new');
 Route::post('/profile-pages-update-generalinfo/{id}',[App\Http\Controllers\VmtProfilePagesController::class,'updateGeneralInfo'])->name('updateGeneralInfo');
@@ -126,15 +126,15 @@ Route::post('/update-bank-info/{id}', [App\Http\Controllers\VmtProfilePagesContr
 Route::post('/update-statutory-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'updateStatutoryInfo'])->name('updateStatutoryInfo');
 Route::post('/store-personal-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'storePersonalInfo'])->name('updatePersonalInformation');
 Route::get('/payslip', [App\Http\Controllers\VmtProfilePagesController::class, 'paySlip'])->name('payslip');
-Route::get('/employee_payslip/{user_id?}',  [App\Http\Controllers\VmtProfilePagesController::class, 'paySlip_HTMLView'])->name('vmt_employee_payslip_htmlview');
+Route::get('/employee_payslip/{user_id?}',  [App\Http\Controllers\VmtProfilePagesController::class, 'showPaySlip_HTMLView'])->name('vmt_employee_payslip_htmlview');
 Route::get('/pdfview/{emp_code}/{selectedPaySlipMonth}',[App\Http\Controllers\VmtProfilePagesController::class, 'pdfview'])->name('pdfview');
- 
+
 
 
 
 Route::get('pages-profile', [App\Http\Controllers\HomeController::class, 'showProfile'])->name('pages-profile');
 
- 
+
 // notifications
 Route::get('/notifications/{id}', [App\Http\Controllers\HomeController::class, 'delete'])->name('delete');
 
@@ -142,9 +142,9 @@ Route::get('/notifications/{id}', [App\Http\Controllers\HomeController::class, '
 Route::post('/poll-voting', [App\Http\Controllers\HomeController::class, 'poll_voting'])->name('poll_voting');
 Route::post('/signin', [App\Http\Controllers\HomeController::class, 'signin'])->name('signin');
 
- 
 
- 
+
+
 Route::get('/registerNewAccount', function(){
     return view('/auth/register');
 })->name('registerNewAccount');
@@ -161,16 +161,16 @@ Route::get('/signed-passwordresetlink', 'App\Http\Controllers\Auth\LoginControll
 Route::get('pages-impersonate-profile/{id}', [App\Http\Controllers\HomeController::class, 'showImpersonateProfile'])->name('pages_impersonate_profile');
 
 
- 
+
 // Route::get('pages-profile-settings', [App\Http\Controllers\HomeController::class, 'showProfilePage'])->name('pages-profile-settings');
 
 Route::get('test-email', 'App\Http\Controllers\HomeController@testEmail');
- 
+
 
 // General Settings
 Route::get('vmt-general-settings', [App\Http\Controllers\HomeController::class, 'generalSettings']);
 Route::post('vmt-general-settings', [App\Http\Controllers\HomeController::class, 'storeGeneralSettings']);
- 
+
 
 // Route::get('/vendor', function () {
 //     return view('vmt_vendor');
@@ -345,11 +345,11 @@ Route::post('vmt-general-settings', [App\Http\Controllers\HomeController::class,
     // sample xl download  11/08/2022  //
     Route::get( '/download/{filename}', 'App\Http\Controllers\VmtPaySlipController@download');
 
-// end rout // 
+// end rout //
 
 // General Info
 Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 'storeGeneralInfo']);
- 
+
 // self appraisal review for employees
 Route::get('vmt-pmsappraisal-review', 'App\Http\Controllers\VmtPmsController@showEmployeeApraisalReview');
 
@@ -413,7 +413,7 @@ Route::get('vmt-pmsappraisal-review', 'App\Http\Controllers\VmtPmsController@sho
 
 // config menu (document tamplate view)
 Route::get('/document_preview', 'App\Http\Controllers\HomeController@showDocumentTemplate')->name('document_preview');
- 
+
 Route::get('/documents',  [App\Http\Controllers\VmtEmployeeController::class, 'showEmployeeDocumentsPage'])->name('vmt-documents-route');
 
     Route::post('vmt-documents-route', 'App\Http\Controllers\VmtEmployeeController@storeEmployeeDocuments')->name('vmt-storedocuments-route');
@@ -521,7 +521,7 @@ Route::get('/signed-passwordresetlink', 'App\Http\Controllers\Auth\LoginControll
 Route::get('syncStaffAttendanceFromDeviceDatabase', [App\Http\Controllers\VmtStaffAttendanceController::class, 'syncStaffAttendanceFromDeviceDatabase']);
 
 
-//DONT WRITE ANT ROUTES BELOW THIS    
+//DONT WRITE ANT ROUTES BELOW THIS
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index']);
- 
+
 
