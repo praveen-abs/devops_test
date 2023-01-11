@@ -165,13 +165,13 @@
                         <p>EPF NUMBER</p>
                     </td>
                     <td colspan="3">
-                        <p>{{ $employee_statutory_details->epf_number }}</p>
+                        <p>{{ $employee_details->EPF_Number }}</p>
                     </td>
                     <td colspan="3" class="bg-ash text-strong">
                         <p>ESIC NUMBER</p>
                     </td>
                     <td colspan="3">
-                        <p>{{ $employee_statutory_details->esic_number }}</p>
+                        <p>{{ $employee_details->esic_number }}</p>
                     </td>
 
                 </tr>
@@ -180,7 +180,7 @@
                         <p>UAN</p>
                     </td>
                     <td colspan="3">
-                        <p>{{ $employee_statutory_details->uan_number  }}</p>
+                        <p>{{ $employee_details->UAN  }}</p>
                     </td>
                     <td colspan="3" class="bg-ash text-strong">
                         <p>PAN</p>
