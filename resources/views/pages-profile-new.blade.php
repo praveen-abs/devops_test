@@ -572,15 +572,7 @@
                                             <tbody>
                                                 @if (!empty($statutory_info))
                                                     @foreach ($statutory_info as $detail)
-                                                       
-                                                            <td>{{ $detail->pf_applicable  }}</td>
-                                                            <td>{{ $detail->epf_number     }}</td>
-                                                            <td>{{ $detail->uan_number     }}</td>
-                                                            <td>{{ $detail->esic_applicable}}</td>
-                                                            <td>{{ $detail->esic_number    }}</td>
-                                                       
-                                                    @endforeach
-                                                @endif 
+                                                    
                                             </tbody>
                                             
 
@@ -618,6 +610,9 @@
                                                     </div>
                                                 </li>
                                             </ul>
+                                                
+                                            @endforeach
+                                            @endif 
                                             
                                      </form>
 
