@@ -309,13 +309,13 @@
                 if (isValid == true) {
 
                     var createPolicyRow =
-                        '<tr><td colspan="10"> <div> <table class="table  table-borderless"><tbody><tr><td colspan="2" >' +
+                        '<tr><td colspan="10"> <div> <table class="table  table-borderless"><tbody><tr><td colspan="2" style="max-width:19px;">' +
                         leaveType + '</td><td colspan="2">' + annualDays + '</td><td colspan="2">' +
                         monthDays +
                         '</td><td colspan="2">' +
                         restrictedDays + '</td><td colspan="2">' + accuralDays +
                         '</td></tr><tr> <td colspan="10 p-0"><div class="alert alert-danger mb-0 py-1 d-flex align-items-center" role="alert"><div class="d-flex justify-content-center"> <span class="text-warning fw-bold me-1">Note : </span><span class="  text-muted ">' +
-                        leaveNotes + '</span> </div> </div></td></tr></tbody></table><div></td></tr>'
+                        leaveNotes + '</span> </div> </div></td></tr></tbody></table></div></td></tr>'
                     $('#policyTable').append(createPolicyRow);
 
                     // $('#addPolicy_form').removeClass('show');
