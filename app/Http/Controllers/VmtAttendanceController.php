@@ -1094,7 +1094,7 @@ class VmtAttendanceController extends Controller
             $viewPage = 'leave_policy_'.strtolower($client_name);
         }
 
-        if (!view()->exists('leave_policies.'.$viewPage)) {
+        if (!view()->exists('leave_policy_templates.'.$viewPage)) {
             $viewPage = 'leave_policy_default';
         }
 
