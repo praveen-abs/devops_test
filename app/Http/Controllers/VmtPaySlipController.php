@@ -9,6 +9,7 @@ use App\Models\VmtEmployeePaySlip;
 use App\Models\Compensatory;
 use App\Models\VmtEmployeeStatutoryDetails;
 use App\Imports\VmtPaySlip;
+use App\Models\User;
 use Dompdf\Options;
 use Dompdf\Dompdf;
 use PDF;
@@ -107,7 +108,7 @@ class VmtPaySlipController extends Controller
        //    dd("asd");
 
         //dd($request);
-        $data['employee'] = VmtEmployeePaySlip::where([
+        $data['employee_payslip'] = VmtEmployeePaySlip::where([
                         ['user_id','=', auth()->user()->id],
                         ['PAYROLL_MONTH','=', $request->selectedPaySlipMonth],
                         ])->first();
@@ -182,6 +183,87 @@ class VmtPaySlipController extends Controller
     }
 
 
-    // code end by hentry //
 
+    /// FOR INTERNAL TESTING
+
+    function internal_ShowSalaries(Request $request){
+
+        //dd($request->user_code);
+        $user_id = User::where('user_code', $request->user_code);
+
+        if ($user_id->exists())
+            $user_id = $user_id->first()->id;
+        else
+            dd("Employee not found ! Please enter the correct employee code");
+
+        $data =  DB::table('vmt_employee_payslip')
+        ->where('vmt_employee_payslip.user_id', $user_id)->orderBy('PAYROLL_MONTH', 'DESC')
+        ->get();
+
+
+        if($data->count()!=0)
+        {
+            $compensatory =  Compensatory::where('user_id', $user_id)->first();
+            $result['CTC'] = 0;
+            $result['TOTAL_EARNED_GROSS'] = 0;
+            $result['TOTAL_DEDUCTIONS'] = 0;
+            $result['BASIC'] = 0;
+            $result['HRA'] = 0;
+            $result['TOTAL_FIXED_GROSS'] = 0;
+            $result['EPFR'] = 0;
+            $result['TOTAL_PF_WAGES'] = 0;
+
+            if ($data && $data[0]) {
+                $result['CTC'] = $data[0]->CTC;
+                $result['TOTAL_EARNED_GROSS'] = $data[0]->TOTAL_EARNED_GROSS;
+                $result['TOTAL_DEDUCTIONS'] = $data[0]->TOTAL_DEDUCTIONS;
+                $result['BASIC'] = $data[0]->BASIC;
+                $result['HRA'] = $data[0]->HRA;
+                $result['TOTAL_FIXED_GROSS'] = $data[0]->TOTAL_FIXED_GROSS;
+                $result['EPFR'] = $data[0]->EPFR;
+
+                $result['BASIC'] = $data[0]->BASIC;
+                $result['HRA'] = $data[0]->HRA;
+                $result['NET_TAKE_HOME'] = $data[0]->NET_TAKE_HOME;
+                $result['PAYROLL_MONTH'] = $data[0]->PAYROLL_MONTH;
+            }
+            foreach($data as $d) {
+                $result['TOTAL_PF_WAGES'] += $d->PF_WAGES;
+            }
+
+            return view('internal.vmt_showsalaries', compact('data', 'result', 'compensatory','user_id'));
+
+        }
+        else
+        {
+            return view('vmt_nodata_salaryDetails');
+
+        }
+
+    }
+
+
+    public function internal_ShowSelectedPayslip(Request $request){
+
+        //dd($request->user_id);
+
+
+        //dd($request);
+        $data['employee'] = VmtEmployeePaySlip::
+                        where('user_id','=', $request->user_id)->
+                        where('PAYROLL_MONTH','=', $request->selectedPaySlipMonth)
+                        ->first();
+
+        $data['employee_name'] = User::find($request->user_id)->name;
+        $data['employee_office_details'] = VmtEmployeeOfficeDetails::where('user_id',$request->user_id)->first();
+        $data['employee_details'] = VmtEmployee::where('userid',$request->user_id)->first();
+        $data['employee_statutory_details'] = VmtEmployeeStatutoryDetails::where('user_id',$request->user_id)->first();
+
+
+        //TODO : Need to show client specific payslip template.
+
+        $html =  view('vmt_payslipTemplate', $data);
+
+        return $html;
+    }
 }
