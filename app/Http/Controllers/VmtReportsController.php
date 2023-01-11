@@ -36,17 +36,24 @@ class VmtReportsController extends Controller
         $query_years= VmtPMS_KPIFormAssignedModel::groupby('year')->pluck('year');
         $username=User::groupby('id')->pluck('id','name');
         $username=json_decode($username, true);
-        
+
+        //dd($query_years);
+        //dd($query_years->value('year'));
+        return view('reports.vmt_showPmsReviewsReports', compact('query_configPms','query_years','username'));
+
+    }
+
+    public function filterPmsReport(Request $request){
 
         $query_pms_data=VmtPMS_KPIFormReviewsModel::
         leftJoin('users','users.id', '=','vmt_pms_kpiform_reviews.assignee_id')
         ->leftJoin('vmt_pms_kpiform_assigned','vmt_pms_kpiform_assigned.id', '=', 'vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id')
-        // ->where([
+        ->where([
         //     //['vmt_pms_kpiform_assigned.calendar_type','=',$this->calendar_type],
-        //     ['vmt_pms_kpiform_assigned.year','=',$this->year],
-        //     ['vmt_pms_kpiform_assigned.assignment_period','=',$this->assignment_period],
+            ['vmt_pms_kpiform_assigned.year','=',$request->year],
+             ['vmt_pms_kpiform_assigned.assignment_period','=',$request->assignment_period],
         //     //['vmt_pms_kpiform_reviews.is_assignee_submitted','=',$this->is_assignee_submitted]
-        // ])
+         ])
         ->select(
                   'users.user_code',
                   'users.name',
@@ -57,16 +64,12 @@ class VmtReportsController extends Controller
                   'vmt_pms_kpiform_reviews.is_assignee_submitted',
                    //'vmt_pms_kpiform_reviews.is_reviewer_accepted', //For Manager name
                    'vmt_pms_kpiform_reviews.is_reviewer_submitted',
-
-
                  )
         ->get();
-        //dd($query_years);
-        //dd($query_years->value('year'));
-        return view('reports.vmt_showPmsReviewsReports', compact('query_configPms','query_years','query_pms_data','username'));
+       //dd($query_pms_data);
 
+        return $query_pms_data;
     }
-
 
     public function generatePmsReviewsReports(Request $request){
         //$filename = 'PmsReports_'.$request->calender_type.'.xlsx';

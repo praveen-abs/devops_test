@@ -127,6 +127,7 @@
                 <table id="pmsReportTable" class="table table-bordered">
                     <thead>
                         <tr>
+                            <th scope="col">S.No</th>
                             <th scope="col">Emp Code</th>
                             <th scope="col">Name</th>
                             <th scope="col">Calendar Type</th>
@@ -138,9 +139,9 @@
                             <th scope="col">Manager Name</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="pmsTbody">
 
-                        @foreach ($query_pms_data as $query_pms_data)
+                        {{-- @foreach ($query_pms_data as $query_pms_data)
                             <tr>
                                 <td class="userCode">
                                     {{ $query_pms_data->user_code }}
@@ -171,7 +172,7 @@
                                 </td>
                             </tr>
                         @endforeach
-
+ --}}
 
 
                     </tbody>
@@ -190,10 +191,74 @@
         $(document).ready(function() {
 
             let calenderType = '{{ $query_configPms->calendar_type }}';
+            //let year = $('#year').val();
+
+            $('select').change(function() {
+                var year = $('#year').val();
+                var assignment_period = $('#dropdownAssignment_period').val();
+                console.log(year);
+                $.ajax({
+                    url: "{{ route('pms-filter-info') }}",
+                    type: 'GET',
+                    data: {
+                        year: year,
+                        assignment_period: assignment_period,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(res) {
+                        var trHtml = ""
+                        $('#pmsReportTable').find('tbody').empty();
+                        // console.log(res.length);
+
+                        $.each(res, function(i, userdata) {
+                            console.log(userdata);
+                            if (userdata.calendar_type == 'financial_year') {
+                                userdata.calendar_type = "Financial Year";
+                                if (userdata.frequency == "quarterly") {
+                                    userdata.frequency = "Quarterly";
+                                    if (userdata.assignment_period == "q1") {
+                                        userdata.assignment_period = "Q1 (Apr-Jun)"
+                                    } else if (userdata.assignment_period == "q2") {
+                                        userdata.assignment_period = "Q2 (Jul-Sept)"
+                                    } else if (userdata.assignment_period == "q3") {
+                                        userdata.assignment_period = "Q3 (Oct-Dec)"
+                                    } else if (userdata.assignment_period == "q4") {
+                                        userdata.assignment_period = "Q4 (Jan-March)"
+                                    }
+                                } else if (userdata.frequency == 'monthly') {
+                                    userdata.frequency = "Monthly";
+                                }
+                            }
+
+                            if (userdata.is_assignee_submitted == "1") {
+                                userdata.is_assignee_submitted = "Submitted";
+                            } else {
+                                userdata.is_assignee_submitted =
+                                    "Not Yet Submitted";
+                            }
+
+
+                            trHtml = '<tr><td>' + (i + 1) + '</td><td>' + userdata
+                                .user_code +
+                                '</td><td>' + userdata.name +
+                                '</td><td>' + userdata
+                                .calendar_type + '</td><td>' + userdata.year +
+                                '</td><td>' + userdata.frequency + '</td><td>' +
+                                userdata.assignment_period + '</td><td>' +
+                                userdata.is_assignee_submitted + '</td><td>' +
+                                userdata.is_reviewer_submitted +
+                                '</td></tr>'
+                            $('#pmsTbody').append(trHtml);
+                        });
+
+                    }
+
+                });
+            });
 
 
 
-            let year = $('#year').val();
+
 
             // if (calenderType == 'financial_year') {
 
@@ -239,13 +304,6 @@
 
             });
 
-            var tableCalendarType = document.getElementsByClassName("tableCalendarType");
-            if (tableCalendarType[0].innerText == "financial_year") {
-                console.log(tableCalendarType[0].innerText);
-                for (var i = 0; i < tableCalendarType.length; i++) {
-                    tableCalendarType[i].innerText = "Financial Year";
-                }
-            }
 
 
             var assigneeSubmiited = document.getElementsByClassName("assigneeSubmiited");
