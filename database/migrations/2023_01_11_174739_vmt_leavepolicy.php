@@ -30,6 +30,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('vmt_leavepolicy', function (Blueprint $table) {
+            $table->dropColumn("");
             $table->dropColumn("user_id");
             $table->dropColumn("leave_policy_name");
             $table->dropColumn("is_active");
