@@ -338,7 +338,7 @@ Route::post('vmt-general-settings', [App\Http\Controllers\HomeController::class,
 
     // pay slip
 
-    Route::get('payRun', 'App\Http\Controllers\VmtPaySlipController@uploadPaySlipView')->name('payRun');
+    Route::get('payRun', 'App\Http\Controllers\VmtPaySlipController@showPayRunPage')->name('payRun');
     Route::post('vmt-payslip', 'App\Http\Controllers\VmtPaySlipController@uploadPaySlip');
     Route::get('vmt-employee-payslip', 'App\Http\Controllers\VmtPaySlipController@payslipView');
     Route::get('vmt-payslip-pdf', 'App\Http\Controllers\VmtPaySlipController@payslipPdf');
@@ -373,7 +373,7 @@ Route::get('vmt-pmsappraisal-review', 'App\Http\Controllers\VmtPmsController@sho
     Route::post('/upload_file_review',  [App\Http\Controllers\VmtApraisalController::class, 'uploadFileReview'])->name('upload-file-review');
     Route::get('/download_file/{id}',  [App\Http\Controllers\VmtApraisalController::class, 'downloadFile'])->name('download-file');
     Route::post('/state',  [App\Http\Controllers\VmtEmployeeController::class, 'getState'])->name('state');
-    Route::get('/salary_details',  [App\Http\Controllers\VmtPaySlipController::class, 'paySlipIndex'])->name('vmt_salary_details');
+    Route::get('/salary_details',  [App\Http\Controllers\VmtPaySlipController::class, 'showSalaryDetailsPage'])->name('vmt_salary_details');
     Route::get('/paycheckDashboard',  [App\Http\Controllers\VmtPayCheckController::class, 'index'])->name('paycheckDashboard');
 
     Route::get('/form16', function () {
@@ -534,8 +534,8 @@ Route::get('syncStaffAttendanceFromDeviceDatabase', [App\Http\Controllers\VmtSta
 
 
 //Internal stuffs
-Route::get('/internal-ShowSalaries/{user_code}',  [App\Http\Controllers\VmtPaySlipController::class, 'internal_ShowSalaries'])->name('ShowSalaries');
-Route::get('/internal-ShowPayslips',  [App\Http\Controllers\VmtPaySlipController::class, 'internal_ShowSelectedPayslip'])->name('ShowSelectedPayslip');
+//Route::get('/internal-ShowSalaries/{user_code}',  [App\Http\Controllers\VmtPaySlipController::class, 'internal_ShowSalaries'])->name('ShowSalaries');
+//Route::get('/internal-ShowPayslips',  [App\Http\Controllers\VmtPaySlipController::class, 'internal_ShowSelectedPayslip'])->name('ShowSelectedPayslip');
 
 //DONT WRITE ANT ROUTES BELOW THIS
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index']);

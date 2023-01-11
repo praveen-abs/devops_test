@@ -19,11 +19,11 @@ use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtEmployeeStatutoryDetails;
 use App\Models\VmtEmployeePaySlip;
 use App\Imports\VmtPaySlip;
+use App\Services\VmtEmployeePayslipService;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
-use Illuminate\Encryption\Encrypter;
 
  class VmtProfilePagesController extends Controller
 {
@@ -203,73 +203,13 @@ use Illuminate\Encryption\Encrypter;
     }
 
 
-    public function showPaySlip_HTMLView(Request $request){
-        //dd($request->all());
-        $user = null;
-
-        //If empty, then show current user profile page
-        if(empty($request->enc_user_id))
-        {
-            $user = auth()->user();
-        }
-        else
-        {
-            $user = User::find(Crypt::decryptString($request->enc_user_id));
-        }
-
-        $data['employee'] = VmtEmployeePaySlip::where([
-                         ['user_id','=', $user->id],
-                         ['PAYROLL_MONTH','=', $request->selectedPaySlipMonth],
-                         ])->first();
-
-         $data['employee_name'] = $user->name;
-         $data['employee_office_details'] = VmtEmployeeOfficeDetails::where('user_id',$user->id)->first();
-         $data['employee_details'] = VmtEmployee::where('userid',$user->id)->first();
-         $data['employee_statutory_details'] = VmtEmployeeStatutoryDetails::where('user_id',$user->id)->first();
-
-
-         //TODO : Need to show client specific payslip template.
-
-         $processed_clientName = strtolower(str_replace(' ', '', sessionGetSelectedClientName()));
-
-         //$html =  view('vmt_payslipTemplate', $data);
-         $html =  view('vmt_payslip_templates.template_payslip_'.$processed_clientName, $data);
-
-         return $html;
+    public function showPaySlip_HTMLView(Request $request, VmtEmployeePayslipService $employeePaySlipService){
+       return $employeePaySlipService->showPaySlip_HTMLView(Crypt::decryptString($request->enc_user_id), $request->selectedPaySlipMonth);
     }
 
-    public function showPaySlip_PDFView(Request $request)
+    public function showPaySlip_PDFView(Request $request, VmtEmployeePayslipService $employeePaySlipService)
     {
-        if($request->emp_code != auth()->user()->user_code)
-           // dd("Payslip View : You are not authorized to access this resource");
-
-        $month = $request->selectedPaySlipMonth;
-        $data['employee'] = VmtEmployeePaySlip::where([
-            ['user_id','=', auth()->user()->id],
-            ['PAYROLL_MONTH','=', $request->selectedPaySlipMonth],
-            ])->first();
-
-        // $data['employee_name'] = auth()->user()->name;
-        // $data['designation'] = VmtEmployeeOfficeDetails::where('user_id',auth()->user()->id)->value('designation');
-        // $data['employee_details'] = VmtEmployee::where('userid',auth()->user()->id)->first();
-
-        $data['employee_name'] = auth()->user()->name;
-        $data['employee_office_details'] = VmtEmployeeOfficeDetails::where('user_id',auth()->user()->id)->first();
-        $data['employee_details'] = VmtEmployee::where('userid',auth()->user()->id)->first();
-        $data['employee_statutory_details'] = VmtEmployeeStatutoryDetails::where('user_id',auth()->user()->id)->first();
-
-        $processed_clientName = strtolower(str_replace(' ', '', sessionGetSelectedClientName()));
-        $view = view('vmt_payslip_templates.template_payslip_'.$processed_clientName, $data);
-
-       // $view = view('vmt_payslipTemplate', $data);
-
-        $html = $view->render();
-        $html = preg_replace('/>\s+</', "><", $html);
-        $pdf = PDF::loadHTML($html)->setPaper('a4', 'portrait')->setWarnings(false);
-
-        return $pdf->download(auth()->user()->id."_".$month."_Payslip.pdf");
-        //   return  PDF::loadView('vmt_payslipTemplate', $data)->download($month.'Payslip.pdf');
-
+        return $employeePaySlipService->showPaySlip_PDFView(Crypt::decryptString($request->enc_user_id), $request->selectedPaySlipMonth);
     }
 
 
