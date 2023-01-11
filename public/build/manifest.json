@@ -1,0 +1,12 @@
+{
+  "resources/js/app.js": {
+    "file": "assets/app-09acbbb3.js",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  },
+  "resources/js/hrms/pages/about.js": {
+    "file": "assets/about-17868239.js",
+    "src": "resources/js/hrms/pages/about.js",
+    "isEntry": true
+  }
+}
