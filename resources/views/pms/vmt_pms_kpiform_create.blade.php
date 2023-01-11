@@ -246,8 +246,6 @@
 <!-- apexcharts -->
 <script src="{{ URL::asset('assets/libs/swiper/swiper.min.js')}}"></script>
 
-<!--Sweet alert JS-->
-<script src="{{ URL::asset('/assets/premassets/js/sweetalert.js') }}"></script>
 
 <!-- for date and time -->
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>

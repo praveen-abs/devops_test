@@ -24,7 +24,7 @@ class VmtPMSMail_HR extends Mailable
      * @return void
      */
     // protected $linkUri;
-    public function __construct($hr_name,$assignee_name,$manager_name,$appraisal_year,$appraisal_period)
+    public function __construct($hr_name,$assignee_name,$manager_name,$appraisal_year,$appraisal_period,$login_link)
     {
         //
 
@@ -33,6 +33,7 @@ class VmtPMSMail_HR extends Mailable
         $this->manager_name = $manager_name;
         $this->appraisal_year = $appraisal_year;
         $this->appraisal_period = $appraisal_period;
+        $this->login_link = $login_link;
 
     }
 
@@ -47,14 +48,16 @@ class VmtPMSMail_HR extends Mailable
         $MAIL_FROM_ADDRESS = env('MAIL_FROM_ADDRESS');
         $MAIL_FROM_NAME    = env('MAIL_FROM_NAME');
 
-        return $this->from($MAIL_FROM_ADDRESS,  $MAIL_FROM_NAME)
-                //->subject("Regarding the Manager Review - PMS")
-                ->subject("Review Completed")
-                ->view('vmt_pms_mail_allflows_reviewcompletedmail_to_HR')
-                ->with('hr_name', $this->hr_name)
-                ->with('assignee_name', $this->assignee_name)
-                ->with('manager_name', $this->manager_name)
-                ->with('appraisal_year', $this->appraisal_year)
-                ->with('appraisal_period', $this->appraisal_period);
+        return $this->from($MAIL_FROM_ADDRESS, $MAIL_FROM_NAME)
+            //Successful Update of PMS/OKR for the Period of {Month Name/ Quarter Name/ Half Year Name}
+            ->subject("Successful Update of PMS/OKR for the Period of " . $this->appraisal_year . " - " . $this->appraisal_period)
+            ->view('pms_mails.vmt_pms_mail_allflows_reviewcompleted_to_HR')
+            ->with('hr_name', $this->hr_name)
+            ->with('assignee_name', $this->assignee_name)
+            ->with('manager_name', $this->manager_name)
+            ->with('appraisal_year', $this->appraisal_year)
+            ->with('appraisal_period', $this->appraisal_period)
+            ->with('loginLink', $this->login_link);
+
     }
 }

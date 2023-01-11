@@ -94,7 +94,7 @@
                                     </td>
                                     <td>
                                         @if (isset($docs_reviewed) && $docs_reviewed->aadhar_card_file == -1)
-                                            <button class="btn btn-border-primary"
+                                            <button class="btn btn-success"
                                                 onclick="approveOrRejectDocument('aadhar_card_file', 1)">
                                                 Approve</button>
                                             <button class="btn btn-danger"
@@ -569,12 +569,14 @@
                     doc_name: docName,
                     approve_status: aproveStatus,
                     _token: '{{ csrf_token() }}'
+
                 },
                 success: function(data) {
                     alert("Document reviewed successfully");
                     //window.location.href = "/";
-                    location.reload();
+                    //location.reload();
                 }
+
             });
         }
 

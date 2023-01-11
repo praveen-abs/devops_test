@@ -58,8 +58,9 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                                                     <p class="text-strong " style="margin: 0px 0px 0px ">Dear
                                                         {{ $employeeName }},</p>
                                                     <p class="" style="  ">
-                                                        This is to inform you that your leave request has been {{ $leave_status }}
-                                                        by your line manager  <b class="f-14"> {{ $managerName }}<b>
+                                                        This is to inform you that your leave request has been
+                                                        {{ $leave_status }}
+                                                        by your line manager <b class="f-14"> {{ $managerName }}<b>
                                                     </p>
 
 
@@ -129,17 +130,20 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                                                     <td colspan="8"
                                                         style="color:#002f56;font-weight:600;font-size:16px;padding-bottom:20px;"
                                                         align="center">
-                                                       {{$managerName}}
+                                                        {{ $managerName }}
                                                     </td>
                                                 </tr>
 
 
                                                 <tr>
                                                     <td colspan="8" style="" align="center">
-                                                        Kindly visit the HRMS portal for more details.
-                                                        <a class="" type="button" href="#"
-                                                            style="text-decoration:none;cursor: pointer;font-weight:600">
-                                                            {{ $loginLink }}
+                                                        <p style="padding-bottom:10px; "> Kindly visit the HRMS portal
+                                                            for more details.</p>
+                                                        <a class="" type="button"
+                                                            href="{{ $loginLink }}/attendance-leave"
+                                                            style="text-decoration:none;cursor: pointer;font-weight:600;border:1px solid #ff8f1b;color:#fa9530;background:transparent;padding: 4px;
+                                                            border-radius: 5px;">
+                                                            Click Here
                                                         </a>
                                                     </td>
                                                 </tr>
@@ -157,8 +161,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                                             <tr>
                                                 <td align="center" style="padding:10px 0px 0px 0px">
                                                     This e-mail was generated from ABShrms if you think this is
-                                                    SPAM,please do report to<a
-                                                    href="info@abshrms.com"
+                                                    SPAM,please do report to<a href="info@abshrms.com"
                                                         style="text-decoration: none;color:none;"> info<span
                                                             style="color:#fa9530;">@abshrms.com</span></a>
                                                 </td>
@@ -198,8 +201,8 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                                     <table align="center" style="text-align:center;width:100%" width="100%">
                                         <tbody>
                                             <tr>
-                                                <td align="center" width="100%"
-                                                    style="padding-bottom:0px !important;" style="margin-right: 10px">
+                                                <td align="center" width="100%" style="padding-bottom:0px !important;"
+                                                    style="margin-right: 10px">
                                                     <div class="fm-sm-container">
                                                         <a href="https://www.linkedin.com/company/ardenshr-services-private-limited/"
                                                             target="_blank" style="margin-right: 20px"><img
