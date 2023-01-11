@@ -1,3 +1,8 @@
+<?php
+//dd($assignedGoals);
+
+?>
+
 @extends('layouts.master')
 @section('css')
 
@@ -430,7 +435,8 @@
                                                     </td>
                                                     <td>
                                                         @if ($assignedGoals->is_assignee_accepted == '1' && $isAllReviewersAcceptedOrNot == true)
-                                                            @if ($assignedGoals->is_assignee_submitted == 0)
+                                                            {{-- If its Saved as Draft --}}
+                                                            @if ($assignedGoals->is_assignee_submitted == 0 || $assignedGoals->is_assignee_submitted == "NULL" )
                                                                 <div>
                                                                     <textarea  name="assignee_kpi_review[{{ $kpiRow->id }}]" data-index="{{ $index }}"
                                                                         data-targetval="{{ $kpiRow->target }}" data-kpiweightageval="{{ $kpiRow->kpi_weightage }}"
@@ -450,7 +456,7 @@
                                                     </td>
                                                     <td>
                                                         @if ($assignedGoals->is_assignee_accepted == '1' && $isAllReviewersAcceptedOrNot == true)
-                                                            @if ($assignedGoals->is_assignee_submitted == 0)
+                                                            @if ($assignedGoals->is_assignee_submitted == 0 || $assignedGoals->is_assignee_submitted == "NULL")
                                                                 {{-- <div> --}}
                                                                     <textarea  class="inp-text form-control w-100 h-100 outline-none border-0 assignee_kpi_percentage" id="assignee_kpi_percentage{{ $index }}"
                                                                         name="assignee_kpi_percentage[{{ $kpiRow->id }}]"
@@ -478,7 +484,7 @@
                                                     </td>
                                                     <td style="width:200px;min-width:300px;">
                                                         @if ($assignedGoals->is_assignee_accepted == '1' && $isAllReviewersAcceptedOrNot == true)
-                                                            @if ($assignedGoals->is_assignee_submitted == 0)
+                                                            @if ($assignedGoals->is_assignee_submitted == 0 || $assignedGoals->is_assignee_submitted == "NULL")
                                                                 {{-- <div> --}}
                                                                     <textarea  name="assignee_kpi_comments[{{ $kpiRow->id }}]" class="form-control h-100 outline-none border-0 "
                                                                         id="assignee_kpi_comments{{ $index }}" placeholder="type here">

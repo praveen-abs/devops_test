@@ -80,7 +80,7 @@
                 @endif
 
                 <!-- Navigation Menu for attendance-->
-                @if (!Str::contains(getCurrentClientName(), 'Vasa'))
+                {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}
                     <li class="nav-item">
                         <a class="nav-link sidebar menu-link pt-0" href="#attendanceDrop-Down" data-bs-toggle="collapse"
                             role="button" aria-expanded="false" aria-controls="sidebarRoles">
@@ -165,7 +165,7 @@
                             <span>Leaves</span>
                         </a>
                     </li>
-                @endif
+                {{-- @endif --}}
 
                 <!-- Organization -->
                 @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
@@ -281,7 +281,7 @@
 
                                     </li>
 
-                                    @if (!Str::contains(getCurrentClientName(), 'Vasa'))
+                                    {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}
 
                                     <li class="nav-item">
                                         <a href="{{ route('attendance-leave-approvals') }}" id=""
@@ -297,7 +297,7 @@
                                                 Attendance Regularization </span> </a>
 
                                     </li>
-                                    @endif
+                                    {{-- @endif --}}
 
                                     <li class="nav-item">
                                         <a href="{{ route('showPMSApprovalPage') }}" id=""
@@ -306,13 +306,14 @@
                                                 OKR /PMS</span> </a>
                                         {{-- PMS forms are approved here. Redirect to PMS dashboard --}}
                                     </li>
-                                    @if (!Str::contains(getCurrentClientName(), 'Vasa'))
+                                    {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}
 
                                     <li class="nav-item">
-                                        <a href="{{ route('page-not-found') }}" id=""
+                                        {{-- <a href="{{ route('showReimbursementApprovalPage') }}" id=""
                                             class="nav-link sidebar py-1" data-bs-toggle="" role="button"
                                             aria-expanded="false"><span>
-                                                Reimbursement</span> </a>
+                                                Reimbursement</span> </a> --}}
+                                                <a href="{{ url('vmt_mail_attendance_regularization_notify') }}" class="nav-link sidebar py-1"><span>Dashboard</span></a>
 
                                     </li>
                                     <li class="nav-item">
@@ -320,8 +321,8 @@
                                             class="nav-link sidebar py-1" data-bs-toggle="" role="button"
                                             aria-expanded="false"><span>
                                                 Taxations</span> </a>
-                                    @endif
                                     </li>
+                                    {{-- @endif --}}
                                 @endif
                             </ul>
                         </div>
@@ -533,7 +534,7 @@
                 </li>
                 {{-- @endif --}}
 
-                @if (!Str::contains(getCurrentClientName(), 'Vasa'))
+                {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}
 
                 <!-- claims -->
                 <li class="nav-item">
@@ -558,9 +559,9 @@
                     </a>
                 </li>
 
-                @endif
+                {{-- @endif --}}
 
-                @if (!Str::contains(getCurrentClientName(), 'Vasa'))
+                {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}
 
                 <!-- reports -->
                 <li class="nav-item">
@@ -594,7 +595,7 @@
                     </div>
                 </li>
 
-                @endif
+                {{-- @endif --}}
 
 
                 <!-- help desk -->
@@ -652,7 +653,7 @@
                                         </span></a>
                                 </li>
 
-                                @if (!Str::contains(getCurrentClientName(), 'Vasa'))
+                                {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}
 
                                 <li class="nav-item">
                                     <a href="{{ route('attendance-leavesettings') }}" class="nav-link">Leave
@@ -662,8 +663,8 @@
                                 <li class="nav-item">
                                     <a href="{{ url('attendance_shift_woff_hday') }}"
                                         class="nav-link sidebar py-1">Attendance</a>
-                                @endif
                                 </li>
+                                {{-- @endif --}}
                             </ul>
                         </div>
                     </li>
