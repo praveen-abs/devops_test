@@ -264,11 +264,8 @@
             </div>
             <div class="tab-pane show " id="org_leave" role="tabpanel" aria-labelledby="pills-profile-tab">
                 <div id="vue_OrgLeaveBalance">
-                    <ButtonCounter />
-                    <Counter />
 
                 </div>
-                <h3>Hello</h3>
                 <div class="row mt-3">
                     <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12 ">
                         <div class="card mb-0 leave-history">
