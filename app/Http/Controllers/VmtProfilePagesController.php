@@ -34,14 +34,14 @@ use Illuminate\Encryption\Encrypter;
          $details->gender = $request->input('gender');
          $details->marital_status = $request->input('marital_status');
          $details->doj=$request->input('doj');
-         
+
          $details->save();
-         
+
          return redirect()->back();
      }
 
      public function updateContactInfo(Request $request){
- 
+
            $user = User::find($request->id);
            $user->email=$request->input('present_email');
            $user->save();
@@ -51,32 +51,32 @@ use Illuminate\Encryption\Encrypter;
            $employee_office_details->save();
 
            $details = VmtEmployee::where('userid', $request->id)->first();
-           
+
            //dd($details);
            if($details->exists())
            {
                $details->mobile_number = $request->input('mobile_number');
                $details->save();
             }
-        
+
               return redirect()->back();
              }
 
-             
-        
+
+
      public function updateAddressInfo(Request $request){
 
              $details = VmtEmployee::where('userid', $request->id)->first();
              $details->current_address_line_1 = $request->input('current_address_line_1');
              $details->permanent_address_line_1 = $request->input('permanent_address_line_1');
              $details->save();
-           
+
              return redirect()->back();
              }
 
-    
+
     public function updateFamilyInfo(Request $request) {
-      
+
         $familyDetails = VmtEmployeeFamilyDetails::where('user_id',$request->id)->delete();
 
         $count = sizeof($request->input('name'));
@@ -91,7 +91,7 @@ use Illuminate\Encryption\Encrypter;
             $emp_familydetails->phone_number = $request->input('phone_number')[$i];
 
             $emp_familydetails->save();
-            
+
         }
 
         return redirect()->back();
@@ -142,29 +142,37 @@ use Illuminate\Encryption\Encrypter;
 
 
     public function paySlip_HTMLView(Request $request){
+        //dd($request->all());
+        $user = null;
 
-        //dd($request->enc_user_id);
+        //If empty, then show current user profile page
+        if(empty($request->enc_user_id))
+        {
+            $user = auth()->user();
+        }
+        else
+        {
+            $user = User::find(Crypt::decryptString($request->enc_user_id));
+        }
 
-         $data['employee'] = VmtEmployeePaySlip::where([
-                         ['user_id','=', Crypt::decryptString($request->enc_user_id)],
+        $data['employee'] = VmtEmployeePaySlip::where([
+                         ['user_id','=', $user->id],
                          ['PAYROLL_MONTH','=', $request->selectedPaySlipMonth],
                          ])->first();
-        
-        dd(Crypt::decryptString($request->enc_user_id));
 
-         $data['employee_name'] = auth()->user()->name;
-         $data['employee_office_details'] = VmtEmployeeOfficeDetails::where('user_id',auth()->user()->id)->first();
-         $data['employee_details'] = VmtEmployee::where('userid',auth()->user()->id)->first();
-         $data['employee_statutory_details'] = VmtEmployeeStatutoryDetails::where('user_id',auth()->user()->id)->first();
- 
- 
+         $data['employee_name'] = $user->name;
+         $data['employee_office_details'] = VmtEmployeeOfficeDetails::where('user_id',$user->id)->first();
+         $data['employee_details'] = VmtEmployee::where('userid',$user->id)->first();
+         $data['employee_statutory_details'] = VmtEmployeeStatutoryDetails::where('user_id',$user->id)->first();
+
+
          //TODO : Need to show client specific payslip template.
- 
+
          $processed_clientName = strtolower(str_replace(' ', '', sessionGetSelectedClientName()));
- 
+
          //$html =  view('vmt_payslipTemplate', $data);
          $html =  view('vmt_payslip_templates.template_payslip_'.$processed_clientName, $data);
- 
+
          return $html;
     }
 
@@ -207,7 +215,7 @@ use Illuminate\Encryption\Encrypter;
 
     }
 
- 
+
 
     public function updateStatutoryInfo(Request $request){
        // dd($request->all());
@@ -228,7 +236,7 @@ use Illuminate\Encryption\Encrypter;
         }
         else
         {
-            $statutory = new VmtEmployeeStatutoryDetails; 
+            $statutory = new VmtEmployeeStatutoryDetails;
             $statutory->pf_applicable=$request->input('pf_applicable');
             $statutory->epf_number=$request->input('epf_number');
             $statutory->uan_number=$request->input('uan_number');
@@ -243,7 +251,7 @@ use Illuminate\Encryption\Encrypter;
 
 
 
-    
+
     //
     public function storePersonalInfo(Request $request) {
        // dd($request->all());
@@ -254,41 +262,45 @@ use Illuminate\Encryption\Encrypter;
         $user->save();
         $report = $request->input('report');
         $code = VmtEmployee::select('emp_no', 'name', 'designation')->join('vmt_employee_office_details', 'user_id', '=', 'vmt_employee_details.userid')->join('users', 'users.id', '=', 'vmt_employee_details.userid')->where('emp_no', $report)->first();
-         
+
         // $reDetails = VmtEmployee::where('userid', $request->id)->first();
         // $details = VmtEmployee::find($reDetails->id);
         // $details->current_address_line_1 = $request->input('current_address_line_1');
         // $details->permanent_address_line_1 = $request->input('permanent_address_line_1');
         // $details->save();
-         
-    
+
+
          return redirect()->back();
     }
 
     // Show Profile info
     public function showProfilePage(Request $request){
+        //dd($request->all());
+        $user = null;
 
-        $user = auth()->user();
-
-        //$user = Auth::user();
-        if(!empty($request->user_id))
+        //If empty, then show current user profile page
+        if(empty($request->user_id))
         {
-           $user = User::find(Crypt::decryptString($request->user_id));
-           //dd("Enc User details from request : ".$user);
+            $user = auth()->user();
+        }
+        else
+        {
+            $user = User::find(Crypt::decryptString($request->user_id));
+            //dd("Enc User details from request : ".$user);
         }
 
-        $enc_user_id = Crypt::encryptString("");
+        $enc_user_id = Crypt::encryptString($user->id);
 
-        //dd($user);
+        //dd($enc_user_id);
         $user_full_details = User::leftjoin('vmt_employee_details','vmt_employee_details.userid', '=', 'users.id')
                         ->leftjoin('vmt_employee_office_details','vmt_employee_office_details.user_id', '=', 'users.id')
                         ->where('users.id', $user->id)->first();
 
-         
+
         $familydetails = VmtEmployeeFamilyDetails::where('user_id',$user->id)->get();
         $statutory_info= VmtEmployeeStatutoryDetails ::where('user_id',$user->id)->get();
- 
-        
+
+
         $exp = Experience::where('user_id',$user->id)->get();
 
         $maritalStatus = array('unmarried',
@@ -315,15 +327,15 @@ use Illuminate\Encryption\Encrypter;
                 ->get();
 
         $employees = VmtEmployeePaySlip::select('EMP_NO','EMP_NAME')->get();
-       
+
 
 
         return view('pages-profile-new', compact('user','enc_user_id','allEmployees', 'maritalStatus','genderArray','user_full_details', 'familydetails', 'exp', 'reportingManager','profileCompletenessValue','bank','data','employees','statutory_info'));
     }
 
-    
- 
-    
+
+
+
 
 }
 

@@ -425,4 +425,10 @@ class VmtEmployeePayslipService {
         }
     }
 
+
+    /*
+        Show Employee payslip as HTML
+    */
+
+
 }
