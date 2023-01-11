@@ -108,7 +108,7 @@ class VmtPaySlipController extends Controller
        //    dd("asd");
 
         //dd($request);
-        $data['employee'] = VmtEmployeePaySlip::where([
+        $data['employee_payslip'] = VmtEmployeePaySlip::where([
                         ['user_id','=', auth()->user()->id],
                         ['PAYROLL_MONTH','=', $request->selectedPaySlipMonth],
                         ])->first();
