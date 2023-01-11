@@ -231,7 +231,7 @@ class VmtEmployeePayslipService {
                 // 'pan_ack.required_if' =>'Field <b>:attribute</b> is required if <b>pan no</b> not provided ',
                 // 'required_unless' => 'Field <b>:attribute</b> is invalid',
                 'required' => 'Field <b>:attribute</b> is required',
-                'exists' => 'Field <b>:attribute</b> not exist'
+                'exists' => 'Column <b>:attribute</b> with value <b>:input</b> doesnt not exist'
 
             ];
 
