@@ -271,7 +271,6 @@
                         <div class="card mb-0 leave-history">
                             <div class="card-body">
                                 <h6 class="mb-2">Org Leave history</h6>
-
                                 <div class="table-responsive">
                                     <div id="org_leaveHistory" class="custom_gridJs"></div>
                                 </div>
