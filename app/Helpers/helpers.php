@@ -258,9 +258,11 @@ function fetchClients(){
 
     function isAppointmentLetterTemplateAvailable(){
 
-        $client_name = Str::lower(str_replace(' ', '', getCurrentClientName()) );
+        $client_name = str_replace(' ', '', sessionGetSelectedClientName());
+        
+        //$client_name = Str::lower(str_replace(' ', '', getCurrentClientName()) );
         $viewfile_appointmentletter = 'mailtemplate_appointmentletter_'.$client_name;
-
+        //dd($viewfile_appointmentletter);
         //dd('vmt_appointment_templates.'.$viewfile_appointmentletter);
         //Throw error if appointment letter missing for this client
         if (view()->exists('vmt_appointment_templates.'.$viewfile_appointmentletter)) {
