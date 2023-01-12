@@ -1608,18 +1608,27 @@
                         {
                             id: 'start_date',
                             name: 'Start Date',
-                            formatter: function formatter(cell) {
-                                //return gridjs.html(cell);
-                                return gridjs.html(moment(cell).format('DD-MM-YYYY h:mm a'));
+                            formatter: function formatter(leave_history) {
+                                // return gridjs.html(leave_history.leave_type_id);
+                                if (permissionTypeIds.includes(leave_history.leave_type_id))
+                                    return gridjs.html(moment(leave_history.start_date).format('MMM Do, YYYY, h:mm a')); // Format : Jan 9th, 2023, 3:00 pm
+                                else
+                                    return gridjs.html(moment(leave_history.start_date).format('MMM Do, YYYY'));
+
+
                             }
                         },
 
                         {
                             id: 'end_date',
                             name: 'End Date',
-                            formatter: function formatter(cell) {
+                            formatter: function formatter(leave_history) {
                                 //return gridjs.html(cell);
-                                return gridjs.html(moment(cell).format('DD-MM-YYYY h:mm a'));
+                                if (permissionTypeIds.includes(leave_history.leave_type_id))
+                                    return gridjs.html(moment(leave_history.start_date).format('MMM Do, YYYY, h:mm a')); // Format : Jan 9th, 2023, 3:00 pm
+                                else
+                                    return gridjs.html(moment(leave_history.start_date).format('MMM Do, YYYY'));
+
                             }
                         },
 
@@ -1694,8 +1703,8 @@
                                 leave_history.id,
                                 leave_history,
                                 leave_history.leave_type_id,
-                                leave_history.start_date,
-                                leave_history.end_date,
+                                leave_history,
+                                leave_history,
                                 leave_history.leave_reason,
                                 leave_history.reviewer_user_id,
                                 //leave_history.notifications_users_id,
