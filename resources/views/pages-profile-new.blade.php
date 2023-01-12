@@ -2106,6 +2106,9 @@
                                 <div class="modal-content profile-box  ">
                                     <div class="modal-header   border-0">
                         <h6>Statutory Details</h6>
+                        <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
                     </div>
                     @csrf
                     {{-- @foreach ($statutory_info as $detail)
