@@ -13,7 +13,7 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
 
 {{-- sweet alert --}}
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.16/dist/sweetalert2.all.min.js"></script>
 
 <!--Nice select-->
 <script src="{{ URL::asset('/assets/premassets/js/jquery.nice-select.min.js') }}"></script>
