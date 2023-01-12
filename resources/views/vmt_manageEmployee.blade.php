@@ -292,7 +292,6 @@
                                 emp.user_id,
                                 emp,
                                 emp.emp_name,
-                                emp.emp_name,
                                 emp.emp_code,
                                 emp.emp_designation,
                                 emp, //L1 manager code
