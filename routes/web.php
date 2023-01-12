@@ -406,6 +406,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/vmt_approval_pms',  [App\Http\Controllers\VmtApprovalsController::class, 'showPMSApprovalPage'])->name('showPMSApprovalPage');
     Route::get('/fetch_pending_pmsforms',  [App\Http\Controllers\VmtApprovalsController::class, 'fetchPendingPMSForms'])->name('fetchPendingPMSForms');
 
+    //Reimbursement Approvals
+    Route::get('/vmt_approval_reimbursements',  [App\Http\Controllers\VmtApprovalsController::class, 'showReimbursementApprovalPage'])->name('showReimbursementApprovalPage');
+    Route::get('/fetch_pending_reimbursements',  [App\Http\Controllers\VmtApprovalsController::class, 'fetchPendingReimbursements'])->name('fetchPendingReimbursements');
+    Route::get('/fetch_approved_rejected_reimbursements',  [App\Http\Controllers\VmtApprovalsController::class, 'fetchApprovedRejectedReimbursements'])->name('fetchApprovedRejectedReimbursements');
+    Route::post('/reimbursements-approve-reject', [App\Http\Controllers\VmtApprovalsController::class, 'approveRejectReimbursements'])->name('approveRejectReimbursements');
+
+
 
 
     //PMS v2

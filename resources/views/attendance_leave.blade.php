@@ -547,7 +547,7 @@
 
                                                 <select name="" id="leave_type_id"
                                                     class="form-select outline-none">
-                                                    <option value="" hidden selected disabled>Select Leave Type
+                                                    <option value="" selected>Select Leave Type
                                                     </option>
 
                                                     @foreach ($leaveTypes as $singleLeaveType)
@@ -577,9 +577,13 @@
                                             <input type="datetime-local" id="start_date"
                                                 class="form-control outline-none border-0 shadow-lite leave_date">
                                         </div>
-                                        <div class="col-md-4 text-md-center mb-md-0 ">
+                                        <div class="col-md-4 text-md-center mb-md-0 " id="div_totaldays">
                                             <p class="fw-bold  text-muted mb-2">Total Days</p>
-                                            <span class="shadow-lite px-2 py-1" id="total_leave">-</span>
+                                            <span class="shadow-lite px-2 py-1" id="total_leave_days">-</span>
+                                        </div>
+                                        <div class="col-md-4 text-md-center mb-md-0 " id="div_totalhours">
+                                            <p class="fw-bold  text-muted mb-2">Total Hours</p>
+                                            <span class="shadow-lite px-2 py-1" id="total_permission_hours">-</span>
                                         </div>
                                         <div class="col-md-4 text-md-end ">
                                             <label class="fw-bold">End Date</label>
@@ -818,8 +822,10 @@
 @section('script')
     <script>
         var leavetypes_array = <?php echo json_encode(getAllLeaveTypes()); ?>;
-        var permissionTypeIds = <?php echo json_encode(getPermissionLeaveTypeIDs()); ?>;
-        console.log("Permission Leave IDs : " + permissionTypeIds);
+        const permissionTypeIds = {{ json_encode(getPermissionLeaveTypeIDs()) }};
+
+       // permissionTypeIds = permissionTypeIds.split(',');
+        console.log("Permission Leave IDs /length: " + permissionTypeIds+" : "+permissionTypeIds.length);
 
         var employeesList_array = <?php echo json_encode($allEmployeesList); ?>;
 
@@ -835,16 +841,30 @@
         $('.close-modal').on('click', function() {
             $('#error_notify').fadeOut(100);
 
-        })
+        });
 
 
         function resetLeaveModalValues() {
 
+            //Reset leave dropdown
+            $('#leave_type_id').prop('selectedIndex',0);
+
             leave_start_date = '';
             leave_end_date = '';
+            let currentDate = new Date().toJSON().slice(0,10);
+
+            $('#start_date').attr('type','datetime-local');
+            $('#start_date').attr("min",currentDate+"T09:00:00");
+            $('#end_date').attr('type','datetime-local');
+            $('#start_date').attr("min",currentDate+"T09:00:00");
             $('#start_date').val('');
             $('#end_date').val('');
             $('#leave_reason').val('');
+            $('#total_leave_days').val('0');
+            $('#total_permission_hours').val('0');
+
+            $('#div_totalhours').hide();
+
 
         }
 
@@ -855,41 +875,113 @@
             });
 
 
+            //When start_date is chosen, then restrict end_date
+            $('#start_date').change(function (){
+                //let selectedStartDate = $('#start_date').attr("min",currentDate+"T09:00:00");
+                //let currentDate = new Date().toJSON().slice(0,10);
+
+                let selectedLeaveTypeID = $('#leave_type_id').find(":selected").val();
+
+                if (permissionTypeIds.includes(parseInt(selectedLeaveTypeID)))
+                {
+                    let endDate_time = new Date($('#start_date').val());
+                    endDate_time.setHours(endDate_time.getHours() + 1);   //add one hour to start date
+                    endDate_time = moment(endDate_time).format('YYYY-MM-DDTHH:mm');
+                   // console.log("Enddate_time : "+endDate_time);
+
+                   // $('#end_date').attr("min",endDate_time);
+                    $('#end_date').val(endDate_time);
+
+                    $('#total_permission_hours').html(1);
+                }
+                else
+                {
+                    $('#end_date').attr("min",$('#start_date').val());
+                    $('#end_date').val($('#start_date').val());
+
+                    $('#total_leave_days').html(1); // Set one day as default
+                }
+
+                console.log("Start Date selected : "+$('#start_date').val());
+
+            });
+
             //When Leave dates are changed
-            $('.leave_date').on('change', function() {
+            $('#end_date').change(function (){
+
+                let selectedLeaveTypeID = $('#leave_type_id').find(":selected").val();
 
                 //Get the date values
-                if ($(this).attr('id') == 'start_date') {
-                    leave_start_date = moment($(this).val());
-                } else
-                if ($(this).attr('id') == 'end_date') {
-                    leave_end_date = moment($(this).val());
-                }
+                let leave_start_date = moment($('#start_date').val());
+                let leave_end_date = moment($(this).val());
 
                 if (leave_start_date != '' && leave_end_date != '') {
                     //Check whether startdate is less than enddate
-                    totalDays = leave_end_date.diff(leave_start_date, 'days');
 
-                    console.log("Total days : " + totalDays);
-                    $('#total_leave').html(totalDays);
+                    if (permissionTypeIds.includes(parseInt(selectedLeaveTypeID))){
+
+
+                        var totalPermissionHours =  moment.duration(leave_end_date.diff(leave_start_date)).asHours(); // +1 added so that 1 day leave can applied when startdate and enddate are same
+                        console.log("Total permission hours : " + totalPermissionHours);
+                        //$('#total_permission_hours').html(Math.ceil(totalPermissionHours));
+                        if( totalPermissionHours < 1)
+                            $('#total_permission_hours').html('0');
+                        else
+                            $('#total_permission_hours').html(Math.ceil(totalPermissionHours));
+                    }
+                    else
+                    {
+                        var totalDays = leave_end_date.diff(leave_start_date, 'days')+1; // +1 added so that 1 day leave can applied when startdate and enddate are same
+                        console.log("Total leave days : " + totalDays);
+                        $('#total_leave_days').html(totalDays);
+
+                    }
+
                 }
             });
 
 
-            // $(document).on('#select-reviewer:open', () => {
-            //         $('.select2-search__field').focus();
-            //     });
+            $('#leave_type_id').change(function (){
+                let selectedPermissionTypeID = $('#leave_type_id').find(":selected").val();
+                console.log("Selected Leave Type : "+selectedPermissionTypeID);
+                console.log("permissionTypeIds: "+permissionTypeIds);
+
+                let currentDate = new Date().toJSON().slice(0,10);
+
+                if (permissionTypeIds.includes(parseInt(selectedPermissionTypeID))){
+                    //If permission selected, then show date & time in Start and End date dropdown
+
+                    $('#start_date').attr('type','datetime-local');
+                    $('#start_date').attr("min",currentDate+"T09:00:00");
+
+
+                    $('#start_date').attr('type','datetime-local');
+                    $('#end_date').attr('type','datetime-local');
+                    $('#div_totaldays').hide();
+                    $('#div_totalhours').show();
+                }
+                else
+                {
+                    $('#start_date').attr("min",currentDate);
+                    $('#start_date').attr('type','date');
+                    $('#end_date').attr('type','date');
+                    $('#div_totaldays').show();
+                    $('#div_totalhours').hide();
+                }
+            });
 
             $('#btn_request_leave').on('click', function(e) {
                 var start_date = $('#start_date').val();
                 var end_date = $('#end_date').val();
 
+                let total_leave = 0;//Both leave and permission types are stored here
+                let selectedLeaveTypeID = $('#leave_type_id').find(":selected").val();
+
+
                 var availableLeaves_ForSelectedLeaveType = parseInt($('#leave_type_id').find(":selected")
                     .attr('data-remainingLeaves'));
-                var totalLeaveDays = parseInt($('#total_leave').html());
 
                 console.log("Available leaves : " + availableLeaves_ForSelectedLeaveType);
-                console.log("totalLeaveDays : " + totalLeaveDays);
 
                 // errors array
                 var basic_details_errors = [];
@@ -927,41 +1019,56 @@
                 //Reset the array
                 basic_details_errors = [];
 
-                //Check the data validation
-                ////IF leave_type == Permission
                 console.log("Selected leave type : " + $('#leave_type_id').find(":selected").attr(
                     'data-leavetype'));
 
-                if ($('#leave_type_id').find(":selected").attr('data-leavetype') == 'Permission') {
-                    if (totalLeaveDays != 0) {
-                        basic_details_errors.push(
-                            "For Permission leave type : Start date and End date should be same date.");
-                    }
+
+                //for permission types
+                if (permissionTypeIds.includes(parseInt(selectedLeaveTypeID))){
 
                     let startDate = moment(start_date);
                     let endDate = moment(end_date);
+                    let daysDiff = moment.duration(endDate.diff(startDate)).asDays();
+                    console.log("Days diff : "+daysDiff);
 
-                    let timeDiff = moment.duration(endDate.diff(startDate)).asHours();
-                    console.log("Permission TimeDiff : " + timeDiff);
+                    var totalPermissionHours = parseInt($('#total_permission_hours').html());
 
-                    //Check if time diff is atleast 1hr
-                    if (timeDiff < 1.0) {
-                        basic_details_errors.push("Permission time should be atleast 1hr.");
+                    if (Math.floor(daysDiff) != 0) {
+                        basic_details_errors.push(
+                            "For Permission leave type : Start date and End date should be same date.");
+                    }
+                    else
+                    {
+                        //If day difference is less than 1, then check timediff
+
+
+                        //let timeDiff = moment.duration(endDate.diff(startDate)).asHours();
+                        console.log("Permission TimeDiff : " + totalPermissionHours);
+
+                        //Check if time diff is atleast 1hr
+                        if (totalPermissionHours < 1.0) {
+                            basic_details_errors.push("Permission time should be atleast 1hr.");
+                        }
+
+
                     }
 
 
-
                 } else {
+
+                    var totalLeaveDays = parseInt($('#total_leave_days').html());
+
+                    //For leave types
                     if (moment(start_date) > moment(end_date)) {
                         basic_details_errors.push(
-                            "Start date should not be greater than or equal to End date.");
+                            "Start date should not be greater than End date.");
                     }
 
 
                     if (availableLeaves_ForSelectedLeaveType <= 0) {
                         basic_details_errors.push("No leaves available for the selected leave type.");
                     }
-
+                    else
                     if (totalLeaveDays > availableLeaves_ForSelectedLeaveType) {
                         basic_details_errors.push(
                             "Selected leave days exceeds your available leave days for the selected leave type."
@@ -988,14 +1095,13 @@
                 }
 
                 $.ajax({
-                    url: "{{ url('attendance-applyleave') }}",
+                    url: "{{ route('attendance-applyleave') }}",
                     type: "POST",
                     dataType: "json",
                     data: {
                         'user_id': $('#leave_type_id').val(),
                         'start_date': $('#start_date').val(),
                         'end_date': $('#end_date').val(),
-                        'total_leave_datetime': $('#total_leave').html(),
                         'leave_reason': $('#leave_reason').val(),
                         'leave_type_id': $('#leave_type_id').val(),
                         'notifications_users_id': $('#notifications_users_id').val(),
@@ -1152,18 +1258,25 @@
                         {
                             id: 'start_date',
                             name: 'Start Date',
-                            formatter: function formatter(cell) {
+                            formatter: function formatter(leave_history) {
                                 //return gridjs.html(cell);
-                                return gridjs.html(moment(cell).format('DD-MM-YYYY h:mm a'));
+                                if (permissionTypeIds.includes(leave_history.leave_type_id))
+                                    return gridjs.html(moment(leave_history.start_date).format('MMM Do, YYYY, h:mm a')); // Format : Jan 9th, 2023, 3:00 pm
+                                else
+                                    return gridjs.html(moment(leave_history.start_date).format('MMM Do, YYYY'));
+
                             }
                         },
 
                         {
                             id: 'end_date',
                             name: 'End Date',
-                            formatter: function formatter(cell) {
-                                //return gridjs.html(cell);
-                                return gridjs.html(moment(cell).format('DD-MM-YYYY h:mm a'));
+                            formatter: function formatter(leave_history) {
+
+                                if (permissionTypeIds.includes(leave_history.leave_type_id))
+                                    return gridjs.html(moment(leave_history.end_date).format('MMM Do, YYYY, h:mm a'));
+                                else
+                                    return gridjs.html(moment(leave_history.end_date).format('MMM Do, YYYY'));
                             }
                         },
                         {
@@ -1172,18 +1285,23 @@
                             formatter: function formatter(leave_history) {
                                 let total_date_hours = leave_history.total_leave_datetime;
 
-                                if (permissionTypeIds.includes(leave_history.leave_type_id))
-                                    return gridjs.html(total_date_hours.split(',')[
-                                        1]); //For permissions, show only hours
+                                if(total_date_hours)
+                                {
+                                    if (permissionTypeIds.includes(leave_history.leave_type_id))
+                                        return gridjs.html(total_date_hours+" Hr(s)"); //For permissions, show only hours
+                                    else
+                                        return gridjs.html(total_date_hours+" Day(s)"); //For Leaves, show only days
+                                }
                                 else
-                                    return gridjs.html(total_date_hours.split(',')[
-                                        0]); //For Leaves, show only days
+                                {
+                                    return gridjs.html('-');
 
+                                }
                             }
                         },
                         {
                             id: 'leave_reason',
-                            name: 'Leave Reason',
+                            name: 'Reason',
                         },
                         {
                             id: 'reviewer_user_id',
@@ -1253,8 +1371,8 @@
                                 // leave_history.user_id,
                                 //leave_history,
                                 leave_history.leave_type_id,
-                                leave_history.start_date,
-                                leave_history.end_date,
+                                leave_history,
+                                leave_history,
                                 leave_history,
                                 leave_history.leave_reason,
                                 leave_history.reviewer_user_id,
