@@ -93,13 +93,13 @@
                         <div class="row">
 
                             @foreach ($leaveTypes as $singleLeaveType)
-                                @if ($singleLeaveType->leave_type != 'Permission')
+                                @if ($singleLeaveType->is_finite == "1")
                                     <div class="col-sm-3 col-sm-12 col-xl-4 col-md-4 col-lg-4 d-flex">
                                         <div class="card  box_shadow_0 border-rtb left-line w-100">
                                             <div class="card-body text-center">
                                                 <p class="text-ash-medium mb-2 f-13 ">{{ $singleLeaveType->leave_type }}</p>
                                                 <h5 class="mb-0">
-                                                    {{ $singleLeaveType->days_annual - ($leaveData_currentUser[$singleLeaveType->leave_type]->leave_availed_count ?? 0) }}
+                                                        {{ $singleLeaveType->days_annual - ($leaveData_currentUser[$singleLeaveType->leave_type]->leave_availed_count ?? 0) }}
                                                 </h5>
                                             </div>
                                         </div>
@@ -119,7 +119,7 @@
                                             <p class="text-ash-medium mb-2 f-13 ">{{ $singleLeaveType->leave_type }}</p>
                                             <h5 class="mb-0">
                                                 <?php
-                                                echo $leaveData_currentUser[$singleLeaveType->leave_type]->leave_availed_count ?? '0';
+                                                    echo $leaveData_currentUser[$singleLeaveType->leave_type]->leave_availed_count ?? '0';
                                                 ?>
                                             </h5>
 
@@ -553,14 +553,18 @@
                                                     @foreach ($leaveTypes as $singleLeaveType)
                                                         <?php
                                                         $leave_availed = $leaveData_currentUser[$singleLeaveType->leave_type]->leave_availed_count ?? 0;
-                                                        $remainingLeaves = $singleLeaveType->days_annual - $leave_availed;
+
+                                                        if($singleLeaveType->is_finite == "1")
+                                                            $remainingLeaves = $singleLeaveType->days_annual - $leave_availed;
+                                                        else
+                                                            $remainingLeaves = 'NA';
                                                         ?>
                                                         <option value="{{ $singleLeaveType->id }}"
                                                             data-leaveType="{{ $singleLeaveType->leave_type }}"
                                                             data-remainingLeaves="{{ $remainingLeaves }}">
                                                             {{ $singleLeaveType->leave_type }}
-                                                            {{-- Dont show remaining leave if leave_type == Permissions --}}
-                                                            @if ($remainingLeaves != -1)
+                                                            {{-- Dont show remaining leave if is_finite == 0 --}}
+                                                            @if ($singleLeaveType->is_finite == "1")
                                                                 ({{ $remainingLeaves }})
                                                             @endif
                                                         </option>
@@ -1034,8 +1038,7 @@
                     var totalPermissionHours = parseInt($('#total_permission_hours').html());
 
                     if (Math.floor(daysDiff) != 0) {
-                        basic_details_errors.push(
-                            "For Permission leave type : Start date and End date should be same date.");
+                        basic_details_errors.push("For Permission leave type : Start date and End date should be same date.");
                     }
                     else
                     {
@@ -1064,8 +1067,8 @@
                             "Start date should not be greater than End date.");
                     }
 
-
-                    if (availableLeaves_ForSelectedLeaveType <= 0) {
+                    // IF availableLeaves_ForSelectedLeaveType =="NA", then its 'is_finite'== 1...
+                    if (availableLeaves_ForSelectedLeaveType != "NA" && availableLeaves_ForSelectedLeaveType <= 0) {
                         basic_details_errors.push("No leaves available for the selected leave type.");
                     }
                     else
