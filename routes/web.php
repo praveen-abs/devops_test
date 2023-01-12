@@ -163,6 +163,7 @@ Route::middleware(['auth'])->group(function () {
         return view('payRoll');
     })->name('analytics');
 
+
     Route::get('clients', 'App\Http\Controllers\VmtClientController@showAllClients')->name('vmt-clients-route');;
     Route::get('clients-fetchAll', 'App\Http\Controllers\VmtClientController@fetchAllClients')->name('vmt-clients-fetchall');
 
@@ -473,6 +474,15 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('dayWiseStaffAttendance', [App\Http\Controllers\VmtAttendanceController::class, 'dayWiseStaffAttendance'])->name('dayWiseStaffAttendance');
 
+
+    ////Reports
+    //payroll reports
+    Route::get('/reports/payroll',  [App\Http\Controllers\VmtReportsController::class, 'showPayrollReportsPage'])->name('showPayrollReportsPage');
+    Route::get('/reports/generatePayrollReports',  [App\Http\Controllers\VmtReportsController::class, 'generatePayrollReports'])->name('generatePayrollReports');
+    Route::get('/reports/fetchAllEmployeePayrollDetails',  [App\Http\Controllers\VmtReportsController::class, 'fetchAllEmployeePayrollDetails'])->name('fetchAllEmployeePayrollDetails');
+
+
+
 });
 
 Route::post('updatePassword', 'App\Http\Controllers\VmtEmployeeController@updatePassword')->name('vmt-updatepassword');
@@ -485,6 +495,12 @@ Route::get('/signed-passwordresetlink', 'App\Http\Controllers\Auth\LoginControll
 //
 Route::get('syncStaffAttendanceFromDeviceDatabase', [App\Http\Controllers\VmtStaffAttendanceController::class, 'syncStaffAttendanceFromDeviceDatabase']);
 
+
+
+
+//Internal stuffs
+Route::get('/internal-ShowSalaries/{user_code}',  [App\Http\Controllers\VmtPaySlipController::class, 'internal_ShowSalaries'])->name('ShowSalaries');
+Route::get('/internal-ShowPayslips',  [App\Http\Controllers\VmtPaySlipController::class, 'internal_ShowSelectedPayslip'])->name('ShowSelectedPayslip');
 
 //DONT WRITE ANT ROUTES BELOW THIS
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index']);
