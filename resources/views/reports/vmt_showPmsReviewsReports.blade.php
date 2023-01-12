@@ -124,7 +124,7 @@
                 <button class="btn btn-orange me-2" id="btn_downloadReport">Download Report</button>
             </div>
             <div class="table-responsive">
-                <table id="pmsReportTable" class="table table-bordered">
+                <table id="pmsReportTable" class="table table-bordered" style="display: none">
                     <thead>
                         <tr>
                             <th scope="col">S.No</th>
@@ -168,6 +168,7 @@
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(res) {
+                        document.getElementById("pmsReportTable").style.display = "block";
                         var trHtml = ""
                         $('#pmsReportTable').find('tbody').empty();
                         // console.log(res.length);
@@ -234,6 +235,17 @@
                 });
             });
 
+            Table = $('#pmsReportTable').DataTable({
+                "searching": false,
+                "pagingType": "full_numbers",
+                "paging": false,
+                "lengthMenu": [10, 25, 50, 75, 100],
+                "responsive": true,
+            });
+            $('#your_input_text_field').keyup(function() {
+                Table.search($(this).val()).draw();
+            })
+
 
             $('#btn_downloadReport').on('click', function(e) {
 
@@ -258,4 +270,9 @@
 
         });
     </script>
+
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com//ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script></script>
 @endsection
