@@ -75,6 +75,7 @@ function getOrganization_HR_Details(){
         ->where('users.id',$master_config_value)->first(['users.name','vmt_employee_office_details.officical_mail']);
 
     }
+    // dd($hr_details);
 
     return $hr_details;
 
