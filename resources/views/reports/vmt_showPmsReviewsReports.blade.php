@@ -149,8 +149,19 @@
     </div>
 @endsection
 @section('script')
+    <link href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet" />
+    {{-- <script src="https://ajax.googleapis.com//ajax/libs/jquery/3.3.1/jquery.min.js"></script> --}}
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function() {
+            $('#pmsReportTable').DataTable({
+                "searching": true,
+                "pagingType": "full_numbers",
+                "paging": true,
+                "ordering": false,
+                "lengthMenu": [10, 25, 50, 75, 100],
+                "responsive": true,
+            });
 
             let calenderType = '{{ $query_configPms->calendar_type }}';
             //let year = $('#year').val();
@@ -235,16 +246,17 @@
                 });
             });
 
-            Table = $('#pmsReportTable').DataTable({
-                "searching": false,
-                "pagingType": "full_numbers",
-                "paging": false,
-                "lengthMenu": [10, 25, 50, 75, 100],
-                "responsive": true,
-            });
-            $('#your_input_text_field').keyup(function() {
-                Table.search($(this).val()).draw();
-            })
+            // Table = $('#pmsReportTable').DataTable({
+            //     "searching": false,
+            //     "pagingType": "full_numbers",
+            //     "paging": false,
+            //     "ordering": true,
+            //     "lengthMenu": [10, 25, 50, 75, 100],
+            //     "responsive": true,
+            // });
+            // $('#your_input_text_field').keyup(function() {
+            //     Table.search($(this).val()).draw();
+            // })
 
 
             $('#btn_downloadReport').on('click', function(e) {
@@ -270,9 +282,4 @@
 
         });
     </script>
-
-    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
-    <script src="https://ajax.googleapis.com//ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script></script>
 @endsection
