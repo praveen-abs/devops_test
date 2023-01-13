@@ -108,7 +108,7 @@
                         <ul class="nav nav-pills    nav-tabs-dashed" id="pills-tab" role="tablist">
                             <li class="nav-item  " role="presentation">
                                 <a class="nav-link active " id="" data-bs-toggle="pill" href=""
-                                    data-bs-target="#employee_det" role="tab" aria-controls="pills-home"
+                                    data-bs-target="#employee_details" role="tab" aria-controls="pills-home"
                                     aria-selected="true">
                                     Employee Details</a>
                             </li>
@@ -143,15 +143,12 @@
                                     aria-selected="true">
                                     Document</a>
                             </li>
-
                         </ul>
                     </div>
-
                 </div>
 
-                  <form id="form1"></form>
                 <div class="tab-content " id="pills-tabContent">
-                    <div class="tab-pane fade active show" id="employee_det" role="tabpanel" aria-labelledby="">
+                    <div class="tab-pane fade active show" id="employee_details" role="tabpanel" aria-labelledby="">
                         <div class="card mb-2">
                             <div class="card-body">
                                 <h6 class="">General Information
@@ -183,9 +180,7 @@
                                         </li>
                                         <li class="border-bottom-liteAsh pb-1">
                                             <div class="title"> Blood Group</div>
-                                            <div class="text">
-
-                                                {{ $user_full_details->blood_group_id ?? '-' }}</div>
+                                            <div class="text">{{ getBloodGroupName($user_full_details->blood_group_id) ?? '-' }}</div>
                                         </li>
                                         <li class=" pb-1">
                                             <div class="title">Physically Handicapped</div>
@@ -1555,15 +1550,15 @@
                                                 <tbody>
 
 
-                                                                </tbody>
-                                                            </table>
+                                                </tbody>
+                                            </table>
 
-                                                        </div>
+                                        </div>
 
-                                                    </div>
-                                                </div>
-                                                </form>
-                                            </div>
+                                    </div>
+                                </div>
+                                </form>
+                            </div>
 
                                                                 {{-- <img src='{{ URL::asset('svg_icon_pending') }}' alt='view' title='view' class='icon'>  --}}
 
@@ -1619,8 +1614,6 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    @csrf
-
                         <div class="col-md-6">
                             <div class="form-group mb-3">
                                 <label>Birth Date<span class="text-danger">*</span></label>
@@ -1670,6 +1663,20 @@
                             </div>
                         </div>
 
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label>Blood Group <span class="text-danger"></span></label>
+                                <select class="form-select form-control text-capitalize" name="blood_group" required>
+                                    <option class="" selected hidden disabled>Select Blood Group</option>
+                                    @foreach ($array_bloodgroup as $bloodgroup)
+                                        <option @if (!empty($user_full_details->blood_group_id) && $user_full_details->blood_group_id == $bloodgroup->id) selected @endif
+                                            value="{{ $bloodgroup->id }}">{{ $bloodgroup->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
 
                          <div class="col-md-6">
                             <div class="form-group mb-3">
@@ -1690,7 +1697,6 @@
                                 <button id="btn_submit_generalInfo" class="btn btn-orange submit-btn">Submit</button>
                             </div>
                         </div>
-                    </form>
                 </div>
             </div>
         </div>
@@ -2535,6 +2541,7 @@
             var gender=$("select[name='gender']").val();
             var doj=$("input[name='doj']").val();
             var marital_status=$("select[name='marital_status']").val();
+            var blood_group=$("select[name='blood_group']").val();
 
          $.ajax({
                 url: "{{ route('updateGeneralInfo', $user->id) }}",
@@ -2544,6 +2551,7 @@
                         gender : gender,
                         doj    :  doj,
                         marital_status : marital_status,
+                        blood_group : blood_group,
                         _token : '{{ csrf_token() }}'
                     },
                     success: function(data) {

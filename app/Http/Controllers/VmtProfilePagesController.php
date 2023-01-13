@@ -2,26 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use \Datetime;
-use Carbon\Carbon;
 use Session as Ses;
 use App\Models\User;
 use App\Models\Bank;
 use App\Models\Experience;
+use App\Models\VmtBloodGroup;
 use App\Models\VmtEmployee;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Session;
 use App\Models\VmtEmployeeFamilyDetails;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtEmployeeStatutoryDetails;
 use App\Models\VmtEmployeePaySlip;
-use App\Imports\VmtPaySlip;
 use App\Services\VmtEmployeePayslipService;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 
@@ -82,20 +74,20 @@ use Illuminate\Support\Facades\Crypt;
                 ->get();
 
         $employees = VmtEmployeePaySlip::select('EMP_NO','EMP_NAME')->get();
-
-
-
-        return view('pages-profile-new', compact('user','enc_user_id','allEmployees', 'maritalStatus','genderArray','user_full_details', 'familydetails', 'exp', 'reportingManager','profileCompletenessValue','bank','data','employees','statutory_info'));
+        $array_bloodgroup = VmtBloodGroup::all(['name', 'id']);
+        //dd($user_full_details);
+        return view('pages-profile-new', compact('user','array_bloodgroup','enc_user_id','allEmployees', 'maritalStatus','genderArray','user_full_details', 'familydetails', 'exp', 'reportingManager','profileCompletenessValue','bank','data','employees','statutory_info'));
     }
 
 
     public function updateGeneralInfo(Request $request) {
-        // dd($request->all());
+        //dd($request->all());
          $details = VmtEmployee::where('userid', $request->id)->first();
          $details->dob = $request->input('dob');
          $details->gender = $request->input('gender');
          $details->marital_status = $request->input('marital_status');
          $details->doj=$request->input('doj');
+         $details->blood_group_id = $request->input('blood_group');
 
          $details->save();
 
@@ -104,25 +96,25 @@ use Illuminate\Support\Facades\Crypt;
 
      public function updateContactInfo(Request $request){
 
-           $user = User::find($request->id);
-           $user->email=$request->input('present_email');
-           $user->save();
+        $user = User::find($request->id);
+        $user->email=$request->input('present_email');
+        $user->save();
 
-           $employee_office_details=VmtEmployeeOfficeDetails::where('user_id',$request->id)->first();
-           $employee_office_details->officical_mail=$request->input('officical_mail');
-           $employee_office_details->save();
+        $employee_office_details=VmtEmployeeOfficeDetails::where('user_id',$request->id)->first();
+        $employee_office_details->officical_mail=$request->input('officical_mail');
+        $employee_office_details->save();
 
-           $details = VmtEmployee::where('userid', $request->id)->first();
+        $details = VmtEmployee::where('userid', $request->id)->first();
 
-           //dd($details);
-           if($details->exists())
-           {
-               $details->mobile_number = $request->input('mobile_number');
-               $details->save();
-            }
+        //dd($details);
+        if($details->exists())
+        {
+            $details->mobile_number = $request->input('mobile_number');
+            $details->save();
+        }
 
-              return redirect()->back();
-             }
+        return redirect()->back();
+    }
 
 
 

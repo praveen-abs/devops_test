@@ -40,6 +40,13 @@ function getClientList(){
     return VmtClientMaster::all();
 }
 
+function getBloodGroupName($blood_group_id){
+    if(!empty($blood_group_id))
+        return VmtBloodGroup::find($blood_group_id)->name;
+    else
+        return null;
+}
+
 function sessionGetSelectedClientCode(){
     $query_client = VmtClientMaster::find(session('client_id'));
 
