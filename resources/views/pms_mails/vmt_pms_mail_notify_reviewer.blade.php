@@ -98,7 +98,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                                                         Complete the OKR/PMS within the time frame.
                                                     </p>
                                                     <p>
-                                                        <a class="" href="{{ $loginLink }}/team-appraisal">
+                                                        <a class="" href="{{ $loginLink }}">
                                                             Kindly visit the HRMS portal for more details
                                                         </a>
                                                     </p>

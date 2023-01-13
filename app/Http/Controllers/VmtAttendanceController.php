@@ -564,7 +564,8 @@ class VmtAttendanceController extends Controller
                         'date' => $dateString,
                         'checkin_time' => $deviceCheckInTime,
                         'checkout_time' => $deviceCheckOutTime,
-                        'attendance_mode' => 'biometric'
+                        'attendance_mode_checkin' => 'biometric',
+                        'attendance_mode_checkout' => 'biometric'
                     );
                 }
             }
@@ -576,7 +577,7 @@ class VmtAttendanceController extends Controller
         $attendance_WebMobile = VmtEmployeeAttendance::where('user_id', $request->user_id)
             ->whereMonth('date', $request->month)
             ->orderBy('checkin_time', 'asc')
-            ->get(['date', 'checkin_time', 'checkout_time','attendance_mode']);
+            ->get(['date', 'checkin_time', 'checkout_time','attendance_mode_checkin','attendance_mode_checkout']);
 
         //dd($attendance_WebMobile);
 
@@ -604,7 +605,7 @@ class VmtAttendanceController extends Controller
            $fulldate = $year."-".$month."-".$date;
 
 
-           $attendanceResponseArray[$fulldate] = array( "user_id"=>$request->user_id,"isAbsent"=>false, "attendance_mode"=>null,
+           $attendanceResponseArray[$fulldate] = array( "user_id"=>$request->user_id,"isAbsent"=>false, "attendance_mode_checkin"=>null, "attendance_mode_checkout"=>null,
                                                         "absent_status"=>null,"checkin_time"=>null, "checkout_time"=>null,
                                                         "isLC"=>false, "lc_status"=>null, "lc_reason"=>null,"lc_reason_custom"=>null,
                                                         "isEG"=>false, "eg_status"=>null, "eg_reason"=>null,"eg_reason_custom"=>null,
@@ -628,6 +629,9 @@ class VmtAttendanceController extends Controller
         //dd($merged_attendanceData);
         //dd($dateWiseData);
         foreach ($dateWiseData  as $key => $value) {
+
+           // dd($value[0]);
+
             /*
                 Here $key is the date. i.e : 2022-10-01
 
@@ -638,14 +642,60 @@ class VmtAttendanceController extends Controller
                         checkin_time=18:06:00
                         checkout_time=18:06:00
                         attendance_mode="web"
+                    ],
+                    [
+                        ....
+                        attendance_mode="biometric"
+
                     ]
 
             */
+            //Compare the checkin,checkout time between all attendance modes and get the min(checkin) and max(checkout)
+
+            $checkin_min = null;
+            $checkout_max = null;
+            $attendance_mode_checkin = null;
+            $attendance_mode_checkout = null;
+
+            //dd($value);
+            foreach($value as $singleValue)
+            {
+                //Find the min of checkin
+                if ($checkin_min == null) {
+                    $checkin_min = $singleValue["checkin_time"];
+                    $attendance_mode_checkin = $singleValue["attendance_mode_checkin"];
+                }
+                else
+                if ($checkin_min > $singleValue["checkin_time"]) {
+                    $checkin_min = $singleValue["checkin_time"];
+                    $attendance_mode_checkin = $singleValue["attendance_mode_checkin"];
+                }
+
+                    //dd("Min value found : " . $singleValue["checkin_time"]);
+
+                //Find the max of checkin
+                if ($checkout_max == null) {
+                    $checkout_max = $singleValue["checkout_time"];
+                    $attendance_mode_checkout = $singleValue["attendance_mode_checkout"];
+                }
+                else
+                if ($checkout_max < $singleValue["checkout_time"]) {
+                    $checkout_max = $singleValue["checkout_time"];
+                    $attendance_mode_checkout = $singleValue["attendance_mode_checkout"];
+
+                }
+
+            }
+
+            //dd("end : Check-in : ".$checkin_min." , Check-out : ".$checkout_max);
 
             //dd($value[0]["attendance_mode"]);
-            $attendanceResponseArray[$key]["checkin_time"] = $value->min('checkin_time') ;
-            $attendanceResponseArray[$key]["checkout_time"] = $value->max('checkout_time');
-            $attendanceResponseArray[$key]["attendance_mode"] = $value[0]["attendance_mode"];
+            $attendanceResponseArray[$key]["checkin_time"] = $checkin_min;
+            $attendanceResponseArray[$key]["checkout_time"] = $checkout_max;
+
+            //TODO :: Based on which checkin, checkout time taken, its corresponding attendance modes has to be assigned here
+            $attendanceResponseArray[$key]["attendance_mode_checkin"] = $attendance_mode_checkin;
+            $attendanceResponseArray[$key]["attendance_mode_checkout"] = $attendance_mode_checkout;
 
         }
         //dd($attendanceResponseArray);

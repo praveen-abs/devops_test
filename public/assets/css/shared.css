@@ -9,7 +9,8 @@
     --color-dark-green: #027419;
     --color-medium-ash: #c9c9c9;
     --color-lite-ash: #e2e2e2;
-    --color-dark-lite: #858585;
+
+
 }
 
 .h_80 {
@@ -19,6 +20,9 @@
 .form-control,
 .form-select {
     font-size: 13px;
+}
+.border-lite-ash{
+    border: var(--color-lite-ash);
 }
 
 :hover,
@@ -1627,4 +1631,7 @@ table.no_borderRadius tr th:last-child {
 
 table.dataTable.no-footer {
     border-bottom: transparent !important;
+}
+.error{
+    color: red;
 }

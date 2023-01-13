@@ -268,7 +268,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                         </p>
                                                         <p>
                                                                 <a class=""
-                                                                        href="{{ $login_Link }}/employee-appraisal">
+                                                                        href="{{ $login_Link }}">
 
                                                                         Kindly visit the HRMS portal for more details
                                                                     </a>
@@ -423,7 +423,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                             frame.</p>
                                                         <p>
                                                         <a class=""
-                                                                href="{{ $login_Link }}/employee-appraisal">
+                                                                href="{{ $login_Link }}">
 
                                                                 Kindly visit the HRMS portal for more details
                                                             </a>
@@ -561,7 +561,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                             If you have any questions or concerns, don’t hesitate to reach out to your reporting manager or the HR team.
                                                         </p>
                                                         <p>
-                                                            <a class="" href="{{ $login_Link }}/employee-appraisal">
+                                                            <a class="" href="{{ $login_Link }}">
                                                                 Kindly visit the HRMS portal for more details
                                                             </a>
                                                         </p>
