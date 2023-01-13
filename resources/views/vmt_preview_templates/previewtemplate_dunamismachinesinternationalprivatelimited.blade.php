@@ -5,15 +5,20 @@
 @section('css')
     <link href="{{ URL::asset('assets/css/preview_template.css') }}" rel="stylesheet">
     <style>
-        table.arderns_salaryTable {
-
-            font-size: 14px !important;
-        }
-
-        table.arderns_salaryTable tr td,
-        table.arderns_salaryTable tr {
+        table.dunamis_table tr td,
+        table.dunamis_table tr {
             border: 1px solid #000 !important;
             padding: 0px 10px;
+            font-size: 14px;
+            border-radius: 0px !important;
+        }
+
+        .bg-blue {
+            background: #6292CF;
+        }
+
+        .txt-white {
+            color: #fff;
         }
     </style>
 @endsection
@@ -43,7 +48,7 @@
                 <div class="tab-pane fade show active" id="appointment" role="tabpanel" aria-labelledby="pills-home-tab">
                     <div id="carousel_template" class="carousel slide" data-bs-touch="false" data-bs-interval="false">
                         <div class="carousel-inner">
-                            <div class="carousel-item active">
+                            <div class="carousel-item active ">
                                 <div class="main-page appointment-letter">
 
                                     <div class="sub-page" style="padding:0px;">
@@ -111,16 +116,30 @@
                                                                             pm. You may contact the Help Desk through one of
                                                                             the two methods below:
                                                                         </p>
-                                                                        <p class="txt-left pt-5 ">
-                                                                            <span> Log in to </span><a
-                                                                                href="ess.abshrms.com">ess.abshrms.com</a>
 
-                                                                        </p>
-                                                                        <p class="txt-left pt-pb-5">
-                                                                            <span> Email</span>
-                                                                            us at <a
-                                                                                href="payroll@ardens.in">payroll@ardens.in</a>
-                                                                        </p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <ol style="list-style: none">
+
+                                                                            <li>
+                                                                                <img src="{{ URL::asset('assets/images/list_style.png') }}"
+                                                                                    alt=""
+                                                                                    style="padding-right:10px ">
+                                                                                <span> Log in to </span><a
+                                                                                    href="ess.abshrms.com">ess.abshrms.com</a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <img src="{{ URL::asset('assets/images/list_style.png') }}"
+                                                                                    alt=""
+                                                                                    style="padding-right:10px ">
+                                                                                <span> Email</span>
+                                                                                us at <a
+                                                                                    href="payroll@ardens.in">payroll@ardens.in</a>
+                                                                            </li>
+
+                                                                        </ol>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -137,63 +156,86 @@
                                                                 </tr>
                                                                 <tr>
                                                                     <td colspan="12" align="left">
-                                                                        <p class="txt-left a pt-10">
-                                                                            <b>Professionalism:</b>
-                                                                            Our staff expertise responds to high complex
-                                                                            needs
-                                                                        </p>
 
-                                                                    </td>
-                                                                </tr>
+                                                                        <ol style="list-style: none">
+
+                                                                            <li>
+                                                                                <p class="pt-10">
+                                                                                    <img src="{{ URL::asset('assets/images/list_style.png') }}"
+                                                                                    alt=""
+                                                                                    style="padding-right:10px ">
+                                                                                    <b>Professionalism:</b>
+                                                                                    Our staff expertise responds to high complex
+                                                                                    needs
+                                                                                </p>
+
+                                                                            </li>
+                                                                            <li>
+
+                                                                                <p class="txt-left a pt-10">
+                                                                                    <img src="{{ URL::asset('assets/images/list_style.png') }}"
+                                                                                    alt=""
+                                                                                    style="padding-right:10px ">
+                                                                                    <b>Proximity:</b>
+                                                                                    Build open relationships with clients
+                                                                                </p>
+                                                                            </li>
+                                                                            <li>
+
+                                                                                <p class="txt-left a pt-10">
+                                                                                    <img src="{{ URL::asset('assets/images/list_style.png') }}"
+                                                                                    alt=""
+                                                                                    style="padding-right:10px ">
+                                                                                    <b>Proactivity: </b>
+                                                                                    Not only follow the customer demand but
+                                                                                    anticipate and customize intelligent
+                                                                                    solutions
+                                                                                </p>
+                                                                            </li>
+                                                                            <li>
 
 
-                                                                <tr>
-                                                                    <td colspan="12" style=" " align="left">
-                                                                        <p class="txt-left a pt-10">
-                                                                            <b>Proximity:</b>
-                                                                            Build open relationships with clients
-                                                                        </p>
-                                                                    </td>
-                                                                </tr>
+                                                                                <p class="txt-left a pt-10">
+                                                                                    <img src="{{ URL::asset('assets/images/list_style.png') }}"
+                                                                                    alt=""
+                                                                                    style="padding-right:10px ">
+                                                                                    <b>Proficiency: </b>
+                                                                                    High standards, ability to use
+                                                                                    innovative
+                                                                                    technology to meet client’s expectations
+                                                                                </p>
+                                                                            </li>
+                                                                            <li>
+
+                                                                                <p class="txt-left a pt-10">
+                                                                                    <img src="{{ URL::asset('assets/images/list_style.png') }}"
+                                                                                    alt=""
+                                                                                    style="padding-right:10px ">
+                                                                                    <b>People: </b>
+                                                                                    Finally, payroll is all about people.
+                                                                                    Our
+                                                                                    experts focus their activity to deliver
+                                                                                    accurate
+                                                                                    pay sheets and rapports to facilitate
+                                                                                    the
+                                                                                    employee’s life.
+                                                                                </p>
+                                                                            </li>
+                                                                            <li>
+
+                                                                                <p class="txt-left a pt-10">
+                                                                                    <img src="{{ URL::asset('assets/images/list_style.png') }}"
+                                                                                    alt=""
+                                                                                    style="padding-right:10px ">
+                                                                                    <b>Progress: </b>
+                                                                                    Innovation is at the core of our
+                                                                                    business
+                                                                                </p>
+                                                                            </li>
+
+                                                                        </ol>
 
 
-                                                                <tr>
-                                                                    <td colspan="12" style=" " align="left">
-                                                                        <p class="txt-left a pt-10">
-                                                                            <b>Proactivity: </b>
-                                                                            Not only follow the customer demand but
-                                                                            anticipate and customize intelligent solutions
-                                                                        </p>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-
-                                                                <tr>
-                                                                    <td colspan="12" style=" " align="left">
-                                                                        <p class="txt-left a pt-10">
-                                                                            <b>Proficiency: </b>
-                                                                            High standards, ability to use innovative
-                                                                            technology to meet client’s expectations
-                                                                        </p>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td colspan="12" style=" " align="left">
-                                                                        <p class="txt-left a pt-10">
-                                                                            <b>People: </b>
-                                                                            Finally, payroll is all about people. Our
-                                                                            experts focus their activity to deliver accurate
-                                                                            pay sheets and rapports to facilitate the
-                                                                            employee’s life.
-                                                                        </p>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td colspan="12" style=" " align="left">
-                                                                        <p class="txt-left a pt-10">
-                                                                            <b>Progress: </b>
-                                                                            Innovation is at the core of our business
-                                                                        </p>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -203,7 +245,7 @@
                                                                             exciting journey with ABS while enhancing your
                                                                             professional stature, along the way.
                                                                         </p>
-                                                                        <p class="txt-left pt-30">
+                                                                        <p class="txt-left " style="padding-top:25px;">
                                                                             <b>For Ardens Business Solutions Private
                                                                                 Limited</b>
                                                                         </p>
@@ -233,7 +275,7 @@
                                                 <tr>
                                                     <td>
                                                         <div class="logo"
-                                                            style="width:100%;height:fit-content;padding-top:34px;">
+                                                            style="width:100%;height:fit-content;">
                                                             <img src="{{ URL::asset('assets/images/footer.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100%;width:100%;">
@@ -264,7 +306,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td align="center" style="padding:1cm;">
+                                                    <td align="center" style="padding:1cm 1cm 0 1cm;">
                                                         <table class="table-one">
                                                             <tbody>
                                                                 <tr>
@@ -276,108 +318,213 @@
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
+                                                                    <td colspan="12" align="" class="pb-10">
+                                                                        <p class="fw-600 txt-left">
+                                                                            To,
+                                                                        </p>
+                                                                        <p class="fw-600 pt-5 txt-left">
+                                                                            Mr.George
+                                                                        </p>
+                                                                        <p class="fw-600 pt-5 txt-left">
+                                                                            Employee Code -Abs1009
+                                                                        </p>
+
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr>
                                                                     <td colspan="12" align="center">
-                                                                        <p class="fw-600 txt-center " style="">
-                                                                            LETTER OF APPOINTMENT
+                                                                        <p class="fw-600 txt-center pb-10" style="">
+                                                                            FIXED-TERM CONTRACT OF EMPLOYMENT
                                                                         </p>
 
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td colspan="12" style=" " align="left">
-                                                                        <p class="fw-600 txt-left pt-30" style="">
-                                                                            Dear &emsp; &emsp; &emsp;,
+                                                                    <td colspan="12" align="">
+                                                                        <p class=" pb-10" style="">
+                                                                            We are pleased to appoint you to our
+                                                                            organization as SENIOR EXCUTIVE, for a fixed
+                                                                            period of employment, on the following terms and
+                                                                            conditions:
                                                                         </p>
-                                                                        <p class="pt-pb-5">We are glad to appoint you as
-                                                                            “<b>Executive - HR</b>” in our company, Ardens
-                                                                            Business Solutions Private Limited.</p>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td colspan="12" align="">
+                                                                        <ol>
+                                                                            <li class="">Your contract of employment
+                                                                                shall be valid
+                                                                                for a period of 1 year from 11/Aug/2022 to
+                                                                                10/Aug/2023 Notwithstanding this, in the
+                                                                                event of the project/ work for which you are
+                                                                                being employed comes to an end before the
+                                                                                aforementioned period, this contract shall
+                                                                                be co- terminus with the aforementioned
+                                                                                project/work. At the end of the above
+                                                                                referred period, the contract will stand
+                                                                                terminated automatically without any notice
+                                                                                or communication to you, unless they are
+                                                                                explicitly extended by us by a letter
+                                                                                inwriting
+
+                                                                            </li>
+                                                                            <li class="pt-5">
+                                                                                Notwithstanding anything above, depending
+                                                                                upon the aforementioned project/work, the
+                                                                                Company reserves its right to extend your
+                                                                                temporary appointment for such period or
+                                                                                periods as may be necessary depending upon
+                                                                                the exigencies relatable to the work for
+                                                                                which you are hereby engaged. In that event,
+                                                                                the Company shall in writing extend your
+                                                                                temporary assignment on the terms as may be
+                                                                                indicated in such letter, and in the event
+                                                                                of your acceptance of the such extension of
+                                                                                the assignment, you shall be governed by
+                                                                                such terms and conditions as may be
+                                                                                indicated therein.
+                                                                            </li>
+                                                                            <li class="pt-5">
+                                                                                During the period of the fixed contract,
+                                                                                your services could be deputed at the sole
+                                                                                discretion of the Management to any of our
+                                                                                client’s companies or locations to do work
+                                                                                pertaining to or incidental to the client's
+                                                                                business.
+                                                                            </li>
+                                                                            <li class="pt-5">
+                                                                                Details of your salary break up with
+                                                                                components are as per <span class="fw-600">
+                                                                                    Annexure1</span>
+                                                                            </li>
+                                                                            <li class="pt-5">
+                                                                                You will be entitled to an employer's
+                                                                                contribution to the Provident Fund to the
+                                                                                extent of 12% or 1800/- restricted wages of
+                                                                                your gross salary excluding house rent
+                                                                                allowance.
+                                                                            </li>
+                                                                            <li class="pt-5">
+                                                                                You will be eligible to get the ESIC medical
+                                                                                benefits for you and your immediate family
+                                                                                members if your gross wages are less than or
+                                                                                equal to 21000/-.
+                                                                            </li>
+                                                                            <li class="pt-5">
+                                                                                You will be eligible for leave as per the
+                                                                                client's company policy, during the period
+                                                                                of your contract of employment.
+                                                                            </li>
+                                                                            <li class="pt-5">
+                                                                                You will be entitled to all other statutory
+                                                                                benefits wherever applicable during the
+                                                                                fixed period ofthe contract.
+                                                                            </li>
+                                                                            <li class="pt-5"
+                                                                                style="padding-bottom: 25px">
+                                                                                You are advised to read and understand ABS
+                                                                                Health & Safety Policy for associates
+                                                                                (Annexure 2) and comply with relevant
+                                                                                policies that are in practice at Ardens
+                                                                                Business Solutions Private Limited.
+                                                                                Adherence to the stated and relevant
+                                                                                policies is a condition of employment with
+                                                                                ABS. In the event you are found to be
+                                                                                non-compliant with any of the applicable
+                                                                                policies, ABS reserves the right to take
+                                                                                necessary action against you.
+
+                                                                            </li>
+                                                                        </ol>
+                                                                    </td>
+                                                                </tr>
+
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="logo" style="width:100%;height:fit-content;">
+                                                            <img src="{{ URL::asset('assets/images/footer.jpg') }}"
+                                                                alt="" class=""
+                                                                style="height:100%;width:100%;">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="carousel-item  ">
+                                <div class="main-page appointment-letter">
+                                    <div class="sub-page" style="padding:0px;">
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <div class="logo" style="width:100%;height:fit-content;">
+                                                            <img src="{{ URL::asset('assets/images/header.jpg') }}"
+                                                                alt="" class=""
+                                                                style="height:100%;width:100%;">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" style="padding:1cm 1cm 0 1cm;">
+                                                        <table class="table-one">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td colspan="12" align="">
+
+                                                                        <ol start="10">
+                                                                            <li>
+                                                                                <p>
+                                                                                    This contract shall be terminable by
+                                                                                    either
+                                                                                    party giving 15 days’ notice in writing
+                                                                                    or
+                                                                                    salary in lieu of notice, to the other.
+                                                                                </p>
+                                                                            </li>
+                                                                        </ol>
+
 
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td colspan="12" style=" " align="left">
-                                                                        <p class="txt-left pt-10">
-                                                                            <b>Remuneration:</b>
-                                                                            Your total remuneration package (CTC) per annum
-                                                                            is <b>&emsp; &emsp;</b> per annum (Rupees One
-                                                                            Lakhs Eighty Thousand and Forty-Eight Only). The
-                                                                            break-up of your compensation package shall be
-                                                                            as detailed in Annexure A.
-                                                                        </p>
-
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td colspan="12" align="left">
+                                                                    <td colspan="12" align="" class="pt-10">
                                                                         <p class="txt-left a pt-10">
-                                                                            <b>Commencement:</b>
-                                                                            Your employment with the company Ardens Business
-                                                                            Solutions Private Limited will be with effect
-                                                                            from <b>03-OCT-2022</b>. You shall initially be
-                                                                            placed in Chennai. You may however be required
-                                                                            to travel and may be positioned or deputed
-                                                                            outside within India or abroad.
+                                                                            We are consciously endeavoring to build an
+                                                                            atmosphere of trust, openness, responsiveness,
+                                                                            autonomy, and growth among all members of the
+                                                                            ABS family. As a new entrant, we would like you
+                                                                            to wholeheartedly contribute to this process.
                                                                         </p>
-
-                                                                    </td>
-                                                                </tr>
-
-
-                                                                <tr>
-                                                                    <td colspan="12" style=" " align="left">
                                                                         <p class="txt-left a pt-10">
-                                                                            <b>Rules and Regulations:</b>
-                                                                            You shall be governed by the policies of the
-                                                                            company as specified in Annexure B. You shall
-                                                                            serve the Company and shall carry out such
-                                                                            duties which will be explained and defined by
-                                                                            your manager (immediate superior), subject
-                                                                            always to the employee policy and the rules and
-                                                                            regulations of the Company. Your employment
-                                                                            shall continue to be governed by the terms of
-                                                                            this appointment letter in the event of you
-                                                                            being deputed or positioned outside India.
+                                                                            As a token of your acceptance of the above terms
+                                                                            and conditions, you are requested to sign the
+                                                                            duplicate copy of this letter and return it to
+                                                                            us.
                                                                         </p>
-                                                                    </td>
-                                                                </tr>
 
-
-                                                                <tr>
-                                                                    <td colspan="12" style=" " align="left">
-                                                                        <p class="txt-left a pt-10">
-                                                                            <b>Reporting</b>
-                                                                        </p>
-                                                                        <p>
-                                                                            You will report to
-                                                                            “<b>&emsp;&emsp;&emsp;&emsp;</b>”.
-                                                                        </p>
-                                                                        <p class="txt-left a pt-5">
-                                                                            We welcome you to our team. We are confident
-                                                                            that you will make an effective contribution to
-                                                                            the growth of the company and will enjoy working
-                                                                            with us.
-                                                                        </p>
-                                                                        <p class="txt-left a pt-5">
-                                                                            You will be under probation for a period of six
-                                                                            months. Your confirmation will be based on the
-                                                                            evaluation during the end of the probation
-                                                                            period.
-                                                                        </p>
-                                                                        <p class="txt-left a pt-5">
-                                                                            If you are agreeable to the terms and conditions
-                                                                            of the appointment (Annexure B), then kindly
-                                                                            confirm your acceptance of the appointment by
-                                                                            signing and returning to us the attached copy of
-                                                                            this letter.
+                                                                        <p class="pt-10 ">
+                                                                            Wishing you the very best!
                                                                         </p>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td colspan="12"align="left">
                                                                         <p class="txt-left pt-30 ">
-                                                                            Yours faithfully,
+                                                                            Yours truly,
                                                                         </p>
-                                                                        <p class="txt-left">
+                                                                        <p class="txt-left pt-10">
                                                                             <b>For Ardens Business Solutions Private
                                                                                 Limited</b>
                                                                         </p>
@@ -398,29 +545,388 @@
                                                                         </p>
                                                                     </td>
                                                                 </tr>
+                                                                <tr>
+                                                                    <td colspan="12" align="left">
+                                                                        <hr style="border: 1px solid black;">
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="12" style="padding-top: 0cm;"
+                                                                        align="left">
+                                                                        <p>
+                                                                            I <b>&emsp;&emsp;&emsp;</b>, have understood and
+                                                                            accepted the appointment upon the terms and
+                                                                            conditions as outlined in this appointment
+                                                                            letter for my position at Ardens Business
+                                                                            Solutions Privat Limited
+                                                                        </p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="12" align="left">
+                                                                        <p class="txt-left pt-30 fw-600 ">
+
+                                                                            Acceptance
+                                                                        </p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="6" style="padding-top: 1cm;"
+                                                                        align="left">
+                                                                        <p class="txt-left fw-600">
+                                                                            Signature:
+                                                                        </p>
+                                                                    </td>
+                                                                    <td colspan="6" style="padding-top: 1cm;"
+                                                                        align="center">
+                                                                        <p class="txt-right fw-600">
+                                                                            Date:
+                                                                        </p>
+                                                                    </td>
+                                                                </tr>
                                                             </tbody>
                                                         </table>
                                                     </td>
                                                 </tr>
+
                                                 <tr>
                                                     <td>
                                                         <div class="logo"
-                                                            style="width:100%;height:fit-content;padding-top:63px;">
+                                                            style="width:100%;height:fit-content;padding-top:297px;">
                                                             <img src="{{ URL::asset('assets/images/footer.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100%;width:100%;">
                                                         </div>
                                                     </td>
                                                 </tr>
-
                                             </tbody>
-
                                         </table>
+
+
                                     </div>
 
                                 </div>
                             </div>
-                            <div class="carousel-item ">
+                            <div class="carousel-item  ">
+                                <div class="main-page appointment-letter">
+                                    <div class="sub-page" style="padding:0px;">
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <div class="logo" style="width:100%;height:fit-content;">
+                                                            <img src="{{ URL::asset('assets/images/header.jpg') }}"
+                                                                alt="" class=""
+                                                                style="height:100%;width:100%;">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" style="padding:1cm 1cm 0 1cm;">
+                                                        <table class="table-one">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td colspan="12" align="right">
+                                                                        <p class="fw-600 txt-right">
+                                                                            Date:
+                                                                        </p>
+
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="12" align="" class="pb-10">
+                                                                        <p class="fw-600 txt-left">
+                                                                            To,
+                                                                        </p>
+                                                                        <p class="fw-600 pt-5 txt-left">
+                                                                            Mr.George
+                                                                        </p>
+                                                                        <p class="fw-600 pt-5 txt-left">
+                                                                            Employee Code -Abs1009
+                                                                        </p>
+
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="12" align="" class="pt-pb-10 ">
+                                                                        <p class="txt-center"> <span
+                                                                                class="fw-600 border-bottom-line">
+                                                                                DEPUTATION LETTER
+                                                                            </span>
+                                                                        </p>
+
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="12" align="" class="pt-pb-10 ">
+
+                                                                        <p class="pb-10">
+                                                                            Further to clause 3 of your letter of
+                                                                            employment, we are pleased to advise you that
+                                                                            your services are
+                                                                            being deputed to Dunamis Machines International
+                                                                            Private Limited with effect from 11/Aug/2022 at
+                                                                            their Chennai office.
+                                                                        </p>
+                                                                        <p class="">
+                                                                            Your total remuneration package (CTC) per annum
+                                                                            is Rs. 405696/- per annum (Rupees Rupees Four
+                                                                            Lac
+                                                                            Five Thousand Six Hundred Ninety Six Only). The
+                                                                            break-up of your compensation package shall be
+                                                                            as
+                                                                            detailed in Annexure A
+
+                                                                        </p>
+
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="12" align="" class="pt-pb-10 ">
+                                                                        <ol>
+                                                                            <li class="pt-10">
+                                                                                <p> You will, with effect from
+                                                                                    11/Aug/2022 be required to work at our
+                                                                                    client's office/ premises at any of
+                                                                                    their locations. During the tenure of
+                                                                                    the
+                                                                                    deputation, you will continue to be an
+                                                                                    employee of Ardens
+                                                                                    Business Solutions</p>
+                                                                            </li>
+                                                                            <li class="pt-10">
+                                                                                <p>
+                                                                                    . In the day-to-day functioning or
+                                                                                    carrying
+                                                                                    out all responsibilities, you will
+                                                                                    receive
+                                                                                    instructions from
+                                                                                    Dunamis Machines International Private
+                                                                                    Limited and will undertake to abide by
+                                                                                    any
+                                                                                    suggestions,
+                                                                                    etc. given by any assigned person(s).
+                                                                                </p>
+
+                                                                            </li>
+                                                                            <li class="pt-10">
+                                                                                <p>
+                                                                                    You shall also abide by any training
+                                                                                    that
+                                                                                    may be offered to you by Dunamis
+                                                                                    Machines
+                                                                                    International
+                                                                                    Private Limited. You shall be bound to
+                                                                                    follow the working hours of DMIPL
+                                                                                </p>
+
+                                                                            </li>
+                                                                            <li class="pt-10">
+                                                                                <p>You shall take care not to disclose
+                                                                                    confidential information/trade secrets,
+                                                                                    etc. that you may come
+                                                                                    across in the course of your
+                                                                                    responsibilities to anyone outside
+                                                                                    Dunamis Machines International
+                                                                                    Private Limited and use such information
+                                                                                    only in connection with the service
+                                                                                    provided to Dunamis
+                                                                                    Machines International Private Limited
+                                                                                </p>
+                                                                            </li>
+                                                                            <li class="pt-10">
+                                                                                <p>You shall at no point of time stake any
+                                                                                    claim or right to claim employment,
+                                                                                    damage, loss, or
+                                                                                    compensation of any sort whatsoever
+                                                                                    against Dunamis Machines International
+                                                                                    Private Limited.
+                                                                                    This arrangement is purely a contractual
+                                                                                    agreement between Ardens Business
+                                                                                    Solutions Private
+                                                                                    Limited and Dunamis Machines
+                                                                                    International Private Limited for the
+                                                                                    timespecified.</p>
+                                                                            </li>
+
+                                                                            <li>
+                                                                                <p class="pt-10">
+                                                                                    You shall not engage in any act
+                                                                                    subversive of discipline in the course
+                                                                                    of your duty/lies in the property
+                                                                                    of Dunamis Machines International
+                                                                                    Private Limited or outside, and if you
+                                                                                    were at any time found
+                                                                                    indulging in such act/s, we reserve the
+                                                                                    right to initiate disciplinary action as
+                                                                                    is deemed fit, against
+                                                                                    you.
+                                                                                </p>
+                                                                            </li>
+                                                                            <li>
+                                                                                <p class="pt-10">
+                                                                                    You shall be responsible for protecting
+                                                                                    the property of Dunamis Machines
+                                                                                    International Private
+                                                                                    Limited entrusted to you in the due
+                                                                                    discharge of your duties and shall
+                                                                                    indemnify Dunamis Machines
+                                                                                    International Private Limited when there
+                                                                                    is a loss of any kind to the said
+                                                                                    property.
+
+                                                                                </p>
+                                                                            </li>
+
+                                                                        </ol>
+                                                                    </td>
+                                                                </tr>
+
+
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                        <div class="logo"
+                                                            style="width:100%;height:fit-content;padding-top:55px">
+                                                            <img src="{{ URL::asset('assets/images/footer.jpg') }}"
+                                                                alt="" class=""
+                                                                style="height:100%;width:100%;">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="carousel-item  ">
+                                <div class="main-page appointment-letter">
+                                    <div class="sub-page" style="padding:0px;">
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <div class="logo" style="width:100%;height:fit-content;">
+                                                            <img src="{{ URL::asset('assets/images/header.jpg') }}"
+                                                                alt="" class=""
+                                                                style="height:100%;width:100%;">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" style="padding:1cm 1cm 0 1cm;">
+                                                        <table class="table-one">
+                                                            <tbody>
+
+                                                                <tr>
+                                                                    <td colspan="12" align="" class=" ">
+                                                                        <p class="pb-30">
+                                                                            All the other terms and conditions of your
+                                                                            employment remain unchanged. As a token of your
+                                                                            acceptance of the above terms and conditions,
+                                                                            you are requested to sign the duplicate copy of
+                                                                            this
+                                                                            letter and return it to us.
+                                                                        </p>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td colspan="12"align="left">
+                                                                        <p class="txt-left  ">
+                                                                            Yours truly,
+                                                                        </p>
+                                                                        <p class="txt-left pt-10">
+                                                                            <b>For Ardens Business Solutions Private
+                                                                                Limited</b>
+                                                                        </p>
+                                                                        <p style="padding:8px 0px;">
+                                                                            <img src="{{ URL::asset('assets/images/augustin_sign.png') }}"
+                                                                                alt="" class=""
+                                                                                style="height:60px;width:140px;">
+                                                                        </p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="12" style="" align="left">
+                                                                        <p class="txt-left">
+                                                                            <b>Augustin Raj A</b>
+                                                                        </p>
+                                                                        <p class="txt-left">
+                                                                            <b>Managing Director & CEO </b>
+                                                                        </p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="12" align="left">
+                                                                        <hr style="border: 1px solid black;">
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="12" style="padding-top: 0cm;"
+                                                                        align="left">
+                                                                        <p>
+                                                                            I <b>&emsp;&emsp;&emsp;</b>, have understood and
+                                                                            accepted the appointment upon the terms and
+                                                                            conditions as outlined in this appointment
+                                                                            letter for my position at Ardens Business
+                                                                            Solutions Privat Limited
+                                                                        </p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="12" align="left">
+                                                                        <p class="txt-left pt-30 fw-600 ">
+                                                                            <span class="border-bottom-line">
+                                                                                Acceptance</span>
+                                                                        </p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="6" style="padding-top: 1cm;"
+                                                                        align="">
+                                                                        <p class="txt-left fw-600">
+                                                                            Signature:
+                                                                        </p>
+                                                                    </td>
+                                                                    <td colspan="6" style="padding-top: 1cm;"
+                                                                        align="">
+                                                                        <p class="txt-right fw-600">
+                                                                            Date:
+                                                                        </p>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                        <div class="logo"
+                                                            style="width:100%;height:fit-content;padding-top:473px;">
+                                                            <img src="{{ URL::asset('assets/images/footer.jpg') }}"
+                                                                alt="" class=""
+                                                                style="height:100%;width:100%;">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="carousel-item  ">
                                 <div class="main-page appointment-letter">
 
                                     <div class="sub-page" style="padding:0px;">
@@ -437,154 +943,195 @@
                                                 </tr>
                                                 <tr>
                                                     <td style="padding:1cm ">
-                                                        <table border="1" align="center"
-                                                            class="payslip_table arderns_salaryTable" style="">
-                                                            <tr>
-                                                                <td colspan="12" align="center"><b>ANNEXURE B</b></td>
+                                                        <table border="1" align="center" class="dunamis_table"
+                                                            style="border-collapse: collapse;width: 100%;padding-bottom: 1cm;;">
+                                                            <tr class="bg-blue">
+                                                                <td colspan="3" align="center"
+                                                                    class="txt-white fw-600">
+                                                                    Annexure A
+                                                                </td>
 
                                                             </tr>
-                                                            <tr>
-                                                                <td colspan="12" align="center"><b>SALARY STRUCTURE</b>
+                                                            <tr class="bg-blue txt-white c">
+                                                                <td colspan="3" align="center" class="fw-600">
+                                                                    Assingment Details
                                                                 </td>
 
                                                             </tr>
                                                             <tr>
-                                                                <td colspan="12" align="center"><b>Your remuneration
-                                                                        shall be paid to
-                                                                        you under the following heads</b></td>
+                                                                <td colspan="1" align="left"><b>Employee Name</b>
+                                                                </td>
+                                                                <td colspan="2" style="" align="center"><b></b>
+                                                                </td>
 
                                                             </tr>
-                                                            <tr class="">
-                                                                <td colspan="4" align="center" class="bg-ash"><b>Name
-                                                                    </b></td>
-                                                                <td colspan="8" align="center"><b>Salary</b></td>
+                                                            <tr>
+                                                                <td colspan="1"><b>Client Name</b></td>
+                                                                <td colspan="2" align="center">Dunamis Machines
+                                                                    International Private Limited</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="1"><b>Place of deputed</b></td>
+                                                                <td colspan="2" align="center"> Chennai</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="1">
+                                                                    <b>Desingnation</b>
+                                                                </td>
+                                                                <td colspan="2" align="center">SENIOR EXECUTIVE</td>
 
                                                             </tr>
-                                                            <tr class="bg-ash">
-                                                                <td colspan="6"><b>Designation: Executive – HR</b></td>
-                                                                <td colspan="3" align="center"><b>Per Month</b></td>
-                                                                <td colspan="3" align="center"><b>Per Annum</b></td>
-                                                            </tr>
                                                             <tr>
-                                                                <td colspan="6">Basic</td>
-                                                                <td colspan="3" align="right"></td>
-                                                                <td colspan="3" align="right"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td colspan="6">HRA</td>
-                                                                <td colspan="3" align="right"></td>
-                                                                <td colspan="3" align="right"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td colspan="6">Child Education Allowance</td>
-                                                                <td colspan="3" align="right"> </td>
-                                                                <td colspan="3" align="right"> </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td colspan="6">Leave Travel Allowance</td>
-                                                                <td colspan="3" align="right"> </td>
-                                                                <td colspan="3" align="right"> </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td colspan="6">Food Allowance</td>
-                                                                <td colspan="3" align="right"> - </td>
-                                                                <td colspan="3" align="right"> - </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td colspan="6">Special Allowance</td>
-                                                                <td colspan="3" align="right"></td>
-                                                                <td colspan="3" align="right"></td>
-                                                            </tr>
-                                                            <tr class="bg-ash">
-                                                                <td colspan="6"><b>Gross</b></td>
-                                                                <td colspan="3" align="right"><b></b></td>
-                                                                <td colspan="3" align="right"><b></b></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td colspan="6">PF (Employer Contribution)</td>
-                                                                <td colspan="3" align="right"></td>
-                                                                <td colspan="3" align="right"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td colspan="6">ESI (Employer Contribution)</td>
-                                                                <td colspan="3" align="right"></td>
-                                                                <td colspan="3" align="right"></td>
-                                                            </tr>
-                                                            <tr class="bg-ash">
-                                                                <td colspan="6" class=""><b>Cost to Company</b>
+                                                                <td colspan="1">
+                                                                    <b>Start date of Assingment</b>
                                                                 </td>
-                                                                <td colspan="2" class="" align="center"><b></b>
-                                                                </td>
-                                                                <td colspan="3" class="" align="center"><b></b>
+                                                                <td colspan="2" align="center">11/ug/2022</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="1"><b>End date of Assingment</b></td>
+                                                                <td colspan="2" align="center">10/Aug/2023</td>
+                                                            </tr>
+                                                            <tr class="bg-ash">
+                                                                <td colspan="3" align="center" class="bg-ash">
+                                                                    <b>Salary Break Up Details</b>
                                                                 </td>
                                                             </tr>
-                                                            <tr>
-                                                                <td colspan="6">PF (Employer Contribution)</td>
-                                                                <td colspan="3" align="center"></td>
-                                                                <td colspan="3" align="center"></td>
+                                                            <tr class="bg-blue txt-white">
+                                                                <td class="a" align="center"><b>Component</b></td>
+                                                                <td class="a" align="center"><b>Monthly</b></td>
+                                                                <td class="a" align="center"><b>Yearly</b></td>
                                                             </tr>
                                                             <tr>
-                                                                <td colspan="6">ESI (Employer Contribution)</td>
-                                                                <td colspan="3" align="center"><b></b></td>
-                                                                <td colspan="3" align="center"><b></b></td>
+                                                                <td>Basic</td>
+                                                                <td>19205.00</td>
+                                                                <td>230460.00</td>
                                                             </tr>
                                                             <tr>
-                                                                <td colspan="6">Prof. Tax</td>
-                                                                <td colspan="3" align="center"></td>
-                                                                <td colspan="3" align="center"></td>
-                                                            </tr>
-                                                            <tr class="bg-ash">
-                                                                <td colspan="6"><b>Net Income</b></td>
-                                                                <td colspan="3" align="center"><b></b></td>
-                                                                <td colspan="3" align="center"><b></b></td>
+                                                                <td>House Rent Allowance</td>
+                                                                <td>9603.00</td>
+                                                                <td>115236.00</td>
                                                             </tr>
                                                             <tr>
-                                                                <td colspan="12" align="center"><b>Income Tax as
-                                                                        applicable will be
-                                                                        deducted</b></td>
-
+                                                                <td>Special Allowance</td>
+                                                                <td>3200.00</td>
+                                                                <td>38400.00</td>
                                                             </tr>
-
+                                                            <tr class="bg-blue">
+                                                                <td class="txt-white fw-600">Gross Salary</td>
+                                                                <td class="a">32008.00</td>
+                                                                <td class="a">384096.00</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Employer'scintribution to ESI</td>
+                                                                <td>0.00</td>
+                                                                <td>o.oo</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Employer'scintribution to EPF</td>
+                                                                <td>1800.00</td>
+                                                                <td>21600.00</td>
+                                                            </tr>
+                                                            <tr class="bg-blue">
+                                                                <td class="fw-600 txt-white"><b>CTC(Cost of the
+                                                                        Company)</b></td>
+                                                                <td class="a">33808.00</td>
+                                                                <td class="a">505696.00</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    Employee's Contribution to EPF
+                                                                </td>
+                                                                <td>1800.00</td>
+                                                                <td>21600.00</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Employee's Contribution to ESI</td>
+                                                                <td>0.00</td>
+                                                                <td>0.00</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Employee's Contribution to PT</td>
+                                                                <td>208.00</td>
+                                                                <td>2496.00</td>
+                                                            </tr>
+                                                            <tr class="bg-blue">
+                                                                <td class="txt-white"><b>Net Take home</b></td>
+                                                                <td class="a">30000.00</td>
+                                                                <td class="a">360000.00</td>
+                                                            </tr>
                                                         </table>
+
+
+
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td style="padding:0cm 1cm ">
-                                                        <table style="padding-top: 0.5cm;">
-                                                            <tr>
-                                                                <td colspan="12" style=" " align="left">
-                                                                    <p class="txt-left a">
-                                                                        I <b>&emsp;&emsp;&emsp;</b>, have read ANNEXURE A &
-                                                                        B, understood
-                                                                        and accept the appointment upon the terms and
-                                                                        conditions as outlined
-                                                                        in this appointment letter for my position at Ardens
-                                                                        Business
-                                                                        Solutions Privat Limited
-                                                                    </p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td colspan="6" style="padding-top: 1cm;"
-                                                                    align="left">
-                                                                    <p class="txt-left">
-                                                                        Signature:
-                                                                    </p>
-                                                                </td>
-                                                                <td colspan="6" style="padding-top: 1cm;"
-                                                                    align="center">
-                                                                    <p class="txt-center">
-                                                                        Date:
-                                                                    </p>
-                                                                </td>
-                                                            </tr>
+                                                    <td style="padding:0  1cm ">
+                                                        <table>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td colspan="12" style=" " align="left">
+                                                                        <p class="txt-left">
+                                                                            * Income tax, Professional Tax and LWF as
+                                                                            applicable will be deducted. All taxes will be
+                                                                            deducted as
+                                                                            applicable by law.
+                                                                        </p>
+                                                                        <p class="pt-10">
+                                                                            * Your salary is strictly confidential.
+                                                                        </p>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td colspan="6"align="left">
+                                                                        <p class="txt-left pt-30 fw-600">
+                                                                            For Ardens Business Solutions Private
+                                                                            Limited
+                                                                        </p>
+                                                                    </td>
+                                                                    <td colspan="6">
+                                                                        <p class="txt-right fw-600 pt-30">
+                                                                            Accepted By
+                                                                        </p>
+
+
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <img src="{{ URL::asset('assets/images/augustin_sign.png') }}"
+                                                                            alt="" class=""
+                                                                            style="height:60px;width:140px;padding:8px 0px;">
+
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="6" style="" align="left">
+                                                                        <p class="txt-left fw-600">
+                                                                            Augustin Raj A - Managing Director
+                                                                        </p>
+
+                                                                    </td>
+                                                                    <td colspan="6" style="" align="left">
+                                                                        <p class="txt-right fw-600">
+                                                                            -
+                                                                        </p>
+
+                                                                    </td>
+                                                                </tr>
+
+                                                            </tbody>
                                                         </table>
                                                     </td>
                                                 </tr>
+
+
+
                                                 <tr>
                                                     <td>
                                                         <div class="logo"
-                                                            style="width:100%;height:fit-content;padding-top:151px;">
+                                                            style="width:100%;height:fit-content;padding-top:10px;">
                                                             <img src="{{ URL::asset('assets/images/footer.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100%;width:100%;">
@@ -616,7 +1163,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td align="center" style="padding:1cm;">
+                                                    <td align="center" style="padding:1cm 1cm 0;">
                                                         <table class="table-one">
                                                             <tbody>
                                                                 <tr>
@@ -624,96 +1171,214 @@
                                                                         <p class="txt-left ">
                                                                             <b>General Terms & Conditions :</b>
                                                                         </p>
-                                                                        <p class="txt-left a pt-10">
-                                                                            You will have to provide signed copies of all
-                                                                            documents and forms in the joining kit including
-                                                                            the signed appointment letter to Ardens Business
-                                                                            Solutions Private Ltd. (ABS) within a period of
-                                                                            30 days from your date of joining. The documents
-                                                                            can be either couriered or handed over in person
-                                                                            at the designated ABS offices. You will not be
-                                                                            eligible for payroll in the subsequent months if
-                                                                            these documents are not received within the
-                                                                            30-day period from your date of joining.
-                                                                        </p>
-                                                                        <p class="txt-left a pt-10">
-                                                                            ABS is working towards having a safe transaction
-                                                                            mode for all payments and follows the practice
-                                                                            of remitting salary, reimbursement, F&F, and
-                                                                            other payments directly to your designated bank
-                                                                            account. You are required hereby to confirm your
-                                                                            acceptance of the same and provide your Bank
-                                                                            Account details with proof (cancelled cheque or
-                                                                            copy of bank passbook or bank statement) within
-                                                                            15 days of the date of joining to ABS personnel
-                                                                            at the designated ABS offices or send an e­mail
-                                                                            with a scanned copy of the proofs mentioned to
-                                                                            <a
-                                                                                href="payroll@ardens.in">payroll@ardens.in</a>
-                                                                            mentioning "bank account details" in the subject
-                                                                            line of the mail.
-                                                                        </p>
-                                                                        <p class="txt-left a pt-10">
-                                                                            You will have to provide your PAN card details
-                                                                            within 15 days of your date of joining.
-                                                                        </p>
-                                                                        <p class="txt-left a pt-10">
-                                                                            In case, you don’t have a PAN card, you will
-                                                                            have to apply and provide the acknowledgment
-                                                                            copy within 15 days from the date of joining.
-                                                                        </p>
-                                                                        <p class="txt-left a pt-10">
-                                                                            In case you do not provide PAN card details and
-                                                                            your income falls under the taxable limits, you
-                                                                            will be paid your monthly salary after the
-                                                                            deduction of taxes as per the existing tax laws.
-                                                                        </p>
-                                                                        <p class="txt-left a pt-10">
-                                                                            Your pay slips will be available online for
-                                                                            viewing, downloading, and printing. This is a
-                                                                            digitally generated document and does not
-                                                                            require a physical signature for verification.
-                                                                            The pay slip will be available at the end of the
-                                                                            first week of the month and will be deemed to
-                                                                            have been received and accepted by you. For any
-                                                                            clarifications or queries, regarding the same,
-                                                                            you can send an email to <a
-                                                                                href="payroll@ardens.in">payroll@ardens.in</a>
-                                                                            referencing your ABS employee ID. </p>
-                                                                        <p class="txt-left a pt-10">
-                                                                            In case of any reimbursable components in your
-                                                                            salary structure, you will be required to submit
-                                                                            necessary proofs of payments and bills for the
-                                                                            same, failing which the payments will be made
-                                                                            after the deduction of appropriate taxes.
-                                                                        </p>
-                                                                        <p class="txt-left a pt-10">
-                                                                            If you are eligible for ESIC benefits and have
-                                                                            an existing ESIC number, please inform in
-                                                                            advance through the ESIC nomination form in your
-                                                                            joining kit to retain the existing ESIC number.
-                                                                            For PF transfer from an existing PF account, you
-                                                                            will need to fill and submit the PF transfer
-                                                                            form in your joining kit.
-                                                                        </p>
-                                                                        <p class="txt-left a pt-10  ">
-                                                                            ABS do not accept or retain any original
-                                                                            certificates/ documents pertaining to your
-                                                                            educational and other qualifications. You may be
-                                                                            required to produce the same for verification
-                                                                            purposes only if requested by authorized ABS
-                                                                            personnel.
-                                                                        </p>
-                                                                        <p class="txt-left a pt-10">
-                                                                            You will have to complete all the exit
-                                                                            formalities and hand over any assets including
-                                                                            but not limited to ID cards, laptops, mobiles,
-                                                                            etc. in your custody before your Last Working
-                                                                            Day (LWD) in the organization. Your Full & Final
-                                                                            Settlement (F&F) will be completed only if the
-                                                                            exit formalities are done on time, which shall
-                                                                            not exceed 45 days.
-                                                                        </p>
+                                                                        <ol>
+                                                                            <li>
+                                                                                <p class="txt-left a pt-10">
+                                                                                    You will have to provide signed copies
+                                                                                    of
+                                                                                    all
+                                                                                    documents and forms in the joining kit
+                                                                                    including
+                                                                                    the signed appointment letter to Ardens
+                                                                                    Business
+                                                                                    Solutions Private Ltd. (ABS) within a
+                                                                                    period
+                                                                                    of
+                                                                                    30 days from your date of joining. The
+                                                                                    documents
+                                                                                    can be either couriered or handed over
+                                                                                    in
+                                                                                    person
+                                                                                    at the designated ABS offices. You will
+                                                                                    not
+                                                                                    be
+                                                                                    eligible for payroll in the subsequent
+                                                                                    months if
+                                                                                    these documents are not received within
+                                                                                    the
+                                                                                    30-day period from your date of joining.
+                                                                                </p>
+                                                                            </li>
+                                                                            <li>
+                                                                                <p class="txt-left a pt-10">
+                                                                                    ABS is working towards having a safe
+                                                                                    transaction
+                                                                                    mode for all payments and follows the
+                                                                                    practice
+                                                                                    of remitting salary, reimbursement, F&F,
+                                                                                    and
+                                                                                    other payments directly to your
+                                                                                    designated
+                                                                                    bank
+                                                                                    account. You are required hereby to
+                                                                                    confirm
+                                                                                    your
+                                                                                    acceptance of the same and provide your
+                                                                                    Bank
+                                                                                    Account details with proof (cancelled
+                                                                                    cheque
+                                                                                    or
+                                                                                    copy of bank passbook or bank statement)
+                                                                                    within
+                                                                                    15 days of the date of joining to ABS
+                                                                                    personnel
+                                                                                    at the designated ABS offices or send an
+                                                                                    e­mail
+                                                                                    with a scanned copy of the proofs
+                                                                                    mentioned
+                                                                                    to
+                                                                                    <a
+                                                                                        href="payroll@ardens.in">payroll@ardens.in</a>
+                                                                                    mentioning "bank account details" in the
+                                                                                    subject
+                                                                                    line of the mail.
+                                                                                </p>
+                                                                            </li>
+                                                                            <li>
+                                                                                <p class="txt-left a pt-10">
+                                                                                    You will have to provide your PAN card
+                                                                                    details
+                                                                                    within 15 days of your date of joining.
+                                                                                </p>
+
+                                                                                <ol style="list-style: none">
+                                                                                    <li>
+                                                                                        <ul type="circle">
+
+                                                                                            <li>
+                                                                                                <p
+                                                                                                    class="txt-left a pt-10">
+                                                                                                    In case, you don’t have
+                                                                                                    a PAN
+                                                                                                    card, you
+                                                                                                    will
+                                                                                                    have to apply and
+                                                                                                    provide the
+                                                                                                    acknowledgment
+                                                                                                    copy within 15 days from
+                                                                                                    the
+                                                                                                    date of
+                                                                                                    joining.
+                                                                                                </p>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <p
+                                                                                                    class="txt-left a pt-10">
+                                                                                                    In case you do not
+                                                                                                    provide PAN
+                                                                                                    card
+                                                                                                    details
+                                                                                                    and
+                                                                                                    your income falls under
+                                                                                                    the
+                                                                                                    taxable
+                                                                                                    limits,
+                                                                                                    you
+                                                                                                    will be paid your
+                                                                                                    monthly salary
+                                                                                                    after
+                                                                                                    the
+                                                                                                    deduction of taxes as
+                                                                                                    per the
+                                                                                                    existing
+                                                                                                    tax
+                                                                                                    laws.
+                                                                                                </p>
+
+                                                                                            </li>
+                                                                                        </ul>
+
+
+
+                                                                                    </li>
+                                                                                </ol>
+                                                                            </li>
+
+                                                                            <p class="txt-left a pt-10">
+                                                                                Your pay slips will be available online for
+                                                                                viewing, downloading, and printing. This is
+                                                                                a
+                                                                                digitally generated document and does not
+                                                                                require a physical signature for
+                                                                                verification.
+                                                                                The pay slip will be available at the end of
+                                                                                the
+                                                                                first week of the month and will be deemed
+                                                                                to
+                                                                                have been received and accepted by you. For
+                                                                                any
+                                                                                clarifications or queries, regarding the
+                                                                                same,
+                                                                                you can send an email to <a
+                                                                                    href="payroll@ardens.in">payroll@ardens.in</a>
+                                                                                referencing your ABS employee ID. </p>
+                                                                            <li>
+                                                                                <p class="txt-left a pt-10">
+                                                                                    In case of any reimbursable components
+                                                                                    in
+                                                                                    your
+                                                                                    salary structure, you will be required
+                                                                                    to
+                                                                                    submit
+                                                                                    necessary proofs of payments and bills
+                                                                                    for
+                                                                                    the
+                                                                                    same, failing which the payments will be
+                                                                                    made
+                                                                                    after the deduction of appropriate
+                                                                                    taxes.
+                                                                                </p>
+                                                                            </li>
+                                                                            <li>
+                                                                                <p class="txt-left a pt-10">
+                                                                                    If you are eligible for ESIC benefits
+                                                                                    and have
+                                                                                    an existing ESIC number, please inform
+                                                                                    in
+                                                                                    advance through the ESIC nomination form
+                                                                                    in your
+                                                                                    joining kit to retain the existing ESIC
+                                                                                    number.
+                                                                                    For PF transfer from an existing PF
+                                                                                    account, you
+                                                                                    will need to fill and submit the PF
+                                                                                    transfer
+                                                                                    form in your joining kit.
+                                                                                </p>
+                                                                            </li>
+                                                                            <li>
+                                                                                <p class="txt-left a pt-10  ">
+                                                                                    ABS do not accept or retain any original
+                                                                                    certificates/ documents pertaining to
+                                                                                    your
+                                                                                    educational and other qualifications.
+                                                                                    You may be
+                                                                                    required to produce the same for
+                                                                                    verification
+                                                                                    purposes only if requested by authorized
+                                                                                    ABS
+                                                                                    personnel.
+                                                                                </p>
+                                                                            </li>
+                                                                            <li>
+                                                                                <p class="txt-left a pt-10">
+                                                                                    You will have to complete all the exit
+                                                                                    formalities and hand over any assets
+                                                                                    including
+                                                                                    but not limited to ID cards, laptops,
+                                                                                    mobiles,
+                                                                                    etc. in your custody before your Last
+                                                                                    Working
+                                                                                    Day (LWD) in the organization. Your Full
+                                                                                    & Final
+                                                                                    Settlement (F&F) will be completed only
+                                                                                    if the
+                                                                                    exit formalities are done on time, which
+                                                                                    shall
+                                                                                    not exceed 45 days.
+                                                                                </p>
+                                                                            </li>
+                                                                        </ol>
                                                                     </td>
                                                                 </tr>
 
@@ -723,7 +1388,8 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <div class="logo" style="width:100%;height:fit-content;padding-top:12px;">
+                                                        <div class="logo"
+                                                            style="width:100%;height:fit-content;padding-top:12px;">
                                                             <img src="{{ URL::asset('assets/images/footer.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100%;width:100%;">
@@ -762,23 +1428,44 @@
 
                                                                 <tr>
                                                                     <td colspan="12" style="" align="left">
-                                                                        <p class="txt-left ">
-                                                                            Your F&F settlement amount will be transferred
-                                                                            to the bank account used for your salary
-                                                                            transactions. In case, there are dues to be
-                                                                            recovered from you in the F&F settlement, you
-                                                                            will be issued your relieving letter and
-                                                                            experience letters only on clearance of these
-                                                                            dues.
-                                                                        </p>
+                                                                        <ol start="9" type="1">
+                                                                            <li>
+                                                                                <p class="txt-left ">
+                                                                                    Your F&F settlement amount will be
+                                                                                    transferred
+                                                                                    to the bank account used for your salary
+                                                                                    transactions. In case, there are dues to
+                                                                                    be
+                                                                                    recovered from you in the F&F
+                                                                                    settlement, you
+                                                                                    will be issued your relieving letter and
+                                                                                    experience letters only on clearance of
+                                                                                    these
+                                                                                    dues.
+                                                                                </p>
+
+                                                                            </li>
+
+                                                                        </ol>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td>
+
                                                                         <p class="txt-left">
-                                                                            As a token of your acceptance of the above terms
-                                                                            and conditions, you are requested to sign the
-                                                                            duplicate copy of this letter and return to us.
+                                                                            As a token of your acceptance of the
+                                                                            above terms
+                                                                            and conditions, you are requested to
+                                                                            sign the
+                                                                            duplicate copy of this letter and return
+                                                                            to us.
                                                                         </p>
+
 
                                                                     </td>
                                                                 </tr>
+
                                                                 <tr>
                                                                     <td colspan="12"align="left">
                                                                         <p class="txt-left pt-30 ">
@@ -845,7 +1532,7 @@
                                                 <tr>
                                                     <td>
                                                         <div class="logo"
-                                                            style="width:100%;height:fit-content;padding-top:419px;">
+                                                            style="width:100%;height:fit-content;padding-top:403px;">
                                                             <img src="{{ URL::asset('assets/images/footer.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100%;width:100%;">
@@ -1318,7 +2005,8 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <div class="logo" style="width:100%;height:fit-content;padding-top:279px;">
+                                                        <div class="logo"
+                                                            style="width:100%;height:fit-content;padding-top:279px;">
                                                             <img src="{{ URL::asset('assets/images/footer.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100%;width:100%;">

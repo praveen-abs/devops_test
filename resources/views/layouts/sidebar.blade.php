@@ -561,7 +561,7 @@
 
                 {{-- @endif --}}
 
-                {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}
+                @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
 
                 <!-- reports -->
                 <li class="nav-item">
@@ -601,7 +601,7 @@
                     </div>
                 </li>
 
-                {{-- @endif --}}
+                @endif
 
 
                 <!-- help desk -->
