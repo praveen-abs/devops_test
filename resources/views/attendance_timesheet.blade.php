@@ -1080,7 +1080,8 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
             console.log("Attendance mode : "+attendance_mode);
 
             if(attendance_mode == "biometric")
-                return '&nbsp;<i class="fa-solid fa-fingerprint"></i>';
+                // return '&nbsp;<i class="fa-solid fa-fingerprint"></i>';
+               return '&nbsp;<i class="fas fa-fingerprint"></i>';
             else
             if(attendance_mode == "web")
                 return '&nbsp;<i class="fa fa-laptop"></i>';
