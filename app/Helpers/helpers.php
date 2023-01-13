@@ -47,6 +47,29 @@ function getBloodGroupName($blood_group_id){
         return null;
 }
 
+function getEmployeeActiveStatus($user_id){
+
+    if(!empty($user_id))
+    {
+        $active_status = User::find($user_id)->active;
+
+        if($active_status == "1")
+            return "Active";
+        else
+        if($active_status == "0")
+            return "Yet to Activate";
+        else
+        if($active_status == "-1")
+            return "Left";
+        else
+            return null;
+    }
+    else
+        return null;
+
+}
+
+
 function sessionGetSelectedClientCode(){
     $query_client = VmtClientMaster::find(session('client_id'));
 

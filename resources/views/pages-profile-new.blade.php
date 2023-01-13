@@ -56,6 +56,12 @@
 
                                     <div class="profile-mid-right-content mb-4 text-center ">
                                         <div class="border-bottom-liteAsh py-2">
+                                            <p class="text-muted f-12 fw-bold">Employee Status</p>
+                                            <p class="text-primary f-15 fw-bold">{{ getEmployeeActiveStatus($user->active) ?? '-' }}
+                                            </p>
+
+                                        </div>
+                                        <div class="border-bottom-liteAsh py-2">
                                             <p class="text-muted f-12 fw-bold">Employee Code</p>
                                             <p class="text-primary f-15 fw-bold">{{ $user_full_details->user_code ?? '-' }}
                                             </p>
