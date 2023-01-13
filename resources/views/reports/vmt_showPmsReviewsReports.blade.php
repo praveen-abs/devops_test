@@ -8,109 +8,118 @@
 
         <div class="card-body">
             <h6 class="">PMS Reports</h6>
+            <div class="row mb-2">
+                <div class="col-6">
+                    <p class=" align-items-center d-flex pt-1">
+                        <b>Calendar Year : </b>
+                        <span>
 
-            <div class=" text-start mb-2">
-                <span>
-                    <b>Calendar Year : </b>
-                    <?php
-                    if ($query_configPms->calendar_type == 'financial_year') {
-                        echo 'Financial Year';
-                    } elseif ($query_configPms->calendar_type == 'calendar_year') {
-                        echo 'Calendar Year';
-                    } else {
-                        echo 'Error';
-                    }
-                    ?>
-                </span>
+                            <?php
+
+                            if ($query_configPms->calendar_type == 'financial_year') {
+                                echo 'Financial Year';
+                            } elseif ($query_configPms->calendar_type == 'calendar_year') {
+                                echo 'Calendar Year';
+                            } else {
+                                echo 'Error';
+                            }
+                            ?>
+                        </span>
+                    </p>
+                </div>
+                <div class="col-6">
+                    <div class="  align-items-center d-flex  ">
+
+                        <p class="fw-bold pe-2">Year </p>
+                        {{-- <input type="text" id="year" readonly value="{{ $query_configPms-> year}}" size="25" /> --}}
+                        <select id="year" class="form-select " style="" aria-label=".form-select-sm example">
+                            {{-- <option value="" selected>Select</option> --}}
+                            @foreach ($query_years as $key => $value)
+                                <option value="{{ $value }}"> {{ $value }} </option>
+                            @endforeach
+                        </select>
+
+
+                    </div>
+                </div>
+
+
             </div>
+            <div class="row">
+                <div class="col-6">
+                    <p class="  mt-1">
+                        <b>Frequency : </b> <span>{{ ucfirst($query_configPms->frequency) }}</span>
 
-            <div class=" text-start mb-2">
-                <span>
-                    <b>Year </b>
-                    {{-- <input type="text" id="year" readonly value="{{ $query_configPms-> year}}" size="25" /> --}}
-                    <select id="year" class="form-select form-select-sm" style="width:auto;"
-                        aria-label=".form-select-sm example">
-                        @foreach ($query_years as $key => $value)
-                            <option value="{{ $value }}"> {{ $value }} </option>
-                        @endforeach
-                    </select>
+                    </p>
+                </div>
+                <div class="col-6">
+                    <div class=" d-flex align-items-center mb-2">
 
-                </span>
-            </div>
-
-
-            <div class=" text-start mb-2">
-                <span>
-                    <b>Frequency : </b>{{ ucfirst($query_configPms->frequency) }}
-                </span>
-            </div>
-
-            <div class=" text-start mb-2">
-                <span>
-                    <b>Assignment Period</b>
-                    <select placeholder="Select Calendar Type" style="width:auto;" aria-label=".form-select-sm example"
-                        id="dropdownAssignment_period" class="form-select form-select-sm">
-                        <option value="" selected>Select</option>
-                        @if ($query_configPms->calendar_type == 'financial_year')
-                            @if ($query_configPms->frequency == 'monthly')
-                                <option value="apr">Apr</option>
-                                <option value="may">May</option>
-                                <option value="jun">Jun</option>
-                                <option value="jul">Jul</option>
-                                <option value="aug">Aug</option>
-                                <option value="sep">Sep</option>
-                                <option value="oct">Oct</option>
-                                <option value="nov">Nov</option>
-                                <option value="dec">Dec</option>
-                                <option value="jan">Jan</option>
-                                <option value="feb">Feb</option>
-                                <option value="mar">Mar</option>
-                            @elseif($query_configPms->frequency == 'quarterly')
-                                <option name="Q1" value="q1"> Q1 (Apr-Jun)</option>
-                                <option name="Q2" value="q2"> Q2 (Jul-Sept)</option>
-                                <option name="Q3" value="q3"> Q3 (Oct-Dec)</option>
-                                <option name="Q4" value="q4"> Q4 (Jan-March)</option>
-                            @elseif($query_configPms->frequency == 'halfYearly')
-                                <option name="H1" value="h1">H1 (Apr-Sept)</option>
-                                <option name="H2" value="h2">H2 (Oct-Mar)</option>
-                            @elseif($query_configPms->frequency == 'annually')
-                                <option name="A" value="A">A (Apr-Mar)</option>
+                        <p class="fw-bold">Assignment Period</p>
+                        <select placeholder="Select Calendar Type" style="" id="dropdownAssignment_period"
+                            class="form-select ">
+                            <option value="" selected>Select</option>
+                            @if ($query_configPms->calendar_type == 'financial_year')
+                                @if ($query_configPms->frequency == 'monthly')
+                                    <option value="apr">Apr</option>
+                                    <option value="may">May</option>
+                                    <option value="jun">Jun</option>
+                                    <option value="jul">Jul</option>
+                                    <option value="aug">Aug</option>
+                                    <option value="sep">Sep</option>
+                                    <option value="oct">Oct</option>
+                                    <option value="nov">Nov</option>
+                                    <option value="dec">Dec</option>
+                                    <option value="jan">Jan</option>
+                                    <option value="feb">Feb</option>
+                                    <option value="mar">Mar</option>
+                                @elseif($query_configPms->frequency == 'quarterly')
+                                    <option name="Q1" value="q1"> Q1 (Apr-Jun)</option>
+                                    <option name="Q2" value="q2"> Q2 (Jul-Sept)</option>
+                                    <option name="Q3" value="q3"> Q3 (Oct-Dec)</option>
+                                    <option name="Q4" value="q4"> Q4 (Jan-March)</option>
+                                @elseif($query_configPms->frequency == 'halfYearly')
+                                    <option name="H1" value="h1">H1 (Apr-Sept)</option>
+                                    <option name="H2" value="h2">H2 (Oct-Mar)</option>
+                                @elseif($query_configPms->frequency == 'annually')
+                                    <option name="A" value="A">A (Apr-Mar)</option>
+                                @endif
+                            @elseif($query_configPms->calendar_type == 'calendar_year')
+                                @if ($query_configPms->frequency == 'monthly')
+                                    <option value="jan">Jan</option>
+                                    <option value="feb">Feb</option>
+                                    <option value="mar">Mar</option>
+                                    <option value="apr">Apr</option>
+                                    <option value="may">May</option>
+                                    <option value="jun">Jun</option>
+                                    <option value="jul">Jul</option>
+                                    <option value="aug">Aug</option>
+                                    <option value="sep">Sep</option>
+                                    <option value="oct">Oct</option>
+                                    <option value="nov">Nov</option>
+                                    <option value="dec">Dec</option>
+                                @elseif($query_configPms->frequency == 'quarterly')
+                                    <option name="Q1" value="q1"> Q1 (Jan-March)</option>
+                                    <option name="Q2" value="q2"> Q2 (Apr-Jun)</option>
+                                    <option name="Q3" value="q3"> Q3 (Jul-Sept)</option>
+                                    <option name="Q4" value="q4"> Q4 (Oct-Dec)</option>
+                                @elseif($query_configPms->frequency == 'halfYearly')
+                                    <option name="H1" value="h1">H1 (Jan-Jun)</option>
+                                    <option name="H2" value="h2">H2 (Jul-Dec)</option>
+                                @elseif($query_configPms->frequency == 'annually')
+                                    <option name="A" value="A">A (Jan-Dec)</option>
+                                @endif
                             @endif
-                        @elseif($query_configPms->calendar_type == 'calendar_year')
-                            @if ($query_configPms->frequency == 'monthly')
-                                <option value="jan">Jan</option>
-                                <option value="feb">Feb</option>
-                                <option value="mar">Mar</option>
-                                <option value="apr">Apr</option>
-                                <option value="may">May</option>
-                                <option value="jun">Jun</option>
-                                <option value="jul">Jul</option>
-                                <option value="aug">Aug</option>
-                                <option value="sep">Sep</option>
-                                <option value="oct">Oct</option>
-                                <option value="nov">Nov</option>
-                                <option value="dec">Dec</option>
-                            @elseif($query_configPms->frequency == 'quarterly')
-                                <option name="Q1" value="q1"> Q1 (Jan-March)</option>
-                                <option name="Q2" value="q2"> Q2 (Apr-Jun)</option>
-                                <option name="Q3" value="q3"> Q3 (Jul-Sept)</option>
-                                <option name="Q4" value="q4"> Q4 (Oct-Dec)</option>
-                            @elseif($query_configPms->frequency == 'halfYearly')
-                                <option name="H1" value="h1">H1 (Jan-Jun)</option>
-                                <option name="H2" value="h2">H2 (Jul-Dec)</option>
-                            @elseif($query_configPms->frequency == 'annually')
-                                <option name="A" value="A">A (Jan-Dec)</option>
-                            @endif
-                        @endif
-                    </select>
-                </span>
+                        </select>
+
+                    </div>
+
+                </div>
             </div>
-
-
             {{-- <div class=" text-start mb-2">
                 <span>
                     <b>Status</b>
-                    <select placeholder="Select Calendar Type" style="width:auto;" aria-label=".form-select-sm example"
+                    <select  style="width:auto;" aria-label=".form-select-sm example"
                         id="dropdownSubmittedStatus" class="form-select form-select-sm">
                         <option selected>Select</option>
                         <option value="1">Submitted</option>
@@ -119,8 +128,8 @@
                 </span>
             </div> --}}
 
-
             <div class=" text-end mb-2">
+                <button class="btn btn-orange me-2" id="btn_run">Run Report</button>
                 <button class="btn btn-orange me-2" id="btn_downloadReport">Download Report</button>
             </div>
             <div class="table-responsive">
@@ -155,9 +164,9 @@
     <script>
         $(document).ready(function() {
             $('#pmsReportTable').DataTable({
-                "searching": true,
+                "searching": false,
                 "pagingType": "full_numbers",
-                "paging": true,
+                "paging": false,
                 "ordering": false,
                 "lengthMenu": [10, 25, 50, 75, 100],
                 "responsive": true,
@@ -166,7 +175,7 @@
             let calenderType = '{{ $query_configPms->calendar_type }}';
             //let year = $('#year').val();
 
-            $('select').change(function() {
+            $('#btn_run').on('click', function() {
                 var year = $('#year').val();
                 var assignment_period = $('#dropdownAssignment_period').val();
                 console.log(year);
@@ -199,10 +208,64 @@
                                     } else if (userdata.assignment_period == "q4") {
                                         userdata.assignment_period = "Q4 (Jan-March)"
                                     }
-                                } else if (userdata.frequency == 'monthly') {
-                                    userdata.frequency = "Monthly";
+                                }
+                            } else if (userdata.calendar_type == 'calendar_year') {
+                                userdata.calendar_type = 'Calendar Year';
+                                if (userdata.frequency == "quarterly") {
+                                    userdata.frequency = "Quarterly";
+                                    if (userdata.assignment_period == "q1") {
+                                        userdata.assignment_period = "Q1 (Jan-March)"
+                                    } else if (userdata.assignment_period == "q2") {
+                                        userdata.assignment_period = "Q2 (Apr-Jun)"
+                                    } else if (userdata.assignment_period == "q3") {
+                                        userdata.assignment_period = "Q3 (Jul-Sept)"
+                                    } else if (userdata.assignment_period == "q4") {
+                                        userdata.assignment_period = "Q4 (Oct-Dec)"
+                                    }
                                 }
                             }
+
+                            // if (userdata.frequency == 'monthly') {
+                            //     userdata.frequency = "Monthly";
+                            //     switch (userdata.assignment_period) {
+                            //         case "jan":
+                            //             userdata.assignment_period = 'January';
+                            //             break;
+                            //         case "feb":
+                            //             userdata.assignment_period = "February"
+                            //             break;
+                            //         case "mar":
+                            //             userdata.assignment_period = "March"
+                            //             break;
+                            //         case "apr":
+                            //             userdata.assignment_period = "April"
+                            //             break;
+                            //         case "may":
+                            //             userdata.assignment_period = "May"
+                            //             break;
+                            //         case "june":
+                            //             userdata.assignment_period = "June"
+                            //             break;
+                            //         case "july":
+                            //             userdata.assignment_period = "July"
+                            //             break;
+                            //         case "aug":
+                            //             userdata.assignment_period "August"
+                            //             break;
+                            //         case "sept":
+                            //             userdata.assignment_period = "September"
+                            //             break;
+                            //         case "oct":
+                            //             userdata.assignment_period = "October"
+                            //             break;
+                            //         case "nov":
+                            //             userdata.assignment_period = "November"
+                            //             break;
+                            //         case "dec":
+                            //             userdata.assignment_period = "December"
+                            //             break;
+                            //     }
+                            // }
 
                             if (userdata.is_assignee_submitted == "1") {
                                 userdata.is_assignee_submitted = "Submitted";

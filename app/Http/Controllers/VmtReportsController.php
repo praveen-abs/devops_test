@@ -48,12 +48,8 @@ class VmtReportsController extends Controller
         $query_pms_data=VmtPMS_KPIFormReviewsModel::
         leftJoin('users','users.id', '=','vmt_pms_kpiform_reviews.assignee_id')
         ->leftJoin('vmt_pms_kpiform_assigned','vmt_pms_kpiform_assigned.id', '=', 'vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id')
-        ->where([
-        //     //['vmt_pms_kpiform_assigned.calendar_type','=',$this->calendar_type],
-            ['vmt_pms_kpiform_assigned.year','=',$request->year],
-             ['vmt_pms_kpiform_assigned.assignment_period','=',$request->assignment_period],
-        //     //['vmt_pms_kpiform_reviews.is_assignee_submitted','=',$this->is_assignee_submitted]
-         ])
+        ->where('vmt_pms_kpiform_assigned.year','=',$request->year)
+        ->orWhere('vmt_pms_kpiform_assigned.assignment_period','=',$request->assignment_period)
         ->select(
                   'users.user_code',
                   'users.name',
