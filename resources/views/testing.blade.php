@@ -14,11 +14,15 @@
              /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
         </style>
 
-    
+
          @vite('resources/js/app.js')
     </head>
     <body class="antialiased">
-       <div id="app"></div>
+       <div id="app">
+
+
+       </div>
+       <div id="mytable"></div>
        <h1>hello</h1>
     </body>
-</html> 
+</html>
