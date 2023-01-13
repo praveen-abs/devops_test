@@ -120,13 +120,13 @@ use Illuminate\Support\Facades\Crypt;
 
      public function updateAddressInfo(Request $request){
 
-             $details = VmtEmployee::where('userid', $request->id)->first();
-             $details->current_address_line_1 = $request->input('current_address_line_1');
-             $details->permanent_address_line_1 = $request->input('permanent_address_line_1');
-             $details->save();
+        $details = VmtEmployee::where('userid', $request->id)->first();
+        $details->current_address_line_1 = $request->input('current_address_line_1');
+        $details->permanent_address_line_1 = $request->input('permanent_address_line_1');
+        $details->save();
 
-             return redirect()->back();
-             }
+        return redirect()->back();
+    }
 
 
     public function updateFamilyInfo(Request $request) {

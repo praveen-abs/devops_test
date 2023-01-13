@@ -10,20 +10,6 @@
 @endsection
 @section('content')
 
-    {{-- <?php
-    $logoObj = \DB::table('vmt_general_info')->first();
-
-    if ($logoObj) {
-        $logoSrc = $logoObj->logo_img;
-    } else {
-        $logoSrc = 'assets/images/vasa.jpg';
-    }
-
-    ?> --}}
-
-
-
-
     <div class="profile_page-wrapper mt-30 container-fluid">
         <div class="row">
             <div class="col-3 col-sm-12 col-md-3 col-lg-3 col-xxl-3 col-xl-3">
@@ -124,13 +110,6 @@
                                     aria-selected="true">
                                     Experience</a>
                             </li>
-                            <li class="nav-item  mx-4" role="presentation">
-                                <a class="nav-link  " id="" data-bs-toggle="pill" href=""
-                                    data-bs-target="#paycheck_det" role="tab" aria-controls="pills-home"
-                                    aria-selected="true">
-                                    Paycheck</a>
-                            </li>
-
                             <li class="nav-item " role="presentation">
                                 <a class="nav-link  " id="" data-bs-toggle="pill" href=""
                                     data-bs-target="#finance_det" role="tab" aria-controls="pills-home"
@@ -1108,54 +1087,70 @@
                                                 <div class="row">
                                                     <div class="col-sm-12 col-md-6 pe-0 col-xl-6 col-lg-6 col-xxl-6 mb-2 ">
                                                         <h6 class=""> Pay Slips</h6>
+                                                            <div id="" class="ember-view">
+                                                                <div class="fill body p-0 payslip-list-body scroll scroll-x scroll-y scrollbox ">
+                                                                    <table class="table zp-table paystub-table">
+                                                                        <thead class="fw-bold text-muted h5">
+                                                                            <tr>
+                                                                                <th width="">Month</th>
+                                                                                <th width="">Gross Pay</th>
+                                                                                <th width="">Reimbursements</th>
+                                                                                <th width="">Deductions</th>
+                                                                                <th width="">Take Home</th>
+                                                                                <th width="" class="text-capitalize">payslip</th>
+                                                                                <th width="">Tax Worksheet</th>
+                                                                                <th width="">Action</th>
+                                                                            </tr>
+                                                                        </thead>
 
-                                                    </div>
-                                                    <div
-                                                        class="col-sm-12 col-md-6 text-end pe-0 col-xl-6 col-lg-6 col-xxl-6 mb-2 ">
-                                                        <select name="" class="btn w-50 btn-border-primary"
-                                                            id="">
-                                                            <option value="">Select Year</option>
-                                                        </select>
-                                                        <button class="btn btn-orange">Download</button>
-                                                    </div>
-                                                    <div class="col-sm-12 col-md-12 pe-0 col-xl-3 col-lg-3 col-xxl-3 ">
-                                                        <div class="card"
-                                                            style="height:500px;min-height:657px;overflow-y:auto;">
-                                                            <div class="card-body">
+                                                                        <tbody>
 
-                                                                <ul class="list-unstyled ">
-                                                                    <li class="list_employee_attendance p-1 ">
-                                                                        <button
-                                                                            class=" btn d-flex employee_list_item border-0">
+                                                                            @foreach ($data  as $d)
+                                                                                <tr data-ember-action="" data-ember-action-131="131">
+                                                                                    <td>
+                                                                                        <a href="#/salary-details/payslips/335214000001040001/details"
+                                                                                            id="ember132" class="ember-view text-secondary">
+                                                                                            {{ Carbon::parse($d->PAYROLL_MONTH)->format('M-y') }}
+                                                                                        </a>
 
-                                                                            <div class="user_content text-start ">
-                                                                                <p class="fw-bold text-muted f-14">
-                                                                                    May 2022
-                                                                                </p>
+                                                                                        <span class="status-label">
+                                                                                            <!---->
+                                                                                        </span>
+                                                                                    </td>
+                                                                                    <td>₹{{ $d->TOTAL_EARNED_GROSS }}
+                                                                                    </td>
+                                                                                    <td>₹0.00</td>
+                                                                                    <td>₹{{ $d->TOTAL_DEDUCTIONS }}</td>
+                                                                                    <td>₹{{ $d->NET_TAKE_HOME }}</td>
+                                                                                    <td>
+                                                                                        <div data="{{ $d->PAYROLL_MONTH }}"
+                                                                                            data-url="{{ route('vmt_employee_payslip_htmlview') }}"
+                                                                                            style="cursor: pointer"
+                                                                                            class="ember-view  paySlipView text-info">
+                                                                                            View
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <a href=""
+                                                                                            id="ember134" class="ember-view  text-info">
+                                                                                            View
+                                                                                        </a>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        @php
 
-                                                                            </div>
-                                                                        </button>
-                                                                    </li>
-                                                                    <li class="list_employee_attendance p-1 ">
-                                                                        <button
-                                                                            class=" btn d-flex employee_list_item border-0">
+                                                                                            $selectedPaySlipMonth = $d->PAYROLL_MONTH;
+                                                                                        @endphp
+                                                                                        <a href="{{ url('pdfview/' . strtoupper($d->EMP_NO) . '/' . strtoupper($selectedPaySlipMonth)) }}"
+                                                                                            class="text-info">Download</a>
 
-                                                                            <div class="user_content text-start ">
-                                                                                <p class="fw-bold text-muted f-14">
-                                                                                    June 2022
-                                                                                </p>
-
-                                                                            </div>
-                                                                        </button>
-                                                                    </li>
-                                                                </ul>
-
+                                                                                    </td>
+                                                                                </tr>
+                                                                            @endforeach
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
                                                             </div>
-
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-12 col-md-12 col-xl-9 col-lg-9 col-xxl-9 ">
-
                                                     </div>
                                                 </div>
 
