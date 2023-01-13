@@ -1028,32 +1028,28 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
 
                                     if (ajax_data_currentdate.isLC) {
-                                        final_checkin_button_code = html_LC_Button + getStatusIcon(ajax_data_currentdate
-                                            .lc_status);
+                                        final_checkin_button_code = html_LC_Button + getStatusIcon(ajax_data_currentdate.lc_status);
                                     } else
                                     if (ajax_data_currentdate.isMIP) {
-                                        final_checkin_button_code = html_MIP_Button + getStatusIcon(ajax_data_currentdate
-                                            .mip_status);
+                                        final_checkin_button_code = html_MIP_Button + getStatusIcon(ajax_data_currentdate.mip_status);
                                     }
 
                                     if (ajax_data_currentdate.isEG) {
-                                        final_checkout_button_code = html_EG_Button + getStatusIcon(ajax_data_currentdate
-                                            .eg_status);
+                                        final_checkout_button_code = html_EG_Button + getStatusIcon(ajax_data_currentdate.eg_status);
                                     } else
                                     if (ajax_data_currentdate.isMOP) {
-                                        final_checkout_button_code = html_MOP_Button + getStatusIcon(ajax_data_currentdate
-                                            .mop_status);
+                                        final_checkout_button_code = html_MOP_Button + getStatusIcon(ajax_data_currentdate.mop_status);
                                     }
 
 
                                     cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
 
                                         "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex '><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
-                                        year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkin_time + getAttendanceModeIcon(ajax_data_currentdate.attendance_mode) +
+                                        year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkin_time + getAttendanceModeIcon(ajax_data_currentdate.attendance_mode_checkin) +
                                         "</span>" +
                                         final_checkin_button_code +
                                         "</div> <div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span class='f-11' id='checkout_time_" +
-                                        year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkout_time + getAttendanceModeIcon(ajax_data_currentdate.attendance_mode) +
+                                        year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkout_time + getAttendanceModeIcon(ajax_data_currentdate.attendance_mode_checkout) +
                                         "</span>" +
                                         final_checkout_button_code +
                                         "</div></div></div>";
