@@ -103,9 +103,10 @@ import TreeSelect from 'primevue/treeselect';
 import TreeTable from 'primevue/treetable';
 import TriStateCheckbox from 'primevue/tristatecheckbox';
 import VirtualScroller from 'primevue/virtualscroller';
+import primeTable from './components/primeTable.vue'
 
 
-const app = createApp(table);
+const app = createApp(primeTable);
 
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);

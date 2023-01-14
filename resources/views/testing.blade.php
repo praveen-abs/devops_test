@@ -19,6 +19,5 @@
     </head>
     <body class="antialiased">
        <div id="app"></div>
-       <h1>hello</h1>
     </body>
 </html> 
