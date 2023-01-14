@@ -14,7 +14,7 @@
                 </template>
             </Toolbar>
 
-            <DataTable ref="dt" :value="products" v-model:selection="selectedProducts" dataKey="id" 
+            <DataTable ref="dt" :value="products" v-model:selection="selectedProducts" dataKey="id"
                 :paginator="true" :rows="10" :filters="filters"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown" :rowsPerPageOptions="[5,10,25]"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" responsiveLayout="scroll">
@@ -154,7 +154,7 @@
 
 <script>
 import { FilterMatchMode } from 'primevue/api';
-import ProductService from './services/productService';
+import ProductService from '../../../components/services/productService';
 
 export default {
     data() {
@@ -303,7 +303,7 @@ export default {
 @media screen and (max-width: 960px) {
 	::v-deep(.p-toolbar) {
 		flex-wrap: wrap;
-        
+
 	}
 }
 .p-button {

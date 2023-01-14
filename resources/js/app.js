@@ -5,7 +5,6 @@ import "primeicons/primeicons.css";
 
 
 import { createApp } from "vue";
-import table from './components/app.vue'
 import PrimeVue from "primevue/config";
 import AutoComplete from 'primevue/autocomplete';
 import Accordion from 'primevue/accordion';
@@ -105,6 +104,8 @@ import TriStateCheckbox from 'primevue/tristatecheckbox';
 import VirtualScroller from 'primevue/virtualscroller';
 import primeTable from './components/primeTable.vue'
 
+import table from './hrms/modules/testings/app.vue'
+import testbuttonclick from './hrms/modules/testings/TestButtonClick.vue'
 
 const app = createApp(primeTable);
 
@@ -208,5 +209,10 @@ app.component('TreeTable', TreeTable);
 app.component('TriStateCheckbox', TriStateCheckbox);
 app.component('VirtualScroller', VirtualScroller);
 
+//globally registering component
+//app.component('Counter',mycounter );
+app.component('TestButtonClick',testbuttonclick);
 
 app.mount("#app");
+//app2.mount("#mytable");
+
