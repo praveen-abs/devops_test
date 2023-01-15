@@ -3,57 +3,8 @@
         @lang('translation.settings')
     @endsection
     @section('css')
+        <link href="{{ URL::asset('assets/css/preview_template.css') }}" rel="stylesheet">
         <style>
-            .main-page {
-                width: 210mm;
-                min-height: 297mm;
-                margin: 10mm auto;
-                background: white;
-                box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
-                box-sizing: border-box;
-                -moz-box-sizing: border-box;
-                -webkit-box-sizing: bo;
-            }
-
-            .sub-page {
-                padding: 1cm;
-
-            }
-
-            @media print {
-                .main-page {
-                    page-break-after: always;
-                }
-            }
-
-
-            @page {
-                size: A4;
-                margin: 0;
-            }
-
-            @media print {
-
-                html,
-                body {
-                    width: 210mm;
-                    height: 297mm;
-                }
-
-                .main-page {
-                    margin: 0;
-                    border: initial;
-                    border-radius: initial;
-                    width: initial;
-                    min-height: initial;
-                    box-shadow: initial;
-                    background: initial;
-                    page-break-after: always;
-                }
-            }
-
-
-
             .avatar_table tr,
             .avatar_table tr td {
                 border: 2px solid #dee2e6 !important;
@@ -68,7 +19,7 @@
 
             table.payslip_table tr,
             table.payslip_table tr td {
-                border: 2px solid #af1888 ;
+                border: 2px solid #af1888;
 
             }
 
@@ -92,7 +43,7 @@
                 margin: 0px;
             }
 
-            table.payslip_table tr td  p {
+            table.payslip_table tr td p {
                 font-size: 9pt;
                 margin-top: 3pt;
                 margin-bottom: 3pt;
@@ -180,7 +131,8 @@
                                                         class="" style="height:100%;width:100%;">
                                                 </div>
 
-                                                <p style="text-align: center;font-size:20px"><b> LETTER OF APPOINTMENT</b>
+                                                <p style="font-size:18px" class="pt-5 txt-center fw-600">LETTER OF
+                                                    APPOINTMENT
                                                 </p>
                                                 <b>
                                                     <p> <br>Dear Xyz, </br>
@@ -263,7 +215,7 @@
                                                 </div>
 
                                             </div>
-                                            <hr style="margin-top: 150px;">
+                                            <hr style="">
                                             <div class="divFooter" style="text-align:center;font-size: 13px;"> <span>
                                                     <b>Registered Office Address</b> –
                                                     Brand Avatar LLP, No-01, Kandasamy Street, Chandrabagh
@@ -720,7 +672,7 @@
                                             <td colspan="8" class="border-less p3">
                                                 <div class="header-cotent">
 
-                                                    <h6 class="margin-0"  style="padding-left: 5px">Brand Avatar LLP</h6>
+                                                    <h6 class="margin-0" style="padding-left: 5px">Brand Avatar LLP</h6>
                                                     <p class="mb-0">NO-01,Kandasamy Street,</p>
                                                     <p class="mb-0">Chandrabagh Ave 2nd St, Dr. Radha Krishnan Salai,
                                                     </p>
@@ -1176,8 +1128,8 @@
 
                                             </td>
                                             <td colspan="2" class="border-less text-left">
-                                                <img src="{{ URL::asset('assets/images/client_logos/ardens/evangelist.png') }}" width="80px" height="15px"
-                                                alt="" class="">
+                                                <img src="{{ URL::asset('assets/images/client_logos/ardens/evangelist.png') }}"
+                                                    width="80px" height="15px" alt="" class="">
                                             </td>
                                         </tr>
 

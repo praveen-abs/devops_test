@@ -43,7 +43,7 @@
                 <div class="tab-pane fade show active" id="appointment" role="tabpanel" aria-labelledby="pills-home-tab">
                     <div id="carousel_template" class="carousel slide" data-bs-touch="false" data-bs-interval="false">
                         <div class="carousel-inner">
-                            <div class="carousel-item active">
+                            <div class="carousel-item active ">
                                 <div class="main-page appointment-letter">
 
                                     <div class="sub-page" style="padding:0px;">
@@ -51,10 +51,10 @@
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <div class="logo" style="width:100%;height:fit-content;">
+                                                        <div class="logo" style="width:100%;height:100px;">
                                                             <img src="{{ URL::asset('assets/images/header.jpg') }}"
                                                                 alt="" class=""
-                                                                style="height:100%;width:100%;">
+                                                                style="height:100px;width:100%;">
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -111,16 +111,30 @@
                                                                             pm. You may contact the Help Desk through one of
                                                                             the two methods below:
                                                                         </p>
-                                                                        <p class="txt-left pt-5 ">
-                                                                            <span> Log in to </span><a
-                                                                                href="ess.abshrms.com">ess.abshrms.com</a>
 
-                                                                        </p>
-                                                                        <p class="txt-left pt-pb-5">
-                                                                            <span> Email</span>
-                                                                            us at <a
-                                                                                href="payroll@ardens.in">payroll@ardens.in</a>
-                                                                        </p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <ol style="list-style: none">
+
+                                                                            <li>
+                                                                                <img src="{{ URL::asset('assets/images/list_style.png') }}"
+                                                                                    alt=""
+                                                                                    style="padding-right:10px ">
+                                                                                <span> Log in to </span><a
+                                                                                    href="ess.abshrms.com">ess.abshrms.com</a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <img src="{{ URL::asset('assets/images/list_style.png') }}"
+                                                                                    alt=""
+                                                                                    style="padding-right:10px ">
+                                                                                <span> Email</span>
+                                                                                us at <a
+                                                                                    href="payroll@ardens.in">payroll@ardens.in</a>
+                                                                            </li>
+
+                                                                        </ol>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -137,63 +151,86 @@
                                                                 </tr>
                                                                 <tr>
                                                                     <td colspan="12" align="left">
-                                                                        <p class="txt-left a pt-10">
-                                                                            <b>Professionalism:</b>
-                                                                            Our staff expertise responds to high complex
-                                                                            needs
-                                                                        </p>
 
-                                                                    </td>
-                                                                </tr>
+                                                                        <ol style="list-style: none">
+
+                                                                            <li>
+                                                                                <p class="pt-10">
+                                                                                    <img src="{{ URL::asset('assets/images/list_style.png') }}"
+                                                                                    alt=""
+                                                                                    style="padding-right:10px ">
+                                                                                    <b>Professionalism:</b>
+                                                                                    Our staff expertise responds to high complex
+                                                                                    needs
+                                                                                </p>
+
+                                                                            </li>
+                                                                            <li>
+
+                                                                                <p class="txt-left a pt-10">
+                                                                                    <img src="{{ URL::asset('assets/images/list_style.png') }}"
+                                                                                    alt=""
+                                                                                    style="padding-right:10px ">
+                                                                                    <b>Proximity:</b>
+                                                                                    Build open relationships with clients
+                                                                                </p>
+                                                                            </li>
+                                                                            <li>
+
+                                                                                <p class="txt-left a pt-10">
+                                                                                    <img src="{{ URL::asset('assets/images/list_style.png') }}"
+                                                                                    alt=""
+                                                                                    style="padding-right:10px ">
+                                                                                    <b>Proactivity: </b>
+                                                                                    Not only follow the customer demand but
+                                                                                    anticipate and customize intelligent
+                                                                                    solutions
+                                                                                </p>
+                                                                            </li>
+                                                                            <li>
 
 
-                                                                <tr>
-                                                                    <td colspan="12" style=" " align="left">
-                                                                        <p class="txt-left a pt-10">
-                                                                            <b>Proximity:</b>
-                                                                            Build open relationships with clients
-                                                                        </p>
-                                                                    </td>
-                                                                </tr>
+                                                                                <p class="txt-left a pt-10">
+                                                                                    <img src="{{ URL::asset('assets/images/list_style.png') }}"
+                                                                                    alt=""
+                                                                                    style="padding-right:10px ">
+                                                                                    <b>Proficiency: </b>
+                                                                                    High standards, ability to use
+                                                                                    innovative
+                                                                                    technology to meet client’s expectations
+                                                                                </p>
+                                                                            </li>
+                                                                            <li>
+
+                                                                                <p class="txt-left a pt-10">
+                                                                                    <img src="{{ URL::asset('assets/images/list_style.png') }}"
+                                                                                    alt=""
+                                                                                    style="padding-right:10px ">
+                                                                                    <b>People: </b>
+                                                                                    Finally, payroll is all about people.
+                                                                                    Our
+                                                                                    experts focus their activity to deliver
+                                                                                    accurate
+                                                                                    pay sheets and rapports to facilitate
+                                                                                    the
+                                                                                    employee’s life.
+                                                                                </p>
+                                                                            </li>
+                                                                            <li>
+
+                                                                                <p class="txt-left a pt-10">
+                                                                                    <img src="{{ URL::asset('assets/images/list_style.png') }}"
+                                                                                    alt=""
+                                                                                    style="padding-right:10px ">
+                                                                                    <b>Progress: </b>
+                                                                                    Innovation is at the core of our
+                                                                                    business
+                                                                                </p>
+                                                                            </li>
+
+                                                                        </ol>
 
 
-                                                                <tr>
-                                                                    <td colspan="12" style=" " align="left">
-                                                                        <p class="txt-left a pt-10">
-                                                                            <b>Proactivity: </b>
-                                                                            Not only follow the customer demand but
-                                                                            anticipate and customize intelligent solutions
-                                                                        </p>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-
-                                                                <tr>
-                                                                    <td colspan="12" style=" " align="left">
-                                                                        <p class="txt-left a pt-10">
-                                                                            <b>Proficiency: </b>
-                                                                            High standards, ability to use innovative
-                                                                            technology to meet client’s expectations
-                                                                        </p>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td colspan="12" style=" " align="left">
-                                                                        <p class="txt-left a pt-10">
-                                                                            <b>People: </b>
-                                                                            Finally, payroll is all about people. Our
-                                                                            experts focus their activity to deliver accurate
-                                                                            pay sheets and rapports to facilitate the
-                                                                            employee’s life.
-                                                                        </p>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td colspan="12" style=" " align="left">
-                                                                        <p class="txt-left a pt-10">
-                                                                            <b>Progress: </b>
-                                                                            Innovation is at the core of our business
-                                                                        </p>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -203,7 +240,7 @@
                                                                             exciting journey with ABS while enhancing your
                                                                             professional stature, along the way.
                                                                         </p>
-                                                                        <p class="txt-left pt-30">
+                                                                        <p class="txt-left " style="padding-top:25px;">
                                                                             <b>For Ardens Business Solutions Private
                                                                                 Limited</b>
                                                                         </p>
@@ -233,10 +270,10 @@
                                                 <tr>
                                                     <td>
                                                         <div class="logo"
-                                                            style="width:100%;height:fit-content;padding-top:34px;">
+                                                            style="width:100%;height:100px;">
                                                             <img src="{{ URL::asset('assets/images/footer.jpg') }}"
                                                                 alt="" class=""
-                                                                style="height:100%;width:100%;">
+                                                                style="height:100px;;width:100%;">
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -256,10 +293,10 @@
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <div class="logo" style="width:100%;height:fit-content;">
+                                                        <div class="logo" style="width:100%;height:100px;">
                                                             <img src="{{ URL::asset('assets/images/header.jpg') }}"
                                                                 alt="" class=""
-                                                                style="height:100%;width:100%;">
+                                                                style="height:100px;;width:100%;">
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -405,10 +442,10 @@
                                                 <tr>
                                                     <td>
                                                         <div class="logo"
-                                                            style="width:100%;height:fit-content;padding-top:63px;">
+                                                            style="width:100%;height:160px;padding-top:63px;">
                                                             <img src="{{ URL::asset('assets/images/footer.jpg') }}"
                                                                 alt="" class=""
-                                                                style="height:100%;width:100%;">
+                                                                style="height:100px;width:100%;">
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -428,10 +465,10 @@
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <div class="logo" style="width:100%;height:fit-content;">
+                                                        <div class="logo" style="width:100%;height:100px;">
                                                             <img src="{{ URL::asset('assets/images/header.jpg') }}"
                                                                 alt="" class=""
-                                                                style="height:100%;width:100%;">
+                                                                style="height:100px;width:100%;">
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -584,10 +621,10 @@
                                                 <tr>
                                                     <td>
                                                         <div class="logo"
-                                                            style="width:100%;height:fit-content;padding-top:151px;">
+                                                            style="width:100%;padding-top:151px;">
                                                             <img src="{{ URL::asset('assets/images/footer.jpg') }}"
                                                                 alt="" class=""
-                                                                style="height:100%;width:100%;">
+                                                                style="height:100px;width:100%;">
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -607,10 +644,10 @@
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <div class="logo" style="width:100%;height:fit-content;">
+                                                        <div class="logo" style="width:100%;height:100px;">
                                                             <img src="{{ URL::asset('assets/images/header.jpg') }}"
                                                                 alt="" class=""
-                                                                style="height:100%;width:100%;">
+                                                                style="height:100px;;width:100%;">
                                                         </div>
 
                                                     </td>
@@ -723,10 +760,10 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <div class="logo" style="width:100%;height:fit-content;padding-top:12px;">
+                                                        <div class="logo" style="width:100%;height:100px;padding-top:12px;">
                                                             <img src="{{ URL::asset('assets/images/footer.jpg') }}"
                                                                 alt="" class=""
-                                                                style="height:100%;width:100%;">
+                                                                style="height:100px;;width:100%;">
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -745,10 +782,10 @@
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <div class="logo" style="width:100%;height:fit-content;">
+                                                        <div class="logo" style="width:100%;height:100px;">
                                                             <img src="{{ URL::asset('assets/images/header.jpg') }}"
                                                                 alt="" class=""
-                                                                style="height:100%;width:100%;">
+                                                                style="height:100px;;width:100%;">
                                                         </div>
 
                                                     </td>
@@ -845,10 +882,10 @@
                                                 <tr>
                                                     <td>
                                                         <div class="logo"
-                                                            style="width:100%;height:fit-content;padding-top:419px;">
+                                                            style="width:100%;height:100px;padding-top:419px;">
                                                             <img src="{{ URL::asset('assets/images/footer.jpg') }}"
                                                                 alt="" class=""
-                                                                style="height:100%;width:100%;">
+                                                                style="height:100px;;width:100%;">
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -868,10 +905,10 @@
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <div class="logo" style="width:100%;height:fit-content;">
+                                                        <div class="logo" style="width:100%;height:100px;">
                                                             <img src="{{ URL::asset('assets/images/header.jpg') }}"
                                                                 alt="" class=""
-                                                                style="height:100%;width:100%;">
+                                                                style="height:100px;;width:100%;">
                                                         </div>
 
                                                     </td>
@@ -1004,10 +1041,10 @@
                                                 <tr>
                                                     <td>
                                                         <div class="logo"
-                                                            style="width:100%;height:fit-content;padding-top:23px;">
+                                                            style="width:100%;height:100px;padding-top:23px;">
                                                             <img src="{{ URL::asset('assets/images/footer.jpg') }}"
                                                                 alt="" class=""
-                                                                style="height:100%;width:100%;">
+                                                                style="height:100px;;width:100%;">
                                                         </div>
 
                                                     </td>
@@ -1028,10 +1065,10 @@
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <div class="logo" style="width:100%;height:fit-content;">
+                                                        <div class="logo" style="width:100%;height:100px;">
                                                             <img src="{{ URL::asset('assets/images/header.jpg') }}"
                                                                 alt="" class=""
-                                                                style="height:100%;width:100%;">
+                                                                style="height:100px;;width:100%;">
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -1182,10 +1219,10 @@
                                                 <tr>
                                                     <td>
                                                         <div class="logo"
-                                                            style="width:100%;height:fit-content;padding-top:84px;">
+                                                            style="width:100%;height:100px;padding-top:84px;">
                                                             <img src="{{ URL::asset('assets/images/footer.jpg') }}"
                                                                 alt="" class=""
-                                                                style="height:100%;width:100%;">
+                                                                style="height:100px;;width:100%;">
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -1204,10 +1241,10 @@
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <div class="logo" style="width:100%;height:fit-content;">
+                                                        <div class="logo" style="width:100%;height:100px;">
                                                             <img src="{{ URL::asset('assets/images/header.jpg') }}"
                                                                 alt="" class=""
-                                                                style="height:100%;width:100%;">
+                                                                style="height:100px;;width:100%;">
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -1318,10 +1355,10 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <div class="logo" style="width:100%;height:fit-content;padding-top:279px;">
+                                                        <div class="logo" style="width:100%;height:100px;padding-top:279px;">
                                                             <img src="{{ URL::asset('assets/images/footer.jpg') }}"
                                                                 alt="" class=""
-                                                                style="height:100%;width:100%;">
+                                                                style="height:100px;;width:100%;">
                                                         </div>
                                                     </td>
                                                 </tr>

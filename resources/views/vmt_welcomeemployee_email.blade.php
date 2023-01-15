@@ -115,7 +115,7 @@ $bank_names = \DB::table('bank_list')->get();
 
                                             </tr>
                                             <tr>
-                                                <td class="padding-t_0" align="center">
+                                                <td class="" align="center" style="padding: 0px">
                                                     <a href="" class="mail-button get-touch">Get in touch</a>
                                                 </td>
                                             </tr>
@@ -129,7 +129,7 @@ $bank_names = \DB::table('bank_list')->get();
                             <tr>
                                 <td class="" align="center">
                                     <table class="" width="400"
-                                        style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;padding:20px">
+                                        style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
                                         <tbody>
 
                                             <tr>
@@ -162,7 +162,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="padding-t_0" align="center">
+                                                <td class="padding-t_0" align="center" style="padding-top:10px;">
                                                     <a href="{{ $loginLink }}/login"
                                                         class="mail-button log-in">Log In</a>
                                                 </td>
