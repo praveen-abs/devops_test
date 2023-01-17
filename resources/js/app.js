@@ -107,7 +107,8 @@ import primeTable from './components/primeTable.vue'
 import table from './hrms/modules/testings/app.vue'
 import testbuttonclick from './hrms/modules/testings/TestButtonClick.vue'
 
-const app = createApp(primeTable);
+const app = createApp(testbuttonclick);
+//const app2 = createApp(testbuttonclick);
 
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
@@ -211,8 +212,8 @@ app.component('VirtualScroller', VirtualScroller);
 
 //globally registering component
 //app.component('Counter',mycounter );
-app.component('TestButtonClick',testbuttonclick);
+//app.component('TestButtonClick',testbuttonclick);
 
-app.mount("#app");
-//app2.mount("#mytable");
+app.mount("#mytable");
+//app2.mount("#app");
 
