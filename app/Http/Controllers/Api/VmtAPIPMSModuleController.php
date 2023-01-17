@@ -236,14 +236,14 @@ class VmtAPIPMSModuleController extends HRMSBaseAPIController
     public function saveAssigneeReviews(Request $request){
         $validation = Validator::make($request->all(), [
             'assignedFormId' => 'required',
-            'assigneeId' => 'required',
+            //'assigneeId' => 'required',
             'assignee_kpi_review' => 'required',
             'assignee_kpi_percentage' => 'required',
             'assignee_kpi_comments' => 'required',
             'formSubmitType' => 'required',
         ],[
             'assignedFormId.required' => 'Assigned Form Id is Required',
-            'assigneeId.required' => 'Assignee Id is Required',
+            //'assigneeId.required' => 'Assignee Id is Required',
             'assignee_kpi_review.required' => 'Assignee KPI Review is Required',
             'assignee_kpi_percentage.required' => 'Assignee KPI Percentage is Required',
             'assignee_kpi_comments.required' => 'Assignee KPI Comment is Required',
@@ -256,12 +256,12 @@ class VmtAPIPMSModuleController extends HRMSBaseAPIController
 
         try{
             // check logged user id and assigneeId
-            if(Auth::id() != $request->assigneeId){
-                return sendError('Assignee Id is not your Id');
-            }
+            // if(Auth::id() != $request->assigneeId){
+            //     return sendError('Assignee Id is not your Id');
+            // }
 
             // check review available or not
-            $assignedReviewCheck = VmtPMS_KPIFormReviewsModel::where('vmt_pms_kpiform_assigned_id',$request->assignedFormId)->where('assignee_id',$request->assigneeId)->with('getPmsKpiFormAssigned')->first();
+            $assignedReviewCheck = VmtPMS_KPIFormReviewsModel::where('vmt_pms_kpiform_assigned_id',$request->assignedFormId)->where('assignee_id',Auth::id())->with('getPmsKpiFormAssigned')->first();
             if(empty($assignedReviewCheck)){
                 return sendError('Review Data Not Found');
             }
@@ -300,7 +300,7 @@ class VmtAPIPMSModuleController extends HRMSBaseAPIController
                     $kpiFormAssignedReviewers = explode(',',$assignedReviewCheck->getPmsKpiFormAssigned->reviewer_id);
                 }
 
-                $assigneeDetails = User::findorfail($request->assigneeId);
+                $assigneeDetails = User::findorfail(Auth::id());
 
                 // check Multiple Reviewers
                 if(count($kpiFormAssignedReviewers) > 0){
@@ -313,10 +313,10 @@ class VmtAPIPMSModuleController extends HRMSBaseAPIController
                             array_push($kpiFormAssignedReviewersOfficialMails,$userEmployeeDetails->getEmployeeOfficeDetails->officical_mail);
 
                             // Send mail to All Reviewers
-                            \Mail::to($userEmployeeDetails->getEmployeeOfficeDetails->officical_mail)->send(new NotifyPMSManager($assigneeDetails->name, $currentUser_empDetails->designation, $userEmployeeDetails->name,$assignedReviewCheck->year ));
-                            $message = "Employee has submitted KPI Assessment.  ";
+                           // \Mail::to($userEmployeeDetails->getEmployeeOfficeDetails->officical_mail)->send(new NotifyPMSManager($assigneeDetails->name, $currentUser_empDetails->designation, $userEmployeeDetails->name,$assignedReviewCheck->year ));
+                           // $message = "Employee has submitted KPI Assessment.  ";
                             // Send notification to All Revie
-                                Notification::send($assigneeDetails ,new ViewNotification($message.$assigneeDetails->name));
+                            //    Notification::send($assigneeDetails ,new ViewNotification($message.$assigneeDetails->name));
                         }
 
                     }
@@ -414,7 +414,7 @@ class VmtAPIPMSModuleController extends HRMSBaseAPIController
                         }
                     }
 
-                    $rating = calculateOverallReviewRatings($kpiAssignee->id, $userId);
+                   // $rating = calculateOverallReviewRatings($kpiAssignee->id, $userId);
                 }
             }
 

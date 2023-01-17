@@ -1,9 +1,14 @@
+<?php
+//dd($assignedGoals);
+
+?>
+
 @extends('layouts.master')
 @section('css')
-    <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
+
     <!-- for styling -->
     <link href="{{ URL::asset('assets/css/appraisal_review.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ URL::asset('/assets/css/pages_profile.css') }}">
+
 @endsection
 @section('content')
     <div class="loader" style="display:none;"></div>
@@ -430,7 +435,8 @@
                                                     </td>
                                                     <td>
                                                         @if ($assignedGoals->is_assignee_accepted == '1' && $isAllReviewersAcceptedOrNot == true)
-                                                            @if ($assignedGoals->is_assignee_submitted == 0)
+                                                            {{-- If its Saved as Draft --}}
+                                                            @if ($assignedGoals->is_assignee_submitted == 0 || $assignedGoals->is_assignee_submitted == "NULL" )
                                                                 <div>
                                                                     <textarea  name="assignee_kpi_review[{{ $kpiRow->id }}]" data-index="{{ $index }}"
                                                                         data-targetval="{{ $kpiRow->target }}" data-kpiweightageval="{{ $kpiRow->kpi_weightage }}"
@@ -450,7 +456,7 @@
                                                     </td>
                                                     <td>
                                                         @if ($assignedGoals->is_assignee_accepted == '1' && $isAllReviewersAcceptedOrNot == true)
-                                                            @if ($assignedGoals->is_assignee_submitted == 0)
+                                                            @if ($assignedGoals->is_assignee_submitted == 0 || $assignedGoals->is_assignee_submitted == "NULL")
                                                                 {{-- <div> --}}
                                                                     <textarea  class="inp-text form-control w-100 h-100 outline-none border-0 assignee_kpi_percentage" id="assignee_kpi_percentage{{ $index }}"
                                                                         name="assignee_kpi_percentage[{{ $kpiRow->id }}]"
@@ -476,11 +482,11 @@
                                                             @endif
                                                         @endif
                                                     </td>
-                                                    <td>
+                                                    <td style="width:200px;min-width:300px;">
                                                         @if ($assignedGoals->is_assignee_accepted == '1' && $isAllReviewersAcceptedOrNot == true)
-                                                            @if ($assignedGoals->is_assignee_submitted == 0)
+                                                            @if ($assignedGoals->is_assignee_submitted == 0 || $assignedGoals->is_assignee_submitted == "NULL")
                                                                 {{-- <div> --}}
-                                                                    <textarea  name="assignee_kpi_comments[{{ $kpiRow->id }}]" class="form-control w-100 h-100 outline-none border-0 "
+                                                                    <textarea  name="assignee_kpi_comments[{{ $kpiRow->id }}]" class="form-control h-100 outline-none border-0 "
                                                                         id="assignee_kpi_comments{{ $index }}" placeholder="type here">
 @if (isset(json_decode($assignedGoals->assignee_kpi_comments, true)[$kpiRow->id]))
 {{ json_decode($assignedGoals->assignee_kpi_comments, true)[$kpiRow->id] }}
@@ -593,23 +599,23 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card mb-0">
-                            <div class="card-header">
-                                <h5>Best People Rating Grid</h5>
-                            </div>
+
                             <div class="card-body pb-2">
+                                <h6 class="modal-title mb-2">Best People Rating Grid</h6>
                                 <h6>Appraisee's Annual Score & Rating</h6>
                                 <div class="table-content mb-1">
                                     <table class="table rating_table  align-middle mb-0 table-bordered " id="table">
 
                                         <thead class="thead" id="tHead">
+
+                                        </thead>
+                                        <tbody class="tbody" id="tbody">
                                             <tr>
                                                 <th class="" style="width:350px">Overall Annual Score</th>
                                                 @foreach ($pmsRatingDetails as $ratingDetails)
                                                     <td scope="col" style="border:1px solid #002f56">>{{ $ratingDetails->score_range }}</th>
                                                 @endforeach
                                             </tr>
-                                        </thead>
-                                        <tbody class="tbody" id="tbody">
                                             <tr>
 
                                                 <th class="" style="width:350px">

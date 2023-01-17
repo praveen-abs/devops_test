@@ -94,7 +94,7 @@
                                     </td>
                                     <td>
                                         @if (isset($docs_reviewed) && $docs_reviewed->aadhar_card_file == -1)
-                                            <button class="btn btn-border-primary"
+                                            <button class="btn btn-success"
                                                 onclick="approveOrRejectDocument('aadhar_card_file', 1)">
                                                 Approve</button>
                                             <button class="btn btn-danger"
@@ -480,7 +480,7 @@
 
 
 <div id="notificationModal" class="modal custom-modal fade" role="dialog"  style="opacity:1; display:none;background:#00000073;">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-xl" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg" role="document">
         <div class="modal-content top-line">
             <div id="modalHeader" class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
                 <h6 class="modal-title mb-1 text-primary"  >
@@ -569,12 +569,14 @@
                     doc_name: docName,
                     approve_status: aproveStatus,
                     _token: '{{ csrf_token() }}'
+
                 },
                 success: function(data) {
                     alert("Document reviewed successfully");
                     //window.location.href = "/";
-                    location.reload();
+                    //location.reload();
                 }
+
             });
         }
 

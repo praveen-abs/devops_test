@@ -40,6 +40,7 @@ class WelcomeMail extends Mailable
     public function build()
     {
         $output = $this->view('vmt_welcomeemployee_email')
+                    ->subject('ABShrms - Welcome')
                     ->with('uEmail', $this->uEmail)
                     ->with('uPassowrd', $this->uPassowrd)
                     ->with('loginLink', $this->loginLink)

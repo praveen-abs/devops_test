@@ -277,7 +277,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 col-xxl-12 d-flex">
+                                <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12  d-flex">
                                     <div class="card top-line w-100">
                                         <div class="card-body">
                                             <div class="d-flex align-items-center justify-content-between mb-2">
@@ -2156,7 +2156,7 @@
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="{{ URL::asset('assets/js/pages/profile-setting.init.js') }}"></script>
-     
+    <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
     <script>
         $(document).ready(function() {
 

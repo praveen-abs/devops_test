@@ -80,7 +80,7 @@
 }
 .orgchart .logo-level:not(:only-child)::after {
     height: 21px !important;
-    top: 48px !important;
+    top: 52px !important;
 }
 
 .orgchart .hierarchy:first-child::before {

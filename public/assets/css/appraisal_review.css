@@ -37,10 +37,10 @@ table.kpi_republish_table tbody tr td {
 
 
 
-table.kpi_appraisal-table tr th:nth-child(1),
+/* table.kpi_appraisal-table tr th:nth-child(1),
 table.kpi_appraisal-table tr th:nth-child(2) {
     text-align: left;
-}
+} */
 table.kpi_appraisal-table td:nth-child(1) {
     text-align: inherit !important;
     width: 300px;
@@ -56,11 +56,15 @@ table.kpi_appraisal-table tbody tr th {
 
     border-bottom-left-radius: 0px !important;
 }
-table.kpi_appraisal-table tbody tr th textarea {
+table.kpi_appraisal-table tbody tr th  textarea{
     color: #fff;
     background: transparent;
-    width: 300px;
+
 }
+table.kpi_appraisal-table tbody tr th {
+    min-width: 250px;
+}
+
 /* table#kpiTable tbody tr td textarea {
     padding: 3px 4px;
 } */
@@ -96,6 +100,8 @@ table.rating_table tbody {
 }
 table.rating_table tr:first-child th:first-child {
     border-top: 1px solid #002f56;
+    border-left: 1px solid #002f56;
+    border-right: 1px solid #002f56;
     border-radius: 0;
 }
 table.rating_table tr:last-child th:first-child {
@@ -147,20 +153,12 @@ table.rating_table tr:last-child th:first-child {
     word-break: break-word;
 }
 
-.table-content {
-    /* overflow: auto; */
-}
-
 .table-content table th {
     background: var(--vz-header-bg-dark);
     width: 350px;
     color: #fff;
 }
 
-/* .table-content div {
-    height: auto;
-    min-width: 50px;
-} */
 .table-content textarea {
     border: 0px;
     outline: none;
@@ -193,17 +191,9 @@ table.kpi_appraisal-table tr td{
     vertical-align:top;
 }
 
-table.kpi_appraisal-table tr:nth-child(1n) th div {
-    text-align: initial;
-}
-
-table.kpi_appraisal-table tr:nth-child(1n) td:nth-child(2) {
-    text-align: initial !important;
-}
-/* table.kpi_appraisal-table tr:nth-child(1n) td:last-child {
-    text-align: initial !important;
+/* table.kpi_appraisal-table tr:nth-child(1n) td:nth-child(2) {
+    text-align: initial ;
 } */
-
 .accordion {
     background-color: #eee;
     color: #444;
@@ -238,4 +228,9 @@ table.kpi_appraisal-table tr:nth-child(1n) td:nth-child(2) {
 
 .appraisal_rating .progress {
     height: 7px;
+}
+.appraisal_reviewer tr td:nth-child(8) div{
+
+    width: 200px;
+
 }

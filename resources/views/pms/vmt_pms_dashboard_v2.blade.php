@@ -1,25 +1,20 @@
 @extends('layouts.master')
 @section('css')
-    <link href="{{ URL::asset('assets/css/assign_goals.css') }}" rel="stylesheet">
-    <link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ URL::asset('/assets/css/pages_profile.css') }}">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.15/tailwind.min.css" rel="stylesheet" />
+<link href="{{ URL::asset('assets/css/appraisal_review.css') }}" rel="stylesheet">
+<link rel="stylesheet" href="{{ URL::asset('/assets/css/pages_profile.css') }}">
+<link rel="stylesheet" href="{{ URL::asset('/assets/css/assign_goals.css') }}">
 
 @endsection
 
 
 @section('content')
     <div class="loader" style="display:none;"></div>
-    {{-- @component('components.performance_breadcrumb')
-        @slot('li_1')
-        @endslot
-    @endcomponent --}}
+
 
 
 
     <div class="container-fluid assign-goal-wrapper mt-30">
         <div class="cards-wrapper">
-
             @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR', 'Manager']))
 
                 <div class="row">
@@ -361,7 +356,7 @@
                             <div class="p-3 justify-content-center d-flex align-items-center"><img
                                     src="{{ URL::asset('assets/images/assign_goals.png') }}"
                                     style="width:280px;min-height:250px;"></div>
-                            <h4 class="fw-bold">Assign Goals for your employees</h4>
+                            <h6 class="fw-bold">Assign Goals for your employees</h6>
                             <button id="add-goals" class="btn btn-orange mt-1">
                                 <i class="text-white fa fa-plus me-1"></i>
                                 Add
@@ -413,9 +408,7 @@
                                                 <th scope="col">Score</th>
                                                 <th scope="col">Review </th>
                                                 @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
-
-                                                <th scope="col">Action </th>
-
+                                                    <th scope="col">Action </th>
                                                 @endif
                                             </tr>
                                         </thead>
@@ -434,137 +427,150 @@
                                                         $kpiFormAssigneeReview = getReviewKpiFormDetails($pmsKpiAssignee->id, $assigneeId);
 
                                                         ?>
-                                                        @if($kpiFormAssigneeReview && !isFormReviewCompleted($kpiFormAssigneeReview))
-                                                        <tr>
-                                                            <td class="d-none">{{ $key1 }}</td>
-                                                            <td class="" >
-                                                                {{-- <div class="td_content_center">{{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</div> --}}
-                                                                <div
-                                                                    class="row page-header-user-dropdown align-items-center" style="width:200px;min-width: 230px;">
-                                                                    <?php
-                                                                    $employee_icon = getEmployeeAvatarOrShortName($assigneeId);
-                                                                    //    dd($employee_icon);
-                                                                    ?>
-                                                                    @if (!empty($employee_icon))
-                                                                        @if ($employee_icon['type'] == 'shortname')
-                                                                            <div class="col-auto p-0">
-                                                                                <span
-                                                                                    class="rounded-circle user-profile  ml-2 "
-                                                                                    id="">
-                                                                                    <i id="topbar_username"
-                                                                                        class="align-middle ">{{ $employee_icon['data'] }}</i>
-                                                                                </span>
-                                                                            </div>
-                                                                        @elseif($employee_icon['type'] == 'avatar')
-                                                                            <div class="col-auto p-0">
-                                                                                <img class="rounded-circle header-profile-user"
-                                                                                    src=" {{ URL::asset('images/' . $employee_icon['data']) }}"
-                                                                                    alt="--">
-                                                                            </div>
+                                                        @if ($kpiFormAssigneeReview && !isFormReviewCompleted($kpiFormAssigneeReview))
+                                                            <tr>
+                                                                <td class="d-none">{{ $key1 }}</td>
+                                                                <td class="">
+                                                                    {{-- <div class="td_content_center">{{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</div> --}}
+                                                                    <div class="row page-header-user-dropdown ms-4 align-items-center"
+                                                                        style="width:200px;min-width: 230px;">
+                                                                        <?php
+                                                                        $employee_icon = getEmployeeAvatarOrShortName($assigneeId);
+                                                                        //    dd($employee_icon);
+                                                                        ?>
+                                                                        @if (!empty($employee_icon))
+                                                                            @if ($employee_icon['type'] == 'shortname')
+                                                                                <div class="col-auto p-0 me-1">
+                                                                                    <span
+                                                                                        class="rounded-circle user-profile  ml-2 "
+                                                                                        id="">
+                                                                                        <i id="topbar_username"
+                                                                                            class="align-middle ">{{ $employee_icon['data'] }}</i>
+                                                                                    </span>
+                                                                                </div>
+                                                                            @elseif($employee_icon['type'] == 'avatar')
+                                                                                <div class="col-auto p-0 me-1">
+                                                                                    <img class="rounded-circle header-profile-user"
+                                                                                        src=" {{ URL::asset('images/' . $employee_icon['data']) }}"
+                                                                                        alt="--">
+                                                                                </div>
+                                                                            @endif
                                                                         @endif
-                                                                    @endif
-                                                                    <div class="col-auto p-0">
-                                                                        <span class="f-12 ml-3">
-                                                                            <span class="">
-                                                                                {{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</span>
-                                                                            {{-- <span
+                                                                        <div class="col-auto me-1 p-0">
+                                                                            <span class="f-12 ml-3">
+                                                                                <span class="">
+                                                                                    {{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</span>
+                                                                                {{-- <span
                                                                         class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text"></span> --}}
 
-                                                                        </span>
+                                                                            </span>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </td>
-                                                            <td class="">
-                                                                <div class="td_content_center">
-                                                                    {{ $pmsKpiAssignee->getUserDetails($assigneeId)['userEmpIds'] }}
-                                                                </div>
-                                                            </td>
-                                                            <td class="" style="min-width: 150px;">
-                                                                @foreach ($pmsKpiAssigneeData['reviewersIds'] as $keyCheck => $reviewer)
-                                                                    @if ($pmsKpiAssigneeData['currentLoggedUserRole'] == 'reviewer' && $reviewer == Auth::id())
-                                                                        <div class=" col-auto td_content_center">
-                                                                            {{ getUserDetailsById($reviewer) }}</div>
-                                                                    @elseif($pmsKpiAssigneeData['currentLoggedUserRole'] != 'reviewer')
-                                                                        @if ($keyCheck != 0)
-                                                                            <br>
+                                                                </td>
+                                                                <td class="">
+                                                                    <div class="td_content_center">
+                                                                        {{ $pmsKpiAssignee->getUserDetails($assigneeId)['userEmpIds'] }}
+                                                                    </div>
+                                                                </td>
+                                                                <td class="" style="min-width: 150px;">
+                                                                    @foreach ($pmsKpiAssigneeData['reviewersIds'] as $keyCheck => $reviewer)
+                                                                        @if ($pmsKpiAssigneeData['currentLoggedUserRole'] == 'reviewer' && $reviewer == Auth::id())
+                                                                            <div class=" col-auto td_content_center">
+                                                                                {{ getUserDetailsById($reviewer) }}</div>
+                                                                        @elseif($pmsKpiAssigneeData['currentLoggedUserRole'] != 'reviewer')
+                                                                            @if ($keyCheck != 0)
+                                                                                <br>
+                                                                            @endif
+
+                                                                            <div class="col-auto td_content_center">
+                                                                                {{ getUserDetailsById($reviewer) }}</div>
                                                                         @endif
+                                                                    @endforeach
 
-                                                                        <div class="col-auto td_content_center">
-                                                                            {{ getUserDetailsById($reviewer) }}</div>
-                                                                    @endif
-                                                                @endforeach
-
-                                                            </td>
-                                                            <td class="">
-                                                                <div class="td_content_center">
-                                                                    {{ strtoupper($pmsKpiAssignee->assignment_period) }}
-                                                                </div>
-                                                            </td>
-                                                            <td class="">
-                                                                <div class="td_content_center">
-                                                                    @if (!empty($kpiFormAssigneeReview) && $kpiFormAssigneeReview->is_assignee_accepted == '0')
-                                                                        Rejected
-                                                                    @else
-                                                                        @if (!empty($kpiFormAssigneeReview) && $kpiFormAssigneeReview->is_assignee_submitted == '1')
-                                                                            Submitted
+                                                                </td>
+                                                                <td class="">
+                                                                    <div class="td_content_center">
+                                                                        {{ strtoupper($pmsKpiAssignee->assignment_period) }}
+                                                                    </div>
+                                                                </td>
+                                                                <td class="">
+                                                                    <div class="td_content_center">
+                                                                        @if (!empty($kpiFormAssigneeReview) && $kpiFormAssigneeReview->is_assignee_accepted == '0')
+                                                                            Rejected
                                                                         @else
-                                                                            Not yet submitted
+                                                                            @if (!empty($kpiFormAssigneeReview) && $kpiFormAssigneeReview->is_assignee_submitted == '1')
+                                                                                Submitted
+                                                                            @else
+                                                                                Not yet submitted
+                                                                            @endif
                                                                         @endif
-                                                                    @endif
-                                                                </div>
-                                                            </td>
-                                                            <td class="">
-
-                                                                <div class="td_content_center">
-                                                                    <?php echo checkCurrentLoggedUserReviewerOrNot($pmsKpiAssigneeData['reviewersIds'], $pmsKpiAssigneeData['currentLoggedUserRole'], $kpiFormAssigneeReview); ?>
-                                                                </div>
-                                                            </td>
-                                                            <td class="">
-                                                                <div class="td_content_center">
-                                                                    <?php echo calculateReviewRatings($pmsKpiAssignee->id, $assigneeId)['score']; ?>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <?php
-                                                                $checkViewReviewText = checkViewReviewText($pmsKpiAssigneeData['currentLoggedUserRole'], $kpiFormAssigneeReview);
-                                                                ?>
-                                                                <div class="td_content_center">
-                                                                    <a target="_self"
-                                                                        @if ($checkViewReviewText == 'Edit') href="{{ route('republishForm', $pmsKpiAssignee->id) }}" @else href="{{ url('pms-showReviewPage?assignedFormid=' . $pmsKpiAssignee->id . '&assigneeId=' . $assigneeId) }}" @endif><button
-                                                                            class="btn btn-orange py-0 px-2 "
-                                                                            style="min-width: 95px;"> <span
-                                                                                class="mr-10 icon"></span>
-                                                                            <?php
-                                                                            echo $checkViewReviewText;
-                                                                            ?>
-                                                                        </button></a>
-                                                                </div>
-                                                            </td>
-                                                            @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
-                                                            <td>
-
-                                                                <div class="dropdown investment_dropDown">
-                                                                    <button
-                                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                                        type="button" id="dropdownMenuButton"
-                                                                        data-bs-toggle="dropdown" aria-haspopup="true"
-                                                                        aria-expanded="false">
-                                                                        <i class="fa fa-ellipsis-v f-14 text-muted" aria-hidden="true"></i>
-                                                                    </button>
-                                                                    <div class="dropdown-menu"
-                                                                        aria-labelledby="dropdownMenuButton">
-                                                                        <a target="_self" href="{{ route('republishForm', $pmsKpiAssignee->id) }}" class="dropdown-item" href="#"><i
-                                                                                class="fa fa-pencil-square-o text-info me-2"
-                                                                                aria-hidden="true"></i> Edit</a>
-                                                                        <a class="dropdown-item" href="#" onclick="deleteAssignedKPIForm({{$pmsKpiAssignee->id}})"><i class="fa fa-trash text-danger me-2"  aria-hidden="true"></i> Delete</a>
-                                                                        <a class="dropdown-item" href="#"></a>
                                                                     </div>
-                                                                </div>
+                                                                </td>
+                                                                <td class="">
 
-                                                            </td>
-                                                            @endif
+                                                                    <div class="td_content_center">
+                                                                        <?php echo checkCurrentLoggedUserReviewerOrNot($pmsKpiAssigneeData['reviewersIds'], $pmsKpiAssigneeData['currentLoggedUserRole'], $kpiFormAssigneeReview); ?>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="">
+                                                                    <div class="td_content_center">
+                                                                        @if (!empty($kpiFormAssigneeReview) && $kpiFormAssigneeReview->is_reviewer_submitted == '1')
+                                                                            <?php echo calculateReviewRatings($pmsKpiAssignee->id, $assigneeId)['score']; ?>
+                                                                        @else
+                                                                            -
+                                                                        @endif
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <?php
+                                                                    $checkViewReviewText = checkViewReviewText($pmsKpiAssigneeData['currentLoggedUserRole'], $kpiFormAssigneeReview);
+                                                                    ?>
+                                                                    <div class="td_content_center">
+                                                                        <a target="_self"
+                                                                            @if ($checkViewReviewText == 'Edit') href="{{ route('republishForm', $pmsKpiAssignee->id) }}" @else href="{{ url('pms-showReviewPage?assignedFormid=' . $pmsKpiAssignee->id . '&assigneeId=' . $assigneeId) }}" @endif><button
+                                                                                class="btn btn-orange py-0 px-2 "
+                                                                                style="min-width: 95px;"> <span
+                                                                                    class="mr-10 icon"></span>
+                                                                                <?php
+                                                                                echo $checkViewReviewText;
+                                                                                ?>
+                                                                            </button></a>
+                                                                    </div>
+                                                                </td>
+                                                                @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
+                                                                    <td>
 
-                                                        </tr>
+                                                                        <div class="dropdown investment_dropDown">
+                                                                            <button
+                                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                                type="button" id="dropdownMenuButton"
+                                                                                data-bs-toggle="dropdown"
+                                                                                aria-haspopup="true"
+                                                                                aria-expanded="false">
+                                                                                <i class="fa fa-ellipsis-v f-14 text-muted"
+                                                                                    aria-hidden="true"></i>
+                                                                            </button>
+                                                                            <div class="dropdown-menu"
+                                                                                aria-labelledby="dropdownMenuButton">
+                                                                                <a target="_self"
+                                                                                    href="{{ route('republishForm', $pmsKpiAssignee->id) }}"
+                                                                                    class="dropdown-item"
+                                                                                    href="#"><i
+                                                                                        class="fa fa-pencil-square-o text-info me-2"
+                                                                                        aria-hidden="true"></i> Edit</a>
+                                                                                <a class="dropdown-item" href="#"
+                                                                                    onclick="deleteAssignedKPIForm({{ $pmsKpiAssignee->id }})"><i
+                                                                                        class="fa fa-trash text-danger me-2"
+                                                                                        aria-hidden="true"></i> Delete</a>
+                                                                                <a class="dropdown-item"
+                                                                                    href="#"></a>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </td>
+                                                                @endif
+
+                                                            </tr>
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -615,76 +621,77 @@
                                                         $kpiFormAssigneeReview = getReviewKpiFormDetails($pmsKpiAssignee->id, $assigneeId);
 
                                                         //dd(isFormReviewCompleted($kpiFormAssigneeReview));
+
                                                         ?>
 
-                                                        @if($kpiFormAssigneeReview && isFormReviewCompleted($kpiFormAssigneeReview))
-                                                        <tr>
-                                                            <td class="d-none">{{ $key1 }}</td>
-                                                            <td class="" style="min-width: 185px;">
-                                                                {{-- <div class="td_content_center">{{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</div> --}}
-                                                                <div
-                                                                    class="row page-header-user-dropdown align-items-center">
-                                                                    <?php
-                                                                    $employee_icon = getEmployeeAvatarOrShortName($assigneeId);
-                                                                    //    dd($employee_icon);
-                                                                    ?>
-                                                                    @if (!empty($employee_icon))
-                                                                        @if ($employee_icon['type'] == 'shortname')
-                                                                            <div class="col-auto p-0">
-                                                                                <span
-                                                                                    class="rounded-circle user-profile  ml-2 "
-                                                                                    id="">
-                                                                                    <i id="topbar_username"
-                                                                                        class="align-middle ">{{ $employee_icon['data'] }}</i>
-                                                                                </span>
-                                                                            </div>
-                                                                        @elseif($employee_icon['type'] == 'avatar')
-                                                                            <div class="col-auto p-0">
-                                                                                <img class="rounded-circle header-profile-user"
-                                                                                    src=" {{ URL::asset('images/' . $employee_icon['data']) }}"
-                                                                                    alt="--">
-                                                                            </div>
+                                                        @if ($kpiFormAssigneeReview && isFormReviewCompleted($kpiFormAssigneeReview))
+                                                            <tr>
+                                                                <td class="d-none">{{ $key1 }}</td>
+                                                                <td class="" style="min-width: 185px;">
+                                                                    {{-- <div class="td_content_center">{{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</div> --}}
+                                                                    <div
+                                                                        class="row page-header-user-dropdown align-items-center">
+                                                                        <?php
+                                                                        $employee_icon = getEmployeeAvatarOrShortName($assigneeId);
+                                                                        //    dd($employee_icon);
+                                                                        ?>
+                                                                        @if (!empty($employee_icon))
+                                                                            @if ($employee_icon['type'] == 'shortname')
+                                                                                <div class="col-auto p-0">
+                                                                                    <span
+                                                                                        class="rounded-circle user-profile  ml-2 "
+                                                                                        id="">
+                                                                                        <i id="topbar_username"
+                                                                                            class="align-middle ">{{ $employee_icon['data'] }}</i>
+                                                                                    </span>
+                                                                                </div>
+                                                                            @elseif($employee_icon['type'] == 'avatar')
+                                                                                <div class="col-auto p-0">
+                                                                                    <img class="rounded-circle header-profile-user"
+                                                                                        src=" {{ URL::asset('images/' . $employee_icon['data']) }}"
+                                                                                        alt="--">
+                                                                                </div>
+                                                                            @endif
                                                                         @endif
-                                                                    @endif
-                                                                    <div class="col-auto p-0">
-                                                                        <span class="f-12 ml-3">
-                                                                            <span class="">
-                                                                                {{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</span>
-                                                                            {{-- <span
+                                                                        <div class="col-auto p-0">
+                                                                            <span class="f-12 ml-3">
+                                                                                <span class="">
+                                                                                    {{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</span>
+                                                                                {{-- <span
                                                                         class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text"></span> --}}
 
-                                                                        </span>
+                                                                            </span>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </td>
-                                                            <td class="">
-                                                                <div class="td_content_center">
-                                                                    {{ $pmsKpiAssignee->getUserDetails($assigneeId)['userEmpIds'] }}
-                                                                </div>
-                                                            </td>
-                                                            <td class="" style="min-width: 130px;">
-                                                                @foreach ($pmsKpiAssigneeData['reviewersIds'] as $keyCheck => $reviewer)
-                                                                    @if ($pmsKpiAssigneeData['currentLoggedUserRole'] == 'reviewer' && $reviewer == Auth::id())
-                                                                        <div class=" col-auto td_content_center">
-                                                                            {{ getUserDetailsById($reviewer) }}</div>
-                                                                    @elseif($pmsKpiAssigneeData['currentLoggedUserRole'] != 'reviewer')
-                                                                        @if ($keyCheck != 0)
-                                                                            <br>
+                                                                </td>
+                                                                <td class="">
+                                                                    <div class="td_content_center">
+                                                                        {{ $pmsKpiAssignee->getUserDetails($assigneeId)['userEmpIds'] }}
+                                                                    </div>
+                                                                </td>
+                                                                <td class="" style="min-width: 130px;">
+                                                                    @foreach ($pmsKpiAssigneeData['reviewersIds'] as $keyCheck => $reviewer)
+                                                                        @if ($pmsKpiAssigneeData['currentLoggedUserRole'] == 'reviewer' && $reviewer == Auth::id())
+                                                                            <div class=" col-auto td_content_center">
+                                                                                {{ getUserDetailsById($reviewer) }}</div>
+                                                                        @elseif($pmsKpiAssigneeData['currentLoggedUserRole'] != 'reviewer')
+                                                                            @if ($keyCheck != 0)
+                                                                                <br>
+                                                                            @endif
+
+                                                                            <div class="col-auto td_content_center">
+                                                                                {{ getUserDetailsById($reviewer) }}</div>
                                                                         @endif
+                                                                    @endforeach
 
-                                                                        <div class="col-auto td_content_center">
-                                                                            {{ getUserDetailsById($reviewer) }}</div>
-                                                                    @endif
-                                                                @endforeach
-
-                                                            </td>
-                                                            <td class="">
-                                                                <div class="td_content_center">
-                                                                    {{ strtoupper($pmsKpiAssignee->assignment_period) }}
-                                                                </div>
-                                                            </td>
-                                                            <td class="">
-                                                                <div class="td_content_center">
+                                                                </td>
+                                                                <td class="">
+                                                                    <div class="td_content_center">
+                                                                        {{ strtoupper($pmsKpiAssignee->assignment_period) }}
+                                                                    </div>
+                                                                </td>
+                                                                <td class="">
+                                                                    <div class="td_content_center">
 
                                                                         @if (!empty($kpiFormAssigneeReview) && $kpiFormAssigneeReview->is_assignee_submitted == '1')
                                                                             Submitted
@@ -692,36 +699,36 @@
                                                                             Not yet submitted
                                                                         @endif
 
-                                                                </div>
-                                                            </td>
-                                                            <td class="">
+                                                                    </div>
+                                                                </td>
+                                                                <td class="">
 
-                                                                <div class="td_content_center">
-                                                                    <?php echo checkCurrentLoggedUserReviewerOrNot($pmsKpiAssigneeData['reviewersIds'], $pmsKpiAssigneeData['currentLoggedUserRole'], $kpiFormAssigneeReview); ?>
-                                                                </div>
-                                                            </td>
-                                                            <td class="">
-                                                                <div class="td_content_center">
-                                                                    <?php echo calculateReviewRatings($pmsKpiAssignee->id, $assigneeId)['score']; ?>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <?php
-                                                                $checkViewReviewText = checkViewReviewText($pmsKpiAssigneeData['currentLoggedUserRole'], $kpiFormAssigneeReview);
-                                                                ?>
-                                                                <div class="td_content_center">
-                                                                    <a target="_self"
-                                                                        @if ($checkViewReviewText == 'Edit') href="{{ route('republishForm', $pmsKpiAssignee->id) }}" @else href="{{ url('pms-showReviewPage?assignedFormid=' . $pmsKpiAssignee->id . '&assigneeId=' . $assigneeId) }}" @endif><button
-                                                                            class="btn btn-orange py-0 px-2 "
-                                                                            style="min-width: 95px;"> <span
-                                                                                class="mr-10 icon"></span>
-                                                                            <?php
-                                                                            echo $checkViewReviewText;
-                                                                            ?>
-                                                                        </button></a>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
+                                                                    <div class="td_content_center">
+                                                                        <?php echo checkCurrentLoggedUserReviewerOrNot($pmsKpiAssigneeData['reviewersIds'], $pmsKpiAssigneeData['currentLoggedUserRole'], $kpiFormAssigneeReview); ?>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="">
+                                                                    <div class="td_content_center">
+                                                                        <?php echo calculateReviewRatings($pmsKpiAssignee->id, $assigneeId)['score']; ?>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <?php
+                                                                    $checkViewReviewText = checkViewReviewText($pmsKpiAssigneeData['currentLoggedUserRole'], $kpiFormAssigneeReview);
+                                                                    ?>
+                                                                    <div class="td_content_center">
+                                                                        <a target="_self"
+                                                                            @if ($checkViewReviewText == 'Edit') href="{{ route('republishForm', $pmsKpiAssignee->id) }}" @else href="{{ url('pms-showReviewPage?assignedFormid=' . $pmsKpiAssignee->id . '&assigneeId=' . $assigneeId) }}" @endif><button
+                                                                                class="btn btn-orange py-0 px-2 "
+                                                                                style="min-width: 95px;"> <span
+                                                                                    class="mr-10 icon"></span>
+                                                                                <?php
+                                                                                echo $checkViewReviewText;
+                                                                                ?>
+                                                                            </button></a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -743,12 +750,13 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h6 class="modal-title mb-1 text-primary" >
-                        New Assign Goals</h5>
+                    <h6 class="modal-title">
+                        New Assign Goals</h6>
                     <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
                         aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
+
                 </div>
                 <div class="modal-body">
                     <div class="card profile-box p-2 top-line">
@@ -765,30 +773,37 @@
                                     value="<?php echo date('Y'); ?>">
 
 
-                                      <div class="row ">
-                                        <div class=" col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
-                                              <label for="calendar_type">Calendar Type</label>
-                                              <input name="calendar_type" id="calendar_type"
-                                                class="form-control"   value="{{ $calendar_type }}" {{ $calendar_type }} readonly>
+                                <div class="row ">
+                                    <div class=" col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
+                                        <label for="calendar_type">Calendar Type</label>
+                                        <span id="spanCalenderType" class="form-control">{{ $calendar_type }}</span>
+                                        <input type="hidden" name="calendar_type" id="calendar_type"
+                                            value="{{ $calendar_type }}">
 
-                                        </div>
-                                        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
-                                             <label class="" for="year">Year</label>
-                                             <input name="hidden_calendar_year" id="hidden_calendar_year" class="form-control"
-                                                value="{{$year}}" {{$year}} readonly>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
+                                        <label class="" for="year">Year</label>
+                                        <input name="hidden_calendar_year" id="hidden_calendar_year" class="form-control"
+                                            value="{{ $year }}" readonly>
 
-                                            </div>
-                                        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
-                                            <label class="" for="frequency">Frequency</label>
-                                            <input name="frequency" id="frequency" class="form-control " value="{{ $frequency }}" {{ $frequency }} readonly>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
+                                        <label class="" for="frequency">Frequency</label>
+                                        <span id="spanFrequency" class="form-control">{{ $frequency }}</span>
 
-                                           </div>
-                                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4  mb-2">
-                                            <label class="" for="assignment_period_start">Assignment Period</label>
-                                            <input name="assignment_period_start" id="assignment_period_start"
-                                                class="form-control "value="{{ $assignment_period }}"{{ $frequency }} readonly>
+                                        <input type="hidden" name="frequency" id="frequency"
+                                            value="{{ $frequency }}">
 
-                                            </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4  mb-2">
+                                        <label class="" for="assignment_period_start">Assignment Period</label>
+                                        <span class="form-control">{{ ucfirst($assignment_period) }}</span>
+
+                                        <input type="hidden" name="assignment_period_start" id="assignment_period_start"
+                                            class="form-control "value="{{ $assignment_period }}">
+
+
+                                    </div>
 
 
 
@@ -808,7 +823,8 @@
                                             <!-- flow 1 -->
                                             <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
                                                 <label class="" for="">Employees</label>
-                                                <input type="hidden" name="employees" value="{{ $loggedInUser->id }}">
+                                                <input type="hidden" id="hidden_selectedEmployees" name="employees"
+                                                    value="{{ $loggedInUser->id }}">
                                                 <input type="text" disabled class="form-control increment-input"
                                                     placeholder="Employee" value="{{ $loggedInUser->name }}">
                                             </div>
@@ -960,8 +976,8 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable fad  modal-md" role="document">
             <div class="modal-content top-line">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
-                        Change Reviewer</h5>
+                    <h6 class="modal-title ">
+                        Change Reviewer</h6>
                     <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
                         aria-label="Close">
                         <span aria-hidden="true">×</span>
@@ -1007,8 +1023,8 @@
         <div class="modal-dialog modal-dialog-centered   modal-md" role="document">
             <div class="modal-content top-line">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
-                        Success</h5>
+                    <h6 class="modal-title ">
+                        Success</h6>
                     <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
                         aria-label="Close">
                         <span aria-hidden="true">×</span>
@@ -1017,8 +1033,8 @@
                 <div class="modal-body">
 
                     <h4 class="mb-3" id="modalNot">Data Saved Successfully!</h4>
-                    <p class="text-muted mb-4" id="modalBody"> Table Saved, Please publish goals.</p>
-                    <div class="hstack gap-2 justify-content-center">
+                    <p class="text-muted mb-2" id="modalBody"> Table Saved, Please publish goals.</p>
+                    <div class="modal-footer p-0 border-0">
                         <button type="button" class="btn btn-light close-modal" data-bs-dismiss="modal">Close</button>
                     </div>
 
@@ -1033,8 +1049,8 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-md" role="document">
             <div class="modal-content top-line">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
-                        Edit Employee</h5>
+                    <h6 class="modal-title ">
+                        Edit Employee</h6>
                     <button type="button" id="closebtn_editEmployees"
                         class="close outline-none bg-transparent border-0 h3 " data-bs-dismiss="modal"
                         aria-label="Close">
@@ -1149,62 +1165,58 @@
     </script>
     <?php } ?>
     <script>
-        function deleteAssignedKPIForm(assignedKPIFormID){
+        function deleteAssignedKPIForm(assignedKPIFormID) {
 
             console.log("Deleting Assigned KPI Form");
 
             Swal.fire({
-                    title: 'Are you sure you want to delete?',
-                    text: "The data cannot be retrieved",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
+                title: 'Are you sure you want to delete?',
+                text: "The data cannot be retrieved",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
 
-                            $.ajax({
-                                type: "POST",
-                                url: "{{ route('deleteAssignedKPIForm') }}",
-                                data: {
-                                    "_token": "{{ csrf_token() }}",
-                                    "assignedKPIFormID": assignedKPIFormID,
-                                },
-                                success: function(data) {
-                                    if (data.status == 'success') {
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('deleteAssignedKPIForm') }}",
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            "assignedKPIFormID": assignedKPIFormID,
+                        },
+                        success: function(data) {
+                            if (data.status == 'success') {
 
-                                        Swal.fire(
-                                                'Deleted!',
-                                                'Assigned KPI Form has been deleted.',
-                                                'success'
-                                                ).then((result) => {
-                                                    window.location.reload();
-                                                });
-                                    }
-                                    else
-                                    {
+                                Swal.fire(
+                                    'Deleted!',
+                                    'Assigned KPI Form has been deleted.',
+                                    'success'
+                                ).then((result) => {
+                                    window.location.reload();
+                                });
+                            } else {
 
-                                        if (data.status == 'success') {
+                                if (data.status == 'success') {
 
-                                        Swal.fire(
-                                                'Error!',
-                                                'Failed to delete the assigned KPI Form',
-                                                'failure'
-                                                )
-                                        }
-                                    }
-                                },
-                                error: function(error) {
-                                    console.log('something went wrong');
+                                    Swal.fire(
+                                        'Error!',
+                                        'Failed to delete the assigned KPI Form',
+                                        'failure'
+                                    )
                                 }
-                            });
-                        }
-                        else
-                        {
-                            return false;
+                            }
+                        },
+                        error: function(error) {
+                            console.log('something went wrong');
                         }
                     });
+                } else {
+                    return false;
+                }
+            });
 
         }
 
@@ -1213,7 +1225,7 @@
             var username =
                 '{{ auth()->user()->name ??
                     '
-                                                                                                                                                                                                                ' }}';
+                                                                                                                                                                                                                                                                                                                                                                                                ' }}';
             const splitArray = username.split(" ");
             var finalname = "empty111";
 
@@ -1337,18 +1349,18 @@
             console.log("Year : " + year);
 
             $(document).on("click", ".employeeEditButton", function() {
-            var assignmentPeriod = $('#assignment_period_start').val();
+                var assignmentPeriod = $('#assignment_period_start').val();
 
-            console.log(assignmentPeriod);
+                console.log(assignmentPeriod);
 
-            if (assignmentPeriod && assignmentPeriod != '') {
-                $("#add-goals-modal").modal('hide');
-                $('#employeeSelectionModal').show();
-                $('#employeeSelectionModal').removeClass('fade');
-            } else {
-                console.log("Error : Please select the assignment period.")
-            }
-        });
+                if (assignmentPeriod && assignmentPeriod != '') {
+                    $("#add-goals-modal").modal('hide');
+                    $('#employeeSelectionModal').show();
+                    $('#employeeSelectionModal').removeClass('fade');
+                } else {
+                    console.log("Error : Please select the assignment period.")
+                }
+            });
 
             /*
             Need to check whether KPI Goals are already assigned for the selected 'Assignment Period and Year'.
@@ -1636,7 +1648,7 @@
                 });
             });
 
-              });
+        });
 
         $(function() {
             $("#kpiTable").sortable({
@@ -1683,6 +1695,31 @@
             // $('#year').val('');
             // $('#frequency').val('');
             $('#department').val('');
+
+            // For Calender Type input Field
+            var calenderType = $("#calendar_type").val();
+            if (calenderType == "financial_year") {
+                $("#spanCalenderType").text("Financial Year");
+
+            } else if (calenderType == "calendar_year") {
+                $("#spanCalenderType").text("Calendar  Year");
+            }
+
+
+            //// For frequency Type input Field
+            var frequencyType = $("#frequency").val();
+
+            if (frequencyType == "monthly") {
+                $("#spanFrequency").text("Monthly");
+            } else if (frequencyType == "quarterly") {
+                $("#spanFrequency").text("Quarterly");
+            } else if (frequencyType == "halfYearly") {
+                $("#spanFrequency").text("Half Yearly");
+            } else if (
+                frequencyType == "yearly") {
+                $("#spanFrequency").text("Yearly");
+            }
+            // console.log("Testing"+$("#spanFrequency").text("Monthly"););
 
 
             $('#add-goals-modal').modal('show');
@@ -1909,6 +1946,15 @@
 
             e.preventDefault();
             var t_selectedEmployeesId = $('.select-employee-dropdown').val();
+
+            //For flow 3, fetch from 'employees' elementname
+            if (t_selectedEmployeesId == '') {
+                t_selectedEmployeesId = [$('#hidden_selectedEmployees').val()];
+                console.log("Fetched selected employees from hidden vars : " + t_selectedEmployeesId);
+            } else
+                console.log("Selected Employees : " + t_selectedEmployeesId);
+
+
             var assignmentPeriod = $('#assignment_period_start').val();
             var year = $('#hidden_calendar_year').val();
 
@@ -1926,28 +1972,40 @@
 
                     if (data) {
                         $('#edit-employee-error-message').html('');
-                        console.log("[ isKPIAlreadyAssignedForGivenAssignmentPeriod ] : "+data);
+                        console.log("[ isKPIAlreadyAssignedForGivenAssignmentPeriod ] : " + data);
 
                         //If KPI's already assigned to the selected emps, then show their names
                         if (data.status == true) {
                             console.log("KPI already assigned...! ");
-                            $('#edit-employee-error-message').append("<b><u>" + data.message +
-                                "</u></b><br/>");
-                            $('#edit-employee-error-message').append("<ul>");
 
-                            $.each(data.result, function(i, value) {
-                                $('#edit-employee-error-message').append("<li>" + value +
-                                    "</li>");
-                            });
+                            if ($('#flowCheck').val() == '3') {
+                                console.log("PMS Flow 3 : Show Error message");
 
-                            $('#edit-employee-error-message').append("</ul>");
-                            $('#edit-employee-error-message').append(
-                                "<b>Please remove these employees before proceeding.</b>");
+                                Swal.fire(
+                                    '<b>Error</b>',
+                                    '<span>KPI Form has already been assigned for the selected Assignment Period.<br/> Please check your <b>Current/Completed</b> tabs in PMS dashboard</span>',
+                                    'warning'
+                                );
 
-                            //Open the Employee Edit Modal
-                            $("#add-goals-modal").modal('hide');
-                            $('#employeeSelectionModal').show();
-                            $('#employeeSelectionModal').removeClass('fade');
+                            } else {
+                                $('#edit-employee-error-message').append("<b><u>" + data.message +
+                                    "</u></b><br/>");
+                                $('#edit-employee-error-message').append("<ul>");
+
+                                $.each(data.result, function(i, value) {
+                                    $('#edit-employee-error-message').append("<li>" + value +
+                                        "</li>");
+                                });
+
+                                $('#edit-employee-error-message').append("</ul>");
+                                $('#edit-employee-error-message').append(
+                                    "<b>Please remove these employees before proceeding.</b>");
+
+                                //Open the Employee Edit Modal
+                                $("#add-goals-modal").modal('hide');
+                                $('#employeeSelectionModal').show();
+                                $('#employeeSelectionModal').removeClass('fade');
+                            }
 
                         } else
                         if (data.status == false || data.status ==

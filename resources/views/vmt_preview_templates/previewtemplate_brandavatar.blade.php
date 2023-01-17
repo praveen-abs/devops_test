@@ -97,7 +97,7 @@
                 margin-top: 3pt;
                 margin-bottom: 3pt;
                 padding: 0px 5px;
-                text-align: justify;
+                /* text-align: justify; */
             }
 
             .txt-left {
@@ -130,16 +130,16 @@
         </style>
     @endsection
     @section('content')
-        <div class="card mb-2 mt-30">
-            <div class="card-body py-1 px-0 ">
+        <div class="card mb-2 mt-30 left-line">
+            <div class="card-body pt-1 pb-0 ">
 
                 <ul class="nav nav-pills    nav-tabs-dashed" id="pills-tab" role="tablist">
-                    <li class="nav-item active ember-view mx-4" role="presentation">
+                    <li class="nav-item  ember-view me-4" role="presentation">
                         <a class="nav-link active ember-view " id="pills-home-tab" data-bs-toggle="pill" href=""
                             data-bs-target="#appointment" role="tab" aria-controls="pills-home" aria-selected="true">
                             Appointment Letter</a>
                     </li>
-                    <li class="nav-item mx-4 ember-view" role="presentation ">
+                    <li class="nav-item  ember-view" role="presentation ">
                         <a class="nav-link ember-view" id="payslips-tab" data-bs-toggle="pill" data-bs-target="#payslips"
                             type="button" role="tab" aria-controls="payslips" aria-selected="false">Pay Slip</a>
                     </li>
@@ -176,7 +176,7 @@
                                             <div class="appointment-letter">
                                                 <div class="logo" style="width:150px;height: 50px;">
 
-                                                    <img src="{{ URL::asset('assets/images/appoinment/brandavatarlogo.png') }}"
+                                                    <img src="{{ URL::asset('assets/images/appointment/avatar/brandavatarlogo.png') }}"
                                                         class="" style="height:100%;width:100%;">
                                                 </div>
 
@@ -237,7 +237,7 @@
                                                 <p> <b>For Brand Avatar LLP</b></p>
 
                                                 <div style="height:50px;width:100px">
-                                                    <img src="{{ URL::asset('assets/images/appoinment/sign2.png') }}"
+                                                    <img src="{{ URL::asset('assets/images/appointment/avatar/sign2.png') }}"
                                                         class="" alt="user-pic" style="height:100%;width:100%;">
                                                 </div>
 
@@ -278,7 +278,7 @@
                                     <div class="main-page">
                                         <div class="sub-page" style="text-align: justify;font-size: 15px;">
                                             <div class="logo" style="width:150px;height: 50px;margin: 10px 0px;">
-                                                <img src="{{ URL::asset('assets/images/appoinment/brandavatarlogo.png') }}"
+                                                <img src="{{ URL::asset('assets/images/appointment/avatar/brandavatarlogo.png') }}"
                                                     class="" style="height:100%;width:100%;">
                                             </div>
                                             <table cellspacing=2 class="table table-bordered avatar_table">
@@ -409,7 +409,7 @@
                                     <div class="main-page">
                                         <div class="sub-page" style="text-align: justify;font-size: 15px;">
                                             <div class="logo" style="width:150px;height: 50px;margin: 10px 0px;">
-                                                <img src="{{ URL::asset('assets/images/appoinment/brandavatarlogo.png') }}"
+                                                <img src="{{ URL::asset('assets/images/appointment/avatar/brandavatarlogo.png') }}"
                                                     class="" alt="user-pic" style="height:100%;width:100%;">
                                             </div>
                                             <div class="appointment-letter" style="text-align: justify;">
@@ -507,7 +507,7 @@
                                     <div class="main-page">
                                         <div class="sub-page" style="text-align: justify;font-size: 15px;">
                                             <div class="logo" style="width:150px;height: 50px;margin: 10px 0px;">
-                                                <img src="{{ URL::asset('assets/images/appoinment/brandavatarlogo.png') }}"
+                                                <img src="{{ URL::asset('assets/images/appointment/avatar/brandavatarlogo.png') }}"
                                                     class="" alt="user-pic" style="height:100%;width:100%;">
                                             </div>
                                             <b>
@@ -602,7 +602,7 @@
                                     <div class="main-page">
                                         <div class="sub-page" style="text-align: justify;font-size: 15px;">
                                             <div class="logo" style="width:150px;height: 50px;margin: 10px 0px;">
-                                                <img src="{{ URL::asset('assets/images/appoinment/brandavatarlogo.png') }}"
+                                                <img src="{{ URL::asset('assets/images/appointment/avatar/brandavatarlogo.png') }}"
                                                     class="" alt="user-pic" style="height:100%;width:100%;">
                                             </div>
                                             <p><b> TERMINATION
@@ -660,7 +660,7 @@
                                             <p style=""><b>Yours faithfully,</b> <br />
                                             <p style="margin-top:0px"><b>For Brand Avatar LLP</b> <br />
                                             <div style="height:50px;width:100px">
-                                                <img src="{{ URL::asset('assets/images/appoinment/sign2.png') }}"
+                                                <img src="{{ URL::asset('assets/images/appointment/avatar/sign2.png') }}"
                                                     class="" alt="user-pic" style="height:100%;width:100%;">
                                             </div>
                                             <p><b>(Hemachandran L)</br>
@@ -720,7 +720,7 @@
                                             <td colspan="8" class="border-less p3">
                                                 <div class="header-cotent">
 
-                                                    <h6 class="margin-0">Brand Avatar LLP</h6>
+                                                    <h6 class="margin-0"  style="padding-left: 5px">Brand Avatar LLP</h6>
                                                     <p class="mb-0">NO-01,Kandasamy Street,</p>
                                                     <p class="mb-0">Chandrabagh Ave 2nd St, Dr. Radha Krishnan Salai,
                                                     </p>
@@ -731,7 +731,7 @@
 
                                                 <div class="header-img txt-right">
                                                     <!-- <img src="" title=""> -->
-                                                    <img src="{{ URL::asset('assets/images/appoinment/brandavatarlogo.png') }}"
+                                                    <img src="{{ URL::asset('assets/images/appointment/avatar/brandavatarlogo.png') }}"
                                                         class="" style="height: 40px;width:180px;max-height:100%;">
                                                 </div>
 
@@ -1172,12 +1172,12 @@
                                                     reach out to us for any payroll queries at -payroll@ardens.in</p>
                                             </td>
                                             <td colspan="2" class="border-less ">
-                                                <p class="txt-right">Powered By</p>
+                                                <p class="txt-right">Generated By</p>
 
                                             </td>
                                             <td colspan="2" class="border-less text-left">
-                                                <img src="{{ URL::asset('assets/images/logo.png') }}" alt=""
-                                                    class="" style="height: 40px;width:100px;">
+                                                <img src="{{ URL::asset('assets/images/client_logos/ardens/evangelist.png') }}" width="80px" height="15px"
+                                                alt="" class="">
                                             </td>
                                         </tr>
 
