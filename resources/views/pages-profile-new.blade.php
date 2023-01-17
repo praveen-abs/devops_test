@@ -2217,46 +2217,55 @@
 
 
 
+               <div id="show_idCard" class="modal custom-modal fade" aria-hidden="true">
+                <div class="modal-dialog  modal-dialog-centered modal-md" role="document">
+                    <div class="modal-content profile-box">
+                        <div class="modal-header border-0  text-end d-flex justify-content-between">
+                            <h6 class="modal-title">Digital
+                                Id Preview </h6>
+                            <button type="button" class="close  border-0 h3" data-bs-dismiss="modal"
+                                aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body mx-auto text-center">
 
-    <div id="show_idCard" class="modal custom-modal fade" aria-hidden="true">
-        <div class="modal-dialog  modal-dialog-centered modal-md" role="document">
-            <div class="modal-content profile-box">
-                <div class="modal-header border-0  text-end d-flex justify-content-between">
-                    <h6 class="modal-title">Digital
-                        Id Preview </h6>
-                    <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body mx-auto text-center">
+                            <div class="card-sm card mb-3" style="">
+                                <div class="card-body text-center ">
+                                    <img src=" {{ URL::asset(session()->get('client_logo_url')) }}" alt=""
+                        class="" height="70" width="130">
 
-                    <div class="card card-sm " style="">
-                        <div class="card-body text-center ">
-                            {{-- <img src="{{ URL::asset($generalInfo->logo_img) }}" alt="" class=""> --}}
-                            {{-- <div class="profile-img d-flex justify-content-center flex-column text-center"> --}}
-                            @include('ui-profile-avatar-lg', [
-                                'currentUser' => $user,
-                            ])
-                            <p class="fw-bold f-14 text-primary text-center mt-4 ">{{ $user->name}}</p>
-                            <p class=" f-14 text-ash  text-center mt-2">
-                                {{ !empty($user_full_details->designation) ? $user_full_details->designation : '' }}
-                            </p>
-                            <p class="fw-bold f-14 text-center text-muted mt-2 ">{{$user_full_details->user_code}}</p>
-                            {{-- </div> --}}
+                        
+                                    {{-- <img src="{{ URL::asset($generalInfo->logo_img) }}" alt=""
+                                        class=""> --}}
+                                    {{-- <div class="profile-img d-flex justify-content-center flex-column text-center"> --}}
+                                    <div class="profile-img d-flex justify-content-center">
+                                        @include('ui-profile-avatar-lg', [
+                                            'currentUser' => $user,
+                                        ])
+                                    </div>
+                                    <p class="fw-bold f-14 text-primary text-center mt-4 ">{{ $user->name }}
+                                    </p>
+                                    <p class=" f-14 text-ash  text-center mt-2">
+                                        {{ !empty($user_full_details->designation) ? $user_full_details->designation : '' }}
+                                    </p>
+                                    <p class="fw-bold f-14 text-center text-muted mt-2 ">
+                                        {{ $user_full_details->user_code }}</p>
+                                    {{-- </div> --}}
+
+
+                                </div>
+                            </div>
+                            <button class="btn btn-orange">Download</button>
+
 
 
                         </div>
                     </div>
-                    <button class="btn btn-orange">Download</button>
-
-
-
                 </div>
             </div>
-        </div>
-    </div>
 
-    </div>
+        </div>
 @endsection
 @section('script')
     @yield('script-profile-avatar')
