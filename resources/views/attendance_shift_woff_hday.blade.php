@@ -7,11 +7,11 @@
 @endsection
 @section('content')
     <div class="cotainer-fluid mt-30">
-        <div class="card mb-3">
-            <div class="pt-2 pb-0 card-body">
+        <div class="card mb-2 left-line">
+            <div class="pt-1 pb-0 card-body">
                 <ul class="nav nav-pills nav-tabs-dashed">
                     <li class="nav-item text-muted">
-                        <a class="nav-link active" data-bs-toggle="tab" href="#shift_weekly-off">Shift & Weekly
+                        <a class="nav-link active" data-bs-toggle="tab" href="#shiftAnd_weeklyOff">Shift & Weekly
                             Offs</a>
                     </li>
                     <li class="nav-item mx-5 text-muted">
@@ -35,17 +35,17 @@
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane show fade active" id="leave_balance" role="tabpanel"
                         aria-labelledby="pills-profile-tab">
-
                         <ul class="nav nav-pills  nav-tabs-dashed">
                             <li class="nav-item  text-muted">
-                                <a class="nav-link active" data-bs-toggle="tab" href="#shift_weekly-off">Shift </a>
+                                <a class="nav-link active" data-bs-toggle="tab" href="#attendance_shift">Shift </a>
                             </li>
 
                             <li class="nav-item  mx-4 text-muted">
-                                <a class="nav-link " data-bs-toggle="tab" href="#shift_weekly-off">Weekly Off's </a>
+                                <a class="nav-link " data-bs-toggle="tab" href="#attendance_weekly-off">Weekly Off's </a>
                             </li>
                             <li class="nav-item text-muted">
-                                <a class="nav-link " data-bs-toggle="tab" href="#shift_weekly-off">Shifts And Weekly Off
+                                <a class="nav-link " data-bs-toggle="tab" href="#attedance_shift-weekly-off">Shifts And
+                                    Weekly Off
                                     Rules </a>
                             </li>
 
@@ -71,14 +71,14 @@
                         </div>
 
 
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="tab-content" id="pills-tabContent">
+                                    <div class="tab-pane show fade active" id="attendance_shift" role="tabpanel"
+                                        aria-labelledby="pills-profile-tab">
 
-                        <div class="tab-content" id="pills-tabContent">
-                            <div class="tab-pane show fade active" id="leave_balance" role="tabpanel"
-                                aria-labelledby="pills-profile-tab">
-                                <div class="card">
-                                    <div class="card-body">
                                         <div class="row">
-                                            <div class="col-12 mb-3">
+                                            <div class="col-12 ">
                                                 <h6>General Shift <span
                                                         class="text-muted f-11 me-2">Shif-Code:GS</span><button
                                                         type="button"
@@ -97,13 +97,16 @@
                                                             href="#employees_table">Employees</a>
                                                     </li>
 
-
+                                                    <li class="nav-item  mx-4 text-muted">
+                                                        <a class="nav-link " data-bs-toggle="tab"
+                                                            href="#track_shift_versions">Track Shift Versions</a>
+                                                    </li>
 
                                                 </ul>
 
                                                 <div class="tab-content" id="pills-tabContent">
                                                     <div class="tab-pane show fade active" id="summary_table"
-                                                        role="tabpanel" aria-labelledby="pills-profile-tab">
+                                                        role="tabpanel" aria-labelledby="">
 
                                                         <div class="track_summary_table" id="track_summary_table"></div>
 
@@ -115,7 +118,8 @@
                                                             <div class="col-2 d-flex align-items-center">
                                                                 <input type="text"
                                                                     class="text-center me-2   text-muted p-0 w-25 form-control"
-                                                                    name="" id="" value="4" disabled>
+                                                                    name="" id="" value="4"
+                                                                    disabled>
                                                                 <span class="text-muted f-12">hours</span>
                                                             </div>
                                                             <div class="col-4 d-flex align-items-center ">
@@ -153,16 +157,23 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="tab-pane " id="employees_table" role="tabpanel"
-                                                        aria-labelledby="pills-profile-tab">
-                                                        <div class="card">
-                                                            <div class="card-body">
-                                                            </div>
-                                                        </div>
+                                                    <div class="tab-pane show fade " id="employees_table" role="tabpanel"
+                                                        aria-labelledby="">
+                                                        <div class="attedance_employee" id="attedance_employee"></div>
+                                                    </div>
+                                                    <div class="tab-pane show fade" id="track_shift_versions"
+                                                        role="tabpanel" aria-labelledby="">
+                                                        <div class="shift_versionsTable" id="shift_versionsTable"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="tab-pane show fade " id="attendance_weekly-off" role="tabpanel">
+
+                                        <div class="weeklyOff_table" id="weeklyOff_table"></div>
+                                    </div>
+                                    <div class="tab-pane show fade " id="leave_balance" role="tabpanel">
                                     </div>
                                 </div>
                             </div>
@@ -438,8 +449,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-8">
-                                                <div
-                                                    class="d-flex align-items-center   alert py-0 f-11 mb-0 alert-danger">
+                                                <div class="d-flex align-items-center   alert py-0 f-11 mb-0 alert-danger">
 
                                                     Once exceed the late LOP limit
 
@@ -471,8 +481,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-8">
-                                                <div
-                                                    class="d-flex align-items-center alert py-0 f-11 mb-0 alert-danger">
+                                                <div class="d-flex align-items-center alert py-0 f-11 mb-0 alert-danger">
 
                                                     Once exceed the late LOP limit
 
@@ -539,16 +548,7 @@
 
                     ],
                     data: [
-                        // {
-                        //     name: 'John',
-                        //     email: 'john@example.com',
-                        //     phoneNumber: '(353) 01 222 3333'
-                        // },
-                        // {
-                        //     name: 'Mark',
-                        //     email: 'mark@gmail.com',
-                        //     phoneNumber: '(01) 22 888 4444'
-                        // },
+
                     ],
                     pagination: {
                         limit: 10
@@ -557,90 +557,120 @@
                     search: true,
                 }).render(document.getElementById("track_summary_table"));
             }
-        });
 
-        $(document).ready(function() {
-            if (document.getElementById("employee_Timng-table")) {
+
+
+
+
+
+
+            if (document.getElementById("attedance_employee")) {
                 const grid = new gridjs.Grid({
                     columns: [{
-                            id: 'employee name',
+                            id: 'shift',
                             name: 'Employee',
 
                         },
                         {
-                            id: 'employee_number',
+                            id: '',
                             name: 'Employee Number',
                         },
                         {
-                            id: 'job_title',
+                            id: 'tuesday',
                             name: 'Job Title',
                         },
                         {
-                            id: 'reporting_to',
+                            id: '',
                             name: 'Reporting To',
                         },
                         {
-                            id: 'department',
+                            id: 'tuesday',
                             name: 'Department',
                         },
                         {
-                            id: 'location',
+                            id: 'tuesday',
                             name: 'Location',
-                        }
+                        },
+
+
 
                     ],
                     data: [
-                        // {
-                        //     name: 'John',
-                        //     email: 'john@example.com',
-                        //     phoneNumber: '(353) 01 222 3333'
-                        // },
-                        // {
-                        //     name: 'Mark',
-                        //     email: 'mark@gmail.com',
-                        //     phoneNumber: '(01) 22 888 4444'
-                        // },
+
                     ],
                     pagination: {
                         limit: 10
                     },
                     sort: true,
                     search: true,
-                }).render(document.getElementById("employee_Timng-table"));
+                }).render(document.getElementById("attedance_employee"));
             }
-        });
 
-        $(document).ready(function() {
-            if (document.getElementById("track_Timng-table")) {
+
+            if (document.getElementById("shift_versionsTable")) {
                 const grid = new gridjs.Grid({
                     columns: [{
-                            id: 'currentdate',
+                            id: 'shift',
                             name: 'Current Date',
 
                         },
                         {
-                            id: 'uploadedate',
-                            name: 'Uploaded Date',
+                            id: '',
+                            name: 'Updated Date',
                         },
                         {
-                            id: 'action_track',
+                            id: 'tuesday',
                             name: 'Action',
-                        }
+                        },
+
+
+
 
                     ],
                     data: [
 
                     ],
-
                     pagination: {
                         limit: 10
                     },
-
                     sort: true,
                     search: true,
-                }).render(document.getElementById("track_Timng-table"));
+                }).render(document.getElementById("shift_versionsTable"));
+            }
+
+
+
+            if (document.getElementById("weeklyOff_table")) {
+                const grid = new gridjs.Grid({
+                    columns: [{
+                            id: 'shift',
+                            name: 'Week Offs',
+
+                        },
+                        {
+                            id: '',
+                            name: 'Day Offs',
+                        },
+
+
+
+
+
+                    ],
+                    data: [
+
+                    ],
+                    pagination: {
+                        limit: 10
+                    },
+                    sort: true,
+                    search: true,
+                }).render(document.getElementById("weeklyOff_table"));
             }
         });
+
+
+
 
         $(document).ready(function() {
             if (document.getElementById("weekly_shift-table")) {
