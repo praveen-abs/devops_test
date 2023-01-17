@@ -96,42 +96,61 @@ function calculateAppraisalReviewRating_BasedOnHR(){
 }
 
 /*
+    To calculate the overall score for the given user based on
+    all reviewed form.
 
-
-
+    TODO : Need to do calculation based on the selected year(calendar / financial)
+           Logic : Find the frequency and based on that, get all the forms. And then calculate.
 */
 function calculateOverallReviewRating($user_id){
 
+    $total_reviewedform_count = 0; // total no.of reviewed forms (is_reviewer_submitted)
+    $totalscore_reviewedform = 0; // total of all reviewer score
+
     //Get all the assigned form's id for the given user_id
-    $FormIDs_assignedforms = VmtPMS_KPIFormAssignedModel::where('assignee_id','141')->get('id');
+    $FormIDs_assignedforms = VmtPMS_KPIFormAssignedModel::where('assignee_id',$user_id)->get('id');
 
 
     //Get all the reviewform id for the given assignedform id's
-    $query_reviewedForms_user =  VmtPMS_KPIFormReviewsModel::whereIn('id',$FormIDs_assignedforms)->get();
+    $query_reviewedForms_user =  VmtPMS_KPIFormReviewsModel::whereIn('vmt_pms_kpiform_assigned_id',$FormIDs_assignedforms)->get();
     //dd($query_reviewedForms_user->toArray());
 
     if($query_reviewedForms_user->count() > 0)
     {
-        //Check whether the form is reviewed
+
+        //Get all the forms that are reviewed
         foreach($query_reviewedForms_user as $singleReviewedForm){
-            //Get all the forms that reviewed
-          //var_dump( calculateReviewRatings($singleReviewedForm->id, $user_id) );
-         // var_dump("<br/><br/>");
+
+            //Check whether the form is reviewed
+            $arrayvalues_is_reviewer_submitted = array_values( json_decode($singleReviewedForm->is_reviewer_submitted, true));
+            
+            if(in_array('0',$arrayvalues_is_reviewer_submitted) || in_array(null,$arrayvalues_is_reviewer_submitted))
+            {
+                //when form is not reviewed
+            }
+            else
+            {
+                //when form is reviewed
+                $total_reviewedform_count++;
+
+                $score_reviewedform =  calculateReviewRatings($singleReviewedForm->vmt_pms_kpiform_assigned_id, $user_id)["score"];
+                $totalscore_reviewedform =  $totalscore_reviewedform + intval( str_replace('%', '', $score_reviewedform));
+            }
+
         }
 
+        $overallReviewRating = $totalscore_reviewedform/$total_reviewedform_count;
+
+        return $overallReviewRating;
     }
     else
     {
-        dd("No Review forms the given User ID : ".$user_id);
+        //dd("No Review forms the given User ID : ".$user_id);
+        return null;
     }
 
 
-   // $reviewedForms_user->toArray()
-
-
-
-
-
+    //dd("--end--");
 }
 
 // get Average rating of particular ReviewedForm and for review given by First Reveiwer for that Kpi Form
