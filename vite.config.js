@@ -6,7 +6,9 @@ export default defineConfig({
     plugins: [
          vue(),
         laravel({
-            input: ['resources/js/app.js'],
+            input: ['resources/js/app.js',
+                    'resources/js/hrms/modules/leave_module/OrgLeaveBalance.js'
+            ],
             refresh: true,
         }),
     ],

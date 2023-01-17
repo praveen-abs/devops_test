@@ -270,6 +270,16 @@
                     <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12 ">
                         <div class="card mb-0 leave-history">
                             <div class="card-body">
+                                <h6 class="mb-2">Org Leave Balance</h6>
+                                <div id="orgLeaveTable_RemainingLeave"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12 ">
+                        <div class="card mb-0 leave-history">
+                            <div class="card-body">
                                 <h6 class="mb-2">Org Leave history</h6>
                                 <div class="table-responsive">
                                     <div id="org_leaveHistory" class="custom_gridJs"></div>
@@ -826,7 +836,7 @@
     </div>
 @endsection
 @section('script')
-    @vite(['resources/js/app.js'])
+    @vite(['resources/js/hrms/modules/leave_module/OrgLeaveBalance.js'])
     <script>
         var leavetypes_array = <?php echo json_encode(getAllLeaveTypes()); ?>;
         const permissionTypeIds = {{ json_encode(getPermissionLeaveTypeIDs()) }};
