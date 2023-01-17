@@ -4,7 +4,6 @@
 
     onMounted(() => {
         console.log("Initial value of counter : "+counter.value);
-
     });
 
     function addCounter(){
@@ -12,12 +11,10 @@
         console.log("Counter value : "+counter.value);
     }
 
-
     function subCounter(){
         counter.value--;
         console.log("Counter value : "+counter.value);
     }
-
 </script>
 <template>
     <Card style="width: 25rem; margin-bottom: 2em; background-color: darkcyan;">
