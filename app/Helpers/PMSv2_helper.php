@@ -123,7 +123,7 @@ function calculateOverallReviewRating($user_id){
 
             //Check whether the form is reviewed
             $arrayvalues_is_reviewer_submitted = array_values( json_decode($singleReviewedForm->is_reviewer_submitted, true));
-            
+
             if(in_array('0',$arrayvalues_is_reviewer_submitted) || in_array(null,$arrayvalues_is_reviewer_submitted))
             {
                 //when form is not reviewed
@@ -141,7 +141,7 @@ function calculateOverallReviewRating($user_id){
 
         $overallReviewRating = $totalscore_reviewedform/$total_reviewedform_count;
 
-        return $overallReviewRating;
+        return round($overallReviewRating);
     }
     else
     {
