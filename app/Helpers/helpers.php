@@ -40,6 +40,36 @@ function getClientList(){
     return VmtClientMaster::all();
 }
 
+function getBloodGroupName($blood_group_id){
+    if(!empty($blood_group_id))
+        return VmtBloodGroup::find($blood_group_id)->name;
+    else
+        return null;
+}
+
+function getEmployeeActiveStatus($user_id){
+
+    if(!empty($user_id))
+    {
+        $active_status = User::find($user_id)->active;
+
+        if($active_status == "1")
+            return "Active";
+        else
+        if($active_status == "0")
+            return "Yet to Activate";
+        else
+        if($active_status == "-1")
+            return "Left";
+        else
+            return null;
+    }
+    else
+        return null;
+
+}
+
+
 function sessionGetSelectedClientCode(){
     $query_client = VmtClientMaster::find(session('client_id'));
 

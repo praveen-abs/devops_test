@@ -858,13 +858,16 @@
 
             leave_start_date = '';
             leave_end_date = '';
-            let currentDate = new Date().toJSON().slice(0,10);
+            //let currentDate = new Date().toJSON().slice(0,8)+'01'; //Restricting for current date
+            let currentDate = new Date().toJSON().slice(0,8)+'01'; //Restricting for current month
 
             $('#start_date').attr('type','datetime-local');
             $('#start_date').attr("min",currentDate+"T09:00:00");
-            $('#end_date').attr('type','datetime-local');
-            $('#start_date').attr("min",currentDate+"T09:00:00");
+            console.log("Current Date : "+currentDate);
+
             $('#start_date').val('');
+
+            $('#end_date').attr('type','datetime-local');
             $('#end_date').val('');
             $('#leave_reason').val('');
             $('#total_leave_days').val('0');
@@ -896,7 +899,8 @@
                     endDate_time = moment(endDate_time).format('YYYY-MM-DDTHH:mm');
                    // console.log("Enddate_time : "+endDate_time);
 
-                   // $('#end_date').attr("min",endDate_time);
+                    $('#end_date').attr("min",endDate_time);
+                    $('#end_date').attr("max",endDate_time);
                     $('#end_date').val(endDate_time);
 
                     $('#total_permission_hours').html(1);
@@ -953,7 +957,7 @@
                 console.log("Selected Leave Type : "+selectedPermissionTypeID);
                 console.log("permissionTypeIds: "+permissionTypeIds);
 
-                let currentDate = new Date().toJSON().slice(0,10);
+                let currentDate = new Date().toJSON().slice(0,8)+'01';
 
                 if (permissionTypeIds.includes(parseInt(selectedPermissionTypeID))){
                     //If permission selected, then show date & time in Start and End date dropdown
