@@ -597,6 +597,12 @@
                                     role="button"><span>Payroll Reports</span>
                                 </a>
                             </li>
+                            <li class="nav-item">
+
+                                <a href="{{ route('showPmsReviewsReportPage') }}" class="nav-link sidebar py-1"
+                                    role="button"><span>Pms Reports</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>
