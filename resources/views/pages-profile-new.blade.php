@@ -2237,11 +2237,11 @@
                             @include('ui-profile-avatar-lg', [
                                 'currentUser' => $user,
                             ])
-                            <p class="fw-bold f-14 text-primary text-center mt-4 ">George</p>
+                            <p class="fw-bold f-14 text-primary text-center mt-4 ">{{ $user->name}}</p>
                             <p class=" f-14 text-ash  text-center mt-2">
                                 {{ !empty($user_full_details->designation) ? $user_full_details->designation : '' }}
                             </p>
-                            <p class="fw-bold f-14 text-center text-muted mt-2 ">Abs</p>
+                            <p class="fw-bold f-14 text-center text-muted mt-2 ">{{$user_full_details->user_code}}</p>
                             {{-- </div> --}}
 
 
