@@ -424,6 +424,7 @@ class HomeController extends Controller
             $attendance->date = date('Y-m-d');
             $currentTime = new DateTime("now", new \DateTimeZone('Asia/Kolkata') );
             $attendance->checkin_time = $currentTime;
+            $attendance->attendance_mode_checkin = "web";
             $attendance->save();
 
             //Check whether if its LC/EG
@@ -466,6 +467,7 @@ class HomeController extends Controller
             $attendance->date = date('Y-m-d');
             $currentTime = new DateTime("now", new \DateTimeZone('Asia/Kolkata') );
             $attendance->checkout_time = $currentTime;
+            $attendance->attendance_mode_checkout = "web";
             $attendance->save();
 
             $checked = VmtEmployeeAttendance::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->first();

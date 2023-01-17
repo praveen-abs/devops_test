@@ -1,3 +1,4 @@
+<?php use Illuminate\Support\Facades\Crypt; ?>
 @extends('layouts.master')
 @section('title')
     @lang('translation.projects')
@@ -9,56 +10,40 @@
 
 @section('content')
     <div class="manage_employee-wrapper mt-30">
-        <div class="card  left-line mb-3">
-            <div class="card-body px-2 pb-1 pt-2">
-                <div class="row">
-                    <div class="col-6 d-flex align-items-center">
-                        <ul class="nav nav-pills nav-tabs-dashed" role="tablist">
-                            <li class="nav-item text-muted me-5" role="presentation">
-                                <a class="nav-link active pb-2" data-bs-toggle="tab" href="#active_employees"
-                                    aria-selected="true" role="tab">
-                                    Active Employees
-                                </a>
-                            </li>
-                            <li class="nav-item text-muted" role="presentation">
-                                <a class="nav-link  pb-2" data-bs-toggle="tab" href="#not_active_employees" aria-selected="true"
-                                    role="tab">
-                                    Yet To Active Employees
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+        <div class="card  left-line mb-2">
+            <div class="card-body  pb-0 pt-1">
+                <ul class="nav nav-pills nav-tabs-dashed" role="tablist">
+                    <li class="nav-item text-muted me-5" role="presentation">
+                        <a class="nav-link active pb-2" data-bs-toggle="tab" href="#active_employees" aria-selected="true"
+                            role="tab">
+                            Active Employees
+                        </a>
+                    </li>
+                    <li class="nav-item text-muted" role="presentation">
+                        <a class="nav-link  pb-2" data-bs-toggle="tab" href="#not_active_employees" aria-selected="true"
+                            role="tab">
+                            Yet To Active Employees
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
-        <div class="tab-content" id="pills-tabContent">
-            <div class="tab-pane show fade active" id="active_employees" role="tabpanel" aria-labelledby="pills-profile-tab">
-                <div class="card">
-                    <div class="card-body">
-
-                        {{-- <h6 class="text-muted fw-bold">Active Employees</h6> --}}
+        <div class="card">
+            <div class="card-body">
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane show fade active" id="active_employees" role="tabpanel"
+                        aria-labelledby="pills-profile-tab">
                         <div id="active-directory-table" class="noCustomize_gridjs"></div>
                     </div>
-                </div>
-            </div>
-            <div class="tab-pane  fade " id="not_active_employees" role="tabpanel" aria-labelledby="pills-profile-tab">
-                <div class="card ">
-                    <div class="card-body">
-                        {{-- <h6 class="text-muted fw-bold">Yet to Active Employees</h6> --}}
 
-
-
+                    <div class="tab-pane  fade " id="not_active_employees" role="tabpanel"
+                        aria-labelledby="pills-profile-tab">
                         <div id="yet-to-active-directory-table" class="noCustomize_gridjs"></div>
-
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
-
 @endsection
 
 @section('script')
@@ -141,7 +126,7 @@
                                     '<div id="span_' + emp_code +
                                     '" class="rounded-circle user-profile  me-1">' +
                                     html_image_tag + '</div></div>';
-                                    html_image_tag + '</div></div>';
+                                html_image_tag + '</div></div>';
 
                                 $('#img_' + emp_code).on('error', function() {
 
@@ -213,7 +198,7 @@
                         },
                         {
                             id: 'profile_completeness',
-                            name: 'Profile',
+                            name: 'Profile Completeness',
                             formatter: function formatter(cell) {
 
                                 return gridjs.html(cell + "%");
@@ -247,11 +232,11 @@
                         {
                             id: 'emp_code',
                             name: 'Edit',
-                            formatter: function formatter(user_id) {
+                            formatter: function formatter(enc_user_id) {
 
-                                var routeURL = "{{ route('pages_impersonate_profile', '') }}" +
-                                    "/" +
-                                    user_id;
+                                var routeURL = "{{ route('pages-profile-new') }}"+"/"+enc_user_id;
+                                //routeURL.replace(':user_id',user_id);
+                                //console.log("User URL : "+routeURL);
 
                                 var htmlcontent = '<a href="' + routeURL +
                                     '" class="btn border-0 outline-none bg-transparent p-0  mx-1"><i class="ri-pencil-line text-orange fw-bold"></i></a>';
@@ -284,7 +269,7 @@
 
                     },
                     sort: true,
-                    search:true,
+                    search: true,
                     server: {
                         url: '{{ route('vmt-yet-to-activeemployees-fetchall') }}',
                         then: data => data.map(
@@ -300,7 +285,7 @@
                                 emp.profile_completeness,
                                 emp.is_onboarded,
                                 emp.is_docs_approved,
-                                emp.user_id,
+                                emp.enc_user_id,
                                 emp,
                             ]
                         )
@@ -352,7 +337,7 @@
                                     '<div id="span_' + emp_code +
                                     '" class="rounded-circle user-profile  me-1">' +
                                     html_image_tag + '</div></div>';
-                                    html_image_tag + '</div></div>';
+                                html_image_tag + '</div></div>';
 
                                 $('#img_' + emp_code).on('error', function() {
 
@@ -424,7 +409,7 @@
                         },
                         {
                             id: 'profile_completeness',
-                            name: 'Profile',
+                            name: 'Profile Completeness',
                             formatter: function formatter(cell) {
                                 return gridjs.html(cell + "%");
 
@@ -433,10 +418,11 @@
                         {
                             id: 'emp_code',
                             name: 'Edit',
-                            formatter: function formatter(user_id) {
+                            formatter: function formatter(enc_user_id) {
 
-                                var routeURL = "{{ route('pages_impersonate_profile', '') }}" +
-                                    "/" + user_id;
+                                var routeURL = "{{ route('pages-profile-new') }}"+"/"+enc_user_id;
+                                //routeURL.replace(':user_id',user_id);
+                                //console.log("User URL : "+routeURL);
 
                                 var htmlcontent = '<a href="' + routeURL +
                                     '" class="btn border-0 outline-none bg-transparent p-0  mx-1"><i class="ri-pencil-line text-orange fw-bold"></i></a>';
@@ -475,7 +461,7 @@
                                 emp.doj,
                                 emp.blood_group_id,
                                 emp.profile_completeness,
-                                emp.user_id,
+                                emp.enc_user_id,
                             ]
                         )
                     },

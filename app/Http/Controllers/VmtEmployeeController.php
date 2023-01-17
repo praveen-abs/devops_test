@@ -36,6 +36,7 @@ use League\CommonMark\Extension\SmartPunct\EllipsesParser;
 use PDF;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Crypt;
 
 use App\Models\VmtEmployeeFamilyDetails;
 use App\Services\VmtEmployeeService;
@@ -1029,8 +1030,12 @@ class VmtEmployeeController extends Controller
         //Add reporting manager name
         foreach($query_vmtEmployees as $singleEmp)
         {
+            $singleEmp['enc_user_id'] = Crypt::encryptString($singleEmp['user_id']);
+            unset($singleEmp['user_id']);
             $singleEmp['reporting_manager_name']= User::where('user_code',$singleEmp->l1_manager_code)->value('name');
         }
+
+        //dd($query_vmtEmployees);
 
         return json_encode($query_vmtEmployees);
     }
@@ -1070,7 +1075,9 @@ class VmtEmployeeController extends Controller
         //Add reporting manager name
         foreach($query_vmtEmployees as $singleEmp)
         {
-            $singleEmp['reporting_manager_name']= User::where('user_code',$singleEmp->l1_manager_code)->value('name');
+            $singleEmp['enc_user_id'] = Crypt::encryptString($singleEmp['user_id']);
+            unset($singleEmp['user_id']);
+            $singleEmp['reporting_manager_name'] = User::where('user_code',$singleEmp->l1_manager_code)->value('name');
         }
 
         return json_encode($query_vmtEmployees);
