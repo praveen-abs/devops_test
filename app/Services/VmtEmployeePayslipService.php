@@ -458,7 +458,7 @@ class VmtEmployeePayslipService {
 
          //TODO : Need to show client specific payslip template.
 
-         $processed_clientName = strtolower(str_replace(' ', '', sessionGetSelectedClientName()));
+         $processed_clientName = strtolower(str_replace(' ', '', getClientName($user_id)));
 
          //$html =  view('vmt_payslipTemplate', $data);
          $html =  view('vmt_payslip_templates.template_payslip_'.$processed_clientName, $data);
