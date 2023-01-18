@@ -65,37 +65,29 @@ if ($query_clientMaster) {
                             $currentClientID = session('client_id');
                             //dd($currentClientID);
                             ?>
-                            @if (Str::contains(getCurrentClientName(), 'Vasa'))
-                                <p for="" class=" fw-bold f-12 ">Legal Entity</p>
-                            @else
-                                <p for="" class=" fw-bold f-12 "></p>
-                            @endif
-
-
+                            <span class=" f-14 fw-bold">Entity Name : </span>
                             <button type="button" class="btn  border-0 mx-1 py-1 f-14 fw-bold"
                                 id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
                                 {{-- <div class="d-flex align-items-center page-header-user-dropdown"> --}}
-                                    Vasa
+                                    {{ sessionGetSelectedClientName() }}
                                 {{-- </div> --}}
                             </button>
                             <div class="dropdown-menu dropdown-menu-end " style="width:220px;">
                                 <div class="px-2">
                                     <div class="text-center">
-                                        <h6>Vasa</h6>
-                                        <p class="text-primary  border-bottom-secondary pb-2">Organization Id : 123456
-                                        </p>
+                                        <h6>{{ sessionGetSelectedClientName() }}</h6>
+                                        {{-- <p class="text-primary  border-bottom-secondary pb-2">Organization Id : 123456</p> --}}
                                         <p class="d-flex justify-content-between py-2  border-bottom-secondary"><span>My
                                                 Organizations</span><span class="text-primary"><i
                                                     class="mdi mdi-cog-outline  me-1"></i>Manage</span> </p>
                                     </div>
                                     <div class="d-flex flex-column" id="">
                                         @foreach ($clientsList as $client)
-                                            <div class="choose-client d-flex border-bottom-secondary  align-items-center  "
-                                                value="{{ $client->id }}" id=""
-                                                @if (!empty($currentClientID) && $currentClientID == $client->id)  @endif>
+                                            <div class="choose-client d-flex border-bottom-secondary  align-items-center @if (!empty($currentClientID) && $currentClientID == $client->id) bg-light bg-gradient @endif"
+                                                data-client_id="{{ $client->id }}">
                                                 <div class="mx-2">
-                                                    <img src="{{ URL::asset($logoSrc) }}" alt=""
+                                                    <img src="{{ URL::asset($client->client_logo) }}" alt=""
                                                         class="rounded-circle" height="40px" width="40px">
                                                 </div>
                                                 <div class="">
@@ -255,7 +247,8 @@ if ($query_clientMaster) {
 
     //$('#dropdown_client').selectpicker("refresh");
     $('.choose-client').click(function() {
-        console.log("Client chosen : " + this.value);
-        updateGlobalClient(this.value);
+        let selectedClientID = $(this).attr('data-client_id');
+        console.log("Client ID chosen : " + selectedClientID);
+        updateGlobalClient(selectedClientID);
     });
 </script>
