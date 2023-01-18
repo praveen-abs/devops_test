@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Dompdf\Dompdf;
+use PDF;
 
 use App\Models\User;
 use App\Models\VmtEmployee;
@@ -481,7 +482,7 @@ class VmtEmployeePayslipService {
             $user = User::find($user_id);
         }
 
-        $data['employee'] = VmtEmployeePaySlip::where([
+        $data['employee_payslip'] = VmtEmployeePaySlip::where([
                                         ['user_id','=', $user_id],
                                         ['PAYROLL_MONTH','=', $selectedPaySlipMonth],
                                         ])->first();
