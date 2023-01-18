@@ -1665,7 +1665,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('updateEmergencyInfo', $user->id) }}" Method="POST"
+                        <form action="{{ route('updtaeEmergencyInfo', $user->id) }}" Method="POST"
                             enctype="multipart/form-data">
                             @csrf
 
@@ -1751,7 +1751,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('updateFamilyInfo', $user->id) }}" Method="POST"
+                        <form action="{{ route('updtaeFamilyInfo', $user->id) }}" Method="POST"
                             enctype="multipart/form-data">
                             @csrf
 
