@@ -64,9 +64,12 @@
     color: #ffffff;
 }
 
-#pencil-on-avatar {
-    margin-top: 65px;
-    margin-left: -15px;
+.profile-img a.edit-icon {
+    position: absolute;
+    bottom: 10px;
+    right: 0px;
+    color:#c1c1c1;
+    cursor: pointer;
 }
 
 #experience-detail-table::-webkit-scrollbar-track {
@@ -175,7 +178,7 @@
     top: 45px;
     border-radius: 50%;
     background-color: var(--color-lite-green);
-   
+
 }
 /* .period.active::after {
     background-color: var(--color-lite-green);
@@ -187,13 +190,13 @@
     content: "";
     border: 1px solid var(--color-medium-ash);
     height: 185px;
-    border-style: dashed;   
-    
+    border-style: dashed;
+
     top: 54px;
     left: 54px;
 }
 /* .period.active::before
 {
     border: 1px solid var(--color-lite-green);
-   
+
 } */
