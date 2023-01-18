@@ -19,9 +19,7 @@
                     <b>Payroll Month</b>
                     <select id="dropdown_payroll_month" class="form-select form-select-sm" style="width:auto;" aria-label=".form-select-sm example">
                         @foreach($payroll_months as $key => $value)
-                            <option value="{{ $value }}"
-                            {{-- @if( !empty($currentClientID) && $currentClientID == $client->id) selected  @endif --}}
-                            >
+                            <option value="{{ $value }}">
                                 {{$key}}
                             </option>
                         @endforeach

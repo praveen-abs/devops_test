@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\ConfigPms;
 use App\Models\VmtPMS_KPIFormAssignedModel;
 use App\Models\VmtPMS_KPIFormReviewsModel;
+use App\Models\VmtEmployeePaySlip;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use App\Exports\VmtPayrollReports;
@@ -17,10 +18,66 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 class VmtReportsController extends Controller
 {
     public function showPayrollReportsPage(Request $request){
-        $payroll_months = [
-            "Nov 2022"=>"01-11-2022",
-            "Dec 2022"=>"01-12-2022"
-        ];
+        // $payroll_months = [
+        //     "Nov 2022"=>"01-11-2022",
+        //     "Dec 2022"=>"01-12-2022"
+        // ];
+        $query_payroll_months= VmtEmployeePaySlip::groupby('PAYROLL_MONTH')->pluck('PAYROLL_MONTH');
+        $payroll_months = [];
+        for($i=0;$i<count($query_payroll_months);$i++){
+            $array_values = explode('-', $query_payroll_months[$i]);
+                if($array_values[1]=='01'){
+                    $each_month=[
+                        'January ' . $array_values[2]=>$query_payroll_months[$i]
+                    ];
+                }else if($array_values[1]=='02'){
+                    $each_month=[
+                        'February ' . $array_values[2]=>$query_payroll_months[$i]
+                    ];
+                }else if($array_values[1]=='03'){
+                    $each_month=[
+                        'March ' . $array_values[2]=>$query_payroll_months[$i]
+                    ];
+                }else if($array_values[1]=='04'){
+                    $each_month=[
+                        'April ' . $array_values[2]=>$query_payroll_months[$i]
+                    ];
+                    //dd($each_month);
+                }else if($array_values[1]=='05'){
+                    $each_month=[
+                        'May ' . $array_values[2]=>$query_payroll_months[$i]
+                    ];
+                }else if($array_values[1]=='06'){
+                    $each_month=[
+                        'Jun ' . $array_values[2]=>$query_payroll_months[$i]
+                    ];
+                }else if($array_values[1]=='07'){
+                    $each_month=[
+                        'July ' . $array_values[2]=>$query_payroll_months[$i]
+                    ];
+                }else if($array_values[1]=='08'){
+                    $each_month=[
+                        'August ' . $array_values[2]=>$query_payroll_months[$i]
+                    ];
+                }else if($array_values[1]=='09'){
+                    $each_month=[
+                        'September ' . $array_values[2]=>$query_payroll_months[$i]
+                    ];
+                }else if($array_values[1]=='10'){
+                    $each_month=[
+                        'October ' . $array_values[2]=>$query_payroll_months[$i]
+                    ];
+                }else if($array_values[1]=='11'){
+                    $each_month=[
+                        'November ' . $array_values[2]=>$query_payroll_months[$i]
+                    ];
+                }else if($array_values[1]=='12'){
+                    $each_month=[
+                        'December ' . $array_values[2]=>$query_payroll_months[$i]
+                    ];
+                }
+                $payroll_months=array_merge($payroll_months, $each_month);
+        }
 
         return view('reports.vmt_showPayrollReports', compact('payroll_months'));
     }
