@@ -215,7 +215,7 @@ class HomeController extends Controller
         return redirect()->back();
     }
 
-    public function updtaeEmergencyInfo(Request $request) {
+    public function updateEmergencyInfo(Request $request) {
         //dd($request->all());
         $contact  = new VmtEmployeeEmergencyContactDetails;
         $contact->user_id =  $request->id;
