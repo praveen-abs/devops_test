@@ -1527,9 +1527,32 @@
                                                 <th>
                                                     Action
                                                 </th>
+                                            </thead>
                                             <tbody>
+                                                {{-- <?php dd($documents_filenames); ?> --}}
+                                                {{-- <?php dd(count($documents_filenames->toArray())); ?> --}}
+                                                @foreach ( $documents_filenames[0] as $key => $value )
+                                                    @if (!empty($value))
+                                                        <tr>
 
+                                                            <td>{{ $key }}</td>
+                                                            <td>
+                                                                @if (Str::contains($value, '.pdf'))
+                                                                    <a target="_blank"
+                                                                        href="{{ URL::asset('employee_documents/' . $value) }}">View
+                                                                        Documents</a>
+                                                                @else
+                                                                    <a class="view-file text-info"
+                                                                        data-src="{{ URL::asset('employee_documents/'  . $value) }}"
+                                                                        style="cursor:pointer">
+                                                                        {{ 'View Documents' }}
+                                                                    </a>
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                    @endif
 
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
@@ -1908,8 +1931,8 @@
                                             <div class="card mb-3 addition-content" id="content1">
                                                 <div class="card-body">
                                                     <!-- <h3 class="card-title fw-bold">Education Informations <a href="javascript:void(0);"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                            {{-- class="delete-icon"><i class="   ri-delete-bin-line"></i></a> --}}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                    </h3> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{-- class="delete-icon"><i class="   ri-delete-bin-line"></i></a> --}}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        </h3> -->
 
                                                     <div class="row ">
                                                         <div class="col-md-12 m-0 text-end">
