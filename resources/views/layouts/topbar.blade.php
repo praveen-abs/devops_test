@@ -65,7 +65,7 @@ if ($query_clientMaster) {
                             $currentClientID = session('client_id');
                             //dd($currentClientID);
                             ?>
-                            <span class=" f-14 fw-bold">Entity Name : </span>
+                            {{-- <span class=" f-14 fw-bold">Entity Name : </span> --}}
                             <button type="button" class="btn  border-0 mx-1 py-1 f-14 fw-bold"
                                 id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
