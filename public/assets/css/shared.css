@@ -274,7 +274,7 @@ table.no-padding tr td {
     color: var(--color-primary_blue);
     padding: 5px 8px;
     font-size: 14px;
-    padding: 5px 8px !important;
+    padding: 5px 8px;
     font-size: 13px !important;
 }
 .btn-primary {
@@ -1132,14 +1132,8 @@ button.gridjs-sort-desc {
 .text-orange {
     color: #ee6a04;
 }
-.topbar-logo {
-    height: 40px;
-    width: 140px;
-}
-.topbar-logo img {
-    height: 100% !important;
-    width: 100% !important;
-}
+
+
 .leave-request-section .modal .modal-dialog .modal-content .modal-header {
     border-bottom: none !important;
 }
