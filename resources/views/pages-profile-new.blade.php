@@ -2838,25 +2838,28 @@
 
             $('.paySlipPDF').on('click', function() {
                 var url = $(this).attr('data-url');
-                var t_paySlipMonth = $(this).attr('data');
-                $.ajax({
-                    type: "GET",
-                    url: url,
-                    data: {
-                        selectedPaySlipMonth: t_paySlipMonth,
-                        enc_user_id: "{{ $enc_user_id }}"
-                    },
-                    success: function(data) {
-                        console.log("Downloading Payslip PDF........");
-                        return data;
-                        // var content =
-                        //     '<div class="row " style=""><div class=""><div class="fill body payslip-filter-pdf mb-4"> <i class="icon icon-blue icon-xlg vertical-align-text-bottom text-secondary ri-filter-2-fill"> </i> <div class="dropdown cursor-pointer payslip-dropdown"><div id="ember127" class="ember-view"><div class="dropdown-toggle" data-toggle="dropdown"><span>Financial Year : </span><span class="font-semibold fw-bold text-dark h5">2022 - 23</span><span class="caret "></span></div><ul class="dropdown-menu dropdown-menu-right"><li data-ember-action="" data-ember-action-129="129"><a>2022 - 23</a></li> </ul></div></div></div></div><div class="">' +
-                        //     data + '</div></div>';
-                        // $("#slipAfterView").html(content);
-                        // $('#payslipModal').modal('show');
-                        // console.log("Clicked View ");
-                    }
-                });
+                let t_paySlipMonth = $(this).attr('data');
+                let enc_userid =  "{{ $enc_user_id }}";
+
+                window.open(url+"?selectedPaySlipMonth="+t_paySlipMonth+"&enc_user_id="+enc_userid,'_blank');
+                // $.ajax({
+                //     type: "GET",
+                //     url: url,
+                //     data: {
+                //         selectedPaySlipMonth: t_paySlipMonth,
+                //         enc_user_id: "{{ $enc_user_id }}"
+                //     },
+                //     success: function(data) {
+                //         console.log("Downloading Payslip PDF........");
+                //         return data;
+                //         // var content =
+                //         //     '<div class="row " style=""><div class=""><div class="fill body payslip-filter-pdf mb-4"> <i class="icon icon-blue icon-xlg vertical-align-text-bottom text-secondary ri-filter-2-fill"> </i> <div class="dropdown cursor-pointer payslip-dropdown"><div id="ember127" class="ember-view"><div class="dropdown-toggle" data-toggle="dropdown"><span>Financial Year : </span><span class="font-semibold fw-bold text-dark h5">2022 - 23</span><span class="caret "></span></div><ul class="dropdown-menu dropdown-menu-right"><li data-ember-action="" data-ember-action-129="129"><a>2022 - 23</a></li> </ul></div></div></div></div><div class="">' +
+                //         //     data + '</div></div>';
+                //         // $("#slipAfterView").html(content);
+                //         // $('#payslipModal').modal('show');
+                //         // console.log("Clicked View ");
+                //     }
+                // });
             });
         });
     </script>
