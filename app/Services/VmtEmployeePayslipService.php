@@ -491,7 +491,7 @@ class VmtEmployeePayslipService {
         $data['employee_details'] = VmtEmployee::where('userid',$user->id)->first();
         $data['employee_statutory_details'] = VmtEmployeeStatutoryDetails::where('user_id',$user->id)->first();
 
-        $processed_clientName = strtolower(str_replace(' ', '', sessionGetSelectedClientName()));
+        $processed_clientName = strtolower(str_replace(' ', '',  getClientName($user_id)));
         $view = view('vmt_payslip_templates.template_payslip_'.$processed_clientName, $data);
 
        // $view = view('vmt_payslipTemplate', $data);
