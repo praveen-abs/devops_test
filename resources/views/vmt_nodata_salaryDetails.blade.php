@@ -6,7 +6,6 @@
 
 @endsection
 @section('content')
-@component('components.paycheck_breadcrumb')
 @slot('li_1') @endslot
 @endcomponent
 <div class="salary-wrapper">
