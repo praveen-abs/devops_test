@@ -21,7 +21,7 @@ import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup';     //optional for column grouping
 import Row from 'primevue/row';
 
-import OrgLeaveRemainingTable from './OrgLeaveBalanceTable.vue';
+import OrgLeaveRemainingTable from './AttRegularizationApproval.vue';
 
 const app = createApp(OrgLeaveRemainingTable);
 
@@ -39,5 +39,5 @@ app.directive('focustrap', FocusTrap);
 app.component('DataTable', DataTable);
 app.component('Column', Column);
 
-app.mount("#orgLeaveTable_RemainingLeave");
+app.mount("#vjs_regularizationTable");
 

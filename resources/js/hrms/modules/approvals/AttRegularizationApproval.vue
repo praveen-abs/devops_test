@@ -1,10 +1,10 @@
 <template>
 	<div>
-        <DataTable :value="products" responsiveLayout="scroll">
-            <Column field="code" header="Code"></Column>
-            <Column field="name" header="Name"></Column>
-            <Column field="category" header="Category"></Column>
-            <Column field="quantity" header="Quantity"></Column>
+        <DataTable :value="att_regularization" responsiveLayout="scroll" :paginator="true" :rows="5">
+            <Column field="employee_name" header="Name"></Column>
+            <Column field="attendance_date" header="Date"></Column>
+            <Column field="regularization_type" header="Type"></Column>
+            <Column field="user_time" header="Actual Time"></Column>
         </DataTable>
 	</div>
 </template>
@@ -15,14 +15,18 @@ import axios from 'axios'
 
 export default {
     setup() {
-        const products = ref();
+        let att_regularization = ref();
 
         onMounted(() => {
-            products.value = getProductDetails().data;
+            let url = window.location.origin+'/fetch-regularization-approvals';
 
-            axios.get('https://jsonplaceholder.typicode.com/posts/1')
+            console.log("AJAX URL : "+ url);
+
+            axios.get(url)
                  .then((response) => {
-                    console.log("Axios : "+response.data.title);
+                    console.log("Axios : "+response.data);
+                    att_regularization.value = response.data;
+
             });
 
         })
@@ -37,7 +41,7 @@ export default {
             };
         }
 
-        return { products }
+        return { att_regularization }
     }
 }
 
