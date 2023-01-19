@@ -1031,7 +1031,7 @@ class VmtEmployeeController extends Controller
         foreach($query_vmtEmployees as $singleEmp)
         {
             $singleEmp['enc_user_id'] = Crypt::encryptString($singleEmp['user_id']);
-            unset($singleEmp['user_id']);
+            //unset($singleEmp['user_id']);
             $singleEmp['reporting_manager_name']= User::where('user_code',$singleEmp->l1_manager_code)->value('name');
         }
 
@@ -1076,7 +1076,7 @@ class VmtEmployeeController extends Controller
         foreach($query_vmtEmployees as $singleEmp)
         {
             $singleEmp['enc_user_id'] = Crypt::encryptString($singleEmp['user_id']);
-            unset($singleEmp['user_id']);
+            //unset($singleEmp['user_id']);
             $singleEmp['reporting_manager_name'] = User::where('user_code',$singleEmp->l1_manager_code)->value('name');
         }
 
