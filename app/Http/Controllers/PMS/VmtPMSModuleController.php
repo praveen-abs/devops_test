@@ -339,51 +339,55 @@ class VmtPMSModuleController extends Controller
         $ratingDetail['ranking'] = '-';
         $ratingDetail['action'] = '-';
         $ratingDetail['rating'] = '-';
-        if($assignedGoals!=''){
-            // Calculation and check All Reviewers Rating
-            // dD($assignedGoals->reviewer_kpi_percentage);
-            $percentageVal = 0;
-            $howManyPercCount = 0;
-            // dd(json_decode($assignedGoals->reviewer_kpi_percentage, true));
-            $allReviewerPercentages = isset($assignedGoals->reviewer_kpi_percentage) ? json_decode($assignedGoals->reviewer_kpi_percentage, true) : [];
-            if(count($allReviewerPercentages) > 0){
-                foreach($allReviewerPercentages as $percentage){
-                    $arraySumPercentage = array_sum($percentage);
-                    $percentageVal += $arraySumPercentage;
-                    $howManyPercCount += count($percentage);
-                }
-            }
-            if ($howManyPercCount > 0) {
-                $ratingDetail['rating'] = $percentageVal / $howManyPercCount;
-                // calculate Rating Based on Table Dynamic Data
-                $pmsConfigRatingDetails = VmtPMSRating::orderBy('sort_order','DESC')->get();
-                if(count($pmsConfigRatingDetails) > 0){
-                    foreach($pmsConfigRatingDetails as $ratings){
 
-                        $rangeCheck = explode('-',$ratings->score_range);
-                        if($ratingDetail['rating'] >= $rangeCheck[0] && $ratingDetail['rating'] <= $rangeCheck[1]){
-                            $ratingDetail['performance'] = $ratings->performance_rating;
-                            $ratingDetail['ranking'] = $ratings->ranking;
-                            $ratingDetail['action'] = $ratings->action;
-                        }elseif($ratingDetail['rating'] >= 100){
-                            if($ratings->score_range == '90 - 100'){
-                                $ratingDetail['performance'] = $ratings->performance_rating;
-                                $ratingDetail['ranking'] = $ratings->ranking;
-                                $ratingDetail['action'] = $ratings->action;
-                            }else{
-                                $ratingDetail['performance'] = "Exceptionally Exceeds Expectations";
-                                $ratingDetail['ranking'] = 5;
-                                $ratingDetail['action'] = '20%';
-                            }
-                        }else{
-                            $ratingDetail['performance'] = "error";
-                            $ratingDetail['ranking'] = 000;
-                            $ratingDetail['action'] = '0000%';
-                        }
-                    }
-                }
-            }
-        }
+        //Get the Overall Rating for this User.(Includes all the KPI form)
+       // $overallRatingDetails = calculateOverallReviewRating(Auth::user()->id);
+
+        // if($assignedGoals!=''){
+        //     // Calculation and check All Reviewers Rating
+        //     // dD($assignedGoals->reviewer_kpi_percentage);
+        //     $percentageVal = 0;
+        //     $howManyPercCount = 0;
+        //     // dd(json_decode($assignedGoals->reviewer_kpi_percentage, true));
+        //     $allReviewerPercentages = isset($assignedGoals->reviewer_kpi_percentage) ? json_decode($assignedGoals->reviewer_kpi_percentage, true) : [];
+        //     if(count($allReviewerPercentages) > 0){
+        //         foreach($allReviewerPercentages as $percentage){
+        //             $arraySumPercentage = array_sum($percentage);
+        //             $percentageVal += $arraySumPercentage;
+        //             $howManyPercCount += count($percentage);
+        //         }
+        //     }
+        //     if ($howManyPercCount > 0) {
+        //         $ratingDetail['rating'] = $percentageVal / $howManyPercCount;
+        //         // calculate Rating Based on Table Dynamic Data
+        //         $pmsConfigRatingDetails = VmtPMSRating::orderBy('sort_order','DESC')->get();
+        //         if(count($pmsConfigRatingDetails) > 0){
+        //             foreach($pmsConfigRatingDetails as $ratings){
+
+        //                 $rangeCheck = explode('-',$ratings->score_range);
+        //                 if($ratingDetail['rating'] >= $rangeCheck[0] && $ratingDetail['rating'] <= $rangeCheck[1]){
+        //                     $ratingDetail['performance'] = $ratings->performance_rating;
+        //                     $ratingDetail['ranking'] = $ratings->ranking;
+        //                     $ratingDetail['action'] = $ratings->action;
+        //                 }elseif($ratingDetail['rating'] >= 100){
+        //                     if($ratings->score_range == '90 - 100'){
+        //                         $ratingDetail['performance'] = $ratings->performance_rating;
+        //                         $ratingDetail['ranking'] = $ratings->ranking;
+        //                         $ratingDetail['action'] = $ratings->action;
+        //                     }else{
+        //                         $ratingDetail['performance'] = "Exceptionally Exceeds Expectations";
+        //                         $ratingDetail['ranking'] = 5;
+        //                         $ratingDetail['action'] = '20%';
+        //                     }
+        //                 }else{
+        //                     $ratingDetail['performance'] = "error";
+        //                     $ratingDetail['ranking'] = 000;
+        //                     $ratingDetail['action'] = '0000%';
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
 
 
         //// Rating calculation -ends

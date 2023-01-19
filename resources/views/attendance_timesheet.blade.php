@@ -201,13 +201,41 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         <div class="row">
                                             <div class="col-6"><label class="text-ash-medium fs-15">Reason</label></div>
                                             <div class="col-6">
-                                                <select name="reason" class="form-select btn-line-orange" id=""
+                                                <select name="reason" class="form-select btn-line-orange" id="reason_mip"
                                                     onchange="showReasonBox(this)">
                                                     <option selected hidden disabled>
-                                                        Choose Reason
+                                                        Choose Reason for MIP
                                                     </option>
                                                     <option value="Permission">Permission</option>
                                                     <option value="Forgot to Punch">Forgot to Punch</option>
+                                                    <option value="Technical Error">Technical Error</option>
+                                                    <option value="Others">Others</option>
+                                                </select>
+                                                <select name="reason" class="form-select btn-line-orange" id="reason_mop"
+                                                    onchange="showReasonBox(this)">
+                                                    <option selected hidden disabled>
+                                                        Choose Reason for MOP
+                                                    </option>
+                                                    <option value="Permission">Permission</option>
+                                                    <option value="Forgot to Punch">Forgot to Punch</option>
+                                                    <option value="Technical Error">Technical Error</option>
+                                                    <option value="Others">Others</option>
+                                                </select>
+                                                <select name="reason" class="form-select btn-line-orange" id="reason_lc"
+                                                    onchange="showReasonBox(this)">
+                                                    <option selected hidden disabled>
+                                                        Choose Reason for LC
+                                                    </option>
+                                                    <option value="Permission">Permission</option>
+                                                    <option value="Technical Error">Technical Error</option>
+                                                    <option value="Others">Others</option>
+                                                </select>
+                                                <select name="reason" class="form-select btn-line-orange" id="reason_eg"
+                                                    onchange="showReasonBox(this)">
+                                                    <option selected hidden disabled>
+                                                        Choose Reason for EG
+                                                    </option>
+                                                    <option value="Permission">Permission</option>
                                                     <option value="Technical Error">Technical Error</option>
                                                     <option value="Others">Others</option>
                                                 </select>
@@ -692,7 +720,28 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                 $('#txt_customreason_noneditable').val(''); //editable
                 $('#txt_apply_status').val(''); //editable
 
+                //Based on Regularization Type, show the dropdowns
+                $('#reason_mip').hide();
+                $('#reason_mop').hide();
+                $('#reason_lc').hide();
+                $('#reason_eg').hide();
 
+                if ($(element).val() == "LC") {
+                    $('#reason_lc').show();
+                }
+                else
+                if ($(element).val() == "EG") {
+                    $('#reason_eg').show();
+
+                }
+                else
+                if ($(element).val() == "MIP") {
+                    $('#reason_mip').show();
+                }
+                else
+                if ($(element).val() == "MOP") {
+                    $('#reason_mop').show();
+                }
 
                 //show Modal
                 $('#regularizationModal').fadeIn(0);
@@ -701,7 +750,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
             //Set UI elements
             $('#current_date').html(selected_date);
 
-
+            //Hide all reason dropdowns
 
             if ($(element).val() == "LC") {
                 //On modal popup

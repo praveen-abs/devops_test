@@ -18,7 +18,7 @@
                     <table class="table table-hover table-bordered kpi_appraisal-table" >
                         <thead>
                             <tr>
-                                <th>Description Of The Holidays</th>
+                                <th>List Of Holidays</th>
 
                                 <th>Date</th>
                                 <th>Day</th>
@@ -40,9 +40,9 @@
                     </table>
                 </div>
             </div>
-            <div class="modal-footer border-0">
+            {{-- <div class="modal-footer border-0">
                 <button type="button" class="btn btn-border-primary" data-bs-dismiss="modal">Close</button>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>

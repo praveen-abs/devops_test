@@ -287,7 +287,7 @@
                                 if(cell.employee_avatar.type == "avatar"){
                                     var imageURL = "images/"+cell.employee_avatar.data;
 
-                                    output ='<div class="col-auto p-0">'+
+                                    output ='<div class="d-flex">'+
                                             '<img class="rounded-circle header-profile-user" src="'+imageURL+'" alt="--">'+
                                             '<span>&nbsp;&nbsp;'+cell.employee_name+'</span>'+
                                         '</div>';

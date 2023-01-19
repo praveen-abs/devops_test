@@ -89,6 +89,15 @@ function sessionGetSelectedClientName(){
         return "";
 }
 
+function getClientName($user_id){
+    $query_client = VmtClientMaster::find(User::find($user_id)->client_id);
+
+    if (!empty($query_client))
+        return $query_client->client_name;
+    else
+        return "";
+}
+
 function getOrganization_HR_Details(){
     $master_config_value = VmtMasterConfig::where('config_name', 'hr_userid')->first();
 
@@ -183,7 +192,7 @@ function hasSubClients()
 
 function fetchClients(){
 
-    return VmtClientMaster::all(['id','client_name']);
+    return VmtClientMaster::all(['id','client_name','client_logo']);
 
 }
 
@@ -290,7 +299,7 @@ function fetchClients(){
     function isAppointmentLetterTemplateAvailable(){
 
         $client_name = str_replace(' ', '', sessionGetSelectedClientName());
-        
+
         //$client_name = Str::lower(str_replace(' ', '', getCurrentClientName()) );
         $viewfile_appointmentletter = 'mailtemplate_appointmentletter_'.$client_name;
         //dd($viewfile_appointmentletter);

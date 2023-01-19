@@ -127,7 +127,7 @@ Route::post('/update-statutory-info/{id}', [App\Http\Controllers\VmtProfilePages
 Route::post('/store-personal-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'storePersonalInfo'])->name('updatePersonalInformation');
 Route::get('/payslip', [App\Http\Controllers\VmtProfilePagesController::class, 'paySlip'])->name('payslip');
 Route::get('/employee_payslip/{user_id?}',  [App\Http\Controllers\VmtProfilePagesController::class, 'showPaySlip_HTMLView'])->name('vmt_employee_payslip_htmlview');
-Route::get('/pdfview/{emp_code}/{selectedPaySlipMonth}',[App\Http\Controllers\VmtProfilePagesController::class, 'pdfview'])->name('pdfview');
+Route::get('/pdfview/{emp_code?}/{selectedPaySlipMonth?}',[App\Http\Controllers\VmtProfilePagesController::class, 'showPaySlip_PDFView'])->name('vmt_employee_payslip_pdf');
 
 
 
@@ -387,7 +387,6 @@ Route::get('vmt-pmsappraisal-review', 'App\Http\Controllers\VmtPmsController@sho
 
 
     Route::get('/vmt_employee_payslip',  [App\Http\Controllers\VmtPaySlipController::class, 'payslipPdfView'])->name('vmt_employee_payslip');
-    Route::get('/pdfview/{emp_code}/{selectedPaySlipMonth}',[App\Http\Controllers\VmtPaySlipController::class, 'pdfview'])->name('pdfview');
     // testing template
     Route::get('/testingController',[App\Http\Controllers\VmtTestingController::class, 'index'])->name('testingController');
 
@@ -515,6 +514,14 @@ Route::get('/documents',  [App\Http\Controllers\VmtEmployeeController::class, 's
     Route::get('/reports/payroll',  [App\Http\Controllers\VmtReportsController::class, 'showPayrollReportsPage'])->name('showPayrollReportsPage');
     Route::get('/reports/generatePayrollReports',  [App\Http\Controllers\VmtReportsController::class, 'generatePayrollReports'])->name('generatePayrollReports');
     Route::get('/reports/fetchAllEmployeePayrollDetails',  [App\Http\Controllers\VmtReportsController::class, 'fetchAllEmployeePayrollDetails'])->name('fetchAllEmployeePayrollDetails');
+
+    //pms reviwes report
+    Route::get('/reports/pmsreviews',  [App\Http\Controllers\VmtReportsController::class, 'showPmsReviewsReportPage'])->name('showPmsReviewsReportPage');
+    Route::get('/reports/generatePmsReviewsReports',  [App\Http\Controllers\VmtReportsController::class, 'generatePmsReviewsReports'])->name('generatePmsReviewsReports');
+
+    //Ajax Part
+    Route::get('/pms-filter-info', [App\Http\Controllers\VmtReportsController::class, 'filterPmsReport'])->name('pms-filter-info');
+
 
 
 
