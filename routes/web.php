@@ -125,7 +125,6 @@ Route::post('/update-experience-info/{id}', [App\Http\Controllers\VmtProfilePage
 Route::post('/update-bank-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'updateBankInfo'])->name('updateBankInfo');
 Route::post('/update-statutory-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'updateStatutoryInfo'])->name('updateStatutoryInfo');
 Route::post('/store-personal-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'storePersonalInfo'])->name('updatePersonalInformation');
-Route::get('/payslip', [App\Http\Controllers\VmtProfilePagesController::class, 'paySlip'])->name('payslip');
 Route::get('/employee_payslip/{user_id?}',  [App\Http\Controllers\VmtProfilePagesController::class, 'showPaySlip_HTMLView'])->name('vmt_employee_payslip_htmlview');
 Route::get('/pdfview/{emp_code?}/{selectedPaySlipMonth?}',[App\Http\Controllers\VmtProfilePagesController::class, 'showPaySlip_PDFView'])->name('vmt_employee_payslip_pdf');
 
@@ -180,23 +179,6 @@ Route::post('vmt-general-settings', [App\Http\Controllers\HomeController::class,
         return view('vmt_vendor');
     })->name('vmt-vendor-route');
 
-    // for payroll
-
-    Route::get('payroll/claim', function () {
-        return view('payRoll_claim');
-    })->name('claim');
-
-    Route::get('payroll/reports', function () {
-        return view('payRoll_reports');
-    })->name('reports');
-
-    Route::get('payroll/run', function () {
-        return view('runpayRoll');
-    })->name('run');
-
-    Route::get('payroll/analytics', function () {
-        return view('payRoll');
-    })->name('analytics');
 
 
     Route::get('clients', 'App\Http\Controllers\VmtClientController@showAllClients')->name('vmt-clients-route');;
@@ -334,18 +316,6 @@ Route::post('vmt-general-settings', [App\Http\Controllers\HomeController::class,
     Route::post('vmt-assetinventory-delete', 'App\Http\Controllers\VmtAssetInventoryController@deleteAsset')->name('vmt-assetinventory-delete');
     //Route::post('department', 'App\Http\Controllers\VmtPmsController@department')->name('department');
 
-
-
-    // pay slip
-
-    Route::get('payRun', 'App\Http\Controllers\VmtPaySlipController@showPayRunPage')->name('payRun');
-    Route::post('vmt-payslip', 'App\Http\Controllers\VmtPaySlipController@uploadPaySlip');
-    Route::get('vmt-employee-payslip', 'App\Http\Controllers\VmtPaySlipController@payslipView');
-    Route::get('vmt-payslip-pdf', 'App\Http\Controllers\VmtPaySlipController@payslipPdf');
-        // code end by hentry //
-    // sample xl download  11/08/2022  //
-    Route::get( '/download/{filename}', 'App\Http\Controllers\VmtPaySlipController@download');
-
 // end rout //
 
 // General Info
@@ -373,20 +343,27 @@ Route::get('vmt-pmsappraisal-review', 'App\Http\Controllers\VmtPmsController@sho
     Route::post('/upload_file_review',  [App\Http\Controllers\VmtApraisalController::class, 'uploadFileReview'])->name('upload-file-review');
     Route::get('/download_file/{id}',  [App\Http\Controllers\VmtApraisalController::class, 'downloadFile'])->name('download-file');
     Route::post('/state',  [App\Http\Controllers\VmtEmployeeController::class, 'getState'])->name('state');
-    Route::get('/salary_details',  [App\Http\Controllers\VmtPaySlipController::class, 'showSalaryDetailsPage'])->name('vmt_salary_details');
-    Route::get('/paycheckDashboard',  [App\Http\Controllers\VmtPayCheckController::class, 'index'])->name('paycheckDashboard');
-
-    Route::get('/form16', function () {
-        return view('vmt_form16');
-    })->name('vmt-form16-route');
-
-    Route::get('/investments', function () {
-        return view('vmt_investments');
-    })->name('vmt-investments-route');
 
 
 
-    Route::get('/vmt_employee_payslip',  [App\Http\Controllers\VmtPaySlipController::class, 'payslipPdfView'])->name('vmt_employee_payslip');
+//Payroll module
+    Route::get('payRun', 'App\Http\Controllers\VmtPayrollController@showPayRunPage')->name('showPayRunPage');
+    Route::post('vmt-payslip', 'App\Http\Controllers\VmtPayrollController@uploadPayRunData');
+
+    Route::get('payroll/claims',  [App\Http\Controllers\VmtPayrollController::class, 'showPayrollClaimsPage'])->name('showPayrollClaimsPage');
+    Route::get('payroll/reports',  [App\Http\Controllers\VmtPayrollController::class, 'showPayrollReportsPage'])->name('showPayrollReportsPage');
+    Route::get('payroll/analytics',  [App\Http\Controllers\VmtPayrollController::class, 'showPayrollAnalyticsPage'])->name('showPayrollAnalyticsPage');
+    Route::get('payroll/run',  [App\Http\Controllers\VmtPayrollController::class, 'showPayrollRunPage'])->name('showPayrollRunPage');
+
+
+//Pay Check module
+    Route::get('/paycheckDashboard',  [App\Http\Controllers\VmtPayCheckController::class, 'showPaycheckDashboard'])->name('paycheckDashboard');
+    Route::get('/salary_details',  [App\Http\Controllers\VmtPayCheckController::class, 'showSalaryDetailsPage'])->name('vmt_salary_details');
+    Route::get('/investments_details',  [App\Http\Controllers\VmtPayCheckController::class, 'showInvestmentsPage'])->name('vmt_investments_details');
+    Route::get('/form16_details',  [App\Http\Controllers\VmtPayCheckController::class, 'showForm16Page'])->name('vmt_form16_details');
+    Route::get('/employee_payslip/{user_id?}',  [App\Http\Controllers\VmtPayCheckController::class, 'showPaySlip_HTMLView'])->name('vmt_paycheck_employee_payslip_htmlview');
+    Route::get('/pdfview/{emp_code?}/{selectedPaySlipMonth?}',[App\Http\Controllers\VmtPayCheckController::class, 'showPaySlip_PDFView'])->name('vmt_paycheck_employee_payslip_pdf');
+
     // testing template
     Route::get('/testingController',[App\Http\Controllers\VmtTestingController::class, 'index'])->name('testingController');
 
@@ -511,7 +488,7 @@ Route::get('/documents',  [App\Http\Controllers\VmtEmployeeController::class, 's
 
     ////Reports
     //payroll reports
-    Route::get('/reports/payroll',  [App\Http\Controllers\VmtReportsController::class, 'showPayrollReportsPage'])->name('showPayrollReportsPage');
+    Route::get('/reports/payroll',  [App\Http\Controllers\VmtReportsController::class, 'showPayrollReportsPage'])->name('Reports.showPayrollReportsPage');
     Route::get('/reports/generatePayrollReports',  [App\Http\Controllers\VmtReportsController::class, 'generatePayrollReports'])->name('generatePayrollReports');
     Route::get('/reports/fetchAllEmployeePayrollDetails',  [App\Http\Controllers\VmtReportsController::class, 'fetchAllEmployeePayrollDetails'])->name('fetchAllEmployeePayrollDetails');
 
@@ -539,10 +516,6 @@ Route::get('syncStaffAttendanceFromDeviceDatabase', [App\Http\Controllers\VmtSta
 
 
 
-
-//Internal stuffs
-//Route::get('/internal-ShowSalaries/{user_code}',  [App\Http\Controllers\VmtPaySlipController::class, 'internal_ShowSalaries'])->name('ShowSalaries');
-//Route::get('/internal-ShowPayslips',  [App\Http\Controllers\VmtPaySlipController::class, 'internal_ShowSelectedPayslip'])->name('ShowSelectedPayslip');
 
 //DONT WRITE ANT ROUTES BELOW THIS
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index']);
