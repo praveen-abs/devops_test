@@ -149,7 +149,7 @@
                                     <li class="border-bottom-liteAsh pb-1">
                                         <div class="title">Birthday</div>
                                         <div class="text">
-                                            {{ date('d F', strtotime($user_full_details->dob ?? '-')) }}
+                                            {{ date('d-m-Y', strtotime($user_full_details->dob ?? '-')) }}
                                         </div>
                                     </li>
                                     <li class="border-bottom-liteAsh pb-1">
@@ -159,7 +159,7 @@
                                     <li class="border-bottom-liteAsh pb-1">
                                         <div class="title">Date Of Joining (DOJ)</div>
                                         <div class="text">
-                                            {{ date('d F', strtotime($user_full_details->doj ?? '-')) }}
+                                            {{ date('d-m-Y', strtotime($user_full_details->doj ?? '-')) }}
                                         </div>
                                     </li>
                                     <li class="border-bottom-liteAsh pb-1">
@@ -173,7 +173,7 @@
                                             {{ getBloodGroupName($user_full_details->blood_group_id) ?? '-' }}</div>
                                     </li>
                                     <li class=" pb-1">
-                                        <div class="title">Physically Handicapped</div>
+                                        <div class="title">Physically Challenged</div>
                                         <div class="text">
 
                                             {{ $user_full_details->physically_challenged ?? '-' }}</div>
@@ -1555,22 +1555,22 @@
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-group mb-3">
-                                                <label>Birth Date<span class="text-danger">*</span></label>
+                                                <label>Birth Date<span class="text-danger"></span></label>
                                                 <div class="cal-icon">
                                                     @if (!empty($user_full_details->dob))
                                                         <input class="form-control datetimepicker" type="date"
-                                                            max="9999-12-31" name="dob"
+                                                            max=" 31-12-9999" name="dob"
                                                             value="{{ date('Y-m-d', strtotime($user_full_details->dob)) }}">
                                                     @else
                                                         <input class="form-control datetimepicker" type="date"
-                                                            max="9999-12-31" name="dob" value="">
+                                                            max="31-12-9999" name="dob" value="">
                                                     @endif
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group mb-3">
-                                                <label>Gender<span class="text-danger">*</span></label>
+                                                <label>Gender<span class="text-danger"></span></label>
 
                                                 <select class="form-select form-control" name="gender"
                                                     aria-label="Default select">
@@ -1586,7 +1586,7 @@
 
                                         <div class="col-6">
                                             <div class="form-group mb-3">
-                                                <label>Date Of Joining(DOJ)<span class="text-danger">*</span></label>
+                                                <label>Date Of Joining(DOJ)<span class="text-danger"></span></label>
                                                 <div class="cal-icon">
                                                     @if (!empty($user_full_details->doj))
                                                         <input class="form-control onboard" type="date"
@@ -1619,7 +1619,7 @@
 
                                         <div class="col-6">
                                             <div class="form-group mb-3">
-                                                <label>Marital status <span class="text-danger">*</span></label>
+                                                <label>Marital status <span class="text-danger"></span></label>
                                                 <select class="form-select form-control text-capitalize"
                                                     name="marital_status" required>
                                                     <option class="" selected hidden disabled>Select Marital</option>
@@ -1632,13 +1632,24 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-6">
+
+                                        {{-- <div class="col-6">
                                             <div class="form-group mb-3">
                                                 <label>Physically Handicapped</label>
-                                                <input type="text" name="" id=""
+                                                <input type="text" name="physically_challenged" id="physically_challenged"
                                                     class="form-control "
-                                                    value=" {{ $user_full_details->physically_challenged ?? '-' }}">
-
+                                                    value=" {{ $user_full_details->physically_challenged ?? '-' }}"> --}}
+                                           <div class="col-md-6">
+                                            <div class="form-group mb-3">
+                                                <label for="">Physically Challenged<span class=" "></span></label>
+                                                <select   name="physically_challenged"
+                                                    id="physically_challenged"
+                                                    class="form-select form-control text-capitalize"
+                                                    required>
+                                                    <option value="" hidden selected disabled>Select</option>
+                                                    <option value="yes">Yes</option>
+                                                    <option value="no">No</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -2589,6 +2600,7 @@
                 var doj = $("input[name='doj']").val();
                 var marital_status = $("select[name='marital_status']").val();
                 var blood_group = $("select[name='blood_group']").val();
+                var physically_challenged =$("select[name='physically_challenged']").val();
 
                 $.ajax({
                     url: "{{ route('updateGeneralInfo', $user->id) }}",
@@ -2599,13 +2611,14 @@
                         doj: doj,
                         marital_status: marital_status,
                         blood_group: blood_group,
+                        physically_challenged :  physically_challenged,
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(data) {
 
                         Swal.fire({
-                            title: "Good job!",
-                            text: 'You clicked the button!',
+                            title: "Data Saved ",
+                            text: 'Successfully!',
                             icon: 'success'
                         }).then((result) => {
                             /* Read more about isConfirmed, isDenied below */
@@ -2619,8 +2632,7 @@
         });
 
 
-        $(document).ready(function() {
-            $("#btn_submit_contact_info").on('click', function(e) {
+        $("#btn_submit_contact_info").on('click', function(e) {
                 e.preventDefault();
 
                 var present_email = $("input[name='present_email']").val();
@@ -2637,17 +2649,22 @@
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(data) {
-                        location.reload();
-                    }
 
-                });
-
-            });
-        });
-
-
-        $(document).ready(function() {
-            $("#btn_submit_address").on('click', function(e) {
+                   Swal.fire({
+                    title: "Data Saved ",
+                     text: 'Successfully!',
+                   icon: 'success'
+                   }).then((result) => {
+    
+                if (result.isConfirmed) {
+                         location.reload();
+                                }
+                             })    
+                           }
+                          });
+                       });
+                    
+          $("#btn_submit_address").on('click', function(e) {
                 e.preventDefault();
 
                 var current_address_line_1 = $("textarea[name='current_address_line_1']").val();
@@ -2662,13 +2679,23 @@
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(data) {
-                        location.reload();
-                    }
 
+                     Swal.fire({
+                     title: "Data Saved ",
+                     text: 'Successfully!',
+                     icon: 'success'
+                     }).then((result) => {
+
+                   if (result.isConfirmed) {
+                     location.reload();
+                                 }
+                               })    
+                           }
+                     });
                 });
+ 
 
-            });
-        });
+        
 
         $(document).ready(function() {
             $("#btn_submit_family_info").on('click', function(e) {
