@@ -488,7 +488,8 @@ Route::middleware(['auth'])->group(function () {
     //Ajax Part
     Route::get('/pms-filter-info', [App\Http\Controllers\VmtReportsController::class, 'filterPmsReport'])->name('pms-filter-info');
 
-
+    //Grid Js
+    Route::get('/payroll-filter-info', [App\Http\Controllers\VmtReportsController::class, 'fetchPayrollReport'])->name('payroll-filter-info');
 
 
 });

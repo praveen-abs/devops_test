@@ -7,6 +7,7 @@ use App\Models\ConfigPms;
 use App\Models\VmtPMS_KPIFormAssignedModel;
 use App\Models\VmtPMS_KPIFormReviewsModel;
 use App\Models\VmtEmployeePaySlip;
+use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use App\Exports\VmtPayrollReports;
@@ -23,6 +24,7 @@ class VmtReportsController extends Controller
         //     "Dec 2022"=>"01-12-2022"
         // ];
         $query_payroll_months= VmtEmployeePaySlip::groupby('PAYROLL_MONTH')->pluck('PAYROLL_MONTH');
+        $work_location= VmtEmployeeOfficeDetails::groupby('work_location')->pluck('work_location');
         $payroll_months = [];
         for($i=0;$i<count($query_payroll_months);$i++){
             $array_values = explode('-', $query_payroll_months[$i]);
@@ -79,7 +81,7 @@ class VmtReportsController extends Controller
                 $payroll_months=array_merge($payroll_months, $each_month);
         }
 
-        return view('reports.vmt_showPayrollReports', compact('payroll_months'));
+        return view('reports.vmt_showPayrollReports', compact('payroll_months','work_location'));
     }
 
     public function generatePayrollReports(Request $request){
@@ -87,6 +89,101 @@ class VmtReportsController extends Controller
         $filename = 'PayrollReports_'.$request->payroll_month.'.xlsx';
         return Excel::download(new VmtPayrollReports($request->payroll_month), $filename ,null, [\Maatwebsite\Excel\Excel::XLSX]);
     }
+
+    public function fetchPayrollReport(Request $request){
+         //dd($request->all());
+        $payroll_data=VmtEmployeePaySlip::leftJoin('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'vmt_employee_payslip.user_id')
+        ->leftJoin('users', 'users.id', '=', 'vmt_employee_payslip.user_id')
+        ->leftJoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'vmt_employee_payslip.user_id')
+        ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'vmt_employee_payslip.user_id')
+        ->leftJoin('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'vmt_employee_payslip.user_id')
+        ->where('vmt_employee_payslip.PAYROLL_MONTH', $request->payroll_month)
+        ->orWhere('vmt_employee_office_details.work_location',$request->work_location)
+        ->select('users.user_code',
+                 'users.name',
+
+                 'vmt_employee_office_details.DESIGNATION',
+                 'vmt_employee_details.doj',
+                 'vmt_employee_details.dob',
+
+                 'vmt_employee_office_details.work_location',
+
+                  'vmt_employee_details.Aadhar_Number',
+                  'vmt_employee_details.PAN_Number',
+
+                 'vmt_employee_statutory_details.uan_number',
+                 'vmt_employee_statutory_details.epf_number',
+                 'vmt_employee_statutory_details.esic_number',
+
+                 'vmt_employee_details.bank_id',
+                 'vmt_employee_details.bank_account_number',
+                 'vmt_employee_details.bank_ifsc_code',
+                 'vmt_employee_details.mobile_number',
+
+                 'vmt_employee_office_details.officical_mail',
+
+                 //Abry and Enitiy
+                 'vmt_employee_payslip.PAYROLL_MONTH',
+                 //Total Emoluments
+                 'vmt_employee_payslip.BASIC',
+                 'vmt_employee_payslip.HRA',
+                 'vmt_employee_payslip.SPL_ALW',
+                 'vmt_employee_payslip.TOTAL_FIXED_GROSS',
+
+                 'vmt_employee_statutory_details.esic_applicable',
+
+                 'vmt_employee_payslip.MONTH_DAYS',
+                 'vmt_employee_payslip.Worked_Days',
+                 'vmt_employee_payslip.Arrears_Days',
+                 'vmt_employee_payslip.LOP',
+                 'vmt_employee_payslip.Earned_BASIC',
+                 'vmt_employee_payslip.BASIC_ARREAR',
+                 'vmt_employee_payslip.Earned_HRA',
+                 'vmt_employee_payslip.HRA_ARREAR',
+                 'vmt_employee_payslip.Earned_SPL_ALW',
+                 'vmt_employee_payslip.SPL_ALW_ARREAR',
+                 'vmt_employee_payslip.Overtime',
+                 //Overtime Arrears
+                 'vmt_employee_payslip.TOTAL_EARNED_GROSS',
+                 'vmt_employee_payslip.PF_WAGES',
+                 'vmt_employee_payslip.PF_WAGES_ARREAR_EPFR',
+                 'vmt_employee_payslip.EPFR',
+                 'vmt_employee_payslip.EPFR_ARREAR',
+                 'vmt_employee_payslip.EDLI_CHARGES',
+                 'vmt_employee_payslip.EDLI_CHARGES_ARREARS',
+                 'vmt_employee_payslip.PF_ADMIN_CHARGES',
+                 'vmt_employee_payslip.PF_ADMIN_CHARGES_ARREARS',
+                 'vmt_employee_payslip.EMPLOYER_ESI',
+                 'vmt_employee_payslip.Employer_LWF',
+                 'vmt_employee_payslip.CTC',
+                 'vmt_employee_payslip.EPF_EE',
+                 //VPF
+                 'vmt_employee_payslip.EPF_EE_ARREAR',
+                 'vmt_employee_payslip.EMPLOYEE_ESIC',
+                 'vmt_employee_payslip.PROF_TAX',
+                 //'vmt_employee_payslip.TDS',
+                 //incomeTax
+                 'vmt_employee_payslip.SAL_ADV',
+                 'vmt_employee_payslip.CANTEEN_DEDN',
+                 'vmt_employee_payslip.OTHER_DEDUC',
+                 'vmt_employee_payslip.LWF',
+                 'vmt_employee_payslip.TOTAL_DEDUCTIONS',
+                 'vmt_employee_payslip.NET_TAKE_HOME'
+        );
+
+
+
+        if (session('client_id') == '1') {
+            $payroll_data = $payroll_data->get();
+            return ($payroll_data);
+        } else {
+            $payroll_data = $payroll_data-> where('users.client_id', session('client_id'))->get();
+            return ($payroll_data);
+        }
+
+
+    }
+
 
     public function showPmsReviewsReportPage(Request $request){
         $query_configPms= ConfigPms::first(['calendar_type','frequency']);
