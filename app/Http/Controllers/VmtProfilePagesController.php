@@ -75,8 +75,23 @@ use Illuminate\Support\Facades\Crypt;
 
         $employees = VmtEmployeePaySlip::select('EMP_NO','EMP_NAME')->get();
         $array_bloodgroup = VmtBloodGroup::all(['name', 'id']);
-        //dd($user_full_details);
-        return view('pages-profile-new', compact('user','array_bloodgroup','enc_user_id','allEmployees', 'maritalStatus','genderArray','user_full_details', 'familydetails', 'exp', 'reportingManager','profileCompletenessValue','bank','data','employees','statutory_info'));
+
+        //Fetch documents from DB
+        $documents_filenames = VmtEmployee::where('userid',$user->id)
+                                ->get([
+                                    'aadhar_card_file',
+                                    'aadhar_card_backend_file',
+                                    'pan_card_file',
+                                    'passport_file',
+                                    'voters_id_file',
+                                    'dl_file',
+                                    'education_certificate_file',
+                                    'reliving_letter_file',
+                                    'docs_reviewed'
+                                ])->toArray();
+
+        //dd($documents_filenames);
+        return view('pages-profile-new', compact('user','documents_filenames','array_bloodgroup','enc_user_id','allEmployees', 'maritalStatus','genderArray','user_full_details', 'familydetails', 'exp', 'reportingManager','profileCompletenessValue','bank','data','employees','statutory_info'));
     }
 
 
@@ -189,8 +204,6 @@ use Illuminate\Support\Facades\Crypt;
         $details->bank_account_number = $request->input('account_no');
         $details->pan_number = $request->input('pan_no');
         $details->save();
-        Ses::flash('message', 'Bank Details Updated successfully!');
-        Ses::flash('alert-class', 'alert-success');
         return redirect()->back();
     }
 

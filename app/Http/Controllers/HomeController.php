@@ -190,7 +190,7 @@ class HomeController extends Controller
         return redirect()->back();
     }
 
-    public function updtaeFamilyInfo(Request $request) {
+    public function updateFamilyInfo(Request $request) {
        // $familyInfo = 'name'=> $request->input('name'), 'relationship'=> $request->input('relationship'),'dob'=> $request->input('dob'), 'phone'=> $request->input('phone')]);
 
         //Delete existing family details
@@ -215,7 +215,7 @@ class HomeController extends Controller
         return redirect()->back();
     }
 
-    public function updtaeEmergencyInfo(Request $request) {
+    public function updateEmergencyInfo(Request $request) {
         //dd($request->all());
         $contact  = new VmtEmployeeEmergencyContactDetails;
         $contact->user_id =  $request->id;

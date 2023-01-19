@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Dompdf\Dompdf;
+use PDF;
 
 use App\Models\User;
 use App\Models\VmtEmployee;
@@ -458,7 +459,7 @@ class VmtEmployeePayslipService {
 
          //TODO : Need to show client specific payslip template.
 
-         $processed_clientName = strtolower(str_replace(' ', '', sessionGetSelectedClientName()));
+         $processed_clientName = strtolower(str_replace(' ', '', getClientName($user_id)));
 
          //$html =  view('vmt_payslipTemplate', $data);
          $html =  view('vmt_payslip_templates.template_payslip_'.$processed_clientName, $data);
@@ -481,7 +482,7 @@ class VmtEmployeePayslipService {
             $user = User::find($user_id);
         }
 
-        $data['employee'] = VmtEmployeePaySlip::where([
+        $data['employee_payslip'] = VmtEmployeePaySlip::where([
                                         ['user_id','=', $user_id],
                                         ['PAYROLL_MONTH','=', $selectedPaySlipMonth],
                                         ])->first();
@@ -491,7 +492,7 @@ class VmtEmployeePayslipService {
         $data['employee_details'] = VmtEmployee::where('userid',$user->id)->first();
         $data['employee_statutory_details'] = VmtEmployeeStatutoryDetails::where('user_id',$user->id)->first();
 
-        $processed_clientName = strtolower(str_replace(' ', '', sessionGetSelectedClientName()));
+        $processed_clientName = strtolower(str_replace(' ', '',  getClientName($user_id)));
         $view = view('vmt_payslip_templates.template_payslip_'.$processed_clientName, $data);
 
        // $view = view('vmt_payslipTemplate', $data);

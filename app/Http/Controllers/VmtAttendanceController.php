@@ -940,18 +940,25 @@ class VmtAttendanceController extends Controller
 
         $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::all();
 
-        //dd($allEmployees_lateComing);
+        //dd($map_allEmployees->toArray());
+        //dd($allEmployees_lateComing->toArray());
 
         foreach ($allEmployees_lateComing as $singleItem) {
-            $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
-            $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->user_id]);
 
-            //If reviewer_id = 0, then its not yet reviewed
-            if ($singleItem->reviewer_id != 0) {
-                $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_id]["name"];
-                $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName([$singleItem->reviewer_id]);
+            //check whether user_id from regularization table exists in USERS table
+            if (array_key_exists($singleItem->user_id, $map_allEmployees->toArray())) {
+
+                $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
+                $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->user_id]);
+
+                //If reviewer_id = 0, then its not yet reviewed
+                if ($singleItem->reviewer_id != 0) {
+                    $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_id]["name"];
+                    $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName([$singleItem->reviewer_id]);
+                }
             }
         }
+
         //dd($allEmployees_lateComing);
         return $allEmployees_lateComing;
     }

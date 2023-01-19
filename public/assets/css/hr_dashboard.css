@@ -110,12 +110,12 @@
     position: absolute;
 }
 
-.topbarContent .btn {
+/* .topbarContent .btn {
     border-bottom-left-radius: 0px;
     border-top-left-radius: 10px;
     border-top-right-radius: 0px;
     border-bottom-right-radius: 10px;
-}
+} */
 
 .wishes-card-wrapper .program-day {
     z-index: 10;
@@ -809,10 +809,6 @@ input + .slider-checkbox > .slider-checkbox-text:after {
     cursor: pointer;
 }
 
-.announcement-content input {
-    border: 0;
-    height: 40px !important;
-}
 
 .bottom-content .anounce-date {
     padding: 2px 13px;
@@ -827,12 +823,6 @@ input + .slider-checkbox > .slider-checkbox-text:after {
     opacity: 0.1;
     margin: 0px 35px !important;
 }
-
-.announcement-content textarea {
-    border: 0;
-}
-
-
 
 .action-content {
     overflow-y: scroll;
