@@ -14,7 +14,7 @@
             </div> --}}
 
 
-            <div class=" text-start mb-2">
+            <div style="display: flex; justify-content: space-evenly;margin-left: -100px" class=" text-start mb-2">
                 <span>
                     <b>Payroll Month</b>
                     <select id="dropdown_payroll_month" class="form-select form-select-sm" style="width:auto;"
@@ -54,7 +54,7 @@
             <div class="vendor-table-wrapper">
                 <div id="employee-table" class="noCustomize_gridjs">
 
-                    <button id="loadData" class="btn btn-default">Generate</button>
+                    <button id="loadData" class="btn btn-orange me-2t">Generate</button>
                     <div class="table-responsive">
                         <table id="payrollReportTable" class="display table table-striped nowrap" style="width:100%">
                             <thead>

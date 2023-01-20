@@ -58,7 +58,7 @@
                         <p class="fw-bold">Assignment Period</p>
                         <select placeholder="Select Calendar Type" style="" id="dropdownAssignment_period"
                             class="form-select ">
-                            <option value="" selected>Select</option>
+                            <option value="All" selected>Select</option>
                             @if ($query_configPms->calendar_type == 'financial_year')
                                 @if ($query_configPms->frequency == 'monthly')
                                     <option value="apr">Apr</option>
@@ -116,6 +116,32 @@
 
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <div class="  align-items-center d-flex  ">
+                        <p class="fw-bold pe-2">Employee Submission status </p>
+                        <select id="dropdownSubmittedStatus" class="form-select " style="" aria-label=".form-select-sm example">
+                            <option value="All" selected>Select</option>
+                            <option value="1" >Submitted</option>
+                            <option value="" >Not Yet Submitted</option>
+
+                        </select>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="  align-items-center d-flex  ">
+                        <p class="fw-bold pe-2">Manager Review Status </p>
+                        <select id="dropdownReviewedStatus" class="form-select " style="" aria-label=".form-select-sm example">
+                            <option value="All" selected>Select</option>
+                            <option value="1" >Reviewed</option>
+                            <option value="" >Not Yet Reviewed</option>
+                        </select>
+                    </div>
+                </div>
+
+
+            </div>
             {{-- <div class=" text-start mb-2">
                 <span>
                     <b>Status</b>
@@ -166,7 +192,7 @@
             $('#pmsReportTable').DataTable({
                 "searching": false,
                 "pagingType": "full_numbers",
-                "paging": false,
+                "paging": true,
                 "ordering": false,
                 "lengthMenu": [10, 25, 50, 75, 100],
                 "responsive": true,
@@ -178,6 +204,8 @@
             $('#btn_run').on('click', function() {
                 var year = $('#year').val();
                 var assignment_period = $('#dropdownAssignment_period').val();
+                let selectedSubmittedDropdown = $('#dropdownSubmittedStatus').find(":selected").val();
+                let selectedReviewedDropdown = $('#dropdownReviewedStatus').find(":selected").val();
                 console.log(year);
                 $.ajax({
                     url: "{{ route('pms-filter-info') }}",
@@ -185,6 +213,8 @@
                     data: {
                         year: year,
                         assignment_period: assignment_period,
+                        submission_status:selectedSubmittedDropdown,
+                        reviewed_status:selectedReviewedDropdown,
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(res) {
@@ -328,10 +358,11 @@
                 let selectedAssingementPeriod = $('#dropdownAssignment_period').find(":selected").val();
                 let year = $('#year').val();
                 let selectedSubmittedDropdown = $('#dropdownSubmittedStatus').find(":selected").val();
+                let selectedReviewedDropdown = $('#dropdownReviewedStatus').find(":selected").val();
                 console.log(selectedAssingementPeriod + ' ' + selectedSubmittedDropdown);
                 let URL = '/reports/generatePmsReviewsReports?calender_type=' + calenderType + '&year=' +
                     year + '&assignment_period=' + selectedAssingementPeriod + '&is_assignee_submitted=' +
-                    selectedSubmittedDropdown +
+                    selectedSubmittedDropdown +'&is_reviewer_accepted='+selectedReviewedDropdown+
                     '&_token={{ csrf_token() }}';
                 console.log("Generated URL : " + URL);
 
