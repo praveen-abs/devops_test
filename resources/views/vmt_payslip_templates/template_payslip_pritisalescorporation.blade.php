@@ -16,8 +16,8 @@
             font-family: sans-serif;
         }
 
-        .payslip_table tr,
-        td {
+        .payslip_table tr,   .payslip_table td
+         {
             border: 1.5pt solid #0087c1;
 
         }

@@ -17,7 +17,7 @@
         }
 
         .payslip_table tr,
-        td {
+        .payslip_table  td {
             border: 1.5pt solid #008fc7;
 
         }
