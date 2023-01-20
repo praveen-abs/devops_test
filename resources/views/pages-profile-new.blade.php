@@ -142,7 +142,7 @@
                         <div class="card mb-2">
                             <div class="card-body">
                                 <h6 class="">General Information
-                                    <a href="#" class="edit-icon" data-bs-toggle="modal"
+                                     <a href="#" class="edit-icon" data-bs-toggle="modal"
                                         data-bs-target="#edit_generalInfo"><i class="ri-pencil-fill"></i></a>
                                 </h6>
                                 <ul class="personal-info">
@@ -284,7 +284,8 @@
                                                     <tr>
                                                         <td>{{ $singledetail->name }}</td>
                                                         <td>{{ $singledetail->relationship }}</td>
-                                                        <td>{{ $singledetail->dob }}</td>
+                                                        <td>{{date('Y-m-d', strtotime ($singledetail->dob)) }}</td>
+                                                        
                                                         <td>{{ $singledetail->phone_number }}</td>
                                                     </tr>
                                                 @endforeach
@@ -333,8 +334,7 @@
                                                     </tr>
                                                 @endforeach
                                             @endif
-                                            <td></td>
-                                            <td></td>
+                                          
 
 
                                             </tr>
@@ -456,9 +456,9 @@
                                     <div class="card-body">
                                         <form action="" method="POST" enctype="multipart/form-data">
                                             <h6 class="">Statutory Information
-                                                <span class="personal-edit"><a href="#" class="edit-icon"
+                                                <span class="personal-edit"><a href="#" class=" "
                                                         data-bs-toggle="modal" data-bs-target="#statutory_info"><i
-                                                            class="ri-pencil-fill"></i></a></span>
+                                                            class=" "></i></a></span>
                                             </h6>
 
 
@@ -467,33 +467,33 @@
                                             <ul class="personal-info">
                                                 <li>
                                                     <div class="title">PF Applicable</div>
-                                                    <div class="text">{{ $detail->pf_applicable ?? '-' }}
+                                                    <div class="text">{{$statutory_info->pf_applicable ?? '-' }}
 
                                                     </div>
                                                 </li>
                                                 <li>
                                                     <div class="title">EPF Number</div>
-                                                    <div class="text">{{ $detail->epf_number ?? '-' }}
+                                                    <div class="text">{{ $statutory_info->epf_number ?? '-' }}
 
                                                     </div>
                                                 </li>
 
                                                 <li>
                                                     <div class="title">UAN Number</div>
-                                                    <div class="text">{{ $detail->uan_number ?? '-' }}
+                                                    <div class="text">{{ $statutory_info->uan_number ?? '-' }}
 
                                                     </div>
                                                 </li>
 
                                                 <li>
                                                     <div class="title">ESIC Applicable</div>
-                                                    <div class="text">{{ $detail->esic_applicable ?? '-' }}
+                                                    <div class="text">{{ $statutory_info->esic_applicable ?? '-' }}
 
                                                     </div>
                                                 </li>
                                                 <li>
                                                     <div class="title">ESIC Number</div>
-                                                    <div class="text">{{ $detail->esic_number ?? '-' }}
+                                                    <div class="text">{{ $statutory_info->esic_number ?? '-' }}
 
                                                     </div>
                                                 </li>
@@ -1001,7 +1001,7 @@
                                                 {{-- <h6 class=""> Pay Slips</h6> --}}
                                                 <div id="" class="ember-view">
                                                     <div class="table-responsive ">
-                                                        <table class="table table-hover">
+                                                        <table class="table table-hover ">
                                                             <thead class="fw-bold text-muted h5">
                                                                 <tr>
                                                                     <th width="">Month</th>
@@ -1560,7 +1560,7 @@
                                                     @if (!empty($user_full_details->dob))
                                                         <input class="form-control datetimepicker" type="date"
                                                             max=" 31-12-9999" name="dob"
-                                                            value="{{ date('Y-m-d', strtotime($user_full_details->dob)) }}">
+                                                            disabled  value="{{ date('Y-m-d', strtotime($user_full_details->dob)) }}" readonly>
                                                     @else
                                                         <input class="form-control datetimepicker" type="date"
                                                             max="31-12-9999" name="dob" value="">
@@ -1570,9 +1570,10 @@
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group mb-3">
-                                                <label>Gender<span class="text-danger"></span></label>
+                                                <label class="">Gender<span class="text-danger"></span></label>
+                                                <input  disabled value={{$user_full_details->gender}} readonly class="form-control">
 
-                                                <select class="form-select form-control" name="gender"
+                                                {{-- <select class="form-select form-control" name="gender"
                                                     aria-label="Default select">
                                                     <option selected hidden disabled>Choose Gender</option>
                                                     @foreach ($genderArray as $item)
@@ -1580,7 +1581,7 @@
                                                             @if (!empty($user_full_details->gender) && $user_full_details->gender == $item) selected @endif>
                                                             {{ $item }}</option>
                                                     @endforeach
-                                                </select>
+                                                </select> --}}
                                             </div>
                                         </div>
 
@@ -1591,7 +1592,7 @@
                                                     @if (!empty($user_full_details->doj))
                                                         <input class="form-control onboard" type="date"
                                                             max="9999-12-31" name="doj"
-                                                            value="{{ date('Y-m-d', strtotime($user_full_details->doj)) }}">
+                                                            disabled value="{{ date('Y-m-d', strtotime($user_full_details->doj)) }}" readonly>
                                                     @else
                                                         <input class="form-control onboard" type="date"
                                                             max="9999-12-31" name="doj" value="">
@@ -1642,14 +1643,15 @@
                                            <div class="col-md-6">
                                             <div class="form-group mb-3">
                                                 <label for="">Physically Challenged<span class=" "></span></label>
-                                                <select   name="physically_challenged"
+                                                <input  disabled value={{$user_full_details->physically_challenged}} readonly class="form-control">
+                                                {{-- <select   name="physically_challenged"
                                                     id="physically_challenged"
                                                     class="form-select form-control text-capitalize"
                                                     required>
                                                     <option value="" hidden selected disabled>Select</option>
                                                     <option value="yes">Yes</option>
                                                     <option value="no">No</option>
-                                                </select>
+                                                </select> --}}
                                             </div>
                                         </div>
                                     </div>
@@ -1837,7 +1839,7 @@
                                                                             class="text-danger">*</span></label>
                                                                     <input name="dob[]"
                                                                         class="form-control onboard-form" type="date"
-                                                                        max="9999-12-31" required
+                                                                        max="31-12-9999" required
                                                                         value="{{ $singledetail->dob }}">
                                                                 </div>
                                                             </div>
@@ -1906,7 +1908,7 @@
                                                                 <label>Date of birth <span
                                                                         class="text-danger">*</span></label>
                                                                 <input name="dob[]" class="form-control onboard-form"
-                                                                    type="date" max="9999-12-31" required
+                                                                    type="date" max="31-12-9999" required
                                                                     value="">
                                                             </div>
                                                         </div>
@@ -1940,7 +1942,7 @@
                                     <div class="col-12">
                                         <div class="text-right">
                                             <button id="btn_submit_family_info"
-                                                class="btn btn-orange submit-btn">Submit</button>
+                                            class="btn btn-border-orange submit-btn">Save</button>
                                         </div>
                                     </div>
                                     </form>
@@ -2033,7 +2035,7 @@
                                     <div class="col-12">
                                         <div class="text-right">
                                             <button id=btn_submit_experience_info
-                                                class="btn btn-orange submit-btn">Submit</button>
+                                            class="btn btn-border-orange submit-btn">Save</button>
                                         </div>
                                     </div>
                                     {{-- </form> --}}
@@ -2047,7 +2049,7 @@
                         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                             <div class="modal-content profile-box top-line">
                                 <div class="modal-header d-flex align-items-center border-0">
-                                    <h6 class="">Bank Information
+                                    <h6 class="modal-title">Bank Information
                                     </h6>
                                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal"
                                         aria-label="Close">
@@ -2111,7 +2113,7 @@
                                     <div class="col-12">
                                         <div class="text-right">
                                             <button
-                                                id="btn_submit_bank_info"class="btn btn-orange submit-btn">Submit</button>
+                                                id="btn_submit_bank_info"class="btn btn-border-orange submit-btn">Save</button>
                                         </div>
                                     </div>
                                     </form>
@@ -2159,7 +2161,7 @@
                                                 <label>EPF Number</label>
                                                 <input type="text" placeholder="EPF Number" name="epf_number"
                                                     id="epf_number" class="onboard-form form-control "
-                                                    value=" {{ $detail->epf_number ?? '' }}">
+                                                    value=" {{$statutory_info->epf_number ?? '' }}">
                                             </div>
                                         </div>
 
@@ -2168,7 +2170,7 @@
                                                 <label>UAN Number</label>
                                                 <input name="uan_number" id="uan_number" minlength="12" maxlength="12"
                                                     class="form-control onboard-form"
-                                                    value="{{ $detail->uan_number ?? '' }}" type="text"
+                                                    value="{{ $statutory_info->uan_number ?? '' }}" type="text"
                                                     pattern-data="ifsc" required>
                                             </div>
                                         </div>
@@ -2211,7 +2213,7 @@
                                                 <input type="text" placeholder="ESIC Number" name="esic_number"
                                                     id="esic_number" minlength="10" maxlength="10"
                                                     class="onboard-form form-control textbox "
-                                                    value="{{ $detail->esic_number ?? '' }}" />
+                                                    value="{{ $statutory_info->esic_number ?? '' }}" />
                                                 <span class="error" id="error_esic_number"></span>
                                             </div>
                                         </div>
@@ -2239,6 +2241,7 @@
                                 <div class="modal-header border-0  text-end d-flex justify-content-between">
                                     <h6 class="modal-title">Digital
                                         Id Preview </h6>
+                                        
                                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal"
                                         aria-label="Close">
                                         <span aria-hidden="true">×</span>
@@ -2260,6 +2263,7 @@
                                                     'currentUser' => $user,
                                                 ])
                                             </div>
+                                            
                                             <p class="fw-bold f-14 text-primary text-center mt-4 ">{{ $user->name }}
                                             </p>
                                             <p class=" f-14 text-ash  text-center mt-2">

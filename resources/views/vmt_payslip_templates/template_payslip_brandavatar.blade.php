@@ -20,7 +20,7 @@ $bank_names = \DB::table('bank_list')->get();
             font-family: sans-serif;
         }
 
-        .payslip_table tr,
+        table.payslip_table tr,
         td {
             border: 1.5pt solid #af1888;
 

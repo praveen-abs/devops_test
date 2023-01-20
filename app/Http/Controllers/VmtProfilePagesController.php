@@ -45,7 +45,7 @@ use Illuminate\Support\Facades\Crypt;
 
 
         $familydetails = VmtEmployeeFamilyDetails::where('user_id',$user->id)->get();
-        $statutory_info= VmtEmployeeStatutoryDetails ::where('user_id',$user->id)->get();
+        $statutory_info= VmtEmployeeStatutoryDetails ::where('user_id',$user->id)->first();
 
 
         $exp = Experience::where('user_id',$user->id)->get();
@@ -191,8 +191,7 @@ use Illuminate\Support\Facades\Crypt;
 
         }
 
-        Ses::flash('message', 'Bank Details Updated successfully!');
-        Ses::flash('alert-class', 'alert-success');
+         
         return redirect()->back();
     }
 
