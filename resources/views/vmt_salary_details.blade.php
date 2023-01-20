@@ -228,6 +228,7 @@
                                                                 data-url="{{ route('vmt_paycheck_employee_payslip_htmlview') }}"
                                                                 style="cursor: pointer"
                                                                 class="ember-view  paySlipView text-info">
+
                                                                 View
                                                             </div>
                                                         </td>
@@ -915,7 +916,7 @@
                     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
                         <div class="modal-content profile-box">
                             <div class="modal-header  ">
-                                <h6 class="modal-title m-0 p-0   text-primary">Pay Slip
+                                <h6 class="modal-title">Pay Slip
                                 </h6>
                                 <button type="button" class="close  border-0 h3" data-bs-dismiss="modal"
                                     aria-label="Close">
