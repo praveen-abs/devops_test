@@ -1132,6 +1132,9 @@ button.gridjs-sort-desc {
 .text-orange {
     color: #ee6a04;
 }
+.bg-orange{
+    background-color: var(--color-primary_orange);
+}
 
 
 .leave-request-section .modal .modal-dialog .modal-content .modal-header {
