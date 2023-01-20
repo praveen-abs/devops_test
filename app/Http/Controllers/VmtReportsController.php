@@ -252,6 +252,7 @@ class VmtReportsController extends Controller
                                                        $request->year,
                                                        $request->assignment_period,
                                                        $request->is_assignee_submitted,
+                                                       $request->is_reviewer_accepted,
                                                        $request->getHttpHost()
                                                        ), 'Reports.xlsx');
 

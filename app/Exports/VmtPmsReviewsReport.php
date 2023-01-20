@@ -34,19 +34,21 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
     protected $year;
     protected $assignment_period;
     protected $is_assignee_submitted;
-    // protected $is_reviewer_accepted;
+    protected $is_reviewer_accepted;
     protected $manager_id;
     protected $manager_name;
     protected $getHttpHost;
 
-    function __construct($calendar_type, $year, $assignment_period, $is_assignee_submitted,$getHttpHost)
+    function __construct($calendar_type, $year, $assignment_period, $is_assignee_submitted, $is_reviewer_accepted ,$getHttpHost)
     {
         $this->calendar_type = $calendar_type;
         $this->year=$year;
         $this->assignment_period = $assignment_period;
-        $this->getHttpHost = $getHttpHost;
         $this->is_assignee_submitted=$is_assignee_submitted;
-        // $this->is_reviewer_accepted=$is_reviewer_accepted;
+        $this->is_reviewer_accepted= $is_reviewer_accepted;
+        $this->getHttpHost = $getHttpHost;
+
+
 
 
 
@@ -181,11 +183,11 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
                                 $query_pms_data= $query_pms_data-> where('vmt_pms_kpiform_reviews.is_assignee_submitted','=',null);
                             }
 
-                            // if( $this->is_reviewer_accepted=="1"){
-                            //     $query_pms_data= $query_pms_data-> where('vmt_pms_kpiform_reviews.is_reviewer_submitted','like','%"1"}');
-                            // }else if( $this->is_reviewer_accepted==""){
-                            //     $query_pms_data= $query_pms_data-> where('vmt_pms_kpiform_reviews.is_reviewer_submitted','not like','%"1"}');
-                            // }
+                            if( $this->is_reviewer_accepted=="1"){
+                                $query_pms_data= $query_pms_data-> where('vmt_pms_kpiform_reviews.is_reviewer_submitted','like','%"1"}');
+                            }else if( $this->is_reviewer_accepted==""){
+                                $query_pms_data= $query_pms_data-> where('vmt_pms_kpiform_reviews.is_reviewer_submitted','not like','%"1"}');
+                            }
 
 
                             $query_pms_data = $query_pms_data->get();
