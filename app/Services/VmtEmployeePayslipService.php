@@ -498,7 +498,7 @@ class VmtEmployeePayslipService {
 
         $query_client = VmtClientMaster::find($user->client_id);
 
-        $data['client_logo'] = $query_client->client_logo;
+        $data['client_logo'] = request()->getSchemeAndHttpHost().$query_client->client_logo;
         $client_name = $query_client->client_name;
 
         $processed_clientName = strtolower(str_replace(' ', '', $client_name));
@@ -510,6 +510,7 @@ class VmtEmployeePayslipService {
         $html = preg_replace('/>\s+</', "><", $html);
         $pdf = PDF::loadHTML($html)->setPaper('a4', 'portrait')->setWarnings(false);
 
+        //dd( request()->getSchemeAndHttpHost().$data['client_logo']);
         return $pdf->download($user->id."_".$selectedPaySlipMonth."_Payslip.pdf");
         //   return  PDF::loadView('vmt_payslipTemplate', $data)->download($month.'Payslip.pdf');
 
