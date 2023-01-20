@@ -1,5 +1,5 @@
 <?php
-    $client_logo = request()->getSchemeAndHttpHost() . session()->get('client_logo_url');
+    //$client_logo = request()->getSchemeAndHttpHost() . session()->get('client_logo_url');
     $bank_names = \DB::table('bank_list')->get();
     //dd($client_logo);
 ?>
