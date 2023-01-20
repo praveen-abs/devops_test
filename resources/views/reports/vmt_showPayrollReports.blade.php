@@ -30,12 +30,23 @@
                     <b>Location</b>
                     <select id="dropdown_work_location" class="form-select form-select-sm" style="width:auto;"
                         aria-label=".form-select-sm example">
-                            <option>---Select----</option>
+                        <option value="all">---All Location----</option>
                         @foreach ($work_location as $key => $value)
                             <option value="{{ $value }}"> {{ $value }} </option>
                         @endforeach
                     </select>
                 </span>
+                <span>
+                    <b>Designation</b>
+                    <select id="dropdown_designation" class="form-select form-select-sm" style="width:auto;"
+                        aria-label=".form-select-sm example">
+                        <option value="all">---Select All----</option>
+                        @foreach ($designation as $key => $value)
+                            <option value="{{ $value }}"> {{ $value }} </option>
+                        @endforeach
+                    </select>
+                </span>
+
             </div>
 
 
@@ -132,8 +143,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js">
         < script >
-            <
-            script src = "https://cdn.datatables.net/1.13.1/js/dataTables.jqueryui.min.js" >
+            <script src = "https://cdn.datatables.net/1.13.1/js/dataTables.jqueryui.min.js" >
     </script>
     <script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
@@ -535,6 +545,8 @@
                 //loadData();
                 var selectedPayRollMonth = $('#dropdown_payroll_month').find(":selected").val();
                 var work_location = $('#dropdown_work_location').find(":selected").val();
+                var designation = $('#dropdown_designation').find(":selected").val();
+
                 $.ajax({
                     url: "{{ route('payroll-filter-info') }}",
                     type: 'GET',
@@ -542,7 +554,8 @@
                     dataType: 'json',
                     data: {
                         payroll_month: selectedPayRollMonth,
-                        work_location:work_location,
+                        work_location: work_location,
+                        designation: designation,
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(data) {

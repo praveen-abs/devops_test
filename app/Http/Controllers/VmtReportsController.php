@@ -25,6 +25,9 @@ class VmtReportsController extends Controller
         // ];
         $query_payroll_months= VmtEmployeePaySlip::groupby('PAYROLL_MONTH')->pluck('PAYROLL_MONTH');
         $work_location= VmtEmployeeOfficeDetails::groupby('work_location')->pluck('work_location');
+        $designation= VmtEmployeePaySlip::leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'vmt_employee_payslip.user_id')
+        ->groupby('vmt_employee_office_details.designation')->pluck('vmt_employee_office_details.designation');
+
         $payroll_months = [];
         for($i=0;$i<count($query_payroll_months);$i++){
             $array_values = explode('-', $query_payroll_months[$i]);
@@ -81,7 +84,7 @@ class VmtReportsController extends Controller
                 $payroll_months=array_merge($payroll_months, $each_month);
         }
 
-        return view('reports.vmt_showPayrollReports', compact('payroll_months','work_location'));
+        return view('reports.vmt_showPayrollReports', compact('payroll_months','work_location','designation'));
     }
 
     public function generatePayrollReports(Request $request){
@@ -91,14 +94,14 @@ class VmtReportsController extends Controller
     }
 
     public function fetchPayrollReport(Request $request){
-         //dd($request->all());
+        //  dd($request->all());
         $payroll_data=VmtEmployeePaySlip::leftJoin('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'vmt_employee_payslip.user_id')
         ->leftJoin('users', 'users.id', '=', 'vmt_employee_payslip.user_id')
         ->leftJoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'vmt_employee_payslip.user_id')
         ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'vmt_employee_payslip.user_id')
         ->leftJoin('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'vmt_employee_payslip.user_id')
         ->where('vmt_employee_payslip.PAYROLL_MONTH', $request->payroll_month)
-        ->orWhere('vmt_employee_office_details.work_location',$request->work_location)
+        // ->orWhere('vmt_employee_office_details.work_location',$request->work_location)
         ->select('users.user_code',
                  'users.name',
 
@@ -171,17 +174,24 @@ class VmtReportsController extends Controller
                  'vmt_employee_payslip.NET_TAKE_HOME'
         );
 
+        // For Filter Option
 
 
-        if (session('client_id') == '1') {
-            $payroll_data = $payroll_data->get();
-            return ($payroll_data);
-        } else {
+        if($request->work_location !="all"){
+            $payroll_data = $payroll_data->where('vmt_employee_office_details.work_location',$request->work_location);
+        }
+
+        if($request->designation != "all"){
+            $payroll_data = $payroll_data->where('vmt_employee_office_details.DESIGNATION',$request->designation);
+        }
+
+        if (session('client_id') != '1') {
             $payroll_data = $payroll_data-> where('users.client_id', session('client_id'))->get();
             return ($payroll_data);
         }
 
 
+        return $payroll_data->get();
     }
 
 
