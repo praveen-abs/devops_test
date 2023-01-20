@@ -34,7 +34,7 @@
                     </li>
 
                     <li class="nav-item text-muted " role="presentation">
-                        <a class="nav-link pb-2" data-bs-toggle="tab" href="#pms_tab" aria-selected="false" tabindex="-1"
+                        <a class="nav-link pb-2" data-bs-toggle="tab" href="{{ route('showPmsReviewsReportPage') }}" aria-selected="false" tabindex="-1"
                             role="tab">
                             PMS</a>
                     </li>
@@ -56,7 +56,7 @@
                             <div class="col-3">
                                 <ul class=' list-style-circle px-4'>
                                     <li class=""><a href="#" class="">Payroll Summary</a></li>
-                                    <li><a href="#" class="">Salary Register - Monthly</a></li>
+                                    <li><a href="{{ route('showPayrollReportsPage') }}" class="">Salary Register - Monthly</a></li>
                                     <li><a href="#" class="">Employees Salary Statement</a></li>
                                     <li><a href="#" class="">Employee Pay Summary</a></li>
                                     <li><a href="#" class="">Payroll Liability Summary</a></li>
