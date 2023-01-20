@@ -22,6 +22,7 @@ function getLeaveCountDetails($user_id){
 
     $leaveCountDetails_user = VmtEmployeeLeaves::select('leave_type_id', DB::raw("SUM(total_leave_datetime) as leave_availed_count"))
                                                 ->where('user_id', $user_id)
+                                                ->where('status','Approved')
                                                 ->groupBy('leave_type_id')->get();
 
     //Add leave names to the array

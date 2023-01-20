@@ -12,6 +12,7 @@ use Dompdf\Dompdf;
 use PDF;
 
 use App\Models\User;
+use App\Models\VmtClientMaster;
 use App\Models\VmtEmployee;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\Compensatory;
@@ -456,11 +457,14 @@ class VmtEmployeePayslipService {
          $data['employee_details'] = VmtEmployee::where('userid',$user->id)->first();
          $data['employee_statutory_details'] = VmtEmployeeStatutoryDetails::where('user_id',$user->id)->first();
 
+         $query_client = VmtClientMaster::find($user->client_id);
 
-         //TODO : Need to show client specific payslip template.
+         $data['client_logo'] = $query_client->client_logo;
+         $client_name = $query_client->client_name;
 
-         $processed_clientName = strtolower(str_replace(' ', '', getClientName($user_id)));
+         $processed_clientName = strtolower(str_replace(' ', '', $client_name));
 
+         //dd($client_name);
          //$html =  view('vmt_payslipTemplate', $data);
          $html =  view('vmt_payslip_templates.template_payslip_'.$processed_clientName, $data);
 
@@ -492,15 +496,21 @@ class VmtEmployeePayslipService {
         $data['employee_details'] = VmtEmployee::where('userid',$user->id)->first();
         $data['employee_statutory_details'] = VmtEmployeeStatutoryDetails::where('user_id',$user->id)->first();
 
-        $processed_clientName = strtolower(str_replace(' ', '',  getClientName($user_id)));
+        $query_client = VmtClientMaster::find($user->client_id);
+
+        $data['client_logo'] = request()->getSchemeAndHttpHost().$query_client->client_logo;
+        $client_name = $query_client->client_name;
+
+        $processed_clientName = strtolower(str_replace(' ', '', $client_name));
+
         $view = view('vmt_payslip_templates.template_payslip_'.$processed_clientName, $data);
 
-       // $view = view('vmt_payslipTemplate', $data);
 
         $html = $view->render();
         $html = preg_replace('/>\s+</', "><", $html);
         $pdf = PDF::loadHTML($html)->setPaper('a4', 'portrait')->setWarnings(false);
 
+        //dd( request()->getSchemeAndHttpHost().$data['client_logo']);
         return $pdf->download($user->id."_".$selectedPaySlipMonth."_Payslip.pdf");
         //   return  PDF::loadView('vmt_payslipTemplate', $data)->download($month.'Payslip.pdf');
 
