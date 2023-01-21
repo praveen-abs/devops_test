@@ -9,8 +9,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Dompdf\Dompdf;
+use PDF;
 
 use App\Models\User;
+use App\Models\VmtClientMaster;
 use App\Models\VmtEmployee;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\Compensatory;
@@ -21,6 +23,8 @@ use Illuminate\Support\Facades\Notification;
 use App\Mail\WelcomeMail;
 use App\Models\VmtEmployeePaySlip;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Crypt;
 
 use App\Imports\VmtPaySlip;
 use App\Models\Bank;
@@ -423,6 +427,93 @@ class VmtEmployeePayslipService {
                 'stack_trace' => $e->getTraceAsString()
             ];
         }
+    }
+
+
+    /*
+        Show Employee payslip as HTML
+    */
+    public function showPaySlip_HTMLView($user_id, $selectedPaySlipMonth){
+        //dd($request->all());
+        $user = null;
+
+        //If empty, then show current user profile page
+        if(empty($user_id))
+        {
+            $user = auth()->user();
+        }
+        else
+        {
+            $user = User::find($user_id);
+        }
+
+        $data['employee_payslip'] = VmtEmployeePaySlip::where([
+                         ['user_id','=', $user_id],
+                         ['PAYROLL_MONTH','=', $selectedPaySlipMonth],
+                         ])->first();
+
+         $data['employee_name'] = $user->name;
+         $data['employee_office_details'] = VmtEmployeeOfficeDetails::where('user_id',$user->id)->first();
+         $data['employee_details'] = VmtEmployee::where('userid',$user->id)->first();
+         $data['employee_statutory_details'] = VmtEmployeeStatutoryDetails::where('user_id',$user->id)->first();
+
+         $query_client = VmtClientMaster::find($user->client_id);
+
+         $data['client_logo'] = $query_client->client_logo;
+         $client_name = $query_client->client_name;
+
+         $processed_clientName = strtolower(str_replace(' ', '', $client_name));
+
+         //dd($client_name);
+         //$html =  view('vmt_payslipTemplate', $data);
+         $html =  view('vmt_payslip_templates.template_payslip_'.$processed_clientName, $data);
+
+         return $html;
+    }
+
+    public function showPaySlip_PDFView($user_id, $selectedPaySlipMonth)
+    {
+        //dd($request->all());
+        $user = null;
+
+        //If empty, then show current user profile page
+        if(empty($user_id))
+        {
+            $user = auth()->user();
+        }
+        else
+        {
+            $user = User::find($user_id);
+        }
+
+        $data['employee_payslip'] = VmtEmployeePaySlip::where([
+                                        ['user_id','=', $user_id],
+                                        ['PAYROLL_MONTH','=', $selectedPaySlipMonth],
+                                        ])->first();
+
+        $data['employee_name'] = $user->name;
+        $data['employee_office_details'] = VmtEmployeeOfficeDetails::where('user_id',$user->id)->first();
+        $data['employee_details'] = VmtEmployee::where('userid',$user->id)->first();
+        $data['employee_statutory_details'] = VmtEmployeeStatutoryDetails::where('user_id',$user->id)->first();
+
+        $query_client = VmtClientMaster::find($user->client_id);
+
+        $data['client_logo'] = request()->getSchemeAndHttpHost().$query_client->client_logo;
+        $client_name = $query_client->client_name;
+
+        $processed_clientName = strtolower(str_replace(' ', '', $client_name));
+
+        $view = view('vmt_payslip_templates.template_payslip_'.$processed_clientName, $data);
+
+
+        $html = $view->render();
+        $html = preg_replace('/>\s+</', "><", $html);
+        $pdf = PDF::loadHTML($html)->setPaper('a4', 'portrait')->setWarnings(false);
+
+        //dd( request()->getSchemeAndHttpHost().$data['client_logo']);
+        return $pdf->download($user->id."_".$selectedPaySlipMonth."_Payslip.pdf");
+        //   return  PDF::loadView('vmt_payslipTemplate', $data)->download($month.'Payslip.pdf');
+
     }
 
 }

@@ -1072,7 +1072,8 @@
 
                                     </td>
                                     <td colspan="2" class="border-less text-left">
-                                        <img src="{{ URL::asset('assets/images/logo.png') }}" alt="" class="" style="height: 40px;width:100px;">
+                                        <img src="{{ URL::asset('assets/images/client_logos/ardens/evangelist.png') }}" width="80px" height="15px"
+                                        alt="" class="">
                                     </td>
                                 </tr>
 
