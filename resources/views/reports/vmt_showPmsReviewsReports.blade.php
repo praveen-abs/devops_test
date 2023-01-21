@@ -192,7 +192,7 @@
             $('#pmsReportTable').DataTable({
                 "searching": false,
                 "pagingType": "full_numbers",
-                "paging": true,
+                "paging": false,
                 "ordering": false,
                 "lengthMenu": [10, 25, 50, 75, 100],
                 "responsive": true,

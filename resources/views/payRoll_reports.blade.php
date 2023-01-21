@@ -34,7 +34,7 @@
                     </li>
 
                     <li class="nav-item text-muted " role="presentation">
-                        <a class="nav-link pb-2" data-bs-toggle="tab" href="#pms_tab" aria-selected="false" tabindex="-1"
+                        <a class="nav-link pb-2" data-bs-toggle="tab" href="{{ route('showPmsReviewsReportPage') }}" aria-selected="false" tabindex="-1"
                             role="tab">
                             PMS</a>
                     </li>
