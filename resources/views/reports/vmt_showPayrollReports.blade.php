@@ -62,7 +62,7 @@
                                     <th>UAN</th>
                                     <th>EPF Number</th>
                                     <th>ESIC Number</th>
-                                    <th>Bank Name'</th>
+                                    <th>Bank Name</th>
                                     <th>Bank Account Number</th>
                                     <th>IFSC Code</th>
                                     <th>Mobile</th>
@@ -569,7 +569,7 @@
                                 data[i].uan_number,
                                 data[i].epf_number,
                                 data[i].esic_number,
-                                data[i].bank_id,
+                                data[i].bank_name,
                                 data[i].bank_account_number,
                                 data[i].bank_ifsc_code,
                                 data[i].mobile_number,
