@@ -1,154 +1,174 @@
 @extends('layouts.master')
 @section('css')
     <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
+
+    <style>
+        .dt-button {
+            transition: 0.4s ease-in;
+            font-weight: 600;
+            padding: 5px 8px;
+            font-size: 13px;
+            border: 1px solid #ee6a04;
+            background-color: transparent;
+            color: #ee6a04;
+            border-radius: 5px;
+            margin: 5px 5px 0px 0px;
+            float: right;
+        }
+    </style>
 @endsection
 
 @section('content')
-    <div class="payrollReports-wrapper mt-30 card">
-        <div class="card-body">
-            <div style="display: flex; justify-content: space-evenly;margin-left: -100px" class=" text-start mb-2">
-                <span>
-                    <b>Payroll Month</b>
-                    <select id="dropdown_payroll_month" class="form-select form-select-sm" style="width:auto;"
-                        aria-label=".form-select-sm example">
-                        @foreach ($payroll_months as $key => $value)
-                            <option value="{{ $value }}">
-                                {{ $key }}
-                            </option>
-                        @endforeach
-                    </select>
-                </span>
-                <span>
-                    <b>Location</b>
-                    <select id="dropdown_work_location" class="form-select form-select-sm" style="width:auto;"
-                        aria-label=".form-select-sm example">
-                        <option value="all">---All Location----</option>
-                        @foreach ($work_location as $key => $value)
-                            <option value="{{ $value }}"> {{ $value }} </option>
-                        @endforeach
-                    </select>
-                </span>
-                <span>
-                    <b>Designation</b>
-                    <select id="dropdown_designation" class="form-select form-select-sm" style="width:auto;"
-                        aria-label=".form-select-sm example">
-                        <option value="all">---Select All----</option>
-                        @foreach ($designation as $key => $value)
-                            <option value="{{ $value }}"> {{ $value }} </option>
-                        @endforeach
-                    </select>
-                </span>
+    <div class="parollReports-wrapper mt-30 ">
+        <div class="card">
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-3">
+                        <label for="">Payroll Month</label>
+                        <select id="dropdown_payroll_month" class="form-select ">
+                            @foreach ($payroll_months as $key => $value)
+                                <option value="{{ $value }}">
+                                    {{ $key }}
+                                </option>
+                            @endforeach
+                        </select>
 
-            </div>
+                    </div>
+                    <div class="col-3">
+                        <label for="">Location</label>
+                        <select id="dropdown_work_location" class="form-select " style="">
+                            <option value="all">---All Location----</option>
+                            @foreach ($work_location as $key => $value)
+                                <option value="{{ $value }}"> {{ $value }} </option>
+                            @endforeach
+                        </select>
+
+                    </div>
+                    <div class="col-3">
+                        <label for="">Designation</label>
+                        <select id="dropdown_designation" class="form-select " style=""
+                            aria-label=".form-select-sm example">
+                            <option value="all">---Select All----</option>
+                            @foreach ($designation as $key => $value)
+                                <option value="{{ $value }}"> {{ $value }} </option>
+                            @endforeach
+                        </select>
+
+                    </div>
+
+                    <div class="col-3 d-flex align-items-center">
+                        <button id="loadData" class="btn btn-orange me-2t"><i
+                                class="fa fa-file-o me-2"></i>Generate</button>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
 
 
+                        <div id="employee-table" class="noCustomize_gridjs">
 
-            <div class="vendor-table-wrapper">
-                <div id="employee-table" class="noCustomize_gridjs">
 
-                    <button id="loadData" class="btn btn-orange me-2t">Generate</button>
-                    <div class="table-responsive">
-                        <table id="payrollReportTable" class="display table table-striped nowrap" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th> Employee Code</th>
-                                    <th> Employee Name</th>
-                                    <th>Designation</th>
-                                    <th>DOJ</th>
-                                    <th>DOB</th>
-                                    <th>Location</th>
-                                    <th>Aadhaar Number</th>
-                                    <th>PAN</th>
-                                    <th>UAN</th>
-                                    <th>EPF Number</th>
-                                    <th>ESIC Number</th>
-                                    <th>Bank Name'</th>
-                                    <th>Bank Account Number</th>
-                                    <th>IFSC Code</th>
-                                    <th>Mobile</th>
-                                    <th>Email ID</th>
-                                    <th>Payroll Month</th>
-                                    <th>Basic</th>
-                                    <th>HRA</th>
-                                    <th>Special Allowance</th>
-                                    <th>Total Fixed Gross</th>
-                                    <th>ESIC Applicablity</th>
-                                    <th>Month Days</th>
-                                    <th>Worked Days</th>
-                                    <th>Arrears Days</th>
-                                    <th>LOP</th>
-                                    <th>Basic</th>
-                                    <th>BASIC Arrears</th>
-                                    <th>HRA</th>
-                                    <th>HRA Arrears</th>
-                                    <th>Special Allowance</th>
-                                    <th>SPL ALW Arrears</th>
-                                    <th>Overtime</th>
-                                    <th>Total Earned Gross</th>
-                                    <th>PF Wages</th>
-                                    <th>PF Wages Arrear</th>
-                                    <th>EPFR</th>
-                                    <th>EPFR Arrears</th>
-                                    <th>EDLI Charges</th>
-                                    <th>EDLI Charges Arrears</th>
-                                    <th>PF Admin Charges</th>
-                                    <th>PF Admin Charges Arrears</th>
-                                    <th>Employer ESIC</th>
-                                    <th>Employer LWF</th>
-                                    <th>CTC</th>
-                                    <th>EPF EE</th>
-                                    <th>EPF EE Arrear</th>
-                                    <th>Emplyee ESIC</th>
-                                    <th>Professional Tax</th>
-                                    <th>Salary Advance</th>
-                                    <th>Canteen Deduction</th>
-                                    <th>Other Deductions</th>
-                                    <th>LWF</th>
-                                    <th>Total Deductions</th>
-                                    <th>Net</th>
-                                </tr>
-                            </thead>
-                        </table>
+                            <div class="table-responsive">
+                                <table id="payrollReportTable" class="display table table-striped nowrap"
+                                    style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th> Employee Code</th>
+                                            <th> Employee Name</th>
+                                            <th>Designation</th>
+                                            <th>DOJ</th>
+                                            <th>DOB</th>
+                                            <th>Location</th>
+                                            <th>Aadhaar Number</th>
+                                            <th>PAN</th>
+                                            <th>UAN</th>
+                                            <th>EPF Number</th>
+                                            <th>ESIC Number</th>
+                                            <th>Bank Name'</th>
+                                            <th>Bank Account Number</th>
+                                            <th>IFSC Code</th>
+                                            <th>Mobile</th>
+                                            <th>Email ID</th>
+                                            <th>Payroll Month</th>
+                                            <th>Basic</th>
+                                            <th>HRA</th>
+                                            <th>Special Allowance</th>
+                                            <th>Total Fixed Gross</th>
+                                            <th>ESIC Applicablity</th>
+                                            <th>Month Days</th>
+                                            <th>Worked Days</th>
+                                            <th>Arrears Days</th>
+                                            <th>LOP</th>
+                                            <th>Basic</th>
+                                            <th>BASIC Arrears</th>
+                                            <th>HRA</th>
+                                            <th>HRA Arrears</th>
+                                            <th>Special Allowance</th>
+                                            <th>SPL ALW Arrears</th>
+                                            <th>Overtime</th>
+                                            <th>Total Earned Gross</th>
+                                            <th>PF Wages</th>
+                                            <th>PF Wages Arrear</th>
+                                            <th>EPFR</th>
+                                            <th>EPFR Arrears</th>
+                                            <th>EDLI Charges</th>
+                                            <th>EDLI Charges Arrears</th>
+                                            <th>PF Admin Charges</th>
+                                            <th>PF Admin Charges Arrears</th>
+                                            <th>Employer ESIC</th>
+                                            <th>Employer LWF</th>
+                                            <th>CTC</th>
+                                            <th>EPF EE</th>
+                                            <th>EPF EE Arrear</th>
+                                            <th>Emplyee ESIC</th>
+                                            <th>Professional Tax</th>
+                                            <th>Salary Advance</th>
+                                            <th>Canteen Deduction</th>
+                                            <th>Other Deductions</th>
+                                            <th>LWF</th>
+                                            <th>Total Deductions</th>
+                                            <th>Net</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
+
             </div>
-
         </div>
-
     </div>
 @endsection
 @section('script')
     {{-- <link href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet" /> --}}
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.4.0/css/buttons.dataTables.min.css" />
+    {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.4.0/css/buttons.dataTables.min.css" /> --}}
 
-    <link rel="stylesheet" type="text/css"
+    {{-- <link rel="stylesheet" type="text/css"
         href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" />
     <link rel="stylesheet" type="text/css"
-        href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.bootstrap5.min.css" />
+        href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.bootstrap5.min.css" /> --}}
 
 
 
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> --}}
+    {{-- <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> --}}
     <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js">
-        < script >
-            <
-            script src = "https://cdn.datatables.net/1.13.1/js/dataTables.jqueryui.min.js" >
-    </script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/js/bootstrap.bundle.min.js"></script> --}}
+    {{-- <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script> --}}
+    {{-- <script src="https://cdn.datatables.net/1.13.1/js/dataTables.jqueryui.min.js"></script> --}}
     <script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script> --}}
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script> --}}
     <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.print.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.4.0/js/dataTables.responsive.min.js">
-        < script >
-            <
-            script src = "https://cdn.datatables.net/responsive/2.4.0/js/responsive.bootstrap5.min.js" >
-    </script>
+    <script src="https://cdn.datatables.net/responsive/2.4.0/js/dataTables.responsive.min.js"></script>
+    {{-- <script src="https://cdn.datatables.net/responsive/2.4.0/js/responsive.bootstrap5.min.js"></script> --}}
 
 
 

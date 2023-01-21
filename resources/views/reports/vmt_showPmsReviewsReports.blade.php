@@ -10,10 +10,10 @@
                 <div class="row mb-3">
 
                     <div class="col-3">
-                        <label class="fw-bold">Year </label>
+                        <label class="fw-bold"> Assignment Year </label>
                         {{-- <input type="text" id="year" readonly value="{{ $query_configPms-> year}}" size="25" /> --}}
                         <select id="year" class="form-select " style="" aria-label=".form-select-sm example">
-                            {{-- <option value="" selected>Select</option> --}}
+                            <option value="" selected hidden disabled>Select Assignment Year</option>
                             @foreach ($query_years as $key => $value)
                                 <option value="{{ $value }}"> {{ $value }} </option>
                             @endforeach
@@ -84,9 +84,10 @@
                         <label class="fw-bold pe-2">Employee Submission status </label>
                         <select id="dropdownSubmittedStatus" class="form-select " style=""
                             aria-label=".form-select-sm example">
-                            <option value="All" selected>Select</option>
+                            <option value="All" class="text-ash" hidden disabled selected>Select Employee Submission
+                                status</option>
                             <option value="1">Submitted</option>
-                            <option value="">Not Yet Submitted</option>
+                            <soption value="">Not Yet Submitted</soption>
 
                         </select>
 
@@ -96,7 +97,8 @@
                         <label class="fw-bold pe-2">Manager Review Status </label>
                         <select id="dropdownReviewedStatus" class="form-select " style=""
                             aria-label=".form-select-sm example">
-                            <option value="All" selected>Select</option>
+                            <option value="All" class="text-ash" hidden disabled selected>Select Manager Review Status
+                            </option>
                             <option value="1">Reviewed</option>
                             <option value="">Not Yet Reviewed</option>
                         </select>
@@ -105,6 +107,19 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-3">
+
+                        <label class="fw-bold pe-2">Line Manager </label>
+                        <select id="dropdownReviewedStatus" class="form-select " style=""
+                            aria-label=".form-select-sm example">
+                            <option value="All" class="text-ash" hidden disabled selected>Select Manager Review Status
+                            </option>
+                            <option value="1">Reviewed</option>
+                            <option value="">Not Yet Reviewed</option>
+                        </select>
+
+                    </div>
+
+                    <div class="col-3 d-flex align-items-center ">
                         <p class=" align-items-centerd-flex pt-1">
                             <label class=" fw-bold "> Calendar Year : </label>
                             <?php
@@ -120,17 +135,20 @@
 
                         </p>
                     </div>
-                    <div class="col-3">
-                        <p class="  mt-1">
+                    <div class="col-3 d-flex align-items-center ">
+                        <p class="  ">
                             <span class="fw-bold"> Frequency : </span> {{ ucfirst($query_configPms->frequency) }}
 
                         </p>
                     </div>
-                    <div class="col-3">
-                        <button class="btn btn-orange me-2" id="btn_run"><i class="fa fa-cog me-2"></i> Report</button>
-                    </div>
-                    <div class="col-3">
-                        <button class="btn btn-orange " id="btn_downloadReport"><i class=' me-2 fas fa-file-download'></i>Download Report</button>
+                    <div class="col-3 ">
+                        <div class="d-flex mt-2">
+                            <button class="btn btn-orange me-2" id="btn_run"><i class="fa fa-cog me-2"></i> Generate
+                            </button>
+
+                            <button class="btn btn-orange " id="btn_downloadReport"><i
+                                    class=' me-2 fas fa-file-download'></i>Download Report</button>
+                        </div>
                     </div>
                 </div>
 
@@ -172,7 +190,7 @@
                 "ordering": false,
                 "lengthMenu": [10, 25, 50, 75, 100],
                 responsive: true,
-                scroolY:true,
+                scroolY: true,
 
 
             });
