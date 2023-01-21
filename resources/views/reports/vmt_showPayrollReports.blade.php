@@ -178,8 +178,22 @@
         $(document).ready(function() {
             $("#payrollReportTable").DataTable({
                 dom: 'Bfrtip',
-                buttons: [
-                    'copy', 'csv', 'excel', 'print'
+                buttons: [{
+                        extend: 'copy',
+                        title: 'Payroll Report'
+                    },
+                    {
+                        extend: 'excel',
+                        title: 'Payroll Report'
+                    },
+                    {
+                        extend: 'csv',
+                        title: 'Payroll Report'
+                    },
+                    {
+                        extend: 'print',
+                        title: 'Payroll Report'
+                    },
                 ],
                 // responsive: {
                 //     details: {
@@ -590,7 +604,7 @@
                                 data[i].uan_number,
                                 data[i].epf_number,
                                 data[i].esic_number,
-                                data[i].bank_id,
+                                data[i].bank_name,
                                 data[i].bank_account_number,
                                 data[i].bank_ifsc_code,
                                 data[i].mobile_number,

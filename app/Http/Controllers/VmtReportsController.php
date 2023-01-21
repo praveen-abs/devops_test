@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Bank;
+
 use App\Models\ConfigPms;
 use App\Models\VmtPMS_KPIFormAssignedModel;
 use App\Models\VmtPMS_KPIFormReviewsModel;
@@ -187,11 +189,20 @@ class VmtReportsController extends Controller
 
         if (session('client_id') != '1') {
             $payroll_data = $payroll_data-> where('users.client_id', session('client_id'))->get();
-            return ($payroll_data);
+            //return ($payroll_data);
         }
 
+        //fetch bank names
+        $payroll_data = $payroll_data->get();
 
-        return $payroll_data->get();
+        foreach($payroll_data as $singlePayrollData)
+        {
+            $singlePayrollData['bank_name'] = Bank::find($singlePayrollData->bank_id)->bank_name;
+        }
+
+        //dd($payroll_data->get());
+        //dd( $payroll_data);
+        return $payroll_data;
     }
 
 
@@ -254,7 +265,7 @@ class VmtReportsController extends Controller
                                                        $request->is_assignee_submitted,
                                                        $request->is_reviewer_accepted,
                                                        $request->getHttpHost()
-                                                       ), 'Reports.xlsx');
+                                                       ), 'Pms Reports.xlsx');
 
     }
 
