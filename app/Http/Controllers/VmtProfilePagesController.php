@@ -234,6 +234,8 @@ use Illuminate\Support\Facades\Crypt;
             $statutory->uan_number=$request->input('uan_number');
             $statutory->esic_applicable=$request->input('esic_applicable');
             $statutory->esic_number=$request->input('esic_number');
+            $statutory->epf_abry_eligible= $request->input('epf_abry_eligible');
+            $statutory->eps_pansion_eligible=$requst->input('eps_pansion_eligible');
             $statutory->save();
         }
         else
@@ -244,6 +246,8 @@ use Illuminate\Support\Facades\Crypt;
             $statutory->uan_number=$request->input('uan_number');
             $statutory->esic_applicable=$request->input('esic_applicable');
             $statutory->esic_number=$request->input('esic_number');
+            $statutory->epf_abry_eligible->input('epf_abry_eligible');
+            $statutory->eps_pansion_eligible->input('eps_pansion_eligible');
             $statutory->save();
         }
 
