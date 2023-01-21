@@ -265,7 +265,7 @@ class VmtReportsController extends Controller
                                                        $request->is_assignee_submitted,
                                                        $request->is_reviewer_accepted,
                                                        $request->getHttpHost()
-                                                       ), 'Reports.xlsx');
+                                                       ), 'Pms Reports.xlsx');
 
     }
 

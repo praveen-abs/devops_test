@@ -34,8 +34,8 @@
                     </li>
 
                     <li class="nav-item text-muted " role="presentation">
-                        <a class="nav-link pb-2" data-bs-toggle="tab" href="{{ route('showPmsReviewsReportPage') }}" aria-selected="false" tabindex="-1"
-                            role="tab">
+                        <a class="nav-link pb-2" data-bs-toggle="tab" href="#pms_tab"
+                            aria-selected="false" tabindex="-1" role="tab">
                             PMS</a>
                     </li>
 
@@ -56,7 +56,8 @@
                             <div class="col-3">
                                 <ul class=' list-style-circle px-4'>
                                     <li class=""><a href="#" class="">Payroll Summary</a></li>
-                                    <li><a href="{{ route('Reports.showPayrollReportsPage') }}" class="">Salary Register - Monthly</a></li>
+                                    <li><a href="{{ route('Reports.showPayrollReportsPage') }}" class="">Salary
+                                            Register - Monthly</a></li>
                                     <li><a href="#" class="">Employees Salary Statement</a></li>
                                     <li><a href="#" class="">Employee Pay Summary</a></li>
                                     <li><a href="#" class="">Payroll Liability Summary</a></li>
@@ -110,7 +111,8 @@
                                 <div class="col-12">
                                     <h6>Payroll Journal</h6>
                                     <ul class=' list-style-circle px-4'>
-                                        <li class=""><a href="#" class="">Payroll Journal Summary</a></li>
+                                        <li class=""><a href="#" class="">Payroll Journal Summary</a>
+                                        </li>
                                     </ul>
                                 </div>
 
@@ -126,6 +128,39 @@
                     </div>
                 </div>
             </div>
+
+
+            <div id="pms_tab" class="tab-pane fade ">
+                <div class="card top-line mb-0">
+                    <div class="card-body">
+                        <div class="row">
+
+                            <div class="col-3">
+                                <ul class='list-style-numbered list-style-circle px-4'>
+                                    <li><a href="{{ route('showPmsReviewsReportPage') }}" class="">PMS Report</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="attendance_tab" class="tab-pane fade ">
+
+                </div>
+                <div id="leaves_tab" class="tab-pane fade ">
+
+                </div>
+                <div id="pms_tab" class="tab-pane fade ">
+
+                </div>
+            </div>
+
+
+
+
+
+
             <div id="statutory_tab" class="tab-pane fade ">
                 <div class="card top-line mb-0">
                     <div class="card-body">
