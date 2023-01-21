@@ -4,33 +4,13 @@
 @endsection
 
 @section('content')
-    <div class="vendor-wrapper mt-30 card">
+    <div class="pmsReports-wrapper mt-30 ">
+        <div class="card">
+            <div class="card-body">
+                <div class="row mb-3">
 
-        <div class="card-body">
-            <h6 class="">PMS Reports</h6>
-            <div class="row mb-2">
-                <div class="col-6">
-                    <p class=" align-items-center d-flex pt-1">
-                        <b>Calendar Year : </b>
-                        <span>
-
-                            <?php
-
-                            if ($query_configPms->calendar_type == 'financial_year') {
-                                echo 'Financial Year';
-                            } elseif ($query_configPms->calendar_type == 'calendar_year') {
-                                echo 'Calendar Year';
-                            } else {
-                                echo 'Error';
-                            }
-                            ?>
-                        </span>
-                    </p>
-                </div>
-                <div class="col-6">
-                    <div class="  align-items-center d-flex  ">
-
-                        <p class="fw-bold pe-2">Year </p>
+                    <div class="col-3">
+                        <label class="fw-bold">Year </label>
                         {{-- <input type="text" id="year" readonly value="{{ $query_configPms-> year}}" size="25" /> --}}
                         <select id="year" class="form-select " style="" aria-label=".form-select-sm example">
                             {{-- <option value="" selected>Select</option> --}}
@@ -38,24 +18,10 @@
                                 <option value="{{ $value }}"> {{ $value }} </option>
                             @endforeach
                         </select>
-
-
                     </div>
-                </div>
 
-
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <p class="  mt-1">
-                        <b>Frequency : </b> <span>{{ ucfirst($query_configPms->frequency) }}</span>
-
-                    </p>
-                </div>
-                <div class="col-6">
-                    <div class=" d-flex align-items-center mb-2">
-
-                        <p class="fw-bold">Assignment Period</p>
+                    <div class="col-3">
+                        <label class="fw-bold">Assignment Period</label>
                         <select placeholder="Select Calendar Type" style="" id="dropdownAssignment_period"
                             class="form-select ">
                             <option value="All" selected>Select</option>
@@ -113,74 +79,84 @@
                         </select>
 
                     </div>
+                    <div class="col-3">
 
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-6">
-                    <div class="  align-items-center d-flex  ">
-                        <p class="fw-bold pe-2">Employee Submission status </p>
-                        <select id="dropdownSubmittedStatus" class="form-select " style="" aria-label=".form-select-sm example">
+                        <label class="fw-bold pe-2">Employee Submission status </label>
+                        <select id="dropdownSubmittedStatus" class="form-select " style=""
+                            aria-label=".form-select-sm example">
                             <option value="All" selected>Select</option>
-                            <option value="1" >Submitted</option>
-                            <option value="" >Not Yet Submitted</option>
+                            <option value="1">Submitted</option>
+                            <option value="">Not Yet Submitted</option>
 
                         </select>
+
                     </div>
-                </div>
-                <div class="col-6">
-                    <div class="  align-items-center d-flex  ">
-                        <p class="fw-bold pe-2">Manager Review Status </p>
-                        <select id="dropdownReviewedStatus" class="form-select " style="" aria-label=".form-select-sm example">
+                    <div class="col-3">
+
+                        <label class="fw-bold pe-2">Manager Review Status </label>
+                        <select id="dropdownReviewedStatus" class="form-select " style=""
+                            aria-label=".form-select-sm example">
                             <option value="All" selected>Select</option>
-                            <option value="1" >Reviewed</option>
-                            <option value="" >Not Yet Reviewed</option>
+                            <option value="1">Reviewed</option>
+                            <option value="">Not Yet Reviewed</option>
                         </select>
+
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-3">
+                        <p class=" align-items-centerd-flex pt-1">
+                            <label class=" fw-bold "> Calendar Year : </label>
+                            <?php
+
+                            if ($query_configPms->calendar_type == 'financial_year') {
+                                echo 'Financial Year';
+                            } elseif ($query_configPms->calendar_type == 'calendar_year') {
+                                echo 'Calendar Year';
+                            } else {
+                                echo 'Error';
+                            }
+                            ?>
+
+                        </p>
+                    </div>
+                    <div class="col-3">
+                        <p class="  mt-1">
+                            <span class="fw-bold"> Frequency : </span> {{ ucfirst($query_configPms->frequency) }}
+
+                        </p>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn btn-orange me-2" id="btn_run"><i class="fa fa-cog me-2"></i> Report</button>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn btn-orange " id="btn_downloadReport"><i class=' me-2 fas fa-file-download'></i>Download Report</button>
                     </div>
                 </div>
 
+                <div class="table-responsive">
+                    <table id="pmsReportTable" class="table table-bordered" style="display: none;white-space:nowrap;">
+                        <thead>
+                            <tr>
+                                <th scope="col">S.No</th>
+                                <th scope="col">Emp Code</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Calendar Type</th>
+                                <th scope="col" style="width: 100%;">Year</th>
+                                <th scope="col">Frequency</th>
+                                <th scope="col">Assignment Period</th>
+                                <th scope="col">Employees Submission Status</th>
+                                <th scope="col">Manager Review Status</th>
+                                <th scope="col">Manager Name</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pmsTbody">
 
-            </div>
-            {{-- <div class=" text-start mb-2">
-                <span>
-                    <b>Status</b>
-                    <select  style="width:auto;" aria-label=".form-select-sm example"
-                        id="dropdownSubmittedStatus" class="form-select form-select-sm">
-                        <option selected>Select</option>
-                        <option value="1">Submitted</option>
-                        <option value=""> Not yet Submitted</option>
-                    </select>
-                </span>
-            </div> --}}
-
-            <div class=" text-end mb-2">
-                <button class="btn btn-orange me-2" id="btn_run">Run Report</button>
-                <button class="btn btn-orange me-2" id="btn_downloadReport">Download Report</button>
-            </div>
-            <div class="table-responsive">
-                <table id="pmsReportTable" class="table table-bordered" style="display: none">
-                    <thead>
-                        <tr>
-                            <th scope="col">S.No</th>
-                            <th scope="col">Emp Code</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Calendar Type</th>
-                            <th scope="col" style="width: 100%;">Year</th>
-                            <th scope="col">Frequency</th>
-                            <th scope="col">Assignment Period</th>
-                            <th scope="col">Employees Submission Status</th>
-                            <th scope="col">Manager Review Status</th>
-                            <th scope="col">Manager Name</th>
-                        </tr>
-                    </thead>
-                    <tbody id="pmsTbody">
-
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-
     </div>
 @endsection
 @section('script')
@@ -190,12 +166,15 @@
     <script>
         $(document).ready(function() {
             $('#pmsReportTable').DataTable({
-                "searching": false,
-                "pagingType": "full_numbers",
+                searching: false,
+                pagingType: "full_numbers",
                 "paging": false,
                 "ordering": false,
                 "lengthMenu": [10, 25, 50, 75, 100],
-                "responsive": true,
+                responsive: true,
+                scroolY:true,
+
+
             });
 
             let calenderType = '{{ $query_configPms->calendar_type }}';
@@ -213,8 +192,8 @@
                     data: {
                         year: year,
                         assignment_period: assignment_period,
-                        submission_status:selectedSubmittedDropdown,
-                        reviewed_status:selectedReviewedDropdown,
+                        submission_status: selectedSubmittedDropdown,
+                        reviewed_status: selectedReviewedDropdown,
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(res) {
@@ -362,7 +341,7 @@
                 console.log(selectedAssingementPeriod + ' ' + selectedSubmittedDropdown);
                 let URL = '/reports/generatePmsReviewsReports?calender_type=' + calenderType + '&year=' +
                     year + '&assignment_period=' + selectedAssingementPeriod + '&is_assignee_submitted=' +
-                    selectedSubmittedDropdown +'&is_reviewer_accepted='+selectedReviewedDropdown+
+                    selectedSubmittedDropdown + '&is_reviewer_accepted=' + selectedReviewedDropdown +
                     '&_token={{ csrf_token() }}';
                 console.log("Generated URL : " + URL);
 

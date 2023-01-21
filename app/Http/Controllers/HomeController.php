@@ -190,7 +190,7 @@ class HomeController extends Controller
         return redirect()->back();
     }
 
-    public function updtaeFamilyInfo(Request $request) {
+    public function updateFamilyInfo(Request $request) {
        // $familyInfo = 'name'=> $request->input('name'), 'relationship'=> $request->input('relationship'),'dob'=> $request->input('dob'), 'phone'=> $request->input('phone')]);
 
         //Delete existing family details
@@ -215,7 +215,7 @@ class HomeController extends Controller
         return redirect()->back();
     }
 
-    public function updtaeEmergencyInfo(Request $request) {
+    public function updateEmergencyInfo(Request $request) {
         //dd($request->all());
         $contact  = new VmtEmployeeEmergencyContactDetails;
         $contact->user_id =  $request->id;
@@ -424,6 +424,7 @@ class HomeController extends Controller
             $attendance->date = date('Y-m-d');
             $currentTime = new DateTime("now", new \DateTimeZone('Asia/Kolkata') );
             $attendance->checkin_time = $currentTime;
+            $attendance->attendance_mode_checkin = "web";
             $attendance->save();
 
             //Check whether if its LC/EG
@@ -466,6 +467,7 @@ class HomeController extends Controller
             $attendance->date = date('Y-m-d');
             $currentTime = new DateTime("now", new \DateTimeZone('Asia/Kolkata') );
             $attendance->checkout_time = $currentTime;
+            $attendance->attendance_mode_checkout = "web";
             $attendance->save();
 
             $checked = VmtEmployeeAttendance::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->first();

@@ -71,6 +71,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
             $attendanceCheckin->work_mode      = $request->work_mode;
             //$attendanceCheckin->selfie_checkin = $request->selfie_checkin; ////Need to save the image in folder and add path here
             $attendanceCheckin->checkin_comments = $request->checkin_comments;
+            $attendanceCheckin->attendance_mode_checkin = "mobile";
             $attendanceCheckin->save();
 
 
@@ -120,6 +121,8 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         $attendanceCheckout->checkout_time = $request->checkout_time;
         //$attendanceCheckout->selfie_checkout = $request->selfie_checkout; //Need to save the image in folder and add path here
         $attendanceCheckout->checkout_comments = $request->checkout_comments;
+        $attendanceCheckout->attendance_mode_checkout = "mobile";
+
         $attendanceCheckout->save();
 
         // processing and storing base64 files in public/selfies folder

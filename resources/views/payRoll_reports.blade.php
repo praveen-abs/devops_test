@@ -56,7 +56,7 @@
                             <div class="col-3">
                                 <ul class=' list-style-circle px-4'>
                                     <li class=""><a href="#" class="">Payroll Summary</a></li>
-                                    <li><a href="{{ route('showPayrollReportsPage') }}" class="">Salary Register - Monthly</a></li>
+                                    <li><a href="{{ route('Reports.showPayrollReportsPage') }}" class="">Salary Register - Monthly</a></li>
                                     <li><a href="#" class="">Employees Salary Statement</a></li>
                                     <li><a href="#" class="">Employee Pay Summary</a></li>
                                     <li><a href="#" class="">Payroll Liability Summary</a></li>

@@ -264,7 +264,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                                                         </p>
                                                         <p>
                                                             <a class=""
-                                                                href="{{ $login_Link }}/team-appraisal">
+                                                                href="{{ $login_Link }}">
                                                                 Kindly visit the HRMS portal for more details
                                                             </a>
                                                         </p>
@@ -418,7 +418,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                                                         </p>
                                                         <p>
                                                             <a class=""
-                                                                href="{{ $login_Link }}/team-appraisal">
+                                                                href="{{ $login_Link }}">
                                                                 Kindly visit the HRMS portal for more details
                                                             </a>
                                                         </p>

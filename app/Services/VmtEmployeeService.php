@@ -542,7 +542,8 @@ class VmtEmployeeService {
         if (fetchMasterConfigValue("can_send_appointmentletter_after_onboarding") == "true") {
 
             //Fetch appointment letter based on client name
-            $client_name = Str::lower(str_replace(' ', '', getCurrentClientName()) );
+            $client_name = str_replace(' ', '', sessionGetSelectedClientName());
+            //$client_name = Str::lower(str_replace(' ', '', getCurrentClientName()) );
             $viewfile_appointmentletter = 'vmt_appointment_templates.mailtemplate_appointmentletter_'.$client_name;
 
             //check if template exists

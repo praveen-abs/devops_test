@@ -23,30 +23,53 @@
                         <div class="col-sm-12 col-xxl-4 col-md-6 col-xl-4 col-lg-4">
                             <h6 class="mb-0 text-muted text-start">Attendance Regularization Approvals</h6>
                         </div>
-                        <div class="col-sm-12 col-xxl-8 col-md-6 col-xl-8 col-lg-8">
+                        {{-- <div class="col-sm-12 col-xxl-8 col-md-6 col-xl-8 col-lg-8">
                             <div class="row">
                                 <div class="col-sm-12 col-xxl-3 col-md-6 col-xl-3 col-lg-3">
+                                    <label class="form-label mb-1">Month</label>
                                     <select name="" id="" class="form-select  border-orange disabled_focus">
-                                        <option value="" selected hidden disabled>Department</option>
+                                        <option value="" selected hidden disabled>Choose</option>
+                                        <option value="1" >Jan</option>
+                                        <option value="2" >Feb</option>
+                                        <option value="3" >Mar</option>
+                                        <option value="4" >Apr</option>
+                                        <option value="5" >May</option>
+                                        <option value="6" >Jun</option>
+                                        <option value="7" >Jul</option>
+                                        <option value="8" >Aug</option>
+                                        <option value="9" >Sep</option>
+                                        <option value="10" >Oct</option>
+                                        <option value="11" >Nov</option>
+                                        <option value="12" >Dec</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-12 col-xxl-3 col-md-6 col-xl-3 col-lg-3">
-                                    <select name="" id="" class="form-select border-orange disabled_focus">
-                                        <option value="" selected hidden disabled>Location</option>
+                                    <label class="form-label mb-1">Regularization Type</label>
+                                    <select name="dropdown_regularizationType" id="dropdown_regularizationType" class="form-select border-orange disabled_focus">
+                                        <option value="" selected hidden disabled>Choose</option>
+                                        <option value="lc">LC (Late Coming)</option>
+                                        <option value="eg">EG (Early Coming)</option>
+                                        <option value="mip">MIP (Missed In Punch)</option>
+                                        <option value="mop">MOP (Missed Out Punch)</option>
+                                    </select>
+                                </div>
+                                <!-- Reason type based on LC,EG,MIP,MOP -->
+                                <div class="col-sm-12 col-xxl-3 col-md-6 col-xl-3 col-lg-3">
+                                    <label class="form-label mb-1">Reason Type</label>
+                                    <select name="dropdown_reasonType" id="dropdown_reasonType" class="form-select border-orange disabled_focus">
+                                        <option value="" selected hidden disabled>Choose</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-12 col-xxl-3 col-md-6 col-xl-3 col-lg-3">
+                                    <label class="form-label mb-1">Status</label>
                                     <select name="" id="" class="form-select border-orange disabled_focus">
-                                        <option value="" selected hidden disabled>Leave Type</option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-12 col-xxl-3 col-md-6 col-xl-3 col-lg-3">
-                                    <select name="" id="" class="form-select border-orange disabled_focus">
-                                        <option value="" selected hidden disabled>Leave Status</option>
+                                        <option value="pending" selected>Pending</option>
+                                        <option value="approved">Approved</option>
+                                        <option value="rejected">Rejected</option>
                                     </select>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
 
@@ -103,6 +126,49 @@
         var employeesList_array = '';
 
         var gridjs_lateComingTable ="";
+
+
+        var dropdown_reasons_LC = [
+               {display: 'Permission', value: 'Permission'},
+               {display: 'Others', value: 'Others'},
+            ];
+
+        var dropdown_reasons_EG = [
+               {display: 'Permission', value: 'Permission'},
+               {display: 'Others', value: 'Others'},
+            ];
+
+        var dropdown_reasons_MIP = [
+               {display: 'Permission', value: 'Permission'},
+               {display: 'Forgot To Punch', value: 'Forgot To Punch'},
+               {display: 'Others', value: 'Others'},
+            ];
+
+
+        var dropdown_reasons_MOP = [
+               {display: 'Permission', value: 'Permission'},
+               {display: 'Forgot To Punch', value: 'Forgot To Punch'},
+               {display: 'Others', value: 'Others'},
+            ];
+
+
+
+        $('#dropdown_regularizationType').change(function () {
+            let selectedValue = $("#dropdown_regularizationType option:selected").val();
+            console.log("Regularization Type DD Changed : "+selectedValue);
+
+            //clear existing options in dropdown
+            $('#dropdown_reasonType').empty().append('<option value="" selected hidden disabled>Choose</option>');
+
+            //Based on selected regularization type, we will show the reason dropdown values accordingly
+            $.each(dropdown_reasons_LC, function (i, item) {
+                $('#dropdown_reasonType').append($('<option>', {
+                    value: item.value,
+                    text : item.display
+                }));
+            });
+
+        });
 
         $(document).ready(function() {
 
@@ -201,10 +267,9 @@
             if (document.getElementById("table_lateComingTable")) {
                 gridjs_lateComingTable = new gridjs.Grid({
                     columns: [
-
                         {
-                            id: 'employee_name',
-                            name: 'Employee Name',
+                            id: 'avatar',
+                            name: '',
                             formatter: function formatter(cell) {
 
                                 var output = "";
@@ -215,7 +280,6 @@
                                                 '<div class="rounded-circle user-profile col-auto user-profile  me-2 " id="">'+
                                                     '<i class="topbar_username" class="align-middle ">'+cell.employee_avatar.data+'</i>'+
                                                 '</div>'+
-                                                '<span>'+cell.employee_name+'</span>'+
                                             '</div>';
                                 }
                                 else
@@ -224,12 +288,18 @@
 
                                     output ='<div class="col-auto p-0">'+
                                             '<img class="rounded-circle header-profile-user" src="'+imageURL+'" alt="--">'+
-                                            '<span>&nbsp;&nbsp;'+cell.employee_name+'</span>'+
                                         '</div>';
                                 }
 
-                                return gridjs.html(output);
 
+                                return gridjs.html(output);
+                            }
+                        },
+                        {
+                            id: 'employee_name',
+                            name: 'Employee Name',
+                            formatter: function formatter(employee_name) {
+                                return gridjs.html(employee_name);
                             }
                         },
                         {
@@ -347,6 +417,7 @@
                             att_regularize => [
                                 //leave_history.id,
                                 att_regularize,
+                                att_regularize.employee_name,
                                 att_regularize.attendance_date,
                                 att_regularize.regularization_type ,
                                 att_regularize.user_time,

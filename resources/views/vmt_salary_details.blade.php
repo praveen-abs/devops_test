@@ -225,26 +225,28 @@
                                                         <td>₹{{ $d->NET_TAKE_HOME }}</td>
                                                         <td>
                                                             <div data="{{ $d->PAYROLL_MONTH }}"
-                                                                data-url="{{ route('vmt_employee_payslip') }}"
+                                                                data-url="{{ route('vmt_paycheck_employee_payslip_htmlview') }}"
                                                                 style="cursor: pointer"
                                                                 class="ember-view  paySlipView text-info">
                                                                 View
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <a href="#/salary-details/payslips/335214000001040001/details?isPayslip=false"
-                                                                id="ember134" class="ember-view  text-info">
+                                                            <a href=""
+                                                                class="ember-view  text-info">
                                                                 View
                                                             </a>
                                                         </td>
                                                         <td>
                                                             @php
-
                                                                 $selectedPaySlipMonth = $d->PAYROLL_MONTH;
                                                             @endphp
-                                                            <a href="{{ url('pdfview/' . strtoupper($d->EMP_NO) . '/' . strtoupper($selectedPaySlipMonth)) }}"
-                                                                class="text-info">Download</a>
-
+                                                            <div data="{{ $d->PAYROLL_MONTH }}"
+                                                                data-url="{{ route('vmt_paycheck_employee_payslip_pdf') }}"
+                                                                style="cursor: pointer"
+                                                                class="ember-view  paySlipPDF text-info">
+                                                                Download PDF
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -943,6 +945,7 @@
     <!-- dashboard init -->
     <script>
         $(document).ready(function() {
+
             $('.paySlipView').on('click', function() {
                 var url = $(this).attr('data-url');
                 var t_paySlipMonth = $(this).attr('data');
@@ -950,7 +953,8 @@
                     type: "GET",
                     url: url,
                     data: {
-                        selectedPaySlipMonth: t_paySlipMonth
+                        selectedPaySlipMonth: t_paySlipMonth,
+                        enc_user_id: "{{ $enc_user_id }}"
                     },
                     success: function(data) {
                         var content =
@@ -962,6 +966,15 @@
                     }
                 });
             });
+
+            $('.paySlipPDF').on('click', function() {
+                var url = $(this).attr('data-url');
+                let t_paySlipMonth = $(this).attr('data');
+                let enc_userid =  "{{ $enc_user_id }}";
+
+                window.open(url+"?selectedPaySlipMonth="+t_paySlipMonth+"&enc_user_id="+enc_userid,'_blank');
+            });
+
         });
     </script>
 @endsection

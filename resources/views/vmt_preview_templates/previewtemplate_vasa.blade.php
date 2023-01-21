@@ -1714,8 +1714,8 @@
 
                                             </td>
                                             <td colspan="2" class="border-less">
-                                                <img src="{{ URL::asset('assets/images/footer_logo.png') }}"
-                                                    alt="" class="" style="height: 16px;width:95px;">
+                                                <img src="{{ URL::asset('assets/images/client_logos/ardens/evangelist.png') }}" width="80px" height="15px"
+                                                alt="" class="">
                                             </td>
                                         </tr>
 

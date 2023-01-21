@@ -4,16 +4,8 @@
 @endsection
 
 @section('content')
-    <div class="vendor-wrapper mt-30 card">
-
+    <div class="payrollReports-wrapper mt-30 card">
         <div class="card-body">
-            <h6 class="">Payroll Reports</h6>
-
-            {{-- <div class=" text-end mb-2">
-                <button class="btn btn-orange me-2" id="btn_downloadReport">Download Report</button>
-            </div> --}}
-
-
             <div style="display: flex; justify-content: space-evenly;margin-left: -100px" class=" text-start mb-2">
                 <span>
                     <b>Payroll Month</b>
