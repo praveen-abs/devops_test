@@ -121,30 +121,33 @@
     {{-- <link href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet" /> --}}
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.4.0/css/buttons.dataTables.min.css" />
 
-    {{-- <link rel="stylesheet" type="text/css"
+    <link rel="stylesheet" type="text/css"
         href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" />
     <link rel="stylesheet" type="text/css"
         href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.bootstrap5.min.css" />
- --}}
+
 
 
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.jqueryui.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js">
+        < script >
+            <script src = "https://cdn.datatables.net/1.13.1/js/dataTables.jqueryui.min.js" >
+    </script>
     <script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.print.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.4.0/js/dataTables.responsive.min.js"></script>
-
-    <script src="https://cdn.datatables.net/responsive/2.4.0/js/responsive.bootstrap5.min.js"></script>
-
+    <script src="https://cdn.datatables.net/responsive/2.4.0/js/dataTables.responsive.min.js">
+        < script >
+            <
+            script src = "https://cdn.datatables.net/responsive/2.4.0/js/responsive.bootstrap5.min.js" >
+    </script>
 
 
 
@@ -155,10 +158,8 @@
             $("#payrollReportTable").DataTable({
                 dom: 'Bfrtip',
                 buttons: [
-                    // { extend: 'copy', className: 'btn btn-orange me-2t' },
-                    'copy','csv', 'excel', 'print'
+                    'copy', 'csv', 'excel', 'print'
                 ],
-                // bPaginate: true,
                 // responsive: {
                 //     details: {
                 //         display: $.fn.dataTable.Responsive.display.modal({
@@ -184,7 +185,352 @@
                 window.location = URL;
 
 
+                // $.ajax({
+                //         url: "{{ route('generatePayrollReports') }}",
+                //         type: "GET",
+                //         dataType: "json",
+                //         cache: false,
+                //         xhrFields:{
+                //             responseType: 'blob'
+                //         },
+                //         data: {
+                //             "payroll_month":selectedPayRollMonth,
+                //             "_token": "{{ csrf_token() }}",
+                //         },
+                //         success: function(data) {
+                //             console.log("Downloading excelsheet....");
+                //             var link = document.createElement('a');
+                //             link.href = window.URL.createObjectURL(response);
+                //             link.download = `bulk_orders.xlsx`;
+                //             link.click();
+
+                //         },
+                //         error: function(data) {
+
+
+                //         }
+                // });
+
             });
+
+
+            // $('#dropdown_payroll_month').on('change', function() {
+            //     console.log("Selected payroll month : "+$(this).find(":selected").val());
+            // });
+
+            // $('#dropdown_payroll_month').find(":selected");
+
+            // if (document.getElementById("employee-table")) {
+            //     const grid = new gridjs.Grid({
+            //         columns: [{
+            //                 id: 'number',
+            //                 name: 'id',
+            //                 hidden: true
+
+            //             },
+            //             {
+            //                 id: 'name ',
+            //                 name: 'Employee Name',
+
+            //             },
+            //             {
+            //                 id: 'month',
+            //                 name: 'Month',
+            //             },
+
+            //         ],
+            //         pagination: {
+            //             limit: 10
+            //         },
+            //         sort: true,
+            //         search: true,
+            //         server: {
+            //             url: '{{ route('fetchAllEmployeePayrollDetails', ['payroll_month' => 'sss']) }}',
+            //             then: data => data.map(
+            //                 employee => [
+            //                     employee.id,
+            //                     employee.name,
+            //                 ]
+            //             )
+            //         }
+
+
+
+            //     }).render(document.getElementById("employee-table"));
+
+
+            // }
+            // if (document.getElementById("employee-table")) {
+            //    console.log("-----------"+selectedPayRollMonth+"---------------");
+
+            //     const grid = new gridjs.Grid({
+            //         columns: [{
+            //                 id: 'user_code',
+            //                 name: 'Employee Code',
+            //             },
+            //             {
+            //                 id: 'name',
+            //                 name: 'Employee Name',
+            //             },
+            //             {
+            //                 id: 'DESIGNATION',
+            //                 name: 'Designation',
+            //             },
+            //             {
+            //                 id: 'doj',
+            //                 name: 'DOJ',
+            //             },
+            //             {
+            //                 id: 'dob',
+            //                 name: 'DOB',
+            //             },
+            //             {
+            //                 id: 'work_location',
+            //                 name: 'Location',
+            //             },
+            //             {
+            //                 id: 'Aadhar_Number',
+            //                 name: 'Aadhaar Number',
+            //             },
+            //             {
+            //                 id: 'PAN_Number',
+            //                 name: 'PAN',
+            //             },
+            //             {
+            //                 id: 'uan_number',
+            //                 name: 'UAN',
+            //             },
+            //             {
+            //                 id: 'epf_number',
+            //                 name: 'EPF Number',
+            //             },
+            //             {
+            //                 id: 'esic_number',
+            //                 name: 'ESIC Number',
+            //             },
+            //             {
+            //                 id: 'bank_id',
+            //                 name: 'Bank Name',
+            //             },
+            //             {
+            //                 id: 'bank_account_number',
+            //                 name: 'Bank Account Number',
+            //             },
+            //             {
+            //                 id: 'bank_ifsc_code',
+            //                 name: 'IFSC Code',
+            //             },
+            //             {
+            //                 id: 'mobile_number',
+            //                 name: 'Mobile',
+            //             },
+            //             {
+            //                 id: 'officical_mail',
+            //                 name: 'Email ID',
+            //             },
+            //             {
+            //                 id: 'PAYROLL_MONTH',
+            //                 name: 'Payroll Month',
+            //             },
+            //             {
+            //                 id: 'BASIC',
+            //                 name: 'Basic',
+            //             },
+            //             {
+            //                 id: 'HRA',
+            //                 name: 'HRA',
+            //             },
+            //             {
+            //                 id: 'SPL_ALW',
+            //                 name: 'Special Allowance',
+            //             },
+            //             {
+            //                 id: 'TOTAL_FIXED_GROSS',
+            //                 name: 'Total Fixed Gross',
+            //             },
+            //             {
+            //                 id: 'esic_applicable',
+            //                 name: 'ESIC Applicablity',
+            //             },
+            //             {
+            //                 id: 'MONTH_DAYS',
+            //                 name: 'Month Days',
+            //             },
+            //             {
+            //                 id: 'Worked_Days',
+            //                 name: 'Worked Days',
+            //             },
+            //             {
+            //                 id: 'Arrears_Days',
+            //                 name: 'Arrears Days',
+            //             },
+            //             {
+            //                 id: 'LOP',
+            //                 name: 'LOP',
+            //             },
+            //             {
+            //                 id: 'Earned_BASIC',
+            //                 name: 'Basic',
+            //             },
+            //             {
+            //                 id: 'BASIC_ARREAR',
+            //                 name: 'BASIC Arrears',
+            //             },
+            //             {
+            //                 id: 'Earned_HRA',
+            //                 name: 'HRA',
+            //             },
+            //             {
+            //                 id: 'HRA_ARREAR',
+            //                 name: 'HRA Arrears',
+            //             },
+            //             {
+            //                 id: 'Earned_SPL_ALW',
+            //                 name: 'Special Allowance',
+            //             },
+            //             {
+            //                 id: 'SPL_ALW_ARREAR',
+            //                 name: 'SPL ALW Arrears',
+            //             },
+            //             {
+            //                 id: 'Overtime',
+            //                 name: 'Overtime',
+            //             },
+            //             {
+            //                 id: 'TOTAL_EARNED_GROSS',
+            //                 name: 'Total Earned Gross',
+            //             },
+            //             {
+            //                 id: 'PF_WAGES',
+            //                 name: 'PF Wages',
+            //             },
+            //             {
+            //                 id: 'PF_WAGES_ARREAR_EPFR',
+            //                 name: 'PF Wages Arrear',
+            //             },
+            //             {
+            //                 id: 'EPFR',
+            //                 name: 'EPFR',
+            //             },
+            //             {
+            //                 id: 'EPFR_ARREAR',
+            //                 name: 'EPFR Arrears',
+            //             },
+            //             {
+            //                 id: 'EDLI_CHARGES',
+            //                 name: 'EDLI Charges',
+            //             },
+            //             {
+            //                 id: 'EDLI_CHARGES_ARREARS',
+            //                 name: 'EDLI Charges Arrears',
+            //             },
+            //             {
+            //                 id: 'PF_ADMIN_CHARGES',
+            //                 name: 'PF Admin Charges',
+            //             },
+            //             {
+            //                 id: 'PF_ADMIN_CHARGES_ARREARS',
+            //                 name: 'PF Admin Charges Arrears',
+            //             },
+            //             {
+            //                 id: 'EMPLOYER_ESI',
+            //                 name: 'Employer ESIC',
+            //             },
+            //             {
+            //                 id: 'Employer_LWF',
+            //                 name: 'Employer LWF',
+            //             },
+            //             {
+            //                 id: 'CTC',
+            //                 name: 'CTC',
+            //             },
+            //             {
+            //                 id: 'EPF_EE',
+            //                 name: 'EPF EE',
+            //             },
+            //             {
+            //                 id: 'EPF_EE_ARREAR',
+            //                 name: 'EPF EE Arrear',
+            //             },
+            //             {
+            //                 id: 'EMPLOYEE_ESIC',
+            //                 name: 'Emplyee ESIC',
+            //             },
+            //             {
+            //                 id: 'PROF_TAX',
+            //                 name: 'Professional Tax',
+            //             },
+            //             {
+            //                 id: 'SAL_ADV',
+            //                 name: 'Salary Advance',
+            //             },
+            //             {
+            //                 id: 'CANTEEN_DEDN',
+            //                 name: 'Canteen Deduction',
+            //             },
+            //             {
+            //                 id: 'OTHER_DEDUC',
+            //                 name: 'Other Deductions',
+            //             },
+            //             {
+            //                 id: 'LWF',
+            //                 name: 'LWF',
+            //             },
+            //             {
+            //                 id: 'TOTAL_DEDUCTIONS',
+            //                 name: 'Total Deductions',
+            //             },
+            //             {
+            //                 id: 'NET_TAKE_HOME',
+            //                 name: 'Net Take Home',
+            //             },
+
+            //         ],
+
+            //         pagination: {
+            //             limit: 10
+            //         },
+            //         sort: true,
+            //         search: true,
+            //         server: {
+            //             url: '{{ route('payroll-filter-info') }}',
+            //             then: data => data.map(Payroll => [
+            //                 Payroll.user_code, Payroll.name,
+            //                 Payroll.DESIGNATION, Payroll.doj,
+            //                 Payroll.dob, Payroll.work_location,
+            //                 Payroll.Aadhar_Number, Payroll.PAN_Number,
+            //                 Payroll.uan_number, Payroll.epf_number,
+            //                 Payroll.esic_number, Payroll.bank_id,
+            //                 Payroll.bank_account_number, Payroll.bank_ifsc_code,
+            //                 Payroll.mobile_number, Payroll.officical_mail,
+            //                 Payroll.PAYROLL_MONTH, Payroll.BASIC,
+            //                 Payroll.HRA, Payroll.TOTAL_FIXED_GROSS,
+            //                 Payroll.esic_applicable, Payroll.MONTH_DAYS,
+            //                 Payroll.Worked_Days, Payroll.Arrears_Days,
+            //                 Payroll.LOP, Payroll.Earned_BASIC,
+            //                 Payroll.BASIC_ARREAR, Payroll.Earned_HRA,
+            //                 Payroll.HRA_ARREAR, Payroll.Earned_SPL_ALW,
+            //                 Payroll.SPL_ALW_ARREAR, Payroll.TOTAL_EARNED_GROSS,
+            //                 Payroll.PF_WAGES, Payroll.PF_WAGES_ARREAR_EPFR,
+            //                 Payroll.EPFR, Payroll.EPFR_ARREAR,
+            //                 Payroll.EDLI_CHARGES, Payroll.EDLI_CHARGES_ARREARS,
+            //                 Payroll.PF_ADMIN_CHARGES, Payroll.PF_ADMIN_CHARGES_ARREARS,
+            //                 Payroll.EMPLOYER_ESI, Payroll.Employer_LWF,
+            //                 Payroll.CTC, Payroll.EPF_EE,
+            //                 Payroll.EPF_EE_ARREAR, Payroll.EMPLOYEE_ESIC,
+            //                 Payroll.PROF_TAX, Payroll.SAL_ADV,
+            //                 Payroll.CANTEEN_DEDN, Payroll.OTHER_DEDUC,
+            //                 Payroll.LWF, Payroll.TOTAL_DEDUCTIONS,
+            //                 Payroll.NET_TAKE_HOME
+            //             ])
+
+            //         }
+
+
+            //     }).render(document.getElementById("employee-table"));
+            // }
+
+
 
 
             $("#loadData").click(function() {
