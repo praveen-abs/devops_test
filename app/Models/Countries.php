@@ -9,7 +9,7 @@ class Countries extends Model
 {
     use HasFactory;
 
-    protected $table = 'countries_list';
+    protected $table = 'vmt_country';
 
     protected $fillable = [
         'country_name',
