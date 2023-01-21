@@ -135,7 +135,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js">
         < script >
-            <script src = "https://cdn.datatables.net/1.13.1/js/dataTables.jqueryui.min.js" >
+            <
+            script src = "https://cdn.datatables.net/1.13.1/js/dataTables.jqueryui.min.js" >
     </script>
     <script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
@@ -157,8 +158,22 @@
         $(document).ready(function() {
             $("#payrollReportTable").DataTable({
                 dom: 'Bfrtip',
-                buttons: [
-                    'copy', 'csv', 'excel', 'print'
+                buttons: [{
+                        extend: 'copy',
+                        title: 'Payroll Report'
+                    },
+                    {
+                        extend: 'excel',
+                        title: 'Payroll Report'
+                    },
+                    {
+                        extend: 'csv',
+                        title: 'Payroll Report'
+                    },
+                    {
+                        extend: 'print',
+                        title: 'Payroll Report'
+                    },
                 ],
                 // responsive: {
                 //     details: {
