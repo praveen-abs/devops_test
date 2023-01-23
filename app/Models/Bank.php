@@ -9,7 +9,7 @@ class Bank extends Model
 {
     use HasFactory;
 
-    protected $table = 'bank_list';
+    protected $table = 'vmt_banks';
 
     protected $fillable = [
         'bank_name',
