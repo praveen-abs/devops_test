@@ -7,8 +7,8 @@
 @endsection
 @section('content')
     <div class="cotainer-fluid mt-30 payroll_wrapper">
-        <div class="card mb-2">
-            <div class="py-1 card-body">
+        <div class="card left-line  mb-2">
+            <div class="pt-1 pb-0 card-body">
                 <ul class="nav  nav-pills nav-tabs-dashed" role="tablist">
                     <li class="nav-item text-muted" role="presentation">
                         <a class="nav-link active pb-2" data-bs-toggle="tab" href="#payroll_tab" aria-selected="true"
@@ -36,7 +36,7 @@
                     <li class="nav-item text-muted " role="presentation">
                         <a class="nav-link pb-2" data-bs-toggle="tab" href="#pms_tab"
                             aria-selected="false" tabindex="-1" role="tab">
-                            PMS</a>
+                            PMS/OKR</a>
                     </li>
 
                 </ul>

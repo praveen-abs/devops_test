@@ -189,6 +189,11 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
                                 $query_pms_data= $query_pms_data-> where('vmt_pms_kpiform_reviews.is_reviewer_submitted','not like','%"1"}');
                             }
 
+                            if (session('client_id') != '1') {
+                                $query_pms_data= $query_pms_data-> where('users.client_id', session('client_id'));
+                                //return ($payroll_data);
+                            }
+
 
                             $query_pms_data = $query_pms_data->get();
 

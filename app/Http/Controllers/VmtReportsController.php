@@ -188,7 +188,7 @@ class VmtReportsController extends Controller
         }
 
         if (session('client_id') != '1') {
-            $payroll_data = $payroll_data-> where('users.client_id', session('client_id'))->get();
+            $payroll_data = $payroll_data-> where('users.client_id', session('client_id'));
             //return ($payroll_data);
         }
 
@@ -250,6 +250,11 @@ class VmtReportsController extends Controller
             $query_pms_data= $query_pms_data-> where('vmt_pms_kpiform_reviews.is_reviewer_submitted','like','%"1"}');
         }else if($request->reviewed_status==""){
             $query_pms_data= $query_pms_data-> where('vmt_pms_kpiform_reviews.is_reviewer_submitted','not like','%"1"}');
+        }
+
+        if (session('client_id') != '1') {
+            $query_pms_data= $query_pms_data-> where('users.client_id', session('client_id'));
+            //return ($payroll_data);
         }
 
         return $query_pms_data->get();

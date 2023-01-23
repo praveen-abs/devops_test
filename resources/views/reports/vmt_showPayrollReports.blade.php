@@ -56,8 +56,8 @@
 
                     </div>
 
-                    <div class="col-3 d-flex align-items-center">
-                        <button id="loadData" class="btn btn-orange me-2t"><i
+                    <div class="col-3 d-flex align-items-center justify-content-end text-end">
+                        <button id="loadData" class="btn btn-orange " style="margin-top:22px"><i
                                 class="fa fa-file-o me-2"></i>Generate</button>
                     </div>
 
@@ -176,23 +176,24 @@
 
     <script>
         $(document).ready(function() {
+            var selectedPayRollMonth = $('#dropdown_payroll_month').find(":selected").text();
             $("#payrollReportTable").DataTable({
                 dom: 'Bfrtip',
                 buttons: [{
                         extend: 'copy',
-                        title: 'Payroll Report'
+                        title: selectedPayRollMonth+" - Payroll Report",
                     },
                     {
                         extend: 'excel',
-                        title: 'Payroll Report'
+                        title: selectedPayRollMonth+" - Payroll Report",
                     },
                     {
                         extend: 'csv',
-                        title: 'Payroll Report'
+                        title: selectedPayRollMonth+" - Payroll Report",
                     },
                     {
                         extend: 'print',
-                        title: 'Payroll Report'
+                        title: selectedPayRollMonth+" - Payroll Report",
                     },
                 ],
                 // responsive: {
