@@ -1,39 +1,6 @@
 @import url(https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap);
 
-/* @font-face {
-    font-family: hkgrotesk;
-    src: url(../fonts/hkgrotesk-light.eot);
-    src: local("hkgrotesk light"), url(../fonts/hkgrotesk-light.woff) format("woff");
-    font-weight: 300
-}
 
-@font-face {
-    font-family: hkgrotesk;
-    src: url(../fonts/hkgrotesk-regular.eot);
-    src: local("hkgrotesk regular"), url(../fonts/hkgrotesk-regular.woff) format("woff");
-    font-weight: 400
-}
-
-@font-face {
-    font-family: hkgrotesk;
-    src: url(../fonts/hkgrotesk-medium.eot);
-    src: local("hkgrotesk medium"), url(../fonts/hkgrotesk-medium.woff) format("woff");
-    font-weight: 500
-}
-
-@font-face {
-    font-family: hkgrotesk;
-    src: url(../fonts/hkgrotesk-semibold.eot);
-    src: local("hkgrotesk semibold"), url(../fonts/hkgrotesk-semibold.woff) format("woff");
-    font-weight: 600
-}
-
-@font-face {
-    font-family: hkgrotesk;
-    src: url(../fonts/hkgrotesk-bold.eot);
-    src: local("hkgrotesk bold"), url(../fonts/hkgrotesk-bold.woff) format("woff");
-    font-weight: 700
-} */
 
 body {
     background: url(../images/background.jpg);
@@ -292,12 +259,12 @@ select {
 
 /* george height change */
 .navbar-header {
-    display: flex;
+    /* display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0 auto;
+    margin: 0 auto; */
     height: 50px;
-    /* padding: 0 1.5rem 0 0.75rem;*/
+
 }
 
 @media (max-width: 767.98px) {
@@ -1520,9 +1487,6 @@ body::-webkit-scrollbar-track {
     width: 55px;
 }
 
-[data-layout="vertical"][data-sidebar-size="sm"] .topbar-logo img {
-    margin-left: 20px;
-}
 
 .sidebar-bottom-bg {
     position: absolute;

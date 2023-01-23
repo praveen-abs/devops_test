@@ -36,6 +36,7 @@ use League\CommonMark\Extension\SmartPunct\EllipsesParser;
 use PDF;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Crypt;
 
 use App\Models\VmtEmployeeFamilyDetails;
 use App\Services\VmtEmployeeService;
@@ -854,7 +855,7 @@ class VmtEmployeeController extends Controller
             $newEmployee->aadhar_number = $row["aadhar"];
             $newEmployee->marital_status = $row["marital_status"];
             $newEmployee->mobile_number  = strval($row["mobile_no"]);
-            $newEmployee->bank_id   = $row["bank_name"];
+            $newEmployee->bank_id   = Bank::where('bank_name',$row['bank_name'])->first()->id;
             $newEmployee->bank_ifsc_code  = $row["bank_ifsc"];
             $newEmployee->bank_account_number  = $row["account_no"];
             $newEmployee->current_address_line_1   = $row["current_address"];
@@ -997,7 +998,7 @@ class VmtEmployeeController extends Controller
 
     public function fetchAllActiveEmployees(Request $request)
     {
-        $vmtEmployees = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
+        $query_vmtEmployees = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
             ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->select(
                 'users.name as emp_name',
@@ -1018,21 +1019,31 @@ class VmtEmployeeController extends Controller
             ->orderBy('users.name', 'ASC')
             ->where('users.active', '1')
             ->where('users.is_ssa', '0')
-            ->whereNotNull('emp_no')
-            ->get();
+            ->whereNotNull('emp_no');
 
-            //Add reporting manager name
-            foreach($vmtEmployees as $singleEmp)
-            {
-                $singleEmp['reporting_manager_name']= User::where('user_code',$singleEmp->l1_manager_code)->value('name');
-            }
+        //if '1', then show all client's employees
+        if (session('client_id') == '1')
+            $query_vmtEmployees = $query_vmtEmployees->get();
+        else
+            $query_vmtEmployees = $query_vmtEmployees->where('client_id', session('client_id'))->get();
 
-        return json_encode($vmtEmployees);
+        //Add reporting manager name
+        foreach($query_vmtEmployees as $singleEmp)
+        {
+            $singleEmp['enc_user_id'] = Crypt::encryptString($singleEmp['user_id']);
+            //unset($singleEmp['user_id']);
+            $singleEmp['reporting_manager_name']= User::where('user_code',$singleEmp->l1_manager_code)->value('name');
+        }
+
+        //dd($query_vmtEmployees);
+
+        return json_encode($query_vmtEmployees);
     }
 
     public function fetchAllYetToActiveEmployees(Request $request)
     {
-        $vmtEmployees = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
+
+        $query_vmtEmployees = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
             ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->select(
                 'users.name as emp_name',
@@ -1053,22 +1064,32 @@ class VmtEmployeeController extends Controller
             ->orderBy('users.name', 'ASC')
             ->where('users.active', '0')
             ->where('users.is_ssa', '0')
-            ->whereNotNull('emp_no')
-            ->get();
+            ->whereNotNull('emp_no');
+
+        //if '1', then show all client's employees
+        if (session('client_id') == '1')
+            $query_vmtEmployees = $query_vmtEmployees->get();
+        else
+            $query_vmtEmployees = $query_vmtEmployees->where('client_id', session('client_id'))->get();
 
         //Add reporting manager name
-        foreach($vmtEmployees as $singleEmp)
+        foreach($query_vmtEmployees as $singleEmp)
         {
-            $singleEmp['reporting_manager_name']= User::where('user_code',$singleEmp->l1_manager_code)->value('name');
+            $singleEmp['enc_user_id'] = Crypt::encryptString($singleEmp['user_id']);
+            //unset($singleEmp['user_id']);
+            $singleEmp['reporting_manager_name'] = User::where('user_code',$singleEmp->l1_manager_code)->value('name');
         }
 
-        return json_encode($vmtEmployees);
+        return json_encode($query_vmtEmployees);
     }
 
     //
     public function showManageEmployeePage(Request $request)
     {
-        return view('vmt_manageEmployee');
+        //Read session value
+        $client_id = 0;
+
+        return view('vmt_manageEmployee',compact('client_id'));
     }
 
     public function isUserExist($t_emp_code)

@@ -9,6 +9,7 @@ use App\Models\VmtBloodGroup;
 use App\Models\VmtLeaves;
 use App\Models\ConfigPms;
 use App\Models\VmtEmployeeOfficeDetails;
+use Illuminate\Support\Facades\Auth;
 
 function required()
 {
@@ -22,6 +23,81 @@ function fetchMasterConfigValue($config_name)
 
 }
 
+function getEmployeeClientDetails($emp_id){
+    $emp_client_id = User::find($emp_id)->client_id;
+    //$client_code = preg_replace('/\d/', '', $emp_code);
+
+    $query_client_details = VmtClientMaster::where('id', '=', $emp_client_id);
+
+    if ($query_client_details->exists())
+        return $query_client_details->first();
+    else
+        return null;
+
+}
+
+function getClientList(){
+    return VmtClientMaster::all();
+}
+
+function getBloodGroupName($blood_group_id){
+    if(!empty($blood_group_id))
+        return VmtBloodGroup::find($blood_group_id)->name;
+    else
+        return null;
+}
+
+function getEmployeeActiveStatus($user_id){
+
+    if(!empty($user_id))
+    {
+        $active_status = User::find($user_id)->active;
+
+        if($active_status == "1")
+            return "Active";
+        else
+        if($active_status == "0")
+            return "Yet to Activate";
+        else
+        if($active_status == "-1")
+            return "Left";
+        else
+            return null;
+    }
+    else
+        return null;
+
+}
+
+
+function sessionGetSelectedClientCode(){
+    $query_client = VmtClientMaster::find(session('client_id'));
+
+    if (!empty($query_client))
+        return $query_client->client_code;
+    else
+        return "";
+}
+
+function sessionGetSelectedClientName(){
+
+    $query_client = VmtClientMaster::find(session('client_id'));
+
+    if (!empty($query_client))
+        return $query_client->client_name;
+    else
+        return "";
+}
+
+function getClientName($user_id){
+    $query_client = VmtClientMaster::find(User::find($user_id)->client_id);
+
+    if (!empty($query_client))
+        return $query_client->client_name;
+    else
+        return "";
+}
+
 function getOrganization_HR_Details(){
     $master_config_value = VmtMasterConfig::where('config_name', 'hr_userid')->first();
 
@@ -33,11 +109,12 @@ function getOrganization_HR_Details(){
     else
     {
         $master_config_value = $master_config_value->config_value;
-    
+
         $hr_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id','=','users.id')
         ->where('users.id',$master_config_value)->first(['users.name','vmt_employee_office_details.officical_mail']);
 
     }
+    // dd($hr_details);
 
     return $hr_details;
 
@@ -94,6 +171,9 @@ function getTeamMembersUserIds($user_id){
     return $user_ids;
 }
 
+/*
+    !!!! TODO :  Need to remove this function
+*/
 function getCurrentClientName(){
     $client_name = VmtClientMaster::all()->value('client_name');
     //dd($client_name);
@@ -109,14 +189,10 @@ function hasSubClients()
         return false;
 }
 
-function getAllLeaveTypes()
-{
-    return VmtLeaves::all(['id','leave_type']);
-}
 
-function fetchSubClients(){
+function fetchClients(){
 
-    return VmtClientMaster::all(['id','client_name']);
+    return VmtClientMaster::all(['id','client_name','client_logo']);
 
 }
 
@@ -222,9 +298,11 @@ function fetchSubClients(){
 
     function isAppointmentLetterTemplateAvailable(){
 
-        $client_name = Str::lower(str_replace(' ', '', getCurrentClientName()) );
-        $viewfile_appointmentletter = 'mailtemplate_appointmentletter_'.$client_name;
+        $client_name = str_replace(' ', '', sessionGetSelectedClientName());
 
+        //$client_name = Str::lower(str_replace(' ', '', getCurrentClientName()) );
+        $viewfile_appointmentletter = 'mailtemplate_appointmentletter_'.$client_name;
+        //dd($viewfile_appointmentletter);
         //dd('vmt_appointment_templates.'.$viewfile_appointmentletter);
         //Throw error if appointment letter missing for this client
         if (view()->exists('vmt_appointment_templates.'.$viewfile_appointmentletter)) {

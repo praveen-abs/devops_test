@@ -1,169 +1,220 @@
+<?php
+//$employee = \DB::table('vmt_employee_payslip')->first();
+$general_info = \DB::table('vmt_general_info')->first();
+//$employee_name =  \DB::table('users')->where('user_code','=',$employee->EMP_NO)->first('name');
+$client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
+// dd(request()->getSchemeAndHttpHost()."".$general_info->logo_img);
+
+
+?>
+
 
 <!DOCTYPE html>
-<html lang="en" >
-<head>
-  <meta charset="UTF-8">
-  <title>ABShrms - Password Reset Mail </title>
-
-
-</head>
-<body>
-<!-- partial:index.partial.html -->
-<!doctype html>
-<html lang="en-US">
+<html lang="en">
 
 <head>
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <style>
+        .txt-left {
+            text-align: left;
+        }
 
-    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-    <title></title>
-    <meta name="description" content="New Account Email Template.">
-    <style type="text/css">
-        a:hover {text-decoration: underline !important;}
-        .button {
-  padding: 1px 10px;
-  font-size: 19px;
-  text-align: center;
-  cursor: pointer;
-  outline: none;
-  color: orange;
-  background-color: orange;
+        .txt-right {
+            text-align: right;
+        }
 
-  border-radius: 15px;
+        .txt-center {
+            text-align: center;
+        }
 
-}
+        .text-strong {
+            font-weight: 600;
+        }
 
-.button:hover {background-color: #3e8e41}
-
-.button:active {
-  background-color: #3e8e41;
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
-
-.bgimage {
-  background-image: url("https://demo.abshrms.com/assets/images/email/Background.jpg");
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: 100% 100%;
-}
-
+        .p-top_5 {
+            padding-top: 5px;
+        }
+        /* table tr td{
+            padding: 0px;
+        } */
+        .padding-0{
+            padding: 0px;
+        }
     </style>
 </head>
-<body marginheight="0" topmargin="0" marginwidth="0" leftmargin="0">
-    <div class="bgimage">
-    <!-- 100% body table -->
-    <table cellspacing="0" border="0" cellpadding="0" width="100%" bgcolor=""
-        style="@import url(https://fonts.googleapis.com/css?family=Rubik:300,400,500,700|Open+Sans:300,400,600,700); font-family: 'Open Sans', sans-serif;">
-        <tr>
-            <td>
-                <table style="background-color: #0f30d800; max-width:670px; margin:0 auto;" width="100%" border="0"
-                    align="center" cellpadding="0" cellspacing="0">
-                    <tr>
-                        <td style="height:80px;">&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:center;">
-                            <a href="https://abshrms.com" title="logo" target="_blank">
-                            <img src="{{$image_view}}" style="width:140px; height:40px;" alt="">
-                          </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="height:20px;">&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <table cellpadding="0" cellspacing="0" class="brand-content"
-                                style=" width: 100%;
-                                height: 332px;
-                                background-image:url('https://demo.abshrms.com/assets/images/email/team.jpg');
-                                background-size: cover;
-                                text-align: center;
-                                position: relative;">
-                                <tr>
-                                    <td style="height:40px;">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding:0 35px;">
-                                        <h1  style="color: #fff;">Attendance Regularization Mail</h1>
-                                       <br>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="height:40px;">&nbsp;</td>
-                                </tr>
-                            </table>
-                            <br>
-                            <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0"
-                                style="max-width:500px; background:#fff; border-radius:3px; text-align:center;-webkit-box-shadow:0 6px 18px 0 rgba(0,0,0,.06);-moz-box-shadow:0 6px 18px 0 rgba(0,0,0,.06);box-shadow:0 6px 18px 0 rgba(0,0,0,.06);">
-                                <tr>
-                                    <td style="height:40px;">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding:0 35px;">
 
-                                      <h5 class="card-title fw-bold text-center m-3"></h5>
-                                      <p class="text-start ">Hello, {{ $employeeName}} - {{ $empCode}} </p>
-                                      <p class="text-start ">{!! $mail_message !!}</p>
-                                      <p class="text-start ">Please click the below link to regularize your attendance</p>
+<body style="background-color:; padding: 5px; margin: 0;">
+    <table id="wrapper" cellpadding="0" cellspacing="0" width="552"
+        style="max-width:552px; height: auto; margin: 0 auto;   font-size: 14px !important; color: #403e3c; line-height: 24px;">
+        <tbody>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="24" cellspacing="0" bgcolor="#ffffff"
+                        style="border-bottom-left-radius: 4px; border-bottom-right-radius: 4px;padding-top:0px;border: 1px solid #ccc;">
+                        <tbody>
+                            <tr>
+                                <td align="center" style="padding:0;">
+
+                                    <table cellpadding="20" cellspacing="0" width="100%" align="center">
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="4" align="center" class="border-less">
+                                                    <img src={{ $client_logo }} style="height:45px;width:150px;"
+                                                        title="">
+                                                </td>
+                                            </tr>
 
 
-                                        <a href="{{ route('attendance-timesheet') }}" style="background:blue;text-decoration:none !important; display:inline-block; font-weight:500; margin-top:24px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;" type="submit">Regularize Attendance</a>
+                                            <tr>
+                                                <td colspan="4" align="center" class="border-less padding-0">
+                                                    <h3>Attendance Regularization Mail</h3>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="8" align="center" class="padding-0">
+                                                    <table>
+                                                        <tbody>
+                                                            <tr>
+                                                                @if ($empAvatar['type'] == 'shortname')
+                                                                    <td align="center"
+                                                                        style="height: 100px;
+                                                                        width: 100px;border-radius: 50%;background:#002f56;color:#ffffff;font-size:20px;font-weight:600;">
+                                                                        {{ $empAvatar['data'] }}
+                                                                    </td>
+                                                                @elseif($empAvatar['type'] == 'avatar')
+                                                                    <td align="center"
+                                                                        style="height: 100px;
+                                                                        width: 100px;border-radius: 50%;">
 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="height:40px;">&nbsp;</td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="height:20px;">&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:center;">
-                           <p class="text-muted"> This e-mail was generated from ABShrms If you think this is SPAM, please do report to
-                <a href="info@abshrms.com">info@abshrms.com</a>
-            </p>
-            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" integrity="sha384-3AB7yXWz4OeoZcPbieVW64vVXEwADiYyAEhwilzWsLw+9FgqpyjjStpPnpBO8o8S" crossorigin="anonymous">
+                                                                        <?php
 
-                <i><a href="
-                    https://www.ardens.in/"><img src="{{url('assets/images/email/google.png')}}" width="30px" height="30px" ></a></i>
-                <i><a href="https://www.facebook.com/ArdensHR"><img src="{{url('assets/images/email/facebook-logo-2019.png')}}" width="30px" height="30px" ></a></i>
-                <i><a href="https://www.linkedin.com/company/ardenshr-services-private-limited/"><img src="{{url('assets/images/email/linkedin (1).png')}}" width="30px" height="30px" ></a></i>
-                <i><a href="https://twitter.com/HrArdens"><img src="{{url('assets/images/email/twitter.png')}}" width="30px" height="30px" ></a></i>
-                <i><a href="https://www.youtube.com/channel/UCgZ7XpBoJvcWWvaiBS5GxHg"><img src="{{url('assets/images/email/movie.png')}}" width="30px" height="30px" ></a></i>
-                <i><a href="https://www.instagram.com/ardenshr/"><img src="{{url('assets/images/email/instagram.png')}}" width="30px" height="30px" ></a></i>
+                                                                        $imageURL = request()->getSchemeAndHttpHost() . '/images/' . $empAvatar['data'];
+
+                                                                        ?>
+                                                                        <img class="rounded-circle header-profile-user"
+                                                                            src="{{ $imageURL }}"
+                                                                            alt="user_image"
+                                                                            style="height: 100%;width: 100%;border-radius: 50%;">
+                                                                    </td>
+                                                                @endif
+                                                            </tr>
+                                                        </tbody>
+
+                                                    </table>
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" align="center" class="border-less" style="padding-top: 0px;">
+                                                    <p class="text-strong p-top_5">{{ $employeeName}}</p>
+                                                    {{-- <p  style="padding-top:5px;">hiee</p> --}}
+                                                    <p class=" ">{!! $mail_message !!}</p>
+
+                                                    <p class="   ">Please click the below link to regularize your
+                                                        attendance</p>
+                                                    <a href="{{ $loginLink }}/attendance-timesheet" style="text-decoration: none;
+                                                    margin-left: 10px;
+                                                    color: #ffffff;
+                                                    cursor: pointer;
+                                                    padding: 7px 14px;
+                                                    border: 2px solid #fa9530;
+                                                    background: #fa9530;
+                                                    border-radius: 4px;
+                                                    font-weight: 600;"
+                                                        type="submit">Regularize Attendance</a>
+                                                </td>
+                                            </tr>
 
 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="height:80px;">&nbsp;</td>
-                    </tr>
-                </table>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
 
-            </td>
-        </tr>
+                            <tr>
+                                <td style="padding: 0px;">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td align="center" style="padding:10px 0px 0px 0px">
+                                                    This e-mail was generatd from ABShrms if you think this is
+                                                    SPAM,please do report to<a href="info@abshrms.com"
+                                                        style="text-decoration: none;color:none;"> info<span
+                                                            style="color:#fa9530;">@abshrms.com</span></a>
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-bottom: 10px">
+                                    <table style="text-align:center; width:100%; padding:10px 0px;">
+                                        <tbody>
+                                            <tr>
+                                                <td align="right" colspan="4" style="padding: 0;">
+                                                    <a href="#" class="">
+                                                        <img src="{{ URL::asset('assets/images/Google_Play_Store.png') }}"
+                                                            alt="" class=""
+                                                            style="margin:0px 20px 0px 0px">
+                                                    </a>
+
+                                                </td>
+                                                <td align="left" colspan="4" style="padding: 0;">
+                                                    <a href="#" class="">
+                                                        <img src="{{ URL::asset('assets/images/apple_play_store.png') }}"
+                                                            alt="" class=""
+                                                            style="margin:0px 0px 0px 20px;">
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-top:0px;">
+                                    <table align="center" style="text-align:center;width:100%" width="100%">
+                                        <tbody>
+                                            <tr>
+                                                <td align="center" width="100%" style="padding:0px;"
+                                                    style="margin-right: 10px">
+                                                    <div class="fm-sm-container">
+                                                        <a href="https://www.linkedin.com/company/ardenshr-services-private-limited/"
+                                                            target="_blank" style="margin-right: 20px"><img
+                                                                src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-001.png"
+                                                                alt="LinkedIn"></a>
+                                                        <a href="https://www.instagram.com/ardenshr/" target="_blank"
+                                                            style="margin-right: 20px"><img
+                                                                src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-002.png"
+                                                                alt="Instagram"></a>
+                                                        <a href="https://www.facebook.com/ArdensHR" target="_blank"
+                                                            style="margin-right: 20px"><img
+                                                                src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-004.png"
+                                                                alt="Facebook"></a>
+                                                        <a href="https://www.youtube.com/channel/UCgZ7XpBoJvcWWvaiBS5GxHg"
+                                                            target="_blank"><img
+                                                                src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-003.png"
+                                                                alt="Youtube"></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+
+                            </tr>
+
+
+                        </tbody>
+                    </table>
+
+                </td>
+            </tr>
+
+
+        </tbody>
     </table>
-</div>
-    <!--/100% body table-->
-    <script src="{{ URL::asset('/assets/js/js/bootstrap.min.js') }}"></script>
-<script src="{{ URL::asset('/assets/js/js/jquery.min.js') }}"></script>
-       <!--  <script src="./Assets/js/bootstrap.min.js"></script>
-        <script src="./Assets/js/jquery.min.js"></script> -->
 </body>
 
 </html>
-<!-- partial -->
-
-</body>
-</html>
-
-

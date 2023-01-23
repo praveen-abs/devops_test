@@ -190,7 +190,7 @@ class HomeController extends Controller
         return redirect()->back();
     }
 
-    public function updtaeFamilyInfo(Request $request) {
+    public function updateFamilyInfo(Request $request) {
        // $familyInfo = 'name'=> $request->input('name'), 'relationship'=> $request->input('relationship'),'dob'=> $request->input('dob'), 'phone'=> $request->input('phone')]);
 
         //Delete existing family details
@@ -215,7 +215,7 @@ class HomeController extends Controller
         return redirect()->back();
     }
 
-    public function updtaeEmergencyInfo(Request $request) {
+    public function updateEmergencyInfo(Request $request) {
         //dd($request->all());
         $contact  = new VmtEmployeeEmergencyContactDetails;
         $contact->user_id =  $request->id;
@@ -346,6 +346,27 @@ class HomeController extends Controller
         return view('vmt_topbar_settings');
     }
 
+    public function update_client_logo(Request $request){
+
+     //dd($request->all());
+     // $user = Auth::user();
+        $client_logo_update =VmtClientMaster::first();
+
+
+        $count = sizeof($request->input('client_logo'));
+        for($i=0 ; $i < $count ; $i++)
+        {
+           // $client_logo_update = new VmtClientMaster;
+
+        $client_logo_update->client_logo = $request->input('client_logo')[$i];
+
+        $client_logo_update->save();
+        }
+        return redirect()->back();
+
+
+    }
+
     public function poll_voting(Request $request) {
         $polling = PollVoting::where('user_id', auth()->user()->id)->where('polling_id', $request->id)->first();
         if ($polling) {
@@ -403,6 +424,7 @@ class HomeController extends Controller
             $attendance->date = date('Y-m-d');
             $currentTime = new DateTime("now", new \DateTimeZone('Asia/Kolkata') );
             $attendance->checkin_time = $currentTime;
+            $attendance->attendance_mode_checkin = "web";
             $attendance->save();
 
             //Check whether if its LC/EG
@@ -416,6 +438,7 @@ class HomeController extends Controller
                 //dd("adsf");
                 $VmtGeneralInfo = VmtGeneralInfo::first();
                 $image_view = url('/') . $VmtGeneralInfo->logo_img;
+                $emp_avatar = getEmployeeAvatarOrShortName(auth::user()->id);
 
                 $isSent    = \Mail::to($user_mail)->send(new AttendanceCheckinCheckoutNotifyMail(
                     auth::user()->name,
@@ -423,6 +446,8 @@ class HomeController extends Controller
                     Carbon::parse($attendance->date)->format('M jS, Y'),
                     Carbon::parse($currentTime)->format('h:i:s A'),
                     $image_view,
+                    $emp_avatar,
+                    request()->getSchemeAndHttpHost(),
                     // Carbon::parse($leave_request_date)->format('M jS Y'),
                     $regularization_type
                 ));
@@ -442,6 +467,7 @@ class HomeController extends Controller
             $attendance->date = date('Y-m-d');
             $currentTime = new DateTime("now", new \DateTimeZone('Asia/Kolkata') );
             $attendance->checkout_time = $currentTime;
+            $attendance->attendance_mode_checkout = "web";
             $attendance->save();
 
             $checked = VmtEmployeeAttendance::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->first();
@@ -573,14 +599,17 @@ class HomeController extends Controller
         else
         {
             //get the client name from client table
-            $client_name = VmtClientMaster::first()->value('client_name');
-            $client_name = str_replace(' ', '', $client_name);
+            $client_name = str_replace(' ', '', sessionGetSelectedClientName());
             //dd($client_name);
         }
 
-        //choose the blade file
+        $viewfile = 'vmt_preview_templates.previewtemplate_'.strtolower($client_name);
 
-        return view('vmt_preview_templates.previewtemplate_'.strtolower($client_name) );
+        //dd($viewfile);
+        if (view()->exists($viewfile))
+            return view($viewfile);
+        else
+            return view('vmt_preview_templates.previewtemplate_nodata');
 
     }
 

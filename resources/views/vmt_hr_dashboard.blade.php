@@ -6,13 +6,9 @@
     <link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/holiday.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('/assets/css/calendar-vanila.css') }}">
+    <script src="{{ URL::asset('assets/js/calendar-vanila.js') }}" defer></script>
 
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-
-    <!--Custom style.css-->
-    <!-- <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/hr_dashboard.css') }}"> -->
-
-    <script src="{{ URL::asset('assets/js/calendar-vanila.js') }}" defer></script>
 @endsection
 
 @section('loading')
@@ -95,7 +91,7 @@
                         <div onClick="showOnlineUsers(this)" class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
                             <div class="card shadow profile-box topOrange-line  ">
                                 <div class="card-body d-flex text-center  flex-column">
-                                    <h6 class="fw-bold title" >Online</h6>
+                                    <h6 class="fw-bold title">Online</h6>
                                     <p class="number-increment text-muted f-15 fw-bold">
                                         {{ json_decode($json_dashboardCountersData)->todayEmployeesCheckedInCount }}</p>
                                 </div>
@@ -114,14 +110,10 @@
                             <div class="card profile-box flex-fill card-top-border w-100">
                                 <!-- <div class="p-1 bg-primary" ></div> -->
                                 <div class="card-body ">
-                                    <div class="profile-wrapper d-flex p-0">
-                                        <div class="popover-body p-0 w-100">
-                                            <div class="">
-                                                <div>
-                                                    <ul class="nav sub-topnav">
-                                                        <!-- <li class="title active topbarNav fw-bold" id="post_view"><a>View
-                                                                                                                                                        Post</a>
-                                                                                                                                                </li> -->
+
+
+
+                                                    <ul class="nav sub-topnav mb-2">
                                                         <li class="title  topbarNav fw-bold active" id="post">
                                                             <a>Post</a>
                                                         </li>
@@ -133,19 +125,13 @@
                                                         <li class="title topbarNav fw-bold" id="praise"><a>Praise</a>
                                                         </li>
                                                     </ul>
-                                                    <!-- code post view  -->
 
-
-                                                    <!-- emd view -->
                                                     <div class="topbarContent emp-post">
-                                                        <div>
-                                                            <div class="px-22 p-16 row no-gutters scrollBar">
 
-                                                                <textarea name="post_menu" id="post_menu" class="border-0 outline-none w-100 h-100" placeholder="Write your Post here"></textarea>
-
+                                                            <div class="my-2 scrollBar">
+                                                                <textarea name="post_menu" id="post_menu" class="form-control outline-none w-100 h-100" placeholder="Write your Post here"></textarea>
                                                             </div>
                                                             <div class="post-contents d-flex align-items-center mx-4">
-
                                                                 <div class="img-contents">
                                                                     <i class="ri-image-2-fill"></i>
                                                                     <input type="file" class="filestyle" name="image_src"
@@ -168,21 +154,18 @@
                                                                 Create Post
                                                             </button>
 
-                                                        </div>
                                                     </div>
                                                     <div class="topbarContent emp-announcement " style="display:none;">
                                                         <div>
                                                             <form id="announcement-form-submit">
                                                                 <div class="announcement-content scrollBar">
 
-                                                                    <input class="form-control   w-100 h-100"
-                                                                        aria-label="default input example"
+                                                                    <input class="form-control mb-2   w-100 h-100"
+
                                                                         placeholder="Title of the Announcement"
-                                                                        type="text" id="title_data" name="title_data"
-                                                                        required>
-                                                                    <hr>
-                                                                    <!-- <input class="form-control" type="text" placeholder="Default input" aria-label="default input example"> -->
-                                                                    <textarea class="form-control placeholder-glow w-100 h-100" placeholder="Details of Announcement"
+                                                                        type="text" id="title_data" name="title_data">
+
+                                                                    <textarea class="form-control  mb-2 w-100 h-100" placeholder="Details of Announcement"
                                                                         aria-label="default input example" type="text" name="details_data" id="details_data" required></textarea>
 
 
@@ -257,7 +240,7 @@
                                                             <div class="poll-content">
                                                                 <form id="polling-questions-form-submit">
                                                                     <input type="text" name="question" id=""
-                                                                        class="form-control border-0 outline-none"
+                                                                        class="form-control outline-none"
                                                                         placeholder="What this poll is about" required>
                                                                     <hr>
                                                                     <div class="content-container">
@@ -345,7 +328,7 @@
                                                             <form id="praise-form-submit">
                                                                 <div>
                                                                     <div class="px-20 p-16 row no-gutters scrollBar">
-                                                                        <textarea name="praise_data" id="" cols="30" rows="3" class="border-0 outline-none w-100"
+                                                                        <textarea name="praise_data" id="" placeholder="Praise..." cols="30" rows="3" class=" form-control outline-none w-100"
                                                                             required></textarea>
                                                                     </div>
                                                                     <div class="text-end mt-2">
@@ -358,10 +341,8 @@
                                                             </form>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+
+
                                 </div>
                             </div>
                         </div>
@@ -438,31 +419,30 @@
 
 
     <script>
-            function showOnlineUsers(element) {
+        function showOnlineUsers(element) {
 
-                //create table
-                <?php
-                    $online_users = json_decode($json_dashboardCountersData)->todayEmployeesCheckedIn;
-                    $html = "<ul>";
-                    foreach($online_users as $singleUser )
-                    {
-                        $html = $html."<li>".$singleUser->name."</li>";
-                    }
-                    $html = $html."</ul>";
-                ?>
-
-                //
-
-
-                // console.log(user_content);
-
-                Swal.fire({
-                    title: 'Online Employees',
-                    html: '{!! $html!!}'
-                });
-
-                //alert("karthick");
+            //create table
+            <?php
+            $online_users = json_decode($json_dashboardCountersData)->todayEmployeesCheckedIn;
+            $html = '<ul>';
+            foreach ($online_users as $singleUser) {
+                $html = $html . '<li>' . $singleUser->name . '</li>';
             }
+            $html = $html . '</ul>';
+            ?>
+
+            //
+
+
+            // console.log(user_content);
+
+            Swal.fire({
+                title: 'Online Employees',
+                html: '{!! $html !!}'
+            });
+
+            //alert("karthick");
+        }
 
 
         $(document).ready(function() {

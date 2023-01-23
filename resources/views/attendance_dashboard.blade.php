@@ -261,18 +261,19 @@
                         <div class="tab-content" id="pills-tabContent">
                             <div class="tab-pane show fade active" id="pills_employeeCount" role="tabpanel"
                                 aria-labelledby="pills-profile-tab">
-                                {{-- <div class="text-center">
-                                    <div class="d-flex justify-content-center">
-                                        <div style="height: 300px;max-width:500px;" class="">
-                                            <img src="{{ URL::asset('assets/images/no_dataFile.svg') }}"
-                                                class="h-100 w-100" alt="user-pic" </div>
-                                        </div>
 
-                                    </div>
-                                    <h4> <span class="text-orange">Sorry !</span> No data</h4>
-                                </div> --}}
                                 <div class="col-10 mx-auto">
-                                    <canvas id="employeeCountChart" style="width:100%;height:300px"></canvas>
+                                    {{-- <canvas id="employeeCountChart" style="width:100%;height:300px"></canvas> --}}
+                                    <div class="text-center">
+                                        <div class="d-flex justify-content-center">
+                                            <div style="height: 300px;max-width:500px;" class="">
+                                                <img src="{{ URL::asset('assets/images/no_dataFile.svg') }}"
+                                                    class="h-100 w-100" alt="user-pic" </div>
+                                            </div>
+
+                                        </div>
+                                        <h4> <span class="text-orange">Sorry !</span> No data</h4>
+                                    </div>
                                 </div>
 
 
@@ -280,7 +281,17 @@
                             <div class="tab-pane fade" id="pills_employeePercentage" role="tabpanel"
                                 aria-labelledby="pills-contact-tab">
                                 <div class="col-10 mx-auto">
-                                    <canvas id="employeePercentageChart" style="width:100%;height:300px"></canvas>
+                                    {{-- <canvas id="employeePercentageChart" style="width:100%;height:300px"></canvas> --}}
+                                    <div class="text-center">
+                                        <div class="d-flex justify-content-center">
+                                            <div style="height: 300px;max-width:500px;" class="">
+                                                <img src="{{ URL::asset('assets/images/no_dataFile.svg') }}"
+                                                    class="h-100 w-100" alt="user-pic" </div>
+                                            </div>
+
+                                        </div>
+                                        <h4> <span class="text-orange">Sorry !</span> No data</h4>
+                                    </div>
                                 </div>
                             </div>
 

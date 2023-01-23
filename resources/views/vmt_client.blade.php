@@ -1,4 +1,4 @@
-@extends('layouts.master')
+{{-- @extends('layouts.master') --}}
 @section('css')
     <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('assets/css/crm.css') }}" rel="stylesheet">
@@ -77,10 +77,10 @@
     </style>
 @endsection
 
-@section('content')
-    <div class="client-wrapper mt-30 card ">
+{{-- @section('content') --}}
+    <div class="client-wrapper card ">
         <div class="card-body">
-            <h6 class="mb-0">Client List</h6>
+
             <div class=" text-end">
                 <button class="btn btn-orange me-2" data-bs-toggle="modal" data-bs-target="#newClient"
                 onclick="window.location='{{ route('vmt_clientOnboarding-route'); }}'">New
@@ -90,96 +90,8 @@
                 </button> --}}
             </div>
 
-
-            {{-- <div class="modal fade" id="newClient" tabindex="-1" aria-labelledby="newInventry" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-scrollable  modal-lg">
-                    <div class="modal-content top-line">
-                        <div class="modal-header border-0 py-2">
-                            <h6 class="modal-title" id="exampleModalLabel">Add New Cient</h6>
-                            <button type="button" class="modal-close outline-none  border-0" data-bs-dismiss="modal"
-                                aria-label="Close">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-                                    <div class="mb-2 floating-label">
-                                        <label for="" class="  float-label">Client ID<span
-                                                class="text-danger">*</span></label>
-                                        <input type="text" class="form-control textbox " id=""
-                                            placeholder="Client ID">
-
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-                                    <div class="mb-2 floating-label">
-                                        <label for="" class="  float-label">Name<span
-                                                class="text-danger">*</span></label>
-                                        <input type="text" class="form-control textbox" id=""
-                                            placeholder=" Name">
-
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-                                    <div class="mb-2 floating-label">
-                                        <label for="" class="  float-label">Contact<span
-                                                class="text-danger">*</span></label>
-                                        <input type="text" class="form-control textbox" id="lead-name"
-                                            placeholder="Contact">
-
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-                                    <div class="mb-2 floating-label">
-                                        <label for="" class="  float-label">Email</label>
-                                        <input type="text" class="form-control textbox" id="position"
-                                            placeholder="Email">
-
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-                                    <div class="mb-2 floating-label">
-                                        <label for="" class="  float-label">Company Name</label>
-                                        <input type="text" class="form-control textbox" id="lead-email"
-                                            placeholder="Company Name">
-
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-
-                                    <div class="mb-2 floating-label">
-
-                                        <label for="" class="  float-label">Customer type</label>
-                                        <input type="text" class="form-control textbox" id=""
-                                            placeholder="Customer type">
-
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-                                    <div class="mb-2 floating-label">
-                                        <label for="" class=" float-label">Status</label>
-                                        <input type="text" class="form-control textbox" id="lead-email"
-                                            placeholder="Status">
-
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="modal-footer border-0 py-2">
-                            <button type="button" class="btn btn-border-primary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save</button>
-                        </div>
-                    </div>
-                </div>
-
-
-            </div> --}}
-
             <div class="client-table-wrapper">
-                <div     id="client-table" class="noCustomize_gridjs"></div>
+                <div id="client-table" class="noCustomize_gridjs"></div>
             </div>
 
 
@@ -292,8 +204,8 @@
             </div> --}}
         </div>
     </div>
-@endsection
-@section('script')
+{{-- @endsection --}}
+@section('script-gridjs-clients')
     <script>
         $(document).ready(function() {
 
@@ -353,47 +265,6 @@
                             name: 'Subscription Type',
                             // hidden:true,
                         }
-                        // {
-                        //     id: 'assigned_date',
-                        //     name: 'Assigned Date',
-                        // },
-                        // {
-                        //     id: 'invoice',
-                        //     name: 'Invoice',
-                        //     formatter: function formatter(cell) {
-                        //         var URL = "{{ url('/assets/') }}" + "/" + cell;
-                        //         return gridjs.html('<a href=' + URL +
-                        //             ' target="_blank"><span class="text-link" style=" color: blue;"><i class="icon icon-lg text-info  ri-download-2-line text-primary fw-bold"></i></span></a>'
-                        //         );
-                        //     }
-                        // },
-                        // {
-                        //     id: 'id',
-                        //     name: 'Edit',
-                        //     formatter: function formatter(cell) {
-
-                        //         var htmlcontent =
-                        //             '<a  class="trigger_asset_edit" ><span class="text-link" style=" color: blue;"><i class="icon icon-lg  ri-pencil-line text-dark fw-bold"></i></span></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
-                        //         var html_edit="<button style='font-size:24px' onclick='hello()'>Edit</button>";
-                        //         var html_delete = '<a href='+url_delete+' target="_blank"><span class="text-link" style=" color: blue;"><i class="icon icon-lg  ri-delete-bin-line text-primary fw-bold"></i></span></a>';
-
-                        //         return gridjs.html(htmlcontent);
-                        //     }
-                        // },
-                        // {
-                        //     id: 'delete',
-                        //     name: 'Delete',
-                        //     formatter: function formatter(cell) {
-
-
-                        //         var htmlcontent =
-                        //             '<a  class="trigger_asset_delete" ><span class="text-link" style=" color: blue;"><i class="icon icon-lg text-danger ri-delete-bin-line text-primary fw-bold"></i></span></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
-                        //         var html_edit="<button style='font-size:24px' onclick='hello()'>Edit</button>";
-                        //         var html_delete = '<a href='+url_delete+' target="_blank"><span class="text-link" style=" color: blue;"><i class="icon icon-lg  ri-delete-bin-line text-primary fw-bold"></i></span></a>';
-
-                        //         return gridjs.html(htmlcontent);
-                        //     }
-                        // }
                     ],
                     pagination: {
                         limit: 10
@@ -412,29 +283,11 @@
                                 client.authorised_person_contact_email,
                                 client.contract_start_date,
                                 client.contract_end_date,
-                                // client.cin_number,
-                                // client.company_tan,
-                                // client.company_pan,
-                                // client.gst_no,
-                                // client.epf_reg_number,
-                                // client.esic_reg_number,
-                                // client.prof_tax_reg_number,
-                                // client.lwf_reg_number,
-                                // client.authorised_person_name,
-                                // client.authorised_person_designation,
-                                // client.billing_address,
-                                // client.shipping_address,
-                                // client.product,
                                 client.subscription_type,
 
                             ]
                         )
                     },
-
-
-
-
-
                 }).render(document.getElementById("client-table")); // card Table
             }
         });

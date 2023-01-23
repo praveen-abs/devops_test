@@ -2,23 +2,19 @@
 @section('css')
 <link href="{{ URL::asset('assets/css/appraisal_review.css') }}" rel="stylesheet">
 <link rel="stylesheet" href="{{ URL::asset('/assets/css/pages_profile.css') }}">
-
+<link rel="stylesheet" href="{{ URL::asset('/assets/css/assign_goals.css') }}">
 
 @endsection
 
 
 @section('content')
     <div class="loader" style="display:none;"></div>
-    {{-- @component('components.performance_breadcrumb')
-        @slot('li_1')
-        @endslot
-    @endcomponent --}}
+
 
 
 
     <div class="container-fluid assign-goal-wrapper mt-30">
         <div class="cards-wrapper">
-
             @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR', 'Manager']))
 
                 <div class="row">
@@ -244,15 +240,7 @@
                                                     <div class="col-2">
                                                         {{-- <span class="text-primary f-15 fw-bold">1/3</span> --}}
                                                         <b class="f-15 text-primary">
-                                                            @if (!empty($isAllReviewersSubmittedOrNot))
-                                                                @if ($ratingDetail)
-                                                                    {{ $ratingDetail['rating'] }}
-                                                                @else
-                                                                    -
-                                                                @endif
-                                                            @else
-                                                                -
-                                                            @endif
+                                                                {{ calculateOverallReviewRating(auth()->user()->id) ."%" }}
                                                         </b>
                                                     </div>
                                                 </div>
@@ -360,7 +348,7 @@
                             <div class="p-3 justify-content-center d-flex align-items-center"><img
                                     src="{{ URL::asset('assets/images/assign_goals.png') }}"
                                     style="width:280px;min-height:250px;"></div>
-                            <h4 class="fw-bold">Assign Goals for your employees</h4>
+                            <h6 class="fw-bold">Assign Goals for your employees</h6>
                             <button id="add-goals" class="btn btn-orange mt-1">
                                 <i class="text-white fa fa-plus me-1"></i>
                                 Add
@@ -436,7 +424,7 @@
                                                                 <td class="d-none">{{ $key1 }}</td>
                                                                 <td class="">
                                                                     {{-- <div class="td_content_center">{{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</div> --}}
-                                                                    <div class="row page-header-user-dropdown align-items-center"
+                                                                    <div class="row page-header-user-dropdown ms-4 align-items-center"
                                                                         style="width:200px;min-width: 230px;">
                                                                         <?php
                                                                         $employee_icon = getEmployeeAvatarOrShortName($assigneeId);
@@ -444,7 +432,7 @@
                                                                         ?>
                                                                         @if (!empty($employee_icon))
                                                                             @if ($employee_icon['type'] == 'shortname')
-                                                                                <div class="col-auto p-0">
+                                                                                <div class="col-auto p-0 me-1">
                                                                                     <span
                                                                                         class="rounded-circle user-profile  ml-2 "
                                                                                         id="">
@@ -453,14 +441,14 @@
                                                                                     </span>
                                                                                 </div>
                                                                             @elseif($employee_icon['type'] == 'avatar')
-                                                                                <div class="col-auto p-0">
+                                                                                <div class="col-auto p-0 me-1">
                                                                                     <img class="rounded-circle header-profile-user"
                                                                                         src=" {{ URL::asset('images/' . $employee_icon['data']) }}"
                                                                                         alt="--">
                                                                                 </div>
                                                                             @endif
                                                                         @endif
-                                                                        <div class="col-auto p-0">
+                                                                        <div class="col-auto me-1 p-0">
                                                                             <span class="f-12 ml-3">
                                                                                 <span class="">
                                                                                     {{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</span>
@@ -756,10 +744,10 @@
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
                     <h6 class="modal-title">
                         New Assign Goals</h6>
-                        <button type="button" class="close outline-none bg-transparent border-0 h3"
-                            data-bs-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
+                    <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
+                        aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
 
                 </div>
                 <div class="modal-body">
@@ -782,7 +770,7 @@
                                         <label for="calendar_type">Calendar Type</label>
                                         <span id="spanCalenderType" class="form-control">{{ $calendar_type }}</span>
                                         <input type="hidden" name="calendar_type" id="calendar_type"
-                                            value="{{ $calendar_type }}" >
+                                            value="{{ $calendar_type }}">
 
                                     </div>
                                     <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
@@ -801,9 +789,7 @@
                                     </div>
                                     <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4  mb-2">
                                         <label class="" for="assignment_period_start">Assignment Period</label>
-                                        <span
-
-                                            class="form-control">{{  ucfirst($assignment_period) }}</span>
+                                        <span class="form-control">{{ ucfirst($assignment_period) }}</span>
 
                                         <input type="hidden" name="assignment_period_start" id="assignment_period_start"
                                             class="form-control "value="{{ $assignment_period }}">
@@ -829,7 +815,8 @@
                                             <!-- flow 1 -->
                                             <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
                                                 <label class="" for="">Employees</label>
-                                                <input type="hidden" id="hidden_selectedEmployees" name="employees" value="{{ $loggedInUser->id }}">
+                                                <input type="hidden" id="hidden_selectedEmployees" name="employees"
+                                                    value="{{ $loggedInUser->id }}">
                                                 <input type="text" disabled class="form-control increment-input"
                                                     placeholder="Employee" value="{{ $loggedInUser->name }}">
                                             </div>
@@ -981,7 +968,7 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable fad  modal-md" role="document">
             <div class="modal-content top-line">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h6 class="modal-title " >
+                    <h6 class="modal-title ">
                         Change Reviewer</h6>
                     <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
                         aria-label="Close">
@@ -1038,8 +1025,8 @@
                 <div class="modal-body">
 
                     <h4 class="mb-3" id="modalNot">Data Saved Successfully!</h4>
-                    <p class="text-muted mb-4" id="modalBody"> Table Saved, Please publish goals.</p>
-                    <div class="hstack gap-2 justify-content-center">
+                    <p class="text-muted mb-2" id="modalBody"> Table Saved, Please publish goals.</p>
+                    <div class="modal-footer p-0 border-0">
                         <button type="button" class="btn btn-light close-modal" data-bs-dismiss="modal">Close</button>
                     </div>
 
@@ -1054,7 +1041,7 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-md" role="document">
             <div class="modal-content top-line">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h6 class="modal-title " >
+                    <h6 class="modal-title ">
                         Edit Employee</h6>
                     <button type="button" id="closebtn_editEmployees"
                         class="close outline-none bg-transparent border-0 h3 " data-bs-dismiss="modal"
@@ -1230,7 +1217,7 @@
             var username =
                 '{{ auth()->user()->name ??
                     '
-                                                                                                                                                                                                                                                                                                                                                                                ' }}';
+                                                                                                                                                                                                                                                                                                                                                                                                ' }}';
             const splitArray = username.split(" ");
             var finalname = "empty111";
 
@@ -1953,13 +1940,11 @@
             var t_selectedEmployeesId = $('.select-employee-dropdown').val();
 
             //For flow 3, fetch from 'employees' elementname
-            if(t_selectedEmployeesId == '')
-            {
+            if (t_selectedEmployeesId == '') {
                 t_selectedEmployeesId = [$('#hidden_selectedEmployees').val()];
-                console.log("Fetched selected employees from hidden vars : "+t_selectedEmployeesId);
-            }
-            else
-                console.log("Selected Employees : "+t_selectedEmployeesId);
+                console.log("Fetched selected employees from hidden vars : " + t_selectedEmployeesId);
+            } else
+                console.log("Selected Employees : " + t_selectedEmployeesId);
 
 
             var assignmentPeriod = $('#assignment_period_start').val();
@@ -1985,8 +1970,7 @@
                         if (data.status == true) {
                             console.log("KPI already assigned...! ");
 
-                            if($('#flowCheck').val() == '3')
-                            {
+                            if ($('#flowCheck').val() == '3') {
                                 console.log("PMS Flow 3 : Show Error message");
 
                                 Swal.fire(
@@ -1995,9 +1979,7 @@
                                     'warning'
                                 );
 
-                            }
-                            else
-                            {
+                            } else {
                                 $('#edit-employee-error-message').append("<b><u>" + data.message +
                                     "</u></b><br/>");
                                 $('#edit-employee-error-message').append("<ul>");

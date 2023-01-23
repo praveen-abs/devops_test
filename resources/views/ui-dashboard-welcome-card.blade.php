@@ -92,8 +92,8 @@
                     </lord-icon>
                 </div>
                 <div class="mt-2">
-                    <h4 class="mb-2">Hello {{ auth()->user()->name }}</h4>
-                    <p class="text-muted mb-4"> Welcome back!</p>
+                    <h4 class="mb-2">Welcome {{ auth()->user()->name }}</h4>
+                    <p class="text-muted mb-4">Have a good day !</p>
                     <div class="hstack gap-2 justify-content-center">
                         <a href="javascript:void(0);" class="btn btn-link link-success fw-medium"
                             data-bs-dismiss="modal">
@@ -126,8 +126,8 @@
 
                 </div>
                 <div class="mt-4">
-                    <h4 class="mb-3">Good-bye {{ auth()->user()->name }}</h4>
-                    <p class="text-muted mb-4"> Checked out!</p>
+                    <h4 class="mb-3">Bye {{ auth()->user()->name }}</h4>
+                    <p class="text-muted mb-4"> See you tommorrow</p>
                     <div class="hstack gap-2 justify-content-center">
                         <a href="javascript:void(0);" class="btn btn-link link-success fw-medium"
                             data-bs-dismiss="modal">

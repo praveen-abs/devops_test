@@ -13,7 +13,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
     @lang('translation.dashboards')
 @endsection
 @section('css')
-    <link rel="stylesheet" href="{{ URL::asset('/assets/css/calendar-vanila.css') }}">
+<link rel="stylesheet" href="{{ URL::asset('/assets/css/calendar-vanila.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('/assets/css/attendance_calendar.css') }}">
 @endsection
 @section('content')
@@ -201,13 +201,41 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         <div class="row">
                                             <div class="col-6"><label class="text-ash-medium fs-15">Reason</label></div>
                                             <div class="col-6">
-                                                <select name="reason" class="form-select btn-line-orange" id=""
+                                                <select name="reason" class="form-select btn-line-orange" id="reason_mip"
                                                     onchange="showReasonBox(this)">
                                                     <option selected hidden disabled>
-                                                        Choose Reason
+                                                        Choose Reason for MIP
                                                     </option>
                                                     <option value="Permission">Permission</option>
                                                     <option value="Forgot to Punch">Forgot to Punch</option>
+                                                    <option value="Technical Error">Technical Error</option>
+                                                    <option value="Others">Others</option>
+                                                </select>
+                                                <select name="reason" class="form-select btn-line-orange" id="reason_mop"
+                                                    onchange="showReasonBox(this)">
+                                                    <option selected hidden disabled>
+                                                        Choose Reason for MOP
+                                                    </option>
+                                                    <option value="Permission">Permission</option>
+                                                    <option value="Forgot to Punch">Forgot to Punch</option>
+                                                    <option value="Technical Error">Technical Error</option>
+                                                    <option value="Others">Others</option>
+                                                </select>
+                                                <select name="reason" class="form-select btn-line-orange" id="reason_lc"
+                                                    onchange="showReasonBox(this)">
+                                                    <option selected hidden disabled>
+                                                        Choose Reason for LC
+                                                    </option>
+                                                    <option value="Permission">Permission</option>
+                                                    <option value="Technical Error">Technical Error</option>
+                                                    <option value="Others">Others</option>
+                                                </select>
+                                                <select name="reason" class="form-select btn-line-orange" id="reason_eg"
+                                                    onchange="showReasonBox(this)">
+                                                    <option selected hidden disabled>
+                                                        Choose Reason for EG
+                                                    </option>
+                                                    <option value="Permission">Permission</option>
                                                     <option value="Technical Error">Technical Error</option>
                                                     <option value="Others">Others</option>
                                                 </select>
@@ -296,13 +324,13 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
 
 
-        function ajaxGetMonthlyDate_TimeSheet(selectedMonth, selectedUserID) {
+        function ajaxGetMonthlyDate_TimeSheet(selectedMonth, selectedYear, selectedUserID) {
             $.ajax({
                 url: "{{ route('fetch-attendance-user-timesheet') }}",
                 type: "GET",
                 data: {
                     month: selectedMonth + 1,
-                    year: new Date().getFullYear(),
+                    year: selectedYear,
                     user_id: selectedUserID,
                     _token: '{{ csrf_token() }}'
                 },
@@ -325,7 +353,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                     //             '</li>';
 
                     // $('#sidepanel_employees_list').append(html);
-                    showCalendar(selectedMonth, '2022', data);
+                    showCalendar(selectedMonth, selectedYear, data);
 
                 }
             });
@@ -367,7 +395,8 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                         }
 
                         var html = '<li class="list_employee_attendance p-1 w-100" >' +
-                            '<button class="w-100 btn d-flex employee_list_item border-0" data-userid=' +
+                            '<a class="w-100  d-flex employee_list_item w-100 p-2" data-userid=' +
+
                             element
                             .id + '>' +
                             '<div class=" me-2 d-flex col-auto">' +
@@ -377,7 +406,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                             '<p class="fw-bold text-primary f-13">' + element.name + '</p>' +
                             '<p class=" text-muted f-11">' + element.designation + '</p>' +
                             '</div>' +
-                            '</button>' +
+                            '</a>' +
                             '</li>';
 
                         $('#sidepanel_employees_list').append(html);
@@ -391,8 +420,8 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                     //when employee name selected, update the calendar
                     $('.employee_list_item').click(function() {
                         currentlySelectedUser = $(this).attr('data-userid');
-                        console.log("currentlySelectedUser : " + currentlySelectedUser);
-                        ajaxGetMonthlyDate_TimeSheet(currentMonth, currentlySelectedUser);
+                        console.log("currentlySelectedUser : " + currentlySelectedUser+", Month - Year : "+currentMonth+" , "+currentYear);
+                        ajaxGetMonthlyDate_TimeSheet(currentMonth, currentYear, currentlySelectedUser);
 
                     });
 
@@ -439,7 +468,8 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
 
                         var html = '<li class="list_employee_attendance p-1 " >' +
-                            '<button class=" btn d-flex employee_list_item border-0" data-userid=' +
+                            '<a class="  d-flex employee_list_item w-100 p-2" data-userid=' +
+
                             element
                             .id + '>' +
                             '<div class="col-auto me-2 ">' +
@@ -449,7 +479,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                             '<p class="fw-bold text-primary f-13">' + element.name + '</p>' +
                             '<p class=" text-muted f-11">' + element.designation + '</p>' +
                             '</div>' +
-                            '</button>' +
+                            '</a>' +
                             '</li>';
 
                         $('#sidepanel_employees_list').append(html);
@@ -463,8 +493,8 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                     //when employee name selected, update the calendar
                     $('.employee_list_item').click(function() {
                         currentlySelectedUser = $(this).attr('data-userid');
-                        console.log("currentlySelectedUser : " + currentlySelectedUser);
-                        ajaxGetMonthlyDate_TimeSheet(currentMonth, currentlySelectedUser);
+                        console.log("currentlySelectedUser : " + currentlySelectedUser+", Month - Year : "+currentMonth+" , "+currentYear);
+                        ajaxGetMonthlyDate_TimeSheet(currentMonth, currentYear, currentlySelectedUser);
 
                     });
 
@@ -496,7 +526,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
 
             var html = '<li class="list_employee_attendance p-1 " >' +
-                '<button class=" btn d-flex employee_list_item border-0" data-userid=' +
+                '<a class="  d-flex employee_list_item w-100 p-2" data-userid=' +
                 '{{ $current_employee_detail->id }}' +
                 '>' +
                 '<div class="col-auto me-2 ">' +
@@ -506,7 +536,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                 '<p class="fw-bold text-primary f-13">{{ $current_employee_detail->name }}</p>' +
                 '<p class=" text-muted f-11">{{ $current_employee_detail->designation }}</p>' +
                 '</div>' +
-                '</button>' +
+                '</a>' +
                 '</li>';
 
             $('#sidepanel_employees_list').append(html);
@@ -515,7 +545,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
             $('.employee_list_item').click(function() {
                 console.log($(this).attr('data-userid'));
 
-                ajaxGetMonthlyDate_TimeSheet(currentMonth, "{{ Auth::user()->id }}");
+                ajaxGetMonthlyDate_TimeSheet(currentMonth, currentYear, "{{ Auth::user()->id }}");
 
 
             });
@@ -546,7 +576,9 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
             //For timesheet tab
             updateTimeSheetForCurrentEmployee();
-            ajaxGetMonthlyDate_TimeSheet(currentMonth, {{ Auth::user()->id }});
+            console.log("INIT : Getting timesheet data for the YYYY-MM : " + currentYear + " - " + currentMonth);
+
+            ajaxGetMonthlyDate_TimeSheet(currentMonth, currentYear, {{ Auth::user()->id }});
 
 
             $('#tab_timesheet').click(function() {
@@ -557,7 +589,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                 var selectedMonth = d.getMonth();
 
                 updateTimeSheetForCurrentEmployee();
-                ajaxGetMonthlyDate_TimeSheet(currentMonth, {{ Auth::user()->id }});
+                ajaxGetMonthlyDate_TimeSheet(currentMonth, currentYear, {{ Auth::user()->id }});
 
             });
 
@@ -582,7 +614,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                 console.log($(this).attr('data-userid'));
                 currentlySelectedUser = $(this).attr('data-userid');
                 console.log("currentlySelectedUser : " + currentlySelectedUser);
-                ajaxGetMonthlyDate_TimeSheet(currentMonth, currentlySelectedUser);
+                ajaxGetMonthlyDate_TimeSheet(currentMonth, currentYear, currentlySelectedUser);
 
 
             });
@@ -688,7 +720,28 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                 $('#txt_customreason_noneditable').val(''); //editable
                 $('#txt_apply_status').val(''); //editable
 
+                //Based on Regularization Type, show the dropdowns
+                $('#reason_mip').hide();
+                $('#reason_mop').hide();
+                $('#reason_lc').hide();
+                $('#reason_eg').hide();
 
+                if ($(element).val() == "LC") {
+                    $('#reason_lc').show();
+                }
+                else
+                if ($(element).val() == "EG") {
+                    $('#reason_eg').show();
+
+                }
+                else
+                if ($(element).val() == "MIP") {
+                    $('#reason_mip').show();
+                }
+                else
+                if ($(element).val() == "MOP") {
+                    $('#reason_mop').show();
+                }
 
                 //show Modal
                 $('#regularizationModal').fadeIn(0);
@@ -697,7 +750,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
             //Set UI elements
             $('#current_date').html(selected_date);
 
-
+            //Hide all reason dropdowns
 
             if ($(element).val() == "LC") {
                 //On modal popup
@@ -788,7 +841,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                     //update sidepanel
 
                     //Update the calendar for this user
-                    ajaxGetMonthlyDate_TimeSheet(currentMonth, $('#attendance_user').val());
+                    ajaxGetMonthlyDate_TimeSheet(currentMonth, currentYear, $('#attendance_user').val());
 
                 }
             });
@@ -862,14 +915,14 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
             currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear;
             currentMonth = (currentMonth + 1) % 12;
             //showCalendar(currentMonth, currentYear);
-            ajaxGetMonthlyDate_TimeSheet(currentMonth, currentlySelectedUser);
+            ajaxGetMonthlyDate_TimeSheet(currentMonth, currentYear, currentlySelectedUser);
         }
 
         function previous() {
             currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear;
             currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
             //showCalendar(currentMonth, currentYear);
-            ajaxGetMonthlyDate_TimeSheet(currentMonth, currentlySelectedUser);
+            ajaxGetMonthlyDate_TimeSheet(currentMonth, currentYear, currentlySelectedUser);
 
         }
 
@@ -877,11 +930,12 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
             currentYear = parseInt(selectYear.value);
             //currentMonth = parseInt(selectMonth.value);
             //showCalendar(currentMonth, currentYear);
-            ajaxGetMonthlyDate_TimeSheet(currentMonth, currentlySelectedUser);
+            ajaxGetMonthlyDate_TimeSheet(currentMonth, currentYear, currentlySelectedUser);
 
         }
 
         function showCalendar(month, year, ajax_monthly_data) {
+
 
 
             var firstDay = (new Date(year, month)).getDay();
@@ -937,14 +991,23 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
                         if (isWeekEnd) {
                             cell.innerHTML =
-                                " <div class='w-100 h-100 p-2' style='background-color:#f3edef;'> <span class='show_date' >" +
+                                " <div class='w-100 h-100 p-2' style='background-color:#e7e7e7;'> <span class='show_date' >" +
                                 date +
                                 "</span> <span>Week Off </span> <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex justify-content-between'> </div> <div class='w-100 d-flex justify-content-between check-out mt-2 f-10 text-danger'> </div></div></div>";
 
                         } else {
 
+                            let processedMonth = month + 1;
 
-                            let currentDate = year + "-" + (month + 1) + "-" + dateText;
+                            if(processedMonth < 10)
+                            {
+                               // console.log("Month is less than 10 : "+month+". Adding '0' as prefix");
+                                processedMonth = "0"+processedMonth;
+                               // console.log("Processed month value : "+processedMonth);
+                               // return ;
+                            }
+
+                            let currentDate = year + "-" + processedMonth + "-" + dateText;
 
                             let ajax_data_currentdate = ajax_monthly_data[currentDate];
                             //console.log("testing " + currentDate);
@@ -960,7 +1023,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                             year + "-" + (month + 1) + "-" + dateText +
                                             "'>Absent</span> </div></div></div>";
 
-                                    }else{
+                                    } else {
                                         cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
                                             "</p>  </div>"
 
@@ -1014,32 +1077,28 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
 
                                     if (ajax_data_currentdate.isLC) {
-                                        final_checkin_button_code = html_LC_Button + getStatusIcon(ajax_data_currentdate
-                                            .lc_status);
+                                        final_checkin_button_code = html_LC_Button + getStatusIcon(ajax_data_currentdate.lc_status);
                                     } else
                                     if (ajax_data_currentdate.isMIP) {
-                                        final_checkin_button_code = html_MIP_Button + getStatusIcon(ajax_data_currentdate
-                                            .mip_status);
+                                        final_checkin_button_code = html_MIP_Button + getStatusIcon(ajax_data_currentdate.mip_status);
                                     }
 
                                     if (ajax_data_currentdate.isEG) {
-                                        final_checkout_button_code = html_EG_Button + getStatusIcon(ajax_data_currentdate
-                                            .eg_status);
+                                        final_checkout_button_code = html_EG_Button + getStatusIcon(ajax_data_currentdate.eg_status);
                                     } else
                                     if (ajax_data_currentdate.isMOP) {
-                                        final_checkout_button_code = html_MOP_Button + getStatusIcon(ajax_data_currentdate
-                                            .mop_status);
+                                        final_checkout_button_code = html_MOP_Button + getStatusIcon(ajax_data_currentdate.mop_status);
                                     }
 
 
                                     cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
 
                                         "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex '><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
-                                        year + "-" + (month + 1) + "-" + dateText + "'>" + ui_final_checkin_time +
+                                        year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkin_time + getAttendanceModeIcon(ajax_data_currentdate.attendance_mode_checkin) +
                                         "</span>" +
                                         final_checkin_button_code +
                                         "</div> <div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span class='f-11' id='checkout_time_" +
-                                        year + "-" + (month + 1) + "-" + dateText + "'>" + ui_final_checkout_time +
+                                        year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkout_time + getAttendanceModeIcon(ajax_data_currentdate.attendance_mode_checkout) +
                                         "</span>" +
                                         final_checkout_button_code +
                                         "</div></div></div>";
@@ -1063,6 +1122,24 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
                 tbl.appendChild(row);
             }
+
+        }
+
+        function getAttendanceModeIcon(attendance_mode){
+            console.log("Attendance mode : "+attendance_mode);
+
+            if(attendance_mode == "biometric")
+                // return '&nbsp;<i class="fa-solid fa-fingerprint"></i>';
+               return '&nbsp;<i class="fas fa-fingerprint"></i>';
+            else
+            if(attendance_mode == "web")
+                return '&nbsp;<i class="fa fa-laptop"></i>';
+            else
+            if(attendance_mode == "mobile")
+                return '&nbsp;<i class="fa fa-mobile-phone"></i>';
+            else
+                return ''; // when attendance_mode column is empty.
+
 
         }
 
@@ -1105,6 +1182,17 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
+            $('body').on('click', '.list_employee_attendance ', function() {
+                $('.list_employee_attendance ').removeClass('active');
+                $(this).addClass('active');
+
+
+
+            });
+
+
+
+
         });
     </script>
 @endsection
