@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Dompdf\Dompdf;
 use PDF;
+use Carbon\Carbon;
+
 
 use App\Models\User;
 use App\Models\VmtClientMaster;
@@ -91,7 +93,7 @@ class VmtEmployeePayslipService {
             //'bank_name' => 'required',
             //'account_number' => 'required',
             //'bank_ifsc_code' => 'required',
-            'payroll_month' => 'required',
+            'payroll_month' => 'required|date',
             'basic' => 'required',
             'hra' => 'required',
             'child_edu_allowance' => 'required',
@@ -223,7 +225,7 @@ class VmtEmployeePayslipService {
             // ];
 
             $messages = [
-                // 'date' => 'Field <b>:attribute</b> should have the following format DD-MM-YYYY ',
+                'date' => 'Field <b>:attribute</b> should have the following format DD-MM-YYYY ',
                 // 'in' => 'Field <b>:attribute</b> should have the following values : :values .',
                 // 'required' => 'Field <b>:attribute</b> is required',
                 // 'regex' => 'Field <b>:attribute</b> is invalid',
@@ -235,7 +237,7 @@ class VmtEmployeePayslipService {
                 // 'pan_ack.required_if' =>'Field <b>:attribute</b> is required if <b>pan no</b> not provided ',
                 // 'required_unless' => 'Field <b>:attribute</b> is invalid',
                 'required' => 'Field <b>:attribute</b> is required',
-                'exists' => 'Column <b>:attribute</b> with value <b>:input</b> doesnt not exist'
+                'exists' => 'Column <b>:attribute</b> with value <b>:input</b> doesnt not exist',
 
             ];
 
@@ -344,7 +346,7 @@ class VmtEmployeePayslipService {
             // $empPaySlip->Bank_Name = $row["bank_name"];
             // $empPaySlip->Account_Number = $row["account_number"];
             // $empPaySlip->Bank_IFSC_Code = $row["bank_ifsc_code"];
-            $empPaySlip->PAYROLL_MONTH = $row["payroll_month"];
+            $empPaySlip->PAYROLL_MONTH = \DateTime::createFromFormat('d-m-Y', $row["payroll_month"])->format('Y-m-d');
             $empPaySlip->BASIC = $row["basic"];
             $empPaySlip->HRA = $row["hra"];
             $empPaySlip->CHILD_EDU_ALLOWANCE = $row["child_edu_allowance"];
