@@ -57,15 +57,20 @@ if ($query_clientMaster) {
                     ?>
                     {{-- <span class=" f-14 fw-bold">Entity Name : </span> --}}
                     <button type="button" class="form-select outline-none border-0 fw-bold"
-                        id="page-header-user-dropdown" data-bs-toggle="offcanvas" data-bs-target="#select_client"
+                        id="page-header-user-dropdown" data-bs-toggle="offcanvas" data-bs-target=".offcanvas"
                         aria-controls="" aria-haspopup="true" aria-expanded="false">
                         {{-- <div class="d-flex align-items-center page-header-user-dropdown"> --}}
                         {{ sessionGetSelectedClientName() }}
                         {{-- </div> --}}
                     </button>
-                    <div class="offcanvas  selectClient-Offcanvas offcanvas-end" data-bs-backdrop="false" tabindex="-1"
-                        id="select_client" aria-labelledby="" style="top: 50px;">
-                        <div class="offcanvas-header justify-content-end border-0 ">
+                    <div class="offcanvas  selectClient-Offcanvas offcanvas-end" data-bs-keyboard="true" data-bs-backdrop="true"  tabindex="-1"
+                        id="select_client" aria-labelledby="" style="top: 50px;border-radius:10px 0px 0px 0px">
+                        <div class="offcanvas-header align-items-center border-0 ">
+                            <a role="button" type="button" href="{{ route('pages-profile') }}"
+                                class="border-0 outline-none bg-transparent" data-bs-toggle="tooltip"
+                                data-bs-placement="right" title="View Profile">
+                                <i class="fa fa-user text-muted fs-15"></i>
+                            </a>
 
                             <button type="button" class="close outline-none bg-transparent border-0 h3"
                                 data-bs-dismiss="offcanvas" aria-label="Close">
@@ -107,18 +112,16 @@ if ($query_clientMaster) {
 
                                 </div>
                             </div>
-                            <p
-                                class="d-flex justify-content-between text-muted align-items-center px-2 py-2 cursor-pointer text-info   border-bottom-liteAsh">
-                                <span class="fw-bold text-muted">My
-                                    Organizations</span><span class="text-info" style="cursor: pointer"><i
-                                        class="mdi mdi-cog-outline  me-1"></i>Manage</span>
-                            </p>
-
-
-
+                            @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
+                                <p
+                                    class="d-flex justify-content-between text-muted align-items-center px-2 py-2 cursor-pointer text-info   border-bottom-liteAsh">
+                                    <span class="fw-bold text-muted">My
+                                        Organizations</span><a href="{{ route('vmt_topbar_settings') }}"
+                                        class="text-info" style="cursor: pointer"><i
+                                            class="mdi mdi-cog-outline  me-1"></i>Manage</a>
+                                </p>
+                            @endif
                             <div class="d-flex flex-column   overflow-auto " id="">
-                                {{-- <div class="my-2 overflow-auto bg-ash" style=""> --}}
-
                                 @foreach ($clientsList as $client)
                                     <div class="choose-client d-flex p-2 cursor-pointer border-bottom-liteAsh  align-items-center @if (!empty($currentClientID) && $currentClientID == $client->id) bg-ash @endif"
                                         data-client_id="{{ $client->id }}">
@@ -133,45 +136,47 @@ if ($query_clientMaster) {
                                         </div>
                                     </div>
                                 @endforeach
-
-                                {{-- </div> --}}
                             </div>
                         </div>
+                        <div class="offcanvas-bottom d-flex justify-content-end py-3 px-2">
+                            <a class="btn btn-danger " href="javascript:void();"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
+                                    class="bx bx-power-off fs-16 align-middle me-1 "></i> <span
+                                    key="t-logout">@lang('translation.logout')</span></a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                style="display: none;">
+                                @csrf
+                            </form>
+
+                        </div>
+                    </div>
+
                 @endif
             </div>
 
-            <div class="dropdown topbar-user ">
-                <button type="button" class="btn bg-transparent border-0 mx-1 py-1 " id="page-header-user-dropdown"
-                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <div class="d-flex align-items-center page-header-user-dropdown">
-                        @if (empty(Auth::user()->avatar) || !file_exists(public_path('images/' . Auth::user()->avatar)))
-                            <!-- <span class="rounded-circle user-profile  ml-2 " id="shorthand_name_bg"> -->
-                            <div
-                                class="bg-primary img-sm rounded-circle d-flex align-items-center justify-content-center text-white fw-bold  ml-2">
-                                <i class="topbar_username" class="align-middle "></i>
-                            </div>
-                        @else
-                            <img class="rounded-circle img-sm header-profile-user"
-                                src=" {{ URL::asset('images/' . Auth::user()->avatar) }}" alt="user">
-                        @endif
 
-                        {{-- <span class="f-12 mx-2 d-flex align-items-center">
-                                        <span class="">{{ Auth::user()->name }}</span>
-                                        <span class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text"></span>
-                                        <i class="fa fa-caret-down ms-2" aria-hidden="true"></i>
-                                    </span> --}}
+            <button type="button" class="btn bg-transparent border-0 mx-1 py-1 " id="page-header-user-dropdown"
+                aria-haspopup="true" aria-expanded="false" data-bs-toggle="offcanvas" data-bs-target=".offcanvas"
+                aria-controls="" aria-haspopup="true" aria-expanded="false">
+                <div class="d-flex align-items-center page-header-user-dropdown">
+                    @if (empty(Auth::user()->avatar) || !file_exists(public_path('images/' . Auth::user()->avatar)))
+                        <div
+                            class="bg-primary img-sm rounded-circle d-flex align-items-center justify-content-center text-white fw-bold  ml-2">
+                            <i class="topbar_username" class="align-middle "></i>
+                        </div>
+                    @else
+                        <img class="rounded-circle img-sm header-profile-user"
+                            src=" {{ URL::asset('images/' . Auth::user()->avatar) }}" alt="user">
+                    @endif
 
-                    </div>
-                </button>
-                <div class="dropdown-menu dropdown-menu-end " style="width:180px;">
-                    <!-- item-->
-                    {{-- <h6 class="dropdown-header">Welcome </h6> --}}
+
+                </div>
+            </button>
+            {{-- <div class="dropdown-menu dropdown-menu-end " style="width:180px;">
                     <div class="mx-2 ">
-
                         <div class="border-bottom-secondary pb-1 ">
                             <div class="d-flex mb-3 flex-column justify-content-center  align-items-center">
                                 @if (empty(Auth::user()->avatar) || !file_exists(public_path('images/' . Auth::user()->avatar)))
-                                    <!-- <span class="rounded-circle user-profile  ml-2 " id="shorthand_name_bg"> -->
                                     <div
                                         class="bg-ash img-md rounded-circle mb-2 d-flex align-items-center justify-content-center text-primary fw-bold ">
                                         <i class="topbar_username " class="align-middle "></i>
@@ -183,18 +188,13 @@ if ($query_clientMaster) {
 
                                 <div class="f-12 ms-2 mb-1 d-flex  text-start flex-column">
                                     <span class="">{{ Auth::user()->name }}</span>
-                                    {{-- <span class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text"></span> --}}
-                                    {{-- <span>{{ Auth::user()->designation }}</span> --}}
+
                                 </div>
                             </div>
 
                         </div>
 
-                        <a class="dropdown-item text-start   border-bottom-secondary  py-2"
-                            href="{{ route('pages-profile') }}">
-                            <i class="fa fa-user-circle me-2 text-muted"></i>
-                            View Profile
-                        </a>
+
                         @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
                             <a class="dropdown-item border-bottom-secondary text-start py-2"
                                 href="{{ route('vmt_topbar_settings') }}"><i
@@ -212,8 +212,8 @@ if ($query_clientMaster) {
                             @csrf
                         </form>
                     </div>
-                </div>
-            </div>
+                </div> --}}
+
 
         </div>
     </div>
@@ -238,7 +238,7 @@ if ($query_clientMaster) {
         var username =
             '{{ auth()->user()->name ??
                 '
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ' }}';
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ' }}';
         const splitArray = username.split(" ");
         var finalname = "empty111";
 
