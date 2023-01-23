@@ -313,7 +313,7 @@
                                             class="nav-link sidebar py-1" data-bs-toggle="" role="button"
                                             aria-expanded="false"><span>
                                                 Reimbursement</span> </a> --}}
-                                                <a href="{{ url('vmt_mail_attendance_regularization_notify') }}" class="nav-link sidebar py-1"><span>Dashboard</span></a>
+                                                {{-- <a href="{{ url('vmt_mail_attendance_regularization_notify') }}" class="nav-link sidebar py-1"><span>Dashboard</span></a> --}}
 
                                     </li>
                                     <li class="nav-item">

@@ -21,6 +21,11 @@ Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
 
+    //Basic DB data
+    Route::get('/db/getBankDetails', [App\Http\Controllers\VmtBankController::class, 'getBankDetails'])->name('vmt_getBankDetails');
+    Route::get('/db/getCountryDetails', [App\Http\Controllers\VmtDBDataController::class, 'getCountryDetails'])->name('vmt_getCountryDetails');
+    Route::get('/db/getStatesDetails', [App\Http\Controllers\VmtDBDataController::class, 'getStatesDetails'])->name('vmt_getStatesDetails');
+
     Route::get('/',  [App\Http\Controllers\VmtMainDashboardController::class, 'index'])->name('index');
 
     //404 error page
