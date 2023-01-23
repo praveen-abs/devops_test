@@ -265,7 +265,7 @@
 
                             </i>
 
-                            <span>Approvals <span class="badge bg-danger rounded-circle text-white">4</span></span>
+                            <span>Approvals <span class="badge mt-0 ms-1 bg-danger rounded-circle text-white">4</span></span>
 
                         </a>
                         <div class="collapse menu-dropdown" id="mytasksDrop-Down">
@@ -277,7 +277,7 @@
                                         <a href="{{ route('vmt-approvals-emp-documents') }}" id=""
                                             class="nav-link sidebar py-1" data-bs-toggle="" role="button"
                                             aria-expanded="false"><span>
-                                                Onboarding <span class="badge bg-danger rounded-circle text-white">4</span> </span> </a>
+                                                Onboarding <span class="badge mt-0 ms-1 bg-danger rounded-circle text-white">4</span> </span> </a>
 
                                     </li>
 
@@ -287,14 +287,14 @@
                                         <a href="{{ route('attendance-leave-approvals') }}" id=""
                                             class="nav-link sidebar py-1" data-bs-toggle="" role="button"
                                             aria-expanded="false">
-                                            <span>Leaves <span class="badge bg-danger rounded-circle text-white">4</span></span> </a>
+                                            <span>Leaves <span class="badge mt-0 ms-1 bg-danger rounded-circle text-white">4</span></span> </a>
                                     </li>
 
                                     <li class="nav-item">
                                         <a href="{{ route('attendance-regularization-approvals') }}" id=""
                                             class="nav-link sidebar py-1" data-bs-toggle="" role="button"
                                             aria-expanded="false"><span>
-                                                Attendance Regularization<span class="badge bg-danger rounded-circle text-white">4</span> </span> </a>
+                                                Attendance Regularization<span class="badge mt-0 ms-1 bg-danger rounded-circle text-white">4</span> </span> </a>
 
                                     </li>
                                     {{-- @endif --}}
@@ -303,7 +303,7 @@
                                         <a href="{{ route('showPMSApprovalPage') }}" id=""
                                             class="nav-link sidebar py-1" data-bs-toggle="" role="button"
                                             aria-expanded="false"><span>
-                                                OKR /PMS<span class="badge bg-danger rounded-circle text-white">4</span></span> </a>
+                                                OKR /PMS<span class="badge mt-0 ms-1 bg-danger rounded-circle text-white">4</span></span> </a>
                                         {{-- PMS forms are approved here. Redirect to PMS dashboard --}}
                                     </li>
                                     {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}
@@ -320,7 +320,7 @@
                                         <a href="{{ route('page-not-found') }}" id=""
                                             class="nav-link sidebar py-1" data-bs-toggle="" role="button"
                                             aria-expanded="false"><span>
-                                                Taxations<span class="badge bg-danger rounded-circle text-white">4</span></span> </a>
+                                                Taxations<span class="badge mt-0 ms-1 bg-danger rounded-circle text-white">4</span></span> </a>
                                     </li>
                                     {{-- @endif --}}
                                 @endif
