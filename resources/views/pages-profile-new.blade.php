@@ -284,9 +284,9 @@
                                                     <tr>
                                                         <td>{{ $singledetail->name }}</td>
                                                         <td>{{ $singledetail->relationship }}</td>
-                                                        <td>{{ date('Y-m-d', strtotime($singledetail->dob)) }}</td>
+                                                        <td>{{ date('d-m-Y', strtotime($singledetail->dob)) }}</td>
 
-                                                        <td>{{ $singledetail->phone_number }}</td>
+                                                     <td>{{ $singledetail->phone_number }}</td>
                                                     </tr>
                                                 @endforeach
                                             @endif
@@ -329,8 +329,8 @@
                                                     <tr>
                                                         <td>{{ $info['company_name'] }}</td>
                                                         <td>{{ $info['job_position'] }}</td>
-                                                        <td>{{ $info['period_from'] }}</td>
-                                                        <td>{{ $info['period_to'] }}</td>
+                                                        <td>{{ date('d-m-Y', strtotime($info['period_from'])) }}</td>
+                                                        <td>{{ date('d-m-Y', strtotime( $info['period_to'])) }}</td>
                                                     </tr>
                                                 @endforeach
                                             @endif
@@ -512,13 +512,13 @@
                                     </li>
                                     <li>
                                         <div class="title">EPF ABRY Eligible</div>
-                                        <div class="text">
+                                        <div class="text">{{ $statutory_info->epf_abry_eligible ?? '-' }}
 
                                         </div>
                                     </li>
                                     <li>
                                         <div class="title">EPS - Pension Eligible</div>
-                                        <div class="text">
+                                        <div class="text">{{ $statutory_info->eps_pansion_eligible ?? '-' }}
 
                                         </div>
                                     </li>
@@ -2013,41 +2013,41 @@
                                     <div class="card mb-3 addition-content" id="content1">
                                         <div class="card-body">
                                             <!-- <h3 class="card-title fw-bold">Education Informations <a href="javascript:void(0);"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{-- class="delete-icon"><i class="   ri-delete-bin-line"></i></a> --}}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </h3> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {{-- class="delete-icon"><i class="   ri-delete-bin-line"></i></a> --}}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </h3> -->
 
                                             <div class="row ">
                                                 <div class="col-md-12 m-0 text-end">
                                                     <button
                                                         class="btn text-danger delete-btn p-0 bg-transparent outline-none border-0 f-12 plus-sign"
                                                         type="button"><i class="f-12 me-1 fa text-danger  fa-trash"
-                                                            aria-hidden="true"></i>Delete
+                                                            aria-hidden="true"href="javascript:void(0);"></i>Delete
                                                         </i></button>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group mb-3">
-                                                        <label>Name<span class="text-danger">*</span></label>
+                                                        <label>Name<span class="text-danger"></span></label>
                                                         <input name="name[]" class="form-control onboard-form"
                                                             type="text" pattern-data="name" required value="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group mb-3">
-                                                        <label>Relationship <span class="text-danger">*</span></label>
+                                                        <label>Relationship <span class="text-danger"></span></label>
                                                         <input name="relationship[]" class="form-control onboard-form"
                                                             type="text" pattern-data="alpha" required value="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group mb-3">
-                                                        <label>Date of birth <span class="text-danger">*</span></label>
+                                                        <label>Date of birth <span class="text-danger"></span></label>
                                                         <input name="dob[]" class="form-control onboard-form"
                                                             type="date" max="31-12-9999" required value="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group ">
-                                                        <label>Phone <span class="text-danger">*</span></label>
+                                                        <label>Phone <span class="text-danger"></span></label>
                                                         <input name="phone_number[]" class="form-control onboard-form"
                                                             type="number" maxlength="10" minlength="10" required
                                                             value="">
@@ -2110,14 +2110,16 @@
                                                     <div class="form-group mb-3 form-focus focused">
                                                         <label class="focus-label">Company Name</label>
                                                         <input type="text" name="company_name[]"
-                                                            class="form-control floating" value="" required>
+                                                            class="form-control floating"
+                                                            value="{{ $info->company_name }}" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group mb-3 form-focus focused">
                                                         <label class="focus-label">Location</label>
                                                         <input type="text" name="location[]"
-                                                            class="form-control floating" value="" required>
+                                                            class="form-control floating" value="{{ $info->location }}"
+                                                            required>
 
                                                     </div>
                                                 </div>
@@ -2125,7 +2127,8 @@
                                                     <div class="form-group mb-3 form-focus focused">
                                                         <label class="focus-label">Job Position</label>
                                                         <input type="text" name="job_position[]"
-                                                            class="form-control floating" value="" required>
+                                                            class="form-control floating"
+                                                            value="{{ $info->job_position }}" required>
 
                                                     </div>
                                                 </div>
@@ -2135,7 +2138,7 @@
                                                         <div class="cal-icon">
                                                             <input type="date" max="9999-12-31" name="period_from[]"
                                                                 class="form-control floating datetimepicker"
-                                                                value="" required>
+                                                                value="{{ $info->period_from }}" required>
                                                         </div>
 
                                                     </div>
@@ -2146,16 +2149,18 @@
                                                             <label class="focus-label">Period To</label>
                                                             <input type="date" max="9999-12-31" name="period_to[]"
                                                                 class="form-control floating datetimepicker"
-                                                                value="" required>
+                                                                value="{{ $info->period_to }}" required>
                                                         </div>
 
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="add-more text-end">
-                                            <div class="text-primary f-13" id="exp-add-more">
-                                                <i class=" ri-add-circle-fill"></i> Add More
+                                        <div class="add-more text-end mb-2" style="cursor:pointer;">
+                                            <div class="add-more text-end">
+                                                <div class="text-primary f-13" id="exp-add-more">
+                                                    <i class=" ri-add-circle-fill"></i> Add More
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -2353,13 +2358,14 @@
                                             id="epf_abry_eligible" minlength="10" maxlength="10"
                                             class="onboard-form form-control textbox " value="  " />
                                         <span class="error" id="error "></span>
-                                        <select placeholder="EPF ABRY Eligible" name="epf_abry_eligible" id="epf_abry_eligible"
-                                        class="onboard-form form-control textbox  select2_form_without_search"
-                                        required>
-                                        <option value="" hidden selected disabled> EPF ABRY Eligible</option>
-                                        <option value="yes">Yes</option>
-                                        <option value="no">No</option>
-                                    </select>
+                                        <select placeholder="EPF ABRY Eligible" name="epf_abry_eligible"
+                                            id="epf_abry_eligible"
+                                            class="onboard-form form-control textbox  select2_form_without_search"
+                                            required>
+                                            <option value="" hidden selected disabled> EPF ABRY Eligible</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -2373,9 +2379,9 @@
                                         class="onboard-form form-control textbox "
                                         value="{{ $statutory_info->esic_number ?? '' }}" />
                                     <span class="error" id="error_esic_number"></span>
-                                    <select placeholder="EPS - Pension Eligible" name="eps_pension_eligible" id="eps_pension_eligible"
-                                        class="onboard-form form-control textbox  select2_form_without_search"
-                                        required>
+                                    <select placeholder="EPS - Pension Eligible" name="eps_pension_eligible"
+                                        id="eps_pension_eligible"
+                                        class="onboard-form form-control textbox  select2_form_without_search" required>
                                         <option value="" hidden selected disabled> EPS - Pension Eligible</option>
                                         <option value="yes">Yes</option>
                                         <option value="no">No</option>
@@ -3074,7 +3080,17 @@
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(data) {
-                        location.reload();
+
+                        Swal.fire({
+                            title: "Data Saved ",
+                            text: 'Successfully!',
+                            icon: 'success'
+                        }).then((result) => {
+
+                            if (result.isConfirmed) {
+                                location.reload();
+                            }
+                        })
                     }
                 });
             });
@@ -3089,8 +3105,8 @@
                 var uan_number = $("input[name='uan_number']").val();
                 var esic_applicable = $("select[name='esic_applicable']").val();
                 var esic_number = $("input[name='esic_number']").val();
-                var epf_abry_eligible =$("select[name ='epf_abry_eligible']").val();
-                var eps_pansion_eligible =$("selct[name ='eps_pansion_eligible']").val();
+                var epf_abry_eligible = $("select[name ='epf_abry_eligible']").val();
+                var eps_pansion_eligible = $("selct[name ='eps_pansion_eligible']").val();
 
 
                 $.ajax({
@@ -3102,18 +3118,26 @@
                         uan_number: uan_number,
                         esic_applicable: esic_applicable,
                         esic_number: esic_number,
-                        epf_abry_eligible :epf_abry_eligible,
-                        eps_pansion_eligible :eps_pansion_eligible,
+                        epf_abry_eligible: epf_abry_eligible,
+                        eps_pansion_eligible: eps_pansion_eligible,
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(data) {
-                        location.reload();
+
+                        Swal.fire({
+                            title: "Data Saved ",
+                            text: 'Successfully!',
+                            icon: 'success'
+                        }).then((result) => {
+
+                            if (result.isConfirmed) {
+                                location.reload();
+                            }
+                        })
                     }
                 });
             });
         });
-
-
         $(document).ready(function() {
             $('.paySlipView').on('click', function() {
                 var url = $(this).attr('data-url');
@@ -3141,7 +3165,8 @@
                 let t_paySlipMonth = $(this).attr('data');
                 let enc_userid = "{{ $enc_user_id }}";
 
-                window.open(url + "?selectedPaySlipMonth=" + t_paySlipMonth + "&enc_user_id=" + enc_userid,
+                window.open(url + "?selectedPaySlipMonth=" + t_paySlipMonth + "&enc_user_id=" +
+                    enc_userid,
                     '_blank');
                 // $.ajax({
                 //     type: "GET",

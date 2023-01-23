@@ -89,6 +89,7 @@ use Illuminate\Support\Facades\Crypt;
                                     'reliving_letter_file',
                                     'docs_reviewed'
                                 ])->toArray();
+                                
 
         //dd($documents_filenames);
         return view('pages-profile-new', compact('user','documents_filenames','array_bloodgroup','enc_user_id','allEmployees', 'maritalStatus','genderArray','user_full_details', 'familydetails', 'exp', 'reportingManager','profileCompletenessValue','bank','data','employees','statutory_info'));
@@ -268,6 +269,18 @@ use Illuminate\Support\Facades\Crypt;
         $user->save();
         $report = $request->input('report');
         $code = VmtEmployee::select('emp_no', 'name', 'designation')->join('vmt_employee_office_details', 'user_id', '=', 'vmt_employee_details.userid')->join('users', 'users.id', '=', 'vmt_employee_details.userid')->where('emp_no', $report)->first();
+        $documents_filenames = VmtEmployee::where('userid',$user_id)
+        ->get([
+            'aadhar_card_file',
+            'aadhar_card_backend_file',
+            'pan_card_file',
+            'passport_file',
+            'voters_id_file',
+            'dl_file',
+            'education_certificate_file',
+            'reliving_letter_file',
+            'docs_reviewed'
+        ]);
 
         // $reDetails = VmtEmployee::where('userid', $request->id)->first();
         // $details = VmtEmployee::find($reDetails->id);
