@@ -833,6 +833,10 @@
                                             aria-hidden="true"></i> Send</button>
 
                                 </div>
+                                <div class="col-12 mb-md-0 mb-3 text-end">
+                                    <button class="btn btn-orange" data-leave-id=""  id="btn_revoke">Revoke</button>
+
+                                </div>
                             </div>
 
                         </div>
@@ -867,6 +871,50 @@
 
         $('.close-modal').on('click', function() {
             $('#error_notify').fadeOut(100);
+
+        });
+        $('#btn_revoke').on('click', function() {
+            console.log("Revoking leave....");
+
+            $.ajax({
+                    url: "{{ route('revokeLeave') }}",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        'leave_id': $('#leave_type_id').val(),
+                        "_token": "{{ csrf_token() }}",
+                    },
+                    success: function(data) {
+                        if (data.status == "success") {
+                            console.log("Leave revoked successfully");
+                            Swal.fire({
+                                title: data.message,
+                                text: data.mail_status,
+                                type: "success"
+                            }).then(function() {
+                                location.reload();
+                            });
+                            //alert(data.message + " \n " + data.mail_status);
+                        } else {
+                            Swal.fire({
+                                title: data.message,
+                                text: data.mail_status,
+                                type: data.failure
+                            }).then(function() {
+                                // location.reload();
+                            });
+                        }
+
+                        //Update all the gridjs tables
+                        gridTable_emp_leaveHistory.updateConfig({}).forceRender();
+                        gridTable_team_leaveHistory.updateConfig({}).forceRender();
+                        gridTable_org_leaveHistory.updateConfig({}).forceRender();
+                    },
+                    error: function(data) {
+
+
+                    }
+                });
 
         });
 
@@ -1380,13 +1428,14 @@
                                 //     </button>
 
                                 htmlcontent =
-                                    '<input type="button" value="View" class="status btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal">';
+                                    '<input type="button" value="View" class="status btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal" onclick="onClickShowLeaveDetails(this)" data-leave-id='+emp.id+'>';
                                 // '<button  value="View" class="status btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal"></button>' ;
 
 
                                 return gridjs.html(htmlcontent);
                             }
                         },
+
                     ],
                     pagination: {
                         limit: 10
@@ -1394,7 +1443,7 @@
                     sort: true,
                     search: true,
                     server: {
-                        url: '{{ route('fetch-leaverequests', ['type' => 'employee', 'statusArray' => 'Approved,Rejected,Pending']) }}',
+                        url: '{{ route('fetch-leaverequests', ['type' => 'employee', 'statusArray' => 'Approved,Rejected,Pending,Revoked']) }}',
                         then: data => data.map(
                             leave_history => [
                                 leave_history.id,
@@ -1749,12 +1798,20 @@
 
 
 
+
         });
 
-        // $('#leaveDetails_modal').hide();
+        function onClickShowLeaveDetails(element){
+            let leave_id= $(element).attr('data-leave-id');
+            console.log("Leave status clicked for "+leave_id);
+
+            getLeaveDetails(leave_id);
+
+        }
 
         function getLeaveDetails(leave_id) {
             console.log("Getting date for leave_id : " + leave_id);
+            $('#btn_revoke').attr('data-leave-id',leave_id);
             $.ajax({
                 url: "{{ route('attendance-leave-getdetails') }}",
                 type: "GET",
@@ -1807,6 +1864,7 @@
                     $('#approver_name').text(data.approver_name);
                     $('#approver_desgination').text(data.notification_designation);
                     $('#totalLeave_days').text(data.total_leave_datetime[0]);
+
 
                     console.log("Leave details for ID : " + leave_id + " :: " + data);
 

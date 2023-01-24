@@ -255,8 +255,15 @@ class VmtAttendanceController extends Controller
         // $leave_details['reviewer_name'] = User::find($leave_details->reviewer_user_id)->name;
         $leave_details['approver_name'] =  User::find($leave_details->reviewer_user_id)->name;
         $leave_details['approver_designation'] = VmtEmployeeOfficeDetails::where('user_id',$leave_details->user_id)->first()->value('designation');
-        $leave_details['notification_userName'] = User::find($leave_details->notifications_users_id)->name;
-        $leave_details['notification_designation'] = VmtEmployeeOfficeDetails::where('user_id',$leave_details->user_id)->first()->value('designation');
+
+        if(!empty($leave_details->notifications_users_id))
+        {
+            $leave_details['notification_userName'] = User::find($leave_details->notifications_users_id)->name;
+            $leave_details['notification_designation'] = VmtEmployeeOfficeDetails::where('user_id',$leave_details->user_id)->first()->value('designation');
+        }
+        else
+            $leave_details['notification_userName'] = "";
+
         $leave_details['avatar'] = getEmployeeAvatarOrShortName($leave_details->user_id);
 
 
@@ -408,6 +415,21 @@ class VmtAttendanceController extends Controller
             'status' => 'success',
             'message' => 'Leave Request applied successfully',
             'mail_status' => $mail_status,
+            'error' => '',
+            'error_verbose' => ''
+        ];
+
+        return $response;
+    }
+
+    public function revokeLeave(Request $request){
+        $revoke_leave_query=VmtEmployeeLeaves::where('id',$request->leave_id)
+        ->update(array('status' => 'Revoked'));
+        $leave_status=VmtEmployeeLeaves::where('id',$request->leave_id)->first()->status;
+
+        $response = [
+            'status' => 'success',
+            'message' => 'Leave Request applied successfully',
             'error' => '',
             'error_verbose' => ''
         ];
