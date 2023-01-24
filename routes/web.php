@@ -28,18 +28,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/',  [App\Http\Controllers\VmtMainDashboardController::class, 'index'])->name('index');
 
-    //Export Employee attendance
-
-
-    // Route::controller(VmtEmployeeAttendanceController::class)->group(function(){
-    //     Route::get('empolyeeAttendanceReport', 'export')->name('attendance.export');
-    // });
-    Route::get('attendance/export/', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'export'])->name('attendanceReport');
-
-    Route::get('report/attendanceReport', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showAttendanceReport'])->name('showAttendanceReport');
-
-
-
     //404 error page
     Route::get('/page-not-found', function () {
         return view('page404');
@@ -48,7 +36,6 @@ Route::middleware(['auth'])->group(function () {
     //Department
     Route::post('/department-add', [App\Http\Controllers\VmtDepartmentController::class, 'addDepartment'])->name('department-add');
     Route::post('/session-update-globalClient', [App\Http\Controllers\VmtMainDashboardController::class, 'updateGlobalClientSelection'])->name('session-update-globalClient');
-
 
     Route::get('/isEmailExists/{email?}', function($email){
 
@@ -510,14 +497,23 @@ Route::get('/documents',  [App\Http\Controllers\VmtEmployeeController::class, 's
     Route::get('/reports/generatePayrollReports',  [App\Http\Controllers\VmtReportsController::class, 'generatePayrollReports'])->name('generatePayrollReports');
     Route::get('/reports/fetchAllEmployeePayrollDetails',  [App\Http\Controllers\VmtReportsController::class, 'fetchAllEmployeePayrollDetails'])->name('fetchAllEmployeePayrollDetails');
 
+    //Attendance Reports
+    Route::get('/reports/attendance',  [App\Http\Controllers\VmtReportsController::class, 'showAttendanceReport'])->name('showAttendanceReport');
+     //Ajax Part
+     Route::get('/attendance-filter-info', [App\Http\Controllers\VmtReportsController::class, 'fetchAttendanceInfo'])->name('fetchAttendanceInfo');
+     //Ajax For Fetch Month For Given Year fetchAttendanceForGivenYear
+     Route::get('/fetch-attendance-for-given-year', [App\Http\Controllers\VmtReportsController::class, 'fetchAttendanceForGivenYear'])->name('fetchAttendanceForGivenYear');
+
     //pms reviwes report
     Route::get('/reports/pmsreviews',  [App\Http\Controllers\VmtReportsController::class, 'showPmsReviewsReportPage'])->name('showPmsReviewsReportPage');
     Route::get('/reports/generatePmsReviewsReports',  [App\Http\Controllers\VmtReportsController::class, 'generatePmsReviewsReports'])->name('generatePmsReviewsReports');
 
-    //Ajax Part
+
+    //Ajax Part fetchAttendanceInfo
     Route::get('/pms-filter-info', [App\Http\Controllers\VmtReportsController::class, 'filterPmsReport'])->name('pms-filter-info');
 
-
+    //Grid Js
+    Route::get('/payroll-filter-info', [App\Http\Controllers\VmtReportsController::class, 'fetchPayrollReport'])->name('payroll-filter-info');
 
 
 });
