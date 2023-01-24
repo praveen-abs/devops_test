@@ -829,12 +829,9 @@
 
                                 </div>
                                 <div class="col-12 mb-md-0 mb-3 text-end">
-                                    <button class="btn btn-orange"><i class="fa fa-paper "
-                                            aria-hidden="true"></i> Send</button>
-
+                                    <button class="btn btn-orange" data-leave-id=""  id="btn_revoke">Revoke</button>
                                 </div>
                                 <div class="col-12 mb-md-0 mb-3 text-end">
-                                    <button class="btn btn-orange" data-leave-id=""  id="btn_revoke">Revoke</button>
 
                                 </div>
                             </div>
@@ -1822,9 +1819,10 @@
                 },
                 success: function(data) {
 
-                    // var leaveMonth=moment(data.leaverequest_date, 'M').format('MMMM');
+                    //clear old data
+                    $('.show_img').remove(html_shortName);
 
-                    // var oneDate = moment(data.leaverequest_date).format('MMM');
+
 
                     var imagePath = '{{ URL::asset('images/') }}' + '/' + data.avatar.data;
                     $('#show_img').html('');
@@ -1867,6 +1865,15 @@
 
 
                     console.log("Leave details for ID : " + leave_id + " :: " + data);
+
+                    if(data.status == "Pending")
+                    {
+                        $('#btn_revoke').show();
+                    }
+                    else
+                    {
+                        $('#btn_revoke').hide();
+                    }
 
                     $('#leaveDetails_modal').modal('show');
 
