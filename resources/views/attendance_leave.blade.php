@@ -756,7 +756,7 @@
 
                                 </div>
                             </div>
-                           
+
                             <div class="content-det">
                                 <p id="">
                                 <h6 id="reviewercomments"></h6> <h6><span id="reviewercomments"></span></h6> </p>
@@ -1696,8 +1696,8 @@
                                 htmlcontent =
                                     // '<input type="button"  class="status btn btn-orange py-1 onboard-employee-btn leavebutton" value="View" />';
                                     // '<button   class="status btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal"  data-bs-toggle="modal">View</button>';
-                                    '<button   class="status btn btn-orange py-1 onboard-employee-btn leavebutton " onClick=" getLeaveHistory(' +
-                                    emp.id + ')" >View</button>';
+                                    //'<button   class="status btn btn-orange py-1 onboard-employee-btn leavebutton " onClick=" getLeaveHistory(' +emp.id + ')" >View</button>';
+                                    '';
                                 return gridjs.html(htmlcontent);
                             },
                         },
@@ -1785,7 +1785,7 @@
                     $('#leave_date').text(moment(data.leaverequest_date).format('d'));
                     $('#leave_day').text(moment(data.leaverequest_date).format('ddd'));
                      $('#totalLeave_days').text(data.user_name);
-                    
+
                     $('#notifyUser_name').text(data.notification_userName);
                     $('#notifyUser_designation').text(data.user_designation);
                     $('#approver_name').text(data.approver_name);
@@ -1820,7 +1820,7 @@
         }
 
         function  getLeaveHistory(leave_id) {
-             
+
             $.ajax({
                 url: "{{ route('attendance-leave-getdetails') }}",
                 type: "GET",
@@ -1835,12 +1835,12 @@
                          console.log(data);
                      }
 
-                     
-                     
-                     
+
+
+
                     $('#employee_name').text(data.user_name);
                     $('#leaveRequested_date').text(moment(data.leaverequest_date).format('MMM DD,YYYY, HH:mm a'));
-                    $('#leave_month').text(moment(data.start_date).format('MMM'));        
+                    $('#leave_month').text(moment(data.start_date).format('MMM'));
                     $('#leave_date').text(moment(data.start_date).format('DD'));
                     $('#leave_day').text(moment(data.start_date).format('ddd'));
                     $('#leave_end_month').text(moment(data.end_date).format('MMM'));
@@ -1858,7 +1858,7 @@
                     $('#leaveDetails_modal').modal('show');
                 }}
                  )};
-                 
-                  
+
+
     </script>
 @endsection
