@@ -871,14 +871,15 @@
 
         });
         $('#btn_revoke').on('click', function() {
-            console.log("Revoking leave....");
+            leave_id=$('#btn_revoke').attr("data-leave-id");
+            console.log("Revoking leave.... "+leave_id);
 
             $.ajax({
                     url: "{{ route('revokeLeave') }}",
-                    type: "POST",
+                    type: "GET",
                     dataType: "json",
                     data: {
-                        'leave_id': $('#leave_type_id').val(),
+                        'leave_id': $('#btn_revoke').attr("data-leave-id"),
                         "_token": "{{ csrf_token() }}",
                     },
                     success: function(data) {
