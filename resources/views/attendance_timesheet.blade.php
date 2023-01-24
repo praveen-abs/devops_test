@@ -1018,11 +1018,44 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
                                 if (ajax_data_currentdate.isAbsent) {
                                     if (todayDate > currentDate) {
-                                        cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
-                                            "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' ><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><span class='f-11' id='checkout_time_" +
-                                            year + "-" + (month + 1) + "-" + dateText +
-                                            "'>Absent</span> </div></div></div>";
 
+                                        cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
+                                                "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start'><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><span class='f-11' id='checkout_time_" +
+                                                year + "-" + (month + 1) + "-" + dateText +
+                                                "'>Absent</span>";
+                                        
+                                        if (ajax_data_currentdate.absent_status == "Not Applied")
+                                        {
+                                            cell.innerHTML = cell.innerHTML + "<span>Not Applied</span>";
+                                        }
+                                        else
+                                        if (ajax_data_currentdate.absent_status == "Pending")
+                                        {
+                                            cell.innerHTML = cell.innerHTML + "<span>Pending</span>";
+
+                                        }
+                                        else
+                                        if (ajax_data_currentdate.absent_status == "Rejected")
+                                        {
+                                            cell.innerHTML = cell.innerHTML + "<span>Rejected</span>";
+
+                                        }        
+                                        else
+                                        if (ajax_data_currentdate.absent_status == "Revoked")
+                                        {
+                                            cell.innerHTML = cell.innerHTML + "<span>Revoked</span>";
+
+                                        }    
+                                        else
+                                        if (ajax_data_currentdate.absent_status == "Approved")
+                                        {
+                                            cell.innerHTML = cell.innerHTML + "<span>Approved</span>";
+
+                                        } 
+                                        else
+                                        {
+                                            cell.innerHTML = cell.innerHTML + "<span>ERROR!</span>";
+                                        }                                                                           
                                     } else {
                                         cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
                                             "</p>  </div>"
