@@ -839,8 +839,7 @@ class VmtAttendanceController extends Controller
                             whereDate('leaverequest_date',$attendance_date);
 
         if($leave_record->exists()){
-
-            return $leave_record->first()->value('status');
+            return $leave_record->first()->status;
 
         }
         else
