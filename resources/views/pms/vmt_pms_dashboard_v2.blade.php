@@ -240,15 +240,7 @@
                                                     <div class="col-2">
                                                         {{-- <span class="text-primary f-15 fw-bold">1/3</span> --}}
                                                         <b class="f-15 text-primary">
-                                                            @if (!empty($isAllReviewersSubmittedOrNot))
-                                                                @if ($ratingDetail)
-                                                                    {{ $ratingDetail['rating'] }}
-                                                                @else
-                                                                    -
-                                                                @endif
-                                                            @else
-                                                                -
-                                                            @endif
+                                                                {{ calculateOverallReviewRating(auth()->user()->id) ."%" }}
                                                         </b>
                                                     </div>
                                                 </div>

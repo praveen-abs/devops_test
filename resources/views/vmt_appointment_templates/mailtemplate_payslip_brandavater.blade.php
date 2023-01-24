@@ -4,7 +4,7 @@ $general_info = \DB::table('vmt_general_info')->first();
 //$employee_name =  \DB::table('users')->where('user_code','=',$employee->EMP_NO)->first('name');
 $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
 // dd(request()->getSchemeAndHttpHost()."".$general_info->logo_img);
-$bank_names = \DB::table('bank_list')->get();
+$bank_names = \DB::table('vmt_banks')->get();
 
 ?>
 <html>
@@ -17,16 +17,16 @@ $bank_names = \DB::table('bank_list')->get();
         table {
             width: 100%;
             vertical-align: middle;
-            font-family: sans-serif;
-        }
-
-        .payslip_table tr,
-        td {
             border: 1.5pt solid #af1888;
+            border-collapse: collapse;
+        }
+
+        .payslip_table tr td {
+            border: 1.5pt solid #af1888;
+            padding: 0px 4px;
 
         }
 
-        table td:last-child {}
 
         .border-less {
             border: 0px !important;
@@ -40,9 +40,6 @@ $bank_names = \DB::table('bank_list')->get();
             width: 81.35pt
         }
 
-        .padding-md {
-            /* padding: 2pt 0pt; */
-        }
 
         .margin-0 {
             margin: 0px;
@@ -56,11 +53,6 @@ $bank_names = \DB::table('bank_list')->get();
         }
 
 
-        .sm {}
-
-        .md {}
-
-        .lg {}
 
         .txt-left {
             text-align: left;
@@ -95,7 +87,8 @@ $bank_names = \DB::table('bank_list')->get();
                 <tr class="header-row">
                     <td colspan="8" class="border-less">
                         <div class="header-cotent" style="margin: 10px;">
-                            <p class="margin-0   text-strong" style="color: #002f56;font-size:18px;padding:0px;">Brand Avatar LLP</p>
+                            <p class="margin-0   text-strong" style="color: #002f56;font-size:18px;padding:0px;">Brand
+                                Avatar LLP</p>
                             <p class="mb-0" style="padding:0px;">NO-01,Kandasamy Street,</p>
                             <p class="mb-0" style="padding:0px;">Chandrabagh Ave 2nd St, Dr. Radha Krishnan Salai,
                             </p>

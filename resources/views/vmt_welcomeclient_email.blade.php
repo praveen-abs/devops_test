@@ -1,180 +1,275 @@
+<?php
+//$employee = \DB::table('vmt_employee_payslip')->first();
+$general_info = \DB::table('vmt_general_info')->first();
+//$employee_name =  \DB::table('users')->where('user_code','=',$employee->EMP_NO)->first('name');
+$client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
+// dd(request()->getSchemeAndHttpHost()."".$general_info->logo_img);
+
+
+?>
 
 <!DOCTYPE html>
-<html lang="en" >
-<head>
-  <meta charset="UTF-8">
-  <title>ABShrms - New Account Email </title>
-
-
-</head>
-<body>
-<!-- partial:index.partial.html -->
-<!doctype html>
-<html lang="en-US">
+<html lang="en">
 
 <head>
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
 
-    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-    <title>New Account Email Template</title>
-    <meta name="description" content="New Account Email Template.">
-    <style type="text/css">
-        a:hover {text-decoration: underline !important;}
-        .button {
-  padding: 1px 10px;
-  font-size: 19px;
-  text-align: center;
-  cursor: pointer;
-  outline: none;
-  color: orange;
-  background-color: orange;
+    <style>
+        .txt-left {
+            text-align: left;
+        }
 
-  border-radius: 15px;
+        .txt-right {
+            text-align: right;
+        }
 
-}
+        .txt-center {
+            text-align: center;
+        }
 
-.button:hover {background-color: #3e8e41}
+        .text-strong {
+            font-weight: 600;
+        }
 
-.button:active {
-  background-color: #3e8e41;
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
+        .padding-t_0 {
+            padding-top: 0px;
+        }
 
-.bgimage {
-  background-image: url("https://demo.abshrms.com/assets/images/email/Background.jpg");
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: 100% 100%;
-}
+        .padding-b_0 {
+            padding-bottom: 0px;
+        }
 
+        .margin-t-b_0 {
+            margin-top: 0px;
+            margin-bottom: 0px;
+        }
+        .margin-t_0 {
+            margin-top: 0px;
+
+        }
+        .padding-t-b_0 {
+            padding-bottom: 0px;
+            padding-top: 0px;
+        }
+
+        .mail-button {
+            font-size: 16px;
+            text-decoration: none;
+            font-weight: 600;
+            width: 100px;
+            height: 20px;
+            padding: 6px 15px;
+            background: transparent;
+            border-radius: 100px;
+            color: #fa9530 !important;
+            border: 2px solid #fa9530;
+
+        }
+
+        .mail-button.get-touch:hover {
+            background: #fa9530;
+            color: #ffffff;
+
+        }
     </style>
 </head>
-<body marginheight="0" topmargin="0" marginwidth="0" leftmargin="0">
-    <div class="bgimage">
-    <!-- 100% body table -->
-    <table cellspacing="0" border="0" cellpadding="0" width="100%" bgcolor=""
-        style="@import url(https://fonts.googleapis.com/css?family=Rubik:300,400,500,700|Open+Sans:300,400,600,700); font-family: 'Open Sans', sans-serif;">
-        <tr>
-            <td>
-                <table style="background-color: #0f30d800; max-width:670px; margin:0 auto;" width="100%" border="0"
-                    align="center" cellpadding="0" cellspacing="0">
-                    <tr>
-                        <td style="height:80px;">&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:center;">
-                            <a href="https://abshrms.com" title="logo" target="_blank">
-                            <img src="{{$image_view}}" style="width:140px; height:40px;" alt="">
-                          </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="height:20px;">&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <table cellpadding="0" cellspacing="0" class="brand-content"
-                                style=" width: 100%;
-                                height: 332px;
-                                background-image:url('https://demo.abshrms.com/assets/images/email/team.jpg');
-                                background-size: cover;
-                                text-align: center;
-                                position: relative;">
-                                <tr>
-                                    <td style="height:40px;">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding:0 35px;">
-                                        <h1  style="color: #fff;">Get started
-                                        </h1>
-                                        <p style="color: #fff;" >
-                                            ABShrms would like to invite you to join our organisation's client portal. Using this portal you can access all your information. You can: <br><strong>Please change
-                                                the password immediately after login</strong>.</p>
-                                       <br>
-                                         <button class="button" style="color:#fff;">Get in touch</button>
 
 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="height:40px;">&nbsp;</td>
-                                </tr>
-                            </table>
-                            <br>
-                            <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0"
-                                style="max-width:500px; background:#fff; border-radius:3px; text-align:center;-webkit-box-shadow:0 6px 18px 0 rgba(0,0,0,.06);-moz-box-shadow:0 6px 18px 0 rgba(0,0,0,.06);box-shadow:0 6px 18px 0 rgba(0,0,0,.06);">
-                                <tr>
-                                    <td style="height:40px;">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding:0 35px;">
+<body>
+    <table id="wrapper" cellpadding="0" cellspacing="0" width="552"
+        style="max-width:552px; height: auto; margin: 0 auto;   font-size: 14px !important; color: #403e3c; line-height: 24px;table-layout:fixed; width:100%;border:1px solid rgba(44, 43, 43, 0.185);border-radius:5px;padding:10px">
+        <tbody>
 
-                                      <h5 class="card-title fw-bold text-center m-3">Login to your account</h5>
-                <p class="text-start ">Please change the password immediately when you login </p>
-                                        <p
-                                            style="color:#455056; font-size:18px;line-height:20px; margin:0; font-weight: 500;">
+            <tr>
+                <td>
+                    <table border="0" cellpadding="24" cellspacing="0" bgcolor="#ffffff"
+                        style="border-bottom-left-radius: 4px; border-bottom-right-radius: 4px;padding-top:0px;">
+                        <tbody>
+                            <tr>
+                                <td align="center" style="padding:0;">
 
-                                            <strong style="display: block;font-size: 13px; margin: 0 0 4px; color:rgba(0,0,0,.64); font-weight:normal;">Client Name</strong>{{ $clientName }}
-                                            <strong style="display: block;font-size: 13px; margin: 0 0 4px; color:rgba(0,0,0,.64); font-weight:normal;">Email</strong>{{$uEmail}}
-                                            <strong style="display: block; font-size: 13px; margin: 24px 0 4px 0; font-weight:normal; color:rgba(0,0,0,.64);">Password</strong>{{$uPassowrd}}
-                                        </p>
+                                    <table cellpadding="20" cellspacing="0" width="100%" align="center">
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="4" align="center" class="border-less">
+                                                    <img src={{ $client_logo }} style="height:45px;width:150px;"
+                                                        title="">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" align="center" class="border-less" style="">
 
-                                        <a href="{{$loginLink}}" style="background:blue;text-decoration:none !important; display:inline-block; font-weight:500; margin-top:24px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;" type="submit">Login</a>
+                                                    <p style="font-size:25px;font-weight:600;color:#fa9530;"
+                                                        class="margin-t-b_0 ">Get
+                                                        Started</p>
 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="height:40px;">&nbsp;</td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="height:20px;">&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:center;">
-                           <p class="text-muted"> This e-mail was generated from ABShrms If you think this is SPAM, please do report to
-                <a href="info@abshrms.com">info@abshrms.com</a>
-            </p>
-            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" integrity="sha384-3AB7yXWz4OeoZcPbieVW64vVXEwADiYyAEhwilzWsLw+9FgqpyjjStpPnpBO8o8S" crossorigin="anonymous">
+                                                    <p>ABShrms would like to invite you to join our organisation's
+                                                        employee portal. Using the portal you can access all your
+                                                        payroll related information. You can:
+                                                        Please change the password immediately after login.
 
-                <i><a href="
-                    https://www.ardens.in/"><img src="{{url('assets/images/email/google.png')}}" width="30px" height="30px" ></a></i>
-                <i><a href="https://www.facebook.com/ArdensHR"><img src="{{url('assets/images/email/facebook-logo-2019.png')}}" width="30px" height="30px" ></a></i>
-                <i><a href="https://www.linkedin.com/company/ardenshr-services-private-limited/"><img src="{{url('assets/images/email/linkedin (1).png')}}" width="30px" height="30px" ></a></i>
-                <i><a href="https://twitter.com/HrArdens"><img src="{{url('assets/images/email/twitter.png')}}" width="30px" height="30px" ></a></i>
-                <i><a href="https://www.youtube.com/channel/UCgZ7XpBoJvcWWvaiBS5GxHg"><img src="{{url('assets/images/email/movie.png')}}" width="30px" height="30px" ></a></i>
-                <i><a href="https://www.instagram.com/ardenshr/"><img src="{{url('assets/images/email/instagram.png')}}" width="30px" height="30px" ></a></i>
+                                                    </p>
 
 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="height:80px;">&nbsp;</td>
-                    </tr>
-                </table>
 
-            </td>
-        </tr>
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td class="padding-t_0" align="center">
+                                                    <a href="" class="mail-button get-touch">Get in touch</a>
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td class="" align="center">
+                                    <table class="" width="400"
+                                        style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;padding:20px">
+                                        <tbody>
+
+                                            <tr>
+                                                <td align="center" class="padding-t-b_0 ">
+                                                    <p class="margin-t-b_0 " style="font-size:20px;font-weight:600"
+                                                        class="center">Login to
+                                                        your account</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="center">
+                                                    <p><span style="color:#fa9530;">Note -</span>Please change the
+                                                        password immediately when you login</p>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="center">
+                                                    <p class="margin-t-b_0">Client Name</p>
+                                                    <p class="margin-t-b_0"><b>
+                                                        @php echo $clientName; @endphp </b></p>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="center">
+                                                    <p class="margin-t-b_0">Employee Code</p>
+                                                    <p class="margin-t-b_0"><b>
+                                                        @php echo $uEmail; @endphp </b></p>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="center">
+                                                    <p class="margin-t-b_0">Employee Password</p>
+                                                    <p class="margin-t_0"><b>
+                                                        @php echo $uPassowrd; @endphp </b></p>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="" align="center" style="padding-top: 25px">
+                                                    <a  href="{{$loginLink}}"
+                                                        class="mail-button log-in">Log In</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="padding-t-b_0">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td align="center" style="">
+                                                    This e-mail was generated from ABShrms if you think this is
+                                                    SPAM,please do report to <a href="info@abshrms.com"
+                                                        style="text-decoration: none;color:none;">info<span
+                                                            style="color:#fa9530;">@abshrms.com</span></a>
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-bottom: 10px;padding-top:10px;">
+                                    <table style="text-align:center; width:100%; padding:10px 0px;">
+                                        <tbody>
+                                            <tr>
+                                                <td align="right" colspan="4" style="padding: 0;">
+                                                    <a href="#" class="">
+                                                        <img src="{{ URL::asset('assets/images/apple_play_store.png') }}"
+                                                            alt="" class=""
+                                                            style="margin:0px 0px 0px 20px;">
+                                                    </a>
+
+                                                </td>
+                                                <td align="left" colspan="4" style="padding: 0;">
+                                                    <a href="#" class="">
+                                                        <img src="{{ URL::asset('assets/images/Google_Play_Store.png') }}"
+                                                            alt="" class=""
+                                                            style="margin:0px 0px 0px 20px;">
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding:0 !important;">
+                                    <table align="center" style="text-align:center;width:100%" width="100%">
+                                        <tbody>
+                                            <tr>
+                                                <td align="center" width="100%" style="padding-bottom:0px !important;"
+                                                    style="margin-right: 10px">
+                                                    <div class="fm-sm-container">
+                                                        <a href="https://www.linkedin.com/company/ardenshr-services-private-limited/"
+                                                            target="_blank" style="margin-right: 20px"><img
+                                                                src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-001.png"
+                                                                alt="LinkedIn"></a>
+                                                        <a href="https://www.instagram.com/ardenshr/" target="_blank"
+                                                            style="margin-right: 20px"><img
+                                                                src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-002.png"
+                                                                alt="Instagram"></a>
+                                                        <a href="https://www.facebook.com/ArdensHR" target="_blank"
+                                                            style="margin-right: 20px"><img
+                                                                src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-004.png"
+                                                                alt="Facebook"></a>
+                                                        <a href="https://www.youtube.com/channel/UCgZ7XpBoJvcWWvaiBS5GxHg"
+                                                            target="_blank"><img
+                                                                src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-003.png"
+                                                                alt="Youtube"></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </td>
+            </tr>
+
+
+
+        </tbody>
     </table>
-</div>
-    <!--/100% body table-->
-    <script src="{{ URL::asset('/assets/js/js/bootstrap.min.js') }}"></script>
-<script src="{{ URL::asset('/assets/js/js/jquery.min.js') }}"></script>
-       <!--  <script src="./Assets/js/bootstrap.min.js"></script>
-        <script src="./Assets/js/jquery.min.js"></script> -->
+
 </body>
 
 </html>
-<!-- partial -->
-
-</body>
-</html>
-
-

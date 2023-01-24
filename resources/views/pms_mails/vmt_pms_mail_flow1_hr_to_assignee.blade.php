@@ -4,7 +4,7 @@ $general_info = \DB::table('vmt_general_info')->first();
 //$employee_name =  \DB::table('users')->where('user_code','=',$employee->EMP_NO)->first('name');
 $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
 // dd(request()->getSchemeAndHttpHost()."".$general_info->logo_img);
-$bank_names = \DB::table('bank_list')->get();
+$bank_names = \DB::table('vmt_banks')->get();
 
 ?>
 
@@ -79,14 +79,14 @@ $bank_names = \DB::table('bank_list')->get();
                                                     <td colspan="4" align="left" class="border-less"
                                                         style="padding:10px ;">
 
-                                                        <p class="" style="margin:0px ">Dear <b>“Mr. /Mrs.
+                                                        <p class="" style="margin:0px ">Dear <b>Mr./Ms.
                                                                 @php echo $user_emp_name; @endphp </b></p>
                                                         <p class="" style="  ">
                                                             The purpose of this mail is to inform you that, your
                                                             respective
                                                             OKR/Goals as well as your reporting manager's expectations
                                                             and
-                                                            directions for <b>@php echo $appraisal_period; @endphp </b>
+                                                            directions for <b>{{ $appraisal_year }} - {{ $appraisal_period}}</>
                                                         </p>
                                                         <p>
                                                             As you all must be aware that this is a mandate process that
@@ -102,6 +102,12 @@ $bank_names = \DB::table('bank_list')->get();
                                                             login and have a great conversation with your reporting
                                                             manager.
                                                         </p>
+                                                        <p>
+                                                            <a class=""
+                                                                    href="{{ $login_Link }}">
+                                                                 Click Here
+                                                                </a>
+                                                            </p>
 
                                                         <p>
                                                             We wish you achieve your greatest goals moving forward.
@@ -110,11 +116,11 @@ $bank_names = \DB::table('bank_list')->get();
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td align="right" style="padding: 10px"
+                                                    <td align="left" style="padding: 10px"
                                                         class="padding-top_0 padding-b_0">
-                                                        <p class="tet-right margin-t-b_0 " class="margin:0px;"><b>Cheers,</b>
+                                                        <p class="txt-left margin-t-b_0 " class="margin:0px;"><b>Cheers,</b>
                                                         </p>
-                                                        <p class="tet-right margin-t-b_0 "><b>ABS_OKR Automated System.</b>
+                                                        <p class="txt-left margin-t-b_0 "><b>ABS_OKR Automated System.</b>
                                                         </p>
                                                     </td>
                                                 </tr>

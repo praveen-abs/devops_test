@@ -93,13 +93,13 @@
                         <div class="row">
 
                             @foreach ($leaveTypes as $singleLeaveType)
-                                @if ($singleLeaveType->leave_type != 'Permission')
+                                @if ($singleLeaveType->is_finite == "1")
                                     <div class="col-sm-3 col-sm-12 col-xl-4 col-md-4 col-lg-4 d-flex">
                                         <div class="card  box_shadow_0 border-rtb left-line w-100">
                                             <div class="card-body text-center">
                                                 <p class="text-ash-medium mb-2 f-13 ">{{ $singleLeaveType->leave_type }}</p>
                                                 <h5 class="mb-0">
-                                                    {{ $singleLeaveType->days_annual - ($leaveData_currentUser[$singleLeaveType->leave_type]->leave_availed_count ?? 0) }}
+                                                        {{ $singleLeaveType->days_annual - ($leaveData_currentUser[$singleLeaveType->leave_type]->leave_availed_count ?? 0) }}
                                                 </h5>
                                             </div>
                                         </div>
@@ -119,7 +119,7 @@
                                             <p class="text-ash-medium mb-2 f-13 ">{{ $singleLeaveType->leave_type }}</p>
                                             <h5 class="mb-0">
                                                 <?php
-                                                echo $leaveData_currentUser[$singleLeaveType->leave_type]->leave_availed_count ?? '0';
+                                                    echo $leaveData_currentUser[$singleLeaveType->leave_type]->leave_availed_count ?? '0';
                                                 ?>
                                             </h5>
 
@@ -553,14 +553,18 @@
                                                     @foreach ($leaveTypes as $singleLeaveType)
                                                         <?php
                                                         $leave_availed = $leaveData_currentUser[$singleLeaveType->leave_type]->leave_availed_count ?? 0;
-                                                        $remainingLeaves = $singleLeaveType->days_annual - $leave_availed;
+
+                                                        if($singleLeaveType->is_finite == "1")
+                                                            $remainingLeaves = $singleLeaveType->days_annual - $leave_availed;
+                                                        else
+                                                            $remainingLeaves = 'NA';
                                                         ?>
                                                         <option value="{{ $singleLeaveType->id }}"
                                                             data-leaveType="{{ $singleLeaveType->leave_type }}"
                                                             data-remainingLeaves="{{ $remainingLeaves }}">
                                                             {{ $singleLeaveType->leave_type }}
-                                                            {{-- Dont show remaining leave if leave_type == Permissions --}}
-                                                            @if ($remainingLeaves != -1)
+                                                            {{-- Dont show remaining leave if is_finite == 0 --}}
+                                                            @if ($singleLeaveType->is_finite == "1")
                                                                 ({{ $remainingLeaves }})
                                                             @endif
                                                         </option>
@@ -874,13 +878,16 @@
 
             leave_start_date = '';
             leave_end_date = '';
-            let currentDate = new Date().toJSON().slice(0,10);
+            //let currentDate = new Date().toJSON().slice(0,8)+'01'; //Restricting for current date
+            let currentDate = new Date().toJSON().slice(0,8)+'01'; //Restricting for current month
 
             $('#start_date').attr('type','datetime-local');
             $('#start_date').attr("min",currentDate+"T09:00:00");
-            $('#end_date').attr('type','datetime-local');
-            $('#start_date').attr("min",currentDate+"T09:00:00");
+            console.log("Current Date : "+currentDate);
+
             $('#start_date').val('');
+
+            $('#end_date').attr('type','datetime-local');
             $('#end_date').val('');
             $('#leave_reason').val('');
             $('#total_leave_days').val('0');
@@ -912,7 +919,8 @@
                     endDate_time = moment(endDate_time).format('YYYY-MM-DDTHH:mm');
                    // console.log("Enddate_time : "+endDate_time);
 
-                   // $('#end_date').attr("min",endDate_time);
+                    $('#end_date').attr("min",endDate_time);
+                    $('#end_date').attr("max",endDate_time);
                     $('#end_date').val(endDate_time);
 
                     $('#total_permission_hours').html(1);
@@ -969,7 +977,7 @@
                 console.log("Selected Leave Type : "+selectedPermissionTypeID);
                 console.log("permissionTypeIds: "+permissionTypeIds);
 
-                let currentDate = new Date().toJSON().slice(0,10);
+                let currentDate = new Date().toJSON().slice(0,8)+'01';
 
                 if (permissionTypeIds.includes(parseInt(selectedPermissionTypeID))){
                     //If permission selected, then show date & time in Start and End date dropdown
@@ -1057,8 +1065,7 @@
                     var totalPermissionHours = parseInt($('#total_permission_hours').html());
 
                     if (Math.floor(daysDiff) != 0) {
-                        basic_details_errors.push(
-                            "For Permission leave type : Start date and End date should be same date.");
+                        basic_details_errors.push("For Permission leave type : Start date and End date should be same date.");
                     }
                     else
                     {
@@ -1087,8 +1094,8 @@
                             "Start date should not be greater than End date.");
                     }
 
-
-                    if (availableLeaves_ForSelectedLeaveType <= 0) {
+                    // IF availableLeaves_ForSelectedLeaveType =="NA", then its 'is_finite'== 1...
+                    if (availableLeaves_ForSelectedLeaveType != "NA" && availableLeaves_ForSelectedLeaveType <= 0) {
                         basic_details_errors.push("No leaves available for the selected leave type.");
                     }
                     else
@@ -1628,18 +1635,27 @@
                         {
                             id: 'start_date',
                             name: 'Start Date',
-                            formatter: function formatter(cell) {
-                                //return gridjs.html(cell);
-                                return gridjs.html(moment(cell).format('DD-MM-YYYY h:mm a'));
+                            formatter: function formatter(leave_history) {
+                                // return gridjs.html(leave_history.leave_type_id);
+                                if (permissionTypeIds.includes(leave_history.leave_type_id))
+                                    return gridjs.html(moment(leave_history.start_date).format('MMM Do, YYYY, h:mm a')); // Format : Jan 9th, 2023, 3:00 pm
+                                else
+                                    return gridjs.html(moment(leave_history.start_date).format('MMM Do, YYYY'));
+
+
                             }
                         },
 
                         {
                             id: 'end_date',
                             name: 'End Date',
-                            formatter: function formatter(cell) {
+                            formatter: function formatter(leave_history) {
                                 //return gridjs.html(cell);
-                                return gridjs.html(moment(cell).format('DD-MM-YYYY h:mm a'));
+                                if (permissionTypeIds.includes(leave_history.leave_type_id))
+                                    return gridjs.html(moment(leave_history.start_date).format('MMM Do, YYYY, h:mm a')); // Format : Jan 9th, 2023, 3:00 pm
+                                else
+                                    return gridjs.html(moment(leave_history.start_date).format('MMM Do, YYYY'));
+
                             }
                         },
 
@@ -1714,8 +1730,8 @@
                                 leave_history.id,
                                 leave_history,
                                 leave_history.leave_type_id,
-                                leave_history.start_date,
-                                leave_history.end_date,
+                                leave_history,
+                                leave_history,
                                 leave_history.leave_reason,
                                 leave_history.reviewer_user_id,
                                 //leave_history.notifications_users_id,

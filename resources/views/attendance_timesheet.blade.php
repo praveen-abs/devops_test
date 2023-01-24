@@ -201,13 +201,41 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         <div class="row">
                                             <div class="col-6"><label class="text-ash-medium fs-15">Reason</label></div>
                                             <div class="col-6">
-                                                <select name="reason" class="form-select btn-line-orange" id=""
+                                                <select name="reason" class="form-select btn-line-orange" id="reason_mip"
                                                     onchange="showReasonBox(this)">
                                                     <option selected hidden disabled>
-                                                        Choose Reason
+                                                        Choose Reason for MIP
                                                     </option>
                                                     <option value="Permission">Permission</option>
                                                     <option value="Forgot to Punch">Forgot to Punch</option>
+                                                    <option value="Technical Error">Technical Error</option>
+                                                    <option value="Others">Others</option>
+                                                </select>
+                                                <select name="reason" class="form-select btn-line-orange" id="reason_mop"
+                                                    onchange="showReasonBox(this)">
+                                                    <option selected hidden disabled>
+                                                        Choose Reason for MOP
+                                                    </option>
+                                                    <option value="Permission">Permission</option>
+                                                    <option value="Forgot to Punch">Forgot to Punch</option>
+                                                    <option value="Technical Error">Technical Error</option>
+                                                    <option value="Others">Others</option>
+                                                </select>
+                                                <select name="reason" class="form-select btn-line-orange" id="reason_lc"
+                                                    onchange="showReasonBox(this)">
+                                                    <option selected hidden disabled>
+                                                        Choose Reason for LC
+                                                    </option>
+                                                    <option value="Permission">Permission</option>
+                                                    <option value="Technical Error">Technical Error</option>
+                                                    <option value="Others">Others</option>
+                                                </select>
+                                                <select name="reason" class="form-select btn-line-orange" id="reason_eg"
+                                                    onchange="showReasonBox(this)">
+                                                    <option selected hidden disabled>
+                                                        Choose Reason for EG
+                                                    </option>
+                                                    <option value="Permission">Permission</option>
                                                     <option value="Technical Error">Technical Error</option>
                                                     <option value="Others">Others</option>
                                                 </select>
@@ -692,7 +720,28 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                 $('#txt_customreason_noneditable').val(''); //editable
                 $('#txt_apply_status').val(''); //editable
 
+                //Based on Regularization Type, show the dropdowns
+                $('#reason_mip').hide();
+                $('#reason_mop').hide();
+                $('#reason_lc').hide();
+                $('#reason_eg').hide();
 
+                if ($(element).val() == "LC") {
+                    $('#reason_lc').show();
+                }
+                else
+                if ($(element).val() == "EG") {
+                    $('#reason_eg').show();
+
+                }
+                else
+                if ($(element).val() == "MIP") {
+                    $('#reason_mip').show();
+                }
+                else
+                if ($(element).val() == "MOP") {
+                    $('#reason_mop').show();
+                }
 
                 //show Modal
                 $('#regularizationModal').fadeIn(0);
@@ -701,7 +750,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
             //Set UI elements
             $('#current_date').html(selected_date);
 
-
+            //Hide all reason dropdowns
 
             if ($(element).val() == "LC") {
                 //On modal popup
@@ -1028,32 +1077,28 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
 
                                     if (ajax_data_currentdate.isLC) {
-                                        final_checkin_button_code = html_LC_Button + getStatusIcon(ajax_data_currentdate
-                                            .lc_status);
+                                        final_checkin_button_code = html_LC_Button + getStatusIcon(ajax_data_currentdate.lc_status);
                                     } else
                                     if (ajax_data_currentdate.isMIP) {
-                                        final_checkin_button_code = html_MIP_Button + getStatusIcon(ajax_data_currentdate
-                                            .mip_status);
+                                        final_checkin_button_code = html_MIP_Button + getStatusIcon(ajax_data_currentdate.mip_status);
                                     }
 
                                     if (ajax_data_currentdate.isEG) {
-                                        final_checkout_button_code = html_EG_Button + getStatusIcon(ajax_data_currentdate
-                                            .eg_status);
+                                        final_checkout_button_code = html_EG_Button + getStatusIcon(ajax_data_currentdate.eg_status);
                                     } else
                                     if (ajax_data_currentdate.isMOP) {
-                                        final_checkout_button_code = html_MOP_Button + getStatusIcon(ajax_data_currentdate
-                                            .mop_status);
+                                        final_checkout_button_code = html_MOP_Button + getStatusIcon(ajax_data_currentdate.mop_status);
                                     }
 
 
                                     cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
 
                                         "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex '><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
-                                        year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkin_time +
+                                        year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkin_time + getAttendanceModeIcon(ajax_data_currentdate.attendance_mode_checkin) +
                                         "</span>" +
                                         final_checkin_button_code +
                                         "</div> <div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span class='f-11' id='checkout_time_" +
-                                        year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkout_time +
+                                        year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkout_time + getAttendanceModeIcon(ajax_data_currentdate.attendance_mode_checkout) +
                                         "</span>" +
                                         final_checkout_button_code +
                                         "</div></div></div>";
@@ -1077,6 +1122,24 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
                 tbl.appendChild(row);
             }
+
+        }
+
+        function getAttendanceModeIcon(attendance_mode){
+            console.log("Attendance mode : "+attendance_mode);
+
+            if(attendance_mode == "biometric")
+                // return '&nbsp;<i class="fa-solid fa-fingerprint"></i>';
+               return '&nbsp;<i class="fas fa-fingerprint"></i>';
+            else
+            if(attendance_mode == "web")
+                return '&nbsp;<i class="fa fa-laptop"></i>';
+            else
+            if(attendance_mode == "mobile")
+                return '&nbsp;<i class="fa fa-mobile-phone"></i>';
+            else
+                return ''; // when attendance_mode column is empty.
+
 
         }
 

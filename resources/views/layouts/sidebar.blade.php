@@ -313,7 +313,7 @@
                                             class="nav-link sidebar py-1" data-bs-toggle="" role="button"
                                             aria-expanded="false"><span>
                                                 Reimbursement</span> </a> --}}
-                                                <a href="{{ url('vmt_mail_attendance_regularization_notify') }}" class="nav-link sidebar py-1"><span>Dashboard</span></a>
+                                                {{-- <a href="{{ url('vmt_mail_attendance_regularization_notify') }}" class="nav-link sidebar py-1"><span>Dashboard</span></a> --}}
 
                                     </li>
                                     <li class="nav-item">
@@ -452,35 +452,23 @@
                                 <ul class="nav nav-sm flex-column">
 
                                     <li class="nav-item">
-                                        <a href="{{ route('analytics') }}" class="nav-link sidebar py-1"
+                                        <a href="{{ route('showPayrollAnalyticsPage') }}" class="nav-link sidebar py-1"
                                             role="button"><span>
                                             Analytics</span>
                                         </a>
                                     </li>
-                                    {{-- <li class="nav-item">
-                                        <a href="{{route('run')}}"  class="nav-link sidebar py-1"
-                                            role="button"><span>
-                                            Pay Run</span>
-                                        </a>
-                                    </li> --}}
-                                    {{-- <li class="nav-item">
-                                        <a  href="{{ url('runpayRoll') }}"  class="nav-link sidebar py-1"
-                                            role="button"><span>
-                                            Pay Run</span>
-                                        </a>
-                                    </li> --}}
-                                    <a href="{{route('payRun')}}" class="nav-link sidebar py-1" role="button"><span>Pay
+                                    <a href="{{route('showPayRunPage')}}" class="nav-link sidebar py-1" role="button"><span>Pay
                                         Run</span></a>
 
                                     <li class="nav-item">
-                                        <a  href="{{route('claim')}}"  class="nav-link sidebar py-1"
+                                        <a  href="{{route('showPayrollClaimsPage')}}"  class="nav-link sidebar py-1"
                                             role="button"><span>
                                             Claim</span>
                                         </a>
                                     </li>
 
                                     <li class="nav-item">
-                                        <a  href="{{route('reports')}}" class="nav-link sidebar py-1"
+                                        <a  href="{{route('showPayrollReportsPage')}}" class="nav-link sidebar py-1"
                                             role="button"><span>
                                                 Reports</span>
                                         </a>
@@ -521,11 +509,11 @@
                                         Details</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('vmt-investments-route') }}" class="nav-link sidebar py-1"
+                                <a href="{{ route('vmt_investments_details') }}" class="nav-link sidebar py-1"
                                     role="button"><span>Investments</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('vmt-form16-route') }}" class="nav-link sidebar py-1"
+                                <a href="{{ route('vmt_form16_details') }}" class="nav-link sidebar py-1"
                                     role="button"><span>
                                         Form 16</span></a>
                             </li>
@@ -561,7 +549,7 @@
 
                 {{-- @endif --}}
 
-                {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}
+                @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
 
                 <!-- reports -->
                 <li class="nav-item">
@@ -591,11 +579,23 @@
                                     role="button"><span>Attendance
                                         Report</span></a>
                             </li>
+                            <li class="nav-item">
+
+                                <a href="{{ route('Reports.showPayrollReportsPage') }}" class="nav-link sidebar py-1"
+                                    role="button"><span>Payroll Reports</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+
+                                <a href="{{ route('showPmsReviewsReportPage') }}" class="nav-link sidebar py-1"
+                                    role="button"><span>Pms Reports</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>
 
-                {{-- @endif --}}
+                @endif
 
 
                 <!-- help desk -->

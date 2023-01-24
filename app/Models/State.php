@@ -9,7 +9,7 @@ class State extends Model
 {
     use HasFactory;
 
-    protected $table = 'state';
+    protected $table = 'vmt_states';
 
     protected $fillable = [
         'country_id',

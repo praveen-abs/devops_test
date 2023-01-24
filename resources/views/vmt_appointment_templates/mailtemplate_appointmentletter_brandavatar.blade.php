@@ -4,7 +4,7 @@ $general_info = \DB::table('vmt_general_info')->first();
 //$employee_name =  \DB::table('users')->where('user_code','=',$employee->EMP_NO)->first('name');
 $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
 // dd(request()->getSchemeAndHttpHost()."".$general_info->logo_img);
-$bank_names = \DB::table('bank_list')->get();
+$bank_names = \DB::table('vmt_banks')->get();
 
 ?>
 <html>
@@ -54,7 +54,7 @@ $bank_names = \DB::table('bank_list')->get();
             padding: 5px;
         }
 
-        .avatar_table tr td   p {
+        .avatar_table tr td p {
             font-size: 9pt;
             margin-top: 3pt;
             margin-bottom: 3pt;
@@ -157,7 +157,7 @@ $bank_names = \DB::table('bank_list')->get();
                 <p> <b>For Brand Avatar LLP</b></p>
 
                 <div style="height:50px;width:100px">
-                    <img src="{{ URL::asset('assets/images/appoinment/sign2.png') }}" class="" alt="user-pic"
+                    <img src="{{ URL::asset('assets/images/appoinment/sign2.png') }}" class="" alt="logo"
                         style="height:100%;width:100%;">
                 </div>
 
@@ -180,7 +180,7 @@ $bank_names = \DB::table('bank_list')->get();
                 </div>
 
             </div>
-            <hr style="margin-top: 150px;">
+            <hr style="margin-top: 100px;">
             <div class="divFooter" style="text-align:center;font-size: 13px;"> <span> <b>Registered Office Address</b> –
                     Brand Avatar LLP, No-01, Kandasamy Street, Chandrabagh
                     Avenue Extn, Radhakrishnan Salai, Mylapore, Chennai, Tamilnadu -600 004.</span></div>
@@ -316,7 +316,7 @@ $bank_names = \DB::table('bank_list')->get();
         <div class="sub-page" style="text-align: justify;font-size: 15px;">
             <div class="logo" style="width:150px;height: 50px;margin: 10px 0px;">
                 <img src="{{ URL::asset('assets/images/appoinment/brandavatarlogo.png') }}" class=""
-                    alt="user-pic" style="height:100%;width:100%;">
+                    alt="logo" style="height:100%;width:100%;">
             </div>
             <div class="appointment-letter" style="text-align: justify;">
                 <p style="text-align: center;font-size:20px">ANNEXURE B
@@ -408,7 +408,7 @@ $bank_names = \DB::table('bank_list')->get();
         <div class="sub-page" style="text-align: justify;font-size: 15px;">
             <div class="logo" style="width:150px;height: 50px;margin: 10px 0px;">
                 <img src="{{ URL::asset('assets/images/appoinment/brandavatarlogo.png') }}" class=""
-                    alt="user-pic" style="height:100%;width:100%;">
+                    alt="logo" style="height:100%;width:100%;">
             </div>
             <b>
                 <p> <br>METHOD OF PAYMENT</br>
@@ -490,7 +490,7 @@ $bank_names = \DB::table('bank_list')->get();
         <div class="sub-page" style="text-align: justify;font-size: 15px;">
             <div class="logo" style="width:150px;height: 50px;margin: 10px 0px;">
                 <img src="{{ URL::asset('assets/images/appoinment/brandavatarlogo.png') }}" class=""
-                    alt="user-pic" style="height:100%;width:100%;">
+                    alt="logo" style="height:100%;width:100%;">
             </div>
             <p><b> TERMINATION
                 </b> </p>
@@ -541,7 +541,7 @@ $bank_names = \DB::table('bank_list')->get();
             <p style=""><b>Yours faithfully,</b> <br />
             <p style="margin-top:0px"><b>For Brand Avatar LLP</b> <br />
             <div style="height:50px;width:100px">
-                <img src="{{ URL::asset('assets/images/appoinment/sign2.png') }}" class="" alt="user-pic"
+                <img src="{{ URL::asset('assets/images/appoinment/sign2.png') }}" class="" alt="signature" />
                     style="height:100%;width:100%;">
             </div>
             <p><b>(Hemachandran L)</br>
@@ -561,7 +561,7 @@ $bank_names = \DB::table('bank_list')->get();
                 </span>
             </div>
             <hr style=" margin-top: 10px;">
-            <div class="divFooter" style="text-align:center;font-size: 13px;"> <span> <b>Registered Office Address</b>
+            <div class="divFooter" style="text-align:center;font-size: 13px;padding-top:30px"> <span> <b>Registered Office Address</b>
                     – Brand
                     Avatar LLP, No-01, Kandasamy Street, Chandrabagh
                     Avenue Extn, Radhakrishnan Salai, Mylapore, Chennai, Tamilnadu -600 004.</span></div>

@@ -4,7 +4,7 @@ $general_info = \DB::table('vmt_general_info')->first();
 //$employee_name =  \DB::table('users')->where('user_code','=',$employee->EMP_NO)->first('name');
 $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
 // dd(request()->getSchemeAndHttpHost()."".$general_info->logo_img);
-$bank_names = \DB::table('bank_list')->get();
+
 
 ?>
 
@@ -100,7 +100,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                     <td colspan="4" style="" align="right"
                                                         class="  padding-t-b_0  ">
 
-                                                        <a class="" type="button"  
+                                                        <a class="" type="button"
                                                         href="{{ $login_Link }}/employee-appraisal"
                                                             style="text-decoration:none;cursor: pointer; margin-right:10px;color:#ffffff;padding: 7px 30px;border: 2px solid #90f10c;background: #90f10c;border-radius: 4px;font-weight:600">
                                                             Accept
@@ -109,7 +109,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                     <td colspan="4" style="" align="left"
                                                         class="padding-t-b_0 ">
 
-                                                        <a class="" type="button"  
+                                                        <a class="" type="button"
                                                         href="{{ $login_Link }}/employee-appraisal"
                                                             style="text-decoration:none;cursor: pointer;margin-left:10px;color:#ffffff;padding: 7px 30px;border: 2px solid #f12d0c;background: #ff2500;border-radius: 4px;font-weight:600">
                                                             Reject
@@ -268,7 +268,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                         </p>
                                                         <p>
                                                                 <a class=""
-                                                                        href="{{ $login_Link }}/employee-appraisal">
+                                                                        href="{{ $login_Link }}">
 
                                                                         Kindly visit the HRMS portal for more details
                                                                     </a>
@@ -423,7 +423,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                             frame.</p>
                                                         <p>
                                                         <a class=""
-                                                                href="{{ $login_Link }}/employee-appraisal">
+                                                                href="{{ $login_Link }}">
 
                                                                 Kindly visit the HRMS portal for more details
                                                             </a>
@@ -561,7 +561,7 @@ $bank_names = \DB::table('bank_list')->get();
                                                             If you have any questions or concerns, don’t hesitate to reach out to your reporting manager or the HR team.
                                                         </p>
                                                         <p>
-                                                            <a class="" href="{{ $login_Link }}/employee-appraisal">
+                                                            <a class="" href="{{ $login_Link }}">
                                                                 Kindly visit the HRMS portal for more details
                                                             </a>
                                                         </p>

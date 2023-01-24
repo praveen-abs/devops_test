@@ -493,9 +493,6 @@ class VmtAttendanceController extends Controller
 
     public function showTimesheet(Request $request)
     {
-        //$data = VmtEmployeeAttendance::where('user_id',a);
-        //dd($data);
-
         $shift_start_time = VmtWorkShifts::where('shift_type', "First Shift")->value('shift_start_time');
         $shift_end_time = VmtWorkShifts::where('shift_type', "First Shift")->value('shift_end_time');
 
@@ -566,7 +563,9 @@ class VmtAttendanceController extends Controller
                     $deviceData[] = array(
                         'date' => $dateString,
                         'checkin_time' => $deviceCheckInTime,
-                        'checkout_time' => $deviceCheckOutTime
+                        'checkout_time' => $deviceCheckOutTime,
+                        'attendance_mode_checkin' => 'biometric',
+                        'attendance_mode_checkout' => 'biometric'
                     );
                 }
             }
@@ -575,12 +574,13 @@ class VmtAttendanceController extends Controller
        //dd($deviceData);
 
         // attendance details from vmt_employee_attenndance table
-        $data = VmtEmployeeAttendance::where('user_id', $request->user_id)
+        $attendance_WebMobile = VmtEmployeeAttendance::where('user_id', $request->user_id)
             ->whereMonth('date', $request->month)
             ->orderBy('checkin_time', 'asc')
-            ->get(['date', 'checkin_time', 'checkout_time']);
+            ->get(['date', 'checkin_time', 'checkout_time','attendance_mode_checkin','attendance_mode_checkout']);
 
-        //dd($data);
+        //dd($attendance_WebMobile);
+
 
         $attendanceResponseArray = [];
 
@@ -605,11 +605,12 @@ class VmtAttendanceController extends Controller
            $fulldate = $year."-".$month."-".$date;
 
 
-           $attendanceResponseArray[$fulldate] = array( "user_id"=>$request->user_id,"isAbsent"=>false, "absent_status"=>null,
-                                                        "checkin_time"=>null, "checkout_time"=>null,
+           $attendanceResponseArray[$fulldate] = array( "user_id"=>$request->user_id,"isAbsent"=>false, "attendance_mode_checkin"=>null, "attendance_mode_checkout"=>null,
+                                                        "absent_status"=>null,"checkin_time"=>null, "checkout_time"=>null,
                                                         "isLC"=>false, "lc_status"=>null, "lc_reason"=>null,"lc_reason_custom"=>null,
                                                         "isEG"=>false, "eg_status"=>null, "eg_reason"=>null,"eg_reason_custom"=>null,
-                                                        "isMIP"=>false, "mip_status"=>null, "isMOP"=>false, "mop_status"=>null);
+                                                        "isMIP"=>false, "mip_status"=>null, "isMOP"=>false, "mop_status"=>null
+                                                        );
 
            //echo "Date is ".$fulldate."\n";
            ///$month_array[""]
@@ -617,21 +618,84 @@ class VmtAttendanceController extends Controller
 
 
         // merging result from both table
-        $data = $data->toArray();
-        $data  = array_merge($deviceData, $data);
-        $dateCollectionObj    =  collect($data);
+        $merged_attendanceData  = array_merge($deviceData, $attendance_WebMobile->toArray());
+        $dateCollectionObj    =  collect($merged_attendanceData);
 
         $sortedCollection   =   $dateCollectionObj->sortBy([
             ['date', 'asc'],
         ]);
 
         $dateWiseData         =  $sortedCollection->groupBy('date'); //->all();
+        //dd($merged_attendanceData);
         //dd($dateWiseData);
-        //dd($attendanceResponseArray);
         foreach ($dateWiseData  as $key => $value) {
 
-            $attendanceResponseArray[$key]["checkin_time"] = $value->min('checkin_time') ;
-            $attendanceResponseArray[$key]["checkout_time"] = $value->max('checkout_time');
+           // dd($value[0]);
+
+            /*
+                Here $key is the date. i.e : 2022-10-01
+
+                $value is ::
+
+                    [
+                        date=>2022-11-05
+                        checkin_time=18:06:00
+                        checkout_time=18:06:00
+                        attendance_mode="web"
+                    ],
+                    [
+                        ....
+                        attendance_mode="biometric"
+
+                    ]
+
+            */
+            //Compare the checkin,checkout time between all attendance modes and get the min(checkin) and max(checkout)
+
+            $checkin_min = null;
+            $checkout_max = null;
+            $attendance_mode_checkin = null;
+            $attendance_mode_checkout = null;
+
+            //dd($value);
+            foreach($value as $singleValue)
+            {
+                //Find the min of checkin
+                if ($checkin_min == null) {
+                    $checkin_min = $singleValue["checkin_time"];
+                    $attendance_mode_checkin = $singleValue["attendance_mode_checkin"];
+                }
+                else
+                if ($checkin_min > $singleValue["checkin_time"]) {
+                    $checkin_min = $singleValue["checkin_time"];
+                    $attendance_mode_checkin = $singleValue["attendance_mode_checkin"];
+                }
+
+                    //dd("Min value found : " . $singleValue["checkin_time"]);
+
+                //Find the max of checkin
+                if ($checkout_max == null) {
+                    $checkout_max = $singleValue["checkout_time"];
+                    $attendance_mode_checkout = $singleValue["attendance_mode_checkout"];
+                }
+                else
+                if ($checkout_max < $singleValue["checkout_time"]) {
+                    $checkout_max = $singleValue["checkout_time"];
+                    $attendance_mode_checkout = $singleValue["attendance_mode_checkout"];
+
+                }
+
+            }
+
+            //dd("end : Check-in : ".$checkin_min." , Check-out : ".$checkout_max);
+
+            //dd($value[0]["attendance_mode"]);
+            $attendanceResponseArray[$key]["checkin_time"] = $checkin_min;
+            $attendanceResponseArray[$key]["checkout_time"] = $checkout_max;
+
+            //TODO :: Based on which checkin, checkout time taken, its corresponding attendance modes has to be assigned here
+            $attendanceResponseArray[$key]["attendance_mode_checkin"] = $attendance_mode_checkin;
+            $attendanceResponseArray[$key]["attendance_mode_checkout"] = $attendance_mode_checkout;
 
         }
         //dd($attendanceResponseArray);
@@ -874,21 +938,32 @@ class VmtAttendanceController extends Controller
 
         $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
 
-        $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::all();
+        $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::where('status','Pending')->get();
 
-        //dd($allEmployees_lateComing);
+        //dd($map_allEmployees->toArray());
+        //dd($allEmployees_lateComing->toArray());
 
         foreach ($allEmployees_lateComing as $singleItem) {
-            $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
-            $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->user_id]);
 
-            //If reviewer_id = 0, then its not yet reviewed
-            if ($singleItem->reviewer_id != 0) {
-                $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_id]["name"];
-                $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName([$singleItem->reviewer_id]);
+            //check whether user_id from regularization table exists in USERS table
+            if (array_key_exists($singleItem->user_id, $map_allEmployees->toArray())) {
+
+                $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
+                $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->user_id]);
+
+                //If reviewer_id = 0, then its not yet reviewed
+                if ($singleItem->reviewer_id != 0) {
+                    $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_id]["name"];
+                    $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName([$singleItem->reviewer_id]);
+                }
+            }
+            else
+            {
+              //  dd("Missing User ID : " . $singleItem->user_id);
             }
         }
-        //dd($allEmployees_lateComing);
+
+       // dd($allEmployees_lateComing);
         return $allEmployees_lateComing;
     }
 
