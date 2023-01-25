@@ -62,7 +62,7 @@
                                         <div class="border-bottom-liteAsh py-2">
                                             <p class="text-muted f-12 fw-bold">Employee Status</p>
                                             <p class="text-primary f-15 fw-bold">
-                                                {{ getEmployeeActiveStatus($user->active) ?? '-' }}
+                                                {{ getEmployeeActiveStatus($user->id) ?? '-' }}
                                             </p>
 
                                         </div>
@@ -2283,7 +2283,7 @@
 
     <script>
         $(document).ready(function() {
-            let empActiveStatus = "{{ getEmployeeActiveStatus($user->active) ?? 'null' }}";
+            let empActiveStatus = "{{ getEmployeeActiveStatus($user->id) ?? 'null' }}";
 
             if (empActiveStatus == "Active") {
                 $('.userActive-status').css('border-color', '#2e9102');
