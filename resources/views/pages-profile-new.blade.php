@@ -1440,23 +1440,23 @@
                                 <form action="{{ route('updatePersonalInformation', $user->id) }}" Method="POST"
                                     enctype="multipart/form-data">
                                     <h6 class="">Documents Of Employee
-                                        <span class="personal-edit"><a href="#" class="edit-icon"
+                                        {{-- <span class="personal-edit"><a href="#" class="edit-icon"
                                                 data-bs-toggle="modal" data-bs-target="#edit_document"><i
                                                     class="ri-pencil-fill"></i></a>
-                                        </span>
+                                        </span> --}}
                                     </h6>
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead class="bg-primary">
                                                 <th>
-                                                    Document Type
+                                                    Document Name
                                                 </th>
                                                 <th>
-                                                    Number / ID
+                                                    Document View
                                                 </th>
-                                                <th>
+                                                {{-- <th>
                                                     Action
-                                                </th>
+                                                </th> --}}
                                             </thead>
                                             <tbody>
                                                 {{-- <?php dd($documents_filenames); ?> --}}

@@ -1132,6 +1132,9 @@ button.gridjs-sort-desc {
 .text-orange {
     color: #ee6a04;
 }
+.bg-orange{
+    background-color: var(--color-primary_orange);
+}
 
 
 .leave-request-section .modal .modal-dialog .modal-content .modal-header {
@@ -1570,7 +1573,8 @@ table.dataTable td {
 .lc_btn {
     padding: 1px !important;
     height: 14px;
-    width: 18px;
+    width: auto;
+    min-width: 20px;
     border-radius: 2px;
     font-size: 8px !important;
     text-align: center;
