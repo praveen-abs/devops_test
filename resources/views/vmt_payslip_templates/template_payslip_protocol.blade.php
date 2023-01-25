@@ -4,7 +4,7 @@ $general_info = \DB::table('vmt_general_info')->first();
 //$employee_name =  \DB::table('users')->where('user_code','=',$employee_payslip->EMP_NO)->first('name');
 //$client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
 // dd(request()->getSchemeAndHttpHost()."".$general_info->logo_img);
-$bank_names = \DB::table('bank_list')->get();
+$bank_names = \DB::table('vmt_banks')->get();
 
 ?>
 <html>
@@ -96,12 +96,12 @@ $bank_names = \DB::table('bank_list')->get();
         <div class="sub-page" style="text-align: justify;">
 
             <table cellspacing="0" cellpadding="0" class="payslip_table">
-                <tr class="border-less">
+                {{-- <tr class="border-less">
                     <td class="border-less" colspan="12">
                         <img src="{{ URL::asset('assets/images/header_protocolo.svg') }}" class="" alt=""
                         style="width:100%;height:100%;">
                     </td>
-                </tr>
+                </tr> --}}
                 <tr class="header-row" aria-rowcount="">
                     <td colspan="8" class="border-less  p3" rowspan="">
                         <div class="header-cotent">
@@ -583,12 +583,12 @@ $bank_names = \DB::table('bank_list')->get();
                     </td>
                 </tr>
 
-                <tr class="border-less">
+                {{-- <tr class="border-less">
                     <td colspan="12" class="border-less">
                         <img src="{{ URL::asset('assets/images/footerProtocolImg_payslip.svg') }}" class="" alt=""
                         style="height:100%;width:100%;">
                     </td>
-                </tr>
+                </tr> --}}
 
             </table>
 

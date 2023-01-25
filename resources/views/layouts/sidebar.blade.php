@@ -553,8 +553,8 @@
 
                 <!-- reports -->
                 <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0" id="employeeInfo" href="#reportsDrop-Down"
-                        data-bs-toggle="collapse" role="button" aria-expanded="false"
+                    <a class="nav-link sidebar menu-link pt-0" id="employeeInfo" href="{{ route('showPayrollReportsPage') }} "
+                        data-bs-toggle="" role="button" aria-expanded="false"
                         aria-controls="sidebar360questions">
                         <i>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#686363"
@@ -565,7 +565,7 @@
                         </i>
                         <span> Reports</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="reportsDrop-Down">
+                    {{-- <div class="collapse menu-dropdown" id="reportsDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
 
@@ -592,7 +592,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </div>
+                    </div> --}}
                 </li>
 
                 @endif
