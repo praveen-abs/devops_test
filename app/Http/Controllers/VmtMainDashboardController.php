@@ -125,9 +125,18 @@ class VmtMainDashboardController extends Controller
             }
         }
 
+        //Promote user to Manager if any employees reporting him
+        $reporteesCount = VmtEmployeeOfficeDetails::where('l1_manager_code',auth()->user()->user_code)->get()->count();
 
+        if($reporteesCount > 0){
+           $currentUser =  User::find(auth()->user()->id);
 
+           //change only if current user is employee
+           if($currentUser->org_role == '5')
+                $currentUser->org_role = '4';
 
+           $currentUser->save();
+        }
 
 
         ////Employee Event details
@@ -287,6 +296,17 @@ class VmtMainDashboardController extends Controller
             $todayEmployeesOnLeaveCount =  $totalEmployeesCount - $todayEmployeesCheckedInCount;
             //dd($newEmployeesCount);
 
+        }
+
+        //For Manager dashboard only
+        //Get all Team employees for this logged-in user
+        if (auth()->user()->org_role == '4') {
+            $totalTeamEmployeesCount = VmtEmployeeOfficeDetails::where('l1_manager_code', auth()->user()->user_code)->get()->count();
+
+            //TODO : Need to fetch biometric and employee_attendance table data and filter based on team members.
+            $todayTeamEmployeesOnline = 0;
+            $todayTeamEmployeesOffline = 0;
+
 
         }
 
@@ -297,6 +317,9 @@ class VmtMainDashboardController extends Controller
             $dashboardCountersData['todayEmployeesCheckedInCount'] = $todayEmployeesCheckedInCount;
             $dashboardCountersData['todayEmployeesCheckedIn'] = $todayEmployeesCheckedIn;
             $dashboardCountersData['todayEmployeesOnLeaveCount'] = $todayEmployeesOnLeaveCount;
+            $dashboardCountersData['todayTeamEmployeesCount'] = $totalTeamEmployeesCount ?? '-';
+            $dashboardCountersData['todayTeamEmployeesOnline'] = $todayTeamEmployeesOnline ?? '-';
+            $dashboardCountersData['todayTeamEmployeesOffline'] = $todayTeamEmployeesOffline ?? '-';
 
         //dd($dashboardCountersData);
 
@@ -308,28 +331,16 @@ class VmtMainDashboardController extends Controller
         // get praise data
         $praiseData = VmtPraise::orderBy('created_at','DESC')->get();
 
-        //Promote user to Manager if any employees reporting him
-        $reporteesCount = VmtEmployeeOfficeDetails::where('l1_manager_code',auth()->user()->user_code)->get()->count();
 
-        if($reporteesCount > 0){
-           $currentUser =  User::find(auth()->user()->id);
-
-           //change only if current user is employee
-           if($currentUser->org_role == '5')
-                $currentUser->org_role = '4';
-
-           $currentUser->save();
-        }
-
-        if(Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]) )
+        if(Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR","Manager"]) )
         {
             return view('vmt_hr_dashboard', compact( 'dashboardEmployeeEventsData', 'checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData'));
         }
-        else
-        if(Str::contains( currentLoggedInUserRole(), ["Manager"]) )
-        {
-            return view('vmt_manager_dashboard', compact( 'dashboardEmployeeEventsData','checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData','announcementData'));
-        }
+        // else
+        // if(Str::contains( currentLoggedInUserRole(), ["Manager"]) )
+        // {
+        //     return view('vmt_manager_dashboard', compact( 'dashboardEmployeeEventsData','checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData','announcementData'));
+        // }
         else
         if(Str::contains( currentLoggedInUserRole(), ["Employee"]) )
         {

@@ -39,7 +39,7 @@
         <!-- content middle -->
         <div class="row">
             <div class="col-sm-12 col-md-12 col-xl-8 col-lg-8 col-xxl-8">
-                @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR', 'Manager']))
+                @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
                     <div class="row mb-n4">
                         <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
                             <a class="" data-bs-toggle="modal">
@@ -106,248 +106,291 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 col-xxl-12">
-                            <div class="card profile-box flex-fill card-top-border w-100">
-                                <!-- <div class="p-1 bg-primary" ></div> -->
-                                <div class="card-body ">
-
-
-
-                                                    <ul class="nav sub-topnav mb-2">
-                                                        <li class="title  topbarNav fw-bold active" id="post">
-                                                            <a>Post</a>
-                                                        </li>
-                                                        <li class="title topbarNav  fw-bold" id="announcement">
-                                                            <a>Announcement</a>
-                                                        </li>
-                                                        <li class="title topbarNav fw-bold" id="poll"><a>Poll</a>
-                                                        </li>
-                                                        <li class="title topbarNav fw-bold" id="praise"><a>Praise</a>
-                                                        </li>
-                                                    </ul>
-
-                                                    <div class="topbarContent emp-post">
-
-                                                            <div class="my-2 scrollBar">
-                                                                <textarea name="post_menu" id="post_menu" class="form-control outline-none w-100 h-100" placeholder="Write your Post here"></textarea>
-                                                            </div>
-                                                            <div class="post-contents d-flex align-items-center mx-4">
-                                                                <div class="img-contents">
-                                                                    <i class="ri-image-2-fill"></i>
-                                                                    <input type="file" class="filestyle" name="image_src"
-                                                                        id="image_src" data-input="false" multiple
-                                                                        accept="image/*" data-iconName="fa fa-upload"
-                                                                        data-buttonText="Upload File" />
-                                                                    <span class="tooltiptext">Image</span>
-
-                                                                </div>
-
-                                                                <div class="emoji-content mx-3">
-                                                                    <i class="ri-user-smile-line "></i>
-                                                                    <span class="tooltiptext">Emoji</span>
-
-                                                                </div>
-
-
-                                                            </div>
-                                                            <button class="btn btn-primary  float-end" type="submit">
-                                                                Create Post
-                                                            </button>
-
-                                                    </div>
-                                                    <div class="topbarContent emp-announcement " style="display:none;">
-                                                        <div>
-                                                            <form id="announcement-form-submit">
-                                                                <div class="announcement-content scrollBar">
-
-                                                                    <input class="form-control mb-2   w-100 h-100"
-
-                                                                        placeholder="Title of the Announcement"
-                                                                        type="text" id="title_data" name="title_data">
-
-                                                                    <textarea class="form-control  mb-2 w-100 h-100" placeholder="Details of Announcement"
-                                                                        aria-label="default input example" type="text" name="details_data" id="details_data" required></textarea>
-
-
-                                                                    <div class="bottom-content d-flex mx-2">
-
-                                                                        <div class="row">
-                                                                            <div
-                                                                                class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-                                                                                <div class="form-check ps-0">
-                                                                                    <input
-                                                                                        class="form-check-input check-box me-1"
-                                                                                        type="checkbox" value="1"
-                                                                                        id="notifyEmp"
-                                                                                        name="notify_employees">
-                                                                                    <label class="form-check-label"
-                                                                                        for="notifyEmp">
-                                                                                        Notify employees
-                                                                                    </label>
-
-                                                                                </div>
-                                                                            </div>
-                                                                            <div
-                                                                                class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-                                                                                <div class="form-check ps-0">
-                                                                                    <input
-                                                                                        class="form-check-input check-box  me-1"
-                                                                                        type="checkbox" value="1"
-                                                                                        id="requireAcknowledge"
-                                                                                        name="require_acknowledgement">
-                                                                                    <label class="form-check-label"
-                                                                                        for="requireAcknowledge">
-                                                                                        Require Acknowledgement
-                                                                                    </label>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div
-                                                                                class="col-sm-6 col-md-6 col-lg-6 col-xl-6  col-xxl-6 ">
-                                                                                <div class="form-check ps-0">
-                                                                                    <input
-                                                                                        class="form-check-input check-box me-1"
-                                                                                        type="checkbox" value="1"
-                                                                                        id="hideAfter" name="hide_after">
-                                                                                    <label class="form-check-label"
-                                                                                        for="hideAfter">
-                                                                                        Hide After
-                                                                                    </label>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div
-                                                                                class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-                                                                                <div class="form-check ps-0">
-                                                                                    <input
-                                                                                        class="form-control me-1 anounce-date "
-                                                                                        type="date" name="date"
-                                                                                        placeholder="Select date"
-                                                                                        id="" required
-                                                                                        style="background-color:#e9ecef">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <button class="btn btn-primary float-end"
-                                                                    id="annon_menu_submit" type="submit">
-                                                                    Submit
-                                                                </button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                    <div class="topbarContent emp-poll" style="display:none;">
-                                                        <div>
-                                                            <div class="poll-content">
-                                                                <form id="polling-questions-form-submit">
-                                                                    <input type="text" name="question" id=""
-                                                                        class="form-control outline-none"
-                                                                        placeholder="What this poll is about" required>
-                                                                    <hr>
-                                                                    <div class="content-container">
-                                                                        <div class="mt-3 d-flex align-items-center">
-                                                                            <input type="text" name="options[]"
-                                                                                id="" class="form-control "
-                                                                                placeholder="Add option here" required>
-                                                                        </div>
-                                                                        <div class="mt-3 d-flex align-items-center">
-                                                                            <input type="text" name="options[]"
-                                                                                id="" class="form-control "
-                                                                                placeholder="Add option here" required>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="text-end my-2">
-                                                                        <!-- <button class="btn btn-secondary outline-none border-0"><i class=" ri-add-circle-line mr-2">Add More</i></button> -->
-                                                                        <button
-                                                                            class="btn text-primary p-0 bg-transparent outline-none border-0 f-12 plus-sign"
-                                                                            type="button"><i
-                                                                                class="f-12 me-1 fa  fa-plus-circle"
-                                                                                aria-hidden="true"></i>Add
-                                                                            More</i></button>
-                                                                    </div>
-
-                                                                    <div class="bottom-content">
-                                                                        <div class="row">
-                                                                            <div
-                                                                                class="col-sm-6 col-md-6 col-xl-4 col-lg-4 mt-1">
-                                                                                <div class=" d-flex align-items-center">
-                                                                                    <label for=""
-                                                                                        class="me-1 mb-0">Poll
-                                                                                        Expires
-                                                                                        On</label>
-                                                                                    <input
-                                                                                        class=" me-1 anounce-date form-control"
-                                                                                        name="date" type="date"
-                                                                                        placeholder="Select date"
-                                                                                        id="" required
-                                                                                        style="background-color:#e9ecef">
-                                                                                </div>
-                                                                            </div>
-                                                                            <div
-                                                                                class="col-sm-6 col-md-6 col-xl-4 col-lg-4 mt-1">
-
-                                                                                <input
-                                                                                    class="form-check-input check-box me-1"
-                                                                                    type="checkbox"
-                                                                                    name="notify_employees"
-                                                                                    id="notifyEmp2" value="1">
-                                                                                <label class="form-check-label"
-                                                                                    for="notifyEmp2">
-                                                                                    Notify employees
-                                                                                </label>
-
-                                                                            </div>
-                                                                            <div
-                                                                                class="col-sm-6 col-md-6 col-xl-4 col-lg-4 mt-1">
-
-                                                                                <input
-                                                                                    class="form-check-input check-box me-1"
-                                                                                    type="checkbox" name="anonymous_poll"
-                                                                                    value="1" id="anonymous">
-                                                                                <label class="form-check-label"
-                                                                                    for="anonymous">
-                                                                                    Anonymous Poll
-                                                                                </label>
-
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="mt-2 text-end">
-                                                                        <button class="btn btn-primary"
-                                                                            id="polling-cancel-btn"
-                                                                            type="button">Cancel</button>
-                                                                        <button class="btn btn-primary"
-                                                                            id="polling-submit-btn"
-                                                                            type="submit">Post</button>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="topbarContent emp-praise" style="display:none;">
-                                                        <div>
-                                                            <form id="praise-form-submit">
-                                                                <div>
-                                                                    <div class="px-20 p-16 row no-gutters scrollBar">
-                                                                        <textarea name="praise_data" id="" placeholder="Praise..." cols="30" rows="3" class=" form-control outline-none w-100"
-                                                                            required></textarea>
-                                                                    </div>
-                                                                    <div class="text-end mt-2">
-                                                                        <button id="praise-submit-btn" type="submit"
-                                                                            class="btn btn-primary py-1 px-4  float-right">
-                                                                            Submit
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-
+                @endif
+                @if (Str::contains(currentLoggedInUserRole(), ['Manager']))
+                <div class="row mb-n4">
+                    <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
+                        <div class="card shadow profile-box card-top-border">
+                            <!-- <div class="p-1 bg-primary" > -->
+                            <div class="card-body d-flex justify-content-center align-items-center">
+                                <div class="text-center">
+                                    <h6 class="fw-bold title">Team Employees</h6>
+                                    <span class="number-increment text-muted f-15 fw-bold">
+                                        {{ json_decode($json_dashboardCountersData)->todayTeamEmployeesCount }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
+                        <div class="card shadow  profile-box card-top-border ">
+                            <!-- <div class="p-1 bg-primary" > -->
+                            <div class="card-body d-flex justify-content-center align-items-center">
+                                <div class="text-center">
+                                    <h6 class="fw-bold title">Offline</h6>
+                                    <span class="number-increment text-muted f-15 fw-bold">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
+                        <div class="card shadow profile-box orange-top-border ">
+                            <!-- <div class="p-1 bg-danger" > -->
+                            <div class="card-body d-flex justify-content-center align-items-center">
+                                <div class="text-center">
+                                    <h6 class="fw-bold title">Online</h6>
+                                    <span class="number-increment text-muted f-15 fw-bold">
+                                        {{ json_decode($json_dashboardCountersData)->todayEmployeesCheckedInCount }}</span>
 
                                 </div>
                             </div>
                         </div>
                     </div>
+
                 @endif
+
+                <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 col-xxl-12">
+                    <div class="card profile-box flex-fill card-top-border w-100">
+                        <!-- <div class="p-1 bg-primary" ></div> -->
+                        <div class="card-body ">
+
+
+
+                                            <ul class="nav sub-topnav mb-2">
+                                                <li class="title  topbarNav fw-bold active" id="post">
+                                                    <a>Post</a>
+                                                </li>
+                                                <li class="title topbarNav  fw-bold" id="announcement">
+                                                    <a>Announcement</a>
+                                                </li>
+                                                <li class="title topbarNav fw-bold" id="poll"><a>Poll</a>
+                                                </li>
+                                                <li class="title topbarNav fw-bold" id="praise"><a>Praise</a>
+                                                </li>
+                                            </ul>
+
+                                            <div class="topbarContent emp-post">
+
+                                                    <div class="my-2 scrollBar">
+                                                        <textarea name="post_menu" id="post_menu" class="form-control outline-none w-100 h-100" placeholder="Write your Post here"></textarea>
+                                                    </div>
+                                                    <div class="post-contents d-flex align-items-center mx-4">
+                                                        <div class="img-contents">
+                                                            <i class="ri-image-2-fill"></i>
+                                                            <input type="file" class="filestyle" name="image_src"
+                                                                id="image_src" data-input="false" multiple
+                                                                accept="image/*" data-iconName="fa fa-upload"
+                                                                data-buttonText="Upload File" />
+                                                            <span class="tooltiptext">Image</span>
+
+                                                        </div>
+
+                                                        <div class="emoji-content mx-3">
+                                                            <i class="ri-user-smile-line "></i>
+                                                            <span class="tooltiptext">Emoji</span>
+
+                                                        </div>
+
+
+                                                    </div>
+                                                    <button class="btn btn-primary  float-end" type="submit">
+                                                        Create Post
+                                                    </button>
+
+                                            </div>
+                                            <div class="topbarContent emp-announcement " style="display:none;">
+                                                <div>
+                                                    <form id="announcement-form-submit">
+                                                        <div class="announcement-content scrollBar">
+
+                                                            <input class="form-control mb-2   w-100 h-100"
+
+                                                                placeholder="Title of the Announcement"
+                                                                type="text" id="title_data" name="title_data">
+
+                                                            <textarea class="form-control  mb-2 w-100 h-100" placeholder="Details of Announcement"
+                                                                aria-label="default input example" type="text" name="details_data" id="details_data" required></textarea>
+
+
+                                                            <div class="bottom-content d-flex mx-2">
+
+                                                                <div class="row">
+                                                                    <div
+                                                                        class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                                                                        <div class="form-check ps-0">
+                                                                            <input
+                                                                                class="form-check-input check-box me-1"
+                                                                                type="checkbox" value="1"
+                                                                                id="notifyEmp"
+                                                                                name="notify_employees">
+                                                                            <label class="form-check-label"
+                                                                                for="notifyEmp">
+                                                                                Notify employees
+                                                                            </label>
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                                                                        <div class="form-check ps-0">
+                                                                            <input
+                                                                                class="form-check-input check-box  me-1"
+                                                                                type="checkbox" value="1"
+                                                                                id="requireAcknowledge"
+                                                                                name="require_acknowledgement">
+                                                                            <label class="form-check-label"
+                                                                                for="requireAcknowledge">
+                                                                                Require Acknowledgement
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="col-sm-6 col-md-6 col-lg-6 col-xl-6  col-xxl-6 ">
+                                                                        <div class="form-check ps-0">
+                                                                            <input
+                                                                                class="form-check-input check-box me-1"
+                                                                                type="checkbox" value="1"
+                                                                                id="hideAfter" name="hide_after">
+                                                                            <label class="form-check-label"
+                                                                                for="hideAfter">
+                                                                                Hide After
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                                                                        <div class="form-check ps-0">
+                                                                            <input
+                                                                                class="form-control me-1 anounce-date "
+                                                                                type="date" name="date"
+                                                                                placeholder="Select date"
+                                                                                id="" required
+                                                                                style="background-color:#e9ecef">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-primary float-end"
+                                                            id="annon_menu_submit" type="submit">
+                                                            Submit
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <div class="topbarContent emp-poll" style="display:none;">
+                                                <div>
+                                                    <div class="poll-content">
+                                                        <form id="polling-questions-form-submit">
+                                                            <input type="text" name="question" id=""
+                                                                class="form-control outline-none"
+                                                                placeholder="What this poll is about" required>
+                                                            <hr>
+                                                            <div class="content-container">
+                                                                <div class="mt-3 d-flex align-items-center">
+                                                                    <input type="text" name="options[]"
+                                                                        id="" class="form-control "
+                                                                        placeholder="Add option here" required>
+                                                                </div>
+                                                                <div class="mt-3 d-flex align-items-center">
+                                                                    <input type="text" name="options[]"
+                                                                        id="" class="form-control "
+                                                                        placeholder="Add option here" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="text-end my-2">
+                                                                <!-- <button class="btn btn-secondary outline-none border-0"><i class=" ri-add-circle-line mr-2">Add More</i></button> -->
+                                                                <button
+                                                                    class="btn text-primary p-0 bg-transparent outline-none border-0 f-12 plus-sign"
+                                                                    type="button"><i
+                                                                        class="f-12 me-1 fa  fa-plus-circle"
+                                                                        aria-hidden="true"></i>Add
+                                                                    More</i></button>
+                                                            </div>
+
+                                                            <div class="bottom-content">
+                                                                <div class="row">
+                                                                    <div
+                                                                        class="col-sm-6 col-md-6 col-xl-4 col-lg-4 mt-1">
+                                                                        <div class=" d-flex align-items-center">
+                                                                            <label for=""
+                                                                                class="me-1 mb-0">Poll
+                                                                                Expires
+                                                                                On</label>
+                                                                            <input
+                                                                                class=" me-1 anounce-date form-control"
+                                                                                name="date" type="date"
+                                                                                placeholder="Select date"
+                                                                                id="" required
+                                                                                style="background-color:#e9ecef">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="col-sm-6 col-md-6 col-xl-4 col-lg-4 mt-1">
+
+                                                                        <input
+                                                                            class="form-check-input check-box me-1"
+                                                                            type="checkbox"
+                                                                            name="notify_employees"
+                                                                            id="notifyEmp2" value="1">
+                                                                        <label class="form-check-label"
+                                                                            for="notifyEmp2">
+                                                                            Notify employees
+                                                                        </label>
+
+                                                                    </div>
+                                                                    <div
+                                                                        class="col-sm-6 col-md-6 col-xl-4 col-lg-4 mt-1">
+
+                                                                        <input
+                                                                            class="form-check-input check-box me-1"
+                                                                            type="checkbox" name="anonymous_poll"
+                                                                            value="1" id="anonymous">
+                                                                        <label class="form-check-label"
+                                                                            for="anonymous">
+                                                                            Anonymous Poll
+                                                                        </label>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mt-2 text-end">
+                                                                <button class="btn btn-primary"
+                                                                    id="polling-cancel-btn"
+                                                                    type="button">Cancel</button>
+                                                                <button class="btn btn-primary"
+                                                                    id="polling-submit-btn"
+                                                                    type="submit">Post</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="topbarContent emp-praise" style="display:none;">
+                                                <div>
+                                                    <form id="praise-form-submit">
+                                                        <div>
+                                                            <div class="px-20 p-16 row no-gutters scrollBar">
+                                                                <textarea name="praise_data" id="" placeholder="Praise..." cols="30" rows="3" class=" form-control outline-none w-100"
+                                                                    required></textarea>
+                                                            </div>
+                                                            <div class="text-end mt-2">
+                                                                <button id="praise-submit-btn" type="submit"
+                                                                    class="btn btn-primary py-1 px-4  float-right">
+                                                                    Submit
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
             </div>
             <!-- content bpttom -->
             <div class="col-sm-12 col-md-12 col-xl-4 col-lg-4 col-xxl-4 mb-3">
