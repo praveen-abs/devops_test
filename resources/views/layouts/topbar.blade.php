@@ -49,12 +49,7 @@ if ($query_clientMaster) {
 
         <div class="d-flex">
             <div class="notify-content d-flex justify-content-center align-items-center">
-                @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']) && hasSubClients())
-                    <?php
-                    $clientsList = fetchClients();
-                    $currentClientID = session('client_id');
-                    //dd($currentClientID);
-                    ?>
+
                     {{-- <span class=" f-14 fw-bold">Entity Name : </span> --}}
                     <button type="button" class="form-select outline-none border-0 fw-bold"
                         id="page-header-user-dropdown" data-bs-toggle="offcanvas" data-bs-target=".offcanvas"
@@ -112,15 +107,18 @@ if ($query_clientMaster) {
 
                                 </div>
                             </div>
-                            @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
-                                <p
-                                    class="d-flex justify-content-between text-muted align-items-center px-2 py-2 cursor-pointer text-info   border-bottom-liteAsh">
+                            @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']) && hasSubClients())
+                            <?php
+                                $clientsList = fetchClients();
+                                $currentClientID = session('client_id');
+                                //dd($currentClientID);
+                            ?>
+                                <p class="d-flex justify-content-between text-muted align-items-center px-2 py-2 cursor-pointer text-info   border-bottom-liteAsh">
                                     <span class="fw-bold text-muted">My
                                         Organizations</span><a href="{{ route('vmt_topbar_settings') }}"
                                         class="text-info" style="cursor: pointer"><i
                                             class="mdi mdi-cog-outline  me-1"></i>Manage</a>
                                 </p>
-                            @endif
                             <div class="d-flex flex-column   overflow-auto " id="">
                                 @foreach ($clientsList as $client)
                                     <div class="choose-client d-flex p-2 cursor-pointer border-bottom-liteAsh  align-items-center @if (!empty($currentClientID) && $currentClientID == $client->id) bg-ash @endif"
@@ -137,6 +135,8 @@ if ($query_clientMaster) {
                                     </div>
                                 @endforeach
                             </div>
+                            @endif
+
                         </div>
                         <div class="offcanvas-bottom d-flex justify-content-end py-3 px-2">
                             <a class="btn btn-danger " href="javascript:void();"
@@ -151,7 +151,6 @@ if ($query_clientMaster) {
                         </div>
                     </div>
 
-                @endif
             </div>
 
 
