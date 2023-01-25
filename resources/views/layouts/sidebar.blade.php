@@ -1,4 +1,14 @@
 <?php //getCurrentClientName()
+
+    //Notification counts
+    $approvals_leave_notif_count = \DB::table('vmt_employee_leaves')->where('status','Pending')->count();
+    $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regularizations')->where('status','Pending')->count();
+
+
+    //dd($approvals_leave_notif_count);
+
+
+
 ?>
 <!-- ========== App Menu ========== -->
 <div class="app-menu navbar-menu">
@@ -295,10 +305,10 @@
                                             class="nav-link sidebar py-1" data-bs-toggle="" role="button"
                                             aria-expanded="false">
                                             {{-- <span>Leaves <span
-                                                    class="badge bg-danger rounded-circle text-white">4</span>
+                                                    class="badge bg-danger rounded-circle text-white">{{ $approvals_leave_notif_count}}</span>
                                             </span> --}}
-                                            <span>Leaves
-                                            </span>
+                                            <span>Leaves <span
+                                        </span>
                                         </a>
                                     </li>
 
@@ -308,10 +318,10 @@
                                             aria-expanded="false">
                                             {{-- <span>
                                                 Attendance Regularization<span
-                                                    class="badge bg-danger rounded-circle text-white">4</span>
+                                                    class="badge bg-danger rounded-circle text-white"> {{ $approvals_att_regularization_count }}</span>
                                             </span> --}}
                                             <span>
-                                                Attendance Regularization
+                                                Attendance Regularization<span
                                             </span>
                                         </a>
 
