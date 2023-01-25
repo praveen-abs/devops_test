@@ -200,29 +200,29 @@
                         for (var i = 0; i < len; i++) {
                             var month;
                             if (monthsArray[i] == 01) {
-                                month = "Jan";
+                                month = "January";
                             } else if (monthsArray[i] == 02) {
-                                month = "Feb";
+                                month = "February";
                             } else if (monthsArray[i] == 03) {
-                                month = "Mar";
+                                month = "March";
                             } else if (monthsArray[i] == 04) {
-                                month = "Apr";
+                                month = "April";
                             } else if (monthsArray[i] == 05) {
                                 month = "May";
                             } else if (monthsArray[i] == 06) {
-                                month = "Jun";
+                                month = "June";
                             } else if (monthsArray[i] == 07) {
-                                month = "Jul";
+                                month = "July";
                             } else if (monthsArray[i] == 08) {
-                                month = "Aug";
+                                month = "August";
                             } else if (monthsArray[i] == 09) {
-                                month = "Sep";
+                                month = "September";
                             } else if (monthsArray[i] == 10) {
-                                month = "Oct";
+                                month = "October";
                             } else if (monthsArray[i] == 11) {
-                                month = "Nov";
+                                month = "November";
                             } else if (monthsArray[i] == 12) {
-                                month = "Dec";
+                                month = "December";
                             }
                             console.log(month);
 
@@ -249,6 +249,14 @@
                 var selectedPayRollYear = $('#dropdown_payroll_year').find(":selected").val();
                 var work_location = $('#dropdown_work_location').find(":selected").val();
                 var SelectedPayRollMonth = $('#dropdown_month').find(":selected").val();
+                var currentdate = new Date();
+                var currentdate = new Date();
+                var datetime = "Last Sync: " + currentdate.getDate() + "/" +
+                    (currentdate.getMonth() + 1) + "/" +
+                    currentdate.getFullYear() + " @ " +
+                    currentdate.getHours() + ":" +
+                    currentdate.getMinutes() + ":" +
+                    currentdate.getSeconds();
 
                 var payRollmonth = $("#dropdown_month").find(":selected").text();
                 $("#payrollReportTable").DataTable({
@@ -256,23 +264,27 @@
                     dom: 'Bfrtip',
                     buttons: [{
                             extend: 'copy',
-                            title: "Pay Register- " + selectedPayRollYear + " " +
-                                payRollmonth,
+                            title: "Pay Register- " + payRollmonth + " " +
+                                selectedPayRollYear,
+                            messageBottom: 'Report Generate ABS Hrms -' + datetime
                         },
                         {
                             extend: 'excel',
-                            title: "Pay Register- " + selectedPayRollYear + " " +
-                                payRollmonth,
+                            title: "Pay Register- " + payRollmonth + " " +
+                                selectedPayRollYear,
+                            messageBottom: 'Report Generate ABS Hrms -' + datetime
                         },
                         {
                             extend: 'csv',
                             title: "Pay Register- " + selectedPayRollYear + " " +
                                 payRollmonth,
+                            messageBottom: 'Report Generate ABS Hrms -' + datetime
                         },
                         {
                             extend: 'print',
-                            title: "Pay Register- " + selectedPayRollYear + " " +
-                                payRollmonth,
+                            title: "Pay Register- " + payRollmonth + " " +
+                                selectedPayRollYear,
+                            messageBottom: 'Report Generate ABS Hrms -' + datetime
                         },
                     ],
                     columnDefs: [{
