@@ -92,6 +92,46 @@ class VmtMainDashboardController extends Controller
 
         }
 
+
+        ////Update the session vars for sub-clients selection
+        if(Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]) )
+        {
+            //dd(session());
+
+            //Set the session client_id to default client if not set
+            if (!$request->session()->has('client_id')) {
+                $this->updateSessionVariables(null);
+            }
+
+        }
+        else
+        if(Str::contains( currentLoggedInUserRole(), ["Manager"]) )
+        {
+            if (!$request->session()->has('client_id')) {
+                //get the employee client_code
+                $assigned_client_id = getEmployeeClientDetails(auth()->id())->id;
+
+                $this->updateSessionVariables($assigned_client_id);
+            }
+        }
+        else
+        if(Str::contains( currentLoggedInUserRole(), ["Employee"]) )
+        {
+            if (!$request->session()->has('client_id')) {
+                //get the employee client_code
+                $assigned_client_id = getEmployeeClientDetails(auth()->id())->id;
+
+                $this->updateSessionVariables($assigned_client_id);
+            }
+        }
+
+
+
+
+
+
+        ////Employee Event details
+
         $employeesEventDetails = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
             ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->select(
@@ -184,33 +224,71 @@ class VmtMainDashboardController extends Controller
         }
 
         ////Dashboard counters data
-        //Total Employees Count
-        $totalEmployeesCount = User::where('users.is_ssa','0')->count();
+        $session_client_id = session('client_id');
+
 
         //New Joinees Count
         $currentDate = Carbon::now();
         $currentDate->setTimezone("Asia/Kolkata");
         $dateDifferenceForNewJoinees = 30; //Right now, showing 1 week old joinees
-        $newEmployeesCount = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
+
+
+        //Total Employees Count
+        //if '1', then show all client's employees
+        if ($session_client_id == '1') {
+            $totalEmployeesCount = User::where('users.is_ssa', '0')->count();
+
+            $newEmployeesCount = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
                                 ->whereRaw('DATEDIFF(? , vmt_employee_details.doj) <= ?',[$currentDate, $dateDifferenceForNewJoinees])
                                 //->where('users.active', '0')
                                 ->where('users.is_ssa','0')
                                 ->get()->count();
 
-        $query_todaysCheckedinEmployees = User::join('vmt_employee_attendance', 'vmt_employee_attendance.user_id', '=', 'users.id')
+            $query_todaysCheckedinEmployees = User::join('vmt_employee_attendance', 'vmt_employee_attendance.user_id', '=', 'users.id')
                                 ->whereDate('vmt_employee_attendance.date', '=', $currentDate)
                                 ->whereNull('vmt_employee_attendance.checkout_time')
                                 ->where('users.is_ssa', '0');
 
-        //Employees Leave today count
-        $todayEmployeesCheckedInCount = $query_todaysCheckedinEmployees->get()->count();
+            //Employees Leave today count
+            $todayEmployeesCheckedInCount = $query_todaysCheckedinEmployees->get()->count();
 
-        //Employees who checked-in today
-        $todayEmployeesCheckedIn = $query_todaysCheckedinEmployees->get(['name','user_code']);
+            //Employees who checked-in today
+            $todayEmployeesCheckedIn = $query_todaysCheckedinEmployees->get(['name','user_code']);
 
 
-        $todayEmployeesOnLeaveCount =  $totalEmployeesCount - $todayEmployeesCheckedInCount;
-        //dd($newEmployeesCount);
+            $todayEmployeesOnLeaveCount =  $totalEmployeesCount - $todayEmployeesCheckedInCount;
+            //dd($newEmployeesCount);
+
+
+
+        } else {
+            $totalEmployeesCount = User::where('users.is_ssa', '0')->where('client_id', $session_client_id)->count();
+
+            $newEmployeesCount = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
+                                ->whereRaw('DATEDIFF(? , vmt_employee_details.doj) <= ?',[$currentDate, $dateDifferenceForNewJoinees])
+                                //->where('users.active', '0')
+                                ->where('users.client_id',$session_client_id)
+                                ->where('users.is_ssa','0')
+                                ->get()->count();
+
+            $query_todaysCheckedinEmployees = User::join('vmt_employee_attendance', 'vmt_employee_attendance.user_id', '=', 'users.id')
+                                ->whereDate('vmt_employee_attendance.date', '=', $currentDate)
+                                ->whereNull('vmt_employee_attendance.checkout_time')
+                                ->where('users.client_id',$session_client_id)
+                                ->where('users.is_ssa', '0');
+
+            //Employees Leave today count
+            $todayEmployeesCheckedInCount = $query_todaysCheckedinEmployees->get()->count();
+
+            //Employees who checked-in today
+            $todayEmployeesCheckedIn = $query_todaysCheckedinEmployees->get(['name','user_code']);
+
+
+            $todayEmployeesOnLeaveCount =  $totalEmployeesCount - $todayEmployeesCheckedInCount;
+            //dd($newEmployeesCount);
+
+
+        }
 
         //Parse into json
         $dashboardCountersData = [];
@@ -245,38 +323,16 @@ class VmtMainDashboardController extends Controller
 
         if(Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]) )
         {
-            //dd(session());
-
-            //Set the session client_id to default client if not set
-            if (!$request->session()->has('client_id')) {
-                $this->updateSessionVariables(null);
-            }
-
             return view('vmt_hr_dashboard', compact( 'dashboardEmployeeEventsData', 'checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData'));
         }
         else
         if(Str::contains( currentLoggedInUserRole(), ["Manager"]) )
         {
-            if (!$request->session()->has('client_id')) {
-                //get the employee client_code
-                $assigned_client_id = getEmployeeClientDetails(auth()->id())->id;
-
-                $this->updateSessionVariables($assigned_client_id);
-            }
-
-
             return view('vmt_manager_dashboard', compact( 'dashboardEmployeeEventsData','checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData','announcementData'));
         }
         else
         if(Str::contains( currentLoggedInUserRole(), ["Employee"]) )
         {
-            if (!$request->session()->has('client_id')) {
-                //get the employee client_code
-                $assigned_client_id = getEmployeeClientDetails(auth()->id())->id;
-
-                $this->updateSessionVariables($assigned_client_id);
-            }
-
             return view('vmt_employee_dashboard', compact( 'dashboardEmployeeEventsData','checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData','announcementData','praiseData'));
         }
 
