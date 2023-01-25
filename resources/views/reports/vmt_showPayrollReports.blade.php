@@ -24,13 +24,23 @@
             <div class="card-body">
                 <div class="row mb-3">
                     <div class="col-3">
-                        <label for="">Payroll Month</label>
-                        <select id="dropdown_payroll_month" class="form-select ">
-                            @foreach ($payroll_months as $key => $value)
+                        <label for="">Payroll Year</label>
+                        <select id="dropdown_payroll_year" class="form-select ">
+                            <option value="">---Select Year----</option>
+                            @foreach ($payroll_available_years as $key => $value)
                                 <option value="{{ $value }}">
-                                    {{ $key }}
+                                    {{ $value }}
                                 </option>
                             @endforeach
+                        </select>
+
+                    </div>
+                    <div class="col-3">
+                        <label for="">Payroll Month</label>
+                        <select id="dropdown_month" class="form-select " style=""
+                            aria-label=".form-select-sm example">
+                            <option value="all">---Select All----</option>
+
                         </select>
 
                     </div>
@@ -44,17 +54,7 @@
                         </select>
 
                     </div>
-                    <div class="col-3">
-                        <label for="">Designation</label>
-                        <select id="dropdown_designation" class="form-select " style=""
-                            aria-label=".form-select-sm example">
-                            <option value="all">---Select All----</option>
-                            @foreach ($designation as $key => $value)
-                                <option value="{{ $value }}"> {{ $value }} </option>
-                            @endforeach
-                        </select>
 
-                    </div>
 
                     <div class="col-3 d-flex align-items-center justify-content-end text-end">
                         <button id="loadData" class="btn btn-orange " style="margin-top:22px"><i
@@ -176,404 +176,104 @@
 
     <script>
         $(document).ready(function() {
-            var selectedPayRollMonth = $('#dropdown_payroll_month').find(":selected").text();
-            $("#payrollReportTable").DataTable({
-                dom: 'Bfrtip',
-                buttons: [{
-                        extend: 'copy',
-                        title: selectedPayRollMonth+" - Payroll Report",
+
+            $('#dropdown_payroll_year').on('change', function() {
+                var selectedPayRollYear = $('#dropdown_payroll_year').find(":selected").val();
+                $.ajax({
+                    url: "{{ route('fetchPayrollMonthForGivenYear') }}",
+                    type: 'GET',
+                    contentType: "text/plain",
+                    dataType: 'json',
+                    data: {
+                        payroll_year: selectedPayRollYear,
+                        _token: '{{ csrf_token() }}'
                     },
-                    {
-                        extend: 'excel',
-                        title: selectedPayRollMonth+" - Payroll Report",
+                    success: function(data) {
+                        var monthsArray = Object.values(data);
+                        //console.log(monthsArray);
+                        var len = monthsArray.length;
+                        //console.log(len);
+                        $("#dropdown_month").empty();
+                        for (var i = 0; i < len; i++) {
+                            var month;
+                            if (monthsArray[i] == 01) {
+                                month = "Jan";
+                            } else if (monthsArray[i] == 02) {
+                                month = "Feb";
+                            } else if (monthsArray[i] == 03) {
+                                month = "Mar";
+                            } else if (monthsArray[i] == 04) {
+                                month = "Apr";
+                            } else if (monthsArray[i] == 05) {
+                                month = "May";
+                            } else if (monthsArray[i] == 06) {
+                                month = "Jun";
+                            } else if (monthsArray[i] == 07) {
+                                month = "Jul";
+                            } else if (monthsArray[i] == 08) {
+                                month = "Aug";
+                            } else if (monthsArray[i] == 09) {
+                                month = "Sep";
+                            } else if (monthsArray[i] == 10) {
+                                month = "Oct";
+                            } else if (monthsArray[i] == 11) {
+                                month = "Nov";
+                            } else if (monthsArray[i] == 12) {
+                                month = "Dec";
+                            }
+                            console.log(month);
+
+
+                            $("#dropdown_month").append("<option value='" +
+                                monthsArray[i] + "'>" + month +
+                                "</option>");
+
+                        }
+
                     },
-                    {
-                        extend: 'csv',
-                        title: selectedPayRollMonth+" - Payroll Report",
-                    },
-                    {
-                        extend: 'print',
-                        title: selectedPayRollMonth+" - Payroll Report",
-                    },
-                ],
-                // responsive: {
-                //     details: {
-                //         display: $.fn.dataTable.Responsive.display.modal({
-                //             header: function(row) {
-                //                 var data = row.data();
-                //                 return 'Details for ' + data[0] + ' ' + data[1];
-                //             }
-                //         }),
-                //         renderer: $.fn.dataTable.Responsive.renderer.tableAll({
-                //             tableClass: 'table'
-                //         })
-                //     }
-                //},
+                    error: function(e) {
+                        console.log("There was an error with your request...");
+                        console.log("error: " + JSON.stringify(e));
+                    }
+                });
             });
-
-            $('#btn_downloadReport').on('click', function(e) {
-                var selectedPayRollMonth = $('#dropdown_payroll_month').find(":selected").val();
-                console.log("Download payroll reports....");
-                let URL = '/reports/generatePayrollReports?payroll_month=' + selectedPayRollMonth +
-                    '&_token={{ csrf_token() }}';
-                console.log("Generated URL : " + URL);
-
-                window.location = URL;
-
-
-                // $.ajax({
-                //         url: "{{ route('generatePayrollReports') }}",
-                //         type: "GET",
-                //         dataType: "json",
-                //         cache: false,
-                //         xhrFields:{
-                //             responseType: 'blob'
-                //         },
-                //         data: {
-                //             "payroll_month":selectedPayRollMonth,
-                //             "_token": "{{ csrf_token() }}",
-                //         },
-                //         success: function(data) {
-                //             console.log("Downloading excelsheet....");
-                //             var link = document.createElement('a');
-                //             link.href = window.URL.createObjectURL(response);
-                //             link.download = `bulk_orders.xlsx`;
-                //             link.click();
-
-                //         },
-                //         error: function(data) {
-
-
-                //         }
-                // });
-
-            });
-
-
-            // $('#dropdown_payroll_month').on('change', function() {
-            //     console.log("Selected payroll month : "+$(this).find(":selected").val());
-            // });
-
-            // $('#dropdown_payroll_month').find(":selected");
-
-            // if (document.getElementById("employee-table")) {
-            //     const grid = new gridjs.Grid({
-            //         columns: [{
-            //                 id: 'number',
-            //                 name: 'id',
-            //                 hidden: true
-
-            //             },
-            //             {
-            //                 id: 'name ',
-            //                 name: 'Employee Name',
-
-            //             },
-            //             {
-            //                 id: 'month',
-            //                 name: 'Month',
-            //             },
-
-            //         ],
-            //         pagination: {
-            //             limit: 10
-            //         },
-            //         sort: true,
-            //         search: true,
-            //         server: {
-            //             url: '{{ route('fetchAllEmployeePayrollDetails', ['payroll_month' => 'sss']) }}',
-            //             then: data => data.map(
-            //                 employee => [
-            //                     employee.id,
-            //                     employee.name,
-            //                 ]
-            //             )
-            //         }
-
-
-
-            //     }).render(document.getElementById("employee-table"));
-
-
-            // }
-            // if (document.getElementById("employee-table")) {
-            //    console.log("-----------"+selectedPayRollMonth+"---------------");
-
-            //     const grid = new gridjs.Grid({
-            //         columns: [{
-            //                 id: 'user_code',
-            //                 name: 'Employee Code',
-            //             },
-            //             {
-            //                 id: 'name',
-            //                 name: 'Employee Name',
-            //             },
-            //             {
-            //                 id: 'DESIGNATION',
-            //                 name: 'Designation',
-            //             },
-            //             {
-            //                 id: 'doj',
-            //                 name: 'DOJ',
-            //             },
-            //             {
-            //                 id: 'dob',
-            //                 name: 'DOB',
-            //             },
-            //             {
-            //                 id: 'work_location',
-            //                 name: 'Location',
-            //             },
-            //             {
-            //                 id: 'Aadhar_Number',
-            //                 name: 'Aadhaar Number',
-            //             },
-            //             {
-            //                 id: 'PAN_Number',
-            //                 name: 'PAN',
-            //             },
-            //             {
-            //                 id: 'uan_number',
-            //                 name: 'UAN',
-            //             },
-            //             {
-            //                 id: 'epf_number',
-            //                 name: 'EPF Number',
-            //             },
-            //             {
-            //                 id: 'esic_number',
-            //                 name: 'ESIC Number',
-            //             },
-            //             {
-            //                 id: 'bank_id',
-            //                 name: 'Bank Name',
-            //             },
-            //             {
-            //                 id: 'bank_account_number',
-            //                 name: 'Bank Account Number',
-            //             },
-            //             {
-            //                 id: 'bank_ifsc_code',
-            //                 name: 'IFSC Code',
-            //             },
-            //             {
-            //                 id: 'mobile_number',
-            //                 name: 'Mobile',
-            //             },
-            //             {
-            //                 id: 'officical_mail',
-            //                 name: 'Email ID',
-            //             },
-            //             {
-            //                 id: 'PAYROLL_MONTH',
-            //                 name: 'Payroll Month',
-            //             },
-            //             {
-            //                 id: 'BASIC',
-            //                 name: 'Basic',
-            //             },
-            //             {
-            //                 id: 'HRA',
-            //                 name: 'HRA',
-            //             },
-            //             {
-            //                 id: 'SPL_ALW',
-            //                 name: 'Special Allowance',
-            //             },
-            //             {
-            //                 id: 'TOTAL_FIXED_GROSS',
-            //                 name: 'Total Fixed Gross',
-            //             },
-            //             {
-            //                 id: 'esic_applicable',
-            //                 name: 'ESIC Applicablity',
-            //             },
-            //             {
-            //                 id: 'MONTH_DAYS',
-            //                 name: 'Month Days',
-            //             },
-            //             {
-            //                 id: 'Worked_Days',
-            //                 name: 'Worked Days',
-            //             },
-            //             {
-            //                 id: 'Arrears_Days',
-            //                 name: 'Arrears Days',
-            //             },
-            //             {
-            //                 id: 'LOP',
-            //                 name: 'LOP',
-            //             },
-            //             {
-            //                 id: 'Earned_BASIC',
-            //                 name: 'Basic',
-            //             },
-            //             {
-            //                 id: 'BASIC_ARREAR',
-            //                 name: 'BASIC Arrears',
-            //             },
-            //             {
-            //                 id: 'Earned_HRA',
-            //                 name: 'HRA',
-            //             },
-            //             {
-            //                 id: 'HRA_ARREAR',
-            //                 name: 'HRA Arrears',
-            //             },
-            //             {
-            //                 id: 'Earned_SPL_ALW',
-            //                 name: 'Special Allowance',
-            //             },
-            //             {
-            //                 id: 'SPL_ALW_ARREAR',
-            //                 name: 'SPL ALW Arrears',
-            //             },
-            //             {
-            //                 id: 'Overtime',
-            //                 name: 'Overtime',
-            //             },
-            //             {
-            //                 id: 'TOTAL_EARNED_GROSS',
-            //                 name: 'Total Earned Gross',
-            //             },
-            //             {
-            //                 id: 'PF_WAGES',
-            //                 name: 'PF Wages',
-            //             },
-            //             {
-            //                 id: 'PF_WAGES_ARREAR_EPFR',
-            //                 name: 'PF Wages Arrear',
-            //             },
-            //             {
-            //                 id: 'EPFR',
-            //                 name: 'EPFR',
-            //             },
-            //             {
-            //                 id: 'EPFR_ARREAR',
-            //                 name: 'EPFR Arrears',
-            //             },
-            //             {
-            //                 id: 'EDLI_CHARGES',
-            //                 name: 'EDLI Charges',
-            //             },
-            //             {
-            //                 id: 'EDLI_CHARGES_ARREARS',
-            //                 name: 'EDLI Charges Arrears',
-            //             },
-            //             {
-            //                 id: 'PF_ADMIN_CHARGES',
-            //                 name: 'PF Admin Charges',
-            //             },
-            //             {
-            //                 id: 'PF_ADMIN_CHARGES_ARREARS',
-            //                 name: 'PF Admin Charges Arrears',
-            //             },
-            //             {
-            //                 id: 'EMPLOYER_ESI',
-            //                 name: 'Employer ESIC',
-            //             },
-            //             {
-            //                 id: 'Employer_LWF',
-            //                 name: 'Employer LWF',
-            //             },
-            //             {
-            //                 id: 'CTC',
-            //                 name: 'CTC',
-            //             },
-            //             {
-            //                 id: 'EPF_EE',
-            //                 name: 'EPF EE',
-            //             },
-            //             {
-            //                 id: 'EPF_EE_ARREAR',
-            //                 name: 'EPF EE Arrear',
-            //             },
-            //             {
-            //                 id: 'EMPLOYEE_ESIC',
-            //                 name: 'Emplyee ESIC',
-            //             },
-            //             {
-            //                 id: 'PROF_TAX',
-            //                 name: 'Professional Tax',
-            //             },
-            //             {
-            //                 id: 'SAL_ADV',
-            //                 name: 'Salary Advance',
-            //             },
-            //             {
-            //                 id: 'CANTEEN_DEDN',
-            //                 name: 'Canteen Deduction',
-            //             },
-            //             {
-            //                 id: 'OTHER_DEDUC',
-            //                 name: 'Other Deductions',
-            //             },
-            //             {
-            //                 id: 'LWF',
-            //                 name: 'LWF',
-            //             },
-            //             {
-            //                 id: 'TOTAL_DEDUCTIONS',
-            //                 name: 'Total Deductions',
-            //             },
-            //             {
-            //                 id: 'NET_TAKE_HOME',
-            //                 name: 'Net Take Home',
-            //             },
-
-            //         ],
-
-            //         pagination: {
-            //             limit: 10
-            //         },
-            //         sort: true,
-            //         search: true,
-            //         server: {
-            //             url: '{{ route('payroll-filter-info') }}',
-            //             then: data => data.map(Payroll => [
-            //                 Payroll.user_code, Payroll.name,
-            //                 Payroll.DESIGNATION, Payroll.doj,
-            //                 Payroll.dob, Payroll.work_location,
-            //                 Payroll.Aadhar_Number, Payroll.PAN_Number,
-            //                 Payroll.uan_number, Payroll.epf_number,
-            //                 Payroll.esic_number, Payroll.bank_id,
-            //                 Payroll.bank_account_number, Payroll.bank_ifsc_code,
-            //                 Payroll.mobile_number, Payroll.officical_mail,
-            //                 Payroll.PAYROLL_MONTH, Payroll.BASIC,
-            //                 Payroll.HRA, Payroll.TOTAL_FIXED_GROSS,
-            //                 Payroll.esic_applicable, Payroll.MONTH_DAYS,
-            //                 Payroll.Worked_Days, Payroll.Arrears_Days,
-            //                 Payroll.LOP, Payroll.Earned_BASIC,
-            //                 Payroll.BASIC_ARREAR, Payroll.Earned_HRA,
-            //                 Payroll.HRA_ARREAR, Payroll.Earned_SPL_ALW,
-            //                 Payroll.SPL_ALW_ARREAR, Payroll.TOTAL_EARNED_GROSS,
-            //                 Payroll.PF_WAGES, Payroll.PF_WAGES_ARREAR_EPFR,
-            //                 Payroll.EPFR, Payroll.EPFR_ARREAR,
-            //                 Payroll.EDLI_CHARGES, Payroll.EDLI_CHARGES_ARREARS,
-            //                 Payroll.PF_ADMIN_CHARGES, Payroll.PF_ADMIN_CHARGES_ARREARS,
-            //                 Payroll.EMPLOYER_ESI, Payroll.Employer_LWF,
-            //                 Payroll.CTC, Payroll.EPF_EE,
-            //                 Payroll.EPF_EE_ARREAR, Payroll.EMPLOYEE_ESIC,
-            //                 Payroll.PROF_TAX, Payroll.SAL_ADV,
-            //                 Payroll.CANTEEN_DEDN, Payroll.OTHER_DEDUC,
-            //                 Payroll.LWF, Payroll.TOTAL_DEDUCTIONS,
-            //                 Payroll.NET_TAKE_HOME
-            //             ])
-
-            //         }
-
-
-            //     }).render(document.getElementById("employee-table"));
-            // }
 
 
 
 
             $("#loadData").click(function() {
                 //loadData();
-                var selectedPayRollMonth = $('#dropdown_payroll_month').find(":selected").val();
+                var selectedPayRollYear = $('#dropdown_payroll_year').find(":selected").val();
                 var work_location = $('#dropdown_work_location').find(":selected").val();
-                var designation = $('#dropdown_designation').find(":selected").val();
+                var SelectedPayRollMonth = $('#dropdown_month').find(":selected").val();
+
+                var payRollmonth = $("#dropdown_month").find(":selected").text();
+                $("#payrollReportTable").DataTable({
+                    retrieve: true,
+                    dom: 'Bfrtip',
+                    buttons: [{
+                            extend: 'copy',
+                            title: "Pay Register- " + selectedPayRollYear + " " +
+                                payRollmonth,
+                        },
+                        {
+                            extend: 'excel',
+                            title: "Pay Register- " + selectedPayRollYear + " " +
+                                payRollmonth,
+                        },
+                        {
+                            extend: 'csv',
+                            title: "Pay Register- " + selectedPayRollYear + " " +
+                                payRollmonth,
+                        },
+                        {
+                            extend: 'print',
+                            title: "Pay Register- " + selectedPayRollYear + " " +
+                                payRollmonth,
+                        },
+                    ],
+
+                });
 
                 $.ajax({
                     url: "{{ route('payroll-filter-info') }}",
@@ -581,9 +281,9 @@
                     contentType: "text/plain",
                     dataType: 'json',
                     data: {
-                        payroll_month: selectedPayRollMonth,
+                        payroll_year: selectedPayRollYear,
                         work_location: work_location,
-                        designation: designation,
+                        payroll_month: SelectedPayRollMonth,
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(data) {

@@ -25,68 +25,89 @@ class VmtReportsController extends Controller
         //     "Nov 2022"=>"01-11-2022",
         //     "Dec 2022"=>"01-12-2022"
         // ];
-        $query_payroll_months= VmtEmployeePaySlip::groupby('PAYROLL_MONTH')->pluck('PAYROLL_MONTH');
+        $query_payroll_year=VmtEmployeePaySlip::groupby('PAYROLL_MONTH')->pluck('PAYROLL_MONTH');
+        //$query_payroll_months= VmtEmployeePaySlip::groupby('PAYROLL_MONTH')->pluck('PAYROLL_MONTH');
         $work_location= VmtEmployeeOfficeDetails::groupby('work_location')->pluck('work_location');
         $designation= VmtEmployeePaySlip::leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'vmt_employee_payslip.user_id')
         ->groupby('vmt_employee_office_details.designation')->pluck('vmt_employee_office_details.designation');
 
-        $payroll_months = [];
-        for($i=0;$i<count($query_payroll_months);$i++){
-            $array_values = explode('-', $query_payroll_months[$i]);
-                if($array_values[1]=='01'){
-                    $each_month=[
-                        'January ' . $array_values[0]=>$query_payroll_months[$i]
-                    ];
-                }else if($array_values[1]=='02'){
-                    $each_month=[
-                        'February ' . $array_values[0]=>$query_payroll_months[$i]
-                    ];
-                }else if($array_values[1]=='03'){
-                    $each_month=[
-                        'March ' . $array_values[0]=>$query_payroll_months[$i]
-                    ];
-                }else if($array_values[1]=='04'){
-                    $each_month=[
-                        'April ' . $array_values[0]=>$query_payroll_months[$i]
-                    ];
-                    //dd($each_month);
-                }else if($array_values[1]=='05'){
-                    $each_month=[
-                        'May ' . $array_values[0]=>$query_payroll_months[$i]
-                    ];
-                }else if($array_values[1]=='06'){
-                    $each_month=[
-                        'Jun ' . $array_values[0]=>$query_payroll_months[$i]
-                    ];
-                }else if($array_values[1]=='07'){
-                    $each_month=[
-                        'July ' . $array_values[0]=>$query_payroll_months[$i]
-                    ];
-                }else if($array_values[1]=='08'){
-                    $each_month=[
-                        'August ' . $array_values[0]=>$query_payroll_months[$i]
-                    ];
-                }else if($array_values[1]=='09'){
-                    $each_month=[
-                        'September ' . $array_values[0]=>$query_payroll_months[$i]
-                    ];
-                }else if($array_values[1]=='10'){
-                    $each_month=[
-                        'October ' . $array_values[0]=>$query_payroll_months[$i]
-                    ];
-                }else if($array_values[1]=='11'){
-                    $each_month=[
-                        'November ' . $array_values[0]=>$query_payroll_months[$i]
-                    ];
-                }else if($array_values[1]=='12'){
-                    $each_month=[
-                        'December ' . $array_values[0]=>$query_payroll_months[$i]
-                    ];
-                }
-                $payroll_months=array_merge($payroll_months, $each_month);
+        for($i=0; $i < count($query_payroll_year); $i++)
+        {
+            $query_payroll_year[$i] = date("Y",strtotime($query_payroll_year[$i]));
         }
 
-        return view('reports.vmt_showPayrollReports', compact('payroll_months','work_location','designation'));
+        $payroll_available_years = array_unique($query_payroll_year->toArray());
+        // $payroll_months = [];
+        // for($i=0;$i<count($query_payroll_months);$i++){
+        //     $array_values = explode('-', $query_payroll_months[$i]);
+        //         if($array_values[1]=='01'){
+        //             $each_month=[
+        //                 'January ' . $array_values[0]=>$query_payroll_months[$i]
+        //             ];
+        //         }else if($array_values[1]=='02'){
+        //             $each_month=[
+        //                 'February ' . $array_values[0]=>$query_payroll_months[$i]
+        //             ];
+        //         }else if($array_values[1]=='03'){
+        //             $each_month=[
+        //                 'March ' . $array_values[0]=>$query_payroll_months[$i]
+        //             ];
+        //         }else if($array_values[1]=='04'){
+        //             $each_month=[
+        //                 'April ' . $array_values[0]=>$query_payroll_months[$i]
+        //             ];
+        //             //dd($each_month);
+        //         }else if($array_values[1]=='05'){
+        //             $each_month=[
+        //                 'May ' . $array_values[0]=>$query_payroll_months[$i]
+        //             ];
+        //         }else if($array_values[1]=='06'){
+        //             $each_month=[
+        //                 'Jun ' . $array_values[0]=>$query_payroll_months[$i]
+        //             ];
+        //         }else if($array_values[1]=='07'){
+        //             $each_month=[
+        //                 'July ' . $array_values[0]=>$query_payroll_months[$i]
+        //             ];
+        //         }else if($array_values[1]=='08'){
+        //             $each_month=[
+        //                 'August ' . $array_values[0]=>$query_payroll_months[$i]
+        //             ];
+        //         }else if($array_values[1]=='09'){
+        //             $each_month=[
+        //                 'September ' . $array_values[0]=>$query_payroll_months[$i]
+        //             ];
+        //         }else if($array_values[1]=='10'){
+        //             $each_month=[
+        //                 'October ' . $array_values[0]=>$query_payroll_months[$i]
+        //             ];
+        //         }else if($array_values[1]=='11'){
+        //             $each_month=[
+        //                 'November ' . $array_values[0]=>$query_payroll_months[$i]
+        //             ];
+        //         }else if($array_values[1]=='12'){
+        //             $each_month=[
+        //                 'December ' . $array_values[0]=>$query_payroll_months[$i]
+        //             ];
+        //         }
+        //         $payroll_months=array_merge($payroll_months, $each_month);
+        // }
+
+        return view('reports.vmt_showPayrollReports', compact('work_location','designation','payroll_available_years'));
+    }
+
+    // Retrieves all months payroll for the given Year
+
+    public function fetchPayrollMonthForGivenYear(Request $request){
+        $payroll_month=VmtEmployeePaySlip::whereYear('vmt_employee_payslip.PAYROLL_MONTH',$request->payroll_year)->groupby('PAYROLL_MONTH')->pluck('PAYROLL_MONTH');
+        for($i=0; $i < count($payroll_month); $i++)
+        {
+
+            $payroll_month[$i] = date("m",strtotime($payroll_month[$i]));
+        }
+        $payroll_available_months = array_unique($payroll_month->toArray());
+
+        return $payroll_available_months;
     }
 
     public function generatePayrollReports(Request $request){
@@ -102,7 +123,7 @@ class VmtReportsController extends Controller
         ->leftJoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'vmt_employee_payslip.user_id')
         ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'vmt_employee_payslip.user_id')
         ->leftJoin('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'vmt_employee_payslip.user_id')
-        ->where('vmt_employee_payslip.PAYROLL_MONTH', $request->payroll_month)
+        ->whereYear('vmt_employee_payslip.PAYROLL_MONTH', $request->payroll_year)
         // ->orWhere('vmt_employee_office_details.work_location',$request->work_location)
         ->select('users.user_code',
                  'users.name',
@@ -178,13 +199,13 @@ class VmtReportsController extends Controller
 
         // For Filter Option
 
+        if($request->payroll_month!="all"){
+            $payroll_data=$payroll_data->whereMonth('vmt_employee_payslip.PAYROLL_MONTH',$request->payroll_month);
+        }
+
 
         if($request->work_location !="all"){
             $payroll_data = $payroll_data->where('vmt_employee_office_details.work_location',$request->work_location);
-        }
-
-        if($request->designation != "all"){
-            $payroll_data = $payroll_data->where('vmt_employee_office_details.DESIGNATION',$request->designation);
         }
 
         if (session('client_id') != '1') {
