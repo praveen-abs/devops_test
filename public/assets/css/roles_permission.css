@@ -1,0 +1,63 @@
+.search-bar-wrapper {
+    position: relative;
+}
+.search-bar-wrapper input {
+    text-indent: 20px;
+}
+.search-bar-wrapper i {
+    position: absolute;
+    color: #c1c1c1;
+    top: 8px;
+    left: 8px;
+}
+
+.selected-user-container {
+    /* border: 1px solid var(--color-dark-ash); */
+    height: 100px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.roles-table tr td {
+    min-width: 200px;
+}
+.roles-table tr td .role-descriptions {
+    text-align: initial;
+}
+
+.manage-button {
+    padding: 5px 35px;
+    background-color: transparent;
+    border: 1px solid var(--color-dark-ash);
+}
+
+/* for chips */
+
+.chip {
+    border-radius: 25px;
+    background-color: #f1f1f1;
+    padding: 5px;
+    /* min-width: 100px; */
+    width: fit-content;
+    height: 25px;
+    display: flex;
+    min-height: 35px;
+    /* display: inherit; */
+}
+
+.chip .chips-img-sm {
+    height: 25px;
+    width: 25px;
+}
+
+.closebtn {
+    padding-left: 10px;
+    color: #888;
+    font-weight: bold;
+    float: right;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.closebtn:hover {
+    color: #000;
+}
