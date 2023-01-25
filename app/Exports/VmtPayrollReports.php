@@ -246,10 +246,14 @@ WithCustomValueBinder
                     //  'vmt_employee_payslip.Availed_SL',
                     //  'vmt_employee_payslip.Balance_SL',
                     //  'vmt_employee_payslip.Rename',
-            )
-            ->get();
+            );
         // dd($query_payroll_data);
 
-        return $query_payroll_data;
+       if (session('client_id') == '1')
+        return $query_payroll_data->get();
+       else
+        return $query_payroll_data->where('users.client_id', session('client_id'))->get();
+
+
     }
 }
