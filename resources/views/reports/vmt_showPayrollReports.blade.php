@@ -86,7 +86,7 @@
                                             <th>UAN</th>
                                             <th>EPF Number</th>
                                             <th>ESIC Number</th>
-                                            <th>Bank Name'</th>
+                                            <th>Bank Name</th>
                                             <th>Bank Account Number</th>
                                             <th>IFSC Code</th>
                                             <th>Mobile</th>

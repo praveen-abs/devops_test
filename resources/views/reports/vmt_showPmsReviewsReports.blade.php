@@ -84,10 +84,9 @@
                         <label class="fw-bold pe-2">Employee Submission status </label>
                         <select id="dropdownSubmittedStatus" class="form-select " style=""
                             aria-label=".form-select-sm example">
-                            <option value="All" class="text-ash" hidden disabled selected>Select Employee Submission
-                                status</option>
+                            <option value="All" class="text-ash"  selected>--- Select All---</option>
                             <option value="1">Submitted</option>
-                            <soption value="">Not Yet Submitted</soption>
+                            <option value="">Not Yet Submitted</option>
 
                         </select>
 
@@ -97,7 +96,7 @@
                         <label class="fw-bold pe-2">Manager Review Status </label>
                         <select id="dropdownReviewedStatus" class="form-select " style=""
                             aria-label=".form-select-sm example">
-                            <option value="All" class="text-ash" hidden disabled selected>Select Manager Review Status
+                            <option value="All" class="text-ash"  selected>------ Select All------
                             </option>
                             <option value="1">Reviewed</option>
                             <option value="">Not Yet Reviewed</option>
@@ -106,7 +105,7 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <div class="col-3">
+                    {{-- <div class="col-3">
 
                         <label class="fw-bold pe-2">Line Manager </label>
                         <select id="dropdownReviewedStatus" class="form-select " style=""
@@ -117,7 +116,7 @@
                             <option value="">Not Yet Reviewed</option>
                         </select>
 
-                    </div>
+                    </div> --}}
 
                     <div class="col-3 d-flex align-items-center ">
                         <p class=" align-items-centerd-flex pt-1">
