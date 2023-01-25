@@ -170,6 +170,9 @@
     <script src="https://cdn.datatables.net/responsive/2.4.0/js/dataTables.responsive.min.js"></script>
     {{-- <script src="https://cdn.datatables.net/responsive/2.4.0/js/responsive.bootstrap5.min.js"></script> --}}
 
+    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.16/sorting/datetime-moment.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.21/dataRender/datetime.js"></script>
+
 
 
 
@@ -272,6 +275,11 @@
                                 payRollmonth,
                         },
                     ],
+                    columnDefs: [{
+                        targets: [3, 4, 16],
+                        render: $.fn.dataTable.render.moment('YYYY-MM-DD',
+                            'DD-MMM-YYYY')
+                    }]
 
                 });
 
