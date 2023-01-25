@@ -89,7 +89,7 @@ $bank_names = \DB::table('vmt_banks')->get();
 <body>
     <table cellspacing="0" cellpadding="0" class="payslip_table">
         <tr class="header-row">
-            <td colspan="8" class="border-less">
+            <td colspan="8" class="" style="border-right:0px;">
                 <div class="header-cotent" style="margin: 10px;">
                     <p class="margin-0 brand-name " style="font-size: 16px;font-weight:600;color:#ea141c;">Precede Workforce Solutions</p>
                     <p class="mb-0">No: 2,Vengaivasal main road,</p>
@@ -97,7 +97,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                     <p class="mb-0">Chennai -600073,Tamilnadu.</p>
                 </div>
             </td>
-            <td colspan="4" class="border-less">
+            <td colspan="4" class="" style="border-right:0px;">
 
                 <div class="header-img txt-right" style="padding-right: 10px;height:55px;width:180px;">
 
