@@ -1,10 +1,10 @@
 <?php
-  
+
 namespace Database\Seeders;
-  
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-  
+
 class BankTableSeeder extends Seeder
 {
     /**
@@ -14,7 +14,7 @@ class BankTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('bank_list')->insert([
+        DB::table('vmt_banks')->insert([
             ['bank_name'=> 'ANDHRA BANK', 'min_length' => '15', 'max_length' => '15'],
             ['bank_name'=> 'ANDHRA PRADESH GRAMEENA VIKAS BANK', 'min_length' => '11', 'max_length' => '11'],
             ['bank_name'=> 'ALLAHABAD BANK', 'min_length' => '11', 'max_length' => '11'],

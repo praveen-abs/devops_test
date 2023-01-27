@@ -23,7 +23,7 @@
                         <div class="col-sm-12 col-xxl-4 col-md-6 col-xl-4 col-lg-4">
                             <h6 class="mb-0 text-muted text-start">Attendance Regularization Approvals</h6>
                         </div>
-                        <div class="col-sm-12 col-xxl-8 col-md-6 col-xl-8 col-lg-8">
+                        {{-- <div class="col-sm-12 col-xxl-8 col-md-6 col-xl-8 col-lg-8">
                             <div class="row">
                                 <div class="col-sm-12 col-xxl-3 col-md-6 col-xl-3 col-lg-3">
                                     <label class="form-label mb-1">Month</label>
@@ -69,7 +69,7 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
 
@@ -270,10 +270,9 @@
             if (document.getElementById("table_lateComingTable")) {
                 gridjs_lateComingTable = new gridjs.Grid({
                     columns: [
-
                         {
-                            id: 'employee_name',
-                            name: 'Employee Name',
+                            id: 'avatar',
+                            name: '',
                             formatter: function formatter(cell) {
 
                                 var output = "";
@@ -284,7 +283,6 @@
                                                 '<div class="rounded-circle user-profile col-auto user-profile  me-2 " id="">'+
                                                     '<i class="topbar_username" class="align-middle ">'+cell.employee_avatar.data+'</i>'+
                                                 '</div>'+
-                                                '<span>'+cell.employee_name+'</span>'+
                                             '</div>';
                                 }
                                 else
@@ -293,12 +291,18 @@
 
                                     output ='<div class="col-auto p-0">'+
                                             '<img class="rounded-circle header-profile-user" src="'+imageURL+'" alt="--">'+
-                                            '<span>&nbsp;&nbsp;'+cell.employee_name+'</span>'+
                                         '</div>';
                                 }
 
-                                return gridjs.html(output);
 
+                                return gridjs.html(output);
+                            }
+                        },
+                        {
+                            id: 'employee_name',
+                            name: 'Employee Name',
+                            formatter: function formatter(employee_name) {
+                                return gridjs.html(employee_name);
                             }
                         },
                         {
@@ -416,6 +420,7 @@
                             att_regularize => [
                                 //leave_history.id,
                                 att_regularize,
+                                att_regularize.employee_name,
                                 att_regularize.attendance_date,
                                 att_regularize.regularization_type ,
                                 att_regularize.user_time,

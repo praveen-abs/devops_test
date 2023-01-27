@@ -34,26 +34,30 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
     protected $year;
     protected $assignment_period;
     protected $is_assignee_submitted;
-    //protected $is_reviewer_accepted;
+    protected $is_reviewer_accepted;
     protected $manager_id;
     protected $manager_name;
     protected $getHttpHost;
 
-    function __construct($calendar_type, $year, $assignment_period, $is_assignee_submitted,$getHttpHost)
+    function __construct($calendar_type, $year, $assignment_period, $is_assignee_submitted, $is_reviewer_accepted ,$getHttpHost)
     {
         $this->calendar_type = $calendar_type;
         $this->year=$year;
         $this->assignment_period = $assignment_period;
+        $this->is_assignee_submitted=$is_assignee_submitted;
+        $this->is_reviewer_accepted= $is_reviewer_accepted;
         $this->getHttpHost = $getHttpHost;
 
 
 
 
-        if($is_assignee_submitted==1 ){
-            $this->is_assignee_submitted=$is_assignee_submitted;
-        }else{
-            $this->is_assignee_submitted=null;
-        }
+
+
+        // if($is_assignee_submitted==1 ){
+        //     $this->is_assignee_submitted=$is_assignee_submitted;
+        // }else{
+        //     $this->is_assignee_submitted=null;
+        // }
     }
 
 
@@ -151,7 +155,7 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
                         ->where([
                             //['vmt_pms_kpiform_assigned.calendar_type','=',$this->calendar_type],
                             ['vmt_pms_kpiform_assigned.year','=',$this->year],
-                            ['vmt_pms_kpiform_assigned.assignment_period','=',$this->assignment_period],
+                            //['vmt_pms_kpiform_assigned.assignment_period','=',$this->assignment_period],
                             //['vmt_pms_kpiform_reviews.is_assignee_submitted','=',$this->is_assignee_submitted]
                         ])
                         ->select(
@@ -166,11 +170,32 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
                                    'vmt_pms_kpiform_reviews.is_reviewer_submitted',
 
 
-                                 )
-                        ->get();
+                                 );
 
 
+                            if($this->assignment_period!="All"){
+                             $query_pms_data= $query_pms_data-> where('vmt_pms_kpiform_assigned.assignment_period','=',$this->assignment_period);
+                            }
 
+                            if($this->is_assignee_submitted=="1"){
+                                $query_pms_data= $query_pms_data-> where('vmt_pms_kpiform_reviews.is_assignee_submitted','=',1);
+                            }else if($this->is_assignee_submitted=="" || $this->is_assignee_submitted==null ){
+                                $query_pms_data= $query_pms_data-> where('vmt_pms_kpiform_reviews.is_assignee_submitted','=',null);
+                            }
+
+                            if( $this->is_reviewer_accepted=="1"){
+                                $query_pms_data= $query_pms_data-> where('vmt_pms_kpiform_reviews.is_reviewer_submitted','like','%"1"}');
+                            }else if( $this->is_reviewer_accepted==""){
+                                $query_pms_data= $query_pms_data-> where('vmt_pms_kpiform_reviews.is_reviewer_submitted','not like','%"1"}');
+                            }
+
+                            if (session('client_id') != '1') {
+                                $query_pms_data= $query_pms_data-> where('users.client_id', session('client_id'));
+                                //return ($payroll_data);
+                            }
+
+
+                            $query_pms_data = $query_pms_data->get();
 
         foreach($query_pms_data as $singleData){
 
@@ -302,7 +327,7 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
 
         //dd($query_pms_data->toArray());
 
-
+          //dd($this->is_assignee_submitted);
 
         return $query_pms_data;
 

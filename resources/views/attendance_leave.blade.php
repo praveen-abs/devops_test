@@ -752,16 +752,39 @@
                             </div>
                             <div class="d-flex border-bottom mb-2 pb-3 ">
                                 <div class="date-wrapper text-center rounded shadow-lite  me-2 border-bottom mb-2" style="width:75px">
-                                    <p class="bg-primary rounded  text-center text-white py-1" id="leave_month"> Apr</p>
+                                    <p class="bg-primary rounded  text-center text-white py-1" id="leave_month">  </p>
                                     <p id="leave_date"> </p>
                                     <p id="leave_day"> </p>
+                                    {{-- <p id="reviewer_comments"></p> --}}
                                 </div>
+
+                                <div class="d-flex border-bottom mb-2 pb-3 ">
+                                    <div class="date-wrapper text-center rounded shadow-lite  me-2 border-bottom mb-2" style="width:75px">
+                                        <p class="bg-primary rounded  text-center text-white py-1" id="leave_end_month">  </p>
+                                        <p id="leave_end_date"> </p>
+                                        <p id="leave_end_day"> </p>
+                                    </div>
+                                    </div>
+
                                 <div class="content-det">
                                     <p id="">
-                                    <h6 id="totalLeave_days"></h6> <span id="leave_type"></span> </p>
+                                    <h6 id="totalLeave_days"></h6> <h6><span id="leave_type"></span></h6> </p>
 
                                 </div>
                             </div>
+
+                            <div class="content-det">
+                                <p id="">
+                                <h6 id="reviewercomments"></h6> <h6><span id="reviewercomments"></span></h6> </p>
+
+                            </div>
+                            <div class="content-det">
+                                <p id="">
+                                <h6 id="leavereason"></h6> <h6><span id="leavereason"></span></h6> </p>
+
+                            </div>
+                        </div>
+
 
                             <div class="row border-bottom mb-2 pb-3">
                                 <div class="col-12">
@@ -776,8 +799,8 @@
                                             <div id="" class="show_img">
                                             </div>
                                             <div class="profile-details">
-                                                <p id="notifyUser_name">Dillip Kumar</p>
-                                                <h5 class="description" id="notifyUser_designation">Designation</h5>
+                                                <h5 p id="notifyUser_name"> </h5>
+                                                <div class="description" id="notifyUser_designation">Designation</div>
                                             </div>
                                         </div>
                                     </div>
@@ -799,8 +822,8 @@
                                                 src="http://images.equipboard.com/uploads/user/image/524/big_calvin-harris.jpg?v=1466072866"
                                                 alt="" /> --}}
                                             <div class="profile-details">
-                                                <p id="approver_name"></p>
-                                                <h5 class="description" id="approver_desgination"></h5>
+                                                <h5 p id="approver_name"></h5>
+                                                <div class="description" id="approver_desgination"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -818,7 +841,7 @@
 
                                 </div>
                                 <div class="col-12 mb-md-0 mb-3 text-end">
-                                    <button class="btn btn-orange"><i class="fa fa-paper-plane me"
+                                    <button class="btn btn-orange"><i class="fa fa-paper "
                                             aria-hidden="true"></i> Send</button>
 
                                 </div>
@@ -1702,8 +1725,8 @@
                                 htmlcontent =
                                     // '<input type="button"  class="status btn btn-orange py-1 onboard-employee-btn leavebutton" value="View" />';
                                     // '<button   class="status btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal"  data-bs-toggle="modal">View</button>';
-                                    '<button   class="status btn btn-orange py-1 onboard-employee-btn leavebutton " onClick="getLeaveDetails(' +
-                                    emp.id + ')" >View</button>';
+                                    //'<button   class="status btn btn-orange py-1 onboard-employee-btn leavebutton " onClick=" getLeaveHistory(' +emp.id + ')" >View</button>';
+                                    '';
                                 return gridjs.html(htmlcontent);
                             },
                         },
@@ -1790,7 +1813,8 @@
                     $('#leave_month').text(moment(data.leaverequest_date).format('MMM'));
                     $('#leave_date').text(moment(data.leaverequest_date).format('d'));
                     $('#leave_day').text(moment(data.leaverequest_date).format('ddd'));
-                    // $('#totalLeave_days').text(data.user_name);
+                     $('#totalLeave_days').text(data.user_name);
+
                     $('#notifyUser_name').text(data.notification_userName);
                     $('#notifyUser_designation').text(data.user_designation);
                     $('#approver_name').text(data.approver_name);
@@ -1823,5 +1847,47 @@
 
 
         }
+
+        function  getLeaveHistory(leave_id) {
+
+            $.ajax({
+                url: "{{ route('attendance-leave-getdetails') }}",
+                type: "GET",
+                dataType: "json",
+                data: {
+                    'leave_id': leave_id,
+                    "_token": "{{ csrf_token() }}",
+                },
+                success: function(data) {
+
+                     {
+                         console.log(data);
+                     }
+
+
+
+
+                    $('#employee_name').text(data.user_name);
+                    $('#leaveRequested_date').text(moment(data.leaverequest_date).format('MMM DD,YYYY, HH:mm a'));
+                    $('#leave_month').text(moment(data.start_date).format('MMM'));
+                    $('#leave_date').text(moment(data.start_date).format('DD'));
+                    $('#leave_day').text(moment(data.start_date).format('ddd'));
+                    $('#leave_end_month').text(moment(data.end_date).format('MMM'));
+                    $('#leave_end_date').text(moment(data.end_date).format('DD'));
+                    $('#leave_end_day').text(moment(data.end_date).format('ddd'));
+                    $('#leave_type').text(data.leave_type);
+                    $('#totalLeave_days').text(data.user_name);
+                    $('#reviewercomments').text(data.reviewer_comments);
+                    $("#leavereason").text(data.leave_reason);
+                    $('#notifyUser_name').text(data.notification_userName);
+                    $('#notifyUser_designation').text(data.user_designation);
+                    $('#approver_name').text(data.approver_name);
+                    $('#approver_desgination').text(data.notification_designation);
+                    $('#totalLeave_days').text(data.total_leave_datetime[0]);
+                    $('#leaveDetails_modal').modal('show');
+                }}
+                 )};
+
+
     </script>
 @endsection

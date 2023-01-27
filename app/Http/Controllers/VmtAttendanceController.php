@@ -938,7 +938,7 @@ class VmtAttendanceController extends Controller
 
         $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
 
-        $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::all();
+        $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::where('status','Pending')->get();
 
         //dd($map_allEmployees->toArray());
         //dd($allEmployees_lateComing->toArray());
@@ -957,9 +957,13 @@ class VmtAttendanceController extends Controller
                     $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName([$singleItem->reviewer_id]);
                 }
             }
+            else
+            {
+              //  dd("Missing User ID : " . $singleItem->user_id);
+            }
         }
 
-        //dd($allEmployees_lateComing);
+       // dd($allEmployees_lateComing);
         return $allEmployees_lateComing;
     }
 

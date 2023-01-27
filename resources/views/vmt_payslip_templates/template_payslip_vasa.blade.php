@@ -1,6 +1,6 @@
 <?php
-    $client_logo = request()->getSchemeAndHttpHost() . session()->get('client_logo_url');
-    $bank_names = \DB::table('bank_list')->get();
+    //$client_logo = request()->getSchemeAndHttpHost() . session()->get('client_logo_url');
+    $bank_names = \DB::table('vmt_banks')->get();
     //dd($client_logo);
 ?>
 <html>
@@ -17,7 +17,7 @@
         }
 
         .payslip_table tr,
-        td {
+        .payslip_table   td {
             border: 1.5pt solid #004b81;
 
         }

@@ -2,9 +2,9 @@
 //$employee = \DB::table('vmt_employee_payslip')->first();
 $general_info = \DB::table('vmt_general_info')->first();
 //$employee_name =  \DB::table('users')->where('user_code','=',$employee_payslip->EMP_NO)->first('name');
-$client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
+//$client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
 // dd(request()->getSchemeAndHttpHost()."".$general_info->logo_img);
-$bank_names = \DB::table('bank_list')->get();
+$bank_names = \DB::table('vmt_banks')->get();
 
 ?>
 <html>
@@ -40,9 +40,7 @@ $bank_names = \DB::table('bank_list')->get();
             width: 81.35pt
         }
 
-        .padding-md {
-            /* padding: 2pt 0pt; */
-        }
+
 
         .margin-0 {
             margin: 0px;
@@ -56,11 +54,7 @@ $bank_names = \DB::table('bank_list')->get();
         }
 
 
-        .sm {}
 
-        .md {}
-
-        .lg {}
 
         .txt-left {
             text-align: left;
@@ -83,7 +77,7 @@ $bank_names = \DB::table('bank_list')->get();
         }
 
         td.bg-ash {
-            background-color: #c1c1c1;
+            background-color: #dbdbdb;
         }
     </style>
 </head>
@@ -95,7 +89,7 @@ $bank_names = \DB::table('bank_list')->get();
                 <tr class="header-row">
                     <td colspan="8" class="border-less">
                         <div class="header-cotent" style="margin: 10px;">
-                            <p class="margin-0   text-strong" style="color: #002f56;font-size:18px;padding:0px;">Brand Avatar LLP</p>
+                            <h6 class="margin-0" style="padding-left: 5px">Brand Avatar LLP</h6>
                             <p class="mb-0" style="padding:0px;">NO-01,Kandasamy Street,</p>
                             <p class="mb-0" style="padding:0px;">Chandrabagh Ave 2nd St, Dr. Radha Krishnan Salai,
                             </p>
@@ -114,8 +108,8 @@ $bank_names = \DB::table('bank_list')->get();
 
 
                 <tr>
-                    <td colspan="12">
-                        <p class="sub-header txt-center bg-ash text-strong">PAYSLIP FOR THE MONTH OF &ndash;
+                    <td colspan="12" class=" bg-ash">
+                        <p class="sub-header txt-center text-strong">PAYSLIP FOR THE MONTH OF &ndash;
                             {{ strtoupper($employee_payslip->PAYROLL_MONTH) }}</p>
                     </td>
                 </tr>
