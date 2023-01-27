@@ -96,6 +96,9 @@ Route::middleware(['auth'])->group(function () {
     //Ajax For Leave withdraw
     Route::get('/withdrawLeave', [App\Http\Controllers\VmtAttendanceController::class, 'withdrawLeave'])->name('withdrawLeave');
 
+    //Ajax For Leave withdraw
+    Route::get('/revokeLeave', [App\Http\Controllers\VmtAttendanceController::class, 'revokeLeave'])->name('revokeLeave');
+
     //Att Regularize
     Route::get('/attendance-regularization-approvals', [App\Http\Controllers\VmtAttendanceController::class, 'showRegularizationApprovalPage'])->name('attendance-regularization-approvals');
     Route::post('/attendance-regularization-approvals', [App\Http\Controllers\VmtAttendanceController::class, 'approveRejectAttendanceRegularization'])->name('process-attendance-regularization-approvals');

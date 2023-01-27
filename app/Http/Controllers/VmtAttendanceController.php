@@ -437,6 +437,22 @@ class VmtAttendanceController extends Controller
         return $response;
     }
 
+
+    //Revoke Leave function
+    public function revokeLeave(Request $request){
+        $withdraw_leave_query=VmtEmployeeLeaves::where('id',$request->leave_id)
+        ->update(array('status' => 'Pending'));
+        $leave_status=VmtEmployeeLeaves::where('id',$request->leave_id)->first()->status;
+
+        $response = [
+            'status' => 'success',
+            'message' => 'Leave Revoked successfully',
+            'error' => '',
+            'error_verbose' => ''
+        ];
+
+        return $response;
+    }
     /*
         Show the attendance IN/OUT time for the given month
 
