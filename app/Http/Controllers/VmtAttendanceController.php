@@ -422,14 +422,14 @@ class VmtAttendanceController extends Controller
         return $response;
     }
 
-    public function revokeLeave(Request $request){
-        $revoke_leave_query=VmtEmployeeLeaves::where('id',$request->leave_id)
-        ->update(array('status' => 'Revoked'));
+    public function withdrawLeave(Request $request){
+        $withdraw_leave_query=VmtEmployeeLeaves::where('id',$request->leave_id)
+        ->update(array('status' => 'Withdrawn'));
         $leave_status=VmtEmployeeLeaves::where('id',$request->leave_id)->first()->status;
 
         $response = [
             'status' => 'success',
-            'message' => 'Leave Request applied successfully',
+            'message' => 'Leave withdrawn successfully',
             'error' => '',
             'error_verbose' => ''
         ];

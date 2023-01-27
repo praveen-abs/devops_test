@@ -829,7 +829,7 @@
 
                                 </div>
                                 <div class="col-12 mb-md-0 mb-3 text-end">
-                                    <button class="btn btn-orange" data-leave-id=""  id="btn_revoke">Revoke</button>
+                                    <button class="btn btn-orange" data-leave-id=""  id="btn_withdraw">Withdraw</button>
                                 </div>
                                 <div class="col-12 mb-md-0 mb-3 text-end">
 
@@ -870,21 +870,21 @@
             $('#error_notify').fadeOut(100);
 
         });
-        $('#btn_revoke').on('click', function() {
-            leave_id=$('#btn_revoke').attr("data-leave-id");
-            console.log("Revoking leave.... "+leave_id);
+        $('#btn_withdraw').on('click', function() {
+            leave_id=$('#btn_withdraw').attr("data-leave-id");
+            console.log("Withdrawing leave.... "+leave_id);
 
             $.ajax({
-                    url: "{{ route('revokeLeave') }}",
+                    url: "{{ route('withdrawLeave') }}",
                     type: "GET",
                     dataType: "json",
                     data: {
-                        'leave_id': $('#btn_revoke').attr("data-leave-id"),
+                        'leave_id': $('#btn_withdraw').attr("data-leave-id"),
                         "_token": "{{ csrf_token() }}",
                     },
                     success: function(data) {
                         if (data.status == "success") {
-                            console.log("Leave revoked successfully");
+                            console.log("Leave withdraw successfully");
                             Swal.fire({
                                 title: data.message,
                                 text: data.mail_status,
@@ -1441,7 +1441,7 @@
                     sort: true,
                     search: true,
                     server: {
-                        url: '{{ route('fetch-leaverequests', ['type' => 'employee', 'statusArray' => 'Approved,Rejected,Pending,Revoked']) }}',
+                        url: '{{ route('fetch-leaverequests', ['type' => 'employee', 'statusArray' => 'Approved,Rejected,Pending,Revoked,Withdrawn ']) }}',
                         then: data => data.map(
                             leave_history => [
                                 leave_history.id,
@@ -1809,7 +1809,7 @@
 
         function getLeaveDetails(leave_id) {
             console.log("Getting date for leave_id : " + leave_id);
-            $('#btn_revoke').attr('data-leave-id',leave_id);
+            $('#btn_withdraw').attr('data-leave-id',leave_id);
             $.ajax({
                 url: "{{ route('attendance-leave-getdetails') }}",
                 type: "GET",
@@ -1869,11 +1869,11 @@
 
                     if(data.status == "Pending")
                     {
-                        $('#btn_revoke').show();
+                        $('#btn_withdraw').show();
                     }
                     else
                     {
-                        $('#btn_revoke').hide();
+                        $('#btn_withdraw').hide();
                     }
 
                     $('#leaveDetails_modal').modal('show');
