@@ -704,8 +704,8 @@ body::-webkit-scrollbar-track {
 }
 
 .navbar-menu {
-    width: 200px;
-    z-index: 1002;
+    width: 230px;
+    z-index: 12;
     background-color: #fff;
     border-right: 1px solid #fff;
     height: 100%;
@@ -16497,7 +16497,7 @@ ul {
 
 @media (min-width: 768px) {
     .main-content {
-        margin-left: 200px;
+        margin-left: 230px;
     }
 }
 

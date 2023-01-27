@@ -62,7 +62,7 @@
                                         <div class="border-bottom-liteAsh py-2">
                                             <p class="text-muted f-12 fw-bold">Employee Status</p>
                                             <p class="text-primary f-15 fw-bold">
-                                                {{ getEmployeeActiveStatus($user->active) ?? '-' }}
+                                                {{ getEmployeeActiveStatus($user->id) ?? '-' }}
                                             </p>
 
                                         </div>
@@ -1440,23 +1440,23 @@
                                 <form action="{{ route('updatePersonalInformation', $user->id) }}" Method="POST"
                                     enctype="multipart/form-data">
                                     <h6 class="">Documents Of Employee
-                                        <span class="personal-edit"><a href="#" class="edit-icon"
+                                        {{-- <span class="personal-edit"><a href="#" class="edit-icon"
                                                 data-bs-toggle="modal" data-bs-target="#edit_document"><i
                                                     class="ri-pencil-fill"></i></a>
-                                        </span>
+                                        </span> --}}
                                     </h6>
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead class="bg-primary">
                                                 <th>
-                                                    Document Type
+                                                    Document Name
                                                 </th>
                                                 <th>
-                                                    Number / ID
+                                                    Document View
                                                 </th>
-                                                <th>
+                                                {{-- <th>
                                                     Action
-                                                </th>
+                                                </th> --}}
                                             </thead>
                                             <tbody>
                                                 {{-- <?php dd($documents_filenames); ?> --}}
@@ -1716,7 +1716,7 @@
                         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
                             <div class="modal-content profile-box">
                                 <div class="modal-header  ">
-                                    <h6 class="modal-title m-0 p-0   text-primary">Pay Slip
+                                    <h6 class="modal-title">Pay Slip
                                     </h6>
                                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal"
                                         aria-label="Close">
@@ -2283,7 +2283,7 @@
 
     <script>
         $(document).ready(function() {
-            let empActiveStatus = "{{ getEmployeeActiveStatus($user->active) ?? 'null' }}";
+            let empActiveStatus = "{{ getEmployeeActiveStatus($user->id) ?? 'null' }}";
 
             if (empActiveStatus == "Active") {
                 $('.userActive-status').css('border-color', '#2e9102');
