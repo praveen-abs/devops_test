@@ -39,5 +39,5 @@ app.directive('focustrap', FocusTrap);
 app.component('DataTable', DataTable);
 app.component('Column', Column);
 
-app.mount("#orgLeaveTable_RemainingLeave");
+app.mount("#vjs_orgLeaveTable_RemainingLeave");
 
