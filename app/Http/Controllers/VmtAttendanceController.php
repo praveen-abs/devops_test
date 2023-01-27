@@ -110,6 +110,10 @@ class VmtAttendanceController extends Controller
         // $approval_status = $request->status;
         $leave_record = VmtEmployeeLeaves::where('id', $request->leave_id)->first();
         $leave_record->status = $request->status;
+
+        if ($request->status == "Revoked")
+            $leave_record->is_revoked = "true";
+
         $leave_record->reviewer_comments = $request->leave_rejection_text;
 
         $leave_record->save();
@@ -149,21 +153,20 @@ class VmtAttendanceController extends Controller
             $mail_status = "There was one or more failures.";
         }
 
+        if($request->status == "Approved")
+            $text_status = "approved";
+        else
+        if($request->status == "Rejected")
+            $text_status = "rejected";
+        else
+        if($request->status == "Revoked")
+            $text_status = "revoked";
+
+
         $response = [
             'status' => 'success',
-            'message' => 'Leave Request applied successfully',
+            'message' => 'Leave Request '.$text_status.' successfully',
             'mail_status' => $mail_status,
-            'error' => '',
-            'error_verbose' => ''
-        ];
-
-
-
-
-
-        $response = [
-            'status' => 'success',
-            'message' => 'Leave ' . $request->status,
             'error' => '',
             'error_verbose' => ''
         ];
@@ -440,18 +443,11 @@ class VmtAttendanceController extends Controller
 
     //Revoke Leave function
     public function revokeLeave(Request $request){
-        $withdraw_leave_query=VmtEmployeeLeaves::where('id',$request->leave_id)
-        ->update(array('status' => 'Pending'));
-        $leave_status=VmtEmployeeLeaves::where('id',$request->leave_id)->first()->status;
 
-        $response = [
-            'status' => 'success',
-            'message' => 'Leave Revoked successfully',
-            'error' => '',
-            'error_verbose' => ''
-        ];
+        $response = $this->approveRejectLeaveRequest($request);
 
         return $response;
+
     }
     /*
         Show the attendance IN/OUT time for the given month
