@@ -105,12 +105,15 @@ class VmtAttendanceController extends Controller
     }
 
 
-    public function approveRejectLeaveRequest(Request $request)
+    public function approveRejectRevokeLeaveRequest(Request $request)
     {
+
         // $approval_status = $request->status;
         $leave_record = VmtEmployeeLeaves::where('id', $request->leave_id)->first();
+        //dd($leave_record);
         $leave_record->status = $request->status;
-
+        //dd( $leave_record);
+        //dd( $request->status);
         if ($request->status == "Revoked")
             $leave_record->is_revoked = "true";
 
@@ -444,7 +447,7 @@ class VmtAttendanceController extends Controller
     //Revoke Leave function
     public function revokeLeave(Request $request){
 
-        $response = $this->approveRejectLeaveRequest($request);
+        $response = $this->approveRejectRevokeLeaveRequest($request);
 
         return $response;
 

@@ -937,13 +937,14 @@
         $('#btn_revoke').on('click', function() {
             leave_id = $('#btn_revoke').attr("data-leave-id");
             console.log("Revoking leave.... " + leave_id);
-
+            var status="Revoked";
             $.ajax({
                 url: "{{ route('revokeLeave') }}",
                 type: "GET",
                 dataType: "json",
                 data: {
                     'leave_id': $('#btn_revoke').attr("data-leave-id"),
+                    'status':status,
                     "_token": "{{ csrf_token() }}",
                 },
                 success: function(data) {
