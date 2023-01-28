@@ -255,7 +255,7 @@
                                                 <tr class="">
                                                     <td colspan="8" align="" class="text-right pad-bottom-25">
                                                         <div class="logo" style="">
-                                                            <img src="{{ URL::asset('assets/clients/brandavatar/logos/logo_brandavatar.png') }}"
+                                                            <img src="{{ URL::asset('assets/clients/brandavatar/logos/logo_avatar_live.png') }}"
                                                                 class="" style="height: 50px;width:180px;">
                                                         </div>
                                                     </td>

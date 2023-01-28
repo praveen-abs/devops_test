@@ -875,7 +875,7 @@
     </div>
 @endsection
 @section('script')
-    @vite(['resources/js/hrms/modules/leave_module/OrgLeaveBalance.js'])
+    {{-- @vite(['resources/js/hrms/modules/leave_module/OrgLeaveBalance.js']) --}}
     <script>
         var leavetypes_array = <?php echo json_encode(getAllLeaveTypes()); ?>;
         const permissionTypeIds = {{ json_encode(getPermissionLeaveTypeIDs()) }};

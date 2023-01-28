@@ -1204,7 +1204,7 @@ class VmtAttendanceController extends Controller
         }
 
         // dd($viewPage);
-        return view('leave_policies.'.$viewPage);
+        return view('leave_policy_templates.'.$viewPage);
 
     }
 }
