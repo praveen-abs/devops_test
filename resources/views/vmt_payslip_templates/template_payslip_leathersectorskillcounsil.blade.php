@@ -22,14 +22,12 @@ $bank_names = \DB::table('vmt_banks')->get();
         table {
             width: 100%;
             vertical-align: middle;
-            border-collapse: collapse;
-            /* border: 1.5pt solid #0072ba; */
-
+            font-family: sans-serif;
         }
 
-        .payslip_table tr td {
-            border: 1.5pt solid #0072ba;
-            padding: 0px 4px;
+        .payslip_table tr,
+        .payslip_table td {
+            border: 1.5pt solid #ea141c;
 
         }
 
@@ -59,6 +57,9 @@ $bank_names = \DB::table('vmt_banks')->get();
             padding: 0px 5px;
         }
 
+
+
+
         .txt-left {
             text-align: left;
         }
@@ -80,7 +81,7 @@ $bank_names = \DB::table('vmt_banks')->get();
         }
 
         td.bg-ash {
-            background-color: #c1c1c1;
+            background-color: #dbdbdb;
         }
     </style>
 </head>
@@ -90,17 +91,17 @@ $bank_names = \DB::table('vmt_banks')->get();
         <tr class="header-row">
             <td colspan="8" class="" style="border-right:0px;">
                 <div class="header-cotent" style="margin: 10px;">
-                    <p class="margin-0 brand-name " style="font-size: 16px;font-weight:600;color:#0072ba">Leather Sector Skill Council</p>
-                    <p class="mb-0">No:1, Grand Southern Trunk Rd,</p>
-                    <p class="mb-0"> Sadras, Guindy,</p>
-                    <p class="mb-0">Chennai, Tamil Nadu 600032</p>
+                    <p class="margin-0 brand-name " style="font-size: 16px;font-weight:600;color:#ea141c;">Precede Workforce Solutions</p>
+                    <p class="mb-0">No: 2,Vengaivasal main road,</p>
+                    <p class="mb-0"> Santhoshapuram,medavakkam</p>
+                    <p class="mb-0">Chennai -600073,Tamilnadu.</p>
                 </div>
             </td>
             <td colspan="4" class="" style="border-right:0px;">
 
-                <div class="header-img txt-right" style="padding-right: 10px;width:200px;height:55px">
+                <div class="header-img txt-right" style="padding-right: 10px;height:55px;width:180px;">
 
-                    <img src="{{ URL::asset('assets/clients/leather_sector/precede_leatherSecotor.png') }}" class="" alt="logo"
+                    <img src="{{ URL::asset('assets/images/precede.png') }}" class="" alt="logo"
                         style="height:100%;width:100%;">
                 </div>
 

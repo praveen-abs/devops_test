@@ -52,10 +52,14 @@
             }
         }
 
-        table {
+        table{
             width: 100%;
             vertical-align: middle;
             font-family: sans-serif;
+
+        }
+        table tr td p{
+            text-align:justify !important;
         }
 
         .payslip_table tr,
@@ -68,7 +72,7 @@
             color: #ce081e;
         }
 
-        table td:last-child {}
+
 
         .border-less {
             border: 0px !important;
@@ -82,15 +86,15 @@
             width: 81.35pt
         }
         .txt-left {
-            text-align: left;
+            text-align: left !important;
         }
 
         .txt-right {
-            text-align: right;
+            text-align: right !important;
         }
 
         .txt-center {
-            text-align: center;
+            text-align: center !important;
         }
 
         .text-strong {
@@ -267,7 +271,7 @@
                                             </tr>
                                             <tr>
                                                 <td colspan="8" class="" align="left">
-                                                    <p class=" txt-left " style="">
+                                                    <p class=" " style="">
                                                         We at Precede Workforce Solutions India Pvt Ltd would like to create
                                                         an environment and culture committed to cooperation, quality, and
                                                         responsiveness that permeate every activity. We treat business
@@ -284,7 +288,7 @@
                                             </tr>
                                             <tr>
                                                 <td colspan="8" class="pt-pb-10" align="left">
-                                                    <p class=" txt-left " style="">
+                                                    <p class=" " style="">
                                                         With reference to your application and subsequent discussion, we
                                                         have pleasure in appointing you as a <span class="fw-600 txt-left">
                                                             Xyz </span>&nbsp; and place on
@@ -457,7 +461,7 @@
                                                         4. COMPENSATION PACKAGE:
 
                                                     </p>
-                                                    <p class="txt-left pt-pb-5">
+                                                    <p class=" pt-pb-5">
                                                         You will be paid an annual package of &nbsp;<span
                                                             class="fw-600 txt-left"> YYY </span>&nbsp;-and your
                                                         service
@@ -765,13 +769,13 @@
                                                     <p class="fw-600">
                                                         10. RETIREMENT / TERMINATION / RESIGNATION:
                                                     </p>
-                                                    <p class=" pt-pb-5 txt-left " style="">
+                                                    <p class=" pt-pb-5 ">
                                                         You will be retired from the services of the Company on your
                                                         completing the age of 58 years, or
                                                         such other retiring age the Management may decide.
 
                                                     </p>
-                                                    <p class=" pt-pb-5  txt-left " style="">
+                                                    <p class=" pt-pb-5  ">
                                                         At the time of retirement/termination/resignation, you will
                                                         immediately hand over to the Company
                                                         all correspondence, documentation, data, software, etc. belonging to
