@@ -36,6 +36,7 @@ app.directive('ripple', Ripple);
 app.directive('styleclass', StyleClass);
 app.directive('focustrap', FocusTrap);
 
+app.component('Button', Button);
 app.component('DataTable', DataTable);
 app.component('Column', Column);
 
