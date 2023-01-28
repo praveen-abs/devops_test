@@ -224,7 +224,6 @@
     </style>
 @endsection
 @section('content')
-
     <div class="card mt-30 mb-0">
         <div class="card-body">
             <div class="fill salary-header nav-tab-header">
@@ -255,8 +254,11 @@
                                                 <tr class="">
                                                     <td colspan="8" align="" class="text-right pad-bottom-25">
                                                         <div class="logo" style="">
-                                                            <img src="{{ URL::asset('assets/images/appoinment/brandavatarlogo.png') }}"
-                                                                class="" style="height: 50px;width:180px;">
+
+                                                            <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_priti.jpg') }}"
+                                                                class="" alt=""
+                                                                style="height: 40px;width:250px;max-height:100%;">
+
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -366,8 +368,8 @@
                                                     <td colspan="8" align="" class="pad-bottom-15">
                                                         <p class="">
                                                             The focus of this policy is to properly manage and track the
-                                                            attendance and leaves of all the employees of
-                                                            the Legal Entity
+                                                            attendance and leaves of all the employees of the Priti Sales
+                                                            Corporation
 
                                                         </p>
                                                     </td>
@@ -384,9 +386,9 @@
                                                     <td colspan="8" align="" class="pad-bottom-15">
                                                         <p class="">
 
-                                                            This policy applies to all the employees of Brand Avatar LLP,
-                                                            across all the departments and regardless of
-                                                            the job position they hold.
+                                                            This policy applies to all the employees of Priti Sales
+                                                            Corporation , across all the departments and regardless of the
+                                                            job position they hold.
                                                         </p>
                                                     </td>
                                                 </tr>
@@ -403,8 +405,8 @@
                                                     <td colspan="8" align="" class="pad-bottom-15">
                                                         <p class="">
 
-                                                            This policy applies to all employees working for Brand Avatar
-                                                            LLP
+                                                            This policy applies to all employees working for Priti Sales
+                                                            Corporation
                                                         </p>
                                                     </td>
                                                 </tr>
@@ -421,53 +423,48 @@
                                                     <td colspan="8" align="" class="pad-bottom-10">
                                                         <ol style="list-style: none">
                                                             <li>
-                                                                <p class="pad-bottom-10">➢ Awareness and understanding of
-                                                                    the policy shall be the responsibility of each employee
+                                                                <p class="pad-bottom-10">⮚ Awareness and understanding of
+                                                                    the policy shall be the responsibility of each employee.
                                                                 </p>
                                                             </li>
                                                             <li>
-                                                                <p class="pad-bottom-10">➢ Assuring compliance with the
-                                                                    policy is the responsibility of Reporting Manager/ Head
-                                                                    of the
-                                                                    Business/Function</p>
+                                                                <p class="pad-bottom-10">⮚ Assuring compliance with the
+                                                                    policy is the responsibility of the Reporting Manager/
+                                                                    Head of the Business/Function.</p>
                                                             </li>
                                                             <li>
-                                                                <p class="pad-bottom-10">➢ The Financial year system will
-                                                                    be followed in all leave categories.</p>
+                                                                <p class="pad-bottom-10">⮚ The Financial year system will
+                                                                    be followed in all leave categories</p>
                                                             </li>
                                                             <li>
-                                                                <p class="pad-bottom-10">➢ Any planned leave must be
+                                                                <p class="pad-bottom-10">⮚ Any planned leave must be
                                                                     applied in the leave application form. Leave will be
-                                                                    treated as Leave
-                                                                    without Pay / Loss of Pay (LWP/LOP)/ Unauthorised
-                                                                    Absence if it is not subsequently approved by
-                                                                    their reporting manager in the application form</p>
+                                                                    treated as Leave without Pay / Loss of Pay (LWP/LOP)/
+                                                                    Unauthorised Absence if it is not subsequently approved
+                                                                    by their reporting manager in the application form</p>
                                                             </li>
                                                             <li>
-                                                                <p class="pad-bottom-10">➢ In case of leave taken without
+                                                                <p class="pad-bottom-10">⮚ In case of leave taken without
                                                                     prior approval, as in emergency/sick, an employee can
-                                                                    raise their
-                                                                    leave request in leave form and the same should be
-                                                                    approved by the Reporting Manager.
+                                                                    raise their leave request in leave form and the same
+                                                                    should be approved by the Reporting Manage
                                                                 </p>
                                                             </li>
                                                             <li>
-                                                                <p class="pad-bottom-10">➢ All leaves must be planned and
+                                                                <p class="pad-bottom-10">⮚ All leaves must be planned and
                                                                     intimated in advance (except during exigencies), such
-                                                                    that it does
-                                                                    not affect day-to-day work</p>
+                                                                    that it does not affect day-to-day work. </p>
                                                             </li>
                                                             <li>
-                                                                <p class="pad-bottom-10">➢ If there is neither prior
+                                                                <p class="pad-bottom-10">⮚ If there is neither prior
                                                                     intimation nor any communication for five days the
-                                                                    organisation holds the
-                                                                    right to treat them as abscond, if more than 7 days of
-                                                                    absence, the organization holds the right to
-                                                                    terminate service for ‘job abandonment’ and the employee
-                                                                    may not be eligible for rehire.</p>
+                                                                    organisation holds the right to treat them as abscond,
+                                                                    if more than 7 days of absence, the organization holds
+                                                                    the right to terminate service for ‘job abandonment’ and
+                                                                    the employee may not be eligible for rehire</p>
                                                             </li>
                                                             <li>
-                                                                <p class="pad-bottom-10">➢ Salary will also be withheld
+                                                                <p class="pad-bottom-10">⮚ Salary will also be withheld
                                                                     with immediate effect from the date of absence</p>
                                                             </li>
                                                         </ol>
@@ -501,9 +498,9 @@
                                                                 A. Absenteeism
 
                                                             </span>
-                                                            is referred to as the act of being unable to perform assigned
-                                                            tasks in accordance
-                                                            with a specified schedule without prior information.
+                                                             is referred to as the act of being unable to
+                                                            perform assigned tasks in accordance with a specified schedule
+                                                            without prior information..
                                                         </p>
                                                     </td>
                                                 </tr>
@@ -514,7 +511,7 @@
                                                                 B. Tardiness
 
                                                             </span>
-                                                            is considered when the following circumstances happen:
+                                                            is considered when the following circumstances happen
                                                         </p>
                                                     </td>
                                                 </tr>
@@ -523,27 +520,26 @@
 
                                                         <ol style="list-style: none">
                                                             <li>
-                                                                <p class="pad-bottom-10">➢ When an employee leaves the
+                                                                <p class="pad-bottom-10">⮚When an employee leaves the
                                                                     workplace before the end of the shift without the
-                                                                    supervisor’s
-                                                                    approval.
+                                                                    supervisor’s approval.
                                                                 </p>
                                                             </li>
                                                             <li>
                                                                 <p class="pad-bottom-10">
-                                                                    ➢ When an employee fails to report to work at the
+                                                                    ⮚ When an employee fails to report to work at the
                                                                     assigned schedule.
                                                                 </p>
                                                             </li>
                                                             <li>
                                                                 <p class="pad-bottom-10">
-                                                                    ➢ When an employee over breaks and takes extended hours
+                                                                    ⮚ When an employee over breaks and takes extended hours
                                                                     or minutes for meals
                                                                 </p>
                                                             </li>
                                                             <li>
                                                                 <p class="pad-bottom-10">
-                                                                    ➢ When an employee arrives late or past the time of
+                                                                    ⮚ When an employee arrives late or past the time of
                                                                     his/her scheduled shift.
                                                                 </p>
                                                             </li>
@@ -567,7 +563,7 @@
                                                         <ol style="list-style: none">
                                                             <li>
                                                                 <p class="pad-bottom-10">
-                                                                    ➢ Employees are expected to have one hundred per cent
+                                                                    ⮚ Employees are expected to have one hundred percent
                                                                     attendance as much as possible
 
                                                                 </p>
@@ -575,14 +571,14 @@
                                                             </li>
                                                             <li>
                                                                 <p class="pad-bottom-10">
-                                                                    ➢ Employees can check their attendance in the HR Team –
-                                                                    Calendar on daily basis
+                                                                    ⮚ Employees can check their attendance in the HR Team –
+                                                                    Calendar on a daily basis.
                                                                 </p>
 
                                                             </li>
                                                             <li>
                                                                 <p class="pad-bottom-10">
-                                                                    ➢ Employees can regularize their attendance on their own
+                                                                    ⮚ Employees can regularize their attendance on their own
                                                                     through the HR Team if there is any
                                                                     leave/permission taken by them.
 
@@ -590,17 +586,19 @@
 
                                                             </li>
                                                             <li>
-                                                                <p class="pad-bottom-10 text-strong">
-                                                                    ➢ Employees are eligible to avail of two permissions per
-                                                                    month of 1.5 hours each per
-                                                                    permission. More than 4 permissions in a month will be
-                                                                    considered a half-day LOP.
+                                                                <p class="pad-bottom-10 ">
+                                                                    ⮚ <span class="text-strong">Employees are eligible to
+                                                                        avail of two permissions per
+                                                                        month of 1.5 hours each per
+                                                                        permission. More than 4 permissions in a month will
+                                                                        be
+                                                                        considered a half-day LOP. </span>
                                                                 </p>
 
                                                             </li>
                                                             <li>
                                                                 <p class="pad-bottom-10">
-                                                                    ➢
+                                                                    ⮚
                                                                     <span class="text-strong">NO CALL NO SHOW</span>
                                                                     is subject to disciplinary action and grounds for
                                                                     termination
@@ -611,7 +609,7 @@
                                                             </li>
                                                             <li>
                                                                 <p class="pad-bottom-10">
-                                                                    ➢ Attendance will be tracked through the Bio Matric
+                                                                    ⮚ Attendance will be tracked through the Bio Matric
                                                                     System, and it is visible to all the
                                                                     employee’s payslips.
                                                                 </p>
@@ -709,27 +707,27 @@
                                                         <ol type="" style="list-style:none;">
                                                             <li>
                                                                 <p class="pad-bottom-10">
-                                                                    ➢ Sick Leave / Casual Leave – 12 days
+                                                                    ⮚ Sick Leave / Casual Leave – 12 days
 
                                                                 </p>
 
                                                             </li>
                                                             <li>
                                                                 <p class="pad-bottom-10">
-                                                                    ➢ Earned Leave – 12 days
+                                                                    ⮚ Earned Leave – 12 days
                                                                 </p>
 
                                                             </li>
                                                             <li>
                                                                 <p class="pad-bottom-10">
-                                                                    ➢ Maternity Leave – 12 weeks (as per the Maternity
+                                                                    ⮚ Maternity Leave – 26 weeks (as per the Maternity
                                                                     Benefits Act)
                                                                 </p>
 
                                                             </li>
                                                             <li>
                                                                 <p class="pad-bottom-10">
-                                                                    ➢ Paternity Leave – 15 days (Only for Male)
+                                                                    ⮚ Paternity Leave – 5 days (Only For Male)
                                                                 </p>
 
                                                             </li>
@@ -747,8 +745,8 @@
                                                 <tr>
                                                     <td colspan="8" align="" class="pad-bottom-10">
                                                         <p class="pad-bottom-10">
-                                                            Brand Avatar will have 11 holidays per annum classified as Core,
-                                                            Centre, or State as per the holiday list.
+                                                            Priti Sales Corporation will have 11 holidays per annum
+                                                            classified as Core, Centre, or State as per the holiday list.
                                                         </p>
                                                     </td>
                                                 </tr>
@@ -756,8 +754,7 @@
                                                     <td colspan="8" align="" class="pad-bottom-25">
                                                         <p class="pad-bottom-10">
                                                             The list of Core, Centre holidays for a calendar year shall be
-                                                            announced prior to the beginning of the new
-                                                            calendar year.
+                                                            announced prior to the beginning of the new calendar year.
                                                         </p>
                                                     </td>
                                                 </tr>
@@ -785,46 +782,45 @@
                                                         <ol style="list-style: none">
                                                             <li>
                                                                 <p class="pad-bottom">
-                                                                    ➢ Employees are eligible for one day of SL/CL on the
-                                                                    same month on which he/she joins the
-                                                                    company, but the only criteria are he/she should join
-                                                                    before 15 of the respective months if
-                                                                    not, the leave for that month will not be provided.
+                                                                    ⮚ Employees are eligible for one day of SL/CL in the
+                                                                    same month on which he/she joins the company, but the
+                                                                    only criteria are he/she should join before 15 of the
+                                                                    respective months; if not, the leave for that month will
+                                                                    not be provided.
 
                                                                 </p>
                                                             </li>
                                                             <li>
                                                                 <p class="pad-bottom">
-                                                                    ➢ All existing employees of Brand Avatar are eligible
-                                                                    for 12 (Twelve) days of Sick leave / Casual
-                                                                    Leave per annum on the 1
-                                                                    st of Apr every year.
+                                                                    ⮚ All existing employees of Priti Sales Corporationare
+                                                                    eligible for 12 (Twelve) days of Sick leave / Casual
+                                                                    Leave per annum on the 1st of April every year
                                                                 </p>
                                                             </li>
                                                             <li>
                                                                 <p class="pad-bottom">
-                                                                    ➢ Employees joining in the middle of the year will be
+                                                                    ⮚ Employees joining in the middle of the year will be
                                                                     eligible for proportionate leave
                                                                 </p>
                                                             </li>
                                                             <li>
                                                                 <p class="pad-bottom">
-                                                                    ➢ Employees availing more than 2 days of Sick leave /
-                                                                    Casual Leave will be treated as LOP
+                                                                    ⮚ Employees availing more than 2 days of Sick leave /
+                                                                    Casual Leave will have to produce a medical certificate
+                                                                    to support their sick / Casual leave request
 
                                                                 </p>
                                                             </li>
                                                             <li>
                                                                 <p class="pad-bottom">
-                                                                    ➢ Sick Leave / Causal Leave cannot be carried forward to
-                                                                    next year
+                                                                    ⮚ Sick Leave / Casual Leave cannot be carried forward to
+                                                                    next year.
                                                                 </p>
                                                             </li>
                                                             <li>
                                                                 <p class="pad-bottom">
-                                                                    ➢ Sick Leave / Casual Leave of more than 3 days will get
-                                                                    prior approval from the HR
-                                                                    Department.
+                                                                    ⮚ Sick Leave / Casual Leave of more than 5 days will get
+                                                                    prior approval from the HR Department.
                                                                 </p>
                                                             </li>
                                                         </ol>
@@ -868,20 +864,13 @@
                                                             </li>
                                                             <li>
                                                                 <p class="">
-                                                                    Earned Leave can be carried forward to next year and the
-                                                                    maximum accumulation will be 45
-                                                                    days and accumulated earned leave will be enchased at
-                                                                    the time of Exit.
+                                                                    Earned Leave can be carried forward to next year and
+                                                                    the maximum accumulation will be 24 days and every 2
+                                                                    years accumulated earned leave will be encashed
                                                                 </p>
 
                                                             </li>
-                                                            <li>
-                                                                <p class="">
-                                                                    Employees can avail max 5 days as planned leave; more
-                                                                    than 5 days will be treated as LOP
-                                                                </p>
 
-                                                            </li>
                                                             <li>
                                                                 <p class="">
                                                                     Earned Leave taken more than 5 days will get the prior
@@ -916,16 +905,16 @@
                                                             <li>
                                                                 <p class="">
                                                                     Earned Leave is subjected to a limit of 12 days per
-                                                                    annum and the maximum earned leave
-                                                                    accumulation limit for an employee is set as 45 days.
+                                                                    annum and the maximum earned leave accumulation limit
+                                                                    for an employee is set as 22 days up to 2 years
                                                                 </p>
 
                                                             </li>
                                                             <li>
                                                                 <p class="">
                                                                     Un-availed Sick leaves/ Casual leaves at the end of the
-                                                                    financial year would not be carried
-                                                                    forward to the subsequent year.
+                                                                    financial year would not be carried forward to the
+                                                                    subsequent year
                                                                 </p>
 
                                                             </li>
@@ -979,24 +968,22 @@
                                                                 <tr class="border_b">
                                                                     <td colspan="2" align="" class="pad-top-5">
                                                                         <p class="f-13 txt_blue text-strong ">
-                                                                            Deviation in Leave
-                                                                            Policy
+                                                                           -
                                                                         </p>
                                                                     </td>
                                                                     <td colspan="2" align="" class="pad-top-5">
                                                                         <p class="f-13 txt_blue text-strong  ">
-                                                                            Employee
+                                                                           -
                                                                         </p>
                                                                     </td>
                                                                     <td colspan="2" align="" class="pad-top-5">
                                                                         <p class="f-13 txt_blue text-strong  ">
-                                                                            Head of Business
-                                                                            /Function
+                                                                           -
                                                                         </p>
                                                                     </td>
                                                                     <td colspan="2" align="" class="pad-top-5">
                                                                         <p class="f-13 txt_blue text-strong  ">
-                                                                            Founder and CEO
+                                                                           -
                                                                         </p>
                                                                     </td>
                                                                 </tr>
@@ -1040,22 +1027,22 @@
                                                                 <tr class="border_b">
                                                                     <td colspan="2" align="" class="pad-top-5">
                                                                         <p class="f-13 txt_blue text-strong ">
-                                                                           -
+                                                                            -
                                                                         </p>
                                                                     </td>
                                                                     <td colspan="2" align="" class="pad-top-5">
                                                                         <p class="f-13 txt_blue text-strong  ">
-                                                                           -
+                                                                            -
                                                                         </p>
                                                                     </td>
                                                                     <td colspan="2" align="" class="pad-top-5">
                                                                         <p class="f-13 txt_blue text-strong  ">
-                                                                          -
+                                                                            -
                                                                         </p>
                                                                     </td>
                                                                     <td colspan="2" align="" class="pad-top-5">
                                                                         <p class="f-13 txt_blue text-strong  ">
-                                                                           -
+                                                                            -
                                                                         </p>
                                                                     </td>
                                                                 </tr>
@@ -1067,9 +1054,9 @@
                                                     <td colspan="8" align="" class="pad-bottom-25">
 
                                                         <p class="">
-                                                            Printed copies of this document may not be the latest version and should not be relied upon. Please
-                                                            check the electronic version posted on HRMS to make sure that you have the most current version. Also,
-                                                            please contact your manager or Human Resources if you require any further information
+                                                            Printed copies of this document may not be the latest version
+                                                            and should not be relied upon. Also, please contact your manager
+                                                            or Human Resources if you require any further information
                                                         </p>
                                                     </td>
                                                 </tr>
@@ -1078,14 +1065,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <button class="carousel-control-prev" type="button"
-                                data-bs-target="#policy_carousel" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <button class="carousel-control-prev " type="button" data-bs-target="#policy_carousel"
+                                data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon bg-secondary rounded-circle" aria-hidden="true"></span>
                                 <span class="visually-hidden">Previous</span>
                             </button>
-                            <button class="carousel-control-next" type="button"
-                                data-bs-target="#policy_carousel" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <button class="carousel-control-next" type="button" data-bs-target="#policy_carousel"
+                                data-bs-slide="next">
+                                <span class="carousel-control-next-icon bg-secondary rounded-circle" aria-hidden="true"></span>
                                 <span class="visually-hidden">Next</span>
                             </button>
                         </div>

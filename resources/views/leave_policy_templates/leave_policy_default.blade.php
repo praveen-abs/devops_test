@@ -250,7 +250,7 @@
                             <div class="carousel-item active ">
                                 <div class="main-page">
                                     <div class="sub-page">
-
+                                        <b>No Template </b>
 
                                     </div>
                                 </div>

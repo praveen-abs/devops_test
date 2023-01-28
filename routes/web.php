@@ -19,6 +19,12 @@ Auth::routes();
 //Language Translation
 //Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
 
+Route::get('/vuejs', function () {
+
+    return view('test_vuejs.app');
+});
+
+
 Route::middleware(['auth'])->group(function () {
 
     //Basic DB data
@@ -95,6 +101,9 @@ Route::middleware(['auth'])->group(function () {
 
     //Ajax For Leave withdraw
     Route::get('/withdrawLeave', [App\Http\Controllers\VmtAttendanceController::class, 'withdrawLeave'])->name('withdrawLeave');
+    //Leave Policy
+    Route::get('/fetch-holidays', [App\Http\Controllers\VmtLeavePolicyController::class, 'fetchHolidays'])->name('fetch-getHolidays');
+
 
     //Ajax For Leave withdraw
     Route::get('/revokeLeave', [App\Http\Controllers\VmtAttendanceController::class, 'approveRejectRevokeLeaveRequest'])->name('revokeLeave');
