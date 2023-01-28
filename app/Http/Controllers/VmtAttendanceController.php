@@ -982,7 +982,7 @@ class VmtAttendanceController extends Controller
 
         $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
 
-        $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::where('status','Pending')->get();
+        $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::all();
 
         //dd($map_allEmployees->toArray());
         //dd($allEmployees_lateComing->toArray());

@@ -5,7 +5,6 @@
 @endsection
 @section('css')
 
-    <link href="{{ URL::asset('assets/css/attendance.css') }}" rel="stylesheet">
 
 @endsection
 @section('content')
@@ -22,6 +21,7 @@
                     <div class="row">
                         <div class="col-sm-12 col-xxl-4 col-md-6 col-xl-4 col-lg-4">
                             <h6 class="mb-0 text-muted text-start">Attendance Regularization Approvals</h6>
+                            <br />
                         </div>
                         {{-- <div class="col-sm-12 col-xxl-8 col-md-6 col-xl-8 col-lg-8">
                             <div class="row">
@@ -74,8 +74,8 @@
                 </div>
 
                 <div class="table-responsive">
-                    <div class="attendance_gridjs" id="vjs_regularizationTable"></div>
-                    <div class="attendance_gridjs" id="table_lateComingTable"></div>
+                    <div id="vjs_regularizationTable"></div>
+                    {{-- <div class="attendance_gridjs" id="table_lateComingTable"></div> --}}
                 </div>
             </div>
         </div>
