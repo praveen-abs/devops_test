@@ -6,17 +6,80 @@
                 <template #header>
                     <span>Personal Documents</span>
                 </template>
-                <div>
-                    <FileUpload name="demo[]" url="https://www.primefaces.org/upload.php" @upload="onAdvancedUpload($event)" :multiple="true" accept="image/*" :maxFileSize="1000000">
-                        <template #content>
-                            <ul v-if="uploadedFiles && uploadedFiles[0]">
-                                <li v-for="file of uploadedFiles[0]" :key="file">{{ file.name }} - {{ file.size }} bytes</li>
-                            </ul>
-                        </template>
-                        <template #empty>
-                        <p>Drag and drop files to here to upload.</p>
-                        </template>
-                     </FileUpload>
+                <!-- Aadhar front -->
+                <div style="display: flex;"  > 
+                    <span class="label" style="line-height: 35px;"><strong>Aadhar Card Front</strong></span>
+                    <div class="AadharCardFront" style="display: flex;gap: 30px;">
+                        <Button label="view" icon="pi pi-eye" iconPos="right" class="p-button-sm p-button-primary" />
+                        <!-- <Button label="choose" icon="pi pi-plus" iconPos="right" class="p-button-sm p-button-danger" /> -->
+                        <FileUpload style="height: 2.5em;" mode="basic" name="demo[]" url="./upload.php" class="p-button-sm" accept="image/*" :maxFileSize="1000000" @upload="onUpload" :auto="true" chooseLabel="Browse" />
+                        <Button type="file" label="Upload" icon="pi pi-upload" iconPos="right" class="p-button-sm p-button-success"  />
+                    </div>
+                </div>
+                <!-- Aadhar Back -->
+                <div style="display: flex;margin-top: 20px;"  > 
+                    <span class="label" style="line-height: 35px;"><strong>Aadhar Card Back</strong></span>
+                    <div class="AadharCardFront" style="display: flex;gap: 30px;">
+                        <Button label="view" icon="pi pi-eye" iconPos="right" class="p-button-sm p-button-primary" />
+                        <!-- <Button label="choose" icon="pi pi-plus" iconPos="right" class="p-button-sm p-button-danger" /> -->
+                        <FileUpload style="height: 2.5em;" mode="basic" name="demo[]" url="./upload.php" class="p-button-sm" accept="image/*" :maxFileSize="1000000" @upload="onUpload" :auto="true" chooseLabel="Browse" />
+                        <Button type="file" label="Upload" icon="pi pi-upload" iconPos="right" class="p-button-sm p-button-success"  />
+                    </div>
+                </div>
+                <!-- Pan card -->
+                <div style="display: flex;margin-top: 20px;"  > 
+                    <span class="label" style="line-height: 35px;"><strong>pan Card</strong></span>
+                    <div class="AadharCardFront" style="display: flex;gap: 30px;">
+                        <Button label="view" icon="pi pi-eye" iconPos="right" class="p-button-sm p-button-primary" />
+                        <!-- <Button label="choose" icon="pi pi-plus" iconPos="right" class="p-button-sm p-button-danger" /> -->
+                        <FileUpload style="height: 2.5em;" mode="basic" name="demo[]" url="./upload.php" class="p-button-sm" accept="image/*" :maxFileSize="1000000" @upload="onUpload" :auto="true" chooseLabel="Browse" />
+                        <Button type="file" label="Upload" icon="pi pi-upload" iconPos="right" class="p-button-sm p-button-success"  />
+                    </div>
+                </div>
+                <div style="display: flex;margin-top: 20px;"  > 
+                    <span class="label"  style="line-height: 35px;"><strong>Aadhar Card Back</strong></span>
+                    <div class="AadharCardFront" style="display: flex;gap: 30px;">
+                        <Button label="view" icon="pi pi-eye" iconPos="right" class="p-button-sm p-button-primary" />
+                        <!-- <Button label="choose" icon="pi pi-plus" iconPos="right" class="p-button-sm p-button-danger" /> -->
+                        <FileUpload style="height: 2.5em;" mode="basic" name="demo[]" url="./upload.php" class="p-button-sm" accept="image/*" :maxFileSize="1000000" @upload="onUpload" :auto="true" chooseLabel="Browse" />
+                        <Button type="file" label="Upload" icon="pi pi-upload" iconPos="right" class="p-button-sm p-button-success"  />
+                    </div>
+                </div>
+                <div style="display: flex;margin-top: 20px;"  > 
+                    <span class="label"  style="line-height: 35px;"><strong>Aadhar Card Back</strong></span>
+                    <div class="AadharCardFront" style="display: flex;gap: 30px;">
+                        <Button label="view" icon="pi pi-eye" iconPos="right" class="p-button-sm p-button-primary" />
+                        <!-- <Button label="choose" icon="pi pi-plus" iconPos="right" class="p-button-sm p-button-danger" /> -->
+                        <FileUpload style="height: 2.5em;" mode="basic" name="demo[]" url="./upload.php" class="p-button-sm" accept="image/*" :maxFileSize="1000000" @upload="onUpload" :auto="true" chooseLabel="Browse" />
+                        <Button type="file" label="Upload" icon="pi pi-upload" iconPos="right" class="p-button-sm p-button-success"  />
+                    </div>
+                </div>
+                <div style="display: flex;margin-top: 20px;"  > 
+                    <span class="label"  style="line-height: 35px;"><strong>Aadhar Card Back</strong></span>
+                    <div class="AadharCardFront" style="display: flex;gap: 30px;">
+                        <Button label="view" icon="pi pi-eye" iconPos="right" class="p-button-sm p-button-primary" />
+                        <!-- <Button label="choose" icon="pi pi-plus" iconPos="right" class="p-button-sm p-button-danger" /> -->
+                        <FileUpload style="height: 2.5em;" mode="basic" name="demo[]" url="./upload.php" class="p-button-sm" accept="image/*" :maxFileSize="1000000" @upload="onUpload" :auto="true" chooseLabel="Browse" />
+                        <Button type="file" label="Upload" icon="pi pi-upload" iconPos="right" class="p-button-sm p-button-success"  />
+                    </div>
+                </div>
+                <div style="display: flex;margin-top: 20px;"  > 
+                    <span class="label"  style="line-height: 35px;"><strong>Aadhar Card Back</strong></span>
+                    <div class="AadharCardFront" style="display: flex;gap: 30px;">
+                        <Button label="view" icon="pi pi-eye" iconPos="right" class="p-button-sm p-button-primary" />
+                        <!-- <Button label="choose" icon="pi pi-plus" iconPos="right" class="p-button-sm p-button-danger" /> -->
+                        <FileUpload style="height: 2.5em;" mode="basic" name="demo[]" url="./upload.php" class="p-button-sm" accept="image/*" :maxFileSize="1000000" @upload="onUpload" :auto="true" chooseLabel="Browse" />
+                        <Button type="file" label="Upload" icon="pi pi-upload" iconPos="right" class="p-button-sm p-button-success"  />
+                    </div>
+                </div>
+                <div style="display: flex;margin-top: 20px;"  > 
+                    <span class="label"  style="line-height: 35px;"><strong>Aadhar Card Back</strong></span>
+                    <div class="AadharCardFront" style="display: flex;gap: 30px;">
+                        <Button label="view" icon="pi pi-eye" iconPos="right" class="p-button-sm p-button-primary" />
+                        <!-- <Button label="choose" icon="pi pi-plus" iconPos="right" class="p-button-sm p-button-danger" /> -->
+                        <FileUpload style="height: 2.5em;" mode="basic" name="demo[]" url="./upload.php" class="p-button-sm" accept="image/*" :maxFileSize="1000000" @upload="onUpload" :auto="true" chooseLabel="Browse" />
+                        <Button type="file" label="Upload" icon="pi pi-upload" iconPos="right" class="p-button-sm p-button-success"  />
+                    </div>
                 </div>
             </TabPanel>
             <TabPanel>
@@ -54,23 +117,40 @@ export default {
         ]);
         const scrollableTabs = ref(Array.from({ length: 50 }, (_, i) => ({ title: `Tab ${i + 1}`, content: `Tab ${i + 1} Content` })));
 
-        return { active1, active2, tabs, scrollableTabs }
+        
+        const onUpload = () => {
+            console.log("successfully");
+        }
+       
+        return { active1, active2, tabs, scrollableTabs,onUpload }
     }
 }
 
 
 </script>
 
-<style lang="scss" scoped>
-    .tabview-custom {
-        i, span {
+<style scoped>
+
+
+       .p-button {
+        height: 2.5em;
+       }
+      .p-button .p-fileupload-choose {
+           height: 2.1em;
+    }
+        i, span ,.tabview-custom{
             vertical-align: middle;
         }
 
         span {
             margin: 0 .5rem;
         }
-    }
+        .AadharCardFront{
+            margin-left: 20px;
+        }
+        .label{
+            width: 170px;
+        }
 
     .p-tabview p {
         line-height: 1.5;
