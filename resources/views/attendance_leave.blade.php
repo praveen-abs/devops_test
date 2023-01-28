@@ -937,14 +937,14 @@
         $('#btn_revoke').on('click', function() {
             leave_id = $('#btn_revoke').attr("data-leave-id");
             console.log("Revoking leave.... " + leave_id);
-            var status="Revoked";
+            var status = "Revoked";
             $.ajax({
                 url: "{{ route('revokeLeave') }}",
                 type: "GET",
                 dataType: "json",
                 data: {
                     'leave_id': $('#btn_revoke').attr("data-leave-id"),
-                    'status':status,
+                    'status': status,
                     "_token": "{{ csrf_token() }}",
                 },
                 success: function(data) {
@@ -1108,6 +1108,26 @@
             });
 
             $('#btn_request_leave').on('click', function(e) {
+                //Loading screen
+                Swal.fire({
+                    title: 'Loading...',
+                    //html: 'I will close in <b></b> milliseconds.',
+                    html: '<b>Applying Leave.</b>',
+                    timer: 2000,
+                    timerProgressBar: true,
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading()
+                    },
+                    willClose: () => {
+                        clearInterval(timerInterval)
+                    }
+                }).then((result) => {
+                    /* Read more about handling dismissals below */
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        console.log('I was closed by the timer')
+                    }
+                })
                 var start_date = $('#start_date').val();
                 var end_date = $('#end_date').val();
 
