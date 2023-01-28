@@ -18,6 +18,8 @@ import ToastService from 'primevue/toastservice';
 import Tooltip from 'primevue/tooltip';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
+import Toolbar from 'primevue/toolbar';
+
 import ColumnGroup from 'primevue/columngroup';     //optional for column grouping
 import Row from 'primevue/row';
 
@@ -39,6 +41,7 @@ app.directive('focustrap', FocusTrap);
 app.component('Button', Button);
 app.component('DataTable', DataTable);
 app.component('Column', Column);
+app.component('Toolbar', Toolbar);
 
 app.mount("#vjs_crudtable");
 
