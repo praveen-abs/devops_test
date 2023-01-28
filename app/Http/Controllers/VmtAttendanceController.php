@@ -111,11 +111,19 @@ class VmtAttendanceController extends Controller
         // $approval_status = $request->status;
         $leave_record = VmtEmployeeLeaves::where('id', $request->leave_id)->first();
         //dd($leave_record);
-        $leave_record->status = $request->status;
         //dd( $leave_record);
         //dd( $request->status);
-        if ($request->status == "Revoked")
+        if ($request->status == "Revoked"){
             $leave_record->is_revoked = "true";
+            $leave_record->status = "Pending";
+        }
+        else
+        {
+            //For Approved or rejected status
+            $leave_record->status = $request->status;
+
+        }
+
 
         $leave_record->reviewer_comments = $request->leave_rejection_text;
 
