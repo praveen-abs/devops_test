@@ -12,7 +12,7 @@
             <Column field="status" header="Status"></Column>
             <Column field="" header="Action">
                 <template #body>
-                    <Button type="button" icon="pi pi-cog" @click="onClickButton(100)"></Button>
+                    <Button type="button" icon="pi pi-cog" @click="onClickButton(att_regularization.data)"></Button>
                 </template>
             </Column>
 
@@ -25,8 +25,6 @@
     import axios from 'axios'
 
     let att_regularization = ref();
-    let name=ref();
-    name.value="Karthick";
 
     onMounted(() => {
         let url = window.location.origin + '/fetch-regularization-approvals';
@@ -39,8 +37,6 @@
                 att_regularization.value = response.data;
 
             });
-
-            return { att_regularization }
 
     })
 

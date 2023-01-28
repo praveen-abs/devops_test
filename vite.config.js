@@ -7,7 +7,8 @@ export default defineConfig({
          vue(),
         laravel({
             input: ['resources/js/app.js',
-                    'resources/js/hrms/modules/leave_module/OrgLeaveBalance.js'
+                    'resources/js/hrms/modules/leave_module/OrgLeaveBalance.js',
+                    'resources/js/hrms/modules/testings/praveen/crud_table/CRUD_DataTable.js'
             ],
             refresh: true,
         }),
