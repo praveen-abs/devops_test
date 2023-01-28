@@ -11,11 +11,10 @@
             <Column field="reviewer_reviewed_date" header="Reviewed Date"></Column>
             <Column field="status" header="Status"></Column>
             <Column field="" header="Action">
-                <template #body>
-                    <Button type="button" icon="pi pi-cog" @click="onClickButton(att_regularization.data)"></Button>
+                <template #body="slotProps">
+                    <Button type="button" icon="pi pi-cog" @click="onClickButton(slotProps.data)"></Button>
                 </template>
             </Column>
-
         </DataTable>
     </div>
 </template>
@@ -41,10 +40,10 @@
     })
 
 
-    function onClickButton(event) {
+    function onClickButton(selectedRowData) {
         //console.log("Button clicked : "+JSON.stringify(event));
         //console.log("Button clicked : "+event[0].employee_name);
-        console.log("Button clicked : "+event);
+        console.log("Button clicked : "+JSON.stringify(selectedRowData));
     }
 
 
