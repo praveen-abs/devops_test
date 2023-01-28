@@ -1126,11 +1126,54 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
                                 if (ajax_data_currentdate.isAbsent) {
                                     if (todayDate > currentDate) {
-                                        cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
-                                            "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' ><span class='f-11' id='checkout_time_" +
-                                            year + "-" + (month + 1) + "-" + dateText +
-                                            "'>Absent</span> </div></div>";
 
+                                        cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
+                                                "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start'><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><span class='f-11' id='checkout_time_" +
+                                                year + "-" + (month + 1) + "-" + dateText +
+                                                "'>Absent <br><span style='color:black;font-size:10px;text-align:center;margin-left:5px' id='statement'></span></span>";
+
+                                        if (ajax_data_currentdate.absent_status == "Not Applied")
+                                        {
+                                            // cell.innerHTML = cell.innerHTML + "<span>Leave Applied</span>";
+                                            $("#statement").html(" Leave Not Applied")
+
+                                        }
+                                        else
+                                        if (ajax_data_currentdate.absent_status == "Pending")
+                                        {
+                                            // $("#statement").attr("src","{{ URL::asset($svg_icon_pending) }}")
+                                            // cell.innerHTML = cell.innerHTML + "<span>Levae</span>";
+                                            $("#statement").html("Leave Pending ")
+
+                                        }
+                                        else
+                                        if (ajax_data_currentdate.absent_status == "Rejected")
+                                        {
+                                            // cell.innerHTML = cell.innerHTML + "<span>Rejected</span>";
+                                            $("#statement").html("Leave Rejected ")
+                                            // $("#statement").attr("src","{{ URL::asset($svg_icon_rejected) }}")
+
+                                        }
+                                        else
+                                        if (ajax_data_currentdate.absent_status == "Revoked")
+                                        {
+                                            // cell.innerHTML = cell.innerHTML + "<span>Revoked</span>";
+                                            $("#statement").html("Leave Revoked ")
+
+                                        }
+                                        else
+                                        if (ajax_data_currentdate.absent_status == "Approved")
+                                        {
+                                            // cell.innerHTML = cell.innerHTML + "<span>Approved</span>";
+                                            // $("#statement").attr("src","{{ URL::asset($svg_icon_approved) }}")
+
+                                            $("#statement").html("Leave Approved ")
+                                        }
+                                        else
+                                        {
+                                            cell.innerHTML = cell.innerHTML + "<span>ERROR!</span>";
+                                            $("#statement").html("ERROR ")
+                                        }
                                     } else {
                                         cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
                                             "</p>  </div>"
