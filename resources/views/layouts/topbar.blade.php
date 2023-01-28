@@ -63,9 +63,9 @@ if ($query_clientMaster) {
                                 <img class="rounded-circle mb-2 img-lg  header-profile-user"
                                     src=" {{ URL::asset('images/' . Auth::user()->avatar) }}" alt="Header Avatar">
                             @endif
-                            <p class="text-dark  fs-15  mb-1">
+                            <p class="text-dark text-center  fs-15  mb-1">
                                 {{ Auth::user()->name }}</p>
-                            <p class="text-muted mb-1"><span class="">User Id :</span>
+                            <p class="text-muted text-center mb-1"><span class="">User Id :</span>
                                 {{ Auth::user()->user_code }}</p>
 
                             <div class="mb-3">
@@ -86,7 +86,7 @@ if ($query_clientMaster) {
                             $currentClientID = session('client_id');
 
                             ?>
-                            <div class=" text-start text-muted  p-2 border-bottom-liteAsh">
+                            <div class=" text-start text-muted px-3 py-2 border-bottom-liteAsh">
 
                                 <span>My Organizations </span>
                                 {{-- <a href="{{ route('vmt_topbar_settings') }}" class="text-info" style="cursor: pointer">
@@ -97,7 +97,7 @@ if ($query_clientMaster) {
                                 @foreach ($clientsList as $client)
                                     <div class="choose-client justify-content-between d-flex p-2  border-bottom-liteAsh  align-items-center  @if (!empty($currentClientID) && $currentClientID == $client->id) bg-ash @endif>"
                                         data-client_id="{{ $client->id }}">
-                                        <div class="d-flex   align-items-center   ">
+                                        <div class="d-flex mx-2   align-items-center   ">
                                             <div class="mx-2 p-1 border d-flex align-items-center  rounded border-1"
                                                 style="height: 40px;width:40px">
                                                 <img src="{{ URL::asset($client->client_logo) }}" alt=""
