@@ -22,14 +22,12 @@ $bank_names = \DB::table('vmt_banks')->get();
         table {
             width: 100%;
             vertical-align: middle;
-            border-collapse: collapse;
-            /* border: 1.5pt solid #000000; */
-
+            font-family: sans-serif;
         }
 
-        .payslip_table tr td {
-            border: 1.5pt solid #000000;
-            padding: 0px 4px;
+        .payslip_table tr,
+        .payslip_table td {
+            border: 1.5pt solid #ea141c;
 
         }
 
@@ -59,6 +57,9 @@ $bank_names = \DB::table('vmt_banks')->get();
             padding: 0px 5px;
         }
 
+
+
+
         .txt-left {
             text-align: left;
         }
@@ -80,7 +81,7 @@ $bank_names = \DB::table('vmt_banks')->get();
         }
 
         td.bg-ash {
-            background-color: #c1c1c1;
+            background-color: #dbdbdb;
         }
     </style>
 </head>
@@ -90,19 +91,18 @@ $bank_names = \DB::table('vmt_banks')->get();
         <tr class="header-row">
             <td colspan="8" class="" style="border-right:0px;">
                 <div class="header-cotent" style="margin: 10px;">
-                    <p class="margin-0 brand-name " style="font-size: 16px;font-weight:600;color:#000000;">ENABL ENGINEERINGS PRIVATE LIMITED</p>
-                    <p class="mb-0">3rd floor, SM Tower, 2/88,</p>
-                    <p class="mb-0"> Rajiv Gandhi Salai, Seevaram, Perungudi,</p>
-                    <p class="mb-0">Chennai, Tamil Nadu 600096
-                        .</p>
+                    <p class="margin-0 brand-name " style="font-size: 16px;font-weight:600;color:#ea141c;">Precede Workforce Solutions</p>
+                    <p class="mb-0">No: 2,Vengaivasal main road,</p>
+                    <p class="mb-0"> Santhoshapuram,medavakkam</p>
+                    <p class="mb-0">Chennai -600073,Tamilnadu.</p>
                 </div>
             </td>
-            <td colspan="4" class=""  style="border-left:0px;">
+            <td colspan="4" class="" style="border-right:0px;">
 
-                <div class="header-img txt-right" style="padding-right: 10px;">
+                <div class="header-img txt-right" style="padding-right: 10px;height:55px;width:180px;">
 
-                    <img src="{{ URL::asset('assets/clients/enabl/logos/logo_enabl.jpg') }}"
-                        style="height:55px;width:180px;">
+                    <img src="{{ URL::asset('assets/images/precede.png') }}" class="" alt="logo"
+                        style="height:100%;width:100%;">
                 </div>
 
 
