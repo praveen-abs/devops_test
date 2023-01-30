@@ -26,8 +26,8 @@
                 </Column>
                 <Column field="" header="Action">
                     <template #body="slotProps">
-                        <Button type="button" icon="pi pi-cog" @click="onClickButton(slotProps.data)">Approve</Button>
-                        <Button type="button" icon="pi pi-cog" @click="onClickButton(slotProps.data)">Reject</Button>
+                        <Button type="button" icon="pi pi-check"  class="p-button p-button-success p-button-sm"  style="height: 2.3em; width: 4.5em;font-family: 'Poppins', sans-serif;"   @click="onClickButton(slotProps.data)" ></Button>
+                        <Button type="button" icon="pi pi-times" class="p-button p-button-danger p-button-sm"  style="height: 2.3em; width: 4em;margin-left: 8px;font-family: 'Poppins', sans-serif;" @click="onClickButton(slotProps.data)"  ></Button>
                     </template>
                 </Column>
             </DataTable>
