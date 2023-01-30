@@ -210,7 +210,7 @@ class VmtApprovalsController extends Controller
 
     function showReimbursementApprovalPage(Request $request){
 
-        return view("vmt_approval_reimbursement");
+        return view("approvals.vmt_approval_reimbursements");
     }
 
     function fetchPendingReimbursements(Request $request){
