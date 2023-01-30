@@ -1,8 +1,24 @@
 <template>
     <div>
-
+        <ConfirmDialog></ConfirmDialog>
+        <Toast />
+        <Dialog header="Confirmation" v-model:visible="canShowConfirmation" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '350px'}" :modal="true">
+            <div class="confirmation-content">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                <span>Are you sure you want to {{currentlySelectedStatus}}?</span>
+            </div>
+            <template #footer>
+                <Button label="Yes" icon="pi pi-check" @click="processApproveReject()" class="p-button-text" autofocus />
+                <Button label="No" icon="pi pi-times" @click="hideConfirmDialog()" class="p-button-text"/>
+            </template>
+        </Dialog>
         <div class="card">
-                <DataTable :value="att_regularization" responsiveLayout="scroll" :paginator="true" :rows="5" class="p-datatable-sm">
+
+            <DataTable :value="att_regularization" :paginator="true" :rows="10"
+                    paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
+                    responsiveLayout="scroll"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords}">
+
                 <Column field="employee_name" header="Name">
                     <template #body="slotProps">
                         <div class="employee_name">
@@ -26,8 +42,10 @@
                 </Column>
                 <Column field="" header="Action">
                     <template #body="slotProps">
-                        <Button type="button" icon="pi pi-check" class="p-button-success" v-tooltip.top="'Approval'" @click="onClickButton(slotProps.data)" />
-                        <Button type="button" icon="pi pi-times" class="p-button-danger"  v-tooltip.top="'Rejected'" style="margin-left: 8px;" @click="onClickButton(slotProps.data)" />
+                        <!-- <Button icon="pi pi-check" class="p-button-success"  @click="confirmDialog(slotProps.data,'Approved')" label="Approval" />
+                        <Button icon="pi pi-times" class="p-button-danger" @click="confirmDialog(slotProps.data,'Rejected')" label="Rejected" /> -->
+                        <Button icon="pi pi-check" class="p-button-success"  @click="showConfirmDialog(slotProps.data,'Approve')" label="Approval" />
+                        <Button icon="pi pi-times" class="p-button-danger" @click="showConfirmDialog(slotProps.data,'Reject')" label="Rejected" />
                     </template>
                 </Column>
             </DataTable>
@@ -38,8 +56,18 @@
 
     import { ref, onMounted } from 'vue';
     import axios from 'axios'
+    import  { useConfirm } from "primevue/useconfirm";
+    import  { useToast }  from "primevue/usetoast";
 
     let att_regularization = ref();
+    let canShowConfirmation = ref(false);
+
+
+    //const confirm = useConfirm();
+    const toast = useToast();
+
+    let currentlySelectedStatus = ref('');
+    let currentlySelectedRowData = ref();
 
     onMounted(() => {
         let url = window.location.origin + '/fetch-regularization-approvals';
@@ -55,6 +83,39 @@
 
     })
 
+    function showConfirmDialog(selectedRowData, status){
+        canShowConfirmation.value = true;
+        currentlySelectedStatus.value = status;
+        currentlySelectedRowData.value = selectedRowData;
+
+        console.log("Selected Row Data : "+JSON.stringify(selectedRowData));
+    }
+
+    function hideConfirmDialog(){
+        canShowConfirmation.value = false;
+        currentlySelectedStatus.value = '';
+        currentlySelectedRowData.value = ref();
+
+    }
+
+    //PrimeVue ConfirmDialog code -- Keeping here for reference
+    // function confirmDialog(selectedRowData, status) {
+    //     console.log("Showing confirm dialog now...");
+
+    //     confirm.require({
+    //         message: 'Are you sure you want to proceed?',
+    //         header: 'Confirmation',
+    //         icon: 'pi pi-exclamation-triangle',
+    //         accept: () => {
+    //             toast.add({severity:'info', summary:'Confirmed', detail:'You have '+status, life: 3000});
+    //         },
+    //         reject: () => {
+    //             console.log("Rejected");
+    //             //toast.add({severity:'error', summary:'Rejected', detail:'You have rejected', life: 3000});
+    //         }
+    //     });
+    // }
+
     const css_statusColumn = (data) => {
             return [
                 {
@@ -65,10 +126,18 @@
             ];
         };
 
-    function onClickButton(selectedRowData) {
-        //console.log("Button clicked : "+JSON.stringify(event));
-        //console.log("Button clicked : "+event[0].employee_name);
-        console.log("Button clicked : "+JSON.stringify(selectedRowData));
+    function processApproveReject() {
+
+        console.log("Processing Rowdata : "+ JSON.stringify(currentlySelectedRowData.value));
+
+
+        axios.post(window.location.origin + '/attendance-regularization-approvals', {
+            id: currentlySelectedRowData.value.id,
+            status: currentlySelectedStatus.value == "Approve" ? "Approved" : currentlySelectedStatus.value =="Reject" ? "Rejected" : currentlySelectedStatus.value ,
+            status_text: 'Reviewer commented'
+        })
+        .then((response) => console.log(response))
+
     }
 
 
