@@ -61,12 +61,14 @@
                         id: 'attr_reviewer_accepted_status',
                         name: 'Reviewer Status',
                         formatter: function formatter(cell) {
-                            if (cell == -1)
+                            if (cell == -1 || cell == null ) {
                                 return "Pending";
-                            elseif(cell == 0)
-                            return "Rejected";
-                            elseif(cell == 1)
-                            return "Approved";
+                            } else if (cell == 0) {
+                                return "Rejected";
+                            } else if (cell == 1) {
+                                return "Approved";
+                            }
+
                         }
                     },
                     {
