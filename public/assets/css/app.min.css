@@ -742,7 +742,6 @@ body::-webkit-scrollbar-track {
     padding: 0;
     box-sizing: border-box;
 
-    font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
 }
 
 .navbar-menu .navbar-nav .nav-link:hover svg path,

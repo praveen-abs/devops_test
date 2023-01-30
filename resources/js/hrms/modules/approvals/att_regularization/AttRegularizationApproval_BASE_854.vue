@@ -74,7 +74,6 @@
 
 </script>
 <style scoped lang="scss">
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,200&display=swap');
 
 .employee_name{
     font-weight: bold;
