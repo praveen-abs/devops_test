@@ -186,7 +186,7 @@
                             formatter: function formatter(cell) {
                                 var date = new Date(cell);
                                 if (!isNaN(date))
-                                    return gridjs.html(moment(date).format('DD-MM-YYYY'));
+                                return gridjs.html(moment(date).format('DD-MMM-YYYY'));
                                 else
                                     return gridjs.html("");
 
@@ -385,7 +385,7 @@
                             formatter: function formatter(cell) {
                                 var date = new Date(cell);
                                 if (!isNaN(date))
-                                    return gridjs.html(moment(date).format('DD-MM-YYYY'));
+                                    return gridjs.html(moment(date).format('DD-MMM-YYYY'));
                                 else
                                     return gridjs.html("");
 
@@ -596,8 +596,10 @@
                             formatter: function formatter(cell) {
                                 var date = new Date(cell);
                                 if (!isNaN(date))
-                                    return gridjs.html(date.getDate() + "-" + date.getMonth() +
-                                        "-" + date.getFullYear());
+                                    // return gridjs.html(date.getDate() + "-" + date.getMonth() +
+                                    //     "-" + date.getFullYear());
+
+                                        return gridjs.html(moment(date).format('DD-MMM-YYYY'));
                                 else
                                     return gridjs.html("");
                             }
