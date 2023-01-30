@@ -12,8 +12,8 @@
                     <div class="AadharCardFront" style="display: flex;gap: 30px;">
                         <Button label="view" icon="pi pi-eye" iconPos="right" class="p-button-sm p-button-primary" />
                         <!-- <Button label="choose" icon="pi pi-plus" iconPos="right" class="p-button-sm p-button-danger" /> -->
-                        <FileUpload style="height: 2.5em;" mode="basic" name="demo[]" url="./upload.php" class="p-button-sm" accept="image/*" :maxFileSize="1000000" @upload="onUpload" :auto="true" chooseLabel="Browse" />
-                        <Button type="file" label="Upload" icon="pi pi-upload" iconPos="right" class="p-button-sm p-button-success"  />
+                        <FileUpload style="height: 2.5em;" mode="basic" name="demo[]" url="./upload.php" class="p-button-sm" accept="image/*" :maxFileSize="1000000" :auto="true" chooseLabel="Browse" />
+                        <Button type="file" label="Upload" icon="pi pi-upload" iconPos="right"  @click="onUpload" class="p-button-sm p-button-success"  />
                     </div>
                 </div>
                 <!-- Aadhar Back -->
@@ -119,7 +119,7 @@ export default {
 
         
         const onUpload = () => {
-            console.log("successfully");
+            console.log("Successfully");
         }
        
         return { active1, active2, tabs, scrollableTabs,onUpload }
