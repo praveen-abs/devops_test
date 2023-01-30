@@ -11,7 +11,15 @@
                     </template>
                 </Column>
                 <Column field="reimbursement_date" header="Date"></Column>
-                <Column field="user_data" header="User Data"></Column>
+                <!-- <Column field="user_data" header="User Data"></Column> -->
+                <Column field="from" header="From"></Column>
+                <Column field="to" header="To"></Column>
+                <Column field="vehicle_type" header="Model Of Transport"></Column>
+                <Column field="distance_travelled" header="Distance Covered"></Column>
+
+
+
+
 
                 <!-- <Column field="reviewer_comments" header="Approver Comm ents"></Column>
                 <Column field="reviewer_reviewed_date" header="Reviewed Date"></Column> -->
@@ -25,8 +33,9 @@
                 <Column field="" header="Action">
                     <template #body="slotProps">
                         
-                        <Button type="button" icon="pi pi-check" class="p-button-success p-button"  label="Approval" @click="onClickButton(slotProps.data)" />
-                        <Button type="button" icon="pi pi-times" class="p-button-danger p-button"  label="Rejected" style="margin-left: 8px;" @click="onClickButton(slotProps.data)" />
+                        <Button type="button" icon="pi pi-check-circle" class="p-button-success Button"  label="Approval" @click="onClickButton(slotProps.data)" 
+                        style="height: 2em;" />
+                        <Button type="button" icon="pi pi-times-circle" class="p-button-danger Button "  label="Rejected" style="margin-left: 8px;height: 2em;" @click="onClickButton(slotProps.data)" />
                     </template>
                 </Column>
             </DataTable>
