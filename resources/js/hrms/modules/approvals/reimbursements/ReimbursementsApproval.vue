@@ -24,8 +24,9 @@
                 </Column>
                 <Column field="" header="Action">
                     <template #body="slotProps">
-                        <Button type="button" icon="pi pi-cog" @click="onClickButton(slotProps.data)">Approve</Button>
-                        <Button type="button" icon="pi pi-cog" @click="onClickButton(slotProps.data)">Reject</Button>
+                        
+                        <Button type="button" icon="pi pi-check" class="p-button-success p-button"  label="Approval" @click="onClickButton(slotProps.data)" />
+                        <Button type="button" icon="pi pi-times" class="p-button-danger p-button"  label="Rejected" style="margin-left: 8px;" @click="onClickButton(slotProps.data)" />
                     </template>
                 </Column>
             </DataTable>
@@ -92,6 +93,9 @@
 .rejected {
     font-weight: 700;
     color: #ff2634;
+}
+.p-button{
+    height:2.5em
 }
 
 </style>
