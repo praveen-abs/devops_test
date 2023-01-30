@@ -1,6 +1,8 @@
 <template>
     <div>
-
+        <Toast />
+        <ConfirmDialog></ConfirmDialog>
+    
         <div class="card">
                 <DataTable :value="data_reimbursements" responsiveLayout="scroll" :paginator="true" :rows="5" class="p-datatable-sm">
                 <Column field="name" header="Name">
@@ -11,7 +13,15 @@
                     </template>
                 </Column>
                 <Column field="reimbursement_date" header="Date"></Column>
-                <Column field="user_data" header="User Data"></Column>
+                <!-- <Column field="user_data" header="User Data"></Column> -->
+                <Column field="from" header="From"></Column>
+                <Column field="to" header="To"></Column>
+                <Column field="vehicle_type" header="Model Of Transport"></Column>
+                <Column field="distance_travelled" header="Distance Covered"></Column>
+
+
+
+
 
                 <!-- <Column field="reviewer_comments" header="Approver Comm ents"></Column>
                 <Column field="reviewer_reviewed_date" header="Reviewed Date"></Column> -->
@@ -25,8 +35,9 @@
                 <Column field="" header="Action">
                     <template #body="slotProps">
                         
-                        <Button type="button" icon="pi pi-check" class="p-button-success p-button"  label="Approval" @click="onClickButton(slotProps.data)" />
-                        <Button type="button" icon="pi pi-times" class="p-button-danger p-button"  label="Rejected" style="margin-left: 8px;" @click="onClickButton(slotProps.data)" />
+                        <Button type="button" icon="pi pi-check-circle" class="p-button-success Button"  label="Approval" @click="onClickButton(slotProps.data)" 
+                        style="height: 2em;" />
+                        <Button type="button" icon="pi pi-times-circle" class="p-button-danger Button "  label="Rejected" style="margin-left: 8px;height: 2em;" @click="onClickButton(slotProps.data)" />
                     </template>
                 </Column>
             </DataTable>
@@ -37,8 +48,12 @@
 
     import { ref, onMounted } from 'vue';
     import axios from 'axios'
+    import { useConfirm } from "primevue/useconfirm";
+    import { useToast } from "primevue/usetoast";
 
     let data_reimbursements = ref();
+    const confirm = useConfirm();
+    const toast = useToast();
 
     onMounted(() => {
         let url_pending = window.location.origin + '/fetch_pending_reimbursements';
@@ -48,7 +63,7 @@
 
         axios.get(url_pending)
             .then((response) => {
-                console.log("Axios : " + response.data);
+                // console.log("Axios : " + response.data);
                 data_reimbursements.value = response.data;
 
             });
@@ -66,14 +81,29 @@
         };
 
     function onClickButton(selectedRowData) {
+        console.log("Successfulyy");
+    
         //console.log("Button clicked : "+JSON.stringify(event));
         //console.log("Button clicked : "+event[0].employee_name);
-        console.log("Button clicked : "+JSON.stringify(selectedRowData));
+        confirm.require({
+                message: 'Are you sure you want to proceed?',
+                header: 'Confirmation',
+                icon: 'pi pi-exclamation-triangle',
+                accept: () => {
+                    toast.add({severity:'info', summary:'Confirmed', detail:'You have accepted', life: 3000});
+                },
+   reject: () => {
+                    toast.add({severity:'error', summary:'Rejected', detail:'You have rejected', life: 3000});
+                }
+            });
+        
+
+        // console.log("Button clicked : "+JSON.stringify(selectedRowData));
     }
 
 
 </script>
-<style scoped lang="scss">
+<style  lang="scss">
 
 .employee_name{
     font-weight: bold;
@@ -94,8 +124,21 @@
     font-weight: 700;
     color: #ff2634;
 }
-.p-button{
-    height:2.5em
+.p-confirm-dialog-icon.pi.pi-exclamation-triangle {
+    color: red;
+  }
+  .p-button.p-component.p-confirm-dialog-accept {
+    background-color: #003056;
+  }
+  .p-button.p-component.p-confirm-dialog-reject.p-button-text {
+    color: #003056;
+  }
+
+@media screen and (max-width: 960px) {
+    button {
+        width: 100%;
+        margin-bottom: .5rem;
+    }
 }
 
 </style>

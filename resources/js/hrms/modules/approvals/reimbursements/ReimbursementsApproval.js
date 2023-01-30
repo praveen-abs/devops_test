@@ -10,10 +10,12 @@ import BadgeDirective from "primevue/badgedirective";
 import BlockUI from 'primevue/blockui';
 import Button from 'primevue/button';
 import ConfirmationService from 'primevue/confirmationservice';
-import DialogService from 'primevue/dialogservice'
+import DialogService from 'primevue/dialogservice';
+import ConfirmDialog from 'primevue/confirmdialog';
 import FocusTrap from 'primevue/focustrap';
 import Ripple from 'primevue/ripple';
 import StyleClass from 'primevue/styleclass';
+import Toast from 'primevue/toast';
 import ToastService from 'primevue/toastservice';
 import Tooltip from 'primevue/tooltip';
 import DataTable from 'primevue/datatable';
@@ -30,6 +32,7 @@ app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
 
+
 app.directive('tooltip', Tooltip);
 app.directive('badge', BadgeDirective);
 app.directive('ripple', Ripple);
@@ -39,6 +42,10 @@ app.directive('focustrap', FocusTrap);
 app.component('Button', Button);
 app.component('DataTable', DataTable);
 app.component('Column', Column);
+app.component('ColumnGroup', ColumnGroup)
+app.component('Row', Row)
+app.component('Toast', Toast);
+app.component('ConfirmDialog',ConfirmDialog);
 
 app.mount("#vjs_reimbursementsApprovalTable");
 
