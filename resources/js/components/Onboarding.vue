@@ -1116,7 +1116,7 @@
                                      <div class="header-card-text">
                                          <h6 class="mb-0">Personal Documents</h6>
                                      </div>
-                                     <div class="form-card mb-2">
+                                     <!-- <div class="form-card mb-2">
                                          <div class="row mt-1">
                             
                                              <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
@@ -1225,7 +1225,7 @@
                                                      class="onboard-form form-control files" required />
                                              </div>
                                          </div>
-                                     </div>
+                                     </div> -->
                                      <div class="row">
                                          <div class="col-12 text-right"><button type="button" data="row-6"
                                                  next="row-6" placeholder="" name="save_form" id="save_button"

@@ -8,7 +8,8 @@ export default defineConfig({
         laravel({
             input: ['resources/js/app.js',
                     'resources/js/hrms/modules/leave_module/OrgLeaveBalance.js',
-                    'resources/js/hrms/modules/testings/praveen/crud_table/CRUD_DataTable.js'
+                    'resources/js/hrms/modules/testings/praveen/crud_table/CRUD_DataTable.js',
+                    'resources/js/hrms/modules/Organization/OnBoarding.js'
             ],
             refresh: true,
         }),
