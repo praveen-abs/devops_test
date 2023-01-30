@@ -26,8 +26,8 @@
                 </Column>
                 <Column field="" header="Action">
                     <template #body="slotProps">
-                        <Button type="button" icon="pi pi-cog" @click="onClickButton(slotProps.data)">Approve</Button>
-                        <Button type="button" icon="pi pi-cog" @click="onClickButton(slotProps.data)">Reject</Button>
+                        <Button type="button" icon="pi pi-check" class="p-button-success" v-tooltip.top="'Approval'" @click="onClickButton(slotProps.data)" />
+                        <Button type="button" icon="pi pi-times" class="p-button-danger"  v-tooltip.top="'Rejected'" style="margin-left: 8px;" @click="onClickButton(slotProps.data)" />
                     </template>
                 </Column>
             </DataTable>
