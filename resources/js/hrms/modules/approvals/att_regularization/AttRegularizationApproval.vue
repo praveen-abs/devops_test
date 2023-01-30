@@ -1,7 +1,13 @@
 <template>
     <div>
-        <ConfirmDialog></ConfirmDialog>
+        <!-- <ConfirmDialog></ConfirmDialog> -->
         <Toast />
+        <Dialog header="Header" v-model:visible="canShowLoading" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '50vw'}" :modal="true">
+            <template #body>
+                <ProgressSpinner style="width:50px;height:50px" strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s" aria-label="Custom ProgressSpinner"/>
+            </template>
+        </Dialog>
+
         <Dialog header="Confirmation" v-model:visible="canShowConfirmation" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '350px'}" :modal="true">
             <div class="confirmation-content">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
@@ -9,15 +15,16 @@
             </div>
             <template #footer>
                 <Button label="Yes" icon="pi pi-check" @click="processApproveReject()" class="p-button-text" autofocus />
-                <Button label="No" icon="pi pi-times" @click="hideConfirmDialog()" class="p-button-text"/>
+                <Button label="No" icon="pi pi-times" @click="hideConfirmDialog(true)" class="p-button-text"/>
             </template>
         </Dialog>
         <div class="card">
 
-            <DataTable :value="att_regularization" :paginator="true" :rows="10"
+            <DataTable :value="att_regularization" :paginator="true" :rows="10" dataKey="id"
                     paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
-                    responsiveLayout="scroll"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords}">
+                    responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
+                    v-model:filters="filters2" filterDisplay="row" :loading="loading2"
+                    :globalFilterFields="['status']">
 
                 <Column field="employee_name" header="Name">
                     <template #body="slotProps">
@@ -34,11 +41,21 @@
                 <Column field="reviewer_comments" header="Approver Comments"></Column>
                 <Column field="reviewer_reviewed_date" header="Reviewed Date"></Column>
                 <Column field="status" header="Status">
-                    <template #body="slotProps">
-                        <div :class="css_statusColumn(slotProps.data)">
-                            {{ slotProps.data.status }}
-                        </div>
+                    <template #body="{data}">
+                        <span :class="'customer-badge status-' + data.status">{{data.status}}</span>
                     </template>
+                    <template #filter="{filterModel,filterCallback}">
+                        <Dropdown v-model="filterModel.value" @change="filterCallback()" :options="statuses" placeholder="Any" class="p-column-filter" :showClear="true">
+                            <template #value="slotProps">
+                                <span :class="'customer-badge status-' + slotProps.value" v-if="slotProps.value">{{slotProps.value}}</span>
+                                <span v-else>{{slotProps.placeholder}}</span>
+                            </template>
+                            <template #option="slotProps">
+                                <span :class="'customer-badge status-' + slotProps.option">{{slotProps.option}}</span>
+                            </template>
+                        </Dropdown>
+                    </template>
+
                 </Column>
                 <Column style="width: 300px;" field="" header="Action">
                     <template #body="slotProps">
@@ -59,18 +76,25 @@
 
     import { ref, onMounted } from 'vue';
     import axios from 'axios'
+    import {FilterMatchMode,FilterOperator} from 'primevue/api';
     import  { useConfirm } from "primevue/useconfirm";
     import  { useToast }  from "primevue/usetoast";
+    const toast = useToast();
 
     let att_regularization = ref();
     let canShowConfirmation = ref(false);
+    let canShowLoadingScreen = ref(false);
 
+    const filters2 = ref({
+        'status': {value: null, matchMode: FilterMatchMode.EQUALS},
+    });
 
-    //const confirm = useConfirm();
-    const toast = useToast();
+    const statuses = ref([
+            'Pending', 'Approved', 'Rejected'
+    ]);
 
-    let currentlySelectedStatus = ref('');
-    let currentlySelectedRowData = ref();
+    let currentlySelectedStatus = null;
+    let currentlySelectedRowData = null;
 
     onMounted(() => {
         let url = window.location.origin + '/fetch-regularization-approvals';
@@ -88,20 +112,29 @@
 
     function showConfirmDialog(selectedRowData, status){
         canShowConfirmation.value = true;
-        currentlySelectedStatus.value = status;
-        currentlySelectedRowData.value = selectedRowData;
+        currentlySelectedStatus = status;
+        currentlySelectedRowData = selectedRowData;
 
         console.log("Selected Row Data : "+JSON.stringify(selectedRowData));
     }
 
-    function hideConfirmDialog(){
+    function hideConfirmDialog(canClearData){
         canShowConfirmation.value = false;
-        currentlySelectedStatus.value = '';
-        currentlySelectedRowData.value = ref();
+
+        if(canClearData)
+            resetVars();
 
     }
 
-    //PrimeVue ConfirmDialog code -- Keeping here for reference
+    function resetVars(){
+        currentlySelectedStatus = '';
+        currentlySelectedRowData = null;
+
+    }
+
+    ////PrimeVue ConfirmDialog code -- Keeping here for reference
+    //const confirm = useConfirm();
+
     // function confirmDialog(selectedRowData, status) {
     //     console.log("Showing confirm dialog now...");
 
@@ -131,16 +164,25 @@
 
     function processApproveReject() {
 
-        console.log("Processing Rowdata : "+ JSON.stringify(currentlySelectedRowData.value));
+        hideConfirmDialog(false);
+
+        canShowLoadingScreen.value = true;
+
+        console.log("Processing Rowdata : "+ JSON.stringify(currentlySelectedRowData));
 
 
         axios.post(window.location.origin + '/attendance-regularization-approvals', {
-            id: currentlySelectedRowData.value.id,
-            status: currentlySelectedStatus.value == "Approve" ? "Approved" : currentlySelectedStatus.value =="Reject" ? "Rejected" : currentlySelectedStatus.value ,
+            id: currentlySelectedRowData.id,
+            status: currentlySelectedStatus == "Approve" ? "Approved" : currentlySelectedStatus =="Reject" ? "Rejected" : currentlySelectedStatus ,
             status_text: 'Reviewer commented'
         })
-        .then((response) => console.log(response))
+        .then((response) => {
+            console.log(response);
 
+            canShowLoadingScreen.value = false;
+
+            resetVars();
+        });
     }
 
 
@@ -149,7 +191,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,200&display=swap');
 
 .employee_name{
-    font-weight: bold;
+   // font-weight: bold;
 }
 
 .pending {
