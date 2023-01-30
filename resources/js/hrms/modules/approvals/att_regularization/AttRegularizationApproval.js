@@ -18,9 +18,10 @@ import Column from 'primevue/column';
 import ConfirmDialog from 'primevue/confirmdialog';
 import Toast from 'primevue/toast';
 import Dialog from 'primevue/dialog';
-
+import Dropdown from 'primevue/dropdown';
 import ConfirmationService from 'primevue/confirmationservice';
 import ToastService from 'primevue/toastservice';
+import ProgressSpinner from 'primevue/progressspinner';
 
 import AttRegularizationApproval from './AttRegularizationApproval.vue';
 
@@ -42,6 +43,8 @@ app.component('Column', Column);
 app.component('ConfirmDialog',ConfirmDialog);
 app.component('Toast',Toast);
 app.component('Dialog',Dialog);
+app.component('Dropdown',Dropdown);
+app.component('ProgressSpinner',ProgressSpinner);
 
 app.mount("#vjs_regularizationTable");
 
