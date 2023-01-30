@@ -119,7 +119,7 @@
 @endsection
 
 @section('script')
-    @vite(['resources/js/hrms/modules/approvals/AttRegularizationApproval.js'])
+    @vite(['resources/js/hrms/modules/approvals/att_regularization/AttRegularizationApproval.js'])
 
     <script src="{{ URL::asset('assets/libs/gridjs/gridjs.min.js') }}"></script>
     <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
