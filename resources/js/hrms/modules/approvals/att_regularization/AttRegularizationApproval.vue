@@ -154,13 +154,13 @@
 
 .pending {
     font-weight: 700;
-    color: #FFA726;
+    
 }
 
 
 .approved {
     font-weight: 700;
-    color: #26ff2d;
+    
 }
 .p-button.p-component.p-button-success.Button {
     padding: 8px;
@@ -172,6 +172,16 @@
 }
 .p-button.p-component.p-button-danger.Button {
     padding: 8px;
+  }
+
+  .p-confirm-dialog-icon.pi.pi-exclamation-triangle {
+    color: red;
+  }
+  .p-button.p-component.p-confirm-dialog-accept {
+    background-color: #003056;
+  }
+  .p-button.p-component.p-confirm-dialog-reject.p-button-text {
+    color: #003056;
   }
 
 </style>
