@@ -1113,7 +1113,7 @@ class VmtAttendanceController extends Controller
         $status = "failure";
         $message = "Invalid request. Kindly contact the HR/Admin";
 
-        $data = VmtEmployeeAttendanceRegularization::find($request->lc_id);
+        $data = VmtEmployeeAttendanceRegularization::find($request->id);
 
         if ($data->exists()) {
             $data->reviewer_id = auth::user()->id;

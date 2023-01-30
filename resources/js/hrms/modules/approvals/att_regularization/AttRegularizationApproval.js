@@ -9,26 +9,26 @@ import PrimeVue from "primevue/config";
 import BadgeDirective from "primevue/badgedirective";
 import BlockUI from 'primevue/blockui';
 import Button from 'primevue/button';
-import ConfirmationService from 'primevue/confirmationservice';
-import DialogService from 'primevue/dialogservice'
 import FocusTrap from 'primevue/focustrap';
 import Ripple from 'primevue/ripple';
 import StyleClass from 'primevue/styleclass';
-import ToastService from 'primevue/toastservice';
 import Tooltip from 'primevue/tooltip';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import ColumnGroup from 'primevue/columngroup';     //optional for column grouping
-import Row from 'primevue/row';
+import ConfirmDialog from 'primevue/confirmdialog';
+import Toast from 'primevue/toast';
+import Dialog from 'primevue/dialog';
 
-import OrgLeaveRemainingTable from './AttRegularizationApproval.vue';
+import ConfirmationService from 'primevue/confirmationservice';
+import ToastService from 'primevue/toastservice';
 
-const app = createApp(OrgLeaveRemainingTable);
+import AttRegularizationApproval from './AttRegularizationApproval.vue';
+
+const app = createApp(AttRegularizationApproval);
 
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
 app.use(ToastService);
-app.use(DialogService);
 
 app.directive('tooltip', Tooltip);
 app.directive('badge', BadgeDirective);
@@ -39,6 +39,9 @@ app.directive('focustrap', FocusTrap);
 app.component('Button', Button);
 app.component('DataTable', DataTable);
 app.component('Column', Column);
+app.component('ConfirmDialog',ConfirmDialog);
+app.component('Toast',Toast);
+app.component('Dialog',Dialog);
 
 app.mount("#vjs_regularizationTable");
 
