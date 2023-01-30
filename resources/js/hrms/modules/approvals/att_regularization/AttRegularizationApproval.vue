@@ -2,13 +2,16 @@
     <div>
         <!-- <ConfirmDialog></ConfirmDialog> -->
         <Toast />
-        <Dialog header="Header" v-model:visible="canShowLoading" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '50vw'}" :modal="true">
-            <template #body>
-                <ProgressSpinner style="width:50px;height:50px" strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s" aria-label="Custom ProgressSpinner"/>
+        <Dialog header="Header" v-model:visible="canShowLoadingScreen" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '25vw'}" :modal="true" :closable="false" :closeOnEscape="false">
+            <template #header>
+                <ProgressSpinner style="width:50px;height:50px" strokeWidth="8" fill="var(--surface-ground)" animationDuration="2s" aria-label="Custom ProgressSpinner"/>
+            </template>
+            <template #footer>
+                <h5 style="text-align: center;">Please wait...</h5>
             </template>
         </Dialog>
 
-        <Dialog header="Confirmation" v-model:visible="canShowConfirmation" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '350px'}" :modal="true">
+        <Dialog header="Confirmation" v-model:visible="canShowConfirmation" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '350px'}" :modal="true" >
             <div class="confirmation-content">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
                 <span>Are you sure you want to {{currentlySelectedStatus}}?</span>
@@ -18,7 +21,7 @@
                 <Button label="No" icon="pi pi-times" @click="hideConfirmDialog(true)" class="p-button-text"/>
             </template>
         </Dialog>
-        <div class="card">
+        <div>
 
             <DataTable :value="att_regularization" :paginator="true" :rows="10" dataKey="id"
                     paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
@@ -61,12 +64,11 @@
                     <template #body="slotProps">
                         <!-- <Button icon="pi pi-check" class="p-button-success"  @click="confirmDialog(slotProps.data,'Approved')" label="Approval" />
                         <Button icon="pi pi-times" class="p-button-danger" @click="confirmDialog(slotProps.data,'Rejected')" label="Rejected" /> -->
-                       
-                        <Button type="button" icon="pi pi-check-circle" class="p-button-success Button"  label="Approval"  @click="showConfirmDialog(slotProps.data,'Approve')"
-                        style="height: 2em;" />
-                        <span><Button type="button" icon="pi pi-times-circle" class="p-button-danger Button "  label="Rejected" style="margin-left: 8px;height: 2em;"  @click="showConfirmDialog(slotProps.data,'Reject')" />
+                        <span v-if="slotProps.data.status == 'Pending'">
+                            <Button type="button" icon="pi pi-check-circle" class="p-button-success Button"  label="Approval"  @click="showConfirmDialog(slotProps.data,'Approve')" style="height: 2em;" />
+                            <Button type="button" icon="pi pi-times-circle" class="p-button-danger Button "  label="Rejected" style="margin-left: 8px;height: 2em;"  @click="showConfirmDialog(slotProps.data,'Reject')" />
                         </span>
-                    </template>
+                   </template>
                 </Column>
             </DataTable>
         </div>
@@ -182,6 +184,13 @@
             canShowLoadingScreen.value = false;
 
             resetVars();
+        })
+        .catch((error) => {
+
+            canShowLoadingScreen.value = false;
+            resetVars();
+
+            console.log(error.toJSON());
         });
     }
 
