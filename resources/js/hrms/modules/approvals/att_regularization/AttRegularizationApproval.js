@@ -21,7 +21,7 @@ import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup';     //optional for column grouping
 import Row from 'primevue/row';
 
-import OrgLeaveRemainingTable from '../att_regularization/AttRegularizationApproval.vue';
+import OrgLeaveRemainingTable from './AttRegularizationApproval.vue';
 
 const app = createApp(OrgLeaveRemainingTable);
 
