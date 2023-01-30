@@ -90,7 +90,7 @@
                 header: 'Confirmation',
                 icon: 'pi pi-exclamation-triangle',
                 accept: () => {
-                    toast.add({severity:'info', summary:'Confirmed', detail:'You have accepted', life: 3000});
+                    toast.add({severity:'success', summary:'Confirmed', detail:'You have accepted', life: 3000});
                 },
    reject: () => {
                     toast.add({severity:'error', summary:'Rejected', detail:'You have rejected', life: 3000});
@@ -100,6 +100,8 @@
 
         // console.log("Button clicked : "+JSON.stringify(selectedRowData));
     }
+
+
 
 
 </script>
@@ -118,12 +120,20 @@
 .approved {
     font-weight: 700;
     color: #26ff2d;
+    
+}
+.p-button.p-component.p-button-success.Button {
+    padding: 8px;
 }
 
 .rejected {
     font-weight: 700;
     color: #ff2634;
+    
 }
+.p-button.p-component.p-button-danger.Button {
+    padding: 8px;
+  }
 .p-confirm-dialog-icon.pi.pi-exclamation-triangle {
     color: red;
   }

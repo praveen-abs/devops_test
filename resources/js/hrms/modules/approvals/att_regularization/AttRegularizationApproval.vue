@@ -57,12 +57,15 @@
                     </template>
 
                 </Column>
-                <Column field="" header="Action">
+                <Column style="width: 300px;" field="" header="Action">
                     <template #body="slotProps">
                         <!-- <Button icon="pi pi-check" class="p-button-success"  @click="confirmDialog(slotProps.data,'Approved')" label="Approval" />
                         <Button icon="pi pi-times" class="p-button-danger" @click="confirmDialog(slotProps.data,'Rejected')" label="Rejected" /> -->
-                        <Button icon="pi pi-check" class="p-button-success"  @click="showConfirmDialog(slotProps.data,'Approve')" label="Approval" />
-                        <Button icon="pi pi-times" class="p-button-danger" @click="showConfirmDialog(slotProps.data,'Reject')" label="Rejected" />
+                       
+                        <Button type="button" icon="pi pi-check-circle" class="p-button-success Button"  label="Approval"  @click="showConfirmDialog(slotProps.data,'Approve')"
+                        style="height: 2em;" />
+                        <span><Button type="button" icon="pi pi-times-circle" class="p-button-danger Button "  label="Rejected" style="margin-left: 8px;height: 2em;"  @click="showConfirmDialog(slotProps.data,'Reject')" />
+                        </span>
                     </template>
                 </Column>
             </DataTable>
@@ -201,10 +204,16 @@
     font-weight: 700;
     color: #26ff2d;
 }
+.p-button.p-component.p-button-success.Button {
+    padding: 8px;
+}
 
 .rejected {
     font-weight: 700;
     color: #ff2634;
 }
+.p-button.p-component.p-button-danger.Button {
+    padding: 8px;
+  }
 
 </style>
