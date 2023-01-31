@@ -10,7 +10,7 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class VmtEmployeeAttendanceController extends Controller
 {
-    public function export()
+    public function generateAttendanceReports()
     {
         return Excel::download(new EmployeeAttendanceExport, 'Attendance.xlsx');
 

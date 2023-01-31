@@ -12,15 +12,18 @@ use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\FromArray;
+use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
 
 
 
-class EmployeeAttendanceExport implements WithHeadings,WithStyles,WithMapping,FromCollection
+class EmployeeAttendanceExport implements FromCollection,WithHeadings,WithStyles
 {
     /**
     * @return \Illuminate\Support\Collection
     */
+     use Exportable;
 
     public function headings():array{
         return[
@@ -40,8 +43,6 @@ class EmployeeAttendanceExport implements WithHeadings,WithStyles,WithMapping,Fr
             // Style the first row as bold text.
             1    => ['font' => ['bold' => true]],
 
-
-
         ];
 
     }
@@ -51,82 +52,79 @@ class EmployeeAttendanceExport implements WithHeadings,WithStyles,WithMapping,Fr
     public function collection()
     {
 
-       return VmtEmployeeAttendance::leftJoin('users as us', 'us.id', '=', 'vmt_employee_attendance.user_id')
-       ->leftjoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=','us.id')
-       ->leftjoin('vmt_employee_attendance_regularizations','vmt_employee_attendance_regularizations.user_id','=','us.id')
+
+        $attendance_data= VmtEmployeeAttendance::leftJoin('users as us', 'us.id', '=', 'vmt_employee_attendance.user_id')
+        ->leftjoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=','us.id')
+        ->leftjoin('vmt_employee_attendance_regularizations','vmt_employee_attendance_regularizations.user_id','=','us.id')
+       //->whereYear('vmt_employee_attendance.date',$request->attendance_year)
+        ->select('user_code','name','designation','checkin_time','checkout_time',
+                       'regularization_type','status')->get();
 
 
-       ->get(['user_code','name','designation','checkin_time','checkout_time','regularization_type','status']);
-
-    //     */
-    //     $attendance_details = VmtEmployeeAttendance::leftJoin('users', 'users.id', '=', 'vmt_employee_attendance.user_id')
-    //             ->leftjoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=','users.id')
-    //             ->leftjoin('vmt_employee_attendance_regularizations','vmt_employee_attendance_regularizations.user_id','=','users.id')
-    //             ->select([
-    //                    'users.user_code',
-    //                    'users.name',
-    //                    'vmt_employee_office_details.designation',
-    //                    'vmt_employee_attendance.date',
-    //                    'vmt_employee_attendance.checkin_time',
-    //                    'vmt_employee_attendance.checkout_time',
-    //                    'vmt_employee_attendance_regularizations.regularization_type',
-    //                    'vmt_employee_attendance_regularizations.status',
-    //                    ]
-    //              )//->where('vmt_employee_attendance.date','=','2022-'.'09-'.$i)
-    //              //->orderby('vmt_employee_attendance.date')
-    //              ->get();
+       foreach($attendance_data as $singledata){
+               $user_code=(User::groupBy('user_code')->pluck('user_code'));
+               //dd($user_code);
+            if($user_code== $singledata->user_code){
+                $user_code=Array();
+                array_push($singledata->usercode,$singledata->checkin_time,$singledata->checkout_time,
+                $singledata->regularization_type,$singledata->status);
+            }else{
+                dd($singledata->usercode);
+                $singledata->usercode=array($singledata->usercode,$singledata->name,$singledata->designation,
+            $singledata->checkin_time,$singledata->checkout_time,$singledata->regularization_type,$singledata->status);
+            }
+            $attendance_array=array();
+            array_push($attendance_array,$singledata->usercode);
+       }
+          // dd($attendance_array);
     }
 
+    // public function query()
+	// {
+    //     $attendance_data= VmtEmployeeAttendance::leftJoin('users as us', 'us.id', '=', 'vmt_employee_attendance.user_id')
+    //     ->leftjoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=','us.id')
+    //     ->leftjoin('vmt_employee_attendance_regularizations','vmt_employee_attendance_regularizations.user_id','=','us.id')
+    //    //->whereYear('vmt_employee_attendance.date',$request->attendance_year)
+    //     ->select('user_code','name','designation','checkin_time','checkout_time',
+    //                    'regularization_type','status');
+    //                    dd($attendance_data->get()->user_code);
+    //     if (User::where("user_code", $attendance_data->user_code)->exists()){
+
+    //     }
+    //      return $attendance_data;
+	// }
+
+
+
+    // public function map($attendance_data): array
+    // {
+
+    //     // This example will return 3 rows.
+    //     // First row will have 2 column, the next 2 will have 1 column
+
+    //     return [
+    //         [
+    //             $attendance_data->user_code,
+    //             $attendance_data->name,
+    //             $attendance_data->designation,
+    //             $attendance_data->checkin_time,
+    //             $attendance_data->checkout_time,
+    //             $attendance_data->regularization_type,
+    //             $attendance_data->status,
+
+    //         ],
+    //         // [
+    //         //     $attendance_data->user_code,
+    //         //     $attendance_data->name,
+    //         //     $attendance_data->designation,
+    //         // ]
+    //     ];
+    // }
 
 
 
 
-    /**
-    * @var VmtEmployeeAttendance $attendance_details
-
-    */
 
 
-    public function map($attendance_details): array
-    {
-
-        $array_checkoutTime= array();
-
-
-
-
-        array_push($array_checkoutTime, $attendance_details->checkout_time);
-
-
-
-
-
-        // $check_len=count($array_checkoutTime);
-        // for($i=0;$i<$check_len;$i++){
-        //     array_push($array_time, $attendance_details->checkout_time);
-        //     $time_len=count($array_time);
-        //     return  $time_len;
-        // }
-
-
-
-    //    dd($array_checkoutTime);
-
-       return [
-        // [   // $attendance_details->name,
-        //     // $attendance_details->designation,
-        //     // $array_time,]
-        //     // $array_checkoutTime
-        // ],
-        // [$time_len]
-
-
-
-            ['6','7','8','9','10'],
-            [$array_checkoutTime]
-
-             ];
-
-    }
 }
 

@@ -514,17 +514,19 @@ Route::get('/documents',  [App\Http\Controllers\VmtEmployeeController::class, 's
 
     //Attendance Reports
     Route::get('/reports/attendance',  [App\Http\Controllers\VmtReportsController::class, 'showAttendanceReport'])->name('showAttendanceReport');
+    Route::get('/reports/generate-attendance-report',  [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'generateAttendanceReports'])->name('generateAttendanceReports');
      //Ajax Part
      Route::get('/attendance-filter-info', [App\Http\Controllers\VmtReportsController::class, 'fetchAttendanceInfo'])->name('fetchAttendanceInfo');
      //Ajax For Fetch Month For Given Year fetchAttendanceForGivenYear
      Route::get('/fetch-attendance-for-given-year', [App\Http\Controllers\VmtReportsController::class, 'fetchAttendanceForGivenYear'])->name('fetchAttendanceForGivenYear');
 
     //pms reviwes report
+
     Route::get('/reports/pmsreviews',  [App\Http\Controllers\VmtReportsController::class, 'showPmsReviewsReportPage'])->name('showPmsReviewsReportPage');
     Route::get('/reports/generatePmsReviewsReports',  [App\Http\Controllers\VmtReportsController::class, 'generatePmsReviewsReports'])->name('generatePmsReviewsReports');
 
 
-    //Ajax Part fetchAttendanceInfo
+    //Ajax Part fetchPmsInfo
     Route::get('/pms-filter-info', [App\Http\Controllers\VmtReportsController::class, 'filterPmsReport'])->name('pms-filter-info');
 
     //Grid Js
