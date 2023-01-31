@@ -196,12 +196,58 @@
 
 
 </script>
-<style scoped lang="scss">
+<style  lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,200&display=swap');
 
+
+.p-datatable .p-datatable-thead >tr>th{
+    text-align: center;
+    padding: 0.3rem 1rem;
+    border: 1px solid #dee2e6;
+      border-top-width: 1px;
+      border-right-width: 1px;
+      border-bottom-width: 1px;
+      border-left-width: 1px;
+    border-width: 0 0 1px 0;
+    font-weight: 700;
+    color: #fff;
+    background: #003056;
+    transition: box-shadow 0.2s;
+    font-size: 15px;
+    .p-column-title {
+        font-size: 15px;
+    }
+  }
+  .p-datatable .p-datatable-tbody > tr > td {
+    text-align: left;
+    border: 1px solid #dee2e6;
+      border-top-width: 1px;
+      border-right-width: 1px;
+      border-bottom-width: 1px;
+      border-left-width: 1px;
+    border-width: 0 0 1px 0;
+    padding: 1rem 0.6rem;
+  }
+  .p-column-filter {
+    width: 90%;
+  }
+  #pv_id_2 {
+    height: 35px;
+  }
+  .p-dropdown .p-dropdown-label.p-placeholder {
+    color: #6c757d;
+    margin-top: -10px;
+  }
 .employee_name{
-   // font-weight: bold;
+    font-weight: bold;
+    font-size: 14px;
 }
+.p-column-title {
+    font-size: 17px;
+}
+.p-datatable .p-datatable-tbody > tr{
+    font-size: 13px;
+  }
 
 .pending {
     font-weight: 700;

@@ -12,12 +12,14 @@
                         </div>
                     </template>
                 </Column>
-                <Column field="reimbursement_date" header="Date"></Column>
+                <Column class="fontSize13px" field="reimbursement_date" header="Date"></Column>
                 <!-- <Column field="user_data" header="User Data"></Column> -->
-                <Column field="from" header="From"></Column>
-                <Column field="to" header="To"></Column>
-                <Column field="vehicle_type" header="Model Of Transport"></Column>
-                <Column field="distance_travelled" header="Distance Covered"></Column>
+                <Column class="fontSize13px" field="from" header="From"></Column>
+                <Column class="fontSize13px" field="to" header="To"></Column>
+                <Column class="fontSize13px" field="vehicle_type" header="Model Of Transport"></Column>
+                <Column class="fontSize13px" field="distance_travelled" header="Distance Covered"></Column>
+                <Column class="fontSize13px" field="" header="Total Expenses"></Column>
+
 
 
 
@@ -109,7 +111,14 @@
 
 .employee_name{
     font-weight: bold;
+    font-size: 14px;
 }
+.p-column-title {
+    font-size: 15px;
+  }
+  .fontSize13px{
+    font-size: 13px;
+  }
 
 .pending {
     font-weight: 700;
