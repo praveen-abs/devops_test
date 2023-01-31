@@ -1,7 +1,25 @@
 <template>
     <div>
-        <Toast />
-        <ConfirmDialog></ConfirmDialog>
+            <Toast />
+        <Dialog header="Header" v-model:visible="canShowLoadingScreen" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '25vw'}" :modal="true" :closable="false" :closeOnEscape="false">
+            <template #header>
+                <ProgressSpinner style="width:50px;height:50px" strokeWidth="8" fill="var(--surface-ground)" animationDuration="2s" aria-label="Custom ProgressSpinner"/>
+            </template>
+            <template #footer>
+                <h5 style="text-align: center;">Please wait...</h5>
+            </template>
+        </Dialog>
+
+        <Dialog header="Confirmation" v-model:visible="canShowConfirmation" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '350px'}" :modal="true" >
+            <div class="confirmation-content">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                <span>Are you sure you want to {{currentlySelectedStatus}}?</span>
+            </div>
+            <template #footer>
+                <Button label="Yes" icon="pi pi-check" @click="processApproveReject()" class="p-button-text" autofocus />
+                <Button label="No" icon="pi pi-times" @click="hideConfirmDialog(true)" class="p-button-text"/>
+            </template>
+        </Dialog>
     
         <div class="card">
                 <DataTable :value="data_reimbursements" responsiveLayout="scroll" :paginator="true" :rows="5" class="p-datatable-sm">
@@ -39,7 +57,7 @@
                         
                         <Button type="button" icon="pi pi-check-circle" class="p-button-success Button"  label="Approval" @click="onClickButton(slotProps.data)" 
                         style="height: 2em;" />
-                        <Button type="button" icon="pi pi-times-circle" class="p-button-danger Button "  label="Rejected" style="margin-left: 8px;height: 2em;" @click="onClickButton(slotProps.data)" />
+                        <Button type="button" icon="pi pi-times-circle" class="p-button-danger Button "  label="Reject" style="margin-left: 8px;height: 2em;" @click="onClickButton(slotProps.data)" />
                     </template>
                 </Column>
             </DataTable>
@@ -108,7 +126,23 @@
 
 </script>
 <style  lang="scss">
-
+.p-datatable .p-datatable-thead >tr>th{
+    text-align: center;
+    padding: 0.3rem 1rem;
+    border: 1px solid #dee2e6;
+      border-top-width: 1px;
+      border-right-width: 1px;
+      border-bottom-width: 1px;
+      border-left-width: 1px;
+    border-width: 0 0 1px 0;
+    font-weight: 600;
+    color: #fff;
+    background: #003056;
+    transition: box-shadow 0.2s;
+    font-size: 13px;
+   
+  }
+  
 .employee_name{
     font-weight: bold;
     font-size: 13px;
@@ -158,6 +192,11 @@
         width: 100%;
         margin-bottom: .5rem;
     }
+
+
+}
+.p-datatable .p-datatable-tbody>tr>td:nth-child(1){
+    width: 240px;
 }
 
 </style>

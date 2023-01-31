@@ -268,6 +268,13 @@
       border-left-width: 1px;
     border-width: 0 0 1px 0;
     padding: 1rem 0.6rem;
+  
+  }
+  .p-datatable .p-datatable-tbody > tr > td:nth-child(1) {
+    width: 20%;
+  }
+  .page-content{
+    width: 110%;
   }
 
 .pending {
