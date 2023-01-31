@@ -13,34 +13,46 @@
             <div class="card-body">
 
                 <div class="newRole-content">
-                    <h5 class="mb-3 text-ash-dark">Create new job role</h5>
+                    <h6 class="mb-3 text-ash-dark">Create new job role</h6>
 
                     <div class="row mb-2">
-                        <div class="col-sm-12 col-xl-12 col-lg-12 col-xxl-12 col-md-12 mb-3">
-                            <p class="fw-bold text-ash-dark fs-15">Role Details</p>
+                        <div class="col-sm-12 col-xl-6  col-lg-6 col-xxl-6 col-md-12 mb-3">
+                            <p class=" fs-14 fw-normal text-muted">Role Details</p>
                         </div>
-                        <div class="col-sm-12 col-xl-12 col-lg-12 col-xxl-12 col-md-12 mb-3">
-                            <label for="" class="">Role title</label>
-                            <input type="text" name="" id="" class="form-control   w-50"
-                                placeholder="Role title">
+                        <div
+                            class="col-sm-12 d-none d-xl-block d-xxl-block d-lg-block  d-sm-none d-md-none col-xl-6 col-lg-6 col-xxl-6 mb-3">
                         </div>
-                        <div class="col-sm-12 col-xl-12 col-lg-12 col-xxl-12 col-md-12 mb-3">
+                        <div class="col-sm-12 col-xl-6  col-lg-6 col-xxl-6 col-md-12 mb-3">
+                            <label for="" class="">Role Title</label>
+                            <input type="text" name="" id="" class="form-control   "
+                                placeholder="Role Title">
+                        </div>
+                        <div
+                            class="col-sm-12 d-none d-xl-block d-xxl-block d-lg-block  d-sm-none d-md-none col-xl-6 col-lg-6 col-xxl-6 mb-3">
+                        </div>
+                        <div class="col-sm-12 col-xl-6  col-lg-6 col-xxl-6 col-md-12 mb-3">
                             <label for="" class="">Role Description</label>
-                            <textarea type="text" name="" id="" class="form-control  w-50 resize-none " cols=""
-                                rows="4"></textarea>
+                            <textarea type="text" name="" id="" placeholder="Role Description"
+                                class="form-control   resize-none " cols="" rows="4"></textarea>
                         </div>
-                        <div class="col-sm-12 col-xl-12 col-lg-12 col-xxl-12 col-md-12 mb-3">
-                            <label for="" class="">Assign to</label>
+                        <div
+                            class="col-sm-12 d-none d-xl-block d-xxl-block d-lg-block  d-sm-none d-md-none col-xl-6 col-lg-6 col-xxl-6 mb-3">
+                        </div>
+                        <div class="col-sm-12 col-xl-6  col-lg-6 col-xxl-6 col-md-12 mb-3">
+                            <label for="" class="">Assign To</label>
                             <div class="roles-filter search-bar-wrapper">
                                 <i class="fa fa-search"></i>
-                                <input type="text" name="" id="" class="form-control w-50"
+                                <input type="text" name="" id="" class="form-control "
                                     placeholder="Search....">
                             </div>
                         </div>
+                        <div
+                            class="col-sm-12 d-none d-xl-block d-xxl-block d-lg-block  d-sm-none d-md-none col-xl-6 col-lg-6 col-xxl-6 mb-3">
+                        </div>
                         {{-- selected user will appear while searching them and choosed   --}}
-                        <div class="col-sm-12 col-xl-12 col-lg-12 col-xxl-12 col-md-12 mb-3">
+                        <div class="col-sm-12 col-xl-6  col-lg-6 col-xxl-6 col-md-12 mb-3">
 
-                            <div id="" class="selected-user-container form-control w-50 " cols=""
+                            <div id="" class="selected-user-container form-control  " cols=""
                                 rows="4">
 
                                 <div class="chip align-items-center">
@@ -50,13 +62,19 @@
                                     </div>
 
                                     <div class="text-start ">
-                                        <p style="">Pravin </p>
-                                        <p>Lead Frotend Developer</p>
+                                        <p class="user-name fs-12 text-ash-dark ">Praveen </p>
+                                        <p class="user-role fs-10 text-muted">Lead Frotend Developer</p>
                                     </div>
-                                    <span class="closebtn btn outlin-none border-0 text-muted"
-                                        onclick="this.parentElement.style.display='none'">&times;</span>
+
+                                    <button class="ms-2 closebtn-wrapper  outlin-none border-0 "
+                                        onclick="this.parentElement.style.display='none'"> &times;
+                                    </button>
+
                                 </div>
                             </div>
+                        </div>
+                        <div
+                            class="col-sm-12 d-none d-xl-block d-xxl-block d-lg-block  d-sm-none d-md-none col-xl-6 col-lg-6 col-xxl-6 mb-3">
                         </div>
                     </div>
 
@@ -70,14 +88,15 @@
             <div class="card-body"> --}}
                 <div class="row">
                     <div class="col-sm-12 col-xl-12 col-lg-12 col-xxl-12 col-md-12 mb-3">
-                        <h5 class="mb-3 text-ash-dark">Add privileges</h5>
+
+                        <h6 class="mb-2 text-ash-dark">Set Permissions</h6>
                     </div>
                     <div class="col-sm-12 col-xl-6 col-lg-6 col-xxl-6 col-md-6 mb-3">
                         <div class="accordion" id="roles_permissions">
                             <div class="accordion-item">
-                                <h2 class="accordion-header" id="asset_heading">
+                                <div class="accordion-header" id="asset_heading">
                                     <div class="d-flex align-items-center ">
-                                        <button class="accordion-button fs-15  text-ash-dark fw-bold outline-none border-0"
+                                        <button class="accordion-button   text-ash-dark  outline-none border-0 collapsed"
                                             type="button" data-bs-toggle="collapse" data-bs-target="#asset_privileges"
                                             aria-expanded="true" aria-controls="">
                                             <input class="form-check-input me-2" type="checkbox" value=""
@@ -85,7 +104,7 @@
 
                                         </button>
                                     </div>
-                                </h2>
+                                </div>
                                 <div id="asset_privileges" class="accordion-collapse collapse "
                                     aria-labelledby="asset_heading" data-bs-parent="#roles_permissions">
                                     <div class="accordion-body">
@@ -93,7 +112,7 @@
                                         <ul class="list-unstyled privileges-list">
                                             <li>
                                                 <div class=""> <input class="form-check-input me-2" type="checkbox"
-                                                        value="" id=""> <span>View Asset
+                                                        value="" id="assest"> <span for="assest">View Asset
                                                         Dashboard</span>
                                                 </div>
                                             </li>
@@ -112,14 +131,16 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <div class="d-flex align-items-center"> <input class="form-check-input me-2"
-                                                        type="checkbox" value="" id=""> <span> Edit
+                                                <div class="d-flex align-items-center"> <input
+                                                        class="form-check-input me-2" type="checkbox" value=""
+                                                        id=""> <span> Edit
                                                         Individual Asset Information</span>
                                                 </div>
                                             </li>
                                             <li>
-                                                <div class="d-flex align-items-center"> <input class="form-check-input me-2"
-                                                        type="checkbox" value="" id=""> <span> Bulk import
+                                                <div class="d-flex align-items-center"> <input
+                                                        class="form-check-input me-2" type="checkbox" value=""
+                                                        id=""> <span> Bulk import
                                                         assets & assignment</span>
                                                 </div>
                                             </li>
@@ -181,7 +202,7 @@
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="asset_heading">
                                     <div class="d-flex align-items-center ">
-                                        <button class="accordion-button fs-15  text-ash-dark fw-bold outline-none border-0"
+                                        <button class="accordion-button   text-ash-dark  collapsed outline-none border-0"
                                             type="button" data-bs-toggle="collapse"
                                             data-bs-target="#attendance_privileges" aria-expanded="true"
                                             aria-controls="">
@@ -537,7 +558,7 @@
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="asset_heading">
                                     <div class="d-flex align-items-center ">
-                                        <button class="accordion-button fs-15  text-ash-dark fw-bold outline-none border-0"
+                                        <button class="accordion-button   text-ash-dark  collapsed outline-none border-0"
                                             type="button" data-bs-toggle="collapse" data-bs-target="#employee_document"
                                             aria-expanded="true" aria-controls="">
                                             <input class="form-check-input me-2" type="checkbox" value=""
@@ -677,7 +698,7 @@
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="asset_heading">
                                     <div class="d-flex align-items-center ">
-                                        <button class="accordion-button fs-15  text-ash-dark fw-bold outline-none border-0"
+                                        <button class="accordion-button   text-ash-dark  collapsed outline-none border-0"
                                             type="button" data-bs-toggle="collapse" data-bs-target="#finance_previleges"
                                             aria-expanded="true" aria-controls="">
                                             <input class="form-check-input me-2" type="checkbox" value=""
@@ -839,7 +860,7 @@
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="asset_heading">
                                     <div class="d-flex align-items-center ">
-                                        <button class="accordion-button fs-15  text-ash-dark fw-bold outline-none border-0"
+                                        <button class="accordion-button  collapsed  text-ash-dark  outline-none border-0"
                                             type="button" data-bs-toggle="collapse" data-bs-target="#leave_previleges"
                                             aria-expanded="true" aria-controls="">
                                             <input class="form-check-input me-2" type="checkbox" value=""
@@ -956,10 +977,10 @@
 
                         </div>
                     </div>
-                    <div class="col-sm-12 col-xl-12 col-lg-12 col-xxl-12 col-md-12 mb-3">
+                    <div class="col-sm-12 col-xl-10 col-lg-10 col-xxl-10 col-md-10 my-3">
 
                         <div class="d-flex align-items-center justify-content-end">
-                            <button class="btn btn-light me-2">Cancel</button>
+                            <button class="btn btn-border-orange me-2">Cancel</button>
                             <button class="btn btn-orange">Create Role</button>
                         </div>
 
