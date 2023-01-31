@@ -1083,6 +1083,49 @@ class VmtEmployeeController extends Controller
         return json_encode($query_vmtEmployees);
     }
 
+    public function fetchAllExitEmployees(Request $request)
+    {
+
+        $query_vmtEmployees = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
+            ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+            ->select(
+                'users.name as emp_name',
+                'users.user_code as emp_code',
+                'users.active as emp_status',
+                'users.is_onboarded as is_onboarded',
+                'users.email as email_id',
+                'users.id as user_id',
+                'users.avatar as avatar',
+                'vmt_employee_details.doj as doj',
+                'vmt_employee_details.blood_group_id as blood_group_id',
+                'vmt_employee_office_details.department_id',
+                'vmt_employee_office_details.designation as emp_designation',
+                'vmt_employee_office_details.l1_manager_code as l1_manager_code',
+                'vmt_employee_office_details.l1_manager_name',
+                'vmt_employee_office_details.l1_manager_designation'
+            )
+            ->orderBy('users.name', 'ASC')
+            ->where('users.active', '-1')
+            ->where('users.is_ssa', '0')
+            ->whereNotNull('emp_no');
+
+        //if '1', then show all client's employees
+        if (session('client_id') == '1')
+            $query_vmtEmployees = $query_vmtEmployees->get();
+        else
+            $query_vmtEmployees = $query_vmtEmployees->where('client_id', session('client_id'))->get();
+
+        //Add reporting manager name
+        foreach($query_vmtEmployees as $singleEmp)
+        {
+            $singleEmp['enc_user_id'] = Crypt::encryptString($singleEmp['user_id']);
+            //unset($singleEmp['user_id']);
+            $singleEmp['reporting_manager_name'] = User::where('user_code',$singleEmp->l1_manager_code)->value('name');
+        }
+
+        return json_encode($query_vmtEmployees);
+    }
+
     //
     public function showManageEmployeePage(Request $request)
     {
