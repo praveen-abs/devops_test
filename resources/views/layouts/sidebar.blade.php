@@ -1,13 +1,14 @@
 <?php //getCurrentClientName()
 
-    //Notification counts
-    $approvals_leave_notif_count = \DB::table('vmt_employee_leaves')->where('status','Pending')->count();
-    $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regularizations')->where('status','Pending')->count();
+//Notification counts
+$approvals_leave_notif_count = \DB::table('vmt_employee_leaves')
+    ->where('status', 'Pending')
+    ->count();
+$approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regularizations')
+    ->where('status', 'Pending')
+    ->count();
 
-
-    //dd($approvals_leave_notif_count);
-
-
+//dd($approvals_leave_notif_count);
 
 ?>
 <!-- ========== App Menu ========== -->
@@ -119,8 +120,9 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="{{ route('attendance-timesheet') }}"
-                                    class="nav-link sidebar py-1">Timesheet</a>
+                                <a href="{{ route('attendance-timesheet') }}" class="nav-link sidebar py-1">
+                                    <span>
+                                        Timesheet</span></a>
                             </li>
 
                         </ul>
@@ -307,8 +309,7 @@
                                             {{-- <span>Leaves <span
                                                     class="badge bg-danger rounded-circle text-white">{{ $approvals_leave_notif_count}}</span>
                                             </span> --}}
-                                            <span>Leaves <span
-                                        </span>
+                                            <span>Leaves <span </span>
                                         </a>
                                     </li>
 
@@ -321,8 +322,7 @@
                                                     class="badge bg-danger rounded-circle text-white"> {{ $approvals_att_regularization_count }}</span>
                                             </span> --}}
                                             <span>
-                                                Attendance Regularization<span
-                                            </span>
+                                                Attendance Regularization<span </span>
                                         </a>
 
                                     </li>
@@ -685,6 +685,15 @@
                         <div class="collapse menu-dropdown" id="configDrop-down">
                             <ul class="nav nav-sm flex-column">
                                 <li class="nav-item">
+                                    <a href="{{ route('roles') }}" id="" class="nav-link sidebar py-1"
+                                        data-bs-toggle="" role="button" aria-expanded="false">
+
+                                        <span>
+                                            roles
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a href="{{ route('view-config-master') }}" class="nav-link"><span>Master
                                             Config</span></a>
                                 </li>
@@ -694,21 +703,21 @@
                                             Onboarding</span></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('document_preview') }}" class="nav-link">Document
-                                        Template<span>
+                                    <a href="{{ route('document_preview') }}" class="nav-link"><span>Document
+                                            Template
                                         </span></a>
                                 </li>
 
                                 {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}
 
                                 <li class="nav-item">
-                                    <a href="{{ route('attendance-leavesettings') }}" class="nav-link">Leave
-                                        Settings<span>
+                                    <a href="{{ route('attendance-leavesettings') }}" class="nav-link"><span>Leave
+                                            Settings
                                         </span></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ url('attendance_shift_woff_hday') }}"
-                                        class="nav-link sidebar py-1">Attendance</a>
+                                    <a href="{{ url('attendance_shift_woff_hday') }}" class="nav-link sidebar py-1">
+                                        <span> Attendance </span></a>
                                 </li>
                                 {{-- @endif --}}
                             </ul>
