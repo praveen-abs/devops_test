@@ -41,7 +41,7 @@
                 <Column field="user_time" header="Actual Time"></Column>
                 <Column field="regularize_time" header="Regularize Time"></Column>
                 <Column field="reason_type" header="Reason"></Column>
-                <Column field="reviewer_comments" header="Approver Comments"></Column>
+                <Column field="reviewer_comments" header="Approve Comments"></Column>
                 <Column field="reviewer_reviewed_date" header="Reviewed Date"></Column>
                 <Column field="status" header="Status">
                     <template #body="{data}">

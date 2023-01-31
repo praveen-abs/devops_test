@@ -111,10 +111,10 @@
 
 .employee_name{
     font-weight: bold;
-    font-size: 14px;
+    font-size: 13px;
 }
 .p-column-title {
-    font-size: 15px;
+    font-size: 13.5px;
   }
   .fontSize13px{
     font-size: 13px;
