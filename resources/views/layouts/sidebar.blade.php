@@ -684,7 +684,7 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                         </a>
                         <div class="collapse menu-dropdown" id="configDrop-down">
                             <ul class="nav nav-sm flex-column">
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <a href="{{ route('roles') }}" id="" class="nav-link sidebar py-1"
                                         data-bs-toggle="" role="button" aria-expanded="false">
 
@@ -692,7 +692,7 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                                             roles
                                         </span>
                                     </a>
-                                </li>
+                                </li> --}}
                                 <li class="nav-item">
                                     <a href="{{ route('view-config-master') }}" class="nav-link"><span>Master
                                             Config</span></a>
