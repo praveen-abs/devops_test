@@ -1,4 +1,16 @@
-<?php //getCurrentClientName() ?>
+<?php //getCurrentClientName()
+
+//Notification counts
+$approvals_leave_notif_count = \DB::table('vmt_employee_leaves')
+    ->where('status', 'Pending')
+    ->count();
+$approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regularizations')
+    ->where('status', 'Pending')
+    ->count();
+
+//dd($approvals_leave_notif_count);
+
+?>
 <!-- ========== App Menu ========== -->
 <div class="app-menu navbar-menu">
     <!-- LOGO -->
@@ -39,96 +51,96 @@
                 <!-- CRM -->
                 @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
                     @if (!Str::contains(getCurrentClientName(), 'Vasa'))
+                        <li class="nav-item">
 
-                    <li class="nav-item">
-
-                        <a class="nav-link sidebar menu-link pt-0" href="#crmDrop-Down" data-bs-toggle="collapse"
-                            role="button" aria-expanded="false" aria-controls="sidebarRoles">
-                            <i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                    viewBox="0 0 16 16">
-                                    <g id="Group_34352" data-name="Group 34352" transform="translate(2635 -5134)">
-                                        <path id="handshake-angle-solid_1_" data-name="handshake-angle-solid (1)"
-                                            d="M5.792,2.187h-1.8V2.8a.889.889,0,0,1-.766.9.855.855,0,0,1-.943-.85V1.419l-.291.175a1.751,1.751,0,0,0-.848,1.5l-.95.55a.379.379,0,0,0-.139.518L1,5.806a.382.382,0,0,0,.519.139l1.227-.709H4.368a.761.761,0,0,0,.76-.76.57.57,0,0,0,.57-.57v-.57h.095a.285.285,0,0,0,.285-.285v-.57A.294.294,0,0,0,5.792,2.187Zm1.753-.434L6.6.107a.382.382,0,0,0-.519-.139L4.85.677H4.107a2.406,2.406,0,0,0-1.271.364.382.382,0,0,0-.177.321v1.5a.475.475,0,0,0,.95,0V1.807H5.792a.665.665,0,0,1,.665.665V2.81l.95-.549A.366.366,0,0,0,7.546,1.752Z"
-                                            transform="translate(-2630.798 5139.144)" fill="#686363" />
-                                        <path id="gear-wide"
-                                            d="M8.931.727a.961.961,0,0,0-1.864,0L7,1.013a.96.96,0,0,1-1.622.434l-.2-.211a.96.96,0,0,0-1.613.931l.08.284A.96.96,0,0,1,2.451,3.638l-.284-.081A.96.96,0,0,0,1.236,5.17l.211.2A.96.96,0,0,1,1.013,7l-.286.071a.961.961,0,0,0,0,1.864L1.013,9a.96.96,0,0,1,.434,1.622l-.211.2a.96.96,0,0,0,.931,1.613l.284-.08a.96.96,0,0,1,1.187,1.187l-.081.283a.96.96,0,0,0,1.613.931l.2-.211A.96.96,0,0,1,7,14.986l.071.286a.961.961,0,0,0,1.864,0L9,14.986a.96.96,0,0,1,1.622-.434l.2.211a.96.96,0,0,0,1.613-.931l-.08-.284a.96.96,0,0,1,1.187-1.187l.283.081a.96.96,0,0,0,.931-1.613l-.211-.2A.96.96,0,0,1,14.986,9l.286-.071a.961.961,0,0,0,0-1.864L14.986,7a.96.96,0,0,1-.434-1.622l.211-.2a.96.96,0,0,0-.931-1.613l-.284.08a.96.96,0,0,1-1.187-1.186l.081-.284a.96.96,0,0,0-1.613-.931l-.2.211A.96.96,0,0,1,9,1.013ZM8,13a5,5,0,1,1,5-5,5,5,0,0,1-5,5Z"
-                                            transform="translate(-2635 5134)" fill="#686363" />
-                                    </g>
-                                </svg>
+                            <a class="nav-link sidebar menu-link pt-0" href="#crmDrop-Down" data-bs-toggle="collapse"
+                                role="button" aria-expanded="false" aria-controls="sidebarRoles">
+                                <i>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        viewBox="0 0 16 16">
+                                        <g id="Group_34352" data-name="Group 34352" transform="translate(2635 -5134)">
+                                            <path id="handshake-angle-solid_1_" data-name="handshake-angle-solid (1)"
+                                                d="M5.792,2.187h-1.8V2.8a.889.889,0,0,1-.766.9.855.855,0,0,1-.943-.85V1.419l-.291.175a1.751,1.751,0,0,0-.848,1.5l-.95.55a.379.379,0,0,0-.139.518L1,5.806a.382.382,0,0,0,.519.139l1.227-.709H4.368a.761.761,0,0,0,.76-.76.57.57,0,0,0,.57-.57v-.57h.095a.285.285,0,0,0,.285-.285v-.57A.294.294,0,0,0,5.792,2.187Zm1.753-.434L6.6.107a.382.382,0,0,0-.519-.139L4.85.677H4.107a2.406,2.406,0,0,0-1.271.364.382.382,0,0,0-.177.321v1.5a.475.475,0,0,0,.95,0V1.807H5.792a.665.665,0,0,1,.665.665V2.81l.95-.549A.366.366,0,0,0,7.546,1.752Z"
+                                                transform="translate(-2630.798 5139.144)" fill="#686363" />
+                                            <path id="gear-wide"
+                                                d="M8.931.727a.961.961,0,0,0-1.864,0L7,1.013a.96.96,0,0,1-1.622.434l-.2-.211a.96.96,0,0,0-1.613.931l.08.284A.96.96,0,0,1,2.451,3.638l-.284-.081A.96.96,0,0,0,1.236,5.17l.211.2A.96.96,0,0,1,1.013,7l-.286.071a.961.961,0,0,0,0,1.864L1.013,9a.96.96,0,0,1,.434,1.622l-.211.2a.96.96,0,0,0,.931,1.613l.284-.08a.96.96,0,0,1,1.187,1.187l-.081.283a.96.96,0,0,0,1.613.931l.2-.211A.96.96,0,0,1,7,14.986l.071.286a.961.961,0,0,0,1.864,0L9,14.986a.96.96,0,0,1,1.622-.434l.2.211a.96.96,0,0,0,1.613-.931l-.08-.284a.96.96,0,0,1,1.187-1.187l.283.081a.96.96,0,0,0,.931-1.613l-.211-.2A.96.96,0,0,1,14.986,9l.286-.071a.961.961,0,0,0,0-1.864L14.986,7a.96.96,0,0,1-.434-1.622l.211-.2a.96.96,0,0,0-.931-1.613l-.284.08a.96.96,0,0,1-1.187-1.186l.081-.284a.96.96,0,0,0-1.613-.931l-.2.211A.96.96,0,0,1,9,1.013ZM8,13a5,5,0,1,1,5-5,5,5,0,0,1-5,5Z"
+                                                transform="translate(-2635 5134)" fill="#686363" />
+                                        </g>
+                                    </svg>
 
 
-                            </i>
-                            <span>CRM</span>
-                        </a>
-                        <div class="collapse menu-dropdown" id="crmDrop-Down">
-                            <ul class="nav nav-sm flex-column">
-                                <li class="nav-item">
-                                    <a href="{{ route('vmt-vendor-route') }}" class="nav-link sidebar py-1">
-                                        <span>Vendor</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
+                                </i>
+                                <span>CRM</span>
+                            </a>
+                            <div class="collapse menu-dropdown" id="crmDrop-Down">
+                                <ul class="nav nav-sm flex-column">
+                                    <li class="nav-item">
+                                        <a href="{{ route('vmt-vendor-route') }}" class="nav-link sidebar py-1">
+                                            <span>Vendor</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
 
-                                    <a href="{{ route('vmt-clients-route') }}" class="nav-link sidebar py-1"
-                                        role="button"><span>Client</span></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
+                                        <a href="{{ route('vmt-clients-route') }}" class="nav-link sidebar py-1"
+                                            role="button"><span>Client</span></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
                     @endif
                 @endif
 
                 <!-- Navigation Menu for attendance-->
                 {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}
-                    <li class="nav-item">
-                        <a class="nav-link sidebar menu-link pt-0" href="#attendanceDrop-Down" data-bs-toggle="collapse"
-                            role="button" aria-expanded="false" aria-controls="sidebarRoles">
-                            <i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#686363"
-                                    class="bi bi-fingerprint" viewBox="0 0 16 16">
+                <li class="nav-item">
+                    <a class="nav-link sidebar menu-link pt-0" href="#attendanceDrop-Down" data-bs-toggle="collapse"
+                        role="button" aria-expanded="false" aria-controls="sidebarRoles">
+                        <i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#686363"
+                                class="bi bi-fingerprint" viewBox="0 0 16 16">
+                                <path
+                                    d="M8.06 6.5a.5.5 0 0 1 .5.5v.776a11.5 11.5 0 0 1-.552 3.519l-1.331 4.14a.5.5 0 0 1-.952-.305l1.33-4.141a10.5 10.5 0 0 0 .504-3.213V7a.5.5 0 0 1 .5-.5Z" />
+                                <path
+                                    d="M6.06 7a2 2 0 1 1 4 0 .5.5 0 1 1-1 0 1 1 0 1 0-2 0v.332c0 .409-.022.816-.066 1.221A.5.5 0 0 1 6 8.447c.04-.37.06-.742.06-1.115V7Zm3.509 1a.5.5 0 0 1 .487.513 11.5 11.5 0 0 1-.587 3.339l-1.266 3.8a.5.5 0 0 1-.949-.317l1.267-3.8a10.5 10.5 0 0 0 .535-3.048A.5.5 0 0 1 9.569 8Zm-3.356 2.115a.5.5 0 0 1 .33.626L5.24 14.939a.5.5 0 1 1-.955-.296l1.303-4.199a.5.5 0 0 1 .625-.329Z" />
+                                <path
+                                    d="M4.759 5.833A3.501 3.501 0 0 1 11.559 7a.5.5 0 0 1-1 0 2.5 2.5 0 0 0-4.857-.833.5.5 0 1 1-.943-.334Zm.3 1.67a.5.5 0 0 1 .449.546 10.72 10.72 0 0 1-.4 2.031l-1.222 4.072a.5.5 0 1 1-.958-.287L4.15 9.793a9.72 9.72 0 0 0 .363-1.842.5.5 0 0 1 .546-.449Zm6 .647a.5.5 0 0 1 .5.5c0 1.28-.213 2.552-.632 3.762l-1.09 3.145a.5.5 0 0 1-.944-.327l1.089-3.145c.382-1.105.578-2.266.578-3.435a.5.5 0 0 1 .5-.5Z" />
+                                <path
+                                    d="M3.902 4.222a4.996 4.996 0 0 1 5.202-2.113.5.5 0 0 1-.208.979 3.996 3.996 0 0 0-4.163 1.69.5.5 0 0 1-.831-.556Zm6.72-.955a.5.5 0 0 1 .705-.052A4.99 4.99 0 0 1 13.059 7v1.5a.5.5 0 1 1-1 0V7a3.99 3.99 0 0 0-1.386-3.028.5.5 0 0 1-.051-.705ZM3.68 5.842a.5.5 0 0 1 .422.568c-.029.192-.044.39-.044.59 0 .71-.1 1.417-.298 2.1l-1.14 3.923a.5.5 0 1 1-.96-.279L2.8 8.821A6.531 6.531 0 0 0 3.058 7c0-.25.019-.496.054-.736a.5.5 0 0 1 .568-.422Zm8.882 3.66a.5.5 0 0 1 .456.54c-.084 1-.298 1.986-.64 2.934l-.744 2.068a.5.5 0 0 1-.941-.338l.745-2.07a10.51 10.51 0 0 0 .584-2.678.5.5 0 0 1 .54-.456Z" />
+                                <path
+                                    d="M4.81 1.37A6.5 6.5 0 0 1 14.56 7a.5.5 0 1 1-1 0 5.5 5.5 0 0 0-8.25-4.765.5.5 0 0 1-.5-.865Zm-.89 1.257a.5.5 0 0 1 .04.706A5.478 5.478 0 0 0 2.56 7a.5.5 0 0 1-1 0c0-1.664.626-3.184 1.655-4.333a.5.5 0 0 1 .706-.04ZM1.915 8.02a.5.5 0 0 1 .346.616l-.779 2.767a.5.5 0 1 1-.962-.27l.778-2.767a.5.5 0 0 1 .617-.346Zm12.15.481a.5.5 0 0 1 .49.51c-.03 1.499-.161 3.025-.727 4.533l-.07.187a.5.5 0 0 1-.936-.351l.07-.187c.506-1.35.634-2.74.663-4.202a.5.5 0 0 1 .51-.49Z" />
+                            </svg></i>
+                        <span>Attendance</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="attendanceDrop-Down">
+                        <ul class="nav nav-sm flex-column">
+
+                            <li class="nav-item active">
+                                <a href="{{ route('attendance-dashboard') }}" class="nav-link sidebar py-1">
+                                    <span>Dashboard</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{ route('attendance-timesheet') }}" class="nav-link sidebar py-1">
+                                    <span>
+                                        Timesheet</span></a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link sidebar menu-link pt-0"href="{{ route('attendance-leave') }}" data-bs-toggle=""
+                        role="button" aria-expanded="false" aria-controls="sidebarRoles">
+                        <i><svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="512.000000pt"
+                                height="512.000000pt" viewBox="0 0 512.000000 512.000000"
+                                preserveAspectRatio="xMidYMid meet">
+
+                                <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="#686363"
+                                    stroke="none">
                                     <path
-                                        d="M8.06 6.5a.5.5 0 0 1 .5.5v.776a11.5 11.5 0 0 1-.552 3.519l-1.331 4.14a.5.5 0 0 1-.952-.305l1.33-4.141a10.5 10.5 0 0 0 .504-3.213V7a.5.5 0 0 1 .5-.5Z" />
-                                    <path
-                                        d="M6.06 7a2 2 0 1 1 4 0 .5.5 0 1 1-1 0 1 1 0 1 0-2 0v.332c0 .409-.022.816-.066 1.221A.5.5 0 0 1 6 8.447c.04-.37.06-.742.06-1.115V7Zm3.509 1a.5.5 0 0 1 .487.513 11.5 11.5 0 0 1-.587 3.339l-1.266 3.8a.5.5 0 0 1-.949-.317l1.267-3.8a10.5 10.5 0 0 0 .535-3.048A.5.5 0 0 1 9.569 8Zm-3.356 2.115a.5.5 0 0 1 .33.626L5.24 14.939a.5.5 0 1 1-.955-.296l1.303-4.199a.5.5 0 0 1 .625-.329Z" />
-                                    <path
-                                        d="M4.759 5.833A3.501 3.501 0 0 1 11.559 7a.5.5 0 0 1-1 0 2.5 2.5 0 0 0-4.857-.833.5.5 0 1 1-.943-.334Zm.3 1.67a.5.5 0 0 1 .449.546 10.72 10.72 0 0 1-.4 2.031l-1.222 4.072a.5.5 0 1 1-.958-.287L4.15 9.793a9.72 9.72 0 0 0 .363-1.842.5.5 0 0 1 .546-.449Zm6 .647a.5.5 0 0 1 .5.5c0 1.28-.213 2.552-.632 3.762l-1.09 3.145a.5.5 0 0 1-.944-.327l1.089-3.145c.382-1.105.578-2.266.578-3.435a.5.5 0 0 1 .5-.5Z" />
-                                    <path
-                                        d="M3.902 4.222a4.996 4.996 0 0 1 5.202-2.113.5.5 0 0 1-.208.979 3.996 3.996 0 0 0-4.163 1.69.5.5 0 0 1-.831-.556Zm6.72-.955a.5.5 0 0 1 .705-.052A4.99 4.99 0 0 1 13.059 7v1.5a.5.5 0 1 1-1 0V7a3.99 3.99 0 0 0-1.386-3.028.5.5 0 0 1-.051-.705ZM3.68 5.842a.5.5 0 0 1 .422.568c-.029.192-.044.39-.044.59 0 .71-.1 1.417-.298 2.1l-1.14 3.923a.5.5 0 1 1-.96-.279L2.8 8.821A6.531 6.531 0 0 0 3.058 7c0-.25.019-.496.054-.736a.5.5 0 0 1 .568-.422Zm8.882 3.66a.5.5 0 0 1 .456.54c-.084 1-.298 1.986-.64 2.934l-.744 2.068a.5.5 0 0 1-.941-.338l.745-2.07a10.51 10.51 0 0 0 .584-2.678.5.5 0 0 1 .54-.456Z" />
-                                    <path
-                                        d="M4.81 1.37A6.5 6.5 0 0 1 14.56 7a.5.5 0 1 1-1 0 5.5 5.5 0 0 0-8.25-4.765.5.5 0 0 1-.5-.865Zm-.89 1.257a.5.5 0 0 1 .04.706A5.478 5.478 0 0 0 2.56 7a.5.5 0 0 1-1 0c0-1.664.626-3.184 1.655-4.333a.5.5 0 0 1 .706-.04ZM1.915 8.02a.5.5 0 0 1 .346.616l-.779 2.767a.5.5 0 1 1-.962-.27l.778-2.767a.5.5 0 0 1 .617-.346Zm12.15.481a.5.5 0 0 1 .49.51c-.03 1.499-.161 3.025-.727 4.533l-.07.187a.5.5 0 0 1-.936-.351l.07-.187c.506-1.35.634-2.74.663-4.202a.5.5 0 0 1 .51-.49Z" />
-                                </svg></i>
-                            <span>Attendance</span>
-                        </a>
-                        <div class="collapse menu-dropdown" id="attendanceDrop-Down">
-                            <ul class="nav nav-sm flex-column">
-
-                                <li class="nav-item active">
-                                    <a href="{{ route('attendance-dashboard') }}" class="nav-link sidebar py-1">
-                                        <span>Dashboard</span>
-                                    </a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a href="{{ route('attendance-timesheet') }}"
-                                        class="nav-link sidebar py-1">Timesheet</a>
-                                </li>
-
-                            </ul>
-                        </div>
-                    </li>
-
-
-                    <li class="nav-item">
-                        <a class="nav-link sidebar menu-link pt-0"href="{{ route('attendance-leave') }}" data-bs-toggle=""
-                            role="button" aria-expanded="false" aria-controls="sidebarRoles">
-                            <i><svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="512.000000pt"
-                                    height="512.000000pt" viewBox="0 0 512.000000 512.000000"
-                                    preserveAspectRatio="xMidYMid meet">
-
-                                    <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="#686363"
-                                        stroke="none">
-                                        <path
-                                            d="M942 5104 c-18 -9 -43 -31 -55 -48 -20 -28 -22 -45 -25 -187 l-3
+                                        d="M942 5104 c-18 -9 -43 -31 -55 -48 -20 -28 -22 -45 -25 -187 l-3
                             -156 -177 -6 c-185 -6 -229 -14 -330 -66 -53 -27 -141 -115 -174 -173 -59
                             -106 -61 -121 -66 -420 l-4 -278 2457 0 2457 0 -5 273 c-4 240 -7 279 -25 328
                             -40 112 -115 205 -212 264 -89 54 -145 66 -336 72 l-172 6 -3 153 c-4 166 -9
@@ -141,30 +153,30 @@
                             -137z m2518 -22 c-3 -173 -8 -187 -69 -233 -67 -50 -171 -22 -208 56 -18 37
                             -21 61 -21 189 l0 147 151 0 150 0 -3 -159z m591 0 c-4 -142 -6 -163 -25 -187
                             -53 -71 -130 -92 -198 -52 -67 39 -76 70 -76 245 l0 153 151 0 151 0 -3 -159z" />
-                                        <path
-                                            d="M1531 5102 c-69 -34 -76 -55 -79 -233 l-3 -159 145 0 146 0 0 154 c0
+                                    <path
+                                        d="M1531 5102 c-69 -34 -76 -55 -79 -233 l-3 -159 145 0 146 0 0 154 c0
                             142 -2 155 -23 187 -26 39 -79 69 -122 69 -16 0 -45 -8 -64 -18z" />
-                                        <path
-                                            d="M110 1958 c0 -1643 -1 -1587 56 -1699 37 -75 138 -172 214 -208 34
+                                    <path
+                                        d="M110 1958 c0 -1643 -1 -1587 56 -1699 37 -75 138 -172 214 -208 34
                             -16 92 -34 128 -41 48 -7 650 -10 2097 -8 1960 3 2032 4 2079 22 81 31 136 67
                             192 123 55 55 81 97 118 193 l21 55 3 1538 3 1537 -2456 0 -2455 0 0 -1512z
                             m2645 1086 c460 -79 828 -416 945 -864 194 -742 -370 -1470 -1139 -1470 -426
                             0 -810 226 -1025 605 -95 165 -146 364 -146 563 0 328 115 608 345 837 186
                             186 405 294 685 338 65 11 254 5 335 -9z" />
-                                        <path
-                                            d="M2375 2744 c-147 -32 -297 -112 -411 -218 -202 -187 -308 -473 -274
+                                    <path
+                                        d="M2375 2744 c-147 -32 -297 -112 -411 -218 -202 -187 -308 -473 -274
                             -741 60 -478 484 -822 956 -774 120 12 195 33 301 84 219 106 387 303 459 540
                             25 81 28 105 28 245 1 133 -2 166 -22 235 -83 289 -298 513 -582 607 -85 28
                             -110 31 -240 34 -104 3 -165 -1 -215 -12z m687 -475 c55 -40 76 -127 44 -187
                             -8 -15 -144 -156 -303 -314 -246 -245 -293 -287 -325 -293 -71 -13 -102 7
                             -276 179 -161 159 -202 211 -202 260 0 63 51 130 110 146 70 19 104 1 224
                             -119 l111 -111 215 215 c121 121 233 224 255 236 47 24 102 19 147 -12z" />
-                                    </g>
-                                </svg>
-                            </i>
-                            <span>Leaves</span>
-                        </a>
-                    </li>
+                                </g>
+                            </svg>
+                        </i>
+                        <span>Leaves</span>
+                    </a>
+                </li>
                 {{-- @endif --}}
 
                 <!-- Organization -->
@@ -219,22 +231,21 @@
                                         class="nav-link sidebar py-1"><span>Exit</span></a>
                                 </li>
                                 @if (!Str::contains(getCurrentClientName(), 'Vasa'))
-
-                                <li class="nav-item ">
-                                    <a href="{{ route('vmt-documents-route') }}" id="tds"
-                                        class="nav-link sidebar py-1"><span>Documents</span></a>
-                                </li>
-                                <li class="nav-item ">
-                                    <a href="{{ route('assetinventory-index') }}" id="tds"
-                                        class="nav-link sidebar py-1"><span>Assets</span></a>
-                                </li>
+                                    <li class="nav-item ">
+                                        <a href="{{ route('vmt-documents-route') }}" id="tds"
+                                            class="nav-link sidebar py-1"><span>Documents</span></a>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a href="{{ route('assetinventory-index') }}" id="tds"
+                                            class="nav-link sidebar py-1"><span>Assets</span></a>
+                                    </li>
                                 @endif
                             </ul>
                         </div>
                     </li>
                 @endif
 
-                @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR','Manager']))
+                @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR', 'Manager']))
 
                     <li class="nav-item">
                         <a class="nav-link sidebar menu-link pt-0" id="employeeInfo" href="#mytasksDrop-Down"
@@ -250,7 +261,8 @@
                                 </svg> --}}
 
                                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 297 297"
-                                    xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 297 297" width="16" height="16" fill="#686363">
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 297 297"
+                                    width="16" height="16" fill="#686363">
                                     <g>
                                         <path
                                             d="m110.549,98.768c27.231,0 49.384-22.154 49.384-49.384 0.001-27.231-22.153-49.384-49.384-49.384s-49.384,22.153-49.384,49.384c0,27.231 22.154,49.384 49.384,49.384z" />
@@ -264,8 +276,8 @@
                                 </svg>
 
                             </i>
-
                             <span>Approvals</span>
+                            {{-- <span>Approvals <span class="badge bg-danger rounded-circle text-white">4</span></span> --}}
 
                         </a>
                         <div class="collapse menu-dropdown" id="mytasksDrop-Down">
@@ -276,8 +288,15 @@
                                     <li class="nav-item">
                                         <a href="{{ route('vmt-approvals-emp-documents') }}" id=""
                                             class="nav-link sidebar py-1" data-bs-toggle="" role="button"
-                                            aria-expanded="false"><span>
-                                                Onboarding </span> </a>
+                                            aria-expanded="false">
+                                            {{-- <span>
+                                                Onboarding <span class="badge bg-danger rounded-circle text-white">4
+                                                </span>
+                                            </span> --}}
+                                            <span>
+                                                Onboarding
+                                            </span>
+                                        </a>
 
                                     </li>
 
@@ -287,14 +306,24 @@
                                         <a href="{{ route('attendance-leave-approvals') }}" id=""
                                             class="nav-link sidebar py-1" data-bs-toggle="" role="button"
                                             aria-expanded="false">
-                                            <span>Leaves</span> </a>
+                                            {{-- <span>Leaves <span
+                                                    class="badge bg-danger rounded-circle text-white">{{ $approvals_leave_notif_count}}</span>
+                                            </span> --}}
+                                            <span>Leaves <span </span>
+                                        </a>
                                     </li>
 
                                     <li class="nav-item">
                                         <a href="{{ route('attendance-regularization-approvals') }}" id=""
                                             class="nav-link sidebar py-1" data-bs-toggle="" role="button"
-                                            aria-expanded="false"><span>
-                                                Attendance Regularization </span> </a>
+                                            aria-expanded="false">
+                                            {{-- <span>
+                                                Attendance Regularization<span
+                                                    class="badge bg-danger rounded-circle text-white"> {{ $approvals_att_regularization_count }}</span>
+                                            </span> --}}
+                                            <span>
+                                                Attendance Regularization<span </span>
+                                        </a>
 
                                     </li>
                                     {{-- @endif --}}
@@ -302,8 +331,15 @@
                                     <li class="nav-item">
                                         <a href="{{ route('showPMSApprovalPage') }}" id=""
                                             class="nav-link sidebar py-1" data-bs-toggle="" role="button"
-                                            aria-expanded="false"><span>
-                                                OKR /PMS</span> </a>
+                                            aria-expanded="false">
+                                            {{-- <span>
+                                                OKR /PMS<span
+                                                    class="badge bg-danger rounded-circle text-white">4</span>
+                                            </span> --}}
+                                            <span>
+                                                OKR /PMS
+                                            </span>
+                                        </a>
                                         {{-- PMS forms are approved here. Redirect to PMS dashboard --}}
                                     </li>
                                     {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}
@@ -313,14 +349,21 @@
                                             class="nav-link sidebar py-1" data-bs-toggle="" role="button"
                                             aria-expanded="false"><span>
                                                 Reimbursement</span> </a> --}}
-                                                {{-- <a href="{{ url('vmt_mail_attendance_regularization_notify') }}" class="nav-link sidebar py-1"><span>Dashboard</span></a> --}}
+                                        {{-- <a href="{{ url('vmt_mail_attendance_regularization_notify') }}" class="nav-link sidebar py-1"><span>Dashboard</span></a> --}}
 
                                     </li>
                                     <li class="nav-item">
                                         <a href="{{ route('page-not-found') }}" id=""
                                             class="nav-link sidebar py-1" data-bs-toggle="" role="button"
-                                            aria-expanded="false"><span>
-                                                Taxations</span> </a>
+                                            aria-expanded="false">
+                                            {{-- <span>
+                                                Taxations<span
+                                                    class="badge bg-danger rounded-circle text-white">4</span>
+                                            </span> --}}
+                                            <span>
+                                                Taxations
+                                            </span>
+                                        </a>
                                     </li>
                                     {{-- @endif --}}
                                 @endif
@@ -332,50 +375,54 @@
                 <!-- PMS module -->
                 @if (!Str::contains(getCurrentClientName(), 'Protocol'))
 
-                <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0" href="#PerformanceDrop-Down" data-bs-toggle="collapse"
-                        role="button" aria-expanded="false" aria-controls="sidebarRoles">
-                        <i>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="22.058" height="12.253"
-                                viewBox="0 0 22.058 12.253">
-                                <path id="arrow-trend-up-solid"
-                                    d="M14.705,98.451a1.225,1.225,0,0,1,0-2.451h6.127a1.224,1.224,0,0,1,1.225,1.225v6.127a1.225,1.225,0,0,1-2.451,0v-3.167l-6.487,6.483a1.223,1.223,0,0,1-1.731,0l-4.071-4.032-5.226,5.258a1.225,1.225,0,0,1-1.733-1.731l6.128-6.127a1.223,1.223,0,0,1,1.731,0l4.036,4.032,5.618-5.652Z"
-                                    transform="translate(0 -96)" fill="#686363" />
-                            </svg>
+                    <li class="nav-item">
+                        <a class="nav-link sidebar menu-link pt-0" href="#PerformanceDrop-Down"
+                            data-bs-toggle="collapse" role="button" aria-expanded="false"
+                            aria-controls="sidebarRoles">
+                            <i>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22.058" height="12.253"
+                                    viewBox="0 0 22.058 12.253">
+                                    <path id="arrow-trend-up-solid"
+                                        d="M14.705,98.451a1.225,1.225,0,0,1,0-2.451h6.127a1.224,1.224,0,0,1,1.225,1.225v6.127a1.225,1.225,0,0,1-2.451,0v-3.167l-6.487,6.483a1.223,1.223,0,0,1-1.731,0l-4.071-4.032-5.226,5.258a1.225,1.225,0,0,1-1.733-1.731l6.128-6.127a1.223,1.223,0,0,1,1.731,0l4.036,4.032,5.618-5.652Z"
+                                        transform="translate(0 -96)" fill="#686363" />
+                                </svg>
 
-                        </i>
-                        <span>Performance</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="PerformanceDrop-Down">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="{{ route('employee-appraisal-pms-dashboard') }}" class="nav-link"><span>Self
-                                        Appraisal</span></a>
-                            </li>
-                            @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR', 'Manager']))
+                            </i>
+                            <span>Performance</span>
+                        </a>
+                        <div class="collapse menu-dropdown" id="PerformanceDrop-Down">
+                            <ul class="nav nav-sm flex-column">
                                 <li class="nav-item">
-                                    <a href="{{ route('team-appraisal-pms-dashboard') }}" class="nav-link"><span>Team
+                                    <a href="{{ route('employee-appraisal-pms-dashboard') }}"
+                                        class="nav-link"><span>Self
                                             Appraisal</span></a>
                                 </li>
-                            @endif
-                            @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
-                                <li class="nav-item">
-                                    <!-- <a href="{{ url('vmt-pms-assigngoals') }}" class="nav-link sidebar py-1"><span>Dashboard</span></a> -->
-                                    <a href="{{ route('pms-dashboard') }}" class="nav-link sidebar py-1"><span>Org
-                                            Appraisal</span></a>
-                                </li>
-                            @endif
+                                @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR', 'Manager']))
+                                    <li class="nav-item">
+                                        <a href="{{ route('team-appraisal-pms-dashboard') }}"
+                                            class="nav-link"><span>Team
+                                                Appraisal</span></a>
+                                    </li>
+                                @endif
+                                @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
+                                    <li class="nav-item">
+                                        <!-- <a href="{{ url('vmt-pms-assigngoals') }}" class="nav-link sidebar py-1"><span>Dashboard</span></a> -->
+                                        <a href="{{ route('pms-dashboard') }}"
+                                            class="nav-link sidebar py-1"><span>Org
+                                                Appraisal</span></a>
+                                    </li>
+                                @endif
 
 
-                            @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
-                                <li class="nav-item">
-                                    <a href="{{ route('vmt_config_pms') }}" class="nav-link"><span>PMS
-                                            Config</span></a>
-                                </li>
-                            @endif
-                        </ul>
-                    </div>
-                </li>
+                                @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
+                                    <li class="nav-item">
+                                        <a href="{{ route('vmt_config_pms') }}" class="nav-link"><span>PMS
+                                                Config</span></a>
+                                    </li>
+                                @endif
+                            </ul>
+                        </div>
+                    </li>
                 @endif
 
                 @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR', 'Manager']))
@@ -428,56 +475,57 @@
                     <!-- pay roll -->
                     {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}
 
-                        <li class="nav-item">
-                            <a class="nav-link sidebar menu-link pt-0" href="#payRollDrop-Down" data-bs-toggle="collapse"
-                                role="button" aria-expanded="false" aria-controls="sidebarRoles">
-                                <i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="12.652"
-                                        viewBox="0 0 16 12.652">
-                                        <g id="Group_34184" data-name="Group 34184" transform="translate(-18 -404.98)">
-                                            <path id="hand-holding-dollar-solid_1_"
-                                                data-name="hand-holding-dollar-solid (1)"
-                                                d="M15.867,12.712a1.114,1.114,0,0,0-1.562-.236l-3.343,2.462H7.595a.429.429,0,0,1-.422-.447.446.446,0,0,1,.422-.447H9.78a.95.95,0,0,0,.932-.743.9.9,0,0,0-.883-1.044H5.336a3.339,3.339,0,0,0-2.07.733l-1.3,1.054L.422,14.019A.471.471,0,0,0,0,14.491v2.68a.445.445,0,0,0,.422.447h9.665a2.926,2.926,0,0,0,1.723-.566C16.126,13.907,16.232,13.209,15.867,12.712Z"
-                                                transform="translate(18 400.015)" fill="#686363" />
-                                            <path id="bx-rupee"
-                                                d="M12.493,6.635V6H9v.635h1.112a.951.951,0,0,1,.894.635H9v.635h2.006a.951.951,0,0,1-.894.635H9v.767l1.774,1.774h.9L9.767,9.176h.345a1.59,1.59,0,0,0,1.556-1.27h.826V7.27h-.826a1.567,1.567,0,0,0-.293-.635Z"
-                                                transform="translate(15.253 398.98)" fill="#686363" />
-                                        </g>
-                                    </svg>
-                                </i>
+                    <li class="nav-item">
+                        <a class="nav-link sidebar menu-link pt-0" href="#payRollDrop-Down" data-bs-toggle="collapse"
+                            role="button" aria-expanded="false" aria-controls="sidebarRoles">
+                            <i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="12.652"
+                                    viewBox="0 0 16 12.652">
+                                    <g id="Group_34184" data-name="Group 34184" transform="translate(-18 -404.98)">
+                                        <path id="hand-holding-dollar-solid_1_"
+                                            data-name="hand-holding-dollar-solid (1)"
+                                            d="M15.867,12.712a1.114,1.114,0,0,0-1.562-.236l-3.343,2.462H7.595a.429.429,0,0,1-.422-.447.446.446,0,0,1,.422-.447H9.78a.95.95,0,0,0,.932-.743.9.9,0,0,0-.883-1.044H5.336a3.339,3.339,0,0,0-2.07.733l-1.3,1.054L.422,14.019A.471.471,0,0,0,0,14.491v2.68a.445.445,0,0,0,.422.447h9.665a2.926,2.926,0,0,0,1.723-.566C16.126,13.907,16.232,13.209,15.867,12.712Z"
+                                            transform="translate(18 400.015)" fill="#686363" />
+                                        <path id="bx-rupee"
+                                            d="M12.493,6.635V6H9v.635h1.112a.951.951,0,0,1,.894.635H9v.635h2.006a.951.951,0,0,1-.894.635H9v.767l1.774,1.774h.9L9.767,9.176h.345a1.59,1.59,0,0,0,1.556-1.27h.826V7.27h-.826a1.567,1.567,0,0,0-.293-.635Z"
+                                            transform="translate(15.253 398.98)" fill="#686363" />
+                                    </g>
+                                </svg>
+                            </i>
 
 
-                                <span>Payroll</span>
-                            </a>
-                            <div class="collapse menu-dropdown" id="payRollDrop-Down">
-                                <ul class="nav nav-sm flex-column">
+                            <span>Payroll</span>
+                        </a>
+                        <div class="collapse menu-dropdown" id="payRollDrop-Down">
+                            <ul class="nav nav-sm flex-column">
 
-                                    <li class="nav-item">
-                                        <a href="{{ route('showPayrollAnalyticsPage') }}" class="nav-link sidebar py-1"
-                                            role="button"><span>
+                                <li class="nav-item">
+                                    <a href="{{ route('showPayrollAnalyticsPage') }}" class="nav-link sidebar py-1"
+                                        role="button"><span>
                                             Analytics</span>
-                                        </a>
-                                    </li>
-                                    <a href="{{route('showPayRunPage')}}" class="nav-link sidebar py-1" role="button"><span>Pay
+                                    </a>
+                                </li>
+                                <a href="{{ route('showPayRunPage') }}" class="nav-link sidebar py-1"
+                                    role="button"><span>Pay
                                         Run</span></a>
 
-                                    <li class="nav-item">
-                                        <a  href="{{route('showPayrollClaimsPage')}}"  class="nav-link sidebar py-1"
-                                            role="button"><span>
+                                <li class="nav-item">
+                                    <a href="{{ route('showPayrollClaimsPage') }}" class="nav-link sidebar py-1"
+                                        role="button"><span>
                                             Claim</span>
-                                        </a>
-                                    </li>
+                                    </a>
+                                </li>
 
-                                    <li class="nav-item">
-                                        <a  href="{{route('showPayrollReportsPage')}}" class="nav-link sidebar py-1"
-                                            role="button"><span>
-                                                Reports</span>
-                                        </a>
-                                    </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('showPayrollReportsPage') }}" class="nav-link sidebar py-1"
+                                        role="button"><span>
+                                            Reports</span>
+                                    </a>
+                                </li>
 
 
-                                </ul>
-                            </div>
-                        </li>
+                            </ul>
+                        </div>
+                    </li>
                     {{-- @endif --}}
                 @endif
 
@@ -550,22 +598,21 @@
                 {{-- @endif --}}
 
                 @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
-
-                <!-- reports -->
-                <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0" id="employeeInfo" href="#reportsDrop-Down"
-                        data-bs-toggle="collapse" role="button" aria-expanded="false"
-                        aria-controls="sidebar360questions">
-                        <i>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#686363"
-                                class="bi bi-flag-fill" viewBox="0 0 16 16">
-                                <path
-                                    d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12.435 12.435 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A19.626 19.626 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a19.587 19.587 0 0 0 1.349-.476l.019-.007.004-.002h.001" />
-                            </svg>
-                        </i>
-                        <span> Reports</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="reportsDrop-Down">
+                    <!-- reports -->
+                    <li class="nav-item">
+                        <a class="nav-link sidebar menu-link pt-0" id="employeeInfo"
+                            href="{{ route('showPayrollReportsPage') }} " data-bs-toggle="" role="button"
+                            aria-expanded="false" aria-controls="sidebar360questions">
+                            <i>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#686363"
+                                    class="bi bi-flag-fill" viewBox="0 0 16 16">
+                                    <path
+                                        d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12.435 12.435 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A19.626 19.626 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a19.587 19.587 0 0 0 1.349-.476l.019-.007.004-.002h.001" />
+                                </svg>
+                            </i>
+                            <span> Reports</span>
+                        </a>
+                        {{-- <div class="collapse menu-dropdown" id="reportsDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
 
@@ -592,9 +639,8 @@
                                 </a>
                             </li>
                         </ul>
-                    </div>
-                </li>
-
+                    </div> --}}
+                    </li>
                 @endif
 
 
@@ -638,6 +684,15 @@
                         </a>
                         <div class="collapse menu-dropdown" id="configDrop-down">
                             <ul class="nav nav-sm flex-column">
+                                {{-- <li class="nav-item">
+                                    <a href="{{ route('roles') }}" id="" class="nav-link sidebar py-1"
+                                        data-bs-toggle="" role="button" aria-expanded="false">
+
+                                        <span>
+                                            roles
+                                        </span>
+                                    </a>
+                                </li> --}}
                                 <li class="nav-item">
                                     <a href="{{ route('view-config-master') }}" class="nav-link"><span>Master
                                             Config</span></a>
@@ -648,21 +703,21 @@
                                             Onboarding</span></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('document_preview') }}" class="nav-link">Document
-                                        Template<span>
+                                    <a href="{{ route('document_preview') }}" class="nav-link"><span>Document
+                                            Template
                                         </span></a>
                                 </li>
 
                                 {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}
 
                                 <li class="nav-item">
-                                    <a href="{{ route('attendance-leavesettings') }}" class="nav-link">Leave
-                                        Settings<span>
+                                    <a href="{{ route('attendance-leavesettings') }}" class="nav-link"><span>Leave
+                                            Settings
                                         </span></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ url('attendance_shift_woff_hday') }}"
-                                        class="nav-link sidebar py-1">Attendance</a>
+                                    <a href="{{ url('attendance_shift_woff_hday') }}" class="nav-link sidebar py-1">
+                                        <span> Attendance </span></a>
                                 </li>
                                 {{-- @endif --}}
                             </ul>

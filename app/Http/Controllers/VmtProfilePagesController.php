@@ -92,7 +92,7 @@ use Illuminate\Support\Facades\Crypt;
                                 
 
         //dd($documents_filenames);
-        return view('pages-profile-new', compact('user','documents_filenames','array_bloodgroup','enc_user_id','allEmployees', 'maritalStatus','genderArray','user_full_details', 'familydetails', 'exp', 'reportingManager','profileCompletenessValue','bank','data','employees','statutory_info'));
+        return view('profilePage_new', compact('user','documents_filenames','array_bloodgroup','enc_user_id','allEmployees', 'maritalStatus','genderArray','user_full_details', 'familydetails', 'exp', 'reportingManager','profileCompletenessValue','bank','data','employees','statutory_info'));
     }
 
 
