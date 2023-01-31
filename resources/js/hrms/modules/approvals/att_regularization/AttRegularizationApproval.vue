@@ -43,7 +43,8 @@
                 <Column field="reason_type" header="Reason"></Column>
                 <Column field="reviewer_comments" header="Approve Comments"></Column>
                 <Column field="reviewer_reviewed_date" header="Reviewed Date"></Column>
-                <Column field="status" header="Status">
+                <Column field="status" header="Status" icon="pi pi-check">
+
                     <template #body="{data}">
                         <span :class="'customer-badge status-' + data.status">{{data.status}}</span>
                     </template>
@@ -202,7 +203,7 @@
 
 .p-datatable .p-datatable-thead >tr>th{
     text-align: center;
-    padding: 0.3rem 1rem;
+    padding: 1.3rem 1rem;
     border: 1px solid #dee2e6;
       border-top-width: 1px;
       border-right-width: 1px;
@@ -273,7 +274,7 @@
   .p-datatable .p-datatable-tbody > tr > td:nth-child(1) {
     width: 20%;
   }
-  .page-content{
+  .main-content{
     width: 110%;
   }
 
