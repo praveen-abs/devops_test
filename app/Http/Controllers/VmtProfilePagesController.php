@@ -275,8 +275,14 @@ use Illuminate\Support\Facades\Crypt;
          return redirect()->back();
     }
 
+    /*
+        Req. params :
+         File name, Document_type, which document
 
-
+    */
+    public function uploadEmployeeDocument(Request $request){
+        dd($request->all());
+    }
 
 
 

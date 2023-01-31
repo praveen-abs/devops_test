@@ -7,7 +7,7 @@
                     <span>Personal Documents</span>
                 </template>
                 <!-- Aadhar front -->
-                <div style="display: flex;"  > 
+                <div style="display: flex;"  >
                     <span class="label" style="line-height: 35px;"><strong>Aadhar Card Front</strong></span>
                     <div class="AadharCardFront" style="display: flex;gap: 30px;">
                         <Button label="view" icon="pi pi-eye" iconPos="right" class="p-button-sm p-button-primary" />
@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <!-- Aadhar Back -->
-                <div style="display: flex;margin-top: 20px;"  > 
+                <div style="display: flex;margin-top: 20px;"  >
                     <span class="label" style="line-height: 35px;"><strong>Aadhar Card Back</strong></span>
                     <div class="AadharCardFront" style="display: flex;gap: 30px;">
                         <Button label="view" icon="pi pi-eye" iconPos="right" class="p-button-sm p-button-primary" />
@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <!-- Pan card -->
-                <div style="display: flex;margin-top: 20px;"  > 
+                <div style="display: flex;margin-top: 20px;"  >
                     <span class="label" style="line-height: 35px;"><strong>pan Card</strong></span>
                     <div class="AadharCardFront" style="display: flex;gap: 30px;">
                         <Button label="view" icon="pi pi-eye" iconPos="right" class="p-button-sm p-button-primary" />
@@ -36,7 +36,7 @@
                         <Button type="file" label="Upload" icon="pi pi-upload" iconPos="right" class="p-button-sm p-button-success"  />
                     </div>
                 </div>
-                <div style="display: flex;margin-top: 20px;"  > 
+                <div style="display: flex;margin-top: 20px;"  >
                     <span class="label"  style="line-height: 35px;"><strong>Aadhar Card Back</strong></span>
                     <div class="AadharCardFront" style="display: flex;gap: 30px;">
                         <Button label="view" icon="pi pi-eye" iconPos="right" class="p-button-sm p-button-primary" />
@@ -45,7 +45,7 @@
                         <Button type="file" label="Upload" icon="pi pi-upload" iconPos="right" class="p-button-sm p-button-success"  />
                     </div>
                 </div>
-                <div style="display: flex;margin-top: 20px;"  > 
+                <div style="display: flex;margin-top: 20px;"  >
                     <span class="label"  style="line-height: 35px;"><strong>Aadhar Card Back</strong></span>
                     <div class="AadharCardFront" style="display: flex;gap: 30px;">
                         <Button label="view" icon="pi pi-eye" iconPos="right" class="p-button-sm p-button-primary" />
@@ -54,7 +54,7 @@
                         <Button type="file" label="Upload" icon="pi pi-upload" iconPos="right" class="p-button-sm p-button-success"  />
                     </div>
                 </div>
-                <div style="display: flex;margin-top: 20px;"  > 
+                <div style="display: flex;margin-top: 20px;"  >
                     <span class="label"  style="line-height: 35px;"><strong>Aadhar Card Back</strong></span>
                     <div class="AadharCardFront" style="display: flex;gap: 30px;">
                         <Button label="view" icon="pi pi-eye" iconPos="right" class="p-button-sm p-button-primary" />
@@ -63,7 +63,7 @@
                         <Button type="file" label="Upload" icon="pi pi-upload" iconPos="right" class="p-button-sm p-button-success"  />
                     </div>
                 </div>
-                <div style="display: flex;margin-top: 20px;"  > 
+                <div style="display: flex;margin-top: 20px;"  >
                     <span class="label"  style="line-height: 35px;"><strong>Aadhar Card Back</strong></span>
                     <div class="AadharCardFront" style="display: flex;gap: 30px;">
                         <Button label="view" icon="pi pi-eye" iconPos="right" class="p-button-sm p-button-primary" />
@@ -72,7 +72,7 @@
                         <Button type="file" label="Upload" icon="pi pi-upload" iconPos="right" class="p-button-sm p-button-success"  />
                     </div>
                 </div>
-                <div style="display: flex;margin-top: 20px;"  > 
+                <div style="display: flex;margin-top: 20px;"  >
                     <span class="label"  style="line-height: 35px;"><strong>Aadhar Card Back</strong></span>
                     <div class="AadharCardFront" style="display: flex;gap: 30px;">
                         <Button label="view" icon="pi pi-eye" iconPos="right" class="p-button-sm p-button-primary" />
@@ -93,39 +93,46 @@
         </TabView>
     </div>
 </template>
-<script>
+<script setup>
 
-import { ref } from 'vue';
+    import { ref, onMounted } from 'vue';
+    import axios from 'axios'
 
-export default {
-    setup() {
-        const active1 = ref(0);
-        const active2 = ref(0);
-        const tabs = ref([
-            {
-                title: 'Header I',
-                content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-            },
-            {
-                title: 'Header II',
-                content: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi."
-            },
-            {
-                title: 'Header III',
-                content: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus."
-            }
-        ]);
-        const scrollableTabs = ref(Array.from({ length: 50 }, (_, i) => ({ title: `Tab ${i + 1}`, content: `Tab ${i + 1} Content` })));
+    onMounted(() => {
+        // let url = window.location.origin + '/fetch-regularization-approvals';
+        // console.log("AJAX URL : " + url);
+        // axios.get(url)
+        //     .then((response) => {
+        //         console.log("Axios : " + response.data);
+        //         att_regularization.value = response.data;
+        //     });
+    })
 
-        
-        const onUpload = () => {
-            console.log("Successfully");
-        }
-       
-        return { active1, active2, tabs, scrollableTabs,onUpload }
+    function processDocUpload() {
+       // hideConfirmDialog(false);
+       // canShowLoadingScreen.value = true;
+
+       axios.post(window.location.origin + '/profile-page/uploadEmployeeDocs', {
+            doc_name: "test_doc",
+            file: "test_123.file" ,
+            status_text: 'helllo'
+        })
+        .then((response) => {
+            console.log(response);
+            //canShowLoadingScreen.value = false;
+            //resetVars();
+        })
+        .catch((error) => {
+            //canShowLoadingScreen.value = false;
+            //resetVars();
+            console.log(error.toJSON());
+        });
     }
-}
 
+    function onUpload(){
+            console.log("Uploading file....");
+            processDocUpload();
+        }
 
 </script>
 
