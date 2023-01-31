@@ -255,7 +255,7 @@
                                                 <tr class="">
                                                     <td colspan="8" align="" class="text-right pad-bottom-25">
                                                         <div class="logo" style="">
-                                                            <img src="{{ URL::asset('assets/images/appoinment/brandavatarlogo.png') }}"
+                                                            <img src="{{ URL::asset('assets/clients/brandavatar/logos/logo_brandavatar.png') }}"
                                                                 class="" style="height: 50px;width:180px;">
                                                         </div>
                                                     </td>
@@ -1080,12 +1080,12 @@
                             </div>
                             <button class="carousel-control-prev" type="button"
                                 data-bs-target="#policy_carousel" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="carousel-control-prev-icon bg-secondary rounded-circle" aria-hidden="true"></span>
                                 <span class="visually-hidden">Previous</span>
                             </button>
                             <button class="carousel-control-next" type="button"
                                 data-bs-target="#policy_carousel" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="carousel-control-next-icon bg-secondary rounded-circle" aria-hidden="true"></span>
                                 <span class="visually-hidden">Next</span>
                             </button>
                         </div>

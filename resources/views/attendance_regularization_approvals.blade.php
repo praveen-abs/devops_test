@@ -74,6 +74,7 @@
                 </div>
 
                 <div class="table-responsive">
+                    <div class="attendance_gridjs" id="vjs_regularizationTable"></div>
                     <div class="attendance_gridjs" id="table_lateComingTable"></div>
                 </div>
             </div>
@@ -118,6 +119,8 @@
 @endsection
 
 @section('script')
+    {{-- @vite(['resources/js/hrms/modules/approvals/AttRegularizationApproval.js']) --}}
+
     <script src="{{ URL::asset('assets/libs/gridjs/gridjs.min.js') }}"></script>
     <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
     <script>

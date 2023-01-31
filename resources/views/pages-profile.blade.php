@@ -108,7 +108,7 @@
                                                     <div class="title">Birthday:</div>
                                                     @if (!empty($user_full_details->dob))
                                                         <div class="text">
-                                                            {{ date('d F', strtotime($user_full_details->dob)) }}
+                                                            {{ date('d F Y', strtotime($user_full_details->dob)) }}
                                                         </div>
                                                     @endif
                                                 </li>

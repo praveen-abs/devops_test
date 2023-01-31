@@ -8,20 +8,24 @@
     --color-medium-green: #01a522;
     --color-dark-green: #027419;
     --color-medium-ash: #c9c9c9;
+    --color-dark-ash: #646464;
     --color-lite-ash: #e2e2e2;
-
-
 }
 
 .h_80 {
     height: 80px;
+}
+/* text color */
+
+.text-ash-dark{
+    color: var(--color-dark-ash);
 }
 
 .form-control,
 .form-select {
     font-size: 13px;
 }
-.border-lite-ash{
+.border-lite-ash {
     border: var(--color-lite-ash);
 }
 
@@ -213,6 +217,17 @@ table.no-padding tr td {
     font-weight: 600;
     padding: 5px 8px !important;
     font-size: 13px !important;
+}
+
+/* .btn-ash {
+    background-color: var(--color-dark-ash);
+}
+.btn-border-ash {
+    background-color: transparent;
+    border: 1px solid var(--color-dark-ash);
+} */
+.btn {
+    font-size: 13px;
 }
 .btn-secondary {
     color: var(--color-white);
@@ -448,25 +463,30 @@ table.no-padding tr td {
 
 button.gridjs-sort-neutral::after,
 button.gridjs-sort-neutral::before,
-button.gridjs-sort-desc::after,button.gridjs-sort-asc::before  {
+button.gridjs-sort-desc::after,
+button.gridjs-sort-asc::before {
     font-family: "Font Awesome 5 Free";
     font-size: 9px;
     font-weight: 900;
     color: #ffffff;
 }
-button.gridjs-sort-neutral::after,button.gridjs-sort-desc::after {
+button.gridjs-sort-neutral::after,
+button.gridjs-sort-desc::after {
     content: "\f078";
     position: absolute;
     top: 10px;
     left: 5px;
 }
-button.gridjs-sort-neutral::before,button.gridjs-sort-asc::before {
+button.gridjs-sort-neutral::before,
+button.gridjs-sort-asc::before {
     content: "\f077";
     position: absolute;
     top: 2px;
     left: 5px;
 }
-button.gridjs-sort-neutral,button.gridjs-sort-asc,button.gridjs-sort-desc {
+button.gridjs-sort-neutral,
+button.gridjs-sort-asc,
+button.gridjs-sort-desc {
     background-image: none !important;
     opacity: 1 !important;
 }
@@ -1132,10 +1152,9 @@ button.gridjs-sort-desc {
 .text-orange {
     color: #ee6a04;
 }
-.bg-orange{
+.bg-orange {
     background-color: var(--color-primary_orange);
 }
-
 
 .leave-request-section .modal .modal-dialog .modal-content .modal-header {
     border-bottom: none !important;
@@ -1416,7 +1435,7 @@ a.editable-click:hover {
     border-bottom: 1px solid #cecece;
 }
 .border-bottom-liteAsh {
-    border-bottom: 1px solid #ebe8e8;
+    border-bottom: 1px solid #f3f2f2;
 }
 .clearfix:after {
     clear: both;
@@ -1628,6 +1647,6 @@ table.no_borderRadius tr th:last-child {
 table.dataTable.no-footer {
     border-bottom: transparent !important;
 }
-.error{
+.error {
     color: red;
 }

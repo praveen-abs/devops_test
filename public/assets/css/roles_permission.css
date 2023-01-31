@@ -1,0 +1,112 @@
+.search-bar-wrapper {
+    position: relative;
+}
+.search-bar-wrapper input {
+    text-indent: 20px;
+}
+.search-bar-wrapper i {
+    position: absolute;
+    color: #c1c1c1;
+    top: 8px;
+    left: 8px;
+}
+
+.selected-user-container {
+    /* border: 1px solid var(--color-dark-ash); */
+    height: 100px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.roles-table tr td {
+    min-width: 200px;
+}
+.roles-table tr td .role-descriptions {
+    text-align: initial;
+}
+
+.manage-button {
+    padding: 5px 35px;
+    background-color: transparent;
+    border: 1px solid var(--color-dark-ash);
+}
+
+/* for chips */
+
+.chip {
+    border-radius: 25px;
+    background-color: #f1f1f1;
+    padding: 5px;
+    /* min-width: 100px; */
+    width: fit-content;
+    height: 25px;
+    display: flex;
+    min-height: 35px;
+    /* display: inherit; */
+}
+
+.chip .chips-img-sm {
+    height: 25px;
+    width: 25px;
+}
+
+.closebtn {
+    padding-left: 10px;
+    color: #888;
+    font-weight: bold;
+    float: right;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.closebtn:hover {
+    color: #000;
+}
+
+.focus-none:focus{
+    box-shadow: none !important;
+}
+.border-focus-none:focus{
+    border-color:none ;
+}
+
+
+/* privilege */
+.accordion-item .accordion-header .accordion-button,.accordion-item .accordion-header .accordion-button.collapsed{
+    background-color: #dcd9da !important;
+}
+.accordion-item .accordion-header .accordion-button:not(.collapsed){
+    color: #000;
+    background-color: #c5ddf78f !important;
+}
+
+/* .accordion-collapse.show {
+    background-color: #000;
+} */
+
+.privileges-list {
+    margin-left: 30px;
+    color: #888;
+    font-weight: 600;
+}
+
+.privileges-list > li div ,.privileges-list > li span{
+    line-height: 20px;
+}
+.privileges-list > li div {
+    display: flex;
+    align-items: center;
+
+    height: 15px;
+}
+.privileges-list > li div {
+    margin-bottom: 10px;
+}
+.privileges-list > li div input {
+    height: 15px;
+    width: 15px;
+}
+
+.privileges-list > li div input:checked + span {
+    font-size: 14px;
+    color: var(--color-dark-ash);
+}
