@@ -209,14 +209,55 @@
       border-bottom-width: 1px;
       border-left-width: 1px;
     border-width: 0 0 1px 0;
-    font-weight: 700;
+    font-weight: 600;
     color: #fff;
     background: #003056;
     transition: box-shadow 0.2s;
-    font-size: 15px;
+    font-size: 13px;
     .p-column-title {
-        font-size: 15px;
+        font-size: 13px;
     }
+    .p-column-filter {
+        width: 100%;
+      }
+      #pv_id_2 {
+        height: 30px;
+      }
+    .p-fluid .p-dropdown .p-dropdown-label {
+        margin-top: -10px;
+      }
+      .p-dropdown .p-dropdown-label.p-placeholder{
+        margin-top: -12px;
+      }
+    
+    .p-column-filter-menu-button{
+        color: white;
+    }
+    .p-column-filter-menu-button:hover {
+        color:white;
+        border-color: transparent;
+        background: #01101e;
+      }
+      .p-column-filter-menu-button.p-column-filter-menu-button-active, .p-column-filter-menu-button.p-column-filter-menu-button-active:hover{
+        color:white;
+        background:#003056 ;
+      }
+     .p-column-filter-menu-button.p-column-filter-menu-button-active:hover{
+        background: #01101e;
+        border-color: transparent;
+    
+        
+     }
+  }
+  
+.p-datatable .p-datatable-tbody > tr{
+    font-size: 13px;
+    .employee_name{
+        font-weight: bold;
+        font-size: 13.5px;
+    }
+    
+    
   }
   .p-datatable .p-datatable-tbody > tr > td {
     text-align: left;
@@ -227,26 +268,6 @@
       border-left-width: 1px;
     border-width: 0 0 1px 0;
     padding: 1rem 0.6rem;
-  }
-  .p-column-filter {
-    width: 90%;
-  }
-  #pv_id_2 {
-    height: 35px;
-  }
-  .p-dropdown .p-dropdown-label.p-placeholder {
-    color: #6c757d;
-    margin-top: -10px;
-  }
-.employee_name{
-    font-weight: bold;
-    font-size: 14px;
-}
-.p-column-title {
-    font-size: 17px;
-}
-.p-datatable .p-datatable-tbody > tr{
-    font-size: 13px;
   }
 
 .pending {
