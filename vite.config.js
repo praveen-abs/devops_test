@@ -10,7 +10,8 @@ export default defineConfig({
                     'resources/js/hrms/modules/leave_module/OrgLeaveBalance.js',
                     'resources/js/hrms/modules/approvals/att_regularization/AttRegularizationApproval.js',
                     'resources/js/hrms/modules/approvals/reimbursements/ReimbursementsApproval.js',
-                    'resources/js/hrms/modules/testings/praveen/crud_table/CRUD_DataTable.js'
+                    'resources/js/hrms/modules/testings/praveen/crud_table/CRUD_DataTable.js',
+                    'resources/js/hrms/modules/profile_pages/EmployeeDocumentsManager.js'
             ],
             refresh: true,
         }),

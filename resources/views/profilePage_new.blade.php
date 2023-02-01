@@ -1,4 +1,3 @@
-<?php use Carbon\Carbon; ?>
 
 @extends('layouts.master')
 @section('title')
@@ -1437,13 +1436,11 @@
                     <div class="tab-pane fade" id="document_det" role="tabpanel" aria-labelledby="">
                         <div class="card mb-2">
                             <div class="card-body">
+                                <div id="vjs_employeeDocsManager"></div>
+                                <!--
                                 <form action="{{ route('updatePersonalInformation', $user->id) }}" Method="POST"
                                     enctype="multipart/form-data">
                                     <h6 class="">Documents Of Employee
-                                        {{-- <span class="personal-edit"><a href="#" class="edit-icon"
-                                                data-bs-toggle="modal" data-bs-target="#edit_document"><i
-                                                    class="ri-pencil-fill"></i></a>
-                                        </span> --}}
                                     </h6>
                                     <div class="table-responsive">
                                         <table class="table">
@@ -1487,6 +1484,7 @@
                                         </table>
                                     </div>
                                 </form>
+                                -->
                             </div>
                         </div>
 
@@ -2277,6 +2275,7 @@
 @endsection
 @section('script')
     @yield('script-profile-avatar')
+    @vite(['resources/js/hrms/modules/profile_pages/EmployeeDocumentsManager.js'])
 
 
     <script src="{{ URL::asset('assets/js/pages/profile-setting.init.js') }}"></script>

@@ -45,7 +45,7 @@ use Illuminate\Support\Facades\Crypt;
 
 
         $familydetails = VmtEmployeeFamilyDetails::where('user_id',$user->id)->get();
-        $statutory_info= VmtEmployeeStatutoryDetails ::where('user_id',$user->id)->get();
+        $statutory_info= VmtEmployeeStatutoryDetails ::where('user_id',$user->id)->first();
 
 
         $exp = Experience::where('user_id',$user->id)->get();
@@ -89,6 +89,7 @@ use Illuminate\Support\Facades\Crypt;
                                     'reliving_letter_file',
                                     'docs_reviewed'
                                 ])->toArray();
+                                
 
         //dd($documents_filenames);
         return view('profilePage_new', compact('user','documents_filenames','array_bloodgroup','enc_user_id','allEmployees', 'maritalStatus','genderArray','user_full_details', 'familydetails', 'exp', 'reportingManager','profileCompletenessValue','bank','data','employees','statutory_info'));
@@ -96,14 +97,15 @@ use Illuminate\Support\Facades\Crypt;
 
 
     public function updateGeneralInfo(Request $request) {
-        //dd($request->all());
+         //dd($request->all());
          $details = VmtEmployee::where('userid', $request->id)->first();
          $details->dob = $request->input('dob');
          $details->gender = $request->input('gender');
          $details->marital_status = $request->input('marital_status');
          $details->doj=$request->input('doj');
          $details->blood_group_id = $request->input('blood_group');
-
+         $details->physically_challenged = $request->input('physically_challenged');
+         
          $details->save();
 
          return redirect()->back();
@@ -190,8 +192,7 @@ use Illuminate\Support\Facades\Crypt;
 
         }
 
-        Ses::flash('message', 'Bank Details Updated successfully!');
-        Ses::flash('alert-class', 'alert-success');
+         
         return redirect()->back();
     }
 
@@ -234,6 +235,8 @@ use Illuminate\Support\Facades\Crypt;
             $statutory->uan_number=$request->input('uan_number');
             $statutory->esic_applicable=$request->input('esic_applicable');
             $statutory->esic_number=$request->input('esic_number');
+            $statutory->epf_abry_eligible= $request->input('epf_abry_eligible');
+            $statutory->eps_pansion_eligible=$requst->input('eps_pansion_eligible');
             $statutory->save();
         }
         else
@@ -244,6 +247,8 @@ use Illuminate\Support\Facades\Crypt;
             $statutory->uan_number=$request->input('uan_number');
             $statutory->esic_applicable=$request->input('esic_applicable');
             $statutory->esic_number=$request->input('esic_number');
+            $statutory->epf_abry_eligible->input('epf_abry_eligible');
+            $statutory->eps_pansion_eligible->input('eps_pansion_eligible');
             $statutory->save();
         }
 
@@ -264,6 +269,18 @@ use Illuminate\Support\Facades\Crypt;
         $user->save();
         $report = $request->input('report');
         $code = VmtEmployee::select('emp_no', 'name', 'designation')->join('vmt_employee_office_details', 'user_id', '=', 'vmt_employee_details.userid')->join('users', 'users.id', '=', 'vmt_employee_details.userid')->where('emp_no', $report)->first();
+        $documents_filenames = VmtEmployee::where('userid',$user_id)
+        ->get([
+            'aadhar_card_file',
+            'aadhar_card_backend_file',
+            'pan_card_file',
+            'passport_file',
+            'voters_id_file',
+            'dl_file',
+            'education_certificate_file',
+            'reliving_letter_file',
+            'docs_reviewed'
+        ]);
 
         // $reDetails = VmtEmployee::where('userid', $request->id)->first();
         // $details = VmtEmployee::find($reDetails->id);
@@ -275,8 +292,14 @@ use Illuminate\Support\Facades\Crypt;
          return redirect()->back();
     }
 
+    /*
+        Req. params :
+         File name, Document_type, which document
 
-
+    */
+    public function uploadEmployeeDocument(Request $request){
+        dd($request->all());
+    }
 
 
 

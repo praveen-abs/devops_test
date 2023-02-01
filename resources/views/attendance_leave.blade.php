@@ -271,7 +271,7 @@
                         <div class="card mb-0 leave-history">
                             <div class="card-body">
                                 <h6 class="mb-2">Org Leave Balance</h6>
-                                <div id="orgLeaveTable_RemainingLeave"></div>
+                                <div id="vjs_orgLeaveTable_RemainingLeave"></div>
                             </div>
                         </div>
                     </div>
