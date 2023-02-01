@@ -31,7 +31,7 @@
                 <div class="tab-pane fade  active show " id="appointment" role="tabpanel" aria-labelledby="pills-home-tab">
                     <div id="carousel_template" class="carousel slide" data-bs-touch="false" data-bs-interval="false">
                         <div class="carousel-inner">
-                            <div class="carousel-item active">
+                            <div class="carousel-item  active">
                                 <div class="main-page appointment-letter">
                                     <div class="sub-page" style="text-align: justify;font-size: 15px;">
                                         <table class="letter-format" style="padding:0;">
@@ -272,7 +272,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="carousel-item active">
+                            <div class="carousel-item ">
                                 <div class="main-page appointment-letter">
                                     <div class="sub-page" style="text-align: justify;font-size: 15px;">
                                         <table class="letter-format " style="padding:0;">
@@ -670,16 +670,16 @@
                                                 </tr>
 
                                                 <tr>
-                                                    <td colspan="6" class=" pt-30 "
-                                                        style="padding-top: 9px;" align="left">
+                                                    <td colspan="6" class=" pt-30 " style="padding-top: 9px;"
+                                                        align="left">
                                                         <p class="fw-500 txt-left " style="">
                                                             Sign:
                                                         </p>
 
 
                                                     </td>
-                                                    <td colspan="6" class="pt-30 "
-                                                        style="padding-top: 9px;" align="right">
+                                                    <td colspan="6" class="pt-30 " style="padding-top: 9px;"
+                                                        align="right">
                                                         <p class="fw-500 txt-right " style="">
                                                             Date:
                                                         </p>
@@ -688,7 +688,8 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="12" class="border-bottom-line-ash" style="padding-bottom: 194px">
+                                                    <td colspan="12" class="border-bottom-line-ash"
+                                                        style="padding-bottom: 194px">
 
                                                     </td>
                                                 </tr>
@@ -712,7 +713,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="carousel-item  active">
+                            <div class="carousel-item  ">
                                 <div class="main-page appointment-letter">
                                     <div class="sub-page" style="text-align: justify;font-size: 15px;">
                                         <table class="letter-format " style="padding:0;">
@@ -732,7 +733,7 @@
 
 
                                                 <tr>
-                                                    <td colspan="12" style=" "class="pt-30" align="center">
+                                                    <td colspan="12" style=" "class="" align="center">
                                                         <span class="fw-500  " style="font-size:20px;">
                                                             ANNEXURE B
                                                         </span>
@@ -741,7 +742,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td colspan="12" style=" "class="pt-20" align="">
-                                                        <p class="fw-500  " style="">
+                                                        <p class="fw-500  pad-bottom-5" style="">
                                                             DUTIES
                                                         </p>
 
@@ -750,33 +751,28 @@
                                                 <tr>
                                                     <td colspan="12" style=" "class="" align="">
                                                         <p class="  " style="">
-                                                            You will devote your full-time skill and attention to the
-                                                            work
-                                                            and business of the Company and shall continue to work to
-                                                            the
+                                                            You will devote your full-time skill and attention to the work
+                                                            and business of the Company and shall continue to work to the
                                                             best of your ability.
-
-                                                        </p>
-
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="12" style=" "class="" align="">
-                                                        <p class="  " style="">
+                                                            Without the Company’s prior written consent, you will not
+                                                            perform any other work for pay during your employment term, or
+                                                            will you, alone or with others, directly or indirectly,
+                                                            establish any business, whatever its form, or take any financial
+                                                            interest in or perform work for such a business, whether or not
+                                                            for consideration.
                                                             You will accept, support, and work within the management,
-                                                            financial, personnel, internal control, and reporting
-                                                            systems,
-                                                            policies, practices, and procedures as determined by the
-                                                            Company
+                                                            financial, personnel, internal control, and reporting systems,
+                                                            policies, practices, and procedures as determined by the Company
                                                             or your Manager, from time to time.
 
                                                         </p>
 
                                                     </td>
                                                 </tr>
+
                                                 <tr>
                                                     <td colspan="12" style=" "class="pt-10" align="">
-                                                        <p class="fw-500  " style="">
+                                                        <p class="fw-500  pad-bottom-5" style="">
                                                             HOURS OF WORK
                                                         </p>
 
@@ -786,24 +782,15 @@
                                                     <td colspan="12" style=" "class="" align="">
                                                         <p class=" " style="">
                                                             Your actual working hours &nbsp;<span
-                                                                class="fw-500 txt-left">9.45 AM to 6 PM </span>&nbsp;
-                                                            including working in
-                                                            Shifts and working days (including working on weekly offs
-                                                            and
-                                                            public holidays) will be often determined by workflow and
-                                                            Company commitments.
+                                                                class="fw-500 txt-left">8.55 AM to 6 PM </span>&nbsp;
+                                                            including working in Shifts and working days (including working
+                                                            on weekly offs and public holidays) will be often determined by
+                                                            workflow and Company commitments. Brand Avatar LLP works for 9
+                                                            hours (Including Break) a day 6 days a week. However, there may
+                                                            be certain work exigencies that may require you to work beyond
+                                                            the stipulated hours of work.
 
 
-                                                        </p>
-                                                        <p class="12 " style="">
-                                                            LANGRO INDIA PRIVATE LIMITED works for &nbsp;<span
-                                                                class="fw-500 txt-left">8
-                                                                hours</span>&nbsp; (Including Break) a day 5 days a
-                                                            week and Saturday &nbsp;<span class="fw-500 txt-left">9.45
-                                                                AM
-                                                                to 4 PM </span>&nbsp; (Including Break). However,
-                                                            there may be certain work exigencies that may require you to
-                                                            work beyond the stipulated hours of work.
 
                                                         </p>
 
@@ -811,7 +798,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td colspan="12" style=" "class="pt-10" align="">
-                                                        <p class="fw-500  " style="">
+                                                        <p class="fw-500  pad-bottom-5" style="">
                                                             CONDUCT
 
                                                         </p>
@@ -832,7 +819,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td colspan="12" style=" "class="pt-10">
-                                                        <p class=" fw-500" style="">
+                                                        <p class=" fw-500 pad-bottom-5" style="">
                                                             REVIEW OF SALARY
 
                                                         </p>
@@ -856,7 +843,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td colspan="12" style=" "class="pt-10">
-                                                        <p class=" fw-500" style="">
+                                                        <p class=" fw-500 pad-bottom-5" style="">
                                                             CONFIDENTIALITY OF SALARY
 
 
@@ -877,7 +864,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td colspan="12" style=" "class="pt-10">
-                                                        <p class=" fw-500" style="">
+                                                        <p class=" fw-500 pad-bottom-5" style="">
                                                             EXPENSES
                                                         </p>
 
@@ -903,7 +890,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td colspan="12" style=" "class="pt-10">
-                                                        <p class=" fw-500" style="">
+                                                        <p class=" fw-500 pad-bottom-5" style="">
                                                             PROVIDENT FUND SCHEME AND ESIC
 
                                                         </p>
@@ -911,56 +898,39 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="12" style="padding-bottom:76px;"
-                                                        class="border-bottom-line ">
+                                                    <td colspan="12" style="padding-bottom:64px;"
+                                                        class="border-bottom-line-ash">
+                                                        <p class=" pad-bottom-5" style="">
+                                                            You will be entitled to an employer's contribution of Provident
+                                                            Fund to the extent of 12% of your gross salary excluding house
+                                                            rent allowance.
+                                                        </p>
                                                         <p class=" " style="">
-                                                            Employer contributions will be submitted to the Indian
-                                                            Government-approved Provident Fund Scheme on your behalf
-                                                            with
-                                                            your equal monthly contribution as detailed in &nbsp;<span
-                                                                class="fw-500 txt-left"> Annexure A .</span>&nbsp;
+                                                            You will be eligible to get the ESIC medical benefits for you
+                                                            and your immediate family members if your gross wages are less
+                                                            than or equal to 21000/-
 
                                                         </p>
 
+
                                                     </td>
                                                 </tr>
-
-
-
 
                                                 <tr>
-                                                    <td colspan="4" class="" align="">
-                                                        <p class=" " style="text-align:initial;width:225px">
-                                                            <span class="fw-500 txt-left">Registered
-                                                                Office:</span>&nbsp;#34/123,
-                                                            Dugar Towers 2ndFloor
-                                                            MarshallsRoad,Chennai-600008
-                                                            Ph:044-42661403I/45558608I/8609
-                                                        </p>
-                                                    </td>
+                                                    <td colspan="12">
+                                                        <p class="txt-center">
+                                                            <span class="fw-500 txt-left " style="">
+                                                                Registered Office Address-
+                                                            </span>
+                                                            Brand Avatar LLP, No-01, Kandasamy Street,
+                                                            Chandrabagh Avenue Extn, Radhakrishnan Salai,
+                                                            Mylapore, Chennai, Tamilnadu -600 004.
 
-                                                    <td colspan="4" class="" align="">
-                                                        <p class=" " style="text-align:initial;">
-                                                            <span class="fw-500 txt-left">
-                                                                BranchOffice:</span>&nbsp;Ambur:2C,KaspaMainRoad,
-                                                            KamarajarNagar,Kaspa-'A',Ambur,
-                                                            VelloreDistrict-635802.
-                                                            Tel:+9l-04174-245366
-                                                            Mob:+91-9962517613
-
-                                                        </p>
-                                                    </td>
-                                                    <td colspan="4" style=" " class="" align="">
-                                                        <p class=" " style="text-align:initial;">
-                                                            <span class="fw-500 txt-left"> Corporate Identity
-                                                                No:</span>&nbsp;
-                                                            <span
-                                                                class="fw-500 txt-left">U19119TN2012PTC086879</span>&nbsp;
-                                                            Email:info@langroindia.com
-                                                            Internet:www.langroindia.com
                                                         </p>
                                                     </td>
                                                 </tr>
+
+
 
 
                                             </tbody>
@@ -968,55 +938,30 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="carousel-item ">
+                            <div class="carousel-item  ">
                                 <div class="main-page appointment-letter">
-                                    <div class="sub-page" style="text-align: justify;">
+                                    <div class="sub-page" style="text-align: justify;font-size: 15px;">
                                         <table class="letter-format " style="padding:0;">
                                             <tbody>
                                                 <tr>
-                                                    <td colspan="12" class="pb-30" align="right">
-
-                                                        <div style="height: 80px;width:200px;max-height:100%;">
-                                                            <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_langro.jpg') }}"
+                                                    <td colspan="12" class="pb-15" align="left">
+                                                        <div style="height: 75px;width:160px">
+                                                            <img src="{{ URL::asset('assets/clients/brandavatar/logos/logo_avatar_live.png') }}"
                                                                 class="" alt=""
-                                                                style="height: 100%;width:100%;">
+                                                                style="height:100%;width:100%;">
                                                         </div>
 
 
-
                                                     </td>
 
                                                 </tr>
 
+
+
                                                 <tr>
-                                                    <td colspan="12" style=" "class="pt-10">
-                                                        <p class=" fw-500" style="">
+                                                    <td colspan="12" style=" "class="pt-20" align="">
+                                                        <p class="fw-500  pad-bottom-5" style="">
                                                             METHOD OF PAYMENT
-                                                        </p>
-
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="12" style=" "class="">
-                                                        <p class="" style="">
-                                                            Salaries and wages will be paid monthly by electronic funds
-                                                            transfer or will be deposited in your Salary Account or any
-                                                            other means on or before the 7th day of each month in
-                                                            arrears.
-                                                            The company reserves its right to vary this procedure at its
-                                                            option. However, such variance will be communicated to you
-                                                            in
-                                                            due course.
-
-                                                        </p>
-
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td colspan="12" style=" "class="pt-10">
-                                                        <p class="fw-500  " style="">
-                                                            LEAVE
                                                         </p>
 
                                                     </td>
@@ -1024,16 +969,41 @@
                                                 <tr>
                                                     <td colspan="12" style=" "class="" align="">
                                                         <p class="  " style="">
-                                                            Leave will be granted as per the prevailing Company's
-                                                            policy. The current Leave Policy is available in the
-                                                            employeehandbook
+                                                            Salaries and wages will be paid monthly by electronic funds
+                                                            transfer or will be deposited in your Corporate Salary Account
+                                                            or any other means on or before the 7th day of each month in
+                                                            arrears. The company reserves its right to vary this procedure
+                                                            at its option. However, such variance will be communicated to
+                                                            you in due course.
+
+
                                                         </p>
+
                                                     </td>
                                                 </tr>
 
                                                 <tr>
                                                     <td colspan="12" style=" "class="pt-10" align="">
-                                                        <p class="fw-500  " style="">
+                                                        <p class="fw-500  pad-bottom-5" style="">
+                                                            LEAVE
+                                                        </p>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="12" style=" "class="" align="">
+                                                        <p class=" " style="">
+                                                            You will be governed by the leave rules of the Company; your
+                                                            manager has got all rights to decide on your leave as per the
+                                                            policy and you can avail of 12 days of Casual Leave (CL) in a
+                                                            year and 4 Days of Paid Leave.
+                                                        </p>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="12" style=" "class="pt-10" align="">
+                                                        <p class="fw-500  pad-bottom-5" style="">
                                                             INTELLECTUAL PROPERTY RIGHTS
 
                                                         </p>
@@ -1042,209 +1012,194 @@
                                                 </tr>
                                                 <tr>
                                                     <td colspan="12" style=" "class="" align="">
-                                                        <p class="  " style="">
-                                                            All Industrial and intellectual property rights, including
-                                                            but
+                                                        <p class=" " style="">
+                                                            All Industrial and intellectual property rights, including but
                                                             not limited to patent rights, design rights, copyrights, and
                                                             related rights, database rights, trademark rights, and chip
-                                                            rights, ensuring within the framework of the work performed
-                                                            by
-                                                            you during your employment with the company,
+                                                            rights, ensuring within the framework of the work performed by
+                                                            you during your employment with the company, will be exclusively
+                                                            vested in Company. You may not independently during your
+                                                            employment and subsequent to termination disclose, multiply,
+                                                            use, manufacture, bring on the market or sell, lease, deliver,
+                                                            or otherwise trade, offer on behalf of any third party, or
+                                                            commission the registration of the results of your work. To the
+                                                            extent that such inventions are performed under the Company’s
+                                                            direction, you shall fully, freely, and immediately communicate
+                                                            any invention to the Company and all rights, title, and interest
+                                                            to any such invention (“Inventions”) shall be the sole property
+                                                            of the Company.
                                                         </p>
-                                                        <p class="  " style="">
-                                                            will be exclusively vested in Company. You may not
-                                                            independently
-                                                            during your employment and subsequent to termination
-                                                            disclose,
-                                                            multiply, use, manufacture, bring on the market or sell,
-                                                            lease,
-                                                            deliver, or otherwise trade, offer on behalf of any third
-                                                            party,
-                                                            or commission the registration of the results of your work.
-                                                            To
-                                                            the extent that such inventions are performed under the
-                                                            Company’s direction, you shall fully, freely, and
-                                                            immediately
-                                                            communicate any invention to the Company and all rights,
-                                                            title,
-                                                            and interest to any such invention (“Inventions”) shall be
-                                                            the
-                                                            sole property of the Company.
-
-                                                        </p>
-                                                        <p class="  " style="">
+                                                        <p class=" pt-10" style="">
                                                             In pursuance of the above
+                                                        </p>
+                                                        <p class=" pt-10" style="">
+                                                            A. You will give the Company and its solicitors and/or it’s
+                                                            patent attorneys all necessary assistance and cooperation in
+                                                            connection with the preparation and prosecution of any
+                                                            application for patent, design, registration, or copyright by
+                                                            the Company in respect of the Invention.
 
                                                         </p>
+                                                        <p class=" pt-pb-10" style="">
+                                                            B. You irrevocably appoint the Company and any directors of the
+                                                            Company jointly and severally your true and lawful attorney to
+                                                            execute all such documents and do all such things as in the
+                                                            opinion of the Company may be necessary or requisite for any
+                                                            such purpose.
 
-                                                        <ol type="A" style="text-align: justify">
-                                                            <li class="pt-pb-5">You will give the Company and its
-                                                                solicitors and/or its
-                                                                patent attorneys all necessary assistance and
-                                                                cooperation in
-                                                                connection with the preparation and prosecution of any
-                                                                application for patent, design, registration, or
-                                                                copyright
-                                                                by the Company in respect of the Invention.
-                                                            </li>
-                                                            <li>TeYou irrevocably appoint the Company and any directors
-                                                                of
-                                                                the Company jointly and severally your true and lawful
-                                                                attorney to execute all such documents and do all such
-                                                                things as in the opinion of the Company may be necessary
-                                                                or
-                                                                requisite for any such purpose.</li>
-
-                                                        </ol>
-
-
+                                                        </p>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="" style=" "class="pt-10">
-                                                        <p class="fw-500  " style="">
+                                                    <td colspan="12" style="padding-bottom:57px"
+                                                        class="border-bottom-line-ash" align="">
+                                                        <p class="fw-500  pad-bottom-5" style="">
+                                                            NON-DISCLOSURE AGREEMENT
+
+                                                        </p>
+                                                        <p class="pad-bottom-5">
+                                                            During the employment, the employee shall not directly or
+                                                            indirectly carry on, assist, engage in, be concerned, or
+                                                            participate in any business/activity (whether directly or
+                                                            indirectly, as a partner, shareholder, principal, agent,
+                                                            director, affiliate, Consultant or in any other capacity or
+                                                            manner whatsoever) which is similar to the business of the
+                                                            Company, nor engage in any activity that conflicts with the
+                                                            employee's obligations to the Company.
+                                                        </p>
+                                                        <p class="pad-bottom-5">
+                                                            Solicit Business: During the Term and for a period of 12 months
+                                                            after the Term, the employee shall not solicit, endeavor to
+                                                            solicit, influence, or attempt to influence any client,
+                                                            customer, or other Person, directly or indirectly, to direct his
+                                                            or its purchase of the Company's product and/or services, to
+                                                            self or any Person in competition with the business of the
+                                                            Company.
+                                                        </p>
+                                                        <p class="pad-bottom-5">
+                                                            Solicit Personnel: During the Term and for a period of 12 months
+                                                            after the Term, the Employee shall not solicit or attempt to
+                                                            influence any person employed or engaged by the Company (whether
+                                                            as an Employee, Consultant, Advisor, or in any other manner) or
+                                                            engagement with the Company or become the Consultant of or
+                                                            directly or indirectly offer services in any form or manner to
+                                                            himself or any person who is a competitor of the Company
+                                                        </p>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="12">
+                                                        <p class="txt-center">
+                                                            <span class="fw-500 txt-left " style="">
+                                                                Registered Office Address-
+                                                            </span>
+                                                            Brand Avatar LLP, No-01, Kandasamy Street,
+                                                            Chandrabagh Avenue Extn, Radhakrishnan Salai,
+                                                            Mylapore, Chennai, Tamilnadu -600 004.
+
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item  ">
+                                <div class="main-page appointment-letter">
+                                    <div class="sub-page" style="text-align: justify;font-size: 15px;">
+                                        <table class="letter-format " style="padding:0;">
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="12" class="pb-15" align="left">
+                                                        <div style="height: 75px;width:160px">
+                                                            <img src="{{ URL::asset('assets/clients/brandavatar/logos/logo_avatar_live.png') }}"
+                                                                class="" alt=""
+                                                                style="height:100%;width:100%;">
+                                                        </div>
+
+
+                                                    </td>
+
+                                                </tr>
+
+
+
+                                                <tr>
+                                                    <td colspan="12" style=" "class="pt-20" align="">
+                                                        <p class="fw-500  pad-bottom-5" style="">
                                                             TERMINATION
                                                         </p>
 
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="12" style="padding-bottom:103px;"
-                                                        class=" border-bottom-line ">
+                                                    <td colspan="12" style=" "class="pad-bottom-10"
+                                                        align="">
                                                         <p class="  " style="">
-                                                            Your employment may be terminated at any time by yourself,
-                                                            or by
-                                                            the Company, upon providing one (1) month’s written notice
-                                                            to
-                                                            the other party. Also, it can be extended according to the
-                                                            management’s needs
-                                                        </p>
-                                                        <p class="pt-pb-5 " style="">
-                                                            In the case of the Company terminating, you for reasons
-                                                            other
-                                                            than a breach of contract by you or for any disciplinary
-                                                            reasons
-                                                            against you, the company shall pay you one month’s salary
-                                                            equal
-                                                            to your notice period not worked as payment in lieu of
-                                                            notice.
+                                                            Your employment may be terminated at any time by yourself, or by
+                                                            the Company, upon providing three (3) months’ written notice to
+                                                            the other party.
 
                                                         </p>
-
-                                                    </td>
-                                                </tr>
-
-
-                                                <tr>
-                                                    <td colspan="4" class="" align="">
-                                                        <p class=" " style="text-align:initial;width:225px">
-                                                            <span class="fw-500 txt-left">Registered
-                                                                Office:</span>&nbsp;#34/123,
-                                                            Dugar Towers 2ndFloor
-                                                            MarshallsRoad,Chennai-600008
-                                                            Ph:044-42661403I/45558608I/8609
+                                                        <p class="pad-top-5" style="">
+                                                            In the case of the Company terminating, you for reasons other
+                                                            than a breach of contract by you or for any disciplinary reasons
+                                                            against you, the Company shall pay you one month’s salary equal
+                                                            to your notice period not worked as payment in lieu of notice.
                                                         </p>
-                                                    </td>
-
-                                                    <td colspan="4" class="" align="">
-                                                        <p class=" " style="text-align:initial;">
-                                                            <span class="fw-500 txt-left">
-                                                                BranchOffice:</span>&nbsp;Ambur:2C,KaspaMainRoad,
-                                                            KamarajarNagar,Kaspa-'A',Ambur,
-                                                            VelloreDistrict-635802.
-                                                            Tel:+9l-04174-245366
-                                                            Mob:+91-9962517613
-
-                                                        </p>
-                                                    </td>
-                                                    <td colspan="4" style=" " class="" align="">
-                                                        <p class=" " style="text-align:initial;">
-                                                            <span class="fw-500 txt-left"> Corporate Identity
-                                                                No:</span>&nbsp;
-                                                            <span
-                                                                class="fw-500 txt-left">U19119TN2012PTC086879</span>&nbsp;
-                                                            Email:info@langroindia.com
-                                                            Internet:www.langroindia.com
-                                                        </p>
-                                                    </td>
-                                                </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item ">
-                                <div class="main-page appointment-letter">
-                                    <div class="sub-page" style="text-align: justify;">
-                                        <table class="letter-format " style="padding:0;">
-                                            <tbody>
-                                                <tr>
-                                                    <td colspan="12" class="pb-30" align="right">
-                                                        <div style="height: 80px;width:200px;max-height:100%;">
-                                                            <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_langro.jpg') }}"
-                                                                class="" alt=""
-                                                                style="height: 100%;width:100%;">
-                                                        </div>
-
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="12 " style=" "class="">
-                                                        <p class=" " style="">
-                                                            If you seek to terminate your employment with the company,
-                                                            you
-                                                            shall do a proper handover of all the work and
-                                                            responsibilities
+                                                        <p class="pad-top-5" style="">
+                                                            If you seek to terminate your employment with the company, you
+                                                            shall do a proper handover of all the work and responsibilities
                                                             that you are handling to your manager and the resource
                                                             identified for replacing you, to the satisfaction of your
-                                                            manager. If you are not able to serve the notice period one
-                                                            (1)
-                                                            month of your CTC to be payable to LANGRO INDIA PRIVATE LIMITED
-
+                                                            manager. If you are not able to serve the notice period three
+                                                            (3) months of your CTC to be payable to Brand Avatar LLP
                                                         </p>
-                                                        <p class="pt-pb-5 " style="">
-                                                            Upon termination of your employment with the company, you
-                                                            agree
-                                                            not to solicit any other team members in the company to the
-                                                            new
+                                                        <p class="pad-top-5" style="">
+                                                            With conflict-of-interest terms and conditions, Employees of
+                                                            Brand Avtar will be refrained from serving as employees of
+                                                            clients/vendors. In the case of deviation from the above-said
+                                                            agreement, Brand Avatar will claim compensation of Rs.5 Lakhs
+                                                            for breach of Trust. If defaulted, we will proceed legally.
+                                                        </p>
+                                                        <p class="pad-top-5" style="">
+                                                            Upon termination of your employment with the company, you agree
+                                                            not to solicit any other team members in the company to the new
                                                             organization that you are going.
-
                                                         </p>
-                                                    </td>
 
+                                                    </td>
                                                 </tr>
+
                                                 <tr>
-                                                    <td colspan="12" style=" "class="pt-10">
-                                                        <p class="fw-500  " style="">
+                                                    <td colspan="12" style=" "class="pt-10" align="">
+                                                        <p class="fw-500  pad-bottom-5" style="">
                                                             DISPUTE RESOLUTION
                                                         </p>
 
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="12" style=" "class="">
-                                                        <p class="  " style="">
+                                                    <td colspan="12" style=" "class="pad-bottom-10"
+                                                        align="">
+                                                        <p class=" " style="">
                                                             Any differences and disputes arising out of this appointment
-                                                            letter would be settled by arbitration conducted in
-                                                            accordance
+                                                            letter would be settled by arbitration conducted in accordance
                                                             with the arbitration and conciliation act 1996 with a person
-                                                            nominated by the company as the sole arbitrator. The
-                                                            arbitrator
-                                                            shall conclude the arbitration within 30 days from the date
-                                                            of
+                                                            nominated by the company as the sole arbitrator. The arbitrator
+                                                            shall conclude the arbitration within 30 days from the date of
                                                             reference and shall pass an award. The award passed by the
-                                                            arbitrator shall be conclusive and binding on the parties
-                                                            and
+                                                            arbitrator shall be conclusive and binding on the parties and
                                                             shall not be appealable before a court of law.
-
                                                         </p>
+
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="12 " style=" "class="pt-10">
-                                                        <p class="fw-500  " style="">
+                                                    <td colspan="12" style=" "class="pt-10" align="">
+                                                        <p class="fw-500  pad-bottom-5" style="">
                                                             GOVERNING LAW AND JURISDICTION
 
                                                         </p>
@@ -1252,61 +1207,68 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="12" style=" "class="">
-                                                        <p class="  " style="">
-                                                            This agreement shall be governed by the laws of the Republic
-                                                            of
+                                                    <td colspan="12" style=" "class="" align="">
+                                                        <p class=" " style="">
+                                                            This agreement shall be governed by the laws of the Republic of
                                                             India and courts in Chennai have exclusive jurisdiction over
                                                             this agreement.
 
                                                         </p>
+
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td colspan="12" style=" "class="pt-10">
-                                                        <p class="fw-500  " style="">
+                                                <tr class="">
+                                                    <td colspan="12" style=" " class="pt-10 pad-bottom-5"
+                                                        align="left">
+                                                        <p class="fw-500 pt-15  txt-left " style="">
                                                             RETIREMENT AGE
-
-
                                                         </p>
-
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="12" style=" "class="">
-                                                        <p class="  " style="">
-                                                            The general Retirement for employees in the Company is
-                                                            &nbsp;<span class="fw-500 txt-left"> Fifty-Eight (58)
-                                                                years.
-                                                            </span>&nbsp;
+                                                        <p>
+                                                            The general Retirement for employees in the Company is <span class="fw-500">Fifty-Eight (58) years.</span>
                                                         </p>
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td colspan="12" style=" " align="">
-                                                        <p class="fw-500 pt-30  txt-left " style="">
+
+
+
+                                                <tr class="border-bottom-line-ash">
+                                                    <td colspan="12" style=" " class="pad-bottom-5"
+                                                        align="left">
+                                                        <p class="fw-500 pt-15  txt-left " style="">
                                                             Yours faithfully,
                                                         </p>
-                                                        <p class="pt-pb-5 pb-30 fw-500">
-                                                            For LANGRO INDIA PRIVATE LIMITED
-
+                                                        <p class="fw-500 pt-pb-15  txt-left " style="">
+                                                            For Brand Avatar LLP
                                                         </p>
 
-                                                        <p class="fw-500 pt-10 txt-left " style="">
-                                                            Founder and CEO of LANGRO INDIA PRIVATE LIMITED
+                                                        <div style="height:70px;width:140px" class="pt-pb-15">
+                                                            <img src="{{ URL::asset('assets/images/appointment/avatar/sign2.png') }}"
+                                                                class="" alt="signature"
+                                                                style="height:100%;width:100%;">
+                                                        </div>
+
+
+
+                                                        <p class="fw-500 txt-left " style=" ">
+                                                            (Hemachandran L)
+                                                        </p>
+                                                        <p class="fw-500  txt-left " style=" ">
+                                                            Founder and CEO of Brand Avatar LLP
                                                         </p>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="12" style=" " align="left">
                                                         <p class=" pt-10 txt-left " style="">
-                                                            I M Xyz, have read &nbsp;<span class="fw-500 txt-left">ANNEXURE
-                                                                A &
-                                                                B,</span>&nbsp; understood, and accept the
+                                                            I <span class="fw-500 txt-left">
+                                                                Xyz,</span>&nbsp; have read &nbsp;<span
+                                                                class="fw-500 txt-left">ANNEXURE A &
+                                                                B,</span>&nbsp; understood, and accept
+                                                            the
                                                             appointment upon the terms and conditions as
                                                             outlined in this appointment letter for my
-                                                            position at &nbsp;<span class="fw-500 txt-left">LANGRO INDIA
-                                                                PRIVATE LIMITED
+                                                            position at &nbsp;<span class="fw-500 txt-left">Brand Avatar
+                                                                LLP
                                                             </span>&nbsp;.
 
                                                         </p>
@@ -1314,15 +1276,15 @@
 
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td colspan="6" class="pt-30" style=" " align="left">
+                                                <tr class="border-bottom-line-ash">
+                                                    <td colspan="6" class="pt-pb-15" style="" align="left">
                                                         <p class="fw-500 txt-left " style="">
                                                             Sign:
                                                         </p>
 
 
                                                     </td>
-                                                    <td colspan="6" style="pt-30" align="right">
+                                                    <td colspan="6" class="pt-pb-15" style=" " align="right">
                                                         <p class="fw-500 txt-right " style="">
                                                             Date:
                                                         </p>
@@ -1331,881 +1293,23 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="12" style="text-align:initial;padding-bottom:165px;"
-                                                        class="pt-pb-5 border-bottom-line " align="">
-                                                        <p class="fw-500  " style="">
-                                                            LANGRO INDIA PRIVATE LIMITED
-                                                        </p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="4" class="" align="">
-                                                        <p class=" " style="text-align:initial;width:225px">
-                                                            <span class="fw-500 txt-left">Registered
-                                                                Office:</span>&nbsp;#34/123,
-                                                            Dugar Towers 2ndFloor
-                                                            MarshallsRoad,Chennai-600008
-                                                            Ph:044-42661403I/45558608I/8609
-                                                        </p>
-                                                    </td>
-
-                                                    <td colspan="4" class="" align="">
-                                                        <p class=" " style="text-align:initial;">
-                                                            <span class="fw-500 txt-left">
-                                                                BranchOffice:</span>&nbsp;Ambur:2C,KaspaMainRoad,
-                                                            KamarajarNagar,Kaspa-'A',Ambur,
-                                                            VelloreDistrict-635802.
-                                                            Tel:+9l-04174-245366
-                                                            Mob:+91-9962517613
+                                                    <td colspan="12">
+                                                        <p class="txt-center">
+                                                            <span class="fw-500 txt-left " style="">
+                                                                Registered Office Address-
+                                                            </span>
+                                                            Brand Avatar LLP, No-01, Kandasamy Street,
+                                                            Chandrabagh Avenue Extn, Radhakrishnan Salai,
+                                                            Mylapore, Chennai, Tamilnadu -600 004.
 
                                                         </p>
                                                     </td>
-                                                    <td colspan="4" style=" " class="" align="">
-                                                        <p class=" " style="text-align:initial;">
-                                                            <span class="fw-500 txt-left"> Corporate Identity
-                                                                No:</span>&nbsp;
-                                                            <span
-                                                                class="fw-500 txt-left">U19119TN2012PTC086879</span>&nbsp;
-                                                            Email:info@langroindia.com
-                                                            Internet:www.langroindia.com
-                                                        </p>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                            <div class="carousel-item ">
-                                <div class="main-page appointment-letter">
-                                    <div class="sub-page" style="text-align: justify;font-size: 15px;">
-                                        <table class="letter-format" style="padding:0;">
-                                            <tbody>
-                                                <tr>
-                                                    <td align="center" style="">
-                                                        <table class="table-one">
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td colspan="12" class="" align="right">
-                                                                        <div style="height: 80px;width:200px">
-                                                                            <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_langro.jpg') }}"
-                                                                                class="" alt=""
-                                                                                style="height:100%;width:100%;">
-                                                                        </div>
-
-                                                                    </td>
-
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td colspan="12" style=" " align="center">
-                                                                        <p class="fw-500 txt-center pb-30 "
-                                                                            style="">
-                                                                            DISCLOSURE AGREEMENT
-                                                                        </p>
-
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td colspan="4" style=" " align="">
-                                                                        <p class="fw-500 txt-left " style="">
-                                                                            Name<span class="">:</span>
-                                                                        </p>
-
-                                                                    </td>
-                                                                    <td colspan="4" style=" " align="">
-                                                                        <p class="txt-left " style="">
-
-                                                                        </p>
-
-                                                                    </td>
-                                                                    <td colspan="4" style=" " align="">
-                                                                        <p class="fw-500 txt-left " style="">
-                                                                            Date <span class="">:</span>
-                                                                        </p>
-
-                                                                    </td>
-                                                                    <td colspan="4" style=" " align="">
-                                                                        <p class=" txt-left " style="">
-
-                                                                        </p>
-
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td colspan="4" style=" " align="">
-                                                                        <p class="fw-500 txt-left pt-20 " style="">
-                                                                            No <span class="">:</span>
-                                                                        </p>
-
-                                                                    </td>
-                                                                    <td colspan="4" style=" " align="">
-                                                                        <p class="txt-left pt-20 " style="">
-
-                                                                        </p>
-
-                                                                    </td>
-
-                                                                </tr>
-                                                                <tr>
-                                                                    <td colspan="12" style=" " align="">
-                                                                        <p class=" pb-30 txt-left pt-20 " style="">
-                                                                            I have read and agree to comply with the terms
-                                                                            of the attached NDA. I have signed and
-                                                                            handed over the original copy of the NDA to HR.
-                                                                        </p>
-
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td colspan="12"
-                                                                        style="padding-right: 20px;padding-left: 20px;"
-                                                                        align="">
-                                                                        <p class=" txt-left" style="">
-                                                                            I have read and agree to comply with the terms
-                                                                            of the attached policies governing the
-
-                                                                        </p>
-
-                                                                        <p class=" txt-left pt-20 " style="">
-
-                                                                            use of “Computer network and Internet access” of
-                                                                            <span class="fw-500  " style="">
-                                                                                LANGRO INDIA PRIVATE LIMITED </span>. I
-                                                                        </p>
-                                                                        <p class=" txt-left pt-20 " style="">
-                                                                            understand that violation of this policy may
-                                                                            result in disciplinary action, including
-
-                                                                        </p>
-                                                                        <p class=" txt-left pt-20 pb-30 " style="">
-                                                                            possible termination. Also I have received a
-                                                                            copy of the above policies.
-
-                                                                        </p>
-
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        <p class=" txt-left pt-20 " style="">
-
-                                                                            Signature of the Employee
-                                                                        </p>
-
-                                                                    </td>
-                                                                </tr>
-
-
-
-
-                                                                <tr>
-                                                                    <td class="" colspan="12"
-                                                                        style="padding-top: 459px">
-                                                                        <table style="border-top: 1px solid #000">
-                                                                            <tbody>
-                                                                                <tr>
-                                                                                    <td colspan="4" class=""
-                                                                                        align="">
-                                                                                        <p class=" "
-                                                                                            style="text-align:initial;width:225px">
-                                                                                            <span
-                                                                                                class="fw-500 txt-left">Registered
-                                                                                                Office:</span>&nbsp;#34/123,
-                                                                                            Dugar Towers 2ndFloor
-                                                                                            MarshallsRoad,Chennai-600008
-                                                                                            Ph:044-42661403I/45558608I/8609
-                                                                                        </p>
-                                                                                    </td>
-
-                                                                                    <td colspan="4" class=""
-                                                                                        align="">
-                                                                                        <p class=" "
-                                                                                            style="text-align:initial;">
-                                                                                            <span class="fw-500 txt-left">
-                                                                                                BranchOffice:</span>&nbsp;Ambur:2C,KaspaMainRoad,
-                                                                                            KamarajarNagar,Kaspa-'A',Ambur,
-                                                                                            VelloreDistrict-635802.
-                                                                                            Tel:+9l-04174-245366
-                                                                                            Mob:+91-9962517613
-
-                                                                                        </p>
-                                                                                    </td>
-                                                                                    <td colspan="4" class=""
-                                                                                        align="">
-
-                                                                                        <p class=" "
-                                                                                            style="text-align:initial;">
-                                                                                            <span class="fw-500 txt-left">
-                                                                                                Corporate
-                                                                                                Identity No:</span>&nbsp;
-                                                                                            <span
-                                                                                                class="fw-500 txt-left">U19119TN2012PTC086879</span>&nbsp;
-                                                                                            Email:info@langroindia.com
-                                                                                            Internet:www.langroindia.com
-                                                                                        </p>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-
-                                            </tbody>
-
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item ">
-                                <div class="main-page appointment-letter">
-                                    <div class="sub-page" style="text-align: justify;font-size: 15px;">
-                                        <table class="letter-format" style="padding:0;">
-                                            <tbody>
-                                                <tr>
-                                                    <td align="center" style="">
-                                                        <table class="table-one">
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td colspan="12" class="" align="right">
-
-                                                                        <div style="height: 80px;width:200px">
-                                                                            <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_langro.jpg') }}"
-                                                                                class="" alt=""
-                                                                                style="height:100%;width:100%;">
-                                                                        </div>
-                                                                    </td>
-
-                                                                </tr>
-                                                                <tr>
-                                                                    <td colspan="12" style=" " align="center">
-                                                                        <p class="fw-500 txt-center pb-30 "
-                                                                            style="">
-                                                                            NON – DISCLOSURE AGREEMENT
-                                                                        </p>
-
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td colspan="12" style=" ">
-                                                                        <p class=" txt-left " style="">
-                                                                            This
-                                                                            <span class="fw-500"> NON-DISCLOSURE AGREEMENT
-                                                                            </span>
-                                                                            is made at Chennai
-                                                                            on this September 1st, day
-                                                                            of 2021 by and between Langro India Private
-                                                                            Limited and Associate of Vasa Group
-                                                                            of Companies, India hereinafter referred to as
-                                                                            “Langro” (which expression unless
-                                                                            repugnant to the context shall mean and include
-                                                                            its successors and assigns) and
-                                                                            _________________________________ hereinafter
-                                                                            referred to as <span class="fw-500">
-                                                                                “Recipient” </span>
-                                                                            (which expression unless repugnant to the
-                                                                            context shall mean and include its
-                                                                            successors and assigns).
-
-                                                                        </p>
-                                                                        <p class=" txt-left pt-20" style="">
-                                                                            Whereas it is anticipated that, it may be
-                                                                            necessary for Langro to disclose certain
-                                                                            confidential and proprietary information in
-                                                                            written, oral, visual and/or
-                                                                            physical/sample form to the Recipient or the
-                                                                            Recipient may otherwise come into
-                                                                            control or possession of certain information,
-                                                                            including those of the customers of
-                                                                            Langro which is considered as confidential by
-                                                                            Langro (collectively “Confidential
-                                                                            Information” and as defined herein).
-                                                                        </p>
-
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td colspan="12" class="" align="right">
-                                                                        <p class=" txt-left pt-20" style="">
-                                                                            Accordingly, the parties agree as follows:
-                                                                        </p>
-                                                                        <ol type="1">
-                                                                            <li>
-                                                                                <p class=" txt-left  pt-20 "
-                                                                                    style="">
-                                                                                    <span class="fw-500">Confidential
-                                                                                        Information:</span>
-                                                                                    Confidential Information shall mean and
-                                                                                    include
-                                                                                    any information disclosed by Langro to
-                                                                                    the Recipient, either directly or
-                                                                                    indirectly, either orally or in writing,
-                                                                                    by inspection of tangible objects
-                                                                                    (including, without limitation,
-                                                                                    documents, prototypes, samples, media,
-                                                                                    documentation, discs and code).
-                                                                                    Confidential Information shall include,
-                                                                                    without limitation, any building plans,
-                                                                                    site maps, security features,
-                                                                                    materials, trade secrets, intellectual
-                                                                                    property rights, know-how, formulae,
-                                                                                    processes, algorithms, ideas,
-                                                                                    strategies, inventions, data, network
-                                                                                    configurations, system architecture,
-                                                                                    designs, flow charts, drawings,
-                                                                                    hardware, software, media and the
-                                                                                    contents thereof, proprietary
-                                                                                    information, business and marketing
-                                                                                    plans, financial and operational
-                                                                                    information, information about customers
-                                                                                    (either present, past or
-                                                                                    prospective) of Langro, information
-                                                                                    regarded as confidential by such
-                                                                                    customers of Langro, all non-public
-                                                                                    information, material or date relating
-                                                                                    to
-                                                                                    the current and/or future business and
-                                                                                    operations of Langro and analysis,
-                                                                                    compilations, studies, summaries,
-                                                                                    extracts or other documentation
-                                                                                    prepared by the Recipient based on
-                                                                                    information disclosed by Langro and any
-                                                                                    other information considered as
-                                                                                    confidential information by Langro.
-                                                                                    Confidential Information shall also
-                                                                                    include information disclosed to the
-                                                                                    Recipient by third parties on behalf of
-                                                                                    Langro or that may otherwise come
-                                                                                    into the possession and / or control of
-                                                                                    the Recipient. The term Confidential
-                                                                                    Information shall also include any
-                                                                                    derivatives made out of any Confidential
-                                                                                    Information of Langro and also any
-                                                                                    information gathered by the use or
-                                                                                    inspection of the Confidential
-                                                                                    Information of Langro.
-
-                                                                                </p>
-
-
-                                                                            </li>
-                                                                            <li>
-                                                                                <p class=" txt-left  pt-10 "
-                                                                                    style="">
-                                                                                    <span class="fw-500">Scope:</span>
-                                                                                    Langro retains the sole and exclusive
-                                                                                    ownership
-                                                                                    and intellectual
-                                                                                    property rights in the Confidential
-                                                                                    Information
-                                                                                    and no license or any other
-                                                                                    interest is granted to the Recipient by
-                                                                                    virtue
-                                                                                    of this Agreement or any other
-                                                                                    agreement between the parties, unless
-                                                                                    expressly
-                                                                                    agreed to the contrary by
-                                                                                    Langro in writing prior to such
-                                                                                    disclosure.
-                                                                                </p>
-                                                                            </li>
-                                                                        </ol>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td class="" colspan="12"
-                                                                        style="padding-top: 48px">
-                                                                        <table style="border-top: 1px solid #000">
-                                                                            <tbody>
-                                                                                <tr>
-                                                                                    <td colspan="4" class=""
-                                                                                        align="">
-                                                                                        <p class=" "
-                                                                                            style="text-align:initial;width:225px">
-                                                                                            <span
-                                                                                                class="fw-500 txt-left">Registered
-                                                                                                Office:</span>&nbsp;#34/123,
-                                                                                            Dugar Towers 2ndFloor
-                                                                                            MarshallsRoad,Chennai-600008
-                                                                                            Ph:044-42661403I/45558608I/8609
-                                                                                        </p>
-                                                                                    </td>
-
-                                                                                    <td colspan="4" class=""
-                                                                                        align="">
-                                                                                        <p class=" "
-                                                                                            style="text-align:initial;">
-                                                                                            <span class="fw-500 txt-left">
-                                                                                                BranchOffice:</span>&nbsp;Ambur:2C,KaspaMainRoad,
-                                                                                            KamarajarNagar,Kaspa-'A',Ambur,
-                                                                                            VelloreDistrict-635802.
-                                                                                            Tel:+9l-04174-245366
-                                                                                            Mob:+91-9962517613
-
-                                                                                        </p>
-                                                                                    </td>
-                                                                                    <td colspan="4" class=""
-                                                                                        align="">
-
-                                                                                        <p class=" "
-                                                                                            style="text-align:initial;">
-                                                                                            <span class="fw-500 txt-left">
-                                                                                                Corporate
-                                                                                                Identity No:</span>&nbsp;
-                                                                                            <span
-                                                                                                class="fw-500 txt-left">U19119TN2012PTC086879</span>&nbsp;
-                                                                                            Email:info@langroindia.com
-                                                                                            Internet:www.langroindia.com
-                                                                                        </p>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-
-                                                        </table>
-                                                    </td>
-
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
-                            <div class="carousel-item  ">
-                                <div class="main-page appointment-letter">
-                                    <div class="sub-page" style="text-align: justify;font-size: 15px;">
-                                        <table class="letter-format" style="padding:0;">
-                                            <tbody>
-                                                <tr>
-                                                    <td align="center" style="">
-                                                        <table class="table-one">
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td colspan="12" class="" align="right">
-                                                                        <div style="height: 80px;width:200px">
-                                                                            <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_langro.jpg') }}"
-                                                                                class="" alt=""
-                                                                                style="height:100%;width:100%;">
-                                                                        </div>
-
-                                                                    </td>
-
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td colspan="12" class="" align="right">
-                                                                        <p class=" txt-left  pt-10 " style="">3.
-                                                                            <span class="fw-500">Term:</span>
-                                                                            The term of this Agreement shall commence
-                                                                            from and continue for
-                                                                            five years there from September 1st, 2021
-                                                                            notwithstanding the foregoing
-                                                                            and without prejudice, the confidentiality
-                                                                            obligations undertaken by the
-                                                                            Recipient hereunder shall survive the expiry of
-                                                                            this
-                                                                            Agreement for a period
-                                                                            of five years from the date of the latest of the
-                                                                            disclosures made under this
-                                                                            Agreement.
-                                                                            Upon the expiry of the term of this Agreement or
-                                                                            upon earlier request of
-                                                                            Langro, the Recipient shall return all
-                                                                            Confidential
-                                                                            Information to Langro
-                                                                            without retaining any copies of such
-                                                                            Confidential
-                                                                            Information. Any copies
-                                                                            that cannot be so returned shall be immediately
-                                                                            destroyed under certificate
-                                                                            to Langro in such a manner that they can never
-                                                                            be
-                                                                            retrieved by whatsoever
-                                                                            method and in whatsoever form subsequent to such
-                                                                            destruction.
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td colspan="12" class="" align="right">
-                                                                        <p class=" txt-left  pt-10 " style="">4.
-                                                                            <span class="fw-500"> Restrictions:</span>
-                                                                            The Recipient undertakes to protect the
-                                                                            Confidential
-                                                                            Information with the same degree of care as used
-                                                                            to protect its own
-                                                                            Confidential Information, which degree of care
-                                                                            shall be at least a
-                                                                            reasonable degree of care to protect the
-                                                                            Confidential Information received
-                                                                            by under this Agreement. In addition to such
-                                                                            degree of care, the Recipient
-                                                                            agrees not to in any way disclose, copy,
-                                                                            reproduce, modify, use, or
-                                                                            otherwise transfer (including temporary
-                                                                            transfer) the Confidential
-                                                                            Information or any media containing the
-                                                                            Confidential Information to any
-                                                                            other person or entity without obtaining prior
-                                                                            express written consent from
-                                                                            Langro. The Recipient shall not reverse
-                                                                            engineer, disassemble or reverse
-                                                                            compile any prototypes, software or other
-                                                                            tangible objects which embody
-                                                                            the Confidential Information and which are
-                                                                            provided to the Recipient
-                                                                            hereunder. The Recipient shall at no time create
-                                                                            any charge, lien or
-                                                                            encumbrance of whatsoever nature on the
-                                                                            Confidential Information. These
-                                                                            shall be in addition to any other restrictions
-                                                                            that Langro may stipulate from
-                                                                            time to time, which shall be binding upon the
-                                                                            Recipient. These restrictions
-                                                                            also apply to any media containing the
-                                                                            Confidential Information.
-
-                                                                        </p>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td colspan="12" class="" align="right">
-                                                                        <p class=" txt-left  pt-10 " style="">5.
-                                                                            <span class="fw-500"> No Obligation:</span>
-                                                                            Nothing herein shall obligate Langro to disclose
-                                                                            any
-
-                                                                            information under this Agreement or to proceed
-                                                                            with any transaction with
-                                                                            the Recipient or enter into any other contract
-                                                                            with the Recipient.
-
-
-                                                                        </p>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td colspan="12" class="" align="right">
-                                                                        <p class=" txt-left  pt-10 " style="">6.
-                                                                            <span class="fw-500"> Enforcement:</span>
-                                                                            The Recipient also agrees that all the
-                                                                            provisions of this
-                                                                            Agreement shall be specifically enforceable by
-                                                                            Langro against the Recipient
-                                                                            and its agents, employees and/or representatives
-                                                                            by injunctive and other
-                                                                            relief, including equitable relief. All the
-                                                                            provisions hereof employees
-                                                                            and/or representatives who have or may have
-                                                                            access to the Confidential
-                                                                            Information shall be bound by contracts
-                                                                            whereupon it is made imperative
-                                                                            upon them that the confidentiality of the
-                                                                            Confidential Information shall be
-                                                                            maintained and other restrictions imposed under
-                                                                            this Agreement in relation
-                                                                            to the Confidential Information with respect to
-                                                                            the Recipient are observed
-                                                                            and compiled by them, as if they were parties to
-                                                                            this Agreement. The
-                                                                            Recipients are observed and compiled by them, as
-                                                                            if they were parties to
-                                                                            this Agreement. The Recipient shall, whenever
-                                                                            requested by Langro,
-                                                                            provide documentary proof to show that the
-                                                                            Recipient is complying with the
-                                                                            provision of the clause in a manner satisfactory
-                                                                            to Langro.
-                                                                        </p>
-                                                                    </td>
-                                                                </tr>
-
-
-                                                                <tr>
-                                                                    <td class="" colspan="12"
-                                                                        style="padding-top:146px ">
-                                                                        <table style="border-top: 1px solid #000">
-                                                                            <tbody>
-                                                                                <tr>
-                                                                                    <td colspan="4" class=""
-                                                                                        align="">
-                                                                                        <p class=" "
-                                                                                            style="text-align:initial;width:225px">
-                                                                                            <span
-                                                                                                class="fw-500 txt-left">Registered
-                                                                                                Office:</span>&nbsp;#34/123,
-                                                                                            Dugar Towers 2ndFloor
-                                                                                            MarshallsRoad,Chennai-600008
-                                                                                            Ph:044-42661403I/45558608I/8609
-                                                                                        </p>
-                                                                                    </td>
-
-                                                                                    <td colspan="4" class=""
-                                                                                        align="">
-                                                                                        <p class=" "
-                                                                                            style="text-align:initial;">
-                                                                                            <span class="fw-500 txt-left">
-                                                                                                BranchOffice:</span>&nbsp;Ambur:2C,KaspaMainRoad,
-                                                                                            KamarajarNagar,Kaspa-'A',Ambur,
-                                                                                            VelloreDistrict-635802.
-                                                                                            Tel:+9l-04174-245366
-                                                                                            Mob:+91-9962517613
-
-                                                                                        </p>
-                                                                                    </td>
-                                                                                    <td colspan="4" class=""
-                                                                                        align="">
-
-                                                                                        <p class=" "
-                                                                                            style="text-align:initial;">
-                                                                                            <span class="fw-500 txt-left">
-                                                                                                Corporate
-                                                                                                Identity No:</span>&nbsp;
-                                                                                            <span
-                                                                                                class="fw-500 txt-left">U19119TN2012PTC086879</span>&nbsp;
-                                                                                            Email:info@langroindia.com
-                                                                                            Internet:www.langroindia.com
-                                                                                        </p>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-
-                                            </tbody>
-
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item  ">
-                                <div class="main-page appointment-letter">
-                                    <div class="sub-page" style="text-align: justify;font-size: 15px;">
-                                        <table class="letter-format" style="padding:0;">
-                                            <tbody>
-                                                <tr>
-                                                    <td align="center" style="">
-                                                        <table class="table-one">
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td colspan="12" class="" align="right">
-
-                                                                        <div
-                                                                            style="height: 80px;width:200px;max-height:100%;">
-                                                                            <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_langro.jpg') }}"
-                                                                                class="" alt=""
-                                                                                style="height:100%;width:100%;">
-                                                                        </div>
-                                                                    </td>
-
-                                                                </tr>
-
-
-                                                                <tr>
-                                                                    <td colspan="12" class="" align="right">
-                                                                        <p class=" txt-left  pt-10 " style="">7.
-                                                                            <span class="fw-500">Compensation:</span>
-                                                                            The Recipient agrees that monetary damages would
-                                                                            be
-                                                                            inadequate compensation to Langro in the event
-                                                                            the Recipient breaches any
-                                                                            provisions of this Agreement. Therefore the
-                                                                            parties agree that in the event
-                                                                            of a breach or threatened breach of
-                                                                            confidentiality or any term of this
-                                                                            Agreement, Langro shall be, without prejudice to
-                                                                            any other remedies that it
-                                                                            may have in this regard, and notwithstanding the
-                                                                            arbitration provision
-                                                                            contained in clause 8 below, entitled to
-                                                                            specific performance and injunctive
-                                                                            or other equitable relief as a remedy for any
-                                                                            such breach or anticipated
-                                                                            breach
-
-                                                                        </p>
-                                                                        <p class=" txt-left pt-pb-5 " style="">
-                                                                            The recipient hereby specifically agrees to be
-                                                                            liable for all damages and loss
-                                                                            (both direct and indirect) sustained or Langro
-                                                                            may sustain that as a result of
-                                                                            or as a consequence of breach of the terms of
-                                                                            this Agreement by the
-                                                                            Recipient.
-
-                                                                        </p>
-
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td colspan="12" class="" align="right">
-                                                                        <p class=" txt-left  pt-10 " style="">8
-                                                                            <span class="fw-500">
-                                                                                Arbitration/Venue/Governing Law:</span>
-                                                                            Any disputes between the parties shall
-                                                                            be resolved by mutual discussions. Unresolved
-                                                                            disputes, if any, shall be
-                                                                            subject to resolution by arbitration by a sole
-                                                                            arbitrator to be appointed by
-                                                                            Langro. The language of the arbitration shall be
-                                                                            English and the decision of
-                                                                            the arbitrator shall be final and binding on the
-                                                                            parties. The venue of
-                                                                            Arbitration shall be Chennai and shall be
-                                                                            conducted under the provision of
-                                                                            the Arbitration and Conciliation Act, 1996. The
-                                                                            laws of India shall govern
-                                                                            this Agreement and shall be subject to the
-                                                                            jurisdiction of the Courts at
-                                                                            Chennai.
-
-                                                                        </p>
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td colspan="12" class="" align="right">
-                                                                        <p class=" txt-left  pt-10 " style="">9.
-                                                                            <span class="fw-500">Assignment:</span>
-                                                                            : Recipient shall not have the right to assign
-                                                                            or otherwise
-                                                                            transfer, in whole or in part, any of its rights
-                                                                            or obligations under this
-                                                                            Agreement without obtaining prior written
-                                                                            consent from Langro.
-
-
-                                                                        </p>
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td colspan="12" class="" align="right">
-                                                                        <p class=" txt-left  pt-10 " style="">10.
-                                                                            <span class="fw-500">Validity:</span>
-                                                                            : If any provision hereof is found by a court to
-                                                                            be invalid, void or
-                                                                            unenforceable, the remaining provisions shall
-                                                                            remain in full force and
-                                                                            effect.
-
-
-                                                                        </p>
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td colspan="12" class="" align="right">
-                                                                        <p class=" txt-left  pt-10 " style="">
-                                                                            In addition to the above conditions, if required
-                                                                            you may be subjected to certain
-                                                                            project specific conditions in future, which
-                                                                            should be adhered to as per the
-                                                                            project requirement.
-                                                                        </p>
-                                                                        <p class=" txt-left  pt-10 " style="">
-                                                                            IN WITNESS WHEREOF, the parties have executed
-                                                                            this Agreement on the date
-                                                                            first written above.
-                                                                        </p>
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td colspan="12" class="" align="right">
-                                                                        <p class=" txt-left  pt-30 pb-30 "
-                                                                            style="">
-                                                                            Signature :
-
-                                                                        </p>
-                                                                    </td>
-                                                                </tr>
-
-
-
-
-
-
-                                                                <tr>
-                                                                    <td class="" colspan="12"
-                                                                        style="padding-top:266px">
-                                                                        <table style="border-top: 1px solid #000">
-                                                                            <tbody>
-                                                                                <tr>
-                                                                                    <td colspan="4" class=""
-                                                                                        align="">
-                                                                                        <p class=" "
-                                                                                            style="text-align:initial;width:225px">
-                                                                                            <span
-                                                                                                class="fw-500 txt-left">Registered
-                                                                                                Office:</span>&nbsp;#34/123,
-                                                                                            Dugar Towers 2ndFloor
-                                                                                            MarshallsRoad,Chennai-600008
-                                                                                            Ph:044-42661403I/45558608I/8609
-                                                                                        </p>
-                                                                                    </td>
-
-                                                                                    <td colspan="4" class=""
-                                                                                        align="">
-                                                                                        <p class=" "
-                                                                                            style="text-align:initial;">
-                                                                                            <span class="fw-500 txt-left">
-                                                                                                BranchOffice:</span>&nbsp;Ambur:2C,KaspaMainRoad,
-                                                                                            KamarajarNagar,Kaspa-'A',Ambur,
-                                                                                            VelloreDistrict-635802.
-                                                                                            Tel:+9l-04174-245366
-                                                                                            Mob:+91-9962517613
-
-                                                                                        </p>
-                                                                                    </td>
-                                                                                    <td colspan="4" class=""
-                                                                                        align="">
-
-                                                                                        <p class=" "
-                                                                                            style="text-align:initial;">
-                                                                                            <span class="fw-500 txt-left">
-                                                                                                Corporate
-                                                                                                Identity No:</span>&nbsp;
-                                                                                            <span
-                                                                                                class="fw-500 txt-left">U19119TN2012PTC086879</span>&nbsp;
-                                                                                            Email:info@langroindia.com
-                                                                                            Internet:www.langroindia.com
-                                                                                        </p>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-
-                                            </tbody>
-
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
                         </div>
                         <button class="carousel-control-prev" type="button" data-bs-target="#carousel_template"
                             data-bs-slide="prev">
@@ -2228,25 +1332,23 @@
                         <div class="main-page">
                             <div class="sub-page" style="text-align: justify;font-size: 15px;">
                                 <div class="table-responsive">
-                                    <table cellspacing="0" cellpadding="0" class="payslip_table">
-                                        <tr class="header-row" aria-rowcount="">
-                                            <td colspan="8" class="border-less p3" rowspan="">
+                                    <table cellspacing="0" cellpadding="0" class="payslip_table payslip-avatarLive">
+                                        <tr class="header-row">
+                                            <td colspan="8" class="border-less p3">
                                                 <div class="header-cotent">
-
-                                                    <h6 class="margin-0" style="padding-left: 5px">Langro India Private
-                                                        Limited
-                                                    </h6>
-                                                    <p class="mb-0">Dugar Towers, 2nd floor,</p>
-                                                    <p class="mb-0">#34/123, Marshalls Road, Egmore,</p>
-                                                    <p class="mb-0">Chennai, Tamil Nadu, India 600 008. </p>
+                                                    <p class="margin-0 fw-500" style="padding-left:5px;color:#ff0000;font-size:18px"> Avatar Live</p>
+                                                    <p class="mb-0">NO-01,Kandasamy Street,</p>
+                                                    <p class="mb-0">Chandrabagh Ave 2nd St, Dr. Radha Krishnan Salai,
+                                                    </p>
+                                                    <p class="mb-0">Mylapore, Chennai, Tamil Nadu 600004</p>
                                                 </div>
                                             </td>
-                                            <td colspan="4" class="border-less p3">
+                                            <td colspan="4" class="border-less " align="right">
 
-                                                <div class="header-img txt-right d-flex align-items-center">
-                                                    <img src="{{ URL::asset('assets/images/client_logos/vasa/logo_langro.jpg') }}"
-                                                        class="" alt=""
-                                                        style="height: 100px;width:250px;max-height:100%;">
+                                                <div class="header-img txt-right" style="height: 60px;width:160px;">
+                                                    <!-- <img src="" title=""> -->
+                                                    <img src="{{ URL::asset('assets/clients/brandavatar/logos/logo_avatar_live.png') }}"
+                                                        class="" style="height: 100%;width:100%;">
                                                 </div>
 
 
@@ -2255,20 +1357,19 @@
 
 
                                         <tr>
-                                            <td colspan="12" class=" bg-ash ">
-                                                <p class="sub-header txt-center text-strong">PAYSLIP FOR THE MONTH OF –
-                                                    NOV
-                                                    – 2022</p>
+                                            <td colspan="12" class="bg-ash">
+                                                <p class="sub-header txt-center  fw-500">PAYSLIP FOR THE MONTH
+                                                    OF &ndash;APR-2022</p>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="3" class="bg-ash text-strong">
+                                            <td colspan="3" class="bg-ash fw-500">
                                                 <p>EMPLOYEE NAME</p>
                                             </td>
                                             <td colspan="3">
                                                 <p></p>
                                             </td>
-                                            <td colspan="3" class="bg-ash text-strong">
+                                            <td colspan="3" class="bg-ash fw-500">
                                                 <p>EMPLOYEE CODE</p>
                                             </td>
                                             <td colspan="3">
@@ -2277,13 +1378,13 @@
 
                                         </tr>
                                         <tr>
-                                            <td colspan="3" class="bg-ash text-strong">
+                                            <td colspan="3" class="bg-ash fw-500">
                                                 <p>DATE OF BIRTH</p>
                                             </td>
                                             <td colspan="3">
                                                 <p></p>
                                             </td>
-                                            <td colspan="3" class="bg-ash text-strong">
+                                            <td colspan="3" class="bg-ash fw-500">
                                                 <p>DATE OF JOINING</p>
                                             </td>
                                             <td colspan="3">
@@ -2292,13 +1393,13 @@
 
                                         </tr>
                                         <tr>
-                                            <td colspan="3" class="bg-ash text-strong">
+                                            <td colspan="3" class="bg-ash fw-500">
                                                 <p>DESIGNATION</p>
                                             </td>
                                             <td colspan="3">
                                                 <p></p>
                                             </td>
-                                            <td colspan="3" class="bg-ash text-strong">
+                                            <td colspan="3" class="bg-ash fw-500">
                                                 <p>LOCATION</p>
                                             </td>
                                             <td colspan="3">
@@ -2307,13 +1408,13 @@
 
                                         </tr>
                                         <tr>
-                                            <td colspan="3" class="bg-ash text-strong">
+                                            <td colspan="3" class="bg-ash fw-500">
                                                 <p>EPF NUMBER</p>
                                             </td>
                                             <td colspan="3">
                                                 <p></p>
                                             </td>
-                                            <td colspan="3" class="bg-ash text-strong">
+                                            <td colspan="3" class="bg-ash fw-500">
                                                 <p>ESIC NUMBER</p>
                                             </td>
                                             <td colspan="3">
@@ -2322,13 +1423,13 @@
 
                                         </tr>
                                         <tr>
-                                            <td colspan="3" class="bg-ash text-strong">
+                                            <td colspan="3" class="bg-ash fw-500">
                                                 <p>UAN</p>
                                             </td>
                                             <td colspan="3">
                                                 <p></p>
                                             </td>
-                                            <td colspan="3" class="bg-ash text-strong">
+                                            <td colspan="3" class="bg-ash fw-500">
                                                 <p>PAN</p>
                                             </td>
                                             <td colspan="3">
@@ -2338,26 +1439,26 @@
                                         </tr>
                                         <tr>
                                             <td colspan="4" class="bg-ash ">
-                                                <p class="text-strong txt-center">BANK NAME</p>
+                                                <p class="fw-500 txt-center">BANK NAME</p>
                                             </td>
 
                                             <td colspan="4" class="bg-ash ">
-                                                <p class="text-strong txt-center">ACCOUNT NUMBER</p>
+                                                <p class="fw-500 txt-center">ACCOUNT NUMBER</p>
                                             </td>
                                             <td colspan="4" class="bg-ash ">
-                                                <p class="text-strong txt-center">IFSC CODE</p>
+                                                <p class="fw-500 txt-center">IFSC CODE</p>
                                             </td>
 
                                         </tr>
                                         <tr>
                                             <td colspan="4" class="">
-                                                <p class="txt-center">-</p>
+                                                <p class="txt-center"></p>
                                             </td>
                                             <td colspan="4" class="">
-                                                <p class="txt-center">-</p>
+                                                <p class="txt-center"></p>
                                             </td>
                                             <td colspan="4" class="">
-                                                <p class="txt-center">-</p>
+                                                <p class="txt-center"></p>
                                             </td>
 
 
@@ -2365,64 +1466,104 @@
 
                                         <tr>
                                             <td colspan="3" class="bg-ash ">
-                                                <p class="text-strong txt-center">MONTH DAYS</p>
+                                                <p class="fw-500 txt-center">MONTH DAYS</p>
                                             </td>
 
                                             <td colspan="3" class="bg-ash ">
-                                                <p class="text-strong txt-center">WORKED DAYS</p>
+                                                <p class="fw-500 txt-center">WORKED DAYS</p>
                                             </td>
                                             <td colspan="3" class="bg-ash ">
-                                                <p class="text-strong txt-center">LOSS OF PAY</p>
+                                                <p class="fw-500 txt-center">LOSS OF PAY</p>
                                             </td>
                                             <td colspan="3" class="bg-ash ">
-                                                <p class="text-strong txt-center">ARREAR DAYS</p>
+                                                <p class="fw-500 txt-center">ARREAR DAYS</p>
                                             </td>
 
                                         </tr>
                                         <tr>
                                             <td colspan="3" class="">
-                                                <p class="txt-center">-</p>
+                                                <p class="txt-center"></p>
                                             </td>
                                             <td colspan="3" class="">
-                                                <p class="txt-center">-</p>
+                                                <p class="txt-center"></p>
                                             </td>
                                             <td colspan="3" class="">
-                                                <p class="txt-center">-</p>
+                                                <p class="txt-center"></p>
                                             </td>
                                             <td colspan="3" class="">
+                                                <p class="txt-center"></p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="bg-ash fw-500">
+                                                <p class="txt-center">CL/SL OpenBalance</p>
+                                            </td>
+                                            <td colspan="2" class="bg-ash fw-500 ">
+                                                <p class="txt-center">PL OpenBalance</p>
+                                            </td>
+
+                                            <td colspan="2" class="bg-ash fw-500">
+                                                <p class="txt-center">Availed CL/SL</p>
+                                            </td>
+                                            <td colspan="2" class="bg-ash fw-500">
+                                                <p class="txt-center">Availed PL</p>
+                                            </td>
+                                            <td colspan="2" class="bg-ash fw-500">
+                                                <p class="txt-center">Balance CL/SL</p>
+                                            </td>
+                                            <td colspan="2" class="bg-ash fw-500">
+                                                <p class="txt-center">Balance PL</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="">
+                                                <p class="txt-center">-</p>
+                                            </td>
+                                            <td colspan="2" class="">
+                                                <p class="txt-center">-</p>
+                                            </td>
+                                            <td colspan="2" class="">
+                                                <p class="txt-center">-</p>
+                                            </td>
+                                            <td colspan="2" class="">
+                                                <p class="txt-center">-</p>
+                                            </td>
+                                            <td colspan="2" class="">
+                                                <p class="txt-center">-</p>
+                                            </td>
+                                            <td colspan="2" class="">
                                                 <p class="txt-center">-</p>
                                             </td>
                                         </tr>
-
                                         <tr>
                                             <td colspan="12">
-                                                <p class="padding-md"></p>
+                                                <p class="padding-md">&nbsp; </p>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td colspan="2" class="bg-ash">
-                                                <p class="txt-center text-strong">DESCRIPTION</p>
+                                                <p class="txt-center fw-500">DESCRIPTION</p>
                                             </td>
                                             <td colspan="2" class="bg-ash">
-                                                <p class="txt-center text-strong">AMOUNT</p>
+                                                <p class="txt-center fw-500">AMOUNT</p>
                                             </td>
                                             <td colspan="2" class="bg-ash">
-                                                <p class="txt-center text-strong">ARREAR AMOUNT</p>
+                                                <p class="txt-center fw-500">ARREAR AMOUNT</p>
                                             </td>
                                             <td colspan="2" class="bg-ash">
-                                                <p class="txt-center text-strong">EARNED AMOUNT</p>
+                                                <p class="txt-center fw-500">EARNED AMOUNT</p>
                                             </td>
                                             <td colspan="2" class="bg-ash">
-                                                <p class="txt-center text-strong">DEDUCTION</p>
+                                                <p class="txt-center fw-500">DEDUCTION</p>
                                             </td>
                                             <td colspan="2" class="bg-ash">
-                                                <p class="txt-center text-strong">AMOUNT</p>
+                                                <p class="txt-center fw-500">AMOUNT</p>
                                             </td>
 
                                         </tr>
                                         <tr>
                                             <td colspan="2" class="">
-                                                <p class="txt-left text-strong">BASIC</p>
+                                                <p class="txt-left fw-500">BASIC</p>
                                             </td>
                                             <td colspan="2" class="">
                                                 <p class="txt-right"></p>
@@ -2434,7 +1575,7 @@
                                                 <p class="txt-right"></p>
                                             </td>
                                             <td colspan="2" class="">
-                                                <p class="txt-left text-strong">EPF</p>
+                                                <p class="txt-left fw-500">EPF</p>
                                             </td>
                                             <td colspan="2" class="">
                                                 <p class="txt-right"></p>
@@ -2442,7 +1583,7 @@
                                         </tr>
                                         <tr>
                                             <td colspan="2" class="">
-                                                <p class="txt-left text-strong">HRA</p>
+                                                <p class="txt-left fw-500">HRA</p>
                                             </td>
                                             <td colspan="2" class="">
                                                 <p class="txt-right"></p>
@@ -2453,7 +1594,7 @@
                                                 <p class="txt-right"></p>
                                             </td>
                                             <td colspan="2" class="">
-                                                <p class="txt-left text-strong">VPF</p>
+                                                <p class="txt-left fw-500">ESIC</p>
                                             </td>
                                             <td colspan="2" class="">
                                                 <p class="txt-right"></p>
@@ -2461,7 +1602,7 @@
                                         </tr>
                                         <tr>
                                             <td colspan="2" class="">
-                                                <p class="txt-left text-strong">SPECIAL ALLOWANCE </p>
+                                                <p class="txt-left fw-500">SPECIAL ALLOWANCE </p>
                                             </td>
                                             <td colspan="2" class="">
                                                 <p class="txt-right"></p>
@@ -2473,29 +1614,7 @@
                                                 <p class="txt-right"></p>
                                             </td>
                                             <td colspan="2" class="">
-                                                <p class="txt-left text-strong">ESIC</p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-right"></p>
-                                            </td>
-
-
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="">
-                                                <p class="txt-left text-strong">OTHER ALLOWANCE </p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-right"></p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-right"></p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-right"></p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-left text-strong">PROF TAX</p>
+                                                <p class="txt-left fw-500">PT</p>
                                             </td>
                                             <td colspan="2" class="">
                                                 <p class="txt-right"></p>
@@ -2503,9 +1622,11 @@
 
 
                                         </tr>
+
+
                                         <tr>
                                             <td colspan="2" class="">
-                                                <p class="txt-left text-strong"> OTHER EARNINGS </p>
+                                                <p class="txt-left fw-500"> COMMUNICATION ALLOWANCE </p>
                                             </td>
                                             <td colspan="2" class="">
                                                 <p class="txt-right"></p>
@@ -2518,7 +1639,7 @@
                                                 <p class="txt-right"></p>
                                             </td>
                                             <td colspan="2" class="">
-                                                <p class="txt-left text-strong">INCOME TAX</p>
+                                                <p class="txt-left fw-500">INCOME TAX</p>
                                             </td>
                                             <td colspan="2" class="">
                                                 <p class="txt-right"></p>
@@ -2526,7 +1647,7 @@
                                         </tr>
                                         <tr>
                                             <td colspan="2" class="">
-                                                <p class="txt-left text-strong"> </p>
+                                                <p class="txt-left fw-500"> FOOD ALLOWANCE </p>
                                             </td>
                                             <td colspan="2" class="">
                                                 <p class="txt-right"></p>
@@ -2539,15 +1660,37 @@
                                                 <p class="txt-right"></p>
                                             </td>
                                             <td colspan="2" class="">
-                                                <p class="txt-left text-strong">SALARY ADVANCE</p>
+                                                <p class="txt-left fw-500">FOOD DEDUCTION</p>
                                             </td>
                                             <td colspan="2" class="">
                                                 <p class="txt-right"></p>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="2" class="">
+                                                <p class="txt-left fw-500"> </p>
+                                            </td>
+                                            <td colspan="2" class="">
+                                                <p class="txt-right"></p>
+                                            </td>
+                                            <td colspan="2" class="">
+                                                <p class="txt-right"></p>
+                                            </td>
+
+                                            <td colspan="2" class="">
+                                                <p class="txt-right"></p>
+                                            </td>
+                                            <td colspan="2" class="">
+                                                <p class="txt-left fw-500">SALARY ADVANCE</p>
+                                            </td>
+                                            <td colspan="2" class="">
+                                                <p class="txt-right"> </p>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td colspan="2" class="">
-                                                <p class="txt-left text-strong"> </p>
+                                                <p class="txt-left fw-500"> </p>
                                             </td>
                                             <td colspan="2" class="">
                                                 <p class="txt-right"></p>
@@ -2560,30 +1703,28 @@
                                                 <p class="txt-right"></p>
                                             </td>
                                             <td colspan="2" class="">
-                                                <p class="txt-left text-strong">OTHERDEDUCTIONS</p>
+                                                <p class="txt-left fw-500">OTHER DEDUCTIONS</p>
                                             </td>
                                             <td colspan="2" class="">
                                                 <p class="txt-right"></p>
                                             </td>
                                         </tr>
-
-
                                         <tr>
                                             <td colspan="2" class="bg-ash">
-                                                <p class="txt-left text-strong">TOTAL EARNINGS</p>
-                                            </td>
-                                            <td colspan="2" class="bg-ash">
-                                                <p class="txt-right"></p>
+                                                <p class="txt-left fw-500">TOTAL EARNINGS</p>
                                             </td>
                                             <td colspan="2" class="bg-ash">
                                                 <p class="txt-right"></p>
                                             </td>
+                                            <td colspan="2" class="bg-ash">
+                                                <p class="txt-right"></p>
+                                            </td>
 
                                             <td colspan="2" class="bg-ash">
                                                 <p class="txt-right"></p>
                                             </td>
                                             <td colspan="2" class="bg-ash">
-                                                <p class="txt-left text-strong">TOTAL DEDUCTION</p>
+                                                <p class="txt-left fw-500">TOTAL DEDUCTION</p>
                                             </td>
                                             <td colspan="2" class="bg-ash">
                                                 <p class="txt-right"></p>
@@ -2596,7 +1737,7 @@
                                         </tr>
                                         <tr>
                                             <td colspan="4" class="bg-ash">
-                                                <p class="txt-left text-strong">NET PAY</p>
+                                                <p class="txt-left fw-500">NET PAY</p>
                                             </td>
                                             <td colspan="8" class="">
                                                 <p class="txt-center "></p>
@@ -2604,7 +1745,7 @@
                                         </tr>
                                         <tr>
                                             <td colspan="4" class="bg-ash">
-                                                <p class="txt-left text-strong">NET PAY IN WORDS</p>
+                                                <p class="txt-left fw-500">NET PAY IN WORDS</p>
                                             </td>
                                             <td colspan="8" class="">
                                                 <p class="txt-center "></p>
@@ -2617,13 +1758,13 @@
                                         </tr>
                                         <tr>
                                             <td colspan="3" class="bg-ash">
-                                                <p class="txt-center text-strong">TRANSACTION ID</p>
+                                                <p class="txt-center fw-500">TRANSACTION ID</p>
                                             </td>
                                             <td colspan="3" class="">
                                                 <p class="txt-center"></p>
                                             </td>
                                             <td colspan="3" class="bg-ash">
-                                                <p class="txt-center text-strong">Paid Date</p>
+                                                <p class="txt-center fw-500">Paid Date</p>
                                             </td>
                                             <td colspan="3" class="">
                                                 <p class="txt-center"></p>
@@ -2632,54 +1773,6 @@
                                         <tr>
                                             <td colspan="12">
                                                 <p class="padding-md">&nbsp; </p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="12" class="bg-ash">
-                                                <p class="txt-center text-strong">Leave Details </p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="4" class="bg-ash">
-                                                <p class="txt-center text-strong">Leave’s Type</p>
-                                            </td>
-                                            <td colspan="3" class="bg-ash">
-                                                <p class="txt-center text-strong">Opening Balance</p>
-                                            </td>
-                                            <td colspan="3" class="bg-ash">
-                                                <p class="txt-center text-strong">Availed Leaves</p>
-                                            </td>
-                                            <td colspan="3" class="bg-ash">
-                                                <p class="txt-center text-strong">Closing Balance</p>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td colspan="4" class="bg-ash">
-                                                <p class="txt-center text-strong">Casual Leave / Sick Leave</p>
-                                            </td>
-                                            <td colspan="3" class="">
-                                                <p class="txt-center text-strong"></p>
-                                            </td>
-                                            <td colspan="3" class="">
-                                                <p class="txt-center text-strong"></p>
-                                            </td>
-                                            <td colspan="3" class="">
-                                                <p class="txt-center text-strong"></p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="4" class="bg-ash">
-                                                <p class="txt-center text-strong">Earned Leave</p>
-                                            </td>
-                                            <td colspan="3" class="">
-                                                <p class="txt-center text-strong"></p>
-                                            </td>
-                                            <td colspan="3" class="">
-                                                <p class="txt-center text-strong"></p>
-                                            </td>
-                                            <td colspan="3" class="">
-                                                <p class="txt-center text-strong"></p>
                                             </td>
                                         </tr>
                                         <tr>
@@ -2691,16 +1784,14 @@
 
                                         <tr class="border-less">
                                             <td colspan="8" class="border-less">
-                                                <p class="txt-left">Please reach out to us for any payroll queries at
-                                                    -hr.admin@imcvasa.in</p>
+                                                <p class="txt-left">Please
+                                                    reach out to us for any payroll queries at -payroll@ardens.in</p>
                                             </td>
                                             <td colspan="2" class="border-less ">
                                                 <p class="txt-right">Generated By</p>
 
-
                                             </td>
-                                            <td colspan="2" class="border-less">
-
+                                            <td colspan="2" class="border-less text-left">
                                                 <img src="{{ URL::asset('assets/images/client_logos/ardens/evangelist.png') }}"
                                                     width="80px" height="15px" alt="" class="">
                                             </td>
