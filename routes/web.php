@@ -25,6 +25,18 @@ Route::get('/vuejs', function () {
 });
 
 
+Route::get('/roles', function () {
+    return view('rolesAndPermission');
+})->name('roles');
+
+Route::get('/addPermission', function () {
+    return view('addPermissionTo_role');
+})->name('addPermission');
+
+Route::get('/Add-New', function () {
+    return view('addNew_role');
+})->name('Add-New');
+
 Route::middleware(['auth'])->group(function () {
 
     //Basic DB data

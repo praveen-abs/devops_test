@@ -142,8 +142,8 @@
                                                         </span>
                                                         <p class="pad-top-10">
                                                             The focus of this policy is to properly manage and track the
-                                                            attendance and leaves of all the employees of the Langro India
-                                                            Private Limited .
+                                                            attendance and leaves of all the employees of the
+                                                            Indchem Marketing Agencies.
                                                         </p>
                                                     </td>
                                                 </tr>
@@ -153,8 +153,7 @@
                                                             Scope:
                                                         </span>
                                                         <p class="pad-top-10">
-                                                            This policy applies to all the employees of Langro India Private
-                                                            Limited , across all the departments and regardless of the job
+                                                            This policy applies to all the employees of  Indchem Marketing Agencies , across all the departments and regardless of the job
                                                             position they hold.
                                                         </p>
                                                     </td>
@@ -165,8 +164,7 @@
                                                             Applicability
                                                         </span>
                                                         <p class="pad-top-10">
-                                                            This policy applies to all employees working for Langro India
-                                                            Private Limited
+                                                            This policy applies to all employees working for  Indchem Marketing Agencies
                                                         </p>
                                                     </td>
                                                 </tr>
@@ -296,7 +294,7 @@
                                         <table class="policy_table  ">
                                             <tbody>
                                                 <tr>
-                                                    <td colspan="8" align="" class="pad-bottom-15">
+                                                    <td colspan="8" align="" class="pad-bottom-10">
                                                         <span class="border-b   text-strong">
                                                             Definition:
                                                         </span>
@@ -584,12 +582,12 @@
 
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="8" align="" class="pad-bottom-15">
+                                                    <td colspan="8" align="" class="pad-bottom-10">
                                                         <span class="border-b   text-strong">
                                                             E. Core, Centre, and Optional holidays
                                                         </span>
                                                         <p class="pad-top-10">
-                                                            Indchem Marketing Agencies will have 11 holidays per annum
+                                                            Indchem Marketing Agencieswill have 11 holidays per annum
                                                             classified as Core, Centre, or State as per the holiday list.
                                                         </p>
                                                         <p class="pad-top-10">
@@ -599,7 +597,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="8" align="" class="pad-top-10 pad-bottom-10">
+                                                    <td colspan="8" align="" class=" pad-bottom-10">
                                                         <span class="border-b   text-strong">
                                                             F. Sick leave
                                                         </span>
@@ -619,16 +617,6 @@
                                                     </td>
 
                                                 </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item  ">
-                                <div class="main-page">
-                                    <div class="sub-page">
-                                        <table class="policy_table  ">
-                                            <tbody>
 
                                                 <tr class="
                                                 ">
@@ -636,7 +624,7 @@
                                                         ⮚
                                                     </td>
                                                     <td colspan="7" align="" class="pad-top-5 ">
-                                                        <p>All existing employees of Indchem Marketing Agencies are
+                                                        <p>All existing employees of  Indchem Marketing Agencies are
                                                             eligible for 12 (Twelve) days of Sick leave / Casual Leave per
                                                             annum on the 1st of April every year. </p>
                                                     </td>
@@ -690,6 +678,18 @@
                                                     </td>
 
                                                 </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item  ">
+                                <div class="main-page">
+                                    <div class="sub-page">
+                                        <table class="policy_table  ">
+                                            <tbody>
+
 
                                                 <tr>
                                                     <td colspan="8" align="" class="pad-bottom-10">
@@ -1012,6 +1012,12 @@
                                                             Resources if you require any further information
                                                         </p>
 
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="8" style="padding-top: 50px" align="center"
+                                                        class=" ">
+                                                        * &nbsp; * &nbsp; *
                                                     </td>
                                                 </tr>
                                             </tbody>

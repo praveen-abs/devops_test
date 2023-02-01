@@ -24,7 +24,7 @@
                             </li>
                             @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR', 'Manager']))
                                 <li class="nav-item text-muted " role="presentation">
-                                    <a class="nav-link pb-2" data-bs-toggle="tab" href="#team_leaveBalance"
+                                    <a class="nav-link pb-2 mx-4" data-bs-toggle="tab" href="#team_leaveBalance"
                                         aria-selected="false" tabindex="-1" role="tab">
                                         Team Leave Balance</a>
                                 </li>
@@ -39,7 +39,7 @@
                             @endif
                         </ul>
                     </div>
-                    <div class="col-3  text-md-end text-center">
+                    <div class="col-3  text-end">
 
                         <div class="input-group   me-2">
                             <label class="input-group-text " for="inputGroupSelect01"><i
@@ -51,12 +51,12 @@
                         </div>
 
                     </div>
-                    <div class="col-3  text-md-start text-center">
+                    <div class="col-3  text-end">
                         <div>
 
-                            <a href="{{ route('attendance-leave-policydocument') }}" id=""
-                                class="nav-link sidebar  btn btn-orange" role="button" aria-expanded="false"><span> Leave
-                                    Policy Explanation</span>
+                            <a href="{{ route('attendance-leave-policydocument') }}" id="" class=" btn btn-orange"
+                                role="button" aria-expanded="false"> Leave
+                                Policy Explanation
                             </a>
                         </div>
                     </div>

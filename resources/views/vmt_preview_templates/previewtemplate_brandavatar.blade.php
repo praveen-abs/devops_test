@@ -125,9 +125,8 @@
                                             <!-- <page size="A4"> -->
 
                                             <div class="appointment-letter">
-                                                <div class="logo" style="width:150px;height: 50px;">
-
-                                                    <img src="{{ URL::asset('assets/images/appointment/avatar/brandavatarlogo.png') }}"
+                                                <div class="logo" style="width:150px;height: 55px;">
+                                                    <img src="{{ URL::asset('assets/clients/brandavatar/logos/logo_avatar_live.png') }}"
                                                         class="" style="height:100%;width:100%;">
                                                 </div>
 
