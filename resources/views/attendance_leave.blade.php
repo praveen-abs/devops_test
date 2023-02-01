@@ -255,6 +255,7 @@
 
                                 <div class="table-responsive">
                                     <div id="team_leaveHistory" class="custom_gridJs"></div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -271,6 +272,7 @@
                         <div class="card mb-0 leave-history">
                             <div class="card-body">
                                 <h6 class="mb-2">Org Leave Balance</h6>
+                                @vite('resources/js/hrms/modules/leave_module/OrgLeaveBalance.js')
                                 <div id="vjs_orgLeaveTable_RemainingLeave"></div>
                             </div>
                         </div>
@@ -282,7 +284,11 @@
                             <div class="card-body">
                                 <h6 class="mb-2">Org Leave history</h6>
                                 <div class="table-responsive">
-                                    <div id="org_leaveHistory" class="custom_gridJs"></div>
+                                    <!-- <div id="org_leaveHistory" class="custom_gridJs"></div> -->
+                                    @vite('resources/js/hrms/modules/profile_pages/EmployeeDocumentsManager.js')
+                                    <div id="vjs_employeeDocsManager"></div>
+                                    
+
                                 </div>
                             </div>
                         </div>

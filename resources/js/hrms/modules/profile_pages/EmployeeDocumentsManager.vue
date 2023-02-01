@@ -83,7 +83,7 @@
             console.log("Uploading file....");
             processDocUpload();
         }
-
+    axios.get('/profile-page/uploadEmployeeDocs').then((res)=>PersonalDocument.value=res.data)
 </script>
 
 <style scoped>
