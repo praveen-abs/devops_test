@@ -182,7 +182,7 @@ a,
 span,input,
 select,button,.accordion-button {
     font-size: 13px;
-    color:var(--vz-vertical-menu-sub-item-color);
+    color:#262a2f;
 }
 
 .f-9{
