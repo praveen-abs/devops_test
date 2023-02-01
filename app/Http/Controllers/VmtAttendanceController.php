@@ -1207,4 +1207,14 @@ class VmtAttendanceController extends Controller
         return view('leave_policy_templates.'.$viewPage);
 
     }
+
+    public function fetchOrgEmployeesPendingLeaves(Request $request){
+
+
+
+    }
+
+    public function fetchTeamEmployeesPendingLeaves(Request $request){
+
+    }
 }
