@@ -26,10 +26,11 @@
             <DataTable :value="att_regularization" :paginator="true" :rows="10" dataKey="id"
                     paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
                     responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
-                    v-model:filters="filters2" filterDisplay="row" :loading="loading2"
+                    v-model:filters="filters2" filterDisplay="menu" :loading="loading2"
                     :globalFilterFields="['status']">
 
                 <Column field="employee_name" header="Name">
+                  
                     <template #body="slotProps">
                         <div class="employee_name">
                             {{ slotProps.data.employee_name }}
@@ -48,7 +49,7 @@
                     <template #body="{data}">
                         <span :class="'customer-badge status-' + data.status">{{data.status}}</span>
                     </template>
-                    <template #filter="{filterModel,filterCallback}">
+                    <template #filter="{filterModel}">
                         <Dropdown v-model="filterModel.value" @change="filterCallback()" :options="statuses" placeholder="Any" class="p-column-filter" :showClear="true">
                             <template #value="slotProps">
                                 <span :class="'customer-badge status-' + slotProps.value" v-if="slotProps.value">{{slotProps.value}}</span>
@@ -59,6 +60,8 @@
                             </template>
                         </Dropdown>
                     </template>
+
+                    
 
                 </Column>
                 <Column style="width: 300px;" field="" header="Action">
