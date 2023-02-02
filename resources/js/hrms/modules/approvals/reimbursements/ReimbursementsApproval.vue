@@ -36,7 +36,16 @@
                 <Column class="fontSize13px" field="to" header="To"></Column>
                 <Column class="fontSize13px" field="vehicle_type" header="Model Of Transport"></Column>
                 <Column class="fontSize13px" field="distance_travelled" header="Distance Covered"></Column>
-                <Column class="fontSize13px" field="" header="Total Expenses"></Column>
+                <Column class="fontSize13px" header="Total Expenses">
+                    <template #body="slotProps">
+                        <div v-if="slotProps.data.vehicle_type=='2- Wheeler'" class="totalExpenses">
+                           {{"&#8377;"+slotProps.data.distance_travelled*two_wheller_km_price}}
+                        </div>
+                        <div v-if="slotProps.data.vehicle_type=='4- Wheeler'" class="totalExpenses">
+                            {{"&#8377;"+slotProps.data.distance_travelled*four_wheller_km_price }}
+                         </div>
+                    </template>
+                </Column>
 
 
 
@@ -72,6 +81,9 @@
     import { useToast } from "primevue/usetoast";
 
     let data_reimbursements = ref();
+    const two_wheller_km_price=ref(3);
+    const four_wheller_km_price=ref(4);
+    const total_expenses =ref();
     const confirm = useConfirm();
     const toast = useToast();
 
@@ -85,6 +97,7 @@
             .then((response) => {
                 // console.log("Axios : " + response.data);
                 data_reimbursements.value = response.data;
+                console.log(response.data)
 
             });
 
@@ -126,6 +139,9 @@
 
 </script>
 <style  lang="scss">
+.main-content{
+    width: 101%;
+}
 .p-datatable .p-datatable-thead >tr>th{
     text-align: center;
     padding: 0.3rem 1rem;
