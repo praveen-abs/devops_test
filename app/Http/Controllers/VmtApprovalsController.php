@@ -223,6 +223,10 @@ class VmtApprovalsController extends Controller
                                 'users.user_code as user_code',
                                 'vmt_employee_reimbursements.date as reimbursement_date',
                                 'vmt_employee_reimbursements.user_data',
+                                'vmt_employee_reimbursements.from',
+                                'vmt_employee_reimbursements.to',
+                                'vmt_employee_reimbursements.vehicle_type',
+                                'vmt_employee_reimbursements.distance_travelled',
                                 'vmt_employee_reimbursements.status',
                             )
                             ->get();
