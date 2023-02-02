@@ -73,6 +73,7 @@
     <script>
         var gridtable_yetToActiveTable = "";
         var gridtable_activeTable = "";
+        var gridtable_exitTable = "";
 
         var bloodgroup_array = <?php echo json_encode(getAllBloodGroupNames()); ?>;
 
@@ -244,7 +245,7 @@
                             name: 'View Profile',
                             formatter: function formatter(enc_user_id) {
 
-                                var routeURL = "{{ route('pages-profile-new') }}" + "/" +
+                                var routeURL = "{{ route('pages-profile') }}" + "/" +
                                     enc_user_id;
                                 //routeURL.replace(':user_id',user_id);
                                 //console.log("User URL : "+routeURL);
@@ -308,7 +309,7 @@
 
 
             if (document.getElementById("exit_employeeTable")) {
-                gridtable_yetToActiveTable = new gridjs.Grid({
+                gridtable_exitTable = new gridjs.Grid({
                     columns: [{
                             id: 'user_id',
                             name: 'ID',
@@ -454,24 +455,24 @@
                                 return gridjs.html(htmlcontent);
                             }
                         },
-                        {
-                            id: 'emp_code',
-                            name: 'Action',
-                            formatter: function formatter(emp) {
-                                var htmlcontent = "";
+                        // {
+                        //     id: 'emp_code',
+                        //     name: 'Action',
+                        //     formatter: function formatter(emp) {
+                        //         var htmlcontent = "";
 
-                                if (emp.is_onboarded == "1" && emp.is_docs_approved == "1")
-                                    htmlcontent =
-                                    '<input type="button" value="Activate" onclick="activateEmployee(this)" id="button_activate_"' +
-                                    emp.user_id + '" data-user_id="' + emp.user_id +
-                                    '" class="status btn btn-orange py-1 onboard-employee-btn "></input>';
-                                else
-                                    htmlcontent =
-                                    '<input type="button" value="Activate" class="status btn btn-orange py-1 onboard-employee-btn disabled"></input>';
+                        //         if (emp.is_onboarded == "1" && emp.is_docs_approved == "1")
+                        //             htmlcontent =
+                        //             '<input type="button" value="Activate" onclick="activateEmployee(this)" id="button_activate_"' +
+                        //             emp.user_id + '" data-user_id="' + emp.user_id +
+                        //             '" class="status btn btn-orange py-1 onboard-employee-btn "></input>';
+                        //         else
+                        //             htmlcontent =
+                        //             '<input type="button" value="Activate" class="status btn btn-orange py-1 onboard-employee-btn disabled"></input>';
 
-                                return gridjs.html(htmlcontent);
-                            }
-                        },
+                        //         return gridjs.html(htmlcontent);
+                        //     }
+                        // },
                     ],
                     pagination: {
                         limit: 10,
@@ -481,7 +482,7 @@
                     sort: true,
                     search: true,
                     server: {
-                        url: '{{ route('vmt-yet-to-activeemployees-fetchall') }}',
+                        url: '{{ route('vmt-exitemployees-fetchall') }}',
                         then: data => data.map(
                             emp => [
                                 emp.user_id,
@@ -496,7 +497,7 @@
                                 emp.is_onboarded,
                                 emp.is_docs_approved,
                                 emp.enc_user_id,
-                                emp,
+                                //emp,
                             ]
                         )
                     },
@@ -631,7 +632,7 @@
                             name: 'View Profile',
                             formatter: function formatter(enc_user_id) {
 
-                                var routeURL = "{{ route('pages-profile-new') }}" + "/" +
+                                var routeURL = "{{ route('pages-profile') }}" + "/" +
                                     enc_user_id;
                                 //routeURL.replace(':user_id',user_id);
                                 //console.log("User URL : "+routeURL);

@@ -171,6 +171,7 @@ body {
 body {
     max-height: 100%;
     max-width: 100%;
+    font-size: 13px;
 }
 
 /* font-sizes */
@@ -178,19 +179,15 @@ body {
 label,
 p,
 a,
-span {
+span,input,
+select,button,.accordion-button {
     font-size: 13px;
+    color:#2a2828;
 }
 
-input,
-select {
-    font-size: 13px !important;
-}
-
-.f-9 {
+.f-9{
     font-size: 9px;
 }
-
 .f-10 {
     font-size: 10px;
 }
@@ -741,8 +738,8 @@ body::-webkit-scrollbar-track {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-
-    font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
+    /* font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif; */
+    font-family: 'Roboto', sans-serif;
 }
 
 .navbar-menu .navbar-nav .nav-link:hover svg path,
@@ -3295,9 +3292,9 @@ body::-webkit-scrollbar-track {
     z-index: 1;
 }
 
-.accordion .accordion-button {
+/* .accordion .accordion-button {
     font-weight: 500;
-}
+} */
 
 .accordion .accordion-body {
     color: #878a99;
@@ -5346,7 +5343,7 @@ h4,
 h5,
 h6 {
     color: #002f56;
-    font-weight: 600;
+    font-weight: 500;
     /* font-family: Poppins, sans-serif */
 }
 
@@ -16678,8 +16675,8 @@ ul {
 }
 
 .form-control:focus {
-    border-color: #002f56 !important;
-    box-shadow: 0 0 0 0.2rem rgb(0 48 86 / 17%) !important;
+    border-color: #002f56 ;
+    box-shadow: 0 0 0 0.2rem rgb(0 48 86 / 17%) ;
 }
 
 /* for paycheckDashboard */

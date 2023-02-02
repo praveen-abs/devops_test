@@ -25,6 +25,18 @@ Route::get('/vuejs', function () {
 });
 
 
+Route::get('/roles', function () {
+    return view('rolesAndPermission');
+})->name('roles');
+
+Route::get('/addPermission', function () {
+    return view('addPermissionTo_role');
+})->name('addPermission');
+
+Route::get('/Add-New', function () {
+    return view('addNew_role');
+})->name('Add-New');
+
 Route::middleware(['auth'])->group(function () {
 
     //Basic DB data
@@ -313,6 +325,7 @@ Route::post('vmt-general-settings', [App\Http\Controllers\HomeController::class,
 
     Route::get('manageEmployees', 'App\Http\Controllers\VmtEmployeeController@showManageEmployeePage')->name('manageEmployees');
     Route::get('vmt-activeemployees-fetchall', 'App\Http\Controllers\VmtEmployeeController@fetchAllActiveEmployees')->name('vmt-activeemployees-fetchall');
+    Route::get('vmt-exitemployees-fetchall', 'App\Http\Controllers\VmtEmployeeController@fetchAllExitEmployees')->name('vmt-exitemployees-fetchall');
     Route::get('vmt-yet-to-activeemployees-fetchall', 'App\Http\Controllers\VmtEmployeeController@fetchAllYetToActiveEmployees')->name('vmt-yet-to-activeemployees-fetchall');
 
     Route::post('vmt-kpi/data', 'App\Http\Controllers\VmtEmployeeController@showKpiData')->name('kpi-data');

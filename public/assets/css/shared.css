@@ -17,7 +17,7 @@
 }
 /* text color */
 
-.text-ash-dark{
+.text-ash-dark {
     color: var(--color-dark-ash);
 }
 
@@ -287,10 +287,7 @@ table.no-padding tr td {
     border: 1px solid var(--color-primary_blue);
     background-color: var(--color-white);
     color: var(--color-primary_blue);
-    padding: 5px 8px;
-    font-size: 14px;
-    padding: 5px 8px;
-    font-size: 13px !important;
+    font-size: 13px;
 }
 .btn-primary {
     background-color: var(--color-primary_blue) !important;
@@ -322,7 +319,7 @@ table.no-padding tr td {
 .btn-orange {
     transition: 0.4s ease-in;
     font-weight: 600;
-    padding: 5px 8px;
+
     font-size: 13px;
 }
 .btn-orange {
@@ -1024,7 +1021,7 @@ button.gridjs-sort-desc {
     color: #fff;
     border: none;
     border-radius: 5px;
-    padding: 5px 8px;
+
 }
 .selection-btn {
     border: 1px solid #002f56;

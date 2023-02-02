@@ -43,8 +43,8 @@
                                                                 <tr>
                                                                     <td colspan="12" class="" align="left">
 
-                                                                        <div style="height: 50px;width:160px">
-                                                                            <img src="{{ URL::asset('assets/images/appointment/avatar/brandavatarlogo.png') }}"
+                                                                        <div style="height: 75px;width:160px">
+                                                                            <img src="{{ URL::asset('assets/clients/brandavatar/logos/logo_avatar_live.png') }}"
                                                                                 class="" alt=""
                                                                                 style="height:100%;width:100%;">
                                                                         </div>
@@ -231,7 +231,7 @@
                                                                 </tr>
                                                                 <tr class="border-bottom-line-ash">
                                                                     <td colspan="6" class="pt-30"
-                                                                        style="padding-bottom:103px " align="left">
+                                                                        style="padding-bottom:78px " align="left">
                                                                         <p class="fw-500 txt-left " style="">
                                                                             Sign:
                                                                         </p>
@@ -239,7 +239,7 @@
 
                                                                     </td>
                                                                     <td colspan="6" class="pt-30"
-                                                                        style="padding-bottom:103px " align="right">
+                                                                        style="padding-bottom:78px " align="right">
                                                                         <p class="fw-500 txt-right " style="">
                                                                             Date:
                                                                         </p>
@@ -278,9 +278,9 @@
                                         <table class="letter-format " style="padding:0;">
                                             <tbody>
                                                 <tr>
-                                                    <td colspan="12" class="pb-10" align="left">
-                                                        <div style="height: 50px;width:160px">
-                                                            <img src="{{ URL::asset('assets/images/appointment/avatar/brandavatarlogo.png') }}"
+                                                    <td colspan="12" class="" align="left">
+                                                        <div style="height: 75px;width:160px">
+                                                            <img src="{{ URL::asset('assets/clients/brandavatar/logos/logo_avatar_live.png') }}"
                                                                 class="" alt=""
                                                                 style="height:100%;width:100%;">
                                                         </div>
@@ -689,7 +689,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td colspan="12" class="border-bottom-line-ash"
-                                                        style="padding-bottom: 208px">
+                                                        style="padding-bottom: 194px">
 
                                                     </td>
                                                 </tr>
@@ -720,8 +720,8 @@
                                             <tbody>
                                                 <tr>
                                                     <td colspan="12" class="pb-15" align="left">
-                                                        <div style="height: 50px;width:160px">
-                                                            <img src="{{ URL::asset('assets/images/appointment/avatar/brandavatarlogo.png') }}"
+                                                        <div style="height: 75px;width:160px">
+                                                            <img src="{{ URL::asset('assets/clients/brandavatar/logos/logo_avatar_live.png') }}"
                                                                 class="" alt=""
                                                                 style="height:100%;width:100%;">
                                                         </div>
@@ -898,7 +898,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="12" style="padding-bottom:88px;"
+                                                    <td colspan="12" style="padding-bottom:64px;"
                                                         class="border-bottom-line-ash">
                                                         <p class=" pad-bottom-5" style="">
                                                             You will be entitled to an employer's contribution of Provident
@@ -945,12 +945,10 @@
                                             <tbody>
                                                 <tr>
                                                     <td colspan="12" class="pb-15" align="left">
-                                                        <div style="height:50px;width:160px">
-                                                            <img src="{{ URL::asset('assets/images/appointment/avatar/brandavatarlogo.png') }}"
+                                                        <div style="height: 75px;width:160px">
+                                                            <img src="{{ URL::asset('assets/clients/brandavatar/logos/logo_avatar_live.png') }}"
                                                                 class="" alt=""
                                                                 style="height:100%;width:100%;">
-
-
                                                         </div>
 
 
@@ -1053,7 +1051,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="12" style="padding-bottom:82px"
+                                                    <td colspan="12" style="padding-bottom:57px"
                                                         class="border-bottom-line-ash" align="">
                                                         <p class="fw-500  pad-bottom-5" style="">
                                                             NON-DISCLOSURE AGREEMENT
@@ -1115,8 +1113,8 @@
                                             <tbody>
                                                 <tr>
                                                     <td colspan="12" class="pb-15" align="left">
-                                                        <div style="height:50px;width:160px">
-                                                            <img src="{{ URL::asset('assets/images/appointment/avatar/brandavatarlogo.png') }}"
+                                                        <div style="height: 75px;width:160px">
+                                                            <img src="{{ URL::asset('assets/clients/brandavatar/logos/logo_avatar_live.png') }}"
                                                                 class="" alt=""
                                                                 style="height:100%;width:100%;">
                                                         </div>
@@ -1226,8 +1224,7 @@
                                                             RETIREMENT AGE
                                                         </p>
                                                         <p>
-                                                            The general Retirement for employees in the Company is <span
-                                                                class="fw-500">Fifty-Eight (58) years.</span>
+                                                            The general Retirement for employees in the Company is <span class="fw-500">Fifty-Eight (58) years.</span>
                                                         </p>
                                                     </td>
                                                 </tr>
@@ -1280,14 +1277,14 @@
                                                     </td>
                                                 </tr>
                                                 <tr class="border-bottom-line-ash">
-                                                    <td colspan="6" class="pt-pb-15" style="padding-bottom:37px" align="left">
+                                                    <td colspan="6" class="pt-pb-15" style="" align="left">
                                                         <p class="fw-500 txt-left " style="">
                                                             Sign:
                                                         </p>
 
 
                                                     </td>
-                                                    <td colspan="6" class="pt-pb-15" style=" padding-bottom:37px" align="right">
+                                                    <td colspan="6" class="pt-pb-15" style=" " align="right">
                                                         <p class="fw-500 txt-right " style="">
                                                             Date:
                                                         </p>
@@ -1335,26 +1332,23 @@
                         <div class="main-page">
                             <div class="sub-page" style="text-align: justify;font-size: 15px;">
                                 <div class="table-responsive">
-                                    <table cellspacing="0" cellpadding="0" class="payslip_table payslip-brandAvatar">
+                                    <table cellspacing="0" cellpadding="0" class="payslip_table payslip-avatarLive">
                                         <tr class="header-row">
                                             <td colspan="8" class="border-less p3">
                                                 <div class="header-cotent">
-
-                                                    <p class="margin-0"
-                                                        style="padding-left:5px;color:#912789;font-size:18px">Brand Avatar
-                                                        LLP</p>
+                                                    <p class="margin-0 fw-500" style="padding-left:5px;color:#ff0000;font-size:18px"> Avatar Live</p>
                                                     <p class="mb-0">NO-01,Kandasamy Street,</p>
                                                     <p class="mb-0">Chandrabagh Ave 2nd St, Dr. Radha Krishnan Salai,
                                                     </p>
                                                     <p class="mb-0">Mylapore, Chennai, Tamil Nadu 600004</p>
                                                 </div>
                                             </td>
-                                            <td colspan="4" class="border-less p3">
+                                            <td colspan="4" class="border-less " align="right">
 
-                                                <div class="header-img txt-right">
+                                                <div class="header-img txt-right" style="height: 60px;width:160px;">
                                                     <!-- <img src="" title=""> -->
-                                                    <img src="{{ URL::asset('assets/images/appointment/avatar/brandavatarlogo.png') }}"
-                                                        class="" style="height: 40px;width:180px;max-height:100%;">
+                                                    <img src="{{ URL::asset('assets/clients/brandavatar/logos/logo_avatar_live.png') }}"
+                                                        class="" style="height: 100%;width:100%;">
                                                 </div>
 
 
