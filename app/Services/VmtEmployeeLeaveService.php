@@ -2,8 +2,7 @@
 
 namespace App\Services;
 
-use App\Imports\VmtPaySlip;
-use App\Models\Bank;
+use App\Models\VmtEmployee;
 
 class VmtEmployeeLeaveService
 {
@@ -19,19 +18,31 @@ class VmtEmployeeLeaveService
     */
     public function processEmployeeLeaveBalance($user_id){
 
-        $calendar_type = "Financial Year";
+        $calendar_type = "calendar_year";
         $accrualLeaveAdd_startDate = "1";
 
+        $current_month = '';
+
+        $emp_doj = VmtEmployee::where('userid',$user_id)->first()->doj;
+
         if($calendar_type=='financial_year'){
+               
+        }else 
+        if($calendar_type=='calendar_year'){
 
-        }else if($calendar_type=='calendar_year'){
+            $calendar_type_start_month = "1";
+            $emp_doj_month = "";
 
+            dd($emp_doj);
+
+            //check how many months have elapsed
+            //$emp_doj_month
         }
 
 
         return $response = [
             'status' => 'success',
-            'message' => 'Accrual Leaves added for the employee : '.$user_id,
+            'message' => 'Accrual Leaves added for the employee : '.$user_id.' ;DOJ : '.$doj,
             'error' => '',
             'error_verbose' => ''
         ];
