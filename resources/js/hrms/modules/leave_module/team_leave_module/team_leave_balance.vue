@@ -1,6 +1,7 @@
 <template>
 	<div>
-        <DataTable :value="products" responsiveLayout="scroll">
+        <DataTable :value="products" responsiveLayout="scroll" :paginator="true" :rows="5" class="p-datatable-sm"
+        v-model:filters="filters2" filterDisplay="menu">
             <Column field="name" header="Sick Leave"></Column>
             <Column field="agejyje" header="Earned Leave"></Column>
          <Column>

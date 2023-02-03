@@ -1,14 +1,10 @@
 <template>
 	<div>
-        <DataTable :value="leaves" responsiveLayout="scroll">
+        <DataTable :value="leaves" responsiveLayout="scroll"   >
             <Column field="user_id" header="Employee ID"></Column>
             <Column field="employee_name" header="Employee Name"></Column>
             <Column  header="Sick Leave / Causal Leave">
-              <!-- <template #header>
-                <div>
-                    Employee Name
-                </div>
-            </template> -->
+          
                 <template #body="data">
                     <div id="leave">
                         {{ data.data.array_leave_details["Sick Leave / Casual Leave"] }}
@@ -16,11 +12,7 @@
                 </template>
             </Column>
             <Column  header="Earned Leave">
-              <!-- <template #header>
-                <div>
-                    Employee Name
-                </div>
-            </template> -->
+            
                 <template #body="data">
                     <div id="leave">
                         {{ data.data.array_leave_details["Earned Leave"] }}
@@ -28,35 +20,16 @@
                 </template>
             </Column>
             <Column  header="Maternity Leave">
-              <!-- <template #header>
-                <div>
-                    Employee Name
-                </div>
-            </template> -->
+           
                 <template #body="data">
                     <div id="leave">
                         {{ data.data.array_leave_details["Maternity Leave"] }}
                     </div>
                 </template>
             </Column>
-            <Column  header="Maternity Leave">
-              <!-- <template #header>
-                <div>
-                    Employee Name
-                </div>
-            </template> -->
-                <template #body="data">
-                    <div id="leave">
-                        {{ data.data.array_leave_details["Maternity Leave"] }}
-                    </div>
-                </template>
-            </Column>
+    
             <Column  header="On Duty">
-              <!-- <template #header>
-                <div>
-                    Employee Name
-                </div>
-            </template> -->
+           
                 <template #body="data">
                     <div id="leave">
                         {{ data.data.array_leave_details["On Duty"] }}
@@ -64,11 +37,7 @@
                 </template>
             </Column>
             <Column  header="Paternity Leave">
-              <!-- <template #header>
-                <div>
-                    Employee Name
-                </div>
-            </template> -->
+     
                 <template #body="data">
                     <div id="leave">
                         {{ data.data.array_leave_details["Paternity Leave"] }}
@@ -76,14 +45,11 @@
                 </template>
             </Column>
             
-            <Column field="earned_leave_balance" header="Permission">      <!-- <template #header>
-              <div>
-                  Employee Name
-              </div>
-          </template> -->
+            <Column field="earned_leave_balance" header="Permission">
+          
               <template #body="data">
                   <div id="leave">
-                      {{ data.data.array_leave_details["Paternity Leave"] }}
+                      {{ data.data.array_leave_details["Permission"] }}
                   </div>
               </template></Column>
         </DataTable>
@@ -112,6 +78,7 @@ import axios from 'axios'
 
              
             });
+
 
         })
 
