@@ -1,12 +1,91 @@
 <template>
 	<div>
-        <DataTable :value="products" responsiveLayout="scroll">
+        <DataTable :value="leaves" responsiveLayout="scroll">
             <Column field="user_id" header="Employee ID"></Column>
-            <Column field="employee_avatar" header="Employee Avatar"></Column>
             <Column field="employee_name" header="Employee Name"></Column>
-
-            <Column field="sick_leave_balance" header="Sick Leave Balance"></Column>
-            <Column field="earned_leave_balance" header="Earned Leave Balance"></Column>
+            <Column  header="Sick Leave / Causal Leave">
+              <!-- <template #header>
+                <div>
+                    Employee Name
+                </div>
+            </template> -->
+                <template #body="data">
+                    <div id="leave">
+                        {{ data.data.array_leave_details["Sick Leave / Casual Leave"] }}
+                    </div>
+                </template>
+            </Column>
+            <Column  header="Earned Leave">
+              <!-- <template #header>
+                <div>
+                    Employee Name
+                </div>
+            </template> -->
+                <template #body="data">
+                    <div id="leave">
+                        {{ data.data.array_leave_details["Earned Leave"] }}
+                    </div>
+                </template>
+            </Column>
+            <Column  header="Maternity Leave">
+              <!-- <template #header>
+                <div>
+                    Employee Name
+                </div>
+            </template> -->
+                <template #body="data">
+                    <div id="leave">
+                        {{ data.data.array_leave_details["Maternity Leave"] }}
+                    </div>
+                </template>
+            </Column>
+            <Column  header="Maternity Leave">
+              <!-- <template #header>
+                <div>
+                    Employee Name
+                </div>
+            </template> -->
+                <template #body="data">
+                    <div id="leave">
+                        {{ data.data.array_leave_details["Maternity Leave"] }}
+                    </div>
+                </template>
+            </Column>
+            <Column  header="On Duty">
+              <!-- <template #header>
+                <div>
+                    Employee Name
+                </div>
+            </template> -->
+                <template #body="data">
+                    <div id="leave">
+                        {{ data.data.array_leave_details["On Duty"] }}
+                    </div>
+                </template>
+            </Column>
+            <Column  header="Paternity Leave">
+              <!-- <template #header>
+                <div>
+                    Employee Name
+                </div>
+            </template> -->
+                <template #body="data">
+                    <div id="leave">
+                        {{ data.data.array_leave_details["Paternity Leave"] }}
+                    </div>
+                </template>
+            </Column>
+            
+            <Column field="earned_leave_balance" header="Permission">      <!-- <template #header>
+              <div>
+                  Employee Name
+              </div>
+          </template> -->
+              <template #body="data">
+                  <div id="leave">
+                      {{ data.data.array_leave_details["Paternity Leave"] }}
+                  </div>
+              </template></Column>
         </DataTable>
 	</div>
 </template>
@@ -15,7 +94,7 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios'
 
-        const products = ref();
+        const leaves = ref();
         const url=ref()
 
         onMounted(() => {
@@ -28,9 +107,9 @@ import axios from 'axios'
 
                 axios.get(url_org_leave)
                   .then((response) => {
-                    console.log(response.data);
+                 leaves.value =response.data   
+                    
 
-                    products.value =response.data
              
             });
 
@@ -39,6 +118,9 @@ import axios from 'axios'
 </script>
 
 <style  lang="scss">
+.main-content{
+  width: 101%;
+}
 .p-datatable .p-datatable-thead >tr>th{
     text-align: center;
     padding: 0.9rem 1rem;
