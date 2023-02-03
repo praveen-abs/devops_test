@@ -22,7 +22,8 @@
         </Dialog>
     
         <div class="card">
-                <DataTable :value="data_reimbursements" responsiveLayout="scroll" :paginator="true" :rows="5" class="p-datatable-sm">
+                <DataTable :value="data_reimbursements" responsiveLayout="scroll" :paginator="true" :rows="5" class="p-datatable-sm"
+                v-model:filters="filters2" filterDisplay="menu">
                 <Column field="name" header="Name">
                     <template #body="slotProps">
                         <div class="employee_name">
@@ -39,10 +40,10 @@
                 <Column class="fontSize13px" header="Total Expenses">
                     <template #body="slotProps">
                         <div v-if="slotProps.data.vehicle_type=='2- Wheeler'" class="totalExpenses">
-                           {{"&#8377;"+slotProps.data.distance_travelled*two_wheller_km_price}}
+                           {{  "&#8377;"+slotProps.data.distance_travelled*two_wheller_km_price  }}
                         </div>
                         <div v-if="slotProps.data.vehicle_type=='4- Wheeler'" class="totalExpenses">
-                            {{"&#8377;"+slotProps.data.distance_travelled*four_wheller_km_price }}
+                            {{ "&#8377;"+slotProps.data.distance_travelled*four_wheller_km_price }}
                          </div>
                     </template>
                 </Column>
@@ -55,12 +56,23 @@
                 <!-- <Column field="reviewer_comments" header="Approver Comm ents"></Column>
                 <Column field="reviewer_reviewed_date" header="Reviewed Date"></Column> -->
                 <Column field="status" header="Status">
-                    <template #body="slotProps">
-                        <div :class="css_statusColumn(slotProps.data)">
-                            {{ slotProps.data.status }}
-                        </div>
+                    
+                    <template #body="{data}">
+                        <span :class="'customer-badge status-' + data.status">{{data.status}}</span>
+                    </template>
+                    <template #filter="{filterModel}">
+                        <Dropdown v-model="filterModel.value" @change="filterCallback()" :options="statuses" placeholder="Any" class="p-column-filter" :showClear="true">
+                            <template #value="slotProps">
+                                <span :class="'customer-badge status-' + slotProps.value" v-if="slotProps.value">{{slotProps.value}}</span>
+                                <span v-else>{{slotProps.placeholder}}</span>
+                            </template>
+                            <template #option="slotProps">
+                                <span :class="'customer-badge status-' + slotProps.option">{{slotProps.option}}</span>
+                            </template>
+                        </Dropdown>
                     </template>
                 </Column>
+                
                 <Column field="" header="Action">
                     <template #body="slotProps">
                         
@@ -76,7 +88,8 @@
 <script setup>
 
     import { ref, onMounted } from 'vue';
-    import axios from 'axios'
+    import axios from 'axios';
+    import {FilterMatchMode,FilterOperator} from 'primevue/api';
     import { useConfirm } from "primevue/useconfirm";
     import { useToast } from "primevue/usetoast";
 
@@ -87,9 +100,20 @@
     const confirm = useConfirm();
     const toast = useToast();
 
+
+    const filters2 = ref({
+        'status': {value: null, matchMode: FilterMatchMode.EQUALS},
+    });
+
+    const statuses = ref([
+            'Pending', 'Approved', 'Rejected'
+    ]);
+
+
     onMounted(() => {
         let url_pending = window.location.origin + '/fetch_pending_reimbursements';
         let url_approved_rejected = window.location.origin + '/fetch_approved_rejected_reimbursements';
+        
 
         console.log("AJAX URL : " + url_pending);
 

@@ -21,9 +21,9 @@ import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup';     //optional for column grouping
 import Row from 'primevue/row';
 
-import OrgLeaveRemainingTable from './OrgLeaveBalanceTable.vue';
+import TeamLeaveBalance from './team_leave_balance.vue'
 
-const app = createApp(OrgLeaveRemainingTable);
+const app = createApp(TeamLeaveBalance);
 
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
@@ -39,5 +39,5 @@ app.directive('focustrap', FocusTrap);
 app.component('DataTable', DataTable);
 app.component('Column', Column);
 
-app.mount("#vjs_orgLeaveTable_RemainingLeave");
+app.mount("#TeamLeaveBalance");
 

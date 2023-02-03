@@ -155,6 +155,9 @@
                             <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12">
                                 <h6 class="text-left fw-bold">Team Leave Balance</h6>
                             </div>
+                            @vite('resources/js/hrms/modules/leave_module/team_leave_module/team_leave_balance.js')
+                            <div id="TeamLeaveBalance"></div>
+
                             <div class="col-sm-3 col-sm-12 col-xl-3 col-md-4 col-lg-3 d-flex">
                                 <div class="card   box_shadow_0 border-rtb left-line w-100">
                                     <div class="card-body text-center">
@@ -272,7 +275,7 @@
                         <div class="card mb-0 leave-history">
                             <div class="card-body">
                                 <h6 class="mb-2">Org Leave Balance</h6>
-                                @vite('resources/js/hrms/modules/leave_module/OrgLeaveBalance.js')
+                                @vite('resources/js/hrms/modules/leave_module/Org_leave_module/OrgLeaveBalance.js')
                                 <div id="vjs_orgLeaveTable_RemainingLeave"></div>
                             </div>
                         </div>
@@ -284,9 +287,9 @@
                             <div class="card-body">
                                 <h6 class="mb-2">Org Leave history</h6>
                                 <div class="table-responsive">
-                                    <!-- <div id="org_leaveHistory" class="custom_gridJs"></div> -->
-                                    @vite('resources/js/hrms/modules/profile_pages/EmployeeDocumentsManager.js')
-                                    <div id="vjs_employeeDocsManager"></div>
+                                    <div id="org_leaveHistory" class="custom_gridJs"></div>
+                                    <!-- @vite('resources/js/hrms/modules/profile_pages/EmployeeDocumentsManager.js')
+                                    <div id="vjs_employeeDocsManager"></div> -->
                                     
 
                                 </div>

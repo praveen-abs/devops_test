@@ -4,54 +4,37 @@
             <Column field="user_id" header="Employee ID"></Column>
             <Column field="employee_avatar" header="Employee Avatar"></Column>
             <Column field="employee_name" header="Employee Name"></Column>
+
             <Column field="sick_leave_balance" header="Sick Leave Balance"></Column>
             <Column field="earned_leave_balance" header="Earned Leave Balance"></Column>
         </DataTable>
 	</div>
 </template>
-<script>
+<script setup>
 
 import { ref, onMounted } from 'vue';
 import axios from 'axios'
 
-export default {
-    setup() {
         const products = ref();
+        const url=ref()
 
         onMounted(() => {
-            products.value = getProductDetails().data;
 
-            // axios.get('https://jsonplaceholder.typicode.com/posts/1')
-            //      .then((response) => {
-            //         console.log("Axios : "+response.data.title);
-            // });
+          let url_org_leave = window.location.origin + '/fetch-org-leaves';
+
+          console.log(url_org_leave);
+                 
+ 
+
+                axios.get(url_org_leave)
+                  .then((response) => {
+                    console.log(response.data);
+
+                    products.value =response.data
+             
+            });
 
         })
-
-        function getProductDetails(){
-             return {
-                "data": [
-                    { 'user_id': '141','employee_avatar': 'SA1','employee_name' : 'Karthick Sir','sick_leave_balance':'2','earned_leave_balance':'6'},
-                    { 'user_id': '142','employee_avatar': 'SA2','employee_name' : 'Praveen Max','sick_leave_balance':'1','earned_leave_balance':'6'},
-                    { 'user_id': '143','employee_avatar': 'SA3','employee_name' : 'Void Max','sick_leave_balance':'4','earned_leave_balance':'6'},
-                    { 'user_id': '144','employee_avatar': 'SA4','employee_name' : 'Shelly','sick_leave_balance':'1','earned_leave_balance':'6'},
-                    { 'user_id': '145','employee_avatar': 'SA5','employee_name' : 'Goerge the Great','sick_leave_balance':'3','earned_leave_balance':'6'},
-                    { 'user_id': '146','employee_avatar': 'SA6','employee_name' : 'Vasan','sick_leave_balance':'3','earned_leave_balance':'6'},
-                    { 'user_id': '147','employee_avatar': 'SA7','employee_name' : 'Karthick','sick_leave_balance':'2','earned_leave_balance':'6'}
-
-
-                ]
-            };
-        }
-       
-   
-   
-   
-   
-
-        return { products }
-    }
-}
 
 </script>
 
