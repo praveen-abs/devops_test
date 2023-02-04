@@ -363,7 +363,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                 </tr>
                 <tr>
                     <td colspan="2" class="">
-                        <p class="txt-left text-strong">SPECIAL ALLOW</p>
+                        <p class="txt-left text-strong">SPECIAL ALLOWANCE</p>
                     </td>
                     <td colspan="2" class="">
                         <p class="txt-right">{{ number_format(round($employee_payslip->SPL_ALW), 2) }}</p>
