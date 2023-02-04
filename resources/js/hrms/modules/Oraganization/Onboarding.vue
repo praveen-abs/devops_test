@@ -23,7 +23,7 @@
                     <div class="floating">
 
                         <label for=""  class="float-label">Employee Code</label>
-                        <InputText class=" form-control textbox "
+                        <InputText class="form-control "
                          type="text"
                         v-model="EmployeeCode" placeholder="Employee Code" />
                        
@@ -1622,5 +1622,21 @@ created(){
 
 <style  scoped>
 
+
+.field {
+    margin-bottom: 1.5rem;
+}
+form {
+    margin-top: 2rem;
+}
+.card {
+    min-width: 450px;
+
+}
+@media screen and (max-width: 960px) {
+    .card {
+        width: 80%;
+    }
+}
 
 </style>
