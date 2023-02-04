@@ -85,8 +85,8 @@ $bank_names = \DB::table('vmt_banks')->get();
             height: 50px;
         }
 
-        .bg-ash {
-            background-color: #9e9e9e5c;
+        td.bg-ash {
+            background-color: #d9d9d9;
         }
     </style>
 </head>
@@ -502,7 +502,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                 </tr>
                 <tr>
                     <td colspan="12" class="bg-ash">
-                        <p class="padding-md txt-center">Leave Details</p>
+                        <p class="padding-md text-strong txt-center">Leave Details</p>
                     </td>
                 </tr>
                 <tr>
