@@ -10,7 +10,7 @@
             <input type="hidden" name="user_id" id="user_id" value="" />
             <input type="hidden" name="can_redirect" id="can_redirect" value="0" />
   <!-- Personal Details Start -->
-  <div class="card shadow  profile-box card-top-border p-2">
+ <div class="card shadow  profile-box card-top-border p-2">
     <div class="card-body justify-content-center align-items-center ">
         <div class=" header-card-text">
             <h6>Personal Details</h6>
@@ -19,7 +19,6 @@
         <div class="form-card">
             <div class="row mt-1">
                 <div class="col-md  -6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                    <!-- <label class="" for="employee_code">Employee Code{!! required() !!}</label> -->
                     <div class="floating">
 
                         <label for=""  class="float-label">Employee Code</label>
@@ -31,7 +30,6 @@
                 </div>
 
                 <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                    <!-- <label class="" for="employee_name">Employee Name as per Aadhar{!! required() !!}</label> -->
 
                     <div class="floating">
                         <label for="EmployeeNameasper" class="float-label">Employee Name as per Aadhar 
@@ -63,7 +61,7 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                    <!-- <label class="" for="marital_status">Marital Status{!! required() !!}</label> -->
+                    
                     <div class="floating">
                         <label for="" class="float-label">Marital Status <span
                                 class="text-danger">*</span></label>
@@ -83,7 +81,6 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                    <!-- <label class="" for="doj">Date of Joining{!! required() !!}</label> -->
                     <div class="floating">
                         <label for="" class="float-label">Date of Joining<span
                             class="text-danger">*</span></label>
@@ -99,7 +96,6 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                    <!-- <label class="" for="gender">Gender{!! required() !!}</label> -->
                     <div class="floating">
                         <label for="" class="float-label">Gender<span
                                 class="text-danger">*</span></label>
@@ -118,7 +114,6 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                    <!-- <label class="" for="mobile_no">Mobile Number{!! required() !!}</label> -->
                     <div class="floating">
 
                         <label for="" class="float-label">Mobile Number<span
@@ -133,7 +128,6 @@
 
                 </div>
                 <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                    <!-- <label class="" for="email">Email ID{!! required() !!}</label> -->
                     <div class="floating">
                         <label for="" class="float-label">Email<span
                                 class="text-danger">*</span></label>
@@ -150,7 +144,6 @@
 
                 </div>
                 <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                    <!-- <label class="" for="aadhar">Aadhaar Number<span id="aadhar_req">{!! required() !!}</span></label> -->
                     <div class="floating">
                         <label for="" class="float-label">Aadhaar Number<span
                                 class="text-danger">*</span></label>
@@ -168,7 +161,6 @@
                 </div>
                 <div class="col-md-6 col-sm-12 col-xs-12 co l-lg-3 col-xl-3 mb-2">
 
-                    <!-- <label class="" for="pan_no">Pan Card Number<span id="pan_no_req">{!! required() !!}</span></label> -->
                     <div class="floating">
                         <label for="" class="float-label">Pan Number / Pan
                             Acknowlegement<span class="text-danger">*</span></label>
@@ -183,7 +175,6 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                    <!-- <label class="" for="444">DL Number</label> -->
                     <div class="floating">
                         <label for="" class="float-label">DL Number</label>
                         <InputText class="onboard-form form-control textbox "
@@ -196,7 +187,6 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                    <!-- <label class="" for="nationality">Nationality{!! required() !!}</label> -->
                     <div class="floating">
                         <label for="" class="float-label">Choose
                             nationality<span class="text-danger">*</span></label>
@@ -244,7 +234,6 @@
                 </div>
 
                 <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                    <!-- <label class="" for="blood_group">Blood Group</label> -->
                     <div class="floating">
                         <label for="" class="float-label">Blood Group</label>
 
@@ -255,11 +244,9 @@
                     </select>
 
 
-                        <!-- <label for="" class="float-label">Blood Group</label> -->
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                    <!-- <label class="" for="physically_challenged">Physically Challenged</label> -->
                     <div class="floating">
                         <label for="" class="float-label">Physically
                             Challenged</label>
@@ -272,12 +259,10 @@
                        </select>
         
 
-                        <!-- <label for="" class="float-label">Physically Challenged</label> -->
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
 
-                    <!-- <label class="" for="bank_name">Bank Name</label> -->
                     <div class="floating">
                         <label for="" class="float-label">Bank Name<span
                                 class="text-danger">*</span></label>
@@ -295,7 +280,6 @@
                 </div>
                 <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                     <div class="floating">
-                        <!-- <label class="" for="account_no">Account Number</label> -->
                         <label for="" class="float-label">Account Number<span
                                 class="text-danger">*</span></label>
                         <InputText placeholder="Account Number" minlength="10"
@@ -308,7 +292,6 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                    <!-- <label class="" for="bank_ifsc">Bank IFSC Code</label> -->
                     <div class="floating">
                         <label for="" class="float-label">Bank IFSC Code<span
                                 class="text-danger">*</span></label>
@@ -326,7 +309,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> 
 
 
            
@@ -482,47 +465,32 @@
                                         
                             </div>
                             </div>
+                            
                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                 <!-- <input type="text" placeholder="" name="curent_district" class="onboard-form form-control textbox " required /> -->
                                 <!-- <label class="" for="curent_district">Country{!! required() !!}</label> -->
                                 <div class="floating">
                                     <label for="" class="float-label">Country<span
                                             class="text-danger">*</span></label>
-
-                                    <select placeholder="Country" name="current_country"
-                                        v-model="v$.currentcountry.$model"
-                                        :class="{'p-error':v$.currentcountry.$invalid && submitted}"
-                                        id="current_country"
-                                        class=" form-control textbox ">
-
-                                        <option v-for="countries in country" :key="countries.id">
-                                            {{ countries.country_name }}
-                                        </option>
-                                  </select>
-                                  <span v-if="(v$.currentcountry.$invalid && submitted) || v$.currentcountry.$pending.$response" class="p-error">{{v$.currentcountry.required.$message.replace('Value', 'country')}}</span>
+                                    <Dropdown  v-model="v$.currentcountry.$model" :options="country" optionLabel="country_name" :editable="true" placeholder="Country"
+                                    :class="{'p-error':v$.currentcountry.$invalid && submitted}"/>
+                                    <span v-if="(v$.currentcountry.$invalid && submitted) || v$.currentcountry.$pending.$response" class="p-error">{{v$.currentcountry.required.$message.replace('Value', 'country')}}</span>
 
                                 </div>
                             </div>
+                      
                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                                <!-- <label class="" for="current_state">Current State{!! required() !!}</label> -->
+                               
                                 <div class="floating">
                                     <label for="" class="float-label">State<span
                                             class="text-danger">*</span></label>
-                                    <select placeholder="State" name="current_state"
-                                        v-model="v$.currentstate.$model"
-                                        :class="{'p-error':v$.currentstate.$invalid && submitted}"
-                                        id="current_state"
-                                        class=" form-control textbox">
-
-                                        <option v-for="states in state" :key="states.id">
-                                            {{ states.state_name }}
-                                        </option>
-                                    </select>
-                        <span v-if="(v$.currentstate.$invalid && submitted) || v$.currentstate.$pending.$response" class="p-error">{{v$.currentstate.required.$message.replace('Value', 'State')}}</span>
-
+                                            <Dropdown  v-model="v$.currentstate.$model" :options="state" optionLabel="state_name" :editable="true" placeholder="State"
+                                            :class="{'p-error':v$.currentcountry.$invalid && submitted}"/>
+                                        <span v-if="(v$.currentstate.$invalid && submitted) || v$.currentstate.$pending.$response" class="p-error">{{v$.currentstate.required.$message.replace('Value', 'state')}}</span>
+    
 
                                 </div>
-                            </div>
+                            </div> 
                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                 <!-- <label class="" for="current_city">Current City{!! required() !!}</label> -->
 
@@ -531,8 +499,8 @@
                                     <label for="" class="float-label"> City<span
                                             class="text-danger">*</span></label>
                                     
-                                <InputText class="form-control "
-                                type="text"
+                                <InputText class="onboard-form form-control textbox  "
+                                type="text" 
                                 :class="{'p-invalid':v$.currentCity.$invalid && submitted}"  
                                v-model="v$.currentCity.$model" placeholder="current city" />
                                 </div>
@@ -548,7 +516,7 @@
                                              <InputText class="form-control "
                                             type="text" minlength="6" maxlength="6"
                                             :class="{'p-invalid':v$.currentPincode.$invalid && submitted}"  
-                                           v-model="v$.currentPincode.$model" placeholder="Employee Code" />
+                                           v-model="v$.currentPincode.$model" placeholder="Pincode" />
                             <span v-if="(v$.currentPincode.$invalid && submitted) || v$.currentPincode.$pending.$response" class="p-error">{{v$.currentPincode.required.$message.replace('Value', 'Pincode')}}</span>
 
 
@@ -604,49 +572,30 @@
                 </div>
             </div>
             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                <!-- <input type="text" placeholder="" name="curent_district" class="onboard-form form-control textbox " required /> -->
-                <!-- <label class="" for="curent_district">Country{!! required() !!}</label> -->
+               
                 <div class="floating">
                     <label for="" class="float-label">Country<span
                             class="text-danger">*</span></label>
-
-                    <select placeholder="Country" name="current_country"
-                        v-model="v$.Permanentcountry.$model"
-                        :class="{'p-error':v$.Permanentcountry.$invalid && submitted}"
-                        id="current_country"
-                        class="onboard-form form-control textbox  "
-                        >
-                        <option v-for="countries in country" :key="countries.id">
-                            {{ countries.country_name }}
-                        </option>
-
-                    </select>
+                      <Dropdown  v-model="v$.Permanentcountry.$model" :options="country" optionLabel="country_name" :editable="true" placeholder="Country"
+                                    :class="{'p-error':v$.Permanentcountry.$invalid && submitted}"/>
                     <span v-if="(v$.Permanentcountry.$invalid && submitted) || v$.Permanentcountry.$pending.$response" class="p-error">{{v$.Permanentcountry.required.$message.replace('Value', 'country')}}</span>
 
                 </div>
             </div>
             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                <!-- <label class="" for="current_state">Current State{!! required() !!}</label> -->
+                
                 <div class="floating">
                     <label for="" class="float-label">State<span
                             class="text-danger">*</span></label>
-                    <select placeholder="State" name="Permanent_state"
-                        v-model="v$.Permanentstate.$model"
-                        :class="{'p-error':v$.Permanentstate.$invalid && submitted}"
-                        id="current_state"
-                        class=" form-control textbox "
-                        >
-                        <option v-for="states in state" :key="states.id">
-                            {{ states.state_name }}
-                        </option>
-                    </select>
+                 
+                     <Dropdown  v-model="v$.Permanentstate.$model" :options="state" optionLabel="state_name" :editable="true" placeholder="State"
+                                            :class="{'p-error':v$.Permanentstate.$invalid && submitted}"/>
                     <span v-if="(v$.Permanentstate.$invalid && submitted) || v$.Permanentstate.$pending.$response" class="p-error">{{v$.Permanentstate.required.$message.replace('Value', 'State')}}</span>
 
                 </div>
             </div>
            
             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                <!-- <label class="" for="current_city">Current City{!! required() !!}</label> -->
                 <div class="floating">
                     <label for="" class="float-label"> City<span
                             class="text-danger">*</span></label>
@@ -686,7 +635,7 @@
   <!-- Office Details Start -->
 
 
-  <div class="card shadow  profile-box card-top-border p-2">
+ <div class="card shadow  profile-box card-top-border p-2">
     <div class="card-body justify-content-center align-items-center ">
         <div class="header-card-text">
             <h6 class="">Official Details</h6>
@@ -695,7 +644,6 @@
             <div class="row mt-1">
                 <div
                     class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 col-xxl-3 mb-2">
-                    <!-- <label class="" for="department">Department{!! required() !!}</label> -->
                     <div class="floating">
                         <label for="" class="float-label">Department</label>
 
@@ -710,7 +658,6 @@
                 </div>
                 <div
                     class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 col-xxl-3 mb-2">
-                    <!-- <label class="" for="process">Process{!! required() !!}</label> -->
                     <div class="floating">
                         <label for="" class="float-label">Process<span
                                 class="text-danger">*</span></label>
@@ -725,7 +672,6 @@
                 </div>
                 <div
                     class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 col-xxl-3 mb-2">
-                    <!-- <label class="" for="designation">Designation{!! required() !!}</label> -->
                     <div class="floating">
                         <label for="" class="float-label">Designation<span
                                 class="text-danger">*</span> </label>
@@ -740,7 +686,6 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                    <!-- <label class="" for="cost_center">Cost Center{!! required() !!}</label> -->
                     <div class="floating">
                         <label for="" class="float-label">Cost Center</label>
 
@@ -751,7 +696,6 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                    <!-- <label class="" for="confirmation_period">Probabition Period{!! required() !!}</label> -->
                     <div class="floating">
                         <label for="" class="float-label">Probation
                             Period</label>
@@ -779,7 +723,6 @@
                 </div>
                 <div
                     class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2 col-xl-3">
-                    <!-- <label class="" for="work_location">Work Location{!! required() !!}</label> -->
                     <div class="floating">
                         <label for="" class="float-label">Work Location<span
                                 class="text-danger">*</span></label>
@@ -794,7 +737,6 @@
                 </div>
                 <div
                     class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2 col-xxl-3">
-                    <!-- <label class="" for="l1_manager_code">Reporting Manager Employee Code{!! required() !!}</label> -->
                     <div class="floating">
                         <label for="" class="float-label">Reporting Manager
                             Code<span class="text-danger">*</span></label>
@@ -807,10 +749,7 @@
                             <option value="" hidden selected disabled>Select
                             </option>
                         </select>
-                        <!-- <InputText class="onboard-form form-control "
-                        type="text"  placeholder="Work Location"
-                        :class="{'p-invalid':v$.WorkLocation.$invalid && submitted}"  
-                       v-model="v$.WorkLocation.$model"/> -->
+                    
                     </div>
                 </div>
                 <div
@@ -845,7 +784,6 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                    <!-- <label class="" for="officical_mail">Official E-Mail Id{!! required() !!}</label> -->
                     <div class="floating">
                         <label for="" class="float-label">Official Email
                         </label>
@@ -855,11 +793,9 @@
                             pattern="email" onkeypress="return event.charCode != 32" />
 
 
-                        <!--  <label class="error star_error officical_mail_label" for="officical_mail" style="display: none;"></label> -->
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                    <!-- <label class="" for="official_mobile">Official Mobile{!! required() !!}</label> -->
                     <div class="floating">
                         <label for="" class="float-label">Official
                             Mobile</label>
@@ -873,7 +809,6 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                    <!-- <label class="" for="emp_notice">Employee Notice Period Days{!! required() !!}</label> -->
                     <div class="floating">
                         <label for="" class="float-label">Employee Notice
                             Period Days</label>
@@ -900,7 +835,9 @@
                     </div>
                 </div>
             </div>
-        
+         </div>   
+     </div>  
+</div> 
      
 
 
@@ -910,7 +847,7 @@
 
 <!-- Family Detials Start -->
 
-<div class="card shadow  profile-box card-top-border p-2">
+ <div class="card shadow  profile-box card-top-border p-2">
     <div class="card-body justify-content-center align-items-center ">
         <div class="header-card-text">
             <h6 class="mb-0">Family Details</h6>
@@ -918,7 +855,7 @@
         <div class="form-card">
             <div class="row mt-1">
                 <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                    <!-- <label class="" for="father_name">Father Name{!! required() !!}</label> -->
+                   
                     <div class="floating">
                         <label for="" class="float-label">Father Name<span
                                 class="text-danger">*</span></label>
@@ -963,7 +900,6 @@
 
 
                 <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                    <!-- <label class="" for="mother_name">Mother Name{!! required() !!}</label> -->
                     <div class="floating">
                         <label for="" class="float-label">Mother Name <span
                                 class="text-danger">*</span></label>
@@ -993,18 +929,17 @@
                     <div class="floating">
                         <label for="" class="float-label">Gender</label>
 
-                        <!-- <select placeholder="Gender" name="mother_gender" id="mother_gender" class="textbox  onboard-form form-control   select2_form_without_search" required>
+                        <select placeholder="Gender" name="mother_gender" id="mother_gender" class="textbox  onboard-form form-control   select2_form_without_search" required>
                             <option value="" hidden selected disabled>Gender</option>
                             <option value="male">Male</option>
                             <option value="female">Female</option>
-                        </select> -->
+                        </select>
                         <input type="text" class="form-control" name="mother_gender"
                            
                             id="" value="Female" readonly>
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                    <!-- <label class="" for="father_name">Father Name{!! required() !!}</label> -->
                     <div class="floating">
                         <label for="" class="float-label">Age</label>
 
@@ -1018,7 +953,6 @@
 
 
                 <div v-if="sposeData" class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                    <!-- <label class="" for="spouse_name">Spouse Name<span id="spouse_name_req">{!! required() !!}</span></label> -->
                     <div class="floating">
                         <label for="" class="float-label">Spouse Name <span
                                 class="text-danger">*</span></label>
@@ -1029,7 +963,6 @@
                     </div>
                 </div>
                 <div v-if="sposeData"  class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                    <!-- <label class="" for="dow">Date of Wedding<span id="dow_req">{!! required() !!}</span></label> -->
                     <div class="floating">
                         <label for="" class="float-label">Date of Wedding
                             <span class="text-danger">*</span></label>
@@ -1041,7 +974,6 @@
                     </div>
                 </div>
                 <div v-if="sposeData"  class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                    <!-- <label class="" for="spouse_gender">Spouse Gender<span id="spouse_gender_req">{!! required() !!}</span></label> -->
 
                     <div class="floating">
                         <label for="" class="float-label">Gender <span
@@ -1061,7 +993,6 @@
                     </div>
                 </div>
                 <div  v-if="sposeData" class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                    <!-- <label class="" for="spouse_dob">Spouse DOB<span id="spouse_dob_req">{!! required() !!}</span></label> -->
                     <div class="floating">
                         <label for="" class="float-label">Spouse DOB <span
                                 class="text-danger">*</span></label>
@@ -1075,7 +1006,6 @@
                     </div>
                 </div>
                 <div v-if="sposeData"  class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                    <!-- <label class="" for="no_child">Number of Children<span id="no_child_req">{!! required() !!}</span></label> -->
                     <div class="floating">
                         <label for="" class="float-label">Number of
                             Children</label>
@@ -1097,26 +1027,21 @@
            </div>
         </div>
     </div>
-</div>     
+</div> 
+     
 
 
 <!-- family Detiaals End -->
                         
-                    </div>
-                </div>
-            </div>
-
- <!-- Office Detials End -->
-
-
- <!-- Personal Documents start -->
+                    
+<!-- Personal Documents start -->
            
                                <div class="card shadow mb-0  profile-box card-top-border p-2">
                                  <div class="card-body justify-content-center align-items-center ">
                                      <div class="header-card-text">
                                          <h6 class="mb-0">Personal Documents</h6>
                                      </div>
-                                     <div class="form-card mb-2">
+                                     <!-- <div class="form-card mb-2">
                                          <div class="row mt-1">
                             
                                              <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
@@ -1225,7 +1150,7 @@
                                                      class="onboard-form form-control files" required />
                                              </div>
                                          </div>
-                                     </div>
+                                     </div> -->
                                      <div class="row">
                                          <div class="col-12 text-right"><button type="button" data="row-6"
                                                  next="row-6" placeholder="" name="save_form" id="save_button"
@@ -1263,7 +1188,7 @@ setup: () => ({ v$: useVuelidate() }),
 data() {
     return {
             
-            bankList:'',
+          
             // Person Detials start
             EmployeeCode: '',
             EmployeeCode:'',
@@ -1605,14 +1530,18 @@ methods: {
 created(){
     // For Bank Data  
    axios.get('/db/getBankDetails').then((response) => this.bankList=response.data)
+   console.log(this.bankList);
+
 
     //  For Countries
 
     axios.get('/db/getCountryDetails').then((response) => this.country=response.data)
+    console.log(this.country)
 
     // for state
 
     axios.get('/db/getStatesDetails').then((response) => this.state=response.data)
+    console.log(this.state)
 
    
    
@@ -1620,7 +1549,26 @@ created(){
 }
 </script>
 
-<style  scoped>
+<style>
+.p-inputtext .p-component .onboard-form .form-control .textbox{
+    height: 2.5em;
+}
+.p-dropdown .p-component .p-inputwrapper  .p-inputwrapper .p-inputwrapper-focus .p-overlay-open{
+    height: 2.5em;
+}
+.p-dropdown-label .p-inputtext {
+    margin-top: -5px;
+}
+.p-dropdown-items-wrapper{
+    max-width: 280px;
+}
+.p-inputtext:enabled:focus {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: 0 0 0 0.2rem #BFDBFE;
+    border-color: #000611;
+  }
+
 
 
 .field {
