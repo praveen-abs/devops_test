@@ -76,8 +76,8 @@ $bank_names = \DB::table('vmt_banks')->get();
             height: 50px;
         }
 
-        td.bg-ash {
-            background-color: #dbdbdb;
+        .bg-ash {
+            background-color: #9e9e9e5c;
         }
     </style>
 </head>

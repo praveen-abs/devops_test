@@ -78,8 +78,8 @@
             height: 50px;
         }
 
-        td.bg-ash {
-            background-color: #dbdbdb;
+        .bg-ash {
+            background-color: #9e9e9e5c;
         }
     </style>
 </head>

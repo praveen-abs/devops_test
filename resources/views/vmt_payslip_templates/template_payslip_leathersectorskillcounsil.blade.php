@@ -80,8 +80,8 @@ $bank_names = \DB::table('vmt_banks')->get();
             height: 50px;
         }
 
-        td.bg-ash {
-            background-color: #dbdbdb;
+        .bg-ash {
+            background-color: #9e9e9e5c;
         }
     </style>
 </head>
@@ -97,7 +97,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                     <p class="mb-0">Chennai -600073,Tamilnadu.</p>
                 </div>
             </td>
-            <td colspan="4" class="" style="border-right:0px;">
+            <td colspan="4" class="" style="border-left:0px;">
 
                 <div class="header-img txt-right" style="padding-right: 10px;height:55px;width:180px;">
 
