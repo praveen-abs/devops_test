@@ -56,7 +56,6 @@
                 <!-- <Column field="reviewer_comments" header="Approver Comm ents"></Column>
                 <Column field="reviewer_reviewed_date" header="Reviewed Date"></Column> -->
                 <Column field="status" header="Status">
-                    
                     <template #body="{data}">
                         <span :class="'customer-badge status-' + data.status">{{data.status}}</span>
                     </template>

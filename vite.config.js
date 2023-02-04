@@ -7,6 +7,7 @@ export default defineConfig({
          vue(),
         laravel({
             input: ['resources/js/app.js',
+                    'resources/js/hrms/modules/Oraganization/onboarding.js',
                     'resources/js/hrms/modules/leave_module/Org_leave_module/OrgLeaveBalance.js',
                     'resources/js/hrms/modules/leave_module/team_leave_module/team_leave_balance.js',
                     'resources/js/hrms/modules/approvals/att_regularization/AttRegularizationApproval.js',
