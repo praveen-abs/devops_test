@@ -43,7 +43,7 @@ use Illuminate\Support\Facades\Crypt;
                         ->leftjoin('vmt_employee_office_details','vmt_employee_office_details.user_id', '=', 'users.id')
                         ->where('users.id', $user->id)->first();
 
-
+        //dd($user_full_details);
         $familydetails = VmtEmployeeFamilyDetails::where('user_id',$user->id)->get();
         $statutory_info= VmtEmployeeStatutoryDetails ::where('user_id',$user->id)->first();
 
@@ -298,7 +298,7 @@ use Illuminate\Support\Facades\Crypt;
 
     */
     public function uploadEmployeeDocument(Request $request){
-       // dd($request->file());
+        dd($request->file());
         $docName = time().'_'.$request->file->getClientOriginalName();
         $docPath = $request->file('file')->storeAs('uploads', $docName, 'public');
         dd('----------'.$docName.'----------------------'. $docPath);

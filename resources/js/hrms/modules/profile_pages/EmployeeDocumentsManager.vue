@@ -13,12 +13,13 @@
                     <div class="AadharCardFront" style="display: flex;gap: 30px;">
                         <Button label="view" icon="pi pi-eye" iconPos="right" class="p-button-sm p-button-primary" />
                         <!-- <Button label="choose" icon="pi pi-plus" iconPos="right" class="p-button-sm p-button-danger" /> -->
-                        <FileUpload style="height: 2.5em;" mode="basic" ref="PersonalDocument"  class="p-button-sm" accept="image/*" :maxFileSize="1000000" :auto="true" chooseLabel="Browse" @change="processDocUpload($event)" />
+                        <FileUpload style="height: 2.5em;" ref="PersonalDocument"  class="p-button-sm" accept="image/*" mode="basic" :maxFileSize="1000000" url="./upload.php" chooseLabel="Browse" @change="processDocUpload($event)" />
+                        <FileUpload mode="basic" name="demo[]" accept="image/*" :maxFileSize="1000000" @upload="onUpload" />
                         <Button type="file" label="Upload" icon="pi pi-upload" iconPos="right"  @click="onUpload" class="p-button-sm p-button-success"  />
                     </div>
                 </div>
-                <!-- Aadhar Back --> 
-               
+                <!-- Aadhar Back -->
+
             </TabPanel>
             <TabPanel>
                 <template #header>
@@ -51,7 +52,7 @@
         //     });
     })
 
-  
+
 
     function processDocUpload(event) {
        // hideConfirmDialog(false);
@@ -60,23 +61,22 @@
        console.log(PersonalDocument.value);
       if(!PersonalDocument.value){
         toast.add({severity:'warn', summary: 'Warn Message', detail:'Required', life: 3000});
-      }else{
-        const formdata=new formData();
-        formdata.append('file', PersonalDocument.value);
-         axios.post(window.location.origin + '/profile-page/uploadEmployeeDocs',
-       formdata
-      )
-        .then((response) => {
-            console.log(response);
-            //canShowLoadingScreen.value = false;
-            //resetVars();
-        })
-        .catch((error) => {
-            //canShowLoadingScreen.value = false;
-            //resetVars();
-            console.log(error.toJSON());
-        });
-    }
+      }
+      else{
+            const formdata=new formData();
+            formdata.append('file', PersonalDocument.value);
+            axios.post(window.location.origin + '/profile-page/uploadEmployeeDocs', formdata)
+                .then((response) => {
+                    console.log(response);
+                    //canShowLoadingScreen.value = false;
+                    //resetVars();
+                })
+                .catch((error) => {
+                    //canShowLoadingScreen.value = false;
+                    //resetVars();
+                    console.log(error.toJSON());
+                });
+        }
     }
 
     function onUpload(){
