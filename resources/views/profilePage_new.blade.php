@@ -1,4 +1,5 @@
 
+<?php use Carbon\Carbon; ?>
 @extends('layouts.master')
 @section('title')
     @lang('translation.settings')
@@ -60,30 +61,37 @@
                                     <div class="profile-mid-right-content mb-4 text-center ">
                                         <div class="border-bottom-liteAsh py-2">
                                             <p class="text-muted f-12 fw-bold">Employee Status</p>
-                                            <p class="text-primary f-15 fw-bold">
+                                            <p class="text-primary-old f-15 fw-bold">
                                                 {{ getEmployeeActiveStatus($user->id) ?? '-' }}
                                             </p>
 
                                         </div>
                                         <div class="border-bottom-liteAsh py-2">
                                             <p class="text-muted f-12 fw-bold">Employee Code</p>
-                                            <p class="text-primary f-15 fw-bold">{{ $user_full_details->user_code ?? '-' }}
+                                            <p class="text-primary-old f-15 fw-bold">{{ $user_full_details->user_code ?? '-' }}
+                                            </p>
+
+                                        </div>
+                                        <div class="border-bottom-liteAsh py-2">
+                                            <p class="text-muted f-12 fw-bold">Employee Designation</p>
+                                            <p class="text-primary-old f-15 fw-bold">
+                                                {{ $user_full_details->designation ?? '-' }}
                                             </p>
 
                                         </div>
                                         <div class="border-bottom-liteAsh py-2">
                                             <p class="text-muted f-12 fw-bold">Location</p>
-                                            <p class="text-primary f-15 fw-bold">
+                                            <p class="text-primary-old f-15 fw-bold">
                                                 {{ $user_full_details->work_location ?? '-' }}</p>
                                         </div>
                                         <div class="border-bottom-liteAsh py-2">
                                             <p class="text-muted f-12 fw-bold">Department</p>
-                                            <p class="text-primary f-15 fw-bold">
+                                            <p class="text-primary-old f-15 fw-bold">
                                                 {{ $user_full_details->department_id ?? '-' }}</p>
                                         </div>
                                         <div class="border-bottom-liteAsh py-2">
                                             <p class="text-muted f-12 fw-bold">Reporting To</p>
-                                            <p class="text-primary f-15 fw-bold">
+                                            <p class="text-primary-old f-15 fw-bold">
                                                 {{ $user_full_details->l1_manager_name ?? '-' }}</p>
                                         </div>
                                     </div>
@@ -552,7 +560,7 @@
                                                                     <p class="text-ash-medium  f-13 ">Current
                                                                         Compension
                                                                     </p>
-                                                                    <p class="mb-0 f-14 fw-bold text-primary">INR 1,50,000
+                                                                    <p class="mb-0 f-14 fw-bold text-primary-old">INR 1,50,000
                                                                         / Annum</h6>
 
                                                                 </div>
@@ -564,7 +572,7 @@
                                                                     <p class="text-ash-medium  f-13 ">
                                                                         Legal Entry
                                                                     </p>
-                                                                    <p class="mb-0 f-14 fw-bold text-primary">-</h6>
+                                                                    <p class="mb-0 f-14 fw-bold text-primary-old">-</h6>
 
                                                                 </div>
                                                             </div>
@@ -575,7 +583,7 @@
                                                                     <p class="text-ash-medium  f-13 ">
                                                                         Remuneration
                                                                     </p>
-                                                                    <p class="mb-0 f-14 fw-bold text-primary">Monthly</p>
+                                                                    <p class="mb-0 f-14 fw-bold text-primary-old">Monthly</p>
 
                                                                 </div>
                                                             </div>
@@ -586,7 +594,7 @@
                                                                     <p class="text-ash-medium  f-13 ">
                                                                         Pay Cycle
                                                                     </p>
-                                                                    <p class="mb-0 f-14 fw-bold text-primary">Monthly</h6>
+                                                                    <p class="mb-0 f-14 fw-bold text-primary-old">Monthly</h6>
 
                                                                 </div>
                                                             </div>
@@ -742,7 +750,7 @@
                                                                                                         Salary Per Month
                                                                                                     </p>
                                                                                                     <p
-                                                                                                        class="mb-0 f-14 fw-bold text-primary">
+                                                                                                        class="mb-0 f-14 fw-bold text-primary-old">
                                                                                                         -</p>
 
                                                                                                 </div>
@@ -758,7 +766,7 @@
                                                                                                         ESIC Employer
                                                                                                     </p>
                                                                                                     <p
-                                                                                                        class="mb-0 f-14 fw-bold text-primary">
+                                                                                                        class="mb-0 f-14 fw-bold text-primary-old">
                                                                                                         -</p>
 
                                                                                                 </div>
@@ -774,7 +782,7 @@
                                                                                                         PF-Employeer
                                                                                                     </p>
                                                                                                     <p
-                                                                                                        class="mb-0 f-14 fw-bold text-primary">
+                                                                                                        class="mb-0 f-14 fw-bold text-primary-old">
                                                                                                         -</p>
 
                                                                                                 </div>
@@ -791,7 +799,7 @@
                                                                                                         Effective Form
                                                                                                     </p>
                                                                                                     <p
-                                                                                                        class="mb-0 f-14 fw-bold text-primary">
+                                                                                                        class="mb-0 f-14 fw-bold text-primary-old">
                                                                                                         -</p>
 
                                                                                                 </div>
@@ -925,7 +933,7 @@
                                                                                                         Salary Per Month
                                                                                                     </p>
                                                                                                     <p
-                                                                                                        class="mb-0 f-14 fw-bold text-primary">
+                                                                                                        class="mb-0 f-14 fw-bold text-primary-old">
                                                                                                         -</p>
 
                                                                                                 </div>
@@ -941,7 +949,7 @@
                                                                                                         ESIC Employer
                                                                                                     </p>
                                                                                                     <p
-                                                                                                        class="mb-0 f-14 fw-bold text-primary">
+                                                                                                        class="mb-0 f-14 fw-bold text-primary-old">
                                                                                                         -</p>
 
                                                                                                 </div>
@@ -957,7 +965,7 @@
                                                                                                         PF-Employeer
                                                                                                     </p>
                                                                                                     <p
-                                                                                                        class="mb-0 f-14 fw-bold text-primary">
+                                                                                                        class="mb-0 f-14 fw-bold text-primary-old">
                                                                                                         -</p>
 
                                                                                                 </div>
@@ -974,7 +982,7 @@
                                                                                                         Effective Form
                                                                                                     </p>
                                                                                                     <p
-                                                                                                        class="mb-0 f-14 fw-bold text-primary">
+                                                                                                        class="mb-0 f-14 fw-bold text-primary-old">
                                                                                                         -</p>
 
                                                                                                 </div>
@@ -1096,7 +1104,7 @@
                                                                     <p class="text-ash-medium mb-2 f-13 ">Maximum Limit
                                                                     </p>
 
-                                                                    <p class="mb-0 f-14 fw-bold text-primary">INR 1,50,000
+                                                                    <p class="mb-0 f-14 fw-bold text-primary-old">INR 1,50,000
 
                                                                     </p>
 
@@ -1109,7 +1117,7 @@
                                                                     <p class="text-ash-medium  f-13 ">Amount
                                                                         Declared
                                                                     </p>
-                                                                    <p class="mb-0 f-14 fw-bold text-primary">INR 1,50,000
+                                                                    <p class="mb-0 f-14 fw-bold text-primary-old">INR 1,50,000
 
                                                                     </p>
 
@@ -1122,7 +1130,7 @@
                                                                 <div class="card-body text-center">
                                                                     <p class="text-ash-medium  f-13 ">Auto Approved
                                                                         Amount</p>
-                                                                    <p class="mb-0 f-14 fw-bold text-primary">INR 1,50,000
+                                                                    <p class="mb-0 f-14 fw-bold text-primary-old">INR 1,50,000
 
                                                                     </p>
 
@@ -1136,7 +1144,7 @@
                                                                     <p class="text-ash-medium  f-13 ">Amount
                                                                         Accepted
                                                                     </p>
-                                                                    <p class="mb-0 f-14 fw-bold text-primary">INR 1,50,000
+                                                                    <p class="mb-0 f-14 fw-bold text-primary-old">INR 1,50,000
 
                                                                     </p>
 
@@ -1150,7 +1158,7 @@
                                                                     <p class="text-ash-medium  f-13 ">Amount
                                                                         Rejected
                                                                     </p>
-                                                                    <p class="mb-0 f-14 fw-bold text-primary">INR 1,50,000
+                                                                    <p class="mb-0 f-14 fw-bold text-primary-old">INR 1,50,000
 
                                                                     </p>
 
@@ -1845,11 +1853,11 @@
                                         @endforeach
 
                                         <div class="add-more text-end mb-2" style="cursor:pointer;">
-                                            {{-- <div id="add_more" class="text-primary  cursor-pointer">
+                                            {{-- <div id="add_more" class="text-primary-old  cursor-pointer">
                                         <i class=" ri-add-circle-fill"></i> Add More
                                     </div> --}}
                                             <button id="add_more"
-                                                class="btn text-primary p-0 bg-transparent outline-none border-0 f-12 plus-sign"
+                                                class="btn text-primary-old p-0 bg-transparent outline-none border-0 f-12 plus-sign"
                                                 type="button"><i class="f-12 me-1 fa  fa-plus-circle"
                                                     aria-hidden="true"></i>Add
                                                 More</i></button>
@@ -1913,11 +1921,11 @@
 
                                         </div>
                                         <div class="add-more text-end mb-2" style="cursor:pointer;">
-                                            {{-- <button id="add_more" class="text-primary  cursor-pointer">
+                                            {{-- <button id="add_more" class="text-primary-old  cursor-pointer">
                                     <i class=" ri-add-circle-fill"></i> Add More
                                 </button> --}}
                                             <button id="add_more"
-                                                class="btn text-primary p-0 bg-transparent outline-none border-0 f-12 plus-sign"
+                                                class="btn text-primary-old p-0 bg-transparent outline-none border-0 f-12 plus-sign"
                                                 type="button"><i class="f-12 me-1 fa  fa-plus-circle"
                                                     aria-hidden="true"></i>Add
                                                 More</i></button>
@@ -2010,7 +2018,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="add-more text-end">
-                                                    <div class="text-primary f-13" id="exp-add-more">
+                                                    <div class="text-primary-old f-13" id="exp-add-more">
                                                         <i class=" ri-add-circle-fill"></i> Add More
                                                     </div>
                                                 </div>
@@ -2247,7 +2255,7 @@
                                                     'currentUser' => $user,
                                                 ])
                                             </div>
-                                            <p class="fw-bold f-14 text-primary text-center mt-4 ">{{ $user->name }}
+                                            <p class="fw-bold f-14 text-primary-old text-center mt-4 ">{{ $user->name }}
                                             </p>
                                             <p class=" f-14 text-ash  text-center mt-2">
                                                 {{ !empty($user_full_details->designation) ? $user_full_details->designation : '' }}
