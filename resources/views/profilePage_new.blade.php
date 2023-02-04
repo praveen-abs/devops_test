@@ -1,4 +1,3 @@
-
 <?php use Carbon\Carbon; ?>
 @extends('layouts.master')
 @section('title')
@@ -68,7 +67,8 @@
                                         </div>
                                         <div class="border-bottom-liteAsh py-2">
                                             <p class="text-muted f-12 fw-bold">Employee Code</p>
-                                            <p class="text-primary-old f-15 fw-bold">{{ $user_full_details->user_code ?? '-' }}
+                                            <p class="text-primary-old f-15 fw-bold">
+                                                {{ $user_full_details->user_code ?? '-' }}
                                             </p>
 
                                         </div>
@@ -1446,53 +1446,84 @@
                             <div class="card-body">
                                 <div id="vjs_employeeDocsManager"></div>
                                 <!--
-                                <form action="{{ route('updatePersonalInformation', $user->id) }}" Method="POST"
-                                    enctype="multipart/form-data">
-                                    <h6 class="">Documents Of Employee
-                                    </h6>
-                                    <div class="table-responsive">
-                                        <table class="table">
-                                            <thead class="bg-primary">
-                                                <th>
-                                                    Document Name
-                                                </th>
-                                                <th>
-                                                    Document View
-                                                </th>
-                                                {{-- <th>
+                                    <form action="{{ route('updatePersonalInformation', $user->id) }}" Method="POST"
+                                        enctype="multipart/form-data">
+                                        <h6 class="">Documents Of Employee
+                                        </h6>
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead class="bg-primary">
+                                                    <th>
+                                                        Document Name
+                                                    </th>
+                                                    <th>
+                                                        Document View
+                                                    </th>
+                                                    {{-- <th>
                                                     Action
                                                 </th> --}}
-                                            </thead>
-                                            <tbody>
-                                                {{-- <?php dd($documents_filenames); ?> --}}
-                                                {{-- <?php dd(count($documents_filenames->toArray())); ?> --}}
-                                                @foreach ( $documents_filenames[0] as $key => $value )
-                                                    @if (!empty($value))
-                                                        <tr>
+                                                </thead>
+                                                <tbody>
+                                                    {{-- <?php dd($documents_filenames); ?> --}}
+                                                    {{-- <?php dd(count($documents_filenames->toArray())); ?> --}}
+                                                    @foreach ($documents_filenames[0] as $key => $value)
+    @if (!empty($value))
+    <tr>
 
-                                                            <td>{{ $key }}</td>
-                                                            <td>
-                                                                @if (Str::contains($value, '.pdf'))
-                                                                    <a target="_blank"
-                                                                        href="{{ URL::asset('employee_documents/' . $value) }}">View
-                                                                        Documents</a>
-                                                                @else
-                                                                    <a class="view-file text-info"
-                                                                        data-src="{{ URL::asset('employee_documents/'  . $value) }}"
-                                                                        style="cursor:pointer">
-                                                                        {{ 'View Documents' }}
-                                                                    </a>
-                                                                @endif
-                                                            </td>
-                                                        </tr>
-                                                    @endif
+                                                                <td>{{ $key }}</td>
+                                                                <td>
+                                                                    @if (Str::contains($value, '.pdf'))
+    <a target="_blank"
+                                                                            href="{{ URL::asset('employee_documents/' . $value) }}">View
+                                                                            Documents</a>
+@else
+    <a class="view-file text-info"
+                                                                            data-src="{{ URL::asset('employee_documents/' . $value) }}"
+                                                                            style="cursor:pointer">
+                                                                            {{ 'View Documents' }}
+                                                                        </a>
+    @endif
+                                                                </td>
+                                                            </tr>
+    @endif
+    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </form>
+                                    -->
+                            </div>
+                        </div>
 
+                        {{-- for texing only --}}
+
+                        <div>
+                            <div class="container mt-5">
+                                <form action="{{ route('uploadEmployeeDocument') }}" method="post" enctype="multipart/form-data">
+                                    <h3 class="text-center mb-5">Uploading Docments</h3>
+                                    @csrf
+                                    @if ($message = Session::get('success'))
+                                        <div class="alert alert-success">
+                                            <strong>{{ $message }}</strong>
+                                        </div>
+                                    @endif
+                                    @if (count($errors) > 0)
+                                        <div class="alert alert-danger">
+                                            <ul>
+                                                @foreach ($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
                                                 @endforeach
-                                            </tbody>
-                                        </table>
+                                            </ul>
+                                        </div>
+                                    @endif
+                                    <div class="custom-file">
+                                        <input type="file" name="file" class="custom-file-input" id="chooseFile">
+                                        <label class="custom-file-label" for="chooseFile">Select file</label>
                                     </div>
+                                    <button type="submit" name="submit" class="btn btn-primary btn-block mt-4">
+                                        Upload Files
+                                    </button>
                                 </form>
-                                -->
                             </div>
                         </div>
 
@@ -1867,8 +1898,8 @@
                                             <div class="card mb-3 addition-content" id="content1">
                                                 <div class="card-body">
                                                     <!-- <h3 class="card-title fw-bold">Education Informations <a href="javascript:void(0);"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{-- class="delete-icon"><i class="   ri-delete-bin-line"></i></a> --}}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        </h3> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    {{-- class="delete-icon"><i class="   ri-delete-bin-line"></i></a> --}}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                            </h3> -->
 
                                                     <div class="row ">
                                                         <div class="col-md-12 m-0 text-end">
@@ -2846,9 +2877,10 @@
             $('.paySlipPDF').on('click', function() {
                 var url = $(this).attr('data-url');
                 let t_paySlipMonth = $(this).attr('data');
-                let enc_userid =  "{{ $enc_user_id }}";
+                let enc_userid = "{{ $enc_user_id }}";
 
-                window.open(url+"?selectedPaySlipMonth="+t_paySlipMonth+"&enc_user_id="+enc_userid,'_blank');
+                window.open(url + "?selectedPaySlipMonth=" + t_paySlipMonth + "&enc_user_id=" + enc_userid,
+                    '_blank');
                 // $.ajax({
                 //     type: "GET",
                 //     url: url,

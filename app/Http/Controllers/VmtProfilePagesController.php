@@ -89,7 +89,7 @@ use Illuminate\Support\Facades\Crypt;
                                     'reliving_letter_file',
                                     'docs_reviewed'
                                 ])->toArray();
-                                
+
 
         //dd($documents_filenames);
         return view('profilePage_new', compact('user','documents_filenames','array_bloodgroup','enc_user_id','allEmployees', 'maritalStatus','genderArray','user_full_details', 'familydetails', 'exp', 'reportingManager','profileCompletenessValue','bank','data','employees','statutory_info'));
@@ -105,7 +105,7 @@ use Illuminate\Support\Facades\Crypt;
          $details->doj=$request->input('doj');
          $details->blood_group_id = $request->input('blood_group');
          $details->physically_challenged = $request->input('physically_challenged');
-         
+
          $details->save();
 
          return redirect()->back();
@@ -192,7 +192,7 @@ use Illuminate\Support\Facades\Crypt;
 
         }
 
-         
+
         return redirect()->back();
     }
 
@@ -298,7 +298,11 @@ use Illuminate\Support\Facades\Crypt;
 
     */
     public function uploadEmployeeDocument(Request $request){
-        dd($request->all());
+       // dd($request->file());
+        $docName = time().'_'.$request->file->getClientOriginalName();
+        $docPath = $request->file('file')->storeAs('uploads', $docName, 'public');
+        dd('----------'.$docName.'----------------------'. $docPath);
+
     }
 
 
