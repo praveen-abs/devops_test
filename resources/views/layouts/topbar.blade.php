@@ -127,7 +127,8 @@ if ($query_clientMaster) {
                 <div class="d-flex align-items-center page-header-user-dropdown">
                     @if (empty(Auth::user()->avatar) || !file_exists(public_path('images/' . Auth::user()->avatar)))
                         <div
-                            class="bg-primary img-sm rounded-circle d-flex align-items-center justify-content-center text-white fw-bold  ml-2">
+                            style="background-color: #002f56"
+                            class="img-sm rounded-circle d-flex align-items-center justify-content-center text-white fw-bold  ml-2">
                             <i class="topbar_username" class="align-middle "></i>
                         </div>
                     @else
