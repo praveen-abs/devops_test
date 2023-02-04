@@ -11,11 +11,8 @@
                 <div style="display: flex;"  >
                     <span class="label" style="line-height: 35px;"><strong>Aadhar Card Front</strong></span>
                     <div class="AadharCardFront" style="display: flex;gap: 30px;">
-                        <Button label="view" icon="pi pi-eye" iconPos="right" class="p-button-sm p-button-primary" />
-                        <!-- <Button label="choose" icon="pi pi-plus" iconPos="right" class="p-button-sm p-button-danger" /> -->
-                        <FileUpload style="height: 2.5em;" ref="PersonalDocument"  class="p-button-sm" accept="image/*" mode="basic" :maxFileSize="1000000" url="./upload.php" chooseLabel="Browse" @change="processDocUpload($event)" />
-                        <FileUpload mode="basic" name="demo[]" accept="image/*" :maxFileSize="1000000" @upload="onUpload" />
-                        <Button type="file" label="Upload" icon="pi pi-upload" iconPos="right"  @click="onUpload" class="p-button-sm p-button-success"  />
+                        <FileUpload class="testing" name="PersonalDocument" mode="advanced" :customUpload="true" @uploader="processDocUpload($event)" accept="image/*" :maxFileSize="1000000">
+                        </FileUpload>
                     </div>
                 </div>
                 <!-- Aadhar Back -->
@@ -65,7 +62,7 @@
       else{
             const formdata=new formData();
             formdata.append('file', PersonalDocument.value);
-            axios.post(window.location.origin + '/profile-page/uploadEmployeeDocs', formdata)
+            axios.post('/profile-page/uploadEmployeeDocs', formdata)
                 .then((response) => {
                     console.log(response);
                     //canShowLoadingScreen.value = false;
@@ -80,10 +77,9 @@
     }
 
     function onUpload(){
-            console.log("Uploading file....");
-            processDocUpload();
-        }
-    axios.get('/profile-page/uploadEmployeeDocs').then((res)=>PersonalDocument.value=res.data)
+        console.log("Uploading file....");
+        processDocUpload();
+    }
 </script>
 
 <style scoped>
