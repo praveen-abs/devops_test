@@ -9,6 +9,8 @@ use App\Models\VmtEmployeesLeavesAccrued;
 class VmtEmployeeLeaveService
 {
 
+
+
     /*
         Calculate leave balance for a given employee.
         And adds entry into 'vmt_employees_leaves_accrued' table.
@@ -21,6 +23,7 @@ class VmtEmployeeLeaveService
 
     private function insertAccrualLeaveRecord($user_id, $date, $leave_type_id, $accrual_leave_count){
         $current_month = date('n');
+
         if(VmtEmployeesLeavesAccrued::whereMonth('date',$current_month)->exists())
         {
             dd("Accrual day already added for month : ".$date);
@@ -28,6 +31,8 @@ class VmtEmployeeLeaveService
 
 
         }
+
+        $claendar_year_start_month=1;
 
         $leavesAccrued = new VmtEmployeesLeavesAccrued;
         $leavesAccrued->user_id = $user_id;
@@ -63,7 +68,14 @@ class VmtEmployeeLeaveService
         if($calendar_type=='calendar_year'){
             $monthsSinceJoin = $today->diffInMonths($emp_doj);
 
-
+            //Employee doj more than 12 since the current month check and add accured leaves
+            if( $monthsSinceJoin>=12){
+                $calendar_year_start_month=1;
+                for($i=$calendar_year_start_month;$i<12;$i++){
+                    $accrual_leave_count='1';
+                    $this->insertAccrualLeaveRecord($user_id, $date, $leave_type_id, $accrual_leave_count);
+                }
+            }
             //dd($monthsSinceJoin);
 
 
