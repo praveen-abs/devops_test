@@ -319,7 +319,7 @@
 
    <!-- Statustory start -->
   
-   <!-- <div class="card shadow  profile-box card-top-border p-2">
+    <div class="card shadow  profile-box card-top-border p-2">
     <div class="card-body justify-content-center align-items-center">
         <div class="form-card">
             <div class=" header-card-text">
@@ -419,7 +419,7 @@
             </div>
         </div>
     </div>
-</div>  -->
+</div>  
 
     <!--Statustory end -->
 
@@ -435,7 +435,6 @@
                         </div>
                         <div class="row mt-1">
                             <div class="col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6 mb-2">
-                                <!-- <label class="" for="current_address">Current Address{!! required() !!}</label> -->
                                 <div class="floating">
                                     <label for="" class="float-label">Address 1<span
                                             class="text-danger">*</span></label>
@@ -449,7 +448,6 @@
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6 mb-2">
-                                <!-- <label class="" for="current_address">Current Address{!! required() !!}</label> -->
                                 <div class="floating">
                                     <label for="" class="float-label">Address 2<span
                                             class="text-danger">*</span></label>
@@ -467,8 +465,6 @@
                             </div>
                             
                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                                <!-- <input type="text" placeholder="" name="curent_district" class="onboard-form form-control textbox " required /> -->
-                                <!-- <label class="" for="curent_district">Country{!! required() !!}</label> -->
                                 <div class="floating">
                                     <label for="" class="float-label">Country<span
                                             class="text-danger">*</span></label>
@@ -492,7 +488,6 @@
                                 </div>
                             </div> 
                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                                <!-- <label class="" for="current_city">Current City{!! required() !!}</label> -->
 
 
                                 <div class="floating">
@@ -508,7 +503,6 @@
 
                             </div>
                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                                <!-- <label class="" for="current_pincode">Current Pincode{!! required() !!}</label> -->
                                 <div class="floating">
                                     <label for="" class="float-label">Pincode<span
                                             class="text-danger">*</span></label>
@@ -522,7 +516,7 @@
 
                                 </div>
                             </div>
-                        </div>
+                        </div> 
 
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 col-xl-12 my-3">
@@ -541,7 +535,6 @@
         </div>
          <div class="row mt-1">
             <div class="col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6 mb-2">
-                <!-- <label class="" for="current_address">Current Address{!! required() !!}</label> -->
                 <div class="floating">
                     <label for="" class="float-label">Address 1<span
                             class="text-danger">*</span></label>
@@ -556,7 +549,6 @@
                 </div>
             </div>
             <div class="col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6 mb-2">
-                <!-- <label class="" for="current_address">Current Address{!! required() !!}</label> -->
                 <div class="floating">
                     <label for="" class="float-label">Address 2<span
                             class="text-danger">*</span></label>
@@ -610,7 +602,6 @@
                 </div>
             </div>
             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                <!-- <label class="" for="current_pincode">Current Pincode{!! required() !!}</label> -->
                 <div class="floating">
                     <label for="" class="float-label">Pincode<span
                             class="text-danger">*</span></label>
@@ -623,11 +614,11 @@
 
                 </div>
             </div>
-        </div>
+        </div> 
+      </div>
+    </div>
 </div>
-    </div>
-    </div>
-            </div>
+</div>
 
                 
         <!-- Permanent Address End -->
@@ -838,7 +829,7 @@
          </div>   
      </div>  
 </div> 
-     
+      
 
 
 
@@ -847,7 +838,7 @@
 
 <!-- Family Detials Start -->
 
- <div class="card shadow  profile-box card-top-border p-2">
+ <div class="card shadow  profile-box card-top-border p-2"> 
     <div class="card-body justify-content-center align-items-center ">
         <div class="header-card-text">
             <h6 class="mb-0">Family Details</h6>
@@ -1027,7 +1018,7 @@
            </div>
         </div>
     </div>
-</div> 
+</div>  -->
      
 
 
@@ -1041,7 +1032,7 @@
                                      <div class="header-card-text">
                                          <h6 class="mb-0">Personal Documents</h6>
                                      </div>
-                                     <!-- <div class="form-card mb-2">
+                                      <div class="form-card mb-2">
                                          <div class="row mt-1">
                             
                                              <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
@@ -1180,7 +1171,8 @@
 <script>
 import { email, required } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
-import axios from 'axios'
+import axios from "axios";
+
 
 
 export default {
@@ -1188,7 +1180,6 @@ setup: () => ({ v$: useVuelidate() }),
 data() {
     return {
             
-          
             // Person Detials start
             EmployeeCode: '',
             EmployeeCode:'',
@@ -1313,16 +1304,6 @@ data() {
            ReleivingLetterDoc:'',
 
 
-       
-        name: '',
-        email: '',
-        password: '',
-        date: null,
-        country: null,
-        accept: null,
-        submitted: false,
-        countries: null,
-        showMessage: false
     }
 },
 
@@ -1462,6 +1443,7 @@ validations() {
 
 
 methods: {
+
     handleSubmit(isFormValid) {
         this.submitted = true;
 
@@ -1477,15 +1459,6 @@ methods: {
         if(!this.showMessage) {
             this.resetForm();
         }
-    },
-    resetForm() {
-        this.name = '';
-        this.email = '';
-        this.password = '';
-        this.date = null;
-        this.country = null;
-        this.accept = null;
-        this.submitted = false;
     },
     spouseDisable(){
         if(this.PersonDetialsMaritalStatus=="Married"){
@@ -1522,8 +1495,111 @@ methods: {
           this.NationalityData=true
         }
     },
+    jsonFormat(){
+       const data =JSON.stringify({
+            EmployeeCode:this.EmployeeCode,
+            DateOfJoining: this.DateOfJoining,
+            AadhaarNumber: this.AadhaarNumber,
+            PassportNumber: this.PassportNumber,
+            BankName: this.BankName,
+            EmployeeNameasper: this.EmployeeNameasper,
+            PersonDetialsGender: this.PersonDetialsGender,
+            PanNumber: this.PanNumber,
+            PassportExpDate: this.PassportExpDate,
+            AccountNumber: this.AccountNumber,
+            PersonDetialsDateofBirth: this.PersonDetialsDateofBirth,
+            PersonDetialsMobileNumber: this.PersonDetialsMobileNumber,
+            DLNumber: this.DLNumber,
+            PersonDetialsBloodGroup: this.PersonDetialsBloodGroup,
+            BankIFSCCode: this.BankIFSCCode,
+            PersonDetialsMaritalStatus: this.PersonDetialsMaritalStatus,
+            PersonDetialsEmail: this.PersonDetialsEmail,
+            ChooseNationality:this.ChooseNationality,
+            PhysicallyChallenged: this.PhysicallyChallenged,
+        // person Detials End
+       
+        
+            // Address detials
+
+            // Current Address Detials Start
+
+            CurrentAddress1:this.CurrentAddress1,
+            CurrentAddress2:this.CurrentAddress2,
+            currentcountry: this.currentcountry,
+            currentstate: this.currentstate,
+            currentCity: this.currentCity,
+            currentPincode: this.currentPincode,
+
+
+            // Current Address Details End
+
+            // Permanant Address Start
+
+            PermanentAddress1:this.PermanentAddress1,
+            PermanentAddress2:this.PermanentAddress2,
+            Permanentcountry:this.Permanentcountry,
+            Permanentstate:this.Permanentstate,
+            PermanentCity:this.PermanentCity,
+            PermanentPincode:this.PermanentPincode,
+            // Permanant Address end
+
+            // Office Detials Start
+
+            
+            Departmant:this.Departmant,
+            Process:this.Process,
+            Designation:this.Designation,
+            CostCenter:this.CostCenter,
+            probationPeriod:this.probationPeriod,
+            WorkLocation:this.WorkLocation,
+            ReportingManagerCode:this.ReportingManagerCode,
+            ReportingManagerName:this.ReportingManagerName,
+            holidayLocation:this.holidayLocation,
+            OfficialEmail:this.OfficialEmail,
+            OfficialMobileNO:this.OfficialMobileNO,
+            EmployeeNoticePeriodDays:this.EmployeeNoticePeriodDays,
+            DateOfConfirmation:this.DateOfConfirmation,
+
+            // Office Details End
+
+            // family Details Start
+            
+            fatherName: this.fatherName,
+            fatherDateofBirth: this.fatherDateofBirth,
+            fatherGender: this.fatherGender,
+            fatherAge: this.fatherAge,
+            motherName: this.motherName,
+            motherDateofBirth: this.motherDateofBirth,
+            motherGender: this.motherGender,
+            motherAge: this.motherAge,
+            SpouseName: this.SpouseName,
+            dateOfWedding: this.dateOfWedding,
+            spouseGender:this.spouseGender,
+            SpouseDOB: this.SpouseDOB,
+            noOfChildren: this.noOfChildren,
+
+           // family Details End
+
+
+           // Personal Documents Start
+           
+           AadharCardFront:this.AadharCardFront,
+           AadharCardBack:this.AadharCardBack,
+           PanCardDoc:this.PanCardDoc,
+           PassportDoc:this.PassportDoc,
+           VoterIdDoc:this.VoterIdDoc,
+           DrivingLicenseDoc:this.DrivingLicenseDoc,
+           EductionCertifacte:this.EductionCertifacte,
+           ReleivingLetterDoc:this.ReleivingLetterDoc,
+
+           })
+           console.log(data);
+        },
+
     showWarn() {
             this.$toast.add({severity:'warn', summary: 'Warn Message', detail:'Message Content', life: 3000});
+             this.jsonFormat();
+         
 
         },
 },
