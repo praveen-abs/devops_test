@@ -605,8 +605,8 @@
                                             <span>
                                             <input type="radio" name="leave" id="for_full_day_leave">
                                             <span class="shadow-lite px-2 py-1" id="total_leave_days">-</span>
-                                           
-                                           
+
+
                                         </div>
                                         <div class="col-md-4 text-md-center mb-md-0 " id="div_totalhours">
                                             <p class="fw-bold  text-muted mb-2">Total Hours</p>
@@ -904,7 +904,7 @@
         var leave_start_date = '';
         var leave_end_date = '';
 
-  
+
 
 
         $('.close-modal').on('click', function() {
@@ -1207,26 +1207,19 @@
 
             //    Leave Duration
 
-                
-                half_day=$("#half_leave_days").text()
-                full_day=$("#total_leave_days").text()
-                half=$("#for_half_day_leave").is(":checked")
-                full=$("#for_full_day_leave").is(":checked")
-                
-                if(half==true){
-                   alert(half_day)
-                }else{
-                
-                    console.log("false")
-                }
-   
-                if(full==true){
-                    alert(full_day)
-                }
-                 
-                console.log("check"+half+full);
 
-        
+                half_day=$("#half_leave_days").text();
+                half=$("#for_half_day_leave").is(":checked");
+                full_day=$("#total_leave_days").text();
+                full=$("#for_full_day_leave").is(":checked");
+
+                if(half==false){
+                    half_day = 0;
+                }
+
+                console.log("is half-day leave applied ? : "+half);
+
+
 
 
                 //for permission types
@@ -1283,6 +1276,7 @@
 
                 if (basic_details_errors.length > 0) {
 
+
                     $('#errors_header').html("Please fix the following error");
                     $('#errors_body').html('');
 
@@ -1306,6 +1300,7 @@
                         'user_id': $('#leave_type_id').val(),
                         'start_date': $('#start_date').val(),
                         'end_date': $('#end_date').val(),
+                        'half_day_leave' : half_day,
                         'leave_reason': $('#leave_reason').val(),
                         'leave_type_id': $('#leave_type_id').val(),
                         'notifications_users_id': $('#notifications_users_id').val(),
@@ -1343,6 +1338,7 @@
                     }
                 });
             });
+
 
             function processLeaveApproveReject(leave_id, user_id, t_statusText, t_leave_rejection_text) {
                 $.ajax({
