@@ -78,7 +78,7 @@
             height: 50px;
         }
 
-        td.bg-ash {
+        .bg-ash {
             background-color: #c1c1c1;
         }
     </style>
@@ -553,8 +553,8 @@
 
                     </td>
                     <td colspan="1" class="border-less" style="    padding: 10px 0px;">
-                        <img src="{{ URL::asset('assets/images/client_logos/ardens/evangelist.png') }}" width="80px" height="15px"
-                        alt="" class="">
+                        <img src="{{ URL::asset('assets/images/client_logos/ardens/evangelist.png') }}" width="100px"
+                            height="18px" alt="" class="">
                     </td>
                 </tr>
 

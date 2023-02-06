@@ -13,16 +13,16 @@
         table {
             width: 100%;
             vertical-align: middle;
-            font-family: sans-serif;
-        }
-
-        .payslip_table tr,   .payslip_table td
-         {
-            border: 1.5pt solid #0087c1;
 
         }
 
-        table td:last-child {}
+        .payslip_table tr,
+        .payslip_table td {
+            border: 1.5pt solid #ff530a;
+
+        }
+
+
 
         .border-less {
             border: 0px !important;
@@ -36,6 +36,7 @@
             width: 81.35pt
         }
 
+
         .margin-0 {
             margin: 0px;
         }
@@ -46,6 +47,7 @@
             margin-bottom: 3pt;
             padding: 0px 5px;
         }
+
 
 
 
@@ -82,16 +84,19 @@
                 <tr class="header-row">
                     <td colspan="8" class="border-less">
                         <div class="header-cotent" style="margin: 10px;">
-                            <h6 class="margin-0" style="padding-left: 5px">Priti Sales Corporation.</h6>
-                            <p class="mb-0">Dugar Towers, 2nd floor,</p>
-                            <p class="mb-0">#34/123, Marshalls Road, Egmore,</p>
-                            <p class="mb-0">Chennai, Tamil Nadu, India 600 008. </p>
+                            <h6 class="margin-0" style="padding-left: 5px">Ardens Business Solutions Private Limited</h6>
+                            <p class="mb-0">  North Phase Industrial Estate</p>
+                            <p class="mb-0">42, 5th Cross St, Kalaimagal Nagar,Ekkatuthangal</p>
+                            <p class="mb-0"> Chennai, Tamil Nadu 600032 </p>
+
                         </div>
                     </td>
                     <td colspan="4" class="border-less">
 
                         <div class="header-img txt-right" style="">
-                            <img src={{ $client_logo }} style="height: 30px;width:170px;margin:10px" title="">
+                            {{-- <img src={{ $client_logo }} style="height: 50px;width:150px;margin:10px" title=""> --}}
+                            <img src= {{ URL::asset('assets/images/client_logos/ardens/evangelist.png') }} style="height: 35px;width:150px;margin:10px" title="">
+
                         </div>
 
 
@@ -100,7 +105,7 @@
 
 
                 <tr>
-                    <td colspan="12" class="bg-ash ">
+                    <td colspan="12" class=" bg-ash">
                         <p class="sub-header txt-center text-strong">PAYSLIP FOR THE MONTH OF &ndash;
                             {{\Carbon\Carbon::parse($employee_payslip->PAYROLL_MONTH)->format('M  y') }}</p>
 
@@ -156,7 +161,7 @@
                         <p>EPF NUMBER</p>
                     </td>
                     <td colspan="3">
-                        <p>{{ $employee_details->EPF_Number }}</p>
+                        <p>{{ $employee_details->EPF_Number  }}</p>
                     </td>
                     <td colspan="3" class="bg-ash text-strong">
                         <p>ESIC NUMBER</p>
@@ -171,7 +176,7 @@
                         <p>UAN</p>
                     </td>
                     <td colspan="3">
-                        <p>{{ $employee_details->UAN  }}</p>
+                        <p>{{ $employee_details->UAN   }}</p>
                     </td>
                     <td colspan="3" class="bg-ash text-strong">
                         <p>PAN</p>
@@ -247,47 +252,7 @@
                         <p class="txt-center">{{ $employee_payslip->Arrears_Days }}</p>
                     </td>
                 </tr>
-                <tr>
 
-                    <td colspan="2" class="bg-ash text-strong ">
-                        <p class="txt-center">SL OpenBalance</p>
-                    </td>
-                    <td colspan="2" class="bg-ash text-strong">
-                        <p class="txt-center">EL OpenBalance</p>
-                    </td>
-                    <td colspan="2" class="bg-ash text-strong">
-                        <p class="txt-center">Availed SL</p>
-                    </td>
-                    <td colspan="2" class="bg-ash text-strong">
-                        <p class="txt-center">Availed EL</p>
-                    </td>
-                    <td colspan="2" class="bg-ash text-strong">
-                        <p class="txt-center">Balance SL</p>
-                    </td>
-                    <td colspan="2" class="bg-ash text-strong">
-                        <p class="txt-center">Balance EL</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" class="">
-                        <p class="txt-center">{{ $employee_payslip->SL_Opn_Bal }}</p>
-                    </td>
-                    <td colspan="2" class="">
-                        <p class="txt-center">{{ $employee_payslip->EL_Opn_Bal }}</p>
-                    </td>
-                    <td colspan="2" class="">
-                        <p class="txt-center">{{ $employee_payslip->Availed_SL }}</p>
-                    </td>
-                    <td colspan="2" class="">
-                        <p class="txt-center">{{ $employee_payslip->Availed_EL }}</p>
-                    </td>
-                    <td colspan="2" class="">
-                        <p class="txt-center">{{ $employee_payslip->Balance_SL }}</p>
-                    </td>
-                    <td colspan="2" class="">
-                        <p class="txt-center">{{ $employee_payslip->Balance_EL }}</p>
-                    </td>
-                </tr>
                 <tr>
                     <td colspan="12">
                         <p class="padding-md">&nbsp; </p>
@@ -379,7 +344,7 @@
 
                 <tr>
                     <td colspan="2" class="">
-                        <p class="txt-left text-strong"> OVERTIME</p>
+                        <p class="txt-left text-strong">COMMUNICATION ALLOWANCE</p>
                     </td>
                     <td colspan="2" class="">
                         <p class="txt-right"></p>
@@ -392,7 +357,28 @@
                         <p class="txt-right">{{ number_format(round($employee_payslip->Overtime), 2) }}</p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-left text-strong">TDS</p>
+                        <p class="txt-left text-strong">INCOME TAX</p>
+                    </td>
+                    <td colspan="2" class="">
+                        <p class="txt-right">{{ number_format(round($employee_payslip->TDS), 2) }}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="">
+                        <p class="txt-left text-strong">FOOD ALLOWANCE </p>
+                    </td>
+                    <td colspan="2" class="">
+                        <p class="txt-right"></p>
+                    </td>
+                    <td colspan="2" class="">
+                        <p class="txt-right"></p>
+                    </td>
+
+                    <td colspan="2" class="">
+                        <p class="txt-right">{{ number_format(round($employee_payslip->Overtime), 2) }}</p>
+                    </td>
+                    <td colspan="2" class="">
+                        <p class="txt-left text-strong">FOOD DEDUCTION</p>
                     </td>
                     <td colspan="2" class="">
                         <p class="txt-right">{{ number_format(round($employee_payslip->TDS), 2) }}</p>
@@ -536,7 +522,7 @@
                 <tr class="border-less">
                     <td colspan="8" class="border-less" style="    padding: 10px 0px;">
                         <p class="txt-left">Please
-                            reach out to us for any payroll queries at  -hr.admin@imcvasa.in</p>
+                            reach out to us for any payroll queries at -hr.admin@imcvasa.in</p>
                     </td>
                     <td colspan="3" class="border-less txt-right" style="    padding: 10px 0px;">
                         <p>Generated By</p>

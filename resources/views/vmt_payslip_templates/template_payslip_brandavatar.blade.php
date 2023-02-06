@@ -76,8 +76,8 @@ $bank_names = \DB::table('vmt_banks')->get();
             height: 50px;
         }
 
-        td.bg-ash {
-            background-color: #dbdbdb;
+        .bg-ash {
+            background-color: #9e9e9e5c;
         }
     </style>
 </head>
@@ -363,7 +363,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                 </tr>
                 <tr>
                     <td colspan="2" class="">
-                        <p class="txt-left text-strong">SPECIAL ALLOW</p>
+                        <p class="txt-left text-strong">SPECIAL ALLOWANCE</p>
                     </td>
                     <td colspan="2" class="">
                         <p class="txt-right">{{ number_format(round($employee_payslip->SPL_ALW), 2) }}</p>
@@ -541,7 +541,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                 </tr>
 
                 <tr class="border-less">
-                    <td colspan="8" class="border-less" style="    padding: 10px 0px;">
+                    <td colspan="8" class="border-less" style="padding: 10px 0px;">
                         <p class="txt-left">Please
                             reach out to us for any payroll queries at -payroll@ardens.in</p>
                     </td>
