@@ -196,7 +196,6 @@ class VmtAttendanceController extends Controller
             $employeeLeaves_Org = '';
 
             $employeeLeaves_Org = VmtEmployeeLeaves::whereIn('status', $statusArray)->get();
-            //dd($employeeLeaves_Org->toArray());
 
             //dd($map_allEmployees[1]["name"]);
             foreach ($employeeLeaves_Org as $singleItem) {
@@ -297,9 +296,10 @@ class VmtAttendanceController extends Controller
     }
 
 
+
     public function saveLeaveRequestDetails(Request $request)
     {
-        dd($request->toArray());
+        //dd($request->toArray());
         $leave_month = date('m',strtotime($request->start_date));
 
         //get the existing Pending/Approved leaves. No need to check Rejected
@@ -359,18 +359,8 @@ class VmtAttendanceController extends Controller
 
             //dd("Time diff : ".$mailtext_total_leave);
         } else {
-
-            //Check if its 0.5 day leave, then handle separately
-            if($request->half_day_leave == "0.5"){
-                $diff = "0.5";
-            } else {
-                //If its not half day leave, then find the leave days
-
-                $diff = intval($start->diff($end)->format('%D')) + 1; //day adjusted by adding '1'
-            }
-
+            $diff = intval( $start->diff($end)->format('%D')) + 1; //day adjusted by adding '1'
             $mailtext_total_leave = $diff . " Day(s)";
-
         }
 
         //dd($diff);
