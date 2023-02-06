@@ -1,6 +1,6 @@
 <template>
 	<div>
-        <DataTable :value="leaves" responsiveLayout="scroll"   >
+        <DataTable :value="leaves" responsiveLayout="scroll" :paginator="true"  >
             <Column field="user_id" header="Employee ID"></Column>
             <Column field="employee_name" header="Employee Name"></Column>
             <Column  header="Sick Leave / Causal Leave">
@@ -74,6 +74,7 @@ import axios from 'axios'
                 axios.get(url_org_leave)
                   .then((response) => {
                  leaves.value =response.data   
+                 console.log(leaves);
                     
 
              

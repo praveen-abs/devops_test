@@ -38,6 +38,9 @@ app.directive('focustrap', FocusTrap);
 
 app.component('DataTable', DataTable);
 app.component('Column', Column);
+app.component('Button', Button);
+app.component('ColumnGroup', ColumnGroup);
+app.component('Row', Row);
 
 app.mount("#vjs_orgLeaveTable_RemainingLeave");
 

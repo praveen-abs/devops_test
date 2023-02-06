@@ -1,6 +1,6 @@
 <template>
 	<div>
-        <DataTable :value="products" responsiveLayout="scroll" :paginator="true" :rows="5" class="p-datatable-sm"
+        <DataTable :value="products" responsiveLayout="scroll"  :rows="5" class="p-datatable-sm"
         v-model:filters="filters2" filterDisplay="menu">
             <Column field="name" header="Sick Leave"></Column>
             <Column field="agejyje" header="Earned Leave"></Column>
@@ -28,7 +28,18 @@
                     {{ data.data.earnleave-data.data.leave }}
                 </div>
             </template></Column>
+           
         </DataTable>
+        <Paginator
+        :template="{
+            '640px': 'PrevPageLink CurrentPageReport NextPageLink',
+            '960px': 'FirstPageLink PrevPageLink CurrentPageReporNextPageLink LastPageLink',
+            '1300px': 'FirstPageLink PrevPageLink PageLinkNextPageLink LastPageLink',
+            default: 'FirstPageLink PrevPageLink PageLinks NextPageLinLastPageLink '
+        }"
+        :rows="10"
+        :totalRecords="totalRecords">
+    </Paginator>
 	</div>
 
 </template>
@@ -39,6 +50,8 @@ import axios from 'axios'
 
         const products = ref();
         const url=ref()
+        const size=ref(values().data.length)
+        const totalRecords = ref(size);
 
         onMounted(() => {
 
@@ -57,7 +70,7 @@ import axios from 'axios'
              
         //     });
         products.value=values().data
-        console.log(products)
+        console.log(size)
 
         })
  function values(){

@@ -20,6 +20,7 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup';     //optional for column grouping
 import Row from 'primevue/row';
+import Paginator from 'primevue/paginator'
 
 import TeamLeaveBalance from './team_leave_balance.vue'
 
@@ -38,6 +39,11 @@ app.directive('focustrap', FocusTrap);
 
 app.component('DataTable', DataTable);
 app.component('Column', Column);
+app.component('Row', Row);
+app.component('ColumnGroup', ColumnGroup);
+app.component('Paginator', Paginator);
+app.component('Button', Button)
+
 
 app.mount("#TeamLeaveBalance");
 
