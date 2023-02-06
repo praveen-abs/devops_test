@@ -126,6 +126,7 @@ class VmtAttendanceController extends Controller
 
 
         $leave_record->reviewer_comments = $request->leave_rejection_text;
+        $leave_record->reviewed_date = Carbon::now();
 
         $leave_record->save();
 
@@ -359,7 +360,15 @@ class VmtAttendanceController extends Controller
 
             //dd("Time diff : ".$mailtext_total_leave);
         } else {
-            $diff = intval( $start->diff($end)->format('%D')) + 1; //day adjusted by adding '1'
+
+            //Check if its 0.5 day leave, then handle separately
+            if($request->half_day_leave == "0.5"){
+                $diff = "0.5 ".$request->half_day_type;
+            } else {
+                //If its not half day leave, then find the leave days
+                $diff = intval($start->diff($end)->format('%D')) + 1; //day adjusted by adding '1'
+            }
+
             $mailtext_total_leave = $diff . " Day(s)";
         }
 
