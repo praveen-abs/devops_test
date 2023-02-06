@@ -596,7 +596,17 @@
                                         </div>
                                         <div class="col-md-4 text-md-center mb-md-0 " id="div_totaldays">
                                             <p class="fw-bold  text-muted mb-2">Total Days</p>
+                                            <span>
+                                            <input type="radio" name="leave" id="for_half_day_leave">
+                                            <span class="shadow-lite px-2 py-1"  id="half_leave_days">
+                                                0.5
+                                            </span>
+
+                                            <span>
+                                            <input type="radio" name="leave" id="for_full_day_leave">
                                             <span class="shadow-lite px-2 py-1" id="total_leave_days">-</span>
+                                           
+                                           
                                         </div>
                                         <div class="col-md-4 text-md-center mb-md-0 " id="div_totalhours">
                                             <p class="fw-bold  text-muted mb-2">Total Hours</p>
@@ -893,6 +903,9 @@
         //leave dates
         var leave_start_date = '';
         var leave_end_date = '';
+
+  
+
 
         $('.close-modal').on('click', function() {
             $('#error_notify').fadeOut(100);
@@ -1191,6 +1204,29 @@
 
                 console.log("Selected leave type : " + $('#leave_type_id').find(":selected").attr(
                     'data-leavetype'));
+
+            //    Leave Duration
+
+                
+                half_day=$("#half_leave_days").text()
+                full_day=$("#total_leave_days").text()
+                half=$("#for_half_day_leave").is(":checked")
+                full=$("#for_full_day_leave").is(":checked")
+                
+                if(half==true){
+                   alert(half_day)
+                }else{
+                
+                    console.log("false")
+                }
+   
+                if(full==true){
+                    alert(full_day)
+                }
+                 
+                console.log("check"+half+full);
+
+        
 
 
                 //for permission types
