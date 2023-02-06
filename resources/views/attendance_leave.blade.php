@@ -597,13 +597,13 @@
                                         <div class="col-md-4 text-md-center mb-md-0 " id="div_totaldays">
                                             <p class="fw-bold  text-muted mb-2">Total Days</p>
                                             <span>
-                                            <input type="radio" name="leave" id="for_half_day_leave">
+                                            <input type="radio" name="leave"  id="for_half_day_leave">
                                             <span class="shadow-lite px-2 py-1"  id="half_leave_days">
                                                 0.5
                                             </span>
 
                                             <span>
-                                            <input type="radio" name="leave" id="for_full_day_leave">
+                                            <input type="radio" style=" margin-left: 20px;" name="leave" id="for_full_day_leave">
                                             <span class="shadow-lite px-2 py-1" id="total_leave_days">-</span>
                                            
                                            
