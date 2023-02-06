@@ -392,7 +392,7 @@ Route::get('vmt-pmsappraisal-review', 'App\Http\Controllers\VmtPmsController@sho
     Route::get('/investments_details',  [App\Http\Controllers\VmtPayCheckController::class, 'showInvestmentsPage'])->name('vmt_investments_details');
     Route::get('/form16_details',  [App\Http\Controllers\VmtPayCheckController::class, 'showForm16Page'])->name('vmt_form16_details');
     Route::get('/employee_payslip/{user_id?}',  [App\Http\Controllers\VmtPayCheckController::class, 'showPaySlip_HTMLView'])->name('vmt_paycheck_employee_payslip_htmlview');
-    Route::get('/pdfview/{emp_code?}/{selectedPaySlipMonth?}',[App\Http\Controllers\VmtPayCheckController::class, 'showPaySlip_PDFView'])->name('vmt_paycheck_employee_payslip_pdf');
+    Route::get('/pdfview/{emp_code?}/{selectedPaySliMonth?}',[App\Http\Controllers\VmtPayCheckController::class, 'showPaySlip_PDFView'])->name('vmt_paycheck_employee_payslip_pdf');
 
     // testing template
     Route::get('/testingController',[App\Http\Controllers\VmtTestingController::class, 'index'])->name('testingController');
@@ -528,6 +528,10 @@ Route::get('/documents',  [App\Http\Controllers\VmtEmployeeController::class, 's
     //Attendance Reports
     Route::get('/reports/attendance',  [App\Http\Controllers\VmtReportsController::class, 'showAttendanceReport'])->name('showAttendanceReport');
     Route::get('/reports/generate-attendance-report',  [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'generateAttendanceReports'])->name('generateAttendanceReports');
+
+    //basic Attedance Report
+    Route::get('/reports/basic-attendance',  [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'basicArrendanceReport'])->name('basicArrendanceReport');
+
      //Ajax Part
      Route::get('/attendance-filter-info', [App\Http\Controllers\VmtReportsController::class, 'fetchAttendanceInfo'])->name('fetchAttendanceInfo');
      //Ajax For Fetch Month For Given Year fetchAttendanceForGivenYear
