@@ -107,7 +107,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                     style="padding-right: 10px;height:55px;width:200px;padding-left:40px;">
                     {{-- <div class="header-img txt-right" style="padding-right: 10px;"> --}}
                     <img src="{{ URL::asset('assets/images/precede.png') }}" class="" alt="logo"
-                        style="height:100%;width:100%;">
+                        style="height:55px;width:180px;">
                 </div>
             </td>
         </tr>
