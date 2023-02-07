@@ -1434,63 +1434,6 @@
                         </div>
 
                     </div>
-                    <div class="tab-pane fade" id="document_det" role="tabpanel" aria-labelledby="">
-                        <div class="card mb-2">
-                            <div class="card-body">
-                                <form action="{{ route('updatePersonalInformation', $user->id) }}" Method="POST"
-                                    enctype="multipart/form-data">
-                                    <h6 class="">Documents Of Employee
-                                        {{-- <span class="personal-edit"><a href="#" class="edit-icon"
-                                                data-bs-toggle="modal" data-bs-target="#edit_document"><i
-                                                    class="ri-pencil-fill"></i></a>
-                                        </span> --}}
-                                    </h6>
-                                    <div class="table-responsive">
-                                        <table class="table">
-                                            <thead class="bg-primary">
-                                                <th>
-                                                    Document Name
-                                                </th>
-                                                <th>
-                                                    Document View
-                                                </th>
-                                                {{-- <th>
-                                                    Action
-                                                </th> --}}
-                                            </thead>
-                                            <tbody>
-                                                {{-- <?php dd($documents_filenames); ?> --}}
-                                                {{-- <?php dd(count($documents_filenames->toArray())); ?> --}}
-                                                @foreach ( $documents_filenames[0] as $key => $value )
-                                                    @if (!empty($value))
-                                                        <tr>
-
-                                                            <td>{{ $key }}</td>
-                                                            <td>
-                                                                @if (Str::contains($value, '.pdf'))
-                                                                    <a target="_blank"
-                                                                        href="{{ URL::asset('employee_documents/' . $value) }}">View
-                                                                        Documents</a>
-                                                                @else
-                                                                    <a class="view-file text-info"
-                                                                        data-src="{{ URL::asset('employee_documents/'  . $value) }}"
-                                                                        style="cursor:pointer">
-                                                                        {{ 'View Documents' }}
-                                                                    </a>
-                                                                @endif
-                                                            </td>
-                                                        </tr>
-                                                    @endif
-
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-
-                    </div>
 
                     {{-- <img src='{{ URL::asset('svg_icon_pending') }}' alt='view' title='view' class='icon'>  --}}
 

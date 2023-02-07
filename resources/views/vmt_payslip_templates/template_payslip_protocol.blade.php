@@ -61,7 +61,7 @@ $bank_names = \DB::table('vmt_banks')->get();
             margin-bottom: 3pt;
             padding: 0.5px 5px;
         }
-        .text-navyBlue{
+        .{
             color: #002f56;
         }
 
@@ -85,8 +85,8 @@ $bank_names = \DB::table('vmt_banks')->get();
             height: 50px;
         }
 
-        td.bg-ash {
-            background-color: #d9d9d9;
+        .bg-ash {
+            background-color: #9e9e9e5c;
         }
     </style>
 </head>
@@ -135,18 +135,18 @@ $bank_names = \DB::table('vmt_banks')->get();
 
                 <tr>
                     <td colspan="12" class=" bg-ash">
-                        <p class=" txt-center text-navyBlue  text-strong">PAYSLIP FOR THE MONTH OF &ndash;
+                        <p class=" txt-center   text-strong">PAYSLIP FOR THE MONTH OF &ndash;
                             {{ strtoupper($employee_payslip->PAYROLL_MONTH) }}</p>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="3" class="text-navyBlue  bg-ash text-strong">
+                    <td colspan="3" class="  bg-ash text-strong">
                         <p>EMPLOYEE NAME</p>
                     </td>
                     <td colspan="3">
                         <p>{{ $employee_name }}</p>
                     </td>
-                    <td colspan="3" class="text-navyBlue  bg-ash text-strong">
+                    <td colspan="3" class="  bg-ash text-strong">
                         <p>EMPLOYEE CODE</p>
                     </td>
                     <td colspan="3">
@@ -155,13 +155,13 @@ $bank_names = \DB::table('vmt_banks')->get();
 
                 </tr>
                 <tr>
-                    <td colspan="3" class="text-navyBlue bg-ash text-strong">
+                    <td colspan="3" class=" bg-ash text-strong">
                         <p>DATE OF BIRTH</p>
                     </td>
                     <td colspan="3">
                         <p>{{ date('d-m-Y', strtotime($employee_details->dob)) }}</p>
                     </td>
-                    <td colspan="3" class="text-navyBlue bg-ash text-strong">
+                    <td colspan="3" class=" bg-ash text-strong">
                         <p>DATE OF JOINING</p>
                     </td>
                     <td colspan="3">
@@ -170,13 +170,13 @@ $bank_names = \DB::table('vmt_banks')->get();
 
                 </tr>
                 <tr>
-                    <td colspan="3" class="text-navyBlue bg-ash text-strong">
+                    <td colspan="3" class=" bg-ash text-strong">
                         <p>DESIGNATION</p>
                     </td>
                     <td colspan="3">
                         <p>{{ $employee_office_details->designation }}</p>
                     </td>
-                    <td colspan="3" class="text-navyBlue bg-ash text-strong">
+                    <td colspan="3" class=" bg-ash text-strong">
                         <p>LOCATION</p>
                     </td>
                     <td colspan="3">
@@ -185,13 +185,13 @@ $bank_names = \DB::table('vmt_banks')->get();
 
                 </tr>
                 <tr>
-                    <td colspan="3" class="text-navyBlue bg-ash text-strong">
+                    <td colspan="3" class=" bg-ash text-strong">
                         <p>EPF NUMBER</p>
                     </td>
                     <td colspan="3">
                         <p>{{ $employee_details->epf_number }}</p>
                     </td>
-                    <td colspan="3" class="text-navyBlue bg-ash text-strong">
+                    <td colspan="3" class=" bg-ash text-strong">
                         <p>ESIC NUMBER</p>
                     </td>
                     <td colspan="3">
@@ -200,13 +200,13 @@ $bank_names = \DB::table('vmt_banks')->get();
 
                 </tr>
                 <tr>
-                    <td colspan="3" class="text-navyBlue bg-ash text-strong">
+                    <td colspan="3" class=" bg-ash text-strong">
                         <p>UAN</p>
                     </td>
                     <td colspan="3">
                         <p>{{ $employee_details->uan }}</p>
                     </td>
-                    <td colspan="3" class="text-navyBlue bg-ash text-strong">
+                    <td colspan="3" class=" bg-ash text-strong">
                         <p>PAN</p>
                     </td>
                     <td colspan="3">
@@ -215,14 +215,14 @@ $bank_names = \DB::table('vmt_banks')->get();
 
                 </tr>
                 <tr>
-                    <td colspan="4" class="text-navyBlue bg-ash ">
+                    <td colspan="4" class=" bg-ash ">
                         <p class="text-strong txt-center">BANK NAME</p>
                     </td>
 
-                    <td colspan="4" class="text-navyBlue bg-ash ">
+                    <td colspan="4" class=" bg-ash ">
                         <p class="text-strong txt-center">ACCOUNT NUMBER</p>
                     </td>
-                    <td colspan="4" class="text-navyBlue bg-ash ">
+                    <td colspan="4" class=" bg-ash ">
                         <p class="text-strong txt-center">IFSC CODE</p>
                     </td>
 
@@ -251,17 +251,17 @@ $bank_names = \DB::table('vmt_banks')->get();
                 </tr>
 
                 <tr>
-                    <td colspan="3" class="text-navyBlue bg-ash ">
+                    <td colspan="3" class=" bg-ash ">
                         <p class="text-strong txt-center">MONTH DAYS</p>
                     </td>
 
-                    <td colspan="3" class="text-navyBlue bg-ash ">
+                    <td colspan="3" class=" bg-ash ">
                         <p class="text-strong txt-center">WORKED DAYS</p>
                     </td>
-                    <td colspan="3" class="text-navyBlue bg-ash ">
+                    <td colspan="3" class=" bg-ash ">
                         <p class="text-strong txt-center">LOSS OF PAY</p>
                     </td>
-                    <td colspan="3" class="text-navyBlue bg-ash ">
+                    <td colspan="3" class=" bg-ash ">
                         <p class="text-strong txt-center">ARREAR DAYS</p>
                     </td>
 
@@ -286,22 +286,22 @@ $bank_names = \DB::table('vmt_banks')->get();
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2" class="text-navyBlue bg-ash">
+                    <td colspan="2" class=" bg-ash">
                         <p class="txt-center text-strong">DESCRIPTION</p>
                     </td>
-                    <td colspan="2" class="text-navyBlue bg-ash">
+                    <td colspan="2" class=" bg-ash">
                         <p class="txt-center text-strong">AMOUNT</p>
                     </td>
-                    <td colspan="2" class="text-navyBlue bg-ash">
+                    <td colspan="2" class=" bg-ash">
                         <p class="txt-center text-strong">ARREAR AMOUNT</p>
                     </td>
-                    <td colspan="2" class="text-navyBlue bg-ash">
+                    <td colspan="2" class=" bg-ash">
                         <p class="txt-center text-strong">EARNED AMOUNT</p>
                     </td>
-                    <td colspan="2" class="text-navyBlue bg-ash">
+                    <td colspan="2" class=" bg-ash">
                         <p class="txt-center text-strong">DEDUCTION</p>
                     </td>
-                    <td colspan="2" class="text-navyBlue bg-ash">
+                    <td colspan="2" class=" bg-ash">
                         <p class="txt-center text-strong">AMOUNT</p>
                     </td>
 
@@ -415,7 +415,7 @@ $bank_names = \DB::table('vmt_banks')->get();
 
                 <tr>
                     <td colspan="2" class="">
-                        <p class="txt-left text-navyBlue text-strong">TRAVAL CONVEYANCE</p>
+                        <p class="txt-left  text-strong">TRAVAL CONVEYANCE</p>
                     </td>
                     <td colspan="2" class="">
                         <p class="txt-right"></p>
@@ -428,7 +428,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                         <p class="txt-right"></p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-left text-navyBlue text-strong">OTHER DEDUCTIONS</p>
+                        <p class="txt-left  text-strong">OTHER DEDUCTIONS</p>
                     </td>
                     <td colspan="2" class="">
                         <p class="txt-right ">{{ number_format(round($employee_payslip->OTHER_DEDUC), 2) }}</p>
@@ -436,23 +436,23 @@ $bank_names = \DB::table('vmt_banks')->get();
                 </tr>
                 <tr>
                     <td colspan="2" class="bg-ash">
-                        <p class="txt-left nav text-strong text-navyBlue">TOTAL EARNINGS</p>
+                        <p class="txt-left nav text-strong ">TOTAL EARNINGS</p>
                     </td>
                     <td colspan="2" class="bg-ash">
-                        <p class="txt-right  text-navyBlue">{{ number_format(round($employee_payslip->TOTAL_EARNED_GROSS), 2) }}</p>
+                        <p class="txt-right  ">{{ number_format(round($employee_payslip->TOTAL_EARNED_GROSS), 2) }}</p>
                     </td>
                     <td colspan="2" class="bg-ash">
                         <p class="txt-right"></p>
                     </td>
 
                     <td colspan="2" class="bg-ash">
-                        <p class="txt-right text-navyBlue">{{ number_format(round($employee_payslip->TOTAL_EARNED_GROSS), 2) }}</p>
+                        <p class="txt-right ">{{ number_format(round($employee_payslip->TOTAL_EARNED_GROSS), 2) }}</p>
                     </td>
                     <td colspan="2" class="bg-ash">
-                        <p class="txt-left text-strong text-navyBlue">TOTAL DEDUCTION</p>
+                        <p class="txt-left text-strong ">TOTAL DEDUCTION</p>
                     </td>
                     <td colspan="2" class="bg-ash">
-                        <p class="txt-right text-navyBlue">{{ number_format(round( $employee_payslip->TOTAL_DEDUCTIONS), 2) }}</p>
+                        <p class="txt-right ">{{ number_format(round( $employee_payslip->TOTAL_DEDUCTIONS), 2) }}</p>
                     </td>
                 </tr>
                 <tr>
@@ -461,7 +461,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="4" class="text-navyBlue bg-ash">
+                    <td colspan="4" class=" bg-ash">
                         <p class="txt-left text-strong">NET PAY</p>
                     </td>
                     <td colspan="8" class="">
@@ -469,7 +469,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="4" class="text-navyBlue bg-ash">
+                    <td colspan="4" class=" bg-ash">
                         <p class="txt-left text-strong">NET PAY IN WORDS</p>
                     </td>
                     <td colspan="8" class="">
@@ -482,13 +482,13 @@ $bank_names = \DB::table('vmt_banks')->get();
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="3" class="text-navyBlue bg-ash">
+                    <td colspan="3" class=" bg-ash">
                         <p class="txt-center text-strong">TRANSACTION ID</p>
                     </td>
                     <td colspan="3" class="">
                         <p class="txt-center"></p>
                     </td>
-                    <td colspan="3" class="text-navyBlue bg-ash">
+                    <td colspan="3" class=" bg-ash">
                         <p class="txt-center text-strong">Paid Date</p>
                     </td>
                     <td colspan="3" class="">
@@ -502,18 +502,18 @@ $bank_names = \DB::table('vmt_banks')->get();
                 </tr>
                 <tr>
                     <td colspan="12" class="bg-ash">
-                        <p class="padding-md txt-center">Leave Details</p>
+                        <p class="padding-md text-strong txt-center">Leave Details</p>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="3" class=" bg-ash">
-                        <p class="txt-center text-navyBlue text-strong">Leave's Type</p>
+                        <p class="txt-center  text-strong">Leave's Type</p>
                     </td>
                     <td colspan="3" class=" bg-ash">
-                        <p class="txt-center text-navyBlue text-strong">Opening Balance</p>
+                        <p class="txt-center  text-strong">Opening Balance</p>
                     </td>
                     <td colspan="3" class=" bg-ash">
-                        <p class="txt-center text-navyBlue text-strong">Availed Balance</p>
+                        <p class="txt-center  text-strong">Availed Balance</p>
                     </td>
                     <td colspan="3" class=" bg-ash">
                         <p class="txt-center text-strong">Closing Balance</p>
@@ -578,9 +578,10 @@ $bank_names = \DB::table('vmt_banks')->get();
 
                     </td>
                     <td colspan="1" class="border-less" style="    padding: 10px 0px;">
-                        <img src="{{ URL::asset('assets/images/client_logos/ardens/evangelist.png') }}" width="80px" height="15px"
-                        alt="" class="">
+                        <img src="{{ URL::asset('assets/images/client_logos/ardens/evangelist.png') }}" width="100px"
+                            height="18px" alt="" class="">
                     </td>
+
                 </tr>
 
                 {{-- <tr class="border-less">

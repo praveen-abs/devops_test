@@ -78,8 +78,8 @@
             height: 50px;
         }
 
-        td.bg-ash {
-            background-color: #dbdbdb;
+        .bg-ash {
+            background-color: #9e9e9e5c;
         }
     </style>
 </head>
@@ -365,7 +365,7 @@
                 </tr>
                 <tr>
                     <td colspan="2" class="">
-                        <p class="txt-left text-strong">SPECIAL ALLOW</p>
+                        <p class="txt-left text-strong">SPECIAL ALLOWANCE</p>
                     </td>
                     <td colspan="2" class="">
                         <p class="txt-right">{{ number_format(round($employee_payslip->SPL_ALW), 2) }}</p>
@@ -553,8 +553,8 @@
 
                     </td>
                     <td colspan="1" class="border-less" style="    padding: 10px 0px;">
-                        <img src="{{ URL::asset('assets/images/client_logos/ardens/evangelist.png') }}" width="80px" height="15px"
-                        alt="" class="">
+                        <img src="{{ URL::asset('assets/images/client_logos/ardens/evangelist.png') }}" width="100px"
+                            height="18px" alt="" class="">
                     </td>
                 </tr>
 
