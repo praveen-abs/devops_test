@@ -165,7 +165,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                         <p>DATE OF JOINING</p>
                     </td>
                     <td colspan="3">
-                        <p>{{ date('d-m-Y', strtotime($employee_payslip->DOJ)) }}</p>
+                        <p>{{ date('d-m-Y', strtotime($employee_details->doj)) }}</p>
                     </td>
 
                 </tr>
@@ -578,9 +578,10 @@ $bank_names = \DB::table('vmt_banks')->get();
 
                     </td>
                     <td colspan="1" class="border-less" style="    padding: 10px 0px;">
-                        <img src="{{ URL::asset('assets/images/client_logos/ardens/evangelist.png') }}" width="80px" height="15px"
-                        alt="" class="">
+                        <img src="{{ URL::asset('assets/images/client_logos/ardens/evangelist.png') }}" width="100px"
+                            height="18px" alt="" class="">
                     </td>
+
                 </tr>
 
                 {{-- <tr class="border-less">
