@@ -165,7 +165,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                         <p>DATE OF JOINING</p>
                     </td>
                     <td colspan="3">
-                        <p>{{ date('d-m-Y', strtotime($employee_payslip->DOJ)) }}</p>
+                        <p>{{ date('d-m-Y', strtotime($employee_details->doj)) }}</p>
                     </td>
 
                 </tr>
