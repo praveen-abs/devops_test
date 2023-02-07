@@ -749,6 +749,185 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
             alert("Not yet implemented");
         }
 
+         
+        function AttendenceRegularizationModal(element) {
+
+             
+             
+
+            let t_regularization_type = $(element).val();
+            let selected_date = $(element).data('currentdate');
+            console.log(selected_date);
+            let t_user_id = $(element).data('userid');
+
+            //Based on data-applystatus, we will fetch the value from server.
+            //If data-applystatus != None, then make Ajax request
+            console.log("Status : " + $(element).data('applystatus'));
+            if ($(element).data('applystatus') != 'None') {
+                ////UI changes in modal popup
+
+                //Disable textbox
+                $('#regularize_time').attr('disabled', 'disabled');
+
+                //Hide Reason dropdown div
+                $('#div_reason_editable').hide();
+
+                //Enable Non-editable reason div
+                $('#div_reason_noneditable').show();
+
+                //Hide the Apply Regulaize button
+                $('#div_btn_applyRegularize').hide();
+
+                /*
+                    Input params : selectedDate, regularization_type
+                    Output params : reason,custom_reason, status
+
+                */
+                $.ajax({
+                    url: "{{ route('fetch-regularization-data') }}",
+                    type: "POST",
+                    data: {
+                        user_id: t_user_id,
+                        selected_date: selected_date,
+                        regularization_type: t_regularization_type,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        console.log("Reason Type : " + data.reason_type);
+
+                        //Update the non-editable UIs
+                        $('#txt_reason_noneditable').val(data.reason_type); //editable
+
+                        if (data.custom_reason != "")
+                            $('#div_custom_reason').show();
+                        else
+                            $('#div_custom_reason').hide();
+
+
+                        $('#txt_customreason_noneditable').val(data.custom_reason); //editable
+                        $('#txt_apply_status').val(data.status); //editable
+
+                        //show Modal
+                        $('#regularizationModal').fadeIn(0);
+
+                    }
+                });
+            } else {
+                //Hide non-editable stuffs
+                //Reset modal element states
+                //Enable textbox
+                $('#regularize_time').attr('disabled', false);
+
+                //Show Reason dropdown div
+                $('#div_reason_editable').show();
+
+                //Show actual time
+                $('#div_actual_user_time').show();
+
+
+                //Disable Non-editable reason div
+                $('#div_reason_noneditable').hide();
+                $('#div_custom_reason').hide();
+
+                //Show the Apply Regularize button
+                $('#div_btn_applyRegularize').show();
+
+                //remove old values
+                $('#txt_reason_noneditable').val(''); //editable
+                $('#txt_customreason_noneditable').val(''); //editable
+                $('#txt_apply_status').val(''); //editable
+
+                //Based on Regularization Type, show the dropdowns
+                $('#reason_mip').hide();
+                $('#reason_mop').hide();
+                $('#reason_lc').hide();
+                $('#reason_eg').hide();
+
+                if ($(element).val() == "LC") {
+                    $('#reason_lc').show();
+                } else
+                if ($(element).val() == "EG") {
+                    $('#reason_eg').show();
+
+                } else
+                if ($(element).val() == "MIP") {
+                    $('#reason_mip').show();
+                } else
+                if ($(element).val() == "MOP") {
+                    $('#reason_mop').show();
+                }
+
+                //show Modal
+                $('#regularizationModal').fadeIn(0);
+            }
+
+            //Set UI elements
+            $('#current_date').html(selected_date);
+
+            //Hide all reason dropdowns
+
+            if ($(element).val() == "LC") {
+                //On modal popup
+                $('#actual_user_time').html(moment($(element).data('checkintime'), ["HH:mm"]).format('h:mm A'));
+                $('#timing_label_suffix').html('( Late Arrival )');
+                $('#regularize_time').val(shift_start_time); //editable
+
+
+                //Hidden vars
+                $('#attendance_date').val(selected_date);
+                $('#user_time').val($(element).data('checkintime'));
+                $('#attendance_user').val(currentlySelectedUser);
+                $('#regularization_type').val("LC");
+
+            } else
+            if ($(element).val() == "EG") {
+                $('#actual_user_time').html(moment($(element).data('checkouttime'), ["HH:mm"]).format('h:mm A'));
+                $('#timing_label_suffix').html('( Early Going )');
+                $('#regularize_time').val(shift_end_time);
+
+                //Hidden vars
+                $('#attendance_date').val(selected_date);
+                $('#user_time').val($(element).data('checkouttime'));
+                $('#attendance_user').val(currentlySelectedUser);
+                $('#regularization_type').val("EG");
+
+            } else
+            if ($(element).val() == "MIP") {
+
+                $('#div_actual_user_time').hide();
+
+                //$('#actual_user_time').html($(element).data('actual_timing'));
+                $('#regularize_time').val(shift_start_time);
+
+                $('#attendance_date').val(selected_date);
+                $('#user_time').val($(element).data('actual_timing'));
+                $('#attendance_user').val(currentlySelectedUser);
+                $('#regularization_type').val("MIP");
+                $('#timing_label_suffix').html('( MIP )');
+                //$('#')
+            } else
+            if ($(element).val() == "MOP") {
+                $('#div_actual_user_time').hide();
+
+                //$('#actual_user_time').html($(element).data('actual_timing'));
+                $('#regularize_time').val(shift_end_time);
+
+                $('#attendance_date').val(selected_date);
+                $('#user_time').val($(element).data('actual_timing'));
+                $('#attendance_user').val(currentlySelectedUser);
+                $('#regularization_type').val("MOP");
+                $('#timing_label_suffix').html('( MOP )');
+                //$('#')
+
+            }
+
+            // $('#regularizationModal').addClass('fade');
+        }
+
+
+
+
         function showRegularizationModal(element) {
             let t_regularization_type = $(element).val();
             let selected_date = $(element).data('currentdate');
@@ -1127,11 +1306,22 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                 if (ajax_data_currentdate.isAbsent) {
                                     if (todayDate > currentDate) {
 
+                                            let NotApplied =ajax_data_currentdate.absent_status.includes("Not Applied");
+                                            let Pending =ajax_data_currentdate.absent_status.includes("Pending");
+                                            let Rejected =ajax_data_currentdate.absent_status.includes("Rejected");
+                                            let Revoked =ajax_data_currentdate.absent_status.includes("Revoked");
+                                            let Approved =ajax_data_currentdate.absent_status.includes("Approved");
+
+                                        if(Pending || Rejected || Revoked || Approved){
+                                       
+
                                         cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
                                                 "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start'><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><span class='f-11' id='checkout_time_" +
                                                 year + "-" + (month + 1) + "-" + dateText +
                                                 "'>Absent <br><span style='color:black;font-size:10px;text-align:center;margin-left:5px' id='statement'></span></span>";
 
+
+                                           
                                         // if (ajax_data_currentdate.absent_status == "Not Applied")
                                         // {
                                         //     cell.innerHTML = cell.innerHTML + "<span>Leave Applied</span>";
@@ -1139,20 +1329,24 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
                                         // }
                                         // else
-                                        if (ajax_data_currentdate.absent_status == "Pending")
+                                        if (ajax_data_currentdate.absent_status == "Approved")
                                         {
-                                            // $("#statement").attr("src","{{ URL::asset($svg_icon_pending) }}")
-                                            cell.innerHTML = cell.innerHTML + "<span style='position: relative;top: -30px; left: -15px;font-weight: 700;color: #b2b223;'>Approval Pending</span>";
-                                            // $("#statement").html("Leave Pending ")
+                                            cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
+                                                "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start'><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><span><button style='background-color: red;padding: 2px;border-radius: 20px;color: white;font-weight: 700;font-size: 10px;'>SL</button></span><span style='font-weight: 700;color: green;margin-left: 10px;' class='f-11' id='checkout_time_" +
+                                                year + "-" + (month + 1) + "-" + dateText +
+                                                "'>Approved<br></span>";
 
+
+                                            // $("#statement").html("Leave Approved")
                                         }
+                                       
                                         else
                                         if (ajax_data_currentdate.absent_status == "Rejected")
                                         {
-                                            cell.innerHTML = cell.innerHTML + "<span style='position: relative;top: -30px; left: -20px;font-weight: 700;'>Leave Rejected</span>";
-                                            // $("#statement").html("Leave Rejected ")
-                                            // $("#statement").attr("src","{{ URL::asset($svg_icon_rejected) }}")
-
+                                            cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
+                                                "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start'><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><span><button style='background-color: red;padding: 2px;border-radius: 20px;color: white;font-weight: 700;font-size: 10px;'>SL</button></span><span style='font-weight: 700;color: red;margin-left: 10px;' class='f-11' id='checkout_time_" +
+                                                year + "-" + (month + 1) + "-" + dateText +
+                                                "'> Rejected<br></span>";
                                         }
                                         else
                                         if (ajax_data_currentdate.absent_status == "Revoked")
@@ -1164,17 +1358,30 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         else
                                         if (ajax_data_currentdate.absent_status == "Approved")
                                         {
-                                            cell.innerHTML = cell.innerHTML + "<span style='position: relative;top: -30px; left: -17px;font-weight: 700;color: green;'>Leave Approved</span>";
+                                            cell.innerHTML = cell.innerHTML + "<span>Approved</span>";
                                             // $("#statement").attr("src","{{ URL::asset($svg_icon_approved) }}")
 
-                                            // $("#statement").html("Leave Approved ")
+                                            // $("#statement").html("Leave Approved")
                                         }
-                                        // else
-                                        // {
-                                        //     cell.innerHTML = cell.innerHTML + "<span>ERROR!</span>";
-                                        //     $("#statement").html("ERROR ")
-                                        // }
-                                    } else {
+                                        else
+                                         if (ajax_data_currentdate.absent_status == "Pending")
+                                        {
+                                            // $("#statement").attr("src","{{ URL::asset($svg_icon_pending) }}")
+                                            cell.innerHTML = cell.innerHTML + "<span>Pending</span>";
+                                            // $("#statement").html("Leave Pending ")
+
+                                        }
+                                    }
+                                
+                                    else{
+                                        cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
+                                                "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start'><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><span style='margin-top: -38px;margin-left: 45px;font-size: 13px;color: red;font-weight: 700;' class='f-11' id='checkout_time_" +
+                                                year + "-" + (month + 1) + "-" + dateText +
+                                                "'>Absent <br><div style='display: flex;gap: 20px;margin-left: -30px;margin-top: 15px;'><span style=''><input type='button' style='padding: 3px;border-radius: 8px;outline: none;color: white;background-color: #2f0358;border: none;font-weight: 700;'onclick='AttendenceRegularizationModal(this)' value='Ar' /></span><span><input type='button'style='padding: 3px;border-radius: 8px;outline: none;color: white;background-color: #ff6000;border: none;font-weight: 700;' value='Apply Leave' /></span></div></span>";
+                                    }
+                                      
+                                    } 
+                                    else {
                                         cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
                                             "</p>  </div>"
 
