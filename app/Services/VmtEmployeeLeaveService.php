@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\VmtEmployee;
 use Carbon\Carbon;
 use App\Models\VmtEmployeesLeavesAccrued;
+use App\Models\ConfigPms;
 
 class VmtEmployeeLeaveService
 {
@@ -26,7 +27,7 @@ class VmtEmployeeLeaveService
 
         if(VmtEmployeesLeavesAccrued::whereMonth('date',$current_month)->exists())
         {
-            dd("Accrual day already added for month : ".$date);
+           // dd("Accrual day already added for month : ".$date);
             return 0;
 
 
@@ -48,7 +49,8 @@ class VmtEmployeeLeaveService
     public function processEmployeeLeaveBalance($user_id, $leave_type_id){
 
 
-        $calendar_type = "calendar_year";
+        $calendar_type =ConfigPms::first()->calendar_type;
+        //dd( $calendar_type);
         $accrualLeaveAdd_startDate = 15; //TODO : Move to Leave Settings page
 
         $current_month = date('n');
@@ -62,47 +64,45 @@ class VmtEmployeeLeaveService
         // dd($empDateArray['month']);
 
         if($calendar_type=='financial_year'){
+               $year=ConfigPms::first()->year;
+               dd($year);
+              //dd($emp_doj_Array ['year']."-".$emp_doj_Array ['month']);
 
+              dd();
         }
         else
         if($calendar_type=='calendar_year'){
             $monthsSinceJoin = $today->diffInMonths($emp_doj);
 
-            //Employee doj more than 12 since the current month check and add accured leaves
-            if( $monthsSinceJoin>=12){
+           // Logic for Check and add accured leaves
+            if(date('Y')==$emp_doj_Array ['year']){
+                $doj_start_month=$emp_doj_Array ['month'];
+                $current_month = date('n');
+
+                // if($emp_doj_Array ['month']==date('n')){
+
+                // }
+                for($i=$doj_start_month;$i<=$current_month;$i++){
+                    if($emp_doj_Array ['month']==$i){
+                        if($emp_doj_Array ['day']==15){
+                            $accrual_leave_count='0.5';
+                        }else if($emp_doj_Array ['day']>15){
+                            $accrual_leave_count='0.5';
+                        }
+                    }else{
+                        $accrual_leave_count='1';
+                    }
+                    $date="2023"."-0".$i."-15";
+                    $this->insertAccrualLeaveRecord($user_id, $date, $leave_type_id, $accrual_leave_count);
+                }
+            }else{
                 $calendar_year_start_month=1;
-                for($i=$calendar_year_start_month;$i<12;$i++){
+                $current_month = date('n');
+                for($i=$calendar_year_start_month;$i<=$current_month;$i++){
+                    $date="2023"."-0".$i."-15";
                     $accrual_leave_count='1';
                     $this->insertAccrualLeaveRecord($user_id, $date, $leave_type_id, $accrual_leave_count);
                 }
-            }
-            //dd($monthsSinceJoin);
-
-
-            if($monthsSinceJoin == 0 && $emp_doj_Array['month']-$current_month){
-
-                if($emp_doj_Array['day'] < $accrualLeaveAdd_startDate){
-                    $accrual_leave_count='1';
-                    $this->insertAccrualLeaveRecord($user_id, $date, $leave_type_id, $accrual_leave_count);
-
-                }else if($emp_doj_Array['day']==$accrualLeaveAdd_startDate){
-                    $accrual_leave_count='0.5';
-                    $this->insertAccrualLeaveRecord($user_id, $date, $leave_type_id, $accrual_leave_count);
-
-
-                }else if($emp_doj_Array['day']>$accrualLeaveAdd_startDate){
-                    $accrual_leave_count='0';
-                    $this->insertAccrualLeaveRecord($user_id, $date, $leave_type_id, $accrual_leave_count);
-
-                }
-
-            }
-            else
-            {
-                //If the emp is existing one, then add accrual leave day
-                $accrual_leave_count='1';
-                $this->insertAccrualLeaveRecord($user_id, $date, $leave_type_id, $accrual_leave_count);
-
             }
 
             //check how many months have elapsed

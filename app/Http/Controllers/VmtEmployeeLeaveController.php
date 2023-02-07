@@ -17,6 +17,7 @@ class VmtEmployeeLeaveController extends Controller
 
         $response = $vmtEmployeeLeaveService->processEmployeeLeaveBalance($user_id, $leave_type_id);
 
-        dd($response);
+        //dd($response);
+        return $response;
     }
 }
