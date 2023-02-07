@@ -1132,48 +1132,51 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                                 year + "-" + (month + 1) + "-" + dateText +
                                                 "'>Absent <br><span style='color:black;font-size:10px;text-align:center;margin-left:5px' id='statement'></span></span>";
 
-                                        if (ajax_data_currentdate.absent_status == "Not Applied")
-                                        {
-                                            // cell.innerHTML = cell.innerHTML + "<span>Leave Applied</span>";
-                                            $("#statement").html(" Leave Not Applied")
+                                        // if (ajax_data_currentdate.absent_status == "Not Applied")
+                                        // {
+                                        //     cell.innerHTML = cell.innerHTML + "<span>Leave not Applied</span>";
+                                        //     $("#statement").html(" Leave Not Applied")
 
-                                        }
-                                        else
-                                        if (ajax_data_currentdate.absent_status == "Pending")
+                                        // }
+                                        // else
+                                        if (ajax_data_currentdate.absent_status == "Pending")  
                                         {
                                             // $("#statement").attr("src","{{ URL::asset($svg_icon_pending) }}")
-                                            // cell.innerHTML = cell.innerHTML + "<span>Levae</span>";
-                                            $("#statement").html("Leave Pending ")
+                                            cell.innerHTML = cell.innerHTML + "<span style=' position: relative;top: -25px;left: -40px;font-weight: 700;color: #9b9b24;'>Pending</span>";
+                                            // $("#statement").html("Leave Pending ")
 
                                         }
                                         else
                                         if (ajax_data_currentdate.absent_status == "Rejected")
                                         {
-                                            // cell.innerHTML = cell.innerHTML + "<span>Rejected</span>";
-                                            $("#statement").html("Leave Rejected ")
+                                            cell.innerHTML = cell.innerHTML + "<span style=' position: relative;top: -25px;left: -40px;font-weight: 700;color: red;'>Rejected</span>";
+                                            // $("#statement").html("Leave Rejected ")
                                             // $("#statement").attr("src","{{ URL::asset($svg_icon_rejected) }}")
 
                                         }
                                         else
                                         if (ajax_data_currentdate.absent_status == "Revoked")
                                         {
-                                            // cell.innerHTML = cell.innerHTML + "<span>Revoked</span>";
-                                            $("#statement").html("Leave Revoked ")
+                                            cell.innerHTML = cell.innerHTML + "<span>Revoked</span>";
+                                            // $("#statement").html("Leave Revoked ")
 
                                         }
                                         else
                                         if (ajax_data_currentdate.absent_status == "Approved")
                                         {
-                                            // cell.innerHTML = cell.innerHTML + "<span>Approved</span>";
+                                            cell.innerHTML = cell.innerHTML + "<span style=' position: relative;top: -25px;left: -15px;font-weight: 700;color: green;'>Leave Approved<i class='fa-regular fa-circle-check'></i></span>";
+                                           
+
+                                         
                                             // $("#statement").attr("src","{{ URL::asset($svg_icon_approved) }}")
 
-                                            $("#statement").html("Leave Approved ")
+                                            // $("#statement").html("Leave Approved ")
                                         }
-                                        else
-                                        {
-                                            cell.innerHTML = cell.innerHTML + "<span>ERROR!</span>";
-                                            $("#statement").html("ERROR ")
-                                        }
+                                        // else
+                                        // {
+                                        //     cell.innerHTML = cell.innerHTML + "<span>ERROR!</span>";
+                                        //     // $("#statement").html("ERROR ")
+                                        // }
                                     } else {
                                         cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
                                             "</p>  </div>"
