@@ -102,15 +102,13 @@ $bank_names = \DB::table('vmt_banks')->get();
                     <p class="mb-0">Chennai -600073,Tamilnadu.</p>
                 </div>
             </td>
-            <td colspan="4" class="" style="border-left:0px;" align="right">
-
-                {{-- <div class="header-img txt-right" style="padding-right: 10px;height:55px;width:180px;"> --}}
-                <div class="header-img txt-right" style="padding-right: 10px;">
+            <td colspan="4" class="" style="border-left:0px;" align="">
+                <div class="header-img txt-right"
+                    style="padding-right: 10px;height:55px;width:200px;padding-left:40px;">
+                    {{-- <div class="header-img txt-right" style="padding-right: 10px;"> --}}
                     <img src="{{ URL::asset('assets/images/precede.png') }}" class="" alt="logo"
-                        style="height:100%;width:100%;">
+                        style="height:55px;width:180px;">
                 </div>
-
-
             </td>
         </tr>
 
