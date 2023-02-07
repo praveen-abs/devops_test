@@ -594,7 +594,7 @@
                                             <input type="datetime-local" id="start_date"
                                                 class="form-control outline-none border-0 shadow-lite leave_date">
                                         </div>
-                                        <div class="col-4 text-md-center mb-md-0 " id="div_tot aldays">
+                                        <div class="col-4 text-md-center mb-md-0 " id="div_totaldays">
                                             <span class="fw-bold  text-muted mb-2">Total Days</span>
                                             <div class="d-flex align-items-center">
                                                 <div class="d-flex">
@@ -613,19 +613,15 @@
                                                         id="for_full_day_leave">
                                                     <span class="shadow-lite px-2 py-1" id="total_leave_days">-</span>
                                                 </div>
-
                                             </div>
-
-
                                         </div>
-                                        {{-- <div class="col-md-4 text-md-center mb-md-0 " id="div_totalhours">
+                                        <div class="col-md-4 text-md-center mb-md-0 " id="div_totalhours">
                                                 <p class="fw-bold  text-muted mb-2">Total Hours</p>
                                                 <span class="shadow-lite px-2 py-1" id="total_permission_hours">-</span>
-                                            </div> --}}
+                                            </div>
                                         <div class="col-4 text-md-end ">
                                             <label class="fw-bold">End Date</label>
-                                            <input type="datetime-local" id="end_date"
-                                                class="form-control outline-none border-0 shadow-lite leave_date">
+                                            <input type="datetime-local" id="end_date" class="form-control outline-none border-0 shadow-lite leave_date">
                                         </div>
                                     </div>
                                     <textarea id="leave_reason" placeholder="Reason here..." class="w-100 outline-none border-0 shadow-lite form-control"
@@ -1160,12 +1156,22 @@
                         console.log('I was closed by the timer')
                     }
                 })
+
                 var start_date = $('#start_date').val();
                 var end_date = $('#end_date').val();
 
                 let total_leave = 0; //Both leave and permission types are stored here
                 let selectedLeaveTypeID = $('#leave_type_id').find(":selected").val();
 
+                let half_day = null;
+                let half_day_type = null;
+
+                let radioBtn_halfDay = $("#for_half_day_leave").is(":checked");
+
+                // full_day = $("#total_leave_days").text();
+                // full = $("#for_full_day_leave").is(":checked");
+
+                console.log("is half-day leave applied ? : " + radioBtn_halfDay);
 
                 var availableLeaves_ForSelectedLeaveType = parseInt($('#leave_type_id').find(":selected")
                     .attr('data-remainingLeaves'));
@@ -1214,16 +1220,7 @@
                 //    Leave Duration
 
 
-                half_day = $("#for_half_day_leave").val();
-                half = $("#for_half_day_leave").is(":checked");
-                full_day = $("#total_leave_days").text();
-                full = $("#for_full_day_leave").is(":checked");
 
-                if (half == false) {
-                    half_day = 0;
-                }
-
-                console.log("is half-day leave applied ? : " + half);
 
 
 
@@ -1258,8 +1255,10 @@
 
 
                 } else {
+                    //for leave types
 
                     var totalLeaveDays = parseInt($('#total_leave_days').html());
+
 
                     //For leave types
                     if (moment(start_date) > moment(end_date)) {
@@ -1276,6 +1275,16 @@
                         basic_details_errors.push(
                             "Selected leave days exceeds your available leave days for the selected leave type."
                         );
+                    }
+
+                    //If half-daf radio button clicked, Get the half day value...
+                    if (radioBtn_halfDay == true){
+                        half_day = $("#for_half_day_leave").val();
+                        half_day_type = $('#half_day_type').val();
+                    }
+                    else{
+                        half_day = null;
+                        half_day_type = null;
                     }
 
                 }
@@ -1307,7 +1316,7 @@
                         'start_date': $('#start_date').val(),
                         'end_date': $('#end_date').val(),
                         'half_day_leave': half_day,
-                        'half_day_type': $('#half_day_type').val(),
+                        'half_day_type': half_day_type,
                         'leave_reason': $('#leave_reason').val(),
                         'leave_type_id': $('#leave_type_id').val(),
                         'notifications_users_id': $('#notifications_users_id').val(),
