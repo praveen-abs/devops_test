@@ -40,7 +40,7 @@ if ($query_clientMaster) {
                     data-bs-backdrop="true" tabindex="-1" id="select_client" aria-labelledby=""
                     style="top: 50px;border-radius:10px 0px 0px 0px">
                     <div class="offcanvas-header pb-0 bg-ash  align-items-center border-0 ">
-                        <a role="button" href="{{ route('pages-profile') }}"
+                        <a role="button" href="{{ route('pages-profile-new') }}"
                             class="border-0 outline-none profile-icon bg-transparent" data-bs-toggle="tooltip"
                             data-bs-placement="right" title="View Profile">
                             <i class="fa fa-user text-muted fs-15"></i>
