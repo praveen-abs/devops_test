@@ -19,6 +19,7 @@ use Carbon\CarbonPeriod;
 use DatePeriod;
 use DateInterval;
 use App\Exports\EmployeeAttendanceExport;
+use App\Exports\BasicAttendanceExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
@@ -121,7 +122,7 @@ class VmtEmployeeAttendanceController extends Controller
 
             }
 
-         // dd($deviceData);
+         //dd($deviceData);
 
             // attendance details from vmt_employee_attenndance table
             $attendance_WebMobile = VmtEmployeeAttendance::
@@ -162,9 +163,9 @@ class VmtEmployeeAttendanceController extends Controller
 
                $attendanceResponseArray[$fulldate] = array(
                 //"user_id"=>$request->user_id,
-                "user_id"=>'142',
-               "isAbsent"=>false, "attendance_mode_checkin"=>null, "attendance_mode_checkout"=>null,
-                                                            "absent_status"=>null,"checkin_time"=>null, "checkout_time"=>null,"is_weekoff"=>null
+                "user_id"=>'142',"isAbsent"=>false, "is_weekoff"=>false,"date"=>$fulldate,
+                "attendance_mode_checkin"=>null, "attendance_mode_checkout"=>null,
+                "absent_status"=>null,"checkin_time"=>null, "checkout_time"=>null,
                                                             );
 
                //echo "Date is ".$fulldate."\n";
@@ -184,6 +185,7 @@ class VmtEmployeeAttendanceController extends Controller
             $dateWiseData         =  $sortedCollection->groupBy('date'); //->all();
             //dd($merged_attendanceData);
             //dd($dateWiseData);
+           // dd($attendanceResponseArray);
             foreach ($dateWiseData  as $key => $value) {
 
                // dd($value[0]);
@@ -249,6 +251,7 @@ class VmtEmployeeAttendanceController extends Controller
                 //dd("end : Check-in : ".$checkin_min." , Check-out : ".$checkout_max);
 
                 //dd($value[0]["attendance_mode"]);
+
                 $attendanceResponseArray[$key]["checkin_time"] = $checkin_min;
                 $attendanceResponseArray[$key]["checkout_time"] = $checkout_max;
 
@@ -259,136 +262,25 @@ class VmtEmployeeAttendanceController extends Controller
             }
 
 
+           // dd($attendanceResponseArray);
+           //
+            foreach ($attendanceResponseArray as $key => $value) {
+                    //Logic For Check week off or not
+                if(Carbon::parse($attendanceResponseArray[$key]['date'])->format('l')=="Sunday"){
+                    $attendanceResponseArray[$key]['is_weekoff']=true;
+                }
 
-            ////Logic to check LC,EG,MIP,MOP,Leave status
+                //Logic For Check Absent or Not
+                if($attendanceResponseArray[$key]['checkin_time']==null&&
+                  $attendanceResponseArray[$key]["checkout_time"]==null&&
+                  $attendanceResponseArray[$key]['is_weekoff']==false){
+                    $attendanceResponseArray[$key]['isAbsent']=true;
+                }
 
-            // $shiftStartTime  = Carbon::parse($regularTime->shift_start_time);
-            // $shiftEndTime  = Carbon::parse($regularTime->shift_end_time);
-            // //dd($regularTime);
-            // foreach ($attendanceResponseArray as $key => $value) {
+            }
 
-            //     $checkin_time = $attendanceResponseArray[$key]["checkin_time"];
-            //     $checkout_time = $attendanceResponseArray[$key]["checkout_time"];
-
-
-            //     //LC Check
-            //     if(!empty($checkin_time))
-            //     {
-
-            //         $parsedCheckIn_time  = Carbon::parse($checkin_time);
-
-            //         //Check whether checkin done on-time
-            //         $isCheckin_done_ontime = $parsedCheckIn_time->lte($shiftStartTime);
-
-            //         if($isCheckin_done_ontime)
-            //         {
-            //             //employee came on time....
-
-            //         }
-            //         else
-            //         {
-            //             //employee came on time....
-            //             //dd("Checkin NOT on-time");
-
-            //             //then LC
-            //             $attendanceResponseArray[$key]["isLC"] = true;
-
-            //             //check whether regularization applied.
-            //             $regularization_status = $this->isRegularizationRequestApplied($request->user_id, $key, 'LC');
-
-            //             //check regularization status
-            //             $attendanceResponseArray[$key]["lc_status"] = $regularization_status;
-
-            //         }
-
-            //     }
-
-
-            //     //EG Check
-            //     //check if its EG
-            //     if(!empty($checkout_time))
-            //     {
-
-            //         $parsedCheckOut_time  = Carbon::parse($checkout_time);
-
-            //         //Check whether checkin done on-time
-            //         $isCheckOut_doneEarly = $parsedCheckOut_time->lte($shiftEndTime);
-
-            //         if($isCheckOut_doneEarly)
-            //         {
-            //             //employee left early on time....
-
-            //             //then EG
-            //             $attendanceResponseArray[$key]["isEG"] = true;
-
-            //             //check whether regularization applied.
-            //             $regularization_status = $this->isRegularizationRequestApplied($request->user_id, $key, 'EG');
-
-            //             //check regularization status
-            //             $attendanceResponseArray[$key]["eg_status"] = $regularization_status;
-            //         }
-            //         else
-            //         {
-            //             //employee left late
-
-            //         }
-
-            //     }
-
-
-            //     //for absent
-            //     if($checkin_time == null && $checkout_time == null){
-            //         $attendanceResponseArray[$key]["isAbsent"] = true;
-
-            //         //Check whether leave is applied or not.
-            //         $attendanceResponseArray[$key]["absent_status"] = $this->isLeaveRequestApplied($request->user_id, $key);
-
-            //     }
-            //     elseif($checkin_time != null && $checkout_time == null)
-            //     {
-
-            //         //Since its MOP
-            //         $attendanceResponseArray[$key]["isMOP"] = true;
-
-            //         ////Is any permission applied
-            //         $attendanceResponseArray[$key]["mop_status"] = $this->isRegularizationRequestApplied($request->user_id, $key, 'MOP');
-
-            //         if($attendanceResponseArray[$key]["mop_status"] == "Approved"){
-
-            //             //If Approved, then set the regularize time as checkin time
-            //             $attendanceResponseArray[$key]["checkout_time"] =  VmtEmployeeAttendanceRegularization::where('attendance_date', $key)
-            //                                          ->where('user_id',  $request->user_id)->where('regularization_type', 'MOP')->value('regularize_time');
-
-            //           //  $attendanceResponseArray[$key]["checkin_time"] = ""
-            //         }
-
-
-            //     }
-            //     elseif($checkin_time == null && $checkout_time != null){
-
-            //         //Since its MIP
-            //         $attendanceResponseArray[$key]["isMIP"] = true;
-
-            //         ////Is any permission applied
-            //         $attendanceResponseArray[$key]["mip_status"] = $this->isRegularizationRequestApplied($request->user_id, $key, 'MIP');
-
-            //         if($attendanceResponseArray[$key]["mip_status"] == "Approved"){
-
-            //             //If Approved, then set the regularize time as checkin time
-            //             $attendanceResponseArray[$key]["checkin_time"] =  VmtEmployeeAttendanceRegularization::where('attendance_date', $key)
-            //                                          ->where('user_id',  $request->user_id)->where('regularization_type', 'MIP')->value('regularize_time');
-
-            //           //  $attendanceResponseArray[$key]["checkin_time"] = ""
-            //         }
-
-
-            //     }
-
-            // }//for each
-
-
-            dd($attendanceResponseArray);
-            return $attendanceResponseArray;
+            //dd($attendanceResponseArray);
+            return Excel::download(new BasicAttendanceExport($attendanceResponseArray), 'Test.xlsx');
         }
     }
 
