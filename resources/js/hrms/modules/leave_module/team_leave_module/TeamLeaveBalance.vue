@@ -16,19 +16,21 @@
                     </div>
                 </template>
             </Column>
-            
 
-            <Column field="earnleave" header="Casual Leave"> <template #body="data">
+
+            <Column field="earnleave" header="Casual Leave">
+            <template #body="data">
                 <div id="leave">
                     {{ data.data.earnleave }}
                 </div>
             </template></Column>
-            <Column field="earned_leave_balance" header="remaining"> <template #body="data">
+            <Column field="earned_leave_balance" header="remaining">
+             <template #body="data">
                 <div id="leave">
                     {{ data.data.earnleave-data.data.leave }}
                 </div>
             </template></Column>
-           
+
         </DataTable>
         <Paginator
         :template="{
@@ -58,16 +60,16 @@ import axios from 'axios'
         //   let url_org_leave = window.location.origin + '/fetch-org-leaves';
 
         //   console.log(url_org_leave);
-                 
- 
+
+
 
         //         axios.get(url_org_leave)
         //           .then((response) => {
         //             console.log(response.data);
 
         //             products.value =values.data
-                    
-             
+
+
         //     });
         products.value=values().data
         console.log(size)
@@ -107,9 +109,9 @@ import axios from 'axios'
     background: #003056;
     transition: box-shadow 0.2s;
     font-size: 13px;
-   
+
   }
-  
+
 .employee_name{
     font-weight: bold;
     font-size: 13px;
@@ -130,7 +132,7 @@ import axios from 'axios'
 .approved {
     font-weight: 700;
     color: #26ff2d;
-    
+
 }
 .p-button.p-component.p-button-success.Button {
     padding: 8px;
@@ -139,7 +141,7 @@ import axios from 'axios'
 .rejected {
     font-weight: 700;
     color: #ff2634;
-    
+
 }
 .p-button.p-component.p-button-danger.Button {
     padding: 8px;

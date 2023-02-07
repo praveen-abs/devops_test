@@ -1,57 +1,10 @@
 <template>
 	<div>
-        <DataTable :value="leaves" responsiveLayout="scroll" :paginator="true"  >
+        <DataTable :value="leaves" responsiveLayout="scroll">
             <Column field="user_id" header="Employee ID"></Column>
             <Column field="employee_name" header="Employee Name"></Column>
-            <Column  header="Sick Leave / Causal Leave">
-          
-                <template #body="data">
-                    <div id="leave">
-                        {{ data.data.array_leave_details["Sick Leave / Casual Leave"] }}
-                    </div>
-                </template>
-            </Column>
-            <Column  header="Earned Leave">
-            
-                <template #body="data">
-                    <div id="leave">
-                        {{ data.data.array_leave_details["Earned Leave"] }}
-                    </div>
-                </template>
-            </Column>
-            <Column  header="Maternity Leave">
-           
-                <template #body="data">
-                    <div id="leave">
-                        {{ data.data.array_leave_details["Maternity Leave"] }}
-                    </div>
-                </template>
-            </Column>
-    
-            <Column  header="On Duty">
-           
-                <template #body="data">
-                    <div id="leave">
-                        {{ data.data.array_leave_details["On Duty"] }}
-                    </div>
-                </template>
-            </Column>
-            <Column  header="Paternity Leave">
-     
-                <template #body="data">
-                    <div id="leave">
-                        {{ data.data.array_leave_details["Paternity Leave"] }}
-                    </div>
-                </template>
-            </Column>
-            
-            <Column field="earned_leave_balance" header="Permission">
-          
-              <template #body="data">
-                  <div id="leave">
-                      {{ data.data.array_leave_details["Permission"] }}
-                  </div>
-              </template></Column>
+             <Column v-for="col of columns" :field="leaves.array_leave_details.values()" :header="leaves.array_leave_details.keys()" :key="col.field"></Column>
+
         </DataTable>
 	</div>
 </template>
@@ -60,28 +13,36 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios'
 
-        const leaves = ref();
-        const url=ref()
+    const leaves = ref();
+    const url=ref();
 
-        onMounted(() => {
+    onMounted(() => {
 
-          let url_org_leave = window.location.origin + '/fetch-org-leaves';
+        let url_org_leave = window.location.origin + '/fetch-org-leaves';
 
-          console.log(url_org_leave);
-                 
- 
+        console.log("Fetching ORG LEAVE from url : "+url_org_leave);
 
-                axios.get(url_org_leave)
-                  .then((response) => {
-                 leaves.value =response.data   
-                 console.log(leaves);
-                    
+        //leaves.value = values().data;
+        //console.log("Ref data : "+JSON.stringify(values().data));
 
-             
-            });
+        axios.get(url_org_leave).then((response) => {
+                leaves.value = Object.values(response.data); //converting JSON String into JS Array
+                console.log("Response Data : "+JSON.stringify(Object.values(response.data)));
+                //console.log("Ref Data : "+leaves.value);
+        });
 
 
-        })
+    });
+
+    function values(){
+        return{
+        "data" :[
+            {"user_id":"emp 1","employee_name":"emp one","leave":"1","earnleave":"10"},
+            {"user_id":"emp 2","employee_name":"emp two","leave":"1","earnleave":"10"},
+
+            ]
+        }
+    }
 
 </script>
 
@@ -93,19 +54,19 @@ import axios from 'axios'
     text-align: center;
     padding: 0.9rem 1rem;
     border: 1px solid #dee2e6;
-      border-top-width: 1px;
-      border-right-width: 1px;
-      border-bottom-width: 1px;
-      border-left-width: 1px;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
     border-width: 0 0 1px 0;
     font-weight: 600;
     color: #fff;
     background: #003056;
     transition: box-shadow 0.2s;
     font-size: 13px;
-   
+
   }
-  
+
 .employee_name{
     font-weight: bold;
     font-size: 13px;
@@ -126,7 +87,7 @@ import axios from 'axios'
 .approved {
     font-weight: 700;
     color: #26ff2d;
-    
+
 }
 .p-button.p-component.p-button-success.Button {
     padding: 8px;
@@ -135,7 +96,7 @@ import axios from 'axios'
 .rejected {
     font-weight: 700;
     color: #ff2634;
-    
+
 }
 .p-button.p-component.p-button-danger.Button {
     padding: 8px;

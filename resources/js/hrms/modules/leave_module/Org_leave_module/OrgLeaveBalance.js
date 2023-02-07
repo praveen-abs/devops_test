@@ -21,7 +21,7 @@ import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup';     //optional for column grouping
 import Row from 'primevue/row';
 
-import OrgLeaveRemainingTable from '../Org_leave_module/OrgLeaveBalanceTable.vue';
+import OrgLeaveRemainingTable from './OrgLeaveBalanceTable.vue';
 
 const app = createApp(OrgLeaveRemainingTable);
 

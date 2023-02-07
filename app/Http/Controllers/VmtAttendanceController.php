@@ -1249,9 +1249,12 @@ class VmtAttendanceController extends Controller
            }
 
            //dd($single_leave_balance_data);
+
+           //Remove text chars from 'total_leave_datetime' value such as FN, AN.
+           $processed_val_total_leave_balance_data = preg_replace("/[^0-9.]/", "", $single_leave_balance_data->total_leave_datetime);
+
            //Add the leave count in this array for the given leave_type
-           $final_output[$single_leave_balance_data->user_id]
-                        ->array_leave_details[$single_leave_balance_data->leave_type] += $single_leave_balance_data->total_leave_datetime;
+           $final_output[$single_leave_balance_data->user_id]->array_leave_details[$single_leave_balance_data->leave_type] += $processed_val_total_leave_balance_data;
 
         }
 

@@ -22,7 +22,7 @@ import ColumnGroup from 'primevue/columngroup';     //optional for column groupi
 import Row from 'primevue/row';
 import Paginator from 'primevue/paginator'
 
-import TeamLeaveBalance from './team_leave_balance.vue'
+import TeamLeaveBalance from './TeamLeaveBalance.vue'
 
 const app = createApp(TeamLeaveBalance);
 

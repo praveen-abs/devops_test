@@ -155,7 +155,7 @@
                             <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12">
                                 <h6 class="text-left fw-bold">Team Leave Balance</h6>
                             </div>
-                            @vite('resources/js/hrms/modules/leave_module/team_leave_module/team_leave_balance.js')
+                            @vite('resources/js/hrms/modules/leave_module/team_leave_module/TeamLeaveBalance.js')
                             <div id="TeamLeaveBalance"></div>
 
                             <div class="col-sm-3 col-sm-12 col-xl-3 col-md-4 col-lg-3 d-flex">
@@ -258,7 +258,7 @@
 
                                 <div class="table-responsive">
                                     <div id="team_leaveHistory" class="custom_gridJs"></div>
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -290,7 +290,7 @@
                                     <div id="org_leaveHistory" class="custom_gridJs"></div>
                                     <!-- @vite('resources/js/hrms/modules/profile_pages/EmployeeDocumentsManager.js')
                                     <div id="vjs_employeeDocsManager"></div> -->
-                                    
+
 
                                 </div>
                             </div>
