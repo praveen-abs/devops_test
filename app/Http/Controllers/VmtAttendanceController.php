@@ -1232,9 +1232,6 @@ class VmtAttendanceController extends Controller
         //For each employee, check how much leave taken for each leave type
         foreach($leave_balance_data as $single_leave_balance_data)
         {
-           $single_leave_balance_data->where('leave_type_id','4')->get();
-
-           $data = null;
 
            //If key not found, create one
            if(!array_key_exists($single_leave_balance_data->user_id ,$final_output))
@@ -1257,6 +1254,9 @@ class VmtAttendanceController extends Controller
            $final_output[$single_leave_balance_data->user_id]->array_leave_details[$single_leave_balance_data->leave_type] += $processed_val_total_leave_balance_data;
 
         }
+
+        //TODO : Ignore the keys and get their values..
+        //dd($final_output);
 
         //dd($final_output);
         return $final_output;

@@ -3,7 +3,7 @@
         <DataTable :value="leaves" responsiveLayout="scroll">
             <Column field="user_id" header="Employee ID"></Column>
             <Column field="employee_name" header="Employee Name"></Column>
-             <Column v-for="col of columns" :field="leaves.array_leave_details.values()" :header="leaves.array_leave_details.keys()" :key="col.field"></Column>
+             <Column v-for="col of columns" :field="col" :header="col" :key="col"></Column>
 
         </DataTable>
 	</div>
@@ -14,6 +14,7 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios'
 
     const leaves = ref();
+    const columns = ref();
     const url=ref();
 
     onMounted(() => {
@@ -27,6 +28,10 @@ import axios from 'axios'
 
         axios.get(url_org_leave).then((response) => {
                 leaves.value = Object.values(response.data); //converting JSON String into JS Array
+
+                //TODO : Need to fetch all the leaves types from the backend
+                //columns.value = Object.values(response.data.array_leave_details);
+
                 console.log("Response Data : "+JSON.stringify(Object.values(response.data)));
                 //console.log("Ref Data : "+leaves.value);
         });
