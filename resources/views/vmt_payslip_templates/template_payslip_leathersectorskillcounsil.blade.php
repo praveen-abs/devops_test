@@ -285,19 +285,19 @@ $bank_names = \DB::table('vmt_banks')->get();
         </tr>
         <tr>
             <td colspan="2" class="">
-                <p class="txt-center">-</p>
+                <p class="txt-center">{{$employee_payslip->SL_Opn_Bal}}</p>
             </td>
             <td colspan="2" class="">
                 <p class="txt-center">-</p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-center">-</p>
+                <p class="txt-center">{{ $employee_payslip->Availed_SL }}</p>
             </td>
             <td colspan="2" class="">
                 <p class="txt-center">-</p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-center">-</p>
+                <p class="txt-center">{{ $employee_payslip->Balance_SL }}</p>
             </td>
             <td colspan="2" class="">
                 <p class="txt-center">-</p>
