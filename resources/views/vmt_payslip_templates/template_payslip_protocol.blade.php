@@ -410,7 +410,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                         <p class="txt-left text-strong">SALARY ADVANCE</p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-right">{{ number_format(round($employee_payslip->TDS), 2) }}</p>
+                        <p class="txt-right">{{ number_format(round($employee_payslip->income_tax ), 2) }}</p>
                     </td>
                 </tr>
 

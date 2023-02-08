@@ -107,7 +107,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                     style="padding-right: 10px;height:55px;width:200px;padding-left:40px;">
                     {{-- <div class="header-img txt-right" style="padding-right: 10px;"> --}}
                     <img src="{{ URL::asset('assets/images/precede.png') }}" class="" alt="logo"
-                        style="height:55px;width:180px;">
+                        style="height:100%;width:100%;">
                 </div>
             </td>
         </tr>
@@ -171,13 +171,13 @@ $bank_names = \DB::table('vmt_banks')->get();
                 <p class="navy-blue">EPF NUMBER</p>
             </td>
             <td colspan="3">
-                <p>{{ $employee_details->EPF_Number }}</p>
+                <p>{{ $employee_details->epf_number }}</p>
             </td>
             <td colspan="3" class="bg-ash text-strong">
                 <p class="navy-blue">ESIC NUMBER</p>
             </td>
             <td colspan="3">
-                <p>{{ $employee_details->ESIC_Number }}</p>
+                <p>{{ $employee_details->esic_number }}</p>
             </td>
 
         </tr>
@@ -186,13 +186,13 @@ $bank_names = \DB::table('vmt_banks')->get();
                 <p class="navy-blue">UAN</p>
             </td>
             <td colspan="3">
-                <p>{{ $employee_details->UAN }}</p>
+                <p>{{ $employee_details->uan }}</p>
             </td>
             <td colspan="3" class="bg-ash text-strong">
                 <p class="navy-blue">PAN</p>
             </td>
             <td colspan="3">
-                <p>{{ $employee_details->PAN_Number }}</p>
+                <p>{{ $employee_details->pan_number  }}</p>
             </td>
 
         </tr>
@@ -223,10 +223,10 @@ $bank_names = \DB::table('vmt_banks')->get();
                 <p class="txt-center">{{ $bank_name }}</p>
             </td>
             <td colspan="4" class="">
-                <p class="txt-center">{{ $employee_details->Account_Number }}</p>
+                <p class="txt-center">{{ $employee_details->bank_account_number }}</p>
             </td>
             <td colspan="4" class="">
-                <p class="txt-center">{{ $employee_details->Bank_IFSC_Code }}</p>
+                <p class="txt-center">{{ $employee_details->bank_ifsc_code }}</p>
             </td>
 
 
@@ -250,16 +250,16 @@ $bank_names = \DB::table('vmt_banks')->get();
         </tr>
         <tr>
             <td colspan="3" class="">
-                <p class="txt-center">{{ $employee_details->MONTH_DAYS }}</p>
+                <p class="txt-center">{{ $employee_payslip->MONTH_DAYS }}</p>
             </td>
             <td colspan="3" class="">
-                <p class="txt-center">{{ $employee_details->Worked_Days }}</p>
+                <p class="txt-center">{{ $employee_payslip->Worked_Days }}</p>
             </td>
             <td colspan="3" class="">
-                <p class="txt-center">{{ $employee_details->LOP }}</p>
+                <p class="txt-center">{{ $employee_payslip->LOP }}</p>
             </td>
             <td colspan="3" class="">
-                <p class="txt-center">{{ $employee_details->Arrears_Days }}</p>
+                <p class="txt-center">{{ $employee_payslip->Arrears_Days }}</p>
             </td>
         </tr>
         <tr>
@@ -334,19 +334,19 @@ $bank_names = \DB::table('vmt_banks')->get();
                 <p class="txt-left text-strong navy-blue">BASIC</p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-right">{{ number_format(round($employee_details->BASIC), 2) }}</p>
+                <p class="txt-right">{{ number_format(round((float)$employee_payslip->BASIC), 2) }}</p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-right">{{ number_format(round($employee_details->BASIC_ARREAR), 2) }}</p>
+                <p class="txt-right">{{ number_format(round((float)$employee_payslip->BASIC_ARREAR), 2) }}</p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-right">{{ number_format(round($employee_details->Earned_BASIC), 2) }}</p>
+                <p class="txt-right">{{ number_format(round($employee_payslip->Earned_BASIC), 2) }}</p>
             </td>
             <td colspan="2" class="">
                 <p class="txt-left text-strong navy-blue">EPF</p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-right">{{ number_format(round($employee_details->EPFR), 2) }}</p>
+                <p class="txt-right">{{ number_format(round($employee_payslip->EPFR), 2) }}</p>
             </td>
         </tr>
         <tr>
@@ -354,19 +354,19 @@ $bank_names = \DB::table('vmt_banks')->get();
                 <p class="txt-left text-strong navy-blue">HRA</p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-right">{{ number_format(round($employee_details->HRA), 2) }}</p>
+                <p class="txt-right">{{ number_format(round($employee_payslip->HRA), 2) }}</p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-right">{{ number_format(round($employee_details->HRA_ARREAR), 2) }}</p>
+                <p class="txt-right">{{number_format(round((float)$employee_payslip->HRA_ARREAR), 2) }}</p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-right">{{ number_format(round($employee_details->Earned_HRA), 2) }}</p>
+                <p class="txt-right">{{ number_format(round($employee_payslip->Earned_HRA), 2) }}</p>
             </td>
             <td colspan="2" class="">
                 <p class="txt-left text-strong  navy-blue">ESIC</p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-right">{{ number_format(round($employee_details->EMPLOYEE_DETAILS_ESIC), 2) }}</p>
+                <p class="txt-right">{{number_format(round((float)$employee_payslip->EMPLOYEE_ESIC), 2) }}</p>
             </td>
         </tr>
         <tr>
@@ -374,21 +374,21 @@ $bank_names = \DB::table('vmt_banks')->get();
                 <p class="txt-left text-strong  navy-blue">STATS BONUS</p>
             </td>
             <td colspan="2" class="">
-                {{-- <p class="txt-right">{{ number_format(round($employee_details->SPL_ALW), 2) }}</p> --}}
+                <p class="txt-right">{{ $employee_payslip->stats_bonus }}</p>
                 <p class="txt-right"></p>
             </td>
             <td colspan="2" class="">
-                {{-- <p class="txt-right">{{ number_format(round($employee_details->SPL_ALW_ARREAR), 2) }}</p> --}}
+                <p class="txt-right">{{ $employee_payslip->earned_stats_bonus }}</p>
             </td>
             <td colspan="2" class="">
-                {{-- <p class="txt-right">{{ number_format(round($employee_details->Earned_SPL_ALW), 2) }}</p> --}}
+                <p class="txt-right">{{ $employee_payslip->earned_stats_arrear }}</p>
                 <p class="txt-right"></p>
             </td>
             <td colspan="2" class="">
                 <p class="txt-left text-strong  navy-blue">PT</p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-right">{{ number_format(round($employee_details->PROF_TAX), 2) }}</p>
+                <p class="txt-right">{{ number_format(round($employee_payslip->PROF_TAX), 2) }}</p>
             </td>
 
 
@@ -398,19 +398,19 @@ $bank_names = \DB::table('vmt_banks')->get();
                 <p class="txt-left text-strong  navy-blue">SPECIAL ALLOW</p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-right">{{ number_format(round($employee_details->SPL_ALW), 2) }}</p>
+                <p class="txt-right">{{number_format(round((float)$employee_payslip->SPL_ALW), 2) }}</p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-right">{{ number_format(round($employee_details->SPL_ALW_ARREAR), 2) }}</p>
+                <p class="txt-right">{{ number_format(round((float)$employee_payslip->SPL_ALW_ARREAR), 2) }}</p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-right">{{ number_format(round($employee_details->Earned_SPL_ALW), 2) }}</p>
+                <p class="txt-right">{{ number_format(round((float)$employee_payslip->Earned_SPL_ALW), 2) }}</p>
             </td>
             <td colspan="2" class="">
                 <p class="txt-left text-strong  navy-blue">INCOME TAX</p>
             </td>
             <td colspan="2" class="">
-                {{-- <p class="txt-right">{{ number_format(round($employee_details->PROF_TAX), 2) }}</p> --}}
+                <p class="txt-right">{{ number_format(round((float)$employee_payslip->PROF_TAX), 2) }}</p>
                 <p class="txt-right"></p>
             </td>
 
@@ -429,13 +429,13 @@ $bank_names = \DB::table('vmt_banks')->get();
             </td>
 
             <td colspan="2" class="">
-                <p class="txt-right">{{ number_format(round($employee_details->Overtime), 2) }}</p>
+                <p class="txt-right">{{number_format(round((float)$employee_payslip->Overtime), 2) }}</p>
             </td>
             <td colspan="2" class="">
                 <p class="txt-left text-strong navy-blue">SALARY ADVANCE</p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-right"> {{ number_format(round($employee_details->SAL_ADV), 2) }}</p>
+                <p class="txt-right"> {{number_format(round((float) $employee_payslip->SAL_ADV), 2) }}</p>
             </td>
         </tr>
 
@@ -458,7 +458,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                 <p class="txt-left text-strong navy-blue">OTHER DEDUCTIONS</p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-right">{{ number_format(round($employee_details->OTHER_DEDUC), 2) }}</p>
+                <p class="txt-right">{{number_format(round((float)$employee_payslip->OTHER_DEDUC), 2) }}</p>
             </td>
         </tr>
         <tr>
@@ -466,7 +466,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                 <p class="txt-left text-strong navy-blue">TOTAL EARNINGS</p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-right">{{ number_format(round($employee_details->TOTAL_EARNED_GROSS), 2) }}</p>
+                <p class="txt-right">{{ number_format(round($employee_payslip->TOTAL_EARNED_GROSS), 2) }}</p>
             </td>
             <td colspan="2" class="">
                 <p class="txt-right"></p>
@@ -479,7 +479,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                 <p class="txt-left text-strong navy-blue">TOTAL DEDUCTION</p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-right">{{ number_format(round($employee_details->TOTAL_DEDUCTIONS), 2) }}</p>
+                <p class="txt-right">{{ number_format(round($employee_payslip->TOTAL_DEDUCTIONS), 2) }}</p>
             </td>
         </tr>
         <tr>
@@ -493,7 +493,7 @@ $bank_names = \DB::table('vmt_banks')->get();
             </td>
             <td colspan="8" class="">
                 <p class="txt-center ext-strong navy-blue">
-                    {{ number_format(round($employee_details->NET_TAKE_HOME), 2) }}</p>
+                    {{ number_format(round($employee_payslip->NET_TAKE_HOME), 2) }}</p>
             </td>
         </tr>
         <tr>
@@ -501,7 +501,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                 <p class="txt-left text-strong navy-blue">NET PAY IN WORDS</p>
             </td>
             <td colspan="8" class="">
-                <p class="txt-center ">{{ $employee_details->Rupees }}</p>
+                <p class="txt-center ">{{ $employee_payslip->Rupees }}</p>
             </td>
         </tr>
         <tr>
