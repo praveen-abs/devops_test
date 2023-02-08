@@ -1211,15 +1211,18 @@ class VmtAttendanceController extends Controller
 
     public function fetchOrgEmployeesPendingLeaves(Request $request){
 
-       $final_output = array();
+       $final_output = array("leave_types"=>[] ,"employees"=>[]);
 
-       $leave_types = VmtLeaves::all();
+       $leave_types = VmtLeaves::all()->pluck('leave_type');
+
+       //store all leave types
+       $final_output["leave_types"] = $leave_types;
 
        //Create leave array template for storing leave count for each leave type for a given employee
        $array_template_leaveTypes = array();
 
         foreach($leave_types as $singleLeaveType){
-            $array_template_leaveTypes[$singleLeaveType->leave_type] = 0;
+            $array_template_leaveTypes[$singleLeaveType] = 0;
         }
 
        $leave_balance_data=VmtEmployeeLeaves::join('users', 'users.id', '=', 'vmt_employee_leaves.user_id')
@@ -1234,10 +1237,10 @@ class VmtAttendanceController extends Controller
         {
 
            //If key not found, create one
-           if(!array_key_exists($single_leave_balance_data->user_id ,$final_output))
+           if(!array_key_exists($single_leave_balance_data->user_id ,$final_output["employees"]))
            {
                 //add to main array
-                $final_output[$single_leave_balance_data->user_id] = new VmtEmployeeLeaveModel(
+                $final_output["employees"][$single_leave_balance_data->user_id] = new VmtEmployeeLeaveModel(
                                                                                         $single_leave_balance_data->user_id,
                                                                                         $single_leave_balance_data->name,
                                                                                         $array_template_leaveTypes
@@ -1251,12 +1254,12 @@ class VmtAttendanceController extends Controller
            $processed_val_total_leave_balance_data = preg_replace("/[^0-9.]/", "", $single_leave_balance_data->total_leave_datetime);
 
            //Add the leave count in this array for the given leave_type
-           $final_output[$single_leave_balance_data->user_id]->array_leave_details[$single_leave_balance_data->leave_type] += $processed_val_total_leave_balance_data;
+           $final_output["employees"][$single_leave_balance_data->user_id]->array_leave_details[$single_leave_balance_data->leave_type] += $processed_val_total_leave_balance_data;
 
         }
 
         //TODO : Ignore the keys and get their values..
-        //dd($final_output);
+        $final_output["employees"] = array_values($final_output["employees"]);
 
         //dd($final_output);
         return $final_output;
