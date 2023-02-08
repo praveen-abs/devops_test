@@ -469,6 +469,7 @@ class VmtAttendanceController extends Controller
 
         //TODO : get the attendance data for the given month
         $employeeAttendanceData = VmtEmployeeAttendance::all();
+        
 
         //dd($employeeAttendanceData);
         return view('old_vmt_attendance_timesheet', compact('employeeAttendanceData'));
@@ -540,6 +541,11 @@ class VmtAttendanceController extends Controller
     {
         $shift_start_time = VmtWorkShifts::where('shift_type', "First Shift")->value('shift_start_time');
         $shift_end_time = VmtWorkShifts::where('shift_type', "First Shift")->value('shift_end_time');
+        $leaveTypes = VmtLeaves::all();
+        $leaveData_currentUser = VmtEmployeeLeaves::where('user_id', auth::user()->id);
+          //Get how many leaves taken for each leave_type
+         $leaveData_currentUser = getLeaveCountDetails(auth::user()->id);
+
 
         //Show the single employee timesheet detail in sidepanel
 
@@ -549,7 +555,7 @@ class VmtAttendanceController extends Controller
 
         $current_employee_detail->employee_avatar = getEmployeeAvatarOrShortName($current_employee_detail->id);
 
-        return view('attendance_timesheet', compact('current_employee_detail', 'shift_start_time', 'shift_end_time'));
+        return view('attendance_timesheet', compact('current_employee_detail','leaveTypes','leaveData_currentUser', 'shift_start_time', 'shift_end_time'));
     }
 
 

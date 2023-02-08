@@ -15,6 +15,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 @section('css')
     <link rel="stylesheet" href="{{ URL::asset('/assets/css/calendar-vanila.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('/assets/css/attendance_calendar.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endsection
 @section('content')
     {{-- @component('components.attendance_breadcrumb')
@@ -383,6 +384,285 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
         </div>
 
+
+    <!-- for leave popup -->
+
+        <div id="leave_availed-modal" class="modal custom-modal fade" role="dialog">
+        <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable  modal-xl" role="document">
+            <div class="modal-content top-line">
+                <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
+                    <h6 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
+                    </h6>
+                    <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
+                        aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex mb-2 justify-content-between ">
+                        <div class="d-flex">
+                            <button class="btn btn-orange me-2"><i class="fa fa-filter" aria-hidden="true"></i></button>
+                            <button class="btn btn-border-primary me-2">Employee</button>
+                            <button class="btn btn-border-primary me-2">Department</button>
+                            <button class="btn btn-border-primary me-2">Location</button>
+                            <button class="btn btn-border-primary me-2">Job Title</button>
+                            <button class="btn btn-border-primary me-2">Total:20</button>
+                            <label for=""></label>
+                        </div>
+
+                        <div class="input-group  w-25 me-2">
+                            <label class="input-group-text " for="inputGroupSelect01"><i
+                                    class="fa fa-calendar text-primary " aria-hidden="true"></i></label>
+                            <select class="form-select btn-line-primary" id="inputGroupSelect01">
+                                <option selected>FY 2022-23</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div id="emp_leaveHistory">
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="leave_balance-modal" class="modal custom-modal fade" role="dialog">
+        <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable  modal-xl" role="document">
+            <div class="modal-content top-line">
+                <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
+                    <h6 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
+                    </h6>
+                    <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
+                        aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex mb-2 justify-content-between ">
+                        <div class="d-flex">
+                            <button class="btn btn-orange me-2"><i class="fa fa-filter" aria-hidden="true"></i></button>
+                            <button class="btn btn-border-primary me-2">Employee</button>
+                            <button class="btn btn-border-primary me-2">Department</button>
+                            <button class="btn btn-border-primary me-2">Location</button>
+                            <button class="btn btn-border-primary me-2">Job Title</button>
+                            <button class="btn btn-border-primary me-2">Total:20</button>
+                            <label for=""></label>
+                        </div>
+
+                        <div class="input-group  w-25 me-2">
+                            <label class="input-group-text " for="inputGroupSelect01"><i
+                                    class="fa fa-calendar text-primary " aria-hidden="true"></i></label>
+                            <select class="form-select btn-line-primary" id="inputGroupSelect01">
+                                <option selected>FY 2022-23</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div id="viewEmp_history_balance_table" class="custom_gridJs"></div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="leavepending_modal" class="modal custom-modal fade" role="dialog">
+        <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable  modal-lg" role="document">
+            <div class="modal-content top-line">
+                <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
+                    <h6 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
+                        Pending Request</h6>
+                    <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
+                        aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="show_message d-flex justify-content-center align-items-center">
+                        <h6 class="text-muted">No Request Pending</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="leaveApply_modal" class="modal custom-modal fade" role="dialog">
+        <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable  modal-xl" role="document">
+            <div class="modal-content top-line">
+                <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
+                    <h6 class="modal-title mb-1 text-primary">
+                        Leave Request</h6>
+                    <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
+                        aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <!-- MODEL : Request leave -->
+                    <div id="modal_request_leave" class="card top-line mb-0">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-xl-8 col-sm-12 col-lg-8 col-xxl-8 col-md-12">
+                                    <div class="row mb-3">
+                                        <div class="col-md-12 text-md-start mb-md-0 mb-3">
+                                            <h6 class=" mb-1">Leave Type</h6>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6  mb-md-0 mb-3">
+                                            <div class="form-group">
+                                                <label for="">Choose Leave Type <span class="text-danger">*</span>
+                                                </label>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6  mb-md-0 mb-3">
+                                            <div class="form-group">
+
+                                                <select name="" id="leave_type_id"
+                                                    class="form-select outline-none">
+                                                    <option value="" selected>Select Leave Type
+                                                    </option>
+
+                                                    @foreach ($leaveTypes as $singleLeaveType)
+                                                        <?php
+                                                        $leave_availed = $leaveData_currentUser[$singleLeaveType->leave_type]->leave_availed_count ?? 0;
+
+                                                        if ($singleLeaveType->is_finite == '1') {
+                                                            $remainingLeaves = $singleLeaveType->days_annual - $leave_availed;
+                                                        } else {
+                                                            $remainingLeaves = 'NA';
+                                                        }
+                                                        ?>
+                                                        <option value="{{ $singleLeaveType->id }}"
+                                                            data-leaveType="{{ $singleLeaveType->leave_type }}"
+                                                            data-remainingLeaves="{{ $remainingLeaves }}">
+                                                            {{ $singleLeaveType->leave_type }}
+                                                            {{-- Dont show remaining leave if is_finite == 0 --}}
+                                                            @if ($singleLeaveType->is_finite == '1')
+                                                                ({{ $remainingLeaves }})
+                                                            @endif
+                                                        </option>
+                                                    @endforeach
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-md-4 text-md-start mb-md-0 mb-3">
+                                            <label class="fw-bold">Start Date</label>
+                                            <input type="datetime-local" id="start_date"
+                                                class="form-control outline-none border-0 shadow-lite leave_date">
+                                        </div>
+                                        <div class="col-md-4 text-md-center mb-md-0 " id="div_totaldays">
+                                            <p class="fw-bold  text-muted mb-2">Total Days</p>
+                                            <span class="shadow-lite px-2 py-1" id="total_leave_days">-</span>
+                                        </div>
+                                        <div class="col-md-4 text-md-center mb-md-0 " id="div_totalhours">
+                                            <p class="fw-bold  text-muted mb-2">Total Hours</p>
+                                            <span class="shadow-lite px-2 py-1" id="total_permission_hours">-</span>
+                                        </div>
+                                        <div class="col-md-4 text-md-end ">
+                                            <label class="fw-bold">End Date</label>
+                                            <input type="datetime-local" id="end_date"
+                                                class="form-control outline-none border-0 shadow-lite leave_date">
+                                        </div>
+                                    </div>
+                                    <textarea id="leave_reason" placeholder="Reason here..." class="w-100 outline-none border-0 shadow-lite form-control"
+                                        rows="4" style=""></textarea>
+                                    <div class="py-2" style="border-bottom: 1px solid #cecece;"></div>
+                                    <h6 class="modal-sub-title py-2">Notify to</h6>
+                                    <div class="row mb-3">
+                                        <div>
+
+                                            <select class="" name="notifications_users_id[]"
+                                                id="notifications_users_id" multiple="multiple">
+                                                @if (!empty($allEmployeesList))
+                                                    @foreach ($allEmployeesList as $employeeData)
+                                                        <option value="{{ $employeeData->id }}">
+                                                            {{ $employeeData->name }}</option>
+                                                    @endforeach
+                                                @else
+                                                    <option value="">Select Employees</option>
+                                                @endif
+                                            </select>
+
+
+                                        </div>
+                                    </div>
+                                    <div class="text-center text-md-end">
+                                        <button type="button" class="btn btn-border-primary"
+                                            data-bs-dismiss="modal">Cancel</button>
+                                        <button type="button" id="btn_request_leave" class="btn btn-primary">Request
+                                            Leave</button>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-sm-12 col-lg-4 col-xxl-4 col-md-12  mt-md-3 mt-sm-3">
+
+                                    <div class="calendar-wrapper card mb-4 border-0">
+                                        <div class="card-body p-0">
+                                            <div class="_wrapper">
+                                                <div class="h-100  _container-calendar">
+                                                    <div
+                                                        class="_button-container-calendar d-flex align-items-center justify-content-between">
+                                                        <button id="_previous" onclick="previous()" class="previous"><i
+                                                                class="fa fa-chevron-left"></i></button>
+                                                        <h6 id="_monthAndYear" class="_monthAndYear text-white"></h6>
+                                                        <button id="_next" onclick="next()" class="next"><i
+                                                                class="fa fa-chevron-right"></i></button>
+                                                    </div>
+                                                    <table class="_table-calendar" id="_calendar" data-lang="en">
+
+
+                                                        <thead id="_thead-month"></thead>
+                                                        
+                                                        <tbody id="_calendar-body">
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="leave_det_calendar">
+                                        {{-- <div class="row">
+                                            <div class="col-6">
+                                                <p class="casual_leave">Casual Leave</p>
+                                            </div>
+                                            <div class="col-6">
+                                                <p class="sick_leave">Sick Leave</p>
+                                            </div>
+                                            <div class="col-6">
+                                                <p class="floater_leave">Floater Leave</p>
+                                            </div>
+                                            <div class="col-6">
+                                                <p class="maternity_leave">Maternity Leave</p>
+                                            </div>
+                                        </div> --}}
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
     </div>
 @endsection
 
@@ -748,184 +1028,6 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
         function showMissedInMissedOutPunchModal(element) {
             alert("Not yet implemented");
         }
-
-         
-        function AttendenceRegularizationModal(element) {
-
-             
-             
-
-            let t_regularization_type = $(element).val();
-            let selected_date = $(element).data('currentdate');
-            console.log(selected_date);
-            let t_user_id = $(element).data('userid');
-
-            //Based on data-applystatus, we will fetch the value from server.
-            //If data-applystatus != None, then make Ajax request
-            console.log("Status : " + $(element).data('applystatus'));
-            if ($(element).data('applystatus') != 'None') {
-                ////UI changes in modal popup
-
-                //Disable textbox
-                $('#regularize_time').attr('disabled', 'disabled');
-
-                //Hide Reason dropdown div
-                $('#div_reason_editable').hide();
-
-                //Enable Non-editable reason div
-                $('#div_reason_noneditable').show();
-
-                //Hide the Apply Regulaize button
-                $('#div_btn_applyRegularize').hide();
-
-                /*
-                    Input params : selectedDate, regularization_type
-                    Output params : reason,custom_reason, status
-
-                */
-                $.ajax({
-                    url: "{{ route('fetch-regularization-data') }}",
-                    type: "POST",
-                    data: {
-                        user_id: t_user_id,
-                        selected_date: selected_date,
-                        regularization_type: t_regularization_type,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(data) {
-                        console.log(data);
-                        console.log("Reason Type : " + data.reason_type);
-
-                        //Update the non-editable UIs
-                        $('#txt_reason_noneditable').val(data.reason_type); //editable
-
-                        if (data.custom_reason != "")
-                            $('#div_custom_reason').show();
-                        else
-                            $('#div_custom_reason').hide();
-
-
-                        $('#txt_customreason_noneditable').val(data.custom_reason); //editable
-                        $('#txt_apply_status').val(data.status); //editable
-
-                        //show Modal
-                        $('#regularizationModal').fadeIn(0);
-
-                    }
-                });
-            } else {
-                //Hide non-editable stuffs
-                //Reset modal element states
-                //Enable textbox
-                $('#regularize_time').attr('disabled', false);
-
-                //Show Reason dropdown div
-                $('#div_reason_editable').show();
-
-                //Show actual time
-                $('#div_actual_user_time').show();
-
-
-                //Disable Non-editable reason div
-                $('#div_reason_noneditable').hide();
-                $('#div_custom_reason').hide();
-
-                //Show the Apply Regularize button
-                $('#div_btn_applyRegularize').show();
-
-                //remove old values
-                $('#txt_reason_noneditable').val(''); //editable
-                $('#txt_customreason_noneditable').val(''); //editable
-                $('#txt_apply_status').val(''); //editable
-
-                //Based on Regularization Type, show the dropdowns
-                $('#reason_mip').hide();
-                $('#reason_mop').hide();
-                $('#reason_lc').hide();
-                $('#reason_eg').hide();
-
-                if ($(element).val() == "LC") {
-                    $('#reason_lc').show();
-                } else
-                if ($(element).val() == "EG") {
-                    $('#reason_eg').show();
-
-                } else
-                if ($(element).val() == "MIP") {
-                    $('#reason_mip').show();
-                } else
-                if ($(element).val() == "MOP") {
-                    $('#reason_mop').show();
-                }
-
-                //show Modal
-                $('#regularizationModal').fadeIn(0);
-            }
-
-            //Set UI elements
-            $('#current_date').html(selected_date);
-
-            //Hide all reason dropdowns
-
-            if ($(element).val() == "LC") {
-                //On modal popup
-                $('#actual_user_time').html(moment($(element).data('checkintime'), ["HH:mm"]).format('h:mm A'));
-                $('#timing_label_suffix').html('( Late Arrival )');
-                $('#regularize_time').val(shift_start_time); //editable
-
-
-                //Hidden vars
-                $('#attendance_date').val(selected_date);
-                $('#user_time').val($(element).data('checkintime'));
-                $('#attendance_user').val(currentlySelectedUser);
-                $('#regularization_type').val("LC");
-
-            } else
-            if ($(element).val() == "EG") {
-                $('#actual_user_time').html(moment($(element).data('checkouttime'), ["HH:mm"]).format('h:mm A'));
-                $('#timing_label_suffix').html('( Early Going )');
-                $('#regularize_time').val(shift_end_time);
-
-                //Hidden vars
-                $('#attendance_date').val(selected_date);
-                $('#user_time').val($(element).data('checkouttime'));
-                $('#attendance_user').val(currentlySelectedUser);
-                $('#regularization_type').val("EG");
-
-            } else
-            if ($(element).val() == "MIP") {
-
-                $('#div_actual_user_time').hide();
-
-                //$('#actual_user_time').html($(element).data('actual_timing'));
-                $('#regularize_time').val(shift_start_time);
-
-                $('#attendance_date').val(selected_date);
-                $('#user_time').val($(element).data('actual_timing'));
-                $('#attendance_user').val(currentlySelectedUser);
-                $('#regularization_type').val("MIP");
-                $('#timing_label_suffix').html('( MIP )');
-                //$('#')
-            } else
-            if ($(element).val() == "MOP") {
-                $('#div_actual_user_time').hide();
-
-                //$('#actual_user_time').html($(element).data('actual_timing'));
-                $('#regularize_time').val(shift_end_time);
-
-                $('#attendance_date').val(selected_date);
-                $('#user_time').val($(element).data('actual_timing'));
-                $('#attendance_user').val(currentlySelectedUser);
-                $('#regularization_type').val("MOP");
-                $('#timing_label_suffix').html('( MOP )');
-                //$('#')
-
-            }
-
-            // $('#regularizationModal').addClass('fade');
-        }
-
-
 
 
         function showRegularizationModal(element) {
@@ -1377,7 +1479,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
                                                 "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start'><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><span style='margin-top: -38px;margin-left: 45px;font-size: 13px;color: red;font-weight: 700;' class='f-11' id='checkout_time_" +
                                                 year + "-" + (month + 1) + "-" + dateText +
-                                                "'>Absent <br><div style='display: flex;gap: 20px;margin-left: -30px;margin-top: 15px;'><span style=''><input type='button' style='padding: 3px;border-radius: 8px;outline: none;color: white;background-color: #2f0358;border: none;font-weight: 700;'onclick='AttendenceRegularizationModal(this)' value='Ar' /></span><span><input type='button'style='padding: 3px;border-radius: 8px;outline: none;color: white;background-color: #ff6000;border: none;font-weight: 700;' value='Apply Leave' /></span></div></span>";
+                                                "'>Absent <br><div style='display: flex;gap: 20px;margin-left: -30px;margin-top: 15px;'><span style=''><input type='button' style='padding: 3px;border-radius: 8px;outline: none;color: white;background-color: #2f0358;border: none;font-weight: 700;'onclick='AttendenceRegularizationModal(this)' value='Ar' /></span><span><input type='button'style='padding: 3px;border-radius: 8px;outline: none;color: white;background-color: #ff6000;border: none;font-weight: 700;' data-bs-target='#leaveApply_modal' data-bs-toggle='modal' value='Apply Leave' /></span></div></span>";
                                     }
                                       
                                     } 
@@ -1563,5 +1665,214 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
 
         });
+
+
+            // For Apply Leave to Button 
+
+            function resetLeaveModalValues() {
+
+                //Reset leave dropdown
+            $('#leave_type_id').prop('selectedIndex', 0);
+
+                leave_start_date = '';
+                leave_end_date = '';
+                //let currentDate = new Date().toJSON().slice(0,8)+'01'; //Restricting for current date
+                let currentDate = new Date().toJSON().slice(0, 8) + '01'; //Restricting for current month
+
+                $('#start_date').attr('type', 'datetime-local');
+                $('#start_date').attr("min", currentDate + "T09:00:00");
+                console.log("Current Date : " + currentDate);
+
+                $('#start_date').val('');
+
+                $('#end_date').attr('type', 'datetime-local');
+                $('#end_date').val('');
+                $('#leave_reason').val('');
+                $('#total_leave_days').val('0');
+                $('#total_permission_hours').val('0');
+
+                $('#div_totalhours').hide();
+
+
+
+            }
+
+            // for Attendence Regularization Button AR
+
+            function AttendenceRegularizationModal(element) {
+
+             
+             let t_regularization_type = $(element).val();
+             let selected_date = $(element).data('currentdate');
+             console.log(selected_date);
+            let t_user_id = $(element).data('userid');
+
+                //Based on data-applystatus, we will fetch the value from server.
+                //If data-applystatus != None, then make Ajax request
+            console.log("Status : " + $(element).data('applystatus'));
+            if ($(element).data('applystatus') != 'None') {
+                ////UI changes in modal popup
+
+                //Disable textbox
+                $('#regularize_time').attr('disabled', 'disabled');
+
+                //Hide Reason dropdown div
+                $('#div_reason_editable').hide();
+
+                //Enable Non-editable reason div
+                $('#div_reason_noneditable').show();
+
+                //Hide the Apply Regulaize button
+                $('#div_btn_applyRegularize').hide();
+
+                /*
+                 Input params : selectedDate, regularization_type
+                 Output params : reason,custom_reason, status
+
+                 */
+                 $.ajax({
+                        url: "{{ route('fetch-regularization-data') }}",
+                        type: "POST",
+                        data: {
+                            user_id: t_user_id,
+                            selected_date: selected_date,
+                         regularization_type: t_regularization_type,
+                         _token: '{{ csrf_token() }}'
+                     },
+                        success: function(data) {
+                                        console.log(data);
+                         console.log("Reason Type : " + data.reason_type);
+
+                            //Update the non-editable UIs
+                            $('#txt_reason_noneditable').val(data.reason_type); //editable
+
+                            if (data.custom_reason != "")
+                                $('#div_custom_reason').show();
+                            else
+                                $('#div_custom_reason').hide();
+
+
+                            $('#txt_customreason_noneditable').val(data.custom_reason); //editable
+                            $('#txt_apply_status').val(data.status); //editable
+
+                            //show Modal
+                            $('#regularizationModal').fadeIn(0);
+
+                        }
+                    });
+                } else {
+                    //Hide non-editable stuffs
+                    //Reset modal element states
+                    //Enable textbox
+                    $('#regularize_time').attr('disabled', false);
+
+                    //Show Reason dropdown div
+                    $('#div_reason_editable').show();
+
+                    //Show actual time
+                    $('#div_actual_user_time').show();
+
+
+                    //Disable Non-editable reason div
+                                $('#div_reason_noneditable').hide();
+                    $('#div_custom_reason').hide();
+
+                    //Show the Apply Regularize button
+                    $('#div_btn_applyRegularize').show();
+
+                    //remove old values
+                    $('#txt_reason_noneditable').val(''); //editable
+                    $('#txt_customreason_noneditable').val(''); //editable
+                    $('#txt_apply_status').val(''); //editable
+
+                    //Based on Regularization Type, show the dropdowns
+                    $('#reason_mip').hide();
+                    $('#reason_mop').hide();
+                    $('#reason_lc').hide();
+                    $('#reason_eg').hide();
+
+                    if ($(element).val() == "LC") {
+                        $('#reason_lc').show();
+                    } else
+                    if ($(element).val() == "EG") {
+                        $('#reason_eg').show();
+
+                    } else
+                    if ($(element).val() == "MIP") {
+                        $('#reason_mip').show();
+                    } else
+                    if ($(element).val() == "MOP") {
+                     $('#reason_mop').show();
+                    }
+
+                    //show Modal
+                    $('#regularizationModal').fadeIn(0);
+                }
+
+                    //Set UI elements
+                    $('#current_date').html(selected_date);
+
+                    //Hide all reason dropdowns
+
+                    if ($(element).val() == "LC") {
+                     //On modal popup
+                        $('#actual_user_time').html(moment($(element).data('checkintime'), ["HH:mm"]).format('h:mm A'));
+                        $('#timing_label_suffix').html('( Late Arrival )');
+                        $('#regularize_time').val(shift_start_time); //editable
+
+
+                        //Hidden vars
+                        $('#attendance_date').val(selected_date);
+                        $('#user_time').val($(element).data('checkintime'));
+                        $('#attendance_user').val(currentlySelectedUser);
+                        $('#regularization_type').val("LC");
+
+                    } else
+                    if ($(element).val() == "EG") {
+                        $('#actual_user_time').html(moment($(element).data('checkouttime'), ["HH:mm"]).format('h:mm A'));
+                        $('#timing_label_suffix').html('( Early Going )');
+                        $('#regularize_time').val(shift_end_time);
+
+                                        //Hidden vars
+                                        $('#attendance_date').val(selected_date);
+                        $('#user_time').val($(element).data('checkouttime'));
+                        $('#attendance_user').val(currentlySelectedUser);
+                        $('#regularization_type').val("EG");
+
+                    } else
+                    if ($(element).val() == "MIP") {
+
+                        $('#div_actual_user_time').hide();
+
+                        //$('#actual_user_time').html($(element).data('actual_timing'));
+                        $('#regularize_time').val(shift_start_time);
+
+                        $('#attendance_date').val(selected_date);
+                        $('#user_time').val($(element).data('actual_timing'));
+                        $('#attendance_user').val(currentlySelectedUser);
+                        $('#regularization_type').val("MIP");
+                        $('#timing_label_suffix').html('( MIP )');
+                        //$('#')
+                    } else
+                    if ($(element).val() == "MOP") {
+                        $('#div_actual_user_time').hide();
+
+                        //$('#actual_user_time').html($(element).data('actual_timing'));
+                        $('#regularize_time').val(shift_end_time);
+
+                        $('#attendance_date').val(selected_date);
+                        $('#user_time').val($(element).data('actual_timing'));
+                        $('#attendance_user').val(currentlySelectedUser);
+                        $('#regularization_type').val("MOP");
+                        $('#timing_label_suffix').html('( MOP )');
+                        //$('#')
+
+                    }
+
+                    // $('#regularizationModal').addClass('fade');
+                    }
+
+
+
     </script>
 @endsection
