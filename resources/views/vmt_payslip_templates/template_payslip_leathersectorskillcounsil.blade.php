@@ -117,7 +117,8 @@ $bank_names = \DB::table('vmt_banks')->get();
         <tr>
             <td colspan="12" class="bg-ash">
                 <p class="sub-header navy-blue txt-center text-strong">PAYSLIP FOR THE MONTH OF &ndash;
-                    {{ \Carbon\Carbon::parse($employee_payslip->PAYROLL_MONTH)->format('M  y') }}</p>
+                    {{ \Carbon\Carbon::parse($employee_payslip->PAYROLL_MONTH)->format('M  y') }}
+                </p>
             </td>
         </tr>
         <tr>
