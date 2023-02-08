@@ -107,8 +107,8 @@
                 <tr>
                     <td colspan="12" class=" bg-ash">
                         <p class="sub-header txt-center text-strong">PAYSLIP FOR THE MONTH OF &ndash;
-                            {{\Carbon\Carbon::parse($employee_payslip->PAYROLL_MONTH)->format('M  y') }}</p>
-
+                            {{\Carbon\Carbon::parse($employee_payslip->PAYROLL_MONTH)->format('M  y') }}
+                        </p>
                     </td>
                 </tr>
                 <tr>
