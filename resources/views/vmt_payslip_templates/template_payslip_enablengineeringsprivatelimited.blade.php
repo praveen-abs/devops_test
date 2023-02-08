@@ -465,14 +465,14 @@ $bank_names = \DB::table('vmt_banks')->get();
                 <p class="txt-left text-strong navy-blue">TOTAL EARNINGS</p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-right">{{number_format(round((float)$employee_payslip->TOTAL_EARNED_GROSS), 2) }}</p>
+                <p class="txt-right">{{number_format(round((float)$employee_payslip->TOTAL_FIXED_GROSS), 2) }}</p>
             </td>
             <td colspan="2" class="">
                 <p class="txt-right"></p>
             </td>
 
             <td colspan="2" class="">
-                <p class="txt-right">  <p class="txt-right">{{number_format(round((float)$employee_payslip->TOTAL_EARNED_GROSS), 2) }}</p></p>
+                <p class="txt-right">  {{number_format(round((float)$employee_payslip->TOTAL_EARNED_GROSS), 2) }}</p>
             </td>
             <td colspan="2" class="">
                 <p class="txt-left text-strong navy-blue">TOTAL DEDUCTION</p>
