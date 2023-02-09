@@ -28,17 +28,17 @@
                                         <p class="badge text-orange mb-1 text-right">{{ $text }}</p>
 
                                         <?php
-                                        $empAvatar = getEmployeeAvatarOrShortName($employee->id);
-                                        //dd($empAvatar);
+                                        $empAvatar = json_decode(getEmployeeAvatarOrShortName($employee->id));
+                                        //dd($empAvatar->type);
                                         ?>
-                                        @if ($empAvatar['type'] == 'shortname')
+                                        @if ($empAvatar->type == 'shortname')
                                             <div class="userShort_name img-lg mb-3">
-                                                {{ $empAvatar['data'] }}
+                                                {{ $empAvatar->data }}
                                             </div>
-                                        @elseif($empAvatar['type'] == 'avatar')
+                                        @elseif($empAvatar->type == 'avatar')
                                             <?php
 
-                                            $imageURL = request()->getSchemeAndHttpHost() . '/images/' . $empAvatar['data'];
+                                            $imageURL = request()->getSchemeAndHttpHost() . '/images/' . $empAvatar->data;
 
                                             ?>
                                             <div class="text-center mb-3">
@@ -98,17 +98,17 @@
                                         <p class="badge text-green text-right">{{ $text }}</p>
 
                                         <?php
-                                        $empAvatar = getEmployeeAvatarOrShortName($employee->id);
+                                        $empAvatar = json_decode(getEmployeeAvatarOrShortName($employee->id));
                                         //dd($empAvatar);
                                         ?>
-                                        @if ($empAvatar['type'] == 'shortname')
+                                        @if ($empAvatar->type == 'shortname')
                                             <div class="userShort_name img-lg mb-3">
-                                                {{ $empAvatar['data'] }}
+                                                {{ $empAvatar->data }}
                                             </div>
-                                        @elseif($empAvatar['type'] == 'avatar')
+                                        @elseif($empAvatar->type == 'avatar')
                                             <?php
 
-                                            $imageURL = request()->getSchemeAndHttpHost() . '/images/' . $empAvatar['data'];
+                                            $imageURL = request()->getSchemeAndHttpHost() . '/images/' . $empAvatar->data;
 
                                             ?>
                                             <div class="text-center">
