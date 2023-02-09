@@ -242,7 +242,7 @@ function getUserShortName($user_id)
 
 
     if (count($dotPattern) > 1) {
-        $toStore = $dotPattern[0][0] . $dotPattern[1][0];
+        $toStore = trim($dotPattern[0])[0] . trim($dotPattern[1])[0];
         return $toStore;
     } else
     if (count($whiteSpacePattern) > 1) {
@@ -299,7 +299,7 @@ function getEmployeeAvatarOrShortName($user_id)
         if (empty($avatar) || !file_exists(public_path('images/' . $avatar))) {
             //send the shortname
             $responseJSON['type'] = 'shortname';
-            $responseJSON['data'] = getUserShortName($user_id);
+            $responseJSON['data'] = strtoupper(getUserShortName($user_id));
 
 
         } else {
@@ -312,9 +312,9 @@ function getEmployeeAvatarOrShortName($user_id)
 
         $responseJSON['color'] = shortNameBGColor($responseJSON['data']);
 
-        return $responseJSON;
+        return json_encode($responseJSON);
     } catch (Throwable $e) {
-        dd("ERROR : helper.php :: getEmployeeAvatarOrShortName() for user_id  ");
+        dd("ERROR : helper.php :: getEmployeeAvatarOrShortName() for user_id : ".$e);
     }
 }
 

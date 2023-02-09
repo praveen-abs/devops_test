@@ -14,7 +14,7 @@
     <script>
         // $(document).ready(function() {
 
-        generateProfileShortName_VendorScript('profileShortNameLargeCircle', '{{ $currentUserName }}');
+        generateProfileShortName_VendorScript('profileShortNameLargeCircle', '{{ auth()->user()->id }}');
 
     </script>
 @endsection
