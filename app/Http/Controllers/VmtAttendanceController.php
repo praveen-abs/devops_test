@@ -200,11 +200,21 @@ class VmtAttendanceController extends Controller
 
             //dd($map_allEmployees[1]["name"]);
             foreach ($employeeLeaves_Org as $singleItem) {
-                $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
-                $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->user_id]);
 
-                $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_user_id]["name"];
-                $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName([$singleItem->reviewer_user_id]);
+
+                //check if the key exists in array
+                if (array_key_exists($singleItem->user_id, $map_allEmployees->toArray()))
+                {
+                    $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
+                    $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->user_id]);
+                }
+
+                //check if the key exists in array
+                if (array_key_exists($singleItem->reviewer_user_id, $map_allEmployees->toArray()))
+                {
+                    $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_user_id]["name"];
+                    $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName([$singleItem->reviewer_user_id]);
+                }
             }
 
             return $employeeLeaves_Org;
@@ -219,11 +229,17 @@ class VmtAttendanceController extends Controller
 
             //dd($map_allEmployees[1]["name"]);
             foreach ($employeeLeaves_team as $singleItem) {
-                $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
-                $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->user_id]);
 
-                $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_user_id]["name"];
-                $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName([$singleItem->reviewer_user_id]);
+                if (array_key_exists($singleItem->user_id, $map_allEmployees->toArray())) {
+                    $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
+                    $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->user_id]);
+                }
+
+                if (array_key_exists($singleItem->reviewer_user_id, $map_allEmployees->toArray())) {
+
+                    $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_user_id]["name"];
+                    $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName([$singleItem->reviewer_user_id]);
+                }
             }
 
             //dd($employeeLeaves_team);
