@@ -1017,6 +1017,9 @@ class VmtAttendanceController extends Controller
 
             //check whether user_id from regularization table exists in USERS table
             if (array_key_exists($singleItem->user_id, $map_allEmployees->toArray())) {
+                if($singleItem->custom_reason==null){
+                    $singleItem->custom_reason=$singleItem->reason_type;
+                }
 
                 $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
                 $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->user_id]);
