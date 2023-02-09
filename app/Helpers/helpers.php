@@ -265,13 +265,13 @@ function shortNameBGColor($shortName)
         $colorPalette = "wildBlueYonder";
         return $colorPalette;
     } else if ($getAsciiCode >= 68 && $getAsciiCode < 72) {
-        $colorPalette = "ligthWisteria";
+        $colorPalette = "lighthWisteria";
         return $colorPalette;
     } else if ($getAsciiCode >= 72 && $getAsciiCode < 76) {
         $colorPalette = "sisal";
         return $colorPalette;
     } else if ($getAsciiCode >= 76 && $getAsciiCode < 79) {
-        $colorPalette = "esternBlue";
+        $colorPalette = "easternBlue";
         return $colorPalette;
     } else if ($getAsciiCode >= 79 && $getAsciiCode < 82) {
         $colorPalette = "morningGlory";

@@ -49,18 +49,21 @@ class VmtTestingController extends Controller
 
 
     public function testingpdf(){
-        $client_name='vasa';
+        $client_name='brandavatar';
         $viewfile_appointmentletter = 'vmt_appointment_templates.mailtemplate_appointmentletter_'.$client_name;
         $html =  view($viewfile_appointmentletter);
 
                 $pdf = new Dompdf();
                 $pdf->loadHtml($html, 'UTF-8');
             //    dd($pdf);
-                // $pdf->setPaper('A4', 'portrait');
-                // $pdf->render();
+                $pdf->setPaper('A4', 'portrait');
+                $pdf->render();
 
-        // return view('pdf');
-         return $pdf;
+                return $pdf->stream($client_name.'.pdf');
+    }
+
+    public function viewpdf(){
+        return view('vmt_appointment_templates.mailtemplate_appointmentletter_brandavatar');
     }
 
 }
