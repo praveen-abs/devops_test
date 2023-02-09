@@ -147,7 +147,7 @@
 
                                 var htmlContent =
                                     '<div class="d-flex align-items-center page-header-user-dropdown" style="width:max-content;">' +
-                                    '<div class="rounded-circle user-profile  me-1">'+emp_avatar.data+'</div></div>';
+                                    '<div class="rounded-circle user-profile  me-1 '+emp_avatar.color+'">'+emp_avatar.data+'</div></div>';
 
 
                                 $('#img_' + emp_code).on('error', function() {
@@ -353,7 +353,7 @@
 
                                 var htmlContent =
                                     '<div class="d-flex align-items-center page-header-user-dropdown" style="width:max-content;">' +
-                                    '<div class="rounded-circle user-profile  me-1">'+emp_avatar.data+'</div></div>';
+                                    '<div class="rounded-circle user-profile  me-1 '+emp_avatar.color+'">'+emp_avatar.data+'</div></div>';
 
 
                                 $('#img_' + emp_code).on('error', function() {
@@ -558,7 +558,7 @@
 
                                 var htmlContent =
                                     '<div class="d-flex align-items-center page-header-user-dropdown" style="width:max-content;">' +
-                                    '<div class="rounded-circle user-profile  me-1">'+emp_avatar.data+'</div></div>';
+                                    '<div class="rounded-circle user-profile me-1 '+emp_avatar.color+'">'+emp_avatar.data+'</div></div>';
 
 
                                 $('#img_' + emp_code).on('error', function() {
