@@ -398,7 +398,7 @@ Route::get('vmt-pmsappraisal-review', 'App\Http\Controllers\VmtPmsController@sho
 
     // testing template
     Route::get('/testingController',[App\Http\Controllers\VmtTestingController::class, 'testingpdf'])->name('testingController');
-    Route::get('/testingControllerView',[App\Http\Controllers\VmtTestingController::class, 'viewpdf'])->name('testingController');
+    Route::get('/testingControllerView',[App\Http\Controllers\VmtTestingController::class, 'viewpdf'])->name('testingControllerView');
 
     // end
 
