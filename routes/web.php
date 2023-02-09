@@ -395,7 +395,7 @@ Route::get('vmt-pmsappraisal-review', 'App\Http\Controllers\VmtPmsController@sho
     Route::get('/pdfview/{emp_code?}/{selectedPaySlipMonth?}',[App\Http\Controllers\VmtPayCheckController::class, 'showPaySlip_PDFView'])->name('vmt_paycheck_employee_payslip_pdf');
 
     // testing template
-    Route::get('/testingController',[App\Http\Controllers\VmtTestingController::class, 'index'])->name('testingController');
+    Route::get('/testingController',[App\Http\Controllers\VmtTestingController::class, 'testingpdf'])->name('testingController');
 
     // end
 
