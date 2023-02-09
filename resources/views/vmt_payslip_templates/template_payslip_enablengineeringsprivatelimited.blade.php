@@ -378,10 +378,10 @@ $bank_names = \DB::table('vmt_banks')->get();
                 <p class="txt-right"></p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-right">{{ $employee_payslip->earned_stats_bonus }}</p>
+                <p class="txt-right">{{ $employee_payslip->earned_stats_arrear }}</p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-right">{{ $employee_payslip->earned_stats_arrear }}</p>
+                <p class="txt-right">{{ $employee_payslip->earned_stats_bonus }}</p>
                 <p class="txt-right"></p>
             </td>
             <td colspan="2" class="">
