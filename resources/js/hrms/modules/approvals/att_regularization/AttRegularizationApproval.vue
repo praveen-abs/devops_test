@@ -44,12 +44,13 @@
                 <Column field="reason_type" header="Reason"></Column>
                 <Column field="reviewer_comments" header="Approve Comments"></Column>
                 <Column field="reviewer_reviewed_date" header="Reviewed Date"></Column>
+
                 <Column field="status" header="Status" icon="pi pi-check">
 
                     <template #body="{data}">
                         <span :class="'customer-badge status-' + data.status">{{data.status}}</span>
                     </template>
-                    <template #filter="{filterModel}">
+                    <template #filter="{filterModel,filterCallback}">
                         <Dropdown v-model="filterModel.value" @change="filterCallback()" :options="statuses" placeholder="Any" class="p-column-filter" :showClear="true">
                             <template #value="slotProps">
                                 <span :class="'customer-badge status-' + slotProps.value" v-if="slotProps.value">{{slotProps.value}}</span>
@@ -61,9 +62,7 @@
                         </Dropdown>
                     </template>
 
-                    
-
-                </Column>
+                     </Column>
                 <Column style="width: 300px;" field="" header="Action">
                     <template #body="slotProps">
                         <!-- <Button icon="pi pi-check" class="p-button-success"  @click="confirmDialog(slotProps.data,'Approved')" label="Approval" />
@@ -85,11 +84,14 @@
     import {FilterMatchMode,FilterOperator} from 'primevue/api';
     import  { useConfirm } from "primevue/useconfirm";
     import  { useToast }  from "primevue/usetoast";
-    const toast = useToast();
+   
 
     let att_regularization = ref();
     let canShowConfirmation = ref(false);
     let canShowLoadingScreen = ref(false);
+    const confirm = useConfirm();
+    const toast = useToast();
+
 
     const filters2 = ref({
         'status': {value: null, matchMode: FilterMatchMode.EQUALS},
@@ -111,6 +113,7 @@
             .then((response) => {
                 console.log("Axios : " + response.data);
                 att_regularization.value = response.data;
+    
 
             });
 
@@ -236,22 +239,24 @@
     
     .p-column-filter-menu-button{
         color: white;
+        margin-left: 10px;
+
     }
     .p-column-filter-menu-button:hover {
         color:white;
         border-color: transparent;
-        background: #01101e;
+        background: #023e70;
       }
-      .p-column-filter-menu-button.p-column-filter-menu-button-active, .p-column-filter-menu-button.p-column-filter-menu-button-active:hover{
-        color:white;
-        background:#003056 ;
-      }
-     .p-column-filter-menu-button.p-column-filter-menu-button-active:hover{
-        background: #01101e;
-        border-color: transparent;
-    
-        
-     }
+  
+  }
+  .p-column-filter-overlay-menu .p-column-filter-constraint .p-column-filter-matchmode-dropdown {
+    margin-bottom: 0.5rem;
+    visibility: hidden;
+    position: absolute;
+  }
+ 
+  .p-button .p-component .p-button-sm{
+    background-color: #003056;
   }
   
 .p-datatable .p-datatable-tbody > tr{
@@ -312,5 +317,24 @@
   .p-button.p-component.p-confirm-dialog-reject.p-button-text {
     color: #003056;
   }
+  .p-column-filter-overlay-menu .p-column-filter-buttonbar {
+    padding: 1.25rem;
+    position: absolute;
+    visibility: hidden;
+  }
+  .p-datatable .p-datatable-thead > tr > th .p-column-filter-menu-button {
+    color: white;
+    border-color: transparent;
+
+  }
+  .p-column-filter-menu-button.p-column-filter-menu-button-open{
+    background: none;
+  }
+
+ .p-column-filter-menu-button.p-column-filter-menu-button-active{
+    background: none;
+
+  }
+
 
 </style>

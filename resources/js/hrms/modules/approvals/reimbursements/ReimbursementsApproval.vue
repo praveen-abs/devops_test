@@ -1,29 +1,34 @@
 <template>
     <div>
+            <!-- <ConfirmDialog></ConfirmDialog> -->
             <Toast />
-        <Dialog header="Header" v-model:visible="canShowLoadingScreen" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '25vw'}" :modal="true" :closable="false" :closeOnEscape="false">
-            <template #header>
-                <ProgressSpinner style="width:50px;height:50px" strokeWidth="8" fill="var(--surface-ground)" animationDuration="2s" aria-label="Custom ProgressSpinner"/>
-            </template>
-            <template #footer>
-                <h5 style="text-align: center;">Please wait...</h5>
-            </template>
-        </Dialog>
-
-        <Dialog header="Confirmation" v-model:visible="canShowConfirmation" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '350px'}" :modal="true" >
-            <div class="confirmation-content">
-                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-                <span>Are you sure you want to {{currentlySelectedStatus}}?</span>
-            </div>
-            <template #footer>
-                <Button label="Yes" icon="pi pi-check" @click="processApproveReject()" class="p-button-text" autofocus />
-                <Button label="No" icon="pi pi-times" @click="hideConfirmDialog(true)" class="p-button-text"/>
-            </template>
-        </Dialog>
+            <Dialog header="Header" v-model:visible="canShowLoadingScreen" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '25vw'}" :modal="true" :closable="false" :closeOnEscape="false">
+                <template #header>
+                    <ProgressSpinner style="width:50px;height:50px" strokeWidth="8" fill="var(--surface-ground)" animationDuration="2s" aria-label="Custom ProgressSpinner"/>
+                </template>
+                <template #footer>
+                    <h5 style="text-align: center;">Please wait...</h5>
+                </template>
+            </Dialog>
     
-        <div class="card">
-                <DataTable :value="data_reimbursements" responsiveLayout="scroll" :paginator="true" :rows="5" class="p-datatable-sm"
-                v-model:filters="filters2" filterDisplay="menu">
+            <Dialog header="Confirmation" v-model:visible="canShowConfirmation" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '350px'}" :modal="true" >
+                <div class="confirmation-content">
+                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                    <span>Are you sure you want to {{currentlySelectedStatus}}?</span>
+                </div>
+                <template #footer>
+                    <Button label="Yes" icon="pi pi-check" @click="processApproveReject()" class="p-button-text" autofocus />
+                    <Button label="No" icon="pi pi-times" @click="hideConfirmDialog(true)" class="p-button-text"/>
+                </template>
+            </Dialog>
+            <div>
+    
+    
+                <DataTable :value="data_reimbursements" :paginator="true" :rows="10" dataKey="id"
+                paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
+                responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
+                v-model:filters="filters2" filterDisplay="menu" :loading="loading2"
+                :globalFilterFields="['status']">
                 <Column field="name" header="Name">
                     <template #body="slotProps">
                         <div class="employee_name">
@@ -55,22 +60,24 @@
 
                 <!-- <Column field="reviewer_comments" header="Approver Comm ents"></Column>
                 <Column field="reviewer_reviewed_date" header="Reviewed Date"></Column> -->
-                <Column field="status" header="Status">
-                    <template #body="{data}">
-                        <span :class="'customer-badge status-' + data.status">{{data.status}}</span>
-                    </template>
-                    <template #filter="{filterModel}">
-                        <Dropdown v-model="filterModel.value" @change="filterCallback()" :options="statuses" placeholder="Any" class="p-column-filter" :showClear="true">
-                            <template #value="slotProps">
-                                <span :class="'customer-badge status-' + slotProps.value" v-if="slotProps.value">{{slotProps.value}}</span>
-                                <span v-else>{{slotProps.placeholder}}</span>
-                            </template>
-                            <template #option="slotProps">
-                                <span :class="'customer-badge status-' + slotProps.option">{{slotProps.option}}</span>
-                            </template>
-                        </Dropdown>
-                    </template>
-                </Column>
+                <Column field="status" header="Status" icon="pi pi-check">
+
+                <template #body="{data}">
+                    <span :class="'customer-badge status-' + data.status">{{data.status}}</span>
+                </template>
+                <template #filter="{filterModel,filterCallback}">
+                    <Dropdown v-model="filterModel.value" @click="filterCallback()" :options="statuses" placeholder="Any" class="p-column-filter" :showClear="true">
+                        <template #value="slotProps">
+                            <span :class="'customer-badge status-' + slotProps.value" v-if="slotProps.value">{{slotProps.value}}</span>
+                            <span v-else>{{slotProps.placeholder}}</span>
+                        </template>
+                        <template #option="slotProps">
+                            <span :class="'customer-badge status-' + slotProps.option">{{slotProps.option}}</span>
+                        </template>
+                    </Dropdown>
+                </template>
+
+                 </Column>
                 
                 <Column field="" header="Action">
                     <template #body="slotProps">
@@ -84,18 +91,22 @@
         </div>
     </div>
 </template>
+
 <script setup>
 
-    import { ref, onMounted } from 'vue';
-    import axios from 'axios';
+import { ref, onMounted } from 'vue';
+    import axios from 'axios'
     import {FilterMatchMode,FilterOperator} from 'primevue/api';
-    import { useConfirm } from "primevue/useconfirm";
-    import { useToast } from "primevue/usetoast";
+    import  { useConfirm } from "primevue/useconfirm";
+    import  { useToast }  from "primevue/usetoast";
+   
 
     let data_reimbursements = ref();
     const two_wheller_km_price=ref(3);
     const four_wheller_km_price=ref(4);
     const total_expenses =ref();
+    let canShowConfirmation = ref(false);
+    let canShowLoadingScreen = ref(false);
     const confirm = useConfirm();
     const toast = useToast();
 
@@ -108,9 +119,11 @@
             'Pending', 'Approved', 'Rejected'
     ]);
 
+    let currentlySelectedStatus = null;
+    let currentlySelectedRowData = null;
 
     onMounted(() => {
-        let url_pending = window.location.origin + '/fetch_pending_reimbursements';
+       let url_pending = window.location.origin + '/fetch_pending_reimbursements';
         let url_approved_rejected = window.location.origin + '/fetch_approved_rejected_reimbursements';
         
 
@@ -126,6 +139,48 @@
 
     })
 
+    function showConfirmDialog(selectedRowData, status){
+        canShowConfirmation.value = true;
+        currentlySelectedStatus = status;
+        currentlySelectedRowData = selectedRowData;
+
+        console.log("Selected Row Data : "+JSON.stringify(selectedRowData));
+    }
+
+    function hideConfirmDialog(canClearData){
+        canShowConfirmation.value = false;
+
+        if(canClearData)
+            resetVars();
+
+    }
+
+    function resetVars(){
+        currentlySelectedStatus = '';
+        currentlySelectedRowData = null;
+
+    }
+
+    ////PrimeVue ConfirmDialog code -- Keeping here for reference
+    //const confirm = useConfirm();
+
+    // function confirmDialog(selectedRowData, status) {
+    //     console.log("Showing confirm dialog now...");
+
+    //     confirm.require({
+    //         message: 'Are you sure you want to proceed?',
+    //         header: 'Confirmation',
+    //         icon: 'pi pi-exclamation-triangle',
+    //         accept: () => {
+    //             toast.add({severity:'info', summary:'Confirmed', detail:'You have '+status, life: 3000});
+    //         },
+    //         reject: () => {
+    //             console.log("Rejected");
+    //             //toast.add({severity:'error', summary:'Rejected', detail:'You have rejected', life: 3000});
+    //         }
+    //     });
+    // }
+
     const css_statusColumn = (data) => {
             return [
                 {
@@ -136,31 +191,39 @@
             ];
         };
 
-    function onClickButton(selectedRowData) {
-        console.log("Successfulyy");
-    
-        //console.log("Button clicked : "+JSON.stringify(event));
-        //console.log("Button clicked : "+event[0].employee_name);
-        confirm.require({
-                message: 'Are you sure you want to proceed?',
-                header: 'Confirmation',
-                icon: 'pi pi-exclamation-triangle',
-                accept: () => {
-                    toast.add({severity:'success', summary:'Confirmed', detail:'You have accepted', life: 3000});
-                },
-   reject: () => {
-                    toast.add({severity:'error', summary:'Rejected', detail:'You have rejected', life: 3000});
-                }
-            });
-        
+    function processApproveReject() {
 
-        // console.log("Button clicked : "+JSON.stringify(selectedRowData));
+        hideConfirmDialog(false);
+
+        canShowLoadingScreen.value = true;
+
+        console.log("Processing Rowdata : "+ JSON.stringify(currentlySelectedRowData));
+
+
+        axios.post(window.location.origin + '/fetch_pending_reimbursements', {
+            id: currentlySelectedRowData.id,
+            status: currentlySelectedStatus == "Approve" ? "Approved" : currentlySelectedStatus =="Reject" ? "Rejected" : currentlySelectedStatus ,
+            status_text: 'Reviewer commented'
+        })
+        .then((response) => {
+            console.log(response);
+
+            canShowLoadingScreen.value = false;
+
+            resetVars();
+        })
+        .catch((error) => {
+
+            canShowLoadingScreen.value = false;
+            resetVars();
+
+            console.log(error.toJSON());
+        });
     }
 
-
-
-
 </script>
+
+
 <style  lang="scss">
 .main-content{
     width: 101%;
@@ -179,6 +242,51 @@
     background: #003056;
     transition: box-shadow 0.2s;
     font-size: 13px;
+    .p-column-title {
+        font-size: 13px;
+    }
+    .p-column-filter {
+        width: 100%;
+      }
+      #pv_id_2 {
+        height: 30px;
+      }
+    .p-fluid .p-dropdown .p-dropdown-label {
+        margin-top: -10px;
+      }
+      .p-dropdown .p-dropdown-label.p-placeholder{
+        margin-top: -12px;
+      }
+    
+    .p-column-filter-menu-button{
+        color: white;
+        margin-left: 10px;
+
+    }
+    .p-column-filter-menu-button:hover {
+        color:white;
+        border-color: transparent;
+        background: #023e70;
+      }
+  
+  }
+  .p-column-filter-overlay-menu .p-column-filter-constraint .p-column-filter-matchmode-dropdown {
+    margin-bottom: 0.5rem;
+    visibility: hidden;
+    position: absolute;
+  }
+ 
+  .p-button .p-component .p-button-sm{
+    background-color: #003056;
+  }
+  
+.p-datatable .p-datatable-tbody > tr{
+    font-size: 13px;
+    .employee_name{
+        font-weight: bold;
+        font-size: 13.5px;
+    }
+    
    
   }
   
@@ -216,15 +324,7 @@
 .p-button.p-component.p-button-danger.Button {
     padding: 8px;
   }
-.p-confirm-dialog-icon.pi.pi-exclamation-triangle {
-    color: red;
-  }
-  .p-button.p-component.p-confirm-dialog-accept {
-    background-color: #003056;
-  }
-  .p-button.p-component.p-confirm-dialog-reject.p-button-text {
-    color: #003056;
-  }
+
 
 @media screen and (max-width: 960px) {
     button {
@@ -237,5 +337,31 @@
 .p-datatable .p-datatable-tbody>tr>td:nth-child(1){
     width: 240px;
 }
+.p-confirm-dialog-icon.pi.pi-exclamation-triangle {
+    color: red;
+  }
+  .p-button.p-component.p-confirm-dialog-accept {
+    background-color: #003056;
+  }
+  .p-button.p-component.p-confirm-dialog-reject.p-button-text {
+    color: #003056;
+  }
+  .p-column-filter-overlay-menu .p-column-filter-buttonbar {
+    padding: 1.25rem;
+    position: absolute;
+    visibility: hidden;
+  }
+  .p-datatable .p-datatable-thead > tr > th .p-column-filter-menu-button {
+    color: white;
+    border-color: transparent;
+
+  }
+  .p-column-filter-menu-button.p-column-filter-menu-button-open{
+    background: none;
+  }
+  .p-column-filter-menu-button.p-column-filter-menu-button-active{
+    background: none;
+
+  }
 
 </style>

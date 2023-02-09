@@ -17,6 +17,7 @@ import Ripple from 'primevue/ripple';
 import StyleClass from 'primevue/styleclass';
 import Toast from 'primevue/toast';
 import ToastService from 'primevue/toastservice';
+import Dropdown from 'primevue/dropdown';
 import Tooltip from 'primevue/tooltip';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
@@ -46,6 +47,7 @@ app.component('ColumnGroup', ColumnGroup)
 app.component('Row', Row)
 app.component('Toast', Toast);
 app.component('ConfirmDialog',ConfirmDialog);
+app.component('Dropdown',Dropdown);
 
 app.mount("#vjs_reimbursementsApprovalTable");
 
