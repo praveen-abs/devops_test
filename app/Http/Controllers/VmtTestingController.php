@@ -21,30 +21,46 @@ class VmtTestingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    // public function index()
+    // {
 
-        $generalInfo = VmtGeneralInfo::first();
+    //     $generalInfo = VmtGeneralInfo::first();
 
-        // $month = $request->selectedPaySlipMonth;
-        $data= VmtEmployeePaySlip::where([
-                    ['user_id','=', auth()->user()->id],
+    //     // $month = $request->selectedPaySlipMonth;
+    //     $data= VmtEmployeePaySlip::where([
+    //                 ['user_id','=', auth()->user()->id],
 
-                    ])->first();
-          //dd($data);
-        // return view('vmt_payslipTemplate', $data);
-        // download PDF file with download method
-        // $pdf = new Dompdf();
-        $html =  view('testing', $data);
-        // $pdf->loadHtml($html, 'UTF-8');
-        // $pdf->setPaper('A4', 'portrait');
-        // $pdf->render();
-        // $filename = $data['employee']->Rename;
-        // return $pdf->stream($filename, ["Attachment" => false]);
-        // dd($html);
+    //                 ])->first();
+    //       //dd($data);
+    //     // return view('vmt_payslipTemplate', $data);
+    //     // download PDF file with download method
+    //     // $pdf = new Dompdf();
+    //     $html =  view('testing', $data);
+    //     // $pdf->loadHtml($html, 'UTF-8');
+    //     // $pdf->setPaper('A4', 'portrait');
+    //     // $pdf->render();
+    //     // $filename = $data['employee']->Rename;
+    //     // return $pdf->stream($filename, ["Attachment" => false]);
+    //     // dd($html);
 
-        // return $pdf->download($data['employee']->Rename.'.pdf');
-        return $html;
+    //     // return $pdf->download($data['employee']->Rename.'.pdf');
+    //     return $html;
+    // }
+
+
+    public function testingpdf(){
+        $client_name='vasa';
+        $viewfile_appointmentletter = 'vmt_appointment_templates.mailtemplate_appointmentletter_'.$client_name;
+        $html =  view($viewfile_appointmentletter);
+
+                $pdf = new Dompdf();
+                $pdf->loadHtml($html, 'UTF-8');
+            //    dd($pdf);
+                // $pdf->setPaper('A4', 'portrait');
+                // $pdf->render();
+
+        // return view('pdf');
+         return $pdf;
     }
 
 }
