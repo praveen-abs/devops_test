@@ -12,6 +12,27 @@
     --color-lite-ash: #e2e2e2;
 }
 
+.wildBlueYonder {
+    background-color: #8c8eb8;
+}
+.iceberg {
+    background-color: #cce1f4;
+}
+.sisal {
+    background-color: #cec7b9;
+}
+.esternBlue {
+    background-color: #1aa6b7;
+}
+.morningGlory {
+    background-color: #a8dee0;
+}
+.downy {
+    background-color: #57cac5;
+}
+.ligthWisteria {
+    background-color: #c8a4d4;
+}
 .h_80 {
     height: 80px;
 }
@@ -1021,7 +1042,6 @@ button.gridjs-sort-desc {
     color: #fff;
     border: none;
     border-radius: 5px;
-
 }
 .selection-btn {
     border: 1px solid #002f56;
