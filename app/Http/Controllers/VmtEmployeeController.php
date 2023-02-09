@@ -1192,7 +1192,11 @@ class VmtEmployeeController extends Controller
 
                 $html =  view($viewfile_appointmentletter, compact('data'));
 
-                $pdf = new Dompdf();
+                $options = new Options();
+                $options->set('isHtml5ParserEnabled', true);
+                $options->set('isRemoteEnabled', true);
+
+                $pdf = new Dompdf($options);
                 $pdf->loadHtml($html, 'UTF-8');
                 $pdf->setPaper('A4', 'portrait');
                 $pdf->render();
