@@ -22,6 +22,7 @@
             </template>
         </Dialog>
         <div>
+            
 
             <DataTable :value="att_regularization" :paginator="true" :rows="10" dataKey="id"
                     paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
@@ -29,27 +30,27 @@
                     v-model:filters="filters" filterDisplay="menu" :loading="loading2"
                     :globalFilterFields="['name','status']">
                     <template #empty>
-                        No customers found.
+                      No Employee found
                     </template>
                     <template #loading>
                         Loading customers data. Please wait.
                     </template>
 
-                    <Column field="employee_name" header="Employee Name" >
-                        <template #body="slotProps">
-                            {{ slotProps.data.employee_name }}
-                        </template>
-                          <template #filter="{filterModel,filterCallback}">
-                            <InputText v-model="filterModel.value" @input="filterCallback()"  placeholder="Search" class="p-column-filter" :showClear="true" />
-                           </template>
-                    </Column>
+                <Column field="employee_name" header="Employee Name" >
+                    <template #body="slotProps">
+                        {{ slotProps.data.employee_name }}
+                    </template>
+                      <template #filter="{filterModel,filterCallback}">
+                        <InputText v-model="filterModel.value" @input="filterCallback()"  placeholder="Search" class="p-column-filter" :showClear="true"   />
+                       </template>
+                </Column>
                 <Column field="attendance_date" header="Date" :sortable="true"></Column>
-                <Column field="regularization_type" header="Type"></Column>
-                <Column field="user_time" header="Actual Time"></Column>
-                <Column field="regularize_time" header="Regularize Time"></Column>
-                <Column field="reason_type" header="Reason"></Column>
-                <Column field="reviewer_comments" header="Approve Comments"></Column>
-                <Column field="reviewer_reviewed_date" header="Reviewed Date"></Column>
+                <Column field="regularization_type" header="Leave Type"></Column>
+                <Column field="user_time" header="Start Time"></Column>
+                <Column field="regularize_time" header="End Time"></Column>
+                <Column field="reason_type" header="Leave Reason"></Column>
+                <Column field="reviewer_comments" header="Approver Name"></Column>
+                <Column field="reviewer_comments" header="Approver Comments"></Column>
 
                 <Column field="status" header="Status" icon="pi pi-check">
 
@@ -57,7 +58,7 @@
                         <span :class="'customer-badge status-' + data.status">{{data.status}}</span>
                     </template>
                     <template #filter="{filterModel,filterCallback}">
-                        <Dropdown v-model="filterModel.value" @change="filterCallback()" :options="statuses" placeholder="Select" class="p-column-filter" :showClear="true" >
+                        <Dropdown v-model="filterModel.value" @change="filterCallback()" :options="statuses" placeholder="Select" class="p-column-filter" :showClear="true">
                             <template #value="slotProps">
                                 <span :class="'customer-badge status-' + slotProps.value" v-if="slotProps.value">{{slotProps.value}}</span>
                                 <span v-else>{{slotProps.placeholder}}</span>
@@ -113,9 +114,10 @@
 
         });
 
-    const statuses = ref([
+        const loading = ref(true);
+        const statuses = ref([
             'Pending', 'Approved', 'Rejected'
-    ]);
+        ]);
 
     let currentlySelectedStatus = null;
     let currentlySelectedRowData = null;
@@ -299,7 +301,7 @@
     width: 20%;
   }
   .main-content{
-    width: 110%;
+    width: 105%;
   }
 
 .pending {
@@ -338,6 +340,9 @@
     position: absolute;
     visibility: hidden;
   }
+  .p-datatable .p-datatable-thead > tr > th .p-column-filter {
+    width: 53%;
+  }
   .p-datatable .p-datatable-thead > tr > th .p-column-filter-menu-button {
     color: white;
     border-color: transparent;
@@ -351,13 +356,11 @@
     background: none;
 
   }
-  .p-datatable .p-datatable-thead > tr > th .p-column-filter {
-    width: 55%;
-  }
- 
-  /* For Sort */
 
-  .p-datatable .p-sortable-column:not(.p-highlight):hover {
+
+ /* For Sort */
+
+ .p-datatable .p-sortable-column:not(.p-highlight):hover {
     background: #003056;
     color:white;
   }
@@ -389,7 +392,6 @@
     content: "\e9a2";
     color: white;
   }
-
 
 
 </style>

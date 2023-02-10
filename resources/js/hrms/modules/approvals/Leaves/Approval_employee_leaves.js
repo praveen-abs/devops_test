@@ -8,26 +8,25 @@ import { createApp } from "vue";
 import PrimeVue from "primevue/config";
 import BadgeDirective from "primevue/badgedirective";
 import BlockUI from 'primevue/blockui';
-import InputText from 'primevue/inputtext'
 import Button from 'primevue/button';
-import ConfirmationService from 'primevue/confirmationservice';
-import DialogService from 'primevue/dialogservice';
-import ConfirmDialog from 'primevue/confirmdialog';
 import FocusTrap from 'primevue/focustrap';
 import Ripple from 'primevue/ripple';
 import StyleClass from 'primevue/styleclass';
-import Toast from 'primevue/toast';
-import ToastService from 'primevue/toastservice';
-import Dropdown from 'primevue/dropdown';
 import Tooltip from 'primevue/tooltip';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import ColumnGroup from 'primevue/columngroup';     //optional for column grouping
-import Row from 'primevue/row';
+import ConfirmDialog from 'primevue/confirmdialog';
+import Toast from 'primevue/toast';
+import Dialog from 'primevue/dialog';
+import Dropdown from 'primevue/dropdown';
+import ConfirmationService from 'primevue/confirmationservice';
+import ToastService from 'primevue/toastservice';
+import ProgressSpinner from 'primevue/progressspinner'; 
+import InputText from 'primevue/inputtext'
 
-import ReimbursementsApproval from './ReimbursementsApproval.vue';
+import Approval_employee_leaves from './Approval_employee_leaves.vue'
 
-const app = createApp(ReimbursementsApproval);
+const app = createApp(Approval_employee_leaves);
 
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
@@ -51,5 +50,5 @@ app.component('ConfirmDialog',ConfirmDialog);
 app.component('Dropdown',Dropdown);
 app.component('InputText', InputText)
 
-app.mount("#vjs_reimbursementsApprovalTable");
+app.mount("#Approval_employee_leaves");
 

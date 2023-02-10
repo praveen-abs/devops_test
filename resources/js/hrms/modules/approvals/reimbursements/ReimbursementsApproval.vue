@@ -27,16 +27,23 @@
                 <DataTable :value="data_reimbursements" :paginator="true" :rows="10" dataKey="id"
                 paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
                 responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
-                v-model:filters="filters2" filterDisplay="menu" :loading="loading2"
-                :globalFilterFields="['status']">
-                <Column field="name" header="Name">
+                v-model:filters="filters" filterDisplay="menu" :loading="loading2"
+                :globalFilterFields="['name','status']" >
+                <template #empty>
+                    No Employee found
+                </template>
+                <template #loading>
+                    Loading customers data. Please wait.
+                </template>
+                <Column field="employee_name" header="Employee Name" >
                     <template #body="slotProps">
-                        <div class="employee_name">
-                            {{ slotProps.data.name }}
-                        </div>
+                        {{ slotProps.data.employee_name }}
                     </template>
+                      <template #filter="{filterModel,filterCallback}">
+                        <InputText v-model="filterModel.value" @input="filterCallback()"  placeholder="Search" class="p-column-filter" :showClear="true" />
+                       </template>
                 </Column>
-                <Column class="fontSize13px" field="reimbursement_date" header="Date"></Column>
+                <Column class="fontSize13px" field="reimbursement_date" header="Date" :sortable="true"></Column>
                 <!-- <Column field="user_data" header="User Data"></Column> -->
                 <Column class="fontSize13px" field="from" header="From"></Column>
                 <Column class="fontSize13px" field="to" header="To"></Column>
@@ -66,7 +73,7 @@
                     <span :class="'customer-badge status-' + data.status">{{data.status}}</span>
                 </template>
                 <template #filter="{filterModel,filterCallback}">
-                    <Dropdown v-model="filterModel.value" @click="filterCallback()" :options="statuses" placeholder="Any" class="p-column-filter" :showClear="true">
+                    <Dropdown v-model="filterModel.value" @click="filterCallback()" :options="statuses" placeholder="Select" class="p-column-filter" :showClear="true">
                         <template #value="slotProps">
                             <span :class="'customer-badge status-' + slotProps.value" v-if="slotProps.value">{{slotProps.value}}</span>
                             <span v-else>{{slotProps.placeholder}}</span>
@@ -111,10 +118,19 @@ import { ref, onMounted } from 'vue';
     const toast = useToast();
 
 
-    const filters2 = ref({
-        'status': {value: null, matchMode: FilterMatchMode.EQUALS},
-    });
+    const filters = ref({
+            global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+            employee_name: {
+             value: null,
+                     matchMode: FilterMatchMode.STARTS_WITH,
+                     matchMode:FilterMatchMode.EQUALS,
+                     matchMode:FilterMatchMode.CONTAINS,
+                     
+                    },
 
+             status:  { value: null, matchMode: FilterMatchMode.EQUALS },
+
+        });
     const statuses = ref([
             'Pending', 'Approved', 'Rejected'
     ]);
@@ -363,5 +379,44 @@ import { ref, onMounted } from 'vue';
     background: none;
 
   }
+  .p-datatable .p-datatable-thead > tr > th .p-column-filter {
+    width: 55%;
+  }
+
+  /* For Sort */
+
+  .p-datatable .p-sortable-column:not(.p-highlight):hover {
+    background: #003056;
+    color:white;
+  }
+  .p-datatable .p-sortable-column:not(.p-highlight):hover .p-sortable-column-icon {
+      color:white
+  }
+   .p-datatable .p-sortable-column.p-highlight {
+    background: #003056;
+    color:white;
+  }
+  
+  .p-datatable .p-sortable-column.p-highlight:hover {
+    background: #003056;
+    color:white;     
+  }
+  .p-datatable .p-sortable-column:focus {
+    box-shadow: none;
+    outline: none;
+    color: white; 
+  }
+  .p-datatable .p-sortable-column .p-sortable-column-icon{
+    color:white
+  }
+  .pi-sort-amount-down::before {
+    content: "\e9a0";
+    color: white;
+  }
+  .pi-sort-amount-up-alt::before {
+    content: "\e9a2";
+    color: white;
+  }
+
 
 </style>

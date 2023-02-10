@@ -22,6 +22,7 @@ import Dropdown from 'primevue/dropdown';
 import ConfirmationService from 'primevue/confirmationservice';
 import ToastService from 'primevue/toastservice';
 import ProgressSpinner from 'primevue/progressspinner';
+import InputText from "primevue/inputtext";
 
 import AttRegularizationApproval from './AttRegularizationApproval.vue';
 
@@ -45,6 +46,7 @@ app.component('Toast',Toast);
 app.component('Dialog',Dialog);
 app.component('Dropdown',Dropdown);
 app.component('ProgressSpinner',ProgressSpinner);
+app.component('InputText', InputText)
 
 app.mount("#vjs_regularizationTable");
 
