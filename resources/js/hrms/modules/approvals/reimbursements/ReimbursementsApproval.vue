@@ -35,9 +35,9 @@
                 <template #loading>
                     Loading customers data. Please wait.
                 </template>
-                <Column field="employee_name" header="Employee Name" >
+                <Column field="name" header="Employee Name" >
                     <template #body="slotProps">
-                        {{ slotProps.data.employee_name }}
+                        {{ slotProps.data.name}}
                     </template>
                       <template #filter="{filterModel,filterCallback}">
                         <InputText v-model="filterModel.value" @input="filterCallback()"  placeholder="Search" class="p-column-filter" :showClear="true" />
@@ -51,10 +51,10 @@
                 <Column class="fontSize13px" field="distance_travelled" header="Distance Covered"></Column>
                 <Column class="fontSize13px" header="Total Expenses">
                     <template #body="slotProps">
-                        <div v-if="slotProps.data.vehicle_type=='2- Wheeler'" class="totalExpenses">
+                        <div v-if="slotProps.data.vehicle_type=='2-Wheeler'" class="totalExpenses">
                            {{  "&#8377;"+slotProps.data.distance_travelled*two_wheller_km_price  }}
                         </div>
-                        <div v-if="slotProps.data.vehicle_type=='4- Wheeler'" class="totalExpenses">
+                        <div v-if="slotProps.data.vehicle_type=='4-Wheeler'" class="totalExpenses">
                             {{ "&#8377;"+slotProps.data.distance_travelled*four_wheller_km_price }}
                          </div>
                     </template>
@@ -120,7 +120,7 @@ import { ref, onMounted } from 'vue';
 
     const filters = ref({
             global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-            employee_name: {
+            name: {
              value: null,
                      matchMode: FilterMatchMode.STARTS_WITH,
                      matchMode:FilterMatchMode.EQUALS,
@@ -380,7 +380,7 @@ import { ref, onMounted } from 'vue';
 
   }
   .p-datatable .p-datatable-thead > tr > th .p-column-filter {
-    width: 55%;
+    width: 50%;
   }
 
   /* For Sort */
