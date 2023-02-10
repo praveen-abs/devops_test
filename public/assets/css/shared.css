@@ -12,11 +12,29 @@
     --color-lite-ash: #e2e2e2;
 }
 
-.wildBlueYonder {
-    background: #8c8eb8 !important;
+.color_wildBlueYonder {
+    background: #70718d !important;
+}
+.color_oracle{
+    background: #346b6d !important;
+}
+.color_disco{
+    background: #841e62 !important;
+}
+.color_cinnabar{
+    background: #db4c40 !important;
+}
+.color_navyBlue{
+    background: #3d405b !important;
 }
 .iceberg {
     background: #cce1f4 !important;
+}
+.color_maroonFlush{
+    background: #b41d6c !important;
+}
+.color_onyx{
+    background: #333b3e !important;
 }
 .sisal {
     background: #cec7b9 !important;
@@ -33,6 +51,7 @@
 .lighthWisteria {
     background: #c8a4d4 !important;
 }
+
 .h_80 {
     height: 80px;
 }

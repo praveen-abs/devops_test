@@ -246,10 +246,10 @@ function getUserShortName($user_id)
         return $toStore;
     } else
     if (count($whiteSpacePattern) > 1) {
-        $toStore=$whiteSpacePattern[0][0]. $whiteSpacePattern[1][0];
+        $toStore = $whiteSpacePattern[0][0] . $whiteSpacePattern[1][0];
         return $toStore;
     } else {
-        $toStore=$singleWordPattern[0] . $singleWordPattern[1];
+        $toStore = $singleWordPattern[0] . $singleWordPattern[1];
         return $toStore;
     }
 
@@ -260,27 +260,43 @@ function shortNameBGColor($shortName)
 {
 
     $colorPalette = "";
-    $getAsciiCode = ord(strtoupper($shortName));
-    if ($getAsciiCode >= 65 && $getAsciiCode < 68) {
-        $colorPalette = "wildBlueYonder";
+    $getAsciiCodeFirstChar = ord(strtoupper($shortName[0]));
+    $getAsciiCodeSecondChar = ord(strtoupper($shortName[1]));
+    if (($getAsciiCodeFirstChar >= 65 && $getAsciiCodeFirstChar < 68) && ($getAsciiCodeSecondChar >= 65 && $getAsciiCodeSecondChar < 68)) {
+        $colorPalette = "color_wildBlueYonder";
         return $colorPalette;
-    } else if ($getAsciiCode >= 68 && $getAsciiCode < 72) {
+    } else if (($getAsciiCodeFirstChar >= 65 && $getAsciiCodeFirstChar < 68) && ($getAsciiCodeSecondChar >= 68 && $getAsciiCodeSecondChar < 72)) {
+        $colorPalette = "color_disco";
+        return $colorPalette;
+    } else if (($getAsciiCodeFirstChar >= 65 && $getAsciiCodeFirstChar < 68) && ($getAsciiCodeSecondChar >= 82 && $getAsciiCodeSecondChar < 85)) {
+        $colorPalette = "color_cinnabar";
+        return $colorPalette;
+    } else if (($getAsciiCodeFirstChar >= 65 && $getAsciiCodeFirstChar < 68) && ($getAsciiCodeSecondChar >= 85 && $getAsciiCodeSecondChar <= 90)) {
+        $colorPalette = "color_navyBlue";
+        return $colorPalette;
+    } else if (($getAsciiCodeFirstChar >= 68 && $getAsciiCodeFirstChar < 72) && ($getAsciiCodeSecondChar >= 82 && $getAsciiCodeSecondChar < 85)) {
+        $colorPalette = "color_cinnabar";
+        return $colorPalette;
+    } else if ($getAsciiCodeFirstChar >= 68 && $getAsciiCodeFirstChar < 72) {
         $colorPalette = "lighthWisteria";
         return $colorPalette;
-    } else if ($getAsciiCode >= 72 && $getAsciiCode < 76) {
+    } else if ($getAsciiCodeFirstChar >= 72 && $getAsciiCodeFirstChar < 76) {
         $colorPalette = "sisal";
         return $colorPalette;
-    } else if ($getAsciiCode >= 76 && $getAsciiCode < 79) {
+    } else if ($getAsciiCodeFirstChar >= 76 && $getAsciiCodeFirstChar < 79) {
         $colorPalette = "easternBlue";
         return $colorPalette;
-    } else if ($getAsciiCode >= 79 && $getAsciiCode < 82) {
+    } else if ($getAsciiCodeFirstChar >= 79 && $getAsciiCodeFirstChar < 82) {
         $colorPalette = "morningGlory";
         return $colorPalette;
-    } else if ($getAsciiCode >= 82 && $getAsciiCode < 85) {
-        $colorPalette = "downy";
+    } else if (($getAsciiCodeFirstChar >= 82 && $getAsciiCodeFirstChar < 85) &&  ($getAsciiCodeSecondChar >= 72 && $getAsciiCodeSecondChar < 76)) {
+        $colorPalette = "color_maroonFlush";
+        return $colorPalette;
+    } else if (($getAsciiCodeFirstChar >= 85 && $getAsciiCodeFirstChar <= 90) &&  ($getAsciiCodeSecondChar >= 80 && $getAsciiCodeSecondChar <=90)) {
+        $colorPalette = "color_cinnabar";
         return $colorPalette;
     } else {
-        $colorPalette = "iceberg";
+        $colorPalette = "color_navyBlue";
         return $colorPalette;
     }
 }
@@ -300,8 +316,6 @@ function getEmployeeAvatarOrShortName($user_id)
             //send the shortname
             $responseJSON['type'] = 'shortname';
             $responseJSON['data'] = strtoupper(getUserShortName($user_id));
-
-
         } else {
             //send the profile pic
             $responseJSON['type'] = 'avatar';
@@ -314,7 +328,7 @@ function getEmployeeAvatarOrShortName($user_id)
 
         return json_encode($responseJSON);
     } catch (Throwable $e) {
-        dd("ERROR : helper.php :: getEmployeeAvatarOrShortName() for user_id : ".$e);
+        dd("ERROR : helper.php :: getEmployeeAvatarOrShortName() for user_id : " . $e);
     }
 }
 

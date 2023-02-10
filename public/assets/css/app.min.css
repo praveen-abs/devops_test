@@ -176,14 +176,6 @@ body {
 
 /* font-sizes */
 
-label,
-p,
-a,
-span,input,
-select,button,.accordion-button {
-    font-size: 13px;
-    color:#2a2828;
-}
 
 .f-9{
     font-size: 9px;
@@ -17545,7 +17537,7 @@ tr:last-child td:last-child {
 
 .table > thead > tr > th,
 .gridjs-table > thead > tr > th {
-    background: #002f56 !important;
+    background: #002f56 ;
     color: #fff !important;
 }
 
