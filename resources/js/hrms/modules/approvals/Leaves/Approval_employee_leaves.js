@@ -16,6 +16,7 @@ import Tooltip from 'primevue/tooltip';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import ConfirmDialog from 'primevue/confirmdialog';
+import DialogService from 'primevue/dialogservice';
 import Toast from 'primevue/toast';
 import Dialog from 'primevue/dialog';
 import Dropdown from 'primevue/dropdown';
@@ -23,6 +24,8 @@ import ConfirmationService from 'primevue/confirmationservice';
 import ToastService from 'primevue/toastservice';
 import ProgressSpinner from 'primevue/progressspinner'; 
 import InputText from 'primevue/inputtext'
+import Row from 'primevue/row'
+import ColumnGroup from 'primevue/columngroup'
 
 import Approval_employee_leaves from './Approval_employee_leaves.vue'
 
@@ -48,7 +51,9 @@ app.component('Row', Row)
 app.component('Toast', Toast);
 app.component('ConfirmDialog',ConfirmDialog);
 app.component('Dropdown',Dropdown);
-app.component('InputText', InputText)
+app.component('InputText', InputText);
+app.component('Dialog', Dialog);
+app.component('ProgressSpinner', ProgressSpinner)
 
 app.mount("#Approval_employee_leaves");
 
