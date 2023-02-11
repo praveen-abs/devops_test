@@ -1,32 +1,36 @@
 <template>
-    <div>
-        <button @click="count++">count is:{{count}}</button>
-        <button @click="cont++">count is:{{cont}}</button>
-        <button @click="cnt++">count is:{{cnt}}</button>
-        <button @click="ct++">count is:{{ct}}</button>
-        <button @click="t++">count is:{{t}}</button>
-        <button @click="c++">count is:{{c}}</button>
-    </div>
+    <DataTable :value="holiday">
+    <Column  field="id" header="From"></Column>
+</DataTable>
 </template>
 
-<script> 
-import AutoComplete from 'primevue/autocomplete'
-export default{
-    data(){
-        return{
-            count:0,
-            cont:0,
-            cnt:0,
-            ct:0,
-            t:0,
-            c:0
-        }
-     
-    },
-    component:{
-        AutoComplete
-    }
-}
+
+
+<script setup> 
+
+import { ref, onMounted } from "vue";
+import {fetchUser} from '../testings/Services/service'
+
+const  holiday=ref();
+
+onMounted(()=>{
+    
+    fetchUser().then((result) =>{
+        // console.log(JSON.stringify(result));
+        holiday.value=result
+        console.log(holiday.value);
+        console.log(JSON.stringify(holiday._rawValue[0]));
+    }).catch(err =>{
+        console.log(err)
+    })
+   
+
+});
+fetchUser();
+
+
+
+
 </script>
 
 <style scoped>

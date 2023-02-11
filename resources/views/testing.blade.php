@@ -1,8 +1,8 @@
 <html>
-	<head>\
-		@vite('resources/js/hrms/modules/approvals/Leaves/Approval_employee_leaves.js')
+	<head>
+		@vite('resources/js/app.js')
 	</head>
 	<body>
-	<div id="Approval_employee_leaves"></div>
+	<div id="app"></div>
 	</body>
 </html>
