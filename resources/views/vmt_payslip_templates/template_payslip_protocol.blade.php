@@ -136,7 +136,8 @@ $bank_names = \DB::table('vmt_banks')->get();
                 <tr>
                     <td colspan="12" class=" bg-ash">
                         <p class=" txt-center   text-strong">PAYSLIP FOR THE MONTH OF &ndash;
-                            {{ strtoupper($employee_payslip->PAYROLL_MONTH) }}</p>
+                            {{\Carbon\Carbon::parse($employee_payslip->PAYROLL_MONTH)->format('M  y') }}
+                        </p>
                     </td>
                 </tr>
                 <tr>
@@ -165,7 +166,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                         <p>DATE OF JOINING</p>
                     </td>
                     <td colspan="3">
-                        <p>{{ date('d-m-Y', strtotime($employee_payslip->DOJ)) }}</p>
+                        <p>{{ date('d-m-Y', strtotime($employee_details->doj)) }}</p>
                     </td>
 
                 </tr>
@@ -409,7 +410,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                         <p class="txt-left text-strong">SALARY ADVANCE</p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-right">{{ number_format(round($employee_payslip->TDS), 2) }}</p>
+                        <p class="txt-right">{{ number_format(round($employee_payslip->income_tax ), 2) }}</p>
                     </td>
                 </tr>
 
