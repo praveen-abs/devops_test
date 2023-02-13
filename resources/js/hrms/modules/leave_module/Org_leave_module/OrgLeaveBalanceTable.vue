@@ -23,14 +23,7 @@
                   </div>
            </template> 
            </Column> -->
-
-
-           
-
-             
-             
-
-        </DataTable>
+</DataTable>
 	</div>
 </template>
 <script setup>

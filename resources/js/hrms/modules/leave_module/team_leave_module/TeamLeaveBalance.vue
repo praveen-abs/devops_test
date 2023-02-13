@@ -1,96 +1,73 @@
 <template>
 	<div>
-        <DataTable :value="products" responsiveLayout="scroll"  :rows="5" class="p-datatable-sm"
-        v-model:filters="filters2" filterDisplay="menu">
-            <Column field="name" header="Sick Leave"></Column>
-            <Column field="agejyje" header="Earned Leave"></Column>
-         <Column>
-            <template #header>
-                <div>
-                    Employee Name
-                </div>
-            </template>
-                <template #body="data">
-                    <div id="leave">
-                        {{ data.data.leave }}
-                    </div>
-                </template>
+        <DataTable :value="leaves"  responsiveLayout="scroll">
+            <Column field="user_id" header="Employee ID"></Column>
+            <Column field="employee_name" header=""></Column>
+             <!-- <Column v-for="col of columns" :field="col" :header="col" :key="col"></Column> -->
+             <Column v-for="leave_type of leave_types" :header="leave_type" :key="leave_type">
+
+              
+               <template #body>
+                  
+                    {{ leave_data.array_leave_details["Casual/Sick Leave"] }}
+                    
+            </template> 
             </Column>
+            <!-- <Column v-for="leave_type of leave_types" :header="leave_type" :key="leave_type">
+
+              
+              <template #body>
+                  <div v-for="leaves of leave_data" :key="leaves">
+                   {{ leaves.array_leave_details["Casual/Sick Leave"] }}
+                   
+                  </div>
+           </template> 
+           </Column> -->
+</DataTable>
+        </div>
 
 
-            <Column field="earnleave" header="Casual Leave">
-            <template #body="data">
-                <div id="leave">
-                    {{ data.data.earnleave }}
-                </div>
-            </template></Column>
-            <Column field="earned_leave_balance" header="remaining">
-             <template #body="data">
-                <div id="leave">
-                    {{ data.data.earnleave-data.data.leave }}
-                </div>
-            </template></Column>
+        
+    </template>
 
-        </DataTable>
-        <Paginator
-        :template="{
-            '640px': 'PrevPageLink CurrentPageReport NextPageLink',
-            '960px': 'FirstPageLink PrevPageLink CurrentPageReporNextPageLink LastPageLink',
-            '1300px': 'FirstPageLink PrevPageLink PageLinkNextPageLink LastPageLink',
-            default: 'FirstPageLink PrevPageLink PageLinks NextPageLinLastPageLink '
-        }"
-        :rows="10"
-        :totalRecords="totalRecords">
-    </Paginator>
-	</div>
-
-</template>
 <script setup>
 
 import { ref, onMounted } from 'vue';
 import axios from 'axios'
 
-        const products = ref();
-        const url=ref()
-        const size=ref(values().data.length)
-        const totalRecords = ref(size);
 
-        onMounted(() => {
+    const leaves = ref();
+    const leave_types=ref();
+    const  leave_data=ref();
+    const columns = ref();
+    const url=ref();
 
-        //   let url_org_leave = window.location.origin + '/fetch-org-leaves';
+    onMounted(() => {
 
-        //   console.log(url_org_leave);
+        let url_org_leave = window.location.origin + '/fetch-org-leaves';
 
+        console.log("Fetching ORG LEAVE from url : "+url_org_leave);
 
+        //leaves.value = values().data;
+        //console.log("Ref data : "+JSON.stringify(values().data));
 
-        //         axios.get(url_org_leave)
-        //           .then((response) => {
-        //             console.log(response.data);
+        axios.get(url_org_leave).then((response) => {
+              
+                leaves.value =Object.values(response.data)
+                leave_types.value=Object.values(response.data.leave_types)
+                leave_data.value=Object.values(response.data.employees)
+                //TODO : Need to fetch all the leaves types from the backend
+                //columns.value = Object.values(response.data.array_leave_details);
 
-        //             products.value =values.data
-
-
-        //     });
-        products.value=values().data
-        console.log(size)
-
-        })
- function values(){
-    return{
-       "data" :[
-         {"name":"sjdvhsvd","agejyje":"sgvdhgsvdghvd","leave":"1","earnleave":"10"},
-         {"name":"sjdvsvd","agejyje":"sgvdhgsvdghvd","leave":"3","earnleave":"10"},
-         {"name":"sjdvhsvd","agejyje":"sgvdhgsvdghvd","leave":"5","earnleave":"10"},
-         {"name":"sjdvhsvd","agejyje":"sgvdhgsvdghvd","leave":"4","earnleave":"10"},
-         {"name":"sjdvhsvd","agejyje":"sgvdhgsvdghvd","leave":"5","earnleave":"10"},
-         {"name":"sjdvhsvd","agejyje":"sgvdhgsvdghvd","leave":"8","earnleave":"10"},
+                console.log("Response Data : "+JSON.stringify(Object.values(response.data)));
+                
+              
+              
+        });
 
 
+    });
 
-
-        ]
-    }
- }
 
 </script>
 
