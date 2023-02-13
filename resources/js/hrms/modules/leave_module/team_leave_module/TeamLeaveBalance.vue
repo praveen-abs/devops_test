@@ -3,7 +3,7 @@
         <DataTable :value="leave_data"  responsiveLayout="scroll">
             <Column field="employee_name" header="Employee Name"></Column>
              <!-- <Column v-for="col of columns" :field="col" :header="col" :key="col"></Column> -->
-             <Column v-for="leave_type of leave_types" :header="leave_type" field="array_leave_details">
+             <Column v-for="leave_type of leave_types" :header="leave_type" :key="leave_type.id" field="array_leave_details">
                <template #body="{data}">
                     {{ data.array_leave_details[leave_type] }}
                </template>
@@ -137,5 +137,11 @@ import axios from 'axios'
 .p-datatable .p-datatable-tbody>tr>td:nth-child(1){
     width: 240px;
 }
-
+.p-datatable .p-datatable-tbody > tr > td {
+  text-align: left;
+  border: 1px solid #dee2e6;
+  border-width: 0 0 1px 0;
+  padding: 1rem 1rem;
+  font-size: 13.5px;
+}
 </style>
