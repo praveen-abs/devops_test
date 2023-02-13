@@ -54,233 +54,270 @@ class VmtEmployeeAttendanceController extends Controller
     public function basicArrendanceReport(){
 
             //dd($request->all());
+            $reportresponse=array();
 
-           // $user = User::find($request->user_id);
+            $user = User::select('id','user_code','name')->get()->toArray();
+           // dd($user);
+            foreach($user as $singleUser){
+                $userCode = $singleUser['id'];
+                $arrayreport=array($singleUser['id'],$singleUser['user_code'],$singleUser['name']);
 
-            // $userCode = $user->user_code;
-            $userCode=142;
+                $regularTime  = VmtWorkShifts::where('shift_type', 'First Shift')->first();
 
-            $regularTime  = VmtWorkShifts::where('shift_type', 'First Shift')->first();
+                // $requestedDate = $request->year . '-' . $request->month . '-01';
+                $requestedDate='2023-01-25';
+                 $currentDate = Carbon::now();
+                 $monthDateObj = Carbon::parse($requestedDate);
+                 //dd($monthDateObj);
+                 $startOfMonth = Carbon::parse($monthDateObj)->startOfMonth(); //->format('Y-m-d');
+                 $endOfMonth   =  Carbon::parse($monthDateObj)->endOfMonth(); //->format('Y-m-d');
+                // dd($endOfMonth);
+                 if ($currentDate->lte($endOfMonth)) {
+                     $lastAttendanceDate  = $currentDate; //->format('Y-m-d');
+                 } else {
+                     $lastAttendanceDate  = $endOfMonth; //->format('Y-m-d');
+                 }
+                //dd($lastAttendanceDate->format('d'));
+                 $totalDays  = $lastAttendanceDate->format('d');
+                 $firstDateStr  = $monthDateObj->startOfMonth()->toDateString();
+             //dd($totalDays);
+                 // attendance details from vmt_staff_attenndance_device table
+                 $deviceData = [];
+                 for ($i = 0; $i < ($totalDays); $i++) {
+                     // code...
 
-           // $requestedDate = $request->year . '-' . $request->month . '-01';
-           $requestedDate='2023-01-31';
-            $currentDate = Carbon::now();
-            $monthDateObj = Carbon::parse($requestedDate);
-            $startOfMonth = $monthDateObj->startOfMonth(); //->format('Y-m-d');
-            $endOfMonth   = $monthDateObj->endOfMonth(); //->format('Y-m-d');
+                     $dayStr = Carbon::parse($firstDateStr)->addDay($i)->format('l');
+                    // dd($dayStr);
+                     if ($dayStr != 'Sunday') {
 
-            if ($currentDate->lte($endOfMonth)) {
-                $lastAttendanceDate  = $currentDate; //->format('Y-m-d');
-            } else {
-                $lastAttendanceDate  = $endOfMonth; //->format('Y-m-d');
-            }
+                         $dateString  = Carbon::parse($firstDateStr)->addDay($i)->format('Y-m-d');
+                          //dd($dateString);
 
-            $totalDays  = $lastAttendanceDate->format('d');
-            $firstDateStr  = $monthDateObj->startOfMonth()->toDateString();
-        //dd($firstDateStr);
-            // attendance details from vmt_staff_attenndance_device table
-            $deviceData = [];
-            for ($i = 0; $i < ($totalDays); $i++) {
-                // code...
+                         $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
+                             ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
+                             ->whereDate('date', $dateString)
+                             ->where('direction', 'out')
+                             ->where('user_Id', 'BA005')
+                             ->first(['check_out_time']);
 
-                $dayStr = Carbon::parse($firstDateStr)->addDay($i)->format('l');
-               // dd($dayStr);
-                if ($dayStr != 'Sunday') {
+                         $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
+                             ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
+                             ->whereDate('date', $dateString)
+                             ->where('direction', 'in')
+                             ->where('user_Id', 'BA005')
+                             ->first(['check_in_time']);
 
-                    $dateString  = Carbon::parse($firstDateStr)->addDay($i)->format('Y-m-d');
-                     //dd($dateString);
+                             //dd($attendanceCheckIn);
 
-                    $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
-                        ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
-                        ->whereDate('date', $dateString)
-                        ->where('direction', 'out')
-                        ->where('user_Id', 'BA005')
-                        ->first(['check_out_time']);
+                         $deviceCheckOutTime = empty($attendanceCheckOut->check_out_time) ? null : explode(' ', $attendanceCheckOut->check_out_time)[1];
+                         $deviceCheckInTime  = empty($attendanceCheckIn->check_in_time) ? null : explode(' ', $attendanceCheckIn->check_in_time)[1];
+                     //    dd($deviceCheckOutTime.'-----------'.$deviceCheckInTime);
+                         if ($deviceCheckOutTime  != null || $deviceCheckInTime != null) {
+                             $deviceData[] = array(
+                                 'date' => $dateString,
+                                 'checkin_time' => $deviceCheckInTime,
+                                 'checkout_time' => $deviceCheckOutTime,
+                                 'attendance_mode_checkin' => 'biometric',
+                                 'attendance_mode_checkout' => 'biometric'
+                             );
+                         }
+                     }
 
-                    $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
-                        ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
-                        ->whereDate('date', $dateString)
-                        ->where('direction', 'in')
-                        ->where('user_Id', 'BA005')
-                        ->first(['check_in_time']);
+                 }
 
-                        //dd($attendanceCheckIn);
+              //dd($deviceData);
 
-                    $deviceCheckOutTime = empty($attendanceCheckOut->check_out_time) ? null : explode(' ', $attendanceCheckOut->check_out_time)[1];
-                    $deviceCheckInTime  = empty($attendanceCheckIn->check_in_time) ? null : explode(' ', $attendanceCheckIn->check_in_time)[1];
-                //    dd($deviceCheckOutTime.'-----------'.$deviceCheckInTime);
-                    if ($deviceCheckOutTime  != null || $deviceCheckInTime != null) {
-                        $deviceData[] = array(
-                            'date' => $dateString,
-                            'checkin_time' => $deviceCheckInTime,
-                            'checkout_time' => $deviceCheckOutTime,
-                            'attendance_mode_checkin' => 'biometric',
-                            'attendance_mode_checkout' => 'biometric'
-                        );
-                    }
-                }
+                 // attendance details from vmt_employee_attenndance table
+                 $attendance_WebMobile = VmtEmployeeAttendance::
+                 //where('user_id', $request->user_id)
+                      where('user_id','142')
+                     //->whereMonth('date', $request->month)
+                     ->whereMonth('date','1')
+                     ->orderBy('checkin_time', 'asc')
+                     ->get(['date', 'checkin_time', 'checkout_time','attendance_mode_checkin','attendance_mode_checkout']);
 
-            }
-
-         //dd($deviceData);
-
-            // attendance details from vmt_employee_attenndance table
-            $attendance_WebMobile = VmtEmployeeAttendance::
-            //where('user_id', $request->user_id)
-                 where('user_id','142')
-                //->whereMonth('date', $request->month)
-                ->whereMonth('date','1')
-                ->orderBy('checkin_time', 'asc')
-                ->get(['date', 'checkin_time', 'checkout_time','attendance_mode_checkin','attendance_mode_checkout']);
-
-            //dd($attendance_WebMobile);
-
-
-            $attendanceResponseArray = [];
-
-            //Create empty month array with all dates.
-           // $month = $request->month;
-            $month = 1;
-
-            if($month < 10)
-                $month = "0" . $month;
-
-            //$year = $request->year;
-            $year = 2023;
-            $days_count = cal_days_in_month(CAL_GREGORIAN,$month,$year);
-
-             for($i=1 ; $i <=$days_count ;$i++)
-             {
-               $date = "";
-
-               if($i<10)
-                 $date = "0".$i;
-               else
-                 $date = $i;
-
-               $fulldate = $year."-".$month."-".$date;
+                 //dd($attendance_WebMobile);
 
 
-               $attendanceResponseArray[$fulldate] = array(
-                //"user_id"=>$request->user_id,
-                "user_id"=>'142',"isAbsent"=>false, "is_weekoff"=>false,"date"=>$fulldate,
-                "attendance_mode_checkin"=>null, "attendance_mode_checkout"=>null,
-                "absent_status"=>null,"checkin_time"=>null, "checkout_time"=>null,
-                                                            );
+                 $attendanceResponseArray = [];
 
-               //echo "Date is ".$fulldate."\n";
-               ///$month_array[""]
-             }
+                 //Create empty month array with all dates.
+                // $month = $request->month;
+                 $month = 1;
 
+                 if($month < 10)
+                     $month = "0" . $month;
 
-            // merging result from both table
-            //dd($attendance_WebMobile->toArray());
-            $merged_attendanceData  = array_merge($deviceData, $attendance_WebMobile->toArray());
+                 //$year = $request->year;
+                 $year = 2023;
+                 $days_count = cal_days_in_month(CAL_GREGORIAN,$month,$year);
+                // dd($days_count);
+                 $heading_dates=array("Emp Code","Name");
+                  for($i=1 ; $i <=$days_count ;$i++)
+                  {
+                    $date = "";
 
-            $dateCollectionObj    =  collect($merged_attendanceData);
-
-            $sortedCollection   =   $dateCollectionObj->sortBy([
-                ['date', 'asc'],
-            ]);
-            $dateWiseData         =  $sortedCollection->groupBy('date'); //->all();
-            //dd($merged_attendanceData);
-            //dd($dateWiseData);
-           // dd($attendanceResponseArray);
-            foreach ($dateWiseData  as $key => $value) {
-
-               // dd($value[0]);
-
-                /*
-                    Here $key is the date. i.e : 2022-10-01
-
-                    $value is ::
-
-                        [
-                            date=>2022-11-05
-                            checkin_time=18:06:00
-                            checkout_time=18:06:00
-                            attendance_mode="web"
-                        ],
-                        [
-                            ....
-                            attendance_mode="biometric"
-
-                        ]
-
-                */
-                //Compare the checkin,checkout time between all attendance modes and get the min(checkin) and max(checkout)
-
-                $checkin_min = null;
-                $checkout_max = null;
-                $attendance_mode_checkin = null;
-                $attendance_mode_checkout = null;
-
-
-                foreach($value as $singleValue)
-                {
-                    //Find the min of checkin
-                    //dd($singleValue);
-
-                    if ($checkin_min == null) {
-                        $checkin_min = $singleValue["checkin_time"];
-
-                        $attendance_mode_checkin = $singleValue["attendance_mode_checkin"];
-                    }
+                    if($i<10)
+                      $date = "0".$i;
                     else
-                    if ($checkin_min > $singleValue["checkin_time"]) {
-                        $checkin_min = $singleValue["checkin_time"];
-                        $attendance_mode_checkin = $singleValue["attendance_mode_checkin"];
-                    }
+                      $date = $i;
 
-                        //dd("Min value found : " . $singleValue["checkin_time"]);
+                    $fulldate = $year."-".$month."-".$date;
 
-                    //Find the max of checkin
-                    if ($checkout_max == null) {
-                        $checkout_max = $singleValue["checkout_time"];
-                        $attendance_mode_checkout = $singleValue["attendance_mode_checkout"];
-                    }
-                    else
-                    if ($checkout_max < $singleValue["checkout_time"]) {
-                        $checkout_max = $singleValue["checkout_time"];
-                        $attendance_mode_checkout = $singleValue["attendance_mode_checkout"];
 
-                    }
+                   array_push($heading_dates, $fulldate);
 
-                }
+                    $attendanceResponseArray[$fulldate] = array(
+                     //"user_id"=>$request->user_id,
+                     "user_id"=>'142',"isAbsent"=>false, "is_weekoff"=>false,"date"=>$fulldate,
+                     "attendance_mode_checkin"=>null, "attendance_mode_checkout"=>null,
+                     "absent_status"=>null,"checkin_time"=>null, "checkout_time"=>null,
+                                                                 );
 
-                //dd("end : Check-in : ".$checkin_min." , Check-out : ".$checkout_max);
+                    //echo "Date is ".$fulldate."\n";
+                    ///$month_array[""]
+                  }
 
-                //dd($value[0]["attendance_mode"]);
 
-                $attendanceResponseArray[$key]["checkin_time"] = $checkin_min;
-                $attendanceResponseArray[$key]["checkout_time"] = $checkout_max;
+                 // merging result from both table
+                //dd($attendance_WebMobile->toArray());
+                 $merged_attendanceData  = array_merge($deviceData, $attendance_WebMobile->toArray());
 
-                //TODO :: Based on which checkin, checkout time taken, its corresponding attendance modes has to be assigned here
-                $attendanceResponseArray[$key]["attendance_mode_checkin"] = $attendance_mode_checkin;
-                $attendanceResponseArray[$key]["attendance_mode_checkout"] = $attendance_mode_checkout;
+                 $dateCollectionObj    =  collect($merged_attendanceData);
+                 $sortedCollection   =   $dateCollectionObj->sortBy([
+                     ['date', 'asc'],
+                 ]);
+                 $dateWiseData         =  $sortedCollection->groupBy('date'); //->all();
+                 //dd($merged_attendanceData);
+                 //dd($dateWiseData);
+                // dd($attendanceResponseArray);
+                 foreach ($dateWiseData  as $key => $value) {
 
+                    // dd($value[0]);
+
+                     /*
+                         Here $key is the date. i.e : 2022-10-01
+
+                         $value is ::
+
+                             [
+                                 date=>2022-11-05
+                                 checkin_time=18:06:00
+                                 checkout_time=18:06:00
+                                 attendance_mode="web"
+                             ],
+                             [
+                                 ....
+                                 attendance_mode="biometric"
+
+                             ]
+
+                     */
+                     //Compare the checkin,checkout time between all attendance modes and get the min(checkin) and max(checkout)
+
+                     $checkin_min = null;
+                     $checkout_max = null;
+                     $attendance_mode_checkin = null;
+                     $attendance_mode_checkout = null;
+
+
+                     foreach($value as $singleValue)
+                     {
+                         //Find the min of checkin
+                         //dd($singleValue);
+
+                         if ($checkin_min == null) {
+                             $checkin_min = $singleValue["checkin_time"];
+
+                             $attendance_mode_checkin = $singleValue["attendance_mode_checkin"];
+                         }
+                         else
+                         if ($checkin_min > $singleValue["checkin_time"]) {
+                             $checkin_min = $singleValue["checkin_time"];
+                             $attendance_mode_checkin = $singleValue["attendance_mode_checkin"];
+                         }
+
+                             //dd("Min value found : " . $singleValue["checkin_time"]);
+
+                         //Find the max of checkin
+                         if ($checkout_max == null) {
+                             $checkout_max = $singleValue["checkout_time"];
+                             $attendance_mode_checkout = $singleValue["attendance_mode_checkout"];
+                         }
+                         else
+                         if ($checkout_max < $singleValue["checkout_time"]) {
+                             $checkout_max = $singleValue["checkout_time"];
+                             $attendance_mode_checkout = $singleValue["attendance_mode_checkout"];
+
+                         }
+
+                     }
+
+                     //dd("end : Check-in : ".$checkin_min." , Check-out : ".$checkout_max);
+
+                     //dd($value[0]["attendance_mode"]);
+
+                     $attendanceResponseArray[$key]["checkin_time"] = $checkin_min;
+                     $attendanceResponseArray[$key]["checkout_time"] = $checkout_max;
+
+                     //TODO :: Based on which checkin, checkout time taken, its corresponding attendance modes has to be assigned here
+                     $attendanceResponseArray[$key]["attendance_mode_checkin"] = $attendance_mode_checkin;
+                     $attendanceResponseArray[$key]["attendance_mode_checkout"] = $attendance_mode_checkout;
+
+                 }
+
+
+                //dd($attendanceResponseArray);
+                //
+                 foreach ($attendanceResponseArray as $key => $value) {
+                         //Logic For Check week off or not
+                       //  dd(($attendanceResponseArray[$key]));
+                       if(!array_key_exists('date',$attendanceResponseArray[$key]) )
+                         dd("Missing for : ".$key);
+
+                     if(Carbon::parse($attendanceResponseArray[$key]['date'])->format('l')=="Sunday"){
+                         $attendanceResponseArray[$key]['is_weekoff']=true;
+                     }
+
+                     //Logic For Check Absent or Not
+                     if($attendanceResponseArray[$key]['checkin_time']==null&&
+                       $attendanceResponseArray[$key]["checkout_time"]==null&&
+                       $attendanceResponseArray[$key]['is_weekoff']==false){
+                         $attendanceResponseArray[$key]['isAbsent']=true;
+                     }
+
+                 }
+
+
+
+
+                 foreach ($attendanceResponseArray as $key => $value) {
+                     if($attendanceResponseArray[$key]['is_weekoff']){
+                         array_push($arrayreport,'WO');
+                      }else if($attendanceResponseArray[$key]['isAbsent']){
+                         array_push($arrayreport,'A');
+                     }else{
+                         array_push($arrayreport,'P');
+                     }
+
+                 }
+
+                 // dd($heading_dates);
+                  //dd(($attendanceResponseArray));
+                // dd( $arrayreport);
+
+                array_push($reportresponse,$arrayreport);
+                unset($arrayreport);
             }
 
+          // dd( $reportresponse);
 
-           // dd($attendanceResponseArray);
-           //
-            foreach ($attendanceResponseArray as $key => $value) {
-                    //Logic For Check week off or not
-                if(Carbon::parse($attendanceResponseArray[$key]['date'])->format('l')=="Sunday"){
-                    $attendanceResponseArray[$key]['is_weekoff']=true;
-                }
+            $ar1 = array(1,2,3);
 
-                //Logic For Check Absent or Not
-                if($attendanceResponseArray[$key]['checkin_time']==null&&
-                  $attendanceResponseArray[$key]["checkout_time"]==null&&
-                  $attendanceResponseArray[$key]['is_weekoff']==false){
-                    $attendanceResponseArray[$key]['isAbsent']=true;
-                }
-
-            }
+            $ar2 = array(4,5,6);
 
             //dd($attendanceResponseArray);
-            return Excel::download(new BasicAttendanceExport($attendanceResponseArray), 'Test.xlsx');
+            return Excel::download(new BasicAttendanceExport($attendanceResponseArray,$ar1,$ar2,$heading_dates,$reportresponse), 'Test.xlsx');
         }
     }
 
