@@ -45,5 +45,5 @@ app.component('Paginator', Paginator);
 app.component('Button', Button)
 
 
-app.mount("#TeamLeaveBalance");
+app.mount("#vjs_TeamLeaveTable_RemainingLeave");
 

@@ -1,59 +1,62 @@
 <template>
 	<div>
-        <DataTable :value="leaves"  responsiveLayout="scroll">
-            <Column field="user_id" header="Employee ID"></Column>
-            <Column field="employee_name" header=""></Column>
+        <DataTable :value="leave_data"  responsiveLayout="scroll">
+            <Column field="employee_name" header="Employee Name"></Column>
              <!-- <Column v-for="col of columns" :field="col" :header="col" :key="col"></Column> -->
-             <Column v-for="leave_type of leave_types" :header="leave_type" :key="leave_type">
-
-
-               <template #body>
-
-                    {{ leave_data.array_leave_details["Casual/Sick Leave"] }}
-
-            </template>
+             <Column v-for="leave_type of leave_types" :header="leave_type" field="array_leave_details">
+               <template #body="{data}">
+                    {{ data.array_leave_details[leave_type] }}
+               </template>
             </Column>
-</DataTable>
-        </div>
-
-
-
-    </template>
+        </DataTable>
+    </div>
+</template>
 
 <script setup>
 
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, useSSRContext } from 'vue';
 import axios from 'axios'
 
 
     const leaves = ref();
     const leave_types=ref();
-    const  leave_data=ref();
+    const leave_data=ref();
     const columns = ref();
     const url=ref();
 
     onMounted(() => {
 
-        let url_org_leave = window.location.origin + '/fetch-org-leaves-balance';
+        let currentLoggedInUserID = null;
 
-        console.log("Fetching ORG LEAVE from url : "+url_org_leave);
+        axios.get(window.location.origin + '/currentUser').then((response) => {
+            currentLoggedInUserID = response.data;
 
-        //leaves.value = values().data;
-        //console.log("Ref data : "+JSON.stringify(values().data));
-
-        axios.get(url_org_leave).then((response) => {
+            axios.post(url_team_leave,{user_id : currentLoggedInUserID}).then((response) => {
 
                 leaves.value =Object.values(response.data)
                 leave_types.value=Object.values(response.data.leave_types)
                 leave_data.value=Object.values(response.data.employees)
+
                 //TODO : Need to fetch all the leaves types from the backend
                 //columns.value = Object.values(response.data.array_leave_details);
 
-                console.log("Response Data : "+JSON.stringify(Object.values(response.data)));
+                console.log("Response Data Team Leave: "+JSON.stringify(Object.values(response.data)));
 
 
+
+            });
 
         });
+
+
+        let url_team_leave = window.location.origin + '/fetch-team-leaves-balance/';
+
+        console.log("Fetching Team LEAVE from url : "+url_team_leave);
+
+        //leaves.value = values().data;
+        //console.log("Ref data : "+JSON.stringify(values().data));
+
+
 
 
     });

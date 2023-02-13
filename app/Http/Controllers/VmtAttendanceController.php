@@ -1273,5 +1273,65 @@ class VmtAttendanceController extends Controller
 
     public function fetchTeamEmployeesPendingLeaves(Request $request){
 
+        //dd($request->all());
+
+        $manager_user_code = User::find($request->user_id)->user_code;
+
+        //dd($manager_user_code);
+
+        $final_output = array("leave_types"=>[] ,"employees"=>[]);
+
+        $leave_types = VmtLeaves::all()->pluck('leave_type');
+
+        //store all leave types
+        $final_output["leave_types"] = $leave_types;
+
+        //Create leave array template for storing leave count for each leave type for a given employee
+        $array_template_leaveTypes = array();
+
+        foreach($leave_types as $singleLeaveType){
+            $array_template_leaveTypes[$singleLeaveType] = 0;
+        }
+
+        $leave_balance_data=VmtEmployeeLeaves::join('users', 'users.id', '=', 'vmt_employee_leaves.user_id')
+                            ->join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','vmt_employee_leaves.user_id')
+                            ->join('vmt_leaves','vmt_leaves.id','=','vmt_employee_leaves.leave_type_id')
+                            ->select('vmt_employee_leaves.user_id','user_code','avatar','name','leave_type_id','leave_type','total_leave_datetime')
+                            ->where('vmt_employee_office_details.l1_manager_code','=',$manager_user_code)
+                            ->get();
+
+        //For each employee, check how much leave taken for each leave type
+        foreach($leave_balance_data as $single_leave_balance_data)
+        {
+
+           //If key not found, create one
+           if(!array_key_exists($single_leave_balance_data->user_id ,$final_output["employees"]))
+           {
+                //add to main array
+                $final_output["employees"][$single_leave_balance_data->user_id] = new VmtEmployeeLeaveModel(
+                                                                                        $single_leave_balance_data->user_id,
+                                                                                        $single_leave_balance_data->name,
+                                                                                        $array_template_leaveTypes
+                                                                                    );
+
+           }
+
+           //dd($single_leave_balance_data);
+
+           //Remove text chars from 'total_leave_datetime' value such as FN, AN.
+           $processed_val_total_leave_balance_data = preg_replace("/[^0-9.]/", "", $single_leave_balance_data->total_leave_datetime);
+
+           //Add the leave count in this array for the given leave_type
+           $final_output["employees"][$single_leave_balance_data->user_id]->array_leave_details[$single_leave_balance_data->leave_type] += $processed_val_total_leave_balance_data;
+
+        }
+
+        //TODO : Ignore the keys and get their values..
+        $final_output["employees"] = array_values($final_output["employees"]);
+
+        //dd($final_output);
+        return $final_output;
+
+
     }
 }
