@@ -29,7 +29,8 @@
                 <div id="leave">
                     {{ data.data.earnleave-data.data.leave }}
                 </div>
-            </template></Column>
+            </template>
+            </Column>
 
         </DataTable>
         <Paginator

@@ -5,31 +5,12 @@
             <Column field="employee_name" header=""></Column>
              <!-- <Column v-for="col of columns" :field="col" :header="col" :key="col"></Column> -->
              <Column v-for="leave_type of leave_types" :header="leave_type" :key="leave_type">
+                <template #body>
 
-              
-               <template #body>
-                  
                     {{ leave_data.array_leave_details["Casual/Sick Leave"] }}
-                    
-            </template> 
+
+                </template>
             </Column>
-            <!-- <Column v-for="leave_type of leave_types" :header="leave_type" :key="leave_type">
-
-              
-              <template #body>
-                  <div v-for="leaves of leave_data" :key="leaves">
-                   {{ leaves.array_leave_details["Casual/Sick Leave"] }}
-                   
-                  </div>
-           </template> 
-           </Column> -->
-
-
-           
-
-             
-             
-
         </DataTable>
 	</div>
 </template>
@@ -47,7 +28,7 @@ import axios from 'axios'
 
     onMounted(() => {
 
-        let url_org_leave = window.location.origin + '/fetch-org-leaves';
+        let url_org_leave = window.location.origin + '/fetch-org-leaves-balance';
 
         console.log("Fetching ORG LEAVE from url : "+url_org_leave);
 
@@ -55,24 +36,24 @@ import axios from 'axios'
         //console.log("Ref data : "+JSON.stringify(values().data));
 
         axios.get(url_org_leave).then((response) => {
-              
+
                 leaves.value =Object.values(response.data)
                 leave_types.value=Object.values(response.data.leave_types)
                 leave_data.value=Object.values(response.data.employees)
-            
-               
 
-              
-               
-                
+
+
+
+
+
 
                 //TODO : Need to fetch all the leaves types from the backend
                 //columns.value = Object.values(response.data.array_leave_details);
 
                 console.log("Response Data : "+JSON.stringify(Object.values(response.data)));
-                
-              
-              
+
+
+
         });
 
 
