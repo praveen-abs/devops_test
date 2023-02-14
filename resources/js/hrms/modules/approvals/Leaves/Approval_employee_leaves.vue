@@ -46,7 +46,7 @@
                 </Column>
                 <Column field="attendance_date" header="Date" :sortable="true"></Column>
                 <Column field="regularization_type" header="Leave Type"></Column>
-                <Column field="user_time" header="Start Time"></Column>
+              <Column field="user_time" header="Start Time"></Column>
                 <Column field="regularize_time" header="End Time"></Column>
                 <Column field="reason_type" header="Leave Reason"></Column>
                 <Column field="reviewer_comments" header="Approver Name"></Column>

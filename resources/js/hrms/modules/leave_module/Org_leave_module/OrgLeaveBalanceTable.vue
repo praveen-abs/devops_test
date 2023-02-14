@@ -1,13 +1,16 @@
 <template>
 	<div>
-        <DataTable :value="leave_data"  responsiveLayout="scroll">
-            <Column field="employee_name" header="Employee Name"></Column>
+        <DataTable :value="leave_data"  :rows="5"  responsiveLayout="scroll"
+        >
+            <Column  field="employee_name" header="Employee Name"></Column>
              <!-- <Column v-for="col of columns" :field="col" :header="col" :key="col"></Column> -->
-             <Column v-for="leave_type of leave_types" :header="leave_type" field="array_leave_details">
+             <Column  v-for="leave_type of leave_types" :key="leave_type.id" :header="leave_type" field="array_leave_details">
                 <template #body="{data}">
                     {{  data.array_leave_details[leave_type] }}
                 </template>
             </Column>
+            
+
         </DataTable>
 	</div>
 </template>
@@ -16,7 +19,7 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios'
 
-
+ ;
     const leaves = ref();
     const leave_types=ref();
     const leave_data=ref();
@@ -43,16 +46,7 @@ import axios from 'axios'
 
 
     });
-
-    function values(){
-        return{
-        "data" :[
-            {"user_id":"emp 1","employee_name":"emp one","leave":"1","earnleave":"10"},
-            {"user_id":"emp 2","employee_name":"emp two","leave":"1","earnleave":"10"},
-
-            ]
-        }
-    }
+    
 
 </script>
 
@@ -129,8 +123,13 @@ import axios from 'axios'
 
 
 }
-.p-datatable .p-datatable-tbody>tr>td:nth-child(1){
-    width: 240px;
+
+.p-datatable .p-datatable-tbody > tr > td {
+    text-align: left;
+    border: 1px solid #dee2e6;
+    border-width: 0 0 1px 0;
+    padding: 1rem 1rem;
+    font-size: 13.5px;
 }
 
 </style>
