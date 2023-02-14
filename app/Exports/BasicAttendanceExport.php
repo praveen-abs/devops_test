@@ -17,19 +17,13 @@ class BasicAttendanceExport implements FromArray,WithHeadings
     */
     use Exportable;
 
-    private $attendanceResponseArray;
-    private $ar1;
-    private $ar2;
     private $heading_dates;
     private $reportresponse;
 
-    public function __construct($attendanceResponseArray,$ar1,$ar2,$heading_dates,$reportresponse)
+    public function __construct($data)
     {
-          $this->attendanceResponseArray = $attendanceResponseArray;
-          $this->ar1=$ar1;
-          $this->ar2=$ar2;
-          $this->heading_dates=$heading_dates;
-          $this->reportresponse=$reportresponse;
+          $this->heading_dates=$data[0];
+          $this->reportresponse=$data[1];
     }
 
     public function headings():array
@@ -41,14 +35,14 @@ class BasicAttendanceExport implements FromArray,WithHeadings
 
     public function array(): array
     {
-           $data= array();
+           $single_employee= array();
 
        // dd(count($this->reportresponse));
         for($i=0;$i<count($this->reportresponse);$i++){
-            array_push($data,$this->reportresponse[$i]);
+            array_push($single_employee,$this->reportresponse[$i]);
         }
 
-        return $data;
+        return  $single_employee;
 
     }
 
