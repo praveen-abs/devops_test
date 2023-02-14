@@ -30,6 +30,7 @@ class VmtEmployeeAttendanceController extends Controller
         return Excel::download(new EmployeeAttendanceExport, 'Attendance.xlsx');
 
     }
+
     public function showAttendanceReport(){
         $attendance_details = VmtEmployeeAttendance::leftJoin('users', 'users.id', '=', 'vmt_employee_attendance.user_id')
                 ->leftjoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=','users.id')
@@ -51,16 +52,25 @@ class VmtEmployeeAttendanceController extends Controller
         return view('attendance_reports', compact('attendance_details'));
     }
 
-    public function basicArrendanceReport(){
+    public function basicAttendanceReport(){
 
             //dd($request->all());
             $reportresponse=array();
 
-            $user = User::select('id','user_code','name')->get()->toArray();
-           // dd($user);
+            $user = User::where('is_ssa','0')->get(['id','user_code','name']);
+            //dd($user);
             foreach($user as $singleUser){
-                $userCode = $singleUser['id'];
-                $arrayreport=array($singleUser['id'],$singleUser['user_code'],$singleUser['name']);
+
+                $total_present=0;
+                $total_absent=0;
+                $total_weekoff=0;
+
+                //dd($singleUser->user_code);
+
+                $arrayReport=array($singleUser->user_code,$singleUser->name);
+
+
+
 
                 $regularTime  = VmtWorkShifts::where('shift_type', 'First Shift')->first();
 
@@ -97,14 +107,14 @@ class VmtEmployeeAttendanceController extends Controller
                              ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
                              ->whereDate('date', $dateString)
                              ->where('direction', 'out')
-                             ->where('user_Id', 'BA005')
+                             ->where('user_Id', $singleUser->user_code)
                              ->first(['check_out_time']);
 
                          $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
                              ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
                              ->whereDate('date', $dateString)
                              ->where('direction', 'in')
-                             ->where('user_Id', 'BA005')
+                             ->where('user_Id', $singleUser->user_code)
                              ->first(['check_in_time']);
 
                              //dd($attendanceCheckIn);
@@ -129,8 +139,8 @@ class VmtEmployeeAttendanceController extends Controller
 
                  // attendance details from vmt_employee_attenndance table
                  $attendance_WebMobile = VmtEmployeeAttendance::
-                 //where('user_id', $request->user_id)
-                      where('user_id','142')
+                // where('user_id', $request->user_id)
+                 where('user_id', $singleUser->id)
                      //->whereMonth('date', $request->month)
                      ->whereMonth('date','1')
                      ->orderBy('checkin_time', 'asc')
@@ -163,13 +173,14 @@ class VmtEmployeeAttendanceController extends Controller
                       $date = $i;
 
                     $fulldate = $year."-".$month."-".$date;
-
-
-                   array_push($heading_dates, $fulldate);
+                   // dd($i.' '.substr(Carbon::parse($fulldate)->format('l'),0,1));
+                  //  $date_day=$i.'  '.substr(Carbon::parse($fulldate)->format('l'),0,1);
+                  $date_day=$i.' - '.Carbon::parse($fulldate)->format('l');
+                    array_push($heading_dates, $date_day);
 
                     $attendanceResponseArray[$fulldate] = array(
                      //"user_id"=>$request->user_id,
-                     "user_id"=>'142',"isAbsent"=>false, "is_weekoff"=>false,"date"=>$fulldate,
+                     "user_id"=> $singleUser->id,"isAbsent"=>false, "is_weekoff"=>false,"date"=>$fulldate,
                      "attendance_mode_checkin"=>null, "attendance_mode_checkout"=>null,
                      "absent_status"=>null,"checkin_time"=>null, "checkout_time"=>null,
                                                                  );
@@ -177,6 +188,8 @@ class VmtEmployeeAttendanceController extends Controller
                     //echo "Date is ".$fulldate."\n";
                     ///$month_array[""]
                   }
+                  array_push($heading_dates, "Total WO", "P", "A");
+
 
 
                  // merging result from both table
@@ -284,6 +297,7 @@ class VmtEmployeeAttendanceController extends Controller
                        $attendanceResponseArray[$key]["checkout_time"]==null&&
                        $attendanceResponseArray[$key]['is_weekoff']==false){
                          $attendanceResponseArray[$key]['isAbsent']=true;
+                         $total_absent++;
                      }
 
                  }
@@ -293,21 +307,27 @@ class VmtEmployeeAttendanceController extends Controller
 
                  foreach ($attendanceResponseArray as $key => $value) {
                      if($attendanceResponseArray[$key]['is_weekoff']){
-                         array_push($arrayreport,'WO');
+                         array_push($arrayReport,'WO');
+                         $total_weekoff++;
                       }else if($attendanceResponseArray[$key]['isAbsent']){
-                         array_push($arrayreport,'A');
+                         array_push($arrayReport,'A');
+                         $total_absent++;
                      }else{
-                         array_push($arrayreport,'P');
+                         array_push($arrayReport,'P');
+                         $total_present++;
                      }
 
                  }
 
                  // dd($heading_dates);
                   //dd(($attendanceResponseArray));
-                // dd( $arrayreport);
 
-                array_push($reportresponse,$arrayreport);
-                unset($arrayreport);
+               // dd();
+                array_push($arrayReport,$total_weekoff,$total_present,$total_absent);
+                array_push($reportresponse,$arrayReport);
+
+               // dd( $arrayReport);
+                unset($arrayReport);
             }
 
           // dd( $reportresponse);

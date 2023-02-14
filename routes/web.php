@@ -533,7 +533,7 @@ Route::get('/documents',  [App\Http\Controllers\VmtEmployeeController::class, 's
     Route::get('/reports/generate-attendance-report',  [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'generateAttendanceReports'])->name('generateAttendanceReports');
 
     //basic Attedance Report
-    Route::get('/reports/basic-attendance',  [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'basicArrendanceReport'])->name('basicArrendanceReport');
+    Route::get('/reports/basic-attendance',  [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'basicAttendanceReport'])->name('basicAttendanceReport');
 
      //Ajax Part
      Route::get('/attendance-filter-info', [App\Http\Controllers\VmtReportsController::class, 'fetchAttendanceInfo'])->name('fetchAttendanceInfo');
