@@ -148,6 +148,8 @@ class VmtEmployeePayslipService {
             'rename' => 'required',
             //'email' => 'required',
             'greetings' => 'required',
+            'travel_conveyance' => 'required',
+            'other_earnings' => 'required'
         ];
 
 
@@ -404,6 +406,8 @@ class VmtEmployeePayslipService {
             $empPaySlip->Rename = $row['rename'];
             //$empPaySlip->Email = $row['email'];
             $empPaySlip->Greetings = $row['greetings'];
+            $empPaySlip->travel_conveyance = $row['travel_conveyance'];
+            $empPaySlip->other_earnings = $row['other_earnings'];
 
             $empPaySlip->save();
             //]);
