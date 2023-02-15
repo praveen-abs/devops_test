@@ -1629,21 +1629,22 @@
                             name: 'Employee Name',
                             formatter: function formatter(leaveHistoryObj) {
                                 var output = "";
+                                let json_emp_avatar = JSON.parse(leaveHistoryObj.employee_avatar);
 
-                                if (leaveHistoryObj.employee_avatar.type == "shortname") {
+                                if (json_emp_avatar.type == "shortname") {
 
                                     output =
                                         '<div class="d-flex align-items-center page-header-user-dropdown">' +
                                         '<span class="rounded-circle user-profile  ml-2 " id="">' +
                                         '<i class="topbar_username" class="align-middle ">' +
-                                        leaveHistoryObj.employee_avatar.data + '</i>' +
+                                        json_emp_avatar.data + '</i>' +
                                         '</span>' +
                                         '<span>&nbsp;&nbsp;' + leaveHistoryObj.employee_name +
                                         '</span>' +
                                         '</div>';
                                 } else
-                                if (leaveHistoryObj.employee_avatar.type == "avatar") {
-                                    var imageURL = "images/" + leaveHistoryObj.employee_avatar.data;
+                                if (json_emp_avatar.type == "avatar") {
+                                    var imageURL = "images/" + json_emp_avatar.data;
 
                                     output = '<div class="d-flex align-items-center">' +
                                         '<img class="rounded-circle header-profile-user" src="' +
@@ -1651,6 +1652,10 @@
                                         '<span>&nbsp;&nbsp;' + leaveHistoryObj.employee_name +
                                         '</span>' +
                                         '</div>';
+                                }
+                                else
+                                {
+                                    output = 'error';
                                 }
 
                                 return gridjs.html(output);
@@ -1787,21 +1792,22 @@
                             formatter: function formatter(leaveHistoryObj) {
 
                                 var output = "";
+                                let json_emp_avatar = JSON.parse(leaveHistoryObj.employee_avatar);
 
-                                if (leaveHistoryObj.employee_avatar.type == "shortname") {
+                                if (json_emp_avatar.type == "shortname") {
 
                                     output =
                                         '<div class="d-flex align-items-center page-header-user-dropdown">' +
                                         '<span class="rounded-circle user-profile  ml-2 " id="">' +
                                         '<i class="topbar_username" class="align-middle ">' +
-                                        leaveHistoryObj.employee_avatar.data + '</i>' +
+                                        json_emp_avatar.data + '</i>' +
                                         '</span>' +
                                         '<span>&nbsp;&nbsp;' + leaveHistoryObj.employee_name +
                                         '</span>' +
                                         '</div>';
                                 } else
-                                if (leaveHistoryObj.employee_avatar.type == "avatar") {
-                                    var imageURL = "images/" + leaveHistoryObj.employee_avatar.data;
+                                if (json_emp_avatar.type == "avatar") {
+                                    var imageURL = "images/" + json_emp_avatar.data;
 
                                     output = '<div class="d-flex align-items-center">' +
                                         '<img class="rounded-circle header-profile-user" src="' +
@@ -1809,6 +1815,10 @@
                                         '<span>&nbsp;&nbsp;' + leaveHistoryObj.employee_name +
                                         '</span>' +
                                         '</div>';
+                                }
+                                else
+                                {
+                                    output = 'error';
                                 }
 
                                 return gridjs.html(output);

@@ -206,14 +206,14 @@ class VmtAttendanceController extends Controller
                 if (array_key_exists($singleItem->user_id, $map_allEmployees->toArray()))
                 {
                     $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
-                    $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->user_id]);
+                    $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->user_id);
                 }
 
                 //check if the key exists in array
                 if (array_key_exists($singleItem->reviewer_user_id, $map_allEmployees->toArray()))
                 {
                     $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_user_id]["name"];
-                    $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName([$singleItem->reviewer_user_id]);
+                    $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName($singleItem->reviewer_user_id);
                 }
             }
 
@@ -232,13 +232,13 @@ class VmtAttendanceController extends Controller
 
                 if (array_key_exists($singleItem->user_id, $map_allEmployees->toArray())) {
                     $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
-                    $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->user_id]);
+                    $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->user_id);
                 }
 
                 if (array_key_exists($singleItem->reviewer_user_id, $map_allEmployees->toArray())) {
 
                     $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_user_id]["name"];
-                    $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName([$singleItem->reviewer_user_id]);
+                    $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName($singleItem->reviewer_user_id);
                 }
             }
 
@@ -966,7 +966,7 @@ class VmtAttendanceController extends Controller
 
         //dd($reportees_details->toArray());
         foreach ($reportees_details as $singleItem) {
-            $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->id]);
+            $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->id);
         }
 
         return $reportees_details;
@@ -984,7 +984,7 @@ class VmtAttendanceController extends Controller
 
         //dd($reportees_details->toArray());
         foreach ($all_employees as $singleItem) {
-            $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->id]);
+            $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->id);
         }
 
         return $all_employees;
@@ -1023,12 +1023,12 @@ class VmtAttendanceController extends Controller
                 }
 
                 $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
-                $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->user_id]);
+                $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->user_id);
 
                 //If reviewer_id = 0, then its not yet reviewed
                 if ($singleItem->reviewer_id != 0) {
                     $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_id]["name"];
-                    $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName([$singleItem->reviewer_id]);
+                    $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName($singleItem->reviewer_id);
                 }
             }
             else
