@@ -574,7 +574,8 @@ class VmtAttendanceController extends Controller
             ->first(['users.id', 'users.name', 'vmt_employee_office_details.designation']);
 
         $current_employee_detail->employee_avatar = getEmployeeAvatarOrShortName($current_employee_detail->id);
-
+         $current_employee_detail->employee_avatar = json_decode( $current_employee_detail->employee_avatar, false);
+        // dd($current_employee_detail->employee_avatar->type);
         return view('attendance_timesheet', compact('current_employee_detail', 'shift_start_time', 'shift_end_time'));
     }
 
