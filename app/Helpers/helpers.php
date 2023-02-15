@@ -301,7 +301,6 @@ function getEmployeeAvatarOrShortName($user_id)
             $responseJSON['type'] = 'shortname';
             $responseJSON['data'] = strtoupper(getUserShortName($user_id));
 
-
         } else {
             //send the profile pic
             $responseJSON['type'] = 'avatar';
@@ -314,7 +313,8 @@ function getEmployeeAvatarOrShortName($user_id)
 
         return json_encode($responseJSON);
     } catch (Throwable $e) {
-        dd("ERROR : helper.php :: getEmployeeAvatarOrShortName() for user_id : ".$e);
+        //dd($user_id);
+        dd("ERROR : helper.php :: getEmployeeAvatarOrShortName() for user_id : ".implode($user_id)." . Exception Message : ".$e);
     }
 }
 
