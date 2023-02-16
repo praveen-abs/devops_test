@@ -80,7 +80,7 @@
                                         <div class="border-bottom-liteAsh py-2">
                                             <p class="text-muted f-12 fw-bold">Department</p>
                                             <p class="text-primary f-15 fw-bold">
-                                                {{ $user_full_details->department_id ?? '-' }}</p>
+                                                {{ $department ?? '-' }}</p>
                                         </div>
                                         <div class="border-bottom-liteAsh py-2">
                                             <p class="text-muted f-12 fw-bold">Reporting To</p>

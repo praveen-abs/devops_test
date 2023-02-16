@@ -39,6 +39,12 @@ Route::get('/Add-New', function () {
 
 Route::middleware(['auth'])->group(function () {
 
+    //AJAX : Get emp avatar
+    Route::get('/getEmployeeAvatar/{user_id}', function ($user_id) {
+        return getEmployeeAvatarOrShortName($user_id);
+    });
+
+
     //Basic DB data
     Route::get('/db/getBankDetails', [App\Http\Controllers\VmtBankController::class, 'getBankDetails'])->name('vmt_getBankDetails');
     Route::get('/db/getCountryDetails', [App\Http\Controllers\VmtDBDataController::class, 'getCountryDetails'])->name('vmt_getCountryDetails');
@@ -92,10 +98,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/fetch-team-members', [App\Http\Controllers\VmtAttendanceController::class, 'fetchTeamMembers'])->name('fetch-team-members');
     Route::get('/fetch-org-members', [App\Http\Controllers\VmtAttendanceController::class, 'fetchOrgMembers'])->name('fetch-org-members');
 
-
-
     //Leave history pages
-
 
     Route::get('/attendance-leave-policydocument', [App\Http\Controllers\VmtAttendanceController::class, 'showLeavePolicyDocument'])->name('attendance-leave-policydocument');
     Route::get('/attendance-leavehistory/{type}', [App\Http\Controllers\VmtAttendanceController::class, 'showLeaveHistoryPage'])->name('attendance-leavehistory');
@@ -116,7 +119,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/withdrawLeave', [App\Http\Controllers\VmtAttendanceController::class, 'withdrawLeave'])->name('withdrawLeave');
     //Leave Policy
     Route::get('/fetch-holidays', [App\Http\Controllers\VmtLeavePolicyController::class, 'fetchHolidays'])->name('fetch-getHolidays');
-
 
     //Ajax For Leave withdraw
     Route::get('/revokeLeave', [App\Http\Controllers\VmtAttendanceController::class, 'approveRejectRevokeLeaveRequest'])->name('revokeLeave');
@@ -396,7 +398,8 @@ Route::get('vmt-pmsappraisal-review', 'App\Http\Controllers\VmtPmsController@sho
     Route::get('/pdfview/{emp_code?}/{selectedPaySlipMonth?}',[App\Http\Controllers\VmtPayCheckController::class, 'showPaySlip_PDFView'])->name('vmt_paycheck_employee_payslip_pdf');
 
     // testing template
-    Route::get('/testingController',[App\Http\Controllers\VmtTestingController::class, 'index'])->name('testingController');
+    Route::get('/testingController',[App\Http\Controllers\VmtTestingController::class, 'testingpdf'])->name('testingController');
+    Route::get('/testingControllerView',[App\Http\Controllers\VmtTestingController::class, 'viewpdf'])->name('testingControllerView');
 
     // end
 

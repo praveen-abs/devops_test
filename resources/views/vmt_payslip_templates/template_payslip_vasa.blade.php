@@ -111,7 +111,8 @@
                 <tr>
                     <td colspan="12" class="bg-ash">
                         <p class="sub-header txt-center  text-strong">PAYSLIP FOR THE MONTH OF &ndash;
-                            {{\Carbon\Carbon::parse($employee_payslip->PAYROLL_MONTH)->format('M  y') }}</p>
+                            {{\Carbon\Carbon::parse($employee_payslip->PAYROLL_MONTH)->format('M  y') }}
+                        </p>
 
                     </td>
                 </tr>
@@ -404,7 +405,7 @@
                         <p class="txt-left text-strong">TDS</p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-right">{{ number_format(round($employee_payslip->TDS), 2) }}</p>
+                        <p class="txt-right">{{ number_format(round($employee_payslip->income_tax), 2) }}</p>
                     </td>
                 </tr>
                 <tr>
