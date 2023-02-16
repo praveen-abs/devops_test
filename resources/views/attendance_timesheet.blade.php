@@ -586,12 +586,12 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
             var avatar_data = '';
 
-            @if ($current_employee_detail->employee_avatar['type'] == 'shortname')
+            @if ($current_employee_detail->employee_avatar->type == 'shortname')
 
                 avatar_data =
-                    '<div class="bg-primary user_pic d-flex justify-content-center align-items-center  rounded-circle"> <span class="text-white fw-bold">{{ $current_employee_detail->employee_avatar['data'] }}</span></div>';
-            @elseif ($current_employee_detail->employee_avatar['type'] == 'avatar')
-                var imageURL = "images/" + '{{ $current_employee_detail->employee_avatar['data'] }}';
+                    '<div class="bg-primary user_pic d-flex justify-content-center align-items-center  rounded-circle"> <span class="text-white fw-bold">{{ $current_employee_detail->employee_avatar->data }}</span></div>';
+            @elseif ($current_employee_detail->employee_avatar->type == 'avatar')
+                var imageURL = "images/" + '{{ $current_employee_detail->employee_avatar->data }}';
 
                 avatar_data =
                     ' <div class="user_pic bg-ash rounded-circle "><img class=" rounded-circle w-100 h-100 header-profile-user" src="' +
