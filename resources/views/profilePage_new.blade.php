@@ -300,7 +300,7 @@
                                 </div>
 
 
-                                </form>
+
                             </div>
                         </div>
                     </div>
@@ -2670,6 +2670,7 @@
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 Swal.fire(
+
                                     'Deleted!',
                                     'Your file has been deleted.',
                                     'success'
