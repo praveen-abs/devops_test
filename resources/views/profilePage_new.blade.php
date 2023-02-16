@@ -29,7 +29,7 @@
 
                                 <div class=" d-flex justify-content-center">
                                     <div class="rounded-circle userActive-status profile-img"
-                                        style="border:8px solid #c2c2c2c2">
+                                        style="border:6px solid #c2c2c2c2">
                                         @include('ui-profile-avatar-lg', [
                                             'currentUser' => $user,
                                         ])
@@ -73,6 +73,12 @@
 
                                         </div>
                                         <div class="border-bottom-liteAsh py-2">
+                                            <p class="text-muted f-12 fw-bold">Designation</p>
+                                            <p class="text-primary f-15 fw-bold">{{ $user_full_details->designation }}
+                                            </p>
+
+                                        </div>
+                                        <div class="border-bottom-liteAsh py-2">
                                             <p class="text-muted f-12 fw-bold">Location</p>
                                             <p class="text-primary f-15 fw-bold">
                                                 {{ $user_full_details->work_location ?? '-' }}</p>
@@ -80,7 +86,7 @@
                                         <div class="border-bottom-liteAsh py-2">
                                             <p class="text-muted f-12 fw-bold">Department</p>
                                             <p class="text-primary f-15 fw-bold">
-                                                {{ $user_full_details->department_id ?? '-' }}</p>
+                                                {{ $department ?? '-' }}</p>
                                         </div>
                                         <div class="border-bottom-liteAsh py-2">
                                             <p class="text-muted f-12 fw-bold">Reporting To</p>
@@ -294,7 +300,7 @@
                                 </div>
 
 
-                                </form>
+
                             </div>
                         </div>
                     </div>
@@ -1532,8 +1538,8 @@
                                                 <label>Date Of Joining(DOJ)<span class="text-danger">*</span></label>
                                                 <div class="cal-icon">
                                                     @if (!empty($user_full_details->doj))
-                                                        <input class="form-control onboard" type="date"
-                                                            max="9999-12-31" name="doj"
+                                                        <input class="form-control " type="date" max="9999-12-31"
+                                                            name="doj"
                                                             value="{{ date('Y-m-d', strtotime($user_full_details->doj)) }}">
                                                     @else
                                                         <input class="form-control onboard" type="date"
@@ -1578,9 +1584,14 @@
                                         <div class="col-6">
                                             <div class="form-group mb-3">
                                                 <label>Physically Handicapped</label>
-                                                <input type="text" name="" id=""
-                                                    class="form-control "
-                                                    value=" {{ $user_full_details->physically_challenged ?? '-' }}">
+                                                @if (!empty($user_full_details->physically_challenged))
+                                                    <input type="text" name="physical_challenge"
+                                                        id="physical_challenge" class="form-control "
+                                                        value=" {{ $user_full_details->physically_challenged }}">
+                                                @else
+                                                    <input type="text" name="physical_challenge"
+                                                        id="physical_challenge" class="form-control " value="">
+                                                @endif
 
                                             </div>
                                         </div>
@@ -1644,7 +1655,7 @@
 
                                         <div class="col-12">
                                             <div class="text-right">
-                                                <button id=btn_submit_contact_info
+                                                <button id="btn_submit_contact_info"
                                                     class="btn btn-border-orange submit-btn">Save</button>
                                             </div>
                                         </div>
@@ -1726,23 +1737,21 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-
-                                    @csrf
-
-                                    @if (!empty($familydetails) && count($familydetails) > 0)
-                                        @foreach ($familydetails as $singledetail)
-                                            {{-- <div class="content-container"> --}}
-                                            <div class="family-addition-container">
+                                    <div class="family-addition-container">
+                                        @csrf
+                                        @if (!empty($familydetails) && count($familydetails) > 0)
+                                            @foreach ($familydetails as $singledetail)
                                                 <div class="card mb-3 addition-content" id="content1">
                                                     <div class="card-body">
                                                         <div class="row ">
                                                             <div class="col-md-12 m-0 text-end">
                                                                 <button
-                                                                    class="btn text-danger delete-btn p-0 bg-transparent outline-none border-0 f-12 plus-sign"
-                                                                    type="button"><i
+                                                                    class="btn text-danger delete-btn p-0 bg-transparent outline-none border-0 f-12 "
+                                                                    type="button" id="deleteFamily_btn"><i
                                                                         class="f-12 me-1 fa text-danger  fa-trash"
                                                                         aria-hidden="true"></i>Delete
-                                                                    </i></button>
+                                                                    </i>
+                                                                </button>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="form-group mb-3">
@@ -1785,33 +1794,15 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {{-- </div> --}}
-                                            </div>
-                                        @endforeach
-
-                                        <div class="add-more text-end mb-2" style="cursor:pointer;">
-                                            {{-- <div id="add_more" class="text-primary  cursor-pointer">
-                                        <i class=" ri-add-circle-fill"></i> Add More
-                                    </div> --}}
-                                            <button id="add_more"
-                                                class="btn text-primary p-0 bg-transparent outline-none border-0 f-12 plus-sign"
-                                                type="button"><i class="f-12 me-1 fa  fa-plus-circle"
-                                                    aria-hidden="true"></i>Add
-                                                More</i></button>
-                                        </div>
-                                    @else
-                                        <div class="family-addition-container">
+                                            @endforeach
+                                        @else
                                             <div class="card mb-3 addition-content" id="content1">
                                                 <div class="card-body">
-                                                    <!-- <h3 class="card-title fw-bold">Education Informations <a href="javascript:void(0);"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{-- class="delete-icon"><i class="   ri-delete-bin-line"></i></a> --}}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        </h3> -->
-
                                                     <div class="row ">
                                                         <div class="col-md-12 m-0 text-end">
                                                             <button
                                                                 class="btn text-danger delete-btn p-0 bg-transparent outline-none border-0 f-12 plus-sign"
-                                                                type="button"><i
+                                                                type="button" id="deleteFamily_btn"><i
                                                                     class="f-12 me-1 fa text-danger  fa-trash"
                                                                     aria-hidden="true"></i>Delete
                                                                 </i></button>
@@ -1855,28 +1846,22 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-                                        </div>
-                                        <div class="add-more text-end mb-2" style="cursor:pointer;">
-                                            {{-- <button id="add_more" class="text-primary  cursor-pointer">
-                                    <i class=" ri-add-circle-fill"></i> Add More
-                                </button> --}}
-                                            <button id="add_more"
-                                                class="btn text-primary p-0 bg-transparent outline-none border-0 f-12 plus-sign"
-                                                type="button"><i class="f-12 me-1 fa  fa-plus-circle"
-                                                    aria-hidden="true"></i>Add
-                                                More</i></button>
-                                        </div>
-                                    @endif
-
-                                    <div class="col-12">
-                                        <div class="text-right">
-                                            <button id="btn_submit_family_info"
-                                                class="btn btn-orange submit-btn">Submit</button>
-                                        </div>
+                                        @endif
                                     </div>
-                                    </form>
+                                    <div class=" text-end mb-2" style="cursor:pointer;">
+                                        <button id="addMore_family"
+                                            class="btn text-primary p-0 bg-transparent outline-none border-0 f-12 plus-sign"
+                                            type="button"><i class="f-12 me-1 fa  fa-plus-circle"
+                                                aria-hidden="true"></i>Add
+                                            More</i>
+                                        </button>
+                                    </div>
+                                    <div class="col-12 text-right">
+                                        <button id="btn_submit_family_info" class="btn btn-orange submit-btn">Submit
+                                        </button>
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -1894,81 +1879,86 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    {{-- <form action="{{ route('updateExperienceInfo', $user->id) }}" Method="POST"> --}}
                                     @csrf
-                                    <div class="form-scroll">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <a href="javascript:void(0);" class="delete-icon text-end"><i
-                                                        class="   ri-delete-bin-line"></i></a>
-
-                                                <div class="exp-content-container">
-                                                    <div class="row exp-addition-content" id="content1">
-                                                        <input type="hidden" name="ids[]">
-                                                        <div class="col-md-6">
-                                                            <div class="form-group mb-3 form-focus focused">
-                                                                <label class="focus-label">Company Name</label>
-                                                                <input type="text" name="company_name[]"
-                                                                    class="form-control floating" value="" required>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form-group mb-3 form-focus focused">
-                                                                <label class="focus-label">Location</label>
-                                                                <input type="text" name="location[]"
-                                                                    class="form-control floating" value="" required>
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form-group mb-3 form-focus focused">
-                                                                <label class="focus-label">Job Position</label>
-                                                                <input type="text" name="job_position[]"
-                                                                    class="form-control floating" value="" required>
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form-group mb-3 form-focus focused">
-                                                                <label class="focus-label">Period From</label>
-                                                                <div class="cal-icon">
-                                                                    <input type="date" max="9999-12-31"
-                                                                        name="period_from[]"
-                                                                        class="form-control floating datetimepicker"
-                                                                        value="" required>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <button
+                                                class="btn text-danger delete-btn p-0 bg-transparent outline-none border-0 f-12 plus-sign"
+                                                type="button" id="deleteFamily_btn"><i
+                                                    class="f-12 me-1 fa text-danger  fa-trash"
+                                                    aria-hidden="true"></i>Delete
+                                            </button>
+                                            <div class="exp-content-container">
+                                                <div class="card exp-addition-card" id="content1">
+                                                    <div class="card-body">
+                                                        <div class="row ">
+                                                            <input type="hidden" name="ids[]">
+                                                            <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-12">
+                                                                <div class="form-group mb-3 form-focus focused">
+                                                                    <label class="focus-label">Company Name</label>
+                                                                    <input type="text" name="company_name[]"
+                                                                        class="form-control floating" value=""
+                                                                        required>
                                                                 </div>
-
                                                             </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form-group mb-3 form-focus focused">
-                                                                <div class="cal-icon">
-                                                                    <label class="focus-label">Period To</label>
-                                                                    <input type="date" max="9999-12-31"
-                                                                        name="period_to[]"
-                                                                        class="form-control floating datetimepicker"
-                                                                        value="" required>
+                                                            <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-12">
+                                                                <div class="form-group mb-3 form-focus focused">
+                                                                    <label class="focus-label">Location</label>
+                                                                    <input type="text" name="location[]"
+                                                                        class="form-control floating" value=""
+                                                                        required>
+
                                                                 </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-12">
+                                                                <div class="form-group mb-3 form-focus focused">
+                                                                    <label class="focus-label">Job Position</label>
+                                                                    <input type="text" name="job_position[]"
+                                                                        class="form-control floating" value=""
+                                                                        required>
 
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-12">
+                                                                <div class="form-group mb-3 form-focus focused">
+                                                                    <label class="focus-label">Period From</label>
+                                                                    <div class="cal-icon">
+                                                                        <input type="date" max="9999-12-31"
+                                                                            name="period_from[]"
+                                                                            class="form-control floating datetimepicker"
+                                                                            value="" required>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-12">
+                                                                <div class="form-group mb-3 form-focus focused">
+                                                                    <div class="cal-icon">
+                                                                        <label class="focus-label">Period To</label>
+                                                                        <input type="date" max="9999-12-31"
+                                                                            name="period_to[]"
+                                                                            class="form-control floating datetimepicker"
+                                                                            value="" required>
+                                                                    </div>
+
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <div class="add-more text-end">
-                                                    <div class="text-primary f-13" id="exp-add-more">
-                                                        <i class=" ri-add-circle-fill"></i> Add More
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="text-primary f-13" id="add_experienceDetails">
+                                                <i class=" ri-add-circle-fill"></i> Add More
+
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-12">
-                                        <div class="text-right">
-                                            <button id=btn_submit_experience_info
-                                                class="btn btn-orange submit-btn">Submit</button>
-                                        </div>
+
+                                    <div class="text-right col-12">
+                                        <button id=btn_submit_experience_info class="btn btn-orange submit-btn">Submit
+                                        </button>
                                     </div>
-                                    {{-- </form> --}}
+
                                 </div>
                             </div>
                         </div>
@@ -2267,6 +2257,8 @@
             console.log("ready!");
         });
 
+
+
         $('body').on('keyup', ".onboard-form", function() {
             var inputvalues = $(this).val();
             var data = $(this).attr('name');
@@ -2326,19 +2318,22 @@
         }
 
 
-        $('#exp-add-more').click(function() {
-            var id = $('.exp-addition-content:last').attr('id');
+        $('#add_experienceDetails').click(function() {
+            var id = $('.exp-addition-card:last').attr('id');
             var length = 1;
             if (id) {
                 length = parseInt(id.replace('content', '')) + 1;
             }
-            $('.exp-content-container').append('<div class="row exp-addition-content" id="content' + length +
-                '"><input type="hidden" name="ids[]"><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Company Name</label><input type="text" class="form-control floating" name="company_name[]" required></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Location</label><input type="text" class="form-control floating" name="location[]" required></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Job Position</label><input type="text" class="form-control floating" name="job_position[]" required></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Period From</label><div class="cal-icon"><input type="date" max="9999-12-31" class="form-control floating datetimepicker" name="period_from[]" required></div></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><div class="cal-icon"><label class="focus-label">Period To</label><input type="date" max="9999-12-31"  class="form-control floating datetimepicker" name="period_to[]" required></div></div></div></div>'
+            $('.exp-content-container').append(
+                '<input type="hidden" name="ids[]"><div class="card  exp-addition-card" id="content' +
+                length +
+                '"><div class="card-body"><div class="row"> <div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Company Name</label><input type="text" class="form-control floating" name="company_name[]" required></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Location</label><input type="text" class="form-control floating" name="location[]" required></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Job Position</label><input type="text" class="form-control floating" name="job_position[]" required></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Period From</label><div class="cal-icon"><input type="date" max="9999-12-31" class="form-control floating datetimepicker" name="period_from[]" required></div></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><div class="cal-icon"><label class="focus-label">Period To</label><input type="date" max="9999-12-31"  class="form-control floating datetimepicker" name="period_to[]" required></div></div></div></div></div></div>'
             );
         });
 
-        $('#add_more').click(function() {
+        $('#addMore_family').click(function() {
             var id = $('.addition-content:last').attr('id');
+
             var length = 1;
             if (id) {
                 length = parseInt(id.replace('content', '')) + 1;
@@ -2532,6 +2527,10 @@
                 var doj = $("input[name='doj']").val();
                 var marital_status = $("select[name='marital_status']").val();
                 var blood_group = $("select[name='blood_group']").val();
+                var physical_challenge = $("#physical_challenge").val();
+                console.log(physical_challenge);
+
+
 
                 $.ajax({
                     url: "{{ route('updateGeneralInfo', $user->id) }}",
@@ -2542,13 +2541,14 @@
                         doj: doj,
                         marital_status: marital_status,
                         blood_group: blood_group,
+
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(data) {
 
                         Swal.fire({
-                            title: "Good job!",
-                            text: 'You clicked the button!',
+
+                            text: 'General Information Updated',
                             icon: 'success'
                         }).then((result) => {
                             /* Read more about isConfirmed, isDenied below */
@@ -2557,7 +2557,10 @@
                             }
                         })
                     }
+
+
                 });
+                console.log(physical_challenge);
             });
         });
 
@@ -2569,6 +2572,7 @@
                 var present_email = $("input[name='present_email']").val();
                 var officical_mail = $("input[name='officical_mail']").val();
                 var mobile_number = $("input[name='mobile_number']").val();
+                console.log(mobile_number);
 
                 $.ajax({
                     url: "{{ route('updateContactInfo', $user->id) }}",
@@ -2580,7 +2584,17 @@
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(data) {
-                        location.reload();
+
+                        Swal.fire({
+
+                            text: 'Contact Information Updated',
+                            icon: 'success'
+                        }).then((result) => {
+                            /* Read more about isConfirmed, isDenied below */
+                            if (result.isConfirmed) {
+                                location.reload();
+                            }
+                        })
                     }
 
                 });
@@ -2605,10 +2619,74 @@
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(data) {
-                        location.reload();
+                        Swal.fire({
+
+                            text: 'Address Information Updated',
+                            icon: 'success'
+                        }).then((result) => {
+                            /* Read more about isConfirmed, isDenied below */
+                            if (result.isConfirmed) {
+                                location.reload();
+                            }
+                        })
+                    }
+
+
+                });
+
+            });
+        });
+
+
+
+        $(document).ready(function() {
+            $("body").on("click", "#deleteFamily_btn", function() {
+
+                $.ajax({
+                    url: "{{ route('deleteFamilyInfo', $user->id) }}",
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(data) {
+                        // Swal.fire({
+                        //     text: 'Family Information Updated',
+                        //     icon: 'success'
+                        // }).then((result) => {
+
+                        //     if (result.isConfirmed) {
+                        //         location.reload();
+
+                        //     }
+                        // })
+                        Swal.fire({
+                            title: 'Are you sure?',
+                            text: "You won't be able to revert this!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Yes, delete it!'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                Swal.fire(
+
+                                    'Deleted!',
+                                    'Your file has been deleted.',
+                                    'success'
+                                )
+                                $(this).parents(".addition-content").remove();
+
+                                location.reload();
+                            }
+                        })
                     }
 
                 });
+
+
+
+
 
             });
         });
@@ -2645,7 +2723,15 @@
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(data) {
-                        location.reload();
+                        Swal.fire({
+                            text: 'Family Information Updated',
+                            icon: 'success'
+                        }).then((result) => {
+                            /* Read more about isConfirmed, isDenied below */
+                            if (result.isConfirmed) {
+                                location.reload();
+                            }
+                        })
                     }
 
                 });
@@ -2694,8 +2780,18 @@
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(data) {
-                        window.location.reload();
+                        Swal.fire({
+
+                            text: 'Experience Information Updated',
+                            icon: 'success'
+                        }).then((result) => {
+                            /* Read more about isConfirmed, isDenied below */
+                            if (result.isConfirmed) {
+                                location.reload();
+                            }
+                        })
                     }
+
 
                 });
 
@@ -2722,8 +2818,18 @@
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(data) {
-                        location.reload();
+                        Swal.fire({
+
+                            text: 'Bank Information Updated',
+                            icon: 'success'
+                        }).then((result) => {
+                            /* Read more about isConfirmed, isDenied below */
+                            if (result.isConfirmed) {
+                                location.reload();
+                            }
+                        })
                     }
+
                 });
             });
         });
@@ -2782,9 +2888,10 @@
             $('.paySlipPDF').on('click', function() {
                 var url = $(this).attr('data-url');
                 let t_paySlipMonth = $(this).attr('data');
-                let enc_userid =  "{{ $enc_user_id }}";
+                let enc_userid = "{{ $enc_user_id }}";
 
-                window.open(url+"?selectedPaySlipMonth="+t_paySlipMonth+"&enc_user_id="+enc_userid,'_blank');
+                window.open(url + "?selectedPaySlipMonth=" + t_paySlipMonth + "&enc_user_id=" + enc_userid,
+                    '_blank');
                 // $.ajax({
                 //     type: "GET",
                 //     url: url,
