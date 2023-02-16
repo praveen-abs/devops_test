@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\Collection;
 use JSON_AssignedPMSFormDetails;
+use App\Models\VmtPMS_KPIFormAssignedModel;
 
 class VmtPMSReportsService {
 
@@ -23,16 +24,25 @@ class VmtPMSReportsService {
     */
     public function getAllAssignedPMSForms($calendar_type, $year, $assignment_period){
 
-        $output = null;
+        $kpisForm = null;
 
+        $kpisForm = VmtPMS_KPIFormAssignedModel::join('vmt_pms_kpiform','vmt_pms_kpiform.id','=','vmt_pms_kpiform_id')
+                                               ->join('users','users.id','=','assignee_id')
+                                               ->where('year',$year)
+                                               ->select('user_code','name','vmt_pms_kpiform_id');
+
+         if($assignment_period!="All"){
+            $kpisForm= $kpisForm->where('frequency',$assignment_period);
+         }
+         $kpisForm =  $kpisForm ->get();
         //loop thru all forms
-
+        dd( $kpisForm);
 
             //Create JSON object for each forms
             $temp = new JSON_AssignedPMSFormDetails($employeeName, $form_data);
 
         //end loop
 
-        return $output;
+        return  $kpisForm;
     }
 }

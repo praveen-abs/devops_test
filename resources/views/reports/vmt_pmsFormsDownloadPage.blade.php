@@ -19,7 +19,9 @@
 @endsection
 
 @section('content')
-
+<?php
+print('-------'.$query_configPms.'-------'.$query_years);
+?>
 @endsection
 @section('script')
 
