@@ -154,9 +154,10 @@ class VmtAttendanceReportsService{
 
                 $attendanceResponseArray[$fulldate] = array(
                  //"user_id"=>$request->user_id,
-                 "user_id"=> $singleUser->id,"isAbsent"=>false, "is_weekoff"=>false,"date"=>$fulldate,
-                 "attendance_mode_checkin"=>null, "attendance_mode_checkout"=>null,
-                 "absent_status"=>null,"checkin_time"=>null, "checkout_time"=>null,
+                 "user_id"=> $singleUser->id,"isAbsent"=>false,"isLeave"=>false,
+                 "is_weekoff"=>false,"date"=>$fulldate,"attendance_mode_checkin"=>null,
+                 "attendance_mode_checkout"=>null, "absent_status"=>null,"checkin_time"=>null,
+                 "checkout_time"=>null,
                                                              );
 
                 //echo "Date is ".$fulldate."\n";
@@ -254,30 +255,60 @@ class VmtAttendanceReportsService{
              }
 
 
-            //dd($attendanceResponseArray);
+         //   dd($attendanceResponseArray);
             //
              foreach ($attendanceResponseArray as $key => $value) {
                      //Logic For Check week off or not
-                   //  dd(($attendanceResponseArray[$key]));
+
                    if(!array_key_exists('date',$attendanceResponseArray[$key]) )
                      dd("Missing for : ".$key);
 
                  if(Carbon::parse($attendanceResponseArray[$key]['date'])->format('l')=="Sunday"){
                      $attendanceResponseArray[$key]['is_weekoff']=true;
                  }
-
                  //Logic For Check Absent or Not
+                 //dd($attendanceResponseArray[$key]['user_id']);
                  if($attendanceResponseArray[$key]['checkin_time']==null&&
                    $attendanceResponseArray[$key]["checkout_time"]==null&&
                    $attendanceResponseArray[$key]['is_weekoff']==false){
-                     $attendanceResponseArray[$key]['isAbsent']=true;
-                     $total_absent++;
+                    $leave_Details=VmtEmployeeLeaves::where('user_id',$attendanceResponseArray[$key]['user_id'])
+                                  ->whereYear('end_date', $year)
+                                  ->whereMonth('end_date',$month)
+                                  ->get(['start_date','end_date','status']);
+                    if( $leave_Details->count()==0){
+                       // dd( $leave_Details->count());
+                        $attendanceResponseArray[$key]['isAbsent']=true;
+                    }else{
+                        foreach( $leave_Details as $single_leave_details){
+                            //dd(gettype($single_leave_details->start_date));
+                            $startDate = Carbon::parse($single_leave_details->start_date);
+                            $endDate = Carbon::parse($single_leave_details->end_date);
+                           // dd($currentDate);
+                            $currentDate =  Carbon::parse($attendanceResponseArray[$key]['date']);
+                            $check =  $currentDate->between($startDate, $endDate);
+                            //dd($check);
+                            if( $check){
+                                if($attendanceResponseArray[$key]['checkin_time']==null&&
+                                $attendanceResponseArray[$key]["checkout_time"]==null&&
+                                $single_leave_details->status=='Approved'){
+                                    $attendanceResponseArray[$key]['isLeave']=true;
+                                    break;
+                                }else{
+                                    $attendanceResponseArray[$key]['isAbsent']=true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+
+
                  }
 
              }
 
 
-
+          dd($attendanceResponseArray);
 
              foreach ($attendanceResponseArray as $key => $value) {
                  if($attendanceResponseArray[$key]['is_weekoff']){
@@ -286,7 +317,9 @@ class VmtAttendanceReportsService{
                   }else if($attendanceResponseArray[$key]['isAbsent']){
                      array_push($arrayReport,'A');
                      $total_absent++;
-                 }else{
+                 }else if( $attendanceResponseArray[$key]['isLeave']){
+                    array_push($arrayReport,'L');
+                 } else {
                      array_push($arrayReport,'P');
                      $total_present++;
                  }
@@ -303,6 +336,7 @@ class VmtAttendanceReportsService{
            // dd( $arrayReport);
             unset($arrayReport);
         }
+      //  dd($reportresponse);
         $data=array($heading_dates,$reportresponse);
        return $data;
     }
