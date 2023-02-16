@@ -734,13 +734,6 @@ body::-webkit-scrollbar-track {
     transition: all 0.1s ease-out;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    /* font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif; */
-    font-family: 'Roboto', sans-serif;
-}
 
 .navbar-menu .navbar-nav .nav-link:hover svg path,
 .navbar-menu .navbar-nav .nav-link:hover span {
