@@ -27,17 +27,18 @@
                             </div>
                             <div class="col-12 text-center">
 
-                                <div class=" d-flex justify-content-center">
-                                    <div class="rounded-circle userActive-status profile-img"
-                                        style="border:6px solid #c2c2c2c2">
-                                        @include('ui-profile-avatar-lg', [
-                                            'currentUser' => $user,
-                                        ])
-                                        <a class="edit-icon  " data-bs-toggle="modal" data-bs-target="#edit_profileImg"
-                                            id="">
-                                            <i class="fa fa-camera"></i></a>
-                                    </div>
+
+                                <div class="rounded-circle img-xl
+                                 mx-auto userActive-status profile-img"
+                                    style="border:6px solid #c2c2c2c2">
+                                    @include('ui-profile-avatar-lg', [
+                                        'currentUser' => $user,
+                                    ])
+                                    <a class="edit-icon  " data-bs-toggle="modal" data-bs-target="#edit_profileImg"
+                                        id="">
+                                        <i class="fa fa-camera"></i></a>
                                 </div>
+
 
                                 <div class="mt-4">
                                     <div class="progress-wrapper border-bottom-liteAsh ">
@@ -269,7 +270,7 @@
                                 </h6>
 
                                 <div class="table-responsive">
-                                    <table class="table">
+                                    <table class="table" >
                                         <thead class="bg-primary">
                                             <th>
                                                 Name
@@ -2177,7 +2178,7 @@
                                             {{-- <img src="{{ URL::asset($generalInfo->logo_img) }}" alt=""
                                         class=""> --}}
                                             {{-- <div class="profile-img d-flex justify-content-center flex-column text-center"> --}}
-                                            <div class="profile-img d-flex justify-content-center">
+                                            <div class="profile-img img-xl rounded my-2 mx-auto">
                                                 @include('ui-profile-avatar-lg', [
                                                     'currentUser' => $user,
                                                 ])

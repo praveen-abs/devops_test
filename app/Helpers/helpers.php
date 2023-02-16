@@ -266,37 +266,68 @@ function shortNameBGColor($shortName)
         $colorPalette = "color_wildBlueYonder";
         return $colorPalette;
     } else if (($getAsciiCodeFirstChar >= 65 && $getAsciiCodeFirstChar < 68) && ($getAsciiCodeSecondChar >= 68 && $getAsciiCodeSecondChar < 72)) {
-        $colorPalette = "color_disco";
+        $colorPalette = "color_disco-400";
         return $colorPalette;
-    } else if (($getAsciiCodeFirstChar >= 65 && $getAsciiCodeFirstChar < 68) && ($getAsciiCodeSecondChar >= 82 && $getAsciiCodeSecondChar < 85)) {
+    } else if (($getAsciiCodeFirstChar >= 65 && $getAsciiCodeFirstChar < 68) && ($getAsciiCodeSecondChar >= 72 && $getAsciiCodeSecondChar < 76)) {
         $colorPalette = "color_cinnabar";
         return $colorPalette;
-    } else if (($getAsciiCodeFirstChar >= 65 && $getAsciiCodeFirstChar < 68) && ($getAsciiCodeSecondChar >= 85 && $getAsciiCodeSecondChar <= 90)) {
+    } else if (($getAsciiCodeFirstChar >= 65 && $getAsciiCodeFirstChar < 68) && ($getAsciiCodeSecondChar >= 76 && $getAsciiCodeSecondChar < 85)) {
+        $colorPalette = "color-green-400";
+        return $colorPalette;
+    } else if (($getAsciiCodeFirstChar >= 65 && $getAsciiCodeFirstChar < 68) && ($getAsciiCodeSecondChar >= 85 && $getAsciiCodeSecondChar <= 89)) {
         $colorPalette = "color_navyBlue";
         return $colorPalette;
-    } else if (($getAsciiCodeFirstChar >= 68 && $getAsciiCodeFirstChar < 72) && ($getAsciiCodeSecondChar >= 82 && $getAsciiCodeSecondChar < 85)) {
-        $colorPalette = "color_cinnabar";
+    } else if (($getAsciiCodeFirstChar >= 68 && $getAsciiCodeFirstChar < 72) && ($getAsciiCodeSecondChar >= 65 && $getAsciiCodeSecondChar < 68)) {
+        $colorPalette = "color-pink-200";
         return $colorPalette;
-    } else if ($getAsciiCodeFirstChar >= 68 && $getAsciiCodeFirstChar < 72) {
+    }
+
+    else if (($getAsciiCodeFirstChar >= 68 && $getAsciiCodeFirstChar < 72) && ($getAsciiCodeSecondChar >= 65 && $getAsciiCodeSecondChar < 75)) {
+        $colorPalette = "color-pink-600";
+        return $colorPalette;
+    }
+    else if (($getAsciiCodeFirstChar >= 72 && $getAsciiCodeFirstChar < 78) && ($getAsciiCodeSecondChar >= 65 && $getAsciiCodeSecondChar < 72)) {
+        $colorPalette = "color-pink-400 ";
+        return $colorPalette;
+    }
+    else if (($getAsciiCodeFirstChar >= 72 && $getAsciiCodeFirstChar < 78) && ($getAsciiCodeSecondChar >= 72 && $getAsciiCodeSecondChar < 80)) {
         $colorPalette = "lighthWisteria";
         return $colorPalette;
-    } else if ($getAsciiCodeFirstChar >= 72 && $getAsciiCodeFirstChar < 76) {
-        $colorPalette = "sisal";
+    } else if (($getAsciiCodeFirstChar >= 78 && $getAsciiCodeFirstChar < 75) && ($getAsciiCodeSecondChar >= 75 && $getAsciiCodeSecondChar < 85)) {
+        $colorPalette = "color-sandal-600";
         return $colorPalette;
-    } else if ($getAsciiCodeFirstChar >= 76 && $getAsciiCodeFirstChar < 79) {
-        $colorPalette = "easternBlue";
+    }
+
+    else if ($getAsciiCodeFirstChar >= 70 && $getAsciiCodeFirstChar < 80) {
+        $colorPalette = "color_disco-600";
         return $colorPalette;
-    } else if ($getAsciiCodeFirstChar >= 79 && $getAsciiCodeFirstChar < 82) {
-        $colorPalette = "morningGlory";
+    }
+
+    else if (($getAsciiCodeFirstChar >= 80 && $getAsciiCodeFirstChar < 85) && ($getAsciiCodeSecondChar >= 65 && $getAsciiCodeSecondChar < 75)){
+        $colorPalette = "color-gradient-green";
         return $colorPalette;
-    } else if (($getAsciiCodeFirstChar >= 82 && $getAsciiCodeFirstChar < 85) &&  ($getAsciiCodeSecondChar >= 72 && $getAsciiCodeSecondChar < 76)) {
-        $colorPalette = "color_maroonFlush";
+    }
+    else if (($getAsciiCodeFirstChar >= 80 && $getAsciiCodeFirstChar < 85) && ($getAsciiCodeSecondChar >= 75 && $getAsciiCodeSecondChar < 82)){
+        $colorPalette = "color-gradient-orange";
         return $colorPalette;
-    } else if (($getAsciiCodeFirstChar >= 85 && $getAsciiCodeFirstChar <= 90) &&  ($getAsciiCodeSecondChar >= 80 && $getAsciiCodeSecondChar <=90)) {
-        $colorPalette = "color_cinnabar";
+    }
+
+    else if (($getAsciiCodeFirstChar >= 85 && $getAsciiCodeFirstChar < 89) && ($getAsciiCodeSecondChar >= 75 && $getAsciiCodeSecondChar < 80)){
+        $colorPalette = "color-gradient-pink";
         return $colorPalette;
-    } else {
-        $colorPalette = "color_navyBlue";
+    }
+    else if (($getAsciiCodeFirstChar >= 80 && $getAsciiCodeFirstChar < 85) && ($getAsciiCodeSecondChar >= 80 && $getAsciiCodeSecondChar < 85)){
+        $colorPalette = " color-gradient-green-200";
+        return $colorPalette;
+    }
+
+    else if  (($getAsciiCodeFirstChar >= 85 && $getAsciiCodeFirstChar < 89) && ($getAsciiCodeSecondChar >= 65 && $getAsciiCodeSecondChar < 75)){
+        $colorPalette = "color-blue-600";
+        return $colorPalette;
+    }
+
+    else {
+        $colorPalette = "downy";
         return $colorPalette;
     }
 }
