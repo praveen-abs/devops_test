@@ -97,13 +97,14 @@ class VmtProfilePagesController extends Controller
 
     public function updateGeneralInfo(Request $request)
     {
-        //dd($request->all());
+        dd($request->all());
         $details = VmtEmployee::where('userid', $request->id)->first();
         $details->dob = $request->input('dob');
         $details->gender = $request->input('gender');
         $details->marital_status = $request->input('marital_status');
         $details->doj = $request->input('doj');
         $details->blood_group_id = $request->input('blood_group');
+        $details->physically_challenged = $request->input('physically_challenge');
 
         $details->save();
 

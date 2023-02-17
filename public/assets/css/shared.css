@@ -11,6 +11,12 @@
     --color-dark-ash: #646464;
     --color-lite-ash: #e2e2e2;
 }
+
+*,body,input,select,p,div,span,.form-control,.form-select,html,table,i,button{
+    text-transform: capitalize;
+}
+
+
 .color-pink-600{
     background: #e50058 !important;
 }
