@@ -141,6 +141,11 @@
                                     </li>
 
                                 </ul>
+                                <ul class='list-style-numbered list-style-circle px-4'>
+                                    <li><a href="{{ route('reports-pmsforms-page') }}" class="">Assigned PMS Forms</a>
+                                    </li>
+
+                                </ul>
                             </div>
                         </div>
                     </div>

@@ -20,58 +20,6 @@
                                 <h6 class="">Leave Approvals</h6>
 
                         </div>
-                        {{-- <div class="col-sm-12 col-xxl-6 col-md-6 col-xl-6 col-lg-6">
-                            <div class="row">
-                                <div class="col-sm-12 col-xxl-3 col-md-6 col-xl-3 col-lg-3">
-                                    <div class="dropdown">
-                                        <a class="btn btn-primary dropdown-toggle" href="#" role="button"
-                                            id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Department
-                                        </a>
-
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <li class="dropdown-item"></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-xxl-3 col-md-6 col-xl-3 col-lg-3">
-                                    <div class="dropdown">
-                                        <a class="btn btn-primary dropdown-toggle" href="#" role="button"
-                                            id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Location
-                                        </a>
-
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <li class="dropdown-item"></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-xxl-3 col-md-6 col-xl-3 col-lg-3">
-                                    <div class="dropdown">
-                                        <a class="btn btn-primary dropdown-toggle" href="#" role="button"
-                                            id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Leave Type
-                                        </a>
-
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <li class="dropdown-item"></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-xxl-3 col-md-6 col-xl-3 col-lg-3">
-                                    <div class="dropdown">
-                                        <a class="btn btn-primary dropdown-toggle" href="#" role="button"
-                                            id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Leave Status
-                                        </a>
-
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <li class="dropdown-item"></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
                     </div>
                 </div>
                 <div class="table-responsive">
