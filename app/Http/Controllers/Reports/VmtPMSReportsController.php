@@ -20,7 +20,7 @@ class VmtPMSReportsController extends Controller
     public function showPMSFormsDownloadPage(Request $request){
         $query_configPms= ConfigPms::first(['calendar_type','frequency']);
         $query_years= VmtPMS_KPIFormAssignedModel::groupby('year')->pluck('year');
-        return view('reports.vmt_pmsFormsDownloadPage',compact('query_configPms','query_years'));
+        return view('reports.pms_reports.vmt_pmsforms_page',compact('query_configPms','query_years'));
     }
 
     /*
@@ -79,7 +79,7 @@ class VmtPMSReportsController extends Controller
 
         //dd($query_years);
         //dd($query_years->value('year'));
-        return view('reports.vmt_showPmsReviewsReports', compact('query_configPms','query_years','username'));
+        return view('reports.pms_reports.vmt_showPmsReviewsReports', compact('query_configPms','query_years','username'));
 
     }
 
