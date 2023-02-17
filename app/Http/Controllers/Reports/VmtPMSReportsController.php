@@ -21,6 +21,17 @@ class VmtPMSReportsController extends Controller
     }
 
     /*
+        Get assignment_period Based On given Year
+    */
+
+    public function fetchAssignmentPeriodForGivenYear(Request $request){
+
+        $query_assignment_period=VmtPMS_KPIFormAssignedModel::where('year',$request->year)->groupby('assignment_period')->pluck('assignment_period');
+
+        return  $query_assignment_period;
+    }
+
+    /*
         Download the selected PMS form as excelsheet
     */
     public function downloadPMSForm(Request $request){
@@ -31,7 +42,7 @@ class VmtPMSReportsController extends Controller
         Fetch all the assigned PMS forms for the given assignment period.
     */
     public function fetchAllAssignedPMSForms(Request $request, VmtPMSReportsService $pmsReportsService){
-       
+
         $status = "failure";
         $message = "";
         // $calendar_type = $request->calendar_type;
@@ -40,8 +51,9 @@ class VmtPMSReportsController extends Controller
 
         //For Testing Purpose
         $year='April - 2022 to March - 2023';
-        $assignment_period='All';
-        dd($year);
+        $assignment_period='q2';
+        $calendar_type=null;
+       // dd($year);
         //call the service method
         $output = $pmsReportsService->getAllAssignedPMSForms($calendar_type, $year, $assignment_period);
 

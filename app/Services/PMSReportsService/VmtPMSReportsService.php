@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\PMSReportsService;
 
 use Illuminate\Support\Collection;
 use JSON_AssignedPMSFormDetails;
@@ -12,8 +12,8 @@ class VmtPMSReportsService {
     /*
         Exports the given form into Excel format
     */
-    public function exportExcel_PMSForm($pms_assignedFormID){
-
+    public function exportExcel_PMSForm($pms_assignedFormDetails){
+        //$this->getSelectedPMSFormDetails();
     }
 
 
@@ -32,17 +32,26 @@ class VmtPMSReportsService {
                                                ->select('user_code','name','vmt_pms_kpiform_id');
 
          if($assignment_period!="All"){
-            $kpisForm= $kpisForm->where('frequency',$assignment_period);
+            $kpisForm= $kpisForm->where('assignment_period',$assignment_period);
          }
-         $kpisForm =  $kpisForm ->get();
+         $kpisForm =  $kpisForm ->get()->toArray();
         //loop thru all forms
         dd( $kpisForm);
 
-            //Create JSON object for each forms
-            $temp = new JSON_AssignedPMSFormDetails($employeeName, $form_data);
 
         //end loop
 
         return  $kpisForm;
+    }
+
+    /*
+        Get the Assigned form details for the given form id.
+
+    */
+    private function getSelectedPMSFormDetails($pms_assignedFormID){
+
+            //Create JSON object for each forms
+            $temp = new JSON_AssignedPMSFormDetails($employeeName, $form_data);
+
     }
 }
