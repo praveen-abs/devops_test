@@ -38,7 +38,8 @@ class VmtPMSReportsController extends Controller
     */
     public function downloadPMSForm(Request $request,VmtPMSReportsService $pmsReportsService){
                //For Testing Purpose
-               $pms_assignedFormID=1;
+               //dd(1);
+               $pms_assignedFormID=2;
                return $pmsReportsService->exportExcel_PMSForm($pms_assignedFormID);
 
     }
