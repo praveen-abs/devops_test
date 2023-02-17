@@ -11,16 +11,16 @@
 
 
 
-        <div class="card mb-0 approvals_wrapper mt-30">
-            <div class="card-body ">
-                <div class="filter-content">
-                    <div class="row">
-                        <div class="col-sm-12 col-xxl-6 col-md-6 col-xl-6 col-lg-6">
+    <div class="card mb-0 approvals_wrapper mt-30">
+        <div class="card-body ">
+            <div class="filter-content">
+                <div class="row">
+                    <div class="col-sm-12 col-xxl-6 col-md-6 col-xl-6 col-lg-6">
 
-                                <h6 class="">Leave Approvals</h6>
+                        <h6 class="">Leave Approvals</h6>
 
-                        </div>
-                        {{-- <div class="col-sm-12 col-xxl-6 col-md-6 col-xl-6 col-lg-6">
+                    </div>
+                    {{-- <div class="col-sm-12 col-xxl-6 col-md-6 col-xl-6 col-lg-6">
                             <div class="row">
                                 <div class="col-sm-12 col-xxl-3 col-md-6 col-xl-3 col-lg-3">
                                     <div class="dropdown">
@@ -72,50 +72,48 @@
                                 </div>
                             </div>
                         </div> --}}
-                    </div>
-                </div>
-                <div class="table-responsive">
-                    <div class="custom_gridJs" id="table_leaveHistory"></div>
                 </div>
             </div>
+            <div class="table-responsive">
+                <div class="custom_gridJs" id="leave_approvals_table"></div>
+            </div>
         </div>
+    </div>
 
-        <div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true"
-            style="opacity:1; display:none;background:#00000073;">
-            <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true" aria-labelledby="">
-                <div class="modal-content top-line">
-                    <div class="modal-header border-0">
-                        <h6 class="modal-title" id="modalHeader">
-                        </h6>
-                        {{-- <button type="button" class="btn-close close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal" aria-label="Close">
+    <div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true"
+        style="opacity:1; display:none;background:#00000073;">
+        <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true" aria-labelledby="">
+            <div class="modal-content top-line">
+                <div class="modal-header border-0">
+                    <h6 class="modal-title" id="modalHeader">
+                    </h6>
+                    {{-- <button type="button" class="btn-close close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal" aria-label="Close">
 
                             </button> --}}
-                        <button type="button" class="close close-modal outline-none bg-transparent border-0 h3"
-                            aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="">
-                            <p class="mb-3 text-muted f-15 text-center" id="modalNot"></p>
-                            <textarea name="reject_content" id="leave_reject_content" class="form-control border-primary  mb-3"></textarea>
-                            <div class="text-end">
-                                <input type="hidden" id="selected_leaveId" />
-                                <input type="hidden" id="selected_userId" />
-                                <input type="hidden" id="selected_statusText" />
+                    <button type="button" class="close close-modal outline-none bg-transparent border-0 h3"
+                        aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="">
+                        <p class="mb-3 text-muted f-15 text-center" id="modalNot"></p>
+                        <textarea name="reject_content" id="leave_reject_content" class="form-control border-primary  mb-3"></textarea>
+                        <div class="text-end">
+                            <input type="hidden" id="selected_leaveId" />
+                            <input type="hidden" id="selected_userId" />
+                            <input type="hidden" id="selected_statusText" />
 
-                                <button type="button" class="btn btn-primary submit_notify"
-                                    id="modal_leave_reject">Submit</button>
-                                <button type="button" class="btn btn-border-primary close-modal"
-                                    id="closeModal">Cancel</button>
-                            </div>
+                            <button type="button" class="btn btn-primary submit_notify"
+                                id="modal_leave_reject">Submit</button>
+                            <button type="button" class="btn btn-border-primary close-modal"
+                                id="closeModal">Cancel</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
+    </div>
 @endsection
 
 @section('script')
@@ -129,9 +127,9 @@
         var leaverequest_type = '';
 
         @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
-            leaverequest_type = '{{ route('fetch-leaverequests', ['type'=>'org','statusArray' => 'Pending' ]) }}';
-        @elseif(Str::contains(currentLoggedInUserRole(), ['Manager']))
-            leaverequest_type = '{{ route('fetch-leaverequests', ['type'=>'team','statusArray' => 'Pending' ]) }}';
+            leaverequest_type = '{{ route('fetch-leaverequests', ['type' => 'org', 'statusArray' => 'Pending']) }}';
+        @elseif (Str::contains(currentLoggedInUserRole(), ['Manager']))
+            leaverequest_type = '{{ route('fetch-leaverequests', ['type' => 'team', 'statusArray' => 'Pending']) }}';
         @endif
 
         $(document).ready(function() {
@@ -190,12 +188,12 @@
                         if (data.status == "success") {
 
                             Swal.fire({
-                                    title: "Info",
-                                    text: data.message,
-                                    type: "success"
-                                }).then(function() {
-                                    location.reload();
-                                });                            // location.reload();
+                                title: "Info",
+                                text: data.message,
+                                type: "success"
+                            }).then(function() {
+                                location.reload();
+                            }); // location.reload();
                         } else {
                             alert("Leave request failed. Contact your Admin");
                         }
@@ -249,7 +247,7 @@
             });
 
 
-            if (document.getElementById("table_leaveHistory")) {
+            if (document.getElementById("leave_approvals_table")) {
                 const grid = new gridjs.Grid({
                     columns: [
 
@@ -270,32 +268,39 @@
                         {
                             id: 'employee_name',
                             name: 'Employee Name',
-                            formatter: function formatter(cell) {
 
+                            formatter: function formatter(userData) {
                                 var output = "";
+                                let json_emp_avatar = JSON.parse(userData.employee_avatar);
 
-                                if(cell.employee_avatar.type == "shortname"){
+                                if (json_emp_avatar.type == "shortname") {
 
-                                    output ='<div class="d-flex align-items-center p-0 page-header-user-dropdown">'+
-                                                '<div class="rounded-circle user-profile col-auto user-profile  me-2 " id="">'+
-                                                    '<i class="topbar_username" class="align-middle ">'+cell.employee_avatar.data+'</i>'+
-                                                '</div>'+
-                                                '<span>'+cell.employee_name+'</span>'+
-                                            '</div>';
-                                }
-                                else
-                                if(cell.employee_avatar.type == "avatar"){
-                                    var imageURL = "images/"+cell.employee_avatar.data;
-
-                                    output ='<div class="d-flex">'+
-                                            '<img class="rounded-circle header-profile-user" src="'+imageURL+'" alt="--">'+
-                                            '<span>&nbsp;&nbsp;'+cell.employee_name+'</span>'+
+                                    output =
+                                        '<div class="d-flex align-items-center page-header-user-dropdown">' +
+                                        '<span class="rounded-circle user-profile  ml-2  '+json_emp_avatar.color+' " id="">' +
+                                        '<i class="topbar_username" class="align-middle ">' +
+                                        json_emp_avatar.data + '</i>' +
+                                        '</span>' +
+                                        '<span>&nbsp;&nbsp;' + userData.employee_name +
+                                        '</span>' +
                                         '</div>';
+                                } else
+                                if (json_emp_avatar.type == "avatar") {
+                                    var imageURL = "images/" + json_emp_avatar.data;
+
+                                    output = '<div class="d-flex align-items-center">' +
+                                        '<img class="rounded-circle header-profile-user" src="' +
+                                        imageURL + '" alt="--">' +
+                                        '<span>&nbsp;&nbsp;' + userData.employee_name +
+                                        '</span>' +
+                                        '</div>';
+                                } else {
+                                    output = 'error';
                                 }
 
                                 return gridjs.html(output);
-
                             }
+
                         },
                         {
                             id: 'leave_type_id',
@@ -370,7 +375,7 @@
 
 
                                     htmlcontent = htmlcontent +
-                                    '<button type="button" value="Reject" id="button_activate_"' +
+                                        '<button type="button" value="Reject" id="button_activate_"' +
                                         emp.user_id + '" data-user_id="' + emp.user_id +
                                         '" data-leave_id="' + emp.id +
                                         '" data-leave_status="Rejected" class="status btn me-2 btn-danger py-1 reject-leave-btn "><i class="fa fa-times-circle me-1"></i>Reject</button>';
@@ -421,7 +426,7 @@
                             ]
                         )
                     }
-                }).render(document.getElementById("table_leaveHistory"));
+                }).render(document.getElementById("leave_approvals_table"));
             }
 
             /* function approveLeave(){

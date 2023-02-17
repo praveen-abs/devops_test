@@ -434,7 +434,7 @@
                                                                             @if ($employee_icon->type == 'shortname')
                                                                                 <div class="col-auto p-0 me-1">
                                                                                     <span
-                                                                                        class="rounded-circle user-profile  ml-2 "
+                                                                                        class="rounded-circle user-profile  ml-2  {{ $employee_icon->color }} "
                                                                                         id="">
                                                                                         <i id="topbar_username"
                                                                                             class="align-middle ">{{ $employee_icon->data }}</i>
@@ -630,7 +630,7 @@
                                                                             @if ($employee_icon->type == 'shortname')
                                                                                 <div class="col-auto p-0">
                                                                                     <span
-                                                                                        class="rounded-circle user-profile  ml-2 "
+                                                                                        class="rounded-circle user-profile   me-1  {{ $employee_icon->color }}"
                                                                                         id="">
                                                                                         <i id="topbar_username"
                                                                                             class="align-middle ">{{ $employee_icon->data }}</i>
