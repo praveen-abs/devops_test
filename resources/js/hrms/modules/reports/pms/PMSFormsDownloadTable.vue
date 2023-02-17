@@ -161,9 +161,21 @@
         console.log("Processing Rowdata : "+ JSON.stringify(selected_pmsform_id));
 
 
-        axios.post(window.location.origin + '/report-download-pmsforms', {
+        axios.get(window.location.origin + '/report-download-pmsforms', {
             pms_form_id: selected_pmsform_id,
         }).then((response) => {
+            let blob = new Blob([response.data], { type: 'data:application/vnd.ms-excel' });
+            let fileURL = window.URL.createObjectURL(blob);
+
+            var fileLink = document.createElement('a');
+            fileLink.href = fileURL;
+
+            // it forces the name of the downloaded file
+            fileLink.download = 'pdf_name.xlsx';
+
+            // triggers the click event
+            fileLink.click();
+
             console.log(response);
         })
         .catch((error) => {
