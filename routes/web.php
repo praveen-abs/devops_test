@@ -298,7 +298,6 @@ Route::post('vmt-general-settings', [App\Http\Controllers\HomeController::class,
 
     Route::post('vmt-360-forms/delete', 'App\Http\Controllers\Review360ModuleController@deleteReviewForm');
 
-
     Route::get('vmt_360review', 'App\Http\Controllers\Review360ModuleController@viewAssignUserForm' );
 
     ////Employee Hierarchy routes
@@ -352,7 +351,7 @@ Route::post('vmt-general-settings', [App\Http\Controllers\HomeController::class,
     Route::post('vmt-assetinventory-delete', 'App\Http\Controllers\VmtAssetInventoryController@deleteAsset')->name('vmt-assetinventory-delete');
     //Route::post('department', 'App\Http\Controllers\VmtPmsController@department')->name('department');
 
-// end rout //
+// end route //
 
 // General Info
 Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 'storeGeneralInfo']);
@@ -387,7 +386,6 @@ Route::get('vmt-pmsappraisal-review', 'App\Http\Controllers\VmtPmsController@sho
     Route::post('vmt-payslip', 'App\Http\Controllers\VmtPayrollController@uploadPayRunData');
 
     Route::get('payroll/claims',  [App\Http\Controllers\VmtPayrollController::class, 'showPayrollClaimsPage'])->name('showPayrollClaimsPage');
-    Route::get('payroll/reports',  [App\Http\Controllers\VmtPayrollController::class, 'showPayrollReportsPage'])->name('showPayrollReportsPage');
     Route::get('payroll/analytics',  [App\Http\Controllers\VmtPayrollController::class, 'showPayrollAnalyticsPage'])->name('showPayrollAnalyticsPage');
     Route::get('payroll/run',  [App\Http\Controllers\VmtPayrollController::class, 'showPayrollRunPage'])->name('showPayrollRunPage');
 
@@ -525,7 +523,11 @@ Route::get('/documents',  [App\Http\Controllers\VmtEmployeeController::class, 's
 
     ////Reports
     //payroll reports
-    Route::get('/reports/payroll',  [App\Http\Controllers\Reports\VmtPayrollReportsController::class, 'showPayrollReportsPage'])->name('Reports.showPayrollReportsPage');
+    Route::get('/reports', function(){
+        return view('reports.vmt_reports_page');
+    })->name('reports-page');
+
+    Route::get('/reports/payroll',  [App\Http\Controllers\Reports\VmtPayrollReportsController::class, 'showPayrollReportsPage'])->name('showPayrollReportsPage');
     Route::get('/reports/generatePayrollReports',  [App\Http\Controllers\Reports\VmtPayrollReportsController::class, 'generatePayrollReports'])->name('generatePayrollReports');
     Route::get('/payroll-filter-info', [App\Http\Controllers\Reports\VmtPayrollReportsController::class, 'fetchPayrollReport'])->name('payroll-filter-info');
 
