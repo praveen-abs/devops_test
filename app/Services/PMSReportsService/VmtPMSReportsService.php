@@ -5,6 +5,9 @@ namespace App\Services\PMSReportsService;
 use Illuminate\Support\Collection;
 use JSON_AssignedPMSFormDetails;
 use App\Models\VmtPMS_KPIFormAssignedModel;
+use App\Models\VmtPMS_KPIFormDetailsModel;
+use App\Exports\PMSFormsExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class VmtPMSReportsService {
 
@@ -12,8 +15,10 @@ class VmtPMSReportsService {
     /*
         Exports the given form into Excel format
     */
-    public function exportExcel_PMSForm($pms_assignedFormDetails){
-        //$this->getSelectedPMSFormDetails();
+    public function exportExcel_PMSForm($pms_assignedFormID){
+        $pms_assignedFormDetails=$this->getSelectedPMSFormDetails($pms_assignedFormID);
+        //dd($pms_assignedFormDetails);
+        return Excel::download(new PMSFormsExport($pms_assignedFormDetails), 'PMS Forms.xlsx');
     }
 
 
@@ -49,9 +54,11 @@ class VmtPMSReportsService {
 
     */
     private function getSelectedPMSFormDetails($pms_assignedFormID){
-
+            $pms_form_details = VmtPMS_KPIFormDetailsModel::where('vmt_pms_kpiform_id',$pms_assignedFormID)
+                                                            ->select('kpi','frequency','target','kpi_weightage')
+                                                            ->get()->toArray();
             //Create JSON object for each forms
-            $temp = new JSON_AssignedPMSFormDetails($employeeName, $form_data);
-
+            //$temp = new JSON_AssignedPMSFormDetails($employeeName, $form_data);
+            return  $pms_form_details;
     }
 }
