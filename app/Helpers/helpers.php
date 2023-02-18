@@ -246,10 +246,10 @@ function getUserShortName($user_id)
         return $toStore;
     } else
     if (count($whiteSpacePattern) > 1) {
-        $toStore=$whiteSpacePattern[0][0]. $whiteSpacePattern[1][0];
+        $toStore = $whiteSpacePattern[0][0] . $whiteSpacePattern[1][0];
         return $toStore;
     } else {
-        $toStore=$singleWordPattern[0] . $singleWordPattern[1];
+        $toStore = $singleWordPattern[0] . $singleWordPattern[1];
         return $toStore;
     }
 
@@ -260,27 +260,74 @@ function shortNameBGColor($shortName)
 {
 
     $colorPalette = "";
-    $getAsciiCode = ord(strtoupper($shortName));
-    if ($getAsciiCode >= 65 && $getAsciiCode < 68) {
-        $colorPalette = "wildBlueYonder";
+    $getAsciiCodeFirstChar = ord(strtoupper($shortName[0]));
+    $getAsciiCodeSecondChar = ord(strtoupper($shortName[1]));
+    if (($getAsciiCodeFirstChar >= 65 && $getAsciiCodeFirstChar < 68) && ($getAsciiCodeSecondChar >= 65 && $getAsciiCodeSecondChar < 68)) {
+        $colorPalette = "color_wildBlueYonder";
         return $colorPalette;
-    } else if ($getAsciiCode >= 68 && $getAsciiCode < 72) {
+    } else if (($getAsciiCodeFirstChar >= 65 && $getAsciiCodeFirstChar < 68) && ($getAsciiCodeSecondChar >= 68 && $getAsciiCodeSecondChar < 72)) {
+        $colorPalette = "color_disco-400";
+        return $colorPalette;
+    } else if (($getAsciiCodeFirstChar >= 65 && $getAsciiCodeFirstChar < 68) && ($getAsciiCodeSecondChar >= 72 && $getAsciiCodeSecondChar < 76)) {
+        $colorPalette = "color_cinnabar";
+        return $colorPalette;
+    } else if (($getAsciiCodeFirstChar >= 65 && $getAsciiCodeFirstChar < 68) && ($getAsciiCodeSecondChar >= 76 && $getAsciiCodeSecondChar < 85)) {
+        $colorPalette = "color-green-400";
+        return $colorPalette;
+    } else if (($getAsciiCodeFirstChar >= 65 && $getAsciiCodeFirstChar < 68) && ($getAsciiCodeSecondChar >= 85 && $getAsciiCodeSecondChar <= 89)) {
+        $colorPalette = "color_navyBlue";
+        return $colorPalette;
+    } else if (($getAsciiCodeFirstChar >= 68 && $getAsciiCodeFirstChar < 72) && ($getAsciiCodeSecondChar >= 65 && $getAsciiCodeSecondChar < 68)) {
+        $colorPalette = "color-pink-200";
+        return $colorPalette;
+    }
+
+    else if (($getAsciiCodeFirstChar >= 68 && $getAsciiCodeFirstChar < 72) && ($getAsciiCodeSecondChar >= 65 && $getAsciiCodeSecondChar < 75)) {
+        $colorPalette = "color-pink-600";
+        return $colorPalette;
+    }
+    else if (($getAsciiCodeFirstChar >= 72 && $getAsciiCodeFirstChar < 78) && ($getAsciiCodeSecondChar >= 65 && $getAsciiCodeSecondChar < 72)) {
+        $colorPalette = "color-pink-400 ";
+        return $colorPalette;
+    }
+    else if (($getAsciiCodeFirstChar >= 72 && $getAsciiCodeFirstChar < 78) && ($getAsciiCodeSecondChar >= 72 && $getAsciiCodeSecondChar < 80)) {
         $colorPalette = "lighthWisteria";
         return $colorPalette;
-    } else if ($getAsciiCode >= 72 && $getAsciiCode < 76) {
-        $colorPalette = "sisal";
+    } else if (($getAsciiCodeFirstChar >= 78 && $getAsciiCodeFirstChar < 75) && ($getAsciiCodeSecondChar >= 75 && $getAsciiCodeSecondChar < 85)) {
+        $colorPalette = "color-sandal-600";
         return $colorPalette;
-    } else if ($getAsciiCode >= 76 && $getAsciiCode < 79) {
-        $colorPalette = "easternBlue";
+    }
+
+    else if ($getAsciiCodeFirstChar >= 70 && $getAsciiCodeFirstChar < 80) {
+        $colorPalette = "color_disco-600";
         return $colorPalette;
-    } else if ($getAsciiCode >= 79 && $getAsciiCode < 82) {
-        $colorPalette = "morningGlory";
+    }
+
+    else if (($getAsciiCodeFirstChar >= 80 && $getAsciiCodeFirstChar < 85) && ($getAsciiCodeSecondChar >= 65 && $getAsciiCodeSecondChar < 75)){
+        $colorPalette = "color-gradient-green";
         return $colorPalette;
-    } else if ($getAsciiCode >= 82 && $getAsciiCode < 85) {
+    }
+    else if (($getAsciiCodeFirstChar >= 80 && $getAsciiCodeFirstChar < 85) && ($getAsciiCodeSecondChar >= 75 && $getAsciiCodeSecondChar < 82)){
+        $colorPalette = "color-gradient-orange";
+        return $colorPalette;
+    }
+
+    else if (($getAsciiCodeFirstChar >= 85 && $getAsciiCodeFirstChar < 89) && ($getAsciiCodeSecondChar >= 75 && $getAsciiCodeSecondChar < 80)){
+        $colorPalette = "color-gradient-pink";
+        return $colorPalette;
+    }
+    else if (($getAsciiCodeFirstChar >= 80 && $getAsciiCodeFirstChar < 85) && ($getAsciiCodeSecondChar >= 80 && $getAsciiCodeSecondChar < 85)){
+        $colorPalette = " color-gradient-green-200";
+        return $colorPalette;
+    }
+
+    else if  (($getAsciiCodeFirstChar >= 85 && $getAsciiCodeFirstChar < 89) && ($getAsciiCodeSecondChar >= 65 && $getAsciiCodeSecondChar < 75)){
+        $colorPalette = "color-blue-600";
+        return $colorPalette;
+    }
+
+    else {
         $colorPalette = "downy";
-        return $colorPalette;
-    } else {
-        $colorPalette = "iceberg";
         return $colorPalette;
     }
 }
@@ -300,7 +347,6 @@ function getEmployeeAvatarOrShortName($user_id)
             //send the shortname
             $responseJSON['type'] = 'shortname';
             $responseJSON['data'] = strtoupper(getUserShortName($user_id));
-
         } else {
             //send the profile pic
             $responseJSON['type'] = 'avatar';
@@ -313,8 +359,7 @@ function getEmployeeAvatarOrShortName($user_id)
 
         return json_encode($responseJSON);
     } catch (Throwable $e) {
-        //dd($user_id);
-        dd("ERROR : helper.php :: getEmployeeAvatarOrShortName() for user_id : ".implode($user_id)." . Exception Message : ".$e);
+        dd("ERROR : helper.php :: getEmployeeAvatarOrShortName() for user_id : " . $e);
     }
 }
 

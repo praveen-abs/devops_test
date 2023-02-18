@@ -471,24 +471,24 @@
                         <p class="txt-right">{{ number_format(round($employee_payslip->OTHER_DEDUC), 2) }}</p>
                     </td>
                 </tr>
-                <tr>
-                    <td colspan="2" class="">
+                <tr class="text-strong">
+                    <td colspan="2" class="bg-ash">
                         <p class="txt-left text-strong">TOTAL EARNINGS</p>
                     </td>
-                    <td colspan="2" class="">
+                    <td colspan="2" class="bg-ash">
                         <p class="txt-right">{{ number_format(round($employee_payslip->TOTAL_EARNED_GROSS), 2) }}</p>
                     </td>
-                    <td colspan="2" class="">
+                    <td colspan="2" class="bg-ash">
                         <p class="txt-right"></p>
                     </td>
 
-                    <td colspan="2" class="">
+                    <td colspan="2" class="bg-ash">
                         <p class="txt-right">{{ number_format(round($employee_payslip->TOTAL_EARNED_GROSS), 2) }}</p>
                     </td>
-                    <td colspan="2" class="">
+                    <td colspan="2" class="bg-ash">
                         <p class="txt-left text-strong">TOTAL DEDUCTION</p>
                     </td>
-                    <td colspan="2" class="">
+                    <td colspan="2" class="bg-ash">
                         <p class="txt-right">{{ number_format(round($employee_payslip->TOTAL_DEDUCTIONS), 2) }}</p>
                     </td>
                 </tr>

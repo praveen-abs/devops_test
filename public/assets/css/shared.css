@@ -12,27 +12,106 @@
     --color-lite-ash: #e2e2e2;
 }
 
-.wildBlueYonder {
-    background: #8c8eb8 !important;
+*,body,input,select,p,div,span,.form-control,.form-select,html,table,i,button{
+    text-transform: capitalize;
+}
+
+
+.color-pink-600{
+    background: #e50058 !important;
+}
+.color-green-400{
+    background: #2a9d8f !important;
+}
+
+.color_wildBlueYonder {
+    background: #70718d !important;
+}
+.color_oracle{
+    background: #346b6d !important;
+}
+.color_disco-600{
+    background: #380928 !important;
+}
+.color-blue-600{
+    background: #0a3358 !important;
+}
+
+.color-gradient-green{
+    background: #00f775 !important;
+}
+
+.color-gradient-orange{
+    background: #ff8f01 !important;
+}
+.color-gradient-pink{
+    background: #c400fb !important;
+}
+.color-gradient-green-200{
+    background: #00ff99 !important;
+}
+
+
+
+
+.color_disco-400{
+    background: #841e62 !important;
+}
+.color_cinnabar{
+    background: #db4c40 !important;
+}
+.color_navyBlue{
+    background: #3d405b !important;
 }
 .iceberg {
-    background: #cce1f4 !important;
+    background: #9eccf7 !important;
 }
-.sisal {
-    background: #cec7b9 !important;
+.color_maroonFlush{
+    background: #b41d6c !important;
+}
+.color_onyx{
+    background: #333b3e !important;
+}
+.color-pink-400 {
+
+    background: #be317a !important;
+}
+.color-pink-200 {
+
+    background: #ff309b !important;
+}
+.color-sandal-600 {
+    background: #daa02e !important;
+}
+.color-sandal-400 {
+    background: #ffba31 !important;
+}
+.color-violet-600 {
+    background: #3f2875 !important;
+}
+.color-gray-600{
+    background: #696969 !important;
 }
 .easternBlue {
     background: #1aa6b7 !important;
 }
 .morningGlory {
-    background: #a8dee0 !important;
+    background: #3f5657 !important;
 }
 .downy {
     background: #57cac5 !important;
 }
 .lighthWisteria {
-    background: #c8a4d4 !important;
+    background: #81668a !important;
 }
+
+
+.user-name-container{
+    font-size: 28px;
+    color: var(--color-white);
+}
+
+
 .h_80 {
     height: 80px;
 }
@@ -43,7 +122,7 @@
 }
 
 .form-control,
-.form-select {
+.form-select,span {
     font-size: 13px;
 }
 .border-lite-ash {
@@ -671,7 +750,7 @@ th.gridjs-th {
 }
 th.gridjs-th-sort:focus,
 th.gridjs-th-sort:hover {
-    background-color: rgba(var(--vz-light-rgb), 0.85);
+    background-color:transparent !important;
 }
 .gridjs-head {
     width: 100% !important;
@@ -1452,7 +1531,7 @@ a.editable-click:hover {
     border-bottom: 1px solid #cecece;
 }
 .border-bottom-liteAsh {
-    border-bottom: 1px solid #f3f2f2;
+    border-bottom:1px solid #eae7e7;
 }
 .clearfix:after {
     clear: both;

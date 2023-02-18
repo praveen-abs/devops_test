@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Session as Ses;
 use App\Models\User;
 use App\Models\Bank;
-use App\Models\Department;
 use App\Models\Experience;
 use App\Models\VmtBloodGroup;
 use App\Models\VmtEmployee;
@@ -60,9 +59,6 @@ class VmtProfilePagesController extends Controller
         $genderArray = array("Male", "Female", "Other");
         $bank = Bank::all();
 
-        //dd($user_full_details->department_id);
-        $department = Department::find($user_full_details->department_id)->name;
-
         //dd($maritalStatus);
         if (!empty($user_full_details->l1_manager_code))
             $reportingManager = User::where('user_code', $user_full_details->l1_manager_code)->first();
@@ -95,20 +91,20 @@ class VmtProfilePagesController extends Controller
             ])->toArray();
 
         //dd($documents_filenames);
-        return view('profilePage_new', compact('user','department', 'documents_filenames', 'array_bloodgroup', 'enc_user_id', 'allEmployees', 'maritalStatus', 'genderArray', 'user_full_details', 'familydetails', 'exp', 'reportingManager', 'profileCompletenessValue', 'bank', 'data', 'employees', 'statutory_info'));
+        return view('profilePage_new', compact('user', 'documents_filenames', 'array_bloodgroup', 'enc_user_id', 'allEmployees', 'maritalStatus', 'genderArray', 'user_full_details', 'familydetails', 'exp', 'reportingManager', 'profileCompletenessValue', 'bank', 'data', 'employees', 'statutory_info'));
     }
 
 
     public function updateGeneralInfo(Request $request)
     {
-        //dd($request->all());
+        dd($request->all());
         $details = VmtEmployee::where('userid', $request->id)->first();
         $details->dob = $request->input('dob');
         $details->gender = $request->input('gender');
         $details->marital_status = $request->input('marital_status');
         $details->doj = $request->input('doj');
         $details->blood_group_id = $request->input('blood_group');
-        // $details->physically_challenged = $request->input('physically_challenged');
+        $details->physically_challenged = $request->input('physically_challenge');
 
         $details->save();
 
@@ -150,6 +146,12 @@ class VmtProfilePagesController extends Controller
         return redirect()->back();
     }
 
+    public function deleteFamilyInfo(Request $request)
+    {
+
+        $familyDetails = VmtEmployeeFamilyDetails::where('user_id', $request->id)->delete();
+        return redirect()->back();
+    }
     public function updateFamilyInfo(Request $request)
     {
 
@@ -168,13 +170,6 @@ class VmtProfilePagesController extends Controller
             $emp_familydetails->save();
         }
 
-        return redirect()->back();
-    }
-
-
-    public function deleteFamilyInfo(Request $request)
-    {
-        $familyDetails = VmtEmployeeFamilyDetails::where('user_id', $request->id)->delete();
         return redirect()->back();
     }
 
@@ -202,8 +197,6 @@ class VmtProfilePagesController extends Controller
             $exp->save();
         }
 
-        Ses::flash('message', 'Bank Details Updated successfully!');
-        Ses::flash('alert-class', 'alert-success');
         return redirect()->back();
     }
 
