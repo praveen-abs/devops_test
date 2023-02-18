@@ -281,13 +281,13 @@ class VmtAttendanceReportsService{
                     }else{
                         foreach( $leave_Details as $single_leave_details){
                             //dd(gettype($single_leave_details->start_date));
-                            $startDate = Carbon::parse($single_leave_details->start_date);
+                            $startDate = Carbon::parse($single_leave_details->start_date)->subDays(1);
                             $endDate = Carbon::parse($single_leave_details->end_date);
                            // dd($currentDate);
                             $currentDate =  Carbon::parse($attendanceResponseArray[$key]['date']);
                             $check =  $currentDate->between($startDate, $endDate);
-                            //dd($check);
-                            if( $check){
+                         //   dd($startDate.'-----'.$currentDate.'-----');
+                            if($currentDate->gt( $startDate) && $currentDate->lte($endDate) ){
                                 if($attendanceResponseArray[$key]['checkin_time']==null&&
                                 $attendanceResponseArray[$key]["checkout_time"]==null&&
                                 $single_leave_details->status=='Approved'){
@@ -308,7 +308,7 @@ class VmtAttendanceReportsService{
              }
 
 
-          dd($attendanceResponseArray);
+         // dd($attendanceResponseArray);
 
              foreach ($attendanceResponseArray as $key => $value) {
                  if($attendanceResponseArray[$key]['is_weekoff']){
@@ -319,9 +319,11 @@ class VmtAttendanceReportsService{
                      $total_absent++;
                  }else if( $attendanceResponseArray[$key]['isLeave']){
                     array_push($arrayReport,'L');
-                 } else {
+                 } else if($attendanceResponseArray[$key]['checkin_time']!=null || $attendanceResponseArray[$key]['checkout_time']!=null) {
                      array_push($arrayReport,'P');
                      $total_present++;
+                 }else{
+                    array_push($arrayReport,' ');
                  }
 
              }
