@@ -12,10 +12,14 @@
     --color-lite-ash: #e2e2e2;
 }
 
-*,body,input,select,p,div,span,.form-control,.form-select,html,table,i,button{
+button,label,p,span,*{
     text-transform: capitalize;
     font-size: 13px;
 }
+input,select,textarea{
+text-transform: lowercase;
+}
+
 .first-letter-captialize{
     display: inline-block;
 }
