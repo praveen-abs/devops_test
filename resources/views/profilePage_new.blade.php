@@ -291,7 +291,7 @@
                                                     <tr>
                                                         <td>{{ $singledetail->name }}</td>
                                                         <td>{{ $singledetail->relationship }}</td>
-                                                        <td>{{ $singledetail->dob }}</td>
+                                                        <td>{{ date('d-M-Y',strtotime($singledetail->dob)) }}</td>
                                                         <td>{{ $singledetail->phone_number }}</td>
                                                     </tr>
                                                 @endforeach
@@ -333,10 +333,11 @@
                                             @if ($exp)
                                                 @foreach ($exp as $k => $info)
                                                     <tr>
+                                                        {{-- date('M-Y', strtotime($employee_payslip->PAYROLL_MONTH))) --}}
                                                         <td>{{ $info['company_name'] }}</td>
                                                         <td>{{ $info['job_position'] }}</td>
-                                                        <td>{{ $info['period_from'] }}</td>
-                                                        <td>{{ $info['period_to'] }}</td>
+                                                        <td>{{ date('d-M-Y',strtotime($info['period_from'])) }}</td>
+                                                        <td>{{date('d-M-Y',strtotime( $info['period_to'])) }}</td>
                                                     </tr>
                                                 @endforeach
                                             @endif
