@@ -261,145 +261,95 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="family_det" role="tabpanel" aria-labelledby="">
+                        <div class="card mb-2">
+                            <div class="card-body">
+                                <h6 class="">Family Information
+                                    <span class="personal-edit"><a href="#" class="edit-icon"
+                                            data-bs-toggle="modal" data-bs-target="#edit_familyInfo"><i
+                                                class="ri-pencil-fill"></i></a></span>
+                                </h6>
 
-                        @if ($familydetails)
-                            <div class="row">
-                                @foreach ($familydetails as $singledetail)
-                                    <div class="col-sm-12 col-md-12 col-xxl-12 col-lg-12 col-xl-12">
-                                        <div class="card mb-2 work-experience-card">
-                                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class="bg-primary">
+                                            <th>
+                                                Name
+                                            </th>
+                                            <th>
+                                                Relationship
+                                            </th>
+                                            <th>
+                                                Date Of Birth
+                                            </th>
+                                            <th>
+                                                Phone
+                                            </th>
+                                        </thead>
+                                        <tbody>
+                                            @if (!empty($familydetails))
+                                                @foreach ($familydetails as $singledetail)
+                                                    <tr>
+                                                        <td>{{ $singledetail->name }}</td>
+                                                        <td>{{ $singledetail->relationship }}</td>
+                                                        <td>{{ $singledetail->dob }}</td>
+                                                        <td>{{ $singledetail->phone_number }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                </div>
 
-                                                <div class="row">
-                                                    <div
-                                                        class="experience-icon  col-6
-                                                                        ">
-                                                        <i class='fas icons fas fa-users'></i>
-                                                    </div>
-                                                    <div class="col-6 text-start">
 
-                                                        <span class="personal-edit"><a href="#" class="edit-icon"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#edit_experienceInfo"><i
-                                                                    class="ri-pencil-fill"></i></a>
-                                                        </span>
-
-                                                    </div>
-
-                                                </div>
-                                                <div class="experience-content">
-                                                    <ul class="personal-info">
-                                                        <li class="border-bottom-liteAsh pb-1">
-                                                            <div class="title"> Name</div>
-                                                            <div class="text">
-                                                                {{ $singledetail->name }}
-                                                            </div>
-                                                        </li>
-                                                        <li class="border-bottom-liteAsh pb-1">
-                                                            <div class="title"> relationship</div>
-                                                            <div class="text">
-                                                                {{ $singledetail->relationship }}
-                                                            </div>
-                                                        </li>
-                                                        <li class="border-bottom-liteAsh pb-1">
-                                                            <div class="title"> dob</div>
-                                                            <div class="text">
-                                                                {{date('d-M-Y',strtotime( $singledetail->dob)) }}
-
-                                                            </div>
-                                                        </li>
-                                                        <li class="border-bottom-liteAsh pb-1">
-                                                            <div class="title">phone number</div>
-                                                            <div class="text">
-                                                                {{ $singledetail->phone_number }}
-                                                            </div>
-                                                        </li>
-
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
+                                </form>
                             </div>
-                        @elseif (empty($familydetails) || count($familydetails) < 0)
-                            <div class="no-data">
-                                <iv class="mx-auto col-4">
-                                    <img src="{{ URL::asset('assets/images/no_dataFile.svg') }}" class="h-100 w-100"
-                                        alt="user-pic">
-                                    <h4> <span class="text-orange">Sorry !</span> No data</h4>
-                            </div>
-                        @endif
-
+                        </div>
                     </div>
                     <div class="tab-pane fade" id="experience_det" role="tabpanel" aria-labelledby="">
+                        <div class="card mb-2">
+                            <div class="card-body">
+                                <h6 class="">Experience Information
+                                    <span class="personal-edit"><a href="#" class="edit-icon"
+                                            data-bs-toggle="modal" data-bs-target="#edit_experienceInfo"><i
+                                                class="ri-pencil-fill"></i></a></span>
+                                </h6>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class="bg-primary">
+                                            <th>
+                                                Organization
+                                            </th>
+                                            <th>
+                                                Designation
+                                            </th>
+                                            <th>
+                                                From
+                                            </th>
+                                            <th>
+                                                To
+                                            </th>
+                                        </thead>
+                                        <tbody>
+                                            @if ($exp)
+                                                @foreach ($exp as $k => $info)
+                                                    <tr>
+                                                        <td>{{ $info['company_name'] }}</td>
+                                                        <td>{{ $info['job_position'] }}</td>
+                                                        <td>{{ $info['period_from'] }}</td>
+                                                        <td>{{ $info['period_to'] }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
 
-                        @if ($exp)
-                            <div class="row">
-                                @foreach ($exp as $k => $info)
-                                    <div class="col-sm-12 col-md-12 col-xxl-12 col-lg-12 col-xl-12">
-                                        <div class="card mb-2 work-experience-card">
-                                            <div class="card-body">
 
-                                                <div class="row">
-                                                    <div
-                                                        class="experience-icon  col-6
-                                            ">
-                                                        <i class='fas icons  fa-briefcase'></i>
-                                                    </div>
-                                                    <div class="col-6 text-start">
 
-                                                        <span class="personal-edit"><a href="#" class="edit-icon"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#edit_experienceInfo"><i
-                                                                    class="ri-pencil-fill"></i></a>
-                                                        </span>
-
-                                                    </div>
-
-                                                </div>
-                                                <div class="experience-content">
-                                                    <ul class="personal-info">
-                                                        <li class="border-bottom-liteAsh pb-1">
-                                                            <div class="title"> Organization</div>
-                                                            <div class="text">
-                                                                {{ $info['company_name'] }}
-                                                            </div>
-                                                        </li>
-                                                        <li class="border-bottom-liteAsh pb-1">
-                                                            <div class="title"> Designation</div>
-                                                            <div class="text">
-                                                                {{ $info['job_position'] }}
-                                                            </div>
-                                                        </li>
-                                                        <li class="border-bottom-liteAsh pb-1">
-                                                            <div class="title"> From(DOJ)</div>
-                                                            <div class="text">
-                                                                {{ date('d-M-Y',strtotime( $info['period_from'])) }}
-                                                            </div>
-                                                        </li>
-                                                        <li class="border-bottom-liteAsh pb-1">
-                                                            <div class="title">To</div>
-                                                            <div class="text">
-                                                                {{ date('d-M-Y',strtotime(  $info['period_to'])) }}
-                                                            </div>
-                                                        </li>
-
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                </form>
                             </div>
-                        @else
-                            <div class="mx-auto col-4">
-                                <img src="{{ URL::asset('assets/images/no_dataFile.svg') }}" class="h-100 w-100"
-                                    alt="user-pic">
-                                <h4> <span class="text-orange">Sorry !</span> No data</h4>
-                            </div>
-                        @endif
-
-
+                        </div>
                     </div>
 
                     <div class="tab-pane fade" id="finance_det" role="tabpanel" aria-labelledby="">
@@ -1484,7 +1434,7 @@
                         </div>
 
                     </div>
-                    <div class="tab-pane fade " id="document_det" role="tabpanel" aria-labelledby="">
+                    {{-- <div class="tab-pane fade " id="document_det" role="tabpanel" aria-labelledby="">
                         <div class="card">
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -1556,7 +1506,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                 {{-- <img src='{{ URL::asset('svg_icon_pending') }}' alt='view' title='view' class='icon'>  --}}
 
@@ -1988,94 +1938,85 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                @csrf <div class="exp-content-container">
-                                    {{-- <div class="card exp-addition-card" id="content1">
-                                        <div class="card-body"> --}}
+                                {{-- <form action="{{ route('updateExperienceInfo', $user->id) }}" Method="POST"> --}}
+                                @csrf
+                                <div class="form-scroll">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <a href="javascript:void(0);" class="delete-icon text-end"><i
+                                                    class="   ri-delete-bin-line"></i></a>
 
-                                    @if (!empty($exp) && count($exp) > 0)
-                                        @foreach ($exp as $experience)
-                                            <div class="row ">
-                                                <input type="hidden" name="ids[]">
-                                                {{-- <div class="col-12 text-end">
-                                                    <button
-                                                        class="btn text-danger delete-btn p-0 bg-transparent outline-none border-0 f-12 plus-sign"
-                                                        type="button" id="deleteFamily_btn"><i
-                                                            class="f-12 me-1 fa text-danger  fa-trash"
-                                                            aria-hidden="true"></i>Delete
-                                                    </button>
-                                                </div> --}}
-                                                <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-12">
-                                                    <div class="form-group mb-2">
-                                                        <label class="focus-label">Company Name</label>
-                                                        <input type="text" name="company_name[]"
-                                                            class="form-control floating"
-                                                            value="" required>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-12">
-                                                    <div class="form-group mb-2">
-                                                        <label class="focus-label">Location</label>
-                                                        <input type="text" name="location[]"
-                                                            class="form-control floating" value="{{ $exp }}"
-                                                            required>
-
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-12">
-                                                    <div class="form-group mb-2">
-                                                        <label class="focus-label">Period From</label>
-                                                        <div class="cal-icon">
-                                                            <input type="date" max="9999-12-31" name="period_from[]"
-                                                                class="form-control floating datetimepicker"
-                                                                value="" required>
+                                            <div class="exp-content-container">
+                                                <div class="row exp-addition-content" id="content1">
+                                                    <input type="hidden" name="ids[]">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group mb-3 form-focus focused">
+                                                            <label class="focus-label">Company Name</label>
+                                                            <input type="text" name="company_name[]"
+                                                                class="form-control floating" value="" required>
                                                         </div>
-
                                                     </div>
-                                                </div>
-                                                <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-12">
-                                                    <div class="form-group mb-2">
-                                                        <div class="cal-icon">
-                                                            <label class="focus-label">Period To</label>
-                                                            <input type="date" max="9999-12-31" name="period_to[]"
-                                                                class="form-control floating datetimepicker"
-                                                                value="" required>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group mb-3 form-focus focused">
+                                                            <label class="focus-label">Location</label>
+                                                            <input type="text" name="location[]"
+                                                                class="form-control floating" value="" required>
+
                                                         </div>
-
                                                     </div>
-                                                </div>
-                                                <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-12">
-                                                    <div class="form-group mb-2">
-                                                        <label class="focus-label">Job Position</label>
-                                                        <input type="text" name="job_position[]"
-                                                            class="form-control floating" value="" required>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group mb-3 form-focus focused">
+                                                            <label class="focus-label">Job Position</label>
+                                                            <input type="text" name="job_position[]"
+                                                                class="form-control floating" value="" required>
 
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group mb-3 form-focus focused">
+                                                            <label class="focus-label">Period From</label>
+                                                            <div class="cal-icon">
+                                                                <input type="date" max="9999-12-31"
+                                                                    name="period_from[]"
+                                                                    class="form-control floating datetimepicker"
+                                                                    value="" required>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group mb-3 form-focus focused">
+                                                            <div class="cal-icon">
+                                                                <label class="focus-label">Period To</label>
+                                                                <input type="date" max="9999-12-31"
+                                                                    name="period_to[]"
+                                                                    class="form-control floating datetimepicker"
+                                                                    value="" required>
+                                                            </div>
+
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        @endforeach
-                                    @endif
+                                            <div class="add-more text-end">
+                                                <div class="text-primary f-13" id="exp-add-more">
+                                                    <i class=" ri-add-circle-fill"></i> Add More
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="text-end col-12">
-                                    <button id=btn_submit_experience_info class="btn btn-orange submit-btn">Submit
-                                    </button>
+                                <div class="col-12">
+                                    <div class="text-right">
+                                        <button id=btn_submit_experience_info
+                                            class="btn btn-orange submit-btn">Submit</button>
+                                    </div>
                                 </div>
+                                {{-- </form> --}}
                             </div>
-
-                            {{-- <div class="text-right col-12 mb-2">
-                                    <button class="text-primary border-0 outline-none bg-transparent"
-                                        id="add_experienceDetails">
-                                        <i class=" ri-add-circle-fill"></i> Add More
-                                    </button>
-                                </div> --}}
-
-
-                            {{-- </div>
-                        </div> --}}
                         </div>
                     </div>
                 </div>
-
                 <!-- bank informatios -->
                 <div id="Bank_info" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
