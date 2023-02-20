@@ -545,6 +545,12 @@ Route::get('/signed-passwordresetlink', 'App\Http\Controllers\Auth\LoginControll
 Route::get('syncStaffAttendanceFromDeviceDatabase', [App\Http\Controllers\VmtStaffAttendanceController::class, 'syncStaffAttendanceFromDeviceDatabase']);
 
 
+//TESTING ROUTES
+//// SASS TESTING
+Route::get('/testing_sass', function(){
+
+    return view('testing_views.sassTest');
+});
 
 
 //DONT WRITE ANT ROUTES BELOW THIS
