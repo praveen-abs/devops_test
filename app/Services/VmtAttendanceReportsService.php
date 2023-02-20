@@ -160,7 +160,7 @@ class VmtAttendanceReportsService{
                  "user_id"=> $singleUser->id,"isAbsent"=>false,"isLeave"=>false,
                  "is_weekoff"=>false,"date"=>$fulldate,"attendance_mode_checkin"=>null,
                  "attendance_mode_checkout"=>null, "absent_status"=>null,"checkin_time"=>null,
-                 "checkout_time"=>null,
+                 "checkout_time"=>null,"leave_type"=>null
                                                              );
 
                 //echo "Date is ".$fulldate."\n";
@@ -266,7 +266,9 @@ class VmtAttendanceReportsService{
                    if(!array_key_exists('date',$attendanceResponseArray[$key]) )
                      dd("Missing for : ".$key);
 
-                 if(Carbon::parse($attendanceResponseArray[$key]['date'])->format('l')=="Sunday"){
+                 if(Carbon::parse($attendanceResponseArray[$key]['date'])->format('l')=="Sunday"
+                 &&$attendanceResponseArray[$key]['checkin_time']==null&&
+                 $attendanceResponseArray[$key]["checkout_time"]==null){
                      $attendanceResponseArray[$key]['is_weekoff']=true;
                  }
                  //Logic For Check Absent or Not
@@ -277,7 +279,7 @@ class VmtAttendanceReportsService{
                     $leave_Details=VmtEmployeeLeaves::where('user_id',$attendanceResponseArray[$key]['user_id'])
                                   ->whereYear('end_date', $year)
                                   ->whereMonth('end_date',$month)
-                                  ->get(['start_date','end_date','status']);
+                                  ->get(['start_date','end_date','status','leave_type_id']);
                     if( $leave_Details->count()==0){
                        // dd( $leave_Details->count());
                         $attendanceResponseArray[$key]['isAbsent']=true;
@@ -292,6 +294,23 @@ class VmtAttendanceReportsService{
                                 $attendanceResponseArray[$key]["checkout_time"]==null&&
                                 $single_leave_details->status=='Approved'){
                                     $attendanceResponseArray[$key]['isLeave']=true;
+                                    $leave_type=VmtLeaves::where('id',$single_leave_details->leave_type_id)
+                                                           ->pluck('leave_type');
+                                    if($leave_type[0]=='Sick Leave / Casual Leave'){
+                                        $attendanceResponseArray[$key]['leave_type']='SL/CL';
+                                    }else if($leave_type[0]=='Earned Leave'){
+                                        $attendanceResponseArray[$key]['leave_type']='EL';
+                                    }else if($leave_type[0]=='Maternity Leave'){
+                                        $attendanceResponseArray[$key]['leave_type']='ML';
+                                    }else if($leave_type[0]=='Paternity Leave'){
+                                        $attendanceResponseArray[$key]['leave_type']='PL';
+                                    }else if($leave_type[0]='On Duty'){
+                                        $attendanceResponseArray[$key]['leave_type']='OD';
+                                    }else if($leave_type[0]='Permission'){
+                                        $attendanceResponseArray[$key]['leave_type']="PI";
+                                    }else if($leave_type[0]=='Compensatory Off'){
+                                        $attendanceResponseArray[$key]['leave_type']='CO';
+                                    }
                                        continue;
                                 }else{
                                     $attendanceResponseArray[$key]['isAbsent']=true;
@@ -321,7 +340,8 @@ class VmtAttendanceReportsService{
                      array_push($arrayReport,'A');
                      $total_absent++;
                  }else if( $attendanceResponseArray[$key]['isLeave']){
-                    array_push($arrayReport,'L');
+                   // dd($attendanceResponseArray[$key]);
+                    array_push($arrayReport,$attendanceResponseArray[$key]['leave_type']);
                     $total_leave++;
                  } else if($attendanceResponseArray[$key]['checkin_time']!=null || $attendanceResponseArray[$key]['checkout_time']!=null) {
                      array_push($arrayReport,'P');
