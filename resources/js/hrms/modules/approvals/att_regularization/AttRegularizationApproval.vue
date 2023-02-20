@@ -21,6 +21,7 @@
                 <Button label="No" icon="pi pi-times" @click="hideConfirmDialog(true)" class="p-button-text"/>
             </template>
         </Dialog>
+
         <div>
 
             <DataTable :value="att_regularization" :paginator="true" :rows="10" dataKey="id"
@@ -90,7 +91,7 @@
     import {FilterMatchMode,FilterOperator} from 'primevue/api';
     import  { useConfirm } from "primevue/useconfirm";
     import  { useToast }  from "primevue/usetoast";
-   
+
 
     let att_regularization = ref();
     let canShowConfirmation = ref(false);
@@ -106,7 +107,7 @@
                      matchMode: FilterMatchMode.STARTS_WITH,
                      matchMode:FilterMatchMode.EQUALS,
                      matchMode:FilterMatchMode.CONTAINS,
-                     
+
                     },
 
              status:  { value: null, matchMode: FilterMatchMode.EQUALS },
@@ -121,6 +122,11 @@
     let currentlySelectedRowData = null;
 
     onMounted(() => {
+
+        ajax_GetAttRegularizationData();
+    })
+
+    function ajax_GetAttRegularizationData(){
         let url = window.location.origin + '/fetch-regularization-approvals';
 
         console.log("AJAX URL : " + url);
@@ -129,11 +135,10 @@
             .then((response) => {
                 console.log("Axios : " + response.data);
                 att_regularization.value = response.data;
-    
+
 
             });
-
-    })
+    }
 
     function showConfirmDialog(selectedRowData, status){
         canShowConfirmation.value = true;
@@ -156,6 +161,7 @@
         currentlySelectedRowData = null;
 
     }
+
 
     ////PrimeVue ConfirmDialog code -- Keeping here for reference
     //const confirm = useConfirm();
@@ -202,9 +208,12 @@
             status_text: 'Reviewer commented'
         })
         .then((response) => {
-            console.log(response);
+            console.log("Response : "+response);
 
             canShowLoadingScreen.value = false;
+
+            toast.add({severity:'info', summary: 'Info', detail:'Success', life: 3000});
+            ajax_GetAttRegularizationData();
 
             resetVars();
         })
@@ -252,7 +261,7 @@
       .p-dropdown .p-dropdown-label.p-placeholder{
         margin-top: -12px;
       }
-    
+
     .p-column-filter-menu-button{
         color: white;
         margin-left: 10px;
@@ -263,26 +272,26 @@
         border-color: transparent;
         background: #023e70;
       }
-  
+
   }
   .p-column-filter-overlay-menu .p-column-filter-constraint .p-column-filter-matchmode-dropdown {
     margin-bottom: 0.5rem;
     visibility: hidden;
     position: absolute;
   }
- 
+
   .p-button .p-component .p-button-sm{
     background-color: #003056;
   }
-  
+
 .p-datatable .p-datatable-tbody > tr{
     font-size: 13px;
     .employee_name{
         font-weight: bold;
         font-size: 13.5px;
     }
-    
-    
+
+
   }
   .p-datatable .p-datatable-tbody > tr > td {
     text-align: left;
@@ -293,7 +302,7 @@
       border-left-width: 1px;
     border-width: 0 0 1px 0;
     padding: 1rem 0.6rem;
-  
+
   }
   .p-datatable .p-datatable-tbody > tr > td:nth-child(1) {
     width: 20%;
@@ -304,13 +313,13 @@
 
 .pending {
     font-weight: 700;
-    
+
 }
 
 
 .approved {
     font-weight: 700;
-    
+
 }
 .p-button.p-component.p-button-success.Button {
     padding: 8px;
@@ -354,7 +363,7 @@
   .p-datatable .p-datatable-thead > tr > th .p-column-filter {
     width: 55%;
   }
- 
+
   /* For Sort */
 
   .p-datatable .p-sortable-column:not(.p-highlight):hover {
@@ -368,15 +377,15 @@
     background: #003056;
     color:white;
   }
-  
+
   .p-datatable .p-sortable-column.p-highlight:hover {
     background: #003056;
-    color:white;     
+    color:white;
   }
   .p-datatable .p-sortable-column:focus {
     box-shadow: none;
     outline: none;
-    color: white; 
+    color: white;
   }
   .p-datatable .p-sortable-column .p-sortable-column-icon{
     color:white
