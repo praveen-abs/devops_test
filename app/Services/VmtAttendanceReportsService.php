@@ -31,9 +31,10 @@ class VmtAttendanceReportsService{
        // dd($year);
         $reportresponse=array();
 
-        $user = User::where('is_ssa','0')
+        $user = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
+                      ->where('is_ssa','0')
                       ->where('active','1')
-                      ->get(['id','user_code','name']);
+                      ->get(['users.id','users.user_code','users.name','vmt_employee_details.doj']);
         //dd($user);
         foreach($user as $singleUser){
 
@@ -157,7 +158,7 @@ class VmtAttendanceReportsService{
 
                 $attendanceResponseArray[$fulldate] = array(
                  //"user_id"=>$request->user_id,
-                 "user_id"=> $singleUser->id,"isAbsent"=>false,"isLeave"=>false,
+                 "user_id"=> $singleUser->id,"DOJ"=>$singleUser->doj,"isAbsent"=>false,"isLeave"=>false,
                  "is_weekoff"=>false,"date"=>$fulldate,"attendance_mode_checkin"=>null,
                  "attendance_mode_checkout"=>null, "absent_status"=>null,"checkin_time"=>null,
                  "checkout_time"=>null,"leave_type"=>null
@@ -333,7 +334,12 @@ class VmtAttendanceReportsService{
          //dd($attendanceResponseArray);
 
              foreach ($attendanceResponseArray as $key => $value) {
-                 if($attendanceResponseArray[$key]['is_weekoff']){
+                 $current_date=Carbon::parse($attendanceResponseArray[$key]['date']);
+                 $doj=Carbon::parse($attendanceResponseArray[$key]['DOJ']);
+
+                 if($doj->gte($current_date)){
+                    array_push($arrayReport,'NA');
+                 } else if($attendanceResponseArray[$key]['is_weekoff']){
                      array_push($arrayReport,'WO');
                      $total_weekoff++;
                   }else if($attendanceResponseArray[$key]['isAbsent']&&!$attendanceResponseArray[$key]['isLeave']){
