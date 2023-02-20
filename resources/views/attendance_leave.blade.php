@@ -1478,10 +1478,10 @@
                                 //return gridjs.html(cell);
                                 if (permissionTypeIds.includes(leave_history.leave_type_id))
                                     return gridjs.html(moment(leave_history.start_date).format(
-                                        'MMM Do, YYYY, h:mm a')); // Format : Jan 9th, 2023, 3:00 pm
+                                        ' DD-MMM-YYYY, h:mm a')); // Format : Jan 9th, 2023, 3:00 pm
                                 else
                                     return gridjs.html(moment(leave_history.start_date).format(
-                                        'MMM Do, YYYY'));
+                                        'DD-MMM-YYYY'));
 
                             }
                         },
@@ -1493,10 +1493,10 @@
 
                                 if (permissionTypeIds.includes(leave_history.leave_type_id))
                                     return gridjs.html(moment(leave_history.end_date).format(
-                                        'MMM Do, YYYY, h:mm a'));
+                                        'DD-MMM-YYYY, h:mm a'));
                                 else
                                     return gridjs.html(moment(leave_history.end_date).format(
-                                        'MMM Do, YYYY'));
+                                        'DD-MMM-YYYY'));
                             }
                         },
                         {
@@ -1678,7 +1678,7 @@
                             name: 'Start Date',
                             formatter: function formatter(cell) {
                                 //return gridjs.html(cell);
-                                return gridjs.html(moment(cell).format('DD-MM-YYYY h:mm a'));
+                                return gridjs.html(moment(cell).format('DD-MMM-YYYY h:mm a'));
                             }
                         },
 
@@ -1687,7 +1687,7 @@
                             name: 'End Date',
                             formatter: function formatter(cell) {
                                 //return gridjs.html(cell);
-                                return gridjs.html(moment(cell).format('DD-MM-YYYY h:mm a'));
+                                return gridjs.html(moment(cell).format('DD-MMM-YYYY h:mm a'));
                             }
                         },
 
@@ -1842,10 +1842,10 @@
                                 // return gridjs.html(leave_history.leave_type_id);
                                 if (permissionTypeIds.includes(leave_history.leave_type_id))
                                     return gridjs.html(moment(leave_history.start_date).format(
-                                        'MMM Do, YYYY, h:mm a')); // Format : Jan 9th, 2023, 3:00 pm
+                                        'DD-MMM-YYYY, h:mm a')); // Format : Jan 9th, 2023, 3:00 pm
                                 else
                                     return gridjs.html(moment(leave_history.start_date).format(
-                                        'MMM Do, YYYY'));
+                                        'DD-MMM-YYYY'));
 
 
                             }
@@ -1858,10 +1858,10 @@
                                 //return gridjs.html(cell);
                                 if (permissionTypeIds.includes(leave_history.leave_type_id))
                                     return gridjs.html(moment(leave_history.start_date).format(
-                                        'MMM Do, YYYY, h:mm a')); // Format : Jan 9th, 2023, 3:00 pm
+                                        'DD-MMM-YYYY, h:mm a')); // Format : Jan 9th, 2023, 3:00 pm
                                 else
                                     return gridjs.html(moment(leave_history.start_date).format(
-                                        'MMM Do, YYYY'));
+                                        'DD-MMM-YYYY'));
 
                             }
                         },
