@@ -156,7 +156,7 @@
                                     <li class="border-bottom-liteAsh pb-1">
                                         <div class="title">Birthday</div>
                                         <div class="text">
-                                            {{ date('d F', strtotime($user_full_details->dob ?? '-')) }}
+                                            {{ date('d-M-Y', strtotime($user_full_details->dob ?? '-')) }}
                                         </div>
                                     </li>
                                     <li class="border-bottom-liteAsh pb-1">
@@ -166,7 +166,7 @@
                                     <li class="border-bottom-liteAsh pb-1">
                                         <div class="title">Date Of Joining (DOJ)</div>
                                         <div class="text">
-                                            {{ date('d F', strtotime($user_full_details->doj ?? '-')) }}
+                                            {{ date('d-M-Y', strtotime($user_full_details->doj ?? '-')) }}
                                         </div>
                                     </li>
                                     <li class="border-bottom-liteAsh pb-1">
@@ -303,7 +303,8 @@
                                                         <li class="border-bottom-liteAsh pb-1">
                                                             <div class="title"> dob</div>
                                                             <div class="text">
-                                                                {{ $singledetail->dob }}
+                                                                {{date('d-M-Y',strtotime( $singledetail->dob)) }}
+
                                                             </div>
                                                         </li>
                                                         <li class="border-bottom-liteAsh pb-1">
@@ -320,7 +321,7 @@
                                     </div>
                                 @endforeach
                             </div>
-                        @else
+                        @elseif (empty($familydetails) || count($familydetails) < 0)
                             <div class="no-data">
                                 <iv class="mx-auto col-4">
                                     <img src="{{ URL::asset('assets/images/no_dataFile.svg') }}" class="h-100 w-100"
@@ -371,15 +372,15 @@
                                                             </div>
                                                         </li>
                                                         <li class="border-bottom-liteAsh pb-1">
-                                                            <div class="title"> From</div>
+                                                            <div class="title"> From(DOJ)</div>
                                                             <div class="text">
-                                                                {{ $info['period_from'] }}
+                                                                {{ date('d-M-Y',strtotime( $info['period_from'])) }}
                                                             </div>
                                                         </li>
                                                         <li class="border-bottom-liteAsh pb-1">
                                                             <div class="title">To</div>
                                                             <div class="text">
-                                                                {{ $info['period_to'] }}
+                                                                {{ date('d-M-Y',strtotime(  $info['period_to'])) }}
                                                             </div>
                                                         </li>
 
@@ -391,13 +392,11 @@
                                 @endforeach
                             </div>
                         @else
-
-                                <div class="mx-auto col-4">
-                                    <img src="{{ URL::asset('assets/images/no_dataFile.svg') }}" class="h-100 w-100"
-                                        alt="user-pic">
-                                    <h4> <span class="text-orange">Sorry !</span> No data</h4>
-                                </div>
-
+                            <div class="mx-auto col-4">
+                                <img src="{{ URL::asset('assets/images/no_dataFile.svg') }}" class="h-100 w-100"
+                                    alt="user-pic">
+                                <h4> <span class="text-orange">Sorry !</span> No data</h4>
+                            </div>
                         @endif
 
 
@@ -1702,22 +1701,22 @@
                                         <div class="form-group mb-3">
                                             <label>Physically Handicapped</label>
                                             @if (!empty($user_full_details->physically_challenged))
-                                                <input type="text" name="physically_challenged" id="physical_challenge"
-                                                    class="form-control "
+                                                <input type="text" name="physically_challenged"
+                                                    id="physical_challenge" class="form-control "
                                                     value=" {{ $user_full_details->physically_challenged }}">
                                             @else
-                                                <input type="text" name="physically_challenged" id="physical_challenge"
-                                                    class="form-control " value="">
+                                                <input type="text" name="physically_challenged"
+                                                    id="physical_challenge" class="form-control " value="">
                                             @endif
 
                                         </div>
                                     </div>
                                 </div>
 
-                                    <div class="text-right col-12">
-                                        <button id="btn_submit_generalInfo"
-                                            class="btn btn-border-orange submit-btn">Save</button>
-                                    </div>
+                                <div class="text-right col-12">
+                                    <button id="btn_submit_generalInfo"
+                                        class="btn btn-border-orange submit-btn">Save</button>
+                                </div>
 
                             </div>
                         </div>
@@ -1990,43 +1989,41 @@
                             </div>
                             <div class="modal-body">
                                 @csrf <div class="exp-content-container">
-                                    <div class="card exp-addition-card" id="content1">
-                                        <div class="card-body">
+                                    {{-- <div class="card exp-addition-card" id="content1">
+                                        <div class="card-body"> --}}
+
+                                    @if (!empty($exp) && count($exp) > 0)
+                                        @foreach ($exp as $experience)
                                             <div class="row ">
                                                 <input type="hidden" name="ids[]">
-                                                <div class="col-12 text-end">
+                                                {{-- <div class="col-12 text-end">
                                                     <button
                                                         class="btn text-danger delete-btn p-0 bg-transparent outline-none border-0 f-12 plus-sign"
                                                         type="button" id="deleteFamily_btn"><i
                                                             class="f-12 me-1 fa text-danger  fa-trash"
                                                             aria-hidden="true"></i>Delete
                                                     </button>
-                                                </div>
+                                                </div> --}}
                                                 <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-12">
-                                                    <div class="form-group mb-3 form-focus focused">
+                                                    <div class="form-group mb-2">
                                                         <label class="focus-label">Company Name</label>
                                                         <input type="text" name="company_name[]"
-                                                            class="form-control floating" value="" required>
+                                                            class="form-control floating"
+                                                            value="" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-12">
-                                                    <div class="form-group mb-3 form-focus focused">
+                                                    <div class="form-group mb-2">
                                                         <label class="focus-label">Location</label>
                                                         <input type="text" name="location[]"
-                                                            class="form-control floating" value="" required>
+                                                            class="form-control floating" value="{{ $exp }}"
+                                                            required>
 
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-12">
-                                                    <div class="form-group mb-3 form-focus focused">
-                                                        <label class="focus-label">Job Position</label>
-                                                        <input type="text" name="job_position[]"
-                                                            class="form-control floating" value="" required>
 
-                                                    </div>
-                                                </div>
                                                 <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-12">
-                                                    <div class="form-group mb-3 form-focus focused">
+                                                    <div class="form-group mb-2">
                                                         <label class="focus-label">Period From</label>
                                                         <div class="cal-icon">
                                                             <input type="date" max="9999-12-31" name="period_from[]"
@@ -2037,7 +2034,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-12">
-                                                    <div class="form-group mb-3 form-focus focused">
+                                                    <div class="form-group mb-2">
                                                         <div class="cal-icon">
                                                             <label class="focus-label">Period To</label>
                                                             <input type="date" max="9999-12-31" name="period_to[]"
@@ -2047,22 +2044,34 @@
 
                                                     </div>
                                                 </div>
+                                                <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-12">
+                                                    <div class="form-group mb-2">
+                                                        <label class="focus-label">Job Position</label>
+                                                        <input type="text" name="job_position[]"
+                                                            class="form-control floating" value="" required>
+
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="text-right col-12 mb-2">
-                                    <button class="text-primary border-0 outline-none bg-transparent"
-                                        id="add_experienceDetails">
-                                        <i class=" ri-add-circle-fill"></i> Add More
-                                    </button>
+                                        @endforeach
+                                    @endif
                                 </div>
                                 <div class="text-end col-12">
                                     <button id=btn_submit_experience_info class="btn btn-orange submit-btn">Submit
                                     </button>
                                 </div>
-
                             </div>
+
+                            {{-- <div class="text-right col-12 mb-2">
+                                    <button class="text-primary border-0 outline-none bg-transparent"
+                                        id="add_experienceDetails">
+                                        <i class=" ri-add-circle-fill"></i> Add More
+                                    </button>
+                                </div> --}}
+
+
+                            {{-- </div>
+                        </div> --}}
                         </div>
                     </div>
                 </div>
@@ -2657,7 +2666,7 @@
                         doj: doj,
                         marital_status: marital_status,
                         blood_group: blood_group,
-                        physically_challenged:physically_challenged,
+                        physically_challenged: physically_challenged,
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(data) {

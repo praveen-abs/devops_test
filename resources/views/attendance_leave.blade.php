@@ -616,12 +616,13 @@
                                             </div>
                                         </div>
                                         <div class="col-md-4 text-md-center mb-md-0 " id="div_totalhours">
-                                                <p class="fw-bold  text-muted mb-2">Total Hours</p>
-                                                <span class="shadow-lite px-2 py-1" id="total_permission_hours">-</span>
-                                            </div>
+                                            <p class="fw-bold  text-muted mb-2">Total Hours</p>
+                                            <span class="shadow-lite px-2 py-1" id="total_permission_hours">-</span>
+                                        </div>
                                         <div class="col-4 text-md-end ">
                                             <label class="fw-bold">End Date</label>
-                                            <input type="datetime-local" id="end_date" class="form-control outline-none border-0 shadow-lite leave_date">
+                                            <input type="datetime-local" id="end_date"
+                                                class="form-control outline-none border-0 shadow-lite leave_date">
                                         </div>
                                     </div>
                                     <textarea id="leave_reason" placeholder="Reason here..." class="w-100 outline-none border-0 shadow-lite form-control"
@@ -1278,11 +1279,10 @@
                     }
 
                     //If half-daf radio button clicked, Get the half day value...
-                    if (radioBtn_halfDay == true){
+                    if (radioBtn_halfDay == true) {
                         half_day = $("#for_half_day_leave").val();
                         half_day_type = $('#half_day_type').val();
-                    }
-                    else{
+                    } else {
                         half_day = null;
                         half_day_type = null;
                     }
@@ -1627,35 +1627,36 @@
                         {
                             id: 'employee_name',
                             name: 'Employee Name',
+
                             formatter: function formatter(leaveHistoryObj) {
+                                var emp_code = leaveHistoryObj.emp_code;
+                                var emp_name = leaveHistoryObj.emp_name;
+                                var emp_avatar = JSON.parse(leaveHistoryObj.employee_avatar);
                                 var output = "";
-                                let json_emp_avatar = JSON.parse(leaveHistoryObj.employee_avatar);
-
-                                if (json_emp_avatar.type == "shortname") {
-
+                                if (emp_avatar.type == "shortname") {
                                     output =
-                                        '<div class="d-flex align-items-center page-header-user-dropdown">' +
-                                        '<span class="rounded-circle user-profile  ml-2 " id="">' +
+                                        '<div class="d-flex align-items-center rounded-circle  page-header-user-dropdown ">' +
+                                        '<span class=" user-profile  ml-2 ' + emp_avatar
+                                        .color + ' " id="">' +
                                         '<i class="topbar_username" class="align-middle ">' +
-                                        json_emp_avatar.data + '</i>' +
+                                        emp_avatar.data + '</i>' +
                                         '</span>' +
                                         '<span>&nbsp;&nbsp;' + leaveHistoryObj.employee_name +
                                         '</span>' +
                                         '</div>';
-                                } else
-                                if (json_emp_avatar.type == "avatar") {
-                                    var imageURL = "images/" + json_emp_avatar.data;
+
+                                } else {
+                                    var imagePath = '{{ URL::asset('images/') }}' + '/' +
+                                        emp_avatar
+                                        .avatar;
 
                                     output = '<div class="d-flex align-items-center">' +
                                         '<img class="rounded-circle header-profile-user" src="' +
-                                        imageURL + '" alt="--">' +
+                                        imagePath + '" alt="user image">' +
                                         '<span>&nbsp;&nbsp;' + leaveHistoryObj.employee_name +
                                         '</span>' +
                                         '</div>';
-                                }
-                                else
-                                {
-                                    output = 'error';
+
                                 }
 
                                 return gridjs.html(output);
@@ -1790,35 +1791,34 @@
                             id: 'employee_name',
                             name: 'Employee Name',
                             formatter: function formatter(leaveHistoryObj) {
-
+                                var emp_code = leaveHistoryObj.emp_code;
+                                var emp_name = leaveHistoryObj.emp_name;
+                                var emp_avatar = JSON.parse(leaveHistoryObj.employee_avatar);
                                 var output = "";
-                                let json_emp_avatar = JSON.parse(leaveHistoryObj.employee_avatar);
-
-                                if (json_emp_avatar.type == "shortname") {
-
+                                if (emp_avatar.type == "shortname") {
                                     output =
-                                        '<div class="d-flex align-items-center page-header-user-dropdown">' +
-                                        '<span class="rounded-circle user-profile  ml-2 " id="">' +
+                                        '<div class="d-flex align-items-center rounded-circle  page-header-user-dropdown ">' +
+                                        '<span class=" user-profile  ml-2 ' + emp_avatar
+                                        .color + ' " id="">' +
                                         '<i class="topbar_username" class="align-middle ">' +
-                                        json_emp_avatar.data + '</i>' +
+                                        emp_avatar.data + '</i>' +
                                         '</span>' +
                                         '<span>&nbsp;&nbsp;' + leaveHistoryObj.employee_name +
                                         '</span>' +
                                         '</div>';
-                                } else
-                                if (json_emp_avatar.type == "avatar") {
-                                    var imageURL = "images/" + json_emp_avatar.data;
+
+                                } else {
+                                    var imagePath = '{{ URL::asset('images/') }}' + '/' +
+                                        emp_avatar
+                                        .avatar;
 
                                     output = '<div class="d-flex align-items-center">' +
                                         '<img class="rounded-circle header-profile-user" src="' +
-                                        imageURL + '" alt="--">' +
+                                        imagePath + '" alt="user image">' +
                                         '<span>&nbsp;&nbsp;' + leaveHistoryObj.employee_name +
                                         '</span>' +
                                         '</div>';
-                                }
-                                else
-                                {
-                                    output = 'error';
+
                                 }
 
                                 return gridjs.html(output);
