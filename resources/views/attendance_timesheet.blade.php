@@ -94,78 +94,85 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
         <div class="card mb-2">
             <div class="card-body">
 
-                <div class="row mb-2">
-                    <div class="col-2">
+                <div class="row ">
+                   <div class="col-xl-2 col-xxl-2 col-lg-2 mb-2 col-md-3 col-sm-4">
 
-                        <p class="fw-bold text-primary"><i class="fas fa-fingerprint me-2  text-success "></i>Biometric</p>
+                        <p class="fw-bold text-primary fs-12"><i
+                                class="fas fa-fingerprint me-2  text-success "></i>Biometric</p>
 
                     </div>
 
-                    <div class="col-2">
+                   <div class="col-xl-2 col-xxl-2 col-lg-2 mb-2 col-md-3 col-sm-4">
 
-                        <p class="fw-bold text-primary"><i class="fa fa-exclamation-circle text-warning fs-15 me-2"></i>Not
+                        <p class="fw-bold text-primary fs-12"><i
+                                class="fa fa-exclamation-circle text-warning fs-15 me-2"></i>Not
                             Applied</p>
 
                     </div>
 
-                    <div class="col-2">
+                   <div class="col-xl-2 col-xxl-2 col-lg-2 mb-2 col-md-3 col-sm-4">
 
-                        <p class="fw-bold text-primary"><i class="badge bg-primary rounded-pill  me-2  ">LC</i>Late Coming
+                        <p class="fw-bold text-primary fs-12"><i class="badge bg-primary rounded-pill  me-2  ">LC</i>Late
+                            Coming
                         </p>
 
                     </div>
-                    <div class="col-2">
+                   <div class="col-xl-2 col-xxl-2 col-lg-2 mb-2 col-md-3 col-sm-4">
 
-                        <p class="fw-bold text-primary"><i class="badge bg-info  rounded-pill  me-2  ">MOP</i>Missed Out
+                        <p class="fw-bold text-primary fs-12"><i class="badge bg-info  rounded-pill  me-2  ">MOP</i>Missed
+                            Out
                             Punch</p>
 
                     </div>
-                    <div class="col-2">
+                   <div class="col-xl-2 col-xxl-2 col-lg-2 mb-2 col-md-3 col-sm-4">
 
-                        <p class="fw-bold text-primary"><i class="fa fa-laptop   me-2 text-info"></i>Web </p>
-
-                    </div>
-                    <div class="col-2">
-
-                        <p class="fw-bold text-primary"><i class="fa fa-times-circle    me-2 text-danger"></i>Rejected </p>
+                        <p class="fw-bold text-primary fs-12"><i class="fa fa-laptop   me-2 text-info"></i>Web </p>
 
                     </div>
+                   <div class="col-xl-2 col-xxl-2 col-lg-2 mb-2 col-md-3 col-sm-4">
 
-                </div>
-                <div class="row">
-
-                    <div class="col-2">
-
-                        <p class="fw-bold text-primary"><i class='fa fa-check-circle text-success me-1'></i> Approved </p>
+                        <p class="fw-bold text-primary fs-12"><i class="fa fa-times-circle    me-2 text-danger"></i>Rejected
+                        </p>
 
                     </div>
-                    <div class="col-2">
 
-                        <p class="fw-bold text-primary"><i
+
+
+
+                   <div class="col-xl-2 col-xxl-2 col-lg-2  col-md-3 col-sm-4">
+
+                        <p class="fw-bold text-primary fs-12"><i class='fa fa-check-circle text-success me-1'></i> Approved
+                        </p>
+
+                    </div>
+                   <div class="col-xl-2 col-xxl-2 col-lg-2  col-md-3 col-sm-4">
+
+                        <p class="fw-bold text-primary fs-12"><i
                                 class="fa fa-question-circle fs-15 text-secondary me-2"></i>Pending</p>
 
                     </div>
 
-                    <div class="col-2">
+                    <div class="col-xl-2 col-xxl-2 col-lg-2 col-md-3 col-sm-4 ">
 
-                        <p class="fw-bold text-primary"><i class="badge bg-orange rounded-pill  me-2  ">EG</i>Early Going
+                        <p class="fw-bold text-primary fs-12"><i class="badge bg-orange rounded-pill  me-2  ">EG</i>Early
+                            Going
                         </p>
 
                     </div>
-                    <div class="col-2">
+                   <div class="col-xl-2 col-xxl-2 col-lg-2  col-md-3 col-sm-4">
 
-                        <p class="fw-bold text-primary"><i class="badge bg-dark rounded-pill  me-3  ">MIP</i>Missed In
+                        <p class="fw-bold text-primary fs-12"><i class="badge bg-dark rounded-pill  me-3  ">MIP</i>Missed In
                             Punch</p>
 
                     </div>
-                    <div class="col-2">
+                   <div class="col-xl-2 col-xxl-2 col-lg-2  col-md-3 col-sm-4">
 
-                        <p class="fw-bold text-primary"><i class="fa fa-mobile text-dark fs-15 me-3  "></i>Mobile</p>
+                        <p class="fw-bold text-primary fs-12"><i class="fa fa-mobile text-dark fs-15 me-3  "></i>Mobile</p>
 
                     </div>
-
-
                 </div>
+
+
 
             </div>
         </div>
@@ -460,13 +467,14 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                         if (empAvatarDetails.type == 'shortname') {
                             var userBgColor = empAvatarDetails.color;
                             avatar_data =
-                                '<div class="user_pic '+userBgColor+' d-flex justify-content-center align-items-center bg-primary  rounded-circle"><span class="text-white fw-bold">' +
-                                    empAvatarDetails.data +
+                                '<div class="user_pic ' + userBgColor +
+                                ' d-flex justify-content-center align-items-center bg-primary  rounded-circle"><span class="text-white fw-bold">' +
+                                empAvatarDetails.data +
                                 '</span></div>';
 
                         } else
                         if (empAvatarDetails.type == 'avatar') {
-                            var imageURL = "images/" +empAvatarDetails.data;
+                            var imageURL = "images/" + empAvatarDetails.data;
 
                             avatar_data =
                                 ' <div class="user_pic bg-ash rounded-circle"><img class=" w-100 h-100 rounded-circle header-profile-user" src="' +
@@ -532,7 +540,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                             avatar_data =
                                 ' <div class=" ' + userBgColor +
                                 '  user_pic d-flex  justify-content-center align-items-center  rounded-circle"> <span class="text-white fw-bold">' +
-                                    empAvatarDetails.data +
+                                empAvatarDetails.data +
                                 '</span></div>';
 
 
@@ -558,8 +566,10 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                             avatar_data +
                             '</div>' +
                             '<div class="user_content text-start ">' +
-                            '<p class="fw-bold text-primary text-capitalize" >' + element.name + '</p>' +
-                            '<p class=" text-muted f-11 text-capitalize">' + element.designation + '</p>' +
+                            '<p class="fw-bold text-primary text-capitalize" >' + element.name +
+                            '</p>' +
+                            '<p class=" text-muted f-11 text-capitalize">' + element.designation +
+                            '</p>' +
                             '</div>' +
                             '</a>' +
                             '</li>';
