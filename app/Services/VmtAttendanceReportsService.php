@@ -27,6 +27,21 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class VmtAttendanceReportsService{
 
+    public function isRegularizationRequestApplied($user_id, $date,$regularizeType){
+        $regularize_record = VmtEmployeeAttendanceRegularization::where('attendance_date',$date)
+                           ->where('user_id',  $user_id)->where('regularization_type', $regularizeType);
+           if ($regularize_record->exists()) {
+                if($regularize_record->value('status')=='Approved'){
+                     return false;
+                }else{
+                    return true;
+                }
+
+           }else{
+                return true;
+            }
+    }
+
     public function basicAttendanceReport($year){
        // dd($year);
         $reportresponse=array();
@@ -43,6 +58,8 @@ class VmtAttendanceReportsService{
             $total_weekoff=0;
             $total_leave=0;
             $total_OD=0;
+            $total_LC=0;
+            $total_EG=0;
 
             //dd($singleUser->user_code);
 
@@ -160,7 +177,7 @@ class VmtAttendanceReportsService{
                 $attendanceResponseArray[$fulldate] = array(
                  //"user_id"=>$request->user_id,
                  "user_id"=> $singleUser->id,"DOJ"=>$singleUser->doj,"isAbsent"=>false,"isLeave"=>false,
-                 "is_weekoff"=>false,"date"=>$fulldate,"attendance_mode_checkin"=>null,
+                 "is_weekoff"=>false,"isLC"=>false,"isEG"=>false,"date"=>$fulldate,"attendance_mode_checkin"=>null,
                  "attendance_mode_checkout"=>null, "absent_status"=>null,"checkin_time"=>null,
                  "checkout_time"=>null,"leave_type"=>null
                                                              );
@@ -168,7 +185,7 @@ class VmtAttendanceReportsService{
                 //echo "Date is ".$fulldate."\n";
                 ///$month_array[""]
               }
-              array_push($heading_dates, "Total WO", "Total P", "Total A","Total L","Total OD");
+              array_push($heading_dates, "Total WO", "Total P", "Total A","Total L","Total OD","Total LG","Total EG");
 
 
 
@@ -260,7 +277,10 @@ class VmtAttendanceReportsService{
              }
 
 
-         //  dd($attendanceResponseArray);
+        // dd($attendanceResponseArray);
+
+         $shiftStartTime  = Carbon::parse($regularTime->shift_start_time);
+         $shiftEndTime  = Carbon::parse($regularTime->shift_end_time);
             //
              foreach ($attendanceResponseArray as $key => $value) {
                      //Logic For Check week off or not
@@ -329,10 +349,47 @@ class VmtAttendanceReportsService{
 
                  }
 
+                 $checkin_time = $attendanceResponseArray[$key]["checkin_time"];
+                 $checkout_time = $attendanceResponseArray[$key]["checkout_time"];
+
+                 //Code For Check LG
+           if(!empty($checkin_time)){
+                       $parsedCheckIn_time  = Carbon::parse($checkin_time);
+                     //Check whether checkin done on-time
+                     $isCheckin_done_ontime = $parsedCheckIn_time->lte($shiftStartTime);
+                if($isCheckin_done_ontime){
+                    //employee came on time....
+                }else{
+                    //dd("Checkin NOT on-time");
+                    //check whether regularization applied.
+                    $user_id=$attendanceResponseArray[$key]['user_id'];
+                    $date=$attendanceResponseArray[$key]['date'];
+                    $regularization_status = $this->isRegularizationRequestApplied($user_id,$date,'LC');
+                    $attendanceResponseArray[$key]["isLC"] = $regularization_status;
+                }
+            }
+                  //Code For Check LG
+            if(!empty( $checkout_time)){
+                    $parsedCheckOut_time  = Carbon::parse($checkout_time);
+                  //Check whether checkin out on-time
+                  $isCheckout_done_ontime =$parsedCheckOut_time->lte($shiftEndTime);
+             if( $isCheckout_done_ontime){
+                   //employee left early on time....
+                 $user_id=$attendanceResponseArray[$key]['user_id'];
+                 $date=$attendanceResponseArray[$key]['date'];
+                 $regularization_status = $this->isRegularizationRequestApplied($user_id,$date,'EG');
+                 $attendanceResponseArray[$key]["isEG"] = $regularization_status;
+             }else{
+                //employee left late....
+             }
+            }
+
+
+
              }
 
 
-         //dd($attendanceResponseArray);
+        // dd($attendanceResponseArray);
 
              foreach ($attendanceResponseArray as $key => $value) {
                  $current_date=Carbon::parse($attendanceResponseArray[$key]['date']);
@@ -357,10 +414,21 @@ class VmtAttendanceReportsService{
                    }
                  } else if($attendanceResponseArray[$key]['checkin_time']!=null || $attendanceResponseArray[$key]['checkout_time']!=null) {
                      array_push($arrayReport,'P');
-                     $total_present++;
+                      $total_present++;
                  }else{
                     array_push($arrayReport,' ');
                  }
+
+                 //Count For LG AND EG
+                 if($attendanceResponseArray[$key]['isLC']){
+                       $total_LC++;
+                 }
+
+                 if($attendanceResponseArray[$key]['isEG']){
+                      $total_EG++;
+                 }
+
+
 
              }
 
@@ -368,7 +436,7 @@ class VmtAttendanceReportsService{
               //dd(($attendanceResponseArray));
 
            // dd();
-            array_push($arrayReport,$total_weekoff,$total_present,$total_absent,$total_leave,$total_OD);
+            array_push($arrayReport,$total_weekoff,$total_present,$total_absent,$total_leave,$total_OD,$total_LC,$total_EG);
             array_push($reportresponse,$arrayReport);
 
            // dd( $arrayReport);
