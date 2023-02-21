@@ -42,6 +42,7 @@ class VmtAttendanceReportsService{
             $total_absent=0;
             $total_weekoff=0;
             $total_leave=0;
+            $total_OD=0;
 
             //dd($singleUser->user_code);
 
@@ -153,7 +154,7 @@ class VmtAttendanceReportsService{
                 $fulldate = $year."-".$month."-".$date;
                // dd($i.' '.substr(Carbon::parse($fulldate)->format('l'),0,1));
               //  $date_day=$i.'  '.substr(Carbon::parse($fulldate)->format('l'),0,1);
-              $date_day=$i.' - '.Carbon::parse($fulldate)->format('l');
+              $date_day=$date.' - '.Carbon::parse($fulldate)->format('l');
                 array_push($heading_dates, $date_day);
 
                 $attendanceResponseArray[$fulldate] = array(
@@ -167,7 +168,7 @@ class VmtAttendanceReportsService{
                 //echo "Date is ".$fulldate."\n";
                 ///$month_array[""]
               }
-              array_push($heading_dates, "Total WO", "Total P", "Total A","Total L");
+              array_push($heading_dates, "Total WO", "Total P", "Total A","Total L","Total OD");
 
 
 
@@ -304,7 +305,7 @@ class VmtAttendanceReportsService{
                                     }else if($leave_type[0]=='Maternity Leave'){
                                         $attendanceResponseArray[$key]['leave_type']='ML';
                                     }else if($leave_type[0]=='Paternity Leave'){
-                                        $attendanceResponseArray[$key]['leave_type']='PL';
+                                        $attendanceResponseArray[$key]['leave_type']='PTL';
                                     }else if($leave_type[0]='On Duty'){
                                         $attendanceResponseArray[$key]['leave_type']='OD';
                                     }else if($leave_type[0]='Permission'){
@@ -338,7 +339,7 @@ class VmtAttendanceReportsService{
                  $doj=Carbon::parse($attendanceResponseArray[$key]['DOJ']);
 
                  if($doj->gte($current_date)){
-                    array_push($arrayReport,'NA');
+                    array_push($arrayReport,'N');
                  } else if($attendanceResponseArray[$key]['is_weekoff']){
                      array_push($arrayReport,'WO');
                      $total_weekoff++;
@@ -347,8 +348,13 @@ class VmtAttendanceReportsService{
                      $total_absent++;
                  }else if( $attendanceResponseArray[$key]['isLeave']){
                    // dd($attendanceResponseArray[$key]);
+                   if($attendanceResponseArray[$key]['leave_type']=='OD'){
                     array_push($arrayReport,$attendanceResponseArray[$key]['leave_type']);
-                    $total_leave++;
+                       $total_OD++;
+                   }else{
+                       array_push($arrayReport,$attendanceResponseArray[$key]['leave_type']);
+                       $total_leave++;
+                   }
                  } else if($attendanceResponseArray[$key]['checkin_time']!=null || $attendanceResponseArray[$key]['checkout_time']!=null) {
                      array_push($arrayReport,'P');
                      $total_present++;
@@ -362,13 +368,13 @@ class VmtAttendanceReportsService{
               //dd(($attendanceResponseArray));
 
            // dd();
-            array_push($arrayReport,$total_weekoff,$total_present,$total_absent,$total_leave);
+            array_push($arrayReport,$total_weekoff,$total_present,$total_absent,$total_leave,$total_OD);
             array_push($reportresponse,$arrayReport);
 
            // dd( $arrayReport);
             unset($arrayReport);
         }
-      //  dd($reportresponse);
+        //dd($reportresponse);
         $data=array($heading_dates,$reportresponse);
        return $data;
     }
