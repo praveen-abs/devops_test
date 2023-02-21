@@ -10,7 +10,7 @@
                     <h5 style="text-align: center;">Please wait...</h5>
                 </template>
             </Dialog>
-    
+
             <Dialog header="Confirmation" v-model:visible="canShowConfirmation" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '350px'}" :modal="true" >
                 <div class="confirmation-content">
                     <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
@@ -22,15 +22,15 @@
                 </template>
             </Dialog>
             <div>
-    
-    
+
+
                 <DataTable :value="data_reimbursements" :paginator="true" :rows="10" dataKey="id"
                 paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
                 responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
                 v-model:filters="filters" filterDisplay="menu" :loading="loading2"
                 :globalFilterFields="['name','status']" >
                 <template #empty>
-                    No Employee found
+                    No Reimbursement data for the selected status filter
                 </template>
                 <template #loading>
                     Loading customers data. Please wait.
@@ -43,13 +43,18 @@
                         <InputText v-model="filterModel.value" @input="filterCallback()"  placeholder="Search" class="p-column-filter" :showClear="true" />
                        </template>
                 </Column>
-                <Column class="fontSize13px" field="reimbursement_date" header="Date" :sortable="true"></Column>
+                <Column class="fontSize13px" field="reimbursement_date" header="Date" :sortable="true">
+                    <template #body="slotProps">
+                    <!-- {{ slotProps.data.reimbursement_date }} -->
+                        {{ dateFormat(slotProps.data.reimbursement_date, "dd-mm-yyyy, h:MM TT") }}
+                    </template>
+                </Column>
                 <!-- <Column field="user_data" header="User Data"></Column> -->
                 <Column class="fontSize13px" field="from" header="From"></Column>
                 <Column class="fontSize13px" field="to" header="To"></Column>
-                <Column class="fontSize13px" field="vehicle_type" header="Model Of Transport"></Column>
+                <Column class="fontSize13px" field="vehicle_type" header="Mode Of Transport"></Column>
                 <Column class="fontSize13px" field="distance_travelled" header="Distance Covered"></Column>
-                <Column class="fontSize13px" header="Total Expenses">
+                <Column class="fontSize13px" field="total_expenses" header="Total Expenses">
                     <template #body="slotProps">
                         <div v-if="slotProps.data.vehicle_type=='2-Wheeler'" class="totalExpenses">
                            {{  "&#8377;"+slotProps.data.distance_travelled*two_wheller_km_price  }}
@@ -85,11 +90,11 @@
                 </template>
 
                  </Column>
-                
+
                 <Column field="" header="Action">
                     <template #body="slotProps">
-                        
-                        <Button type="button" icon="pi pi-check-circle" class="p-button-success Button"  label="Approval" @click="onClickButton(slotProps.data)" 
+
+                        <Button type="button" icon="pi pi-check-circle" class="p-button-success Button"  label="Approval" @click="onClickButton(slotProps.data)"
                         style="height: 2em;" />
                         <Button type="button" icon="pi pi-times-circle" class="p-button-danger Button "  label="Reject" style="margin-left: 8px;height: 2em;" @click="onClickButton(slotProps.data)" />
                     </template>
@@ -101,12 +106,13 @@
 
 <script setup>
 
-import { ref, onMounted } from 'vue';
+    import { ref, onMounted } from 'vue';
+    import dateFormat, { masks } from "dateformat";
     import axios from 'axios'
     import {FilterMatchMode,FilterOperator} from 'primevue/api';
     import  { useConfirm } from "primevue/useconfirm";
     import  { useToast }  from "primevue/usetoast";
-   
+
 
     let data_reimbursements = ref();
     const two_wheller_km_price=ref(3);
@@ -125,7 +131,7 @@ import { ref, onMounted } from 'vue';
                      matchMode: FilterMatchMode.STARTS_WITH,
                      matchMode:FilterMatchMode.EQUALS,
                      matchMode:FilterMatchMode.CONTAINS,
-                     
+
                     },
 
              status:  { value: null, matchMode: FilterMatchMode.EQUALS },
@@ -139,13 +145,12 @@ import { ref, onMounted } from 'vue';
     let currentlySelectedRowData = null;
 
     onMounted(() => {
-       let url_pending = window.location.origin + '/fetch_pending_reimbursements';
-        let url_approved_rejected = window.location.origin + '/fetch_approved_rejected_reimbursements';
-        
+       let url_all_reimbursements = window.location.origin + '/fetch_all_reimbursements';
 
-        console.log("AJAX URL : " + url_pending);
 
-        axios.get(url_pending)
+        console.log("AJAX URL : " + url_all_reimbursements);
+
+        axios.get(url_all_reimbursements)
             .then((response) => {
                 // console.log("Axios : " + response.data);
                 data_reimbursements.value = response.data;
@@ -273,7 +278,7 @@ import { ref, onMounted } from 'vue';
       .p-dropdown .p-dropdown-label.p-placeholder{
         margin-top: -12px;
       }
-    
+
     .p-column-filter-menu-button{
         color: white;
         margin-left: 10px;
@@ -284,28 +289,28 @@ import { ref, onMounted } from 'vue';
         border-color: transparent;
         background: #023e70;
       }
-  
+
   }
   .p-column-filter-overlay-menu .p-column-filter-constraint .p-column-filter-matchmode-dropdown {
     margin-bottom: 0.5rem;
     visibility: hidden;
     position: absolute;
   }
- 
+
   .p-button .p-component .p-button-sm{
     background-color: #003056;
   }
-  
+
 .p-datatable .p-datatable-tbody > tr{
     font-size: 13px;
     .employee_name{
         font-weight: bold;
         font-size: 13.5px;
     }
-    
-   
+
+
   }
-  
+
 .employee_name{
     font-weight: bold;
     font-size: 13px;
@@ -326,7 +331,7 @@ import { ref, onMounted } from 'vue';
 .approved {
     font-weight: 700;
     color: #26ff2d;
-    
+
 }
 .p-button.p-component.p-button-success.Button {
     padding: 8px;
@@ -335,7 +340,7 @@ import { ref, onMounted } from 'vue';
 .rejected {
     font-weight: 700;
     color: #ff2634;
-    
+
 }
 .p-button.p-component.p-button-danger.Button {
     padding: 8px;
@@ -396,15 +401,15 @@ import { ref, onMounted } from 'vue';
     background: #003056;
     color:white;
   }
-  
+
   .p-datatable .p-sortable-column.p-highlight:hover {
     background: #003056;
-    color:white;     
+    color:white;
   }
   .p-datatable .p-sortable-column:focus {
     box-shadow: none;
     outline: none;
-    color: white; 
+    color: white;
   }
   .p-datatable .p-sortable-column .p-sortable-column-icon{
     color:white

@@ -213,16 +213,14 @@ class VmtApprovalsController extends Controller
         return view("approvals.vmt_approval_reimbursements");
     }
 
-    function fetchPendingReimbursements(Request $request){
+    function fetchAllReimbursements(Request $request){
       $reimbursement_query= VmtEmployeeReimbursements::join('vmt_reimbursements','vmt_reimbursements.id','=','vmt_employee_reimbursements.reimbursement_type_id')
                             ->join('users','users.id','=','vmt_employee_reimbursements.user_id')
-                            ->where('vmt_employee_reimbursements.status','Pending')
                             ->select(
                                 'vmt_employee_reimbursements.id as id',
                                 'users.name as name',
                                 'users.user_code as user_code',
                                 'vmt_employee_reimbursements.date as reimbursement_date',
-                                'vmt_employee_reimbursements.user_data',
                                 'vmt_employee_reimbursements.from',
                                 'vmt_employee_reimbursements.to',
                                 'vmt_employee_reimbursements.vehicle_type',
@@ -234,32 +232,6 @@ class VmtApprovalsController extends Controller
          return $reimbursement_query;
     }
 
-    function fetchApprovedRejectedReimbursements(Request $request){
-
-        $reimbursement_query= VmtEmployeeReimbursements::join('vmt_reimbursements','vmt_reimbursements.id','=','vmt_employee_reimbursements.reimbursement_type_id')
-                              ->join('users as emp','emp.id','=','vmt_employee_reimbursements.user_id')
-                              ->join('users as reviewer','reviewer.id','=','vmt_employee_reimbursements.reviewer_id')
-                              ->where('vmt_employee_reimbursements.status','<>','Pending')
-                              ->select(
-                                  'vmt_employee_reimbursements.id as id',
-                                  'emp.name as employee_name',
-                                  'emp.user_code as employee_code',
-
-                                  'reviewer.name as reviewer_name',
-                                  'reviewer.user_code as reviewer_code',
-                                  'vmt_employee_reimbursements.date as reimbursement_date',
-                                  'vmt_employee_reimbursements.status as status',
-                                  'vmt_employee_reimbursements.user_data',
-                                  'vmt_employee_reimbursements.reviewer_comments',
-                                  'vmt_employee_reimbursements.status',
-                              )->get();
-
-
-
-       // dd($reimbursement_query);
-
-           return $reimbursement_query;
-      }
 
     function approveRejectReimbursements(Request $request){
     // dd($request->all());

@@ -446,8 +446,7 @@ Route::get('/documents',  [App\Http\Controllers\VmtEmployeeController::class, 's
 
     //Reimbursement Approvals
     Route::get('/vmt_approval_reimbursements',  [App\Http\Controllers\VmtApprovalsController::class, 'showReimbursementApprovalPage'])->name('showReimbursementApprovalPage');
-    Route::get('/fetch_pending_reimbursements',  [App\Http\Controllers\VmtApprovalsController::class, 'fetchPendingReimbursements'])->name('fetchPendingReimbursements');
-    Route::get('/fetch_approved_rejected_reimbursements',  [App\Http\Controllers\VmtApprovalsController::class, 'fetchApprovedRejectedReimbursements'])->name('fetchApprovedRejectedReimbursements');
+    Route::get('/fetch_all_reimbursements',  [App\Http\Controllers\VmtApprovalsController::class, 'fetchAllReimbursements'])->name('fetchAllReimbursements');
     Route::post('/reimbursements-approve-reject', [App\Http\Controllers\VmtApprovalsController::class, 'approveRejectReimbursements'])->name('approveRejectReimbursements');
 
 

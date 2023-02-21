@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\File;
 
 class VmtAPIAttendanceController extends HRMSBaseAPIController
 {
+
+    private $cost_per_km_2wheeler = 3;
+    private $cost_per_km_4wheeler = 4;
+
     /*
         get current day attendance details
         attendanceGetCurrentDay():
@@ -172,7 +176,20 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         $emp_reimbursement_data->reimbursement_type_id = VmtReimbursements::where('reimbursement_type',$request->reimbursement_type)->first()->value('id');
         $emp_reimbursement_data->user_id = Auth::user()->id;
         $emp_reimbursement_data->status = $request->status;
-        $emp_reimbursement_data->user_data = $request->user_data;
+
+        //reimbursement details
+        $emp_reimbursement_data->from = $request->from;
+        $emp_reimbursement_data->to = $request->to;
+        $emp_reimbursement_data->vehicle_type = $request->vehicle_type;
+        $emp_reimbursement_data->distance_travelled = $request->distance_travelled;
+
+        if($request->vehicle_type == "2-Wheeler")
+            $emp_reimbursement_data-> total_expenses  = $request->distance_travelled * $this->cost_per_km_2wheeler;
+        else
+        if($request->vehicle_type == "4-Wheeler")
+            $emp_reimbursement_data-> total_expenses  = $request->distance_travelled * $this->cost_per_km_4wheeler;
+        else
+            $emp_reimbursement_data-> total_expenses = $request->distance_travelled;
 
         $emp_reimbursement_data->save();
 
@@ -181,9 +198,6 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
             'message'=> 'Reimbursement detailed saved',
             'data'=> $request->all()
         ]);
-
-
-
 
     }
 
