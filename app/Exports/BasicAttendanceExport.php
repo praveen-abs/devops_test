@@ -8,8 +8,9 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Maatwebsite\Excel\Sheet;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class BasicAttendanceExport implements FromArray,WithHeadings
+class BasicAttendanceExport implements FromArray,WithHeadings,ShouldAutoSize
 {
 
     /**
