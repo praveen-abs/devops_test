@@ -234,20 +234,14 @@ class VmtApprovalsController extends Controller
 
 
     function approveRejectReimbursements(Request $request){
-    // dd($request->all());
+        //dd($request->all());
 
         $query_review_reimbursement = VmtEmployeeReimbursements::find($request->reimbursement_id);
-        $status = null;
        // dd($query_review_reimbursement);
-        if($request->status == "Approve")
-            $status = "Approved";
-        else
-        if($request->status == "Reject")
-            $status = "Rejected";
 
         $query_review_reimbursement->reviewer_id = auth::user()->id;
         $query_review_reimbursement->reviewer_comments = $request->reviewer_comments;
-        $query_review_reimbursement->status = $status;
+        $query_review_reimbursement->status = $request->status;
         $query_review_reimbursement->save();
 
         return "success";

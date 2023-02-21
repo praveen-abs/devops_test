@@ -127,7 +127,7 @@
     })
 
     function ajax_GetAttRegularizationData(){
-        let url = window.location.origin + '/fetch-regularization-approvals';
+        let url = window.location.origin + '/fetch-allregularization-data';
 
         console.log("AJAX URL : " + url);
 
@@ -205,7 +205,7 @@
         axios.post(window.location.origin + '/attendance-regularization-approvals', {
             id: currentlySelectedRowData.id,
             status: currentlySelectedStatus == "Approve" ? "Approved" : currentlySelectedStatus =="Reject" ? "Rejected" : currentlySelectedStatus ,
-            status_text: 'Reviewer commented'
+            status_text: ''
         })
         .then((response) => {
             console.log("Response : "+response);

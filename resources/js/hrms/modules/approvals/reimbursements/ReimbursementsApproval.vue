@@ -93,10 +93,12 @@
 
                 <Column field="" header="Action">
                     <template #body="slotProps">
+                        <span v-if="slotProps.data.status == 'Pending'">
 
-                        <Button type="button" icon="pi pi-check-circle" class="p-button-success Button"  label="Approval" @click="onClickButton(slotProps.data)"
-                        style="height: 2em;" />
-                        <Button type="button" icon="pi pi-times-circle" class="p-button-danger Button "  label="Reject" style="margin-left: 8px;height: 2em;" @click="onClickButton(slotProps.data)" />
+                            <Button type="button" icon="pi pi-check-circle" class="p-button-success Button"  label="Approve" @click="showConfirmDialog(slotProps.data,'Approve')"
+                            style="height: 2em;" />
+                            <Button type="button" icon="pi pi-times-circle" class="p-button-danger Button "  label="Reject" style="margin-left: 8px;height: 2em;" @click="showConfirmDialog(slotProps.data,'Reject')" />
+                        </span>
                     </template>
                 </Column>
             </DataTable>
@@ -145,7 +147,11 @@
     let currentlySelectedRowData = null;
 
     onMounted(() => {
-       let url_all_reimbursements = window.location.origin + '/fetch_all_reimbursements';
+        ajax_GetReimbursementData();
+    })
+
+    function ajax_GetReimbursementData(){
+        let url_all_reimbursements = window.location.origin + '/fetch_all_reimbursements';
 
 
         console.log("AJAX URL : " + url_all_reimbursements);
@@ -154,11 +160,11 @@
             .then((response) => {
                 // console.log("Axios : " + response.data);
                 data_reimbursements.value = response.data;
-                console.log(response.data)
+                console.log(response.data);
 
             });
 
-    })
+    }
 
     function showConfirmDialog(selectedRowData, status){
         canShowConfirmation.value = true;
@@ -179,7 +185,6 @@
     function resetVars(){
         currentlySelectedStatus = '';
         currentlySelectedRowData = null;
-
     }
 
     ////PrimeVue ConfirmDialog code -- Keeping here for reference
@@ -219,17 +224,21 @@
         canShowLoadingScreen.value = true;
 
         console.log("Processing Rowdata : "+ JSON.stringify(currentlySelectedRowData));
+        console.log("currentlySelectedStatus : "+ currentlySelectedStatus);
 
 
-        axios.post(window.location.origin + '/fetch_pending_reimbursements', {
-            id: currentlySelectedRowData.id,
+        axios.post(window.location.origin + '/reimbursements-approve-reject', {
+            reimbursement_id: currentlySelectedRowData.id,
             status: currentlySelectedStatus == "Approve" ? "Approved" : currentlySelectedStatus =="Reject" ? "Rejected" : currentlySelectedStatus ,
-            status_text: 'Reviewer commented'
+            reviewer_comments: ''
         })
         .then((response) => {
             console.log(response);
 
             canShowLoadingScreen.value = false;
+
+            toast.add({severity:'info', summary: 'Info', detail:'Success', life: 3000});
+            ajax_GetReimbursementData();
 
             resetVars();
         })

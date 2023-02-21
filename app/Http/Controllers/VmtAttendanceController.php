@@ -920,6 +920,10 @@ class VmtAttendanceController extends Controller
         }
     }
 
+    /*
+        Fetch regularization data for the given user id
+
+    */
     public function fetchRegularizationData(Request $request){
 
         //dd($request->all());
@@ -981,7 +985,7 @@ class VmtAttendanceController extends Controller
         return view('attendance_regularization_approvals');
     }
 
-    public function fetchAttendanceLateComingDetails(Request $request)
+    public function fetchAllRegularizationData(Request $request)
     {
 
 
