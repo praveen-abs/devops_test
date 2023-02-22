@@ -90,20 +90,20 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                                                         <table>
                                                             <tbody>
                                                                 <tr>
-                                                                    @if ($empAvatar['type'] == 'shortname')
+                                                                    @if ($empAvatar->type == 'shortname')
                                                                         <td align="center"
                                                                             style="height: 100px;
                                                                             width: 100px;border-radius: 50%;background:#002f56;color:#ffffff;font-size:20px;font-weight:600;">
-                                                                            {{ $empAvatar['data'] }}
+                                                                            {{ $empAvatar->data }}
                                                                         </td>
-                                                                    @elseif($empAvatar['type'] == 'avatar')
+                                                                    @elseif($empAvatar->type == 'avatar')
                                                                         <td align="center"
                                                                             style="height: 100px;
                                                                             width: 100px;border-radius: 50%;">
 
                                                                             <?php
 
-                                                                            $imageURL = request()->getSchemeAndHttpHost() . '/images/' . $empAvatar['data'];
+                                                                            $imageURL = request()->getSchemeAndHttpHost() . '/images/' . $empAvatar->data;
 
                                                                             ?>
                                                                             <img class="rounded-circle header-profile-user"
