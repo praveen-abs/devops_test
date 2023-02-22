@@ -22,7 +22,7 @@
             </template>
         </Dialog>
         <div>
-            
+
 
             <DataTable :value="att_regularization" :paginator="true" :rows="10" dataKey="id"
                     paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
@@ -75,7 +75,7 @@
                         <!-- <Button icon="pi pi-check" class="p-button-success"  @click="confirmDialog(slotProps.data,'Approved')" label="Approval" />
                         <Button icon="pi pi-times" class="p-button-danger" @click="confirmDialog(slotProps.data,'Rejected')" label="Rejected" /> -->
                         <span v-if="slotProps.data.status == 'Pending'">
-                            <Button type="button" icon="pi pi-check-circle" class="p-button-success Button"  label="Approval"  @click="showConfirmDialog(slotProps.data,'Approve')" style="height: 2em;" />
+                            <Button type="button" icon="pi pi-check-circle" class="p-button-success Button"  label="Approve"  @click="showConfirmDialog(slotProps.data,'Approve')" style="height: 2em;" />
                             <Button type="button" icon="pi pi-times-circle" class="p-button-danger Button "  label="Rejected" style="margin-left: 8px;height: 2em;"  @click="showConfirmDialog(slotProps.data,'Reject')" />
                         </span>
                    </template>
@@ -91,7 +91,7 @@
     import {FilterMatchMode,FilterOperator} from 'primevue/api';
     import  { useConfirm } from "primevue/useconfirm";
     import  { useToast }  from "primevue/usetoast";
-   
+
 
     let att_regularization = ref();
     let canShowConfirmation = ref(false);
@@ -107,7 +107,7 @@
                      matchMode: FilterMatchMode.STARTS_WITH,
                      matchMode:FilterMatchMode.EQUALS,
                      matchMode:FilterMatchMode.CONTAINS,
-                     
+
                     },
 
              status:  { value: null, matchMode: FilterMatchMode.EQUALS },
@@ -131,11 +131,27 @@
             .then((response) => {
                 console.log("Axios : " + response.data);
                 att_regularization.value = response.data;
-    
+
 
             });
 
     })
+
+    function ajax_GetLeaveData(){
+        let url_all_reimbursements = window.location.origin + '/fetch_all_reimbursements';
+
+
+        console.log("AJAX URL : " + url_all_reimbursements);
+
+        axios.get(url_all_reimbursements)
+            .then((response) => {
+                // console.log("Axios : " + response.data);
+                data_reimbursements.value = response.data;
+                console.log(response.data);
+
+            });
+
+    }
 
     function showConfirmDialog(selectedRowData, status){
         canShowConfirmation.value = true;
@@ -254,7 +270,7 @@
       .p-dropdown .p-dropdown-label.p-placeholder{
         margin-top: -12px;
       }
-    
+
     .p-column-filter-menu-button{
         color: white;
         margin-left: 10px;
@@ -265,26 +281,26 @@
         border-color: transparent;
         background: #023e70;
       }
-  
+
   }
   .p-column-filter-overlay-menu .p-column-filter-constraint .p-column-filter-matchmode-dropdown {
     margin-bottom: 0.5rem;
     visibility: hidden;
     position: absolute;
   }
- 
+
   .p-button .p-component .p-button-sm{
     background-color: #003056;
   }
-  
+
 .p-datatable .p-datatable-tbody > tr{
     font-size: 13px;
     .employee_name{
         font-weight: bold;
         font-size: 13.5px;
     }
-    
-    
+
+
   }
   .p-datatable .p-datatable-tbody > tr > td {
     text-align: left;
@@ -295,7 +311,7 @@
       border-left-width: 1px;
     border-width: 0 0 1px 0;
     padding: 1rem 0.6rem;
-  
+
   }
   .p-datatable .p-datatable-tbody > tr > td:nth-child(1) {
     width: 20%;
@@ -306,13 +322,13 @@
 
 .pending {
     font-weight: 700;
-    
+
 }
 
 
 .approved {
     font-weight: 700;
-    
+
 }
 .p-button.p-component.p-button-success.Button {
     padding: 8px;
@@ -371,15 +387,15 @@
     background: #003056;
     color:white;
   }
-  
+
   .p-datatable .p-sortable-column.p-highlight:hover {
     background: #003056;
-    color:white;     
+    color:white;
   }
   .p-datatable .p-sortable-column:focus {
     box-shadow: none;
     outline: none;
-    color: white; 
+    color: white;
   }
   .p-datatable .p-sortable-column .p-sortable-column-icon{
     color:white
