@@ -263,7 +263,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                         <p class="txt-center text-strong">DESCRIPTION</p>
                     </td>
                     <td colspan="2" class="bg-ash">
-                        <p class="txt-center text-strong">AMOUNT GROSS</p>
+                        <p class="txt-center text-strong">FIXED GROSS</p>
                     </td>
                     <td colspan="2" class="bg-ash">
                         <p class="txt-center text-strong">ARREAR GROSS</p>
