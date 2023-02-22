@@ -106,7 +106,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/set-singleleavepolicy-record', [App\Http\Controllers\VmtAttendanceController::class, 'updateSingleLeavePolicyRecord'])->name('set-singleleavepolicy-record');
     Route::post('/attendance-applyleave', [App\Http\Controllers\VmtAttendanceController::class, 'saveLeaveRequestDetails'])->name('attendance-applyleave');
 
-    Route::post('/attendance-approve-rejectleave', [App\Http\Controllers\VmtAttendanceController::class, 'approveRejectRevokeLeaveRequest']);
+    Route::post('/attendance-approve-rejectleave', [App\Http\Controllers\VmtAttendanceController::class, 'approveRejectRevokeLeaveRequest'])->name('processLeaveRequest');
     Route::get('/attendance-leave-getdetails', [App\Http\Controllers\VmtAttendanceController::class, 'fetchLeaveDetails'])->name('attendance-leave-getdetails');
 
     //Ajax For Leave withdraw
@@ -114,9 +114,6 @@ Route::middleware(['auth'])->group(function () {
     //Leave Policy
     Route::get('/fetch-holidays', [App\Http\Controllers\VmtLeavePolicyController::class, 'fetchHolidays'])->name('fetch-getHolidays');
 
-
-    //Ajax For Leave withdraw
-    Route::get('/revokeLeave', [App\Http\Controllers\VmtAttendanceController::class, 'approveRejectRevokeLeaveRequest'])->name('revokeLeave');
 
     //Att Regularize
     Route::get('/attendance-regularization-approvals', [App\Http\Controllers\VmtAttendanceController::class, 'showRegularizationApprovalPage'])->name('attendance-regularization-approvals');

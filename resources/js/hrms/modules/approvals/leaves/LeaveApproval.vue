@@ -136,6 +136,11 @@
     let currentlySelectedRowData = null;
 
     onMounted(() => {
+        ajax_GetLeaveData();
+
+    })
+
+    function ajax_GetLeaveData(){
         let url = window.location.origin + '/fetch-leaverequests/org/Approved,Rejected,Pending';
 
         console.log("AJAX URL : " + url);
@@ -147,23 +152,6 @@
 
 
             });
-
-    })
-
-    function ajax_GetLeaveData(){
-        let url_all_reimbursements = window.location.origin + '/fetch_all_reimbursements';
-
-
-        console.log("AJAX URL : " + url_all_reimbursements);
-
-        axios.get(url_all_reimbursements)
-            .then((response) => {
-                // console.log("Axios : " + response.data);
-                data_reimbursements.value = response.data;
-                console.log(response.data);
-
-            });
-
     }
 
     function showConfirmDialog(selectedRowData, status){
@@ -227,13 +215,14 @@
         console.log("Processing Rowdata : "+ JSON.stringify(currentlySelectedRowData));
 
 
-        axios.post(window.location.origin + '/attendance-regularization-approvals', {
-            id: currentlySelectedRowData.id,
+        axios.post(window.location.origin + '/attendance-approve-rejectleave', {
+            leave_id: currentlySelectedRowData.id,
             status: currentlySelectedStatus == "Approve" ? "Approved" : currentlySelectedStatus =="Reject" ? "Rejected" : currentlySelectedStatus ,
-            status_text: 'Reviewer commented'
+            leave_rejection_text: ''
         })
         .then((response) => {
             console.log(response);
+            ajax_GetLeaveData();
 
             canShowLoadingScreen.value = false;
 

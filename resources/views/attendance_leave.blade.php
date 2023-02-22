@@ -869,8 +869,8 @@
             console.log("Revoking leave.... " + leave_id);
             var status = "Revoked";
             $.ajax({
-                url: "{{ route('revokeLeave') }}",
-                type: "GET",
+                url: "{{ route('processLeaveRequest') }}",
+                type: "POST",
                 dataType: "json",
                 data: {
                     'leave_id': $('#btn_revoke').attr("data-leave-id"),
