@@ -96,7 +96,6 @@ class VmtEmployeePayslipService {
             'payroll_month' => 'required|date',
             'basic' => 'required',
             'hra' => 'required',
-            'stats_bonus'=> 'required',
             'child_edu_allowance' => 'required',
             'spl_alw' => 'required',
             'total_fixed_gross' => 'required',
@@ -108,8 +107,6 @@ class VmtEmployeePayslipService {
             'basic_arrear' => 'required',
             'earned_hra' => 'required',
             'hra_arrear' => 'required',
-            'earned_stats_bonus' => 'required',
-            'earned_stats_arrear' => 'required',
             'earned_child_edu_allowance' => 'required',
             'child_edu_allowance_arrear' => 'required',
             'earned_spl_alw' => 'required',
@@ -131,7 +128,7 @@ class VmtEmployeePayslipService {
             'epf_ee_arrear' => 'required',
             'employee_esic' => 'required',
             'prof_tax' => 'required',
-            'income_tax' => 'required',
+            'tds' => 'required',
             'sal_adv' => 'required',
             'canteen_dedn' => 'required',
             'other_deduc' => 'required',
@@ -148,8 +145,6 @@ class VmtEmployeePayslipService {
             'rename' => 'required',
             //'email' => 'required',
             'greetings' => 'required',
-            'travel_conveyance' => 'required',
-            'other_earnings' => 'required'
         ];
 
 
@@ -386,10 +381,7 @@ class VmtEmployeePayslipService {
             $empPaySlip->EPF_EE_ARREAR = $row['epf_ee_arrear'];
             $empPaySlip->EMPLOYEE_ESIC = $row['employee_esic'];
             $empPaySlip->PROF_TAX = $row['prof_tax'];
-            $empPaySlip->income_tax = $row["income_tax"];
-            $empPaySlip->stats_bonus = $row["stats_bonus"];
-            $empPaySlip->earned_stats_bonus = $row["earned_stats_bonus"];
-            $empPaySlip->earned_stats_arrear = $row["earned_stats_arrear"];
+            $empPaySlip->TDS = $row["tds"];
             $empPaySlip->SAL_ADV = $row['sal_adv'];
             $empPaySlip->CANTEEN_DEDN = $row['canteen_dedn'];
             $empPaySlip->OTHER_DEDUC = $row["other_deduc"];
@@ -406,8 +398,6 @@ class VmtEmployeePayslipService {
             $empPaySlip->Rename = $row['rename'];
             //$empPaySlip->Email = $row['email'];
             $empPaySlip->Greetings = $row['greetings'];
-            $empPaySlip->travel_conveyance = $row['travel_conveyance'];
-            $empPaySlip->other_earnings = $row['other_earnings'];
 
             $empPaySlip->save();
             //]);

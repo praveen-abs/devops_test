@@ -139,11 +139,7 @@ function calculateOverallReviewRating($user_id){
 
         }
 
-        //If no forms for this user, then put zero
-        if($total_reviewedform_count != 0)
-            $overallReviewRating = $totalscore_reviewedform/$total_reviewedform_count;
-        else
-            $overallReviewRating = 0;
+        $overallReviewRating = $totalscore_reviewedform/$total_reviewedform_count;
 
         return round($overallReviewRating);
     }

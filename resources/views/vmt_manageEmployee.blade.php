@@ -121,44 +121,37 @@
                             name: '',
                             formatter: function formatter(empObj) {
 
-
                                 var emp_code = empObj.emp_code;
                                 var emp_name = empObj.emp_name;
-                                var emp_avatar = JSON.parse(empObj.emp_avatar);
 
-                                var imagePath = '{{ URL::asset('images/') }}' + '/' + empObj
-                                .avatar;
-
-                                //Check if spaces present in profile image text
-                                if ((/\s/).test(imagePath)) {
-                                    // console.log("White spaces present in : "+imagePath);
-
-                                } else {
-                                    // console.log(span_id);
-
-                                    //  console.log("##### White spaces not present in : "+imagePath);
-
-                                }
+                                var imagePath = '{{ URL::asset('images/') }}' + '/' + empObj.avatar;
 
                                 //console.log(emp_name);
                                 var html_image_tag = '<img data-emp_code="' + emp_code +
                                     '" data-emp_name="' + emp_name + '" id="img_' + emp_code +
                                     '" class="h-10 w-10"  alt=" " src="' + imagePath + '" />';
 
+
                                 var htmlContent =
                                     '<div class="d-flex align-items-center page-header-user-dropdown" style="width:max-content;">' +
-                                    '<div class="rounded-circle user-profile  me-1 '+emp_avatar.color+'">'+emp_avatar.data+'</div></div>';
-
+                                    '<div id="span_' + emp_code +
+                                    '" class="rounded-circle user-profile  me-1">' +
+                                    html_image_tag + '</div></div>';
+                                html_image_tag + '</div></div>';
 
                                 $('#img_' + emp_code).on('error', function() {
 
-                                    console.log("Image missing for " + this.dataset.emp_name);
+                                    console.log("Image missing for " + this.dataset
+                                        .emp_name);
 
-                                   // $('#span_' + this.dataset.emp_code).html('<i class="align-middle fw-bold">'+emp_avatar.data+'</i>');
+                                    $('#span_' + this.dataset.emp_code).html(
+                                        '<i id="shortname_' + emp_code +
+                                        '" class="align-middle fw-bold "></i>');
+
+                                    generateProfileShortName_VendorScript("shortname_" +
+                                        emp_code, emp_name);
 
                                 });
-
-                                console.log("Loading");
 
                                 return gridjs.html(htmlContent);
                             }
@@ -327,44 +320,37 @@
                             name: '',
                             formatter: function formatter(empObj) {
 
-
                                 var emp_code = empObj.emp_code;
                                 var emp_name = empObj.emp_name;
-                                var emp_avatar = JSON.parse(empObj.emp_avatar);
 
-                                var imagePath = '{{ URL::asset('images/') }}' + '/' + empObj
-                                .avatar;
-
-                                //Check if spaces present in profile image text
-                                if ((/\s/).test(imagePath)) {
-                                    // console.log("White spaces present in : "+imagePath);
-
-                                } else {
-                                    // console.log(span_id);
-
-                                    //  console.log("##### White spaces not present in : "+imagePath);
-
-                                }
+                                var imagePath = '{{ URL::asset('images/') }}' + '/' + empObj.avatar;
 
                                 //console.log(emp_name);
                                 var html_image_tag = '<img data-emp_code="' + emp_code +
                                     '" data-emp_name="' + emp_name + '" id="img_' + emp_code +
                                     '" class="h-10 w-10"  alt=" " src="' + imagePath + '" />';
 
+
                                 var htmlContent =
                                     '<div class="d-flex align-items-center page-header-user-dropdown" style="width:max-content;">' +
-                                    '<div class="rounded-circle user-profile  me-1 '+emp_avatar.color+'">'+emp_avatar.data+'</div></div>';
-
+                                    '<div id="span_' + emp_code +
+                                    '" class="rounded-circle user-profile  me-1">' +
+                                    html_image_tag + '</div></div>';
+                                html_image_tag + '</div></div>';
 
                                 $('#img_' + emp_code).on('error', function() {
 
-                                    console.log("Image missing for " + this.dataset.emp_name);
+                                    console.log("Image missing for " + this.dataset
+                                        .emp_name);
 
-                                   // $('#span_' + this.dataset.emp_code).html('<i class="align-middle fw-bold">'+emp_avatar.data+'</i>');
+                                    $('#span_' + this.dataset.emp_code).html(
+                                        '<i id="shortname_' + emp_code +
+                                        '" class="align-middle fw-bold "></i>');
+
+                                    generateProfileShortName_VendorScript("shortname_" +
+                                        emp_code, emp_name);
 
                                 });
-
-                                console.log("Loading");
 
                                 return gridjs.html(htmlContent);
                             }
@@ -535,7 +521,6 @@
 
                                 var emp_code = empObj.emp_code;
                                 var emp_name = empObj.emp_name;
-                                var emp_avatar = JSON.parse(empObj.emp_avatar);
 
                                 var imagePath = '{{ URL::asset('images/') }}' + '/' + empObj
                                 .avatar;
@@ -549,6 +534,7 @@
 
                                     //  console.log("##### White spaces not present in : "+imagePath);
 
+
                                 }
 
                                 //console.log(emp_name);
@@ -558,18 +544,24 @@
 
                                 var htmlContent =
                                     '<div class="d-flex align-items-center page-header-user-dropdown" style="width:max-content;">' +
-                                    '<div class="rounded-circle user-profile me-1 '+emp_avatar.color+'">'+emp_avatar.data+'</div></div>';
-
+                                    '<div id="span_' + emp_code +
+                                    '" class="rounded-circle user-profile  me-1">' +
+                                    html_image_tag + '</div></div>';
+                                html_image_tag + '</div></div>';
 
                                 $('#img_' + emp_code).on('error', function() {
 
-                                    console.log("Image missing for " + this.dataset.emp_name);
+                                    console.log("Image missing for " + this.dataset
+                                        .emp_name);
 
-                                   // $('#span_' + this.dataset.emp_code).html('<i class="align-middle fw-bold">'+emp_avatar.data+'</i>');
+                                    $('#span_' + this.dataset.emp_code).html(
+                                        '<i id="shortname_' + emp_code +
+                                        '" class="align-middle fw-bold"></i>');
+
+                                    generateProfileShortName_VendorScript("shortname_" +
+                                        emp_code, emp_name);
 
                                 });
-
-                                console.log("Loading");
 
                                 return gridjs.html(htmlContent);
                             }

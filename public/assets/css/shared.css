@@ -12,151 +12,6 @@
     --color-lite-ash: #e2e2e2;
 }
 
-button,label,p,span,*{
-    text-transform: capitalize;
-    font-size: 13px;
-}
-input,select,textarea{
-text-transform: lowercase;
-}
-
-.first-letter-captialize{
-    display: inline-block;
-}
-.first-letter-captialize::first-letter{
-    text-transform: capitalize;
-}
-
-.color-skyblue-600{
-    background: #005855 !important;
-}
-.color-skyblue-500{
-    background: #017470 !important;
-}
-.color-skyblue-200{
-    background: #00CED1 !important;
-}
-
-
-.color-inkblue-600{
-    background: #000358 !important;
-}
-
-
-
-
-.color-inkblue-600{
-    background: #000358 !important;
-}
-
-
-.color-pink-600{
-    background: #e50058 !important;
-}
-
-.color-green-600{
-    background: #5a7e00 !important;
-}
-.color-green-400{
-    background: #2a9d8f !important;
-}
-
-.color_wildBlueYonder {
-    background: #70718d !important;
-}
-.color_oracle{
-    background: #346b6d !important;
-}
-.color_disco-600{
-    background: #380928 !important;
-}
-.color_disco-500{
-    background: #580000 !important;
-}
-
-.color-blue-600{
-    background: #0a3358 !important;
-}
-.color-blue-200{
-    background: #4682B4 !important;
-}
-
-
-.color-gradient-green{
-    background: #00f775 !important;
-}
-
-.color-gradient-orange{
-    background: #ff8f01 !important;
-}
-.color-gradient-pink{
-    background: #c400fb !important;
-}
-.color-gradient-green-200{
-    background: #00ff99 !important;
-}
-
-
-
-
-.color_disco-400{
-    background: #841e62 !important;
-}
-.color_cinnabar{
-    background: #db4c40 !important;
-}
-.color_navyBlue{
-    background: #3d405b !important;
-}
-.iceberg {
-    background: #9eccf7 !important;
-}
-.color_maroonFlush{
-    background: #b41d6c !important;
-}
-.color_onyx{
-    background: #333b3e !important;
-}
-.color-pink-400 {
-
-    background: #be317a !important;
-}
-.color-pink-200 {
-
-    background: #ff309b !important;
-}
-.color-sandal-600 {
-    background: #daa02e !important;
-}
-.color-sandal-400 {
-    background: #ffba31 !important;
-}
-.color-violet-600 {
-    background: #3f2875 !important;
-}
-.color-gray-600{
-    background: #696969 !important;
-}
-.easternBlue {
-    background: #1aa6b7 !important;
-}
-.morningGlory {
-    background: #3f5657 !important;
-}
-.downy {
-    background: #57cac5 !important;
-}
-.lighthWisteria {
-    background: #81668a !important;
-}
-
-
-.user-name-container{
-    font-size: 28px;
-    color: var(--color-white);
-}
-
-
 .h_80 {
     height: 80px;
 }
@@ -167,7 +22,7 @@ text-transform: lowercase;
 }
 
 .form-control,
-.form-select,span {
+.form-select {
     font-size: 13px;
 }
 .border-lite-ash {
@@ -183,10 +38,6 @@ textarea {
 }
 .shadow-lite {
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-}
-
-th.gridjs-th-sort:hover{
-    background-color: #000358;
 }
 
 .img-sm {
@@ -799,7 +650,7 @@ th.gridjs-th {
 }
 th.gridjs-th-sort:focus,
 th.gridjs-th-sort:hover {
-    background-color:transparent !important;
+    background-color: rgba(var(--vz-light-rgb), 0.85);
 }
 .gridjs-head {
     width: 100% !important;
@@ -1170,6 +1021,7 @@ button.gridjs-sort-desc {
     color: #fff;
     border: none;
     border-radius: 5px;
+
 }
 .selection-btn {
     border: 1px solid #002f56;
@@ -1580,7 +1432,7 @@ a.editable-click:hover {
     border-bottom: 1px solid #cecece;
 }
 .border-bottom-liteAsh {
-    border-bottom:1px solid #eae7e7;
+    border-bottom: 1px solid #f3f2f2;
 }
 .clearfix:after {
     clear: both;

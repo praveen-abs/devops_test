@@ -71,7 +71,7 @@
                                                                 <tr>
                                                                     <td colspan="12" align="right">
                                                                         <p class="fw-600 txt-right">
-                                                                            Date:dd-mm-yyyy
+                                                                            Date:
                                                                         </p>
 
                                                                     </td>
@@ -250,11 +250,11 @@
                                                                                 Limited</b>
                                                                         </p>
 
-                                                                        <div style="padding:8px 0px;width:185px;height:75px;">
+                                                                        <p style="padding:8px 0px;">
                                                                             <img src="{{ URL::asset('assets/images/augustin_sign.png') }}"
                                                                                 alt="" class=""
-                                                                                style="height:100%;width:100%;">
-                                                                        </div>
+                                                                                style="height:60px;width:140px;">
+                                                                        </p>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -275,8 +275,8 @@
                                                 <tr>
                                                     <td>
                                                         <div class="logo"
-                                                            style="width:100%;height:100px;">
-                                                            <img src="{{ URL::asset('assets/images/abs_footer-label.jpg') }}"
+                                                            style="width:100%;height:fit-content;">
+                                                            <img src="{{ URL::asset('assets/images/footer.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100%;width:100%;">
                                                         </div>
@@ -298,7 +298,7 @@
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <div class="logo" style="width:100%;height:100px;">
+                                                        <div class="logo" style="width:100%;height:fit-content;">
                                                             <img src="{{ URL::asset('assets/images/header.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100%;width:100%;">
@@ -312,7 +312,7 @@
                                                                 <tr>
                                                                     <td colspan="12" align="right">
                                                                         <p class="fw-600 txt-right">
-                                                                            Date:dd-mm-yyyy
+                                                                            Date:
                                                                         </p>
 
                                                                     </td>
@@ -323,10 +323,10 @@
                                                                             To,
                                                                         </p>
                                                                         <p class="fw-600 pt-5 txt-left">
-                                                                            Mr.XYZ
+                                                                            Mr.George
                                                                         </p>
                                                                         <p class="fw-600 pt-5 txt-left">
-                                                                            Employee Code -XYZ
+                                                                            Employee Code -Abs1009
                                                                         </p>
 
                                                                     </td>
@@ -356,8 +356,8 @@
                                                                         <ol>
                                                                             <li class="">Your contract of employment
                                                                                 shall be valid
-                                                                                for a period of 1 year from <b>dd-mm-yyyy</b>  to
-                                                                                <b>dd-mm-yyyy</b>  Notwithstanding this, in the
+                                                                                for a period of 1 year from 11/Aug/2022 to
+                                                                                10/Aug/2023 Notwithstanding this, in the
                                                                                 event of the project/ work for which you are
                                                                                 being employed comes to an end before the
                                                                                 aforementioned period, this contract shall
@@ -448,7 +448,7 @@
                                                 <tr>
                                                     <td>
                                                         <div class="logo" style="width:100%;height:fit-content;">
-                                                            <img src="{{ URL::asset('assets/images/abs_footer-label.jpg') }}"
+                                                            <img src="{{ URL::asset('assets/images/footer.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100%;width:100%;">
                                                         </div>
@@ -469,7 +469,7 @@
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <div class="logo" style="width:100%;height:100px;">
+                                                        <div class="logo" style="width:100%;height:fit-content;">
                                                             <img src="{{ URL::asset('assets/images/header.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100%;width:100%;">
@@ -488,7 +488,7 @@
                                                                                 <p>
                                                                                     This contract shall be terminable by
                                                                                     either
-                                                                                    party giving 30 day's notice in writing
+                                                                                    party giving 15 days’ notice in writing
                                                                                     or
                                                                                     salary in lieu of notice, to the other.
                                                                                 </p>
@@ -528,11 +528,11 @@
                                                                             <b>For Ardens Business Solutions Private
                                                                                 Limited</b>
                                                                         </p>
-                                                                        <div style="padding:8px 0px;width:185px;height:77px">
+                                                                        <p style="padding:8px 0px;">
                                                                             <img src="{{ URL::asset('assets/images/augustin_sign.png') }}"
                                                                                 alt="" class=""
                                                                                 style="height:60px;width:140px;">
-                                                                        </div>
+                                                                        </p>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -554,7 +554,7 @@
                                                                     <td colspan="12" style="padding-top: 0cm;"
                                                                         align="left">
                                                                         <p>
-                                                                            I <b>XYZ</b>, have understood and
+                                                                            I <b>&emsp;&emsp;&emsp;</b>, have understood and
                                                                             accepted the appointment upon the terms and
                                                                             conditions as outlined in this appointment
                                                                             letter for my position at Ardens Business
@@ -593,7 +593,7 @@
                                                     <td>
                                                         <div class="logo"
                                                             style="width:100%;height:fit-content;padding-top:297px;">
-                                                            <img src="{{ URL::asset('assets/images/abs_footer-label.jpg') }}"
+                                                            <img src="{{ URL::asset('assets/images/footer.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100%;width:100%;">
                                                         </div>
@@ -614,7 +614,7 @@
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <div class="logo" style="width:100%;height:100px;">
+                                                        <div class="logo" style="width:100%;height:fit-content;">
                                                             <img src="{{ URL::asset('assets/images/header.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100%;width:100%;">
@@ -628,7 +628,7 @@
                                                                 <tr>
                                                                     <td colspan="12" align="right">
                                                                         <p class="fw-600 txt-right">
-                                                                            Date:dd-mm-yyyy
+                                                                            Date:
                                                                         </p>
 
                                                                     </td>
@@ -639,10 +639,10 @@
                                                                             To,
                                                                         </p>
                                                                         <p class="fw-600 pt-5 txt-left">
-                                                                            Mr.XYZ
+                                                                            Mr.George
                                                                         </p>
                                                                         <p class="fw-600 pt-5 txt-left">
-                                                                            Employee Code -XYZ
+                                                                            Employee Code -Abs1009
                                                                         </p>
 
                                                                     </td>
@@ -665,12 +665,12 @@
                                                                             employment, we are pleased to advise you that
                                                                             your services are
                                                                             being deputed to Dunamis Machines International
-                                                                            Private Limited with effect from dd-mm-yyyy at
+                                                                            Private Limited with effect from 11/Aug/2022 at
                                                                             their Chennai office.
                                                                         </p>
                                                                         <p class="">
                                                                             Your total remuneration package (CTC) per annum
-                                                                            is Rs. <b>XYZ</b> per annum (Rupees Rupees Four
+                                                                            is Rs. 405696/- per annum (Rupees Rupees Four
                                                                             Lac
                                                                             Five Thousand Six Hundred Ninety Six Only). The
                                                                             break-up of your compensation package shall be
@@ -686,7 +686,7 @@
                                                                         <ol>
                                                                             <li class="pt-10">
                                                                                 <p> You will, with effect from
-                                                                                    <b>dd-mm-yyyy</b> be required to work at our
+                                                                                    11/Aug/2022 be required to work at our
                                                                                     client's office/ premises at any of
                                                                                     their locations. During the tenure of
                                                                                     the
@@ -792,7 +792,7 @@
                                                     <td>
                                                         <div class="logo"
                                                             style="width:100%;height:fit-content;padding-top:55px">
-                                                            <img src="{{ URL::asset('assets/images/abs_footer-label.jpg') }}"
+                                                            <img src="{{ URL::asset('assets/images/footer.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100%;width:100%;">
                                                         </div>
@@ -813,7 +813,7 @@
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <div class="logo" style="width:100%;height:100px;">
+                                                        <div class="logo" style="width:100%;height:fit-content;">
                                                             <img src="{{ URL::asset('assets/images/header.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100%;width:100%;">
@@ -873,7 +873,7 @@
                                                                     <td colspan="12" style="padding-top: 0cm;"
                                                                         align="left">
                                                                         <p>
-                                                                            I <b>XYZ</b>, have understood and
+                                                                            I <b>&emsp;&emsp;&emsp;</b>, have understood and
                                                                             accepted the appointment upon the terms and
                                                                             conditions as outlined in this appointment
                                                                             letter for my position at Ardens Business
@@ -912,7 +912,7 @@
                                                     <td>
                                                         <div class="logo"
                                                             style="width:100%;height:fit-content;padding-top:473px;">
-                                                            <img src="{{ URL::asset('assets/images/abs_footer-label.jpg') }}"
+                                                            <img src="{{ URL::asset('assets/images/footer.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100%;width:100%;">
                                                         </div>
@@ -928,14 +928,16 @@
                             </div>
                             <div class="carousel-item  ">
                                 <div class="main-page appointment-letter">
+
                                     <div class="sub-page" style="padding:0px;">
                                         <table>
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <div class="logo" style="width:100%;height:100px;">
-                                                            <img src="{{ URL::asset('assets/images/header.jpg') }}" alt=""
-                                                                class="" style="height:100%;width:100%;">
+                                                        <div class="logo" style="width:100%;height:fit-content;">
+                                                            <img src="{{ URL::asset('assets/images/header.jpg') }}"
+                                                                alt="" class=""
+                                                                style="height:100%;width:100%;">
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -944,7 +946,8 @@
                                                         <table border="1" align="center" class="dunamis_table"
                                                             style="border-collapse: collapse;width: 100%;padding-bottom: 1cm;;">
                                                             <tr class="bg-blue">
-                                                                <td colspan="3" align="center" class="txt-white fw-600">
+                                                                <td colspan="3" align="center"
+                                                                    class="txt-white fw-600">
                                                                     Annexure A
                                                                 </td>
 
@@ -964,28 +967,29 @@
                                                             </tr>
                                                             <tr>
                                                                 <td colspan="1"><b>Client Name</b></td>
-                                                                <td colspan="2" align="center"></td>
+                                                                <td colspan="2" align="center">Dunamis Machines
+                                                                    International Private Limited</td>
                                                             </tr>
                                                             <tr>
                                                                 <td colspan="1"><b>Place of deputed</b></td>
-                                                                <td colspan="2" align="center"> </td>
+                                                                <td colspan="2" align="center"> Chennai</td>
                                                             </tr>
                                                             <tr>
                                                                 <td colspan="1">
                                                                     <b>Desingnation</b>
                                                                 </td>
-                                                                <td colspan="2" align="center"></td>
+                                                                <td colspan="2" align="center">SENIOR EXECUTIVE</td>
 
                                                             </tr>
                                                             <tr>
                                                                 <td colspan="1">
                                                                     <b>Start date of Assingment</b>
                                                                 </td>
-                                                                <td colspan="2" align="center"></td>
+                                                                <td colspan="2" align="center">11/ug/2022</td>
                                                             </tr>
                                                             <tr>
                                                                 <td colspan="1"><b>End date of Assingment</b></td>
-                                                                <td colspan="2" align="center"></td>
+                                                                <td colspan="2" align="center">10/Aug/2023</td>
                                                             </tr>
                                                             <tr class="bg-ash">
                                                                 <td colspan="3" align="center" class="bg-ash">
@@ -999,61 +1003,61 @@
                                                             </tr>
                                                             <tr>
                                                                 <td>Basic</td>
-                                                                <td></td>
-                                                                <td></td>
+                                                                <td>19205.00</td>
+                                                                <td>230460.00</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>House Rent Allowance</td>
-                                                                <td></td>
-                                                                <td></td>
+                                                                <td>9603.00</td>
+                                                                <td>115236.00</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Special Allowance</td>
-                                                                <td></td>
-                                                                <td></td>
+                                                                <td>3200.00</td>
+                                                                <td>38400.00</td>
                                                             </tr>
                                                             <tr class="bg-blue">
                                                                 <td class="txt-white fw-600">Gross Salary</td>
-                                                                <td class="a"></td>
-                                                                <td class="a"></td>
+                                                                <td class="a">32008.00</td>
+                                                                <td class="a">384096.00</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Employer'scintribution to ESI</td>
-                                                                <td></td>
-                                                                <td></td>
+                                                                <td>0.00</td>
+                                                                <td>o.oo</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Employer'scintribution to EPF</td>
-                                                                <td></td>
-                                                                <td></td>
+                                                                <td>1800.00</td>
+                                                                <td>21600.00</td>
                                                             </tr>
                                                             <tr class="bg-blue">
                                                                 <td class="fw-600 txt-white"><b>CTC(Cost of the
                                                                         Company)</b></td>
-                                                                <td class="a"></td>
-                                                                <td class="a"></td>
+                                                                <td class="a">33808.00</td>
+                                                                <td class="a">505696.00</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>
                                                                     Employee's Contribution to EPF
                                                                 </td>
-                                                                <td></td>
-                                                                <td></td>
+                                                                <td>1800.00</td>
+                                                                <td>21600.00</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Employee's Contribution to ESI</td>
-                                                                <td></td>
-                                                                <td></td>
+                                                                <td>0.00</td>
+                                                                <td>0.00</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Employee's Contribution to PT</td>
-                                                                <td></td>
-                                                                <td></td>
+                                                                <td>208.00</td>
+                                                                <td>2496.00</td>
                                                             </tr>
                                                             <tr class="bg-blue">
                                                                 <td class="txt-white"><b>Net Take home</b></td>
-                                                                <td class="a"></td>
-                                                                <td class="a"></td>
+                                                                <td class="a">30000.00</td>
+                                                                <td class="a">360000.00</td>
                                                             </tr>
                                                         </table>
 
@@ -1126,9 +1130,11 @@
 
                                                 <tr>
                                                     <td>
-                                                        <div class="logo" style="width:100%;height:fit-content;padding-top:10px;">
-                                                            <img src="{{ URL::asset('assets/images/abs_footer-label.jpg') }}" alt=""
-                                                                class="" style="height:100%;width:100%;">
+                                                        <div class="logo"
+                                                            style="width:100%;height:fit-content;padding-top:10px;">
+                                                            <img src="{{ URL::asset('assets/images/footer.jpg') }}"
+                                                                alt="" class=""
+                                                                style="height:100%;width:100%;">
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -1148,7 +1154,7 @@
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <div class="logo" style="width:100%;height:100px;">
+                                                        <div class="logo" style="width:100%;height:fit-content;">
                                                             <img src="{{ URL::asset('assets/images/header.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100%;width:100%;">
@@ -1384,7 +1390,7 @@
                                                     <td>
                                                         <div class="logo"
                                                             style="width:100%;height:fit-content;padding-top:12px;">
-                                                            <img src="{{ URL::asset('assets/images/abs_footer-label.jpg') }}"
+                                                            <img src="{{ URL::asset('assets/images/footer.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100%;width:100%;">
                                                         </div>
@@ -1405,7 +1411,7 @@
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <div class="logo" style="width:100%;height:100px;">
+                                                        <div class="logo" style="width:100%;height:fit-content;">
                                                             <img src="{{ URL::asset('assets/images/header.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100%;width:100%;">
@@ -1495,7 +1501,7 @@
                                                                     <td colspan="12" style="padding-top: 0cm;"
                                                                         align="left">
                                                                         <p>
-                                                                            I <b>XYZ</b>, have understood and
+                                                                            I <b>&emsp;&emsp;&emsp;</b>, have understood and
                                                                             accepted the appointment upon the terms and
                                                                             conditions as outlined in this appointment
                                                                             letter for my position at Ardens Business
@@ -1527,7 +1533,7 @@
                                                     <td>
                                                         <div class="logo"
                                                             style="width:100%;height:fit-content;padding-top:403px;">
-                                                            <img src="{{ URL::asset('assets/images/abs_footer-label.jpg') }}"
+                                                            <img src="{{ URL::asset('assets/images/footer.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100%;width:100%;">
                                                         </div>
@@ -1549,7 +1555,7 @@
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <div class="logo" style="width:100%;height:100px;">
+                                                        <div class="logo" style="width:100%;height:fit-content;">
                                                             <img src="{{ URL::asset('assets/images/header.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100%;width:100%;">
@@ -1686,7 +1692,7 @@
                                                     <td>
                                                         <div class="logo"
                                                             style="width:100%;height:fit-content;padding-top:23px;">
-                                                            <img src="{{ URL::asset('assets/images/abs_footer-label.jpg') }}"
+                                                            <img src="{{ URL::asset('assets/images/footer.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100%;width:100%;">
                                                         </div>
@@ -1709,7 +1715,7 @@
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <div class="logo" style="width:100%;height:100px;">
+                                                        <div class="logo" style="width:100%;height:fit-content;">
                                                             <img src="{{ URL::asset('assets/images/header.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100%;width:100%;">
@@ -1864,7 +1870,7 @@
                                                     <td>
                                                         <div class="logo"
                                                             style="width:100%;height:fit-content;padding-top:84px;">
-                                                            <img src="{{ URL::asset('assets/images/abs_footer-label.jpg') }}"
+                                                            <img src="{{ URL::asset('assets/images/footer.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100%;width:100%;">
                                                         </div>
@@ -1885,7 +1891,7 @@
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <div class="logo" style="width:100%;height:100px;">
+                                                        <div class="logo" style="width:100%;height:fit-content;">
                                                             <img src="{{ URL::asset('assets/images/header.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100%;width:100%;">
@@ -1971,7 +1977,7 @@
                                                                     <td colspan="12" style="padding-top: 0cm;"
                                                                         align="left">
                                                                         <p>
-                                                                            I <b>XYZ</b>, have understood and
+                                                                            I <b>&emsp;&emsp;&emsp;</b>, have understood and
                                                                             accepted the appointment upon the terms and
                                                                             conditions as outlined in this appointment
                                                                             letter for my position at Ardens Business
@@ -2000,8 +2006,8 @@
                                                 <tr>
                                                     <td>
                                                         <div class="logo"
-                                                            style="width:100%;height:100px;padding-top:279px;">
-                                                            <img src="{{ URL::asset('assets/images/abs_footer-label.jpg') }}"
+                                                            style="width:100%;height:fit-content;padding-top:279px;">
+                                                            <img src="{{ URL::asset('assets/images/footer.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100%;width:100%;">
                                                         </div>
