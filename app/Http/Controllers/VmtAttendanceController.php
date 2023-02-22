@@ -127,6 +127,7 @@ class VmtAttendanceController extends Controller
 
 
         $leave_record->reviewer_comments = $request->leave_rejection_text;
+        $leave_record->reviewed_date = Carbon::now();
 
         $leave_record->save();
 
@@ -237,8 +238,13 @@ class VmtAttendanceController extends Controller
 
             //dd($map_allEmployees[1]["name"]);
             foreach ($employeeLeaves_team as $singleItem) {
-                $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
-                $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->user_id]);
+
+                if (array_key_exists($singleItem->user_id, $map_allEmployees->toArray())) {
+                    $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
+                    $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->user_id);
+                }
+
+                if (array_key_exists($singleItem->reviewer_user_id, $map_allEmployees->toArray())) {
 
                 $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_user_id]["name"];
                 $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName([$singleItem->reviewer_user_id]);
@@ -324,6 +330,7 @@ class VmtAttendanceController extends Controller
     }
 
 
+
     public function saveLeaveRequestDetails(Request $request)
     {
         //dd($request->toArray());
@@ -386,7 +393,15 @@ class VmtAttendanceController extends Controller
 
             //dd("Time diff : ".$mailtext_total_leave);
         } else {
-            $diff = intval( $start->diff($end)->format('%D')) + 1; //day adjusted by adding '1'
+
+            //Check if its 0.5 day leave, then handle separately
+            if($request->half_day_leave == "0.5"){
+                $diff = "0.5 ".$request->half_day_type;
+            } else {
+                //If its not half day leave, then find the leave days
+                $diff = intval($start->diff($end)->format('%D')) + 1; //day adjusted by adding '1'
+            }
+
             $mailtext_total_leave = $diff . " Day(s)";
         }
 
@@ -576,7 +591,8 @@ class VmtAttendanceController extends Controller
             ->first(['users.id', 'users.name', 'vmt_employee_office_details.designation']);
 
         $current_employee_detail->employee_avatar = getEmployeeAvatarOrShortName($current_employee_detail->id);
-
+         $current_employee_detail->employee_avatar = json_decode( $current_employee_detail->employee_avatar, false);
+        // dd($current_employee_detail->employee_avatar->type);
         return view('attendance_timesheet', compact('current_employee_detail', 'shift_start_time', 'shift_end_time'));
     }
 
@@ -971,7 +987,7 @@ class VmtAttendanceController extends Controller
 
         //dd($reportees_details->toArray());
         foreach ($reportees_details as $singleItem) {
-            $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->id]);
+            $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->id);
         }
 
         return $reportees_details;
@@ -989,7 +1005,7 @@ class VmtAttendanceController extends Controller
 
         //dd($reportees_details->toArray());
         foreach ($all_employees as $singleItem) {
-            $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->id]);
+            $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->id);
         }
 
         return $all_employees;
@@ -1023,14 +1039,17 @@ class VmtAttendanceController extends Controller
 
             //check whether user_id from regularization table exists in USERS table
             if (array_key_exists($singleItem->user_id, $map_allEmployees->toArray())) {
+                if($singleItem->custom_reason==null){
+                    $singleItem->custom_reason=$singleItem->reason_type;
+                }
 
                 $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
-                $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->user_id]);
+                $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->user_id);
 
                 //If reviewer_id = 0, then its not yet reviewed
                 if ($singleItem->reviewer_id != 0) {
                     $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_id]["name"];
-                    $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName([$singleItem->reviewer_id]);
+                    $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName($singleItem->reviewer_id);
                 }
             }
             else

@@ -1,7 +1,7 @@
 <?php
-    //$client_logo = request()->getSchemeAndHttpHost() . session()->get('client_logo_url');
-    $bank_names = \DB::table('vmt_banks')->get();
-    //dd($client_logo);
+//$client_logo = request()->getSchemeAndHttpHost() . session()->get('client_logo_url');
+$bank_names = \DB::table('vmt_banks')->get();
+//dd($client_logo);
 ?>
 <html>
 
@@ -16,13 +16,13 @@
             font-family: sans-serif;
         }
 
-        .payslip_table tr,   .payslip_table td
-         {
+        .payslip_table tr,
+        .payslip_table td {
             border: 1.5pt solid #0087c1;
 
         }
 
-        table td:last-child {}
+
 
         .border-less {
             border: 0px !important;
@@ -40,7 +40,8 @@
             margin: 0px;
         }
 
-        p {
+        .payslip_table tr p,
+        .payslip_table td p {
             font-size: 9pt;
             margin-top: 3pt;
             margin-bottom: 3pt;
@@ -69,8 +70,9 @@
             height: 50px;
         }
 
-        td.bg-ash {
-            background-color: #dbdbdb;
+        .payslip_table tr .bg-ash,
+        .payslip_table td .bg-ash {
+            background-color: #9e9e9e5c;
         }
     </style>
 </head>
@@ -81,20 +83,20 @@
             <table cellspacing="0" cellpadding="0" class="payslip_table">
                 <tr class="header-row">
                     <td colspan="8" class="border-less">
-                        <div class="header-cotent" style="margin: 10px;">
-                            <h6 class="margin-0" style="padding-left: 5px">Priti Sales Corporation.</h6>
-                            <p class="mb-0">Dugar Towers, 2nd floor,</p>
-                            <p class="mb-0">#34/123, Marshalls Road, Egmore,</p>
-                            <p class="mb-0">Chennai, Tamil Nadu, India 600 008. </p>
+                        <div class="header-cotent" style="margin: 1px;">
+                            <p class=" text-strong"
+                            style="color: #002f56;
+                            padding-left: 5px;font-size:18px;margin:0px;">Priti Sales Corporation</p>
+                            <p class="mb-0" style="margin:0px">Dugar Towers, 2nd floor,</p>
+                            <p class="mb-0" style="margin:0px">#34/123, Marshalls Road, Egmore,</p>
+                            <p class="mb-0" style="margin:0px">Chennai, Tamil Nadu, India 600 008. </p>
                         </div>
                     </td>
                     <td colspan="4" class="border-less">
-
                         <div class="header-img txt-right" style="">
-                            <img src={{ $client_logo }} style="height: 30px;width:170px;margin:10px" title="">
+                            <img src={{ $client_logo }} style="height:45px;width:21px;padding-right:10px;"
+                                title="">
                         </div>
-
-
                     </td>
                 </tr>
 
@@ -102,7 +104,9 @@
                 <tr>
                     <td colspan="12" class="bg-ash ">
                         <p class="sub-header txt-center text-strong">PAYSLIP FOR THE MONTH OF &ndash;
-                            {{\Carbon\Carbon::parse($employee_payslip->PAYROLL_MONTH)->format('M  y') }}</p>
+                            {{-- {{ \Carbon\Carbon::parse($employee_payslip->PAYROLL_MONTH)->format('M  y') }} --}}
+                            <span style="text-transform:uppercase;">  {{ strtoupper(date('M-Y', strtotime($employee_payslip->PAYROLL_MONTH))) }} </span>
+                        </p>
 
                     </td>
                 </tr>
@@ -126,13 +130,13 @@
                         <p>DATE OF BIRTH</p>
                     </td>
                     <td colspan="3">
-                        <p>{{ date('d-m-Y', strtotime($employee_details->dob)) }}</p>
+                        <p>{{ date('d-M-Y', strtotime($employee_details->dob)) }}</p>
                     </td>
                     <td colspan="3" class="bg-ash text-strong">
                         <p>DATE OF JOINING</p>
                     </td>
                     <td colspan="3">
-                        <p>{{ date('d-m-Y', strtotime($employee_details->doj)) }}</p>
+                        <p>{{ date('d-M-Y', strtotime($employee_details->doj)) }}</p>
                     </td>
 
                 </tr>
@@ -147,7 +151,7 @@
                         <p>LOCATION</p>
                     </td>
                     <td colspan="3">
-                        <p>{{  $employee_details->location }}</p>
+                        <p>{{ $employee_details->location }}</p>
                     </td>
 
                 </tr>
@@ -171,7 +175,7 @@
                         <p>UAN</p>
                     </td>
                     <td colspan="3">
-                        <p>{{ $employee_details->UAN  }}</p>
+                        <p>{{ $employee_details->UAN }}</p>
                     </td>
                     <td colspan="3" class="bg-ash text-strong">
                         <p>PAN</p>
@@ -298,13 +302,13 @@
                         <p class="txt-center text-strong">DESCRIPTION</p>
                     </td>
                     <td colspan="2" class="bg-ash">
-                        <p class="txt-center text-strong">AMOUNT</p>
+                        <p class="txt-center text-strong">AMOUNT GROSS</p>
                     </td>
                     <td colspan="2" class="bg-ash">
-                        <p class="txt-center text-strong">ARREAR AMOUNT</p>
+                        <p class="txt-center text-strong">ARREAR GROSS</p>
                     </td>
                     <td colspan="2" class="bg-ash">
-                        <p class="txt-center text-strong">EARNED AMOUNT</p>
+                        <p class="txt-center text-strong">EARNED GROSS</p>
                     </td>
                     <td colspan="2" class="bg-ash">
                         <p class="txt-center text-strong">DEDUCTION</p>
@@ -319,19 +323,29 @@
                         <p class="txt-left text-strong">BASIC</p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-right">{{ number_format(round($employee_payslip->BASIC), 2) }}</p>
+                        <p class="txt-right"><img height="8.5" width="12"
+                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right" alt=""
+                                style="padding-right:0px;">{{ number_format(round($employee_payslip->BASIC), 2) }}</p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-right">{{ number_format(round($employee_payslip->BASIC_ARREAR), 2) }}</p>
+                        <p class="txt-right"><img height="8.5" width="12"
+                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right" alt=""
+                                style="padding-right:0px;">{{ number_format(round($employee_payslip->BASIC_ARREAR), 2) }}
+                        </p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-right">{{ number_format(round($employee_payslip->Earned_BASIC), 2) }}</p>
+                        <p class="txt-right"><img height="8.5" width="12"
+                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right" alt=""
+                                style="padding-right:0px;">{{ number_format(round($employee_payslip->Earned_BASIC), 2) }}
+                        </p>
                     </td>
                     <td colspan="2" class="">
                         <p class="txt-left text-strong">EPF</p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-right">{{ number_format(round($employee_payslip->EPFR), 2) }}</p>
+                        <p class="txt-right"><img height="8.5" width="12"
+                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right" alt=""
+                                style="padding-right:0px;">{{ number_format(round($employee_payslip->EPFR), 2) }}</p>
                     </td>
                 </tr>
                 <tr>
@@ -339,39 +353,62 @@
                         <p class="txt-left text-strong">HRA</p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-right">{{ number_format(round($employee_payslip->HRA), 2) }}</p>
+                        <p class="txt-right"><img height="8.5" width="12"
+                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right" alt=""
+                                style="padding-right:0px;">{{ number_format(round($employee_payslip->HRA), 2) }}</p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-right">{{ number_format(round($employee_payslip->HRA_ARREAR), 2) }}</p>
+                        <p class="txt-right"><img height="8.5" width="12"
+                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right" alt=""
+                                style="padding-right:0px;">{{ number_format(round($employee_payslip->HRA_ARREAR), 2) }}
+                        </p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-right">{{ number_format(round($employee_payslip->Earned_HRA), 2) }}</p>
+                        <p class="txt-right"><img height="8.5" width="12"
+                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right" alt=""
+                                style="padding-right:0px;">{{ number_format(round($employee_payslip->Earned_HRA), 2) }}
+                        </p>
                     </td>
                     <td colspan="2" class="">
                         <p class="txt-left text-strong">ESIC</p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-right">{{ number_format(round($employee_payslip->EMPLOYEE_ESIC), 2) }}</p>
+                        <p class="txt-right"><img height="8.5" width="12"
+                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right" alt=""
+                                style="padding-right:0px;">{{ number_format(round($employee_payslip->EMPLOYEE_ESIC), 2) }}
+                        </p>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2" class="">
-                        <p class="txt-left text-strong">SPECIAL ALLOW</p>
+                        <p class="txt-left text-strong">SPECIAL ALLOWANCE</p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-right">{{ number_format(round($employee_payslip->SPL_ALW), 2) }}</p>
+                        <p class="txt-right"><img height="8.5" width="12"
+                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right" alt=""
+                                style="padding-right:0px;">{{ number_format(round($employee_payslip->SPL_ALW), 2) }}
+                        </p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-right">{{ number_format(round($employee_payslip->SPL_ALW_ARREAR), 2) }}</p>
+                        <p class="txt-right"><img height="8.5" width="12"
+                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right" alt=""
+                                style="padding-right:0px;">{{ number_format(round($employee_payslip->SPL_ALW_ARREAR), 2) }}
+                        </p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-right">{{ number_format(round($employee_payslip->Earned_SPL_ALW), 2) }}</p>
+                        <p class="txt-right"><img height="8.5" width="12"
+                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right" alt=""
+                                style="padding-right:0px;">{{ number_format(round($employee_payslip->Earned_SPL_ALW), 2) }}
+                        </p>
                     </td>
                     <td colspan="2" class="">
                         <p class="txt-left text-strong">PT</p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-right">{{ number_format(round($employee_payslip->PROF_TAX), 2) }}</p>
+                        <p class="txt-right"><img height="8.5" width="12"
+                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right" alt=""
+                                style="padding-right:0px;">{{ number_format(round($employee_payslip->PROF_TAX), 2) }}
+                        </p>
                     </td>
 
 
@@ -389,13 +426,19 @@
                     </td>
 
                     <td colspan="2" class="">
-                        <p class="txt-right">{{ number_format(round($employee_payslip->Overtime), 2) }}</p>
+                        <p class="txt-right"><img height="8.5" width="12"
+                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right" alt=""
+                                style="padding-right:0px;">{{ number_format(round($employee_payslip->Overtime), 2) }}
+                        </p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-left text-strong">TDS</p>
+                        <p class="txt-left text-strong">INCOME TAX</p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-right">{{ number_format(round($employee_payslip->TDS), 2) }}</p>
+                        <p class="txt-right"><img height="8.5" width="12"
+                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right" alt=""
+                                style="padding-right:0px;">{{ number_format(round($employee_payslip->income_tax), 2) }}
+                        </p>
                     </td>
                 </tr>
                 <tr>
@@ -416,7 +459,10 @@
                         <p class="txt-left text-strong">CANT-DEDUCTION</p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-right"> {{ number_format(round($employee_payslip->CANTEEN_DEDN), 2) }}</p>
+                        <p class="txt-right"><img height="8.5" width="12"
+                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right" alt=""
+                                style="padding-right:0px;">
+                            {{ number_format(round($employee_payslip->CANTEEN_DEDN), 2) }}</p>
                     </td>
                 </tr>
                 <tr>
@@ -437,7 +483,10 @@
                         <p class="txt-left text-strong">SALARY ADVANCE</p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-right"> {{ number_format(round($employee_payslip->SAL_ADV), 2) }}</p>
+                        <p class="txt-right"><img height="8.5" width="12"
+                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right" alt=""
+                                style="padding-right:0px;"> {{ number_format(round($employee_payslip->SAL_ADV), 2) }}
+                        </p>
                     </td>
                 </tr>
                 <tr>
@@ -458,28 +507,40 @@
                         <p class="txt-left text-strong">OTHER DEDUCTIONS</p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-right">{{ number_format(round($employee_payslip->OTHER_DEDUC), 2) }}</p>
+                        <p class="txt-right"><img height="8.5" width="12"
+                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right" alt=""
+                                style="padding-right:0px;">{{ number_format(round($employee_payslip->OTHER_DEDUC), 2) }}
+                        </p>
                     </td>
                 </tr>
-                <tr>
-                    <td colspan="2" class="">
+                <tr class="bg-ash text-strong">
+                    <td colspan="2" class="bg-ash">
                         <p class="txt-left text-strong">TOTAL EARNINGS</p>
                     </td>
-                    <td colspan="2" class="">
-                        <p class="txt-right">{{ number_format(round($employee_payslip->TOTAL_EARNED_GROSS), 2) }}</p>
+                    <td colspan="2" class="bg-ash">
+                        <p class="txt-right"><img height="8.5" width="12"
+                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right" alt=""
+                                style="padding-right:0px;">{{ number_format(round($employee_payslip->TOTAL_EARNED_GROSS), 2) }}
+                        </p>
                     </td>
-                    <td colspan="2" class="">
+                    <td colspan="2" class="bg-ash">
                         <p class="txt-right"></p>
                     </td>
 
-                    <td colspan="2" class="">
-                        <p class="txt-right">{{ number_format(round($employee_payslip->TOTAL_EARNED_GROSS), 2) }}</p>
+                    <td colspan="2" class="bg-ash">
+                        <p class="txt-right"><img height="8.5" width="12"
+                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right" alt=""
+                                style="padding-right:0px;">{{ number_format(round($employee_payslip->TOTAL_EARNED_GROSS), 2) }}
+                        </p>
                     </td>
-                    <td colspan="2" class="">
+                    <td colspan="2" class="bg-ash">
                         <p class="txt-left text-strong">TOTAL DEDUCTION</p>
                     </td>
-                    <td colspan="2" class="">
-                        <p class="txt-right">{{ number_format(round($employee_payslip->TOTAL_DEDUCTIONS), 2) }}</p>
+                    <td colspan="2" class="bg-ash">
+                        <p class="txt-right"><img height="8.5" width="12"
+                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right" alt=""
+                                style="padding-right:0px;">{{ number_format(round($employee_payslip->TOTAL_DEDUCTIONS), 2) }}
+                        </p>
                     </td>
                 </tr>
                 <tr>
@@ -492,7 +553,10 @@
                         <p class="txt-left text-strong">NET PAY</p>
                     </td>
                     <td colspan="8" class="">
-                        <p class="txt-center ">{{ number_format(round($employee_payslip->NET_TAKE_HOME), 2) }}</p>
+                        <p class="txt-center "><img height="8.5" width="12"
+                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right" alt=""
+                                style="padding-right:0px;">{{ number_format(round($employee_payslip->NET_TAKE_HOME), 2) }}
+                        </p>
                     </td>
                 </tr>
                 <tr>
@@ -536,16 +600,14 @@
                 <tr class="border-less">
                     <td colspan="8" class="border-less" style="    padding: 10px 0px;">
                         <p class="txt-left">Please
-                            reach out to us for any payroll queries at  -hr.admin@imcvasa.in</p>
+                            reach out to us for any payroll queries at -hr.admin@imcvasa.in</p>
                     </td>
-                    <td colspan="3" class="border-less txt-right" style="    padding: 10px 0px;">
+                    <td colspan="3" class="border-less txt-right" style="padding: 10px 0px;">
                         <p>Generated By</p>
-
-
                     </td>
-                    <td colspan="1" class="border-less" style="    padding: 10px 0px;">
-                        <img src="{{ URL::asset('assets/images/client_logos/ardens/evangelist.png') }}" width="80px" height="15px"
-                        alt="" class="">
+                    <td colspan="1" class="border-less" style="padding: 10px 0px;">
+                        <img src="{{ URL::asset('assets/images/client_logos/ardens/evangelist.png') }}"
+                            width="100px" height="18px" alt="" class="">
                     </td>
                 </tr>
 

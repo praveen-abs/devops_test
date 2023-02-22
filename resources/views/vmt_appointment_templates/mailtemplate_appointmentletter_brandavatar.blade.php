@@ -99,7 +99,7 @@ $bank_names = \DB::table('vmt_banks')->get();
             <div class="appointment-letter">
                 <div class="logo" style="width:150px;height: 50px;">
 
-                    <img src="{{ URL::asset('assets/images/appoinment/brandavatarlogo.png') }}" class=""
+                    <img src="{{ URL::asset('assets/images/vasa.jpg') }}" class=""
                         style="height:100%;width:100%;">
                 </div>
 
