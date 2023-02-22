@@ -75,19 +75,21 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         }
     });
 
-    function generateProfileShortName_VendorScript(element_id, t_user_id) {
+    function generateProfileShortName_VendorScript(element_id, t_username) {
+        var username = t_username;
+        const splitArray = username.split(" ");
+        var finalname = "empty111";
 
-        let shortName = null;
+        if (splitArray.length == 1) {
+            finalname = splitArray[0][0] + "" + splitArray[0][1];
+        } else {
+            if (splitArray[0].length == 1)
+                finalname = splitArray[0][0] + "" + splitArray[1][0];
+            else
+                finalname = splitArray[0][0] + "" + splitArray[0][1];
+        }
 
-        $.getJSON( "/getEmployeeAvatar/"+t_user_id, function( response ) {
-          // console.log("Response : "+JSON.stringify(response));
-
-           shortName = response.data;
-          // console.log("Data : "+response.data);
-
-           $('#' + element_id).text(shortName);
-        });
-
+        var a = $('#' + element_id).text(finalname.toUpperCase());
     }
 
     function getRandomColor() {

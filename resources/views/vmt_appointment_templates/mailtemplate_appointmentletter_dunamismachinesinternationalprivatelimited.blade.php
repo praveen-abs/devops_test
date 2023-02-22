@@ -1104,61 +1104,61 @@
                                 </tr>
                                 <tr>
                                     <td>Basic</td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>19205.00</td>
+                                    <td>230460.00</td>
                                 </tr>
                                 <tr>
                                     <td>House Rent Allowance</td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>9603.00</td>
+                                    <td>115236.00</td>
                                 </tr>
                                 <tr>
                                     <td>Special Allowance</td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>3200.00</td>
+                                    <td>38400.00</td>
                                 </tr>
                                 <tr class="bg-blue">
                                     <td class="txt-white fw-600">Gross Salary</td>
-                                    <td class="a"></td>
-                                    <td class="a"></td>
+                                    <td class="a">32008.00</td>
+                                    <td class="a">384096.00</td>
                                 </tr>
                                 <tr>
                                     <td>Employer'scintribution to ESI</td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>0.00</td>
+                                    <td>o.oo</td>
                                 </tr>
                                 <tr>
                                     <td>Employer'scintribution to EPF</td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>1800.00</td>
+                                    <td>21600.00</td>
                                 </tr>
                                 <tr class="bg-blue">
                                     <td class="fw-600 txt-white"><b>CTC(Cost of the
                                             Company)</b></td>
-                                    <td class="a"></td>
-                                    <td class="a"></td>
+                                    <td class="a">33808.00</td>
+                                    <td class="a">505696.00</td>
                                 </tr>
                                 <tr>
                                     <td>
                                         Employee's Contribution to EPF
                                     </td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>1800.00</td>
+                                    <td>21600.00</td>
                                 </tr>
                                 <tr>
                                     <td>Employee's Contribution to ESI</td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>0.00</td>
+                                    <td>0.00</td>
                                 </tr>
                                 <tr>
                                     <td>Employee's Contribution to PT</td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>208.00</td>
+                                    <td>2496.00</td>
                                 </tr>
                                 <tr class="bg-blue">
                                     <td class="txt-white"><b>Net Take home</b></td>
-                                    <td class="a"></td>
-                                    <td class="a"></td>
+                                    <td class="a">30000.00</td>
+                                    <td class="a">360000.00</td>
                                 </tr>
                             </table>
 

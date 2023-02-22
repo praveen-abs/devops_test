@@ -457,7 +457,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                         <p class="txt-left text-strong">TDS</p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-right">{{ number_format(round($employee->income_tax ), 2) }}</p>
+                        <p class="txt-right">{{ number_format(round($employee->TDS), 2) }}</p>
                     </td>
                 </tr>
                 <tr>

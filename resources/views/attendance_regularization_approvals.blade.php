@@ -106,7 +106,8 @@
 
                                 <button type="button" class="btn btn-primary submit_notify"
                                     id="modal_lc_reject">Submit</button>
-                                <button type="button" class="btn btn-light close-modal" id="closeModal">Cancel</button>
+                                <button type="button" class="btn btn-light close-modal"
+                                    id="closeModal">Cancel</button>
                             </div>
                         </div>
                     </div>
@@ -127,72 +128,46 @@
 
         var employeesList_array = '';
 
-        var gridjs_lateComingTable = "";
+        var gridjs_lateComingTable ="";
 
 
-        var dropdown_reasons_LC = [{
-                display: 'Permission',
-                value: 'Permission'
-            },
-            {
-                display: 'Others',
-                value: 'Others'
-            },
-        ];
+        var dropdown_reasons_LC = [
+               {display: 'Permission', value: 'Permission'},
+               {display: 'Others', value: 'Others'},
+            ];
 
-        var dropdown_reasons_EG = [{
-                display: 'Permission',
-                value: 'Permission'
-            },
-            {
-                display: 'Others',
-                value: 'Others'
-            },
-        ];
+        var dropdown_reasons_EG = [
+               {display: 'Permission', value: 'Permission'},
+               {display: 'Others', value: 'Others'},
+            ];
 
-        var dropdown_reasons_MIP = [{
-                display: 'Permission',
-                value: 'Permission'
-            },
-            {
-                display: 'Forgot To Punch',
-                value: 'Forgot To Punch'
-            },
-            {
-                display: 'Others',
-                value: 'Others'
-            },
-        ];
+        var dropdown_reasons_MIP = [
+               {display: 'Permission', value: 'Permission'},
+               {display: 'Forgot To Punch', value: 'Forgot To Punch'},
+               {display: 'Others', value: 'Others'},
+            ];
 
 
-        var dropdown_reasons_MOP = [{
-                display: 'Permission',
-                value: 'Permission'
-            },
-            {
-                display: 'Forgot To Punch',
-                value: 'Forgot To Punch'
-            },
-            {
-                display: 'Others',
-                value: 'Others'
-            },
-        ];
+        var dropdown_reasons_MOP = [
+               {display: 'Permission', value: 'Permission'},
+               {display: 'Forgot To Punch', value: 'Forgot To Punch'},
+               {display: 'Others', value: 'Others'},
+            ];
 
 
 
-        $('#dropdown_regularizationType').change(function() {
+        $('#dropdown_regularizationType').change(function () {
             let selectedValue = $("#dropdown_regularizationType option:selected").val();
-            console.log("Regularization Type DD Changed : " + selectedValue);
+            console.log("Regularization Type DD Changed : "+selectedValue);
 
             //clear existing options in dropdown
             $('#dropdown_reasonType').empty().append('<option value="" selected hidden disabled>Choose</option>');
 
             //Based on selected regularization type, we will show the reason dropdown values accordingly
-            $.each(dropdown_reasons_LC, function(i, item) {
+            $.each(dropdown_reasons_LC, function (i, item) {
                 $('#dropdown_reasonType').append($('<option>', {
                     value: item.value,
-                    text: item.display
+                    text : item.display
                 }));
             });
 
@@ -224,23 +199,23 @@
                             $("#notificationModal").hide();
 
                             swal({
-                                title: "Info",
-                                text: data.message,
-                                type: data.status
-                            }).then(function() {
-                                location.reload();
-                            });
+                                    title: "Info",
+                                    text: data.message,
+                                    type: data.status
+                                }).then(function() {
+                                    location.reload();
+                                });
 
                             // location.reload();
                         } else {
-                            // alert("Leave request failed. Contact your Admin");
+                           // alert("Leave request failed. Contact your Admin");
                             swal({
-                                title: "Info",
-                                text: data.message,
-                                type: data.status
-                            }).then(function() {
-                                location.reload();
-                            });
+                                    title: "Info",
+                                    text: data.message,
+                                    type: data.status
+                                }).then(function() {
+                                    location.reload();
+                                });
                         }
                     },
                     error: function(data) {
@@ -294,37 +269,31 @@
 
             if (document.getElementById("table_lateComingTable")) {
                 gridjs_lateComingTable = new gridjs.Grid({
-                    columns: [{
+                    columns: [
+                        {
                             id: 'avatar',
                             name: '',
-                            formatter: function formatter(userData) {
+                            formatter: function formatter(cell) {
+
                                 var output = "";
-                                let json_emp_avatar = JSON.parse(userData.employee_avatar);
 
-                                if (json_emp_avatar.type == "shortname") {
+                                if(cell.employee_avatar.type == "shortname"){
 
-                                    output =
-                                        '<div class="d-flex align-items-center page-header-user-dropdown">' +
-                                        '<span class="rounded-circle user-profile  ml-2  ' +
-                                        json_emp_avatar.color + ' " id="">' +
-                                        '<i class="topbar_username" class="align-middle ">' +
-                                        json_emp_avatar.data + '</i>' +
-                                        '</span>' +
-
-                                        '</div>';
-                                } else
-                                if (json_emp_avatar.type == "avatar") {
-                                    var imageURL = "images/" + json_emp_avatar.data;
-
-                                    output = '<div class="d-flex align-items-center">' +
-                                        '<img class="rounded-circle header-profile-user" src="' +
-                                        imageURL + '" alt="--">' +
-                                        '<span>&nbsp;&nbsp;' + userData.employee_name +
-                                        '</span>' +
-                                        '</div>';
-                                } else {
-                                    output = 'error';
+                                    output ='<div class="d-flex align-items-center p-0 page-header-user-dropdown">'+
+                                                '<div class="rounded-circle user-profile col-auto user-profile  me-2 " id="">'+
+                                                    '<i class="topbar_username" class="align-middle ">'+cell.employee_avatar.data+'</i>'+
+                                                '</div>'+
+                                            '</div>';
                                 }
+                                else
+                                if(cell.employee_avatar.type == "avatar"){
+                                    var imageURL = "images/"+cell.employee_avatar.data;
+
+                                    output ='<div class="col-auto p-0">'+
+                                            '<img class="rounded-circle header-profile-user" src="'+imageURL+'" alt="--">'+
+                                        '</div>';
+                                }
+
 
                                 return gridjs.html(output);
                             }
@@ -355,7 +324,7 @@
                             name: 'Actual Time',
                             formatter: function formatter(cell) {
 
-                                return gridjs.html(moment(cell, "HH:mm:ss").format('h:mm a'));
+                                return gridjs.html(moment(cell,"HH:mm:ss").format('h:mm a'));
                                 //return gridjs.html(cell);
 
                             }
@@ -366,7 +335,7 @@
                             name: 'Regularize Time',
                             formatter: function formatter(cell) {
 
-                                return gridjs.html(moment(cell, "HH:mm:ss").format('h:mm a'));
+                                return gridjs.html(moment(cell,"HH:mm:ss").format('h:mm a'));
                             }
                         },
 
@@ -418,8 +387,7 @@
                                         // '" data-lc_id="' + req.id +
                                         // '" data-lc_status="Approved" class="status btn btn-success py-1 approve-lc-btn">';
 
-                                        '<button type="button" value="Approve" data-user_id="' + req
-                                        .user_id +
+                                        '<button type="button" value="Approve" data-user_id="' + req.user_id +
                                         '" data-lc_id="' + req.id +
                                         '" data-lc_status="Approved" class="status me-2 btn btn-success py-1 approve-lc-btn"><i class="fa fa-check-circle me-1" aria-hidden="true"></i>Approve</button>';
 
@@ -428,8 +396,7 @@
                                         // req.user_id + '" data-user_id="' + req.user_id +
                                         // '" data-lc_id="' + req.id +
                                         // '" data-lc_status="Rejected" class="status btn btn-danger py-1 reject-lc-btn "></input>&nbsp;&nbsp;';
-                                        '<button type="button" value="Reject" id="button_activate_"' +
-                                        req.user_id + '" data-user_id="' + req.user_id +
+                                        '<button type="button" value="Reject" id="button_activate_"' +req.user_id + '" data-user_id="' + req.user_id +
                                         '" data-lc_id="' + req.id +
                                         '" data-lc_status="Rejected" class="status btn btn-danger py-1 reject-lc-btn "><i class="fa fa-times-circle me-1"></i>Reject</button>';
                                 }
@@ -455,7 +422,7 @@
                                 att_regularize,
                                 att_regularize.employee_name,
                                 att_regularize.attendance_date,
-                                att_regularize.regularization_type,
+                                att_regularize.regularization_type ,
                                 att_regularize.user_time,
                                 att_regularize.regularize_time,
                                 att_regularize.custom_reason,
