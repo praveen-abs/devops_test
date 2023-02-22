@@ -6,8 +6,6 @@
 
 @endsection
 @section('content')
-@slot('li_1') @endslot
-@endcomponent
 <div class="salary-wrapper">
     <div class="card shadow profile-box card-top-border ">
         <div class="fill salary-header nav-tab-header">

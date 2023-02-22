@@ -1033,6 +1033,7 @@ class VmtEmployeeController extends Controller
             $singleEmp['enc_user_id'] = Crypt::encryptString($singleEmp['user_id']);
             //unset($singleEmp['user_id']);
             $singleEmp['reporting_manager_name']= User::where('user_code',$singleEmp->l1_manager_code)->value('name');
+            $singleEmp['emp_avatar'] = getEmployeeAvatarOrShortName($singleEmp['user_id']);
         }
 
         //dd($query_vmtEmployees);
@@ -1078,6 +1079,8 @@ class VmtEmployeeController extends Controller
             $singleEmp['enc_user_id'] = Crypt::encryptString($singleEmp['user_id']);
             //unset($singleEmp['user_id']);
             $singleEmp['reporting_manager_name'] = User::where('user_code',$singleEmp->l1_manager_code)->value('name');
+            $singleEmp['emp_avatar'] = getEmployeeAvatarOrShortName($singleEmp['user_id']);
+
         }
 
         return json_encode($query_vmtEmployees);
@@ -1121,6 +1124,8 @@ class VmtEmployeeController extends Controller
             $singleEmp['enc_user_id'] = Crypt::encryptString($singleEmp['user_id']);
             //unset($singleEmp['user_id']);
             $singleEmp['reporting_manager_name'] = User::where('user_code',$singleEmp->l1_manager_code)->value('name');
+            $singleEmp['emp_avatar'] = getEmployeeAvatarOrShortName($singleEmp['user_id']);
+
         }
 
         return json_encode($query_vmtEmployees);
@@ -1187,7 +1192,11 @@ class VmtEmployeeController extends Controller
 
                 $html =  view($viewfile_appointmentletter, compact('data'));
 
-                $pdf = new Dompdf();
+                $options = new Options();
+                $options->set('isHtml5ParserEnabled', true);
+                $options->set('isRemoteEnabled', true);
+
+                $pdf = new Dompdf($options);
                 $pdf->loadHtml($html, 'UTF-8');
                 $pdf->setPaper('A4', 'portrait');
                 $pdf->render();

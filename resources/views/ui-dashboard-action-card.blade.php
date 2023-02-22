@@ -1,6 +1,6 @@
 <style type="text/css">
 header {
-    font-family: 'Lobster', cursive;
+    /* font-family: 'Lobster', cursive; */
     text-align: center;
     font-size: 25px;
 }
