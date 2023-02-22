@@ -2,9 +2,20 @@
     <div class="card-body">
         <div class="d-flex">
             <div class="status-wrapper page-header-user-dropdown me-3">
-                @include('ui-profile-avatar',[
-                    'currentUserName' =>  auth()->user()->name,
-                    ])
+                <?php
+                //dd($currentUser);
+                $t_userAvatarDetails = json_decode(getEmployeeAvatarOrShortName(auth()->user()->id), true);
+                // dd($t_userAvatarDetails);
+                ?>
+                @if ($t_userAvatarDetails['type'] == 'shortname')
+                    <div id=""
+                        class="align-middle fw-600 img-xl text-white  rounded-circle d-flex align-items-center justify-content-center  rounded-circle <?php echo $t_userAvatarDetails['color']; ?>"
+                        style="font-size: 25px">
+                        {{ $t_userAvatarDetails['data'] }}</div>
+                @else
+                    <img class="rounded-circle header-profile-user img-xl"
+                        src=" {{ URL::asset('images/' . $t_userAvatarDetails['data']) }}" alt="user-image">
+                @endif
             </div>
             <div class="greet-wrap ">
                 <div class="d-felx ">

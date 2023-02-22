@@ -296,7 +296,7 @@
                                         <table class="policy_table  ">
                                             <tbody>
                                                 <tr>
-                                                    <td colspan="8" align="" class="pad-bottom-15">
+                                                    <td colspan="8" align="" class="pad-bottom-10">
                                                         <span class="border-b   text-strong">
                                                             Definition:
                                                         </span>
@@ -584,7 +584,7 @@
 
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="8" align="" class="pad-bottom-15">
+                                                    <td colspan="8" align="" class="pad-bottom-10">
                                                         <span class="border-b   text-strong">
                                                             E. Core, Centre, and Optional holidays
                                                         </span>
@@ -599,7 +599,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="8" align="" class="pad-top-10 pad-bottom-10">
+                                                    <td colspan="8" align="" class=" pad-bottom-10">
                                                         <span class="border-b   text-strong">
                                                             F. Sick leave
                                                         </span>
@@ -619,16 +619,6 @@
                                                     </td>
 
                                                 </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item  ">
-                                <div class="main-page">
-                                    <div class="sub-page">
-                                        <table class="policy_table  ">
-                                            <tbody>
 
                                                 <tr class="
                                                 ">
@@ -690,6 +680,18 @@
                                                     </td>
 
                                                 </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item  ">
+                                <div class="main-page">
+                                    <div class="sub-page">
+                                        <table class="policy_table  ">
+                                            <tbody>
+
 
                                                 <tr>
                                                     <td colspan="8" align="" class="pad-bottom-10">
@@ -1012,6 +1014,12 @@
                                                             Resources if you require any further information
                                                         </p>
 
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="8" style="padding-top: 50px" align="center"
+                                                        class=" ">
+                                                        * &nbsp; *  &nbsp; *
                                                     </td>
                                                 </tr>
                                             </tbody>

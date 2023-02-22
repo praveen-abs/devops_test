@@ -390,7 +390,14 @@ class VmtAttendanceController extends Controller
 
             //dd("Time diff : ".$mailtext_total_leave);
         } else {
-            $diff = intval( $start->diff($end)->format('%D')) + 1; //day adjusted by adding '1'
+            //Check if its 0.5 day leave, then handle separately
+            if($request->half_day_leave == "0.5"){
+                $diff = "0.5 ".$request->half_day_type;
+            } else {
+                //If its not half day leave, then find the leave days
+                $diff = intval($start->diff($end)->format('%D')) + 1; //day adjusted by adding '1'
+            }
+
             $mailtext_total_leave = $diff . " Day(s)";
         }
 
@@ -579,7 +586,7 @@ class VmtAttendanceController extends Controller
             ->where('users.id', auth::user()->id)
             ->first(['users.id', 'users.name', 'vmt_employee_office_details.designation']);
 
-        $current_employee_detail->employee_avatar = getEmployeeAvatarOrShortName($current_employee_detail->id);
+        $current_employee_detail->employee_avatar = json_decode( $current_employee_detail->employee_avatar, false);
 
         return view('attendance_timesheet', compact('current_employee_detail', 'shift_start_time', 'shift_end_time'));
     }

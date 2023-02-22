@@ -141,8 +141,8 @@
                                                         </span>
                                                         <p class="pad-top-10">
                                                             The focus of this policy is to properly manage and track the
-                                                            attendance and leaves of all the employees of the Langro India
-                                                            Private Limited .
+                                                            attendance and leaves of all the employees of the Priti Sales
+                                                            Corporation .
                                                         </p>
                                                     </td>
                                                 </tr>
@@ -152,8 +152,9 @@
                                                             Scope:
                                                         </span>
                                                         <p class="pad-top-10">
-                                                            This policy applies to all the employees of Langro India Private
-                                                            Limited , across all the departments and regardless of the job
+                                                            This policy applies to all the employees of Priti Sales
+                                                            Corporation , across all the departments and regardless of the
+                                                            job
                                                             position they hold.
                                                         </p>
                                                     </td>
@@ -164,8 +165,8 @@
                                                             Applicability
                                                         </span>
                                                         <p class="pad-top-10">
-                                                            This policy applies to all employees working for Langro India
-                                                            Private Limited
+                                                            This policy applies to all employees working for Priti Sales
+                                                            Corporation
                                                         </p>
                                                     </td>
                                                 </tr>
@@ -428,7 +429,8 @@
                                                         ⮚
                                                     </td>
                                                     <td colspan="7" align="" class="pad-top-5">
-                                                        <p><span class="text-strong"> NO CALL NO SHOW </span> is subject to disciplinary action and grounds
+                                                        <p><span class="text-strong"> NO CALL NO SHOW </span> is subject to
+                                                            disciplinary action and grounds
                                                             for termination</p>
                                                     </td>
 
@@ -587,7 +589,7 @@
                                                             E. Core, Centre, and Optional holidays
                                                         </span>
                                                         <p class="pad-top-10">
-                                                            Priti Sales Corporation  will have 11 holidays per annum
+                                                            Priti Sales Corporation will have 11 holidays per annum
                                                             classified as Core, Centre, or State as per the holiday list.
                                                         </p>
                                                         <p class="pad-top-10">

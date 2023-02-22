@@ -94,76 +94,85 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
         <div class="card mb-2">
             <div class="card-body">
 
-                <div class="row mb-2">
-                    <div class="col-2">
+                <div class="row ">
+                   <div class="col-xl-2 col-xxl-2 col-lg-2 mb-2 col-md-3 col-sm-4">
 
-                        <p class="fw-bold text-primary"><i class="fas fa-fingerprint me-2  text-success "></i>Biometric</p>
-
-                    </div>
-
-                    <div class="col-2">
-
-                        <p class="fw-bold text-primary"><i class="fa fa-exclamation-circle text-warning fs-15 me-2"></i>Not Applied</p>
+                        <p class="fw-bold text-primary fs-12"><i
+                                class="fas fa-fingerprint me-2  text-success "></i>Biometric</p>
 
                     </div>
 
-                    <div class="col-2">
+                   <div class="col-xl-2 col-xxl-2 col-lg-2 mb-2 col-md-3 col-sm-4">
 
-                        <p class="fw-bold text-primary"><i class="badge bg-primary rounded-pill  me-2  ">LC</i>Late Coming
+                        <p class="fw-bold text-primary fs-12"><i
+                                class="fa fa-exclamation-circle text-warning fs-15 me-2"></i>Not
+                            Applied</p>
+
+                    </div>
+
+                   <div class="col-xl-2 col-xxl-2 col-lg-2 mb-2 col-md-3 col-sm-4">
+
+                        <p class="fw-bold text-primary fs-12"><i class="badge bg-primary rounded-pill  me-2  ">LC</i>Late
+                            Coming
                         </p>
 
                     </div>
-                    <div class="col-2">
+                   <div class="col-xl-2 col-xxl-2 col-lg-2 mb-2 col-md-3 col-sm-4">
 
-                        <p class="fw-bold text-primary"><i class="badge bg-info  rounded-pill  me-2  ">MOP</i>Missed Out
+                        <p class="fw-bold text-primary fs-12"><i class="badge bg-info  rounded-pill  me-2  ">MOP</i>Missed
+                            Out
                             Punch</p>
 
                     </div>
-                    <div class="col-2">
+                   <div class="col-xl-2 col-xxl-2 col-lg-2 mb-2 col-md-3 col-sm-4">
 
-                        <p class="fw-bold text-primary"><i class="fa fa-laptop   me-2 text-info"></i>Web </p>
-
-                    </div>
-                    <div class="col-2">
-
-                        <p class="fw-bold text-primary"><i class="fa fa-times-circle    me-2 text-danger"></i>Rejected </p>
+                        <p class="fw-bold text-primary fs-12"><i class="fa fa-laptop   me-2 text-info"></i>Web </p>
 
                     </div>
+                   <div class="col-xl-2 col-xxl-2 col-lg-2 mb-2 col-md-3 col-sm-4">
 
-                </div>
-                <div class="row">
-
-                    <div class="col-2">
-
-                        <p class="fw-bold text-primary"><i class='fa fa-check-circle text-success me-1'></i> Approved </p>
-
-                    </div>
-                    <div class="col-2">
-
-                        <p class="fw-bold text-primary"><i class="fa fa-question-circle fs-15 text-secondary me-2"></i>Pending</p>
-
-                    </div>
-
-                    <div class="col-2">
-
-                        <p class="fw-bold text-primary"><i class="badge bg-orange rounded-pill  me-2  ">EG</i>Early Going
+                        <p class="fw-bold text-primary fs-12"><i class="fa fa-times-circle    me-2 text-danger"></i>Rejected
                         </p>
 
                     </div>
-                    <div class="col-2">
 
-                        <p class="fw-bold text-primary"><i class="badge bg-dark rounded-pill  me-3  ">MIP</i>Missed In
+
+
+
+                   <div class="col-xl-2 col-xxl-2 col-lg-2  col-md-3 col-sm-4">
+
+                        <p class="fw-bold text-primary fs-12"><i class='fa fa-check-circle text-success me-1'></i> Approved
+                        </p>
+
+                    </div>
+                   <div class="col-xl-2 col-xxl-2 col-lg-2  col-md-3 col-sm-4">
+
+                        <p class="fw-bold text-primary fs-12"><i
+                                class="fa fa-question-circle fs-15 text-secondary me-2"></i>Pending</p>
+
+                    </div>
+
+                    <div class="col-xl-2 col-xxl-2 col-lg-2 col-md-3 col-sm-4 ">
+
+                        <p class="fw-bold text-primary fs-12"><i class="badge bg-orange rounded-pill  me-2  ">EG</i>Early
+                            Going
+                        </p>
+
+                    </div>
+                   <div class="col-xl-2 col-xxl-2 col-lg-2  col-md-3 col-sm-4">
+
+                        <p class="fw-bold text-primary fs-12"><i class="badge bg-dark rounded-pill  me-3  ">MIP</i>Missed In
                             Punch</p>
 
                     </div>
-                    <div class="col-2">
+                   <div class="col-xl-2 col-xxl-2 col-lg-2  col-md-3 col-sm-4">
 
-                        <p class="fw-bold text-primary"><i class="fa fa-mobile text-dark fs-15 me-3  "></i>Mobile</p>
+                        <p class="fw-bold text-primary fs-12"><i class="fa fa-mobile text-dark fs-15 me-3  "></i>Mobile</p>
 
                     </div>
-
-
                 </div>
+
+
 
             </div>
         </div>
@@ -453,17 +462,19 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                     data.forEach((element) => {
 
                         var avatar_data = '';
+                        let empAvatarDetails = JSON.parse(element.employee_avatar);
 
-                        if (element.employee_avatar.type == 'shortname') {
-
+                        if (empAvatarDetails.type == 'shortname') {
+                            var userBgColor = empAvatarDetails.color;
                             avatar_data =
-                                '<div class="user_pic d-flex justify-content-center align-items-center bg-primary  rounded-circle"><span class="text-white fw-bold">' +
-                                element.employee_avatar.data +
+                                '<div class="user_pic ' + userBgColor +
+                                ' d-flex justify-content-center align-items-center bg-primary  rounded-circle"><span class="text-white fw-bold">' +
+                                empAvatarDetails.data +
                                 '</span></div>';
 
                         } else
-                        if (element.employee_avatar.type == 'avatar') {
-                            var imageURL = "images/" + element.employee_avatar.data;
+                        if (empAvatarDetails.type == 'avatar') {
+                            var imageURL = "images/" + empAvatarDetails.data;
 
                             avatar_data =
                                 ' <div class="user_pic bg-ash rounded-circle"><img class=" w-100 h-100 rounded-circle header-profile-user" src="' +
@@ -479,7 +490,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                             avatar_data +
                             '</div>' +
                             '<div class="user_content text-start">' +
-                            '<p class="fw-bold text-primary f-13">' + element.name + '</p>' +
+                            '<p class="fw-bold text-primary text-capitalize">' + element.name + '</p>' +
                             '<p class=" text-muted f-11">' + element.designation + '</p>' +
                             '</div>' +
                             '</a>' +
@@ -520,21 +531,23 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                     $('#sidepanel_employees_list').html('');
 
                     data.forEach((element) => {
-
                         var avatar_data = '';
+                        let empAvatarDetails = JSON.parse(element.employee_avatar);
+                        if (empAvatarDetails.type == 'shortname') {
 
-                        if (element.employee_avatar.type == 'shortname') {
-
+                            var userBgColor = empAvatarDetails.color;
+                            console.log("color", empAvatarDetails.color);
                             avatar_data =
-                                ' <div class="bg-primary user_pic d-flex  justify-content-center align-items-center  rounded-circle"> <span class="text-white fw-bold">' +
-                                element.employee_avatar.data +
+                                ' <div class=" ' + userBgColor +
+                                '  user_pic d-flex  justify-content-center align-items-center  rounded-circle"> <span class="text-white fw-bold">' +
+                                empAvatarDetails.data +
                                 '</span></div>';
 
 
                         } else
-                        if (element.employee_avatar.type == 'avatar') {
+                        if (empAvatarDetails.type == 'avatar') {
 
-                            var imageURL = "images/" + element.employee_avatar.data;
+                            var imageURL = "images/" + empAvatarDetails.data;
 
                             avatar_data =
                                 '<div class="user_pic bg-ash rounded-circle"><img class=" w-100 rounded-circle  h-100 header-profile-user" src="' +
@@ -553,8 +566,10 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                             avatar_data +
                             '</div>' +
                             '<div class="user_content text-start ">' +
-                            '<p class="fw-bold text-primary f-13">' + element.name + '</p>' +
-                            '<p class=" text-muted f-11">' + element.designation + '</p>' +
+                            '<p class="fw-bold text-primary text-capitalize" >' + element.name +
+                            '</p>' +
+                            '<p class=" text-muted f-11 text-capitalize">' + element.designation +
+                            '</p>' +
                             '</div>' +
                             '</a>' +
                             '</li>';
@@ -586,17 +601,19 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
             var avatar_data = '';
 
-            @if ($current_employee_detail->employee_avatar['type'] == 'shortname')
+
+
+            @if ($current_employee_detail->employee_avatar->type == 'shortname')
 
                 avatar_data =
-                    '<div class="bg-primary user_pic d-flex justify-content-center align-items-center  rounded-circle"> <span class="text-white fw-bold">{{ $current_employee_detail->employee_avatar['data'] }}</span></div>';
-            @elseif ($current_employee_detail->employee_avatar['type'] == 'avatar')
-                var imageURL = "images/" + '{{ $current_employee_detail->employee_avatar['data'] }}';
+                    '<div class="{{ $current_employee_detail->employee_avatar->color }} user_pic d-flex justify-content-center align-items-center  rounded-circle"> <span class="text-white fw-bold">{{ $current_employee_detail->employee_avatar->data }}</span></div>';
+            @elseif ($current_employee_detail->employee_avatar->type == 'avatar')
+                var imageURL = "images/" + '{{ $current_employee_detail->employee_avatar->data }}';
 
                 avatar_data =
                     ' <div class="user_pic bg-ash rounded-circle "><img class=" rounded-circle w-100 h-100 header-profile-user" src="' +
                     imageURL +
-                    '" alt="--"></div>';
+                    '" alt="user-image"></div>';
             @endif
 
             //show the current user in sidepanel for TimeSheet tab
@@ -611,7 +628,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                 avatar_data +
                 '</div>' +
                 '<div class="user_content  text-start">' +
-                '<p class="fw-bold text-primary f-13">{{ $current_employee_detail->name }}</p>' +
+                '<p class="fw-bold text-primary text-capitalize">{{ $current_employee_detail->name }}</p>' +
                 '<p class=" text-muted f-11">{{ $current_employee_detail->designation }}</p>' +
                 '</div>' +
                 '</a>' +
@@ -635,10 +652,10 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
             if ($('#tab_timesheet').hasClass('active')) {
                 $('.left-panel').css('display', 'none');
-                $('.right-panel').addClass('col-xl-12 col-lg-12');
+                $('.right-panel').addClass('col-xl-12 col-lg-12 col-xxl-12');
                 $('#tab_timesheet').click(function() {
                     $('.left-panel').css('display', 'none');
-                    $('.right-panel').addClass('col-xl-12 col-lg-12');
+                    $('.right-panel').addClass('col-xl-12 col-lg-12 col-xxl-12');
                     updateTimeSheetForCurrentEmployee();
                 });
 
@@ -647,16 +664,16 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
             }
 
             $('#tab_teamtimesheet').click(function() {
-                $('.right-panel').removeClass('col-xl-12 col-lg-12');
-                $('.right-panel').addClass('col-xl-9 col-lg-9');
+                $('.right-panel').removeClass('col-xl-12 col-lg-12 col-xxl-12');
+                $('.right-panel').addClass('col-xl-9 col-lg-9 col-xxl-9');
                 $('.left-panel').css('display', 'block');
                 ajaxGetTeamMembersDetails("{{ Auth::user()->user_code }}");
             });
 
 
             $('#tab_orgtimesheet').click(function() {
-                $('.right-panel').removeClass('col-xl-12 col-lg-12');
-                $('.right-panel').addClass('col-xl-9 col-lg-9');
+                $('.right-panel').removeClass('col-xl-12 col-lg-12 col-xxl-12');
+                $('.right-panel').addClass('col-xl-9 col-lg-9 col-xxl-9');
                 $('.left-panel').css('display', 'block');
                 ajaxGetOrgMembersDetails("{{ Auth::user()->user_code }}");
             });
@@ -1128,9 +1145,9 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                     if (todayDate > currentDate) {
 
                                         cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
-                                                "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start'><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><span class='f-11' id='checkout_time_" +
-                                                year + "-" + (month + 1) + "-" + dateText +
-                                                "'>Absent <br><span style='color:black;font-size:10px;text-align:center;margin-left:5px' id='statement'></span></span>";
+                                            "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start'><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><span class='f-11' id='checkout_time_" +
+                                            year + "-" + (month + 1) + "-" + dateText +
+                                            "'>Absent <br><span style='color:black;font-size:10px;text-align:center;margin-left:5px' id='statement'></span></span>";
 
                                         // if (ajax_data_currentdate.absent_status == "Not Applied")
                                         // {
@@ -1139,17 +1156,16 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
                                         // }
                                         // else
-                                        if (ajax_data_currentdate.absent_status == "Pending")  
+                                        if (ajax_data_currentdate.absent_status == "Pending")
                                         {
                                             // $("#statement").attr("src","{{ URL::asset($svg_icon_pending) }}")
                                             cell.innerHTML = cell.innerHTML + "<span style=' position: relative;top: -25px;left: -40px;font-weight: 700;color: #9b9b24;'>Pending</span>";
                                             // $("#statement").html("Leave Pending ")
 
-                                        }
-                                        else
-                                        if (ajax_data_currentdate.absent_status == "Rejected")
-                                        {
-                                            cell.innerHTML = cell.innerHTML + "<span style=' position: relative;top: -25px;left: -40px;font-weight: 700;color: red;'>Rejected</span>";
+                                        } else
+                                        if (ajax_data_currentdate.absent_status == "Rejected") {
+                                            cell.innerHTML = cell.innerHTML +
+                                                "<span style='position: relative;top: -30px; left: -20px;font-weight: 700;'>Leave Rejected</span>";
                                             // $("#statement").html("Leave Rejected ")
                                             // $("#statement").attr("src","{{ URL::asset($svg_icon_rejected) }}")
 
@@ -1165,11 +1181,12 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         if (ajax_data_currentdate.absent_status == "Approved")
                                         {
                                             cell.innerHTML = cell.innerHTML + "<span style=' position: relative;top: -25px;left: -15px;font-weight: 700;color: green;'>Leave Approved<i class='fa-regular fa-circle-check'></i></span>";
-                                           
 
-                                         
+
+
                                             // $("#statement").attr("src","{{ URL::asset($svg_icon_approved) }}")
 
+                                            // $("#statement").html("Leave Approved ")
                                             // $("#statement").html("Leave Approved ")
                                         }
                                         // else
@@ -1321,7 +1338,8 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
             } else
             if (status == "Rejected") {
                 // return "<img src='{{ URL::asset($svg_icon_rejected) }}' alt='Rejected' title='rejected' text='Rejected' class='calendar_icon'>";
-            }  return "<i class='fa fa-times-circle text-danger fs-15'  title='rejected'></i>";
+            }
+            return "<i class='fa fa-times-circle text-danger fs-15'  title='rejected'></i>";
         }
 
         function daysInMonth(iMonth, iYear) {
