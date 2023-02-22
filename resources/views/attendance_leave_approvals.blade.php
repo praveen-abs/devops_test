@@ -18,10 +18,10 @@
                         <div class="col-sm-12 col-xxl-6 col-md-6 col-xl-6 col-lg-6">
                             <h6 class="">Leave Approvals</h6>
                         </div>
-                    </div> 
-                </div> 
-                @vite('resources/js/hrms/modules/approvals/Leaves/Approval_employee_leaves.js')
-                <div id="Approval_employee_leaves"></div>
-            </div> 
-         </div> 
+                    </div>
+                </div>
+                @vite('resources/js/hrms/modules/approvals/leaves/LeaveApproval.js')
+                <div id="VJS_LeaveApproval"></div>
+            </div>
+         </div>
 @endsection

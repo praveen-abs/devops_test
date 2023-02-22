@@ -226,6 +226,8 @@ class VmtApprovalsController extends Controller
                                 'vmt_employee_reimbursements.vehicle_type',
                                 'vmt_employee_reimbursements.distance_travelled',
                                 'vmt_employee_reimbursements.status',
+                                'vmt_employee_reimbursements.total_expenses',
+
                             )
                             ->get();
 

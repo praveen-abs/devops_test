@@ -24,7 +24,7 @@
         <div>
 
 
-            <DataTable :value="att_regularization" :paginator="true" :rows="10" dataKey="id"
+            <DataTable :value="att_leaves" :paginator="true" :rows="10" dataKey="id"
                     paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
                     responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
                     v-model:filters="filters" filterDisplay="menu" :loading="loading2"
@@ -37,19 +37,30 @@
                     </template>
 
                 <Column field="employee_name" header="Employee Name" >
-                    <template #body="slotProps">
-                        {{ slotProps.data.employee_name }}
-                    </template>
-                      <template #filter="{filterModel,filterCallback}">
-                        <InputText v-model="filterModel.value" @input="filterCallback()"  placeholder="Search" class="p-column-filter" :showClear="true"   />
-                       </template>
+
                 </Column>
-                <Column field="attendance_date" header="Date" :sortable="true"></Column>
-                <Column field="regularization_type" header="Leave Type"></Column>
-              <Column field="user_time" header="Start Time"></Column>
-                <Column field="regularize_time" header="End Time"></Column>
-                <Column field="reason_type" header="Leave Reason"></Column>
-                <Column field="reviewer_comments" header="Approver Name"></Column>
+                <Column field="leaverequest_date" header="Date" :sortable="true">
+                    <template #body="slotProps">
+                    <!-- {{ slotProps.data.reimbursement_date }} -->
+                        {{ dateFormat(slotProps.data.leaverequest_date, "dd-mm-yyyy, h:MM TT") }}
+                    </template>
+                </Column>
+                <Column field="leave_type" header="Leave Type"></Column>
+                <Column field="start_date" header="Start Time">
+                    <template #body="slotProps">
+                    <!-- {{ slotProps.data.reimbursement_date }} -->
+                        {{ dateFormat(slotProps.data.start_date, "dd-mm-yyyy, h:MM TT") }}
+                    </template>
+                </Column>
+                <Column field="end_date" header="End Time">
+                    <template #body="slotProps">
+                    <!-- {{ slotProps.data.reimbursement_date }} -->
+                        {{ dateFormat(slotProps.data.end_date, "dd-mm-yyyy, h:MM TT") }}
+                    </template>
+                </Column>
+                <!-- <Column field="total_leave_datetime" header="Total"></Column> -->
+                <Column field="leave_reason" header="Leave Reason"></Column>
+                <Column field="reviewer_name" header="Approver Name"></Column>
                 <Column field="reviewer_comments" header="Approver Comments"></Column>
 
                 <Column field="status" header="Status" icon="pi pi-check">
@@ -69,7 +80,8 @@
                         </Dropdown>
                     </template>
 
-                     </Column>
+                </Column>
+
                 <Column style="width: 300px;" field="" header="Action">
                     <template #body="slotProps">
                         <!-- <Button icon="pi pi-check" class="p-button-success"  @click="confirmDialog(slotProps.data,'Approved')" label="Approval" />
@@ -87,13 +99,14 @@
 <script setup>
 
     import { ref, onMounted } from 'vue';
+    import dateFormat, { masks } from "dateformat";
     import axios from 'axios'
     import {FilterMatchMode,FilterOperator} from 'primevue/api';
     import  { useConfirm } from "primevue/useconfirm";
     import  { useToast }  from "primevue/usetoast";
 
 
-    let att_regularization = ref();
+    let att_leaves = ref();
     let canShowConfirmation = ref(false);
     let canShowLoadingScreen = ref(false);
     const confirm = useConfirm();
@@ -123,14 +136,14 @@
     let currentlySelectedRowData = null;
 
     onMounted(() => {
-        let url = window.location.origin + '/fetch-regularization-approvals';
+        let url = window.location.origin + '/fetch-leaverequests/org/Approved,Rejected,Pending';
 
         console.log("AJAX URL : " + url);
 
         axios.get(url)
             .then((response) => {
                 console.log("Axios : " + response.data);
-                att_regularization.value = response.data;
+                att_leaves.value = response.data;
 
 
             });
@@ -314,7 +327,15 @@
 
   }
   .p-datatable .p-datatable-tbody > tr > td:nth-child(1) {
-    width: 20%;
+    width: 200px;
+  }
+  .p-datatable .p-datatable-tbody > tr > td:nth-child(3) {
+    width: 150px;
+
+  }
+  .p-datatable .p-datatable-tbody > tr > td:nth-child(6) {
+    width: 200px;
+
   }
   .main-content{
     width: 105%;

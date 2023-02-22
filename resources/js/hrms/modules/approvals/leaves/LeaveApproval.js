@@ -22,14 +22,14 @@ import Dialog from 'primevue/dialog';
 import Dropdown from 'primevue/dropdown';
 import ConfirmationService from 'primevue/confirmationservice';
 import ToastService from 'primevue/toastservice';
-import ProgressSpinner from 'primevue/progressspinner'; 
+import ProgressSpinner from 'primevue/progressspinner';
 import InputText from 'primevue/inputtext'
 import Row from 'primevue/row'
 import ColumnGroup from 'primevue/columngroup'
 
-import Approval_employee_leaves from './Approval_employee_leaves.vue'
+import LeaveApproval from './LeaveApproval.vue'
 
-const app = createApp(Approval_employee_leaves);
+const app = createApp(LeaveApproval);
 
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
@@ -55,5 +55,5 @@ app.component('InputText', InputText);
 app.component('Dialog', Dialog);
 app.component('ProgressSpinner', ProgressSpinner)
 
-app.mount("#Approval_employee_leaves");
+app.mount("#VJS_LeaveApproval");
 

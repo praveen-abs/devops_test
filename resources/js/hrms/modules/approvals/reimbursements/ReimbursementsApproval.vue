@@ -56,12 +56,7 @@
                 <Column class="fontSize13px" field="distance_travelled" header="Distance Covered"></Column>
                 <Column class="fontSize13px" field="total_expenses" header="Total Expenses">
                     <template #body="slotProps">
-                        <div v-if="slotProps.data.vehicle_type=='2-Wheeler'" class="totalExpenses">
-                           {{  "&#8377;"+slotProps.data.distance_travelled*two_wheller_km_price  }}
-                        </div>
-                        <div v-if="slotProps.data.vehicle_type=='4-Wheeler'" class="totalExpenses">
-                            {{ "&#8377;"+slotProps.data.distance_travelled*four_wheller_km_price }}
-                         </div>
+                        {{  "&#8377; "+slotProps.data.total_expenses  }}
                     </template>
                 </Column>
 
@@ -365,7 +360,7 @@
 
 }
 .p-datatable .p-datatable-tbody>tr>td:nth-child(1){
-    width: 240px;
+    width: 200px;
 }
 .p-confirm-dialog-icon.pi.pi-exclamation-triangle {
     color: red;

@@ -186,12 +186,18 @@ class VmtAttendanceController extends Controller
         return $response;
     }
 
+    /*
+        Fetches all leave details
+        Also used VJS and gridjs table
+
+    */
     public function fetchLeaveRequestDetails(Request $request)
     {
         //Convert  'Pending', ' Approved' , 'Rejected' from csv to array
         $statusArray = explode(",", $request->statusArray);
 
         $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
+        $map_leaveTypes = VmtLeaves::all(['id','leave_type'])->keyBy('id');
 
         if ($request->type == 'org') {
             $employeeLeaves_Org = '';
@@ -200,6 +206,7 @@ class VmtAttendanceController extends Controller
 
             foreach ($employeeLeaves_Org as $singleItem) {
 
+               //Map emp names
                if (array_key_exists($singleItem->user_id, $map_allEmployees->toArray())) {
 
                     $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
@@ -207,14 +214,19 @@ class VmtAttendanceController extends Controller
 
                }
 
+               //Map reviewer names
                if (array_key_exists($singleItem->reviewer_user_id, $map_allEmployees->toArray())) {
                     $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_user_id]["name"];
                     $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName([$singleItem->reviewer_user_id]);
                }
+
+               //Map leave types
+                $singleItem->leave_type = $map_leaveTypes[$singleItem->leave_type_id]["leave_type"];
             }
 
             return $employeeLeaves_Org;
-        } else
+        }
+        else
         if ($request->type == 'team') {
             //Get the list of employees for the given Manager
             $team_employees_ids = VmtEmployeeOfficeDetails::where('l1_manager_code', auth::user()->user_code)->get('user_id');
@@ -230,6 +242,9 @@ class VmtAttendanceController extends Controller
 
                 $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_user_id]["name"];
                 $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName([$singleItem->reviewer_user_id]);
+
+                //Map leave types
+                $singleItem->leave_type = $map_leaveTypes[$singleItem->leave_type_id]["leave_type"];
             }
 
             //dd($employeeLeaves_team);
@@ -292,6 +307,12 @@ class VmtAttendanceController extends Controller
         return $leave_details;
     }
 
+    /*
+        For VJS Leave Approvals table
+
+        Returns all leave status types
+
+    */
     private function createLeaveRange($start_date, $end_date){
         $start_date = new DateTime($start_date);
         $end_date = new DateTime($end_date);
