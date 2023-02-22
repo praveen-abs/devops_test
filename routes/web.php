@@ -211,7 +211,9 @@ Route::post('vmt-general-settings', [App\Http\Controllers\HomeController::class,
         return view('vmt_vendor');
     })->name('vmt-vendor-route');
 
-
+    Route::get('/offer_letter_module', function () {
+        return view('offer_letter.offerLetter_view');
+    });
 
     Route::get('clients', 'App\Http\Controllers\VmtClientController@showAllClients')->name('vmt-clients-route');;
     Route::get('clients-fetchAll', 'App\Http\Controllers\VmtClientController@fetchAllClients')->name('vmt-clients-fetchall');

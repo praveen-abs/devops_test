@@ -10,8 +10,7 @@
     "devDependencies": {
         "@vue/cli-plugin-router": "~5.0.0",
         "axios": "^0.25",
-        "lodash": "^4.17.19",
-        "postcss": "^8.1.14"
+        "lodash": "^4.17.19"
     },
     "dependencies": {
         "@vitejs/plugin-vue": "^4.0.0",
@@ -41,6 +40,7 @@
         "primeflex": "^3.3.0",
         "primeicons": "^6.0.1",
         "primevue": "^3.22.0",
+        "sass": "^1.58.3",
         "sortablejs": "^1.15.0",
         "sweetalert2": "^11.6.15",
         "swiper": "^7.2.0",

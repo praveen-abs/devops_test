@@ -1,0 +1,65 @@
+// brand color
+$prefix-variable:ABS-;
+
+// for font weight
+$font-weight-bold:700;
+$font-weight-semibold:600;
+$font-weight-medium:500;
+$font-weight-regular:400;
+$font-weight-lighter:lighter;
+$font-weight-bolder:bolder;
+
+// colors:declaration variable
+$navyblue-600:#002f56;
+$orange-500:#ff6000;
+
+$white:#fff;
+$black:#000;
+
+// border radius
+
+$num-50:50;
+
+
+
+:root{
+
+    --#{$prefix-variable}primary:#{$navyblue-600};
+    --white:#{$white};
+    --black:#{$black};
+    --raidus:#{$num-50};
+    --font-regular:#{$font-weight-regular};
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// $yellow-100: tint-color($yellow, 80%);
+// $yellow-200: tint-color($yellow, 60%);
+// $yellow-300: tint-color($yellow, 40%);
+// $yellow-400: tint-color($yellow, 20%);
+// $yellow-500: $yellow;
+// $yellow-600: shade-color($yellow, 20%);
+// $yellow-700: shade-color($yellow, 40%);
+// $yellow-800: shade-color($yellow, 60%);
+// $yellow-900: shade-color($yellow, 80%);
+// $yellows: (
+//   "yellow-100": $yellow-100,
+//   "yellow-200": $yellow-200,
+//   "yellow-300": $yellow-300,
+//   "yellow-400": $yellow-400,
+//   "yellow-500": $yellow-500,
+//   "yellow-600": $yellow-600,
+//   "yellow-700": $yellow-700,
+//   "yellow-800": $yellow-800,
+//   "yellow-900": $yellow-900
+// );
