@@ -11,6 +11,7 @@ use App\Models\VmtGeneralInfo;
 use App\Models\VmtStaffAttendanceDevice;
 use App\Models\VmtWorkShifts;
 use App\Models\VmtEmployeeAttendanceRegularization;
+use App\Models\vmtHolidays;
 use \Datetime;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
@@ -42,20 +43,22 @@ class VmtAttendanceReportsService{
             }
     }
 
-    public function basicAttendanceReport($year){
-       // dd($year);
+    public function basicAttendanceReport($year,$month){
+       //dd($month);
         $reportresponse=array();
 
         $user = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
                       ->where('is_ssa','0')
                       ->where('active','1')
                       ->get(['users.id','users.user_code','users.name','vmt_employee_details.doj']);
-        //dd($user);
+
+        $holidays = vmtHolidays::whereMonth('holiday_date','=',$month)->pluck('holiday_date');
         foreach($user as $singleUser){
 
             $total_present=0;
             $total_absent=0;
             $total_weekoff=0;
+            $total_holidays=0;
             $total_leave=0;
             $total_OD=0;
             $total_LC=0;
@@ -70,8 +73,7 @@ class VmtAttendanceReportsService{
 
             $regularTime  = VmtWorkShifts::where('shift_type', 'First Shift')->first();
 
-            // $requestedDate = $request->year . '-' . $request->month . '-01';
-            $requestedDate='2023-01-25';
+             $requestedDate = $year . '-' . $month . '-01';
              $currentDate = Carbon::now();
              $monthDateObj = Carbon::parse($requestedDate);
              //dd($monthDateObj);
@@ -177,15 +179,15 @@ class VmtAttendanceReportsService{
                 $attendanceResponseArray[$fulldate] = array(
                  //"user_id"=>$request->user_id,
                  "user_id"=> $singleUser->id,"DOJ"=>$singleUser->doj,"isAbsent"=>false,"isLeave"=>false,
-                 "is_weekoff"=>false,"isLC"=>false,"isEG"=>false,"date"=>$fulldate,"attendance_mode_checkin"=>null,
-                 "attendance_mode_checkout"=>null, "absent_status"=>null,"checkin_time"=>null,
-                 "checkout_time"=>null,"leave_type"=>null
+                 "is_weekoff"=>false,"isLC"=>false,"isEG"=>false,"date"=>$fulldate,"is_holiday"=>false,
+                 "attendance_mode_checkin"=>null,"attendance_mode_checkout"=>null, "absent_status"=>null,
+                 "checkin_time"=>null,"checkout_time"=>null,"leave_type"=>null
                                                              );
 
                 //echo "Date is ".$fulldate."\n";
                 ///$month_array[""]
               }
-              array_push($heading_dates, "Total WO", "Total P", "Total A","Total L","Total OD","Total LG","Total EG");
+              array_push($heading_dates, "Total WO", "Total HO","Total P", "Total A","Total L","Total OD","Total LG","Total EG");
 
 
 
@@ -293,6 +295,18 @@ class VmtAttendanceReportsService{
                  $attendanceResponseArray[$key]["checkout_time"]==null){
                      $attendanceResponseArray[$key]['is_weekoff']=true;
                  }
+
+                //Logic For Check Holiday Or Not
+                foreach( $holidays as $holiday){
+                    if(Carbon::parse($holiday)->eq(Carbon::parse($attendanceResponseArray[$key]['date']))
+                    &&$attendanceResponseArray[$key]['checkin_time']==null&&
+                    $attendanceResponseArray[$key]["checkout_time"]==null&&
+                    !$attendanceResponseArray[$key]['is_weekoff']){
+                        $attendanceResponseArray[$key]['is_holiday']=true;
+                    }
+
+                }
+
                  //Logic For Check Absent or Not
                  //dd($attendanceResponseArray[$key]['user_id']);
                  if($attendanceResponseArray[$key]['checkin_time']==null&&
@@ -389,7 +403,7 @@ class VmtAttendanceReportsService{
              }
 
 
-        // dd($attendanceResponseArray);
+       // dd($attendanceResponseArray);
 
              foreach ($attendanceResponseArray as $key => $value) {
                  $current_date=Carbon::parse($attendanceResponseArray[$key]['date']);
@@ -400,7 +414,10 @@ class VmtAttendanceReportsService{
                  } else if($attendanceResponseArray[$key]['is_weekoff']){
                      array_push($arrayReport,'WO');
                      $total_weekoff++;
-                  }else if($attendanceResponseArray[$key]['isAbsent']&&!$attendanceResponseArray[$key]['isLeave']){
+                  }else if($attendanceResponseArray[$key]['is_holiday']){
+                    array_push($arrayReport,'HO');
+                    $total_holidays++;
+                  }else if($attendanceResponseArray[$key]['isAbsent']&&!$attendanceResponseArray[$key]['isLeave']&&!$attendanceResponseArray[$key]['is_holiday']){
                      array_push($arrayReport,'A');
                      $total_absent++;
                  }else if( $attendanceResponseArray[$key]['isLeave']){
@@ -436,7 +453,7 @@ class VmtAttendanceReportsService{
               //dd(($attendanceResponseArray));
 
            // dd();
-            array_push($arrayReport,$total_weekoff,$total_present,$total_absent,$total_leave,$total_OD,$total_LC,$total_EG);
+            array_push($arrayReport,$total_weekoff,$total_holidays,$total_present,$total_absent,$total_leave,$total_OD,$total_LC,$total_EG);
             array_push($reportresponse,$arrayReport);
 
            // dd( $arrayReport);
