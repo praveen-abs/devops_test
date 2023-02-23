@@ -177,13 +177,13 @@ $bank_names = \DB::table('vmt_banks')->get();
                 <p class="navy-blue">EPF NUMBER</p>
             </td>
             <td colspan="3">
-                <p>{{ $employee_details->epf_number }}</p>
+                <p>{{ $employee_statutory_details->epf_number }}</p>
             </td>
             <td colspan="3" class="bg-ash text-strong">
                 <p class="navy-blue">ESIC NUMBER</p>
             </td>
             <td colspan="3">
-                <p>{{ $employee_details->esic_number }}</p>
+                <p>{{ $employee_statutory_details->esic_number }}</p>
             </td>
 
         </tr>
@@ -192,7 +192,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                 <p class="navy-blue">UAN</p>
             </td>
             <td colspan="3">
-                <p>{{ $employee_details->uan }}</p>
+                <p>{{  $employee_statutory_details->uan_number }}</p>
             </td>
             <td colspan="3" class="bg-ash text-strong">
                 <p class="navy-blue">PAN</p>

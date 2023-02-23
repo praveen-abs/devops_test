@@ -2318,10 +2318,9 @@
                 }
             });
 
-            @if (!empty($reportingManager))
-                generateProfileShortName_VendorScript("manager_shortname",
-                    "{{ $reportingManager->name }}");
-            @endif
+            // @if (!empty($reportingManager))
+            //     generateProfileShortName_VendorScript("manager_shortname", "{{ $reportingManager->id }}");
+            // @endif
 
             console.log("ready!");
         });
