@@ -222,7 +222,7 @@
 
             canShowLoadingScreen.value = false;
 
-            toast.add({severity:'info', summary: 'Info', detail:'Success', life: 3000});
+            toast.add({severity:'success', summary: 'Info', detail:'Success', life: 3000});
             ajax_GetAttRegularizationData();
 
             resetVars();
