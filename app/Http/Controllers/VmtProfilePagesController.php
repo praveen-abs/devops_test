@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Session as Ses;
+use App\Models\Department;
 use App\Models\User;
 use App\Models\Bank;
-use App\Models\Department;
 use App\Models\Experience;
 use App\Models\VmtBloodGroup;
 use App\Models\VmtEmployee;
@@ -19,12 +19,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 
 class VmtProfilePagesController extends Controller
-class VmtProfilePagesController extends Controller
 {
 
     // Show Profile info
-    public function showProfilePage(Request $request)
-    {
     public function showProfilePage(Request $request)
     {
         //dd($request->all());
@@ -32,9 +29,7 @@ class VmtProfilePagesController extends Controller
 
         //If empty, then show current user profile page
         if (empty($request->user_id)) {
-        if (empty($request->user_id)) {
             $user = auth()->user();
-        } else {
         } else {
             $user = User::find(Crypt::decryptString($request->user_id));
             //dd("Enc User details from request : ".$user);
@@ -46,27 +41,14 @@ class VmtProfilePagesController extends Controller
         $user_full_details = User::leftjoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
             ->leftjoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->where('users.id', $user->id)->first();
-        $user_full_details = User::leftjoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
-            ->leftjoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-            ->where('users.id', $user->id)->first();
 
 
-        $familydetails = VmtEmployeeFamilyDetails::where('user_id', $user->id)->get();
-        $statutory_info = VmtEmployeeStatutoryDetails::where('user_id', $user->id)->get();
         $familydetails = VmtEmployeeFamilyDetails::where('user_id', $user->id)->get();
         $statutory_info = VmtEmployeeStatutoryDetails::where('user_id', $user->id)->get();
 
 
         $exp = Experience::where('user_id', $user->id)->get();
-        $exp = Experience::where('user_id', $user->id)->get();
 
-        $maritalStatus = array(
-            'unmarried',
-            'married',
-            'divorced',
-            'widowed',
-            'seperated'
-        );
         $maritalStatus = array(
             'unmarried',
             'married',
@@ -77,19 +59,14 @@ class VmtProfilePagesController extends Controller
 
         $genderArray = array("Male", "Female", "Other");
         $bank = Bank::all();
-
-        //dd($user_full_details->department_id);
         $department = Department::find($user_full_details->department_id)->name;
 
         //dd($maritalStatus);
         if (!empty($user_full_details->l1_manager_code))
             $reportingManager = User::where('user_code', $user_full_details->l1_manager_code)->first();
-        if (!empty($user_full_details->l1_manager_code))
-            $reportingManager = User::where('user_code', $user_full_details->l1_manager_code)->first();
         else
             $reportingManager = null;
 
-        $allEmployees = User::where('user_code', '<>', $user->id)->where('active', 1)->get(['user_code', 'name']);
         $allEmployees = User::where('user_code', '<>', $user->id)->where('active', 1)->get(['user_code', 'name']);
         $profileCompletenessValue  = calculateProfileCompleteness($user->id);
 
@@ -97,10 +74,7 @@ class VmtProfilePagesController extends Controller
         $data =  DB::table('vmt_employee_payslip')
             ->where('vmt_employee_payslip.user_id', $user->id)->orderBy('PAYROLL_MONTH', 'DESC')
             ->get();
-            ->where('vmt_employee_payslip.user_id', $user->id)->orderBy('PAYROLL_MONTH', 'DESC')
-            ->get();
 
-        $employees = VmtEmployeePaySlip::select('EMP_NO', 'EMP_NAME')->get();
         $employees = VmtEmployeePaySlip::select('EMP_NO', 'EMP_NAME')->get();
         $array_bloodgroup = VmtBloodGroup::all(['name', 'id']);
 
@@ -117,26 +91,12 @@ class VmtProfilePagesController extends Controller
                 'reliving_letter_file',
                 'docs_reviewed'
             ])->toArray();
-        $documents_filenames = VmtEmployee::where('userid', $user->id)
-            ->get([
-                'aadhar_card_file',
-                'aadhar_card_backend_file',
-                'pan_card_file',
-                'passport_file',
-                'voters_id_file',
-                'dl_file',
-                'education_certificate_file',
-                'reliving_letter_file',
-                'docs_reviewed'
-            ])->toArray();
 
         //dd($documents_filenames);
-        return view('profilePage_new', compact('user', 'documents_filenames', 'array_bloodgroup', 'enc_user_id', 'allEmployees', 'maritalStatus', 'genderArray', 'user_full_details', 'familydetails', 'exp', 'reportingManager', 'profileCompletenessValue', 'bank', 'data', 'employees', 'statutory_info'));
+        return view('profilePage_new', compact('user', 'department','documents_filenames', 'array_bloodgroup', 'enc_user_id', 'allEmployees', 'maritalStatus', 'genderArray', 'user_full_details', 'familydetails', 'exp', 'reportingManager', 'profileCompletenessValue', 'bank', 'data', 'employees', 'statutory_info'));
     }
 
 
-    public function updateGeneralInfo(Request $request)
-    {
     public function updateGeneralInfo(Request $request)
     {
         //dd($request->all());
@@ -148,25 +108,17 @@ class VmtProfilePagesController extends Controller
         $details->blood_group_id = $request->input('blood_group');
 
         $details->save();
-        $details->save();
 
         return redirect()->back();
     }
-        return redirect()->back();
-    }
 
-    public function updateContactInfo(Request $request)
-    {
     public function updateContactInfo(Request $request)
     {
 
         $user = User::find($request->id);
         $user->email = $request->input('present_email');
-        $user->email = $request->input('present_email');
         $user->save();
 
-        $employee_office_details = VmtEmployeeOfficeDetails::where('user_id', $request->id)->first();
-        $employee_office_details->officical_mail = $request->input('officical_mail');
         $employee_office_details = VmtEmployeeOfficeDetails::where('user_id', $request->id)->first();
         $employee_office_details->officical_mail = $request->input('officical_mail');
         $employee_office_details->save();
@@ -174,7 +126,6 @@ class VmtProfilePagesController extends Controller
         $details = VmtEmployee::where('userid', $request->id)->first();
 
         //dd($details);
-        if ($details->exists()) {
         if ($details->exists()) {
             $details->mobile_number = $request->input('mobile_number');
             $details->save();
@@ -185,8 +136,6 @@ class VmtProfilePagesController extends Controller
 
 
 
-    public function updateAddressInfo(Request $request)
-    {
     public function updateAddressInfo(Request $request)
     {
 
@@ -210,7 +159,6 @@ class VmtProfilePagesController extends Controller
         $familyDetails = VmtEmployeeFamilyDetails::where('user_id', $request->id)->delete();
 
         $count = sizeof($request->input('name'));
-        for ($i = 0; $i < $count; $i++) {
         for ($i = 0; $i < $count; $i++) {
             $emp_familydetails = new VmtEmployeeFamilyDetails;
 
@@ -236,7 +184,6 @@ class VmtProfilePagesController extends Controller
         $periodFromArr = $request->input('period_from');
         $periodToArr = $request->input('period_to');
         foreach ($request->input('company_name') as $k => $val) {
-        foreach ($request->input('company_name') as $k => $val) {
             if ($idArr[$k] && $idArr[$k] > 0) {
                 $exp = Experience::find($idArr[$k]);
             } else {
@@ -259,11 +206,8 @@ class VmtProfilePagesController extends Controller
 
     public function updateBankInfo(Request $request)
     {
-    public function updateBankInfo(Request $request)
-    {
         $reDetails = VmtEmployee::where('userid', $request->id)->first();
         $details = VmtEmployee::find($reDetails->id);
-        $details->bank_id = Bank::where('bank_name', $request->input('bank_name'))->value('id');
         $details->bank_id = Bank::where('bank_name', $request->input('bank_name'))->value('id');
         $details->bank_ifsc_code = $request->input('bank_ifsc');
         $details->bank_account_number = $request->input('account_no');
@@ -273,9 +217,6 @@ class VmtProfilePagesController extends Controller
     }
 
 
-    public function showPaySlip_HTMLView(Request $request, VmtEmployeePayslipService $employeePaySlipService)
-    {
-        return $employeePaySlipService->showPaySlip_HTMLView(Crypt::decryptString($request->enc_user_id), $request->selectedPaySlipMonth);
     public function showPaySlip_HTMLView(Request $request, VmtEmployeePayslipService $employeePaySlipService)
     {
         return $employeePaySlipService->showPaySlip_HTMLView(Crypt::decryptString($request->enc_user_id), $request->selectedPaySlipMonth);
@@ -291,17 +232,11 @@ class VmtProfilePagesController extends Controller
     public function updateStatutoryInfo(Request $request)
     {
         // dd($request->all());
-    public function updateStatutoryInfo(Request $request)
-    {
-        // dd($request->all());
 
-        $statutory = VmtEmployeeStatutoryDetails::where('user_id', $request->id);
         $statutory = VmtEmployeeStatutoryDetails::where('user_id', $request->id);
 
         // dd($statutory->exists());
-        // dd($statutory->exists());
 
-        if ($statutory->exists()) {
         if ($statutory->exists()) {
             $statutory = $statutory->first();
             $statutory->pf_applicable = $request->input('pf_applicable');
@@ -309,20 +244,9 @@ class VmtProfilePagesController extends Controller
             $statutory->uan_number = $request->input('uan_number');
             $statutory->esic_applicable = $request->input('esic_applicable');
             $statutory->esic_number = $request->input('esic_number');
-            $statutory->pf_applicable = $request->input('pf_applicable');
-            $statutory->epf_number = $request->input('epf_number');
-            $statutory->uan_number = $request->input('uan_number');
-            $statutory->esic_applicable = $request->input('esic_applicable');
-            $statutory->esic_number = $request->input('esic_number');
             $statutory->save();
         } else {
-        } else {
             $statutory = new VmtEmployeeStatutoryDetails;
-            $statutory->pf_applicable = $request->input('pf_applicable');
-            $statutory->epf_number = $request->input('epf_number');
-            $statutory->uan_number = $request->input('uan_number');
-            $statutory->esic_applicable = $request->input('esic_applicable');
-            $statutory->esic_number = $request->input('esic_number');
             $statutory->pf_applicable = $request->input('pf_applicable');
             $statutory->epf_number = $request->input('epf_number');
             $statutory->uan_number = $request->input('uan_number');
@@ -342,9 +266,6 @@ class VmtProfilePagesController extends Controller
     public function storePersonalInfo(Request $request)
     {
         // dd($request->all());
-    public function storePersonalInfo(Request $request)
-    {
-        // dd($request->all());
         $file = $request->file('profilePic');
         $user = User::find($request->id);
         $user->name = $request->input('name');
@@ -360,7 +281,6 @@ class VmtProfilePagesController extends Controller
         // $details->save();
 
 
-        return redirect()->back();
         return redirect()->back();
     }
 }
