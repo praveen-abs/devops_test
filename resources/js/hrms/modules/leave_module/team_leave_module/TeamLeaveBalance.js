@@ -21,6 +21,8 @@ import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup';     //optional for column grouping
 import Row from 'primevue/row';
 import Paginator from 'primevue/paginator'
+import Dialog from 'primevue/dialog';
+import InputText from 'primevue/inputtext'
 
 import TeamLeaveBalance from './TeamLeaveBalance.vue'
 
@@ -43,6 +45,8 @@ app.component('Row', Row);
 app.component('ColumnGroup', ColumnGroup);
 app.component('Paginator', Paginator);
 app.component('Button', Button)
+app.component('Dialog', Dialog)
+app.component('InputText', InputText)
 
 
 app.mount("#vjs_TeamLeaveTable_RemainingLeave");

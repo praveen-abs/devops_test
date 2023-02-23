@@ -45,6 +45,12 @@
                     </template>
 
                 <Column field="employee_name" header="Employee Name" >
+                  <template #body="slotProps">
+                    {{ slotProps.data.employee_name }}
+                </template>
+                  <template #filter="{filterModel,filterCallback}">
+                    <InputText v-model="filterModel.value" @input="filterCallback()"  placeholder="Search" class="p-column-filter" :showClear="true" />
+                   </template>
 
                 </Column>
                 <Column field="leaverequest_date" header="Date" :sortable="true">
@@ -377,7 +383,7 @@
     visibility: hidden;
   }
   .p-datatable .p-datatable-thead > tr > th .p-column-filter {
-    width: 53%;
+    width: 44%;
   }
   .p-datatable .p-datatable-thead > tr > th .p-column-filter-menu-button {
     color: white;

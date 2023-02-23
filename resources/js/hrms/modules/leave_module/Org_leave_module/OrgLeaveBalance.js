@@ -20,6 +20,8 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup';     //optional for column grouping
 import Row from 'primevue/row';
+import Dialog from 'primevue/dialog';
+import InputText from 'primevue/inputtext'
 
 import OrgLeaveRemainingTable from './OrgLeaveBalanceTable.vue';
 
@@ -41,6 +43,8 @@ app.component('Column', Column);
 app.component('Button', Button);
 app.component('ColumnGroup', ColumnGroup);
 app.component('Row', Row);
+app.component('Dialog', Dialog)
+app.component('InputText', InputText)
 
 app.mount("#vjs_orgLeaveTable_RemainingLeave");
 
