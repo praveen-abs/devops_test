@@ -20,6 +20,7 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup';     //optional for column grouping
 import Row from 'primevue/row';
+import InputText from 'primevue/inputtext'
 
 import OfferLetterModule from './OfferLetterModule.vue';
 
@@ -38,6 +39,7 @@ app.directive('focustrap', FocusTrap);
 
 app.component('DataTable', DataTable);
 app.component('Column', Column);
+app.component('InputText', InputText)
 
 app.mount("#vjs_offerletter_module");
 

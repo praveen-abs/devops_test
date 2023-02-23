@@ -1,6 +1,16 @@
 <template>
     <div>
-        <DataTable :value="products" responsiveLayout="scroll">
+        <DataTable :value="products" responsiveLayout="scroll" v-model:filters="filters" :globalFilterFields="['name','country.name','representative.name','status']">
+            <template #header>
+                <div class="flex justify-content-start align-items-center">
+
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search" />
+                        <InputText v-model="filters['global'].value" class="w-100" placeholder="Keyword Search" />
+
+                    </span>
+                </div>
+            </template>
             <Column field="code" header="Candidate ID"></Column>
             <Column field="name" header="Candidate Name"></Column>
             <Column field="category" header="Role"></Column>
@@ -12,11 +22,18 @@
 <script>
 
 import { ref, onMounted } from 'vue';
-import axios from 'axios'
+import axios from 'axios';
+import { FilterMatchMode, FilterOperator } from "primevue/api";
 
 export default {
+
     setup() {
         const products = ref();
+
+
+        const filters = ref({
+            global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+        });
 
         onMounted(() => {
             products.value = getProductDetails().data;
@@ -38,7 +55,7 @@ export default {
             };
         }
 
-        return { products }
+        return { products,filters }
     }
 }
 
