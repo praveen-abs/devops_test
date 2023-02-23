@@ -24,7 +24,7 @@
                             </li>
                             @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR', 'Manager']))
                                 <li class="nav-item text-muted " role="presentation">
-                                <a class="nav-link pb-2 mx-4" data-bs-toggle="tab" href="#team_leaveBalance"
+                                    <a class="nav-link pb-2 mx-4" data-bs-toggle="tab" href="#team_leaveBalance"
                                         aria-selected="false" tabindex="-1" role="tab">
                                         Team Leave Balance</a>
                                 </li>
@@ -54,7 +54,7 @@
                     <div class="col-3  text-end">
                         <div>
 
-                          <a href="{{ route('attendance-leave-policydocument') }}" id="" class=" btn btn-orange"
+                            <a href="{{ route('attendance-leave-policydocument') }}" id="" class=" btn btn-orange"
                                 role="button" aria-expanded="false"> Leave
                                 Policy Explanation
                             </a>
@@ -506,7 +506,7 @@
                                     </div>
 
                                     <div class="row mb-3">
-                                    <div class="col-4 text-md-start mb-md-0 mb-3">
+                                        <div class="col-4 text-md-start mb-md-0 mb-3">
                                             <label class="fw-bold">Start Date</label>
                                             <input type="datetime-local" id="start_date"
                                                 class="form-control outline-none border-0 shadow-lite leave_date">
@@ -517,7 +517,6 @@
                                                 <div class="d-flex">
                                                     <input type="radio" class="me-1" name="leave"
                                                         id="for_half_day_leave" value="0.5">
-                                                        
                                                     <label class="shadow-lite px-2 py-1"
                                                         id="half_leave_days">Half-Day</label>
                                                 </div>
@@ -537,7 +536,7 @@
                                             <p class="fw-bold  text-muted mb-2">Total Hours</p>
                                             <span class="shadow-lite px-2 py-1" id="total_permission_hours">-</span>
                                         </div>
-                                        <div class="col-md-4 text-md-end ">
+                                        <div class="col-4 text-md-end ">
                                             <label class="fw-bold">End Date</label>
                                             <input type="datetime-local" id="end_date"
                                                 class="form-control outline-none border-0 shadow-lite leave_date">
@@ -689,7 +688,8 @@
                             <div class="d-flex border-bottom mb-2 pb-3 ">
                                 <div class="date-wrapper text-center rounded shadow-lite  me-2 border-bottom mb-2"
                                     style="width:75px">
-                                    <p class="bg-primary rounded  text-center text-white py-1" id="leave_month"> </p>
+                                    <p class="bg-primary rounded  text-center text-white py-1" id="leave_start_month">
+                                    </p>
                                     <p id="leave_start_date"> </p>
                                     <p id="leave_start_day"> </p>
                                     {{-- <p id="reviewer_comments"></p> --}}
@@ -704,8 +704,8 @@
                                 </div>
 
                                 <div class="content-det">
-                                <p><span id="totalLeave_days"></span> Day(s) of <span id="leave_type"></span></p>
-                            </div>
+                                    <p><span id="totalLeave_days"></span> Day(s) of <span id="leave_type"></span></p>
+                                </div>
                             </div>
 
                             <div class="content-det">
@@ -739,7 +739,7 @@
                                         </div>
                                         <div class="profile-details">
                                             <h5 p id="notifyUser_name"> </h5>
-                                            <div class="description" id="notifyUser_designation">Designation</div>
+                                            <div class="description" id="notifyUser_designation"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -763,6 +763,7 @@
                                         <div class="profile-details">
                                             <h5 p id="approver_name"></h5>
                                             <div class="description" id="approver_desgination"></div>
+                                            <div class="description">on <span id="reviewed_date"></span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -775,8 +776,8 @@
                                 <h6 class="">Reason</h6>
                             </div>
                             <div class="col-12 mb-md-0 mb-3">
-                                <textarea placeholder="Add Comment" class="form-control mb-2 outline-none border-0 shadow-lite" name=""
-                                    id="" cols="30" rows="3"></textarea>
+                                <textarea readonly class="form-control mb-2 outline-none border-0 shadow-lite" name=""
+                                    id="textarea_leavecomments" cols="30" rows="3"></textarea>
 
                             </div>
                             <div class="col-12 mb-md-0 mb-3 text-end">
@@ -822,6 +823,9 @@
         //leave dates
         var leave_start_date = '';
         var leave_end_date = '';
+
+
+
 
         $('.close-modal').on('click', function() {
             $('#error_notify').fadeOut(100);
@@ -1052,27 +1056,40 @@
 
 
             $('#btn_request_leave').on('click', function(e) {
-
-
-
+                //Loading screen
+                Swal.fire({
+                    title: 'Loading...',
+                    //html: 'I will close in <b></b> milliseconds.',
+                    html: '<b>Applying Leave.</b>',
+                    timer: 2000,
+                    timerProgressBar: true,
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading()
+                    },
+                    willClose: () => {
+                        clearInterval(timerInterval)
+                    }
+                }).then((result) => {
+                    /* Read more about handling dismissals below */
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        console.log('I was closed by the timer')
+                    }
+                })
 
                 var start_date = $('#start_date').val();
                 var end_date = $('#end_date').val();
 
                 let total_leave = 0; //Both leave and permission types are stored here
                 let selectedLeaveTypeID = $('#leave_type_id').find(":selected").val();
-                
 
                 let half_day = null;
                 let half_day_type = null;
 
                 let radioBtn_halfDay = $("#for_half_day_leave").is(":checked");
 
-
                 // full_day = $("#total_leave_days").text();
                 // full = $("#for_full_day_leave").is(":checked");
-
-                console.log(radioBtn_halfDay);
 
                 console.log("is half-day leave applied ? : " + radioBtn_halfDay);
 
@@ -1120,6 +1137,13 @@
                 console.log("Selected leave type : " + $('#leave_type_id').find(":selected").attr(
                     'data-leavetype'));
 
+                //    Leave Duration
+
+
+
+
+
+
 
                 //for permission types
                 if (permissionTypeIds.includes(parseInt(selectedLeaveTypeID))) {
@@ -1151,8 +1175,10 @@
 
 
                 } else {
+                    //for leave types
 
                     var totalLeaveDays = parseInt($('#total_leave_days').html());
+
 
                     //For leave types
                     if (moment(start_date) > moment(end_date)) {
@@ -1182,9 +1208,19 @@
                         );
                     }
 
+                    //If half-daf radio button clicked, Get the half day value...
+                    if (radioBtn_halfDay == true) {
+                        half_day = $("#for_half_day_leave").val();
+                        half_day_type = $('#half_day_type').val();
+                    } else {
+                        half_day = null;
+                        half_day_type = null;
+                    }
+
                 }
 
                 if (basic_details_errors.length > 0) {
+
 
                     $('#errors_header').html("Please fix the following error");
                     $('#errors_body').html('');
@@ -1269,6 +1305,7 @@
                     }
                 });
             });
+
 
             function processLeaveApproveReject(leave_id, user_id, t_statusText, t_leave_rejection_text) {
                 $.ajax({
@@ -1490,7 +1527,7 @@
                                 // '<button  value="View" class="status btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal"></button>' ;
 
 
-                               //return gridjs.html(htmlcontent);
+                                //return gridjs.html(htmlcontent);
 
                                 //Temporaryily hiding the VIEW button
                                 return gridjs.html('');
@@ -1543,25 +1580,25 @@
                         {
                             id: 'employee_name',
                             name: 'Employee Name',
+
                             formatter: function formatter(leaveHistoryObj) {
                                 var emp_code = leaveHistoryObj.emp_code;
                                 var emp_name = leaveHistoryObj.emp_name;
                                 var emp_avatar = JSON.parse(leaveHistoryObj.employee_avatar);
                                 var output = "";
-
                                 if (emp_avatar.type == "shortname") {
-
                                     output =
-                                    '<div class="d-flex align-items-center rounded-circle  page-header-user-dropdown ">' +
+                                        '<div class="d-flex align-items-center rounded-circle  page-header-user-dropdown ">' +
                                         '<span class=" user-profile  ml-2 ' + emp_avatar
                                         .color + ' " id="">' +
                                         '<i class="topbar_username" class="align-middle ">' +
-                                        emp_avatar.data + '</i>' + +
+                                        emp_avatar.data + '</i>' +
                                         '</span>' +
                                         '<span>&nbsp;&nbsp;' + leaveHistoryObj.employee_name +
                                         '</span>' +
                                         '</div>';
-                                    } else {
+
+                                } else {
                                     var imagePath = '{{ URL::asset('images/') }}' + '/' +
                                         emp_avatar
                                         .avatar;
@@ -1572,6 +1609,7 @@
                                         '<span>&nbsp;&nbsp;' + leaveHistoryObj.employee_name +
                                         '</span>' +
                                         '</div>';
+
                                 }
 
                                 return gridjs.html(output);
@@ -1593,7 +1631,7 @@
                             name: 'Start Date',
                             formatter: function formatter(cell) {
                                 //return gridjs.html(cell);
-                                return gridjs.html(moment(cell).format('DD-MM-YYYY h:mm a'));
+                                return gridjs.html(moment(cell).format('DD-MMM-YYYY h:mm a'));
                             }
                         },
 
@@ -1709,13 +1747,10 @@
                                 var emp_code = leaveHistoryObj.emp_code;
                                 var emp_name = leaveHistoryObj.emp_name;
                                 var emp_avatar = JSON.parse(leaveHistoryObj.employee_avatar);
-
                                 var output = "";
-
                                 if (emp_avatar.type == "shortname") {
-
                                     output =
-                                      '<div class="d-flex align-items-center rounded-circle  page-header-user-dropdown ">' +
+                                        '<div class="d-flex align-items-center rounded-circle  page-header-user-dropdown ">' +
                                         '<span class=" user-profile  ml-2 ' + emp_avatar
                                         .color + ' " id="">' +
                                         '<i class="topbar_username" class="align-middle ">' +
@@ -1724,17 +1759,19 @@
                                         '<span>&nbsp;&nbsp;' + leaveHistoryObj.employee_name +
                                         '</span>' +
                                         '</div>';
-                                    } else {
+
+                                } else {
                                     var imagePath = '{{ URL::asset('images/') }}' + '/' +
                                         emp_avatar
                                         .avatar;
 
                                     output = '<div class="d-flex align-items-center">' +
                                         '<img class="rounded-circle header-profile-user" src="' +
-                                        imageURL + '" alt="--">' +
+                                        imagePath + '" alt="user image">' +
                                         '<span>&nbsp;&nbsp;' + leaveHistoryObj.employee_name +
                                         '</span>' +
                                         '</div>';
+
                                 }
 
                                 return gridjs.html(output);
@@ -1952,10 +1989,7 @@
                     $('#notifyUser_designation').text(data.user_designation);
                     $('#approver_name').text(data.approver_name);
                     $('#approver_desgination').text(data.notification_designation);
-                    $('#reviewed_date').text(moment(data.reviewed_date).format('MMM DD, YYYY, hh:MM a'));
-                    $('#textarea_leavecomments').text(data.leave_reason);
-
-
+                    $('#totalLeave_days').text(data.total_leave_datetime[0]);
 
                     console.log("Leave details for ID : " + leave_id + " :: " + data);
 
@@ -1967,17 +2001,28 @@
                     //Checking if the current user is employee who applied this leave
                     if (current_emp_id == data.user_id) {
                         //Employee can withdraw leave
+                        let current_emp_id = "{{ auth()->user()->id }}";
+                    console.log("Current Emp id : " + current_emp_id);
+                    console.log("Emp Emp id : " + data.user_id);
+                    console.log("Mgr  Emp id : " + data.reviewer_user_id);
+
+                    //Checking if the current user is employee who applied this leave
+                    if (current_emp_id == data.user_id) {
+                        //Employee can withdraw leave
                         if (data.status == "Pending") {
-                            $('#btn_withdraw').show();
-                        } else {
-                            $('#btn_withdraw').hide();
-                        }
+                                $('#btn_withdraw').show();
+                            } else {
+                                $('#btn_withdraw').hide();
+                            }
+                    } else {
+                        $('#btn_withdraw').hide();
+                    }
                     } else {
                         $('#btn_withdraw').hide();
                     }
 
-                     //Checking if the current user is Manager of this leave applied emp
-                     if (current_emp_id == data.reviewer_user_id) {
+                    //Checking if the current user is Manager of this leave applied emp
+                    if (current_emp_id == data.reviewer_user_id) {
                         //Manager can revoke his leave approval
                         if (data.status == "Rejected" || data.status == "Approved") {
                             $('#btn_revoke').show();
@@ -1985,12 +2030,12 @@
                             $('#btn_revoke').hide();
                         }
                     } else {
+                        //console.log("Current user is not Manager : "+current_emp_id);
                         $('#btn_revoke').hide();
+
                     }
 
                     $('#leaveDetails_modal').modal('show');
-
-                
 
                 },
                 error: function(data) {
@@ -2001,47 +2046,5 @@
 
 
         }
-
-        // function getLeaveHistory(leave_id) {
-
-        //     $.ajax({
-        //         url: "{{ route('attendance-leave-getdetails') }}",
-        //         type: "GET",
-        //         dataType: "json",
-        //         data: {
-        //             'leave_id': leave_id,
-        //             "_token": "{{ csrf_token() }}",
-        //         },
-        //         success: function(data) {
-
-        //             {
-        //                 console.log(data);
-        //             }
-
-
-
-
-        //             $('#employee_name').text(data.user_name);
-        //             $('#leaveRequested_date').text(moment(data.leaverequest_date).format(
-        //                 'MMM DD,YYYY, HH:mm a'));
-        //             $('#leave_month').text(moment(data.start_date).format('MMM'));
-        //             $('#leave_date').text(moment(data.start_date).format('DD'));
-        //             $('#leave_day').text(moment(data.start_date).format('ddd'));
-        //             $('#leave_end_month').text(moment(data.end_date).format('MMM'));
-        //             $('#leave_end_date').text(moment(data.end_date).format('DD'));
-        //             $('#leave_end_day').text(moment(data.end_date).format('ddd'));
-        //             $('#leave_type').text(data.leave_type);
-        //             $('#totalLeave_days').text(data.user_name);
-        //             $('#reviewercomments').text(data.reviewer_comments);
-        //             $("#leavereason").text(data.leave_reason);
-        //             $('#notifyUser_name').text(data.notification_userName);
-        //             $('#notifyUser_designation').text(data.user_designation);
-        //             $('#approver_name').text(data.approver_name);
-        //             $('#approver_desgination').text(data.notification_designation);
-        //             $('#totalLeave_days').text(data.total_leave_datetime[0]);
-        //             $('#leaveDetails_modal').modal('show');
-        //         }
-        //     })
-        // };
     </script>
 @endsection

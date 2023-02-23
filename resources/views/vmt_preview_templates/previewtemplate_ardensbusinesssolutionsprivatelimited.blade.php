@@ -66,7 +66,7 @@
                                                                 <tr>
                                                                     <td colspan="12" align="right">
                                                                         <p class="fw-600 txt-right">
-                                                                            Date:
+                                                                            Date:dd-mm-yyyy
                                                                         </p>
 
                                                                     </td>
@@ -152,7 +152,7 @@
                                                                 <tr>
                                                                     <td colspan="12" align="left">
 
-                                                                        <ol style="list-style: none">
+                                                                        <ol style="list-style: none" class="">
 
                                                                             <li>
                                                                                 <p class="pt-10">
@@ -271,7 +271,7 @@
                                                     <td>
                                                         <div class="logo"
                                                             style="width:100%;height:100px;">
-                                                            <img src="{{ URL::asset('assets/images/footer.jpg') }}"
+                                                            <img src="{{ URL::asset('assets/images/abs_footer-label.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100px;;width:100%;">
                                                         </div>
@@ -307,7 +307,7 @@
                                                                 <tr>
                                                                     <td colspan="12" align="right">
                                                                         <p class="fw-600 txt-right">
-                                                                            Date:
+                                                                            Date:dd-mm-yyyy
                                                                         </p>
 
                                                                     </td>
@@ -323,7 +323,7 @@
                                                                 <tr>
                                                                     <td colspan="12" style=" " align="left">
                                                                         <p class="fw-600 txt-left pt-30" style="">
-                                                                            Dear &emsp; &emsp; &emsp;,
+                                                                            Dear XYZ,
                                                                         </p>
                                                                         <p class="pt-pb-5">We are glad to appoint you as
                                                                             “<b>Executive - HR</b>” in our company, Ardens
@@ -350,7 +350,7 @@
                                                                             <b>Commencement:</b>
                                                                             Your employment with the company Ardens Business
                                                                             Solutions Private Limited will be with effect
-                                                                            from <b>03-OCT-2022</b>. You shall initially be
+                                                                            from <b>dd-mm-yyyy</b>. You shall initially be
                                                                             placed in Chennai. You may however be required
                                                                             to travel and may be positioned or deputed
                                                                             outside within India or abroad.
@@ -443,7 +443,7 @@
                                                     <td>
                                                         <div class="logo"
                                                             style="width:100%;height:160px;padding-top:63px;">
-                                                            <img src="{{ URL::asset('assets/images/footer.jpg') }}"
+                                                            <img src="{{ URL::asset('assets/images/abs_footer-label.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100px;width:100%;">
                                                         </div>
@@ -591,7 +591,7 @@
                                                             <tr>
                                                                 <td colspan="12" style=" " align="left">
                                                                     <p class="txt-left a">
-                                                                        I <b>&emsp;&emsp;&emsp;</b>, have read ANNEXURE A &
+                                                                        I <b>XYZ</b>, have read ANNEXURE A &
                                                                         B, understood
                                                                         and accept the appointment upon the terms and
                                                                         conditions as outlined
@@ -622,7 +622,7 @@
                                                     <td>
                                                         <div class="logo"
                                                             style="width:100%;padding-top:151px;">
-                                                            <img src="{{ URL::asset('assets/images/footer.jpg') }}"
+                                                            <img src="{{ URL::asset('assets/images/abs_footer-label.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100px;width:100%;">
                                                         </div>
@@ -761,7 +761,7 @@
                                                 <tr>
                                                     <td>
                                                         <div class="logo" style="width:100%;height:100px;padding-top:12px;">
-                                                            <img src="{{ URL::asset('assets/images/footer.jpg') }}"
+                                                            <img src="{{ URL::asset('assets/images/abs_footer-label.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100px;;width:100%;">
                                                         </div>
@@ -851,7 +851,7 @@
                                                                     <td colspan="12" style="padding-top: 0cm;"
                                                                         align="left">
                                                                         <p>
-                                                                            I <b>&emsp;&emsp;&emsp;</b>, have understood and
+                                                                            I <b>XYZ</b>, have understood and
                                                                             accepted the appointment upon the terms and
                                                                             conditions as outlined in this appointment
                                                                             letter for my position at Ardens Business
@@ -883,7 +883,7 @@
                                                     <td>
                                                         <div class="logo"
                                                             style="width:100%;height:100px;padding-top:419px;">
-                                                            <img src="{{ URL::asset('assets/images/footer.jpg') }}"
+                                                            <img src="{{ URL::asset('assets/images/abs_footer-label.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100px;;width:100%;">
                                                         </div>
@@ -1042,7 +1042,7 @@
                                                     <td>
                                                         <div class="logo"
                                                             style="width:100%;height:100px;padding-top:23px;">
-                                                            <img src="{{ URL::asset('assets/images/footer.jpg') }}"
+                                                            <img src="{{ URL::asset('assets/images/abs_footer-label.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100px;;width:100%;">
                                                         </div>
@@ -1220,7 +1220,7 @@
                                                     <td>
                                                         <div class="logo"
                                                             style="width:100%;height:100px;padding-top:84px;">
-                                                            <img src="{{ URL::asset('assets/images/footer.jpg') }}"
+                                                            <img src="{{ URL::asset('assets/images/abs_footer-label.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100px;;width:100%;">
                                                         </div>
@@ -1327,7 +1327,7 @@
                                                                     <td colspan="12" style="padding-top: 0cm;"
                                                                         align="left">
                                                                         <p>
-                                                                            I <b>&emsp;&emsp;&emsp;</b>, have understood and
+                                                                            I <b>XYZ</b>, have understood and
                                                                             accepted the appointment upon the terms and
                                                                             conditions as outlined in this appointment
                                                                             letter for my position at Ardens Business
@@ -1356,7 +1356,7 @@
                                                 <tr>
                                                     <td>
                                                         <div class="logo" style="width:100%;height:100px;padding-top:279px;">
-                                                            <img src="{{ URL::asset('assets/images/footer.jpg') }}"
+                                                            <img src="{{ URL::asset('assets/images/abs_footer-label.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100px;;width:100%;">
                                                         </div>

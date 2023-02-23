@@ -427,23 +427,23 @@
                                                                     <div class="row page-header-user-dropdown ms-4 align-items-center"
                                                                         style="width:200px;min-width: 230px;">
                                                                         <?php
-                                                                        $employee_icon = getEmployeeAvatarOrShortName($assigneeId);
+                                                                        $employee_icon = json_decode(getEmployeeAvatarOrShortName($assigneeId));
                                                                         //    dd($employee_icon);
                                                                         ?>
                                                                         @if (!empty($employee_icon))
-                                                                            @if ($employee_icon['type'] == 'shortname')
+                                                                            @if ($employee_icon->type == 'shortname')
                                                                                 <div class="col-auto p-0 me-1">
                                                                                     <span
-                                                                                        class="rounded-circle user-profile  ml-2 "
+                                                                                        class="rounded-circle user-profile  ml-2  {{ $employee_icon->color }} "
                                                                                         id="">
                                                                                         <i id="topbar_username"
-                                                                                            class="align-middle ">{{ $employee_icon['data'] }}</i>
+                                                                                            class="align-middle ">{{ $employee_icon->data }}</i>
                                                                                     </span>
                                                                                 </div>
-                                                                            @elseif($employee_icon['type'] == 'avatar')
+                                                                            @elseif($employee_icon->type == 'avatar')
                                                                                 <div class="col-auto p-0 me-1">
                                                                                     <img class="rounded-circle header-profile-user"
-                                                                                        src=" {{ URL::asset('images/' . $employee_icon['data']) }}"
+                                                                                        src=" {{ URL::asset('images/' . $employee_icon->data) }}"
                                                                                         alt="--">
                                                                                 </div>
                                                                             @endif
@@ -624,23 +624,22 @@
                                                                     <div
                                                                         class="row page-header-user-dropdown align-items-center">
                                                                         <?php
-                                                                        $employee_icon = getEmployeeAvatarOrShortName($assigneeId);
-                                                                        //    dd($employee_icon);
+                                                                        $employee_icon = json_decode(getEmployeeAvatarOrShortName($assigneeId));
                                                                         ?>
                                                                         @if (!empty($employee_icon))
-                                                                            @if ($employee_icon['type'] == 'shortname')
+                                                                            @if ($employee_icon->type == 'shortname')
                                                                                 <div class="col-auto p-0">
                                                                                     <span
-                                                                                        class="rounded-circle user-profile  ml-2 "
+                                                                                        class="rounded-circle user-profile   me-1  {{ $employee_icon->color }}"
                                                                                         id="">
                                                                                         <i id="topbar_username"
-                                                                                            class="align-middle ">{{ $employee_icon['data'] }}</i>
+                                                                                            class="align-middle ">{{ $employee_icon->data }}</i>
                                                                                     </span>
                                                                                 </div>
-                                                                            @elseif($employee_icon['type'] == 'avatar')
+                                                                            @elseif($employee_icon->type == 'avatar')
                                                                                 <div class="col-auto p-0">
                                                                                     <img class="rounded-circle header-profile-user"
-                                                                                        src=" {{ URL::asset('images/' . $employee_icon['data']) }}"
+                                                                                        src=" {{ URL::asset('images/' . $employee_icon->data) }}"
                                                                                         alt="--">
                                                                                 </div>
                                                                             @endif

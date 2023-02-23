@@ -142,7 +142,7 @@ class VmtAttendanceController extends Controller
         $VmtGeneralInfo = VmtGeneralInfo::first();
         $image_view = url('/') . $VmtGeneralInfo->logo_img;
 
-        $emp_avatar = getEmployeeAvatarOrShortName(auth::user()->id);
+        $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id));
 
 
         $isSent    = \Mail::to($employee_mail)->send(
@@ -210,14 +210,14 @@ class VmtAttendanceController extends Controller
                if (array_key_exists($singleItem->user_id, $map_allEmployees->toArray())) {
 
                     $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
-                    $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->user_id]);
+                    $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->user_id);
 
                }
 
                //Map reviewer names
                if (array_key_exists($singleItem->reviewer_user_id, $map_allEmployees->toArray())) {
                     $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_user_id]["name"];
-                    $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName([$singleItem->reviewer_user_id]);
+                    $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName($singleItem->reviewer_user_id);
                }
 
                //Map leave types
@@ -241,15 +241,19 @@ class VmtAttendanceController extends Controller
                 $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->user_id]);
 
                 $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_user_id]["name"];
-                $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName([$singleItem->reviewer_user_id]);
+                $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName($singleItem->reviewer_user_id);
+
 
                 //Map leave types
                 $singleItem->leave_type = $map_leaveTypes[$singleItem->leave_type_id]["leave_type"];
+
             }
+
 
             //dd($employeeLeaves_team);
             return $employeeLeaves_team;
-        } else
+        }
+        else
         if ($request->type == 'employee') {
             return VmtEmployeeLeaves::whereIn('status', $statusArray)->where('user_id', auth::user()->id)->get();
         }
@@ -386,7 +390,14 @@ class VmtAttendanceController extends Controller
 
             //dd("Time diff : ".$mailtext_total_leave);
         } else {
-            $diff = intval( $start->diff($end)->format('%D')) + 1; //day adjusted by adding '1'
+            //Check if its 0.5 day leave, then handle separately
+            if($request->half_day_leave == "0.5"){
+                $diff = "0.5 ".$request->half_day_type;
+            } else {
+                //If its not half day leave, then find the leave days
+                $diff = intval($start->diff($end)->format('%D')) + 1; //day adjusted by adding '1'
+            }
+
             $mailtext_total_leave = $diff . " Day(s)";
         }
 
@@ -407,7 +418,7 @@ class VmtAttendanceController extends Controller
         $manager_id = User::where('user_code', $manager_emp_code)->value('id');
 
         $emp_leave_details->reviewer_user_id = $manager_id;
-        $emp_avatar = getEmployeeAvatarOrShortName(auth::user()->id);
+        $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id));
 
         if (!empty($request->notifications_users_id))
             $emp_leave_details->notifications_users_id = implode(",", $request->notifications_users_id);
@@ -575,7 +586,7 @@ class VmtAttendanceController extends Controller
             ->where('users.id', auth::user()->id)
             ->first(['users.id', 'users.name', 'vmt_employee_office_details.designation']);
 
-        $current_employee_detail->employee_avatar = getEmployeeAvatarOrShortName($current_employee_detail->id);
+        $current_employee_detail->employee_avatar = json_decode( $current_employee_detail->employee_avatar, false);
 
         return view('attendance_timesheet', compact('current_employee_detail', 'shift_start_time', 'shift_end_time'));
     }
@@ -971,7 +982,7 @@ class VmtAttendanceController extends Controller
 
         //dd($reportees_details->toArray());
         foreach ($reportees_details as $singleItem) {
-            $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->id]);
+            $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->id);
         }
 
         return $reportees_details;
@@ -989,7 +1000,7 @@ class VmtAttendanceController extends Controller
 
         //dd($reportees_details->toArray());
         foreach ($all_employees as $singleItem) {
-            $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->id]);
+            $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->id);
         }
 
         return $all_employees;
@@ -1025,12 +1036,12 @@ class VmtAttendanceController extends Controller
             if (array_key_exists($singleItem->user_id, $map_allEmployees->toArray())) {
 
                 $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
-                $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->user_id]);
+                $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->user_id);
 
                 //If reviewer_id = 0, then its not yet reviewed
                 if ($singleItem->reviewer_id != 0) {
                     $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_id]["name"];
-                    $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName([$singleItem->reviewer_id]);
+                    $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName($singleItem->reviewer_id);
                 }
             }
             else
@@ -1105,7 +1116,7 @@ class VmtAttendanceController extends Controller
         $image_view = url('/') . $VmtGeneralInfo->logo_img;
 
 
-        $emp_avatar = getEmployeeAvatarOrShortName(auth::user()->id);
+        $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id));
 
 
         $isSent    = \Mail::to($manager_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
@@ -1172,7 +1183,7 @@ class VmtAttendanceController extends Controller
 
         $VmtGeneralInfo = VmtGeneralInfo::first();
         $image_view = url('/') . $VmtGeneralInfo->logo_img;
-        $emp_avatar = getEmployeeAvatarOrShortName(auth::user()->id);
+        $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id));
 
         $isSent    = \Mail::to($employee_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
             $employee_details->name,
