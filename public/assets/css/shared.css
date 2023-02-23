@@ -11,8 +11,51 @@
     --color-dark-ash: #646464;
     --color-lite-ash: #e2e2e2;
 }
+
+button,label,p,span,*{
+    text-transform: capitalize;
+    font-size: 13px;
+}
+input,select,textarea{
+text-transform: lowercase;
+}
+
+.first-letter-captialize{
+    display: inline-block;
+}
+.first-letter-captialize::first-letter{
+    text-transform: capitalize;
+}
+
+.color-skyblue-600{
+    background: #005855 !important;
+}
+.color-skyblue-500{
+    background: #017470 !important;
+}
+.color-skyblue-200{
+    background: #00CED1 !important;
+}
+
+
+.color-inkblue-600{
+    background: #000358 !important;
+}
+
+
+
+
+.color-inkblue-600{
+    background: #000358 !important;
+}
+
+
 .color-pink-600{
     background: #e50058 !important;
+}
+
+.color-green-600{
+    background: #5a7e00 !important;
 }
 .color-green-400{
     background: #2a9d8f !important;
@@ -27,9 +70,17 @@
 .color_disco-600{
     background: #380928 !important;
 }
+.color_disco-500{
+    background: #580000 !important;
+}
+
 .color-blue-600{
     background: #0a3358 !important;
 }
+.color-blue-200{
+    background: #4682B4 !important;
+}
+
 
 .color-gradient-green{
     background: #00f775 !important;
@@ -132,6 +183,10 @@ textarea {
 }
 .shadow-lite {
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+th.gridjs-th-sort:hover{
+    background-color: #000358;
 }
 
 .img-sm {

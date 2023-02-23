@@ -106,6 +106,7 @@ class VmtProfilePagesController extends Controller
         $details->marital_status = $request->input('marital_status');
         $details->doj = $request->input('doj');
         $details->blood_group_id = $request->input('blood_group');
+        $details->physically_challenged = $request->input('physically_challenge');
 
         $details->save();
 
@@ -198,8 +199,6 @@ class VmtProfilePagesController extends Controller
             $exp->save();
         }
 
-        Ses::flash('message', 'Bank Details Updated successfully!');
-        Ses::flash('alert-class', 'alert-success');
         return redirect()->back();
     }
 
