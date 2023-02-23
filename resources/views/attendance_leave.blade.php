@@ -1053,8 +1053,6 @@
                 }
             });
 
-
-
             $('#btn_request_leave').on('click', function(e) {
                 //Loading screen
                 Swal.fire({
@@ -1185,22 +1183,11 @@
                         basic_details_errors.push(
                             "Start date should not be greater than End date.");
                     }
-                     //If half-daf radio button clicked, Get the half day value...
-                     if (radioBtn_halfDay == true) {
-                        half_day = $("#for_half_day_leave").val();
-                        console.log("Half_Day value"+half_day);
-                        half_day_type = $('#half_day_type').val();
-                        console.log("Half_Day value"+half_day_type);
-                    } else {
-                        half_day = null;
-                        half_day_type = null;
-                    }
 
                     // IF availableLeaves_ForSelectedLeaveType =="NA", then its 'is_finite'== 1...
                     if (availableLeaves_ForSelectedLeaveType != "NA" &&
                         availableLeaves_ForSelectedLeaveType <= 0) {
                         basic_details_errors.push("No leaves available for the selected leave type.");
-                        //for leave types
                     } else
                     if (totalLeaveDays > availableLeaves_ForSelectedLeaveType) {
                         basic_details_errors.push(
@@ -1236,27 +1223,6 @@
 
                     return;
                 }
-
-                    //Loading screen
-                    Swal.fire({
-                    title: 'Loading...',
-                    //html: 'I will close in <b></b> milliseconds.',
-                    html: '<b>Applying Leave.</b>',
-                    timer: 6000,
-                    timerProgressBar: true,
-                    allowOutsideClick: false,
-                    didOpen: () => {
-                        Swal.showLoading()
-                    },
-                    willClose: () => {
-                        clearInterval(timerInterval)
-                    }
-                }).then((result) => {
-                    /* Read more about handling dismissals below */
-                    if (result.dismiss === Swal.DismissReason.timer) {
-                        console.log('I was closed by the timer')
-                    }
-                })
 
                 $.ajax({
                     url: "{{ route('attendance-applyleave') }}",
@@ -1361,8 +1327,6 @@
                 $('#notificationModal').removeClass('fade');
 
             });
-
-              //    Leave Duration
 
 
             $('.popUp-close').click(function() {
@@ -1989,7 +1953,8 @@
                     $('#notifyUser_designation').text(data.user_designation);
                     $('#approver_name').text(data.approver_name);
                     $('#approver_desgination').text(data.notification_designation);
-                    $('#totalLeave_days').text(data.total_leave_datetime[0]);
+                    $('#reviewed_date').text(moment(data.reviewed_date).format('MMM DD, YYYY, hh:MM a'));
+                    $('#textarea_leavecomments').text(data.leave_reason);
 
                     console.log("Leave details for ID : " + leave_id + " :: " + data);
 
@@ -2001,22 +1966,11 @@
                     //Checking if the current user is employee who applied this leave
                     if (current_emp_id == data.user_id) {
                         //Employee can withdraw leave
-                        let current_emp_id = "{{ auth()->user()->id }}";
-                    console.log("Current Emp id : " + current_emp_id);
-                    console.log("Emp Emp id : " + data.user_id);
-                    console.log("Mgr  Emp id : " + data.reviewer_user_id);
-
-                    //Checking if the current user is employee who applied this leave
-                    if (current_emp_id == data.user_id) {
-                        //Employee can withdraw leave
                         if (data.status == "Pending") {
-                                $('#btn_withdraw').show();
-                            } else {
-                                $('#btn_withdraw').hide();
-                            }
-                    } else {
-                        $('#btn_withdraw').hide();
-                    }
+                            $('#btn_withdraw').show();
+                        } else {
+                            $('#btn_withdraw').hide();
+                        }
                     } else {
                         $('#btn_withdraw').hide();
                     }
