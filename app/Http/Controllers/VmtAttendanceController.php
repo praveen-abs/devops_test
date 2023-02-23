@@ -127,7 +127,7 @@ class VmtAttendanceController extends Controller
 
 
         $leave_record->reviewer_comments = $request->leave_rejection_text;
-
+        $leave_record->reviewed_date = Carbon::now();
         $leave_record->save();
 
         //Send mail to the employee
@@ -237,12 +237,17 @@ class VmtAttendanceController extends Controller
 
             //dd($map_allEmployees[1]["name"]);
             foreach ($employeeLeaves_team as $singleItem) {
-                $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
-                $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->user_id]);
 
-                $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_user_id]["name"];
-                $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName($singleItem->reviewer_user_id);
+                if (array_key_exists($singleItem->user_id, $map_allEmployees->toArray())) {
+                    $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
+                    $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->user_id]);
+                }
 
+                if (array_key_exists($singleItem->reviewer_user_id, $map_allEmployees->toArray())) {
+
+                    $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_user_id]["name"];
+                    $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName($singleItem->reviewer_user_id);
+                }
 
                 //Map leave types
                 $singleItem->leave_type = $map_leaveTypes[$singleItem->leave_type_id]["leave_type"];
@@ -586,8 +591,8 @@ class VmtAttendanceController extends Controller
             ->where('users.id', auth::user()->id)
             ->first(['users.id', 'users.name', 'vmt_employee_office_details.designation']);
 
-        $current_employee_detail->employee_avatar = json_decode( $current_employee_detail->employee_avatar, false);
-
+        $current_employee_detail->employee_avatar = json_decode( getEmployeeAvatarOrShortName(auth()->user()->id), false);
+        //dd( $current_employee_detail->employee_avatar);
         return view('attendance_timesheet', compact('current_employee_detail', 'shift_start_time', 'shift_end_time'));
     }
 
