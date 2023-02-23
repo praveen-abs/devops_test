@@ -2,7 +2,7 @@
 	<div>
   
         <DataTable :value="leave_data"  :rows="5" :paginator="true"   responsiveLayout="scroll"
-        v-model:filters="filters" filterDisplay="menu"   :globalFilterFields="['name','status']" :loading="loading">
+        v-model:filters="filters" filterDisplay="menu"   :globalFilterFields="['name','status']" >
             <Column  field="employee_name" header="Employee Name">
               <template #body="slotProps">
                 {{ slotProps.data.employee_name }}
