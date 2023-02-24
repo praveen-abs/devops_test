@@ -212,7 +212,7 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                                         class="nav-link sidebar py-1"><span>Department</span></a>
                                 </li>
                                 <li class="nav-item ">
-                                    <a href="{{ url('employeeOnboarding') }}" id=""
+                                    <a href="{{ route('employee-onboarding-v2') }}" id=""
                                         class="nav-link sidebar py-1" aria-expanded="false"><span>Onboarding</span>
                                     </a>
                                 </li>

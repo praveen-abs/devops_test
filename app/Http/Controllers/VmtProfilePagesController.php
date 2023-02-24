@@ -306,13 +306,12 @@ class VmtProfilePagesController extends Controller
 
     */
     public function uploadEmployeeDocument(Request $request){
-        dd($request->file());
+        //dd($request->file());
         $docName = time().'_'.$request->file->getClientOriginalName();
-        $docPath = $request->file('file')->storeAs('uploads', $docName, 'public');
-        dd('----------'.$docName.'----------------------'. $docPath);
-
+        $docPath = $request->file('file')->storeAs('employee_documents', $docName);
+       // dd('----------'.$docName.'----------------------'. $docPath);
+       dd($docPath);
+       return $docPath;
     }
-
-
 
 }

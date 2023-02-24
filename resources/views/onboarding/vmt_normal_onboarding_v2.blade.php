@@ -48,11 +48,16 @@
 
 
 @section('content')
+
+<div id="vjs_normal_onboarding"></div>
+
+@endsection
+@section('script')
+
 @vite('resources/js/hrms/modules/Organization/Normal_Onboarding/NormalOnboarding.js')
 
 <div id="vjs_normal_onboarding"></div>
 @endsection
-
 
 
 
