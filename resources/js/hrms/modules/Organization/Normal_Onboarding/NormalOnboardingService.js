@@ -28,119 +28,6 @@ export async function getStateList() {
     return response.data;
 }
 
-// File Upload Post Request
-
-// export  function FileUpload(file) {
-//     const response =  axios
-//         .post("http://localhost:3000/posts", file)
-//         .then((res) => {
-//             alert("sent");
-//             console.log(res);
-//         })
-//         .catch((err) => {
-//             alert("not sent");
-//         });
-//     return response;
-// }
-
-
-
-export function EmployeeDetials() {
-    return {
-        EmployeeCode: "",
-        DateOfJoining: "",
-        AadhaarNumber: "",
-        PassportNumber: "",
-        BankName: "",
-        EmployeeNameasper: "",
-        PersonDetialsGender: "",
-        PanNumber: "",
-        PassportExpDate: "",
-        AccountNumber: "",
-        PersonDetialsDateofBirth: "",
-        PersonDetialsMobileNumber: "",
-        DLNumber: "",
-        PersonDetialsBloodGroup: "",
-        BankIFSCCode: "",
-        PersonDetialsMaritalStatus: "",
-        PersonDetialsEmail: "",
-        ChooseNationality: "",
-        PhysicallyChallenged: "",
-
-        // person Detials End
-
-        // Address detials
-
-        // Current Address Detials Start
-
-        CurrentAddress1: "",
-        CurrentAddress2: "",
-        currentcountry: "",
-        currentstate: "",
-        currentCity: "",
-        currentPincode: "",
-
-        // Current Address Details End
-
-        // Permanant Address Start
-
-        PermanentAddress1: "",
-        PermanentAddress2: "",
-        Permanentcountry: "",
-        Permanentstate: "",
-        PermanentCity: "",
-        PermanentPincode: "",
-
-        // Permanant Address end
-
-        // Office Detials Start
-
-        Departmant: "",
-        Process: "",
-        Designation: "",
-        CostCenter: "",
-        probationPeriod: "",
-        WorkLocation: "",
-        ReportingManagerCode: "",
-        ReportingManagerName: "",
-        holidayLocation: "",
-        OfficialEmail: "",
-        OfficialMobileNO: "",
-        EmployeeNoticePeriodDays: "",
-        DateOfConfirmation: "",
-
-        // Office Details End
-
-        // family Details Start
-
-        fatherName: "",
-        fatherDateofBirth: "",
-        fatherGender: "",
-        fatherAge: "",
-        motherName: "",
-        motherDateofBirth: "",
-        motherGender: "",
-        motherAge: "",
-        SpouseName: "",
-        dateOfWedding: "",
-        spouseGender: "",
-        SpouseDOB: "",
-        noOfChildren: "",
-
-        // family Details End
-
-        // Personal Documents Start
-
-        AadharCardFront: "",
-        AadharCardBack: "",
-        PanCardDoc: "",
-        PassportDoc: "",
-        VoterIdDoc: "",
-        DrivingLicenseDoc: "",
-        EductionCertifacte: "",
-        ReleivingLetterDoc: "",
-    };
-}
 
 // Validation
 
@@ -229,10 +116,10 @@ export default function validation(rules) {
         //  Person Details End
 
         // Address Validation Start
-        CurrentAddress1: {
+        currentAddress1: {
             required,
         },
-        CurrentAddress2: {
+        currentAddress2: {
             required,
         },
         currentcountry: {
@@ -306,20 +193,17 @@ export default function validation(rules) {
         motherDateofBirth: { required },
         SpouseName: { required },
         dateOfWedding: { required },
+        spouseGender:{required},
         SpouseDOB: { required },
 
-        name: {
-            required,
-        },
-        email: {
-            required,
-            email,
-        },
-        password: {
-            required,
-        },
-        accept: {
-            required,
-        },
+        // Personal Documents
+        // AadharCardFront:{required},
+        // AadharCardBack:{required},
+        // PanCardDoc:{required},
+        // PassportDoc:{required},
+        // VoterIdDoc:{required},
+        // DrivingLicenseDoc:{required},
+        // EductionDoc:{required},
+        // ReleivingLetterDoc:{required}
     });
 }
