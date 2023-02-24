@@ -10,13 +10,15 @@ export default defineConfig({
                     //sass files
                     'resources/sass/testsass.scss',
 
-                    'resources/js/app.js',
+                    'resources/js/app.js',  
 
                     // Leaves Module
                     'resources/js/hrms/modules/leave_module/org_leave_module/OrgLeaveBalance.js',
                     'resources/js/hrms/modules/leave_module/team_leave_module/TeamLeaveBalance.js',
 
-                    //
+                    //Organization Module
+
+                    'resources/js/hrms/modules/Organization/Normal_Onboarding/NormalOnboarding.js',
 
                     // Approval Module
                     'resources/js/hrms/modules/approvals/att_regularization/AttRegularizationApproval.js',

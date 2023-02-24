@@ -44,6 +44,10 @@ use App\Services\VmtEmployeeService;
 class VmtEmployeeController extends Controller
 {
 
+    public function showEmployeeOnboardingPageV2(Request $request){
+        return view('onboarding.vmt_normal_onboarding_v2');
+    }
+
     /*
     Called from VmtMainDashboardController ,if quick onboarded employee logs in.
     Also used by HR to restore saved drafts of particular employee's normal onboarding.
