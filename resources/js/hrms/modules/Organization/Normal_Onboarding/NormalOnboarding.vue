@@ -1073,98 +1073,99 @@
                                                  <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                                                      <label for="" class="float-label">Aadhar
                                                          Card Front<span class="text-danger">*</span></label>
-                                                     <!-- <div class="form-control md" 
+                                                     <div class="addfiles form-control md" data="#aadhar_card_file"
                                                          id="aadhar_card_file_label"><span class="file_label">Choose
                                                              Aadhar
-                                                             Card Front</span></div>-->
-                                                     <input  type="file" accept="image/png, image/gif, image/jpeg"
-                                                         class="onboard-form form-control file" @change="AadharFront($event)"  />
+                                                             Card Front</span></div>
+                                                     <input type="file" accept="image/png, image/gif, image/jpeg"
+
+                                                         class="onboard-form form-control files" @change="AadharFront($event)"  />
                                                   </div>
                                                   <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2"
                                                      id="aadhar_card_backend_content">
                                                      <label for="" class="float-label"> Aadhar Card Back<span
                                                              class="text-danger">*</span></label>
-                                                     <!-- <div class="addfiles form-control" 
+                                                     <div class="addfiles form-control" data="#aadhar_card_backend_file"
                                                          id="aadhar_card_backend_file_label"><span
                                                              class="file_label">Choose
-                                                             Aadhar Card Back </span></div> -->
+                                                             Aadhar Card Back </span></div>
                                                      <input type="file" accept="image/png, image/gif, image/jpeg"
                                                      @change="AadharBack($event)"
-                                                         class="onboard-form form-control file"  />
+                                                         class="onboard-form form-control files"  />
                                                  </div>
                                                  <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                                                      <label for="" class="float-label"> Pan
                                                          Card<span class="text-danger">*</span></label>
-                                                     <!-- <div class="addfiles form-control" data="#pan_card_file"
+                                                     <div class="addfiles form-control" data="#pan_card_file"
                                                          id="pan_card_file_label"><span class="file_label">Upload Pan
-                                                             Card</span></div> -->
+                                                             Card</span></div>
                                                      <input type="file" accept="image/png, image/gif, image/jpeg"
                                                          placeholder="Pan Card"
                                                          name="pan_card_file" id="pan_card_file"
                                                          @change="PanCard($event)"
-                                                         class="onboard-form form-control file" />
+                                                         class="onboard-form form-control files" />
                                                  </div>
                                                  <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                                                      <label for="" class="float-label">
                                                          Passport</label>
-                                                     <!-- <div class="addfiles form-control" data="#passport_file"
+                                                     <div class="addfiles form-control" data="#passport_file"
                                                          id="passport_file_label"><span class="file_label">Choose
-                                                             Passport</span></div> -->
+                                                             Passport</span></div>
                                                      <input type="file" accept="image/png, image/gif, image/jpeg"
                                                           placeholder="Passport"
                                                          name="passport_file" id="passport_file"
                                                          @change="Passport($event)"
-                                                         class="onboard-form form-control file" />
+                                                         class="onboard-form form-control files" />
                                                  </div>
                                                  <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                                                      <label for="" class="float-label">
                                                          ID</label>
-                                                     <!-- <div class="addfiles form-control" data="#voters_id_file"
+                                                     <div class="addfiles form-control" data="#voters_id_file"
                                                          id="voters_id_file_label"><span class="file_label">Choose
                                                              Voters
-                                                             ID</span></div> -->
+                                                             ID</span></div>
                                                      <input type="file" accept="image/png, image/gif, image/jpeg"
                                                           placeholder="Voters ID"
                                                          name="voters_id_file" id="voters_id_file"
                                                          @change="VoterId($event)"
-                                                         class="onboard-form form-control file" />
+                                                         class="onboard-form form-control files" />
                                                  </div>
                                                  <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                                                      <label for="" class="float-label"> Driving
                                                          License</label>
-                                                     <!-- <div class="addfiles form-control" data="#dl_file"
+                                                     <div class="addfiles form-control" data="#dl_file"
                                                          id="dl_file_label"><span class="file_label">Choose Driving
-                                                             License</span></div> -->
+                                                             License</span></div>
                                                      <input type="file" accept="image/png, image/gif, image/jpeg"
                                                          placeholder="Driving License"
                                                          name="dl_file" id="dl_file"   @change="DrivingLisence($event)"
-                                                         class="onboard-form form-control file"  />
+                                                         class="onboard-form form-control files"  />
                                                  </div>
                                                  <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
                                                      <label for="" class="float-label">Educations
                                                          Certificate<span class="text-danger">*</span></label>
-                                                     <!-- <div class="addfiles form-control"
+                                                     <div class="addfiles form-control"
                                                          data="#education_certificate_file"
                                                          id="education_certificate_file_label"><span
                                                              class="file_label">Choose
-                                                             Educations Certificate</span></div> -->
+                                                             Educations Certificate</span></div>
                                                      <input type="file" accept="image/png, image/gif, image/jpeg"
                                                           placeholder="Educations Certificate"
                                                          name="education_certificate_file"
                                                          @change="EductionCertifacte($event)"
                                                          id="education_certificate_file"
-                                                         class="onboard-form form-control file "  />
+                                                         class="onboard-form form-control files"  />
                                                  </div>
                                                  <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
                                                      <label for="" class="float-label"> Relieving
                                                          Letter</label>
-                                                     <!-- <div class="addfiles form-control" data="#reliving_letter_file"
-                                                         id="reliving_letter_file_label"><span class="file_label">Choose Relieving Letter</span></div> -->
+                                                     <div class="addfiles form-control" data="#reliving_letter_file"
+                                                         id="reliving_letter_file_label"><span class="file_label">Choose Relieving Letter</span></div>
                                                      <input type="file" accept="image/png, image/gif, image/jpeg"
                                                           placeholder="Relieving Letter"
                                                          name="reliving_letter_file" id="reliving_letter_file"
                                                          @change="ReleivingLetter($event)"
-                                                         class="onboard-form form-control file"  />
+                                                         class="onboard-form form-control files"  />-
                                                  </div>
                                              </div>
                                          </div>
@@ -1345,7 +1346,6 @@ import {getBankList,getCountryList,getStateList} from './NormalOnboardingService
           
             }else{
                 alert("value")
-                toast.add({severity:'success', summary: 'Successfully Uploaded', detail:'Enter Valid Details', life: 3000});
             }
 
 
@@ -1407,19 +1407,6 @@ import {getBankList,getCountryList,getStateList} from './NormalOnboardingService
     }
 
 
-
-
-
-    // Generate data into JSON Format
-
-      const jsonFormat=()=>{
-       const data =JSON.stringify(employee_onboarding,AadharCardFront,AadharCardBack,PanCardDoc,DrivingLicenseDoc,EductionDoc,VoterIdDoc,ReleivingLetterDoc,PassportDoc)
-       console.log(data);
-    }
-
-
-    //  File Upload Function Declaration
-    
       const file=ref()
       const  AadharCardFront=ref()
       const  AadharCardBack=ref()
@@ -1429,6 +1416,12 @@ import {getBankList,getCountryList,getStateList} from './NormalOnboardingService
       const  DrivingLicenseDoc=ref()
       const  EductionDoc=ref()
       const  ReleivingLetterDoc=ref()
+
+
+      const jsonFormat=()=>{
+       const data =JSON.stringify(employee_onboarding,AadharCardFront,AadharCardBack,PanCardDoc,DrivingLicenseDoc,EductionDoc,VoterIdDoc,ReleivingLetterDoc,PassportDoc)
+       console.log(data);
+    }
 
 
 
@@ -1570,9 +1563,6 @@ import {getBankList,getCountryList,getStateList} from './NormalOnboardingService
       }
     }
 
- 
-    // for Testing Post Data
-
 
     const submit=()=>{
         axios.post('http://localhost:3000/posts',{
@@ -1626,7 +1616,6 @@ import {getBankList,getCountryList,getStateList} from './NormalOnboardingService
     ])
 
     
-    // Sample testong Data 
 
     const Sampledata=()=>{
         employee_onboarding.EmployeeCode=ref("B090")
@@ -1773,10 +1762,6 @@ input.p-dropdown-filter.p-inputtext.p-component {
     align-items: center;
     pointer-events: none;
     background: #0000005e;
-}
-
-.file{
-    padding: 8px;
 }
     .field {
         margin-bottom: 1.5rem;
