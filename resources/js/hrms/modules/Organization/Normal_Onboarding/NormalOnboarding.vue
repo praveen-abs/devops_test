@@ -44,7 +44,7 @@
                                 :class="{'p-invalid':v$.EmployeeNameasper.$invalid && submitted}"
                                 style="text-transform: uppercase;"
                                 placeholder="Employee Name as per Aadhar "
-                                pattern="[A-z']*"  />
+                                  />
 
                             <span v-if="(v$.EmployeeNameasper.$invalid && submitted) || v$.EmployeeNameasper.$pending.$response" class="p-error">{{v$.EmployeeNameasper.required.$message.replace('Value', 'Employee Name as per')}}</span>
 
@@ -820,8 +820,7 @@
                             </label>
                             <input type="email" placeholder="Official E-Mail Id"
                                 name="officical_mail" class="textbox form-control "
-                                v-model="v$.OfficialEmail.$model"
-                                pattern="email" onkeypress="return event.charCode != 32" />
+                                v-model="v$.OfficialEmail.$model"/>
 
                         </div>
                     </div>
@@ -832,7 +831,7 @@
                             <input type="text" minlength="10" maxlength="10"
                                 v-model="v$.OfficialMobileNO.$model"
                                 placeholder="Official Mobile" name="official_mobile"
-                                id="official_mobile" oninput="numberOnly(this.id);"
+                                id="official_mobile" 
                                 class="textbox  onboard-form form-control " />
 
 
@@ -1262,8 +1261,8 @@ import {getBankList,getCountryList,getStateList} from './NormalOnboardingService
 
         // Current Address Detials Start
 
-        CurrentAddress1: "",
-        CurrentAddress2: "",
+        currentAddress1: "",
+        currentAddress2: "",
         currentcountry: "",
         currentstate: "",
         currentCity: "",
@@ -1341,11 +1340,12 @@ import {getBankList,getCountryList,getStateList} from './NormalOnboardingService
         
         submitted.value = true;
         RequiredDocument.value=true
-            if (isFormValid) {
-                alert("value")
-            }else{
+            if (!isFormValid) {
                 toast.add({severity:'error', summary: 'Document Missing', detail:'Enter Valid Details', life: 3000});
                 RequiredDocument.value=true
+          
+            }else{
+                alert("value")
             }
 
 
@@ -1406,13 +1406,9 @@ import {getBankList,getCountryList,getStateList} from './NormalOnboardingService
 
     }
 
- const jsonFormat=()=>{
-       const data =JSON.stringify(employee_onboarding,file)
-       console.log(data);
-    }
 
-    const file=ref()
-    //   const  AadharCardFront=ref()
+      const file=ref()
+      const  AadharCardFront=ref()
       const  AadharCardBack=ref()
       const  PanCardDoc=ref()
       const  PassportDoc=ref()
@@ -1420,6 +1416,12 @@ import {getBankList,getCountryList,getStateList} from './NormalOnboardingService
       const  DrivingLicenseDoc=ref()
       const  EductionDoc=ref()
       const  ReleivingLetterDoc=ref()
+
+
+      const jsonFormat=()=>{
+       const data =JSON.stringify(employee_onboarding,AadharCardFront,AadharCardBack,PanCardDoc,DrivingLicenseDoc,EductionDoc,VoterIdDoc,ReleivingLetterDoc,PassportDoc)
+       console.log(data);
+    }
 
 
 
@@ -1563,7 +1565,9 @@ import {getBankList,getCountryList,getStateList} from './NormalOnboardingService
 
 
     const submit=()=>{
-        axios.post('http://localhost:3000/posts',{AadharCardFront,
+        axios.post('http://localhost:3000/posts',{
+        employee_onboarding,
+        AadharCardFront,
         AadharCardBack,
         PanCardDoc,
         EductionDoc,
@@ -1653,7 +1657,7 @@ import {getBankList,getCountryList,getStateList} from './NormalOnboardingService
         employee_onboarding.ReportingManagerCode=ref("B10909")
         employee_onboarding.ReportingManagerName=ref("PraveenArtisic")
         employee_onboarding.WorkLocation=ref("chennai")
-        employee_onboarding.OfficialEmail=ref("VMT@Max.com")
+        employee_onboarding.OfficialEmail=ref("voidmax@gmail.com")
         employee_onboarding.OfficialMobileNO=ref("4646454547")
         employee_onboarding.EmployeeNoticePeriodDays=ref("3 Months")
         employee_onboarding.DateOfConfirmation=ref("10-12-2019")
