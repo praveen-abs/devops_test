@@ -430,8 +430,17 @@ class VmtAttendanceReportsService{
                        $total_leave++;
                    }
                  } else if($attendanceResponseArray[$key]['checkin_time']!=null || $attendanceResponseArray[$key]['checkout_time']!=null) {
-                     array_push($arrayReport,'P');
-                      $total_present++;
+                     if($total_LC>4&&$attendanceResponseArray[$key]['isLC']){
+                        array_push($arrayReport,'P/LC');
+                        $total_present= $total_present+0.5;
+                     }else if($total_EG>4&&$attendanceResponseArray[$key]['isEG']){
+                        array_push($arrayReport,'P/EG');
+                        $total_present= $total_present+0.5;
+                     }else{
+                        array_push($arrayReport,'P');
+                        $total_present++;
+                     }
+
                  }else{
                     array_push($arrayReport,' ');
                  }
