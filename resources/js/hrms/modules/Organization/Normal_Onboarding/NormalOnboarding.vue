@@ -12,7 +12,7 @@
 
       <!-- Personal Details Start -->
 
-  
+
       <div class="card shadow  profile-box card-top-border p-2">
         <div class="card-body justify-content-center align-items-center ">
             <div class=" header-card-text">
@@ -68,7 +68,7 @@
                             <label for="" class="float-label">Marital Status <span
                                     class="text-danger">*</span></label>
                                     <select
-                                    class=" form-control textbox " 
+                                    class=" form-control textbox "
                                     placeholder="Marital Status" @click="spouseDisable"
                                     v-model="v$.PersonDetialsMaritalStatus.$model"
                                     :class="{'p-invalid':v$.PersonDetialsMaritalStatus.$invalid && submitted}"
@@ -831,7 +831,7 @@
                             <input type="text" minlength="10" maxlength="10"
                                 v-model="v$.OfficialMobileNO.$model"
                                 placeholder="Official Mobile" name="official_mobile"
-                                id="official_mobile" 
+                                id="official_mobile"
                                 class="textbox  onboard-form form-control " />
 
 
@@ -1179,7 +1179,7 @@
 
                                                 <input type="button" value="sample" @click="Sampledata"
                                                 class="btn btn-orange  text-center processOnboardForm">
-                                                
+
                                                 <button type="button" data="row-6"
                                                      next="row-6" placeholder="" name="save_form" id="save_button"
                                                      class="btn btn-orange  text-center processOnboardForm"
@@ -1201,7 +1201,7 @@
          </div>
          </div>
          </div>
-     
+
          <Dialog v-if="!employee_onboarding.EmployeeNameasper.length>0 && !employee_onboarding.AadhaarNumber.length>0 " header="Documents Required" v-model:visible="RequiredDocument" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '50vw'}">
             <li v-if="employee_onboarding.EmployeeNameasper=='' || employee_onboarding.EmployeeNameasper.length<0">Employee As Per Name Required</li>
             <li v-if="employee_onboarding.AadhaarNumber=='' || employee_onboarding.AadhaarNumber.length<0">Aadhaar Number Required</li>
@@ -1229,7 +1229,7 @@ import {getBankList,getCountryList,getStateList} from './NormalOnboardingService
             getCountryList().then(result => country.value = result)
             console.log(country.country_name);
             // for state
-            getStateList().then(result => state.value = result)
+            //getStateList().then(result => state.value = result)
         })
 
 
@@ -1321,7 +1321,7 @@ import {getBankList,getCountryList,getStateList} from './NormalOnboardingService
 
         // Personal Documents Start
 
-       
+
     })
 
     const bankList=ref();
@@ -1337,13 +1337,13 @@ import {getBankList,getCountryList,getStateList} from './NormalOnboardingService
 
     const showMessage = ref(false);
     const handleSubmit = (isFormValid) => {
-        
+
         submitted.value = true;
         RequiredDocument.value=true
             if (!isFormValid) {
                 toast.add({severity:'error', summary: 'Document Missing', detail:'Enter Valid Details', life: 3000});
                 RequiredDocument.value=true
-          
+
             }else{
                 alert("value")
             }
@@ -1615,7 +1615,7 @@ import {getBankList,getCountryList,getStateList} from './NormalOnboardingService
 
     ])
 
-    
+
 
     const Sampledata=()=>{
         employee_onboarding.EmployeeCode=ref("B090")
@@ -1672,7 +1672,7 @@ import {getBankList,getCountryList,getStateList} from './NormalOnboardingService
         employee_onboarding.SpouseName=ref("priyanka")
         employee_onboarding.noOfChildren=ref("5")
         employee_onboarding.EmployeeCode=ref("B101")
-    
+
 
 
     }
