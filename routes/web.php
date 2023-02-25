@@ -37,6 +37,11 @@ Route::get('/Add-New', function () {
     return view('addNew_role');
 })->name('Add-New');
 
+Route::get('/paycheckDashboard', function () {
+    return view('paycheckDashboard');
+})->name('paycheckDashboard');
+
+
 Route::middleware(['auth'])->group(function () {
 
     //AJAX : Get emp avatar
@@ -211,9 +216,13 @@ Route::post('vmt-general-settings', [App\Http\Controllers\HomeController::class,
         return view('vmt_vendor');
     })->name('vmt-vendor-route');
 
-    Route::get('/offer_letter_module', function () {
-        return view('offer_letter.offerLetter_view');
-    });
+    Route::get('/view-offer', function () {
+        return view('offer_letter.View_OfferLetter');
+    })->name('view-offer');
+
+    Route::get('/create-offer', function () {
+        return view('offer_letter.create_offerletter');
+    })->name('create-offer');
 
     Route::get('clients', 'App\Http\Controllers\VmtClientController@showAllClients')->name('vmt-clients-route');;
     Route::get('clients-fetchAll', 'App\Http\Controllers\VmtClientController@fetchAllClients')->name('vmt-clients-fetchall');

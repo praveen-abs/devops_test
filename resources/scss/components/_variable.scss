@@ -16,9 +16,16 @@ $orange-500:#ff6000;
 $white:#fff;
 $black:#000;
 
+// gray
+$gray-100:#f7f7f7;
+
 // border radius
 
 $num-50:50;
+
+//
+$box-shadow-light: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+$box-shadow-600: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 
 
 
@@ -29,10 +36,24 @@ $num-50:50;
     --black:#{$black};
     --raidus:#{$num-50};
     --font-regular:#{$font-weight-regular};
+    --bg-gray-100:$gray-100;
 
 }
 
+.font-regular{
+    font-weight: $font-weight-regular;
+}
 
+.font-bold{
+    font-weight: $font-weight-bold;
+}
+.font-lighter{
+    font-weight: $font-weight-lighter;
+}
+
+.font-medium{
+    font-weight: $font-weight-medium;
+}
 
 
 

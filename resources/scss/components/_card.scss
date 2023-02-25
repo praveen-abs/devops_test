@@ -2,6 +2,10 @@
 // // _card.scss
 // //
 
+.card-border {
+    box-shadow: $box-shadow-light;
+}
+
 // .card {
 //     margin-bottom: $grid-gutter-width;
 //     box-shadow: $card-box-shadow;
@@ -47,7 +51,6 @@
 //         box-shadow: $box-shadow-lg;
 //     }
 // }
-
 
 // // card color variant
 
@@ -98,7 +101,6 @@
 // .stretched-link {
 //     position: static;
 // }
-
 
 // // Loader
 
@@ -167,86 +169,4 @@
 //             }
 //         }
 //     }
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-table {
-    margin: 10px;
-}
-td,
-th {
-    padding: 0.5em 1em;
-}
-
-/* Shadow on the header row*/
-thead tr {
-}
-/* Background colors defined on table cells */
-th {
-    background-color: #ccc;
-}
-tr.even td {
-    background-color: yellow;
-}
-tr.odd td {
-    background-color: orange;
-}
-
-/* I would like spacing between thead tr and tr.first-row */
-
-tbody:before {
-    /* This doesn't work because of border-collapse */
-    line-height: 1em;
-    content: ".";
-    color: white; /* bacground color */
-    display: block;
-}
-
-// table {
-//     border-spacing: 0px 10px;
-//     border-collapse: separate !important;
-//     border: 1px solid;
-//     border-radius: 5px;
-
-//     tbody {
-//         :before {
-//             line-height: 1rem;
-//             content: "_";
-//             color: white;
-//             display: block;
-//         }
-//     }
-
-//     th {
-//         font-weight: $font-weight-semibold;
-//         border: 1px solid #000 !important;
-//     }
-//     td {
-//         background-color: aqua;
-//         border: 1px solid #000 !important;
-//     }
-
-//     // .table-light {
-//     //     color: $body-color;
-//     //     border-color: $table-border-color;
-//     //     background-color: var(--#{$variable-prefix}light);
-//     // }
-
-//     // > thead {
-//     //     border-color: $table-border-color;
-//     // }
-//     // > :not(:first-child) {
-//     //     border-top-width: $table-border-width;
-//     // }
 // }
