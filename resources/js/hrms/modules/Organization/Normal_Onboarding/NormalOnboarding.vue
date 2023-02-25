@@ -75,7 +75,7 @@
                                                     <select class=" form-control textbox " placeholder="Marital Status"
                                                         @click="spouseDisable"
                                                         v-model="v$.PersonDetialsMaritalStatus.$model"
-                                                        :class="{ 'p-invalid': v$.PersonDetialsMaritalStatus.$invalid && submitted }">
+                                                        :class="{ 'is-invalid': v$.PersonDetialsMaritalStatus.$invalid && submitted }">
                                                         <option v-for="marry in MaritalStatus" :key="marry.value">
                                                             {{ marry.name }}
                                                         </option>
@@ -94,7 +94,7 @@
                                                     <label for="" class="float-label">Date of Joining<span
                                                             class="text-danger">*</span></label>
 
-                                                    <input type="text" max="9999-12-31" v-model="v$.DateOfJoining.$model"
+                                                    <InputText type="text" max="9999-12-31" v-model="v$.DateOfJoining.$model"
                                                         placeholder="Date of Joining" id="doj" name="doj"
                                                         :class="{ 'p-invalid': v$.DateOfJoining.$invalid && submitted }"
                                                         class=" form-control textbox " onfocus="(this.type='date')" />
@@ -114,7 +114,7 @@
 
                                                     <select v-model="v$.PersonDetialsGender.$model"
                                                         placeholder="Choose Gender"
-                                                        :class="{ 'p-invalid': v$.PersonDetialsGender.$invalid && submitted }"
+                                                        :class="{ 'is-invalid': v$.PersonDetialsGender.$invalid && submitted }"
                                                         class=" form-control textbox ">
 
                                                         <option selected v-for="gender in Gender" :key="gender.name">
@@ -222,6 +222,7 @@
 
 
                                                     <select @click="NationalityCheck" name="" id=""
+                                                    :class="{ 'is-invalid': v$.ChooseNationality.$invalid && submitted }"
                                                         v-model="v$.ChooseNationality.$model" class="form-control">
                                                         <option v-for="nation in Nationality" :key="nation.name">
                                                             {{ nation.name }}
@@ -306,7 +307,7 @@
                                                             class="text-danger">*</span></label>
 
                                                     <select name="" id=" " placeholder="Bank Name"
-                                                        :class="{ 'p-invalid': v$.BankName.$invalid && submitted }"
+                                                        :class="{ 'is-invalid': v$.BankName.$invalid && submitted }"
                                                         class=" form-control textbox" v-model="v$.BankName.$model">
                                                         <option v-for="bank in bankList" :key="bank.id">
                                                             {{ bank.bank_name }}
@@ -523,7 +524,7 @@
 
                                                     <select placeholder="Country" name="current_country"
                                                         v-model="v$.currentcountry.$model"
-                                                        :class="{ 'p-error': v$.currentcountry.$invalid && submitted }"
+                                                        :class="{ 'is-invalid': v$.currentcountry.$invalid && submitted }"
                                                         id="current_country" class=" form-control textbox">
 
                                                         <option v-for="countries in country" :key="countries.id">
@@ -544,7 +545,7 @@
                                                             class="text-danger">*</span></label>
                                                     <select placeholder="State" name="current_state"
                                                         v-model="v$.currentstate.$model"
-                                                        :class="{ 'p-error': v$.currentstate.$invalid && submitted }"
+                                                        :class="{ 'is-invalid': v$.currentstate.$invalid && submitted }"
                                                         id="current_state" class=" form-control textbox">
 
                                                         <option v-for="states in state" :key="states.id">
@@ -663,7 +664,7 @@
 
                                                             <select placeholder="Country" name="current_country"
                                                                 v-model="v$.Permanentcountry.$model"
-                                                                :class="{ 'p-error': v$.Permanentcountry.$invalid && submitted }"
+                                                                :class="{ 'is-invalid': v$.Permanentcountry.$invalid && submitted }"
                                                                 id="current_country"
                                                                 class="onboard-form form-control textbox  ">
                                                                 <option v-for="countries in country" :key="countries.id">
@@ -685,7 +686,7 @@
                                                                     class="text-danger">*</span></label>
                                                             <select placeholder="State" name="Permanent_state"
                                                                 v-model="v$.Permanentstate.$model"
-                                                                :class="{ 'p-error': v$.Permanentstate.$invalid && submitted }"
+                                                                :class="{ 'is-invalid': v$.Permanentstate.$invalid && submitted }"
                                                                 id="current_state" class=" form-control textbox ">
                                                                 <option v-for="states in state" :key="states.id">
                                                                     {{ states.state_name }}
@@ -1216,11 +1217,15 @@
                                                          id="aadhar_card_file_label"><span class="file_label">Choose
                                                              Aadhar
                                                                      Card Front</span></div>-->
-                                                <input type="file" accept="image/png, image/gif, image/jpeg" ref="AadharCardFront"
-                                                    class="onboard-form form-control file" @change="AadharFront($event)"
+                                                <input v-if="AadFInvalid" type="file" accept="image/png, image/gif, image/jpeg" ref="AadharCardFront"
+                                                    class="onboard-form form-control file is-invalid" @change="AadharFront($event)"
                                                     
                                                 />
-                                                <span class="p-error" v-if="AadFInvalid">AadharCard Is required</span>
+                                                <input  v-if="!AadFInvalid"  type="file" accept="image/png, image/gif, image/jpeg" ref="AadharCardFront"
+                                                    class="onboard-form form-control file " @change="AadharFront($event)"
+                                                    
+                                                />
+                                                <span class="p-error" v-if="AadFInvalid">Aadhar Card Front is required</span>
 
                                                  
                                                 
@@ -1233,7 +1238,10 @@
                                                          id="aadhar_card_backend_file_label"><span
                                                              class="file_label">Choose
                                                                      Aadhar Card Back </span></div> -->
-                                                <input type="file" accept="image/png, image/gif, image/jpeg" ref="AadharCardBack"
+                                                <input v-if="AadBInvalid" type="file" accept="image/png, image/gif, image/jpeg" ref="AadharCardBack"
+                                                    @change="AadharBack($event)" class="onboard-form form-control file is-invalid"
+                                                    />
+                                                    <input v-if="!AadBInvalid" type="file" accept="image/png, image/gif, image/jpeg" ref="AadharCardBack"
                                                     @change="AadharBack($event)" class="onboard-form form-control file"
                                                     />
 
@@ -1247,10 +1255,15 @@
                                             <!-- <div class="addfiles form-control" data="#pan_card_file"
                                                          id="pan_card_file_label"><span class="file_label">Upload Pan
                                                                      Card</span></div> -->
-                                                <input type="file" accept="image/png, image/gif, image/jpeg"
+                                                <input v-if="PanInvalid" type="file" accept="image/png, image/gif, image/jpeg"
                                                     placeholder="Pan Card" name="pan_card_file" id="pan_card_file" ref="PanCardDoc"
-                                                    @change="PanCard($event)" class="onboard-form form-control file"
+                                                    @change="PanCard($event)" class="onboard-form form-control file is-invalid"
                                                      />
+
+                                                     <input v-if="!PanInvalid" type="file" accept="image/png, image/gif, image/jpeg"
+                                                     placeholder="Pan Card" name="pan_card_file" id="pan_card_file" ref="PanCardDoc"
+                                                     @change="PanCard($event)" class="onboard-form form-control file"
+                                                      />
 
                                                     <span v-if="PanInvalid" class="p-error">Pan Card is Required</span>
                                             </div>
@@ -1260,7 +1273,12 @@
                                             <!-- <div class="addfiles form-control" data="#passport_file"
                                                          id="passport_file_label"><span class="file_label">Choose
                                                                      Passport</span></div> -->
-                                                <input type="file" accept="image/png, image/gif, image/jpeg" ref="PassportDoc"
+                                                <input v-if="PassInvalid" type="file" accept="image/png, image/gif, image/jpeg" ref="PassportDoc"
+                                                    placeholder="Passport" name="passport_file" id="passport_file"
+                                                    @change="Passport($event)" class="onboard-form form-control file is-invalid" 
+                                                    />
+
+                                                    <input v-if="!PassInvalid" type="file" accept="image/png, image/gif, image/jpeg" ref="PassportDoc"
                                                     placeholder="Passport" name="passport_file" id="passport_file"
                                                     @change="Passport($event)" class="onboard-form form-control file" 
                                                     />
@@ -1275,7 +1293,12 @@
                                                              Voters
                                                                      ID</span></div> -->
                                                 <input type="file" accept="image/png, image/gif, image/jpeg" ref="VoterIdDoc"
-                                                    placeholder="Voters ID" name="voters_id_file" id="voters_id_file"
+                                                    placeholder="Voters ID" name="voters_id_file" id="voters_id_file" v-if="VotInvalid"
+                                                    @change="VoterId($event)" class="onboard-form form-control file is-invalid" 
+                                                   />
+
+                                                   <input type="file" accept="image/png, image/gif, image/jpeg" ref="VoterIdDoc"
+                                                    placeholder="Voters ID" name="voters_id_file" id="voters_id_file" v-if="!VotInvalid"
                                                     @change="VoterId($event)" class="onboard-form form-control file" 
                                                    />
 
@@ -1290,6 +1313,13 @@
                                                                      License</span></div> -->
                                                 <input type="file" accept="image/png, image/gif, image/jpeg"
                                                     placeholder="Driving License" name="dl_file" id="dl_file"
+                                                    @change="DrivingLisence($event)"  ref="DrivingLicenseDoc"
+                                                    v-if="DrivinInvalid"
+                                                    class="onboard-form form-control file is-invalid" />
+
+                                                    <input type="file" accept="image/png, image/gif, image/jpeg"
+                                                    placeholder="Driving License" name="dl_file" id="dl_file"
+                                                    v-if="!DrivinInvalid"
                                                     @change="DrivingLisence($event)"  ref="DrivingLicenseDoc"
                                                   
                                                     class="onboard-form form-control file" />
@@ -1307,7 +1337,14 @@
                                                 <input type="file" accept="image/png, image/gif, image/jpeg"
                                                     placeholder="Educations Certificate" name="education_certificate_file"
                                                     @change="EductionCertifacte($event)"
-                                                  
+                                                    v-if="EduInvalid"
+                                                     id="education_certificate_file" ref="EductionDoc"
+                                                    class="onboard-form form-control file is-invalid " />
+
+                                                    <input type="file" accept="image/png, image/gif, image/jpeg"
+                                                    placeholder="Educations Certificate" name="education_certificate_file"
+                                                    @change="EductionCertifacte($event)"
+                                                    v-if="!EduInvalid"
                                                      id="education_certificate_file" ref="EductionDoc"
                                                     class="onboard-form form-control file " />
                                                  
@@ -1320,7 +1357,13 @@
                                                                  id="reliving_letter_file_label"><span class="file_label">Choose Relieving Letter</span></div> -->
                                                 <input type="file" accept="image/png, image/gif, image/jpeg"
                                                     placeholder="Relieving Letter" name="reliving_letter_file"
-                                                    id="reliving_letter_file"
+                                                    id="reliving_letter_file"  v-if="RelInvalid"
+                                                    @change="ReleivingLetter($event)" ref="ReleivingLetterDoc"
+                                                    class="onboard-form form-control file is-invalid" />
+
+                                                    <input type="file" accept="image/png, image/gif, image/jpeg"
+                                                    placeholder="Relieving Letter" name="reliving_letter_file"
+                                                    id="reliving_letter_file" v-if="!RelInvalid"
                                                     @change="ReleivingLetter($event)" ref="ReleivingLetterDoc"
                                                     class="onboard-form form-control file" />
 
@@ -1339,12 +1382,12 @@
                                             <input type="button" value="sample" @click="Sampledata"
                                                 class="btn btn-orange  text-center processOnboardForm">
 
-                                            <button type="button" data="row-6" next="row-6" placeholder="" name="save_form"
+                                            <button type="submit" data="row-6" next="row-6" placeholder="" name="save_form"
                                                 id="save_button" class="btn btn-orange  text-center processOnboardForm"
                                                 value="Submit">Save</button>
 
                                             <button type="submit" data="row-6" next="row-6" placeholder=""
-                                                name="submit_form" id="msform"
+                                                name="submit_form" id="msform" :disabled="SumbitDisable"
                                                 class="btn btn-orange  text-center processOnboardForm" value="Submit"
                                                 @click="showWarn">Submit</button>
 
@@ -1380,7 +1423,7 @@
             <i class="pi pi-check-circle" :style="{fontSize: '5rem', color: 'var(--green-500)' }"></i>
             <h5>Onboarding Successful!</h5>
             <p :style="{lineHeight: 1.5, textIndent: '1rem'}">
-                Your account is registered under name <b>{{employee_onboarding.EmployeeNameasper}}</b> ; it'll be valid next 30 days without activation. Please check <b>{{state.email}}</b> for activation instructions.
+                Your account is registered under name <b>{{employee_onboarding.EmployeeNameasper}}</b><br> Please check <b>{{employee_onboarding.PersonDetialsEmail}}</b> for Further Information
             </p>
         </div>
         <template #footer>
@@ -1401,7 +1444,6 @@ import { ref } from "@vue/runtime-core";
 import validation from './NormalOnboardingService';
 import { getBankList, getCountryList, getStateList } from './NormalOnboardingService';
 
-const imageFile = ref()
 
 onMounted(() => {
     // For Bank Data
@@ -1530,6 +1572,7 @@ const VotInvalid=ref(false);
 const PassInvalid=ref(false);
 const DrivinInvalid=ref(false);
 const RelInvalid=ref(false);
+const SumbitDisable=ref(true)
 
 
 
@@ -1551,10 +1594,12 @@ const handleSubmit = (isFormValid) => {
 
             if (!isFormValid) {
                 toast.add({severity:'error', summary: 'Error Message', detail:'Message Content', life: 3000});
+                RequiredDocument.value=true
                 return;
             }
-
             toggleDialog();
+            SumbitDisable.value=false
+
         }
         const toggleDialog = () => {
             showMessage.value = !showMessage.value;
@@ -1901,7 +1946,7 @@ const Sampledata = () => {
     employee_onboarding.SpouseName = ref("priyanka")
     employee_onboarding.noOfChildren = ref("5")
     employee_onboarding.EmployeeCode = ref("B101")
-    AadharCardFront.file=ref("wallpaperflare.com_wallpaper")
+   
   
 
 }
