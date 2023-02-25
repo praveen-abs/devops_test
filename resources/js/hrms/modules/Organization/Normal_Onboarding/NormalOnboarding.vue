@@ -358,7 +358,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> 
 
 
 
@@ -481,14 +481,15 @@
                                         <div class=" header-card-text">
                                             <h6>Current Address</h6>
                                         </div>
-                                        <div class="row mt-1">
+                                         <div class="row mt-1">
                                             <div class="col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6 mb-2">
                                                 <div class="floating">
                                                     <label for="" class="float-label">Address 1<span
                                                             class="text-danger">*</span></label>
                                                     <Textarea style="height: 100px;" class="form-control textbox capitalize"
                                                         type="text" rows="3" current_address_line_1
-                                                        v-model="v$.currentAddress1.$model" placeholder="Current Address" ></Textarea>
+                                                        :class="{ 'p-invalid': v$.currentAddress1.$invalid && submitted }"
+                                                        v-model="v$.currentAddress1.$model" placeholder="Current Address" />
                                                 
                                                         <span v-if="(v$.currentAddress1.$invalid && submitted) || v$.currentAddress1.$pending.$response"
                                                         class="p-error">{{v$.currentAddress1.required.$message.replace('Value', 'CurrentAddress1') }}</span>
@@ -594,7 +595,7 @@
 
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> 
 
                                         <div class="row">
                                             <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 col-xl-12 my-3">
@@ -609,7 +610,7 @@
 
 
                                             <!-- Permanent Address Start -->
-                                            <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 col-xl-12 ">
+                                             <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 col-xl-12 ">
                                                 <h6>Permanent Address</h6>
                                                 <div class="row mt-1">
                                                     <div class="col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6 mb-2">
@@ -736,7 +737,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> 
                                         </div>
                                     </div>
                                 </div>
@@ -860,8 +861,7 @@
                                                         :class="{ 'is-invalid': v$.ReportingManagerCode.$invalid && submitted }"
                                                           class="onboard-form form-control  textbox " >
                                                           <option value="B100">B100</option>
-                                                        <!-- <option value="" hidden selected disabled>Select
-                                                        </option> -->
+                                                    
                                                     </select>
 
                                                     <span
@@ -965,7 +965,7 @@
 
                             <!-- Family Detials Start -->
 
-                            <div class="card shadow  profile-box card-top-border p-2">
+                            <div class="card shadow  profile-box card-top-border p-2"> 
                                 <div class="card-body justify-content-center align-items-center ">
                                     <div class="header-card-text">
                                         <h6 class="mb-0">Family Details</h6>
@@ -1216,17 +1216,14 @@
                                                          id="aadhar_card_file_label"><span class="file_label">Choose
                                                              Aadhar
                                                                      Card Front</span></div>-->
-                                                <input type="file" accept="image/png, image/gif, image/jpeg"
+                                                <input type="file" accept="image/png, image/gif, image/jpeg" ref="AadharCardFront"
                                                     class="onboard-form form-control file" @change="AadharFront($event)"
-                                                    :class="{ 'p-invalid': v$.AadharCardFront.$invalid && submitted }" />
-
                                                     
-                                                    <!-- <span
-                                                    v-if="(v$.AadharFront.$invalid && submitted) || v$.AadharFront.$pending.$response"
-                                                    class="p-error">{{
-                                                     v$.AadharFront.required.$message.replace('Value',
-                                                     'Aadhar Front') }}
-                                                    </span> -->
+                                                />
+                                                <span class="p-error" v-if="AadFInvalid">AadharCard Is required</span>
+
+                                                 
+                                                
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2"
                                                 id="aadhar_card_backend_content">
@@ -1236,15 +1233,13 @@
                                                          id="aadhar_card_backend_file_label"><span
                                                              class="file_label">Choose
                                                                      Aadhar Card Back </span></div> -->
-                                                <input type="file" accept="image/png, image/gif, image/jpeg"
+                                                <input type="file" accept="image/png, image/gif, image/jpeg" ref="AadharCardBack"
                                                     @change="AadharBack($event)" class="onboard-form form-control file"
-                                                    :class="{ 'p-invalid': v$.AadharCardBack.$invalid && submitted }" />
+                                                    />
 
-                                                    <!-- <span
-                                                    v-if="(v$.AadharBack.$invalid && submitted) || v$.AadharBack.$pending.$response"
-                                                    class="p-error">{{
-                                                     v$.AadharBack.required.$message.replace('Value',
-                                                     'Aadhar Back') }}</span> -->
+                                                    <span v-if="AadBInvalid" class="p-error">Aadhar Card Back is Required</span>
+
+                                                   
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                                                 <label for="" class="float-label"> Pan
@@ -1253,15 +1248,11 @@
                                                          id="pan_card_file_label"><span class="file_label">Upload Pan
                                                                      Card</span></div> -->
                                                 <input type="file" accept="image/png, image/gif, image/jpeg"
-                                                    placeholder="Pan Card" name="pan_card_file" id="pan_card_file"
+                                                    placeholder="Pan Card" name="pan_card_file" id="pan_card_file" ref="PanCardDoc"
                                                     @change="PanCard($event)" class="onboard-form form-control file"
-                                                    :class="{ 'p-invalid': v$.PanCardDoc.$invalid && submitted }" />
+                                                     />
 
-                                                    <!-- <span
-                                                    v-if="(v$.PanCard.$invalid && submitted) || v$.PanCard.$pending.$response"
-                                                    class="p-error">{{
-                                                     v$.PanCard.required.$message.replace('Value',
-                                                     'PanCard Id') }}</span> -->
+                                                    <span v-if="PanInvalid" class="p-error">Pan Card is Required</span>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                                                 <label for="" class="float-label">
@@ -1269,16 +1260,12 @@
                                             <!-- <div class="addfiles form-control" data="#passport_file"
                                                          id="passport_file_label"><span class="file_label">Choose
                                                                      Passport</span></div> -->
-                                                <input type="file" accept="image/png, image/gif, image/jpeg"
+                                                <input type="file" accept="image/png, image/gif, image/jpeg" ref="PassportDoc"
                                                     placeholder="Passport" name="passport_file" id="passport_file"
                                                     @change="Passport($event)" class="onboard-form form-control file" 
-                                                    :class="{ 'p-invalid': v$.PassportDoc.$invalid && submitted }"/>
+                                                    />
 
-                                                    <!-- <span
-                                                    v-if="(v$.Passport.$invalid && submitted) || v$.Passport.$pending.$response"
-                                                    class="p-error">{{
-                                                     v$.Passport.required.$message.replace('Value',
-                                                     'Passport Id') }}</span> -->
+                                                    <span v-if="PassInvalid" class="p-error">Pan Card is Required</span>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                                                 <label for="" class="float-label">
@@ -1287,17 +1274,13 @@
                                                          id="voters_id_file_label"><span class="file_label">Choose
                                                              Voters
                                                                      ID</span></div> -->
-                                                <input type="file" accept="image/png, image/gif, image/jpeg"
+                                                <input type="file" accept="image/png, image/gif, image/jpeg" ref="VoterIdDoc"
                                                     placeholder="Voters ID" name="voters_id_file" id="voters_id_file"
                                                     @change="VoterId($event)" class="onboard-form form-control file" 
-                                                    :class="{ 'p-invalid': v$.VoterIdDoc.$invalid && submitted }"/>
+                                                   />
 
 
-                                                    <!-- <span
-                                                    v-if="(v$.VoterId.$invalid && submitted) || v$.VoterId.$pending.$response"
-                                                    class="p-error">{{
-                                                     v$.VoterId.required.$message.replace('Value',
-                                                     'Voter Id') }}</span> -->
+                                                    <span v-if="VotInvalid" class="p-error">Voter Id is Required</span>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                                                 <label for="" class="float-label"> Driving
@@ -1307,15 +1290,11 @@
                                                                      License</span></div> -->
                                                 <input type="file" accept="image/png, image/gif, image/jpeg"
                                                     placeholder="Driving License" name="dl_file" id="dl_file"
-                                                    @change="DrivingLisence($event)"
-                                                    :class="{ 'p-invalid': v$.DrivingLicenseDoc.$invalid && submitted }"
+                                                    @change="DrivingLisence($event)"  ref="DrivingLicenseDoc"
+                                                  
                                                     class="onboard-form form-control file" />
-<!-- 
-                                                    <span
-                                                    v-if="(v$.DrivingLisence.$invalid && submitted) || v$.DrivingLisence.$pending.$response"
-                                                    class="p-error">{{
-                                                     v$.DrivingLisence.required.$message.replace('Value',
-                                                     'Driving Lisence') }}</span> -->
+
+                                                    <span v-if="DrivinInvalid" class="p-error">Driving Lisence is Required</span>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
                                                 <label for="" class="float-label">Educations
@@ -1328,15 +1307,11 @@
                                                 <input type="file" accept="image/png, image/gif, image/jpeg"
                                                     placeholder="Educations Certificate" name="education_certificate_file"
                                                     @change="EductionCertifacte($event)"
-                                                    :class="{ 'p-invalid': v$.EductionDoc.$invalid && submitted }"
-                                                     id="education_certificate_file"
+                                                  
+                                                     id="education_certificate_file" ref="EductionDoc"
                                                     class="onboard-form form-control file " />
                                                  
-                                                    <!-- <span
-                                                    v-if="(v$.EductionCertifacte.$invalid && submitted) || v$.EductionCertifacte.$pending.$response"
-                                                    class="p-error">{{
-                                                     v$.EductionCertifacte.required.$message.replace('Value',
-                                                     'Eduction Certifacte') }}</span> -->
+                                                    <span v-if="EduInvalid" class="p-error">Eduction Certifacte is Required</span>
                                             </div>   
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
                                                 <label for="" class="float-label"> Relieving
@@ -1345,15 +1320,11 @@
                                                                  id="reliving_letter_file_label"><span class="file_label">Choose Relieving Letter</span></div> -->
                                                 <input type="file" accept="image/png, image/gif, image/jpeg"
                                                     placeholder="Relieving Letter" name="reliving_letter_file"
-                                                    :class="{ 'p-invalid': v$.ReleivingLetterDoc.$invalid && submitted }" id="reliving_letter_file"
-                                                    @change="ReleivingLetter($event)"
+                                                    id="reliving_letter_file"
+                                                    @change="ReleivingLetter($event)" ref="ReleivingLetterDoc"
                                                     class="onboard-form form-control file" />
 
-                                                    <!-- <span
-                                                    v-if="(v$.ReleivingLetterDoc.$invalid && submitted) || v$.ReleivingLetterDoc.$pending.$response"
-                                                    class="p-error">{{
-                                                     v$.ReleivingLetterDoc.required.$message.replace('Value',
-                                                     'Releiving Letter') }}</span> -->
+                                                    <span v-if="RelInvalid" class="p-error">Releiving Letter is Required</span>
                                             </div>
                                         </div>
                                     </div>
@@ -1440,6 +1411,7 @@ onMounted(() => {
     console.log(country.country_name);
     // for state
     getStateList().then(result => state.value = result)
+    
 })
 
 
@@ -1550,6 +1522,15 @@ const submitted = ref(false);
 const showMessage = ref(false);
 const v$ = useVuelidate(validation, employee_onboarding)
 
+const AadFInvalid=ref(false);
+const AadBInvalid=ref(false);
+const PanInvalid=ref(false);
+const EduInvalid=ref(false);
+const VotInvalid=ref(false);
+const PassInvalid=ref(false);
+const DrivinInvalid=ref(false);
+const RelInvalid=ref(false);
+
 
 
 //   Events
@@ -1557,8 +1538,19 @@ const v$ = useVuelidate(validation, employee_onboarding)
 const handleSubmit = (isFormValid) => {
             submitted.value = true;
 
+         AadharCardFront.fileName==undefined?AadFInvalid.value=true: AadFInvalid.value=false
+         AadharCardBack.fileName==undefined?AadBInvalid.value=true: AadBInvalid.value=false
+         PanCardDoc.fileName==undefined?PanInvalid.value=true: PanInvalid.value=false
+         DrivingLicenseDoc.fileName==undefined?DrivinInvalid.value=true: DrivinInvalid.value=false
+         VoterIdDoc.fileName==undefined?VotInvalid.value=true: VotInvalid.value=false
+         ReleivingLetterDoc.fileName==undefined?RelInvalid.value=true: RelInvalid.value=false
+         EductionDoc.fileName==undefined?EduInvalid.value=true: EduInvalid.value=false
+         PassportDoc.fileName==undefined?PassInvalid.value=true: PassInvalid.value=false
+
+
+
             if (!isFormValid) {
-               
+                toast.add({severity:'error', summary: 'Error Message', detail:'Message Content', life: 3000});
                 return;
             }
 
@@ -1611,14 +1603,7 @@ const NationalityCheck = () => {
         NationalityData.value = true
     }
 }
-const showWarn = () => {
-    console.log(employee_onboarding);
-    // handleSubmit();
-    jsonFormat();
-    console.log("current "+employee_onboarding.currentAddress1);
 
-
-}
 
 
 
@@ -1660,7 +1645,7 @@ const AadharFront = (e) => {
     // Check if file is selected
     if (e.target.files && e.target.files[0]) {
         // Get uploaded file
-        AadharCardFront.file = e.target.files[0],
+            AadharCardFront.file = e.target.files[0],
             // Get file size
             AadharCardFront.fileSize = Math.round((file.size / 1024 / 1024) * 100) / 100,
             // Get file extension
@@ -1793,6 +1778,16 @@ const ReleivingLetter = (e) => {
     }
 }
 
+const showWarn = () => {
+    console.log(employee_onboarding);
+    // handleSubmit();
+    jsonFormat();
+    console.log(AadharCardFront.fileName);
+   
+
+    
+   
+}
 
 // for Testing Post Data
 
@@ -1906,7 +1901,8 @@ const Sampledata = () => {
     employee_onboarding.SpouseName = ref("priyanka")
     employee_onboarding.noOfChildren = ref("5")
     employee_onboarding.EmployeeCode = ref("B101")
-
+    AadharCardFront.file=ref("wallpaperflare.com_wallpaper")
+  
 
 }
 

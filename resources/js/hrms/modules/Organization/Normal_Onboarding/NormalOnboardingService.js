@@ -197,13 +197,6 @@ export default function validation(rules) {
         SpouseDOB: { required },
 
         // Personal Documents
-        // AadharCardFront:{required},
-        // AadharCardBack:{required},
-        // PanCardDoc:{required},
-        // PassportDoc:{required},
-        // VoterIdDoc:{required},
-        // DrivingLicenseDoc:{required},
-        // EductionDoc:{required},
-        // ReleivingLetterDoc:{required}
+        file:{required}
     });
 }
