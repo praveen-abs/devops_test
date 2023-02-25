@@ -198,9 +198,8 @@
                         <div class="card mb-0 leave-history">
                             <div class="card-body">
                                 <h6 class="mb-2">Org Leave history</h6>
-                                <div class="table-responsive">
-                                    <div id="org_leaveHistory" class="custom_gridJs"></div>
-                                </div>
+                                @vite('resources/js/hrms/modules/leave_module/Org_leave_module/OrgLeaveHistoryTable.js')
+                                <div id="vjs_orgLeaveHistoryTable"></div>
                             </div>
                         </div>
                     </div>
@@ -247,95 +246,6 @@
         </div>
 
     </div>
-
-    {{--  --}}
-
-
-    {{--
-        <div class="card top-line ">
-            <div class="card-body">
-                <div class="leave-balance-wrapper">
-                    <div class="row mb-2">
-                        <div class="col-8">
-                            <h6>Leave Balance</h6>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-4 d-flex ">
-                        <div class="card left-line w-100">
-                            <div class="card-body">
-                                <p class="text-muted mb-2 fw-bold text-center">Available</p>
-                                <h6 class="text-center">-</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-4 d-flex ">
-                        <div class="card left-line w-100">
-                            <div class="card-body">
-                                <p class="text-muted mb-2 fw-bold text-center">Accured so far</p>
-                                <h6 class="text-center">-</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-4 d-flex ">
-                        <div class="card left-line w-100">
-                            <div class="card-body">
-                                <p class="text-muted mb-2 fw-bold text-center">Carryover</p>
-                                <h6 class="text-center">-</h6>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="leave-availed-wrapper">
-                    <div class="row mb-2">
-                        <div class="col-8">
-                            <h6>Leave Availed</h6>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-4 d-flex ">
-                            <div class="card left-line w-100">
-                                <div class="card-body">
-                                    <p class="text-muted mb-2 fw-bold text-center">Available</p>
-                                    <h6 class="text-center">-</h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4 d-flex ">
-                            <div class="card left-line w-100">
-                                <div class="card-body">
-                                    <p class="text-muted mb-2 fw-bold text-center">Accured so far</p>
-                                    <h6 class="text-center">-</h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4 d-flex ">
-                            <div class="card left-line w-100">
-                                <div class="card-body">
-                                    <p class="text-muted mb-2 fw-bold text-center">Carryover</p>
-                                    <h6 class="text-center">-</h6>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-
-            </div>
-        </div> --}}
-
-
-
-
-
-
-
-    {{-- modals --}}
-
 
     <div id="leave_availed-modal" class="modal custom-modal fade" role="dialog">
         <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable  modal-xl" role="document">
