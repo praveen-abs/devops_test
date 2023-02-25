@@ -970,6 +970,7 @@ class VmtEmployeeController extends Controller
                 'error_fields' => [],
             ];
         } catch (\Exception $e) {
+            //dd($e);
             $this->deleteUser($user->id);
 
 
