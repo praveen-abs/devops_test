@@ -181,7 +181,7 @@ class VmtAttendanceReportsService{
                  "user_id"=> $singleUser->id,"DOJ"=>$singleUser->doj,"isAbsent"=>false,"isLeave"=>false,
                  "is_weekoff"=>false,"isLC"=>false,"isEG"=>false,"date"=>$fulldate,"is_holiday"=>false,
                  "attendance_mode_checkin"=>null,"attendance_mode_checkout"=>null, "absent_status"=>null,
-                 "checkin_time"=>null,"checkout_time"=>null,"leave_type"=>null
+                 "checkin_time"=>null,"checkout_time"=>null,"leave_type"=>null,"half_day_status"=>null
                                                              );
 
                 //echo "Date is ".$fulldate."\n";
@@ -315,7 +315,7 @@ class VmtAttendanceReportsService{
                     $leave_Details=VmtEmployeeLeaves::where('user_id',$attendanceResponseArray[$key]['user_id'])
                                   ->whereYear('end_date', $year)
                                   ->whereMonth('end_date',$month)
-                                  ->get(['start_date','end_date','status','leave_type_id']);
+                                  ->get(['start_date','end_date','status','leave_type_id','total_leave_datetime']);
                     if( $leave_Details->count()==0){
                        // dd( $leave_Details->count());
                         $attendanceResponseArray[$key]['isAbsent']=true;
@@ -326,7 +326,13 @@ class VmtAttendanceReportsService{
                             $currentDate =  Carbon::parse($attendanceResponseArray[$key]['date']);
                          //   dd($startDate.'-----'.$currentDate.'-----');
                             if($currentDate->gt( $startDate) && $currentDate->lte($endDate) ){
-                                if($attendanceResponseArray[$key]['checkin_time']==null&&
+                                if(substr( $single_leave_details->total_leave_datetime,-1)=='N'){
+                                     if($single_leave_details->status=='Approved'){
+                                         $attendanceResponseArray[$key]['half_day_status']='leave';
+                                     }else {
+                                        $attendanceResponseArray[$key]['half_day_status']='absent';
+                                     }
+                                } else if($attendanceResponseArray[$key]['checkin_time']==null&&
                                 $attendanceResponseArray[$key]["checkout_time"]==null&&
                                 $single_leave_details->status=='Approved'){
                                     $attendanceResponseArray[$key]['isLeave']=true;
@@ -417,9 +423,12 @@ class VmtAttendanceReportsService{
                   }else if($attendanceResponseArray[$key]['is_holiday']){
                     array_push($arrayReport,'HO');
                     $total_holidays++;
-                  }else if($attendanceResponseArray[$key]['isAbsent']&&!$attendanceResponseArray[$key]['isLeave']&&!$attendanceResponseArray[$key]['is_holiday']){
+                  }else if($attendanceResponseArray[$key]['isAbsent']&&!$attendanceResponseArray[$key]['isLeave']
+                  &&!$attendanceResponseArray[$key]['is_holiday']&&$attendanceResponseArray[$key]['half_day_status']!='leave'){
                      array_push($arrayReport,'A');
                      $total_absent++;
+                 }else if($attendanceResponseArray[$key]['half_day_status']=='leave'){
+                    array_push($arrayReport,'HD');
                  }else if( $attendanceResponseArray[$key]['isLeave']){
                    // dd($attendanceResponseArray[$key]);
                    if($attendanceResponseArray[$key]['leave_type']=='OD'){
