@@ -70,7 +70,7 @@ import axios from 'axios';
                 leave_data.value=Object.values(response.data.employees)
                 loading.value=false
 
-                console.log("Response Data ORG Leave: "+JSON.stringify(Object.values(leave_data.value)));
+                // console.log("Response Data ORG Leave: "+JSON.stringify(Object.values(leave_data.value)));
         });
 
 
