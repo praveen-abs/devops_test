@@ -4,7 +4,8 @@
     @lang('translation.dashboards')
 @endsection
 @section('css')
-    <link href="{{ URL::asset('assets/css/attendance.css') }}" rel="stylesheet">
+
+
 @endsection
 @section('content')
     {{-- @component('components.attendance_breadcrumb')
@@ -18,9 +19,10 @@
             <div class="card-body ">
                 <div class="filter-content">
                     <div class="row">
-
-                        <h6 class="">Attendance Regularization Approvals</h6>
-
+                        <div class="col-sm-12 col-xxl-4 col-md-6 col-xl-4 col-lg-4">
+                            <h6 class="mb-0 text-muted text-start">Attendance Regularization Approvals</h6>
+                            <br />
+                        </div>
                         {{-- <div class="col-sm-12 col-xxl-8 col-md-6 col-xl-8 col-lg-8">
                             <div class="row">
                                 <div class="col-sm-12 col-xxl-3 col-md-6 col-xl-3 col-lg-3">
@@ -72,8 +74,8 @@
                 </div>
 
                 <div class="table-responsive">
-                    <div class="attendance_gridjs" id="vjs_regularizationTable"></div>
-                    <div class="attendance_gridjs" id="table_lateComingTable"></div>
+                    <div id="vjs_regularizationTable"></div>
+                    {{-- <div class="attendance_gridjs" id="table_lateComingTable"></div> --}}
                 </div>
             </div>
         </div>
@@ -116,7 +118,7 @@
 @endsection
 
 @section('script')
-    {{-- @vite(['resources/js/hrms/modules/approvals/AttRegularizationApproval.js']) --}}
+    @vite(['resources/js/hrms/modules/approvals/att_regularization/AttRegularizationApproval.js'])
 
     <script src="{{ URL::asset('assets/libs/gridjs/gridjs.min.js') }}"></script>
     <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>

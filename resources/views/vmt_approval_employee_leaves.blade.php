@@ -14,6 +14,8 @@
 
 <div class=" directory-wrapper bg-white px-3 pt-3 pb-0 mt8-mb25">
     <h6 class="">Leave Approvals</h6>
+    <h1>welcome</h1>
+   <div id="Approval_employee_leaves"></div>
     <!-- <div class="row">
         <div class="col-12">
             <div class="row ">
@@ -226,6 +228,8 @@
     <h6 class="text-secondary">In-Active Employees</h6>
 
     <div>
+
+
         <div class="table-responsive">
             <div class="container-fluid px-2 bg-white" style="position:relative;">
                 <table class=" table table-borderd " id="directory-table-1">
@@ -424,6 +428,8 @@
 
 @endsection
 @section('script')
+@vite('resources/js/hrms/modules/approvals/Leaves/Approval_employee_leaves.js')
+
 <!-- apexcharts -->
 <script src="{{ URL::asset('/assets/js/pages/dashboard-projects.init.js') }}"></script>
 

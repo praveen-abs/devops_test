@@ -65,6 +65,7 @@ table.policy-table {
 }
 table.policy-table tr:nth-child(even) {
     background-color: #0067bf30;
+    border-bottom: 0px;
 }
 table.policy-version-table td:first-child {
     min-width: 250px;
@@ -110,6 +111,10 @@ table.policy-version-table td:nth-child(odd) p {
 .border-none-left-right {
     border-left: 0px;
     border-right: 0px;
+}
+
+.pad-left-15{
+    padding-left: 15px;
 }
 
 .pad-bottom-25 {

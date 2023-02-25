@@ -212,7 +212,7 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                                         class="nav-link sidebar py-1"><span>Department</span></a>
                                 </li>
                                 <li class="nav-item ">
-                                    <a href="{{ url('employeeOnboarding') }}" id=""
+                                    <a href="{{ route('employee-onboarding-v2') }}" id=""
                                         class="nav-link sidebar py-1" aria-expanded="false"><span>Onboarding</span>
                                     </a>
                                 </li>
@@ -345,10 +345,10 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                                     {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}
 
                                     <li class="nav-item">
-                                        {{-- <a href="{{ route('showReimbursementApprovalPage') }}" id=""
+                                        <a href="{{ route('showReimbursementApprovalPage') }}" id=""
                                             class="nav-link sidebar py-1" data-bs-toggle="" role="button"
                                             aria-expanded="false"><span>
-                                                Reimbursement</span> </a> --}}
+                                                Reimbursement</span> </a>
                                         {{-- <a href="{{ url('vmt_mail_attendance_regularization_notify') }}" class="nav-link sidebar py-1"><span>Dashboard</span></a> --}}
 
                                     </li>
