@@ -40,7 +40,7 @@ import StyleClass from 'primevue/styleclass';
 import Toast from 'primevue/toast';
 import ToastService from 'primevue/toastservice';
 import Tooltip from 'primevue/tooltip';
-
+import Textarea from 'primevue/textarea';
 
 import NormalOnboarding from './NormalOnboarding.vue'
 
@@ -85,6 +85,7 @@ app.component('Listbox', Listbox);
 app.component('ProgressSpinner', ProgressSpinner);
 app.component('RadioButton', RadioButton);
 app.component('Toast', Toast)
+app.component('Textarea', Textarea)
 
 app.mount("#vjs_normal_onboarding");
 

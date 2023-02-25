@@ -28,7 +28,6 @@ export async function getStateList() {
     return response.data;
 }
 
-
 // Validation
 
 export default function validation(rules) {
@@ -100,9 +99,7 @@ export default function validation(rules) {
                 return regex.test(value);
             },
         },
-        PersonDetialsMaritalStatus: {
-            required,
-        },
+        PersonDetialsMaritalStatus: {    },
         PersonDetialsEmail: {
             required,
             email,
@@ -192,18 +189,10 @@ export default function validation(rules) {
         motherName: { required },
         motherDateofBirth: { required },
         SpouseName: { required },
-        dateOfWedding: { required },
-        spouseGender:{required},
+        dateOfWedding: {  },
+        spouseGender: { required },
         SpouseDOB: { required },
 
         // Personal Documents
-        // AadharCardFront:{required},
-        // AadharCardBack:{required},
-        // PanCardDoc:{required},
-        // PassportDoc:{required},
-        // VoterIdDoc:{required},
-        // DrivingLicenseDoc:{required},
-        // EductionDoc:{required},
-        // ReleivingLetterDoc:{required}
     });
 }
