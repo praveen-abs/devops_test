@@ -1398,6 +1398,9 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                         cell.setAttribute("data-month_name", months[month]);
                         cell.className = "_date-picker p-0";
 
+                        
+                                             
+
 
                         if (isWeekEnd) {
                             cell.innerHTML =
@@ -1422,6 +1425,35 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                             //console.log("testing " + currentDate);
                             let todayDate = new Date().toISOString().slice(0, 10)
                             //console.log("today" + todayDate);
+                       
+                            console.log("Leave type"+ajax_data_currentdate.leave_type);
+
+                            // if(ajax_data_currentdate.leave_type=="Sick Leave"){
+                            //     $("#Leavetype").html("Sick Leave Approved");
+                            //     console.log("Sick Leave true");
+                            // }
+                            // else
+                            // if(ajax_data_currentdate.leave_type=="Earned Leave"){
+                            //     $("#Leavetype").html("Earned Leave Approved");
+                            //     console.log("Earned Leave true")
+                            // }else
+                            // if(ajax_data_currentdate.leave_type=="Casual Leave"){
+                            //     $("#Leavetype").html("Casual Leave Approved");
+                            //     console.log("casual Leave true");
+                            // }else
+                            // if(ajax_data_currentdate.leave_type=="Compensatory Leave"){
+                            //     $("#Leavetype").html("Compensatory Leave Approved");
+                            //     console.log("Compensatory Leave true");
+                            // }else
+                            // if(ajax_data_currentdate.leave_type=="Flexi day-off Leave"){
+                            //     $("#Leavetype").html("Flexi day-off Leave Approved");
+                            //     console.log("Flexi Leave true");
+                            // }
+                            // else{
+                            //     $("#Leavetype").html(ajax_data_currentdate.leave_type);
+                            //     alert(ajax_data_currentdate.leave_type);
+                            // }
+                            
 
                             if (ajax_data_currentdate) {
 
@@ -1440,7 +1472,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
                                             "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start'><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><span class='f-11' id='checkout_time_" +
                                             year + "-" + (month + 1) + "-" + dateText +
-                                            "'>Absent <br><span style='color:black;font-size:10px;text-align:center;margin-left:5px' id='statement'></span></span>";
+                                            "'><br><span style='color:black;font-size:10px;text-align:center;margin-left:5px' id='statement'></span></span>";
 
 
 
@@ -1476,10 +1508,11 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         else
                                         if (ajax_data_currentdate.absent_status == "Approved")
                                         {
-                                            cell.innerHTML = cell.innerHTML + "<span style='position: relative;top: -30px; left: -17px;font-weight: 700;color: green;'>Leave Approved</span>"+ajax_data_currentdate.leave_type;
+                                            cell.innerHTML = cell.innerHTML + "<span style='position: relative;top: -40px; left: -27px;font-weight: 700;color: black;'>"+ ajax_data_currentdate.leave_type+"<br><span>Approved</span></span><br>";
+                                            // cell.innerHTML = cell.innerHTML + "<span style='position: relative;top: -30px; left: -17px;font-weight: 700;color: green;'>Leave</span>";
                                             // $("#statement").attr("src","{{ URL::asset($svg_icon_approved) }}")
 
-                                            // $("#statement").html("Leave Approved")
+                                         
                                         }
                                         else
                                          if (ajax_data_currentdate.absent_status == "Pending")
