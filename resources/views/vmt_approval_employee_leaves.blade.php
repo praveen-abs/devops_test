@@ -14,7 +14,7 @@
 
 <div class=" directory-wrapper bg-white px-3 pt-3 pb-0 mt8-mb25">
     <h6 class="">Leave Approvals</h6>
-    <h1>welcome</h1>
+   
    <div id="Approval_employee_leaves"></div>
     <!-- <div class="row">
         <div class="col-12">

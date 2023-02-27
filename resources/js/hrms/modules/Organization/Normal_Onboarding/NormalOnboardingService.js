@@ -27,6 +27,10 @@ export async function getStateList() {
     const response = await axios.get(`/db/getStatesDetails`);
     return response.data;
 }
+export async function ManagerDetails(){
+    const response=await axios.get(`/fetch-manahgers-name`);
+    return response.data
+}
 
 // Validation
 
@@ -99,7 +103,8 @@ export default function validation(rules) {
                 return regex.test(value);
             },
         },
-        PersonDetialsMaritalStatus: {    },
+        PersonDetialsMaritalStatus: { required   },
+
         PersonDetialsEmail: {
             required,
             email,

@@ -22,6 +22,9 @@ import ColumnGroup from 'primevue/columngroup';     //optional for column groupi
 import Row from 'primevue/row';
 import Dialog from 'primevue/dialog';
 import InputText from 'primevue/inputtext'
+import Dropdown from 'primevue/dropdown';
+import ProgressSpinner from 'primevue/progressspinner';
+
 
 import OrgLeaveHistoryTable from './OrgLeaveHistoryTable.vue';
 
@@ -45,6 +48,8 @@ app.component('ColumnGroup', ColumnGroup);
 app.component('Row', Row);
 app.component('Dialog', Dialog)
 app.component('InputText', InputText)
+app.component('Dropdown', Dropdown)
+app.component('ProgressSpinner', ProgressSpinner)
 
 app.mount("#vjs_orgLeaveHistoryTable");
 
