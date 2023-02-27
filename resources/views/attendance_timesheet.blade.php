@@ -631,7 +631,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
 
                                                         <thead id="_thead-month"></thead>
-                                                        
+
                                                         <tbody id="_calendar-body">
 
                                                         </tbody>
@@ -881,14 +881,17 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
             var avatar_data = '';
 
+            <?php
+                $emp_avatar = json_decode($current_employee_detail->employee_avatar);
 
+            ?>
 
-            @if ($current_employee_detail->employee_avatar->type == 'shortname')
+            @if ($emp_avatar->type == 'shortname')
 
                 avatar_data =
-                    '<div class="{{ $current_employee_detail->employee_avatar->color }} user_pic d-flex justify-content-center align-items-center  rounded-circle"> <span class="text-white fw-bold">{{ $current_employee_detail->employee_avatar->data }}</span></div>';
-            @elseif ($current_employee_detail->employee_avatar->type == 'avatar')
-                var imageURL = "images/" + '{{ $current_employee_detail->employee_avatar->data }}';
+                    '<div class="{{ $emp_avatar->color }} user_pic d-flex justify-content-center align-items-center  rounded-circle"> <span class="text-white fw-bold">{{ $emp_avatar->data }}</span></div>';
+            @elseif ($emp_avatar->type == 'avatar')
+                var imageURL = "images/" + '{{ $emp_avatar->data }}';
 
                 avatar_data =
                     ' <div class="user_pic bg-ash rounded-circle "><img class=" rounded-circle w-100 h-100 header-profile-user" src="' +
@@ -1432,7 +1435,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                             let Approved =ajax_data_currentdate.absent_status.includes("Approved");
 
                                         if(Pending || Rejected || Revoked || Approved){
-                                       
+
 
                                         cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
                                             "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start'><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><span class='f-11' id='checkout_time_" +
@@ -1440,7 +1443,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                             "'>Absent <br><span style='color:black;font-size:10px;text-align:center;margin-left:5px' id='statement'></span></span>";
 
 
-                                           
+
                                         // if (ajax_data_currentdate.absent_status == "Not Applied")
                                         // {
                                         //     cell.innerHTML = cell.innerHTML + "<span>Leave Applied</span>";
@@ -1487,15 +1490,15 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
                                         }
                                     }
-                                
+
                                     else{
                                         cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
                                                 "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start'><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><span style='margin-top: -38px;margin-left: 45px;font-size: 13px;color: red;font-weight: 700;' class='f-11' id='checkout_time_" +
                                                 year + "-" + (month + 1) + "-" + dateText +
                                                 "'>Absent <br><div style='display: flex;gap: 20px;margin-left: -30px;margin-top: 15px;'><span style=''><input type='button' style='padding: 3px;border-radius: 8px;outline: none;color: white;background-color: #2f0358;border: none;font-weight: 700;'onclick='AttendenceRegularizationModal(this)' value='Ar' /></span><span><input type='button'style='padding: 3px;border-radius: 8px;outline: none;color: white;background-color: #ff6000;border: none;font-weight: 700;' data-bs-target='#leaveApply_modal' data-bs-toggle='modal' value='Apply Leave' /></span></div></span>";
                                     }
-                                      
-                                    } 
+
+                                    }
                                     else {
                                         cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
                                             "</p>  </div>"
@@ -1681,7 +1684,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
         });
 
 
-            // For Apply Leave to Button 
+            // For Apply Leave to Button
 
             function resetLeaveModalValues() {
 
@@ -1715,7 +1718,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
             function AttendenceRegularizationModal(element) {
 
-             
+
              let t_regularization_type = $(element).val();
              let selected_date = $(element).data('currentdate');
              console.log(selected_date);

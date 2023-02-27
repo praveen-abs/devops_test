@@ -495,7 +495,7 @@ class VmtAttendanceController extends Controller
 
         //TODO : get the attendance data for the given month
         $employeeAttendanceData = VmtEmployeeAttendance::all();
-        
+
 
         //dd($employeeAttendanceData);
         return view('old_vmt_attendance_timesheet', compact('employeeAttendanceData'));
@@ -581,7 +581,7 @@ class VmtAttendanceController extends Controller
 
         $current_employee_detail->employee_avatar = getEmployeeAvatarOrShortName($current_employee_detail->id);
 
-        return view('attendance_timesheet', compact('current_employee_detail', 'shift_start_time', 'shift_end_time'));
+        return view('attendance_timesheet', compact('current_employee_detail', 'shift_start_time', 'shift_end_time','leaveTypes'));
     }
 
 
