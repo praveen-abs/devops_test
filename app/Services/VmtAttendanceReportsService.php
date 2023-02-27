@@ -64,6 +64,7 @@ class VmtAttendanceReportsService{
             $total_OD=0;
             $total_LC=0;
             $total_EG=0;
+            $total_lop=0;
 
 
             //dd($singleUser->user_code);
@@ -189,7 +190,7 @@ class VmtAttendanceReportsService{
                 //echo "Date is ".$fulldate."\n";
                 ///$month_array[""]
               }
-              array_push($heading_dates, "Total WO", "Total HO","Total P", "Total A","Total L","Total HD","Total OD","Total LG","Total EG","Total Payable Days");
+              array_push($heading_dates, "Total WO", "Total HO","Total P", "Total A","Total LOP","Total L","Total HD","Total OD","Total LG","Total EG","Total Payable Days");
 
 
 
@@ -454,29 +455,33 @@ class VmtAttendanceReportsService{
                        $total_leave++;
                    }
                  } else if($attendanceResponseArray[$key]['checkin_time']!=null || $attendanceResponseArray[$key]['checkout_time']!=null) {
-                     if($total_LC>4&&$attendanceResponseArray[$key]['isLC']){
+                     if($total_LC>=4&&$attendanceResponseArray[$key]['isLC']){
                         array_push($arrayReport,'P/LC');
                         $total_present= $total_present+0.5;
-                     }else if($total_EG>4&&$attendanceResponseArray[$key]['isEG']){
+                        $total_lop=  $total_lop+0.5;
+                     }else if($total_EG>=4&&$attendanceResponseArray[$key]['isEG']){
                         array_push($arrayReport,'P/EG');
                         $total_present= $total_present+0.5;
+                        $total_lop=  $total_lop+0.5;
                      }else{
                         array_push($arrayReport,'P');
                         $total_present++;
                      }
 
+                     //Count For LG AND EG
+                 if($attendanceResponseArray[$key]['isLC']){
+                    $total_LC++;
+                 }
+
+                if($attendanceResponseArray[$key]['isEG']){
+                   $total_EG++;
+               }
+
                  }else{
                     array_push($arrayReport,' ');
                  }
 
-                 //Count For LG AND EG
-                 if($attendanceResponseArray[$key]['isLC']){
-                       $total_LC++;
-                 }
 
-                 if($attendanceResponseArray[$key]['isEG']){
-                      $total_EG++;
-                 }
 
 
 
@@ -487,7 +492,7 @@ class VmtAttendanceReportsService{
 
            // dd();
             $total_payable_days=$total_weekoff+$total_holidays+$total_present+$total_leave+$total_halfday+$total_OD;
-            array_push($arrayReport,$total_weekoff,$total_holidays,$total_present,$total_absent,$total_leave, $total_halfday,$total_OD,$total_LC,$total_EG, $total_payable_days);
+            array_push($arrayReport,$total_weekoff,$total_holidays,$total_present,$total_absent, $total_lop,$total_leave, $total_halfday,$total_OD,$total_LC,$total_EG, $total_payable_days);
             array_push($reportresponse,$arrayReport);
 
            // dd( $arrayReport);
