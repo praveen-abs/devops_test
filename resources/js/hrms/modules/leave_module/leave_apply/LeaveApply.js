@@ -23,8 +23,9 @@ import Row from 'primevue/row';
 import Dialog from 'primevue/dialog';
 import InputText from 'primevue/inputtext'
 import Dropdown from 'primevue/dropdown';
+import Calendar from 'primevue/calendar';
 import ProgressSpinner from 'primevue/progressspinner';
-
+import Textarea from 'primevue/textarea';
 
 import leaveApply from './LeaveApply.vue'
 
@@ -51,5 +52,7 @@ app.component('Dialog', Dialog)
 app.component('InputText', InputText)
 app.component('Dropdown', Dropdown)
 app.component('ProgressSpinner', ProgressSpinner)
+app.component('Calendar', Calendar)
+app.component('Textarea', Textarea)
 
 app.mount("#vjs_leaveApply");
