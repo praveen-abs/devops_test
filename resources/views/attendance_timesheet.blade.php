@@ -1476,7 +1476,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         else
                                         if (ajax_data_currentdate.absent_status == "Approved")
                                         {
-                                            cell.innerHTML = cell.innerHTML + "<span style='position: relative;top: -30px; left: -17px;font-weight: 700;color: green;'>Leave Approved</span>";
+                                            cell.innerHTML = cell.innerHTML + "<span style='position: relative;top: -30px; left: -17px;font-weight: 700;color: green;'>Leave Approved</span>"+ajax_data_currentdate.leave_type;
                                             // $("#statement").attr("src","{{ URL::asset($svg_icon_approved) }}")
 
                                             // $("#statement").html("Leave Approved")

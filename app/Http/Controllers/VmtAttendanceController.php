@@ -683,7 +683,7 @@ class VmtAttendanceController extends Controller
 
 
            $attendanceResponseArray[$fulldate] = array( "user_id"=>$request->user_id,"isAbsent"=>false, "attendance_mode_checkin"=>null, "attendance_mode_checkout"=>null,
-                                                        "absent_status"=>null,"checkin_time"=>null, "checkout_time"=>null,
+                                                        "absent_status"=>null,"leave_type"=>null,"checkin_time"=>null, "checkout_time"=>null,
                                                         "isLC"=>false, "lc_status"=>null, "lc_reason"=>null,"lc_reason_custom"=>null,
                                                         "isEG"=>false, "eg_status"=>null, "eg_reason"=>null,"eg_reason_custom"=>null,
                                                         "isMIP"=>false, "mip_status"=>null, "isMOP"=>false, "mop_status"=>null
@@ -858,7 +858,20 @@ class VmtAttendanceController extends Controller
                 $attendanceResponseArray[$key]["isAbsent"] = true;
 
                 //Check whether leave is applied or not.
-                $attendanceResponseArray[$key]["absent_status"] = $this->isLeaveRequestApplied($request->user_id, $key);
+                $t_leaveRequestDetails = $this->isLeaveRequestApplied($request->user_id, $key);
+
+                if(empty($t_leaveRequestDetails))
+                {
+
+                    $attendanceResponseArray[$key]["absent_status"] = "Not Applied";
+                    $attendanceResponseArray[$key]["leave_type"] = null;
+
+                }
+                else
+                {
+                    $attendanceResponseArray[$key]["absent_status"] = $t_leaveRequestDetails->status;
+                    $attendanceResponseArray[$key]["leave_type"] = VmtLeaves::find($t_leaveRequestDetails->leave_type_id)->leave_type;
+                }
 
             }
             elseif($checkin_time != null && $checkout_time == null)
@@ -916,12 +929,12 @@ class VmtAttendanceController extends Controller
                             whereDate('leaverequest_date',$attendance_date);
 
         if($leave_record->exists()){
-            return $leave_record->first()->status;
+            return $leave_record->first();
 
         }
         else
         {
-            return "Not Applied";
+            return null;
         }
     }
 
