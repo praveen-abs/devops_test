@@ -327,11 +327,8 @@ class VmtAttendanceReportsService{
                          //   dd($startDate.'-----'.$currentDate.'-----');
                             if($currentDate->gt( $startDate) && $currentDate->lte($endDate) ){
                                 if(substr( $single_leave_details->total_leave_datetime,-1)=='N'){
-                                     if($single_leave_details->status=='Approved'){
-                                         $attendanceResponseArray[$key]['half_day_status']='leave';
-                                     }else {
-                                        $attendanceResponseArray[$key]['half_day_status']='absent';
-                                     }
+                                          dd(substr( $single_leave_details->total_leave_datetime,-2,-1));
+                                         $attendanceResponseArray[$key]['half_day_status']=$single_leave_details->status;
                                 } else if($attendanceResponseArray[$key]['checkin_time']==null&&
                                 $attendanceResponseArray[$key]["checkout_time"]==null&&
                                 $single_leave_details->status=='Approved'){
@@ -424,10 +421,10 @@ class VmtAttendanceReportsService{
                     array_push($arrayReport,'HO');
                     $total_holidays++;
                   }else if($attendanceResponseArray[$key]['isAbsent']&&!$attendanceResponseArray[$key]['isLeave']
-                  &&!$attendanceResponseArray[$key]['is_holiday']&&$attendanceResponseArray[$key]['half_day_status']!='leave'){
+                  &&!$attendanceResponseArray[$key]['is_holiday']&&$attendanceResponseArray[$key]['half_day_status']==null){
                      array_push($arrayReport,'A');
                      $total_absent++;
-                 }else if($attendanceResponseArray[$key]['half_day_status']=='leave'){
+                 }else if($attendanceResponseArray[$key]['half_day_status']=='Approved'){
                     array_push($arrayReport,'HD');
                  }else if( $attendanceResponseArray[$key]['isLeave']){
                    // dd($attendanceResponseArray[$key]);
