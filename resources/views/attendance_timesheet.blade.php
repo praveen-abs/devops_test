@@ -1492,7 +1492,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
                                                 "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start'><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><span style='margin-top: -38px;margin-left: 45px;font-size: 13px;color: red;font-weight: 700;' class='f-11' id='checkout_time_" +
                                                 year + "-" + (month + 1) + "-" + dateText +
-                                                "'>Absent <br><div style='display: flex;gap: 20px;margin-left: -30px;margin-top: 15px;'><span style=''><input type='button' style='padding: 3px;border-radius: 8px;outline: none;color: white;background-color: #2f0358;border: none;font-weight: 700;'onclick='AttendenceRegularizationModal(this)' value='Ar' /></span><span><input type='button'style='padding: 3px;border-radius: 8px;outline: none;color: white;background-color: #ff6000;border: none;font-weight: 700;' data-bs-target='#leaveApply_modal' data-bs-toggle='modal' value='Apply Leave' /></span></div></span>";
+                                                "'>Absent</span>";
                                     }
                                       
                                     } 
