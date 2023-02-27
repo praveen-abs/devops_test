@@ -102,7 +102,7 @@
                         <Button icon="pi pi-times" class="p-button-danger" @click="confirmDialog(slotProps.data,'Rejected')" label="Rejected" /> -->
                         <span v-if="slotProps.data.status == 'Pending'">
                             <Button type="button" icon="pi pi-check-circle" class="p-button-success Button"  label="Approve"  @click="showConfirmDialog(slotProps.data,'Approve')" style="height: 2em;" />
-                            <Button type="button" icon="pi pi-times-circle" class="p-button-danger Button "  label="Rejected" style="margin-left: 8px;height: 2em;"  @click="showConfirmDialog(slotProps.data,'Reject')" />
+                            <Button type="button" icon="pi pi-times-circle" class="p-button-danger Button "  label="Reject" style="margin-left: 8px;height: 2em;"  @click="showConfirmDialog(slotProps.data,'Reject')" />
                         </span>
                    </template>
                 </Column>
@@ -125,7 +125,7 @@
     let canShowLoadingScreen = ref(false);
     const confirm = useConfirm();
     const toast = useToast();
- 
+
 
 
     const filters = ref({
