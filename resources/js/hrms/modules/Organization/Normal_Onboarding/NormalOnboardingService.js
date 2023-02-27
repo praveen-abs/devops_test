@@ -99,7 +99,8 @@ export default function validation(rules) {
                 return regex.test(value);
             },
         },
-        PersonDetialsMaritalStatus: {    },
+        PersonDetialsMaritalStatus: { required   },
+        
         PersonDetialsEmail: {
             required,
             email,

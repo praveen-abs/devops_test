@@ -2,14 +2,14 @@
   <div>
           <!-- <ConfirmDialog></ConfirmDialog> -->
           <Toast />
-          <Dialog header="Header" v-model:visible="loading" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '25vw'}" :modal="true" :closable="false" :closeOnEscape="false">
+          <!-- <Dialog header="Header" v-model:visible="loading" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '25vw'}" :modal="true" :closable="false" :closeOnEscape="false">
               <template #header>
                   <ProgressSpinner style="width:50px;height:50px" strokeWidth="8" fill="var(--surface-ground)" animationDuration="2s" aria-label="Custom ProgressSpinner"/>
               </template>
               <template #footer>
                   <h5 style="text-align: center;">Please wait...</h5>
               </template>
-          </Dialog>
+          </Dialog> -->
           <Dialog header="Header" v-model:visible="canShowLoadingScreen" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '25vw'}" :modal="true" :closable="false" :closeOnEscape="false">
               <template #header>
                   <ProgressSpinner style="width:50px;height:50px" strokeWidth="8" fill="var(--surface-ground)" animationDuration="2s" aria-label="Custom ProgressSpinner"/>
@@ -45,14 +45,14 @@
               </template>
               <Column field="name" header="Employee Name" >
                   <template #body="slotProps">
-                      
+                      <div></div>
                       {{ slotProps.data.employee_name}}
                   </template>
                     <template #filter="{filterModel,filterCallback}">
                       <InputText v-model="filterModel.value" @input="filterCallback()"  placeholder="Search" class="p-column-filter" :showClear="true" />
                      </template>
               </Column>
-            
+                
                 <Column field="leave_type" header="Leave Type"></Column>
                 <Column field="start_date" header="Start Date"></Column>
                 <Column field="end_date" header="End Date"></Column>
@@ -145,13 +145,12 @@ onMounted(() => {
 
 
   axios.get(url_org_leave).then((response) => {
-     Leave_data.value = response.data
-     console.log(response.data[0]["reviewer_avatar"]);
-     Employee_Avatar.value=response.data.reviewer_avatar
+    //  Leave_data.value =Object.values(response.data['employee_avatar'])
+      
+    //  Employee_Avatar.value=Object.values(Leave_data.employee_avatar)
+       Leave_data.value=response.data
     console.log("org_Leave_history"+Leave_data.value);
-    console.log("employyee Avtar"+JSON.stringify(Employee_Avatar.value));
-    // leave_types.value = Object.values(response.data.leave_types);
-    // leave_data.value = Object.values(response.data.employees);
+  
     loading.value = false;
 
     console.log(

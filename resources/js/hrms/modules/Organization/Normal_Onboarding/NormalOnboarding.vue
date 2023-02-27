@@ -309,6 +309,7 @@
                                                     <select name="" id=" " placeholder="Bank Name"
                                                         :class="{ 'is-invalid': v$.BankName.$invalid && submitted }"
                                                         class=" form-control textbox" v-model="v$.BankName.$model">
+                                                 
                                                         <option v-for="bank in bankList" :key="bank.id">
                                                             {{ bank.bank_name }}
                                                         </option>
@@ -764,8 +765,8 @@
                                                     <select placeholder="Department" name="department"
                                                         v-model="v$.Departmant.$model" style="height: 2.9em;"
                                                         id="department" class="onboard-form form-control textbox">
-                                                        <option value="" hidden selected disabled>Select
-                                                            Department</option>
+                                                        <!-- <option value="" hidden selected disabled>Select
+                                                            Department</option> -->
 
                                                     </select>
                                                 </div>
@@ -821,8 +822,8 @@
                                                         id="probation_period" style="height: 2.9em;"
                                                         v-model="v$.probationPeriod.$model"
                                                         class="onboard-form form-control textbox ">
-                                                        <option value="" hidden selected disabled>Select
-                                                            Probabition Period</option>
+                                                        <!-- <option value="" hidden selected disabled>Select
+                                                            Probabition Period</option> -->
                                                         <option value="1 Month">1 Month</option>
                                                         <option value="2 Month">2 Month</option>
                                                         <option value="3 Month">3 Month</option>
@@ -980,7 +981,7 @@
 
                                                     <InputText class="nboard-form form-control textbox capitalize"
                                                         type="text" placeholder="Father Name" name="father_name"
-                                                        id="father_name"
+                                                        id="father_name"   
                                                         :class="{ 'p-invalid': v$.fatherName.$invalid && submitted }"
                                                         v-model="v$.fatherName.$model" />
                                                         <span
@@ -996,9 +997,9 @@
                                                             class="text-danger">*</span></label>
 
                                                     <InputText class="onboard-form form-control textbox  " type="text"
-                                                        placeholder="Date of Birth"
+                                                        placeholder="Date of Birth"  @change="fnCalculateAge"
                                                         :class="{ 'p-invalid': v$.fatherDateofBirth.$invalid && submitted }"
-                                                        v-model="v$.fatherDateofBirth.$model" />
+                                                        v-model="v$.fatherDateofBirth.$model" onfocus="(this.type='date')" />
 
                                                         <span
                                                         v-if="(v$.fatherDateofBirth.$invalid && submitted) || v$.fatherDateofBirth.$pending.$response"
@@ -1021,9 +1022,9 @@
                                                     <label for="" class="float-label">Age </label>
 
                                                     <input type="number" placeholder="Age" name="father_age"
-                                                        v-model="fatherAge" id="father_age"
+                                                        v-model="employee_onboarding.fatherAge" id="father_age"  
                                                         class="textbox  onboard-form form-control " minlength="2"
-                                                        maxlength="3" readonly />
+                                                        maxlength="3" readonly   />
                                                 </div>
                                             </div>
 
@@ -1056,7 +1057,7 @@
                                                     <InputText class="onboard-form form-control textbox  " type="text"
                                                         placeholder="Date of Birth"
                                                         :class="{ 'p-invalid': v$.motherDateofBirth.$invalid && submitted }"
-                                                        v-model="v$.motherDateofBirth.$model"
+                                                        v-model="v$.motherDateofBirth.$model"  @change="fnCalculateAge"
                                                         onfocus="(this.type='date')" />
 
                                                         <span
@@ -1081,7 +1082,7 @@
                                                     <label for="" class="float-label">Age</label>
 
                                                     <input type="number" placeholder="Age" name="mother_age"
-                                                        v-model="motherAge" id="mother_age"
+                                                        v-model="employee_onboarding.motherAge" id="mother_age" 
                                                         class="textbox  onboard-form form-control " minlength="2"
                                                         maxlength="3" readonly />
                                                 </div>
@@ -1114,7 +1115,7 @@
 
                                                     <InputText class="onboard-form form-control textbox  " type="text"
                                                         placeholder="Date of Wedding" name="wedding_date"
-                                                        :class="{ 'p-invalid': v$.dateOfWedding.$invalid && submitted }"
+                                                        :class="{ 'is-invalid': v$.dateOfWedding.$invalid && submitted }"
                                                         v-model="v$.dateOfWedding.$model" onfocus="(this.type='date')" />
 
                                                         <span
@@ -1217,15 +1218,15 @@
                                                          id="aadhar_card_file_label"><span class="file_label">Choose
                                                              Aadhar
                                                                      Card Front</span></div>-->
-                                                <input v-if="AadFInvalid" type="file" accept="image/png, image/gif, image/jpeg" ref="AadharCardFront"
+                                                <input v-if="AadharDocFrontInvalid" type="file" accept="image/png, image/gif, image/jpeg" ref="AadharCardFront"
                                                     class="onboard-form form-control file is-invalid" @change="AadharFront($event)"
                                                     
                                                 />
-                                                <input  v-if="!AadFInvalid"  type="file" accept="image/png, image/gif, image/jpeg" ref="AadharCardFront"
+                                                <input  v-if="!AadharDocFrontInvalid"  type="file" accept="image/png, image/gif, image/jpeg" ref="AadharCardFront"
                                                     class="onboard-form form-control file " @change="AadharFront($event)"
                                                     
                                                 />
-                                                <span class="p-error" v-if="AadFInvalid">Aadhar Card Front is required</span>
+                                                <span class="p-error" v-if="AadharDocFrontInvalid">Aadhar Card Front is required</span>
 
                                                  
                                                 
@@ -1238,14 +1239,14 @@
                                                          id="aadhar_card_backend_file_label"><span
                                                              class="file_label">Choose
                                                                      Aadhar Card Back </span></div> -->
-                                                <input v-if="AadBInvalid" type="file" accept="image/png, image/gif, image/jpeg" ref="AadharCardBack"
+                                                <input v-if="AadharDocBackInvalid" type="file" accept="image/png, image/gif, image/jpeg" ref="AadharCardBack"
                                                     @change="AadharBack($event)" class="onboard-form form-control file is-invalid"
                                                     />
-                                                    <input v-if="!AadBInvalid" type="file" accept="image/png, image/gif, image/jpeg" ref="AadharCardBack"
+                                                    <input v-if="!AadharDocBackInvalid" type="file" accept="image/png, image/gif, image/jpeg" ref="AadharCardBack"
                                                     @change="AadharBack($event)" class="onboard-form form-control file"
                                                     />
 
-                                                    <span v-if="AadBInvalid" class="p-error">Aadhar Card Back is Required</span>
+                                                    <span v-if="AadharDocBackInvalid" class="p-error">Aadhar Card Back is Required</span>
 
                                                    
                                             </div>
@@ -1255,17 +1256,17 @@
                                             <!-- <div class="addfiles form-control" data="#pan_card_file"
                                                          id="pan_card_file_label"><span class="file_label">Upload Pan
                                                                      Card</span></div> -->
-                                                <input v-if="PanInvalid" type="file" accept="image/png, image/gif, image/jpeg"
+                                                <input v-if="PancardInvalid" type="file" accept="image/png, image/gif, image/jpeg"
                                                     placeholder="Pan Card" name="pan_card_file" id="pan_card_file" ref="PanCardDoc"
                                                     @change="PanCard($event)" class="onboard-form form-control file is-invalid"
                                                      />
 
-                                                     <input v-if="!PanInvalid" type="file" accept="image/png, image/gif, image/jpeg"
+                                                     <input v-if="!PancardInvalid" type="file" accept="image/png, image/gif, image/jpeg"
                                                      placeholder="Pan Card" name="pan_card_file" id="pan_card_file" ref="PanCardDoc"
                                                      @change="PanCard($event)" class="onboard-form form-control file"
                                                       />
 
-                                                    <span v-if="PanInvalid" class="p-error">Pan Card is Required</span>
+                                                    <span v-if="PancardInvalid" class="p-error">Pan Card is Required</span>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                                                 <label for="" class="float-label">
@@ -1273,17 +1274,17 @@
                                             <!-- <div class="addfiles form-control" data="#passport_file"
                                                          id="passport_file_label"><span class="file_label">Choose
                                                                      Passport</span></div> -->
-                                                <input v-if="PassInvalid" type="file" accept="image/png, image/gif, image/jpeg" ref="PassportDoc"
+                                                <input v-if="PassPortInvalid" type="file" accept="image/png, image/gif, image/jpeg" ref="PassportDoc"
                                                     placeholder="Passport" name="passport_file" id="passport_file"
                                                     @change="Passport($event)" class="onboard-form form-control file is-invalid" 
                                                     />
 
-                                                    <input v-if="!PassInvalid" type="file" accept="image/png, image/gif, image/jpeg" ref="PassportDoc"
+                                                    <input v-if="!PassPortInvalid" type="file" accept="image/png, image/gif, image/jpeg" ref="PassportDoc"
                                                     placeholder="Passport" name="passport_file" id="passport_file"
                                                     @change="Passport($event)" class="onboard-form form-control file" 
                                                     />
 
-                                                    <span v-if="PassInvalid" class="p-error">Pan Card is Required</span>
+                                                    <span v-if="PassPortInvalid" class="p-error">Pan Card is Required</span>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                                                 <label for="" class="float-label">
@@ -1293,17 +1294,17 @@
                                                              Voters
                                                                      ID</span></div> -->
                                                 <input type="file" accept="image/png, image/gif, image/jpeg" ref="VoterIdDoc"
-                                                    placeholder="Voters ID" name="voters_id_file" id="voters_id_file" v-if="VotInvalid"
+                                                    placeholder="Voters ID" name="voters_id_file" id="voters_id_file" v-if="VoterIdInvalid"
                                                     @change="VoterId($event)" class="onboard-form form-control file is-invalid" 
                                                    />
 
                                                    <input type="file" accept="image/png, image/gif, image/jpeg" ref="VoterIdDoc"
-                                                    placeholder="Voters ID" name="voters_id_file" id="voters_id_file" v-if="!VotInvalid"
+                                                    placeholder="Voters ID" name="voters_id_file" id="voters_id_file" v-if="!VoterIdInvalid"
                                                     @change="VoterId($event)" class="onboard-form form-control file" 
                                                    />
 
 
-                                                    <span v-if="VotInvalid" class="p-error">Voter Id is Required</span>
+                                                    <span v-if="VoterIdInvalid" class="p-error">Voter Id is Required</span>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                                                 <label for="" class="float-label"> Driving
@@ -1314,17 +1315,17 @@
                                                 <input type="file" accept="image/png, image/gif, image/jpeg"
                                                     placeholder="Driving License" name="dl_file" id="dl_file"
                                                     @change="DrivingLisence($event)"  ref="DrivingLicenseDoc"
-                                                    v-if="DrivinInvalid"
+                                                    v-if="DrivingLisenceInvalid"
                                                     class="onboard-form form-control file is-invalid" />
 
                                                     <input type="file" accept="image/png, image/gif, image/jpeg"
                                                     placeholder="Driving License" name="dl_file" id="dl_file"
-                                                    v-if="!DrivinInvalid"
+                                                    v-if="!DrivingLisenceInvalid"
                                                     @change="DrivingLisence($event)"  ref="DrivingLicenseDoc"
                                                   
                                                     class="onboard-form form-control file" />
 
-                                                    <span v-if="DrivinInvalid" class="p-error">Driving Lisence is Required</span>
+                                                    <span v-if="DrivingLisenceInvalid" class="p-error">Driving Lisence is Required</span>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
                                                 <label for="" class="float-label">Educations
@@ -1337,18 +1338,18 @@
                                                 <input type="file" accept="image/png, image/gif, image/jpeg"
                                                     placeholder="Educations Certificate" name="education_certificate_file"
                                                     @change="EductionCertifacte($event)"
-                                                    v-if="EduInvalid"
+                                                    v-if="EducationCertificateInvalid"
                                                      id="education_certificate_file" ref="EductionDoc"
                                                     class="onboard-form form-control file is-invalid " />
 
                                                     <input type="file" accept="image/png, image/gif, image/jpeg"
                                                     placeholder="Educations Certificate" name="education_certificate_file"
                                                     @change="EductionCertifacte($event)"
-                                                    v-if="!EduInvalid"
+                                                    v-if="!EducationCertificateInvalid"
                                                      id="education_certificate_file" ref="EductionDoc"
                                                     class="onboard-form form-control file " />
                                                  
-                                                    <span v-if="EduInvalid" class="p-error">Eduction Certifacte is Required</span>
+                                                    <span v-if="EducationCertificateInvalid" class="p-error">Eduction Certifacte is Required</span>
                                             </div>   
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
                                                 <label for="" class="float-label"> Relieving
@@ -1357,17 +1358,17 @@
                                                                  id="reliving_letter_file_label"><span class="file_label">Choose Relieving Letter</span></div> -->
                                                 <input type="file" accept="image/png, image/gif, image/jpeg"
                                                     placeholder="Relieving Letter" name="reliving_letter_file"
-                                                    id="reliving_letter_file"  v-if="RelInvalid"
+                                                    id="reliving_letter_file"  v-if="ReleivingLetterInvalid"
                                                     @change="ReleivingLetter($event)" ref="ReleivingLetterDoc"
                                                     class="onboard-form form-control file is-invalid" />
 
                                                     <input type="file" accept="image/png, image/gif, image/jpeg"
                                                     placeholder="Relieving Letter" name="reliving_letter_file"
-                                                    id="reliving_letter_file" v-if="!RelInvalid"
+                                                    id="reliving_letter_file" v-if="!ReleivingLetterInvalid"
                                                     @change="ReleivingLetter($event)" ref="ReleivingLetterDoc"
                                                     class="onboard-form form-control file" />
 
-                                                    <span v-if="RelInvalid" class="p-error">Releiving Letter is Required</span>
+                                                    <span v-if="ReleivingLetterInvalid" class="p-error">Releiving Letter is Required</span>
                                             </div>
                                         </div>
                                     </div>
@@ -1453,7 +1454,7 @@ onMounted(() => {
     console.log(country.country_name);
     // for state
     getStateList().then(result => state.value = result)
-    
+
 })
 
 
@@ -1485,8 +1486,8 @@ const employee_onboarding = reactive({
 
     // Current Address Detials Start
 
-     currentAddress1:'',
-     currentAddress2:'',
+    currentAddress1: '',
+    currentAddress2: '',
     currentcountry: "",
     currentstate: "",
     currentCity: "",
@@ -1529,12 +1530,12 @@ const employee_onboarding = reactive({
 
     fatherName: "",
     fatherDateofBirth: "",
-    fatherGender: "",
+    fatherGender: "Male",
     fatherAge: "",
     motherName: "",
     motherDateofBirth: "",
     motherGender: "",
-    motherAge: "",
+    motherAge: "Female",
     SpouseName: "",
     dateOfWedding: "",
     spouseGender: "",
@@ -1564,50 +1565,53 @@ const submitted = ref(false);
 const showMessage = ref(false);
 const v$ = useVuelidate(validation, employee_onboarding)
 
-const AadFInvalid=ref(false);
-const AadBInvalid=ref(false);
-const PanInvalid=ref(false);
-const EduInvalid=ref(false);
-const VotInvalid=ref(false);
-const PassInvalid=ref(false);
-const DrivinInvalid=ref(false);
-const RelInvalid=ref(false);
-const SumbitDisable=ref(true)
+const AadharDocFrontInvalid = ref(false);
+const AadharDocBackInvalid = ref(false);
+const PancardInvalid = ref(false);
+const EducationCertificateInvalid = ref(false);
+const VoterIdInvalid = ref(false);
+const PassPortInvalid = ref(false);
+const DrivingLisenceInvalid = ref(false);
+const ReleivingLetterInvalid = ref(false);
+const SumbitDisable = ref(true)
 
 
 
 //   Events
 
 const handleSubmit = (isFormValid) => {
-            submitted.value = true;
 
-         AadharCardFront.fileName==undefined?AadFInvalid.value=true: AadFInvalid.value=false
-         AadharCardBack.fileName==undefined?AadBInvalid.value=true: AadBInvalid.value=false
-         PanCardDoc.fileName==undefined?PanInvalid.value=true: PanInvalid.value=false
-         DrivingLicenseDoc.fileName==undefined?DrivinInvalid.value=true: DrivinInvalid.value=false
-         VoterIdDoc.fileName==undefined?VotInvalid.value=true: VotInvalid.value=false
-         ReleivingLetterDoc.fileName==undefined?RelInvalid.value=true: RelInvalid.value=false
-         EductionDoc.fileName==undefined?EduInvalid.value=true: EduInvalid.value=false
-         PassportDoc.fileName==undefined?PassInvalid.value=true: PassInvalid.value=false
+    console.log(employee_onboarding);
+     
+    submitted.value = true;
+
+    AadharCardFront.fileName == undefined ? AadharDocFrontInvalid.value = true : AadharDocFrontInvalid.value = false
+    AadharCardBack.fileName == undefined ? AadharDocBackInvalid.value = true : AadharDocBackInvalid.value = false
+    PanCardDoc.fileName == undefined ? PancardInvalid.value = true : PancardInvalid.value = false
+    DrivingLicenseDoc.fileName == undefined ? DrivingLisenceInvalid.value = true : DrivingLisenceInvalid.value = false
+    VoterIdDoc.fileName == undefined ? VoterIdInvalid.value = true : VoterIdInvalid.value = false
+    ReleivingLetterDoc.fileName == undefined ? ReleivingLetterInvalid.value = true : ReleivingLetterInvalid.value = false
+    EductionDoc.fileName == undefined ? EducationCertificateInvalid.value = true : EducationCertificateInvalid.value = false
+    PassportDoc.fileName == undefined ? PassPortInvalid.value = true : PassPortInvalid.value = false
 
 
 
-            if (!isFormValid) {
-                toast.add({severity:'error', summary: 'Error Message', detail:'Message Content', life: 3000});
-                RequiredDocument.value=true
-                return;
-            }
-            toggleDialog();
-            SumbitDisable.value=false
+    if (!isFormValid) {
+        toast.add({ severity: 'error', summary: 'Error Message', detail: 'Message Content', life: 3000 });
+        RequiredDocument.value = true
+        return;
+    }
+    toggleDialog();
+    SumbitDisable.value = false
 
-        }
-        const toggleDialog = () => {
-            showMessage.value = !showMessage.value;
-        
-            if(!showMessage.value) {
-                
-            }
-        }
+}
+const toggleDialog = () => {
+    showMessage.value = !showMessage.value;
+
+    if (!showMessage.value) {
+
+    }
+}
 
 
 const spouseDisable = () => {
@@ -1647,6 +1651,39 @@ const NationalityCheck = () => {
     else {
         NationalityData.value = true
     }
+}
+
+
+const fnCalculateAge = () => {
+
+    console.log("Father's Age" + employee_onboarding.fatherDateofBirth);
+    console.log("Mother's Age" + employee_onboarding.motherDateofBirth);
+
+    // convert user input value into date object
+
+
+    // get difference from current date;
+
+    if (employee_onboarding.fatherDateofBirth) {
+
+        var birthDate = new Date(employee_onboarding.fatherDateofBirth);
+        console.log(" birthDate" + birthDate);
+        var difference = Date.now() - birthDate.getTime();
+        var ageDate = new Date(difference);
+        var calculatedAge = Math.abs(ageDate.getUTCFullYear() - 1970);
+        employee_onboarding.fatherAge = calculatedAge
+        alert( "Father's Age"+calculatedAge);
+    } else
+        if (employee_onboarding.motherDateofBirth) {
+            var birthDate = new Date(employee_onboarding.motherDateofBirth);
+            console.log(" birthDate" + birthDate);
+            var difference = Date.now() - birthDate.getTime();
+            var ageDate = new Date(difference);
+            var calculatedAge = Math.abs(ageDate.getUTCFullYear() - 1970);
+            employee_onboarding.motherAge = calculatedAge
+            alert("Mother's Age"+calculatedAge);
+        }
+
 }
 
 
@@ -1690,7 +1727,7 @@ const AadharFront = (e) => {
     // Check if file is selected
     if (e.target.files && e.target.files[0]) {
         // Get uploaded file
-            AadharCardFront.file = e.target.files[0],
+        AadharCardFront.file = e.target.files[0],
             // Get file size
             AadharCardFront.fileSize = Math.round((file.size / 1024 / 1024) * 100) / 100,
             // Get file extension
@@ -1828,10 +1865,10 @@ const showWarn = () => {
     // handleSubmit();
     jsonFormat();
     console.log(AadharCardFront.fileName);
-   
 
-    
-   
+
+
+
 }
 
 // for Testing Post Data
@@ -1946,8 +1983,8 @@ const Sampledata = () => {
     employee_onboarding.SpouseName = ref("priyanka")
     employee_onboarding.noOfChildren = ref("5")
     employee_onboarding.EmployeeCode = ref("B101")
-   
-  
+
+
 
 }
 
@@ -2064,4 +2101,5 @@ form {
     .card {
         width: 80%;
     }
-}</style>
+}
+</style>
