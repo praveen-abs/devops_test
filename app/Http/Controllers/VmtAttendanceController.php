@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Services\VmtEmployeeLeaveModel;
+use App\Services\VmtAttendanceService;
 use App\Mail\ApproveRejectLeaveMail;
 use App\Mail\RequestLeaveMail;
 use App\Mail\VmtAttendanceMail_Regularization;
@@ -240,7 +242,7 @@ class VmtAttendanceController extends Controller
 
                 if (array_key_exists($singleItem->user_id, $map_allEmployees->toArray())) {
                     $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
-                    $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->user_id]);
+                    $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->user_id);
                 }
 
                 if (array_key_exists($singleItem->reviewer_user_id, $map_allEmployees->toArray())) {
@@ -1022,6 +1024,35 @@ class VmtAttendanceController extends Controller
         return view('attendance_regularization_approvals');
     }
 
+    /*
+        Fetch Attendance Regularization data
+
+        Todo : Need to restrict employee access
+    */
+    public function fetchAttendanceRegularizationData(Request $request, VmtAttendanceService $attendanceService){
+
+        $response = null;
+
+        //Check whether the current employee is Manager
+
+        if(Str::contains(currentLoggedInUserRole(), ['Manager']))
+        {
+            //fetch team level data
+           $response = $attendanceService->fetchAttendanceRegularizationData(auth()->user()->id);
+        }
+        else
+        {
+            //Fetch all data
+           $response = $attendanceService->fetchAttendanceRegularizationData(null);
+        }
+
+        return $response;
+    }
+
+
+    /*
+        Fetch all regularization data.
+    */
     public function fetchAllRegularizationData(Request $request)
     {
 
@@ -1030,7 +1061,23 @@ class VmtAttendanceController extends Controller
 
         $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
 
-        $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::all();
+
+        $allEmployees_lateComing = null;
+
+        //If manager ID set, then show only the team level employees
+        if(isset($request->manager_id))
+        {
+            //Get all the employees ID for the given manager_id
+            $manager_emp_code = User::find($request->manager_id)->user_code;
+
+            dd($manager_emp_code);
+            $employees_id = VmtEmployeeOfficeDetails::where('l1_manager_code','');
+
+            $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereIn();
+        }
+        else{
+            $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::all();
+        }
 
         //dd($map_allEmployees->toArray());
         //dd($allEmployees_lateComing->toArray());

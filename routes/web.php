@@ -119,7 +119,7 @@ Route::middleware(['auth'])->group(function () {
     //Att Regularize
     Route::get('/attendance-regularization-approvals', [App\Http\Controllers\VmtAttendanceController::class, 'showRegularizationApprovalPage'])->name('attendance-regularization-approvals');
     Route::post('/attendance-regularization-approvals', [App\Http\Controllers\VmtAttendanceController::class, 'approveRejectAttendanceRegularization'])->name('process-attendance-regularization-approvals');
-    Route::get('/fetch-allregularization-data', [App\Http\Controllers\VmtAttendanceController::class, 'fetchAllRegularizationData'])->name('fetch-regularization-approvals');
+    Route::get('/fetch-att-regularization-data', [App\Http\Controllers\VmtAttendanceController::class, 'fetchAttendanceRegularizationData'])->name('fetch-regularization-approvals');
 
 
 
