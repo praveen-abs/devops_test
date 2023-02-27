@@ -171,6 +171,57 @@ class VmtApprovalsController extends Controller
 
     }
 
+    public function fetchApprovals_PMSForms(Request $request)
+    {
+
+        $query_pendingforms = VmtPMS_KPIFormAssignedModel::join('vmt_pms_kpiform_reviews','vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id','=', 'vmt_pms_kpiform_assigned.id')
+                        ->join('users as t1','t1.id','=','vmt_pms_kpiform_assigned.assignee_id')
+                        ->join('users as t2','t2.id','=','vmt_pms_kpiform_assigned.reviewer_id')
+                        ->select('vmt_pms_kpiform_reviews.id as pms_kpiform_review_id',
+                            't1.name as assignee_name','t2.name as reviewer_name',
+                            'vmt_pms_kpiform_assigned.reviewer_id as reviewer_id',
+                            'vmt_pms_kpiform_assigned.assignment_period',
+                            'vmt_pms_kpiform_reviews.is_reviewer_accepted'
+                        )
+                        //->where( 'vmt_pms_kpiform_reviews.is_reviewer_accepted', 'LIKE','%null%')
+                        ->get();
+
+        //Create status value based on 'is_reviewer_accepted' field
+        foreach($query_pendingforms as $singleItem){
+            //Convert string to JSON object
+            $json_isReviewerAccepted = json_decode($singleItem->is_reviewer_accepted, true);
+            //dd($json_isReviewerAccepted[$singleItem->reviewer_id]);
+
+            //Get the value of the key (Reviewer id)
+            //Based on reviewer id, check the status by
+            $t_reviewer_status = $json_isReviewerAccepted[$singleItem->reviewer_id];
+            $final_status = null;
+
+            if($t_reviewer_status == null)
+            {
+                $final_status = 'Pending';
+            }
+            else
+            if($t_reviewer_status == '1')
+            {
+                $final_status = 'Approved';
+            }
+            else
+            if($t_reviewer_status == '0')
+            {
+                $final_status = 'Rejected';
+            }
+
+
+            $singleItem['status'] = $final_status;
+
+        }
+
+        return $query_pendingforms;
+
+
+    }
+
     public function approveRejectPMSForm(Request $request){
 
         $query_review_form = VmtPMS_KPIFormReviewsModel::find($request->kpiform_review_id);

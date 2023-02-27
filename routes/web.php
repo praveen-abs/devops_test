@@ -379,7 +379,7 @@ Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 's
     Route::post('documents-review-approve-all', 'App\Http\Controllers\VmtApprovalsController@approveAllDocumentByAdmin')->name('vmt-store-documents-review-approve-all');
 
     //PMS Approvals
-    Route::post('approvals-pms', 'App\Http\Controllers\VmtApprovalsController@approveRejectPMSForm')->name('vmt-approvals-pms');
+    Route::post('/approvals-pms', 'App\Http\Controllers\VmtApprovalsController@approveRejectPMSForm')->name('vmt-approvals-pms');
 
 
 
@@ -393,6 +393,7 @@ Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 's
     //PMS Approvals
     Route::get('/vmt_approval_pms',  [App\Http\Controllers\VmtApprovalsController::class, 'showPMSApprovalPage'])->name('showPMSApprovalPage');
     Route::get('/fetch_pending_pmsforms',  [App\Http\Controllers\VmtApprovalsController::class, 'fetchPendingPMSForms'])->name('fetchPendingPMSForms');
+    Route::get('/fetch_approvals_pmsforms',  [App\Http\Controllers\VmtApprovalsController::class, 'fetchApprovals_PMSForms'])->name('fetchApprovalsPMSForms');
 
     //Reimbursement Approvals
     Route::get('/vmt_approval_reimbursements',  [App\Http\Controllers\VmtApprovalsController::class, 'showReimbursementApprovalPage'])->name('showReimbursementApprovalPage');

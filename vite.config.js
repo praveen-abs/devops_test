@@ -10,7 +10,7 @@ export default defineConfig({
                     //sass files
                     'resources/sass/testsass.scss',
 
-                    'resources/js/app.js',  
+                    'resources/js/app.js',
 
                     // Leaves Module
                     'resources/js/hrms/modules/leave_module/org_leave_module/OrgLeaveBalance.js',
@@ -24,6 +24,7 @@ export default defineConfig({
                     'resources/js/hrms/modules/approvals/att_regularization/AttRegularizationApproval.js',
                     'resources/js/hrms/modules/approvals/reimbursements/ReimbursementsApproval.js',
                     'resources/js/hrms/modules/approvals/leaves/LeaveApproval.js',
+                    'resources/js/hrms/modules/approvals/leaves/PMSApprovalTable.js',
                     'resources/js/hrms/modules/profile_pages/EmployeeDocumentsManager.js'
             ],
             refresh: true,
