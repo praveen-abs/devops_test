@@ -60,9 +60,11 @@ class VmtAttendanceReportsService{
             $total_weekoff=0;
             $total_holidays=0;
             $total_leave=0;
+            $total_halfday=0;
             $total_OD=0;
             $total_LC=0;
             $total_EG=0;
+
 
             //dd($singleUser->user_code);
 
@@ -181,13 +183,13 @@ class VmtAttendanceReportsService{
                  "user_id"=> $singleUser->id,"DOJ"=>$singleUser->doj,"isAbsent"=>false,"isLeave"=>false,
                  "is_weekoff"=>false,"isLC"=>false,"isEG"=>false,"date"=>$fulldate,"is_holiday"=>false,
                  "attendance_mode_checkin"=>null,"attendance_mode_checkout"=>null, "absent_status"=>null,
-                 "checkin_time"=>null,"checkout_time"=>null,"leave_type"=>null,"half_day_status"=>null
+                 "checkin_time"=>null,"checkout_time"=>null,"leave_type"=>null,"half_day_status"=>null,"half_day_type"=>null
                                                              );
 
                 //echo "Date is ".$fulldate."\n";
                 ///$month_array[""]
               }
-              array_push($heading_dates, "Total WO", "Total HO","Total P", "Total A","Total L","Total OD","Total LG","Total EG");
+              array_push($heading_dates, "Total WO", "Total HO","Total P", "Total A","Total L","Total HD","Total OD","Total LG","Total EG","Total Payable Days");
 
 
 
@@ -307,7 +309,7 @@ class VmtAttendanceReportsService{
 
                 }
 
-                 //Logic For Check Absent or Not
+                 //Logic For Check Leave,Half day, Absent
                  //dd($attendanceResponseArray[$key]['user_id']);
                  if($attendanceResponseArray[$key]['checkin_time']==null&&
                    $attendanceResponseArray[$key]["checkout_time"]==null&&
@@ -327,7 +329,8 @@ class VmtAttendanceReportsService{
                          //   dd($startDate.'-----'.$currentDate.'-----');
                             if($currentDate->gt( $startDate) && $currentDate->lte($endDate) ){
                                 if(substr( $single_leave_details->total_leave_datetime,-1)=='N'){
-                                          dd(substr( $single_leave_details->total_leave_datetime,-2,-1));
+                                    // Logic Get FN or AN Value From total Leave date time
+                                        $attendanceResponseArray[$key]['half_day_type'] = preg_replace("/([^a-zA-Z]+)/i", "",  $single_leave_details->total_leave_datetime);
                                          $attendanceResponseArray[$key]['half_day_status']=$single_leave_details->status;
                                 } else if($attendanceResponseArray[$key]['checkin_time']==null&&
                                 $attendanceResponseArray[$key]["checkout_time"]==null&&
@@ -425,8 +428,23 @@ class VmtAttendanceReportsService{
                      array_push($arrayReport,'A');
                      $total_absent++;
                  }else if($attendanceResponseArray[$key]['half_day_status']=='Approved'){
-                    array_push($arrayReport,'HD');
-                 }else if( $attendanceResponseArray[$key]['isLeave']){
+                    if($attendanceResponseArray[$key]['half_day_type']=='FN'){
+                        array_push($arrayReport,'HD/P');
+                    }else if($attendanceResponseArray[$key]['half_day_type']=='AN'){
+                        array_push($arrayReport,'P/HD');
+                    }
+                      $total_present= $total_present+0.5;
+                      $total_halfday= $total_halfday+0.5;
+
+                 }else if($attendanceResponseArray[$key]['half_day_status']=='Pending'||$attendanceResponseArray[$key]['half_day_status']=='Rejected'){
+                    if($attendanceResponseArray[$key]['half_day_type']=='AN'){
+                        array_push($arrayReport,'A/P');
+                    }else if($attendanceResponseArray[$key]['half_day_type']=='FN'){
+                        array_push($arrayReport,'P/A');
+                    }
+                    $total_present= $total_present+0.5;
+                    $total_absent= $total_absent+0.5;
+                 } else if( $attendanceResponseArray[$key]['isLeave']){
                    // dd($attendanceResponseArray[$key]);
                    if($attendanceResponseArray[$key]['leave_type']=='OD'){
                     array_push($arrayReport,$attendanceResponseArray[$key]['leave_type']);
@@ -468,7 +486,8 @@ class VmtAttendanceReportsService{
               //dd(($attendanceResponseArray));
 
            // dd();
-            array_push($arrayReport,$total_weekoff,$total_holidays,$total_present,$total_absent,$total_leave,$total_OD,$total_LC,$total_EG);
+            $total_payable_days=$total_weekoff+$total_holidays+$total_present+$total_leave+$total_halfday+$total_OD;
+            array_push($arrayReport,$total_weekoff,$total_holidays,$total_present,$total_absent,$total_leave, $total_halfday,$total_OD,$total_LC,$total_EG, $total_payable_days);
             array_push($reportresponse,$arrayReport);
 
            // dd( $arrayReport);
