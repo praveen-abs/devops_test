@@ -603,7 +603,7 @@
                                             <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 col-xl-12 my-3">
                                                 <Checkbox inputId="" @click="ForCopyAdrress" v-model="CopyAddresschecked"
                                                     :binary="true" />
-                                                <label for="current_address_copy">Copy current address to the
+                                                <label style="margin-left: 10px;" for="current_address_copy">Copy current address to the
                                                     permanent address</label>
                                             </div>
 
@@ -862,7 +862,9 @@
                                                         id="l1_manager_code_select" v-model="v$.ReportingManagerCode.$model"
                                                         :class="{ 'is-invalid': v$.ReportingManagerCode.$invalid && submitted }"
                                                           class="onboard-form form-control  textbox " >
-                                                          <option value="B100">B100</option>
+                                                          <option v-for="managerCode in Managerdetails" :key="managerCode.user_code">
+                                                            {{ managerCode.user_code }}
+                                                          </option>
                                                     
                                                     </select>
 
@@ -879,15 +881,23 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Reporting Manager
                                                         Name</label>
-
+<!-- 
                                                     <input type="text" placeholder="Reporting Manager Name"
                                                         name="l1_manager_name" id="l1_manager_name"
                                                         v-model="v$.ReportingManagerName.$model"
                                                         class="textbox  onboard-form form-control " pattern="name"
-                                                        readonly />
+                                                        readonly /> -->
 
-                                                    <label class="error star_error l1_manager_name_label"
-                                                        for="l1_manager_name" style="display: none;"></label>
+                                                        <select placeholder="Reporting Manager Name" name="l1_manager_code"
+                                                        id="l1_manager_code_select" v-model="v$.ReportingManagerName.$model"
+                                                        :class="{ 'is-invalid': v$.ReportingManagerName.$invalid && submitted }"
+                                                          class="onboard-form form-control  textbox " >
+                                                          <option v-for="managerName in Managerdetails" :key="managerName.name">
+                                                            {{ managerName.name }}
+                                                          </option>
+                                                    
+                                                    </select>
+
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -1433,6 +1443,7 @@
             </div>
         </template>
     </Dialog>
+
 </template>
 
 <script setup>
@@ -1443,7 +1454,7 @@ import { reactive } from "@vue/reactivity";
 import { onMounted } from "@vue/runtime-core";
 import { ref } from "@vue/runtime-core";
 import validation from './NormalOnboardingService';
-import { getBankList, getCountryList, getStateList } from './NormalOnboardingService';
+import { getBankList, getCountryList, getStateList,ManagerDetails } from './NormalOnboardingService';
 
 
 onMounted(() => {
@@ -1454,6 +1465,10 @@ onMounted(() => {
     console.log(country.country_name);
     // for state
     getStateList().then(result => state.value = result)
+    // for Manager Details
+    ManagerDetails().then(result =>Managerdetails.value=result)
+    console.log(Managerdetails);
+
 
 })
 
@@ -1556,13 +1571,19 @@ const toast = useToast();
 const bankList = ref();
 const country = ref();
 const state = ref();
+const Managerdetails=ref();
+
+
 const NationalityData = ref(true);
 const CopyAddresschecked = ref(false);
 const sposeData = ref(false);
-const RequiredDocument = ref(false)
+
+
 
 const submitted = ref(false);
 const showMessage = ref(false);
+const RequiredDocument = ref(false)
+const SumbitDisable = ref(true)
 const v$ = useVuelidate(validation, employee_onboarding)
 
 const AadharDocFrontInvalid = ref(false);
@@ -1573,7 +1594,7 @@ const VoterIdInvalid = ref(false);
 const PassPortInvalid = ref(false);
 const DrivingLisenceInvalid = ref(false);
 const ReleivingLetterInvalid = ref(false);
-const SumbitDisable = ref(true)
+
 
 
 
@@ -1672,7 +1693,7 @@ const fnCalculateAge = () => {
         var ageDate = new Date(difference);
         var calculatedAge = Math.abs(ageDate.getUTCFullYear() - 1970);
         employee_onboarding.fatherAge = calculatedAge
-        alert( "Father's Age"+calculatedAge);
+        
     } else
         if (employee_onboarding.motherDateofBirth) {
             var birthDate = new Date(employee_onboarding.motherDateofBirth);
@@ -1681,7 +1702,7 @@ const fnCalculateAge = () => {
             var ageDate = new Date(difference);
             var calculatedAge = Math.abs(ageDate.getUTCFullYear() - 1970);
             employee_onboarding.motherAge = calculatedAge
-            alert("Mother's Age"+calculatedAge);
+           
         }
 
 }
