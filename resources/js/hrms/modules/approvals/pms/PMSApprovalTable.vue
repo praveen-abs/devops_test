@@ -252,7 +252,7 @@ function processApproveReject() {
 
   axios
     .post(window.location.origin + "/approvals-pms", {
-      kpiform_review_id: currentlySelectedRowData.id,
+      kpiform_review_id: currentlySelectedRowData.pms_kpiform_review_id,
       status:
         currentlySelectedStatus == "Approve"
           ? "Approved"
