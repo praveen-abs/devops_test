@@ -9,8 +9,16 @@ use Maatwebsite\Excel\Sheet;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Events\AfterSheet;
+use Maatwebsite\Excel\Concerns\WithEvents;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Style\Style;
+use PhpOffice\PhpSpreadsheet\Style\Color;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use Maatwebsite\Excel\Concerns\WithStyles;
 
-class BasicAttendanceExport implements FromArray,WithHeadings,ShouldAutoSize
+
+class BasicAttendanceExport implements FromArray,WithHeadings,ShouldAutoSize,WithEvents
 {
 
     /**
@@ -33,6 +41,37 @@ class BasicAttendanceExport implements FromArray,WithHeadings,ShouldAutoSize
             $this->heading_dates
         ];
      }
+
+     public function registerEvents(): array {
+        return [
+            AfterSheet::class => function(AfterSheet $event) {
+                /** @var Sheet $sheet */
+                $sheet = $event->sheet;
+
+                $styleArray = [
+                    'alignment' => [
+                        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                    ],
+                    'borders' => [
+                        'outline' => [
+                            'borderStyle' => Border::BORDER_THICK,
+                            'color' => array('argb' => '00000000'),
+                        ],
+                    ],
+                    'fill' => [
+                        'fillType' => Fill::FILL_SOLID,
+                        'startColor' => array('argb' => 'ffff31')
+                        ]
+
+                ];
+                $cellRange = 'A1:AN1'; // All headers
+                $event->sheet->getDelegate()->getStyle($cellRange)->applyFromArray($styleArray);
+
+
+            },
+        ];
+    }
+
 
     public function array(): array
     {

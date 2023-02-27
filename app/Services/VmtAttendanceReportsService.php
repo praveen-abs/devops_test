@@ -143,7 +143,7 @@ class VmtAttendanceReportsService{
             // where('user_id', $request->user_id)
              where('user_id', $singleUser->id)
                  //->whereMonth('date', $request->month)
-                 ->whereMonth('date','1')
+                 ->whereMonth('date',$month)
                  ->orderBy('checkin_time', 'asc')
                  ->get(['date', 'checkin_time', 'checkout_time','attendance_mode_checkin','attendance_mode_checkout']);
 
@@ -154,17 +154,12 @@ class VmtAttendanceReportsService{
 
              //Create empty month array with all dates.
             // $month = $request->month;
-             $month = 1;
 
-             if($month < 10)
-                 $month = "0" . $month;
 
-             //$year = $request->year;
-             $year = 2023;
-             $days_count = cal_days_in_month(CAL_GREGORIAN,$month,$year);
-            // dd($days_count);
+             //$days_count = cal_days_in_month(CAL_GREGORIAN,$month,$year);
+             //dd($totalDays );
              $heading_dates=array("Emp Code","Name");
-              for($i=1 ; $i <=$days_count ;$i++)
+              for($i=1 ; $i <=$totalDays ;$i++)
               {
                 $date = "";
 
@@ -205,10 +200,10 @@ class VmtAttendanceReportsService{
              $dateWiseData         =  $sortedCollection->groupBy('date'); //->all();
              //dd($merged_attendanceData);
              //dd($dateWiseData);
-            // dd($attendanceResponseArray);
+        // dd($attendanceResponseArray);
              foreach ($dateWiseData  as $key => $value) {
-
-                // dd($value[0]);
+                 //dd($key);
+                //dd($value[0]);
 
                  /*
                      Here $key is the date. i.e : 2022-10-01
@@ -282,7 +277,7 @@ class VmtAttendanceReportsService{
              }
 
 
-        // dd($attendanceResponseArray);
+        //dd($attendanceResponseArray);
 
          $shiftStartTime  = Carbon::parse($regularTime->shift_start_time);
          $shiftEndTime  = Carbon::parse($regularTime->shift_end_time);
@@ -410,7 +405,7 @@ class VmtAttendanceReportsService{
              }
 
 
-       // dd($attendanceResponseArray);
+       dd($attendanceResponseArray);
 
              foreach ($attendanceResponseArray as $key => $value) {
                  $current_date=Carbon::parse($attendanceResponseArray[$key]['date']);
