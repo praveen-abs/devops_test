@@ -32,12 +32,7 @@ class VmtAttendanceReportsService{
         $regularize_record = VmtEmployeeAttendanceRegularization::where('attendance_date',$date)
                            ->where('user_id',  $user_id)->where('regularization_type', $regularizeType);
            if ($regularize_record->exists()) {
-                if($regularize_record->value('status')=='Approved'){
-                     return false;
-                }else{
-                    return true;
-                }
-
+                 return true;
            }else{
                 return true;
             }
@@ -187,7 +182,7 @@ class VmtAttendanceReportsService{
                 //echo "Date is ".$fulldate."\n";
                 ///$month_array[""]
               }
-              array_push($heading_dates, "Total WO", "Total HO","Total P", "Total A","Total LOP","Total L","Total HD","Total OD","Total LG","Total EG","Total Payable Days");
+              array_push($heading_dates, "Total Weekoff", "Total Holiday","Total Present", "Total Absent","Total LOP","Total Leave","Total Halfday","Total On Duty","Total LC","Total EG","Total Payable Days");
 
 
 
@@ -454,11 +449,11 @@ class VmtAttendanceReportsService{
                  } else if($attendanceResponseArray[$key]['checkin_time']!=null || $attendanceResponseArray[$key]['checkout_time']!=null) {
                      if($total_LC>=4&&$attendanceResponseArray[$key]['isLC']){
                         array_push($arrayReport,'P/LC');
-                        $total_present= $total_present+0.5;
+                        $total_present++;
                         $total_lop=  $total_lop+0.5;
                      }else if($total_EG>=4&&$attendanceResponseArray[$key]['isEG']){
                         array_push($arrayReport,'P/EG');
-                        $total_present= $total_present+0.5;
+                        $total_present++;
                         $total_lop=  $total_lop+0.5;
                      }else{
                         array_push($arrayReport,'P');
@@ -488,7 +483,7 @@ class VmtAttendanceReportsService{
               //dd(($attendanceResponseArray));
 
            // dd();
-            $total_payable_days=$total_weekoff+$total_holidays+$total_present+$total_leave+$total_halfday+$total_OD;
+            $total_payable_days=($total_weekoff+$total_holidays+$total_present+$total_leave+$total_halfday+$total_OD)-$total_lop;
             array_push($arrayReport,$total_weekoff,$total_holidays,$total_present,$total_absent, $total_lop,$total_leave, $total_halfday,$total_OD,$total_LC,$total_EG, $total_payable_days);
             array_push($reportresponse,$arrayReport);
 
