@@ -16,9 +16,9 @@ button,label,p,span,*{
     text-transform: capitalize;
     font-size: 13px;
 }
-input,select,textarea{
-text-transform: lowercase;
-}
+/* input,select,textarea{
+text-transform: capitalize;
+} */
 
 .first-letter-captialize{
     display: inline-block;

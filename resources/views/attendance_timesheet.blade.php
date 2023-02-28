@@ -1486,32 +1486,37 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         if (ajax_data_currentdate.absent_status == "Pending")
                                         {
                                             // $("#statement").attr("src","{{ URL::asset($svg_icon_pending) }}")
-                                            cell.innerHTML = cell.innerHTML + "<span style='position: relative;top: -30px; font-weight: 700;color: #b2b223;'>Approval Pending</span>";
-                                            // $("#statement").html("Leave Pending ")
+                                            // cell.innerHTML = cell.innerHTML + "<span style='position: relative;top: -30px; font-weight: 700;color: #f8f8ce;'>Approval Pending</span>";
+                                            cell.innerHTML = " <div class='w-100 h-100 p-2' style='background: #f8f8ce;'><p class='show_date' >" + date +
+                                                "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start'><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'>"+
+                                                "<span style='position: relative;font-weight: 700;color: #b2b223;'>Approval Pending</span><span style='margin-left: 7px'><i class= 'fa fa-question-circle text-secondary me-2 fs-15 ' title='Pending'  ></i></span>";
+                                           
 
                                         }
                                         else
                                         if (ajax_data_currentdate.absent_status == "Rejected")
                                         {
 
-                                            cell.innerHTML = cell.innerHTML + "<span style='top: -89px;color: red;font-weight: 700;position:relative'>Absent</span><br><span style='position: relative;top: -20px;font-weight: 700;color: red;'>"+ ajax_data_currentdate.leave_type+'&nbsp;'+"<span>Rejected</span></span><br>";
-                                            // $("#statement").html("Leave Rejected ")
-                                            // $("#statement").attr("src","{{ URL::asset($svg_icon_rejected) }}")
+                                            
+                                            cell.innerHTML = " <div class='w-100 h-100 p-2' style='background: #fad8d8;'><p class='show_date' >" + date +
+                                                "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start'><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'>"+
+                                                "<span style='top: -35px;left:50px;color: red;font-weight: 700;position:relative'>Absent</span><br><span style='position: relative;left: -18px;font-weight: 700;color: red;'>"+ ajax_data_currentdate.leave_type+'&nbsp;'+"<span>Rejected</span><span style='position: absolute;top: 20px;left: 95px;'><i class='fa fa-times-circle text-danger fs-15'  title='rejected'></i></span></span>";
 
                                         }
                                         else
                                         if (ajax_data_currentdate.absent_status == "Revoked")
                                         {
                                             cell.innerHTML = cell.innerHTML + "<span>Leave Revoked</span>";
-                                            // $("#statement").html("Leave Revoked ")
+
 
                                         }
                                         else
                                         if (ajax_data_currentdate.absent_status == "Approved")
                                         {
-                                            cell.innerHTML = cell.innerHTML + "<span style='position: relative;top: -20px;font-weight: 700;color: green;'>"+ ajax_data_currentdate.leave_type+'&nbsp;'+"<span>Approved</span></span><br>";
-                                            // cell.innerHTML = cell.innerHTML + "<span style='position: relative;top: -30px; left: -17px;font-weight: 700;color: green;'>Leave</span>";
-                                            // $("#statement").attr("src","{{ URL::asset($svg_icon_approved) }}")
+                                            
+                                            cell.innerHTML = " <div class='w-100 h-100 p-2' style='background: #d0dfd0;'><p class='show_date' >" + date +
+                                                "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start'><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><span style='position: relative;top: -5px;font-weight: 700;color: green;'>" +
+                                                ajax_data_currentdate.leave_type+'&nbsp;'+"<span>Approved</span><span style='margin-left: 7px'><i class='fa fa-check-circle text-success fs-15'  title='Approved'></i></span></span>";
 
                                          
                                         }
@@ -1519,10 +1524,10 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                     }
 
                                     else{
-                                        cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
-                                                "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start'><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><span style='margin-top: -38px;margin-left: 45px;font-size: 13px;color: red;font-weight: 700;' class='f-11' id='checkout_time_" +
+                                        cell.innerHTML = " <div class='w-100 h-100 p-2' style='background: #fad8d8;'><p class='show_date' >" + date +
+                                                "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start'><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><span style='margin-left: 45px;font-size: 13px;color: red;font-weight: 700;' class='f-11' id='checkout_time_" +
                                                 year + "-" + (month + 1) + "-" + dateText +
-                                                "'>Absent</span>";
+                                                "'>Absent</span><span style='margin-left: 7px'><i class='fa fa-exclamation-circle fs-15 text-warning me-2' title='Not Applied'></i></span>";
                                     }
 
                                     }
