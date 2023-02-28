@@ -1,23 +1,13 @@
 <template>
-    <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-        <h6 class="modal-title mb-1 text-primary">
-            Leave Request</h6>
-        <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
-            aria-label="Close">
-            <span aria-hidden="true">×</span>
-        </button>
-    </div>
-    <div class="modal-body">
+    <div class="modal-body  new-role-header border-0 ">
         <div id="modal_request_leave" class="card top-line mb-0">
             <div class="card-body">
+        <h6 class="modal-title mb-6  fs-21">
+            Leave Request</h6>
                 <div class="row ">
-                    <div class="col-md-7 col-sm-12" style="border: 1px solid black;">
+                    <div class="col-md-7 col-sm-12" >
 
-                        <div class="row mb-3">
-                            <div class="col-md-12 text-md-start mb-md-0 mb-3">
-                                <h6 class=" mb-1">Leave Type</h6>
-                            </div>
-                        </div>
+                      
                         <div class="row mb-3">
                             <div class="col-md-3  mb-md-0 mb-3">
                                 <div class="form-group">
@@ -26,23 +16,27 @@
 
                                 </div>
                             </div>
-                            <div class="col-md-4  mb-md-0 mb-3">
+                     
+                            <div class="col-md-6  mb-md-0 mb-3">
                                 <div class="form-group">
 
-                                    <select v-model="leave_data.selected_leave" name="" id="leave_type_id" class="form-select outline-none">
-                                        <option value="" selected>Select Leave Type
-                                        </option>
-                                        <option value="" v-for="leaves in  leave_type" :key="leaves">
-                                            {{ leaves }}
-                                        </option>
+                                    <select style="  height: 38px;font-weight: 500;" name="" id="leave_type_id" class="form-select outline-none" v-model="leave_data.selected_leave" @change="Permission">
+                                        <option>Select</option>
+                                        <option >Sick Leave / Casual Leave</option>
+                                        <option >Maternity Leave</option>
+                                        <option >Paternity Leave</option>
+                                        <option >On Duty</option>
+                                        <option >Permission</option>
+                                        <option >Compensatory Off</option>
 
 
                                     </select>
-                                    <button @click="test">test</button>
+
+                                 
                                 </div>
                             </div>
                         </div>
-                        <div class="row mb-3">
+                        <div v-if="TotalNoOfDays" class="row mb-3">
                             <div class="col-md-3  mb-md-0 mb-3">
                                 <div class="form-group">
                                     <label for="">No of Days<span class="text-danger">*</span>
@@ -53,16 +47,17 @@
                             <div class="col-md-9  mb-md-0 mb-3">
                                 <div class="form-group">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="leave" id="" value="{3:option1}" v-model="leave_data.full_day">
-                                        <label class="form-check-label" for="">Full Day</label>
+                                        <input style="height: 20px;width: 20px;" class="form-check-input" type="radio" name="leave" id="" value="full_day" v-model="leave_data.full_day" @click="full_day">
+                                        <label class="form-check-label leave_type ms-3" for="">Full Day</label>
+                                   
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="leave" id="" value="option2" v-model="leave_data.half_day">
-                                        <label class="form-check-label" for="">Half Day</label>
+                                        <input  style="height: 20px;width: 20px;" class="form-check-input" type="radio" name="leave" id="" value="half_day" v-model="leave_data.half_day" @click="half_day">
+                                        <label class="form-check-label leave_type ms-3" for="">Half Day</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="leave" id="" value="option3" v-model="leave_data.custom" >
-                                        <label class="form-check-label" for="">Custom</label>
+                                        <input  style="height: 20px;width: 20px;" class="form-check-input" type="radio" name="leave" id="" value="custom" v-model="leave_data.custom" @click="custom_day" >
+                                        <label class="form-check-label leave_type ms-3" for="">Custom</label>
                                     </div>
 
 
@@ -71,7 +66,7 @@
                         </div>
 
                         <!-- Full Day -->
-                        <div class="row mb-3">
+                        <div v-if="full_day_format" class="row mb-3">
                             <div class="col-md-3  mb-md-0 mb-3">
                                 <div class="form-group">
                                     <label for="">Date<span class="text-danger">*</span>
@@ -81,7 +76,7 @@
                             </div>
                             <div class="col-md-9  mb-md-0 mb-3">
                                 <div class="form-group">
-                                    <Calendar inputId="icon" dateFormat="yy-mm-dd" :showIcon="true" />
+                                    <Calendar inputId="icon" v-model="leave_data.date" dateFormat="yy-mm-dd" :showIcon="true" style="width: 350px;" />
 
 
                                 </div>
@@ -90,7 +85,7 @@
 
 
                         <!-- Half day leave -->
-                        <div v-if="false" class="row mb-3">
+                        <div v-if="half_day_format"  class="row mb-3">
                             <div class="col-md-3  mb-md-0 mb-3">
                                 <div class="form-group">
                                     <label for="">Session<span class="text-danger">*</span>
@@ -101,12 +96,13 @@
                             <div class="col-md-9  mb-md-0 mb-3">
                                 <div class="form-group">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="" id="" value="{3:option1}">
-                                        <label class="form-check-label" for="">Full Day</label>
+                                        <input style="height: 20px;width: 20px;" class="form-check-input" type="radio" name="leave" id="" value="forenoon" >
+                                        <label class="form-check-label leave_type ms-3" for="">Forenoon</label>
+                                   
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="" id="" value="option2">
-                                        <label class="form-check-label" for="">Half Day</label>
+                                        <input  style="height: 20px;width: 20px;" class="form-check-input" type="radio" name="leave" id="" value="afternoon" >
+                                        <label class="form-check-label leave_type ms-3" for="">Afternoon</label>
                                     </div>
 
 
@@ -116,8 +112,8 @@
 
 
                         <!-- Custom Leave -->
-                        <div v-if="false" class="row mb-3">
-                            <div class="col-md-3  mb-md-0 mb-3">
+                        <div v-if="custom_format"  class="row mb-3">
+                            <div class="col-md-4  mb-md-0 mb-3">
                                 <div class="form-group">
                                     <div class="floating">
 
@@ -128,19 +124,127 @@
 
                                 </div>
                             </div>
-                            <div class="col-md-3  mb-md-0 mb-3">
+                            <div class="col-md-2  mb-md-0 mb-3 ms-4 ">
                                 <div class="form-group">
                                     <div class="floating">
 
-                                        <label for="" class="float-label">Total Days</label>
-                                        <InputText class="form-onboard-form form-control  textbox  capitalize " type="text"
-                                            placeholder="Employee Code" />
+                                        <label for="" class="float-label ">Total Days</label>
+                                        <InputText style="width: 60px" class="form-onboard-form form-control  textbox  capitalize " type="text"
+                                         />
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-4  mb-md-0 mb-3 ">
+                                <div class="form-group">
+
+                                    <div class="floating">
+
+                                        <label for="" class="float-label">End Day</label>
+                                        <Calendar inputId="icon" dateFormat="yy-mm-dd" :showIcon="true" />
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            </div>
+
+                        <!-- Permisson -->
+
+                        <div v-if="Permission_format" class="row mb-3">
+                            <div class="col-md-4  mb-md-0 mb-3">
+                                <div class="form-group">
+                                    <div class="floating">
+
+                                        <label for="" class="float-label">Start time</label>
+                                        <span class=" p-input-icon-right">
+                                            <Calendar inputId="time12" v-model="date8" :timeOnly="true" hourFormat="12" icon="your-icon" />
+                                            <i class="pi pi-clock" />
+                                        </span>
 
                                     </div>
 
                                 </div>
                             </div>
                             <div class="col-md-3  mb-md-0 mb-3">
+                                <div class="form-group">
+                                    <div class="floating">
+
+                                        <label for="" class="float-label">Total Hour</label>
+                                        <InputText class="form-onboard-form form-control  textbox  capitalize " type="text"
+                                           style="width: 67px;" />
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-4  mb-md-0 mb-3">
+                                <div class="form-group">
+
+                                    <div class="floating">
+
+                                        <label for="" class="float-label">End time</label>
+                                       
+                                        <span class=" p-input-icon-right">
+                                            <Calendar inputId="time12" v-model="date8" :timeOnly="true" hourFormat="12" icon="your-icon" />
+                                            <i class="pi pi-clock" />
+                                        </span>
+                                        
+                                        
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!--compensatory off  -->
+
+                        
+                        <div v-if="compensatory_format" class="row mb-3">
+                            <div class="col-md-3  mb-md-0 mb-3">
+                                <div class="form-group">
+                                    <label for="">Worked Date <span class="text-danger">*</span>
+                                    </label>
+
+                                </div>
+                            </div>
+                     
+                            <div class="col-md-6  mb-md-0 mb-3">
+                                <div class="form-group">
+
+                                    <select style="  height: 38px;font-weight: 500;" name="" id="leave_type_id" class="form-select outline-none" ></select>
+                                    <p style="opacity: 50%;">(note:Worked dates will get expired after 60 days)</p>
+
+                                 
+                                </div>
+                           </div>
+                           <div   class="row mb-3">
+                            <div class="col-md-5  mb-md-0 mb-3">
+                                <div class="form-group">
+                                    <div class="floating">
+
+                                        <label for="" class="float-label">Start Date</label>
+                                        <Calendar inputId="icon" dateFormat="yy-mm-dd" :showIcon="true" />
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-3  mb-md-0 mb-3 ">
+                                <div class="form-group">
+                                    <div class="floating">
+
+                                        <label for="" class="float-label ms-10">Total Days</label>
+                                        <InputText style="width: 60px" class="form-onboard-form form-control  textbox  capitalize " type="text"
+                                         />
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-4  mb-md-0 mb-3 ">
                                 <div class="form-group">
 
                                     <div class="floating">
@@ -154,43 +258,6 @@
 
                         </div>
 
-                        <!-- Permisson -->
-
-                        <div v-if="false" class="row mb-3">
-                            <div class="col-md-3  mb-md-0 mb-3">
-                                <div class="form-group">
-                                    <div class="floating">
-
-                                        <label for="" class="float-label">Start time</label>
-                                        <Calendar inputId="icon" dateFormat="yy-mm-dd" :showIcon="true" />
-
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="col-md-3  mb-md-0 mb-3">
-                                <div class="form-group">
-                                    <div class="floating">
-
-                                        <label for="" class="float-label">Total Hour</label>
-                                        <InputText class="form-onboard-form form-control  textbox  capitalize " type="text"
-                                            placeholder="Employee Code" />
-
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="col-md-3  mb-md-0 mb-3">
-                                <div class="form-group">
-
-                                    <div class="floating">
-
-                                        <label for="" class="float-label">End time</label>
-                                        <Calendar inputId="icon" dateFormat="yy-mm-dd" :showIcon="true" />
-
-                                    </div>
-                                </div>
-                            </div>
 
                         </div>
 
@@ -202,10 +269,10 @@
 
                                 </div>
                             </div>
-                            <div class="col-md-4  mb-md-0 mb-3">
+                            <div class="col-md-6  mb-md-0 mb-3">
                                 <div class="form-group">
 
-                                    <select name="" id="leave_type_id" class="form-select outline-none">
+                                    <select style="height: 38px;font-weight: 500;" name="" id="leave_type_id" class="form-select outline-none">
                                         <option value="" selected>Select
                                         </option>
 
@@ -215,7 +282,7 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-md-2  mb-md-0 mb-3">
+                            <div class="col-md-3  mb-md-0 mb-3">
                                 <div class="form-group">
                                     <label for="">Reason <span class="text-danger">*</span>
                                     </label>
@@ -224,19 +291,20 @@
                             </div>
                             <div class="col-md-4  mb-md-0 mb-3">
                                 <div class="form-group">
-                                    <Textarea :autoResize="true" rows="5" cols="30" />
+                                    <Textarea :autoResize="true" rows="3" cols="45" placeholder="Enter the Reason" />
 
 
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        </div>
+                    
                     <div class="col-5">
 
-                        <Calendar :inline="true" :showWeek="true" />
-                        <div class="text-center text-md-end">
+                        <Calendar :inline="true" :showWeek="true" style="margin: 20px 60px;" />
+                        <div class="text-center ">
                             <button type="button" class="btn btn-border-primary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" id="btn_request_leave" class="btn btn-primary">Request
+                            <button type="button" id="btn_request_leave" class="btn btn-primary ms-4" >Request
                                 Leave</button>
                         </div>
                     </div>
@@ -248,6 +316,7 @@
             </div>
         </div>
     </div>
+  
 </template>
 
 
@@ -257,36 +326,138 @@
 
 import { onMounted, reactive, ref } from "vue";
 
-// const selected_leave=ref()
+const selected_leave=ref('a')
 // const full_day=ref()
 // const half_day=ref()
 // const custom=ref()
 
 
 const leave_data=reactive({
-    selected_leave:"",
+    
+    selected_leave:'',
+    date:'',
     full_day:'',
-    half_day:"",
-    custom:""
+    half_day:'',
+    custom:''
 })
 
+const TotalNoOfDays=ref(true)
+const full_day_format=ref(true)
+const half_day_format=ref(false)
+const custom_format=ref(false)
+const Permission_format=ref(false)
+const compensatory_format=ref(false)
 
-const leave_type=ref([
-    "Sick Leave / Casual Leave",
-    "Maternity Leave",
-    "Paternity Leave",
-    "On Duty",
-    "Permission",
-    "Compensatory Off"
-])
+// const leave_type=ref([
+    
+// ])
 
-const test=()=>{
-//     console.log(selected_leave);
-// console.log(full_day)
-// console.log(half_day);
-// console.log(custom);
-console.log(leave_data);
+const full_day=()=>{
+    leave_data.full_day=='full_day' ? full_day_format.value=true : full_day_format.value=false
+    custom_format.value=false
+    Permission_format.value=false
+    half_day_format.value=false
+}
+
+const half_day=()=>{
+    leave_data.half_day='half_day'? half_day_format.value=true : half_day_format.value=false
+    custom_format.value=false
+    Permission_format.value=false
+    full_day_format.value=false
+}
+const custom_day=()=>{
+    leave_data.custom=='custom'? custom_format.value=true : custom_format.value=false 
+    Permission_format.value=false
+    half_day_format.value=false
+    full_day_format.value=false
+
+    }
+
+const Permission=()=>{
+    // leave_data.selected_leave=='Permission' ? Permission_format.value=true:Permission_format.value=false
+    // leave_data.selected_leave=='Compensatory Off'  ?  compensatory_format.value=true : compensatory_format.value=false
+    
+    // full_day_format.value=false
+    // half_day_format.value=false
+    // custom_format.value=false
+
+    if(leave_data.selected_leave=='Permission'){
+        Permission_format.value=true
+        TotalNoOfDays.value=false
+       half_day_format.value=false
+       custom_format.value=false
+       compensatory_format.value=false
+    }else
+    if(leave_data.selected_leave=='Compensatory Off'){
+       compensatory_format.value=true 
+       Permission_format.value=false
+       full_day_format.value=false
+       half_day_format.value=false
+       custom_format.value=false
+       TotalNoOfDays.value=false
+    }else
+    if(leave_data.selected_leave=='Select'){
+        compensatory_format.value=false 
+        Permission_format.value=false
+         full_day_format.value=true
+       half_day_format.value=false
+       custom_format.value=false
+       TotalNoOfDays.value=true
+
+    }
+    else{
+        Permission_format.value=false
+        compensatory_format.value=false
+    }
 }
 
 
+
+
+
 </script>
+
+
+
+<style>
+
+label{
+    font-size: 15px;
+font-weight: 502;
+}
+.leave_type{
+    font-size: 15px;
+    font-weight: 400;
+}
+.p-datepicker .p-datepicker-header {
+    padding: 0.5rem;
+    color: #061328;
+    background: #002f56;
+    font-weight: 600;
+    margin: 0;
+    border-bottom: 1px solid #dee2e6;
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+  }
+  .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year, .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month {
+    color: #fff;
+    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+    font-weight: 600;
+    padding: 0.5rem;
+  }
+  .p-datepicker:not(.p-datepicker-inline) .p-datepicker-header {
+    background: #002f56;
+    color: black;
+  }
+  
+  .p-calendar-w-btn .p-datepicker-trigger {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background: #002f56;
+  }
+  .p-button:enabled:hover {
+    background: #002f56;
+    color: #ffffff;
+    border-color: none;
+  }
+</style>
