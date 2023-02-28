@@ -26,6 +26,7 @@ import Dropdown from 'primevue/dropdown';
 import Calendar from 'primevue/calendar';
 import ProgressSpinner from 'primevue/progressspinner';
 import Textarea from 'primevue/textarea';
+import Toast from 'primevue/toast';
 
 import leaveApply from './LeaveApply.vue'
 
@@ -54,5 +55,6 @@ app.component('Dropdown', Dropdown)
 app.component('ProgressSpinner', ProgressSpinner)
 app.component('Calendar', Calendar)
 app.component('Textarea', Textarea)
+app.component('Toast', Toast)
 
 app.mount("#vjs_leaveApply");
