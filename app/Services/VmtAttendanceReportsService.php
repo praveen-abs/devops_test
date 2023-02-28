@@ -454,7 +454,6 @@ class VmtAttendanceReportsService{
                      }else if($total_EG>=4&&$attendanceResponseArray[$key]['isEG']){
                         array_push($arrayReport,'P/EG');
                         $total_present++;
-                        $total_lop=  $total_lop+0.5;
                      }else{
                         array_push($arrayReport,'P');
                         $total_present++;

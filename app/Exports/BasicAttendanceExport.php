@@ -16,9 +16,10 @@ use PhpOffice\PhpSpreadsheet\Style\Style;
 use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use Maatwebsite\Excel\Concerns\WithStyles;
+use Maatwebsite\Excel\Concerns\WithCustomStartCell;
 
 
-class BasicAttendanceExport implements FromArray,WithHeadings,ShouldAutoSize,WithEvents
+class BasicAttendanceExport implements FromArray,WithHeadings,ShouldAutoSize,WithEvents,WithCustomStartCell
 {
 
     /**
@@ -42,12 +43,16 @@ class BasicAttendanceExport implements FromArray,WithHeadings,ShouldAutoSize,Wit
         ];
      }
 
+     public function startCell(): string
+     {
+         return 'A2';
+     }
      public function registerEvents(): array {
         return [
             AfterSheet::class => function(AfterSheet $event) {
                 /** @var Sheet $sheet */
                 $sheet = $event->sheet;
-
+          
                 $styleArray = [
                     'alignment' => [
                         'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
