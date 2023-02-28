@@ -48,9 +48,10 @@ class VmtAttendanceReportsService{
         $reportresponse=array();
 
         $user = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
+                      ->join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
                       ->where('is_ssa','0')
                       ->where('active','1')
-                      ->get(['users.id','users.user_code','users.name','vmt_employee_details.doj']);
+                      ->get(['users.id','users.user_code','users.name','vmt_employee_office_details.designation','vmt_employee_details.doj']);
 
         $holidays = vmtHolidays::whereMonth('holiday_date','=',$month)->pluck('holiday_date');
         foreach($user as $singleUser){
@@ -67,9 +68,9 @@ class VmtAttendanceReportsService{
             $total_lop=0;
 
 
-            //dd($singleUser->user_code);
+            //dd($singleUser);
 
-            $arrayReport=array($singleUser->user_code,$singleUser->name);
+            $arrayReport=array($singleUser->user_code,$singleUser->name,$singleUser->designation,$singleUser->doj);
 
 
 
@@ -158,7 +159,8 @@ class VmtAttendanceReportsService{
 
              //$days_count = cal_days_in_month(CAL_GREGORIAN,$month,$year);
              //dd($totalDays );
-             $heading_dates=array("Emp Code","Name");
+             //For Excel Sheet Headers
+             $heading_dates=array("Emp Code","Name","Designation","DOJ");
               for($i=1 ; $i <=$totalDays ;$i++)
               {
                 $date = "";
@@ -405,7 +407,7 @@ class VmtAttendanceReportsService{
              }
 
 
-       dd($attendanceResponseArray);
+      // dd($attendanceResponseArray);
 
              foreach ($attendanceResponseArray as $key => $value) {
                  $current_date=Carbon::parse($attendanceResponseArray[$key]['date']);

@@ -64,7 +64,7 @@ class BasicAttendanceExport implements FromArray,WithHeadings,ShouldAutoSize,Wit
                         ]
 
                 ];
-                $cellRange = 'A1:AN1'; // All headers
+                $cellRange = 'A1:AQ1'; // All headers
                 $event->sheet->getDelegate()->getStyle($cellRange)->applyFromArray($styleArray);
 
 
