@@ -1486,14 +1486,15 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         if (ajax_data_currentdate.absent_status == "Pending")
                                         {
                                             // $("#statement").attr("src","{{ URL::asset($svg_icon_pending) }}")
-                                            cell.innerHTML = cell.innerHTML + "<span style='position: relative;top: -30px; left: -15px;font-weight: 700;color: #b2b223;'>Approval Pending</span>";
+                                            cell.innerHTML = cell.innerHTML + "<span style='position: relative;top: -30px; font-weight: 700;color: #b2b223;'>Approval Pending</span>";
                                             // $("#statement").html("Leave Pending ")
 
                                         }
                                         else
                                         if (ajax_data_currentdate.absent_status == "Rejected")
                                         {
-                                            cell.innerHTML = cell.innerHTML + "<span style='position: relative;top: -30px; left: -20px;font-weight: 700;'>Leave Rejected</span>";
+
+                                            cell.innerHTML = cell.innerHTML + "<span style='top: -89px;color: red;font-weight: 700;position:relative'>Absent</span><br><span style='position: relative;top: -20px;font-weight: 700;color: red;'>"+ ajax_data_currentdate.leave_type+'&nbsp;'+"<span>Rejected</span></span><br>";
                                             // $("#statement").html("Leave Rejected ")
                                             // $("#statement").attr("src","{{ URL::asset($svg_icon_rejected) }}")
 
@@ -1501,27 +1502,20 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         else
                                         if (ajax_data_currentdate.absent_status == "Revoked")
                                         {
-                                            cell.innerHTML = cell.innerHTML + "<span>Revoked</span>";
+                                            cell.innerHTML = cell.innerHTML + "<span>Leave Revoked</span>";
                                             // $("#statement").html("Leave Revoked ")
 
                                         }
                                         else
                                         if (ajax_data_currentdate.absent_status == "Approved")
                                         {
-                                            cell.innerHTML = cell.innerHTML + "<span style='position: relative;top: -40px; left: -27px;font-weight: 700;color: black;'>"+ ajax_data_currentdate.leave_type+"<br><span>Approved</span></span><br>";
+                                            cell.innerHTML = cell.innerHTML + "<span style='position: relative;top: -20px;font-weight: 700;color: green;'>"+ ajax_data_currentdate.leave_type+'&nbsp;'+"<span>Approved</span></span><br>";
                                             // cell.innerHTML = cell.innerHTML + "<span style='position: relative;top: -30px; left: -17px;font-weight: 700;color: green;'>Leave</span>";
                                             // $("#statement").attr("src","{{ URL::asset($svg_icon_approved) }}")
 
                                          
                                         }
-                                        else
-                                         if (ajax_data_currentdate.absent_status == "Pending")
-                                        {
-                                            // $("#statement").attr("src","{{ URL::asset($svg_icon_pending) }}")
-                                            cell.innerHTML = cell.innerHTML + "<span>Pending</span>";
-                                            // $("#statement").html("Leave Pending ")
-
-                                        }
+                                       
                                     }
 
                                     else{
