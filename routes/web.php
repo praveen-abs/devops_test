@@ -480,6 +480,8 @@ Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 's
     //Grid Js
     Route::get('/payroll-filter-info', [App\Http\Controllers\VmtReportsController::class, 'fetchPayrollReport'])->name('payroll-filter-info');
 
+    //Reimbursements Reports
+    Route::get('/reports/generateReimbursementsReports',  [App\Http\Controllers\VmtReportsController::class, 'generateReimbursementsReports'])->name('generateReimbursementsReports');
 
 });
 

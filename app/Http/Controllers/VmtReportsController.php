@@ -14,9 +14,11 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use App\Exports\VmtPayrollReports;
 use App\Exports\VmtPmsReviewsReport;
+use App\Exports\ReimbursementsExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use App\Models\VmtEmployeeReimbursements;
 
 class VmtReportsController extends Controller
 {
@@ -295,5 +297,12 @@ class VmtReportsController extends Controller
 
     }
 
-
+    public function generateReimbursementsReports(){
+        $reimbursements_data = VmtEmployeeReimbursements::join('users','users.id','=','vmt_employee_reimbursements.user_id')
+                                                        ->join('vmt_reimbursements','vmt_reimbursements.id','=','vmt_employee_reimbursements.reimbursement_type_id')
+                                                        ->whereMonth('date',2)
+                                                        ->get(['users.user_code','users.name','vmt_reimbursements.reimbursement_type','date','user_data','from','to','vehicle_type','distance_travelled']);
+         dd( $reimbursements_data);
+        return Excel::download(new ReimbursementsExport, 'Reimbursements.xlsx');
+    }
 }
