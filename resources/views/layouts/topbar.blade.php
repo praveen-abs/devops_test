@@ -143,7 +143,7 @@ if ($query_clientMaster) {
                             style="height:35px;width:35px;">
                             {{ $t_userAvatarDetails['data'] }}</div>
                     @else
-                        <img class="rounded-circle header-profile-user img-xl"
+                        <img class="rounded-circle header-profile-user"
                             src=" {{ URL::asset('images/' . $t_userAvatarDetails['data']) }}" alt="user-image">
                     @endif
 
