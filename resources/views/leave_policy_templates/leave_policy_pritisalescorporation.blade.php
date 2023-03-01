@@ -619,17 +619,6 @@
                                                     </td>
 
                                                 </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item  ">
-                                <div class="main-page">
-                                    <div class="sub-page">
-                                        <table class="policy_table  ">
-                                            <tbody>
-
                                                 <tr class="
                                                 ">
                                                     <td colspan="1" align="" class="pad-top-5 pad-right-10 ">
@@ -690,6 +679,18 @@
                                                     </td>
 
                                                 </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item  ">
+                                <div class="main-page">
+                                    <div class="sub-page">
+                                        <table class="policy_table  ">
+                                            <tbody>
+
+
 
                                                 <tr>
                                                     <td colspan="8" align="" class="pad-bottom-10">
@@ -1012,6 +1013,12 @@
                                                             Resources if you require any further information
                                                         </p>
 
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="8" style="padding-top: 50px" align="center"
+                                                        class=" ">
+                                                        * &nbsp; * &nbsp; *
                                                     </td>
                                                 </tr>
                                             </tbody>

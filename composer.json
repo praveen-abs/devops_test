@@ -38,8 +38,8 @@
             "app/Helpers/PMSv2_helper.php",
             "app/Helpers/Attendance_helper.php",
             "app/Services/VmtEmployeeService.php",
-            "app/Services/VmtEmployeePayslipService.php"
-
+            "app/Services/VmtEmployeePayslipService.php",
+            "app/Services/VmtAttendanceService.php"
         ]
     },
     "autoload-dev": {

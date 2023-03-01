@@ -970,6 +970,7 @@ class VmtEmployeeController extends Controller
                 'error_fields' => [],
             ];
         } catch (\Exception $e) {
+            //dd($e);
             $this->deleteUser($user->id);
 
 
@@ -1766,6 +1767,14 @@ class VmtEmployeeController extends Controller
         return "saved";
 
 
+    }
+
+    public function fetchManagerName(){
+        $reportingManagers=User::join('vmt_org_roles','vmt_org_roles.id','=','users.org_role')
+                                 ->whereIn('vmt_org_roles.id',[3,4])
+                                 ->get(['users.user_code','users.name']);
+                               // dd($reportingManagers);
+        return $reportingManagers;
     }
 
 }

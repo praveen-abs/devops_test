@@ -155,93 +155,8 @@
                             <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12">
                                 <h6 class="text-left fw-bold">Team Leave Balance</h6>
                             </div>
-                            <div class="col-sm-3 col-sm-12 col-xl-3 col-md-4 col-lg-3 d-flex">
-                                <div class="card   box_shadow_0 border-rtb left-line w-100">
-                                    <div class="card-body text-center">
-                                        <p class="text-ash-medium mb-2 f-13 ">Sick Leave</p>
-                                        <h5 class="mb-0">-</h5>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3 col-sm-12 col-xl-3 col-md-4 col-lg-3 d-flex">
-                                <div class="card box_shadow_0 border-rtb left-line w-100">
-                                    <div class="card-body text-center">
-                                        <p class="text-ash-medium mb-2 f-13 ">Earned Leave</p>
-                                        <h5 class="mb-0">-</h5>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3 col-sm-12 col-xl-3 col-md-4 col-lg-3 d-flex">
-                                <div class="card box_shadow_0 border-rtb  left-line w-100">
-                                    <div class="card-body text-center">
-                                        <p class="text-ash-medium mb-2 f-13 ">Casual Leave</p>
-                                        <h5 class="mb-0">-</h5>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3 col-sm-12 col-xl-3 col-md-4 col-lg-3 d-flex">
-                                <div class="card box_shadow_0 border-rtb  left-line w-100">
-                                    <div class="card-body text-center">
-                                        <p class="text-ash-medium mb-2 f-13 "> Carryover</p>
-                                        <h5 class="mb-0">-</h5>
-                                        <div class="text-right">
-                                            <button type="button" class="btn px-2 py-0 border_radius_3 btn-orange"
-                                                data-bs-toggle="modal" data-bs-target="#earlyTimeArivals_modal">
-                                                <i class="fa fa-file-text-o"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12">
-                                <h6 class="text-left fw-bold">Leave Availed</h6>
-                            </div>
-                            <div class="col-sm-3 col-sm-12 col-xl-3 col-md-4 col-lg-3 d-flex">
-                                <div class="card mb-0  box_shadow_0 border-rtb left-line w-100">
-                                    <div class="card-body text-center">
-                                        <p class="text-ash-medium mb-2 f-13 ">Sick Leave</p>
-                                        <h5 class="mb-0">-</h5>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3 col-sm-12 col-xl-3 col-md-4 col-lg-3 d-flex">
-                                <div class="card mb-0 box_shadow_0 border-rtb left-line w-100">
-                                    <div class="card-body text-center">
-                                        <p class="text-ash-medium mb-2 f-13 ">Earned Leave</p>
-                                        <h5 class="mb-0">-</h5>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3 col-sm-12 col-xl-3 col-md-4 col-lg-3 d-flex">
-                                <div class="cardmb-0 box_shadow_0 border-rtb  left-line w-100">
-                                    <div class="card-body text-center">
-                                        <p class="text-ash-medium mb-2 f-13 ">Casual Leave</p>
-                                        <h5 class="mb-0">-</h5>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3 col-sm-12 col-xl-3 col-md-4 col-lg-3 d-flex">
-                                <div class="cardmb-0 box_shadow_0 border-rtb  left-line w-100">
-                                    <div class="card-body text-center">
-                                        <p class="text-ash-medium mb-2 f-13 "> Carryover</p>
-                                        <h5 class="mb-0">-</h5>
-                                        <div class="text-right">
-                                            <button type="button" class="btn px-2 py-0 border_radius_3 btn-orange"
-                                                data-bs-toggle="modal" data-bs-target="#earlyTimeArivals_modal">
-                                                <i class="fa fa-file-text-o"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @vite('resources/js/hrms/modules/leave_module/team_leave_module/TeamLeaveBalance.js')
+                            <div id="vjs_TeamLeaveTable_RemainingLeave"></div>
                         </div>
 
                     </div>
@@ -255,6 +170,7 @@
 
                                 <div class="table-responsive">
                                     <div id="team_leaveHistory" class="custom_gridJs"></div>
+
                                 </div>
                             </div>
                         </div>
@@ -271,7 +187,8 @@
                         <div class="card mb-0 leave-history">
                             <div class="card-body">
                                 <h6 class="mb-2">Org Leave Balance</h6>
-                                <div id="orgLeaveTable_RemainingLeave"></div>
+                                @vite('resources/js/hrms/modules/leave_module/Org_leave_module/OrgLeaveBalance.js')
+                                <div id="vjs_orgLeaveTable_RemainingLeave"></div>
                             </div>
                         </div>
                     </div>
@@ -281,9 +198,8 @@
                         <div class="card mb-0 leave-history">
                             <div class="card-body">
                                 <h6 class="mb-2">Org Leave history</h6>
-                                <div class="table-responsive">
-                                    <div id="org_leaveHistory" class="custom_gridJs"></div>
-                                </div>
+                                @vite('resources/js/hrms/modules/leave_module/Org_leave_module/OrgLeaveHistoryTable.js')
+                                <div id="vjs_orgLeaveHistoryTable"></div>
                             </div>
                         </div>
                     </div>
@@ -330,95 +246,6 @@
         </div>
 
     </div>
-
-    {{--  --}}
-
-
-    {{--
-        <div class="card top-line ">
-            <div class="card-body">
-                <div class="leave-balance-wrapper">
-                    <div class="row mb-2">
-                        <div class="col-8">
-                            <h6>Leave Balance</h6>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-4 d-flex ">
-                        <div class="card left-line w-100">
-                            <div class="card-body">
-                                <p class="text-muted mb-2 fw-bold text-center">Available</p>
-                                <h6 class="text-center">-</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-4 d-flex ">
-                        <div class="card left-line w-100">
-                            <div class="card-body">
-                                <p class="text-muted mb-2 fw-bold text-center">Accured so far</p>
-                                <h6 class="text-center">-</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-4 d-flex ">
-                        <div class="card left-line w-100">
-                            <div class="card-body">
-                                <p class="text-muted mb-2 fw-bold text-center">Carryover</p>
-                                <h6 class="text-center">-</h6>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="leave-availed-wrapper">
-                    <div class="row mb-2">
-                        <div class="col-8">
-                            <h6>Leave Availed</h6>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-4 d-flex ">
-                            <div class="card left-line w-100">
-                                <div class="card-body">
-                                    <p class="text-muted mb-2 fw-bold text-center">Available</p>
-                                    <h6 class="text-center">-</h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4 d-flex ">
-                            <div class="card left-line w-100">
-                                <div class="card-body">
-                                    <p class="text-muted mb-2 fw-bold text-center">Accured so far</p>
-                                    <h6 class="text-center">-</h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4 d-flex ">
-                            <div class="card left-line w-100">
-                                <div class="card-body">
-                                    <p class="text-muted mb-2 fw-bold text-center">Carryover</p>
-                                    <h6 class="text-center">-</h6>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-
-            </div>
-        </div> --}}
-
-
-
-
-
-
-
-    {{-- modals --}}
-
 
     <div id="leave_availed-modal" class="modal custom-modal fade" role="dialog">
         <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable  modal-xl" role="document">
@@ -968,8 +795,8 @@
             console.log("Revoking leave.... " + leave_id);
             var status = "Revoked";
             $.ajax({
-                url: "{{ route('revokeLeave') }}",
-                type: "GET",
+                url: "{{ route('processLeaveRequest') }}",
+                type: "POST",
                 dataType: "json",
                 data: {
                     'leave_id': $('#btn_revoke').attr("data-leave-id"),

@@ -1,5 +1,4 @@
 <?php use Carbon\Carbon; ?>
-
 @extends('layouts.master')
 @section('title')
     @lang('translation.settings')
@@ -61,36 +60,37 @@
                                     <div class="profile-mid-right-content mb-4 text-center ">
                                         <div class="border-bottom-liteAsh py-2">
                                             <p class="text-muted f-12 fw-bold">Employee Status</p>
-                                            <p class="text-primary f-15 fw-bold">
+                                            <p class="text-primary-old f-15 fw-bold">
                                                 {{ getEmployeeActiveStatus($user->id) ?? '-' }}
                                             </p>
 
                                         </div>
                                         <div class="border-bottom-liteAsh py-2">
                                             <p class="text-muted f-12 fw-bold">Employee Code</p>
-                                            <p class="text-primary f-15 fw-bold">{{ $user_full_details->user_code ?? '-' }}
+                                            <p class="text-primary-old f-15 fw-bold">
+                                                {{ $user_full_details->user_code ?? '-' }}
                                             </p>
 
                                         </div>
                                         <div class="border-bottom-liteAsh py-2">
-                                            <p class="text-muted f-12 fw-bold">Designation</p>
-                                            <p class="text-primary f-15 fw-bold">{{ $user_full_details->designation }}
+                                            <p class="text-muted f-12 fw-bold">Employee Designation</p>
+                                            <p class="text-primary-old f-15 fw-bold">
+                                                {{ $user_full_details->designation ?? '-' }}
                                             </p>
-
                                         </div>
                                         <div class="border-bottom-liteAsh py-2">
                                             <p class="text-muted f-12 fw-bold">Location</p>
-                                            <p class="text-primary f-15 fw-bold">
+                                            <p class="text-primary-old f-15 fw-bold">
                                                 {{ $user_full_details->work_location ?? '-' }}</p>
                                         </div>
                                         <div class="border-bottom-liteAsh py-2">
                                             <p class="text-muted f-12 fw-bold">Department</p>
-                                            <p class="text-primary f-15 fw-bold">
+                                            <p class="text-primary-old f-15 fw-bold">
                                                 {{ $department ?? '-' }}</p>
                                         </div>
                                         <div class="border-bottom-liteAsh py-2">
                                             <p class="text-muted f-12 fw-bold">Reporting To</p>
-                                            <p class="text-primary f-15 fw-bold">
+                                            <p class="text-primary-old f-15 fw-bold">
                                                 {{ $user_full_details->l1_manager_name ?? '-' }}</p>
                                         </div>
                                     </div>
@@ -370,13 +370,6 @@
                                             Paycheck
                                         </a>
                                     </li>
-                                    {{-- <li class="nav-item  " role="presentation">
-                                        <a class="nav-link  " id="" data-bs-toggle="pill" href=""
-                                            data-bs-target="#finance_manageTax" role="tab" aria-controls="pills-home"
-                                            aria-selected="true">
-                                            Manage Tax
-                                        </a>
-                                    </li> --}}
                                 </ul>
                             </div>
                         </div>
@@ -529,478 +522,8 @@
                                                     Pay Slips
                                                 </a>
                                             </li>
-                                            {{-- <li class="nav-item  " role="presentation">
-                                                <a class="nav-link  " id="" data-bs-toggle="pill"
-                                                    href="" data-bs-target="#pay_incomeTax" role="tab"
-                                                    aria-controls="" aria-selected="true">
-                                                    Income Tax
-                                                </a>
-                                            </li> --}}
-                                            {{-- <li class="nav-item  " role="presentation">
-                                                <a class="nav-link  " id="" data-bs-toggle="pill"
-                                                    href="" data-bs-target="#pay_claims" role="tab"
-                                                    aria-controls="" aria-selected="true">
-                                                    Component Claims
-                                                </a>
-                                            </li> --}}
                                         </ul>
-                                        {{-- </div>
-                                        </div> --}}
-
-                                        <div class="tab-content " id="pills-tabContent">
-                                            {{-- <div class="tab-pane fade active show" id="pay_summary" role="tabpanel"
-                                                aria-labelledby="">
-                                                <div class="paysummary_container mb-3">
-
-                                                    <div class="row">
-                                                        <div class="col-sm-3 col-sm-12 col-xl-3 col-md-3 col-lg-3 ">
-                                                            <div class="card box_shadow_0 border-rtb   left-line">
-                                                                <div class="card-body text-center">
-                                                                    <p class="text-ash-medium  f-13 ">Current
-                                                                        Compension
-                                                                    </p>
-                                                                    <p class="mb-0 f-14 fw-bold text-primary">INR 1,50,000
-                                                                        / Annum</h6>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-3 col-sm-12 col-xl-3 col-md-3 col-lg-3 ">
-                                                            <div class="card box_shadow_0 border-rtb   left-line">
-                                                                <div class="card-body text-center">
-                                                                    <p class="text-ash-medium  f-13 ">
-                                                                        Legal Entry
-                                                                    </p>
-                                                                    <p class="mb-0 f-14 fw-bold text-primary">-</h6>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-3 col-sm-12 col-xl-3 col-md-3 col-lg-3 ">
-                                                            <div class="card box_shadow_0 border-rtb   left-line">
-                                                                <div class="card-body text-center">
-                                                                    <p class="text-ash-medium  f-13 ">
-                                                                        Remuneration
-                                                                    </p>
-                                                                    <p class="mb-0 f-14 fw-bold text-primary">Monthly</p>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-3 col-sm-12 col-xl-3 col-md-3 col-lg-3 ">
-                                                            <div class="card box_shadow_0 border-rtb   left-line">
-                                                                <div class="card-body text-center">
-                                                                    <p class="text-ash-medium  f-13 ">
-                                                                        Pay Cycle
-                                                                    </p>
-                                                                    <p class="mb-0 f-14 fw-bold text-primary">Monthly</h6>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <div class="row mb-3">
-                                                            <div class="col-6 text-start mb-3">
-                                                                <h6>Salary Timeline</h6>
-
-                                                            </div>
-                                                            <div class="col-6 text-end mb-2">
-                                                                <button class="btn btn-orange">Revise Salary</button>
-                                                            </div>
-                                                            <div class="col-2">
-                                                                <ul class="timeLine_period">
-                                                                    <li class="period active text-center">
-                                                                        <p class="f-12  text-center period-month fw-bold">
-                                                                            Mar 01,2022</p>
-                                                                        <span
-                                                                            class="period-status badge bg-info">Current</span>
-                                                                    </li>
-                                                                    <li class="period  text-center">
-                                                                        <p class="f-12  text-center period-month fw-bold">
-                                                                            Mar 01,2022</p>
-
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="col-10">
-                                                                <div class="accordion"
-                                                                    id="accordionPanelsStayOpenExample">
-                                                                    <div class="accordion-item mb-4">
-                                                                        <h2 class="accordion-header"
-                                                                            id="panelsStayOpen-headingOne">
-                                                                            <button class="accordion-button collapsed"
-                                                                                type="button" data-bs-toggle="collapse"
-                                                                                data-bs-target="#timeLine-collapseOne"
-                                                                                aria-expanded="true" aria-controls="">
-                                                                                <div class="d-flex me-3 justify-content-center align-items-center rounded-circle"
-                                                                                    style="height: 40px;width:40px;background-color:#91ddbe;">
-                                                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                        width="22.058" height="12.253"
-                                                                                        viewBox="0 0 22.058 12.253">
-                                                                                        <path id="arrow-trend-up-solid"
-                                                                                            d="M14.705,98.451a1.225,1.225,0,0,1,0-2.451h6.127a1.224,1.224,0,0,1,1.225,1.225v6.127a1.225,1.225,0,0,1-2.451,0v-3.167l-6.487,6.483a1.223,1.223,0,0,1-1.731,0l-4.071-4.032-5.226,5.258a1.225,1.225,0,0,1-1.733-1.731l6.128-6.127a1.223,1.223,0,0,1,1.731,0l4.036,4.032,5.618-5.652Z"
-                                                                                            transform="translate(0 -96)"
-                                                                                            fill="#686363" />
-                                                                                    </svg>
-                                                                                </div>
-                                                                                <div
-                                                                                    class="d-flex justify-content-between">
-                                                                                    <div class="">
-                                                                                        <p
-                                                                                            class="text-dark_green  mb-2 f-12 text-center">
-                                                                                            Regular Salary</p>
-                                                                                        <p
-                                                                                            class="mb-0 text-dark_green  f-14 fw-bold">
-                                                                                            INR
-                                                                                            1,15,91,555
-                                                                                        </p>
-                                                                                    </div>
-                                                                                    <div
-                                                                                        class="f-15 text-dark_green  mx-4  d-flex align-items-center">
-                                                                                        +</div>
-                                                                                    <div class="">
-                                                                                        <p
-                                                                                            class="text-dark_green  mb-2 f-12 text-center">
-                                                                                            Others</p>
-                                                                                        <p
-                                                                                            class="mb-0 text-dark_green  f-14 fw-bold">
-                                                                                            INR
-                                                                                            54,00,000
-                                                                                        </p>
-                                                                                    </div>
-                                                                                    <div
-                                                                                        class="f-15 mx-3 text-dark_green d-flex align-items-center ">
-                                                                                        +</div>
-                                                                                    <div class="">
-                                                                                        <p
-                                                                                            class="text-dark_green  mb-2 f-12 text-center">
-                                                                                            Bonus</p>
-                                                                                        <p
-                                                                                            class="mb-0 text-dark_green  f-14 fw-bold">
-                                                                                            INR
-                                                                                            26,91,555
-                                                                                        </p>
-                                                                                    </div>
-                                                                                    <div
-                                                                                        class="f-15 mx-3 text-dark_green  d-flex align-items-center ">
-                                                                                        =</div>
-                                                                                    <div class="">
-                                                                                        <p
-                                                                                            class="text-dark_green  mb-2 f-12 text-center">
-                                                                                            Total </p>
-                                                                                        <p
-                                                                                            class="mb-0 text-dark_green  f-14 fw-bold">
-                                                                                            INR
-                                                                                            35,00,00
-                                                                                        </p>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </button>
-                                                                        </h2>
-                                                                        <div id="timeLine-collapseOne"
-                                                                            class="accordion-collapse collapse "
-                                                                            aria-labelledby="panelsStayOpen-headingOne">
-                                                                            <div class="accordion-body">
-                                                                                <div class="row">
-                                                                                    <div class="col-4">
-                                                                                        <p
-                                                                                            class="text-dark_green  mb-2 f-12 text-center">
-                                                                                            Regular Salary</p>
-                                                                                        <p
-                                                                                            class="mb-0 text-dark_green  f-14 fw-bold text-center">
-                                                                                            INR
-                                                                                            35,00,00 / Annum
-                                                                                        </p>
-                                                                                    </div>
-                                                                                    <div class="col-4">
-                                                                                        <p
-                                                                                            class="text-dark_green  mb-2 f-12 text-center">
-                                                                                            Other</p>
-                                                                                        <p
-                                                                                            class="mb-0 text-dark_green  f-14 fw-bold text-center">
-                                                                                            INR
-                                                                                            35,00,00 / Annum
-                                                                                        </p>
-                                                                                    </div>
-                                                                                    <div
-                                                                                        class="col-4 d-flex    justify-content-end align-items-center">
-                                                                                        <button
-                                                                                            class="btn btn-border-orange">Salary-breakup</button>
-                                                                                    </div>
-                                                                                </div>
-
-
-
-                                                                                <div class="salaryTimeline_container mt-4">
-
-                                                                                    <div class="row">
-
-                                                                                        <div
-                                                                                            class="col-sm-3 col-sm-12 col-xl-3 col-md-3 col-lg-3 ">
-                                                                                            <div class="card mb-0">
-                                                                                                <div
-                                                                                                    class="card-body text-center">
-                                                                                                    <p
-                                                                                                        class="text-ash-medium  f-11 ">
-                                                                                                        Salary Per Month
-                                                                                                    </p>
-                                                                                                    <p
-                                                                                                        class="mb-0 f-14 fw-bold text-primary">
-                                                                                                        -</p>
-
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div
-                                                                                            class="col-sm-3 col-sm-12 col-xl-3 col-md-3 col-lg-3 ">
-                                                                                            <div class="card mb-0">
-                                                                                                <div
-                                                                                                    class="card-body text-center">
-                                                                                                    <p
-                                                                                                        class="text-ash-medium  f-11 ">
-                                                                                                        ESIC Employer
-                                                                                                    </p>
-                                                                                                    <p
-                                                                                                        class="mb-0 f-14 fw-bold text-primary">
-                                                                                                        -</p>
-
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div
-                                                                                            class="col-sm-3 col-sm-12 col-xl-3 col-md-3 col-lg-3 ">
-                                                                                            <div class="card mb-0">
-                                                                                                <div
-                                                                                                    class="card-body text-center">
-                                                                                                    <p
-                                                                                                        class="text-ash-medium  f-11 ">
-                                                                                                        PF-Employeer
-                                                                                                    </p>
-                                                                                                    <p
-                                                                                                        class="mb-0 f-14 fw-bold text-primary">
-                                                                                                        -</p>
-
-                                                                                                </div>
-                                                                                            </div>
-
-                                                                                        </div>
-                                                                                        <div
-                                                                                            class="col-sm-3 col-sm-12 col-xl-3 col-md-3 col-lg-3 ">
-                                                                                            <div class="card mb-0">
-                                                                                                <div
-                                                                                                    class="card-body text-center">
-                                                                                                    <p
-                                                                                                        class="text-ash-medium  f-11 ">
-                                                                                                        Effective Form
-                                                                                                    </p>
-                                                                                                    <p
-                                                                                                        class="mb-0 f-14 fw-bold text-primary">
-                                                                                                        -</p>
-
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-
-
-                                                                                    </div>
-                                                                                </div>
-
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="accordion-item mb-4">
-                                                                        <h2 class="accordion-header"
-                                                                            id="panelsStayOpen-headingOne">
-                                                                            <button class="accordion-button collapsed"
-                                                                                type="button" data-bs-toggle="collapse"
-                                                                                data-bs-target="#timeLine-collapseTwo"
-                                                                                aria-expanded="true" aria-controls="">
-                                                                                <div class="d-flex me-3 justify-content-center align-items-center rounded-circle"
-                                                                                    style="height: 40px;width:40px;background-color:#91ddbe;">
-                                                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                        width="22.058" height="12.253"
-                                                                                        viewBox="0 0 22.058 12.253">
-                                                                                        <path id="arrow-trend-up-solid"
-                                                                                            d="M14.705,98.451a1.225,1.225,0,0,1,0-2.451h6.127a1.224,1.224,0,0,1,1.225,1.225v6.127a1.225,1.225,0,0,1-2.451,0v-3.167l-6.487,6.483a1.223,1.223,0,0,1-1.731,0l-4.071-4.032-5.226,5.258a1.225,1.225,0,0,1-1.733-1.731l6.128-6.127a1.223,1.223,0,0,1,1.731,0l4.036,4.032,5.618-5.652Z"
-                                                                                            transform="translate(0 -96)"
-                                                                                            fill="#686363" />
-                                                                                    </svg>
-                                                                                </div>
-                                                                                <div
-                                                                                    class="d-flex justify-content-between">
-                                                                                    <div class="">
-                                                                                        <p
-                                                                                            class="text-dark_green  mb-2 f-12 text-center">
-                                                                                            Regular Salary</p>
-                                                                                        <p
-                                                                                            class="mb-0 text-dark_green  f-14 fw-bold">
-                                                                                            INR
-                                                                                            1,15,91,555
-                                                                                        </p>
-                                                                                    </div>
-                                                                                    <div
-                                                                                        class="f-15 text-dark_green  mx-4  d-flex align-items-center">
-                                                                                        +</div>
-                                                                                    <div class="">
-                                                                                        <p
-                                                                                            class="text-dark_green  mb-2 f-12 text-center">
-                                                                                            Others</p>
-                                                                                        <p
-                                                                                            class="mb-0 text-dark_green  f-14 fw-bold">
-                                                                                            INR
-                                                                                            54,00,000
-                                                                                        </p>
-                                                                                    </div>
-                                                                                    <div
-                                                                                        class="f-15 mx-3 text-dark_green d-flex align-items-center ">
-                                                                                        +</div>
-                                                                                    <div class="">
-                                                                                        <p
-                                                                                            class="text-dark_green  mb-2 f-12 text-center">
-                                                                                            Bonus</p>
-                                                                                        <p
-                                                                                            class="mb-0 text-dark_green  f-14 fw-bold">
-                                                                                            INR
-                                                                                            26,91,555
-                                                                                        </p>
-                                                                                    </div>
-                                                                                    <div
-                                                                                        class="f-15 mx-3 text-dark_green  d-flex align-items-center ">
-                                                                                        =</div>
-                                                                                    <div class="">
-                                                                                        <p
-                                                                                            class="text-dark_green  mb-2 f-12 text-center">
-                                                                                            Total </p>
-                                                                                        <p
-                                                                                            class="mb-0 text-dark_green  f-14 fw-bold">
-                                                                                            INR
-                                                                                            35,00,00
-                                                                                        </p>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </button>
-                                                                        </h2>
-                                                                        <div id="timeLine-collapseTwo"
-                                                                            class="accordion-collapse collapse "
-                                                                            aria-labelledby="panelsStayOpen-headingOne">
-                                                                            <div class="accordion-body">
-                                                                                <div class="row">
-                                                                                    <div class="col-4">
-                                                                                        <p
-                                                                                            class="text-dark_green  mb-2 f-12 text-center">
-                                                                                            Regular Salary</p>
-                                                                                        <p
-                                                                                            class="mb-0 text-dark_green  f-14 fw-bold text-center">
-                                                                                            INR
-                                                                                            35,00,00 / Annum
-                                                                                        </p>
-                                                                                    </div>
-                                                                                    <div class="col-4">
-                                                                                        <p
-                                                                                            class="text-dark_green  mb-2 f-12 text-center">
-                                                                                            Other</p>
-                                                                                        <p
-                                                                                            class="mb-0 text-dark_green  f-14 fw-bold text-center">
-                                                                                            INR
-                                                                                            35,00,00 / Annum
-                                                                                        </p>
-                                                                                    </div>
-                                                                                    <div
-                                                                                        class="col-4 d-flex    justify-content-end align-items-center">
-                                                                                        <button
-                                                                                            class="btn btn-border-orange">Salary-breakup</button>
-                                                                                    </div>
-                                                                                </div>
-
-
-
-                                                                                <div class="salaryTimeline_container mt-4">
-
-                                                                                    <div class="row">
-
-                                                                                        <div
-                                                                                            class="col-sm-3 col-sm-12 col-xl-3 col-md-3 col-lg-3 ">
-                                                                                            <div class="card mb-0">
-                                                                                                <div
-                                                                                                    class="card-body text-center">
-                                                                                                    <p
-                                                                                                        class="text-ash-medium  f-11 ">
-                                                                                                        Salary Per Month
-                                                                                                    </p>
-                                                                                                    <p
-                                                                                                        class="mb-0 f-14 fw-bold text-primary">
-                                                                                                        -</p>
-
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div
-                                                                                            class="col-sm-3 col-sm-12 col-xl-3 col-md-3 col-lg-3 ">
-                                                                                            <div class="card mb-0">
-                                                                                                <div
-                                                                                                    class="card-body text-center">
-                                                                                                    <p
-                                                                                                        class="text-ash-medium  f-11 ">
-                                                                                                        ESIC Employer
-                                                                                                    </p>
-                                                                                                    <p
-                                                                                                        class="mb-0 f-14 fw-bold text-primary">
-                                                                                                        -</p>
-
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div
-                                                                                            class="col-sm-3 col-sm-12 col-xl-3 col-md-3 col-lg-3 ">
-                                                                                            <div class="card mb-0">
-                                                                                                <div
-                                                                                                    class="card-body text-center">
-                                                                                                    <p
-                                                                                                        class="text-ash-medium  f-11 ">
-                                                                                                        PF-Employeer
-                                                                                                    </p>
-                                                                                                    <p
-                                                                                                        class="mb-0 f-14 fw-bold text-primary">
-                                                                                                        -</p>
-
-                                                                                                </div>
-                                                                                            </div>
-
-                                                                                        </div>
-                                                                                        <div
-                                                                                            class="col-sm-3 col-sm-12 col-xl-3 col-md-3 col-lg-3 ">
-                                                                                            <div class="card mb-0">
-                                                                                                <div
-                                                                                                    class="card-body text-center">
-                                                                                                    <p
-                                                                                                        class="text-ash-medium  f-11 ">
-                                                                                                        Effective Form
-                                                                                                    </p>
-                                                                                                    <p
-                                                                                                        class="mb-0 f-14 fw-bold text-primary">
-                                                                                                        -</p>
-
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-
-
-                                                                                    </div>
-                                                                                </div>
-
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div> --}}
+                                         <div class="tab-content " id="pills-tabContent">
                                             <div class="tab-pane fade active show" id="pay_slips" role="tabpanel"
                                                 aria-labelledby="">
 
@@ -1077,439 +600,14 @@
 
                                             </div>
 
-                                            {{-- <div class="tab-pane fade" id="pay_incomeTax" role="tabpanel"
-                                                aria-labelledby="">
-                                                <div class="row mb-3">
-                                                    <div class="col-sm-12 col-md-6 col-lg-6 col-xxl-6 col-xl-6">
-                                                        <h6>Tax Saving Investment </h6>
-                                                    </div>
-
-                                                    <div class="col-sm-12 col-md-6 col-lg-6 col-xxl-6 col-xl-6">
-                                                        <div class="d-flex justify-content-end">
-                                                            <select name="" id=""
-                                                                class="border-orange w-50 form-select disabled_focus">
-                                                                <option value="" selected="" hidden=""
-                                                                    disabled="">Apr 2022 - Mar 2023 </option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="widget-card mb-3">
-
-                                                    <div class="row ">
-                                                        <div class="col-sm-3 col-sm-12 col-xl-3 col-md-3 col-lg-3 ">
-                                                            <div class="card box_shadow_0 h_80 border-rtb  left-line ">
-                                                                <div class="card-body text-center">
-                                                                    <p class="text-ash-medium mb-2 f-13 ">Maximum Limit
-                                                                    </p>
-
-                                                                    <p class="mb-0 f-14 fw-bold text-primary">INR 1,50,000
-
-                                                                    </p>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-3 col-sm-12 col-xl-3 col-md-3 col-lg-3 ">
-                                                            <div class="card box_shadow_0  border-rtb  left-line ">
-                                                                <div class="card-body text-center">
-                                                                    <p class="text-ash-medium  f-13 ">Amount
-                                                                        Declared
-                                                                    </p>
-                                                                    <p class="mb-0 f-14 fw-bold text-primary">INR 1,50,000
-
-                                                                    </p>
-
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-3 col-sm-12 col-xl-3 col-md-3 col-lg-3 ">
-                                                            <div class="card box_shadow_0 border-rtb  left-line">
-                                                                <div class="card-body text-center">
-                                                                    <p class="text-ash-medium  f-13 ">Auto Approved
-                                                                        Amount</p>
-                                                                    <p class="mb-0 f-14 fw-bold text-primary">INR 1,50,000
-
-                                                                    </p>
-
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-3 col-sm-12 col-xl-3 col-md-3 col-lg-3">
-                                                            <div class="card box_shadow_0 border-rtb   left-line ">
-                                                                <div class="card-body text-center">
-                                                                    <p class="text-ash-medium  f-13 ">Amount
-                                                                        Accepted
-                                                                    </p>
-                                                                    <p class="mb-0 f-14 fw-bold text-primary">INR 1,50,000
-
-                                                                    </p>
-
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-3 col-sm-12 col-xl-3 col-md-3 col-lg-3 ">
-                                                            <div class="card box_shadow_0 border-rtb   left-line">
-                                                                <div class="card-body text-center">
-                                                                    <p class="text-ash-medium  f-13 ">Amount
-                                                                        Rejected
-                                                                    </p>
-                                                                    <p class="mb-0 f-14 fw-bold text-primary">INR 1,50,000
-
-                                                                    </p>
-
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-
-                                                <div class="reimbursment_container">
-                                                    <h6 class="mb-3">Reimbursement</h6>
-                                                    <div class="table-responsive">
-                                                        <table class="table investment_table">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th scope="col">Sections</th>
-                                                                    <th scope="col">Particulars</th>
-                                                                    <th scope="col">References</th>
-                                                                    <th scope="col">Max Limit</th>
-                                                                    <th scope="col">Declaration Amount</th>
-                                                                    <th scope="col">Proofs</th>
-
-                                                                    <th scope="col">Status</th>
-                                                                    <th scope="col">Action</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-
-                                                                <tr>
-                                                                    <td> 17(2)</td>
-                                                                    <td class="noWhite-space">
-
-                                                                        <p>Vehicle Reimbursement</p>
-                                                                        <div class="d-flex justify-content-center">
-                                                                            <div class="form-check me-2">
-                                                                                <input class="form-check-input"
-                                                                                    type="radio" name="cc"
-                                                                                    id="below_cc">
-                                                                                <label class="form-check-label"
-                                                                                    for="below_cc">
-                                                                                    Below 1600 CC
-                                                                                </label>
-                                                                            </div>
-                                                                            <div class="form-check">
-                                                                                <input class="form-check-input"
-                                                                                    type="radio" name="cc"
-                                                                                    id="above_cc">
-                                                                                <label class="form-check-label"
-                                                                                    for="above_cc">
-
-                                                                                    Above 2400 CC
-                                                                                </label>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </td>
-                                                                    <td>
-
-                                                                        <button type="button"
-                                                                            class="btn btn-transprarent border-0 outline-none "
-                                                                            data-bs-toggle="tooltip"
-                                                                            data-bs-placement="top"
-                                                                            title="If Cubic Capacity is below 1.6 ltrs (1600CC) expenses can be considered upto 1800pm & If Cubic Capacity is above 1.6 ltrs then  expenses can be considered upto 2400pm">
-                                                                            <i class="fa fa-exclamation-circle  text-warning"
-                                                                                aria-hidden="true"></i>
-                                                                        </button>
-                                                                    </td>
-                                                                    <td>28800</td>
-
-                                                                    <td>
-                                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                                            cols="5" rows="1"></textarea>
-                                                                    </td>
-
-                                                                    <td align="">
-
-                                                                        <div class="upload_file ">
-
-                                                                            <i class="fa fa-upload"
-                                                                                aria-hidden="true"><input type="file"
-                                                                                    name="" id=""
-                                                                                    multiple></i>
-
-
-                                                                        </div>
-
-                                                                    </td>
-                                                                    <td>
-                                                                        <p>Not Submitted</p>
-                                                                    </td>
-                                                                    <td>
-
-
-                                                                        <div class="dropdown investment_dropDown">
-                                                                            <button
-                                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                                                type="button" id="dropdownMenuButton"
-                                                                                data-bs-toggle="dropdown"
-                                                                                aria-haspopup="true"
-                                                                                aria-expanded="false">
-                                                                                <i class="fa fa-ellipsis-v"
-                                                                                    aria-hidden="true"></i>
-                                                                            </button>
-                                                                            <div class="dropdown-menu"
-                                                                                aria-labelledby="dropdownMenuButton">
-                                                                                <a class="dropdown-item" href="#"><i
-                                                                                        class="fa fa-pencil-square-o text-info me-2"
-                                                                                        aria-hidden="true"></i>
-                                                                                    Edit</a>
-                                                                                <a class="dropdown-item" href="#"><i
-                                                                                        class="fa fa-times-circle-o text-danger me-2"
-                                                                                        aria-hidden="true"></i>
-                                                                                    Clear</a>
-                                                                                <a class="dropdown-item"
-                                                                                    href="#"></a>
-                                                                            </div>
-                                                                        </div>
-                                                                    </td>
-
-
-                                                                </tr>
-                                                                <tr>
-                                                                    <td> 17(2)</td>
-                                                                    <td>Driver Reimbursement</td>
-                                                                    <td>
-
-                                                                        <button type="button"
-                                                                            class="btn btn-transprarent border-0 outline-none "
-                                                                            data-bs-toggle="tooltip"
-                                                                            data-bs-placement="top"
-                                                                            title="Maximum exemption will be restricted to Rs.900/- per month or amount paid under CTC  whichever is less.">
-                                                                            <i class="fa fa-exclamation-circle  text-warning"
-                                                                                aria-hidden="true"></i>
-                                                                        </button>
-                                                                    </td>
-                                                                    <td>10800</td>
-
-                                                                    <td>
-                                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                                            cols="5" rows="1"></textarea>
-                                                                    </td>
-
-                                                                    <td align="">
-
-                                                                        <div class="upload_file ">
-
-                                                                            <i class="fa fa-upload"
-                                                                                aria-hidden="true"><input type="file"
-                                                                                    name="" id=""
-                                                                                    multiple></i>
-
-
-                                                                        </div>
-
-                                                                    </td>
-                                                                    <td>
-                                                                        <p>Not Submitted</p>
-                                                                    </td>
-                                                                    <td>
-
-
-                                                                        <div class="dropdown investment_dropDown">
-                                                                            <button
-                                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                                                type="button" id="dropdownMenuButton"
-                                                                                data-bs-toggle="dropdown"
-                                                                                aria-haspopup="true"
-                                                                                aria-expanded="false">
-                                                                                <i class="fa fa-ellipsis-v"
-                                                                                    aria-hidden="true"></i>
-                                                                            </button>
-                                                                            <div class="dropdown-menu"
-                                                                                aria-labelledby="dropdownMenuButton">
-                                                                                <a class="dropdown-item" href="#"><i
-                                                                                        class="fa fa-pencil-square-o text-info me-2"
-                                                                                        aria-hidden="true"></i>
-                                                                                    Edit</a>
-                                                                                <a class="dropdown-item" href="#"><i
-                                                                                        class="fa fa-times-circle-o text-danger me-2"
-                                                                                        aria-hidden="true"></i>
-                                                                                    Clear</a>
-                                                                                <a class="dropdown-item"
-                                                                                    href="#"></a>
-                                                                            </div>
-                                                                        </div>
-                                                                    </td>
-
-
-                                                                </tr>
-                                                                <tr>
-                                                                    <td> 17(2)</td>
-                                                                    <td>Vehicle Reimbursement</td>
-                                                                    <td>
-
-                                                                        <button type="button"
-                                                                            class="btn btn-transprarent border-0 outline-none "
-                                                                            data-bs-toggle="tooltip"
-                                                                            data-bs-placement="top"
-                                                                            title="Exemption will be restricted to the extend of bills provided or as per CTC, whichever is less. Maximum amount of exemption is ">
-                                                                            <i class="fa fa-exclamation-circle  text-warning"
-                                                                                aria-hidden="true"></i>
-                                                                        </button>
-                                                                    </td>
-                                                                    <td>36000</td>
-
-                                                                    <td>
-                                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                                            cols="5" rows="1"></textarea>
-                                                                    </td>
-
-                                                                    <td align="">
-
-                                                                        <div class="upload_file ">
-
-                                                                            <i class="fa fa-upload"
-                                                                                aria-hidden="true"><input type="file"
-                                                                                    name="" id=""
-                                                                                    multiple></i>
-
-
-                                                                        </div>
-
-                                                                    </td>
-                                                                    <td>
-                                                                        <p>Not Submitted</p>
-                                                                    </td>
-                                                                    <td>
-                                                                        <div class="dropdown investment_dropDown">
-                                                                            <button
-                                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                                                type="button" id="dropdownMenuButton"
-                                                                                data-bs-toggle="dropdown"
-                                                                                aria-haspopup="true"
-                                                                                aria-expanded="false">
-                                                                                <i class="fa fa-ellipsis-v"
-                                                                                    aria-hidden="true"></i>
-                                                                            </button>
-                                                                            <div class="dropdown-menu"
-                                                                                aria-labelledby="dropdownMenuButton">
-                                                                                <a class="dropdown-item" href="#"><i
-                                                                                        class="fa fa-pencil-square-o text-info me-2"
-                                                                                        aria-hidden="true"></i>
-                                                                                    Edit</a>
-                                                                                <a class="dropdown-item" href="#"><i
-                                                                                        class="fa fa-times-circle-o text-danger me-2"
-                                                                                        aria-hidden="true"></i>
-                                                                                    Clear</a>
-                                                                                <a class="dropdown-item"
-                                                                                    href="#"></a>
-                                                                            </div>
-                                                                        </div>
-                                                                    </td>
-
-
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div> --}}
-                                            {{-- <div class="tab-pane fade" id="pay_claims" role="tabpanel"
-                                                aria-labelledby="">
-                                                <div class="card mb-2">
-                                                    <div class="card-body">
-                                                    </div>
-                                                </div>
-                                            </div> --}}
+                                           </table>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-
                     </div>
-                    {{-- <div class="tab-pane fade " id="document_det" role="tabpanel" aria-labelledby="">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <thead class="bg-primary">
-                                            <th>
-                                                file name
-                                            </th>
-                                            <th>
-                                                status
-                                            </th>
-                                            <th>
-                                                reason
-                                            </th>
-                                            <th>
-                                                actions
-                                            </th>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>aadhar card front <span class="text-danger">*</span></td>
-                                                <td>
-                                                    <span class="badge bg-success">approved</span>
-                                                </td>
-                                                <td>
-                                                    -
-                                                </td>
-
-                                                <td><button class="btn btn-primary view-file"
-                                                        data-bs-target="#show_documents"
-                                                        data-bs-toggle="modal">view</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>aadhar card back <span class="text-danger">*</span></td>
-
-                                            </tr>
-                                            <tr>
-                                                <td>pan card <span class="text-danger">*</span></td>
-                                                <td>
-                                                    <span class=" badge bg-danger">rejected</span>
-                                                </td>
-                                                <td>
-                                                    blur
-                                                </td>
-                                                <td><button class="btn btn-orange">re-upload</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>edudcational certificate <span class="text-danger">*</span></td>
-                                                <td>
-                                                    <span class="badge bg-warning">pending for approval</span>
-                                                </td>
-                                                <td style="width:250px;text-align:justify;">
-                                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsam aliquid
-                                                    temporibus sunt dignissimos, labore, possimus tempora esse
-                                                    necessitatibus saepe at iusto rerum sed nostrum dolore, fugiat ab itaque
-                                                    unde a!
-                                                </td>
-                                                <td><button class="btn btn-orange">re-upload</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>passport</td>
-
-                                            </tr>
-                                            <tr>
-                                                <td>voter ID</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
                 </div>
-                {{-- <img src='{{ URL::asset('svg_icon_pending') }}' alt='view' title='view' class='icon'>  --}}
 
                 <div id="edit_profileImg" class="modal  custom-modal fade" style="display: none;" aria-hidden="true">
                     <div class="modal-dialog  modal-dialog-centered " role="document">
@@ -1860,49 +958,69 @@
                                                 </div>
                                             </div>
                                         @endforeach
+
+                                        <div class="add-more text-end mb-2" style="cursor:pointer;">
+                                            {{-- <div id="add_more" class="text-primary-old  cursor-pointer">
+                                        <i class=" ri-add-circle-fill"></i> Add More
+                                    </div> --}}
+                                            <button id="add_more"
+                                                class="btn text-primary-old p-0 bg-transparent outline-none border-0 f-12 plus-sign"
+                                                type="button"><i class="f-12 me-1 fa  fa-plus-circle"
+                                                    aria-hidden="true"></i>Add
+                                                More</i></button>
+                                        </div>
                                     @else
-                                        <div class="card mb-3 addition-content" id="content1">
-                                            <div class="card-body">
-                                                <div class="row ">
-                                                    <div class="col-md-12 m-0 text-end">
-                                                        <button
-                                                            class="btn text-danger delete-btn p-0 bg-transparent outline-none border-0 f-12 plus-sign"
-                                                            type="button" id="deleteFamily_btn"><i
-                                                                class="f-12 me-1 fa text-danger  fa-trash"
-                                                                aria-hidden="true"></i>Delete
-                                                            </i></button>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group mb-3">
-                                                            <label>Name<span class="text-danger">*</span></label>
-                                                            <input name="name[]" class="form-control onboard-form"
-                                                                type="text" pattern-data="name" required
-                                                                value="">
+                                        <div class="family-addition-container">
+                                            <div class="card mb-3 addition-content" id="content1">
+                                                <div class="card-body">
+                                                    <!-- <h3 class="card-title fw-bold">Education Informations <a href="javascript:void(0);"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    {{-- class="delete-icon"><i class="   ri-delete-bin-line"></i></a> --}}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                            </h3> -->
+
+                                                    <div class="row ">
+                                                        <div class="col-md-12 m-0 text-end">
+                                                            <button
+                                                                class="btn text-danger delete-btn p-0 bg-transparent outline-none border-0 f-12 plus-sign"
+                                                                type="button"><i
+                                                                    class="f-12 me-1 fa text-danger  fa-trash"
+                                                                    aria-hidden="true"></i>Delete
+                                                                </i></button>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group mb-3">
-                                                            <label>Relationship <span class="text-danger">*</span></label>
-                                                            <input name="relationship[]" class="form-control onboard-form"
-                                                                type="text" pattern-data="alpha" required
-                                                                value="">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group mb-3">
+                                                                <label>Name<span class="text-danger">*</span></label>
+                                                                <input name="name[]" class="form-control onboard-form"
+                                                                    type="text" pattern-data="name" required
+                                                                    value="">
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group mb-3">
-                                                            <label>Date of birth <span class="text-danger">*</span></label>
-                                                            <input name="dob[]" class="form-control onboard-form"
-                                                                type="date" max="9999-12-31" required value="">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group mb-3">
+                                                                <label>Relationship <span
+                                                                        class="text-danger">*</span></label>
+                                                                <input name="relationship[]"
+                                                                    class="form-control onboard-form" type="text"
+                                                                    pattern-data="alpha" required value="">
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group ">
-                                                            <label>Phone <span class="text-danger">*</span></label>
-                                                            <input name="phone_number[]" class="form-control onboard-form"
-                                                                type="number" maxlength="10" minlength="10" required
-                                                                value="">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group mb-3">
+                                                                <label>Date of birth <span
+                                                                        class="text-danger">*</span></label>
+                                                                <input name="dob[]" class="form-control onboard-form"
+                                                                    type="date" max="9999-12-31" required
+                                                                    value="">
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group ">
+                                                                <label>Phone <span class="text-danger">*</span></label>
+                                                                <input name="phone_number[]"
+                                                                    class="form-control onboard-form" type="number"
+                                                                    maxlength="10" minlength="10" required
+                                                                    value="">
+                                                            </div>
+                                                        </div>
 
                                                 </div>
                                             </div>
@@ -2279,6 +1397,7 @@
 @endsection
 @section('script')
     @yield('script-profile-avatar')
+    @vite(['resources/js/hrms/modules/profile_pages/EmployeeDocumentsManager.js'])
 
 
     <script src="{{ URL::asset('assets/js/pages/profile-setting.init.js') }}"></script>

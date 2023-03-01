@@ -176,6 +176,14 @@ body {
 
 /* font-sizes */
 
+label,
+p,
+a,
+span,input,
+select,button,.accordion-button {
+    font-size: 13px;
+    /* color:var(--vz-vertical-menu-sub-item-color); */
+}
 
 .f-9{
     font-size: 9px;
