@@ -171,11 +171,12 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Aadhaar Number<span
                                                             class="text-danger">*</span></label>
-                                                    <InputText class="onboard-form form-control textbox " id="AadharNumber"
-                                                        placeholder="Aadhaar Number" v-model="v$.AadhaarNumber.$model"
+                                                    <InputMask id="ssn" mask="9999-9999-9999"  class="onboard-form form-control textbox " 
+                                                        placeholder="6622-2350-9284" v-model="v$.AadhaarNumber.$model"
                                                         :class="{ 'p-invalid': v$.AadhaarNumber.$invalid && submitted }"
                                                         pattern="/^([0-9]{4}[0-9]{4}[0-9]{4}$)|([0-9]{4}\s[0-9]{4}\s[0-9]{4}$)|([0-9]{4}-[0-9]{4}-[0-9]{4}$)/"
                                                         data-pattern-error="wel" autocomplete="off" type="text" />
+                                              
                                                     <span
                                                         v-if="(v$.AadhaarNumber.$invalid && submitted) || v$.AadhaarNumber.$pending.$response"
                                                         class="p-error">{{
@@ -183,6 +184,8 @@
                                                                 'Aadhaar Number') }}</span>
 
                                                 </div>
+                                             
+                                        
 
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 co l-lg-3 col-xl-3 mb-2">
@@ -190,16 +193,17 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Pan Number / Pan
                                                         Acknowlegement<span class="text-danger">*</span></label>
-                                                    <InputText class=" form-control textbox  pan" type="text"
+                                                    <InputMask id="serial" mask="aaaaa9999a"  class=" form-control textbox  pan" type="text"
                                                         style="text-transform: uppercase;"
                                                         :class="{ 'p-invalid': v$.PanNumber.$invalid && submitted }"
                                                         pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" v-model="v$.PanNumber.$model"
-                                                        placeholder="AHFCS1234F" maxlength="10" />
+                                                        placeholder="AHFCP1234F" maxlength="10" />
 
                                                     <span
                                                         v-if="(v$.PanNumber.$invalid && submitted) || v$.PanNumber.$pending.$response"
                                                         class="p-error">{{ v$.PanNumber.required.$message.replace('Value',
                                                             'Pan Number') }}</span>
+
 
                                                 </div>
                                             </div>
