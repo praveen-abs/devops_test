@@ -19,18 +19,18 @@
             <Column field="candidate_status" header="Status ">
                 <template #body>
 
-                    <div class="arrow ">
-                        <span class="arrow-1"></span>
-                        <span class="arrow-2"></span>
-                        <span class="arrow-3"></span>
-                        <p class=" text-initial "><span class="me-1 font-medium">Offer Sent </span> <a
-                                class="fa text-muted fa-eye me-1" @click="viewOffer" href="#"></a></p>
-                        <p class="fs-10 text-initial">01-Jan-2023</p>
-                    </div>
-                    <div class="arrow ">
-                        <p class=" text-initial "><span class="me-1 font-medium">Offer Sent </span> <a
-                                class="fa text-muted fa-eye me-1" @click="viewOffer" href="#"></a></p>
-                        <p class="fs-10 text-initial">01-Jan-2023</p>
+                    <div class="status">
+                        <div class="arrow ">
+
+                            <p class=" text-initial "><span class="me-1 font-medium">Offer Sent </span> <a
+                                    class="fa text-muted fa-eye me-1" @click="viewOffer" href="#"></a></p>
+                            <p class="fs-10 text-initial">01-Jan-2023</p>
+                        </div>
+                        <div class="arrow ">
+                            <p class=" text-initial "><span class="me-1 font-medium">Offer Sent </span> <a
+                                    class="fa text-muted fa-eye me-1" @click="viewOffer" href="#"></a></p>
+                            <p class="fs-10 text-initial">01-Jan-2023</p>
+                        </div>
                     </div>
 
                     <!-- <button  class="bg-transparent outline-none border-0 btn "  @click="viewOffer"><span class="me-1 text-info font-medium">Accepted </span> <i class="fa text-muted fa-eye me-1"></i></button>
@@ -98,5 +98,45 @@ export default {
 
 
 <style lang="scss">
+// .arrow:hover {
+//     transform: scale(1.2);
+//     transform: translate(1.2px);
 
+// }
+
+.status{
+    position: relative;
+}
+.arrow{
+    position: absolute;
+    /* top: 25px; */
+    width: 49%;
+    height: 4px;
+    background-color: #141414;
+    box-shadow: 0 3px 5px rgb(202 202 202 / 40%);
+}
+
+.arrow::after,
+.arrow::before {
+    content: " ";
+    position: absolute;
+    width: 60%;
+    height: 10px;
+    right: -8px;
+    /*   left:-8px; */
+    background-color: #141414;
+}
+
+.arrow::after {
+    top: -12px;
+    /*   box-shadow:0 3px 5px rgba(0,0,0,.2); */
+
+    transform: rotate(45deg);
+}
+
+.arrow::before {
+    top: 12px;
+    transform: rotate(-45deg);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, .2)
+}
 </style>
