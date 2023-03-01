@@ -284,9 +284,9 @@ Route::post('vmt-general-settings', [App\Http\Controllers\HomeController::class,
 
 
     // Bulk upload employees for quick Onboarding
-    Route::get('quickEmployeeOnboarding', 'App\Http\Controllers\VmtEmployeeController@showQuickOnboardUploadPage')->name('quickEmployeeOnboarding');
+    Route::get('quickEmployeeOnboarding', 'App\Http\Controllers\VmtEmployeeOnboardingController@showQuickOnboardUploadPage')->name('quickEmployeeOnboarding');
     Route::post('vmt-employess/quick-onboarding/upload', 'App\Http\Controllers\VmtEmployeeController@importQuickOnboardEmployeesExcelData');
-    Route::get('vmt-employee/complete-onboarding', 'App\Http\Controllers\VmtEmployeeController@showEmployeeOnboardingPage');
+    Route::get('vmt-employee/complete-onboarding', 'App\Http\Controllers\VmtEmployeeOnboardingController@showEmployeeOnboardingPage');
     Route::post('vmt-employee/complete-onboarding', 'App\Http\Controllers\VmtEmployeeController@storeQuickOnboardForm');
 
 
@@ -320,7 +320,7 @@ Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 's
     Route::get('/getEmployeeName',  [App\Http\Controllers\VmtEmployeeController::class, 'getEmployeeName'])->name('get-employee-name');
 
 
-    Route::get('/employeeOnboarding',  [App\Http\Controllers\VmtEmployeeController::class, 'showEmployeeOnboardingPage'])->name('employeeOnboarding');
+    Route::get('/employeeOnboarding',  [App\Http\Controllers\VmtEmployeeOnboardingController::class, 'showEmployeeOnboardingPage'])->name('employeeOnboarding');
     Route::post('/state',  [App\Http\Controllers\VmtEmployeeController::class, 'getState'])->name('state');
 
     //Normal Onboarding v2
