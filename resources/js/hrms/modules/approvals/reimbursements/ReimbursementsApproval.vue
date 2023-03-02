@@ -399,7 +399,7 @@
 
   }
   .p-datatable .p-datatable-thead > tr > th .p-column-filter {
-    width: 50%;
+    width: 44%;
   }
 
   /* For Sort */
