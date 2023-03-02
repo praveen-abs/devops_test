@@ -17,7 +17,7 @@ use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithCustomStartCell;
-
+use PhpOffice\PhpSpreadsheet\Style\Protection;
 
 class BasicAttendanceExport implements FromArray,WithHeadings,ShouldAutoSize,WithEvents,WithCustomStartCell
 {
@@ -52,7 +52,7 @@ class BasicAttendanceExport implements FromArray,WithHeadings,ShouldAutoSize,Wit
             AfterSheet::class => function(AfterSheet $event) {
                 /** @var Sheet $sheet */
                 $sheet = $event->sheet;
-          
+                $sheet->getParent()->getActiveSheet()->getProtection()->setSheet(true);
                 $styleArray = [
                     'alignment' => [
                         'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
@@ -69,7 +69,7 @@ class BasicAttendanceExport implements FromArray,WithHeadings,ShouldAutoSize,Wit
                         ]
 
                 ];
-                $cellRange = 'A1:AQ1'; // All headers
+                $cellRange = 'A2:AQ2'; // All headers
                 $event->sheet->getDelegate()->getStyle($cellRange)->applyFromArray($styleArray);
 
 

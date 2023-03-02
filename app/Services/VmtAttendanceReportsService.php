@@ -331,6 +331,7 @@ class VmtAttendanceReportsService{
                                     $attendanceResponseArray[$key]['isLeave']=true;
                                     $leave_type=VmtLeaves::where('id',$single_leave_details->leave_type_id)
                                                            ->pluck('leave_type');
+                                                         //  dd( $leave_type[0]);
                                     if($leave_type[0]=='Sick Leave / Casual Leave'){
                                         $attendanceResponseArray[$key]['leave_type']='SL/CL';
                                     }else if($leave_type[0]=='Earned Leave'){
@@ -339,12 +340,20 @@ class VmtAttendanceReportsService{
                                         $attendanceResponseArray[$key]['leave_type']='ML';
                                     }else if($leave_type[0]=='Paternity Leave'){
                                         $attendanceResponseArray[$key]['leave_type']='PTL';
-                                    }else if($leave_type[0]='On Duty'){
+                                    }else if($leave_type[0]=='On Duty'){
                                         $attendanceResponseArray[$key]['leave_type']='OD';
-                                    }else if($leave_type[0]='Permission'){
+                                    }else if($leave_type[0]=='Permission'){
                                         $attendanceResponseArray[$key]['leave_type']="PI";
                                     }else if($leave_type[0]=='Compensatory Off'){
                                         $attendanceResponseArray[$key]['leave_type']='CO';
+                                    }else if($leave_type[0]=='Casual Leave'){
+                                        $attendanceResponseArray[$key]['leave_type']='CL';
+                                    }else if($leave_type[0]=='Sick Leave'){
+                                        $attendanceResponseArray[$key]['leave_type']='SL';
+                                    }else if($leave_type[0]=='Compensatory Leave'){
+                                        $attendanceResponseArray[$key]['leave_type']='CO';
+                                    }else if($leave_type[0]=='Flexi day-off Leave'){
+                                        $attendanceResponseArray[$key]['leave_type']='FO L';
                                     }
                                        continue;
                                 }else{
@@ -482,7 +491,8 @@ class VmtAttendanceReportsService{
               //dd(($attendanceResponseArray));
 
            // dd();
-            $total_payable_days=($total_weekoff+$total_holidays+$total_present+$total_leave+$total_halfday+$total_OD)-$total_lop;
+           // $total_payable_days=($total_weekoff+$total_holidays+$total_present+$total_leave+$total_halfday+$total_OD)-$total_lop;
+           $total_payable_days=$total_weekoff+$total_holidays+$total_present+$total_leave+$total_halfday+$total_OD;
             array_push($arrayReport,$total_weekoff,$total_holidays,$total_present,$total_absent, $total_lop,$total_leave, $total_halfday,$total_OD,$total_LC,$total_EG, $total_payable_days);
             array_push($reportresponse,$arrayReport);
 
