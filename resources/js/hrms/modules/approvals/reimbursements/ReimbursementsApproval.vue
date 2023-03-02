@@ -32,9 +32,11 @@
             <div>
 
 
-                <DataTable :paginator="true" :rows="10" dataKey="id"
+                <DataTable :value="data_reimbursements" :paginator="true" :rows="10" dataKey="id"
                 paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
-                 responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}">
+                responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
+                v-model:filters="filters" filterDisplay="menu" :loading="loading2"
+                :globalFilterFields="['name','status']" >
                 <template #empty>
                     No Reimbursement data for the selected status filter
                 </template>
@@ -68,6 +70,30 @@
 
 
 
+
+
+
+                <!-- <Column field="reviewer_comments" header="Approver Comm ents"></Column>
+                <Column field="reviewer_reviewed_date" header="Reviewed Date"></Column> -->
+                <Column field="status" header="Status" icon="pi pi-check">
+
+                <template #body="{data}">
+                    <span :class="'customer-badge status-' + data.status">{{data.status}}</span>
+                </template>
+                <template #filter="{filterModel,filterCallback}">
+                    <Dropdown v-model="filterModel.value" @click="filterCallback()" :options="statuses" placeholder="Select" class="p-column-filter" :showClear="true">
+                        <template #value="slotProps">
+                            <span :class="'customer-badge status-' + slotProps.value" v-if="slotProps.value">{{slotProps.value}}</span>
+                            <span v-else>{{slotProps.placeholder}}</span>
+                        </template>
+                        <template #option="slotProps">
+                            <span :class="'customer-badge status-' + slotProps.option">{{slotProps.option}}</span>
+                        </template>
+                    </Dropdown>
+                </template>
+
+                 </Column>
+
                 <Column field="" header="Action">
                     <template #body="slotProps">
                         <span v-if="slotProps.data.status == 'Pending'">
@@ -79,7 +105,6 @@
                     </template>
                 </Column>
             </DataTable>
-            <Button label="Submit" icon="pi pi-check" iconPos="right" />
         </div>
     </div>
 </template>

@@ -1,133 +1,333 @@
 <template>
-
-<div class="reimbursement-wrapper mt-30">
-    <div class="card  left-line mb-2">
-        <div class="card-body  pb-1 pt-1">
-            <div class="row">
-                <div class="col-sm-12 col-md-7 col-lg-7 col-xl-7 col-xxl-7">
-
-                    <ul class="nav nav-pills nav-tabs-dashed" role="tablist">
-                        <li class="nav-item text-muted " role="presentation">
-                            <a class="nav-link active pb-2" data-bs-toggle="tab" href="#reimbursement"
-                                aria-selected="true" role="tab">
-                                Reimbursement
-                            </a>
-                        </li>
-                        <li class="nav-item text-muted ms-5" role="presentation">
-                            <a class="nav-link  pb-2" data-bs-toggle="tab" href="#localConveyance"
-                                aria-selected="true" role="tab">
-                                Local Conveyance
-                            </a>
-                        </li>
-
-                    </ul>
-                </div>
-                <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5 col-xxl-5 d-flex justify-content-end">
-                    <select name="" id="" class="form-select border-primary w-50 me-3">
-                        <option value="" disabled hidden selected>Choose Month</option>
-                        <option value="">Jan 2023</option>
-                        <option value="">Feb 2023</option>
-                    </select>
-                    <button @click="openNew" class="btn btn-orange"><i class="fa fa-plus-circle me-1"></i>Add Claim</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-body">
-            <div class="tab-content" id="pills-tabContent">
-                <div class="tab-pane show fade active" id="reimbursement" role="tabpanel"
-                    aria-labelledby="pills-profile-tab">
-                    <div id="table">
-                        <div>
-                            <div class="card">
+    <Toast />
+    <div class="modal-body  new-role-header border-0 ">
+        <div id="modal_request_leave" class="card top-line mb-0">
+            <div class="card-body">
+        <h6 class="modal-title mb-6  fs-21">
+            Leave Request</h6>
+                <div class="row ">
+                    <div class="col-md-7 col-sm-12" >
 
 
-                                <DataTable ref="dt" :value="products" v-model:selection="selectedProducts" dataKey="id"
-                                    :paginator="true" :rows="10"
-                                    paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown" :rowsPerPageOptions="[5,10,25]"
-                                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" responsiveLayout="scroll">
+                        <div class="row mb-3">
+                            <div class="col-md-4 col-sm-4 mb-md-0 mb-3">
+                                <div class="form-group">
+                                    <label for="">Choose Leave Type <span class="text-danger">*</span>
+                                    </label>
 
-                                    <Column :exportable="false" field="upload">
-                                        <template #body="slotProps">
-                                            <Button icon="pi pi-trash" class="p-button-rounded p-button-danger" @click="confirmDeleteProduct(slotProps.data)" />
-                                            </template>
-                                        </Column>
-
-                                    <Column field="claim_type" header="Claim type"  style="min-width:12rem"> </Column>
-                                    <Column field="claim_amount" header="Claim amount"  style="min-width:8rem"> </Column>
-
-                                    <Column field="eligible_amount" header="Eligible Amount"  style="min-width:12rem"></Column>
-
-                                    <Column :exportable="false" field="upload">
-                                        <template #body="slotProps">
-                                            <Button style="height: 30px;" icon="pi pi-eye" label="View" class=" p-button-success mr-2" @click="confirmDeleteSelected(slotProps.data)" />
-                                        </template>
-                                    </Column>
-                                </DataTable>
+                                </div>
                             </div>
 
-                            <Dialog v-model:visible="productDialog" :style="{width: '450px'}" header="Reimbursement Detials" :modal="true" class="p-fluid">
-                                <div class="field">
-                                    <label for="name">Claim Type</label>
-                                    <Dropdown id="inventoryStatus" v-model="employee_reimbursement.claim_type" :options="statuses" optionLabel="label" placeholder="Select a Status"></Dropdown>
+                            <div class="col-md-7 col-sm-7  mb-md-0 mb-3">
+                                <div class="form-group">
+
+                                    <select style="  height: 38px;font-weight: 500;" name="" id="leave_type_id" class="form-select outline-none" v-model="leave_data.selected_leave" @change="Permission">
+                                        <option>Select</option>
+                                        <option >Sick Leave / Casual Leave</option>
+                                        <option >Maternity Leave</option>
+                                        <option >Paternity Leave</option>
+                                        <option >On Duty</option>
+                                        <option >Permission</option>
+                                        <option >Compensatory Off</option>
+                                        <!-- <option v-for="Leave_type in leave_type" :key="Leave_type">
+                                        {{ Leave_type }}</option> -->
+
+
+                                    </select>
+
 
                                 </div>
+                            </div>
+                        </div>
+                        <div v-if="TotalNoOfDays" class="row mb-3">
+                            <div class="col-md-4  mb-md-0 mb-3">
+                                <div class="form-group">
+                                    <label for="">No of Days<span class="text-danger">*</span>
+                                    </label>
 
-                                <div class="formgrid grid">
-                                    <div class="field col">
-                                        <label for="Claim Amount">Claim Amount</label>
-                                        <InputNumber id="Claim Amount" v-model="employee_reimbursement.claim_amount_amount" mode="currency" currency="INR" locale="en-IN" />
+                                </div>
+                            </div>
+                            <div class="col-md-8  mb-md-0 mb-3">
+                                <div class="form-group">
+                                    <div class="form-check form-check-inline">
+                                        <input style="height: 20px;width: 20px;" class="form-check-input" type="radio" name="leave" id="" value="full_day" v-model="leave_data.full_day" @click="full_day">
+                                        <label class="form-check-label leave_type ms-3" for="">Full Day</label>
+
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input  style="height: 20px;width: 20px;" class="form-check-input" type="radio" name="leave" id="" value="half_day" v-model="leave_data.half_day" @click="half_day">
+                                        <label class="form-check-label leave_type ms-3" for="">Half Day</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input  style="height: 20px;width: 20px;" class="form-check-input" type="radio" name="leave" id="" value="custom" v-model="leave_data.custom" @click="custom_day" >
+                                        <label class="form-check-label leave_type ms-3" for="">Custom</label>
                                     </div>
 
-                                    <div class="field col">
-                                        <label for="Eligible Amount">Eligible Amount</label>
-                                        <InputNumber  id="Eligible Amount" v-model="employee_reimbursement.eligible_amount" mode="currency" currency="INR" locale="en-IN" />
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Full Day -->
+                        <div v-if="full_day_format" class="row mb-4">
+                            <div class="col-md-4  mb-md-0 mb-3">
+                                <div class="form-group">
+                                    <label for="">Date<span class="text-danger">*</span>
+                                    </label>
+
+                                </div>
+                            </div>
+                            <div class="col-md-7  mb-md-0 mb-3">
+                                <div class="form-group">
+                                    <Calendar inputId="icon" v-model="leave_data.date" dateFormat="yy-mm-dd" :showIcon="true" style="width: 350px;" />
+
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Half day leave -->
+                        <div v-if="half_day_format"  class="row mb-3">
+                            <div class="col-md-4  mb-md-0 mb-3">
+                                <div class="form-group">
+                                    <label for="">Session<span class="text-danger">*</span>
+                                    </label>
+
+                                </div>
+                            </div>
+                            <div class="col-md-8  mb-md-0 mb-3">
+                                <div class="form-group">
+                                    <div class="form-check form-check-inline">
+                                        <input style="height: 20px;width: 20px;" class="form-check-input" type="radio" name="session" id="" value="forenoon" >
+                                        <label class="form-check-label leave_type ms-3" for="">Forenoon</label>
+
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input  style="height: 20px;width: 20px;" class="form-check-input" type="radio" name="session" id="" value="afternoon" >
+                                        <label class="form-check-label leave_type ms-3" for="">Afternoon</label>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Custom Leave -->
+                        <div v-if="custom_format"  class="row mb-3">
+                            <div class="col-md-4 col-sm-4 mb-md-0 mb-3">
+                                <div class="form-group">
+                                    <div class="floating">
+
+
+                                        <label for="" class="float-label">Start Date</label>
+                                        <Calendar inputId="icon" dateFormat="yy-mm-dd" :showIcon="true" v-model="leave_data.custom_start_date"
+                                        :disabledDates="invalidDates" :disabledDays="[0,6]" :manualInput="true" />
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-2  mb-md-0 mb-3 ms-5 ">
+                                <div class="form-group">
+                                    <div class="floating">
+
+                                        <label for="" class="float-label ">Total Days</label>
+                                        <InputText style="width: 60px;text-align: center;" class="form-onboard-form form-control  textbox  capitalize " type="text"
+                                        v-model="leave_data.custom_total_days"
+                                         />
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-4  mb-md-0 mb-3 ">
+                                <div class="form-group">
+
+                                    <div class="floating">
+
+                                        <label for="" class="float-label">End Day</label>
+                                        <Calendar inputId="icon" @date-select="dayCalculation" dateFormat="yy-mm-dd" :showIcon="true" v-model="leave_data.custom_end_date"  />
+
                                     </div>
                                 </div>
-                                <div class="field">
-                                    <label class="mb-3">file Upload</label>
-                                    <div class="formgrid">
-                                        <Button label="Upload" icon="pi pi-upload" class="p-button-primary" @click="saveProduct" />
+                            </div>
+
+                            </div>
+
+                        <!-- Permisson -->
+
+                        <div v-if="Permission_format" class="row mb-3">
+                            <div class="col-md-4  mb-md-0 mb-3">
+                                <div class="form-group">
+                                    <div class="floating">
+
+                                        <label for="" class="float-label">Start time</label>
+                                        <span class=" p-input-icon-right">
+                                            <Calendar inputId="time12" v-model="leave_data.permission_start_time" :timeOnly="true" hourFormat="12" icon="your-icon" />
+                                            <i class="pi pi-clock" />
+                                        </span>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-3  mb-md-0 mb-3 ms-5">
+                                <div class="form-group">
+                                    <div class="floating">
+
+                                        <label for="" class="float-label">Total Hour</label>
+                                        <InputText class="form-onboard-form form-control  textbox  capitalize " type="text"
+                                           style="width: 67px;text-align: center;" v-model="leave_data.permission_total_time" />
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-4  mb-md-0 mb-3">
+                                <div class="form-group">
+
+                                    <div class="floating">
+
+                                        <label for="" class="float-label">End time</label>
+
+                                        <span class=" p-input-icon-right">
+                                            <Calendar inputId="time12" v-model="leave_data.permission_end_time" :timeOnly="true" hourFormat="12" icon="your-icon" @click="hour_difference" />
+                                            <i class="pi pi-clock" />
+                                        </span>
+
+
+
                                     </div>
                                 </div>
+                            </div>
+
+                        </div>
+
+                        <!--compensatory off  -->
 
 
-                                <template #footer>
-                                    <Button label="Cancel" icon="pi pi-times" style="height: 30px;color:black" class="p-button-text" @click="hideDialog"/>
-                                    <Button label="Save" icon="pi pi-check" style="height: 30px;background: rgb(255 135 38);color: white;" @click="saveProduct" />
-                                </template>
-                            </Dialog>
+                        <div v-if="compensatory_format" class="row mb-3">
+                            <div class="col-md-4  mb-md-0 mb-3">
+                                <div class="form-group">
+                                    <label for="">Worked Date <span class="text-danger">*</span>
+                                    </label>
 
-                            <Dialog v-model:visible="deleteProductDialog" :style="{width: '450px'}" header="Confirm" :modal="true">
-                                <div class="confirmation-content">
-                                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-                                    <span v-if="employee_reimbursement">Are you sure you want to delete <b>{{employee_reimbursement.claim_type}}</b>?</span>
                                 </div>
-                                <template #footer>
-                                    <Button label="No" icon="pi pi-times" class="p-button-text" @click="deleteProductDialog = false"/>
-                                    <Button label="Yes" icon="pi pi-check" class="p-button-text" @click="deleteProduct" />
-                                </template>
-                            </Dialog>
+                            </div>
+                                <!-- <span>
+                                                {{ leaved.array_leave_details['Compensatory Leave'] }}
+                                                </span> -->
 
-                            <Dialog v-model:visible="deleteProductsDialog" :style="{width: '450px'}" header="Confirm" :modal="true">
-                                <div class="confirmation-content">
-                                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-                                    <span v-if="product">Are you sure you want to delete the selected products?</span>
+                            <div class="col-md-7  mb-md-0 mb-3">
+                                <div class="form-group">
+
+                                    <select style="  height: 38px;font-weight: 500;" name="" id="leave_type_id" class="form-select outline-none" >
+                                        <option v-for="leaved in leave_Data" :key="leaved.array_leave_details">
+                                            <input type="checkbox" name="" id="red">
+
+                                        </option>
+                                    </select>
+                                    <p style="opacity: 50%;">(note:Worked dates will get expired after 60 days)</p>
+
+
                                 </div>
-                                <template #footer>
-                                    <Button label="No" icon="pi pi-times" class="p-button-text" @click="deleteProductsDialog = false"/>
-                                    <Button label="Yes" icon="pi pi-check" class="p-button-text" @click="deleteSelectedProducts" />
-                                </template>
-                            </Dialog>
+                           </div>
+                           <div   class="row mb-3">
+                            <div class="col-md-4  mb-md-0 mb-3">
+                                <div class="form-group">
+                                    <div class="floating">
+
+                                        <label for="" class="float-label">Start Date</label>
+                                        <Calendar inputId="icon" dateFormat="yy-mm-dd" :showIcon="true" />
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-3  mb-md-0 mb-3 ms-5 ">
+                                <div class="form-group">
+                                    <div class="floating">
+
+                                        <label for="" class="float-label ms-10">Total Days</label>
+                                        <InputText style="width: 60px" class="form-onboard-form form-control  textbox  capitalize " type="text"
+                                         />
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-4  mb-md-0 mb-3 ">
+                                <div class="form-group">
+
+                                    <div class="floating">
+
+                                        <label for="" class="float-label">End Day</label>
+                                        <Calendar inputId="icon" dateFormat="yy-mm-dd" :showIcon="true" />
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-4  mb-md-0 mb-3">
+                                <div class="form-group">
+                                    <label for="">Notify to <span class="text-danger">*</span>
+                                    </label>
+
+                                </div>
+                            </div>
+                            <div class="col-md-7  mb-md-0 mb-3">
+                                <div class="form-group">
+
+                                    <select style="height: 38px;font-weight: 500;" name="" id="leave_type_id" class="form-select outline-none">
+                                        <option value="" selected>Select
+                                        </option>
+
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4  mb-md-0 mb-3">
+                                <div class="form-group">
+                                    <label for="">Reason <span class="text-danger">*</span>
+                                    </label>
+
+                                </div>
+                            </div>
+                            <div class="col-md-8  mb-md-0 mb-3">
+                                <div class="form-group">
+                                    <Textarea :autoResize="true" rows="3" cols="47" placeholder="Enter the Reason" />
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+
+                    <div class="col-md-5 ">
+                        <div class="col-md mb-6 n-m-2 ">
+                                <div class="form-group">
+                                    <Calendar :inline="true" :showWeek="true" />
+                                   </div>
+                            </div>
+
+
+                        <div class="text-center ">
+                            <button type="button" class="btn btn-border-primary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" id="btn_request_leave" class="btn btn-primary ms-4" >Request
+                                Leave</button>
                         </div>
                     </div>
-                </div>
 
-                </div>
-                <div class="tab-pane show fade active" id="localConveyance" role="tabpanel"
-                    aria-labelledby="pills-profile-tab">
+
+
 
                 </div>
             </div>
@@ -139,269 +339,227 @@
 
 
 <script setup>
-import { ref, onMounted, reactive } from 'vue';
-
-import { useToast } from 'primevue/usetoast';
-
-        // onMounted(() => {
-        //     productService.value.getProducts().then(data => products.value = data);
-        // })
-
-        const toast = useToast();
-        const dt = ref();
-        const products = ref([
-       {"id": "1000","claim_type": "Bamboo Watch","claim_amount": 65,"eligible_amount": 24,},
-       {"id": "1001","claim_type": "Black Watch","claim_amount": 72,"eligible_amount": 61,},
 
 
-        ]);
-        const productDialog = ref(false);
-        const deleteProductDialog = ref(false);
-        const deleteProductsDialog = ref(false);
-        const employee_reimbursement = ref({
-            claim_type:"",
-            claim_amount:"",
-            eligible_amount:"",
-            File:''
 
-        });
-
-        const selectedProducts = ref();
-
-        const submitted = ref(false);
-        const statuses = ref([
-	     	{label: 'Mobile Bills'},
-	     	{label: 'Accommodation'},
-	     	{label: 'Mobile Bills'},
-            {label: 'Travel Expenses'},
-	     	{label: 'Miscellaneous'},
-	     	{label: 'Medical Expenses'},
-             {label: 'Others'}   ]);
+import { onMounted, reactive, ref } from "vue";
+import axios from "axios";
+import { useToast } from "primevue/usetoast"
 
 
-        const openNew = () => {
 
-            submitted.value = false;
-            productDialog.value = true;
-        };
-        const hideDialog = () => {
-            productDialog.value = false;
-            submitted.value = false;
-        };
-        const saveProduct = () => {
-    submitted.value = true;
-    products.value.push(employee_reimbursement.value);
-    toast.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
-    productDialog.value = false;
-
-    console.log(employee_reimbursement.value);
-};
-
-        const deleteProduct = () => {
-
-            deleteProductDialog.value = false;
-
-            toast.add({severity:'success', summary: 'Successful', detail: 'Product Deleted', life: 3000});
-        };
+const leave_Data=ref()
+const toast = useToast();
+let today = new Date();
+// let month = today.getMonth();
+// let year = today.getFullYear()
 
 
-        const confirmDeleteSelected = () => {
-            deleteProductsDialog.value = true;
-        };
-        const confirmDeleteProduct = (prod) => {
-            employee_reimbursement.value = prod;
-            deleteProductDialog.value = true;
-        };
-        const deleteSelectedProducts = () => {
+onMounted(() => {
 
-            deleteProductsDialog.value = false;
-            selectedProducts.value = null;
-            toast.add({severity:'success', summary: 'Successful', detail: 'Products Deleted', life: 3000});
-        };
+leave_data.custom_start_date= new Date().toJSON().slice(0, 10);
+leave_data.permission_start_time=new Date().getHours()
+console.log(leave_data.permission_start_time);
+console.log(leave_data.custom_start_date);
+let url_org_leave = window.location.origin + '/fetch-org-leaves-balance';
+
+console.log("Fetching ORG LEAVE from url : "+url_org_leave);
+
+//leaves.value = values().data;
+//console.log("Ref data : "+JSON.stringify(values().data));
+
+axios.get(url_org_leave).then((response) => {
+
+        // leaves.value =Object.values(response.data)
+        // leave_type.value=Object.values(response.data.leave_types)
+        // leave_Data.value=response.data.employees
+        // console.log(leave_Data.value);
+});
+
+
+});
+
+
+
+const leave_data=reactive({
+
+    selected_leave:'',
+    date:'',
+    full_day:'',
+    half_day:'',
+    custom:'',
+    custom_start_date:'',
+    custom_end_date:'',
+    custom_total_days:'',
+    permission_start_time:'',
+    permission_total_time:'',
+    permission_end_time:''
+
+})
+
+const TotalNoOfDays=ref(true)
+const full_day_format=ref(true)
+const half_day_format=ref(false)
+const custom_format=ref(false)
+const Permission_format=ref(false)
+const compensatory_format=ref(false)
+const invalidDates = ref();
+
+
+let invalidDate = new Date();
+invalidDate.setDate(today.getDate() - 1);
+invalidDates.value = [today, invalidDate];
+
+
+
+const full_day=()=>{
+    leave_data.full_day=='full_day' ? full_day_format.value=true : full_day_format.value=false
+    full_day_format.value=true
+    custom_format.value=false
+    Permission_format.value=false
+    half_day_format.value=false
+    compensatory_format.value=false
+
+}
+
+const half_day=()=>{
+    leave_data.half_day=='half_day'? half_day_format.value=true :half_day_format.value=false
+    custom_format.value=false
+    Permission_format.value=false
+    full_day_format.value=false
+    compensatory_format.value=false
+    half_day_format.value=true
+}
+const custom_day=()=>{
+    leave_data.custom=='custom'? custom_format.value=true : custom_format.value=false
+    custom_format.value=true
+    Permission_format.value=false
+    half_day_format.value=false
+    full_day_format.value=false
+    compensatory_format.value=false
+
+    }
+    const dayCalculation=()=>{
+    if(custom_format.value==true){
+    if(leave_data.custom_start_date.length<0 || leave_data.custom_start_date==''){
+        toast.add({severity:'info', summary: 'Info Message', detail:'Select Start date', life: 3000});
+    }
+    }
+     if(Permission_format.value==true){
+    if(leave_data.permission_start_time<0 || leave_data.permission_start_time==''){
+        toast.add({severity:'info', summary: 'Info Message', detail:'Select Start Time', life: 3000});
+    }
+  }
+
+
+    console.log(leave_data.custom_start_date);
+    console.log(leave_data.custom_end_date);
+    var date1 = new Date(leave_data.custom_start_date);
+    var date2 = new Date(leave_data.custom_end_date);
+
+    // To calculate the time difference of two dates
+    var Difference_In_Time = date2.getTime() - date1.getTime();
+    console.log( "Differnece"+Difference_In_Time);
+
+    // To calculate the no. of days between two dates
+    var Difference_In_Days = (Difference_In_Time /  (1000 * 60 * 60 * 24)).toFixed(0) ;
+    leave_data.custom_total_days=Difference_In_Days
+    console.log(leave_data.custom_total_days);
+
+
+}
+
+
+
+
+
+
+
+const Permission=()=>{
+    // leave_data.selected_leave=='Permission' ? Permission_format.value=true:Permission_format.value=false
+    // leave_data.selected_leave=='Compensatory Off'  ?  compensatory_format.value=true : compensatory_format.value=false
+
+    // full_day_format.value=false
+    // half_day_format.value=false
+    // custom_format.value=false
+
+    if(leave_data.selected_leave=='Permission'){
+        Permission_format.value=true
+        TotalNoOfDays.value=false
+       half_day_format.value=false
+       custom_format.value=false
+       compensatory_format.value=false
+    }else
+    if(leave_data.selected_leave=='Compensatory Off'){
+       compensatory_format.value=true
+       Permission_format.value=false
+       full_day_format.value=false
+       half_day_format.value=false
+       custom_format.value=false
+       TotalNoOfDays.value=false
+    }else
+    if(leave_data.selected_leave=='Select'){
+        compensatory_format.value=false
+        Permission_format.value=false
+        full_day_format.value=true
+       half_day_format.value=false
+       custom_format.value=false
+       TotalNoOfDays.value=true
+
+    }
+    else{
+        Permission_format.value=false
+        compensatory_format.value=false
+    }
+}
+
+
+
 
 
 </script>
 
 
 
+<style>
 
-
-
-<style  lang="scss">
-.main-content{
-    width: 80%;
+label{
+    font-size: 15px;
+font-weight: 502;
 }
-.p-datatable .p-datatable-thead >tr>th{
-    text-align: center;
-    padding: 1rem 1rem;
-    border: 1px solid #dee2e6;
-      border-top-width: 1px;
-      border-right-width: 1px;
-      border-bottom-width: 1px;
-      border-left-width: 1px;
-    border-width: 0 0 1px 0;
+.leave_type{
+    font-size: 15px;
+    font-weight: 400;
+}
+.p-datepicker .p-datepicker-header {
+    padding: 0.5rem;
+    color: #061328;
+    background: #002f56;
     font-weight: 600;
+    margin: 0;
+    border-bottom: 1px solid #dee2e6;
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+  }
+  .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year, .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month {
     color: #fff;
-    background: #003056;
-    transition: box-shadow 0.2s;
-    font-size: 13px;
-    .p-column-title {
-        font-size: 13px;
-    }
-    .p-column-filter {
-        width: 100%;
-      }
-      #pv_id_2 {
-        height: 30px;
-      }
-    .p-fluid .p-dropdown .p-dropdown-label {
-        margin-top: -10px;
-      }
-      .p-dropdown .p-dropdown-label.p-placeholder{
-        margin-top: -12px;
-      }
-
-    .p-column-filter-menu-button{
-        color: white;
-        margin-left: 10px;
-
-    }
-    .p-column-filter-menu-button:hover {
-        color:white;
-        border-color: transparent;
-        background: #023e70;
-      }
-
+    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+    font-weight: 600;
+    padding: 0.5rem;
   }
-  .p-column-filter-overlay-menu .p-column-filter-constraint .p-column-filter-matchmode-dropdown {
-    margin-bottom: 0.5rem;
-    visibility: hidden;
-    position: absolute;
+  .p-datepicker:not(.p-datepicker-inline) .p-datepicker-header {
+    background: #002f56;
+    color: black;
   }
 
-  .p-button .p-component .p-button-sm{
-    background-color: #003056;
+  .p-calendar-w-btn .p-datepicker-trigger {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background: #002f56;
   }
-
-.p-datatable .p-datatable-tbody > tr{
-    font-size: 13px;
-    .employee_name{
-        font-weight: bold;
-        font-size: 13.5px;
-    }
-
-
+  .p-button:enabled:hover {
+    background: #002f56;
+    color: #ffffff;
+    border-color: none;
   }
-
-.employee_name{
-    font-weight: bold;
-    font-size: 13px;
-}
-.p-column-title {
-    font-size: 13.5px;
-  }
-  .fontSize13px{
-    font-size: 13px;
-  }
-
-.pending {
-    font-weight: 700;
-    color: #FFA726;
-}
-
-
-.approved {
-    font-weight: 700;
-    color: #26ff2d;
-
-}
-.p-button.p-component.p-button-success.Button {
-    padding: 8px;
-}
-
-.rejected {
-    font-weight: 700;
-    color: #ff2634;
-
-}
-.p-button.p-component.p-button-danger.Button {
-    padding: 8px;
-  }
-
-
-@media screen and (max-width: 960px) {
-    button {
-        width: 100%;
-        margin-bottom: .5rem;
-    }
-
-
-}
-
-.p-confirm-dialog-icon.pi.pi-exclamation-triangle {
-    color: red;
-  }
-  .p-button.p-component.p-confirm-dialog-accept {
-    background-color: #003056;
-  }
-  .p-button.p-component.p-confirm-dialog-reject.p-button-text {
-    color: #003056;
-  }
-  .p-column-filter-overlay-menu .p-column-filter-buttonbar {
-    padding: 1.25rem;
-    position: absolute;
-    visibility: hidden;
-  }
-  .p-datatable .p-datatable-thead > tr > th .p-column-filter-menu-button {
-    color: white;
-    border-color: transparent;
-
-  }
-  .p-column-filter-menu-button.p-column-filter-menu-button-open{
-    background: none;
-  }
-  .p-column-filter-menu-button.p-column-filter-menu-button-active{
-    background: none;
-
-  }
-  .p-datatable .p-datatable-thead > tr > th .p-column-filter {
-    width: 50%;
-  }
-
-  /* For Sort */
-
-  .p-datatable .p-sortable-column:not(.p-highlight):hover {
-    background: #003056;
-    color:white;
-  }
-  .p-datatable .p-sortable-column:not(.p-highlight):hover .p-sortable-column-icon {
-      color:white
-  }
-   .p-datatable .p-sortable-column.p-highlight {
-    background: #003056;
-    color:white;
-  }
-
-  .p-datatable .p-sortable-column.p-highlight:hover {
-    background: #003056;
-    color:white;
-  }
-  .p-datatable .p-sortable-column:focus {
-    box-shadow: none;
-    outline: none;
-    color: white;
-  }
-  .p-datatable .p-sortable-column .p-sortable-column-icon{
-    color:white
-  }
-  .pi-sort-amount-down::before {
-    content: "\e9a0";
-    color: white;
-  }
-  .pi-sort-amount-up-alt::before {
-    content: "\e9a2";
-    color: white;
-  }
-
-
 </style>

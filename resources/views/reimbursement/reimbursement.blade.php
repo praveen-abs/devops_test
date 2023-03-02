@@ -13,13 +13,13 @@
 
                     <ul class="nav nav-pills nav-tabs-dashed" role="tablist">
                         <li class="nav-item text-muted " role="presentation">
-                            <a class="nav-link active pb-2" data-bs-toggle="tab" href="#reimbursement"
+                            <a class="nav-link active pb-2" data-bs-toggle="tab" href="#active_employees"
                                 aria-selected="true" role="tab">
                                 Reimbursement
                             </a>
                         </li>
                         <li class="nav-item text-muted ms-5" role="presentation">
-                            <a class="nav-link  pb-2" data-bs-toggle="tab" href="#localConveyance"
+                            <a class="nav-link  pb-2" data-bs-toggle="tab" href="#not_active_employees"
                                 aria-selected="true" role="tab">
                                 Local Conveyance
                             </a>
@@ -42,13 +42,9 @@
     <div class="card">
         <div class="card-body">
             <div class="tab-content" id="pills-tabContent">
-                <div class="tab-pane show fade active" id="reimbursement" role="tabpanel"
+                <div class="tab-pane show fade active" id="active_employees" role="tabpanel"
                     aria-labelledby="pills-profile-tab">
-                      <!-- table -->
-                </div>
-                <div class="tab-pane show fade active" id="localConveyance" role="tabpanel"
-                    aria-labelledby="pills-profile-tab">
-
+                    <div id="active-directory-table" class="noCustomize_gridjs"></div>
                 </div>
             </div>
         </div>

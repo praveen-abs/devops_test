@@ -7,6 +7,7 @@ import "primeicons/primeicons.css";
 import { createApp } from "vue";
 import PrimeVue from "primevue/config";
 import BadgeDirective from "primevue/badgedirective";
+import BlockUI from 'primevue/blockui';
 import Button from 'primevue/button';
 import FocusTrap from 'primevue/focustrap';
 import Ripple from 'primevue/ripple';
@@ -25,11 +26,15 @@ import ProgressSpinner from 'primevue/progressspinner';
 import InputText from 'primevue/inputtext'
 import Row from 'primevue/row'
 import ColumnGroup from 'primevue/columngroup'
-import InputNumber from 'primevue/inputnumber'
-import FileUpload from 'primevue/fileupload';
+import Calendar from 'primevue/calendar';
 
-import  employee_reimbursement from './employee_reimbursements.vue'
 
+
+
+
+
+
+import employee_reimbursement from './employee_reimbursements.vue'
 
 const app = createApp(employee_reimbursement);
 
@@ -56,8 +61,7 @@ app.component('Dropdown',Dropdown);
 app.component('InputText', InputText);
 app.component('Dialog', Dialog);
 app.component('ProgressSpinner', ProgressSpinner)
-app.component('InputNumber', InputNumber)
-app.component('FileUpload', FileUpload)
+app.component('Calendar', Calendar)
 
 app.mount("#vjs_employee_reimbursement");
 
