@@ -193,7 +193,7 @@
                                         <label for="" class="float-label">End time</label>
 
                                         <span class=" p-input-icon-right">
-                                            <Calendar inputId="time12" v-model="leave_data.permission_end_time" :timeOnly="true" hourFormat="12" icon="your-icon" @timeupdate="dayCalculation" />
+                                            <Calendar inputId="time12" v-model="leave_data.permission_end_time" :timeOnly="true" hourFormat="12" icon="your-icon" @click="hour_difference" />
                                             <i class="pi pi-clock" />
                                         </span>
 
@@ -358,9 +358,12 @@ let today = new Date();
 onMounted(() => {
 
 leave_data.custom_start_date= new Date().toJSON().slice(0, 10);
-leave_data.permission_start_time=new Date().toLocaleTimeString()
+leave_data.permission_start_time=new Date().getHours()
+console.log(leave_data.permission_start_time);
 console.log(leave_data.custom_start_date);
 console.log(new Date().toLocaleDateString());
+
+hour_difference()
 
 let url_org_leave = window.location.origin + '/fetch-org-leaves-balance';
 
@@ -458,29 +461,36 @@ const custom_day=()=>{
     var date1 = new Date(leave_data.custom_start_date);
     var date2 = new Date(leave_data.custom_end_date);
 
-    var time1=new Date(leave_data.permission_start_time)
     var time2=new Date(leave_data.permission_end_time)
-    var Hour_Difference_for_Permission =time2.getHours()-time1.getHours()
+    var Hour_Difference_for_Permission =time2.getHours()-leave_data.permission_start_time.getHours()
     console.log("Total hours"+""+Hour_Difference_for_Permission);
     leave_data.permission_total_time=Hour_Difference_for_Permission
 
 
     // To calculate the time difference of two dates
     var Difference_In_Time = date2.getTime() - date1.getTime();
-    console.log(Difference_In_Time);
+    console.log( "Differnece"+Difference_In_Time);
 
     // To calculate the no. of days between two dates
-    var Difference_In_Days = Difference_In_Time /  (1000 * 60 * 60 * 24); ;
-    var total_days=Difference_In_Days
-    leave_data.custom_total_days=total_days
+    var Difference_In_Days = (Difference_In_Time /  (1000 * 60 * 60 * 24)).toFixed(0) ;
+    leave_data.custom_total_days=Difference_In_Days
     console.log(leave_data.custom_total_days);
 
 
-    // Validation for End Date and time
+}
+const hour_difference=()=>{
+    //   Time Difference
+
+  var t1=new Date().getHours()
+  var t2=leave_data.permission_end_time.getHours()
+  console.log(t1,t2);
+}
 
 
 
-    }
+
+
+
 const Permission=()=>{
     // leave_data.selected_leave=='Permission' ? Permission_format.value=true:Permission_format.value=false
     // leave_data.selected_leave=='Compensatory Off'  ?  compensatory_format.value=true : compensatory_format.value=false
