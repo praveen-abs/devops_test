@@ -168,10 +168,6 @@ class VmtEmployeeOnboardingController extends Controller
          }
      }
 
-      /*
-     *  Quick Onboarding Employee
-     *
-     */
     // Showing view for uploading quick onboaring excel sheet
     public function showQuickOnboardUploadPage()
     {
