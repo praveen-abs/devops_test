@@ -27,7 +27,7 @@ import InputText from 'primevue/inputtext'
 import Row from 'primevue/row'
 import ColumnGroup from 'primevue/columngroup'
 import Calendar from 'primevue/calendar';
-
+import Textarea from 'primevue/textarea';
 
 
 
@@ -62,6 +62,7 @@ app.component('InputText', InputText);
 app.component('Dialog', Dialog);
 app.component('ProgressSpinner', ProgressSpinner)
 app.component('Calendar', Calendar)
+app.component('Textarea', Textarea)
 
 app.mount("#vjs_employee_reimbursement");
 

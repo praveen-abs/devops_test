@@ -193,7 +193,7 @@
                                         <label for="" class="float-label">End time</label>
 
                                         <span class=" p-input-icon-right">
-                                            <Calendar inputId="time12" v-model="leave_data.permission_end_time" :timeOnly="true" hourFormat="12" icon="your-icon" @click="hour_difference" />
+                                            <Calendar inputId="time12" v-model="leave_data.permission_end_time" :timeOnly="true" hourFormat="12" icon="your-icon" @date-select="time_difference" />
                                             <i class="pi pi-clock" />
                                         </span>
 
@@ -358,9 +358,9 @@ let today = new Date();
 onMounted(() => {
 
 leave_data.custom_start_date= new Date().toJSON().slice(0, 10);
-leave_data.permission_start_time=new Date().getHours()
-console.log(leave_data.permission_start_time);
-console.log(leave_data.custom_start_date);
+leave_data.permission_start_time=new Date()
+
+
 let url_org_leave = window.location.origin + '/fetch-org-leaves-balance';
 
 console.log("Fetching ORG LEAVE from url : "+url_org_leave);
@@ -469,9 +469,19 @@ const custom_day=()=>{
 
 }
 
+const time_difference=()=>{
+    console.log(leave_data.permission_start_time);
+    console.log(leave_data.permission_end_time);
+    let t1=new Date(leave_data.permission_start_time).getTime()
+    let t2=new Date(leave_data.permission_end_time).getTime()
+    console.log("start"+t1,"end"+t2);
+
+var total_hours = ((((t2 - t1) / 1000) / 60)/ 60).toFixed(0)
+leave_data.permission_total_time=total_hours
+console.log(total_hours);
 
 
-
+}
 
 
 
