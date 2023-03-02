@@ -1,0 +1,83 @@
+@extends('layouts.master')
+@section('title')
+    @lang('translation.settings')
+@endsection
+@section('css')
+    @vite(['resources/scss/views/offer_letter.scss'])
+@endsection
+@section('content')
+    <div class="offer-letter-wrapper mt-30">
+        <div class="card  left-line mb-2">
+            <div class="card-body  pb-0 pt-1">
+                <ul class="nav nav-pills nav-tabs-dashed " role="tablist">
+                    <li class="nav-item text-muted " role="presentation">
+                        <a class="nav-link active pb-2" data-bs-toggle="tab" href="#offer_pending" aria-selected="true"
+                            role="tab">
+                            Pending
+                        </a>
+                    </li>
+                    <li class="nav-item text-muted mx-4" role="presentation">
+                        <a class="nav-link  pb-2" data-bs-toggle="tab" href="#offer_completed" aria-selected="true"
+                            role="tab">
+                            Completed
+                        </a>
+                    </li>
+                    <li class="nav-item text-muted" role="presentation">
+                        <a class="nav-link  pb-2" data-bs-toggle="tab" href="#offer_resent" aria-selected="true"
+                            role="tab">
+                            Resent
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="card px-5">
+            <div class="card-body">
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane show fade active" id="offer_pending" role="tabpanel"
+                        aria-labelledby="pills-profile-tab">
+                        <div class="offer-pending-content mb-5">
+                            <div class="row">
+                                <div class="col-xl-8 col-sm-8 col-lg-8 col-md-8 col-xxl-8"><span class="text-muted font-medium">Here you
+                                        can
+                                        view the saved offer letters to be sent</span></div>
+                                <div class="col-xl-4 col-sm-4 col-lg-4 col-md-4 col-xxl-4">
+                                    <a href="{{ route('create-offer') }}" class="btn btn-orange"><i class=" fa fa-plus-circle me-1"></i> Create
+                                        Offer</a>
+                                </div>
+                            </div>
+                            <div id="offerletter_pending" class="mb-3" style=""></div>
+                        </div>
+                        <div class="offer-delete-content">
+                            <div class="row">
+                                <div class="col-xl-12 col-sm-12 col-lg-12 col-md-12 col-xxl-12"><span class="text-muted font-medium">
+                                        Deleted offer letters are stored here for 10 days</span>
+                                </div>
+                                <div class="col-xl-12 col-sm-12 col-lg-12 col-md-12 col-xxl-12">
+                                    <div id="deleted_offerletter" style=""></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="tab-pane  fade " id="offer_completed" role="tabpanel" aria-labelledby="pills-profile-tab">
+                        <div id="offerletter_completedTable" style=""></div>
+
+                    </div>
+                    <div class="tab-pane  fade " id="offer_resent" role="tabpanel" aria-labelledby="pills-profile-tab">
+                        <div id="offerletter_resentTable" style=""></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('script')
+    @vite(['resources/js/hrms/modules/onboarding_module/OfferLetterModule.js'])
+
+
+
+    <script></script>
+@endsection
