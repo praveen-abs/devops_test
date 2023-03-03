@@ -654,7 +654,7 @@ class VmtAttendanceController extends Controller
         $attendance_WebMobile = VmtEmployeeAttendance::where('user_id', $request->user_id)
             ->whereMonth('date', $request->month)
             ->orderBy('checkin_time', 'asc')
-            ->get(['date', 'checkin_time', 'checkout_time','attendance_mode_checkin','attendance_mode_checkout']);
+            ->get(['date', 'checkin_time', 'checkout_time','attendance_mode_checkin','attendance_mode_checkout','selfie_checkin','selfie_checkout']);
 
         //dd($attendance_WebMobile);
 
@@ -684,6 +684,7 @@ class VmtAttendanceController extends Controller
 
            $attendanceResponseArray[$fulldate] = array( "user_id"=>$request->user_id,"isAbsent"=>false, "attendance_mode_checkin"=>null, "attendance_mode_checkout"=>null,
                                                         "absent_status"=>null,"leave_type"=>null,"checkin_time"=>null, "checkout_time"=>null,
+                                                        "selfie_checkin"=>null, "selfie_checkout"=>null,
                                                         "isLC"=>false, "lc_status"=>null, "lc_reason"=>null,"lc_reason_custom"=>null,
                                                         "isEG"=>false, "eg_status"=>null, "eg_reason"=>null,"eg_reason_custom"=>null,
                                                         "isMIP"=>false, "mip_status"=>null, "isMOP"=>false, "mop_status"=>null
@@ -773,6 +774,14 @@ class VmtAttendanceController extends Controller
             //TODO :: Based on which checkin, checkout time taken, its corresponding attendance modes has to be assigned here
             $attendanceResponseArray[$key]["attendance_mode_checkin"] = $attendance_mode_checkin;
             $attendanceResponseArray[$key]["attendance_mode_checkout"] = $attendance_mode_checkout;
+
+            //selfies
+            //format : http://127.0.0.1:8000/employees/PLIPL068/selfies/checkout.png
+            if($singleValue["checkin_time"])
+                $attendanceResponseArray[$key]["selfie_checkin"] = 'employees/'.$user->user_code.'/selfies/'.$singleValue["selfie_checkin"];
+
+            if($singleValue["checkout_time"])
+                $attendanceResponseArray[$key]["selfie_checkout"] = 'employees/'.$user->user_code.'/selfies/'.$singleValue["selfie_checkout"];
 
         }
         //dd($attendanceResponseArray);
