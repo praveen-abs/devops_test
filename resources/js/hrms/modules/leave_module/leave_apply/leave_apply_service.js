@@ -11,9 +11,9 @@ export const Service = defineStore("Service", () => {
     const leave_data = reactive({
         selected_leave: "",
         date: "",
-        full_day: "",
-        half_day: "",
-        custom: "",
+        radiobtn_full_day: "",
+        radiobtn_half_day: "",
+        radiobtn_custom: "",
         custom_start_date: "",
         custom_end_date: "",
         custom_total_days: "",
@@ -41,7 +41,7 @@ export const Service = defineStore("Service", () => {
     // Events
 
     const full_day = () => {
-        leave_data.full_day == "full_day"
+        leave_data.radiobtn_full_day == "full_day"
             ? (full_day_format.value = true)
             : (full_day_format.value = false);
         full_day_format.value = true;
@@ -52,7 +52,7 @@ export const Service = defineStore("Service", () => {
     };
 
     const half_day = () => {
-        leave_data.half_day == "half_day"
+        leave_data.radiobtn_half_day == "half_day"
             ? (half_day_format.value = true)
             : (half_day_format.value = false);
         custom_format.value = false;
@@ -62,7 +62,7 @@ export const Service = defineStore("Service", () => {
         half_day_format.value = true;
     };
     const custom_day = () => {
-        leave_data.custom == "custom"
+        leave_data.radiobtn_custom == "custom"
             ? (custom_format.value = true)
             : (custom_format.value = false);
         custom_format.value = true;
