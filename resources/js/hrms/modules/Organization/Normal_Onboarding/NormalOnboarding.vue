@@ -171,12 +171,12 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Aadhaar Number<span
                                                             class="text-danger">*</span></label>
-                                                    <InputMask id="ssn" mask="9999-9999-9999"  class="onboard-form form-control textbox " 
+                                                    <InputMask id="ssn" mask="9999-9999-9999"  class="onboard-form form-control textbox "
                                                         placeholder="6622-2350-9284" v-model="v$.AadhaarNumber.$model"
                                                         :class="{ 'p-invalid': v$.AadhaarNumber.$invalid && submitted }"
                                                         pattern="/^([0-9]{4}[0-9]{4}[0-9]{4}$)|([0-9]{4}\s[0-9]{4}\s[0-9]{4}$)|([0-9]{4}-[0-9]{4}-[0-9]{4}$)/"
                                                         data-pattern-error="wel" autocomplete="off" type="text" />
-                                              
+
                                                     <span
                                                         v-if="(v$.AadhaarNumber.$invalid && submitted) || v$.AadhaarNumber.$pending.$response"
                                                         class="p-error">{{
@@ -184,8 +184,8 @@
                                                                 'Aadhaar Number') }}</span>
 
                                                 </div>
-                                             
-                                        
+
+
 
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 co l-lg-3 col-xl-3 mb-2">
@@ -313,7 +313,7 @@
                                                     <select name="" id=" " placeholder="Bank Name"
                                                         :class="{ 'is-invalid': v$.BankName.$invalid && submitted }"
                                                         class=" form-control textbox" v-model="v$.BankName.$model">
-                                                 
+
                                                         <option v-for="bank in bankList" :key="bank.id">
                                                             {{ bank.bank_name }}
                                                         </option>
@@ -364,7 +364,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div> 
+                            </div>
 
 
 
@@ -496,7 +496,7 @@
                                                         type="text" rows="3" current_address_line_1
                                                         :class="{ 'p-invalid': v$.currentAddress1.$invalid && submitted }"
                                                         v-model="v$.currentAddress1.$model" placeholder="Current Address" />
-                                                
+
                                                         <span v-if="(v$.currentAddress1.$invalid && submitted) || v$.currentAddress1.$pending.$response"
                                                         class="p-error">{{v$.currentAddress1.required.$message.replace('Value', 'CurrentAddress1') }}</span>
 
@@ -601,7 +601,7 @@
 
                                                 </div>
                                             </div>
-                                        </div> 
+                                        </div>
 
                                         <div class="row">
                                             <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 col-xl-12 my-3">
@@ -743,7 +743,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div> 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -869,7 +869,7 @@
                                                           <option v-for="managerCode in Managerdetails" :key="managerCode.user_code">
                                                             {{ managerCode.user_code }}
                                                           </option>
-                                                    
+
                                                     </select>
 
                                                     <span
@@ -885,7 +885,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Reporting Manager
                                                         Name</label>
-<!-- 
+<!--
                                                     <input type="text" placeholder="Reporting Manager Name"
                                                         name="l1_manager_name" id="l1_manager_name"
                                                         v-model="v$.ReportingManagerName.$model"
@@ -899,7 +899,7 @@
                                                           <option v-for="managerName in Managerdetails" :key="managerName.name">
                                                             {{ managerName.name }}
                                                           </option>
-                                                    
+
                                                     </select>
 
                                                 </div>
@@ -981,7 +981,7 @@
 
                             <!-- Family Detials Start -->
 
-                            <div class="card shadow  profile-box card-top-border p-2"> 
+                            <div class="card shadow  profile-box card-top-border p-2">
                                 <div class="card-body justify-content-center align-items-center ">
                                     <div class="header-card-text">
                                         <h6 class="mb-0">Family Details</h6>
@@ -995,7 +995,7 @@
 
                                                     <InputText class="nboard-form form-control textbox capitalize"
                                                         type="text" placeholder="Father Name" name="father_name"
-                                                        id="father_name"   
+                                                        id="father_name"
                                                         :class="{ 'p-invalid': v$.fatherName.$invalid && submitted }"
                                                         v-model="v$.fatherName.$model" />
                                                         <span
@@ -1036,7 +1036,7 @@
                                                     <label for="" class="float-label">Age </label>
 
                                                     <input type="number" placeholder="Age" name="father_age"
-                                                        v-model="employee_onboarding.fatherAge" id="father_age"  
+                                                        v-model="employee_onboarding.fatherAge" id="father_age"
                                                         class="textbox  onboard-form form-control " minlength="2"
                                                         maxlength="3" readonly   />
                                                 </div>
@@ -1096,7 +1096,7 @@
                                                     <label for="" class="float-label">Age</label>
 
                                                     <input type="number" placeholder="Age" name="mother_age"
-                                                        v-model="employee_onboarding.motherAge" id="mother_age" 
+                                                        v-model="employee_onboarding.motherAge" id="mother_age"
                                                         class="textbox  onboard-form form-control " minlength="2"
                                                         maxlength="3" readonly />
                                                 </div>
@@ -1228,28 +1228,28 @@
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                                                 <label for="" class="float-label">Aadhar
                                                     Card Front<span class="text-danger">*</span></label>
-                                            <!-- <div class="form-control md" 
+                                            <!-- <div class="form-control md"
                                                          id="aadhar_card_file_label"><span class="file_label">Choose
                                                              Aadhar
                                                                      Card Front</span></div>-->
                                                 <input v-if="AadharDocFrontInvalid" type="file" accept="image/png, image/gif, image/jpeg" ref="AadharCardFront"
                                                     class="onboard-form form-control file is-invalid" @change="AadharFront($event)"
-                                                    
+
                                                 />
                                                 <input  v-if="!AadharDocFrontInvalid"  type="file" accept="image/png, image/gif, image/jpeg" ref="AadharCardFront"
                                                     class="onboard-form form-control file " @change="AadharFront($event)"
-                                                    
+
                                                 />
                                                 <span class="p-error" v-if="AadharDocFrontInvalid">Aadhar Card Front is required</span>
 
-                                                 
-                                                
+
+
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2"
                                                 id="aadhar_card_backend_content">
                                                 <label for="" class="float-label"> Aadhar Card Back<span
                                                         class="text-danger">*</span></label>
-                                            <!-- <div class="addfiles form-control" 
+                                            <!-- <div class="addfiles form-control"
                                                          id="aadhar_card_backend_file_label"><span
                                                              class="file_label">Choose
                                                                      Aadhar Card Back </span></div> -->
@@ -1262,7 +1262,7 @@
 
                                                     <span v-if="AadharDocBackInvalid" class="p-error">Aadhar Card Back is Required</span>
 
-                                                   
+
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                                                 <label for="" class="float-label"> Pan
@@ -1290,12 +1290,12 @@
                                                                      Passport</span></div> -->
                                                 <input v-if="PassPortInvalid" type="file" accept="image/png, image/gif, image/jpeg" ref="PassportDoc"
                                                     placeholder="Passport" name="passport_file" id="passport_file"
-                                                    @change="Passport($event)" class="onboard-form form-control file is-invalid" 
+                                                    @change="Passport($event)" class="onboard-form form-control file is-invalid"
                                                     />
 
                                                     <input v-if="!PassPortInvalid" type="file" accept="image/png, image/gif, image/jpeg" ref="PassportDoc"
                                                     placeholder="Passport" name="passport_file" id="passport_file"
-                                                    @change="Passport($event)" class="onboard-form form-control file" 
+                                                    @change="Passport($event)" class="onboard-form form-control file"
                                                     />
 
                                                     <span v-if="PassPortInvalid" class="p-error">Pan Card is Required</span>
@@ -1309,12 +1309,12 @@
                                                                      ID</span></div> -->
                                                 <input type="file" accept="image/png, image/gif, image/jpeg" ref="VoterIdDoc"
                                                     placeholder="Voters ID" name="voters_id_file" id="voters_id_file" v-if="VoterIdInvalid"
-                                                    @change="VoterId($event)" class="onboard-form form-control file is-invalid" 
+                                                    @change="VoterId($event)" class="onboard-form form-control file is-invalid"
                                                    />
 
                                                    <input type="file" accept="image/png, image/gif, image/jpeg" ref="VoterIdDoc"
                                                     placeholder="Voters ID" name="voters_id_file" id="voters_id_file" v-if="!VoterIdInvalid"
-                                                    @change="VoterId($event)" class="onboard-form form-control file" 
+                                                    @change="VoterId($event)" class="onboard-form form-control file"
                                                    />
 
 
@@ -1336,7 +1336,7 @@
                                                     placeholder="Driving License" name="dl_file" id="dl_file"
                                                     v-if="!DrivingLisenceInvalid"
                                                     @change="DrivingLisence($event)"  ref="DrivingLicenseDoc"
-                                                  
+
                                                     class="onboard-form form-control file" />
 
                                                     <span v-if="DrivingLisenceInvalid" class="p-error">Driving Lisence is Required</span>
@@ -1362,9 +1362,9 @@
                                                     v-if="!EducationCertificateInvalid"
                                                      id="education_certificate_file" ref="EductionDoc"
                                                     class="onboard-form form-control file " />
-                                                 
+
                                                     <span v-if="EducationCertificateInvalid" class="p-error">Eduction Certifacte is Required</span>
-                                            </div>   
+                                            </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
                                                 <label for="" class="float-label"> Relieving
                                                     Letter</label>
@@ -1402,7 +1402,7 @@
                                                 value="Submit">Save</button>
 
                                             <button type="submit" data="row-6" next="row-6" placeholder=""
-                                                name="submit_form" id="msform" :disabled="SumbitDisable"
+                                                name="submit_form" id="msform" :disabled="!SumbitDisable"
                                                 class="btn btn-orange  text-center processOnboardForm" value="Submit"
                                                 @click="showWarn">Submit</button>
 
@@ -1410,7 +1410,7 @@
                                     </div>
                                 </div>
                                 </div>
-                            
+
 
                         </form>
                     </div>
@@ -1607,7 +1607,7 @@ const ReleivingLetterInvalid = ref(false);
 const handleSubmit = (isFormValid) => {
 
     console.log(employee_onboarding);
-     
+
     submitted.value = true;
 
     AadharCardFront.fileName == undefined ? AadharDocFrontInvalid.value = true : AadharDocFrontInvalid.value = false
@@ -1697,7 +1697,7 @@ const fnCalculateAge = () => {
         var ageDate = new Date(difference);
         var calculatedAge = Math.abs(ageDate.getUTCFullYear() - 1970);
         employee_onboarding.fatherAge = calculatedAge
-        
+
     } else
         if (employee_onboarding.motherDateofBirth) {
             var birthDate = new Date(employee_onboarding.motherDateofBirth);
@@ -1706,7 +1706,7 @@ const fnCalculateAge = () => {
             var ageDate = new Date(difference);
             var calculatedAge = Math.abs(ageDate.getUTCFullYear() - 1970);
             employee_onboarding.motherAge = calculatedAge
-           
+
         }
 
 }
@@ -1747,7 +1747,6 @@ const ReleivingLetterDoc = ref()
 
 
 
-
 const AadharFront = (e) => {
     // Check if file is selected
     if (e.target.files && e.target.files[0]) {
@@ -1762,7 +1761,7 @@ const AadharFront = (e) => {
             // Check if file is an image
             AadharCardFront.isImage = ["jpg", "jpeg", "png", "gif"].includes(AadharCardFront.fileExtention);
         // Print to console
-        console.log(AadharCardFront);
+        console.log(AadharCardFront.file);
     }
 }
 const AadharBack = (e) => {
@@ -1795,6 +1794,7 @@ const PanCard = (e) => {
             PanCardDoc.fileName = PanCardDoc.file.name.split(".").shift(),
             // Check if file is an image
             PanCardDoc.isImage = ["jpg", "jpeg", "png", "gif"].includes(PanCardDoc.fileExtention);
+            PanCardDoc.value=PanCardDoc.file
         // Print to console
         console.log(PanCardDoc);
     }
@@ -1894,13 +1894,18 @@ const showWarn = () => {
 
 
 
+
 }
 
 // for Testing Post Data
 
 
 const submit = () => {
-    axios.post('http://localhost:3000/posts', {
+    console.log(employee_onboarding);
+    alert("working")
+    axios.post('/vmt-employee-onboard',
+
+   {
         employee_onboarding,
         AadharCardFront,
         AadharCardBack,
@@ -1951,7 +1956,7 @@ const BloodGroup = ref([
 ])
 
 
-// Sample testong Data 
+// Sample testong Data
 
 const Sampledata = () => {
     employee_onboarding.EmployeeCode = ref("B090")
