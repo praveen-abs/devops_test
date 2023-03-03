@@ -5,6 +5,7 @@ import "primeicons/primeicons.css";
 
 
 import { createApp } from "vue";
+import { createPinia } from "pinia";
 import PrimeVue from "primevue/config";
 import BadgeDirective from "primevue/badgedirective";
 import BlockUI from 'primevue/blockui';
@@ -37,11 +38,13 @@ import Textarea from 'primevue/textarea';
 import employee_reimbursement from './employee_reimbursements.vue'
 
 const app = createApp(employee_reimbursement);
+const pinia=createPinia()
 
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
+app.use(pinia)
 
 
 app.directive('tooltip', Tooltip);
