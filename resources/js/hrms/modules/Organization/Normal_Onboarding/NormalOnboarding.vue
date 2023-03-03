@@ -1399,14 +1399,14 @@
                                             <input type="button" value="sample" @click="Sampledata"
                                                 class="btn btn-orange  text-center processOnboardForm">
 
-                                            <button type="submit" data="row-6" next="row-6" placeholder="" name="save_form"
+                                            <button type="button" data="row-6" next="row-6" placeholder="" name="save_form"
                                                 id="save_button" class="btn btn-orange  text-center processOnboardForm"
-                                                value="Submit">Save</button>
+                                                value="Submit" @click="SaveEmployeeOnboardingData">Save</button>
 
                                             <button type="submit" data="row-6" next="row-6" placeholder=""
                                                 name="submit_form" id="msform"
                                                 class="btn btn-orange  text-center processOnboardForm" value="Submit"
-                                                @click="showWarn">Submit</button>
+                                                @click="SubmitEmployeeOnboardingData">Submit</button>
 
                                         </div>
                                     </div>
@@ -1580,9 +1580,11 @@ const state = ref();
 const Managerdetails=ref();
 
 
+
 const NationalityData = ref(true);
 const CopyAddresschecked = ref(false);
 const sposeData = ref(false);
+const can_onboard_employee=ref(false)
 
 
 
@@ -1713,9 +1715,15 @@ const fnCalculateAge = () => {
 
 }
 
-
-
-
+const SaveEmployeeOnboardingData=()=>{
+    can_onboard_employee.value=false
+}
+const SubmitEmployeeOnboardingData = () => {
+    can_onboard_employee.value=true
+    console.log(employee_onboarding);
+    jsonFormat();
+    console.log(AadharCardFront.fileName);
+}
 
 
 // Generate data into JSON Format
@@ -1887,16 +1895,7 @@ const ReleivingLetter = (e) => {
     }
 }
 
-const showWarn = () => {
-    console.log(employee_onboarding);
-    // handleSubmit();
-    jsonFormat();
-    console.log(AadharCardFront.fileName);
 
-
-
-
-}
 
 // for Testing Post Data
 
