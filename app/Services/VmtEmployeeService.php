@@ -73,8 +73,8 @@ class VmtEmployeeService {
     */
     public function createOrUpdate_OnboardFormData($data, $can_onboard_employee, $existing_user_id = null)
     {
-        $response = $this->createOrUpdate_User(data: $data, can_onboard_employee : $can_onboard_employee, user_id: $existing_user_id);
 
+        $response = $this->createOrUpdate_User(data: $data, can_onboard_employee : $can_onboard_employee, user_id: $existing_user_id);
         if(!empty($response) && $response->status == 'success')
         {
             try
@@ -149,6 +149,7 @@ class VmtEmployeeService {
     private function CreateNewUser($data, $can_onboard_employee)
     {
         $newUser = new User;
+        dd($data);
         $newUser->name = $data['employee_name'];
         $newUser->email = $data["email"];
         $newUser->password = Hash::make('Abs@123123');

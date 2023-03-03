@@ -184,19 +184,18 @@ class VmtEmployeeOnboardingController extends Controller
 
     public function processEmployeeOnboardForm_Normal_Quick(Request $request, VmtEmployeeService $employeeService)
     {
-        $user_id = $request->input('user_id');
+
+        $user_id = $request->employee_onboarding['EmployeeCode'];
         $response = "";
         $isEmailSent = "";
         $onboard_form_data =  array();
         //parse_str($request->all(), $onboard_form_data); (Removing this line, input from data is alreay in array)
         $onboard_form_data  = $request->all();
-
         $currentLoggedinInUser = auth()->user();
 
 
         //Check whether we are updating existing user or adding new user.
         $existingUser = User::where('id',$user_id);
-
         if($existingUser->exists())
         {
 
