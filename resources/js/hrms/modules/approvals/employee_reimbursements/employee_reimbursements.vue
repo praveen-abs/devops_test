@@ -44,25 +44,28 @@
                             <div class="card">
 
 
-                                <DataTable ref="dt" :value="products" v-model:selection="selectedProducts" dataKey="id"
+                                <DataTable ref="dt" :value="products"  dataKey="id"
                                     :paginator="true" :rows="10"
                                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown" :rowsPerPageOptions="[5,10,25]"
                                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" responsiveLayout="scroll">
 
-                                    <Column :exportable="false" field="upload">
+                                    <Column field="claim_type" header="Claim type"  style="min-width:12rem"> </Column>
+                                    <Column  header="Claim amount"  style="min-width:8rem">
                                         <template #body="slotProps">
-                                            <Button icon="pi pi-trash" class="p-button-rounded p-button-danger" @click="confirmDeleteProduct(slotProps.data)" />
+                                            {{  "&#x20B9;"+slotProps.data.claim_amount }}
                                             </template>
                                         </Column>
 
-                                    <Column field="claim_type" header="Claim type"  style="min-width:12rem"> </Column>
-                                    <Column field="claim_amount" header="Claim amount"  style="min-width:8rem"> </Column>
-
-                                    <Column field="eligible_amount" header="Eligible Amount"  style="min-width:12rem"></Column>
-
-                                    <Column :exportable="false" field="upload">
+                                    <Column field="" header="Eligible Amount"  style="min-width:12rem">
                                         <template #body="slotProps">
-                                            <Button style="height: 30px;" icon="pi pi-eye" label="View" class=" p-button-success mr-2" @click="confirmDeleteSelected(slotProps.data)" />
+                                            {{  "&#x20B9;"+slotProps.data.eligible_amount }}
+                                            </template>
+                                    </Column>
+
+                                    <Column :exportable="false" field="upload" header="Action"  style="min-width:8rem">
+                                        <template #body="slotProps">
+                                            <Button style="height: 30px;" icon="pi pi-pencil"  class="p-button-rounded p-button-warning mr-2" @click="editProduct(slotProps.data)" />
+                                            <Button style="height: 30px;" icon="pi pi-trash"  class="p-button-rounded p-button-danger mr-2" @click="confirmDeleteSelected(slotProps.data)" />
                                         </template>
                                     </Column>
                                 </DataTable>
@@ -71,19 +74,23 @@
                             <Dialog v-model:visible="productDialog" :style="{width: '450px'}" header="Reimbursement Detials" :modal="true" class="p-fluid">
                                 <div class="field">
                                     <label for="name">Claim Type</label>
-                                    <Dropdown id="inventoryStatus" v-model="employee_reimbursement.claim_type" :options="statuses" optionLabel="label" placeholder="Select a Status"></Dropdown>
-
+                                    <!-- <Dropdown id="inventoryStatus" v-model="employee_reimbursement.claim_type" :options="statuses" optionLabel="label" placeholder="Select a Status"></Dropdown> -->
+                                    <select class="form-select textbox onboard-form form-control"  v-model="employee_reimbursement.claim_type" >
+                                        <option  v-for="types in statuses" :key="types.value">
+                                            {{ types.label }}
+                                        </option>
+                                      </select>
                                 </div>
 
                                 <div class="formgrid grid">
                                     <div class="field col">
                                         <label for="Claim Amount">Claim Amount</label>
-                                        <InputNumber id="Claim Amount" v-model="employee_reimbursement.claim_amount_amount" mode="currency" currency="INR" locale="en-IN" />
+                                        <InputNumber v-model="employee_reimbursement.claim_amount" mode="currency" currency="INR" locale="en-IN"  />
                                     </div>
 
                                     <div class="field col">
                                         <label for="Eligible Amount">Eligible Amount</label>
-                                        <InputNumber  id="Eligible Amount" v-model="employee_reimbursement.eligible_amount" mode="currency" currency="INR" locale="en-IN" />
+                                        <InputNumber  v-model="employee_reimbursement.eligible_amount" mode="currency" currency="INR" locale="en-IN" integeronly  />
                                     </div>
                                 </div>
                                 <div class="field">
@@ -118,7 +125,7 @@
                                 </div>
                                 <template #footer>
                                     <Button label="No" icon="pi pi-times" class="p-button-text" @click="deleteProductsDialog = false"/>
-                                    <Button label="Yes" icon="pi pi-check" class="p-button-text" @click="deleteSelectedProducts" />
+                                    <Button label="Yes" icon="pi pi-check" class="btn btn-orange  p-button-text" @click="deleteSelectedProducts" />
                                 </template>
                             </Dialog>
                         </div>
@@ -159,24 +166,25 @@ import { useToast } from 'primevue/usetoast';
         const deleteProductDialog = ref(false);
         const deleteProductsDialog = ref(false);
         const employee_reimbursement = ref({
-            claim_type:"",
-            claim_amount:"",
-            eligible_amount:"",
+            claim_type:'',
+            claim_amount:Number,
+            eligible_amount:Number,
             File:''
 
         });
 
-        const selectedProducts = ref();
+
 
         const submitted = ref(false);
         const statuses = ref([
-	     	{label: 'Mobile Bills'},
-	     	{label: 'Accommodation'},
-	     	{label: 'Mobile Bills'},
-            {label: 'Travel Expenses'},
-	     	{label: 'Miscellaneous'},
-	     	{label: 'Medical Expenses'},
-             {label: 'Others'}   ]);
+	     	{label: 'Mobile Bills',value: 'Mobile Bills'},
+	     	{label: 'Accommodation',value: 'Accommodation'},
+	     	{label: 'Mobile Bills',value: 'Mobile Bills'},
+            {label: 'Travel Expenses',value: 'Travel Expenses'},
+	     	{label: 'Miscellaneous',value: 'Miscellaneous'},
+	     	{label: 'Medical Expenses',value: 'Medical Expenses'},
+            {label: 'Others',value: 'Others'}
+           ]);
 
 
         const openNew = () => {
@@ -188,14 +196,23 @@ import { useToast } from 'primevue/usetoast';
             productDialog.value = false;
             submitted.value = false;
         };
-        const saveProduct = () => {
+
+        const editProduct = (prod) => {
+            employee_reimbursement.value = {...prod};
+            productDialog.value = true;
+        };
+    const saveProduct = () => {
     submitted.value = true;
     products.value.push(employee_reimbursement.value);
     toast.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
     productDialog.value = false;
-
     console.log(employee_reimbursement.value);
 };
+
+const claim=()=>{
+    console.log(type.value);
+    employee_reimbursement.claim_type=type.value
+}
 
         const deleteProduct = () => {
 
