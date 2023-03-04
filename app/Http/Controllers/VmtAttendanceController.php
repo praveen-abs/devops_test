@@ -867,7 +867,10 @@ class VmtAttendanceController extends Controller
                 $attendanceResponseArray[$key]["isAbsent"] = true;
 
                 //Check whether leave is applied or not.
-                $t_leaveRequestDetails = $this->isLeaveRequestApplied($request->user_id, $key);
+                $year=$request->year;
+                $month=$request->month;
+                $t_leaveRequestDetails = $this->isLeaveRequestApplied($request->user_id, $key,$year,$month);
+                dd($t_leaveRequestDetails);
 
                 if(empty($t_leaveRequestDetails))
                 {
@@ -930,12 +933,46 @@ class VmtAttendanceController extends Controller
         return $attendanceResponseArray;
     }
 
-    public function isLeaveRequestApplied($user_id, $attendance_date){
+    public function isLeaveRequestApplied($user_id, $attendance_date,$year,$month){
+                        // dd($year);
+
+        $leave_Details=VmtEmployeeLeaves::join('vmt_leaves','vmt_leaves.id','=','vmt_employee_leaves.leave_type_id')
+                                  ->where('user_id',$user_id)
+                                  ->whereYear('end_date', $year)
+                                  ->whereMonth('end_date',$month)
+                                  ->get(['start_date','end_date','status','vmt_leaves.leave_type','total_leave_datetime']);
+                                  dd($leave_Details->count());
+                if( $leave_Details->count()==0){
+                       return null;
+                }else{
+                    foreach( $leave_Details as $single_leave_details){
+                                   $startDate = Carbon::parse($single_leave_details->start_date);
+                                   $endDate = Carbon::parse($single_leave_details->end_date);
+                                   $currentDate =  Carbon::parse($attendance_date);
+                             //  dd($startDate.'-----'.$currentDate.'------------'.$endDate.'-----');
+                              //dd($currentDate->lte( $startDate));
+                                    if($currentDate->lte( $startDate) && $currentDate->lte($endDate) ){
+                                        if(substr( $single_leave_details->total_leave_datetime,-1)=='N'){
+                                                 // Logic Get FN or AN Value From total Leave date time
+                                                    //  $attendanceResponseArray[$key]['half_day_type'] = preg_replace("/([^a-zA-Z]+)/i", "",  $single_leave_details->total_leave_datetime);
+                                                    //   $attendanceResponseArray[$key]['half_day_status']=$single_leave_details->status;
+                                        } else {
+                                            return $single_leave_details;
+                                        }
+                                    }else{
+                                        return null;
+                                    }
+                     }
+                }
 
 
+
+
+
+          dd($attendance_date);
         //check whether leave applied.If yes, check leave status
         $leave_record = VmtEmployeeLeaves::where('user_id',$user_id)->
-                            whereDate('leaverequest_date',$attendance_date);
+                            whereDate('end_date',$attendance_date);
 
         if($leave_record->exists()){
             return $leave_record->first();

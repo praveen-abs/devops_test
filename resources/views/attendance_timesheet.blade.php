@@ -1660,7 +1660,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-center' ><div class='check-in f-10 text-success w-100 d-flex align-items-center justify-content-start'><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
                                         year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkin_time +
                                         getAttendanceModeIcon(ajax_data_currentdate.attendance_mode_checkin) +
-                                        "<button style='border:none;width:20px;background:none;' onclick='onclickShowSelfie(this)'><i class='fa fa-picture-o me-2' aria-hidden='true'></i></button>"+
+                                        ""+
                                         "</span>" +
                                         final_checkin_button_code +
                                         "</div> <div class='w-100 d-flex align-items-center justify-content-start  check-out mt-2 f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span class='f-11' id='checkout_time_" +
@@ -1692,31 +1692,27 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
         }
 
-        function getAttendanceSelfieButtons(ajax_data_currentdate){
+        function getAttendanceSelfieButtons(data_CurrentDate){
+                  alert(data_CurrentDate.isAbsent)
 
-            alert("Check  Punch_type")
+            //     if(!ajax_data_currentdate.checkin_time){
+            //         var selfie = ajax_data_currentdate.selfie_checkin;
+            //         console.log(selfie);alert(selfie)
 
-            if(ajax_data_currentdate.attendance_mode_checkin == "mobile")
-            {
-                if(!ajax_data_currentdate.checkin_time){
-                    var selfie = ajax_data_currentdate.selfie_checkin;
+            //         $("#check_in_selfie").attr('src',ajax_data_currentdate.selfie_checkin)
+            //         console.log("Check_in_selfie"+selfie)
 
-                    $("#check_in_selfie").attr('src',ajax_data_currentdate.selfie_checkin)
-                    console.log("Check_in_selfie"+selfie)
+            //     }
 
-                }
-            }
-            else
-            if(ajax_data_currentdate.attendance_mode_checkout == "mobile")
-            {
-                if(!ajax_data_currentdate.checkout_time){
-                    var selfie = ajax_data_currentdate.selfie_checkout;
-                    console.log("check_out_selfie "+selfie);
-                }
+            // else
+
+            //     if(!ajax_data_currentdate.checkout_time){
+            //         var selfie = ajax_data_currentdate.selfie_checkout;
+            //         console.log("check_out_selfie "+selfie);
+            //     }
+
             }
 
-
-        }
 
         function onclickShowSelfie(){
 
@@ -1738,11 +1734,11 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
             if (attendance_mode == "web")
                 return '&nbsp;<i class="fa fa-laptop"></i>';
             else
-            if (attendance_mode == "mobile"){
+            if (attendance_mode == "mobile")
 
 
-                return '&nbsp;<i class="fa fa-mobile-phone"></i>';
-            }
+                return '&nbsp;<i class="fa fa-mobile-phone"></i><span><button style="border:none;width:20px;background:none;" onclick="onclickShowSelfie(this)"><i class="fa fa-picture-o me-2" aria-hidden="true"></i></button></span>';
+
             else
                 return ''; // when attendance_mode column is empty.
 
