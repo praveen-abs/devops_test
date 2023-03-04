@@ -1543,8 +1543,8 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
 
                                             cell.innerHTML = " <div class='w-100 h-100 p-2' style='background: #fad8d8;'><p class='show_date' >" + date +
-                                                "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start'><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'>"+
-                                                "<span style='top: -35px;left:50px;color: red;font-weight: 700;position:relative'>Absent</span><br><span style='position: relative;left: -18px;font-weight: 700;color: red;'>"+ ajax_data_currentdate.leave_type+'&nbsp;'+"<span>Rejected</span><span style='position: absolute;top: 20px;left: 95px;'><i class='fa fa-times-circle text-danger fs-15'  title='rejected'></i></span></span>";
+                                                "</p><span style='top: -22px;color: red;font-weight: 700;position:relative'>Absent</span>  <div class='d-flex mt-2 flex-column bio_check align-items-start'><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><span style='position:relative;font-weight: 700;color: red;top: -15px;'>"+ ajax_data_currentdate.leave_type+'&nbsp;'+"<span>Rejected</span><span style='margin-left: 7px'><i class='fa fa-times-circle text-danger fs-15'  title='Rejected'></i></span></span>";
+
 
                                         }
                                         else
