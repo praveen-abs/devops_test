@@ -35,22 +35,22 @@
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
 
                                                 <div class="floating">
-                                                    <label for="EmployeeNameasper" class="float-label">Employee Name as per
+                                                    <label for="EmployeeNameasperAadhar" class="float-label">Employee Name as per
                                                         Aadhar
                                                         <span class="text-danger">*</span>
                                                     </label>
 
                                                     <InputText class="onboard-form form-control  textbox  capitalize"
-                                                        type="text" v-model="v$.EmployeeNameasper.$model"
-                                                        :class="{ 'p-invalid': v$.EmployeeNameasper.$invalid && submitted }"
+                                                        type="text" v-model="v$.EmployeeNameAsPerAadhar.$model"
+                                                        :class="{ 'p-invalid': v$.EmployeeNameAsPerAadhar.$invalid && submitted }"
                                                         style="text-transform: uppercase;"
                                                         placeholder="Employee Name as per Aadhar " />
 
                                                     <span
-                                                        v-if="(v$.EmployeeNameasper.$invalid && submitted) || v$.EmployeeNameasper.$pending.$response"
+                                                        v-if="(v$.EmployeeNameAsPerAadhar.$invalid && submitted) || v$.EmployeeNameAsPerAadhar.$pending.$response"
                                                         class="p-error">{{
-                                                            v$.EmployeeNameasper.required.$message.replace('Value',
-                                                                'Employee Name as per') }}</span>
+                                                            v$.EmployeeNameAsPerAadhar.required.$message.replace('Value',
+                                                                'Employee Name as per in Aadhar') }}</span>
 
                                                 </div>
                                             </div>
@@ -1421,10 +1421,10 @@
         </div>
     </div>
 
-    <Dialog v-if="!employee_onboarding.EmployeeNameasper.length > 0 && !employee_onboarding.AadhaarNumber.length > 0"
+    <Dialog v-if="!employee_onboarding.EmployeeNameAsPerAadhar.length > 0 && !employee_onboarding.AadhaarNumber.length > 0"
         header="Documents Required" v-model:visible="RequiredDocument" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
         :style="{ width: '50vw' }">
-        <li v-if="employee_onboarding.EmployeeNameasper == '' || employee_onboarding.EmployeeNameasper.length < 0">Employee
+        <li v-if="employee_onboarding.EmployeeNameAsPerAadhar == '' || employee_onboarding.EmployeeNameAsPerAadhar.length < 0">Employee
             As
             Per Name Required</li>
         <li v-if="employee_onboarding.AadhaarNumber == '' || employee_onboarding.AadhaarNumber.length < 0">Aadhaar Number
@@ -1440,7 +1440,7 @@
             <i class="pi pi-check-circle" :style="{fontSize: '5rem', color: 'var(--green-500)' }"></i>
             <h5>Onboarding Successful!</h5>
             <p :style="{lineHeight: 1.5, textIndent: '1rem'}">
-                Your account is registered under name <b>{{employee_onboarding.EmployeeNameasper}}</b><br> Please check <b>{{employee_onboarding.PersonDetialsEmail}}</b> for Further Information
+                Your account is registered under name <b>{{employee_onboarding.EmployeeNameAsPerAadhar}}</b><br> Please check <b>{{employee_onboarding.PersonDetialsEmail}}</b> for Further Information
             </p>
         </div>
         <template #footer>
@@ -1481,12 +1481,13 @@ onMounted(() => {
 
 
 const employee_onboarding = reactive({
+    can_onboard_employee:true,
     EmployeeCode: "",
     DateOfJoining: "",
     AadhaarNumber: "",
     PassportNumber: "",
     BankName: "",
-    EmployeeNameasper: "",
+    EmployeeNameAsPerAadhar: "",
     PersonDetialsGender: "",
     PanNumber: "",
     PassportExpDate: "",
@@ -1584,7 +1585,6 @@ const Managerdetails=ref();
 const NationalityData = ref(true);
 const CopyAddresschecked = ref(false);
 const sposeData = ref(false);
-const can_onboard_employee=ref(false)
 
 
 
@@ -1901,7 +1901,7 @@ const ReleivingLetter = (e) => {
 
 
 const submit = () => {
-    axios.post('http://localhost:3000/posts', {
+    axios.post('/vmt-employee-onboard', {
         employee_onboarding,
         AadharCardFront,
         AadharCardBack,
@@ -1956,7 +1956,7 @@ const BloodGroup = ref([
 
 const Sampledata = () => {
     employee_onboarding.EmployeeCode = ref("B090")
-    employee_onboarding.EmployeeNameasper = ref("George David")
+    employee_onboarding.EmployeeNameAsPerAadhar = ref("George David")
     employee_onboarding.AadhaarNumber = ref("3977 8798 6564")
     employee_onboarding.DateOfJoining = ref("23-4-2020")
     employee_onboarding.PanNumber = ref("BGAJP6646F")

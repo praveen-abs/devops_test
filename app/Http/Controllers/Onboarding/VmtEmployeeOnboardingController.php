@@ -185,6 +185,7 @@ class VmtEmployeeOnboardingController extends Controller
     public function processEmployeeOnboardForm_Normal_Quick(Request $request, VmtEmployeeService $employeeService)
     {
 
+
         $user_id = $request->employee_onboarding['EmployeeCode'];
         $response = "";
         $isEmailSent = "";
@@ -309,7 +310,7 @@ class VmtEmployeeOnboardingController extends Controller
             //Check whether current login is admin
             if(Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]) )
             {
-                $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), null);
+                $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->employee_onboarding['can_onboard_employee'], null);
 
                 if($result->status == "success")
                 {
