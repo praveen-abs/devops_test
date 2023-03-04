@@ -1707,7 +1707,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
         function onclickShowSelfie(image_url){
 
                 $('#SelfieImage').fadeIn(0);
-                getAttendanceSelfieButtons()
+
 
                 if(!ajax_data_currentdate.checkin_time){
                     var selfie = ajax_data_currentdate.selfie_checkin;
@@ -1753,10 +1753,10 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
             if (attendance_mode == "mobile")
             {
                 if(t_punch_type == "checkin")
-                    return '&nbsp;<i class="fa fa-mobile-phone"></i><span><button style="border:none;width:20px;background:none;" onclick="onclickShowSelfie("'+data_currentdate.selfie_checkin+'")"><i class="fa fa-picture-o me-2" aria-hidden="true"></i></button></span>';
+                    return '&nbsp;<i class="fa fa-mobile-phone"></i><span><button style="border:none;width:20px;background:none;" onclick="onclickShowSelfie()"><i class="fa fa-picture-o me-2" aria-hidden="true"></i></button></span>';
                 else
                 if(t_punch_type == "checkout")
-                    return '&nbsp;<i class="fa fa-mobile-phone"></i><span><button style="border:none;width:20px;background:none;" onclick="onclickShowSelfie("'+data_currentdate.selfie_checkout+'")"><i class="fa fa-picture-o me-2" aria-hidden="true"></i></button></span>';
+                    return '&nbsp;<i class="fa fa-mobile-phone"></i><span><button style="border:none;width:20px;background:none;" onclick="onclickShowSelfie()"><i class="fa fa-picture-o me-2" aria-hidden="true"></i></button></span>';
             }
             else
             {
