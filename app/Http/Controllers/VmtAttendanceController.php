@@ -881,7 +881,7 @@ class VmtAttendanceController extends Controller
                 else
                 {
                     $attendanceResponseArray[$key]["absent_status"] = $t_leaveRequestDetails->status;
-                    $attendanceResponseArray[$key]["leave_type"] = VmtLeaves::find($t_leaveRequestDetails->leave_type_id)->leave_type;
+                    $attendanceResponseArray[$key]["leave_type"] = $t_leaveRequestDetails->leave_type;
                 }
 
             }
@@ -927,7 +927,7 @@ class VmtAttendanceController extends Controller
 
         }//for each
 
-        //dd($attendanceResponseArray);
+       // dd($attendanceResponseArray);
 
         return $attendanceResponseArray;
     }
@@ -945,23 +945,19 @@ class VmtAttendanceController extends Controller
                        return null;
                 }else{
                     foreach( $leave_Details as $single_leave_details){
-                                   $startDate = Carbon::parse($single_leave_details->start_date);
+                                   $startDate = Carbon::parse($single_leave_details->start_date)->subDay();
                                    $endDate = Carbon::parse($single_leave_details->end_date);
                                    $currentDate =  Carbon::parse($attendance_date);
-                             //  dd($startDate.'-----'.$currentDate.'------------'.$endDate.'-----');
-                              //dd($currentDate->lte( $startDate));
-                                    if($currentDate->lte( $startDate) && $currentDate->lte($endDate) ){
-                                        if(substr( $single_leave_details->total_leave_datetime,-1)=='N'){
-                                                 // Logic Get FN or AN Value From total Leave date time
-                                                    //  $attendanceResponseArray[$key]['half_day_type'] = preg_replace("/([^a-zA-Z]+)/i", "",  $single_leave_details->total_leave_datetime);
-                                                    //   $attendanceResponseArray[$key]['half_day_status']=$single_leave_details->status;
-                                        } else {
+                             // dd($startDate.'-----'.$currentDate.'------------'.$endDate.'-----');
+                                    if($currentDate->gt( $startDate) && $currentDate->lte($endDate) ){
+                                       // dd($single_leave_details);
                                             return $single_leave_details;
-                                        }
+
                                     }else{
-                                        return null;
+                                        $single_leave_details=null;
                                     }
                      }
+                     return $single_leave_details;
                 }
 
 
