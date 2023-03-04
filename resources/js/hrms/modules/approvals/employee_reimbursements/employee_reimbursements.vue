@@ -121,7 +121,7 @@
                             <Dialog v-model:visible="deleteProductsDialog" :style="{width: '450px'}" header="Confirm" :modal="true">
                                 <div class="confirmation-content">
                                     <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-                                    <span v-if="product">Are you sure you want to delete the selected products?</span>
+                                    <span v-if="employee_reimbursement">Are you sure you want to delete the <b>{{employee_reimbursement.claim_type}}</b>?</span>
                                 </div>
                                 <template #footer>
                                     <Button label="No" icon="pi pi-times" class="p-button-text" @click="deleteProductsDialog = false"/>
