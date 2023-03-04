@@ -777,10 +777,10 @@ class VmtAttendanceController extends Controller
 
             //selfies
             //format : http://127.0.0.1:8000/employees/PLIPL068/selfies/checkout.png
-            if($singleValue["checkin_time"])
+            if($singleValue["checkin_time"] && !empty($singleValue["selfie_checkin"]))
                 $attendanceResponseArray[$key]["selfie_checkin"] = 'employees/'.$user->user_code.'/selfies/'.$singleValue["selfie_checkin"];
 
-            if($singleValue["checkout_time"])
+            if($singleValue["checkout_time"] && !empty($singleValue["selfie_checkout"]))
                 $attendanceResponseArray[$key]["selfie_checkout"] = 'employees/'.$user->user_code.'/selfies/'.$singleValue["selfie_checkout"];
 
         }
