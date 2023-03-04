@@ -1627,15 +1627,6 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         ajax_data_currentdate.user_id + "' data-applystatus='" + ajax_data_currentdate
                                         .mop_status + "' data-currentdate='" + currentDate + "' value='MOP' />&nbsp;&nbsp;";
 
-                                    let html_IMG_Button=
-                                        "<input type='button' onclick ='onClickShowSelfie(this)' title='Selfie Image'  class='f-10 btn-orange bn ms-2 lc_btn border-0 p-1 text-white ' data-userid='" +
-                                        ajax_data_currentdate.user_id + "' data-punchtype='" + ajax_data_currentdate
-                                        .mop_status + "' data-currentdate='" + currentDate + "' value='IMG' />&nbsp;&nbsp;";
-
-
-
-
-
                                     if (ajax_data_currentdate.isLC) {
                                         final_checkin_button_code = html_LC_Button + getStatusIcon(ajax_data_currentdate
                                             .lc_status);
@@ -1659,13 +1650,12 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
                                         "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-center' ><div class='check-in f-10 text-success w-100 d-flex align-items-center justify-content-start'><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
                                         year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkin_time +
-                                        getAttendanceModeIcon(ajax_data_currentdate.attendance_mode_checkin) +
-                                        ""+
+                                        getAttendanceModeIcon(ajax_data_currentdate, "checkin") +
                                         "</span>" +
                                         final_checkin_button_code +
                                         "</div> <div class='w-100 d-flex align-items-center justify-content-start  check-out mt-2 f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span class='f-11' id='checkout_time_" +
                                         year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkout_time +
-                                        getAttendanceModeIcon(ajax_data_currentdate.attendance_mode_checkout) +
+                                        getAttendanceModeIcon(ajax_data_currentdate, "checkout") +
                                         "</span>" +
                                         final_checkout_button_code +
                                         "</div></div></div>";
@@ -1714,18 +1704,44 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
             }
 
 
-        function onclickShowSelfie(){
+        function onclickShowSelfie(image_url){
 
                 $('#SelfieImage').fadeIn(0);
                 getAttendanceSelfieButtons()
-            }
+
+                if(!ajax_data_currentdate.checkin_time){
+                    var selfie = ajax_data_currentdate.selfie_checkin;
+                    console.log(selfie);alert(selfie)
+
+                    $("#check_in_selfie").attr('src',ajax_data_currentdate.selfie_checkin)
+                    console.log("Check_in_selfie"+selfie)
+
+                }
+
+                else
+
+                if(!ajax_data_currentdate.checkout_time){
+                    var selfie = ajax_data_currentdate.selfie_checkout;
+                    console.log("check_out_selfie "+selfie);
+                }
+        }
 
 
 
 
+        /*
+            t_punch_type = checkin/checkout
+        */
+        function getAttendanceModeIcon(data_currentdate, t_punch_type) {
 
-        function getAttendanceModeIcon(attendance_mode) {
-            console.log("Attendance mode : " + attendance_mode);
+            let attendance_mode = null;
+
+            //find the attendance mode.
+            if(t_punch_type == "checkin")
+                attendance_mode = data_currentdate.attendance_mode_checkin;
+            else
+            if(t_punch_type == "checkout")
+                attendance_mode = data_currentdate.attendance_mode_checkout;
 
             if (attendance_mode == "biometric")
                 // return '&nbsp;<i class="fa-solid fa-fingerprint"></i>';
@@ -1735,13 +1751,17 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                 return '&nbsp;<i class="fa fa-laptop"></i>';
             else
             if (attendance_mode == "mobile")
-
-
-                return '&nbsp;<i class="fa fa-mobile-phone"></i><span><button style="border:none;width:20px;background:none;" onclick="onclickShowSelfie(this)"><i class="fa fa-picture-o me-2" aria-hidden="true"></i></button></span>';
-
+            {
+                if(t_punch_type == "checkin")
+                    return '&nbsp;<i class="fa fa-mobile-phone"></i><span><button style="border:none;width:20px;background:none;" onclick="onclickShowSelfie("'+data_currentdate.selfie_checkin+'")"><i class="fa fa-picture-o me-2" aria-hidden="true"></i></button></span>';
+                else
+                if(t_punch_type == "checkout")
+                    return '&nbsp;<i class="fa fa-mobile-phone"></i><span><button style="border:none;width:20px;background:none;" onclick="onclickShowSelfie("'+data_currentdate.selfie_checkout+'")"><i class="fa fa-picture-o me-2" aria-hidden="true"></i></button></span>';
+            }
             else
+            {
                 return ''; // when attendance_mode column is empty.
-
+            }
 
         }
 

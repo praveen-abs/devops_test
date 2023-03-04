@@ -870,7 +870,6 @@ class VmtAttendanceController extends Controller
                 $year=$request->year;
                 $month=$request->month;
                 $t_leaveRequestDetails = $this->isLeaveRequestApplied($request->user_id, $key,$year,$month);
-                //dd($t_leaveRequestDetails->leave_type);
 
                 if(empty($t_leaveRequestDetails))
                 {
@@ -941,7 +940,7 @@ class VmtAttendanceController extends Controller
                                   ->whereYear('end_date', $year)
                                   ->whereMonth('end_date',$month)
                                   ->get(['start_date','end_date','status','vmt_leaves.leave_type','total_leave_datetime']);
-                                 // dd($leave_Details->count());
+
                 if( $leave_Details->count()==0){
                        return null;
                 }else{
