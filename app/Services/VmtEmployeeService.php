@@ -149,7 +149,7 @@ class VmtEmployeeService {
     private function CreateNewUser($data, $can_onboard_employee)
     {
         $newUser = new User;
-        dd($data);
+        dd($data->employee_onboarding['EmployeeNamesper']);
         $newUser->name = $data['employee_name'];
         $newUser->email = $data["email"];
         $newUser->password = Hash::make('Abs@123123');

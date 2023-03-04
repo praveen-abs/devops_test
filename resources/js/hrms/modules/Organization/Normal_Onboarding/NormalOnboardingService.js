@@ -67,7 +67,7 @@ export default function validation(rules) {
         BankName: {
             required,
         },
-        EmployeeNameasper: {
+        EmployeeNameAsPerAadhar: {
             required,
         },
         PersonDetialsGender: {
