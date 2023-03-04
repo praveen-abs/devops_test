@@ -127,12 +127,12 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                     </div>
                    <div class="col-xl-2 col-xxl-2 col-lg-2 mb-2 col-md-3 col-sm-4">
 
-                        <p class="fw-bold text-primary fs-12"><i class="fa fa-laptop   me-2 text-info"></i>Web </p>
+                        <p class="fw-bold text-primary fs-12"><i class="fa fa-laptop  me-2 text-info"></i>Web </p>
 
                     </div>
-                   <div class="col-xl-2 col-xxl-2 col-lg-2 mb-2 col-md-3 col-sm-4">
+                   <div class="col-xl-2 col-xxl-2 col-lg-2 mb-2 col-md-3 col-sm-3">
 
-                        <p class="fw-bold text-primary fs-12"><i class="fa fa-times-circle    me-2 text-danger"></i>Rejected
+                        <p class="fw-bold text-primary fs-12"><i class="fa fa-times-circle  me-2 text-danger"></i>Rejected
                         </p>
 
                     </div>
@@ -171,6 +171,11 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                         <p class="fw-bold text-primary fs-12"><i class="fa fa-mobile text-dark fs-15 me-3  "></i>Mobile</p>
 
                     </div>
+                    <div class="col-xl-2 col-xxl-2 col-lg-2  col-md-3 col-sm-4">
+
+                     <p class="fw-bold text-primary fs-12"><i class="fa fa-picture-o me-2" aria-hidden="true"></i>View Image</p>
+
+            </div>
                 </div>
 
 
@@ -228,6 +233,10 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                 </div>
             </div>
         </div>
+
+
+
+
 
 
         <div class="modal  custom-modal" aria-hidden="true" id="regularizationModal" tabindex="-1" aria-labelledby=""
@@ -392,6 +401,34 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
 
         </div>
+
+        <div class="modal  custom-modal" aria-hidden="true" id="SelfieImage" tabindex="-1" aria-labelledby=""
+            aria-modal="true" role="dialog">
+            <div class="modal-dialog modal-dialog-centered   modal-md">
+                <div class="modal-content top-line">
+                    <div class="modal-header border-0 py-2">
+                        <h6 class="modal-title" id="exampleModalLabel">Selfie</h6>
+                        <button type="button" class="modal-close popUp-close outline-none  border-0"
+                            data-bs-dismiss="modal" aria-label="Close">×</button>
+                    </div>
+
+                    <div class="modal-body">
+
+                    <!-- ajax_data_currentdate.selfie_checkin -->
+
+                    <img style='width: 472px; height: 550px;' id="check_in_selfie" src="employees/PLIPL068/selfies/checkin.png">
+
+                       <!-- <img style='width: 472px; height: 550px;' src="https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?cs=srgb&dl=pexels-pixabay-268533.jpg&fm=jpg" alt="Employee_selfie" srcset=""> -->
+
+                    </div>
+
+
+                </div>
+            </div>
+
+
+        </div>
+
 
 
     <!-- for leave popup -->
@@ -671,6 +708,8 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
             </div>
         </div>
     </div>
+
+
 
     </div>
 @endsection
@@ -1261,9 +1300,14 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
         $('.modal-close').click(function() {
             $('#regularizationModal').fadeOut(0);
 
+        })
 
+        $('.modal-close').click(function() {
+            $('#SelfieImage').fadeOut(0);
 
         })
+
+
 
         function generate_year_range(start, end) {
             var years = "";
@@ -1398,8 +1442,8 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                         cell.setAttribute("data-month_name", months[month]);
                         cell.className = "_date-picker p-0";
 
-                        
-                                             
+
+
 
 
                         if (isWeekEnd) {
@@ -1425,7 +1469,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                             //console.log("testing " + currentDate);
                             let todayDate = new Date().toISOString().slice(0, 10)
                             //console.log("today" + todayDate);
-                       
+
                             console.log("Leave type"+ajax_data_currentdate.leave_type);
 
                             // if(ajax_data_currentdate.leave_type=="Sick Leave"){
@@ -1453,7 +1497,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                             //     $("#Leavetype").html(ajax_data_currentdate.leave_type);
                             //     alert(ajax_data_currentdate.leave_type);
                             // }
-                            
+
 
                             if (ajax_data_currentdate) {
 
@@ -1490,14 +1534,14 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                             cell.innerHTML = " <div class='w-100 h-100 p-2' style='background: #f8f8ce;'><p class='show_date' >" + date +
                                                 "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start'><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'>"+
                                                 "<span style='position: relative;font-weight: 700;color: #b2b223;'>Approval Pending</span><span style='margin-left: 7px'><i class= 'fa fa-question-circle text-secondary me-2 fs-15 ' title='Pending'  ></i></span>";
-                                           
+
 
                                         }
                                         else
                                         if (ajax_data_currentdate.absent_status == "Rejected")
                                         {
 
-                                            
+
                                             cell.innerHTML = " <div class='w-100 h-100 p-2' style='background: #fad8d8;'><p class='show_date' >" + date +
                                                 "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start'><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'>"+
                                                 "<span style='top: -35px;left:50px;color: red;font-weight: 700;position:relative'>Absent</span><br><span style='position: relative;left: -18px;font-weight: 700;color: red;'>"+ ajax_data_currentdate.leave_type+'&nbsp;'+"<span>Rejected</span><span style='position: absolute;top: 20px;left: 95px;'><i class='fa fa-times-circle text-danger fs-15'  title='rejected'></i></span></span>";
@@ -1513,14 +1557,14 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         else
                                         if (ajax_data_currentdate.absent_status == "Approved")
                                         {
-                                            
+
                                             cell.innerHTML = " <div class='w-100 h-100 p-2' style='background: #d0dfd0;'><p class='show_date' >" + date +
                                                 "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start'><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><span style='position: relative;top: -5px;font-weight: 700;color: green;'>" +
                                                 ajax_data_currentdate.leave_type+'&nbsp;'+"<span>Approved</span><span style='margin-left: 7px'><i class='fa fa-check-circle text-success fs-15'  title='Approved'></i></span></span>";
 
-                                         
+
                                         }
-                                       
+
                                     }
 
                                     else{
@@ -1528,6 +1572,8 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                                 "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start'><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><span style='margin-left: 45px;font-size: 13px;color: red;font-weight: 700;' class='f-11' id='checkout_time_" +
                                                 year + "-" + (month + 1) + "-" + dateText +
                                                 "'>Absent</span><span style='margin-left: 7px'><i class='fa fa-exclamation-circle fs-15 text-warning me-2' title='Not Applied'></i></span>";
+
+                                                console.log("attendence_mode"+ajax_data_currentdate.attendance_mode_checkin)
                                     }
 
                                     }
@@ -1581,6 +1627,12 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         ajax_data_currentdate.user_id + "' data-applystatus='" + ajax_data_currentdate
                                         .mop_status + "' data-currentdate='" + currentDate + "' value='MOP' />&nbsp;&nbsp;";
 
+                                    let html_IMG_Button=
+                                        "<input type='button' onclick ='onClickShowSelfie(this)' title='Selfie Image'  class='f-10 btn-orange bn ms-2 lc_btn border-0 p-1 text-white ' data-userid='" +
+                                        ajax_data_currentdate.user_id + "' data-punchtype='" + ajax_data_currentdate
+                                        .mop_status + "' data-currentdate='" + currentDate + "' value='IMG' />&nbsp;&nbsp;";
+
+
 
 
 
@@ -1605,9 +1657,10 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
                                     cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
 
-                                        "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-center' > <div class='check-in f-10 text-success w-100 d-flex align-items-center justify-content-start'><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
+                                        "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-center' ><div class='check-in f-10 text-success w-100 d-flex align-items-center justify-content-start'><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
                                         year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkin_time +
                                         getAttendanceModeIcon(ajax_data_currentdate.attendance_mode_checkin) +
+                                        "<button style='border:none;width:20px;background:none;' onclick='onclickShowSelfie(this)'><i class='fa fa-picture-o me-2' aria-hidden='true'></i></button>"+
                                         "</span>" +
                                         final_checkin_button_code +
                                         "</div> <div class='w-100 d-flex align-items-center justify-content-start  check-out mt-2 f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span class='f-11' id='checkout_time_" +
@@ -1639,6 +1692,42 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
         }
 
+        function getAttendanceSelfieButtons(ajax_data_currentdate){
+
+            alert("Check  Punch_type")
+
+            if(ajax_data_currentdate.attendance_mode_checkin == "mobile")
+            {
+                if(!ajax_data_currentdate.checkin_time){
+                    var selfie = ajax_data_currentdate.selfie_checkin;
+
+                    $("#check_in_selfie").attr('src',ajax_data_currentdate.selfie_checkin)
+                    console.log("Check_in_selfie"+selfie)
+
+                }
+            }
+            else
+            if(ajax_data_currentdate.attendance_mode_checkout == "mobile")
+            {
+                if(!ajax_data_currentdate.checkout_time){
+                    var selfie = ajax_data_currentdate.selfie_checkout;
+                    console.log("check_out_selfie "+selfie);
+                }
+            }
+
+
+        }
+
+        function onclickShowSelfie(){
+
+                $('#SelfieImage').fadeIn(0);
+                getAttendanceSelfieButtons()
+            }
+
+
+
+
+
         function getAttendanceModeIcon(attendance_mode) {
             console.log("Attendance mode : " + attendance_mode);
 
@@ -1649,8 +1738,11 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
             if (attendance_mode == "web")
                 return '&nbsp;<i class="fa fa-laptop"></i>';
             else
-            if (attendance_mode == "mobile")
+            if (attendance_mode == "mobile"){
+
+
                 return '&nbsp;<i class="fa fa-mobile-phone"></i>';
+            }
             else
                 return ''; // when attendance_mode column is empty.
 
@@ -1714,6 +1806,13 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
 
         });
+
+        /*
+            Show emp selfie .
+
+
+        */
+
 
 
             // For Apply Leave to Button
