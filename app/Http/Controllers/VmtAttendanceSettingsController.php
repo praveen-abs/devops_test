@@ -10,7 +10,7 @@ class VmtAttendanceSettingsController extends Controller
     //
 
     public function showAttendanceSettingsPage(Request $request){
-
+        return view('configurations.attendance_settings');
     }
 
     public function assignEmployeesWorkShift(Request $request){

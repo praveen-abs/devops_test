@@ -483,6 +483,10 @@ Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 's
     //Reimbursements Reports
     Route::get('/reports/generateReimbursementsReports',  [App\Http\Controllers\VmtReportsController::class, 'generateReimbursementsReports'])->name('generateReimbursementsReports');
 
+    //Configrations
+    ////Attendance Settings
+    Route::get('/configurations/attendance_settings',  [App\Http\Controllers\VmtAttendanceSettingsController::class, 'showAttendanceSettingsPage'])->name('showAttendanceSettingsPage');
+
 });
 
 Route::post('updatePassword', 'App\Http\Controllers\VmtEmployeeController@updatePassword')->name('vmt-updatepassword');
