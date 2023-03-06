@@ -130,17 +130,128 @@
                             </Dialog>
                         </div>
                     </div>
+
+
+
                 </div>
 
                 </div>
-                <div class="tab-pane show fade active" id="localConveyance" role="tabpanel"
+
+                <!-- Local conveyance -->
+                <div class="tab-pane fade " id="localConveyance" role="tabpanel"
                     aria-labelledby="pills-profile-tab">
+                    <div>
+                        <div class="card">
+
+
+                            <DataTable ref="dt" :value="products"  dataKey="id"
+                                :paginator="true" :rows="10"
+                                paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown" :rowsPerPageOptions="[5,10,25]"
+                                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" responsiveLayout="scroll">
+
+                                <Column field="claim_type" header="Date"  style="min-width:12rem"> </Column>
+                                <Column  header="Mode Of Transport  "  style="min-width:8rem">
+                                    <template #body="slotProps">
+                                        {{  "&#x20B9;"+slotProps.data.claim_amount }}
+                                        </template>
+                                    </Column>
+
+                                <Column field="" header="From "  style="min-width:12rem">
+                                    <template #body="slotProps">
+                                        {{  "&#x20B9;"+slotProps.data.eligible_amount }}
+                                        </template>
+                                </Column>
+                                <Column field="" header="To"  style="min-width:12rem">
+                                    <template #body="slotProps">
+                                        {{  "&#x20B9;"+slotProps.data.eligible_amount }}
+                                        </template>
+                                </Column>
+
+                                <Column field="" header="Total Distance"  style="min-width:12rem">
+                                    <template #body="slotProps">
+                                        {{  "&#x20B9;"+slotProps.data.eligible_amount }}
+                                        </template>
+                                </Column>
+
+
+
+                                <Column :exportable="false" field="upload" header="Action"  style="min-width:8rem">
+                                    <template #body="slotProps">
+                                        <Button style="height: 30px;" icon="pi pi-pencil"  class="p-button-rounded p-button-warning mr-2" @click="editProduct(slotProps.data)" />
+                                        <Button style="height: 30px;" icon="pi pi-trash"  class="p-button-rounded p-button-danger mr-2" @click="confirmDeleteSelected(slotProps.data)" />
+                                    </template>
+                                </Column>
+                            </DataTable>
+                        </div>
+
+                        <Dialog v-model:visible="productDialog" :style="{width: '450px'}" header="Reimbursement Detials" :modal="true" class="p-fluid">
+                            <div class="field">
+                                <label for="name">Date</label>
+                                <Calendar inputId="dateformat" v-model="employee_local_conveyance.travelled_date" dateFormat="yy-mm-dd" />
+                                {{ employee_local_conveyance.travelled_date }}
+
+                            </div>
+
+                            <div class="field col">
+                                <label for="Claim Amount">Mode of transport</label>
+                                <InputText v-model="employee_local_conveyance.mode_of_transport"  />
+                            </div>
+
+                            <div class="formgrid grid">
+
+                                <div class="field col">
+                                    <label for="Eligible Amount">From</label>
+                                    <InputText v-model="employee_local_conveyance.travel_from"  />
+                                </div>
+                                <div class="field col">
+                                    <label for="Claim Amount">To</label>
+                                    <InputText v-model="employee_local_conveyance.travel_to"  />
+                                </div>
+
+
+                            </div>
+                            <div class="field col">
+                                <label for="Eligible Amount">Distance travelled</label>
+                                <InputText  v-model="employee_local_conveyance.total_distance_travelledPle"    />
+                            </div>
+
+
+
+
+                            <template #footer>
+                                <Button label="Cancel" icon="pi pi-times" style="height: 30px;color:black" class="p-button-text" @click="hideDialog"/>
+                                <Button label="Save" icon="pi pi-check" style="height: 30px;background: rgb(255 135 38);color: white;" @click="saveProduct" />
+                            </template>
+                        </Dialog>
+
+                        <Dialog v-model:visible="deleteProductDialog" :style="{width: '450px'}" header="Confirm" :modal="true">
+                            <div class="confirmation-content">
+                                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                                <span v-if="employee_reimbursement">Are you sure you want to delete <b>{{employee_reimbursement.claim_type}}</b>?</span>
+                            </div>
+                            <template #footer>
+                                <Button label="No" icon="pi pi-times" class="p-button-text" @click="deleteProductDialog = false"/>
+                                <Button label="Yes" icon="pi pi-check" class="p-button-text" @click="deleteProduct" />
+                            </template>
+                        </Dialog>
+
+                        <Dialog v-model:visible="deleteProductsDialog" :style="{width: '450px'}" header="Confirm" :modal="true">
+                            <div class="confirmation-content">
+                                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                                <span v-if="employee_reimbursement">Are you sure you want to delete the <b>{{employee_reimbursement.claim_type}}</b>?</span>
+                            </div>
+                            <template #footer>
+                                <Button label="No" icon="pi pi-times" class="p-button-text" @click="deleteProductsDialog = false"/>
+                                <Button label="Yes" icon="pi pi-check" class="btn btn-orange  p-button-text" @click="deleteSelectedProducts" />
+                            </template>
+                        </Dialog>
+                    </div>
 
                 </div>
             </div>
         </div>
     </div>
-
+<button @click="employee_service.saveProduct"></button>
 
 </template>
 
@@ -150,10 +261,12 @@ import { ref, onMounted, reactive } from 'vue';
 
 import { useToast } from 'primevue/usetoast';
 
+import employee_reimbursment_service from './employee_reimbursment_service'
+
         // onMounted(() => {
         //     productService.value.getProducts().then(data => products.value = data);
         // })
-
+        const employee_service= employee_reimbursment_service()
         const toast = useToast();
         const dt = ref();
         const products = ref([
@@ -172,6 +285,14 @@ import { useToast } from 'primevue/usetoast';
             File:''
 
         });
+
+        const employee_local_conveyance=ref({
+            travelled_date:'',
+            mode_of_transport:'',
+            travel_from:'',
+            travel_to:'',
+            total_distance_travelled:''
+        })
 
 
 
@@ -209,10 +330,6 @@ import { useToast } from 'primevue/usetoast';
     console.log(employee_reimbursement.value);
 };
 
-const claim=()=>{
-    console.log(type.value);
-    employee_reimbursement.claim_type=type.value
-}
 
         const deleteProduct = () => {
 
@@ -232,9 +349,10 @@ const claim=()=>{
         const deleteSelectedProducts = () => {
 
             deleteProductsDialog.value = false;
-            selectedProducts.value = null;
             toast.add({severity:'success', summary: 'Successful', detail: 'Products Deleted', life: 3000});
         };
+
+
 
 
 </script>

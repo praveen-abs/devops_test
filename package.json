@@ -47,6 +47,7 @@
         "list.pagination.js": "^0.1.1",
         "masonry-layout": "^4.2.2",
         "moment": "^2.29.4",
+        "pinia": "^2.0.33",
         "primeflex": "^3.3.0",
         "primeicons": "^6.0.1",
         "primevue": "^3.22.0",

@@ -4,10 +4,7 @@ import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
 
 
-
 import { createApp } from "vue";
-import { createPinia } from "pinia";
-
 import PrimeVue from "primevue/config";
 import BadgeDirective from "primevue/badgedirective";
 import Button from 'primevue/button';
@@ -32,17 +29,15 @@ import InputNumber from 'primevue/inputnumber'
 import FileUpload from 'primevue/fileupload';
 import Calendar from 'primevue/calendar'
 
-import  employee_reimbursement from './employee_reimbursements.vue'
+import employee_local_convegance from './employee_local_covegance.vue'
 
 
-const app = createApp(employee_reimbursement);
-const pinia=createPinia()
+const app = createApp(employee_local_convegance);
 
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
-app.use(pinia)
 
 
 app.directive('tooltip', Tooltip);
@@ -66,5 +61,5 @@ app.component('InputNumber', InputNumber)
 app.component('FileUpload', FileUpload)
 app.component('Calendar', Calendar)
 
-app.mount("#vjs_employee_reimbursement");
+app.mount("#vjs_employee_local_convegance");
 
