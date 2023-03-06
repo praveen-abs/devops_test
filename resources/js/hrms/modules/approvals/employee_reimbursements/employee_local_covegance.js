@@ -29,6 +29,8 @@ import InputNumber from 'primevue/inputnumber'
 import FileUpload from 'primevue/fileupload';
 import Calendar from 'primevue/calendar'
 
+
+
 import employee_local_convegance from './employee_local_covegance.vue'
 
 
@@ -38,6 +40,7 @@ app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
+
 
 
 app.directive('tooltip', Tooltip);
