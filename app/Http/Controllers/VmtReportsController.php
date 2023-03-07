@@ -14,7 +14,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use App\Exports\VmtPayrollReports;
 use App\Exports\VmtPmsReviewsReport;
-use App\Exports\ReimbursementsExport;
+use App\Exports\ManagerReimbursementsExport;
+use App\Exports\EmployeeReimbursementsExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -297,12 +298,13 @@ class VmtReportsController extends Controller
 
     }
 
-    public function generateReimbursementsReports(){
-        $reimbursements_data = VmtEmployeeReimbursements::join('users','users.id','=','vmt_employee_reimbursements.user_id')
-                                                        ->join('vmt_reimbursements','vmt_reimbursements.id','=','vmt_employee_reimbursements.reimbursement_type_id')
-                                                        ->whereMonth('date',2)
-                                                        ->get(['users.user_code','users.name','vmt_reimbursements.reimbursement_type','date','user_data','from','to','vehicle_type','distance_travelled']);
-         dd( $reimbursements_data);
-        return Excel::download(new ReimbursementsExport, 'Reimbursements.xlsx');
+    public function generateEmployeeReimbursementsReports(Request $request){
+        $reimbursements_employee_details=VmtEmployeeReimbursements::join('users','users.id','=',
+                                                                  'vmt_employee_reimbursements.user_id')
+                                                                  ->whereYear('vmt_employee_reimbursements.date','2023')
+                                                                  ->select('users.id','users.user_code','users.name');
+         dd( auth()->user());
+         dd($reimbursements_employee_details->get());
+       return $reimbursements_employee_details;
     }
 }

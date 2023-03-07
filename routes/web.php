@@ -481,7 +481,7 @@ Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 's
     Route::get('/payroll-filter-info', [App\Http\Controllers\VmtReportsController::class, 'fetchPayrollReport'])->name('payroll-filter-info');
 
     //Reimbursements Reports
-    Route::get('/reports/generateReimbursementsReports',  [App\Http\Controllers\VmtReportsController::class, 'generateReimbursementsReports'])->name('generateReimbursementsReports');
+    Route::get('/reports/generateEmployeeReimbursementsReports',  [App\Http\Controllers\VmtReportsController::class, 'generateEmployeeReimbursementsReports'])->name('generateEmployeeReimbursementsReports');
 
     //Configrations
     ////Attendance Settings
