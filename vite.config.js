@@ -25,7 +25,11 @@ export default defineConfig({
                     'resources/js/hrms/modules/approvals/reimbursements/ReimbursementsApproval.js',
                     'resources/js/hrms/modules/approvals/leaves/LeaveApproval.js',
                     'resources/js/hrms/modules/approvals/leaves/PMSApprovalTable.js',
-                    'resources/js/hrms/modules/profile_pages/EmployeeDocumentsManager.js'
+                    'resources/js/hrms/modules/profile_pages/EmployeeDocumentsManager.js',
+
+                    //Configurations
+
+                    'resources/js/hrms/modules/configurations/attendance_settings/Att_AssignWorkShifts.js'
             ],
             refresh: true,
         }),

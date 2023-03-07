@@ -35,22 +35,22 @@
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
 
                                                 <div class="floating">
-                                                    <label for="EmployeeNameasper" class="float-label">Employee Name as per
+                                                    <label for="EmployeeNameasperAadhar" class="float-label">Employee Name as per
                                                         Aadhar
                                                         <span class="text-danger">*</span>
                                                     </label>
 
                                                     <InputText class="onboard-form form-control  textbox  capitalize"
-                                                        type="text" v-model="v$.EmployeeNameasper.$model"
-                                                        :class="{ 'p-invalid': v$.EmployeeNameasper.$invalid && submitted }"
+                                                        type="text" v-model="v$.EmployeeNameAsPerAadhar.$model"
+                                                        :class="{ 'p-invalid': v$.EmployeeNameAsPerAadhar.$invalid && submitted }"
                                                         style="text-transform: uppercase;"
                                                         placeholder="Employee Name as per Aadhar " />
 
                                                     <span
-                                                        v-if="(v$.EmployeeNameasper.$invalid && submitted) || v$.EmployeeNameasper.$pending.$response"
+                                                        v-if="(v$.EmployeeNameAsPerAadhar.$invalid && submitted) || v$.EmployeeNameAsPerAadhar.$pending.$response"
                                                         class="p-error">{{
-                                                            v$.EmployeeNameasper.required.$message.replace('Value',
-                                                                'Employee Name as per') }}</span>
+                                                            v$.EmployeeNameAsPerAadhar.required.$message.replace('Value',
+                                                                'Employee Name as per in Aadhar') }}</span>
 
                                                 </div>
                                             </div>
@@ -171,12 +171,13 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Aadhaar Number<span
                                                             class="text-danger">*</span></label>
-                                                    <InputMask id="ssn" mask="9999-9999-9999"  class="onboard-form form-control textbox "
-                                                        placeholder="6622-2350-9284" v-model="v$.AadhaarNumber.$model"
-                                                        :class="{ 'p-invalid': v$.AadhaarNumber.$invalid && submitted }"
-                                                        pattern="/^([0-9]{4}[0-9]{4}[0-9]{4}$)|([0-9]{4}\s[0-9]{4}\s[0-9]{4}$)|([0-9]{4}-[0-9]{4}-[0-9]{4}$)/"
-                                                        data-pattern-error="wel" autocomplete="off" type="text" />
+                                                    <!-- <InputText class="onboard-form form-control textbox " id="AadharNumber"
+                                                        placeholder="Aadhaar Number"
 
+                                                        pattern="/^([0-9]{4}[0-9]{4}[0-9]{4}$)|([0-9]{4}\s[0-9]{4}\s[0-9]{4}$)|([0-9]{4}-[0-9]{4}-[0-9]{4}$)/"
+                                                        data-pattern-error="wel" autocomplete="off" type="text" /> -->
+                                                        <InputMask id="ssn" mask="9999 9999 9999"  placeholder="9999 9999 9999"
+                                                        v-model="v$.AadhaarNumber.$model" :class="{ 'p-invalid': v$.AadhaarNumber.$invalid && submitted }" />
                                                     <span
                                                         v-if="(v$.AadhaarNumber.$invalid && submitted) || v$.AadhaarNumber.$pending.$response"
                                                         class="p-error">{{
@@ -185,25 +186,26 @@
 
                                                 </div>
 
-
-
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 co l-lg-3 col-xl-3 mb-2">
 
                                                 <div class="floating">
                                                     <label for="" class="float-label">Pan Number / Pan
                                                         Acknowlegement<span class="text-danger">*</span></label>
-                                                    <InputMask id="serial" mask="aaaaa9999a"  class=" form-control textbox  pan" type="text"
-                                                        style="text-transform: uppercase;"
-                                                        :class="{ 'p-invalid': v$.PanNumber.$invalid && submitted }"
-                                                        pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" v-model="v$.PanNumber.$model"
-                                                        placeholder="AHFCP1234F" maxlength="10" />
+                                                    <!-- <InputText  type="text"
+
+                                                        pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}"
+                                                         maxlength="10" /> -->
+                                                        <InputMask id="serial" mask="aaaaa9999a" v-model="v$.PanNumber.$model" placeholder="AHFCS1234F"
+                                                        style="text-transform: uppercase;" class=" form-control textbox "
+                                                        :class="{ 'p-invalid': v$.PanNumber.$invalid && submitted }" />
+
+
 
                                                     <span
                                                         v-if="(v$.PanNumber.$invalid && submitted) || v$.PanNumber.$pending.$response"
                                                         class="p-error">{{ v$.PanNumber.required.$message.replace('Value',
                                                             'Pan Number') }}</span>
-
 
                                                 </div>
                                             </div>
@@ -494,11 +496,11 @@
                                                             class="text-danger">*</span></label>
                                                     <Textarea style="height: 100px;" class="form-control textbox capitalize"
                                                         type="text" rows="3" current_address_line_1
-                                                        :class="{ 'p-invalid': v$.currentAddress1.$invalid && submitted }"
-                                                        v-model="v$.currentAddress1.$model" placeholder="Current Address" />
+                                                        :class="{ 'p-invalid': v$.CurrentAddress1.$invalid && submitted }"
+                                                        v-model="v$.CurrentAddress1.$model" placeholder="Current Address" />
 
-                                                        <span v-if="(v$.currentAddress1.$invalid && submitted) || v$.currentAddress1.$pending.$response"
-                                                        class="p-error">{{v$.currentAddress1.required.$message.replace('Value', 'CurrentAddress1') }}</span>
+                                                        <span v-if="(v$.CurrentAddress1.$invalid && submitted) || v$.CurrentAddress1.$pending.$response"
+                                                        class="p-error">{{v$.CurrentAddress1.required.$message.replace('Value', 'Current Address 1') }}</span>
 
                                                 </div>
                                             </div>
@@ -509,14 +511,14 @@
 
                                                     <Textarea style="height: 100px;" class="form-control textbox capitalize"
                                                         type="text" rows="3" current_address_line_2
-                                                        :class="{ 'p-invalid': v$.currentAddress2.$invalid && submitted }"
-                                                        v-model="v$.currentAddress2.$model" placeholder="Current Address" />
+                                                        :class="{ 'p-invalid': v$.CurrentAddress2.$invalid && submitted }"
+                                                        v-model="v$.CurrentAddress2.$model" placeholder="Current Address" />
 
                                                     <span
-                                                        v-if="(v$.currentAddress2.$invalid && submitted) || v$.currentAddress2.$pending.$response"
+                                                        v-if="(v$.CurrentAddress2.$invalid && submitted) || v$.CurrentAddress2.$pending.$response"
                                                         class="p-error">{{
-                                                            v$.currentAddress2.required.$message.replace('Value',
-                                                                'CurrentAddress2') }}</span>
+                                                            v$.CurrentAddress2.required.$message.replace('Value',
+                                                                'Current Address 2') }}</span>
 
 
                                                 </div>
@@ -528,8 +530,8 @@
                                                             class="text-danger">*</span></label>
 
                                                     <select placeholder="Country" name="current_country"
-                                                        v-model="v$.currentcountry.$model"
-                                                        :class="{ 'is-invalid': v$.currentcountry.$invalid && submitted }"
+                                                        v-model="v$.CurrentCountry.$model"
+                                                        :class="{ 'is-invalid': v$.CurrentCountry.$invalid && submitted }"
                                                         id="current_country" class=" form-control textbox">
 
                                                         <option v-for="countries in country" :key="countries.id">
@@ -537,9 +539,9 @@
                                                         </option>
                                                     </select>
                                                     <span
-                                                        v-if="(v$.currentcountry.$invalid && submitted) || v$.currentcountry.$pending.$response"
+                                                        v-if="(v$.CurrentCountry.$invalid && submitted) || v$.CurrentCountry.$pending.$response"
                                                         class="p-error">{{
-                                                            v$.currentcountry.required.$message.replace('Value',
+                                                            v$.CurrentCountry.required.$message.replace('Value',
                                                                 'country') }}</span>
 
                                                 </div>
@@ -549,8 +551,8 @@
                                                     <label for="" class="float-label">State<span
                                                             class="text-danger">*</span></label>
                                                     <select placeholder="State" name="current_state"
-                                                        v-model="v$.currentstate.$model"
-                                                        :class="{ 'is-invalid': v$.currentstate.$invalid && submitted }"
+                                                        v-model="v$.CurrentState.$model"
+                                                        :class="{ 'is-invalid': v$.CurrentState.$invalid && submitted }"
                                                         id="current_state" class=" form-control textbox">
 
                                                         <option v-for="states in state" :key="states.id">
@@ -558,9 +560,9 @@
                                                         </option>
                                                     </select>
                                                     <span
-                                                        v-if="(v$.currentstate.$invalid && submitted) || v$.currentstate.$pending.$response"
+                                                        v-if="(v$.CurrentState.$invalid && submitted) || v$.CurrentState.$pending.$response"
                                                         class="p-error">{{
-                                                            v$.currentstate.required.$message.replace('Value',
+                                                            v$.CurrentState.required.$message.replace('Value',
                                                                 'State') }}</span>
 
 
@@ -574,12 +576,12 @@
                                                             class="text-danger">*</span></label>
 
                                                     <InputText class="form-control " type="text"
-                                                        :class="{ 'p-invalid': v$.currentCity.$invalid && submitted }"
-                                                        v-model="v$.currentCity.$model" placeholder="current city" />
+                                                        :class="{ 'p-invalid': v$.CurrentCity.$invalid && submitted }"
+                                                        v-model="v$.CurrentCity.$model" placeholder="current city" />
                                                 </div>
                                                 <span
-                                                    v-if="(v$.currentCity.$invalid && submitted) || v$.currentCity.$pending.$response"
-                                                    class="p-error">{{ v$.currentCity.required.$message.replace('Value',
+                                                    v-if="(v$.CurrentCity.$invalid && submitted) || v$.CurrentCity.$pending.$response"
+                                                    class="p-error">{{ v$.CurrentCity.required.$message.replace('Value',
                                                         'City') }}</span>
 
                                             </div>
@@ -590,12 +592,12 @@
 
                                                     <InputText class="form-control " type="number
                                                         " minlength="6" maxlength="6"
-                                                        :class="{ 'p-invalid': v$.currentPincode.$invalid && submitted }"
-                                                        v-model="v$.currentPincode.$model" placeholder="Employee Code" />
+                                                        :class="{ 'p-invalid': v$.CurrentPincode.$invalid && submitted }"
+                                                        v-model="v$.CurrentPincode.$model" placeholder="Employee Code" />
                                                     <span
-                                                        v-if="(v$.currentPincode.$invalid && submitted) || v$.currentPincode.$pending.$response"
+                                                        v-if="(v$.CurrentPincode.$invalid && submitted) || v$.CurrentPincode.$pending.$response"
                                                         class="p-error">{{
-                                                            v$.currentPincode.required.$message.replace('Value',
+                                                            v$.CurrentPincode.required.$message.replace('Value',
                                                                 'Pincode') }}</span>
 
 
@@ -1397,14 +1399,14 @@
                                             <input type="button" value="sample" @click="Sampledata"
                                                 class="btn btn-orange  text-center processOnboardForm">
 
-                                            <button type="submit" data="row-6" next="row-6" placeholder="" name="save_form"
+                                            <button type="button" data="row-6" next="row-6" placeholder="" name="save_form"
                                                 id="save_button" class="btn btn-orange  text-center processOnboardForm"
-                                                value="Submit">Save</button>
+                                                value="Submit" @click="SaveEmployeeOnboardingData">Save</button>
 
                                             <button type="submit" data="row-6" next="row-6" placeholder=""
-                                                name="submit_form" id="msform" :disabled="!SumbitDisable"
+                                                name="submit_form" id="msform"
                                                 class="btn btn-orange  text-center processOnboardForm" value="Submit"
-                                                @click="showWarn">Submit</button>
+                                                @click="SubmitEmployeeOnboardingData">Submit</button>
 
                                         </div>
                                     </div>
@@ -1419,10 +1421,10 @@
         </div>
     </div>
 
-    <Dialog v-if="!employee_onboarding.EmployeeNameasper.length > 0 && !employee_onboarding.AadhaarNumber.length > 0"
+    <Dialog v-if="!employee_onboarding.EmployeeNameAsPerAadhar.length > 0 && !employee_onboarding.AadhaarNumber.length > 0"
         header="Documents Required" v-model:visible="RequiredDocument" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
         :style="{ width: '50vw' }">
-        <li v-if="employee_onboarding.EmployeeNameasper == '' || employee_onboarding.EmployeeNameasper.length < 0">Employee
+        <li v-if="employee_onboarding.EmployeeNameAsPerAadhar == '' || employee_onboarding.EmployeeNameAsPerAadhar.length < 0">Employee
             As
             Per Name Required</li>
         <li v-if="employee_onboarding.AadhaarNumber == '' || employee_onboarding.AadhaarNumber.length < 0">Aadhaar Number
@@ -1438,7 +1440,7 @@
             <i class="pi pi-check-circle" :style="{fontSize: '5rem', color: 'var(--green-500)' }"></i>
             <h5>Onboarding Successful!</h5>
             <p :style="{lineHeight: 1.5, textIndent: '1rem'}">
-                Your account is registered under name <b>{{employee_onboarding.EmployeeNameasper}}</b><br> Please check <b>{{employee_onboarding.PersonDetialsEmail}}</b> for Further Information
+                Your account is registered under name <b>{{employee_onboarding.EmployeeNameAsPerAadhar}}</b><br> Please check <b>{{employee_onboarding.PersonDetialsEmail}}</b> for Further Information
             </p>
         </div>
         <template #footer>
@@ -1479,12 +1481,13 @@ onMounted(() => {
 
 
 const employee_onboarding = reactive({
+    can_onboard_employee:true,
     EmployeeCode: "",
     DateOfJoining: "",
     AadhaarNumber: "",
     PassportNumber: "",
     BankName: "",
-    EmployeeNameasper: "",
+    EmployeeNameAsPerAadhar: "",
     PersonDetialsGender: "",
     PanNumber: "",
     PassportExpDate: "",
@@ -1505,12 +1508,12 @@ const employee_onboarding = reactive({
 
     // Current Address Detials Start
 
-    currentAddress1: '',
-    currentAddress2: '',
-    currentcountry: "",
-    currentstate: "",
-    currentCity: "",
-    currentPincode: "",
+    CurrentAddress1: '',
+    CurrentAddress2: '',
+    CurrentCountry: "",
+    CurrentState: "",
+    CurrentCity: "",
+    CurrentPincode: "",
 
     // Current Address Details End
 
@@ -1576,6 +1579,7 @@ const bankList = ref();
 const country = ref();
 const state = ref();
 const Managerdetails=ref();
+
 
 
 const NationalityData = ref(true);
@@ -1652,12 +1656,12 @@ const spouseDisable = () => {
 const ForCopyAdrress = () => {
 
     if (CopyAddresschecked.value == false) {
-        employee_onboarding.PermanentAddress1 = employee_onboarding.currentAddress1;
-        employee_onboarding.PermanentAddress2 = employee_onboarding.currentAddress2;
-        employee_onboarding.Permanentcountry = employee_onboarding.currentcountry;
-        employee_onboarding.Permanentstate = employee_onboarding.currentstate;
-        employee_onboarding.PermanentCity = employee_onboarding.currentCity;
-        employee_onboarding.PermanentPincode = employee_onboarding.currentPincode;
+        employee_onboarding.PermanentAddress1 = employee_onboarding.CurrentAddress1;
+        employee_onboarding.PermanentAddress2 = employee_onboarding.CurrentAddress2;
+        employee_onboarding.Permanentcountry = employee_onboarding.CurrentCountry;
+        employee_onboarding.Permanentstate = employee_onboarding.CurrentState;
+        employee_onboarding.PermanentCity = employee_onboarding.CurrentCity;
+        employee_onboarding.PermanentPincode = employee_onboarding.CurrentPincode;
     } else if (CopyAddresschecked.value == true) {
         employee_onboarding.PermanentAddress1 = '';
         employee_onboarding.PermanentAddress2 = '';
@@ -1711,9 +1715,15 @@ const fnCalculateAge = () => {
 
 }
 
-
-
-
+const SaveEmployeeOnboardingData=()=>{
+    can_onboard_employee.value=false
+}
+const SubmitEmployeeOnboardingData = () => {
+    can_onboard_employee.value=true
+    console.log(employee_onboarding);
+    jsonFormat();
+    console.log(AadharCardFront.fileName);
+}
 
 
 // Generate data into JSON Format
@@ -1747,6 +1757,7 @@ const ReleivingLetterDoc = ref()
 
 
 
+
 const AadharFront = (e) => {
     // Check if file is selected
     if (e.target.files && e.target.files[0]) {
@@ -1761,7 +1772,7 @@ const AadharFront = (e) => {
             // Check if file is an image
             AadharCardFront.isImage = ["jpg", "jpeg", "png", "gif"].includes(AadharCardFront.fileExtention);
         // Print to console
-        console.log(AadharCardFront.file);
+        console.log(AadharCardFront);
     }
 }
 const AadharBack = (e) => {
@@ -1794,7 +1805,6 @@ const PanCard = (e) => {
             PanCardDoc.fileName = PanCardDoc.file.name.split(".").shift(),
             // Check if file is an image
             PanCardDoc.isImage = ["jpg", "jpeg", "png", "gif"].includes(PanCardDoc.fileExtention);
-            PanCardDoc.value=PanCardDoc.file
         // Print to console
         console.log(PanCardDoc);
     }
@@ -1885,27 +1895,13 @@ const ReleivingLetter = (e) => {
     }
 }
 
-const showWarn = () => {
-    console.log(employee_onboarding);
-    // handleSubmit();
-    jsonFormat();
-    console.log(AadharCardFront.fileName);
 
-
-
-
-
-}
 
 // for Testing Post Data
 
 
 const submit = () => {
-    console.log(employee_onboarding);
-    alert("working")
-    axios.post('/vmt-employee-onboard',
-
-   {
+    axios.post('/vmt-employee-onboard', {
         employee_onboarding,
         AadharCardFront,
         AadharCardBack,
@@ -1960,7 +1956,7 @@ const BloodGroup = ref([
 
 const Sampledata = () => {
     employee_onboarding.EmployeeCode = ref("B090")
-    employee_onboarding.EmployeeNameasper = ref("George David")
+    employee_onboarding.EmployeeNameAsPerAadhar = ref("George David")
     employee_onboarding.AadhaarNumber = ref("3977 8798 6564")
     employee_onboarding.DateOfJoining = ref("23-4-2020")
     employee_onboarding.PanNumber = ref("BGAJP6646F")
@@ -1977,12 +1973,12 @@ const Sampledata = () => {
     employee_onboarding.PersonDetialsGender = ref("male")
     employee_onboarding.PersonDetialsMaritalStatus = ref("Married")
     employee_onboarding.PersonDetialsMobileNumber = ref("897898797")
-    employee_onboarding.currentAddress1 = ref("45/21 2nd Avenue,chennai")
-    employee_onboarding.currentAddress2 = ref("45/21 2nd Avenue,chennai")
-    employee_onboarding.currentcountry = ref("India")
-    employee_onboarding.currentstate = ref("Tamilnadu")
-    employee_onboarding.currentCity = ref("chennai")
-    employee_onboarding.currentPincode = ref("600023")
+    employee_onboarding.CurrentAddress1 = ref("45/21 2nd Avenue,chennai")
+    employee_onboarding.CurrentAddress2 = ref("45/21 2nd Avenue,chennai")
+    employee_onboarding.CurrentCountry = ref("India")
+    employee_onboarding.CurrentState = ref("Tamilnadu")
+    employee_onboarding.CurrentCity = ref("chennai")
+    employee_onboarding.CurrentPincode = ref("600023")
     employee_onboarding.PermanentAddress1 = ref("45/21 2nd Avenue,chennai")
     employee_onboarding.PermanentAddress2 = ref("45/21 2nd Avenue,chennai")
     employee_onboarding.Permanentcountry = ref("India")

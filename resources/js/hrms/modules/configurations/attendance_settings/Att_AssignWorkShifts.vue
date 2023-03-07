@@ -56,13 +56,13 @@
     >
       <div class="confirmation-content">
         <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-        <span>Are you sure you want to {{ currentlySelectedStatus }}?</span>
+        <span>Proceed to save the shift details?</span>
       </div>
       <template #footer>
         <Button
           label="Yes"
           icon="pi pi-check"
-          @click="processApproveReject()"
+          @click="saveWorkShiftDetails()"
           class="p-button-text"
           autofocus
         />
@@ -74,14 +74,20 @@
         />
       </template>
     </Dialog>
+
+    <div>
+      <span>Shift Name </span>
+      <span><InputText type="text" v-model="txt_shift_name" /></span>
+      <br />
+    </div>
     <div>
       <DataTable
-        :value="att_leaves"
+        :value="att_emp_details"
+        v-model:selection="selectedEmployees"
         :paginator="true"
         :rows="10"
-        dataKey="id"
+        dataKey="emp_code"
         paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
-        responsiveLayout="scroll"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
         v-model:filters="filters"
         filterDisplay="menu"
@@ -89,9 +95,23 @@
         :globalFilterFields="['name', 'status']"
       >
         <template #empty> No Employee found </template>
-        <template #loading> Loading customers data. Please wait. </template>
-
-        <Column field="employee_name" header="Employee Name">
+        <template #loading> Loading employee data. Please wait. </template>
+        <Column selectionMode="multiple" headerStyle="width: 1em"></Column>
+        <Column headerStyle="width: 20em" field="emp_code" header="Employee ID">
+          <template #body="slotProps">
+            {{ slotProps.data.emp_code }}
+          </template>
+          <template #filter="{ filterModel, filterCallback }">
+            <InputText
+              v-model="filterModel.value"
+              @input="filterCallback()"
+              placeholder="Search"
+              class="p-column-filter"
+              :showClear="true"
+            />
+          </template>
+        </Column>
+        <Column headerStyle="width: 20em" field="employee_name" header="Employee Name">
           <template #body="slotProps">
             {{ slotProps.data.employee_name }}
           </template>
@@ -105,85 +125,50 @@
             />
           </template>
         </Column>
-        <Column field="leaverequest_date" header="Date" :sortable="true">
+        <Column headerStyle="width: 20em" field="designation" header="Designation">
           <template #body="slotProps">
-            <!-- {{ slotProps.data.reimbursement_date }} -->
-            {{ dateFormat(slotProps.data.leaverequest_date, "dd-mm-yyyy, h:MM TT") }}
-          </template>
-        </Column>
-        <Column field="leave_type" header="Leave Type"></Column>
-        <Column field="start_date" header="Start Time">
-          <template #body="slotProps">
-            <!-- {{ slotProps.data.reimbursement_date }} -->
-            {{ dateFormat(slotProps.data.start_date, "dd-mm-yyyy, h:MM TT") }}
-          </template>
-        </Column>
-        <Column field="end_date" header="End Time">
-          <template #body="slotProps">
-            <!-- {{ slotProps.data.reimbursement_date }} -->
-            {{ dateFormat(slotProps.data.end_date, "dd-mm-yyyy, h:MM TT") }}
-          </template>
-        </Column>
-        <!-- <Column field="total_leave_datetime" header="Total"></Column> -->
-        <Column field="leave_reason" header="Leave Reason"></Column>
-        <Column field="reviewer_name" header="Approver Name"></Column>
-        <Column field="reviewer_comments" header="Approver Comments"></Column>
-
-        <Column field="status" header="Status" icon="pi pi-check">
-          <template #body="{ data }">
-            <span :class="'customer-badge status-' + data.status">{{ data.status }}</span>
+            {{ slotProps.data.designation }}
           </template>
           <template #filter="{ filterModel, filterCallback }">
-            <Dropdown
+            <InputText
               v-model="filterModel.value"
-              @change="filterCallback()"
-              :options="statuses"
-              placeholder="Select"
+              @input="filterCallback()"
+              placeholder="Search"
               class="p-column-filter"
               :showClear="true"
-            >
-              <template #value="slotProps">
-                <span
-                  :class="'customer-badge status-' + slotProps.value"
-                  v-if="slotProps.value"
-                  >{{ slotProps.value }}</span
-                >
-                <span v-else>{{ slotProps.placeholder }}</span>
-              </template>
-              <template #option="slotProps">
-                <span :class="'customer-badge status-' + slotProps.option">{{
-                  slotProps.option
-                }}</span>
-              </template>
-            </Dropdown>
+            />
           </template>
         </Column>
-
-        <Column style="width: 300px" field="" header="Action">
+        <Column headerStyle="width: 20em" field="department_name" header="Department">
           <template #body="slotProps">
-            <!-- <Button icon="pi pi-check" class="p-button-success"  @click="confirmDialog(slotProps.data,'Approved')" label="Approval" />
-                        <Button icon="pi pi-times" class="p-button-danger" @click="confirmDialog(slotProps.data,'Rejected')" label="Rejected" /> -->
-            <span v-if="slotProps.data.status == 'Pending'">
-              <Button
-                type="button"
-                icon="pi pi-check-circle"
-                class="p-button-success Button"
-                label="Approve"
-                @click="showConfirmDialog(slotProps.data, 'Approve')"
-                style="height: 2em"
-              />
-              <Button
-                type="button"
-                icon="pi pi-times-circle"
-                class="p-button-danger Button"
-                label="Reject"
-                style="margin-left: 8px; height: 2em"
-                @click="showConfirmDialog(slotProps.data, 'Reject')"
-              />
-            </span>
+            {{ slotProps.data.department_name }}
+          </template>
+          <template #filter="{ filterModel, filterCallback }">
+            <InputText
+              v-model="filterModel.value"
+              @input="filterCallback()"
+              placeholder="Search"
+              class="p-column-filter"
+              :showClear="true"
+            />
+          </template>
+        </Column>
+        <Column headerStyle="width: 5em" field="work_location" header="Location">
+          <template #body="slotProps">
+            {{ slotProps.data.work_location }}
+          </template>
+          <template #filter="{ filterModel, filterCallback }">
+            <InputText
+              v-model="filterModel.value"
+              @input="filterCallback()"
+              placeholder="Search"
+              class="p-column-filter"
+              :showClear="true"
+            />
           </template>
         </Column>
       </DataTable>
+      <Button label="Assign" @click="showConfirmDialog()" />
     </div>
   </div>
 </template>
@@ -195,52 +180,80 @@ import { FilterMatchMode, FilterOperator } from "primevue/api";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 
-let att_leaves = ref();
+let att_emp_details = ref();
 let canShowConfirmation = ref(false);
 let canShowLoadingScreen = ref(false);
+let selectedEmployees = ref();
+let txt_shift_name = ref();
 const confirm = useConfirm();
 const toast = useToast();
 
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  emp_code: {
+    value: null,
+    matchMode: FilterMatchMode.STARTS_WITH,
+    matchMode: FilterMatchMode.EQUALS,
+    matchMode: FilterMatchMode.CONTAINS,
+  },
   employee_name: {
     value: null,
     matchMode: FilterMatchMode.STARTS_WITH,
     matchMode: FilterMatchMode.EQUALS,
     matchMode: FilterMatchMode.CONTAINS,
   },
-
-  status: { value: null, matchMode: FilterMatchMode.EQUALS },
+  designation: {
+    value: null,
+    matchMode: FilterMatchMode.STARTS_WITH,
+    matchMode: FilterMatchMode.EQUALS,
+    matchMode: FilterMatchMode.CONTAINS,
+  },
+  department_name: {
+    value: null,
+    matchMode: FilterMatchMode.STARTS_WITH,
+    matchMode: FilterMatchMode.EQUALS,
+    matchMode: FilterMatchMode.CONTAINS,
+  },
+  location: {
+    value: null,
+    matchMode: FilterMatchMode.STARTS_WITH,
+    matchMode: FilterMatchMode.EQUALS,
+    matchMode: FilterMatchMode.CONTAINS,
+  },
 });
 
 const loading = ref(true);
-const statuses = ref(["Pending", "Approved", "Rejected"]);
 
 let currentlySelectedStatus = null;
 let currentlySelectedRowData = null;
 
 onMounted(() => {
-  ajax_GetLeaveData();
+  ajax_GetEmployeeDetails();
 });
 
-function ajax_GetLeaveData() {
-  let url = window.location.origin + "/fetch-leaverequests/org/Approved,Rejected,Pending";
+function onClickGetEmployees() {
+  console.log(
+    "onClickGetEmployees() button clicked : Shift Name :: " + txt_shift_name.value
+  );
+  console.log("Selected Employees : " + JSON.stringify(selectedEmployees.value));
+}
+
+function ajax_GetEmployeeDetails() {
+  let url = window.location.origin + "/attendance_settings/fetch-emp-details";
 
   console.log("AJAX URL : " + url);
 
   axios.get(url).then((response) => {
     console.log("Axios : " + response.data);
-    att_leaves.value = response.data;
+    att_emp_details.value = response.data;
     loading.value = false;
   });
 }
 
-function showConfirmDialog(selectedRowData, status) {
+function showConfirmDialog() {
   canShowConfirmation.value = true;
-  currentlySelectedStatus = status;
-  currentlySelectedRowData = selectedRowData;
 
-  console.log("Selected Row Data : " + JSON.stringify(selectedRowData));
+  // console.log("Selected Row Data : " + JSON.stringify(selectedRowData));
 }
 
 function hideConfirmDialog(canClearData) {
@@ -283,6 +296,36 @@ const css_statusColumn = (data) => {
     },
   ];
 };
+
+function saveWorkShiftDetails() {
+  hideConfirmDialog(false);
+
+  canShowLoadingScreen.value = true;
+
+  console.log("Processing Rowdata : " + JSON.stringify(currentlySelectedRowData));
+
+  //Shift name
+  //Selected employees
+  axios
+    .post(window.location.origin + "/attendance_settings/save-shiftdetails", {
+      selectedEmployees: selectedEmployees.value,
+      workshift_name: txt_shift_name.value,
+    })
+    .then((response) => {
+      console.log(response);
+      ajax_GetEmployeeDetails();
+
+      canShowLoadingScreen.value = false;
+
+      resetVars();
+    })
+    .catch((error) => {
+      canShowLoadingScreen.value = false;
+      resetVars();
+
+      console.log(error.toJSON());
+    });
+}
 
 function processApproveReject() {
   hideConfirmDialog(false);
