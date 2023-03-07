@@ -76,8 +76,14 @@
     </Dialog>
 
     <div>
-      <span>Shift Name </span>
+      <span>Shift Name</span>
       <span><InputText type="text" v-model="txt_shift_name" /></span>
+      &nbsp;&nbsp;&nbsp;
+      <span>Shift Start Time</span>
+      <span><InputText type="text" v-model="txt_shift_start_time" /></span>
+      &nbsp;&nbsp;&nbsp;
+      <span>Shift End Time</span>
+      <span><InputText type="text" v-model="txt_shift_end_time" /></span>
       <br />
     </div>
     <div>
@@ -297,6 +303,22 @@ const css_statusColumn = (data) => {
   ];
 };
 
+/*
+    Input : Emp array obj
+    Output : A 1-D array of emp ids.
+
+*/
+function getEmployeeIDsArray() {
+  const temp = [];
+
+  _.flatMap(selectedEmployees.value, function (data) {
+    temp.push(data.user_id);
+  });
+
+  return temp;
+  //console.log("Output : "+temp);
+}
+
 function saveWorkShiftDetails() {
   hideConfirmDialog(false);
 
@@ -304,11 +326,14 @@ function saveWorkShiftDetails() {
 
   console.log("Processing Rowdata : " + JSON.stringify(currentlySelectedRowData));
 
+  //squash all the emp details
+  let array_assignedEmp_ids = getEmployeeIDsArray();
+
   //Shift name
   //Selected employees
   axios
     .post(window.location.origin + "/attendance_settings/save-shiftdetails", {
-      selectedEmployees: selectedEmployees.value,
+      selectedEmployees: array_assignedEmp_ids,
       workshift_name: txt_shift_name.value,
     })
     .then((response) => {
@@ -327,39 +352,39 @@ function saveWorkShiftDetails() {
     });
 }
 
-function processApproveReject() {
-  hideConfirmDialog(false);
+// function processApproveReject() {
+//   hideConfirmDialog(false);
 
-  canShowLoadingScreen.value = true;
+//   canShowLoadingScreen.value = true;
 
-  console.log("Processing Rowdata : " + JSON.stringify(currentlySelectedRowData));
+//   console.log("Processing Rowdata : " + JSON.stringify(currentlySelectedRowData));
 
-  axios
-    .post(window.location.origin + "/attendance-approve-rejectleave", {
-      leave_id: currentlySelectedRowData.id,
-      status:
-        currentlySelectedStatus == "Approve"
-          ? "Approved"
-          : currentlySelectedStatus == "Reject"
-          ? "Rejected"
-          : currentlySelectedStatus,
-      leave_rejection_text: "",
-    })
-    .then((response) => {
-      console.log(response);
-      ajax_GetLeaveData();
+//   axios
+//     .post(window.location.origin + "/attendance-approve-rejectleave", {
+//       leave_id: currentlySelectedRowData.id,
+//       status:
+//         currentlySelectedStatus == "Approve"
+//           ? "Approved"
+//           : currentlySelectedStatus == "Reject"
+//           ? "Rejected"
+//           : currentlySelectedStatus,
+//       leave_rejection_text: "",
+//     })
+//     .then((response) => {
+//       console.log(response);
+//       ajax_GetLeaveData();
 
-      canShowLoadingScreen.value = false;
+//       canShowLoadingScreen.value = false;
 
-      resetVars();
-    })
-    .catch((error) => {
-      canShowLoadingScreen.value = false;
-      resetVars();
+//       resetVars();
+//     })
+//     .catch((error) => {
+//       canShowLoadingScreen.value = false;
+//       resetVars();
 
-      console.log(error.toJSON());
-    });
-}
+//       console.log(error.toJSON());
+//     });
+// }
 </script>
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,200&display=swap");
