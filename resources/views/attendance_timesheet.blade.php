@@ -1478,6 +1478,8 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
                             if (ajax_data_currentdate) {
 
+
+
                                 if(!ajax_data_currentdate.isAbsent){
                                     console.log("isAbsent:"+ajax_data_currentdate.isAbsent);
                                     if(ajax_data_currentdate.attendance_mode_checkin=='mobile'){
@@ -1708,7 +1710,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                 return '&nbsp;<i class="fa fa-laptop"></i>';
             else
             if (attendance_mode == "mobile")
-                    return '&nbsp;<i class="fa fa-mobile-phone"></i><span><button style="border:none;width:20px;background:none;" onclick="onclickShowSelfie()"><i class="fa fa-picture-o me-2" aria-hidden="true"></i></button></span>';
+                    return '&nbsp;<i class="fa fa-mobile-phone"></i><span><button style="border:none;width:19px;background:none;" onclick="onclickShowSelfie()"><i class="fa fa-picture-o me-2" aria-hidden="true"></i></button></span>';
             else
             {
                 return ''; // when attendance_mode column is empty.
