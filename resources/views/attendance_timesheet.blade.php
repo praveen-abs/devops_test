@@ -413,9 +413,9 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                     </div>
 
                     <div class="modal-body">
+                        <div id="selfie_check"></div>
 
-
-                    <img style='width: 472px; height: 550px;' id="check_in_selfie" >
+                    <!-- <img style='width: 472px; height: 550px;' id="check_in_selfie" > -->
 
 
                     </div>
@@ -1481,7 +1481,10 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                     console.log("isAbsent:"+ajax_data_currentdate.isAbsent);
                                     if(ajax_data_currentdate.attendance_mode_checkin=='mobile'){
                                         console.log("Employee Mode of check_in is:"+ajax_data_currentdate.attendance_mode_checkin);
-                                        $("#check_in_selfie").attr('src',ajax_data_currentdate.selfie_checkin);
+                                        // $("#check_in_selfie").attr('src',ajax_data_currentdate.selfie_checkin);
+                                        $('<img>', {id: 'check_in_selfie',
+                                                    src:ajax_data_currentdate.selfie_checkin
+                                                  }).appendTo('#selfie_check');
                                         console.log("Check in Selfie SRC:"+ajax_data_currentdate.selfie_checkin);
 
 
