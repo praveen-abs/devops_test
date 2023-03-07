@@ -416,7 +416,8 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
                     <!-- ajax_data_currentdate.selfie_checkin -->
 
-                    <img style='width: 472px; height: 550px;' id="check_in_selfie" src="employees/PLIPL068/selfies/checkin.png">
+                    <img style='width: 472px; height: 550px;' id="check_in_selfie" >
+                    <!-- src="employees/PLIPL068/selfies/checkin.png" -->
 
                        <!-- <img style='width: 472px; height: 550px;' src="https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?cs=srgb&dl=pexels-pixabay-268533.jpg&fm=jpg" alt="Employee_selfie" srcset=""> -->
 
@@ -1446,6 +1447,8 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
 
 
+
+
                         if (isWeekEnd) {
                             cell.innerHTML =
                                 " <div class='w-100 h-100 p-2' style='background-color:#e7e7e7;'> <span class='show_date' >" +
@@ -1470,36 +1473,30 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                             let todayDate = new Date().toISOString().slice(0, 10)
                             //console.log("today" + todayDate);
 
-                            console.log("Leave type"+ajax_data_currentdate.leave_type);
 
-                            // if(ajax_data_currentdate.leave_type=="Sick Leave"){
-                            //     $("#Leavetype").html("Sick Leave Approved");
-                            //     console.log("Sick Leave true");
-                            // }
-                            // else
-                            // if(ajax_data_currentdate.leave_type=="Earned Leave"){
-                            //     $("#Leavetype").html("Earned Leave Approved");
-                            //     console.log("Earned Leave true")
-                            // }else
-                            // if(ajax_data_currentdate.leave_type=="Casual Leave"){
-                            //     $("#Leavetype").html("Casual Leave Approved");
-                            //     console.log("casual Leave true");
-                            // }else
-                            // if(ajax_data_currentdate.leave_type=="Compensatory Leave"){
-                            //     $("#Leavetype").html("Compensatory Leave Approved");
-                            //     console.log("Compensatory Leave true");
-                            // }else
-                            // if(ajax_data_currentdate.leave_type=="Flexi day-off Leave"){
-                            //     $("#Leavetype").html("Flexi day-off Leave Approved");
-                            //     console.log("Flexi Leave true");
-                            // }
-                            // else{
-                            //     $("#Leavetype").html(ajax_data_currentdate.leave_type);
-                            //     alert(ajax_data_currentdate.leave_type);
-                            // }
 
 
                             if (ajax_data_currentdate) {
+
+                                if(!ajax_data_currentdate.isAbsent){
+                                    console.log("isAbsent:"+ajax_data_currentdate.isAbsent);
+                                    if(ajax_data_currentdate.attendance_mode_checkin=='mobile'){
+                                        console.log("Employee Mode of check_in is:"+ajax_data_currentdate.attendance_mode_checkin);
+                                        $("#check_in_selfie").attr('src',ajax_data_currentdate.selfie_checkin);
+                                        console.log("Check in Selfie SRC:"+ajax_data_currentdate.selfie_checkin);
+
+
+                                    }
+
+
+                                    if(ajax_data_currentdate.attendance_mode_checkout=='mobile'){
+                                        console.log("Employee Mode of check_out is:"+ajax_data_currentdate.attendance_mode_checkin);
+                                        $("#check_in_selfie").attr('src',ajax_data_currentdate.selfie_checkout);
+                                        console.log("Check in Selfie SRC:"+ajax_data_currentdate.selfie_checkout);
+
+                                    }
+                                }
+
 
                                 if (ajax_data_currentdate.isAbsent) {
                                     if (todayDate > currentDate) {
@@ -1682,56 +1679,16 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
         }
 
-        function getAttendanceSelfieButtons(data_CurrentDate){
-                  alert(data_CurrentDate.isAbsent)
+        // Showing Selfie Image
 
-            //     if(!ajax_data_currentdate.checkin_time){
-            //         var selfie = ajax_data_currentdate.selfie_checkin;
-            //         console.log(selfie);alert(selfie)
-
-            //         $("#check_in_selfie").attr('src',ajax_data_currentdate.selfie_checkin)
-            //         console.log("Check_in_selfie"+selfie)
-
-            //     }
-
-            // else
-
-            //     if(!ajax_data_currentdate.checkout_time){
-            //         var selfie = ajax_data_currentdate.selfie_checkout;
-            //         console.log("check_out_selfie "+selfie);
-            //     }
-
-            }
-
-
-        function onclickShowSelfie(image_url){
-
+        function onclickShowSelfie(){
                 $('#SelfieImage').fadeIn(0);
-
-
-                if(!ajax_data_currentdate.checkin_time){
-                    var selfie = ajax_data_currentdate.selfie_checkin;
-                    console.log(selfie);alert(selfie)
-
-                    $("#check_in_selfie").attr('src',ajax_data_currentdate.selfie_checkin)
-                    console.log("Check_in_selfie"+selfie)
-
-                }
-
-                else
-
-                if(!ajax_data_currentdate.checkout_time){
-                    var selfie = ajax_data_currentdate.selfie_checkout;
-                    console.log("check_out_selfie "+selfie);
-                }
         }
 
 
 
 
-        /*
-            t_punch_type = checkin/checkout
-        */
+
         function getAttendanceModeIcon(data_currentdate, t_punch_type) {
 
             let attendance_mode = null;
@@ -1751,13 +1708,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                 return '&nbsp;<i class="fa fa-laptop"></i>';
             else
             if (attendance_mode == "mobile")
-            {
-                if(t_punch_type == "checkin")
                     return '&nbsp;<i class="fa fa-mobile-phone"></i><span><button style="border:none;width:20px;background:none;" onclick="onclickShowSelfie()"><i class="fa fa-picture-o me-2" aria-hidden="true"></i></button></span>';
-                else
-                if(t_punch_type == "checkout")
-                    return '&nbsp;<i class="fa fa-mobile-phone"></i><span><button style="border:none;width:20px;background:none;" onclick="onclickShowSelfie()"><i class="fa fa-picture-o me-2" aria-hidden="true"></i></button></span>';
-            }
             else
             {
                 return ''; // when attendance_mode column is empty.
