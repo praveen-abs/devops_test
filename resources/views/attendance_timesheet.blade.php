@@ -1302,6 +1302,8 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
         $('.modal-close').click(function() {
             $('#SelfieImage').fadeOut(0);
+            $('#check_in_selfie').removeAttr('src');
+
 
         })
 
@@ -1685,7 +1687,6 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
         function onclickShowSelfie(){
                 $('#SelfieImage').fadeIn(0);
-                $('#check_in_selfie').attr('src');
         }
 
 
