@@ -1682,7 +1682,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
         function onclickShowSelfie(){
                 $('#SelfieImage').fadeIn(0);
-                $('#check_in_selfie').attr('src');
+                $('#check_in_selfie').removeAttr('src');
         }
 
 
