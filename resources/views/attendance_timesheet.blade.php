@@ -412,10 +412,10 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                             data-bs-dismiss="modal" aria-label="Close">×</button>
                     </div>
 
-                    <div class="modal-body">
+                    <div class="modal-body" id="selfie">
 
 
-                    <img style='width: 472px; height: 550px;' id="check_in_selfie" >
+                    <!-- <img style='width: 472px; height: 550px;' id="check_in_selfie" > -->
 
 
                     </div>
@@ -1300,10 +1300,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
         })
 
-        $('.modal-close').click(function() {
-            $('#SelfieImage').fadeOut(0);
 
-        })
 
 
 
@@ -1473,16 +1470,27 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
 
 
+
+
+
+
+
                             if (ajax_data_currentdate) {
 
 
 
                                 if(!ajax_data_currentdate.isAbsent){
+
+                                    console.log("val"+Object.values(ajax_data_currentdate));
                                     console.log("isAbsent:"+ajax_data_currentdate.isAbsent);
                                     if(ajax_data_currentdate.attendance_mode_checkin=='mobile'){
                                         console.log("Employee Mode of check_in is:"+ajax_data_currentdate.attendance_mode_checkin);
-                                        $("#check_in_selfie").attr('src',ajax_data_currentdate.selfie_checkin);
+                                        for(let i=0;i<31;i++){
+                                            $("#check_in_selfie").attr('src',ajax_data_currentdate.selfie_checkout);
+                                        }
+
                                         console.log("Check in Selfie SRC:"+ajax_data_currentdate.selfie_checkin);
+
 
 
                                     }
@@ -1680,10 +1688,33 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
         // Showing Selfie Image
 
-        function onclickShowSelfie(){
+        function generate(){
+            $('<img>', {id: 'check_in_selfie',
+                        class: 'some-class some-other-class',
+                        title: 'now this div has a title!',
+                        }).appendTo('#selfie');
+
+                        console.log("generated");
+         }
+
+                  function onclickShowSelfie(){
                 $('#SelfieImage').fadeIn(0);
-                $('#check_in_selfie').attr('src');
-        }
+                // $('#check_in_selfie').attr('src');
+                 }
+
+                 $( document ).ready(function() {
+                   console.log("generated")
+                    generate();
+                 });
+
+                 $('.modal-close').click(function() {
+                    $('#SelfieImage').fadeOut(0);
+                //   $("#check_in_selfie").remove();
+                    // setTimeout(generate, 300);
+
+                   })
+
+
 
 
 
