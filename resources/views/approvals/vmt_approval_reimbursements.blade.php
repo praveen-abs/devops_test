@@ -11,24 +11,10 @@
 @endsection
 @section('content')
 
-                    <div class="row mt-3">
-                    <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12 ">
-                        <div class="card mb-0 leave-history">
-                            <div class="card-body">
-                                <h6 class="mb-2">Reimbursements</h6>
-
-                                <div class="table-responsive">
-                                    <div id="vjs_reimbursementsApprovalTable"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+<div id="vjs_employee_reimbursement"></div>
 
 @endsection
 @section('script')
-    @vite(['resources/js/hrms/modules/approvals/reimbursements/ReimbursementsApproval.js'])
+@vite('resources/js/hrms/modules/approvals/employee_reimbursements/employee_reimbursements.js')
 </script>
 @endsection

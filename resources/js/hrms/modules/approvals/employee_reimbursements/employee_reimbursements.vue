@@ -290,7 +290,7 @@ employee_service.fetch_data_for_local_convergance()
 
 <style  lang="scss">
 .main-content {
-    width: 80%;
+    width: 85%;
 }
 
 .p-datatable .p-datatable-thead>tr>th {

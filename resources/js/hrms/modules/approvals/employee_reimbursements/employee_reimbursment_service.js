@@ -158,14 +158,21 @@ export const employee_reimbursment_service = defineStore('employee_reimbursment_
             reimbursement_data,reimbursement_attachment
          })
          console.log(data);
-        // axios.post(url_all_reimbursements)
-        // .then((response) => {
-        //     data_reimbursements.value = response.data;
-        //     console.log(response.data);
 
-        // }).catch(response=>{
-        //     console.log(response);
-        // });
+        let  url_all_reimbursements=window.location.origin + '/saveReimbursementsData'
+        axios.post(url_all_reimbursements,{
+            reimbursement_data,
+            reimbursement_attachment
+
+
+        })
+        .then((response) => {
+
+
+
+        }).catch(response=>{
+            console.log(response);
+        });
     }
 
     const data_local_convergance=ref()
