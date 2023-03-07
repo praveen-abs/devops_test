@@ -414,12 +414,9 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
                     <div class="modal-body">
 
-                    <!-- ajax_data_currentdate.selfie_checkin -->
 
                     <img style='width: 472px; height: 550px;' id="check_in_selfie" >
-                    <!-- src="employees/PLIPL068/selfies/checkin.png" -->
 
-                       <!-- <img style='width: 472px; height: 550px;' src="https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?cs=srgb&dl=pexels-pixabay-268533.jpg&fm=jpg" alt="Employee_selfie" srcset=""> -->
 
                     </div>
 
@@ -1685,6 +1682,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
         function onclickShowSelfie(){
                 $('#SelfieImage').fadeIn(0);
+                $('#check_in_selfie').attr('src');
         }
 
 
