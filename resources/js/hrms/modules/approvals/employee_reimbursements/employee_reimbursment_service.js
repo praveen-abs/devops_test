@@ -1,6 +1,11 @@
 import { defineStore } from "pinia";
 import { ref, onMounted, reactive } from 'vue';
-import { useToast } from 'primevue/usetoast';
+import { useToast } from "primevue/usetoast";
+import axios from "axios";
+
+
+// toast.add({severity:'success', summary: 'Success Message', detail:'Message Content', life: 3000});
+
 
 
 
@@ -12,16 +17,22 @@ export const employee_reimbursment_service = defineStore('employee_reimbursment_
 
 
     ]);
-    const productDialog = ref(false);
-    const deleteProductDialog = ref(false);
-    const deleteProductsDialog = ref(false);
+    const reimbursementsScreen = ref(true)
+    const reimbursements_dailog = ref(false);
+
+    const localconverganceScreen = ref(false)
+    const localconvergance_dailog = ref(false)
+
+
     const employee_reimbursement = ref({
         claim_type: '',
         claim_amount: Number,
         eligible_amount: Number,
-        File: ''
-
     });
+
+
+
+
 
     const employee_local_conveyance = ref({
         travelled_date: '',
@@ -32,8 +43,20 @@ export const employee_reimbursment_service = defineStore('employee_reimbursment_
     })
 
 
+    const Switch_to_reimbursment = () => {
+        reimbursementsScreen.value = true
+        localconverganceScreen.value = false
 
-    const submitted = ref(false);
+    }
+    const Switch_to_localC = () => {
+        reimbursementsScreen.value = false
+        localconverganceScreen.value = true
+
+
+    }
+
+
+     const submitted = ref(false);
     const statuses = ref([
         { label: 'Mobile Bills', value: 'Mobile Bills' },
         { label: 'Accommodation', value: 'Accommodation' },
@@ -47,23 +70,48 @@ export const employee_reimbursment_service = defineStore('employee_reimbursment_
     const open_reimbursment = () => {
 
         submitted.value = false;
-        productDialog.value = true;
+        reimbursements_dailog.value = true;
     };
+
+    const employee_reimbursement_attachment=ref()
+
+    const file=ref()
+
+    const employee_reimbursement_attachment_upload = (e) => {
+        // Check if file is selected
+        if (e.target.files && e.target.files[0]) {
+            // Get uploaded file
+            employee_reimbursement_attachment.file = e.target.files[0],
+                // Get file size
+                employee_reimbursement_attachment.fileSize = Math.round((file.size / 1024 / 1024) * 100) / 100,
+                // Get file extension
+                employee_reimbursement_attachment.fileExtention = employee_reimbursement_attachment.file.name.split(".").pop(),
+                // Get file name
+                employee_reimbursement_attachment.fileName = employee_reimbursement_attachment.file.name.split(".").shift(),
+                // Check if file is an image
+                employee_reimbursement_attachment.isImage = ["jpg", "jpeg", "png", "gif"].includes(employee_reimbursement_attachment.fileExtention);
+
+            // Print to console
+            console.log(employee_reimbursement_attachment.file);
+        }
+    }
+
+
 
     const open_local_convergance = () => {
 
         submitted.value = false;
-        productDialog.value = true;
+        localconvergance_dailog.value = true;
+
+        submitted.value = false;
+
     };
     const hideDialog = () => {
-        productDialog.value = false;
+        reimbursements_dailog.value = false;
+        localconvergance_dailog.value = false;
         submitted.value = false;
     };
 
-    const editProduct = (prod) => {
-        employee_reimbursement.value = { ...prod };
-        productDialog.value = true;
-    };
     const saveProduct = () => {
         submitted.value = true;
         products.value.push(employee_reimbursement.value);
@@ -72,31 +120,111 @@ export const employee_reimbursment_service = defineStore('employee_reimbursment_
     };
 
 
-    const deleteProduct = () => {
-
-        deleteProductDialog.value = false;
-
-        toast.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
-    };
+    // Fetching
 
 
-    const confirmDeleteSelected = () => {
-        deleteProductsDialog.value = true;
-    };
-    const confirmDeleteProduct = (prod) => {
-        employee_reimbursement.value = prod;
-        deleteProductDialog.value = true;
-    };
-    const deleteSelectedProducts = () => {
+    const data_reimbursements = ref()
+    const loading_spinner=ref(true)
+    const reimbursment_file=ref()
 
-        deleteProductsDialog.value = false;
-        toast.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
-    };
+
+
+    const fetch_data_from_reimbursment=()=>{
+
+    let url_all_reimbursements = window.location.origin + '/fetch_all_reimbursements';
+
+
+        console.log("AJAX URL : " + url_all_reimbursements);
+
+        axios.get(url_all_reimbursements)
+            .then((response) => {
+                data_reimbursements.value = response.data;
+                console.log(response.data);
+                loading_spinner.value=false
+
+            });
+
+    }
+
+    const reimbursement_data = reactive(employee_reimbursement.value)
+    const reimbursement_attachment = reactive(employee_reimbursement_attachment)
+
+
+    const post_reimbursment_data=()=>{
+
+        console.log(("post reiburmentt"));
+         console.log(employee_reimbursement_attachment.value);
+         const data=JSON.stringify({
+            reimbursement_data,reimbursement_attachment
+         })
+         console.log(data);
+        // axios.post(url_all_reimbursements)
+        // .then((response) => {
+        //     data_reimbursements.value = response.data;
+        //     console.log(response.data);
+
+        // }).catch(response=>{
+        //     console.log(response);
+        // });
+    }
+
+    const data_local_convergance=ref()
+
+
+    const fetch_data_for_local_convergance=()=>{
+
+        let url_all_reimbursements = window.location.origin + '/fetch_all_reimbursements';
+
+
+        console.log("AJAX URL : " + url_all_reimbursements);
+
+        axios.get(url_all_reimbursements)
+            .then((response) => {
+                data_local_convergance.value = response.data;
+                console.log(response.data);
+                loading_spinner.value=false
+
+            });
+
+
+        }
+
+        const post_data_for_local_convergance=()=>{
+
+            console.log(employee_local_conveyance.value);
+
+
+            // let url_all_local_convergance = window.location.origin + '/fetch_all_reimbursements';
+
+
+                // console.log("AJAX URL : " + url_all_reimbursements);
+
+                // axios.post(url_all_local_convergance)
+                //     .then((response) => {
+
+
+                //     });
+
+            }
+
+
+
 
 
 
     return {
-        products, productDialog, hideDialog, deleteProduct, deleteProductDialog, deleteSelectedProducts, confirmDeleteProduct,
-        confirmDeleteSelected, saveProduct, editProduct, employee_local_conveyance, employee_reimbursement, statuses, open_reimbursment, open_local_convergance
+        products, hideDialog,  localconvergance_dailog, saveProduct, employee_reimbursement, employee_local_conveyance, statuses,
+         open_reimbursment, open_local_convergance,reimbursements_dailog,
+        reimbursementsScreen, localconverganceScreen, Switch_to_localC, Switch_to_reimbursment,
+        fetch_data_from_reimbursment,data_reimbursements,loading_spinner,
+
+
+        // employee_reimbursement
+
+        employee_reimbursement_attachment_upload,employee_reimbursement_attachment,file,reimbursement_data,reimbursement_attachment,post_reimbursment_data,
+
+        // employee_local_convergance
+
+        post_data_for_local_convergance,fetch_data_for_local_convergance,data_local_convergance
     }
 })
