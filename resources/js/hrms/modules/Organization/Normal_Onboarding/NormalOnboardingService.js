@@ -1,5 +1,5 @@
 /*
-Normal Onboarding 
+Normal Onboarding
 
 HTML fields
 Validation
@@ -67,7 +67,7 @@ export default function validation(rules) {
         BankName: {
             required,
         },
-        EmployeeNameasper: {
+        EmployeeNameAsPerAadhar: {
             required,
         },
         PersonDetialsGender: {
@@ -118,22 +118,22 @@ export default function validation(rules) {
         //  Person Details End
 
         // Address Validation Start
-        currentAddress1: {
+        CurrentAddress1: {
             required,
         },
-        currentAddress2: {
+        CurrentAddress2: {
             required,
         },
-        currentcountry: {
+        CurrentCountry: {
             required,
         },
-        currentstate: {
+        CurrentState: {
             required,
         },
-        currentCity: {
+        CurrentCity: {
             required,
         },
-        currentPincode: {
+        CurrentPincode: {
             required,
             maxLength: 6,
         },

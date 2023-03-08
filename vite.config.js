@@ -29,9 +29,9 @@ export default defineConfig({
                     'resources/js/hrms/modules/approvals/employee_reimbursements/employee_reimbursements.js',
                     'resources/js/hrms/modules/approvals/employee_reimbursements/employee_local_covegance.js',
 
+                    //Configurations
 
-
-
+                    'resources/js/hrms/modules/configurations/attendance_settings/Att_AssignWorkShifts.js'
             ],
             refresh: true,
         }),
