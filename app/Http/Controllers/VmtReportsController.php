@@ -320,7 +320,7 @@ class VmtReportsController extends Controller
         ->groupBy('users.id')
         ->select('users.user_code','users.name','vmt_employee_office_details.designation',
         'vmt_department.name as department',DB::raw('sum(vmt_employee_reimbursements.distance_travelled) as total_distance'),
-        DB::raw('sum(vmt_employee_reimbursements.total_expenses) as total_expenses'));
+        DB::raw('sum(vmt_employee_reimbursements.total_expenses) as total_expenses'),'vmt_employee_office_details.l1_manager_name');
 
 
        if($year==null){

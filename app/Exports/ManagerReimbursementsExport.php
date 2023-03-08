@@ -44,7 +44,8 @@ class ManagerReimbursementsExport implements FromArray,ShouldAutoSize,WithHeadin
             'Designation',
             'Department',
             'Total Travelled KM',
-            'Amount'
+            'Amount',
+            'Manager Name'
                  ];
      }
 
@@ -58,10 +59,10 @@ class ManagerReimbursementsExport implements FromArray,ShouldAutoSize,WithHeadin
     {
 
 
-        $sheet->getStyle('A2:F2')->getFill()
+        $sheet->getStyle('A2:G2')->getFill()
         ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
         ->getStartColor()->setRGB('002164');
-        $sheet->getStyle('A2:F2')->getFont()->setBold(true)
+        $sheet->getStyle('A2:G2')->getFont()->setBold(true)
                             ->getColor()->setRGB('ffffff');
         // return [
         //     // Style the first row as bold text.
