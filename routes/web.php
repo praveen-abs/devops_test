@@ -504,7 +504,13 @@ Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 's
     Route::get('/payroll-filter-info', [App\Http\Controllers\VmtReportsController::class, 'fetchPayrollReport'])->name('payroll-filter-info');
 
     //Reimbursements Reports
-    Route::get('/reports/generateEmployeeReimbursementsReports',  [App\Http\Controllers\VmtReportsController::class, 'generateEmployeeReimbursementsReports'])->name('generateEmployeeReimbursementsReports');
+    Route::get('/reports/generate-employee-reimbursements-reports',  [App\Http\Controllers\VmtReportsController::class, 'generateEmployeeReimbursementsReports'])->name('generateEmployeeReimbursementsReports');
+    Route::get('/reports/generate-manager-reimbursements-reports',  [App\Http\Controllers\VmtReportsController::class, 'generateManagerReimbursementsReports'])->name('generateManagerReimbursementsReports');
+    Route::get('/reports/fetch-manager-reimbursements-reports',  [App\Http\Controllers\VmtReportsController::class, 'fetchManagerReimbursementsReports'])->name('fetchManagerReimbursementsReports');
+
+    //Vmt Correction Controller
+    Route::get('/processsExpense',  [App\Http\Controllers\VmtCorrectionController::class, 'processsExpense'])->name('processsExpense');
+
 
     //Configrations
     ////Attendance Settings
