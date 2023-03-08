@@ -15,6 +15,10 @@ class VmtReimbursementController extends Controller
 
     }
 
+    public function fetchLocalConveyanceData(Request $request){
+
+    }
+
     public function saveReimbursementsData(Request $request){
 
         dd($request->all());

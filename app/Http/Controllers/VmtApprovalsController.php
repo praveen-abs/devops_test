@@ -285,6 +285,80 @@ class VmtApprovalsController extends Controller
          return $reimbursement_query;
     }
 
+    /*
+        Returns all the reimbursements data for the given month and all emps are
+        grouped together.
+
+        [
+            {
+                "employee_name" : "Karthick",
+                "user_id":178,
+                "reimbursement_data":[
+                    { "id": "10","date" : "2023-03-08 00:35:49" , "user_comments":"sdfsdf" ,"status":"Pending" , "from" : "chennai", "to": "bangalore", "vehicle_type": "2-wheeler", "distance_travelled" :"100","total_expenses":"1500" },
+                    { "id": "11","date" : "2023-03-08 00:35:49" , "user_comments":"sdfsdf" ,"status":"Pending" , "from" : "chennai", "to": "bangalore", "vehicle_type": "2-wheeler", "distance_travelled" :"100","total_expenses":"1500" },
+                    { "id": "12","date" : "2023-03-08 00:35:49" , "user_comments":"sdfsdf" ,"status":"Pending" , "from" : "chennai", "to": "bangalore", "vehicle_type": "2-wheeler", "distance_travelled" :"100","total_expenses":"1500" },
+                ]
+            },
+            {
+                "employee_name" : "Narasimma",
+                "user_id":179,
+                "reimbursement_data":[
+                    { "id": "10","date" : "2023-03-08 00:35:49" , "user_comments":"sdfsdf" ,"status":"Pending" , "from" : "chennai", "to": "bangalore", "vehicle_type": "2-wheeler", "distance_travelled" :"100","total_expenses":"1500" },
+                    { "id": "11","date" : "2023-03-08 00:35:49" , "user_comments":"sdfsdf" ,"status":"Pending" , "from" : "chennai", "to": "bangalore", "vehicle_type": "2-wheeler", "distance_travelled" :"100","total_expenses":"1500" },
+                    { "id": "12","date" : "2023-03-08 00:35:49" , "user_comments":"sdfsdf" ,"status":"Pending" , "from" : "chennai", "to": "bangalore", "vehicle_type": "2-wheeler", "distance_travelled" :"100","total_expenses":"1500" },
+                ]
+            },
+
+        ]
+
+
+    */
+    function fetchAllReimbursementsAsGroups(Request $request){
+
+        $year = '2023';
+        $month = '03';
+
+        $response = array();
+
+        //Fetch how many unique users for the given filters
+        //SELECT distinct user_id FROM `vmt_employee_reimbursements` where MONTH(date) = '3' AND YEAR(date) = '2023';
+        $array_unique_users = VmtEmployeeReimbursements::leftJoin('users','users.id','=','vmt_employee_reimbursements.user_id')
+                                ->whereYear('vmt_employee_reimbursements.date',$year)->whereMonth('vmt_employee_reimbursements.date',$month)->distinct()->get(['vmt_employee_reimbursements.user_id as user_id','users.name as employee_name','users.user_code as user_code']);
+
+        //for each user_id
+        dd($array_unique_users->toArray());
+
+
+        $reimbursement_query= VmtEmployeeReimbursements::join('vmt_reimbursements','vmt_reimbursements.id','=','vmt_employee_reimbursements.reimbursement_type_id')
+        ->join('users','users.id','=','vmt_employee_reimbursements.user_id')
+        ->select(
+            'vmt_employee_reimbursements.id as id',
+            'users.name as name',
+            'users.user_code as user_code',
+            'vmt_employee_reimbursements.date as reimbursement_date',
+            'vmt_employee_reimbursements.from',
+            'vmt_employee_reimbursements.to',
+            'vmt_employee_reimbursements.vehicle_type',
+            'vmt_employee_reimbursements.distance_travelled',
+            'vmt_employee_reimbursements.status',
+            'vmt_employee_reimbursements.total_expenses',
+
+        )
+        ->get();
+
+
+         return $reimbursement_query;
+
+    }
+
+    /*
+
+
+    */
+    public function processReimbursementBulkApprovals(Request $request){
+
+    }
+
 
     function approveRejectReimbursements(Request $request){
         //dd($request->all());
