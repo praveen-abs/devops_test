@@ -323,7 +323,10 @@ class VmtApprovalsController extends Controller
         //Fetch how many unique users for the given filters
         //SELECT distinct user_id FROM `vmt_employee_reimbursements` where MONTH(date) = '3' AND YEAR(date) = '2023';
         $array_unique_users = VmtEmployeeReimbursements::leftJoin('users','users.id','=','vmt_employee_reimbursements.user_id')
-                                ->whereYear('vmt_employee_reimbursements.date',$year)->whereMonth('vmt_employee_reimbursements.date',$month)->distinct()->get(['vmt_employee_reimbursements.user_id as user_id','users.name as employee_name','users.user_code as user_code']);
+                                ->whereYear('vmt_employee_reimbursements.date',$year)
+                                ->whereMonth('vmt_employee_reimbursements.date',$month)
+                                ->distinct()
+                                ->get(['vmt_employee_reimbursements.user_id as user_id','users.name as employee_name','users.user_code as user_code']);
 
         //for each user_id
         dd($array_unique_users->toArray());
