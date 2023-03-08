@@ -292,6 +292,7 @@ class VmtApprovalsController extends Controller
         [
             {
                 "employee_name" : "Karthick",
+                "user_code" : "ABS001",
                 "user_id":178,
                 "reimbursement_data":[
                     { "id": "10","date" : "2023-03-08 00:35:49" , "user_comments":"sdfsdf" ,"status":"Pending" , "from" : "chennai", "to": "bangalore", "vehicle_type": "2-wheeler", "distance_travelled" :"100","total_expenses":"1500" },
@@ -301,6 +302,7 @@ class VmtApprovalsController extends Controller
             },
             {
                 "employee_name" : "Narasimma",
+                "user_code" : "ABS002",
                 "user_id":179,
                 "reimbursement_data":[
                     { "id": "10","date" : "2023-03-08 00:35:49" , "user_comments":"sdfsdf" ,"status":"Pending" , "from" : "chennai", "to": "bangalore", "vehicle_type": "2-wheeler", "distance_travelled" :"100","total_expenses":"1500" },
@@ -317,40 +319,45 @@ class VmtApprovalsController extends Controller
 
         $year = '2023';
         $month = '03';
+        $reimbursement_type_id = "1"; //Hardcoded Local Conveyance
 
-        $response = array();
+        $json_response = array();
 
         //Fetch how many unique users for the given filters
         //SELECT distinct user_id FROM `vmt_employee_reimbursements` where MONTH(date) = '3' AND YEAR(date) = '2023';
         $array_unique_users = VmtEmployeeReimbursements::leftJoin('users','users.id','=','vmt_employee_reimbursements.user_id')
+                                ->where('vmt_employee_reimbursements.reimbursement_type_id',$reimbursement_type_id)
                                 ->whereYear('vmt_employee_reimbursements.date',$year)
                                 ->whereMonth('vmt_employee_reimbursements.date',$month)
                                 ->distinct()
                                 ->get(['vmt_employee_reimbursements.user_id as user_id','users.name as employee_name','users.user_code as user_code']);
 
         //for each user_id
-        dd($array_unique_users->toArray());
+        //dd($array_unique_users->toArray());
+        foreach($array_unique_users as $single_user){
 
+            //dd($single_user->user_id);
+            $single_user_data["employee_name"] = $single_user->employee_name;
+            $single_user_data["user_code"] = $single_user->user_code;
+            $single_user_data["user_id"] = $single_user->user_id;
 
-        $reimbursement_query= VmtEmployeeReimbursements::join('vmt_reimbursements','vmt_reimbursements.id','=','vmt_employee_reimbursements.reimbursement_type_id')
-        ->join('users','users.id','=','vmt_employee_reimbursements.user_id')
-        ->select(
-            'vmt_employee_reimbursements.id as id',
-            'users.name as name',
-            'users.user_code as user_code',
-            'vmt_employee_reimbursements.date as reimbursement_date',
-            'vmt_employee_reimbursements.from',
-            'vmt_employee_reimbursements.to',
-            'vmt_employee_reimbursements.vehicle_type',
-            'vmt_employee_reimbursements.distance_travelled',
-            'vmt_employee_reimbursements.status',
-            'vmt_employee_reimbursements.total_expenses',
+            //Get all the reimbursement data for the given user_id
+            $reimbursement_data = VmtEmployeeReimbursements::where('user_id',$single_user->user_id)
+                                ->where('reimbursement_type_id',$reimbursement_type_id)
+                                ->get(['id','reimbursement_type_id','date','from','to','vehicle_type','distance_travelled','total_expenses','status']);
 
-        )
-        ->get();
+            //dd($reimbursement_data->toArray());
+            $single_user_data["reimbursement_data"] = $reimbursement_data->toArray();
 
+            //dd($single_user_data);
 
-         return $reimbursement_query;
+            array_push($json_response, $single_user_data);
+
+        }
+
+        //dd($json_response);
+
+        return $json_response;
 
     }
 
