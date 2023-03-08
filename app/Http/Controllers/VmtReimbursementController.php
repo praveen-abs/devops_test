@@ -16,5 +16,13 @@ class VmtReimbursementController extends Controller
 
     public function saveReimbursementsData(Request $request){
 
+        dd($request->all());
+        $request->claim_type= $request['claim_type'];
+        $request->claim_amount= $request['claim_amount'];
+        $request->eligible_amount= $request['request'];
+        $request->reimbursement_attachment= $request['reimbursement_attachment'];
+        $request->save();
+
+
     }
 }
