@@ -32,7 +32,7 @@
             <div>
 
 
-                <DataTable :paginator="true" :rows="10" dataKey="id"
+                <DataTable :value="data_reimbursements" :paginator="true" :rows="10" dataKey="id" @rowExpand="onRowExpand" @rowCollapse="onRowCollapse" v-model:expandedRows="expandedRows"
                 paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
                  responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}">
                 <template #empty>
@@ -41,6 +41,7 @@
                 <template #loading>
                     Loading customers data. Please wait.
                 </template>
+                <Column :expander="true" headerStyle="width: 3rem" />
                 <Column field="name" header="Employee Name" >
                     <template #body="slotProps">
                         {{ slotProps.data.name}}
@@ -56,7 +57,7 @@
                     </template>
                 </Column>
                 <!-- <Column field="user_data" header="User Data"></Column> -->
-                <Column class="fontSize13px" field="from" header="From"></Column>
+                <!-- <Column class="fontSize13px" field="from" header="From"></Column>
                 <Column class="fontSize13px" field="to" header="To"></Column>
                 <Column class="fontSize13px" field="vehicle_type" header="Mode Of Transport"></Column>
                 <Column class="fontSize13px" field="distance_travelled" header="Distance Covered"></Column>
@@ -64,7 +65,7 @@
                     <template #body="slotProps">
                         {{  "&#8377; "+slotProps.data.total_expenses  }}
                     </template>
-                </Column>
+                </Column> -->
 
 
 
@@ -78,8 +79,33 @@
                         </span>
                     </template>
                 </Column>
+
+                <template #expansion="slotProps">
+                    <div class="orders-subtable">
+                        <h5>Reimbursment Details of {{slotProps.data.name}}</h5>
+                        <DataTable :value="data_reimbursements" responsiveLayout="scroll">
+                            <Column field="user_code" header="Id" >
+                              {{slotProps.data}}
+                            </Column>
+                            <Column field="reimbursement_date" header="Date" sortable></Column>
+                            <Column field="from" header="From" ></Column>
+                            <Column field="to" header="To" ></Column>
+                            <Column class="fontSize13px" field="distance_travelled" header="Distance Covered"></Column>
+                            <Column class="fontSize13px" field="total_expenses" header="Total Expenses">
+                                <template #body="slotProps">
+                                    {{  "&#8377; "+slotProps.data.total_expenses  }}
+                                </template>
+                            </Column>
+                            <Column field="status" header="Status" sortable>
+                                <template #body="slotProps">
+                                    <span :class="'order-badge order-' + slotProps.data.status">{{slotProps.data.status}}</span>
+                                </template>
+                            </Column>
+
+                        </DataTable>
+                    </div>
+                </template>
             </DataTable>
-            <Button label="Submit" icon="pi pi-check" iconPos="right" />
         </div>
     </div>
 </template>
@@ -103,6 +129,8 @@
     const confirm = useConfirm();
     const toast = useToast();
     const loading=ref(true)
+    const expandedRows = ref([]);
+
 
 
     const filters = ref({
@@ -141,6 +169,7 @@
                 data_reimbursements.value = response.data;
                 console.log(response.data);
                 loading.value=false
+                console.log(Object.keys(response.data));
 
             });
 
@@ -236,11 +265,11 @@
 
 <style  lang="scss">
 .main-content{
-    width: 101%;
+    width: 85%;
 }
 .p-datatable .p-datatable-thead >tr>th{
     text-align: center;
-    padding: 0.3rem 1rem;
+    padding: 1.3rem 1rem;
     border: 1px solid #dee2e6;
       border-top-width: 1px;
       border-right-width: 1px;
