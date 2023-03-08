@@ -601,7 +601,7 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                     <!-- reports -->
                     <li class="nav-item">
                         <a class="nav-link sidebar menu-link pt-0" id="employeeInfo"
-                            href="{{ route('showPayrollReportsPage') }} " data-bs-toggle="" role="button"
+                            href="{{ route('reports-page') }} " data-bs-toggle="" role="button"
                             aria-expanded="false" aria-controls="sidebar360questions">
                             <i>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#686363"
