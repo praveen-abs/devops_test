@@ -716,7 +716,7 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                                         </span></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ url('attendance_shift_woff_hday') }}" class="nav-link sidebar py-1">
+                                    <a href="{{ route('showAttendanceSettingsPage') }}" class="nav-link sidebar py-1">
                                         <span> Attendance </span></a>
                                 </li>
                                 {{-- @endif --}}

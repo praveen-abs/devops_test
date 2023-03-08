@@ -277,16 +277,16 @@ Route::post('vmt-general-settings', [App\Http\Controllers\HomeController::class,
     // store employee
     Route::post('vmt-employee-store', 'App\Http\Controllers\VmtEmployeeController@storeEmployeeData');
 
-    Route::post('vmt-employee-onboard', 'App\Http\Controllers\VmtEmployeeController@processEmployeeOnboardForm_Normal_Quick');
+    Route::post('/vmt-employee-onboard', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@processEmployeeOnboardForm_Normal_Quick');
 
-    Route::get('bulkEmployeeOnboarding', 'App\Http\Controllers\VmtEmployeeController@showBulkOnboardUploadPage')->name('bulkEmployeeOnboarding');
-    Route::post('vmt-employess/bulk-upload', 'App\Http\Controllers\VmtEmployeeController@importBulkOnboardEmployeesExcelData');
+    Route::get('bulkEmployeeOnboarding', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@showBulkOnboardUploadPage')->name('bulkEmployeeOnboarding');
+    Route::post('vmt-employess/bulk-upload', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@importBulkOnboardEmployeesExcelData');
 
 
     // Bulk upload employees for quick Onboarding
-    Route::get('quickEmployeeOnboarding', 'App\Http\Controllers\VmtEmployeeController@showQuickOnboardUploadPage')->name('quickEmployeeOnboarding');
-    Route::post('vmt-employess/quick-onboarding/upload', 'App\Http\Controllers\VmtEmployeeController@importQuickOnboardEmployeesExcelData');
-    Route::get('vmt-employee/complete-onboarding', 'App\Http\Controllers\VmtEmployeeController@showEmployeeOnboardingPage');
+    Route::get('quickEmployeeOnboarding', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@showQuickOnboardUploadPage')->name('quickEmployeeOnboarding');
+    Route::post('vmt-employess/quick-onboarding/upload', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@importQuickOnboardEmployeesExcelData');
+    Route::get('vmt-employee/complete-onboarding', 'App\Http\Controllers\VmtEmployeeOnboardingController@showEmployeeOnboardingPage');
     Route::post('vmt-employee/complete-onboarding', 'App\Http\Controllers\VmtEmployeeController@storeQuickOnboardForm');
 
 
@@ -320,7 +320,7 @@ Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 's
     Route::get('/getEmployeeName',  [App\Http\Controllers\VmtEmployeeController::class, 'getEmployeeName'])->name('get-employee-name');
 
 
-    Route::get('/employeeOnboarding',  [App\Http\Controllers\VmtEmployeeController::class, 'showEmployeeOnboardingPage'])->name('employeeOnboarding');
+    Route::get('/employeeOnboarding',  [App\Http\Controllers\VmtEmployeeOnboardingController::class, 'showEmployeeOnboardingPage'])->name('employeeOnboarding');
     Route::post('/state',  [App\Http\Controllers\VmtEmployeeController::class, 'getState'])->name('state');
 
     //Normal Onboarding v2
@@ -370,7 +370,7 @@ Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 's
 
     Route::get('/documents',  [App\Http\Controllers\VmtEmployeeController::class, 'showEmployeeDocumentsPage'])->name('vmt-documents-route');
 
-    Route::post('vmt-documents-route', 'App\Http\Controllers\VmtEmployeeController@storeEmployeeDocuments')->name('vmt-storedocuments-route');
+    Route::post('vmt-documents-route', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@storeEmployeeDocuments')->name('vmt-storedocuments-route');
 
     //Documents Approvals
     Route::get('approvals-documents', 'App\Http\Controllers\VmtApprovalsController@showDocumentsApprovalPage')->name('vmt-approvals-emp-documents');
@@ -481,6 +481,20 @@ Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 's
     //Grid Js
     Route::get('/payroll-filter-info', [App\Http\Controllers\VmtReportsController::class, 'fetchPayrollReport'])->name('payroll-filter-info');
 
+    //Reimbursements Reports
+    Route::get('/reports/generate-employee-reimbursements-reports',  [App\Http\Controllers\VmtReportsController::class, 'generateEmployeeReimbursementsReports'])->name('generateEmployeeReimbursementsReports');
+    Route::get('/reports/generate-manager-reimbursements-reports',  [App\Http\Controllers\VmtReportsController::class, 'generateManagerReimbursementsReports'])->name('generateManagerReimbursementsReports');
+    Route::get('/reports/fetch-manager-reimbursements-reports',  [App\Http\Controllers\VmtReportsController::class, 'fetchManagerReimbursementsReports'])->name('fetchManagerReimbursementsReports');
+
+    //Vmt Correction Controller
+    Route::get('/processsExpense',  [App\Http\Controllers\VmtCorrectionController::class, 'processsExpense'])->name('processsExpense');
+
+
+    //Configrations
+    ////Attendance Settings
+    Route::get('/configurations/attendance_settings',  [App\Http\Controllers\VmtAttendanceSettingsController::class, 'showAttendanceSettingsPage'])->name('showAttendanceSettingsPage');
+    Route::get('/attendance_settings/fetch-emp-details',  [App\Http\Controllers\VmtAttendanceSettingsController::class, 'fetchEmployeeDetails'])->name('attendance_settings-fetchEmployeeDetails');
+    Route::post('/attendance_settings/save-shiftdetails',  [App\Http\Controllers\VmtAttendanceSettingsController::class, 'assignEmployeesToWorkShift'])->name('attendance_settings-save-shiftdetails');
 
 });
 
