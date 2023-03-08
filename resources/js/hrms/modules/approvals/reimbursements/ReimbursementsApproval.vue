@@ -74,8 +74,8 @@
                         <span v-if="slotProps.data.status == 'Pending'">
 
                             <Button type="button" icon="pi pi-check-circle" class="p-button-success Button"  label="Approve" @click="showConfirmDialog(slotProps.data,'Approve')"
-                            style="height: 2em;" />
-                            <Button type="button" icon="pi pi-times-circle" class="p-button-danger Button "  label="Reject" style="margin-left: 8px;height: 2em;" @click="showConfirmDialog(slotProps.data,'Reject')" />
+                            style="height: 2.5em;" />
+                            <Button type="button" icon="pi pi-times-circle" class="p-button-danger Button "  label="Reject" style="margin-left: 8px;height: 2.5em;" @click="showConfirmDialog(slotProps.data,'Reject')" />
                         </span>
                     </template>
                 </Column>
@@ -84,7 +84,7 @@
                     <div class="orders-subtable">
                         <h5>Reimbursment Details of {{slotProps.data.name}}</h5>
                         <DataTable :value="data_reimbursements" responsiveLayout="scroll">
-                            <Column field="user_code" header="Id" >
+                            <Column field="user_code" header="Employee ID" >
                               {{slotProps.data}}
                             </Column>
                             <Column field="reimbursement_date" header="Date" sortable></Column>
