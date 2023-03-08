@@ -92,7 +92,7 @@
         <Column :expander="true" headerStyle="width: 3rem" />
         <Column field="name" header="Employee Name">
           <template #body="slotProps">
-            {{ slotProps.data.name }}
+            {{ slotProps.data.employee_name }}
           </template>
           <template #filter="{ filterModel, filterCallback }">
             <InputText
@@ -106,14 +106,13 @@
         </Column>
         <Column
           class="fontSize13px"
-          field="reimbursement_date"
-          header="Date"
+          field="overall_expenses"
+          header="Overall Expenses"
           :sortable="true"
         >
-          <template #body="slotProps">
-            <!-- {{ slotProps.data.reimbursement_date }} -->
-            {{ dateFormat(slotProps.data.reimbursement_date, "dd-mm-yyyy, h:MM TT") }}
-          </template>
+        <template #body="slotProps">
+            {{ "&#8377; " + slotProps.data.overall_expenses }}
+        </template>
         </Column>
         <!-- <Column field="user_data" header="User Data"></Column> -->
         <!-- <Column class="fontSize13px" field="from" header="From"></Column>
@@ -151,12 +150,11 @@
 
         <template #expansion="slotProps">
           <div class="orders-subtable">
-            <h5>Reimbursment Details of {{ slotProps.data.name }}</h5>
-            <DataTable :value="data_reimbursements" responsiveLayout="scroll">
-              <Column field="user_code" header="Employee ID">
-                {{ slotProps.data }}
-              </Column>
-              <Column field="reimbursement_date" header="Date" sortable></Column>
+            <DataTable
+              :value="slotProps.data.reimbursement_data"
+              responsiveLayout="scroll"
+            >
+              <Column field="date" header="Date" sortable></Column>
               <Column field="from" header="From"></Column>
               <Column field="to" header="To"></Column>
               <Column
@@ -193,9 +191,6 @@ import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 
 let data_reimbursements = ref();
-const two_wheller_km_price = ref(3);
-const four_wheller_km_price = ref(4);
-const total_expenses = ref();
 let canShowConfirmation = ref(false);
 let canShowLoadingScreen = ref(false);
 const confirm = useConfirm();

@@ -341,10 +341,15 @@ class VmtApprovalsController extends Controller
             $single_user_data["user_code"] = $single_user->user_code;
             $single_user_data["user_id"] = $single_user->user_id;
 
+
             //Get all the reimbursement data for the given user_id
             $reimbursement_data = VmtEmployeeReimbursements::where('user_id',$single_user->user_id)
                                 ->where('reimbursement_type_id',$reimbursement_type_id)
                                 ->get(['id','reimbursement_type_id','date','from','to','vehicle_type','distance_travelled','total_expenses','status']);
+
+
+            $single_user_data["overall_expenses"] = "0";    //TODO : Need to calculate the overall expenses
+            $single_user_data["has_pending_reimbursements"] = "true";   //TODO : Need to find if any pending reimbursement there for the given user.
 
             //dd($reimbursement_data->toArray());
             $single_user_data["reimbursement_data"] = $reimbursement_data->toArray();
