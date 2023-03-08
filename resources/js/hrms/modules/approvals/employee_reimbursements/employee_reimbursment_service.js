@@ -11,12 +11,10 @@ import axios from "axios";
 
 export const employee_reimbursment_service = defineStore('employee_reimbursment_service', () => {
 
-    const products = ref([
-        { "id": "1000", "claim_type": "Bamboo Watch", "claim_amount": 65, "eligible_amount": 24, },
-        { "id": "1001", "claim_type": "Black Watch", "claim_amount": 72, "eligible_amount": 61, },
-
-
-    ]);
+    const reimbursement_datas = ref([
+        // { "id": "1000", "claim_type": "Bamboo Watch", "claim_amount": 65, "eligible_amount": 24,"reimbursment_remarks":"red","status":"Approved" },
+        // { "id": "1001", "claim_type": "Black Watch", "claim_amount": 72, "eligible_amount": 61,"status":"Pending" },
+   ]);
     const reimbursementsScreen = ref(true)
     const reimbursements_dailog = ref(false);
 
@@ -28,6 +26,9 @@ export const employee_reimbursment_service = defineStore('employee_reimbursment_
         claim_type: '',
         claim_amount: Number,
         eligible_amount: Number,
+        date_of_dispatch:'',
+        proof_of_delivery:'',
+        reimbursment_remarks:''
     });
 
 
@@ -39,7 +40,10 @@ export const employee_reimbursment_service = defineStore('employee_reimbursment_
         mode_of_transport: '',
         travel_from: '',
         travel_to: '',
-        total_distance_travelled: ''
+        total_distance_travelled: '',
+        Amt_km:'',
+        local_convenyance_total_amount:"",
+        local_conveyance_remarks:''
     })
 
 
@@ -57,13 +61,20 @@ export const employee_reimbursment_service = defineStore('employee_reimbursment_
 
 
      const submitted = ref(false);
-    const statuses = ref([
+    const  reimbursment_claim_types = ref([
         { label: 'Mobile Bills', value: 'Mobile Bills' },
         { label: 'Accommodation', value: 'Accommodation' },
         { label: 'Travel Expenses', value: 'Travel Expenses' },
         { label: 'Miscellaneous', value: 'Miscellaneous' },
         { label: 'Medical Expenses', value: 'Medical Expenses' },
         { label: 'Others', value: 'Others' }
+    ]);
+
+    const  local_Conveyance_Mode_of_transport = ref([
+        { label: 'public Transport', value: 'public Transport' },
+        { label: 'Car', value: 'Car' },
+        { label: 'Bike', value: 'Bike' },
+
     ]);
 
 
@@ -114,8 +125,7 @@ export const employee_reimbursment_service = defineStore('employee_reimbursment_
 
     const saveProduct = () => {
         submitted.value = true;
-        products.value.push(employee_reimbursement.value);
-        productDialog.value = false;
+        reimbursement_datas.value.push(employee_reimbursement.value);
         console.log(employee_reimbursement.value);
     };
 
@@ -152,6 +162,11 @@ export const employee_reimbursment_service = defineStore('employee_reimbursment_
 
     const post_reimbursment_data=()=>{
 
+
+        submitted.value = true;
+        reimbursement_datas.value.push(employee_reimbursement.value);
+        reimbursements_dailog.value=false
+        console.log(employee_reimbursement.value);
         console.log(("post reiburmentt"));
          console.log(employee_reimbursement_attachment.value);
          const data=JSON.stringify({
@@ -175,7 +190,7 @@ export const employee_reimbursment_service = defineStore('employee_reimbursment_
         });
     }
 
-    const data_local_convergance=ref()
+    const data_local_convergance=ref([])
 
 
     const fetch_data_for_local_convergance=()=>{
@@ -199,6 +214,8 @@ export const employee_reimbursment_service = defineStore('employee_reimbursment_
         const post_data_for_local_convergance=()=>{
 
             console.log(employee_local_conveyance.value);
+            data_local_convergance.value.push(employee_local_conveyance.value);
+
 
 
             // let url_all_local_convergance = window.location.origin + '/fetch_all_reimbursements';
@@ -220,7 +237,7 @@ export const employee_reimbursment_service = defineStore('employee_reimbursment_
 
 
     return {
-        products, hideDialog,  localconvergance_dailog, saveProduct, employee_reimbursement, employee_local_conveyance, statuses,
+         hideDialog,  localconvergance_dailog, saveProduct, employee_reimbursement, employee_local_conveyance,
          open_reimbursment, open_local_convergance,reimbursements_dailog,
         reimbursementsScreen, localconverganceScreen, Switch_to_localC, Switch_to_reimbursment,
         fetch_data_from_reimbursment,data_reimbursements,loading_spinner,
@@ -229,9 +246,10 @@ export const employee_reimbursment_service = defineStore('employee_reimbursment_
         // employee_reimbursement
 
         employee_reimbursement_attachment_upload,employee_reimbursement_attachment,file,reimbursement_data,reimbursement_attachment,post_reimbursment_data,
+        reimbursement_datas,reimbursment_claim_types,
 
         // employee_local_convergance
 
-        post_data_for_local_convergance,fetch_data_for_local_convergance,data_local_convergance
+        post_data_for_local_convergance,fetch_data_for_local_convergance,data_local_convergance,local_Conveyance_Mode_of_transport
     }
 })

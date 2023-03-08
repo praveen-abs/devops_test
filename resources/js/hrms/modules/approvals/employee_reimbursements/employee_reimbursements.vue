@@ -22,11 +22,15 @@
                         </ul>
                     </div>
                     <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5 col-xxl-5 d-flex justify-content-end">
-                        <select name="" id="" class="form-select border-primary w-50 me-3">
+
+                        <Calendar inputId="monthpicker" v-model="date9" view="month" dateFormat="mm/yy" placeholder="choose month"  />
+
+
+                        <!-- <select name="" id="" class="form-select border-primary w-50 me-3">
                             <option value="" disabled hidden selected>Choose Month</option>
                             <option value="">Jan 2023</option>
                             <option value="">Feb 2023</option>
-                        </select>
+                        </select> -->
                         <button v-if="employee_service.reimbursementsScreen" @click="employee_service.open_reimbursment"
                             class="btn btn-orange"><i class="fa fa-plus-circle me-1"></i>Add Claim</button>
 
@@ -49,10 +53,10 @@
                                 <div class="card">
 
 
-                                    <DataTable ref="dt" :value="employee_service.products" dataKey="id" :paginator="true"
+                                    <DataTable ref="dt" :value="employee_service.reimbursement_datas" dataKey="id" :paginator="true"
                                         :rows="10"
                                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                                        :rowsPerPageOptions="[5, 10, 25]"
+                                        :rowsPerPageOptions="[5, 10, 25]"   v-model:filters="filters" filterDisplay="menu" :globalFilterFields="['name', 'status']"
                                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
                                         responsiveLayout="scroll">
 
@@ -68,19 +72,62 @@
                                                 {{ "&#x20B9;" + slotProps.data.eligible_amount }}
                                             </template>
                                         </Column>
-
-
-
-                                        <!-- <Column :exportable="false" field="upload" header="Action" style="min-width:8rem">
+                                        <Column header="Document" style="min-width:8rem">
                                             <template #body="slotProps">
-                                                <Button style="height: 30px;" icon="pi pi-pencil"
-                                                    class="p-button-rounded p-button-warning mr-2"
-                                                    @click="editProduct(slotProps.data)" />
-                                                <Button style="height: 30px;" icon="pi pi-trash"
-                                                    class="p-button-rounded p-button-danger mr-2"
-                                                    @click="confirmDeleteSelected(slotProps.data)" />
+                                                {{ slotProps.data.document }}
                                             </template>
-                                        </Column> -->
+                                        </Column>
+                                        <Column field="reimbursment_remarks" header="Remarks" style="min-width:12rem">
+                                            <template #body="slotProps">
+                                                {{  slotProps.data.reimbursment_remarks }}
+                                            </template>
+                                        </Column>
+                                        <Column field="status" header="Status" icon="pi pi-check">
+                                            <template #body="{ data }">
+                                              <span v-if="!data.status" :class="'customer-badge status-' + data.status" style="font-weight: 800;font-size: 16px;">Pending</span>
+                                              <span :class="'customer-badge status-' + data.status">{{ data.status }}</span>
+                                            </template>
+                                            <template #filter="{ filterModel, filterCallback }">
+                                              <Dropdown
+                                                v-model="filterModel.value"
+                                                @change="filterCallback()"
+                                                :options="statuses"
+                                                placeholder="Select"
+                                                class="p-column-filter"
+                                                :showClear="true"
+                                              >
+                                                <template #value="slotProps">
+                                                  <span
+                                                    :class="'customer-badge status-' + slotProps.value"
+                                                    v-if="slotProps.value"
+                                                    >{{ slotProps.value }}</span
+                                                  >
+                                                  <span v-else>{{ slotProps.placeholder }}</span>
+                                                </template>
+                                                <template #option="slotProps">
+                                                  <span :class="'customer-badge status-' + slotProps.option">{{
+                                                    slotProps.option
+                                                  }}</span>
+                                                </template>
+                                              </Dropdown>
+                                            </template>
+                                          </Column>
+
+                                        <Column field="Date of dispatch" header="Date of dispatch" style="min-width:12rem">
+                                            <template #body="slotProps">
+                                                {{ slotProps.data.date_of_dispatch }}
+                                            </template>
+                                        </Column>
+                                        <Column header="Proof of Delivery" style="min-width:8rem">
+                                            <template #body="slotProps">
+                                                {{slotProps.data.proof_of_delivery }}
+                                            </template>
+                                        </Column>
+
+
+
+
+
                                     </DataTable>
                                 </div>
 
@@ -89,9 +136,9 @@
                                     <div class="field">
                                         <label for="name">Claim Type</label>
                                         <!-- <Dropdown id="inventoryStatus" v-model="employee_reimbursement.claim_type" :options="statuses" optionLabel="label" placeholder="Select a Status"></Dropdown> -->
-                                        <select class="form-select textbox onboard-form form-control"
+                                        <select class="form-select textbox onboard-form form-control" style="height: 2.9em;"
                                             v-model="employee_service.employee_reimbursement.claim_type">
-                                            <option v-for="types in employee_service.statuses" :key="types.value">
+                                            <option v-for="types in employee_service.reimbursment_claim_types" :key="types.value">
                                                 {{ types.label }}
                                             </option>
                                         </select>
@@ -109,6 +156,25 @@
                                             <InputNumber v-model="employee_service.employee_reimbursement.eligible_amount"
                                                 mode="currency" currency="INR" locale="en-IN" integeronly />
                                         </div>
+                                    </div>
+                                    <!-- <div class="formgrid grid">
+                                        <div class="field col">
+                                            <label for="Claim Amount">Date of Dispatch</label>
+                                            <InputNumber v-model="employee_service.employee_reimbursement.date_of_dispatch"
+                                                mode="currency" currency="INR" locale="en-IN" />
+                                        </div>
+
+                                        <div class="field col">
+                                            <label for="Eligible Amount">Proof of Delivery</label>
+                                            <InputNumber v-model="employee_service.employee_reimbursement.proof_of_delivery"
+                                                mode="currency" currency="INR" locale="en-IN" integeronly />
+                                        </div>
+                                    </div> -->
+                                    <div class="field">
+                                        <label for="name">Remarks</label><br>
+                                        <Textarea v-model="employee_service.employee_reimbursement.reimbursment_remarks" :autoResize="true" rows="5" cols="30" />
+
+
                                     </div>
                                     <div class="field">
                                         <label class="mb-3">file Upload</label>
@@ -158,13 +224,8 @@
                                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
                                 responsiveLayout="scroll">
 
-                                <Column header="Employee Name  " style="min-width:8rem">
-                                    <template #body="slotProps">
-                                        {{ slotProps.data.name }}
-                                    </template>
-                                </Column>
 
-                                <Column field="reimbursement_date" header="Date" style="min-width:12rem"> </Column>
+                                <Column field="" header="Date" style="min-width:12rem"> </Column>
                                 <Column header="Mode Of Transport  " style="min-width:8rem">
                                     <template #body="slotProps">
                                         {{ slotProps.data.vehicle_type }}
@@ -188,7 +249,19 @@
                                     </template>
                                 </Column>
 
+
+                                <Column field="distance_travelled" header="Amt/km" style="min-width:12rem">
+                                    <template #body="slotProps">
+                                        {{ slotProps.data.distance_travelled }}
+                                    </template>
+                                </Column>
+
                                 <Column field="total_expenses" header="Total Expenses" style="min-width:8rem">
+                                    <template #body="slotProps">
+                                        {{ slotProps.data.total_expenses }}
+                                    </template>
+                                </Column>
+                                <Column field="Remarks" header="Remarks" style="min-width:8rem">
                                     <template #body="slotProps">
                                         {{ slotProps.data.total_expenses }}
                                     </template>
@@ -213,7 +286,13 @@
 
                         <div class="field col">
                             <label for="Claim Amount">Mode of transport</label>
-                            <InputText v-model="employee_service.employee_local_conveyance.mode_of_transport" />
+                            <select class="form-select textbox onboard-form form-control" style="height: 2.9em;"
+                            v-model="employee_service.employee_local_conveyance.mode_of_transport">
+                            <option v-for="types in employee_service.local_Conveyance_Mode_of_transport" :key="types.value">
+                                {{ types.label }}
+                            </option>
+                        </select>
+
                         </div>
 
                         <div class="formgrid grid">
@@ -232,7 +311,13 @@
                         <div class="field col">
                             <label for="Eligible Amount">Distance travelled</label>
                             <InputText
-                                v-model="employee_service.employee_local_conveyance.total_distance_travelledPle" />
+                                v-model="employee_service.employee_local_conveyance.total_distance_travelled" />
+                        </div>
+                        <div class="field">
+                            <label for="name">Remarks</label><br>
+                            <Textarea v-model="employee_service.employee_local_conveyance.local_conveyance_remarks" :autoResize="true" rows="5" cols="30" />
+
+
                         </div>
 
 
@@ -263,8 +348,70 @@
 
 import { ref, onMounted, reactive } from 'vue';
 import { employee_reimbursment_service } from './employee_reimbursment_service'
+import { FilterMatchMode, FilterOperator } from "primevue/api";
+
+const filters = ref({
+  global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  employee_name: {
+    value: null,
+    matchMode: FilterMatchMode.STARTS_WITH,
+    matchMode: FilterMatchMode.EQUALS,
+    matchMode: FilterMatchMode.CONTAINS,
+  },
+
+  status: { value: null, matchMode: FilterMatchMode.EQUALS },
+});
+
+const statuses = ref(["Pending", "Approved", "Rejected"]);
 
 const employee_service = employee_reimbursment_service()
+
+const css_statusColumn = (data) => {
+  return [
+    {
+      pending: data.status === "Pending",
+      approved: data.status === "Approved",
+      rejected: data.status === "Rejected",
+    },
+  ];
+};
+
+// function processApproveReject() {
+//   hideConfirmDialog(false);
+
+//   canShowLoadingScreen.value = true;
+
+//   console.log("Processing Rowdata : " + JSON.stringify(currentlySelectedRowData));
+
+//   axios
+//     .post(window.location.origin + "/attendance-regularization-approvals", {
+//       id: currentlySelectedRowData.id,
+//       status:
+//         currentlySelectedStatus == "Approve"
+//           ? "Approved"
+//           : currentlySelectedStatus == "Reject"
+//           ? "Rejected"
+//           : currentlySelectedStatus,
+//       status_text: "",
+//     })
+//     .then((response) => {
+//       console.log("Response : " + response);
+
+//       canShowLoadingScreen.value = false;
+
+//       toast.add({ severity: "success", summary: "Info", detail: "Success", life: 3000 });
+//       ajax_GetAttRegularizationData();
+
+//       resetVars();
+//     })
+//     .catch((error) => {
+//       canShowLoadingScreen.value = false;
+//       resetVars();
+
+//       console.log(error.toJSON());
+//     });
+
+// }
 
 
 onMounted(() => {

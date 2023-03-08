@@ -31,6 +31,7 @@ import ColumnGroup from 'primevue/columngroup'
 import InputNumber from 'primevue/inputnumber'
 import FileUpload from 'primevue/fileupload';
 import Calendar from 'primevue/calendar'
+import Textarea from 'primevue/textarea'
 
 import  employee_reimbursement from './employee_reimbursements.vue'
 
@@ -65,6 +66,7 @@ app.component('ProgressSpinner', ProgressSpinner)
 app.component('InputNumber', InputNumber)
 app.component('FileUpload', FileUpload)
 app.component('Calendar', Calendar)
+app.component('Textarea', Textarea)
 
 app.mount("#vjs_employee_reimbursement");
 
