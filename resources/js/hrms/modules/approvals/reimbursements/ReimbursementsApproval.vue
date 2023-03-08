@@ -110,9 +110,9 @@
           header="Overall Expenses"
           :sortable="true"
         >
-        <template #body="slotProps">
+          <template #body="slotProps">
             {{ "&#8377; " + slotProps.data.overall_expenses }}
-        </template>
+          </template>
         </Column>
         <!-- <Column field="user_data" header="User Data"></Column> -->
         <!-- <Column class="fontSize13px" field="from" header="From"></Column>
@@ -127,7 +127,7 @@
 
         <Column field="" header="Action">
           <template #body="slotProps">
-            <span v-if="slotProps.data.status == 'Pending'">
+            <span v-if="slotProps.data.has_pending_reimbursements == 'true'">
               <Button
                 type="button"
                 icon="pi pi-check-circle"
