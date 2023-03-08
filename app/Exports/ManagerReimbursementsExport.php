@@ -32,6 +32,7 @@ class ManagerReimbursementsExport implements FromArray,ShouldAutoSize,WithHeadin
     function __construct($reimbursements_details,$totals){
         $this->reimbursements_details=$reimbursements_details;
         $this->totals=$totals;
+        $this->total_row=count($this->reimbursements_details)+3;
 
     }
 
@@ -64,6 +65,12 @@ class ManagerReimbursementsExport implements FromArray,ShouldAutoSize,WithHeadin
         ->getStartColor()->setRGB('002164');
         $sheet->getStyle('A2:G2')->getFont()->setBold(true)
                             ->getColor()->setRGB('ffffff');
+
+        $sheet->getStyle('A'.$this->total_row.':G'.$this->total_row)->getFill()
+        ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+        ->getStartColor()->setRGB('002164');
+        $sheet->getStyle('A'.$this->total_row.':G'.$this->total_row)->getFont()->setBold(true)
+        ->getColor()->setRGB('ffffff');
         // return [
         //     // Style the first row as bold text.
 
