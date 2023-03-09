@@ -220,12 +220,16 @@
 
                             <DataTable ref="dt" :value="employee_service.data_local_convergance" dataKey="id" :paginator="true" :rows="8"
                                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                                :rowsPerPageOptions="[5, 10, 25]"
+                                :rowsPerPageOptions="[5, 10, 25]"  v-model:filters="filters" filterDisplay="menu" :globalFilterFields="['name', 'status']"
                                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
                                 responsiveLayout="scroll">
 
 
-                                <Column field="" header="Date" style="min-width:12rem"> </Column>
+                                <Column field="date" header="Date" style="min-width:12rem">
+                                    <template #body="slotProps">
+                                        {{ slotProps.data.date }}
+                                    </template>
+                                 </Column>
                                 <Column header="Mode Of Transport  " style="min-width:8rem">
                                     <template #body="slotProps">
                                         {{ slotProps.data.vehicle_type }}
@@ -250,11 +254,43 @@
                                 </Column>
 
 
-                                <Column field="distance_travelled" header="Amt/km" style="min-width:12rem">
+                                <!-- <Column field="distance_travelled" header="Amt/km" style="min-width:12rem">
                                     <template #body="slotProps">
                                         {{ slotProps.data.distance_travelled }}
                                     </template>
-                                </Column>
+                                </Column> -->
+
+
+                                <Column field="status" header="Status" icon="pi pi-check">
+                                            <template #body="{ data }">
+                                              <span v-if="!data.status" :class="'customer-badge status-' + data.status" style="font-weight: 800;font-size: 16px;">Pending</span>
+                                              <span :class="'customer-badge status-' + data.status">{{ data.status }}</span>
+                                            </template>
+                                            <template #filter="{ filterModel, filterCallback }">
+                                              <Dropdown
+                                                v-model="filterModel.value"
+                                                @change="filterCallback()"
+                                                :options="statuses"
+                                                placeholder="Select"
+                                                class="p-column-filter"
+                                                :showClear="true"
+                                              >
+                                                <template #value="slotProps">
+                                                  <span
+                                                    :class="'customer-badge status-' + slotProps.value"
+                                                    v-if="slotProps.value"
+                                                    >{{ slotProps.value }}</span
+                                                  >
+                                                  <span v-else>{{ slotProps.placeholder }}</span>
+                                                </template>
+                                                <template #option="slotProps">
+                                                  <span :class="'customer-badge status-' + slotProps.option">{{
+                                                    slotProps.option
+                                                  }}</span>
+                                                </template>
+                                              </Dropdown>
+                                            </template>
+                                          </Column>
 
                                 <Column field="total_expenses" header="Total Expenses" style="min-width:8rem">
                                     <template #body="slotProps">
@@ -415,7 +451,7 @@ const css_statusColumn = (data) => {
 
 
 onMounted(() => {
-//    employee_service.fetch_data_from_reimbursment()
+   employee_service.fetch_data_from_reimbursment()
 employee_service.fetch_data_for_local_convergance()
 
 })

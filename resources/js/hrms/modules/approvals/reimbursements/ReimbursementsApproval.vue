@@ -104,14 +104,27 @@
             />
           </template>
         </Column>
+
         <Column
           class="fontSize13px"
-          field="overall_expenses"
-          header="Overall Expenses"
-          :sortable="true"
+          field="total_distance_travelled"
+          header="Overall Distance Travelled"
+          :sortable="false"
         >
           <template #body="slotProps">
-            {{ "&#8377; " + slotProps.data.overall_expenses }}
+            {{  slotProps.data.total_distance_travelled + " KM"}}
+          </template>
+        </Column>
+
+
+        <Column
+          class="fontSize13px"
+          field="total_expenses"
+          header="Overall Expenses"
+          :sortable="false"
+        >
+          <template #body="slotProps">
+            {{ "&#8377; " + slotProps.data.total_expenses }}
           </template>
         </Column>
         <!-- <Column field="user_data" header="User Data"></Column> -->
@@ -291,8 +304,8 @@ function processApproveReject() {
   console.log("currentlySelectedStatus : " + currentlySelectedStatus);
 
   axios
-    .post(window.location.origin + "/reimbursements-approve-reject", {
-      reimbursement_id: currentlySelectedRowData.id,
+    .post(window.location.origin + "/reimbursements_bulk_approval", {
+      reimbursement_id: currentlySelectedRowData,
       status:
         currentlySelectedStatus == "Approve"
           ? "Approved"
