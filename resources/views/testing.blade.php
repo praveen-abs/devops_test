@@ -6,8 +6,7 @@
 @endsection
 @endsection
 @section('content')
-@vite('resources/js/hrms/modules/approvals/reimbursements/ReimbursementsApproval.js')
-<div id="vjs_reimbursementsApprovalTable"></div>
+@vite('resources/js/hrms/modules/leave_module/leave_apply/LeaveApply.js')
+<div id="vjs_leaveapply"></div>
 @endsection
-
 

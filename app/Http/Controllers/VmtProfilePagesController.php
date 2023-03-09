@@ -6,7 +6,6 @@ use Session as Ses;
 use App\Models\Department;
 use App\Models\User;
 use App\Models\Bank;
-use App\Models\Department;
 use App\Models\Experience;
 use App\Models\VmtBloodGroup;
 use App\Models\VmtEmployee;

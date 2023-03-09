@@ -473,13 +473,6 @@
 
 
                                         </div>
-                                    </div>
-                                    <div class="text-center text-md-end">
-                                        <button type="button" class="btn btn-border-primary"
-                                            data-bs-dismiss="modal">Cancel</button>
-                                        <button type="button" id="btn_request_leave" class="btn btn-primary">Request
-                                            Leave</button>
-                                    </div>
                                 </div>
                                 <div class="col-xl-4 col-sm-12 col-lg-4 col-xxl-4 col-md-12  mt-md-3 mt-sm-3">
 
@@ -537,7 +530,14 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>                        </div>
+                                    <div class="text-center text-md-end">
+                                        <button type="button" class="btn btn-border-primary"
+                                            data-bs-dismiss="modal">Cancel</button>
+                                        <button type="button" id="btn_request_leave" class="btn btn-primary">Request
+                                            Leave</button>
+                                    </div>
+            
 
     {{-- error message details --}}
 
@@ -1335,10 +1335,9 @@
                                 if (total_date_hours) {
                                     if (permissionTypeIds.includes(leave_history.leave_type_id))
                                         return gridjs.html(total_date_hours +
-                                            " Hr(s)"); //For permissions, show only hours
+                                            " Hr(ssss)"); //For permissions, show only hours
                                     else
-                                        return gridjs.html(total_date_hours +
-                                            " Day(s)"); //For Leaves, show only days
+                                        return gridjs.html(total_date_hours); //For Leaves, show only days
                                 } else {
                                     return gridjs.html('-');
 
