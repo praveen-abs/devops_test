@@ -1718,11 +1718,11 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
                                         "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-center' ><div class='check-in f-10 text-success w-100 d-flex align-items-center justify-content-start'><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
                                         year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkin_time +
-                                        getAttendanceModeIcon(ajax_data_currentdate, "checkin") +"<span><button style='border: none;background: none;width: 16px;'><a style='color: black;' href="+ajax_data_currentdate.selfie_checkin+"><i style='width:0px' class='fa fa-picture-o me-2'></i></a></button></span>" +
+                                        getAttendanceModeIcon(ajax_data_currentdate, "checkin") +"<span><button style='border: none;background: none;width: 16px;'><a style='color: black;' target='_blank'  href="+ajax_data_currentdate.selfie_checkin+"><i style='width:0px' class='fa fa-picture-o me-2'></i></a></button></span>" +
                                         final_checkin_button_code +
                                         "</div> <div class='w-100 d-flex align-items-center justify-content-start  check-out mt-2 f-10 text-danger'><i  class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span class='f-11' id='checkout_time_" +
                                         year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkout_time +
-                                        getAttendanceModeIcon(ajax_data_currentdate, "checkout") +"<span><button style='border: none;background: none;width: 16px;'><a  style='color: black;' href="+ajax_data_currentdate.selfie_checkout+"><i style='width:0px'color: black;'' class='fa fa-picture-o me-2'></i></a></button></span>" +
+                                        getAttendanceModeIcon(ajax_data_currentdate, "checkout") +"<span><button style='border: none;background: none;width: 16px;'><a target='_blank'  style='color: black;' href="+ajax_data_currentdate.selfie_checkout+"><i style='width:0px'color: black;'' class='fa fa-picture-o me-2'></i></a></button></span>" +
                                         "</span>" +
                                         final_checkout_button_code +
                                         "</div></div></div>"
