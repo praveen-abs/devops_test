@@ -79,7 +79,7 @@
         :value="data_reimbursements"
         :paginator="true"
         :rows="10"
-        dataKey="id"
+        dataKey="user_id"
         @rowExpand="onRowExpand"
         @rowCollapse="onRowCollapse"
         v-model:expandedRows="expandedRows"
