@@ -12,7 +12,8 @@ export default defineConfig({
 
                     'resources/js/app.js',
 
-                    // Leaves Module
+                    // Leaves
+                    'resources/js/hrms/modules/leave_module/leave_apply/LeaveApply.js',
                     'resources/js/hrms/modules/leave_module/org_leave_module/OrgLeaveBalance.js',
                     'resources/js/hrms/modules/leave_module/team_leave_module/TeamLeaveBalance.js',
 
@@ -26,6 +27,7 @@ export default defineConfig({
                     // Approval Module
                     'resources/js/hrms/modules/approvals/att_regularization/AttRegularizationApproval.js',
                     'resources/js/hrms/modules/approvals/reimbursements/ReimbursementsApproval.js',
+                    'resources/js/hrms/modules/approvals/employee_reimbursements/employee_reimbursements.js',
                     'resources/js/hrms/modules/approvals/leaves/LeaveApproval.js',
                     'resources/js/hrms/modules/approvals/leaves/PMSApprovalTable.js',
                     'resources/js/hrms/modules/profile_pages/EmployeeDocumentsManager.js',
