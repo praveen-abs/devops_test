@@ -412,11 +412,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                             data-bs-dismiss="modal" aria-label="Close">×</button>
                     </div>
 
-                    <div class="modal-body">
-
-
-                    <img style='width: 472px; height: 550px;' id="check_in_selfie" >
-
+                    <div class="modal-body" id="selfie">
 
                     </div>
 
@@ -1300,8 +1296,6 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
         })
 
-        $('.modal-close').click(function() {
-            $('#SelfieImage').fadeOut(0);
 
 
 
@@ -1448,22 +1442,22 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                         if (isWeekEnd) {
 
 
-
+                            //   If check IN/OUT in week ends
                             let processedMonth = month + 1;
 
-                           if (processedMonth < 10) {
-                    // console.log("Month is less than 10 : "+month+". Adding '0' as prefix");
-                    processedMonth = "0" + processedMonth;
-                // console.log("Processed month value : "+processedMonth);
-                    // return ;
-                    }
+                            if (processedMonth < 10) {
+                             // console.log("Month is less than 10 : "+month+". Adding '0' as prefix");
+                             processedMonth = "0" + processedMonth;
+                              // console.log("Processed month value : "+processedMonth);
+                               // return ;
+                             }
 
-                 let currentDate = year + "-" + processedMonth + "-" + dateText;
+                            let currentDate = year + "-" + processedMonth + "-" + dateText;
 
-               let ajax_data_currentdate = ajax_monthly_data[currentDate];
-            //console.log("testing " + currentDate);
-       let todayDate = new Date().toISOString().slice(0, 10)
-           //console.log("today" + todayDate);
+                           let ajax_data_currentdate = ajax_monthly_data[currentDate];
+                            //console.log("testing " + currentDate);
+                            let todayDate = new Date().toISOString().slice(0, 10)
+                            //console.log("today" + todayDate);
 
 
                             if(!ajax_data_currentdate.isAbsent){
@@ -1545,9 +1539,6 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
                             }else{
 
-
-
-
                             cell.innerHTML =
                                 " <div class='w-100 h-100 p-2' style='background-color:#e7e7e7;'> <span class='show_date' >" +
                                 date +
@@ -1573,39 +1564,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                             //console.log("today" + todayDate);
 
 
-
-
-
-
-
-
-
                             if (ajax_data_currentdate) {
-
-
-
-                                if(!ajax_data_currentdate.isAbsent){
-
-                                    console.log("val"+Object.values(ajax_data_currentdate));
-                                    console.log("isAbsent:"+ajax_data_currentdate.isAbsent);
-                                    if(ajax_data_currentdate.attendance_mode_checkin=='mobile'){
-                                        console.log("Employee Mode of check_in is:"+ajax_data_currentdate.attendance_mode_checkin);
-                                        $("#check_in_selfie").attr('src',ajax_data_currentdate.selfie_checkin);
-                                        console.log("Check in Selfie SRC:"+ajax_data_currentdate.selfie_checkin);
-
-
-
-                                    }
-
-
-                                    if(ajax_data_currentdate.attendance_mode_checkout=='mobile'){
-                                        console.log("Employee Mode of check_out is:"+ajax_data_currentdate.attendance_mode_checkin);
-                                        $("#check_in_selfie").attr('src',ajax_data_currentdate.selfie_checkout);
-                                        console.log("Check in Selfie SRC:"+ajax_data_currentdate.selfie_checkout);
-
-                                    }
-                                }
-
 
                                 if (ajax_data_currentdate.isAbsent) {
                                     if (todayDate > currentDate) {
@@ -1841,8 +1800,8 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
                   function onclickShowSelfie(){
                 $('#SelfieImage').fadeIn(0);
-                $('#check_in_selfie').attr('src');
-        }
+                // $('#check_in_selfie').attr('src');
+                 }
 
                  $( document ).ready(function() {
                    console.log("generated")
