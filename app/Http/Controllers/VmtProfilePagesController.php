@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Session as Ses;
+use App\Models\Department;
 use App\Models\User;
 use App\Models\Bank;
-use App\Models\Department;
 use App\Models\Experience;
 use App\Models\VmtBloodGroup;
 use App\Models\VmtEmployee;
@@ -60,6 +60,7 @@ class VmtProfilePagesController extends Controller
 
         $genderArray = array("Male", "Female", "Other");
         $bank = Bank::all();
+        $department = Department::find($user_full_details->department_id)->name;
 
         //dd($maritalStatus);
         if (!empty($user_full_details->l1_manager_code))

@@ -100,7 +100,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/attendance-req-regularization', [App\Http\Controllers\VmtAttendanceController::class, 'applyRequestAttendanceRegularization'])->name('attendance-req-regularization');
     Route::post('/fetch-regularization-data', [App\Http\Controllers\VmtAttendanceController::class, 'fetchRegularizationData'])->name('fetch-regularization-data');
 
-
+   //Pms Form download
+    Route::get('/reports-pmsforms-page', [App\Http\Controllers\Reports\VmtPMSReportsController::class, 'showPMSFormsDownloadPage'])->name('reports-pmsforms-page');
+    Route::get('/fetch-assigned-pmsforms', [App\Http\Controllers\Reports\VmtPMSReportsController::class, 'fetchAllAssignedPMSForms'])->name('fetch-assigned-pmsforms');
+    Route::get('/fetchAssignmentPeriodForGivenYear', [App\Http\Controllers\Reports\VmtPMSReportsController::class, 'fetchAssignmentPeriodForGivenYear'])->name('fetchAssignmentPeriodForGivenYear');
+    Route::get('/report-download-pmsforms', [App\Http\Controllers\Reports\VmtPMSReportsController::class, 'downloadPMSForm'])->name('downloadPMSForm');
 
     //Attendance - AJAX
     Route::get('/fetch-attendance-user-timesheet', [App\Http\Controllers\VmtAttendanceController::class, 'fetchUserTimesheet'])->name('fetch-attendance-user-timesheet');
@@ -280,7 +284,6 @@ Route::post('vmt-general-settings', [App\Http\Controllers\HomeController::class,
 
     Route::post('vmt-360-forms/delete', 'App\Http\Controllers\Review360ModuleController@deleteReviewForm');
 
-
     Route::get('vmt_360review', 'App\Http\Controllers\Review360ModuleController@viewAssignUserForm' );
 
     ////Employee Hierarchy routes
@@ -335,7 +338,7 @@ Route::post('vmt-general-settings', [App\Http\Controllers\HomeController::class,
     Route::post('vmt-assetinventory-edit', 'App\Http\Controllers\VmtAssetInventoryController@updateAsset')->name('vmt-assetinventory-edit');
     Route::post('vmt-assetinventory-delete', 'App\Http\Controllers\VmtAssetInventoryController@deleteAsset')->name('vmt-assetinventory-delete');
 
-// end rout //
+// end route //
 
 // General Info
 Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 'storeGeneralInfo']);
@@ -356,7 +359,6 @@ Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 's
     Route::post('vmt-payslip', 'App\Http\Controllers\VmtPayrollController@uploadPayRunData');
 
     Route::get('payroll/claims',  [App\Http\Controllers\VmtPayrollController::class, 'showPayrollClaimsPage'])->name('showPayrollClaimsPage');
-    Route::get('payroll/reports',  [App\Http\Controllers\VmtPayrollController::class, 'showPayrollReportsPage'])->name('showPayrollReportsPage');
     Route::get('payroll/analytics',  [App\Http\Controllers\VmtPayrollController::class, 'showPayrollAnalyticsPage'])->name('showPayrollAnalyticsPage');
     Route::get('payroll/run',  [App\Http\Controllers\VmtPayrollController::class, 'showPayrollRunPage'])->name('showPayrollRunPage');
 
@@ -419,9 +421,13 @@ Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 's
     Route::get('/fetch_approvals_pmsforms',  [App\Http\Controllers\VmtApprovalsController::class, 'fetchApprovals_PMSForms'])->name('fetchApprovalsPMSForms');
 
     //Reimbursement Approvals
-    Route::get('/vmt_approval_reimbursements',  [App\Http\Controllers\VmtApprovalsController::class, 'showReimbursementApprovalPage'])->name('showReimbursementApprovalPage');
+    Route::get('/employee_reimbursements',  [App\Http\Controllers\VmtReimbursementController::class, 'showReimbursementsPage'])->name('showReimbursementsPage');
+    Route::get('/approval_reimbursements',  [App\Http\Controllers\VmtApprovalsController::class, 'showReimbursementApprovalPage'])->name('showReimbursementApprovalPage');
     Route::get('/fetch_all_reimbursements',  [App\Http\Controllers\VmtApprovalsController::class, 'fetchAllReimbursements'])->name('fetchAllReimbursements');
+    Route::get('/fetch_all_reimbursements_as_groups',  [App\Http\Controllers\VmtApprovalsController::class, 'fetchAllReimbursementsAsGroups'])->name('fetchAllReimbursements');
+    Route::post('/reimbursements_bulk_approval',  [App\Http\Controllers\VmtApprovalsController::class, 'processReimbursementBulkApprovals'])->name('processReimbursementBulkApprovals');
     Route::post('/reimbursements-approve-reject', [App\Http\Controllers\VmtApprovalsController::class, 'approveRejectReimbursements'])->name('approveRejectReimbursements');
+    Route::post('/saveReimbursementsData', [App\Http\Controllers\VmtReimbursementController::class, 'saveReimbursementsData'])->name('saveReimbursementsData');
 
 
 
@@ -487,21 +493,21 @@ Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 's
 
     ////Reports
     //payroll reports
-    Route::get('/reports/payroll',  [App\Http\Controllers\VmtReportsController::class, 'showPayrollReportsPage'])->name('Reports.showPayrollReportsPage');
-    Route::get('/reports/generatePayrollReports',  [App\Http\Controllers\VmtReportsController::class, 'generatePayrollReports'])->name('generatePayrollReports');
-    Route::get('/reports/fetchAllEmployeePayrollDetails',  [App\Http\Controllers\VmtReportsController::class, 'fetchAllEmployeePayrollDetails'])->name('fetchAllEmployeePayrollDetails');
-     //Ajax For Fetch Month For Given Year for payroll
-     Route::get('/fetch-payroll-month-for-given-year', [App\Http\Controllers\VmtReportsController::class, 'fetchPayrollMonthForGivenYear'])->name('fetchPayrollMonthForGivenYear');
+    Route::get('/reports', function(){
+        return view('reports.vmt_reports_page');
+    })->name('reports-page');
+
+    Route::get('/reports/payroll',  [App\Http\Controllers\Reports\VmtPayrollReportsController::class, 'showPayrollReportsPage'])->name('showPayrollReportsPage');
+    Route::get('/reports/generatePayrollReports',  [App\Http\Controllers\Reports\VmtPayrollReportsController::class, 'generatePayrollReports'])->name('generatePayrollReports');
+    Route::get('/payroll-filter-info', [App\Http\Controllers\Reports\VmtPayrollReportsController::class, 'fetchPayrollReport'])->name('payroll-filter-info');
+
+    //Ajax For Fetch Month For Given Year for payroll
+     Route::get('/fetch-payroll-month-for-given-year', [App\Http\Controllers\Reports\VmtPayrollReportsController::class, 'fetchPayrollMonthForGivenYear'])->name('fetchPayrollMonthForGivenYear');
 
     //pms reviwes report
-    Route::get('/reports/pmsreviews',  [App\Http\Controllers\VmtReportsController::class, 'showPmsReviewsReportPage'])->name('showPmsReviewsReportPage');
-    Route::get('/reports/generatePmsReviewsReports',  [App\Http\Controllers\VmtReportsController::class, 'generatePmsReviewsReports'])->name('generatePmsReviewsReports');
-
-    //Ajax Part
-    Route::get('/pms-filter-info', [App\Http\Controllers\VmtReportsController::class, 'filterPmsReport'])->name('pms-filter-info');
-
-    //Grid Js
-    Route::get('/payroll-filter-info', [App\Http\Controllers\VmtReportsController::class, 'fetchPayrollReport'])->name('payroll-filter-info');
+    Route::get('/reports/pmsreviews',  [App\Http\Controllers\Reports\VmtPMSReportsController::class, 'showPmsReviewsReportPage'])->name('showPmsReviewsReportPage');
+    Route::get('/reports/generatePmsReviewsReports',  [App\Http\Controllers\Reports\VmtPMSReportsController::class, 'generatePmsReviewsReports'])->name('generatePmsReviewsReports');
+    Route::get('/pms-filter-info', [App\Http\Controllers\Reports\VmtPMSReportsController::class, 'filterPmsReport'])->name('pms-filter-info');
 
     //Reimbursements Reports
     Route::get('/reports/generate-employee-reimbursements-reports',  [App\Http\Controllers\VmtReportsController::class, 'generateEmployeeReimbursementsReports'])->name('generateEmployeeReimbursementsReports');
