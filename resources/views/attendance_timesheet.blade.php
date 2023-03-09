@@ -414,10 +414,6 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
                     <div class="modal-body" id="selfie">
 
-
-                    <!-- <img style='width: 472px; height: 550px;' id="check_in_selfie" > -->
-
-
                     </div>
 
 
@@ -1444,10 +1440,113 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
 
                         if (isWeekEnd) {
+
+
+
+                            let processedMonth = month + 1;
+
+                           if (processedMonth < 10) {
+                    // console.log("Month is less than 10 : "+month+". Adding '0' as prefix");
+                    processedMonth = "0" + processedMonth;
+                // console.log("Processed month value : "+processedMonth);
+                    // return ;
+                    }
+
+                 let currentDate = year + "-" + processedMonth + "-" + dateText;
+
+               let ajax_data_currentdate = ajax_monthly_data[currentDate];
+            //console.log("testing " + currentDate);
+       let todayDate = new Date().toISOString().slice(0, 10)
+           //console.log("today" + todayDate);
+
+
+                            if(!ajax_data_currentdate.isAbsent){
+
+                                let final_checkin_button_code = "";
+                                    let final_checkout_button_code = "";
+                                    let final_checkin_time = ajax_data_currentdate.checkin_time ?? "";
+                                    let ui_final_checkin_time = final_checkin_time == "" ? "--:--:--" : moment(
+                                        final_checkin_time, ["HH:mm"]).format('h:mm a');
+
+                                    if (ajax_data_currentdate.lc_status == "Approved" || ajax_data_currentdate.mip_status ==
+                                        "Approved")
+                                        final_checkin_time == "" ? "--:--:--" : moment(final_checkin_time, ["HH:mm"])
+                                        .format('h:mm a');
+
+                                    let final_checkout_time = ajax_data_currentdate.checkout_time ?? "";
+                                    let ui_final_checkout_time = final_checkout_time == "" ? "--:--:--" : moment(
+                                        final_checkout_time, ["HH:mm"]).format('h:mm a');
+
+                                    //If not absent, show the dates
+                                    let html_LC_Status = ajax_data_currentdate.isLC ?
+                                        "<img src='{{ URL::asset($svg_icon_pending) }}' class='calendar_icon'>" : "";
+
+                                    let html_LC_Button =
+                                        "<input type='button' onclick ='showRegularizationModal(this)' title='Late Coming' class='f-10 btn-primary bn ms-2 lc_btn border-0 p-1 text-white' data-userid='" +
+                                        ajax_data_currentdate.user_id + "' data-applystatus='" + ajax_data_currentdate
+                                        .lc_status + "' data-currentdate='" + currentDate + "' data-checkintime='" +
+                                        final_checkin_time + "' value='LC' />&nbsp;&nbsp;";
+
+                                    let html_MIP_Button =
+                                        "<input type='button' onclick ='showRegularizationModal(this)' title='Missed In Punch' class='f-10 btn-primary bn ms-2 lc_btn border-0 p-1 text-white' data-userid='" +
+                                        ajax_data_currentdate.user_id + "' data-applystatus='" + ajax_data_currentdate
+                                        .mip_status + "' data-currentdate='" + currentDate + "' value='MIP' />&nbsp;&nbsp;";
+
+                                    let html_EG_Button =
+                                        "<input type='button' onclick ='showRegularizationModal(this)' title='Early Going' class='f-10 btn-orange bn ms-2 lc_btn border-0 p-1 text-white' data-userid='" +
+                                        ajax_data_currentdate.user_id + "' data-applystatus='" + ajax_data_currentdate
+                                        .eg_status + "' data-currentdate='" + currentDate + "' data-checkouttime='" +
+                                        final_checkout_time + "' value='EG'/>&nbsp;&nbsp;";
+
+                                    let html_MOP_Button =
+                                        "<input type='button' onclick ='showRegularizationModal(this)' title='Missed Out Punch'  class='f-10 btn-orange bn ms-2 lc_btn border-0 p-1 text-white ' data-userid='" +
+                                        ajax_data_currentdate.user_id + "' data-applystatus='" + ajax_data_currentdate
+                                        .mop_status + "' data-currentdate='" + currentDate + "' value='MOP' />&nbsp;&nbsp;";
+
+                                    if (ajax_data_currentdate.isLC) {
+                                        final_checkin_button_code = html_LC_Button + getStatusIcon(ajax_data_currentdate
+                                            .lc_status);
+                                    } else
+                                    if (ajax_data_currentdate.isMIP) {
+                                        final_checkin_button_code = html_MIP_Button + getStatusIcon(ajax_data_currentdate
+                                            .mip_status);
+                                    }
+
+                                    if (ajax_data_currentdate.isEG) {
+                                        final_checkout_button_code = html_EG_Button + getStatusIcon(ajax_data_currentdate
+                                            .eg_status);
+                                    } else
+                                    if (ajax_data_currentdate.isMOP) {
+                                        final_checkout_button_code = html_MOP_Button + getStatusIcon(ajax_data_currentdate
+                                            .mop_status);
+                                    }
+
+
+                                    cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
+
+                                        "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-center' ><div class='check-in f-10 text-success w-100 d-flex align-items-center justify-content-start'><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
+                                        year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkin_time +
+                                        getAttendanceModeIcon(ajax_data_currentdate, "checkin") +
+                                        "</span>" +
+                                        final_checkin_button_code +
+                                        "</div> <div class='w-100 d-flex align-items-center justify-content-start  check-out mt-2 f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span class='f-11' id='checkout_time_" +
+                                        year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkout_time +
+                                        getAttendanceModeIcon(ajax_data_currentdate, "checkout") +
+                                        "</span>" +
+                                        final_checkout_button_code +
+                                        "</div></div></div>";
+
+
+                            }else{
+
+
+
+
                             cell.innerHTML =
                                 " <div class='w-100 h-100 p-2' style='background-color:#e7e7e7;'> <span class='show_date' >" +
                                 date +
                                 "</span> <span>Week Off </span> <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex justify-content-between'> </div> <div class='w-100 d-flex justify-content-between check-out mt-2 f-10 text-danger'> </div></div></div>";
+                            }
 
                         } else {
 
@@ -1589,7 +1688,8 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
 
 
-                                } else {
+                                }
+                                else {
                                     let final_checkin_button_code = "";
                                     let final_checkout_button_code = "";
                                     let final_checkin_time = ajax_data_currentdate.checkin_time ?? "";
@@ -1649,8 +1749,28 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                             .mop_status);
                                     }
 
+                                     if(ajax_data_currentdate.attendance_mode_checkin=="mobile" || ajax_data_currentdate.attendance_mode_checkout=="mobile" ){
 
-                                    cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
+
+                                        cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
+
+                                        "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-center' ><div class='check-in f-10 text-success w-100 d-flex align-items-center justify-content-start'><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
+                                        year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkin_time +
+                                        getAttendanceModeIcon(ajax_data_currentdate, "checkin") +"<span><button style='border: none;background: none;width: 16px;'><a style='color: black;' href="+ajax_data_currentdate.selfie_checkin+"><i style='width:0px' class='fa fa-picture-o me-2'></i></a></button></span>" +
+                                        final_checkin_button_code +
+                                        "</div> <div class='w-100 d-flex align-items-center justify-content-start  check-out mt-2 f-10 text-danger'><i  class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span class='f-11' id='checkout_time_" +
+                                        year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkout_time +
+                                        getAttendanceModeIcon(ajax_data_currentdate, "checkout") +"<span><button style='border: none;background: none;width: 16px;'><a  style='color: black;' href="+ajax_data_currentdate.selfie_checkout+"><i style='width:0px'color: black;'' class='fa fa-picture-o me-2'></i></a></button></span>" +
+                                        "</span>" +
+                                        final_checkout_button_code +
+                                        "</div></div></div>"
+                                        console.log("---check in selfie-----"+ajax_data_currentdate.selfie_checkin+"------------");
+                                        console.log("---check out selfie-----"+ajax_data_currentdate.selfie_checkout+"------------");
+
+
+                                     }else{
+
+                                        cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
 
                                         "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-center' ><div class='check-in f-10 text-success w-100 d-flex align-items-center justify-content-start'><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
                                         year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkin_time +
@@ -1663,6 +1783,25 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         "</span>" +
                                         final_checkout_button_code +
                                         "</div></div></div>";
+
+
+                                     }
+
+
+
+                                    //  cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
+
+                                    //     "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-center' ><div class='check-in f-10 text-success w-100 d-flex align-items-center justify-content-start'><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
+                                    //     year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkin_time +
+                                    //     getAttendanceModeIcon(ajax_data_currentdate, "checkin") +
+                                    //     "</span>" +
+                                    //     final_checkin_button_code +
+                                    //     "</div> <div class='w-100 d-flex align-items-center justify-content-start  check-out mt-2 f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span class='f-11' id='checkout_time_" +
+                                    //     year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkout_time +
+                                    //     getAttendanceModeIcon(ajax_data_currentdate, "checkout") +
+                                    //     "</span>" +
+                                    //     final_checkout_button_code +
+                                    //     "</div></div></div>";
                                 }
                             }
 
@@ -1739,7 +1878,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                 return '&nbsp;<i class="fa fa-laptop"></i>';
             else
             if (attendance_mode == "mobile")
-                    return '&nbsp;<i class="fa fa-mobile-phone"></i><span><button style="border:none;width:19px;background:none;" onclick="onclickShowSelfie()"><i class="fa fa-picture-o me-2" aria-hidden="true"></i></button></span>';
+                    return '&nbsp;<i class="fa fa-mobile-phone"></i>';
             else
             {
                 return ''; // when attendance_mode column is empty.
