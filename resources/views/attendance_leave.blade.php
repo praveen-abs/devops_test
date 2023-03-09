@@ -1335,10 +1335,9 @@
                                 if (total_date_hours) {
                                     if (permissionTypeIds.includes(leave_history.leave_type_id))
                                         return gridjs.html(total_date_hours +
-                                            " Hr(s)"); //For permissions, show only hours
+                                            " Hr(ssss)"); //For permissions, show only hours
                                     else
-                                        return gridjs.html(total_date_hours +
-                                            " Day(s)"); //For Leaves, show only days
+                                        return gridjs.html(total_date_hours); //For Leaves, show only days
                                 } else {
                                     return gridjs.html('-');
 
