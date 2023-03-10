@@ -14,5 +14,5 @@
 @endsection
 @section('script')
 @vite('resources/js/hrms/modules/approvals/employee_reimbursements/employee_reimbursements.js')
-</script>
+
 @endsection
