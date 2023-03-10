@@ -353,9 +353,11 @@ class VmtReportsController extends Controller
                            // ->sum('vmt_employee_reimbursements.distance_travelled');
          // dd(gettype($user_details));
        //  dd(count($reimbursements_details));
+         $file_name=date("F", strtotime('00-'.$month.'-01'))."-".$year;
+         $month_name=date("F", strtotime('00-'.$month.'-01'));
         return Excel::download(new ManagerReimbursementsExport($reimbursements_details,
                                                                $totals
-                                                              ), 'Reimbursements.xlsx');
+                                                              ), $file_name.' Reimbursements Reports.xlsx');
 
     }
     public function fetchManagerReimbursementsReports(Request $request){
