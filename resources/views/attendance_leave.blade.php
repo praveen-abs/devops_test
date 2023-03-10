@@ -187,7 +187,7 @@
                         <div class="card mb-0 leave-history">
                             <div class="card-body">
                                 <h6 class="mb-2">Org Leave Balance</h6>
-                                @vite('resources/js/hrms/modules/leave_module/Org_leave_module/OrgLeaveBalance.js')
+                                @vite('resources/js/hrms/modules/leave_module/org_leave_module/OrgLeaveBalance.js')
                                 <div id="vjs_orgLeaveTable_RemainingLeave"></div>
                             </div>
                         </div>
