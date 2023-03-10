@@ -54,12 +54,10 @@
 
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
-
+<link rel="stylesheet" href="{{ URL::asset('/assets/css/calendar-vanila.css') }}">
 
 {{-- scss files --}}
-@vite(['resources/scss/main.scss'])
-
-
-
+@vite(['resources/scss/main.scss']);
+@vite(['resources/scss/views/main_dashboard.scss']);
 
 @yield('css')
