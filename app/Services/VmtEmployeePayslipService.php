@@ -478,6 +478,7 @@ class VmtEmployeePayslipService {
 
          //dd($client_name);
          //$html =  view('vmt_payslipTemplate', $data);
+         //dd($data['employee_statutory_details']->uan_number);
          $html =  view('vmt_payslip_templates.template_payslip_'.$processed_clientName, $data);
 
          return $html;
