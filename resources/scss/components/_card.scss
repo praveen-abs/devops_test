@@ -1,9 +1,11 @@
-// //
-// // _card.scss
-// //
-
 .card-border {
     box-shadow: $box-shadow-light;
+}
+
+
+.card{
+    // border: 0;
+    margin-bottom: 0.8rem;
 }
 
 // .card {

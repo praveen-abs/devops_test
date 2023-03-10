@@ -1,10 +1,17 @@
-@import './components/table';
-@import './components/variable';
-@import './components/card';
+@import "./components/table";
+@import "./components/variable";
+@import "./components/card";
+@import "./utilities/helpers";
 
 
-*{
-    font-size:1vw;
+
+$gray-100:#ededed;
+
+* {
+    // font-size: 1vw;
+    font-weight: $font-weight-medium;
 }
 
-
+body {
+    background-color:#{$gray-100};
+}

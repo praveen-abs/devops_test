@@ -1,21 +1,23 @@
 <div class="event-wrapper">
-    <div class="card  border-0 mb-0" style="height:270px;
-    overflow-y: auto;
-    overflow-x: hidden;">
+    <div class="card  border-0 mb-0">
         <div class="card-body">
-            <h6 class="text-primary">Events</h6>
-            <div class="row ">
+            <div class=" mb-3  f-18 text-primary" id=""> <span>Events</span>
+            </div>
+            <div class="center d-flex" style="height:210px">
+
                 <?php $anyUpcoming_Current_Events = false; ?>
 
                 @if ($dashboardEmployeeEventsData['hasData'] == 'true')
                     @foreach ($dashboardEmployeeEventsData['birthday'] as $employee)
                         <?php $text = null; ?>
 
-                        @if (\Carbon\Carbon::parse($employee['dob'])->month == date('m') &&
-                            \Carbon\Carbon::parse($employee['dob'])->day == date('d'))
+                        @if (
+                            \Carbon\Carbon::parse($employee['dob'])->month == date('m') &&
+                                \Carbon\Carbon::parse($employee['dob'])->day == date('d'))
                             <?php $text = 'Today'; ?>
-                        @elseif (\Carbon\Carbon::parse($employee['dob'])->month >= date('m') &&
-                            \Carbon\Carbon::parse($employee['dob'])->day > date('d'))
+                        @elseif (
+                            \Carbon\Carbon::parse($employee['dob'])->month >= date('m') &&
+                                \Carbon\Carbon::parse($employee['dob'])->day > date('d'))
                             <?php $text = 'Upcoming'; ?>
                         @endif
                         @if ($text != null)
@@ -29,29 +31,31 @@
 
                                         <?php
                                         $empAvatar = json_decode(getEmployeeAvatarOrShortName($employee->id));
-                                        //dd($empAvatar->type);
+                                        // dd($empAvatar->color);
                                         ?>
-                                        @if ($empAvatar->type == 'shortname')
-                                            <div class="userShort_name img-lg mb-3">
-                                                {{ $empAvatar->data }}
-                                            </div>
-                                        @elseif($empAvatar->type == 'avatar')
-                                            <?php
+                                        <div class="d-flex justify-content-center align-items-center mb-2">
+                                            @if ($empAvatar->type == 'shortname')
+                                                <div
+                                                    class=" img-xl  d-flex justify-content-center align-items-center   rounded <?php echo $empAvatar->color; ?>">
+                                                    <span class="text-white fw-bold">
+                                                        {{ $empAvatar->data }}
+                                                    </span>
+                                                </div>
+                                            @elseif($empAvatar->type == 'avatar')
+                                                <?php
+                                                $imageURL = request()->getSchemeAndHttpHost() . '/images/' . $empAvatar->data;
+                                                ?>
 
-                                            $imageURL = request()->getSchemeAndHttpHost() . '/images/' . $empAvatar->data;
-
-                                            ?>
-                                            <div class="text-center mb-3">
-                                                <img class=" userShort_name img-lg mb-3" src="{{ $imageURL }}"
+                                                <img class=" userShort_name rounded img-xl" src="{{ $imageURL }}"
                                                     alt="">
-                                            </div>
-                                        @endif
+                                            @endif
+                                        </div>
 
                                         <div class="text-center">
-                                            <p class="fw-bold f-14 text-muted ">
+                                            <p class=" text-muted ">
                                                 {{ $employee->name }}
                                             </p>
-                                            <p class="f-12 fw-bold text-orange  program-day ">
+                                            <p class="f-12  text-orange  program-day ">
                                                 {{ \Carbon\Carbon::parse($employee['dob'])->format('jS M') }}
                                             </p>
                                         </div>
@@ -79,11 +83,13 @@
                     @foreach ($dashboardEmployeeEventsData['work_anniversary'] as $employee)
                         <?php $text = null; ?>
 
-                        @if (\Carbon\Carbon::parse($employee['doj'])->month == date('m') &&
-                            \Carbon\Carbon::parse($employee['doj'])->day == date('d'))
+                        @if (
+                            \Carbon\Carbon::parse($employee['doj'])->month == date('m') &&
+                                \Carbon\Carbon::parse($employee['doj'])->day == date('d'))
                             <?php $text = 'Today'; ?>
-                        @elseif (\Carbon\Carbon::parse($employee['doj'])->month >= date('m') &&
-                            \Carbon\Carbon::parse($employee['doj'])->day > date('d'))
+                        @elseif (
+                            \Carbon\Carbon::parse($employee['doj'])->month >= date('m') &&
+                                \Carbon\Carbon::parse($employee['doj'])->day > date('d'))
                             <?php $text = 'Upcoming'; ?>
                         @endif
 
@@ -101,21 +107,26 @@
                                         $empAvatar = json_decode(getEmployeeAvatarOrShortName($employee->id));
                                         //dd($empAvatar);
                                         ?>
-                                        @if ($empAvatar->type == 'shortname')
-                                            <div class="userShort_name img-lg mb-3">
-                                                {{ $empAvatar->data }}
-                                            </div>
-                                        @elseif($empAvatar->type == 'avatar')
-                                            <?php
-
-                                            $imageURL = request()->getSchemeAndHttpHost() . '/images/' . $empAvatar->data;
-
-                                            ?>
-                                            <div class="text-center">
-                                                <img class=" img-lg mb-3  userShort_name" src="{{ $imageURL }}"
-                                                    alt="">
-                                            </div>
-                                        @endif
+                                        <div class="d-flex justify-content-center align-items-center">
+                                            @if ($empAvatar->type == 'shortname')
+                                                <div
+                                                    class=" img-xl mb-2 d-flex justify-content-center align-items-center   rounded <?php echo $empAvatar->color; ?>">
+                                                    <span class="text-white fw-bold">
+                                                        {{ $empAvatar->data }}
+                                                    </span>
+                                                </div>
+                                            @elseif($empAvatar->type == 'avatar')
+                                                <?php
+                                                $imageURL = request()->getSchemeAndHttpHost() . '/images/' . $empAvatar->data;
+                                                ?>
+                                                <div
+                                                    class="text-center
+                                            mb-3">
+                                                    <img class=" userShort_name rounded img-xl mb-2"
+                                                        src="{{ $imageURL }}" alt="">
+                                                </div>
+                                            @endif
+                                        </div>
                                         <div class="text-center">
                                             <p class="fw-bold f-14 text-muted ">
                                                 {{ $employee->name }}
@@ -155,6 +166,7 @@
                         </span>
                     </div>
                 @endif
+
             </div>
         </div>
     </div>
@@ -164,7 +176,7 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-md">
             <div class="modal-content">
                 <div class="modal-header py-2 border-0">
-                    <h6 class="modal-title " >
+                    <h6 class="modal-title ">
                         Wishes Text</h6>
                     <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
                         aria-label="Close">
@@ -184,3 +196,38 @@
         </div>
     </div>
 </div>
+
+
+
+<script>
+    $(document).ready(function() {
+        $(".center").slick({
+            centerMode: true,
+            centerPadding: "0px",
+            dots: true,
+            slidesToScroll: 1,
+            slidesToShow: 5,
+            prevArrow: '<span class="priv_arrow"> <i class="fa fa-chevron-left" aria-hidden="true"></i></span>',
+            nextArrow: '<span class="next_arrow"> <i class="fa fa-chevron-right" aria-hidden="true"></i></span>',
+            responsive: [{
+                    breakpoint: 768,
+                    settings: {
+                        arrows: true,
+                        centerMode: true,
+                        centerPadding: "40px",
+                        slidesToShow: 1,
+                    },
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        arrows: true,
+                        centerMode: true,
+                        centerPadding: "40px",
+                        slidesToShow: 1,
+                    },
+                },
+            ],
+        });
+    });
+</script>
