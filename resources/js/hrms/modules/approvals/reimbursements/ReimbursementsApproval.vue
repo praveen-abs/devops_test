@@ -89,7 +89,9 @@
       >
         <template #empty> No Reimbursement data for the selected status filter </template>
         <template #loading> Loading customers data. Please wait. </template>
-        <Column :expander="true" headerStyle="width: 3rem" />
+        <Column :expander="true" headerStyle="width: 0.5rem" />
+        <Column field="user_code" header="Employee Id" sortable></Column>
+
         <Column field="name" header="Employee Name">
           <template #body="slotProps">
             {{ slotProps.data.employee_name }}
@@ -162,6 +164,7 @@
         </Column>
 
         <template #expansion="slotProps">
+
           <div class="orders-subtable">
             <DataTable
               :value="slotProps.data.reimbursement_data"
@@ -436,7 +439,7 @@ function processApproveReject() {
   }
 }
 .p-datatable .p-datatable-tbody > tr > td:nth-child(1) {
-  width: 200px;
+  width: 100px;
 }
 .p-confirm-dialog-icon.pi.pi-exclamation-triangle {
   color: red;
