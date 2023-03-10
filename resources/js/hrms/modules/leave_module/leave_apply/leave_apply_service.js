@@ -197,9 +197,9 @@ export const Service = defineStore("Service", () => {
 
     const Submit = () => {
         leave_Request_data.leave_type=leave_data.selected_leave
-        if(full_day_format.value==true || leave_data.radiobtn_full_day=="full_day"){
+        if( leave_data.radiobtn_full_day=="full_day"){
             leave_Request_data.total_duration="full day"
-            leave_Request_data.total_duration=leave_data.full_day_leave_date
+            leave_Request_data.requested_leave_date=leave_data.full_day_leave_date
         }else
         if(leave_data.radiobtn_half_day=="half_day"){
             leave_Request_data.total_duration="half day"

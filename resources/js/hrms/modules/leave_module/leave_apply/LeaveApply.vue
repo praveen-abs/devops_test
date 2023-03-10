@@ -26,7 +26,7 @@
                                     <select style="  height: 38px;font-weight: 500;" name="" id="leave_type_id"
                                         class="form-select outline-none" v-model="service.leave_data.selected_leave"
                                         @change="service.Permission">
-                                        <option>Select</option>
+                                        <option value="Select" selected>Select</option>
                                         <option>Sick Leave / Casual Leave</option>
                                         <option>Maternity Leave</option>
                                         <option>Paternity Leave</option>
@@ -349,8 +349,7 @@
 
 
     <Dialog :style="{ width: '450px' }" header="Required" :modal="true" v-model:visible="service.RequiredField"
-        v-if="service.leave_data.notifyTo == '' || service.leave_data.leave_reason == ''">
-        <li v-if="service.leave_data.notifyTo == ''">notify To</li>
+        v-if="service.leave_data.leave_reason == ''">
         <li v-if="service.leave_data.leave_reason == ''">Leave Reason</li>
     </Dialog>
 
