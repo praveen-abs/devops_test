@@ -4,15 +4,15 @@
         <div class="flex justify-content-between align-items-center">
             <Calendar v-model="selected_date" view="month" dateFormat="mm/yy"  class=""/>
             <Dropdown v-model="selected_status" :options="statuses" placeholder="Status" class="w-full md:w-14rem mx-3" />
-            <button label="Submit" class="btn btn-primary" severity="danger" @click="generate_ajax"> <i class="fa fa-cog me-2"></i> Generate</button>
+            <button label="Submit" class="btn btn-primary" severity="danger"  @click="generate_ajax"> <i class="fa fa-cog me-2"></i> Generate</button>
         </div>
 
-        <button class="btn btn-primary" severity="success" @click="download_ajax"><i class="fas fa-file-download me-2"></i>Download</button>
+        <button class="btn btn-primary"  severity="success" @click="download_ajax"><i class="fas fa-file-download me-2" ></i>Download</button>
     </div>
     <div>
         <!-- <ConfirmDialog></ConfirmDialog> -->
         <Toast />
-        <Dialog header="Header" visible="false" v-if="false" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+        <Dialog header="Header" v-model:visible="data_checking" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
             :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
             <template #header>
                 <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
@@ -72,7 +72,7 @@
                 </Column>
 
 
-                <Column class="fontSize13px" field="total_expenses" header="Overall Expenses" :sortable="false">
+                <Column class="fontSize13px" field="total_expenses" header="Overall Reimbursements" :sortable="false">
                     <template #body="slotProps">
                         {{ "&#8377; " + slotProps.data.total_expenses }}
                     </template>
@@ -146,6 +146,7 @@ import moment from 'moment'
 let data_reimbursements = ref();
 let canShowConfirmation = ref(false);
 let canShowLoadingScreen = ref(false);
+const data_checking=ref(false)
 const confirm = useConfirm();
 const toast = useToast();
 const loading = ref(true);
@@ -168,10 +169,14 @@ const statuses = ref(["Pending", "Approved", "Rejected"]);
 
 let currentlySelectedStatus = null;
 let currentlySelectedRowData = null;
+const isdisabled=ref(true)
 
 onMounted(() => {
     data_reimbursements.value = [];
     selected_date.value = new Date()
+
+    console.log(selected_date.value);
+
 
 
 });
@@ -226,6 +231,8 @@ const generate_ajax = () => {
 
     //show_table.value=true
 
+    data_checking.value=true
+
 
 
     axios.post(window.location.origin + "/fetch_all_reimbursements_as_groups", {
@@ -237,6 +244,7 @@ const generate_ajax = () => {
         console.log("data from " + res.employee_name);
         data_reimbursements.value = res.data
         get_data.value = res.data
+        data_checking.value=false
     }).catch(err => {
         console.log(err);
     })
@@ -248,6 +256,7 @@ const download_ajax = () => {
 
     let year = filter_date.getFullYear();
     let month = filter_date.getMonth() + 1;
+    isdisabled.value=false
 
     let URL = '/reports/generate-manager-reimbursements-reports?selected_year=' + year + '&selected_month=' + month +
         '&selected_status=' + selected_status.value + '&_token={{ csrf_token() }}';
