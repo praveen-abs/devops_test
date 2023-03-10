@@ -33,11 +33,9 @@ class VmtReimbursementsService {
 
 
 
-    function fetchAllReimbursementsAsGroups($year, $month, $reimbursement_type_id){
+    function fetchAllReimbursementsAsGroups($year, $month, $status ,$reimbursement_type_id){
 
-        // $year = '2023';
-        // $month = '03';
-        // $reimbursement_type_id = "1"; //Hardcoded Local Conveyance
+
 
         $json_response = array();
 
@@ -49,10 +47,12 @@ class VmtReimbursementsService {
                                 ->groupBy('user_code')
                                 ->select('vmt_employee_reimbursements.user_id as user_id','users.name as employee_name',
                                 'users.user_code as user_code',DB::raw('sum(distance_travelled) as total_distance_travelled'),
-                                DB::raw('sum(total_expenses) as total_total_expenses'))->get();
+                                DB::raw('sum(total_expenses) as total_total_expenses'));
 
-        //for each user_id
-      // dd($array_unique_users->toArray());
+        if($status!=null){
+            $array_unique_users=$array_unique_users->where('vmt_employee_reimbursements.status', $status);
+        }
+        $array_unique_users=$array_unique_users->get();
         foreach($array_unique_users as $single_user){
 
             //dd($single_user->user_id);
@@ -65,9 +65,15 @@ class VmtReimbursementsService {
 
             //Get all the reimbursement data for the given user_id
             $reimbursement_data = VmtEmployeeReimbursements::where('user_id',$single_user->user_id)
+                                ->whereYear('vmt_employee_reimbursements.date',$year)
+                                ->whereMonth('vmt_employee_reimbursements.date',$month)
                                 ->where('reimbursement_type_id',$reimbursement_type_id)
-                                ->get(['id','reimbursement_type_id','date','from','to','vehicle_type','distance_travelled','total_expenses','status']);
+                                ->select('id','reimbursement_type_id','date','from','to','vehicle_type','distance_travelled','total_expenses','status');
 
+            if($status!=null){
+                $reimbursement_data = $reimbursement_data->where('vmt_employee_reimbursements.status', $status);
+            }
+            $reimbursement_data = $reimbursement_data->get();
 
            foreach($reimbursement_data as $singledata){
                 if($singledata->status=='Pending'){

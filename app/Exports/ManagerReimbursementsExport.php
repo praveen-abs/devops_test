@@ -19,6 +19,7 @@ use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use Maatwebsite\Excel\Concerns\WithDrawings;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
+use PhpOffice\PhpSpreadsheet\Style\Protection;
 
 
 class ManagerReimbursementsExport implements FromArray,ShouldAutoSize,WithHeadings,WithCustomStartCell,WithStyles
@@ -59,6 +60,7 @@ class ManagerReimbursementsExport implements FromArray,ShouldAutoSize,WithHeadin
     public function styles(Worksheet $sheet)
     {
 
+        $sheet->getParent()->getActiveSheet()->getProtection()->setSheet(true);
 
         $sheet->getStyle('A2:G2')->getFill()
         ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
