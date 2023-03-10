@@ -44,7 +44,7 @@
                                             <h6 class="text-center">{{ $user->name }}</h6>
                                         </div>
                                         <div class="mb-1 d-flex justify-content-between ">
-                                            <span class="text-muted f-12">Profile Completeness</span>
+                                            <span class="text-muted f-12">Profile Completeness :</span>
                                             <span class="text-muted text-end f-12 fw-bold" id="prograssBar_percentage">
 
                                             </span>
@@ -456,7 +456,8 @@
                                         <form action="" method="POST" enctype="multipart/form-data">
                                             <h6 class="">Statutory Information
                                                 <span class="personal-edit"><a href="#" class="edit-icon"
-                                                        data-bs-toggle="modal" data-bs-target="#statutory_info"><i
+                                                        data-bs-toggle="modal" data-bs-target="#statutory_info
+                                                        "><i
                                                             class="ri-pencil-fill"></i></a></span>
                                             </h6>
 
@@ -466,33 +467,33 @@
                                             <ul class="personal-info">
                                                 <li>
                                                     <div class="title">PF Applicable</div>
-                                                    <div class="text">{{ $detail->pf_applicable ?? '-' }}
+                                                    <div class="text">{{ $statutory_info->pf_applicable ?? '-' }}
 
                                                     </div>
                                                 </li>
                                                 <li>
                                                     <div class="title">EPF Number</div>
-                                                    <div class="text">{{ $detail->epf_number ?? '-' }}
+                                                    <div class="text">{{ $statutory_info->epf_number ?? '-' }}
 
                                                     </div>
                                                 </li>
 
                                                 <li>
                                                     <div class="title">UAN Number</div>
-                                                    <div class="text">{{ $detail->uan_number ?? '-' }}
+                                                    <div class="text">{{ $statutory_info->uan_number ?? '-' }}
 
                                                     </div>
                                                 </li>
 
                                                 <li>
                                                     <div class="title">ESIC Applicable</div>
-                                                    <div class="text">{{ $detail->esic_applicable ?? '-' }}
+                                                    <div class="text">{{ $statutory_info->esic_applicable ?? '-' }}
 
                                                     </div>
                                                 </li>
                                                 <li>
                                                     <div class="title">ESIC Number</div>
-                                                    <div class="text">{{ $detail->esic_number ?? '-' }}
+                                                    <div class="text">{{ $statutory_info->esic_number ?? '-' }}
 
                                                     </div>
                                                 </li>
