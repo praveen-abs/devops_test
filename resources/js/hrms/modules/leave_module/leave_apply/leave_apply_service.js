@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { ref, reactive } from "vue";
 import { useToast } from "primevue/usetoast";
+import axios from "axios";
 
 export const Service = defineStore("Service", () => {
 
@@ -10,7 +11,8 @@ export const Service = defineStore("Service", () => {
     // Variable Declarations
     const leave_data = reactive({
         selected_leave: "",
-        date: "",
+        full_day_leave_date: "",
+        half_day_leave_session:"",
         radiobtn_full_day: "",
         radiobtn_half_day: "",
         radiobtn_custom: "",
@@ -164,11 +166,74 @@ export const Service = defineStore("Service", () => {
 
     // Request leave Events
 
+    const leave_Request_data=reactive({
+        leave_type:'',
+        total_duration:'',
+        requested_leave_date:'',
+        notify_to:'',
+        leave_reason:''
+    })
+
+    leave_Request_data.leave_type=leave_data.selected_leave
+    if(full_day_format.value==true || leave_data.radiobtn_full_day=="full_day"){
+        leave_Request_data.total_duration="full day"
+    }else
+    if(leave_data.radiobtn_half_day=="half_day"){
+        leave_Request_data.total_duration="half day"
+
+    }else
+    if(leave_data.radiobtn_custom=="custom"){
+        leave_Request_data.total_duration="custom "
+    }else{
+         console.log("leave duration not selected")
+    }
+
+
+
+
+
+
     // write Email service and axios service here
 
     const Submit = () => {
+        leave_Request_data.leave_type=leave_data.selected_leave
+        if(full_day_format.value==true || leave_data.radiobtn_full_day=="full_day"){
+            leave_Request_data.total_duration="full day"
+            leave_Request_data.total_duration=leave_data.full_day_leave_date
+        }else
+        if(leave_data.radiobtn_half_day=="half_day"){
+            leave_Request_data.total_duration="half day"
+            leave_Request_data.requested_leave_date=new Date().toISOString()
+
+            if(leave_data.half_day_leave_session=="forenoon"){
+                leave_Request_data.total_duration="forenoon"
+            }else{
+                leave_Request_data.total_duration="afternoon"
+            }
+
+      }else
+        if(leave_data.radiobtn_custom=="custom"){
+            leave_Request_data.total_duration="custom "
+        }else{
+            alert("not working")
+      }
+      leave_Request_data.notify_to=leave_data.notifyTo
+      leave_Request_data.leave_reason=leave_data.leave_reason
+
         RequiredField.value = true;
+
+        console.log(leave_Request_data);
+
+        axios.post('/attendance-applyleave',{
+            leave_Request_data
+        }).then(res=>{
+            console.log(res);
+        }).catch(err=>{
+            console.log(err);
+        })
     };
+
+
 
     return {
 
@@ -178,6 +243,7 @@ export const Service = defineStore("Service", () => {
         today,
         invalidDates,
         toast,
+        leave_Request_data,
 
 
         // Events

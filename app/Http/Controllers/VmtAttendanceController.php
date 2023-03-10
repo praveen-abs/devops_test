@@ -337,7 +337,7 @@ class VmtAttendanceController extends Controller
 
     public function saveLeaveRequestDetails(Request $request)
     {
-        //dd($request->toArray());
+        dd($request->toArray());
         $leave_month = date('m',strtotime($request->start_date));
 
         //get the existing Pending/Approved leaves. No need to check Rejected
