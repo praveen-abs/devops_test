@@ -13,6 +13,7 @@ export default defineConfig({
                     // Leaves
                     'resources/js/hrms/modules/leave_module/leave_apply/LeaveApply.js',
                     'resources/js/hrms/modules/leave_module/org_leave_module/OrgLeaveBalance.js',
+                    'resources/js/hrms/modules/leave_module/org_leave_module/OrgLeaveHistoryTable.js',
 
                     'resources/js/hrms/modules/leave_module/team_leave_module/TeamLeaveBalance.js',
                     //Reports
