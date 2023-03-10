@@ -27,6 +27,7 @@ import InputText from 'primevue/inputtext'
 import Row from 'primevue/row'
 import ColumnGroup from 'primevue/columngroup'
 import Calendar from 'primevue/calendar'
+import moment from 'moment'
 
 import ReimbursementsApproval from './ReimbursementsApproval.vue';
 
@@ -54,8 +55,9 @@ app.component('ConfirmDialog',ConfirmDialog);
 app.component('Dropdown',Dropdown);
 app.component('InputText', InputText);
 app.component('Dialog', Dialog);
-app.component('ProgressSpinner', ProgressSpinner)
-app.component('Calendar', Calendar)
+app.component('ProgressSpinner', ProgressSpinner);
+app.component('Calendar', Calendar);
+app.component('moment',moment)
 
 app.mount("#vjs_reimbursementsApprovalTable");
 

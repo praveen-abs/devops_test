@@ -178,7 +178,11 @@
               :value="slotProps.data.reimbursement_data"
               responsiveLayout="scroll"
             >
-              <Column field="date" header="Date" sortable></Column>
+              <Column field="" header="Date" sortable>
+                <template #body="slotProps">
+                  {{ moment(slotProps.data.date).format('DD-MMM-YYYY')}}
+                </template>
+            </Column>
               <Column field="from" header="From"></Column>
               <Column field="to" header="To"></Column>
               <Column field="vehicle_type" header="Mode of transport"></Column>
@@ -214,6 +218,7 @@ import axios from "axios";
 import { FilterMatchMode, FilterOperator } from "primevue/api";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
+import moment from 'moment'
 
 let data_reimbursements = ref();
 let canShowConfirmation = ref(false);
@@ -222,6 +227,8 @@ const confirm = useConfirm();
 const toast = useToast();
 const loading = ref(true);
 const expandedRows = ref([]);
+
+
 
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
