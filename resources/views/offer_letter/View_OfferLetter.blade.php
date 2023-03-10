@@ -38,11 +38,13 @@
                         aria-labelledby="pills-profile-tab">
                         <div class="offer-pending-content mb-5">
                             <div class="row">
-                                <div class="col-xl-8 col-sm-8 col-lg-8 col-md-8 col-xxl-8"><span class="text-muted font-medium">Here you
+                                <div class="col-xl-8 col-sm-8 col-lg-8 col-md-8 col-xxl-8"><span
+                                        class="text-muted font-medium">Here you
                                         can
                                         view the saved offer letters to be sent</span></div>
                                 <div class="col-xl-4 col-sm-4 col-lg-4 col-md-4 col-xxl-4">
-                                    <a href="{{ route('create-offer') }}" class="btn btn-orange"><i class=" fa fa-plus-circle me-1"></i> Create
+                                    <a href="{{ route('create-offer') }}" class="btn btn-orange"><i
+                                            class=" fa fa-plus-circle me-1"></i> Create
                                         Offer</a>
                                 </div>
                             </div>
@@ -50,7 +52,8 @@
                         </div>
                         <div class="offer-delete-content">
                             <div class="row">
-                                <div class="col-xl-12 col-sm-12 col-lg-12 col-md-12 col-xxl-12"><span class="text-muted font-medium">
+                                <div class="col-xl-12 col-sm-12 col-lg-12 col-md-12 col-xxl-12"><span
+                                        class="text-muted font-medium">
                                         Deleted offer letters are stored here for 10 days</span>
                                 </div>
                                 <div class="col-xl-12 col-sm-12 col-lg-12 col-md-12 col-xxl-12">

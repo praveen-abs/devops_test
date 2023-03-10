@@ -61,17 +61,17 @@
                                                 <div class="mb-3">
                                                     <label for="">Candiate Name</label>
                                                     <input type="text" class="form-control" id=""
-                                                        placeholder="Candiate Name">
+                                                        placeholder="">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="">Mail Id</label>
                                                     <input type="text" class="form-control" id=""
-                                                        placeholder="ardens@gmail.com">
+                                                        placeholder="">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="">Mobile Number</label>
                                                     <input type="text" class="form-control" id=""
-                                                        placeholder="7772227779">
+                                                        placeholder="">
                                                 </div>
 
                                             </div>
@@ -112,7 +112,7 @@
                                                         <label for="">Pay (<i class="fa fa-inr"
                                                                 aria-hidden="true"></i>)</label>
                                                         <input type="text" class="form-control" id=""
-                                                            placeholder="10,200">
+                                                            placeholder="">
                                                     </div>
                                                     <div class="col-xl-6 col-sm-12 col-lg-6 col-md-6 mb-3 col-xxl-6 mb-3">
                                                         <label for="">Specification</label>
@@ -126,7 +126,7 @@
                                                 <div class="mb-3">
                                                     <label for="">Pay(In words)</label>
                                                     <input type="text" class="form-control" id=""
-                                                        placeholder="thousand two hundred">
+                                                        placeholder="">
                                                 </div>
                                             </div>
                                         </div>
@@ -140,7 +140,7 @@
                                                 <div class="mb-3">
                                                     <label for="">Designation</label>
                                                     <input type="text" class="form-control" id=""
-                                                        placeholder="UI Developer">
+                                                        placeholder="">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="">Expected DOJ</label>
