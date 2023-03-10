@@ -1,10 +1,17 @@
 <template>
+  <div style="flex justify-content-between">
+    <Calendar v-model="selected_date" view="month" dateFormat="mm/yy" />
+    <Dropdown v-model="selected_status" :options="statuses" placeholder="Status" class="w-full md:w-14rem" />
+    <Button label="Submit" severity="danger" @click="generate_ajax" />
+    <Button label="Download" severity="success" @click="download_ajax" />
+  </div>
   <div>
     <!-- <ConfirmDialog></ConfirmDialog> -->
     <Toast />
     <Dialog
       header="Header"
-      v-model:visible="loading"
+      visible="false"
+      v-if="false"
       :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
       :style="{ width: '25vw' }"
       :modal="true"
@@ -79,6 +86,7 @@
         :value="data_reimbursements"
         :paginator="true"
         :rows="10"
+        class="mt-6 "
         dataKey="user_id"
         @rowExpand="onRowExpand"
         @rowCollapse="onRowCollapse"
@@ -173,6 +181,7 @@
               <Column field="date" header="Date" sortable></Column>
               <Column field="from" header="From"></Column>
               <Column field="to" header="To"></Column>
+              <Column field="vehicle_type" header="Mode of transport"></Column>
               <Column
                 class="fontSize13px"
                 field="distance_travelled"
@@ -231,7 +240,10 @@ let currentlySelectedStatus = null;
 let currentlySelectedRowData = null;
 
 onMounted(() => {
-  ajax_GetReimbursementData();
+ data_reimbursements.value = [];
+ selected_date.value=new Date()
+
+
 });
 
 function ajax_GetReimbursementData() {
@@ -244,7 +256,6 @@ function ajax_GetReimbursementData() {
     // console.log("Axios : " + response.data);
     data_reimbursements.value = response.data;
     console.log(response.data);
-    loading.value = false;
     console.log(Object.keys(response.data));
   });
 }
@@ -268,25 +279,50 @@ function resetVars() {
   currentlySelectedRowData = null;
 }
 
-////PrimeVue ConfirmDialog code -- Keeping here for reference
-//const confirm = useConfirm();
+const selected_date=ref()
+const selected_status=ref()
+const show_table=ref(false)
 
-// function confirmDialog(selectedRowData, status) {
-//     console.log("Showing confirm dialog now...");
+const get_data=ref()
 
-//     confirm.require({
-//         message: 'Are you sure you want to proceed?',
-//         header: 'Confirmation',
-//         icon: 'pi pi-exclamation-triangle',
-//         accept: () => {
-//             toast.add({severity:'info', summary:'Confirmed', detail:'You have '+status, life: 3000});
-//         },
-//         reject: () => {
-//             console.log("Rejected");
-//             //toast.add({severity:'error', summary:'Rejected', detail:'You have rejected', life: 3000});
-//         }
-//     });
-// }
+const generate_ajax=()=>{
+    let filter_date = new Date(selected_date.value);
+
+    let year = filter_date.getFullYear();
+    let month = filter_date.getMonth() + 1;
+
+    console.log((selected_date.value).toString());
+    console.log(get_data);
+
+    //show_table.value=true
+
+
+
+ axios.post(window.location.origin + "/fetch_all_reimbursements_as_groups",{
+    selected_year : year,
+    selected_month : month,
+    selected_status : selected_status.value ,
+ }).then(res=>{
+    console.log("data sent");
+    console.log("data from "+res.employee_name);
+    data_reimbursements.value=res.data
+    get_data.value=res.data
+ }).catch(err=>{
+    console.log(err);
+ })
+
+}
+
+const download_ajax=()=>{
+    let filter_date = new Date(selected_date.value);
+
+    let year = filter_date.getFullYear();
+    let month = filter_date.getMonth() + 1;
+
+    let URL= '/reports/generate-manager-reimbursements-reports?selected_year='+year+'&selected_month='+month+
+    '&selected_status='+selected_status.value+ '&_token={{ csrf_token() }}';
+    window.location = URL;
+}
 
 const css_statusColumn = (data) => {
   return [

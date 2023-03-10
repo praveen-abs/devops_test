@@ -319,12 +319,11 @@ class VmtApprovalsController extends Controller
     */
     function fetchAllReimbursementsAsGroups(Request $request, VmtReimbursementsService $service){
 
-
-
-        $year = '2023';
-        $month = '02';
+        $year = $request->selected_year;
+        $month = $request->selected_month;
+        $status = $request->selected_status;
         $reimbursement_type_id = "1"; //Hardcoded Local
-       return  $service->fetchAllReimbursementsAsGroups( $year, $month , $reimbursement_type_id);
+       return  $service->fetchAllReimbursementsAsGroups( $year, $month , $status, $reimbursement_type_id);
     }
 
     /*
@@ -337,7 +336,6 @@ class VmtApprovalsController extends Controller
 
 
     function approveRejectReimbursements(Request $request){
-        dd($request->all());
 
         $query_review_reimbursement = VmtEmployeeReimbursements::find($request->reimbursement_id);
        // dd($query_review_reimbursement);
