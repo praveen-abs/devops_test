@@ -989,6 +989,11 @@ class VmtEmployeeController extends Controller
         return response()->json($state);
     }
 
+    public function fetchDepartmentDetails(Request $request){
+        $query = Department::all(['id','name']);
+        return response()->json($query);
+    }
+
     public function updateUserAccountStatus(Request $request)
     {
         $user = User::find($request->id);
