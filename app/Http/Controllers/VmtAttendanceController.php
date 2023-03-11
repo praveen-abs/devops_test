@@ -348,8 +348,11 @@ class VmtAttendanceController extends Controller
 
         //dd($existingNonPendingLeaves);
         //coverting start_date and end_date for comparison
+        $Leave_type_name=$request->input('leave_type_name');
+        dd( $request->$Leave_type_name);
         $processed_leave_start_date = new Carbon($request->start_date);
         $processed_leave_end_date = new Carbon($request->end_date);
+
 
         //dd($processed_leave_start_date->format('Y-m-d'));
 
