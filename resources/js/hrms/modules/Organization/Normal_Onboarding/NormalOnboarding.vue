@@ -1802,6 +1802,7 @@
                             class="form-control"
                             name="mother_gender"
                             id=""
+                            vmodel
                             value="Female"
                             readonly
                           />
@@ -2639,16 +2640,10 @@ const SaveEmployeeOnboardingData = () => {
 };
 
 const SubmitEmployeeOnboardingData = () => {
-
-   if(AadharDocBackInvalid.value && AadharDocFrontInvalid.value && PancardInvalid.value && EducationCertificateInvalid.value ){
-    console.log("invalid");
-   }else{
-    employee_onboarding.can_onboard_employee = true;
+  employee_onboarding.can_onboard_employee = true;
   console.log(employee_onboarding);
   jsonFormat();
   console.log(AadharCardFront.fileName);
-   }
-
 };
 
 // Generate data into JSON Format
@@ -2949,6 +2944,7 @@ const Sampledata = () => {
   employee_onboarding.fatherDateofBirth = ref("23-09-1968");
   employee_onboarding.motherName = ref("Licas");
   employee_onboarding.motherDateofBirth = ref("23-8-1970");
+  employee_onboarding.motherGender=ref("Female")
   employee_onboarding.motherAge = ref("35");
   employee_onboarding.spouseGender = ref("female");
   employee_onboarding.SpouseDOB = ref("12-8-1995");
