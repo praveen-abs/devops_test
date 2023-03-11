@@ -18,14 +18,14 @@
             <div class="card-body  pb-0 pt-1">
                 <ul class="nav nav-pills nav-tabs-dashed" role="tablist">
                     <li class="nav-item text-muted me-5" role="presentation">
-                        <a class="nav-link  pb-2" data-bs-toggle="tab" href="#dashboard" aria-selected="true"
+                        <a class="nav-link active  pb-2" data-bs-toggle="tab" href="#dashboard" aria-selected="true"
                             role="tab">
                             Dashboard
                         </a>
                     </li>
 
                     <li class="nav-item text-muted" role="presentation">
-                        <a class="nav-link active pb-2" data-bs-toggle="tab" href="#hrDashboard" aria-selected="true"
+                        <a class="nav-link  pb-2" data-bs-toggle="tab" href="#hrDashboard" aria-selected="true"
                             role="tab">
                             HR Dashboard
                         </a>
@@ -35,7 +35,7 @@
         </div>
 
         <div class="tab-content" id="pills-tabContent">
-            <div class="tab-pane show fade  " id="dashboard" role="tabpanel" aria-labelledby="pills-profile-tab">
+            <div class="tab-pane show fade  active " id="dashboard" role="tabpanel" aria-labelledby="pills-profile-tab">
                 <div class="row">
                     <div class="col-sm-12 col-md-6  col-xl-4 col-lg-4 col-xxl-4">
                         @include('ui-dashboard-welcome-card')
@@ -301,7 +301,7 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane show fade active " id="hrDashboard" role="tabpanel"
+            <div class="tab-pane show fade  " id="hrDashboard" role="tabpanel"
                 aria-labelledby="pills-profile-tab">
                 <div class="hr-dashboard">
                     <div class="row">
