@@ -8,7 +8,6 @@
             :globalFilterFields="['name', 'country.name', 'representative.name', 'status']">
             <template #header>
                 <div class="flex justify-content-start align-items-center">
-
                     <span class="p-input-icon-left">
                         <i class="pi pi-search" />
                         <InputText v-model="filters['global'].value" class="w-100" placeholder="Keyword Search" />
@@ -74,6 +73,20 @@ const display = () => {
 function getProductDetails() {
     return {
         "data": [
+            { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_offerPay": "5L,Net", "actions": "" },
+            { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_offerPay": "5L,Net", "actions": "" },
+            { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_offerPay": "5L,Net", "actions": "" },
+            { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_offerPay": "5L,Net", "actions": "" },
+            { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_offerPay": "5L,Net", "actions": "" },
+            { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_offerPay": "5L,Net", "actions": "" },
+            { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_offerPay": "5L,Net", "actions": "" },
+            { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_offerPay": "5L,Net", "actions": "" },
+            { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_offerPay": "5L,Net", "actions": "" },
+            { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_offerPay": "5L,Net", "actions": "" },
+            { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_offerPay": "5L,Net", "actions": "" },
+            { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_offerPay": "5L,Net", "actions": "" },
+            { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_offerPay": "5L,Net", "actions": "" },
+            { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_offerPay": "5L,Net", "actions": "" },
             { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_offerPay": "5L,Net", "actions": "" }
 
         ]

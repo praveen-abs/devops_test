@@ -19,7 +19,7 @@
             <Column field="candidate_status" header="Status ">
                 <template #body>
 
-                    <div class="status d-flex">
+                    <div class="status d-flex justify-content-center">
                         <div class="arrow">
                             <span class=" text-initial "><span class="me-1 font-medium">Offer Sent </span> <a
                                     class="fa text-muted fa-eye me-1" @click="viewOffer" href="#"></a></span>
@@ -96,6 +96,17 @@ export default {
         function getProductDetails() {
             return {
                 "data": [
+                    { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_status": "5L,Net", },
+                    { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_status": "5L,Net", },
+                    { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_status": "5L,Net", },
+                    { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_status": "5L,Net", },
+                    { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_status": "5L,Net", },
+                    { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_status": "5L,Net", },
+                    { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_status": "5L,Net", },
+                    { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_status": "5L,Net", },
+                    { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_status": "5L,Net", },
+                    { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_status": "5L,Net", },
+                    { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_status": "5L,Net", },
                     { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_status": "5L,Net", }
 
                 ]

@@ -31,25 +31,29 @@
                 </ul>
             </div>
         </div>
-        <div class="card px-5">
-            <div class="card-body">
-                <div class="tab-content" id="pills-tabContent">
-                    <div class="tab-pane show fade active" id="offer_pending" role="tabpanel"
-                        aria-labelledby="pills-profile-tab">
-                        <div class="offer-pending-content mb-5">
+
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane show fade active" id="offer_pending" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <div class="card ">
+                    <div class="card-body">
+                        <div class="offer-pending-content">
                             <div class="row">
                                 <div class="col-xl-8 col-sm-8 col-lg-8 col-md-8 col-xxl-8"><span
                                         class="text-muted font-medium">Here you
                                         can
                                         view the saved offer letters to be sent</span></div>
-                                <div class="col-xl-4 col-sm-4 col-lg-4 col-md-4 col-xxl-4">
+                                <div class="col-xl-4 col-sm-4 col-lg-4 col-md-4 col-xxl-4 text-end">
                                     <a href="{{ route('create-offer') }}" class="btn btn-orange"><i
                                             class=" fa fa-plus-circle me-1"></i> Create
                                         Offer</a>
                                 </div>
                             </div>
-                            <div id="offerletter_pending" class="mb-3" style=""></div>
+                            <div id="offerletter_pending" class="" style=""></div>
                         </div>
+                    </div>
+                </div>
+                <div class="card mb-0">
+                    <div class="card-body">
                         <div class="offer-delete-content">
                             <div class="row">
                                 <div class="col-xl-12 col-sm-12 col-lg-12 col-md-12 col-xxl-12"><span
@@ -63,17 +67,27 @@
 
                         </div>
                     </div>
+                </div>
+            </div>
 
-                    <div class="tab-pane  fade " id="offer_completed" role="tabpanel" aria-labelledby="pills-profile-tab">
+            <div class="tab-pane  fade " id="offer_completed" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <div class="card mb-0">
+                    <div class="card-body">
                         <div id="offerletter_completedTable" style=""></div>
-
                     </div>
-                    <div class="tab-pane  fade " id="offer_resent" role="tabpanel" aria-labelledby="pills-profile-tab">
-                        <div id="offerletter_resentTable" style=""></div>
+                </div>
+            </div>
+            <div class="tab-pane  fade " id="offer_resent" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <div class="card mb-0">
+                    <div class="card-body">
+
+                            <div id="offerletter_resentTable" class="no-customize" style=""></div>
+
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 @endsection
 
