@@ -23,21 +23,14 @@
                             <div class="col-md-7 col-sm-7  mb-md-0 mb-3">
                                 <div class="form-group">
 
-                                    <select style="  height: 38px;font-weight: 500;" name="" id="leave_type_id"
+
+
+                                    <select style="  height: 38px;font-weight: 500;" name="" id="leave_type_id" aria-label="Default select example"
                                         class="form-select outline-none" v-model="service.leave_data.selected_leave"
                                         @change="service.Permission">
-                                        <option value="Select" selected>Select</option>
-                                        <option>Sick Leave / Casual Leave</option>
-                                        <option>Maternity Leave</option>
-                                        <option>Paternity Leave</option>
-                                        <option>On Duty</option>
-                                        <option>Permission</option>
-                                        <option>Compensatory Off</option>
-
-
-
+                                        <option v-for="leavetype in service.leave_types" :key="leavetype.id">
+                                            {{ leavetype.leave_type }}</option>
                                     </select>
-
 
                                 </div>
                             </div>
@@ -89,7 +82,7 @@
                             <div class="col-md-7  mb-md-0 mb-3">
                                 <div class="form-group">
                                     <Calendar inputId="icon" v-model="service.leave_data.full_day_leave_date" dateFormat="yy-mm-dd"
-                                        :showIcon="true" style="width: 350px;"  />
+                                        :showIcon="true" style="width: 350px;"  :minDate="new Date()" />
 
 
                                 </div>
@@ -137,7 +130,7 @@
                                         <Calendar inputId="icon" dateFormat="yy-mm-dd" :showIcon="true"
                                             v-model="service.leave_data.custom_start_date"
                                             :disabledDates="service.invalidDates" :disabledDays="[0, 6]"
-                                            :manualInput="true" />
+                                            :manualInput="true"  />
 
                                     </div>
 
@@ -163,7 +156,7 @@
 
                                         <label for="" class="float-label">End Day</label>
                                         <Calendar inputId="icon" @date-select="service.dayCalculation" dateFormat="yy-mm-dd"
-                                            :showIcon="true" v-model="service.leave_data.custom_end_date" />
+                                            :showIcon="true" v-model="service.leave_data.custom_end_date" :minDate="new Date()"  />
 
                                     </div>
                                 </div>
@@ -300,7 +293,7 @@
 
                                 </div>
                             </div>
-                            <div class="col-md-8  mb-md-0 mb-3">
+                            <div class="col-md-7  mb-md-0 mb-3">
                                 <div class="form-group">
                                     <Chips v-model="service.leave_data.notifyTo" separator=","  />
                                 </div>
@@ -335,7 +328,7 @@
 
                         <div class="text-center mt-6 ">
                             <button type="button" class="btn btn-border-primary"  @click="visible = false">Cancel</button>
-                            <button type="button" id="btn_request_leave" class="btn btn-primary ms-4"
+                            <button type="button" id="btn_request_leave" class="btn btn-primary ms-4" :disabled="service.leave_data.selected_leave.length>0 ? false : true"
                                 @click="service.Submit">
                                 Request Leave</button>
                         </div>
@@ -368,11 +361,17 @@ import {Service} from './leave_apply_service'
 
 const visible=ref(false)
 
+const leave_types=ref()
 
 // Check All Varaibles and Events Here
 const service = Service()
 
 onMounted(() => {
+
+
+    service.get_leave_types()
+
+
 
     service.leave_data.custom_start_date = new Date().toJSON().slice(0, 10);
     service.leave_data.permission_start_time = new Date()

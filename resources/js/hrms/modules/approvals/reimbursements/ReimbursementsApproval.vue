@@ -7,7 +7,13 @@
             <button label="Submit" class="btn btn-primary" severity="danger"  @click="generate_ajax"> <i class="fa fa-cog me-2"></i> Generate</button>
         </div>
 
-        <button class="btn btn-primary"  severity="success" @click="download_ajax"><i class="fas fa-file-download me-2" ></i>Download</button>
+        <button class="btn btn-primary"
+
+
+
+
+
+         severity="success" @click="download_ajax"><i class="fas fa-file-download me-2" ></i>Download</button>
     </div>
     <div>
         <!-- <ConfirmDialog></ConfirmDialog> -->
