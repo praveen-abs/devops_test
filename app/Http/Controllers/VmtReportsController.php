@@ -347,16 +347,21 @@ class VmtReportsController extends Controller
               $overall_distance = $overall_distance+$single_details->total_distance;
               $overall_expense = $overall_expense+ $single_details->total_expenses;
         }
-          $totals = array('',"Total","","",$overall_distance, $overall_expense);
+          //$totals = array('',"Total","","",$overall_distance, $overall_expense);
+          $totals = array("Total"=>"Total","overall_distance"=>$overall_distance,"overall_Expense"=> $overall_expense);
          //dd($totals);
 
                            // ->sum('vmt_employee_reimbursements.distance_travelled');
          // dd(gettype($user_details));
        //  dd(count($reimbursements_details));
+         $legal_entity=sessionGetSelectedClientName();
+         if( $legal_entity=='Protocol'){
+            $legal_entity='PROTOCOL LABELS INDIA PRIVATE LIMITED';
+         }
          $file_name=date("F", strtotime('00-'.$month.'-01'))."-".$year;
-         $month_name=date("F", strtotime('00-'.$month.'-01'));
+         $month_name=strtoupper(date("F", strtotime('00-'.$month.'-01')));
         return Excel::download(new ManagerReimbursementsExport($reimbursements_details,
-                                                               $totals
+                                                               $totals,$legal_entity, $month_name,$year
                                                               ), $file_name.' Reimbursements Reports.xlsx');
 
     }
