@@ -28,7 +28,12 @@ export async function getStateList() {
     return response.data;
 }
 export async function ManagerDetails(){
-    const response=await axios.get(`/fetch-manahgers-name`);
+    const response=await axios.get(`/fetch-managers-name`);
+    return response.data
+}
+
+export async function DepartmentDetails(){
+    const response=await axios.get(`/fetch-departments`);
     return response.data
 }
 
