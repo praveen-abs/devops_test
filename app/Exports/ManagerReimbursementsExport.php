@@ -34,13 +34,15 @@ class ManagerReimbursementsExport implements FromArray,ShouldAutoSize,WithHeadin
     protected $legal_entity;
     protected $month_name;
     protected $year;
-    function __construct($reimbursements_details,$totals,$legal_entity,$month_name,$year){
+    protected $client_name;
+    function __construct($reimbursements_details,$totals,$legal_entity,$month_name,$year,$client_name){
         $this->reimbursements_details=$reimbursements_details;
         $this->totals=$totals;
         $this->total_row=count($this->reimbursements_details)+4;
         $this->legal_entity=$legal_entity;
         $this->month_name=$month_name;
         $this->year=$year;
+        $this->client_name=$client_name;
 
     }
 
@@ -66,9 +68,9 @@ class ManagerReimbursementsExport implements FromArray,ShouldAutoSize,WithHeadin
     public function registerEvents(): array
     {
         return [
-            AfterSheet::class    => function(AfterSheet $event) {
-                $event->sheet->getDelegate()->getStyle('A3:G'.$this->total_row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-            },
+            // AfterSheet::class    => function(AfterSheet $event) {
+            //     $event->sheet->getDelegate()->getStyle('A3:G'.$this->total_row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            // },
             AfterSheet::class    => function(AfterSheet $event) {
                 $event->sheet->getDelegate()->getRowDimension('2')->setRowHeight(35);
             },
@@ -110,13 +112,21 @@ class ManagerReimbursementsExport implements FromArray,ShouldAutoSize,WithHeadin
         $sheet->getStyle('A'.$this->total_row.':G'.$this->total_row)->getFont()->setBold(true)
         ->getColor()->setRGB('ffffff');
 
+        $sheet->setCellValue('C'.($this->total_row+2), "Human Resource Manager Signature");
+        $sheet->getStyle('C'.($this->total_row+2))->getFont()->setBold(true)->setUnderline(true);
 
-        // return [
-        //     // Style the first row as bold text.
+        $sheet->mergeCells('E'.($this->total_row+2).':F'.($this->total_row+2))->setCellValue('E'.($this->total_row+2),"Finance Manager Signature");
+        $sheet->getStyle('E'.($this->total_row+2))->getFont()->setBold(true)->setUnderline(true);
 
-        //    1   => ['font' => ['bold' => true]],
+        //For Allignment Centre
+        $sheet->getStyle('A3:G'.($this->total_row+2))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
-        // ];
+         //For Allignment Centre
+         $sheet->getStyle('E1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+
+       // $sheet->getStyle('A1:G'.($this->total_row+2))->getBorders()->getOutline()->setBorderStyle(Border::BORDER_THICK);
+
     }
 
     public function array(): array
@@ -133,10 +143,11 @@ class ManagerReimbursementsExport implements FromArray,ShouldAutoSize,WithHeadin
     public function drawings()
     {
         $drawing = new Drawing();
-        $drawing->setName('Logo');
-        $drawing->setDescription('logoS');
-        $drawing->setPath(public_path('/assets/images/client_logos/ardens/evangelist.png'));
+        $drawing->setName($this->client_name);
+        $drawing->setDescription($this->client_name);
+        $drawing->setPath(public_path('assets/images/'.$this->client_name.'_logo.jpg'));
         $drawing->setHeight(60);
+        $drawing->setWidth(60);
         $drawing->setCoordinates('E1');
 
         return $drawing;
