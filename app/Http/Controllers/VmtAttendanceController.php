@@ -337,7 +337,7 @@ class VmtAttendanceController extends Controller
 
     public function saveLeaveRequestDetails(Request $request)
     {
-        //dd($request->toArray());
+        dd($request->toArray());
         $leave_month = date('m',strtotime($request->start_date));
 
         //get the existing Pending/Approved leaves. No need to check Rejected
@@ -1363,6 +1363,10 @@ class VmtAttendanceController extends Controller
         return $final_output;
     }
 
+    /*
+        Team level leave balance
+
+    */
     public function fetchTeamEmployeesPendingLeaves(Request $request){
 
         //dd($request->all());
@@ -1388,7 +1392,7 @@ class VmtAttendanceController extends Controller
                             ->join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','vmt_employee_leaves.user_id')
                             ->join('vmt_leaves','vmt_leaves.id','=','vmt_employee_leaves.leave_type_id')
                             ->select('vmt_employee_leaves.user_id','user_code','avatar','name','leave_type_id','leave_type','total_leave_datetime')
-                            ->where('vmt_employee_office_details.l1_manager_code','=','PLIPL001')
+                            ->where('vmt_employee_office_details.l1_manager_code','=',$manager_user_code)
                             ->get();
 
         //For each employee, check how much leave taken for each leave type

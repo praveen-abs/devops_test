@@ -309,57 +309,55 @@ class VmtReportsController extends Controller
     }
 
     private function getManagerReimbursementsReports($year,$month,$status){
-       // dd($year);
+       //dd($year);
+
         $reimbursements_details=User::leftJoin('vmt_employee_office_details','vmt_employee_office_details.user_id','=',
         'users.id')
         ->leftJoin('vmt_department','vmt_department.id','=','vmt_employee_office_details.department_id')
         ->join('vmt_employee_reimbursements','vmt_employee_reimbursements.user_id','=', 'users.id')
         ->where('is_ssa',0)->where('active','1')
-        // ->whereYear('vmt_employee_reimbursements.date','2022')
-        // ->whereMonth('vmt_employee_reimbursements.date','12')
+        ->whereYear('vmt_employee_reimbursements.date',$year)
+        ->whereMonth('vmt_employee_reimbursements.date',$month)
         ->groupBy('users.id')
         ->select('users.user_code','users.name','vmt_employee_office_details.designation',
         'vmt_department.name as department',DB::raw('sum(vmt_employee_reimbursements.distance_travelled) as total_distance'),
         DB::raw('sum(vmt_employee_reimbursements.total_expenses) as total_expenses'),'vmt_employee_office_details.l1_manager_name');
 
 
-       if($year==null){
-             $reimbursements_details= $reimbursements_details->whereYear('vmt_employee_reimbursements.date','2022');
+        if($status!="undefined"){
+            $reimbursements_details= $reimbursements_details->where('vmt_employee_reimbursements.status',$status);
         }
-
-        if($month==null){
-            $reimbursements_details= $reimbursements_details->whereMonth('vmt_employee_reimbursements.date','12');
-        }
-        if($status==null){
-            $reimbursements_details= $reimbursements_details->where('vmt_employee_reimbursements.status','12');
-        }
+       // dd($reimbursements_details->get());
 
         return $reimbursements_details->get();
 
     }
 
     public function generateManagerReimbursementsReports(Request $request){
-        $year='2022';
-        $month='12';
-        $status='Pending';
+    // dd($request->selected_status);
+        $year=$request->selected_year;
+        $month=$request->selected_month;
+        $status=$request->selected_status;
         $overall_distance=0;
         $overall_expense=0;
 
         $reimbursements_details = $this->getManagerReimbursementsReports($year,$month,$status);
-       // dd($reimbursements_details);
+       //dd($reimbursements_details);
         foreach( $reimbursements_details as $single_details){
               $overall_distance = $overall_distance+$single_details->total_distance;
               $overall_expense = $overall_expense+ $single_details->total_expenses;
         }
           $totals = array('',"Total","","",$overall_distance, $overall_expense);
-         // dd($totals);
+         //dd($totals);
 
                            // ->sum('vmt_employee_reimbursements.distance_travelled');
          // dd(gettype($user_details));
        //  dd(count($reimbursements_details));
+         $file_name=date("F", strtotime('00-'.$month.'-01'))."-".$year;
+         $month_name=date("F", strtotime('00-'.$month.'-01'));
         return Excel::download(new ManagerReimbursementsExport($reimbursements_details,
                                                                $totals
-                                                              ), 'Reimbursements.xlsx');
+                                                              ), $file_name.' Reimbursements Reports.xlsx');
 
     }
     public function fetchManagerReimbursementsReports(Request $request){

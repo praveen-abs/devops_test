@@ -1,8 +1,8 @@
 <template>
   <div>
-          <!-- <ConfirmDialog></ConfirmDialog> -->
-          <Toast />
-          <!-- <Dialog header="Header" v-model:visible="loading" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '25vw'}" :modal="true" :closable="false" :closeOnEscape="false">
+    <!-- <ConfirmDialog></ConfirmDialog> -->
+    <Toast />
+    <!-- <Dialog header="Header" v-model:visible="loading" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '25vw'}" :modal="true" :closable="false" :closeOnEscape="false">
               <template #header>
                   <ProgressSpinner style="width:50px;height:50px" strokeWidth="8" fill="var(--surface-ground)" animationDuration="2s" aria-label="Custom ProgressSpinner"/>
               </template>
@@ -10,132 +10,184 @@
                   <h5 style="text-align: center;">Please wait...</h5>
               </template>
           </Dialog> -->
-          <Dialog header="Header" v-model:visible="canShowLoadingScreen" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '25vw'}" :modal="true" :closable="false" :closeOnEscape="false">
-              <template #header>
-                  <ProgressSpinner style="width:50px;height:50px" strokeWidth="8" fill="var(--surface-ground)" animationDuration="2s" aria-label="Custom ProgressSpinner"/>
-              </template>
-              <template #footer>
-                  <h5 style="text-align: center;">Please wait...</h5>
-              </template>
-          </Dialog>
+    <Dialog
+      header="Header"
+      v-model:visible="canShowLoadingScreen"
+      :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+      :style="{ width: '25vw' }"
+      :modal="true"
+      :closable="false"
+      :closeOnEscape="false"
+    >
+      <template #header>
+        <ProgressSpinner
+          style="width: 50px; height: 50px"
+          strokeWidth="8"
+          fill="var(--surface-ground)"
+          animationDuration="2s"
+          aria-label="Custom ProgressSpinner"
+        />
+      </template>
+      <template #footer>
+        <h5 style="text-align: center">Please wait...</h5>
+      </template>
+    </Dialog>
 
-          <Dialog header="Confirmation" v-model:visible="canShowConfirmation" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '350px'}" :modal="true" >
-              <div class="confirmation-content">
-                  <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-                  <span>Are you sure you want to {{currentlySelectedStatus}}?</span>
-              </div>
-              <template #footer>
-                  <Button label="Yes" icon="pi pi-check" @click="processApproveReject()" class="p-button-text" autofocus />
-                  <Button label="No" icon="pi pi-times" @click="hideConfirmDialog(true)" class="p-button-text"/>
-              </template>
-          </Dialog>
-          <div>
-
-
-              <DataTable :value="Leave_data" :paginator="true" :rows="10" dataKey="id"
-              paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
-              responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
-              v-model:filters="filters" filterDisplay="menu" 
-              :globalFilterFields="['name','status']" >
-              <template #empty>
-                  No Employee data.....
-              </template>
-              <template #loading>
-                  Loading customers data. Please wait.
-              </template>
-              <Column field="name" header="Employee Name" >
-                  <template #body="slotProps">
-                      <div></div>
-                      {{ slotProps.data.employee_name}}
-                  </template>
-                    <template #filter="{filterModel,filterCallback}">
-                      <InputText v-model="filterModel.value" @input="filterCallback()"  placeholder="Search" class="p-column-filter" :showClear="true" />
-                     </template>
-              </Column>
-                
-                <Column field="leave_type" header="Leave Type"></Column>
-                <Column field="start_date" header="Start Date"></Column>
-                <Column field="end_date" header="End Date"></Column>
-                <Column field="leave_reason" header="Leave Reason"></Column>
-                <Column field="reviewer_name" header="Approvar Name"></Column>
-                <Column field="reviewer_comments" header="Approvar Comments"></Column>
-
-              <Column field="status" header="Status" icon="pi pi-check">
-
-              <template #body="{data}">
-                  <span :class="'customer-badge status-' + data.status">{{data.status}}</span>
-              </template>
-              <template #filter="{filterModel,filterCallback}">
-                  <Dropdown v-model="filterModel.value" @click="filterCallback()" :options="statuses" placeholder="Select" class="p-column-filter" :showClear="true">
-                      <template #value="slotProps">
-                          <span :class="'customer-badge status-' + slotProps.value" v-if="slotProps.value">{{slotProps.value}}</span>
-                          <span v-else>{{slotProps.placeholder}}</span>
-                      </template>
-                      <template #option="slotProps">
-                          <span :class="'customer-badge status-' + slotProps.option">{{slotProps.option}}</span>
-                      </template>
-                  </Dropdown>
-              </template>
-
-               </Column>
-
-              <Column field="" header="Action">
-                  <template #body="slotProps">
-                      <span v-if="slotProps.data.status == 'Pending'">
-
-                          <Button type="button" icon="pi pi-check-circle" class="p-button-success Button"  label="Approve" @click="showConfirmDialog(slotProps.data,'Approve')"
-                          style="height: 2em;" />
-                          <Button type="button" icon="pi pi-times-circle" class="p-button-danger Button "  label="Reject" style="margin-left: 8px;height: 2em;" @click="showConfirmDialog(slotProps.data,'Reject')" />
-                      </span>
-                  </template>
-              </Column>
-          </DataTable>
+    <Dialog
+      header="Confirmation"
+      v-model:visible="canShowConfirmation"
+      :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+      :style="{ width: '350px' }"
+      :modal="true"
+    >
+      <div class="confirmation-content">
+        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+        <span>Are you sure you want to {{ currentlySelectedStatus }}?</span>
       </div>
-  </div>
-    
+      <template #footer>
+        <Button
+          label="Yes"
+          icon="pi pi-check"
+          @click="processApproveReject()"
+          class="p-button-text"
+          autofocus
+        />
+        <Button
+          label="No"
+          icon="pi pi-times"
+          @click="hideConfirmDialog(true)"
+          class="p-button-text"
+        />
+      </template>
+    </Dialog>
+    <div>
+      <DataTable
+        :value="Leave_data"
+        :paginator="true"
+        :rows="5"
+        dataKey="id"
+        paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
+        responsiveLayout="scroll"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
+        v-model:filters="filters"
+        filterDisplay="menu"
+        :globalFilterFields="['name', 'status']"
+      >
+        <template #empty> No Employee data..... </template>
+        <template #loading> Loading customers data. Please wait. </template>
+        <Column field="name" header="Employee Name">
+          <template #body="slotProps">
+            <div></div>
+            {{ slotProps.data.employee_name }}
+          </template>
+          <template #filter="{ filterModel, filterCallback }">
+            <InputText
+              v-model="filterModel.value"
+              @input="filterCallback()"
+              placeholder="Search"
+              class="p-column-filter"
+              :showClear="true"
+            />
+          </template>
+        </Column>
 
+        <Column field="leave_type" header="Leave Type"></Column>
+        <Column field="start_date" header="Start Date"></Column>
+        <Column field="end_date" header="End Date"></Column>
+        <Column field="leave_reason" header="Leave Reason"></Column>
+        <Column field="reviewer_name" header="Approvar Name"></Column>
+        <Column field="reviewer_comments" header="Approvar Comments"></Column>
+
+        <Column field="status" header="Status" icon="pi pi-check">
+          <template #body="{ data }">
+            <span :class="'customer-badge status-' + data.status">{{ data.status }}</span>
+          </template>
+          <template #filter="{ filterModel, filterCallback }">
+            <Dropdown
+              v-model="filterModel.value"
+              @click="filterCallback()"
+              :options="statuses"
+              placeholder="Select"
+              class="p-column-filter"
+              :showClear="true"
+            >
+              <template #value="slotProps">
+                <span
+                  :class="'customer-badge status-' + slotProps.value"
+                  v-if="slotProps.value"
+                  >{{ slotProps.value }}</span
+                >
+                <span v-else>{{ slotProps.placeholder }}</span>
+              </template>
+              <template #option="slotProps">
+                <span :class="'customer-badge status-' + slotProps.option">{{
+                  slotProps.option
+                }}</span>
+              </template>
+            </Dropdown>
+          </template>
+        </Column>
+
+        <Column field="" header="Action">
+          <template #body="slotProps">
+            <span v-if="slotProps.data.status == 'Pending'">
+              <Button
+                type="button"
+                icon="pi pi-check-circle"
+                class="p-button-success Button"
+                label="Approve"
+                @click="showConfirmDialog(slotProps.data, 'Approve')"
+                style="height: 2em"
+              />
+              <Button
+                type="button"
+                icon="pi pi-times-circle"
+                class="p-button-danger Button"
+                label="Reject"
+                style="margin-left: 8px; height: 2em"
+                @click="showConfirmDialog(slotProps.data, 'Reject')"
+              />
+            </span>
+          </template>
+        </Column>
+      </DataTable>
+    </div>
+  </div>
 
   <!-- <h4 v-for="Employee_Avatar  in Employee_Avatar" :key="Employee_Avatar.type"
    style="height: 50px;width: 50px;border-radius: 50%;text-align: center;" class="Employee_Avatar.color">{{Employee_Avatar.data}}</h4> -->
 </template>
 
 <script setup>
+import { ref, onMounted } from "vue";
+import axios from "axios";
+import { FilterMatchMode, FilterOperator } from "primevue/api";
+import { useConfirm } from "primevue/useconfirm";
+import { useToast } from "primevue/usetoast";
 
-  import { ref, onMounted } from 'vue';
-  import axios from 'axios'
-  import {FilterMatchMode,FilterOperator} from 'primevue/api';
-  import  { useConfirm } from "primevue/useconfirm";
-  import  { useToast }  from "primevue/usetoast";
+const Leave_data = ref();
+const Employee_Avatar = ref();
+let canShowConfirmation = ref(false);
+let canShowLoadingScreen = ref(false);
+const confirm = useConfirm();
+const toast = useToast();
+const loading = ref(true);
 
+const filters = ref({
+  global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  name: {
+    value: null,
+    matchMode: FilterMatchMode.STARTS_WITH,
+    matchMode: FilterMatchMode.EQUALS,
+    matchMode: FilterMatchMode.CONTAINS,
+  },
 
-  const Leave_data=ref()
-  const Employee_Avatar=ref()
-  let canShowConfirmation = ref(false);
-  let canShowLoadingScreen = ref(false);
-  const confirm = useConfirm();
-  const toast = useToast();
-  const loading=ref(true)
+  status: { value: null, matchMode: FilterMatchMode.EQUALS },
+});
+const statuses = ref(["Pending", "Approved", "Rejected"]);
 
-
-  const filters = ref({
-          global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-          name: {
-           value: null,
-                   matchMode: FilterMatchMode.STARTS_WITH,
-                   matchMode:FilterMatchMode.EQUALS,
-                   matchMode:FilterMatchMode.CONTAINS,
-
-                  },
-
-           status:  { value: null, matchMode: FilterMatchMode.EQUALS },
-
-      });
-  const statuses = ref([
-          'Pending', 'Approved', 'Rejected'
-  ]);
-
-  let currentlySelectedStatus = null;
-  let currentlySelectedRowData = null;
+let currentlySelectedStatus = null;
+let currentlySelectedRowData = null;
 
 onMounted(() => {
   let url_org_leave =
@@ -143,104 +195,95 @@ onMounted(() => {
 
   console.log("Fetching ORG LEAVE from url : " + url_org_leave);
 
-
   axios.get(url_org_leave).then((response) => {
     //  Leave_data.value =Object.values(response.data['employee_avatar'])
-      
+
     //  Employee_Avatar.value=Object.values(Leave_data.employee_avatar)
-       Leave_data.value=response.data
-    console.log("org_Leave_history"+Leave_data.value);
-  
+    Leave_data.value = response.data;
+    console.log("org_Leave_history" + Leave_data.value);
+
     loading.value = false;
 
     console.log(
-      "Response Data ORG Leave History : " +
-        Leave_data.value['reviewer_avatar']
+      "Response Data ORG Leave History : " + Leave_data.value["reviewer_avatar"]
     );
   });
-})
+});
 
-  function showConfirmDialog(selectedRowData, status){
-      canShowConfirmation.value = true;
-      currentlySelectedStatus = status;
-      currentlySelectedRowData = selectedRowData;
+function showConfirmDialog(selectedRowData, status) {
+  canShowConfirmation.value = true;
+  currentlySelectedStatus = status;
+  currentlySelectedRowData = selectedRowData;
 
-      console.log("Selected Row Data : "+JSON.stringify(selectedRowData));
-  }
+  console.log("Selected Row Data : " + JSON.stringify(selectedRowData));
+}
 
-  function hideConfirmDialog(canClearData){
-      canShowConfirmation.value = false;
+function hideConfirmDialog(canClearData) {
+  canShowConfirmation.value = false;
 
-      if(canClearData)
-          resetVars();
+  if (canClearData) resetVars();
+}
 
-  }
+function resetVars() {
+  currentlySelectedStatus = "";
+  currentlySelectedRowData = null;
+}
 
-  function resetVars(){
-      currentlySelectedStatus = '';
-      currentlySelectedRowData = null;
-  }
+const css_statusColumn = (data) => {
+  return [
+    {
+      pending: data.status === "Pending",
+      approved: data.status === "Approved",
+      rejected: data.status === "Rejected",
+    },
+  ];
+};
 
- 
-  const css_statusColumn = (data) => {
-          return [
-              {
-                  'pending': data.status === 'Pending',
-                  'approved':  data.status === 'Approved',
-                  'rejected':  data.status === 'Rejected',
-               }
-          ];
-      };
+function processApproveReject() {
+  hideConfirmDialog(false);
 
-  function processApproveReject() {
+  canShowLoadingScreen.value = true;
 
-      hideConfirmDialog(false);
+  console.log("Processing Rowdata : " + JSON.stringify(currentlySelectedRowData));
+  console.log("currentlySelectedStatus : " + currentlySelectedStatus);
 
-      canShowLoadingScreen.value = true;
+  // axios.post(window.location.origin + '/reimbursements-approve-reject', {
+  //     reimbursement_id: currentlySelectedRowData.id,
+  //     status: currentlySelectedStatus == "Approve" ? "Approved" : currentlySelectedStatus =="Reject" ? "Rejected" : currentlySelectedStatus ,
+  //     reviewer_comments: ''
+  // })
+  // .then((response) => {
+  //     console.log(response);
 
-      console.log("Processing Rowdata : "+ JSON.stringify(currentlySelectedRowData));
-      console.log("currentlySelectedStatus : "+ currentlySelectedStatus);
+  //     canShowLoadingScreen.value = false;
 
+  //     toast.add({severity:'info', summary: 'Info', detail:'Success', life: 3000});
+  //     ajax_GetReimbursementData();
 
-      // axios.post(window.location.origin + '/reimbursements-approve-reject', {
-      //     reimbursement_id: currentlySelectedRowData.id,
-      //     status: currentlySelectedStatus == "Approve" ? "Approved" : currentlySelectedStatus =="Reject" ? "Rejected" : currentlySelectedStatus ,
-      //     reviewer_comments: ''
-      // })
-      // .then((response) => {
-      //     console.log(response);
+  //     resetVars();
+  // })
+  // .catch((error) => {
 
-      //     canShowLoadingScreen.value = false;
+  //     canShowLoadingScreen.value = false;
+  //     resetVars();
 
-      //     toast.add({severity:'info', summary: 'Info', detail:'Success', life: 3000});
-      //     ajax_GetReimbursementData();
-
-      //     resetVars();
-      // })
-      // .catch((error) => {
-
-      //     canShowLoadingScreen.value = false;
-      //     resetVars();
-
-      //     console.log(error.toJSON());
-      // });
-  }
-
+  //     console.log(error.toJSON());
+  // });
+}
 </script>
 
-
-<style  lang="scss">
-.main-content{
+<style lang="scss">
+.main-content {
   width: 101%;
 }
-.p-datatable .p-datatable-thead >tr>th{
+.p-datatable .p-datatable-thead > tr > th {
   text-align: center;
   padding: 0.3rem 1rem;
   border: 1px solid #dee2e6;
-    border-top-width: 1px;
-    border-right-width: 1px;
-    border-bottom-width: 1px;
-    border-left-width: 1px;
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+  border-left-width: 1px;
   border-width: 0 0 1px 0;
   font-weight: 600;
   color: #fff;
@@ -248,74 +291,70 @@ onMounted(() => {
   transition: box-shadow 0.2s;
   font-size: 13px;
   .p-column-title {
-      font-size: 13px;
+    font-size: 13px;
   }
   .p-column-filter {
-      width: 100%;
-    }
-    #pv_id_2 {
-      height: 30px;
-    }
+    width: 100%;
+  }
+  #pv_id_2 {
+    height: 30px;
+  }
   .p-fluid .p-dropdown .p-dropdown-label {
-      margin-top: -10px;
-    }
-    .p-dropdown .p-dropdown-label.p-placeholder{
-      margin-top: -12px;
-    }
+    margin-top: -10px;
+  }
+  .p-dropdown .p-dropdown-label.p-placeholder {
+    margin-top: -12px;
+  }
 
-  .p-column-filter-menu-button{
-      color: white;
-      margin-left: 10px;
-
+  .p-column-filter-menu-button {
+    color: white;
+    margin-left: 10px;
   }
   .p-column-filter-menu-button:hover {
-      color:white;
-      border-color: transparent;
-      background: #023e70;
-    }
-
+    color: white;
+    border-color: transparent;
+    background: #023e70;
+  }
 }
-.p-column-filter-overlay-menu .p-column-filter-constraint .p-column-filter-matchmode-dropdown {
+.p-column-filter-overlay-menu
+  .p-column-filter-constraint
+  .p-column-filter-matchmode-dropdown {
   margin-bottom: 0.5rem;
   visibility: hidden;
   position: absolute;
 }
 
-.p-button .p-component .p-button-sm{
+.p-button .p-component .p-button-sm {
   background-color: #003056;
 }
 
-.p-datatable .p-datatable-tbody > tr{
+.p-datatable .p-datatable-tbody > tr {
   font-size: 13px;
-  .employee_name{
-      font-weight: bold;
-      font-size: 13.5px;
+  .employee_name {
+    font-weight: bold;
+    font-size: 13.5px;
   }
-
-
 }
 
-.employee_name{
+.employee_name {
   font-weight: bold;
   font-size: 13px;
 }
 .p-column-title {
   font-size: 13.5px;
 }
-.fontSize13px{
+.fontSize13px {
   font-size: 13px;
 }
 
 .pending {
   font-weight: 700;
-  color: #FFA726;
+  color: #ffa726;
 }
-
 
 .approved {
   font-weight: 700;
   color: #26ff2d;
-
 }
 .p-button.p-component.p-button-success.Button {
   padding: 8px;
@@ -324,22 +363,18 @@ onMounted(() => {
 .rejected {
   font-weight: 700;
   color: #ff2634;
-
 }
 .p-button.p-component.p-button-danger.Button {
   padding: 8px;
 }
 
-
 @media screen and (max-width: 960px) {
   button {
-      width: 100%;
-      margin-bottom: .5rem;
+    width: 100%;
+    margin-bottom: 0.5rem;
   }
-
-
 }
-.p-datatable .p-datatable-tbody>tr>td:nth-child(1){
+.p-datatable .p-datatable-tbody > tr > td:nth-child(1) {
   width: 200px;
 }
 .p-confirm-dialog-icon.pi.pi-exclamation-triangle {
@@ -359,14 +394,12 @@ onMounted(() => {
 .p-datatable .p-datatable-thead > tr > th .p-column-filter-menu-button {
   color: white;
   border-color: transparent;
-
 }
-.p-column-filter-menu-button.p-column-filter-menu-button-open{
+.p-column-filter-menu-button.p-column-filter-menu-button-open {
   background: none;
 }
-.p-column-filter-menu-button.p-column-filter-menu-button-active{
+.p-column-filter-menu-button.p-column-filter-menu-button-active {
   background: none;
-
 }
 .p-datatable .p-datatable-thead > tr > th .p-column-filter {
   width: 44%;
@@ -376,27 +409,27 @@ onMounted(() => {
 
 .p-datatable .p-sortable-column:not(.p-highlight):hover {
   background: #003056;
-  color:white;
+  color: white;
 }
 .p-datatable .p-sortable-column:not(.p-highlight):hover .p-sortable-column-icon {
-    color:white
+  color: white;
 }
- .p-datatable .p-sortable-column.p-highlight {
+.p-datatable .p-sortable-column.p-highlight {
   background: #003056;
-  color:white;
+  color: white;
 }
 
 .p-datatable .p-sortable-column.p-highlight:hover {
   background: #003056;
-  color:white;
+  color: white;
 }
 .p-datatable .p-sortable-column:focus {
   box-shadow: none;
   outline: none;
   color: white;
 }
-.p-datatable .p-sortable-column .p-sortable-column-icon{
-  color:white
+.p-datatable .p-sortable-column .p-sortable-column-icon {
+  color: white;
 }
 .pi-sort-amount-down::before {
   content: "\e9a0";
@@ -406,6 +439,4 @@ onMounted(() => {
   content: "\e9a2";
   color: white;
 }
-
-
 </style>

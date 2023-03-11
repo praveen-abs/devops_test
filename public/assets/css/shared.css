@@ -13,11 +13,7 @@
 }
 
 button,label,p,span,*{
-    text-transform: capitalize;
     font-size: 13px;
-}
-input,select,textarea{
-text-transform: lowercase;
 }
 
 .first-letter-captialize{

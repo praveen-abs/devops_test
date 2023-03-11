@@ -29,7 +29,7 @@ import Row from 'primevue/row'
 import ColumnGroup from 'primevue/columngroup'
 import Calendar from 'primevue/calendar';
 import Textarea from 'primevue/textarea';
-
+import Chips from 'primevue/chips';
 
 
 
@@ -65,6 +65,7 @@ app.component('Dialog', Dialog);
 app.component('ProgressSpinner', ProgressSpinner)
 app.component('Calendar', Calendar)
 app.component('Textarea', Textarea)
+app.component('Chips', Chips)
 
 app.mount("#vjs_leaveapply");
 

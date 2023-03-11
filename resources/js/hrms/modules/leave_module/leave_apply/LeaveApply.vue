@@ -1,8 +1,10 @@
 <template>
     <Toast />
-    <div class="modal-body  new-role-header border-0 ">
-        <div id="modal_request_leave" class="card top-line mb-0">
-            <div class="card-body">
+    <Button label="Apply Leave" class="bg-orange-500 border-none h-3rem" @click="visible = true" />
+
+<Dialog v-model:visible="visible"  :style="{ width: '80vw' }" :breakpoints="{ '960px': '75vw', '641px': '100vw' }">
+
+
                 <h6 class="modal-title mb-6  fs-21">
                     Leave Request</h6>
                 <div class="row ">
@@ -24,15 +26,14 @@
                                     <select style="  height: 38px;font-weight: 500;" name="" id="leave_type_id"
                                         class="form-select outline-none" v-model="service.leave_data.selected_leave"
                                         @change="service.Permission">
-                                        <option>Select</option>
+                                        <option value="Select" selected>Select</option>
                                         <option>Sick Leave / Casual Leave</option>
                                         <option>Maternity Leave</option>
                                         <option>Paternity Leave</option>
                                         <option>On Duty</option>
                                         <option>Permission</option>
                                         <option>Compensatory Off</option>
-                                        <!-- <option v-for="Leave_type in leave_type" :key="Leave_type">
-                                        {{ Leave_type }}</option> -->
+
 
 
                                     </select>
@@ -54,7 +55,7 @@
                                     <div class="form-check form-check-inline">
                                         <input style="height: 20px;width: 20px;" class="form-check-input" type="radio"
                                             name="leave" id="" value="full_day" v-model="service.leave_data.radiobtn_full_day"
-                                            @click="full_day">
+                                            @click="service.full_day">
                                         <label class="form-check-label leave_type ms-3" for="">Full Day</label>
 
                                     </div>
@@ -87,8 +88,8 @@
                             </div>
                             <div class="col-md-7  mb-md-0 mb-3">
                                 <div class="form-group">
-                                    <Calendar inputId="icon" v-model="service.leave_data.date" dateFormat="yy-mm-dd"
-                                        :showIcon="true" style="width: 350px;" />
+                                    <Calendar inputId="icon" v-model="service.leave_data.full_day_leave_date" dateFormat="yy-mm-dd"
+                                        :showIcon="true" style="width: 350px;"  />
 
 
                                 </div>
@@ -109,13 +110,13 @@
                                 <div class="form-group">
                                     <div class="form-check form-check-inline">
                                         <input style="height: 20px;width: 20px;" class="form-check-input" type="radio"
-                                            name="session" id="" value="forenoon">
+                                            name="session" id="" value="forenoon" v-model="service.leave_data.half_day_leave_session">
                                         <label class="form-check-label leave_type ms-3" for="">Forenoon</label>
 
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input style="height: 20px;width: 20px;" class="form-check-input" type="radio"
-                                            name="session" id="" value="afternoon">
+                                            name="session" id="" value="afternoon"  v-model="service.leave_data.half_day_leave_session" >
                                         <label class="form-check-label leave_type ms-3" for="">Afternoon</label>
                                     </div>
 
@@ -256,7 +257,7 @@
                                         <div class="floating">
 
                                             <label for="" class="float-label">Start Date</label>
-                                            <Calendar inputId="icon" dateFormat="yy-mm-dd" :showIcon="true" />
+                                            <Calendar inputId="icon" dateFormat="yy-mm-dd" :showIcon="true" style="z-index: 1300;" />
 
                                         </div>
 
@@ -299,16 +300,9 @@
 
                                 </div>
                             </div>
-                            <div class="col-md-7  mb-md-0 mb-3">
+                            <div class="col-md-8  mb-md-0 mb-3">
                                 <div class="form-group">
-
-                                    <select style="height: 38px;font-weight: 500;" name="" id="leave_type_id"
-                                        class="form-select outline-none" v-model="service.leave_data.notifyTo">
-                                        <option value="" selected>Select
-                                        </option>
-
-
-                                    </select>
+                                    <Chips v-model="service.leave_data.notifyTo" separator=","  />
                                 </div>
                             </div>
                         </div>
@@ -322,23 +316,25 @@
                             </div>
                             <div class="col-md-8  mb-md-0 mb-3">
                                 <div class="form-group">
-                                    <Textarea :autoResize="true" rows="3" cols="47" placeholder="Enter the Reason"
+                                    <Textarea :autoResize="true" rows="3" cols="60" placeholder="Enter the Reason"
                                         v-model="service.leave_data.leave_reason" />
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-md-5 ">
-                        <div class="col-md mb-6 n-m-2 ">
-                            <div class="form-group">
-                                <Calendar :inline="true" :showWeek="true" />
-                            </div>
+
+
+                    <div class="col-md-5 col-sm-12 ">
+
+                        <div class="col-12  ">
+                            <Calendar :inline="true" :showWeek="true" style="min-width:100%" />
+
                         </div>
 
 
-                        <div class="text-center ">
-                            <button type="button" class="btn btn-border-primary" data-bs-dismiss="modal">Cancel</button>
+                        <div class="text-center mt-6 ">
+                            <button type="button" class="btn btn-border-primary"  @click="visible = false">Cancel</button>
                             <button type="button" id="btn_request_leave" class="btn btn-primary ms-4"
                                 @click="service.Submit">
                                 Request Leave</button>
@@ -349,15 +345,16 @@
 
 
                 </div>
-            </div>
-        </div>
-    </div>
+
+
+
     <Dialog :style="{ width: '450px' }" header="Required" :modal="true" v-model:visible="service.RequiredField"
-        v-if="service.leave_data.notifyTo == '' || service.leave_data.leave_reason == ''">
-        <li v-if="service.leave_data.notifyTo == ''">notify To</li>
+        v-if="service.leave_data.leave_reason == ''">
         <li v-if="service.leave_data.leave_reason == ''">Leave Reason</li>
     </Dialog>
-</template>
+
+</Dialog>
+    </template>
 
 
 <script setup>
@@ -368,6 +365,8 @@ import { onMounted, reactive, ref } from "vue";
 import axios from "axios";
 
 import {Service} from './leave_apply_service'
+
+const visible=ref(false)
 
 
 // Check All Varaibles and Events Here
@@ -412,6 +411,9 @@ label {
     font-weight: 400;
 }
 
+
+
+
 .p-datepicker .p-datepicker-header {
     padding: 0.5rem;
     color: #061328;
@@ -441,6 +443,24 @@ label {
     border-bottom-left-radius: 0;
     background: #002f56;
 }
+
+.p-dialog-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    background: #433f3f6b;
+
+}
+
+
+
+
 
 .p-button:enabled:hover {
     background: #002f56;
