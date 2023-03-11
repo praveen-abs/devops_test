@@ -313,7 +313,7 @@
                             </div>
                             <div class="col-md-8  mb-md-0 mb-3">
                                 <div class="form-group">
-                                    <Chips v-model="service.leave_data.notifyTo" separator=","  />
+                                    <Chips class="   " v-model="service.leave_data.notifyTo" separator=","  />
                                 </div>
                             </div>
                         </div>
