@@ -11,6 +11,7 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endsection
 @section('content')
+
     <div class="Leave_dashboard mt-30">
         <div class="card  left-line mb-3">
             <div class="card-body px-2 py-2">
@@ -84,10 +85,13 @@
                                             0</span>
                                     </div> --}}
 
-                                <button class="btn btn-orange" data-bs-target="#leaveApply_modal" data-bs-toggle="modal"
+                                <!-- <button class="btn btn-orange" data-bs-target="#leaveApply_modal" data-bs-toggle="modal"
                                     onclick="resetLeaveModalValues()">
                                     Apply Leave
-                                </button>
+                                </button> -->
+
+                                @vite('resources/js/hrms/modules/leave_module/leave_apply/LeaveApply.js')
+                                 <div id="vjs_leaveapply"> </div>
                             </div>
                         </div>
                         <div class="row">
@@ -187,7 +191,7 @@
                         <div class="card mb-0 leave-history">
                             <div class="card-body">
                                 <h6 class="mb-2">Org Leave Balance</h6>
-                                @vite('resources/js/hrms/modules/leave_module/Org_leave_module/OrgLeaveBalance.js')
+                                @vite('resources/js/hrms/modules/leave_module/org_leave_module/OrgLeaveBalance.js')
                                 <div id="vjs_orgLeaveTable_RemainingLeave"></div>
                             </div>
                         </div>
@@ -198,7 +202,7 @@
                         <div class="card mb-0 leave-history">
                             <div class="card-body">
                                 <h6 class="mb-2">Org Leave history</h6>
-                                @vite('resources/js/hrms/modules/leave_module/Org_leave_module/OrgLeaveHistoryTable.js')
+                                @vite('resources/js/hrms/modules/leave_module/org_leave_module/OrgLeaveHistoryTable.js')
                                 <div id="vjs_orgLeaveHistoryTable"></div>
                             </div>
                         </div>
@@ -349,15 +353,29 @@
         </div>
     </div>
 
+<!-- <div class="modal fade bd-example-modal-xl" tabindex="-10" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true " id="leaveApply_modal" >
+  <div class="modal-dialog modal-xl   modal-dialog-centered" style="z-index:-20 !important">
+     <div class="modal-content">
 
-    <div id="leaveApply_modal" class="modal custom-modal fade" role="dialog">
-            <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable  modal-xl" role="document">
-                    <div id="vjs_leaveapply">
+  </div>
+</div> -->
 
-                    </div>
-                    @vite('resources/js/hrms/modules/leave_module/leave_apply/LeaveApply.js')
+
+
+
+    <!-- <div id="leaveApply_modal" class="modal custom-modal fade" role="dialog">
+
+
+            <div class="modal-dialog  modal-dialog-centered   modal-xl" role="document">
+            <div id="vjs_leaveapply">
+
+</div>
+
+
+@vite('resources/js/hrms/modules/leave_module/leave_apply/LeaveApply.js')
+
             </div>
-    </div>
+    </div> -->
 
     {{-- error message details --}}
 

@@ -12,7 +12,7 @@
 @section('content')
 <div class="card mb-0 pms_approval_wrapper mt-30">
     <div class="card-body">
-        <h6 class="mb-2">Reimbursement Approvals</h6>
+        <h6 class="mb-2 font-weight-bold text-lg">Reimbursement Approvals</h6>
         <div class="table-responsive">
             <div id="vjs_reimbursementsApprovalTable"></div>
         </div>
