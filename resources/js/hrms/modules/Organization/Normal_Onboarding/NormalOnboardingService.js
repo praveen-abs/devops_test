@@ -6,7 +6,6 @@ Validation
 AJAX
 
 
-
 */
 
 import { required, email, maxLength } from "@vuelidate/validators";
@@ -108,7 +107,7 @@ export default function validation(rules) {
             required,
             maxLength: 10,
         },
-        BankIFSCCode: {
+        bank_ifsc: {
             required,
             ValidateIfscNo(value) {
                 const regex = /^[A-Z]{4}0[A-Z0-9]{6}$/;
@@ -117,7 +116,7 @@ export default function validation(rules) {
         },
         marital_status: { required   },
 
-        PersonDetialsEmail: {
+        email: {
             required,
             email,
         },
@@ -130,41 +129,41 @@ export default function validation(rules) {
         //  Person Details End
 
         // Address Validation Start
-        CurrentAddress1: {
+        current_address_line_1: {
             required,
         },
-        CurrentAddress2: {
+        current_address_line_2: {
             required,
         },
-        CurrentCountry: {
+        current_country: {
             required,
         },
-        CurrentState: {
+        current_state: {
             required,
         },
-        CurrentCity: {
+        current_city: {
             required,
         },
-        CurrentPincode: {
+        current_pincode: {
             required,
             maxLength: 6,
         },
-        PermanentAddress1: {
+        permanent_address_line_1: {
             required,
         },
-        PermanentAddress2: {
+        permanent_address_line_2: {
             required,
         },
-        Permanentcountry: {
+        permanent_country: {
             required,
         },
-        Permanentstate: {
+        permanent_state: {
             required,
         },
-        PermanentCity: {
+        permanent_city: {
             required,
         },
-        PermanentPincode: {
+        permanent_pincode: {
             required,
             maxLength: 6,
         },
@@ -172,28 +171,27 @@ export default function validation(rules) {
         // Addres End
 
         // Office Details Start
-        Process: {
+        process: {
             required,
         },
-        Designation: {
+        designation: {
             required,
         },
-        Departmant: {},
-        CostCenter: {},
-        probationPeriod: {},
-        ReportingManagerName: {},
-        holidayLocation: {},
-        OfficialEmail: {},
-        OfficialMobileNO: {},
-        probationPeriod: {},
-        EmployeeNoticePeriodDays: {},
-        WorkLocation: {
+        department: {},
+        cost_center: {},
+        probation_period: {},
+        holiday_location: {},
+        officical_mail: {},
+        official_mobile: {},
+        probation_period: {},
+        emp_notice: {},
+        work_location: {
             required,
         },
-        ReportingManagerCode: {
+        l1_manager_code: {
             required,
         },
-        DateOfConfirmation: {
+        confirmation_period: {
             required,
         },
 
@@ -201,15 +199,16 @@ export default function validation(rules) {
 
         // Family Details Start
 
-        fatherName: { required },
-        fatherDateofBirth: { required },
-        motherName: { required },
-        motherDateofBirth: { required },
-        SpouseName: { required },
-        dateOfWedding: {  },
-        spouseGender: { required },
-        SpouseDOB: { required },
+        father_name: { required },
+        dob_father: { required },
+        mother_name: { required },
+        dob_mother: { required },
+        spouse_name: { required },
+        wedding_date: {  },
+        spouse_gender: { required },
+        dob_spouse: { required },
 
         // Personal Documents
+
     });
 }

@@ -91,8 +91,9 @@
                             v-model="v$.marital_status.$model"
                             :options="maritalDetails"
                             optionLabel="name"
-                            optionValue="id"
-                            placeholder="Select Bank Name"
+                            optionValue="name"
+                            placeholder="Select Martial Status"
+                            @change="spouseDisable"
                           />
                           <!-- <select
                             class="form-control textbox"
@@ -164,6 +165,7 @@
                             :options="Gender"
                             optionLabel="name"
                             optionValue="value"
+                            editable
                             placeholder="Select Gender"
                           />
                           <!-- <select
@@ -231,21 +233,21 @@
                             type="text"
                             placeholder="Email ID"
                             :class="{
-                              'p-invalid': v$.PersonDetialsEmail.$invalid && submitted,
+                              'p-invalid': v$.email.$invalid && submitted,
                             }"
-                            v-model="v$.PersonDetialsEmail.$model"
+                            v-model="v$.email.$model"
                             class="form-control textbox"
                             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                           />
 
                           <span
                             v-if="
-                              (v$.PersonDetialsEmail.$invalid && submitted) ||
-                              v$.PersonDetialsEmail.$pending.$response
+                              (v$.email.$invalid && submitted) ||
+                              v$.email.$pending.$response
                             "
                             class="p-error"
                             >{{
-                              v$.PersonDetialsEmail.required.$message.replace(
+                              v$.email.required.$message.replace(
                                 "Value",
                                 "Email"
                               )
@@ -355,8 +357,10 @@
                             v-model="v$.nationality.$model"
                             :options="Nationality"
                             optionLabel="name"
-                            optionValue="value"
+                            optionValue="name"
+                            editable
                             placeholder="Select Nationality"
+                            @change="NationalityCheck"
                           />
 
                           <!-- <select
@@ -446,6 +450,7 @@
                             optionLabel="name"
                             optionValue="id"
                             placeholder="Select Bloodgroup"
+                            editable
                           />
 
                         </div>
@@ -459,6 +464,7 @@
                             :options="PhyChallenged"
                             optionLabel="name"
                             optionValue="value"
+                            editable
                             placeholder="Physically Challenged"
                           />
 
@@ -545,9 +551,9 @@
                           >
                           <InputText
                             type="text"
-                            v-model="v$.BankIFSCCode.$model"
+                            v-model="v$.bank_ifsc.$model"
                             :class="{
-                              'p-invalid': v$.BankIFSCCode.$invalid && submitted,
+                              'p-invalid': v$.bank_ifsc.$invalid && submitted,
                             }"
                             class="form-control textbox"
                             pattern="^[A-Z]{4}0[A-Z0-9]{6}$"
@@ -558,12 +564,12 @@
 
                           <span
                             v-if="
-                              (v$.BankIFSCCode.$invalid && submitted) ||
-                              v$.BankIFSCCode.$pending.$response
+                              (v$.bank_ifsc.$invalid && submitted) ||
+                              v$.bank_ifsc.$pending.$response
                             "
                             class="p-error"
                             >{{
-                              v$.BankIFSCCode.required.$message.replace(
+                              v$.bank_ifsc.required.$message.replace(
                                 "Value",
                                 "Bank IFSC Code"
                               )
@@ -707,20 +713,20 @@
                             rows="3"
                             current_address_line_1
                             :class="{
-                              'p-invalid': v$.CurrentAddress1.$invalid && submitted,
+                              'p-invalid': v$.current_address_line_1.$invalid && submitted,
                             }"
-                            v-model="v$.CurrentAddress1.$model"
+                            v-model="v$.current_address_line_1.$model"
                             placeholder="Current Address"
                           />
 
                           <span
                             v-if="
-                              (v$.CurrentAddress1.$invalid && submitted) ||
-                              v$.CurrentAddress1.$pending.$response
+                              (v$.current_address_line_1.$invalid && submitted) ||
+                              v$.current_address_line_1.$pending.$response
                             "
                             class="p-error"
                             >{{
-                              v$.CurrentAddress1.required.$message.replace(
+                              v$.current_address_line_1.required.$message.replace(
                                 "Value",
                                 "Current Address 1"
                               )
@@ -741,20 +747,20 @@
                             rows="3"
                             current_address_line_2
                             :class="{
-                              'p-invalid': v$.CurrentAddress2.$invalid && submitted,
+                              'p-invalid': v$.current_address_line_2.$invalid && submitted,
                             }"
-                            v-model="v$.CurrentAddress2.$model"
+                            v-model="v$.current_address_line_2.$model"
                             placeholder="Current Address"
                           />
 
                           <span
                             v-if="
-                              (v$.CurrentAddress2.$invalid && submitted) ||
-                              v$.CurrentAddress2.$pending.$response
+                              (v$.current_address_line_2.$invalid && submitted) ||
+                              v$.current_address_line_2.$pending.$response
                             "
                             class="p-error"
                             >{{
-                              v$.CurrentAddress2.required.$message.replace(
+                              v$.current_address_line_2.required.$message.replace(
                                 "Value",
                                 "Current Address 2"
                               )
@@ -767,13 +773,13 @@
                           <label for="" class="float-label"
                             >Country<span class="text-danger">*</span></label
                           >
-
+<!--
                           <select
                             placeholder="Country"
                             name="current_country"
-                            v-model="v$.CurrentCountry.$model"
+                            v-model="v$.current_country.$model"
                             :class="{
-                              'is-invalid': v$.CurrentCountry.$invalid && submitted,
+                              'is-invalid': v$.current_country.$invalid && submitted,
                             }"
                             id="current_country"
                             class="form-control textbox"
@@ -781,15 +787,27 @@
                             <option v-for="countries in country" :key="countries.id">
                               {{ countries.country_name }}
                             </option>
-                          </select>
+                          </select> -->
+
+                          <Dropdown
+                          editable
+                          v-model="v$.current_country.$model"
+                          :class="{
+                            'p-invalid': v$.current_country.$invalid && submitted,
+                          }"
+                          :options="country"
+                          optionLabel="country_name"
+                          optionValue="id"
+                          placeholder="Select Country Name"
+                        />
                           <span
                             v-if="
-                              (v$.CurrentCountry.$invalid && submitted) ||
-                              v$.CurrentCountry.$pending.$response
+                              (v$.current_country.$invalid && submitted) ||
+                              v$.current_country.$pending.$response
                             "
                             class="p-error"
                             >{{
-                              v$.CurrentCountry.required.$message.replace(
+                              v$.current_country.required.$message.replace(
                                 "Value",
                                 "country"
                               )
@@ -802,12 +820,12 @@
                           <label for="" class="float-label"
                             >State<span class="text-danger">*</span></label
                           >
-                          <select
+                          <!-- <select
                             placeholder="State"
                             name="current_state"
-                            v-model="v$.CurrentState.$model"
+                            v-model="v$.current_state.$model"
                             :class="{
-                              'is-invalid': v$.CurrentState.$invalid && submitted,
+                              'is-invalid': v$.current_state.$invalid && submitted,
                             }"
                             id="current_state"
                             class="form-control textbox"
@@ -815,15 +833,27 @@
                             <option v-for="states in state" :key="states.id">
                               {{ states.state_name }}
                             </option>
-                          </select>
+                          </select> -->
+
+                          <Dropdown
+                          editable
+                          v-model="v$.current_state.$model"
+                          :class="{
+                            'p-invalid': v$.current_state.$invalid && submitted,
+                          }"
+                          :options="state"
+                          optionLabel="state_name"
+                          optionValue="id"
+                          placeholder="Select State Name"
+                        />
                           <span
                             v-if="
-                              (v$.CurrentState.$invalid && submitted) ||
-                              v$.CurrentState.$pending.$response
+                              (v$.current_state.$invalid && submitted) ||
+                              v$.current_state.$pending.$response
                             "
                             class="p-error"
                             >{{
-                              v$.CurrentState.required.$message.replace("Value", "State")
+                              v$.current_state.required.$message.replace("Value", "State")
                             }}</span
                           >
                         </div>
@@ -838,20 +868,20 @@
                             class="form-control"
                             type="text"
                             :class="{
-                              'p-invalid': v$.CurrentCity.$invalid && submitted,
+                              'p-invalid': v$.current_city.$invalid && submitted,
                             }"
-                            v-model="v$.CurrentCity.$model"
+                            v-model="v$.current_city.$model"
                             placeholder="current city"
                           />
                         </div>
                         <span
                           v-if="
-                            (v$.CurrentCity.$invalid && submitted) ||
-                            v$.CurrentCity.$pending.$response
+                            (v$.current_city.$invalid && submitted) ||
+                            v$.current_city.$pending.$response
                           "
                           class="p-error"
                           >{{
-                            v$.CurrentCity.required.$message.replace("Value", "City")
+                            v$.current_city.required.$message.replace("Value", "City")
                           }}</span
                         >
                       </div>
@@ -868,19 +898,19 @@
                             minlength="6"
                             maxlength="6"
                             :class="{
-                              'p-invalid': v$.CurrentPincode.$invalid && submitted,
+                              'p-invalid': v$.current_pincode.$invalid && submitted,
                             }"
-                            v-model="v$.CurrentPincode.$model"
+                            v-model="v$.current_pincode.$model"
                             placeholder="Pincode"
                           />
                           <span
                             v-if="
-                              (v$.CurrentPincode.$invalid && submitted) ||
-                              v$.CurrentPincode.$pending.$response
+                              (v$.current_pincode.$invalid && submitted) ||
+                              v$.current_pincode.$pending.$response
                             "
                             class="p-error"
                             >{{
-                              v$.CurrentPincode.required.$message.replace(
+                              v$.current_pincode.required.$message.replace(
                                 "Value",
                                 "Pincode"
                               )
@@ -925,20 +955,20 @@
                                 rows="3"
                                 id="permanent_address_line_1"
                                 :class="{
-                                  'p-invalid': v$.PermanentAddress1.$invalid && submitted,
+                                  'p-invalid': v$.permanent_address_line_1.$invalid && submitted,
                                 }"
-                                v-model="v$.PermanentAddress1.$model"
+                                v-model="v$.permanent_address_line_1.$model"
                               />
                               <span
                                 v-if="
-                                  (v$.PermanentAddress1.$invalid && submitted) ||
-                                  v$.PermanentAddress1.$pending.$response
+                                  (v$.permanent_address_line_1.$invalid && submitted) ||
+                                  v$.permanent_address_line_1.$pending.$response
                                 "
                                 class="p-error"
                                 >{{
-                                  v$.PermanentAddress1.required.$message.replace(
+                                  v$.permanent_address_line_1.required.$message.replace(
                                     "Value",
-                                    "PermanentAddress1"
+                                    "Permanent Address 1"
                                   )
                                 }}</span
                               >
@@ -960,21 +990,21 @@
                                 rows="3"
                                 id="permanent_address_line_2"
                                 :class="{
-                                  'p-invalid': v$.PermanentAddress2.$invalid && submitted,
+                                  'p-invalid': v$.permanent_address_line_2.$invalid && submitted,
                                 }"
-                                v-model="v$.PermanentAddress2.$model"
+                                v-model="v$.permanent_address_line_2.$model"
                               />
 
                               <span
                                 v-if="
-                                  (v$.PermanentAddress2.$invalid && submitted) ||
-                                  v$.PermanentAddress2.$pending.$response
+                                  (v$.permanent_address_line_2.$invalid && submitted) ||
+                                  v$.permanent_address_line_2.$pending.$response
                                 "
                                 class="p-error"
                                 >{{
-                                  v$.PermanentAddress2.required.$message.replace(
+                                  v$.permanent_address_line_2.required.$message.replace(
                                     "Value",
-                                    "PermanentAddress2"
+                                    "Permanent Address 2"
                                   )
                                 }}</span
                               >
@@ -988,27 +1018,38 @@
                                 >Country<span class="text-danger">*</span></label
                               >
 
-                              <select
+                              <!-- <select
                                 placeholder="Country"
-                                v-model="v$.Permanentcountry.$model"
+                                v-model="v$.permanent_country.$model"
                                 :class="{
-                                  'is-invalid': v$.Permanentcountry.$invalid && submitted,
+                                  'is-invalid': v$.permanent_country.$invalid && submitted,
                                 }"
-                                id="current_country"
+                                id="permanent_country"
                                 class="onboard-form form-control textbox"
                               >
                                 <option v-for="countries in country" :key="countries.id">
                                   {{ countries.country_name }}
                                 </option>
-                              </select>
+                              </select> -->
+                              <Dropdown
+                              editable
+                              v-model="v$.permanent_country.$model"
+                              :class="{
+                                'p-invalid': v$.permanent_country.$invalid && submitted,
+                              }"
+                              :options="country"
+                              optionLabel="country_name"
+                              optionValue="id"
+                              placeholder="Select Country Name"
+                            />
                               <span
                                 v-if="
-                                  (v$.Permanentcountry.$invalid && submitted) ||
-                                  v$.Permanentcountry.$pending.$response
+                                  (v$.permanent_country.$invalid && submitted) ||
+                                  v$.permanent_country.$pending.$response
                                 "
                                 class="p-error"
                                 >{{
-                                  v$.Permanentcountry.required.$message.replace(
+                                  v$.permanent_country.required.$message.replace(
                                     "Value",
                                     "country"
                                   )
@@ -1023,27 +1064,39 @@
                               <label for="" class="float-label"
                                 >State<span class="text-danger">*</span></label
                               >
-                              <select
+                              <!-- <select
                                 placeholder="State"
                                 name="Permanent_state"
-                                v-model="v$.Permanentstate.$model"
+                                v-model="v$.permanent_state.$model"
                                 :class="{
-                                  'is-invalid': v$.Permanentstate.$invalid && submitted,
+                                  'is-invalid': v$.permanent_state.$invalid && submitted,
                                 }"
                                 class="form-control textbox"
                               >
                                 <option v-for="states in state" :key="states.id">
                                   {{ states.state_name }}
                                 </option>
-                              </select>
+                              </select> -->
+                              <Dropdown
+                          editable
+                          v-model="v$.permanent_state.$model"
+                          :class="{
+                            'p-invalid': v$.permanent_state.$invalid && submitted,
+                          }"
+                          :options="state"
+                          optionLabel="state_name"
+                          optionValue="id"
+                          placeholder="Select State Name"
+                        />
+
                               <span
                                 v-if="
-                                  (v$.Permanentstate.$invalid && submitted) ||
-                                  v$.Permanentstate.$pending.$response
+                                  (v$.permanent_state.$invalid && submitted) ||
+                                  v$.permanent_state.$pending.$response
                                 "
                                 class="p-error"
                                 >{{
-                                  v$.Permanentstate.required.$message.replace(
+                                  v$.permanent_state.required.$message.replace(
                                     "Value",
                                     "State"
                                   )
@@ -1064,20 +1117,20 @@
                                 class="onboard-form form-control textbox capitalize"
                                 type="text"
                                 :class="{
-                                  'p-invalid': v$.PermanentCity.$invalid && submitted,
+                                  'p-invalid': v$.permanent_city.$invalid && submitted,
                                 }"
-                                v-model="v$.PermanentCity.$model"
+                                v-model="v$.permanent_city.$model"
                                 placeholder="City"
                               />
 
                               <span
                                 v-if="
-                                  (v$.PermanentCity.$invalid && submitted) ||
-                                  v$.PermanentCity.$pending.$response
+                                  (v$.permanent_city.$invalid && submitted) ||
+                                  v$.permanent_city.$pending.$response
                                 "
                                 class="p-error"
                                 >{{
-                                  v$.PermanentCity.required.$message.replace(
+                                  v$.permanent_city.required.$message.replace(
                                     "Value",
                                     "City"
                                   )
@@ -1099,19 +1152,19 @@
                                 minlength="6"
                                 maxlength="6"
                                 :class="{
-                                  'p-invalid': v$.PermanentPincode.$invalid && submitted,
+                                  'p-invalid': v$.permanent_pincode.$invalid && submitted,
                                 }"
-                                v-model="v$.PermanentPincode.$model"
+                                v-model="v$.permanent_pincode.$model"
                                 placeholder="Pincode"
                               />
                               <span
                                 v-if="
-                                  (v$.PermanentPincode.$invalid && submitted) ||
-                                  v$.PermanentPincode.$pending.$response
+                                  (v$.permanent_pincode.$invalid && submitted) ||
+                                  v$.permanent_pincode.$pending.$response
                                 "
                                 class="p-error"
                                 >{{
-                                  v$.PermanentPincode.required.$message.replace(
+                                  v$.permanent_pincode.required.$message.replace(
                                     "Value",
                                     "Pincode"
                                   )
@@ -1146,7 +1199,7 @@
                           <select
                             placeholder="Department"
                             name="department"
-                            v-model="v$.Departmant.$model"
+                            v-model="v$.department.$model"
                             style="height: 2.9em"
                             id="department"
                             class="onboard-form form-control textbox"
@@ -1174,20 +1227,20 @@
                             class="onboard-form form-control"
                             type="text"
                             :class="{
-                              'p-invalid': v$.Process.$invalid && submitted,
+                              'p-invalid': v$.process.$invalid && submitted,
                             }"
-                            v-model="v$.Process.$model"
+                            v-model="v$.process.$model"
                             placeholder="Process"
                           />
 
                           <span
                             v-if="
-                              (v$.Process.$invalid && submitted) ||
-                              v$.Process.$pending.$response
+                              (v$.process.$invalid && submitted) ||
+                              v$.process.$pending.$response
                             "
                             class="p-error"
                             >{{
-                              v$.Process.required.$message.replace("Value", "Process")
+                              v$.process.required.$message.replace("Value", "Process")
                             }}</span
                           >
                         </div>
@@ -1205,19 +1258,19 @@
                             type="text"
                             placeholder="Designation"
                             :class="{
-                              'p-invalid': v$.Designation.$invalid && submitted,
+                              'p-invalid': v$.designation.$invalid && submitted,
                             }"
-                            v-model="v$.Designation.$model"
+                            v-model="v$.designation.$model"
                           />
 
                           <span
                             v-if="
-                              (v$.Designation.$invalid && submitted) ||
-                              v$.Designation.$pending.$response
+                              (v$.designation.$invalid && submitted) ||
+                              v$.designation.$pending.$response
                             "
                             class="p-error"
                             >{{
-                              v$.Designation.required.$message.replace(
+                              v$.designation.required.$message.replace(
                                 "Value",
                                 "Designation"
                               )
@@ -1232,7 +1285,7 @@
                           <input
                             type="number"
                             placeholder="Cost Center"
-                            v-model="v$.CostCenter.$model"
+                            v-model="v$.cost_center.$model"
                             name="cost_center"
                             class="onboard-form form-control textbox"
                           />
@@ -1247,7 +1300,7 @@
                             name="probation_period"
                             id="probation_period"
                             style="height: 2.9em"
-                            v-model="v$.probationPeriod.$model"
+                            v-model="v$.probation_period.$model"
                             class="onboard-form form-control textbox"
                           >
                             <!-- <option value="" hidden selected disabled>Select
@@ -1279,9 +1332,9 @@
                             type="text"
                             placeholder="Work Location"
                             :class="{
-                              'p-invalid': v$.WorkLocation.$invalid && submitted,
+                              'p-invalid': v$.work_location.$invalid && submitted,
                             }"
-                            v-model="v$.WorkLocation.$model"
+                            v-model="v$.work_location.$model"
                           />
                           <label
                             class="error star_error work_location_label"
@@ -1300,13 +1353,28 @@
                             ></label
                           >
 
+                          <!-- <Dropdown
+                             v-model="v$.l1_manager_code.$model"
+                            :options="Nationality"
+                            optionLabel="name"
+                            optionValue="name"
+                            editable
+                            placeholder="Select l1_manager_code"
+                            @change="NationalityCheck"
+                             :class="{
+                              'is-invalid': v$.l1_manager_code.$invalid && submitted,
+                            }"
+
+                          /> -->
+
+
                           <select
                             placeholder="Reporting Manager Name"
                             name="l1_manager_code"
                             id="l1_manager_code_select"
-                            v-model="v$.ReportingManagerCode.$model"
+                            v-model="v$.l1_manager_code.$model"
                             :class="{
-                              'is-invalid': v$.ReportingManagerCode.$invalid && submitted,
+                              'is-invalid': v$.l1_manager_code.$invalid && submitted,
                             }"
                             class="onboard-form form-control textbox"
                           >
@@ -1322,12 +1390,12 @@
 
                           <span
                             v-if="
-                              (v$.ReportingManagerCode.$invalid && submitted) ||
-                              v$.ReportingManagerCode.$pending.$response
+                              (v$.l1_manager_code.$invalid && submitted) ||
+                              v$.l1_manager_code.$pending.$response
                             "
                             class="p-error"
                             >{{
-                              v$.ReportingManagerCode.required.$message.replace(
+                              v$.l1_manager_code.required.$message.replace(
                                 "Value",
                                 "Reporting Manager Code"
                               )
@@ -1342,7 +1410,7 @@
                             placeholder="Holiday Location"
                             name="holiday_location"
                             id="holiday_location"
-                            v-model="holidayLocation"
+                            v-model="holiday_location"
                             class="textbox onboard-form form-control select2_form_without_search"
                           >
                             <option value="" disabled>Holiday Location</option>
@@ -1357,7 +1425,7 @@
                             placeholder="Official E-Mail Id"
                             name="officical_mail"
                             class="textbox form-control"
-                            v-model="v$.OfficialEmail.$model"
+                            v-model="v$.officical_mail.$model"
                           />
                         </div>
                       </div>
@@ -1368,7 +1436,7 @@
                             type="text"
                             minlength="10"
                             maxlength="10"
-                            v-model="v$.OfficialMobileNO.$model"
+                            v-model="v$.official_mobile.$model"
                             placeholder="Official Mobile"
                             name="official_mobile"
                             id="official_mobile"
@@ -1384,7 +1452,7 @@
                           <input
                             type="number"
                             placeholder="Employee Notice Period Days"
-                            v-model="v$.EmployeeNoticePeriodDays.$model"
+                            v-model="v$.emp_notice.$model"
                             name="emp_notice"
                             class="onboard-form form-control textbox"
                           />
@@ -1402,19 +1470,19 @@
                             placeholder="Date of confirmation"
                             max="9999-12-31"
                             :class="{
-                              'p-invalid': v$.DateOfConfirmation.$invalid && submitted,
+                              'p-invalid': v$.confirmation_period.$invalid && submitted,
                             }"
-                            v-model="v$.DateOfConfirmation.$model"
+                            v-model="v$.confirmation_period.$model"
                           />
 
                           <span
                             v-if="
-                              (v$.DateOfConfirmation.$invalid && submitted) ||
-                              v$.DateOfConfirmation.$pending.$response
+                              (v$.confirmation_period.$invalid && submitted) ||
+                              v$.confirmation_period.$pending.$response
                             "
                             class="p-error"
                             >{{
-                              v$.DateOfConfirmation.required.$message.replace(
+                              v$.confirmation_period.required.$message.replace(
                                 "Value",
                                 "Date Of Confirmation"
                               )
@@ -1451,18 +1519,18 @@
                             name="father_name"
                             id="father_name"
                             :class="{
-                              'p-invalid': v$.fatherName.$invalid && submitted,
+                              'p-invalid': v$.father_name.$invalid && submitted,
                             }"
-                            v-model="v$.fatherName.$model"
+                            v-model="v$.father_name.$model"
                           />
                           <span
                             v-if="
-                              (v$.fatherName.$invalid && submitted) ||
-                              v$.fatherName.$pending.$response
+                              (v$.father_name.$invalid && submitted) ||
+                              v$.father_name.$pending.$response
                             "
                             class="p-error"
                             >{{
-                              v$.fatherName.required.$message.replace(
+                              v$.father_name.required.$message.replace(
                                 "Value",
                                 "father Name"
                               )
@@ -1482,20 +1550,20 @@
                             placeholder="Date of Birth"
                             @change="fnCalculateAge"
                             :class="{
-                              'p-invalid': v$.fatherDateofBirth.$invalid && submitted,
+                              'p-invalid': v$.dob_father.$invalid && submitted,
                             }"
-                            v-model="v$.fatherDateofBirth.$model"
+                            v-model="v$.dob_father.$model"
                             onfocus="(this.type='date')"
                           />
 
                           <span
                             v-if="
-                              (v$.fatherDateofBirth.$invalid && submitted) ||
-                              v$.fatherDateofBirth.$pending.$response
+                              (v$.dob_father.$invalid && submitted) ||
+                              v$.dob_father.$pending.$response
                             "
                             class="p-error"
                             >{{
-                              v$.fatherDateofBirth.required.$message.replace(
+                              v$.dob_father.required.$message.replace(
                                 "Value",
                                 "father Date of Birth"
                               )
@@ -1525,7 +1593,7 @@
                             type="number"
                             placeholder="Age"
                             name="father_age"
-                            v-model="employee_onboarding.fatherAge"
+                            v-model="employee_onboarding.father_age"
                             id="father_age"
                             class="textbox onboard-form form-control"
                             minlength="2"
@@ -1547,19 +1615,19 @@
                             placeholder="Mother Name"
                             name="mother_name"
                             :class="{
-                              'p-invalid': v$.motherName.$invalid && submitted,
+                              'p-invalid': v$.mother_name.$invalid && submitted,
                             }"
-                            v-model="v$.motherName.$model"
+                            v-model="v$.mother_name.$model"
                           />
 
                           <span
                             v-if="
-                              (v$.motherName.$invalid && submitted) ||
-                              v$.motherName.$pending.$response
+                              (v$.mother_name.$invalid && submitted) ||
+                              v$.mother_name.$pending.$response
                             "
                             class="p-error"
                             >{{
-                              v$.motherName.required.$message.replace(
+                              v$.mother_name.required.$message.replace(
                                 "Value",
                                 "mother Name"
                               )
@@ -1579,21 +1647,21 @@
                             type="text"
                             placeholder="Date of Birth"
                             :class="{
-                              'p-invalid': v$.motherDateofBirth.$invalid && submitted,
+                              'p-invalid': v$.dob_mother.$invalid && submitted,
                             }"
-                            v-model="v$.motherDateofBirth.$model"
+                            v-model="v$.dob_mother.$model"
                             @change="fnCalculateAge"
                             onfocus="(this.type='date')"
                           />
 
                           <span
                             v-if="
-                              (v$.motherDateofBirth.$invalid && submitted) ||
-                              v$.motherDateofBirth.$pending.$response
+                              (v$.dob_mother.$invalid && submitted) ||
+                              v$.dob_mother.$pending.$response
                             "
                             class="p-error"
                             >{{
-                              v$.motherDateofBirth.required.$message.replace(
+                              v$.dob_mother.required.$message.replace(
                                 "Value",
                                 "mother Date of Birth"
                               )
@@ -1623,7 +1691,7 @@
                             type="number"
                             placeholder="Age"
                             name="mother_age"
-                            v-model="employee_onboarding.motherAge"
+                            v-model="employee_onboarding.mother_age"
                             id="mother_age"
                             class="textbox onboard-form form-control"
                             minlength="2"
@@ -1648,19 +1716,19 @@
                             placeholder="Spouse Name"
                             name="spouse_name"
                             :class="{
-                              'p-invalid': v$.SpouseName.$invalid && submitted,
+                              'p-invalid': v$.spouse_name.$invalid && submitted,
                             }"
-                            v-model="v$.SpouseName.$model"
+                            v-model="v$.spouse_name.$model"
                           />
 
                           <span
                             v-if="
-                              (v$.SpouseName.$invalid && submitted) ||
-                              v$.SpouseName.$pending.$response
+                              (v$.spouse_name.$invalid && submitted) ||
+                              v$.spouse_name.$pending.$response
                             "
                             class="p-error"
                             >{{
-                              v$.SpouseName.required.$message.replace(
+                              v$.spouse_name.required.$message.replace(
                                 "Value",
                                 "Spouse Name"
                               )
@@ -1683,20 +1751,20 @@
                             placeholder="Date of Wedding"
                             name="wedding_date"
                             :class="{
-                              'is-invalid': v$.dateOfWedding.$invalid && submitted,
+                              'is-invalid': v$.wedding_date.$invalid && submitted,
                             }"
-                            v-model="v$.dateOfWedding.$model"
+                            v-model="v$.wedding_date.$model"
                             onfocus="(this.type='date')"
                           />
 
                           <span
                             v-if="
-                              (v$.dateOfWedding.$invalid && submitted) ||
-                              v$.dateOfWedding.$pending.$response
+                              (v$.wedding_date.$invalid && submitted) ||
+                              v$.wedding_date.$pending.$response
                             "
                             class="p-error"
                             >{{
-                              v$.dateOfWedding.required.$message.replace(
+                              v$.wedding_date.required.$message.replace(
                                 "Value",
                                 "Date Of Wedding"
                               )
@@ -1716,10 +1784,10 @@
                           <select
                             placeholder="Spouse Gender"
                             name="spouse_gender"
-                            v-model="v$.spouseGender.$model"
+                            v-model="v$.spouse_gender.$model"
                             id="spouse_gender"
                             :class="{
-                              'is-invalid': v$.SpouseDOB.$invalid && submitted,
+                              'is-invalid': v$.spouse_gender.$invalid && submitted,
                             }"
                             class="textbox onboard-form form-control"
                           >
@@ -1733,12 +1801,12 @@
 
                           <span
                             v-if="
-                              (v$.spouseGender.$invalid && submitted) ||
-                              v$.spouseGender.$pending.$response
+                              (v$.spouse_gender.$invalid && submitted) ||
+                              v$.spouse_gender.$pending.$response
                             "
                             class="p-error"
                             >{{
-                              v$.spouseGender.required.$message.replace(
+                              v$.spouse_gender.required.$message.replace(
                                 "Value",
                                 "Spouse Gender"
                               )
@@ -1763,20 +1831,20 @@
                             type="text"
                             placeholder="SpouseDOB"
                             :class="{
-                              'p-invalid': v$.SpouseDOB.$invalid && submitted,
+                              'p-invalid': v$.dob_spouse.$invalid && submitted,
                             }"
-                            v-model="v$.SpouseDOB.$model"
+                            v-model="v$.dob_spouse.$model"
                             onfocus="(this.type='date')"
                           />
 
                           <span
                             v-if="
-                              (v$.SpouseDOB.$invalid && submitted) ||
-                              v$.SpouseDOB.$pending.$response
+                              (v$.dob_spouse.$invalid && submitted) ||
+                              v$.dob_spouse.$pending.$response
                             "
                             class="p-error"
                             >{{
-                              v$.SpouseDOB.required.$message.replace(
+                              v$.dob_spouse.required.$message.replace(
                                 "Value",
                                 "Spouse Date of Birth"
                               )
@@ -1795,7 +1863,7 @@
                             placeholder="Number of Children"
                             name="no_of_children"
                             id="no_of_children"
-                            v-model="noOfChildren"
+                            v-model="no_of_children"
                             class="textbox onboard-form form-control spouse_data select2_form_without_search"
                           >
                             <option value="" hidden selected disabled>
@@ -2133,7 +2201,7 @@
         <b>{{ employee_onboarding.employee_name }}</b
         ><br />
         Please check
-        <b>{{ employee_onboarding.PersonDetialsEmail }}</b> for Further Information
+        <b>{{ employee_onboarding.email }}</b> for Further Information
       </p>
     </div>
     <template #footer>
@@ -2173,13 +2241,13 @@ onMounted(() => {
   //  For Countries
   getCountryList().then((result) => (country.value = result));
   console.log(country.country_name);
-  employee_onboarding.CurrentCountry = "India";
-  employee_onboarding.Permanentcountry = "India";
+  employee_onboarding.current_country = "India";
+  employee_onboarding.permanent_country = "India";
 
   // for state
   getStateList().then((result) => (state.value = result));
-  employee_onboarding.CurrentState = "Tamil Nadu";
-  employee_onboarding.Permanentstate = "Tamil Nadu";
+  employee_onboarding.current_state = "Tamil Nadu";
+  employee_onboarding.permanent_state = "Tamil Nadu";
   // for Manager Details
   ManagerDetails().then((result) => (Managerdetails.value = result));
   console.log(Managerdetails);
@@ -2188,7 +2256,10 @@ onMounted(() => {
 
   DepartmentDetails().then((result) => (departmentDetails.value = result));
 
-  getMaritalStatus().then((result) => (maritalDetails.value = result));
+  getMaritalStatus().then((result) =>{
+    console.log(result);
+     (maritalDetails.value = result)});
+
 
   getBloodGroups().then((result) => (bloodGroups.value = result));
 
@@ -2210,9 +2281,9 @@ const employee_onboarding = reactive({
   mobile_number: "",
   dl_no: "",
   blood_group_id: "",
-  BankIFSCCode: "",
+  bank_ifsc: "",
   marital_status: "",
-  PersonDetialsEmail: "",
+  email: "",
   nationality: "",
   physically_challenged: "",
 
@@ -2222,59 +2293,58 @@ const employee_onboarding = reactive({
 
   // Current Address Detials Start
 
-  CurrentAddress1: "",
-  CurrentAddress2: "",
-  CurrentCountry: "",
-  CurrentState: "",
-  CurrentCity: "",
-  CurrentPincode: "",
+  current_address_line_1: "",
+  current_address_line_2: "",
+  current_country: "",
+  current_state: "",
+  current_city: "",
+  current_pincode: "",
 
   // Current Address Details End
 
   // Permanant Address Start
 
-  PermanentAddress1: "",
-  PermanentAddress2: "",
-  Permanentcountry: "",
-  Permanentstate: "",
-  PermanentCity: "",
-  PermanentPincode: "",
+  permanent_address_line_1: "",
+  permanent_address_line_2: "",
+  permanent_country: "",
+  permanent_state: "",
+  permanent_city: "",
+  permanent_pincode: "",
 
   // Permanant Address end
 
   // Office Detials Start
 
-  Departmant: "",
-  Process: "",
-  Designation: "",
-  CostCenter: "",
-  probationPeriod: "",
-  WorkLocation: "",
-  ReportingManagerCode: "",
-  ReportingManagerName: "",
-  holidayLocation: "",
-  OfficialEmail: "",
-  OfficialMobileNO: "",
-  EmployeeNoticePeriodDays: "",
-  DateOfConfirmation: "",
+  department: "",
+  process: "",
+  designation: "",
+  cost_center: "",
+  probation_period: "",
+  work_location: "",
+  l1_manager_code: "",
+  holiday_location: "",
+  officical_mail: "",
+  official_mobile: "",
+  emp_notice: "",
+  confirmation_period: "",
 
   // Office Details End
 
   // family Details Start
 
-  fatherName: "",
-  fatherDateofBirth: "",
-  fatherGender: "Male",
-  fatherAge: "",
-  motherName: "",
-  motherDateofBirth: "",
-  motherGender: "",
-  motherAge: "Female",
-  SpouseName: "",
-  dateOfWedding: "",
-  spouseGender: "",
-  SpouseDOB: "",
-  noOfChildren: "",
+  father_name: "",
+  dob_father: "",
+  father_gender: "Male",
+  father_age: "",
+  mother_name: "",
+  dob_mother: "",
+  mother_gender: "Female",
+  mother_age: "",
+  spouse_name: "",
+  wedding_date: "",
+  spouse_gender: "",
+  dob_spouse: "",
+  no_of_children: "",
 
   // family Details End
 
@@ -2328,21 +2398,10 @@ const handleSubmit = (isFormValid) => {
   PanCardDoc.fileName == undefined
     ? (PancardInvalid.value = true)
     : (PancardInvalid.value = false);
-  DrivingLicenseDoc.fileName == undefined
-    ? (DrivingLisenceInvalid.value = true)
-    : (DrivingLisenceInvalid.value = false);
-  VoterIdDoc.fileName == undefined
-    ? (VoterIdInvalid.value = true)
-    : (VoterIdInvalid.value = false);
-  ReleivingLetterDoc.fileName == undefined
-    ? (ReleivingLetterInvalid.value = true)
-    : (ReleivingLetterInvalid.value = false);
   EductionDoc.fileName == undefined
     ? (EducationCertificateInvalid.value = true)
     : (EducationCertificateInvalid.value = false);
-  PassportDoc.fileName == undefined
-    ? (PassPortInvalid.value = true)
-    : (PassPortInvalid.value = false);
+
 
   if (!isFormValid) {
     toast.add({
@@ -2376,19 +2435,19 @@ const spouseDisable = () => {
 
 const ForCopyAdrress = () => {
   if (CopyAddresschecked.value == false) {
-    employee_onboarding.PermanentAddress1 = employee_onboarding.CurrentAddress1;
-    employee_onboarding.PermanentAddress2 = employee_onboarding.CurrentAddress2;
-    employee_onboarding.Permanentcountry = employee_onboarding.CurrentCountry;
-    employee_onboarding.Permanentstate = employee_onboarding.CurrentState;
-    employee_onboarding.PermanentCity = employee_onboarding.CurrentCity;
-    employee_onboarding.PermanentPincode = employee_onboarding.CurrentPincode;
+    employee_onboarding.permanent_address_line_1 = employee_onboarding.current_address_line_1;
+    employee_onboarding.permanent_address_line_2 = employee_onboarding.current_address_line_2;
+    employee_onboarding.permanent_country = employee_onboarding.current_country;
+    employee_onboarding.permanent_state = employee_onboarding.current_state;
+    employee_onboarding.permanent_city = employee_onboarding.current_city;
+    employee_onboarding.permanent_pincode = employee_onboarding.current_pincode;
   } else if (CopyAddresschecked.value == true) {
-    employee_onboarding.PermanentAddress1 = "";
-    employee_onboarding.PermanentAddress2 = "";
-    employee_onboarding.PermanentCity = "";
-    employee_onboarding.Permanentstate = "";
-    employee_onboarding.PermanentPincode = "";
-    employee_onboarding.PermanentAddress1 = "";
+    employee_onboarding.permanent_address_line_1 = "";
+    employee_onboarding.permanent_address_line_2 = "";
+    employee_onboarding.permanent_country="";
+    employee_onboarding.permanent_city = "";
+    employee_onboarding.permanent_state = "";
+    employee_onboarding.permanent_pincode = "";
   }
 };
 
@@ -2403,27 +2462,27 @@ const NationalityCheck = () => {
 };
 
 const fnCalculateAge = () => {
-  console.log("Father's Age" + employee_onboarding.fatherDateofBirth);
-  console.log("Mother's Age" + employee_onboarding.motherDateofBirth);
+  console.log("Father's Age" + employee_onboarding.dob_father);
+  console.log("Mother's Age" + employee_onboarding.dob_mother);
 
   // convert user input value into date object
 
   // get difference from current date;
 
-  if (employee_onboarding.fatherDateofBirth) {
-    var birthDate = new Date(employee_onboarding.fatherDateofBirth);
+  if (employee_onboarding.dob_father) {
+    var birthDate = new Date(employee_onboarding.dob_father);
     console.log(" birthDate" + birthDate);
     var difference = Date.now() - birthDate.getTime();
     var ageDate = new Date(difference);
     var calculatedAge = Math.abs(ageDate.getUTCFullYear() - 1970);
-    employee_onboarding.fatherAge = calculatedAge;
-  } else if (employee_onboarding.motherDateofBirth) {
-    var birthDate = new Date(employee_onboarding.motherDateofBirth);
+    employee_onboarding.father_age = calculatedAge;
+  } else if (employee_onboarding.dob_mother) {
+    var birthDate = new Date(employee_onboarding.dob_mother);
     console.log(" birthDate" + birthDate);
     var difference = Date.now() - birthDate.getTime();
     var ageDate = new Date(difference);
     var calculatedAge = Math.abs(ageDate.getUTCFullYear() - 1970);
-    employee_onboarding.motherAge = calculatedAge;
+    employee_onboarding.mother_age = calculatedAge;
   }
 };
 
@@ -2434,10 +2493,14 @@ const SaveEmployeeOnboardingData = () => {
 };
 
 const SubmitEmployeeOnboardingData = () => {
-  employee_onboarding.can_onboard_employee = true;
-  console.log(employee_onboarding);
-  jsonFormat();
-  console.log(AadharCardFront.fileName);
+
+    if(AadharCardFront.fileName == undefined || AadharCardBack.fileName == undefined || PanCardDoc.fileName== undefined || EductionDoc.fileName == undefined){
+        employee_onboarding.can_onboard_employee = true;
+        console.log(employee_onboarding);
+         jsonFormat();
+    }
+
+
 };
 
 // Generate data into JSON Format
@@ -2686,54 +2749,53 @@ const Sampledata = () => {
   employee_onboarding.pan_number = ref("BGAJP6646F");
   employee_onboarding.blood_group_id = ref("B Positive");
   employee_onboarding.dob = ref("23-07-2000");
-  employee_onboarding.PersonDetialsEmail = ref("example@gmail.com");
+  employee_onboarding.email = ref("example@gmail.com");
   employee_onboarding.dl_no = ref("HR-0619850034761");
   employee_onboarding.passport_number = ref("A2096457");
   employee_onboarding.passport_date = ref("23-5-2030");
   employee_onboarding.bank_id = ref("ANDHRA BANK");
   employee_onboarding.physically_challenged = ref("No");
   employee_onboarding.AccountNumber = ref("35216644292");
-  employee_onboarding.BankIFSCCode = ref("SBIN0121325");
+  employee_onboarding.bank_ifsc = ref("SBIN0121325");
   employee_onboarding.nationality = ref("Indian");
   employee_onboarding.gender = ref("Male");
   employee_onboarding.marital_status = ref("Married");
   employee_onboarding.mobile_number = ref("897898797");
-  employee_onboarding.CurrentAddress1 = ref("45/21 2nd Avenue,chennai");
-  employee_onboarding.CurrentAddress2 = ref("45/21 2nd Avenue,chennai");
-  employee_onboarding.CurrentCountry = ref("India");
-  employee_onboarding.CurrentState = ref("Tamil Nadu");
-  employee_onboarding.CurrentCity = ref("chennai");
-  employee_onboarding.CurrentPincode = ref("600023");
-  employee_onboarding.PermanentAddress1 = ref("45/21 2nd Avenue,chennai");
-  employee_onboarding.PermanentAddress2 = ref("45/21 2nd Avenue,chennai");
-  employee_onboarding.Permanentcountry = ref("India");
-  employee_onboarding.PermanentCity = ref("chennai");
-  employee_onboarding.Permanentstate = ref("Tamil Nadu");
-  employee_onboarding.PermanentPincode = ref("600003");
-  employee_onboarding.Departmant = ref("IT");
-  employee_onboarding.Process = ref("Iti");
-  employee_onboarding.Designation = ref("Developer");
-  employee_onboarding.CostCenter = ref("Chennai");
-  employee_onboarding.probationPeriod = ref("11 Month");
-  employee_onboarding.holidayLocation = ref("Tamilnadu");
-  employee_onboarding.ReportingManagerCode = ref("PLIPL076-Muthu Selvan");
-  employee_onboarding.WorkLocation = ref("chennai");
-  employee_onboarding.OfficialEmail = ref("voidmax@gmail.com");
-  employee_onboarding.OfficialMobileNO = ref("4646454547");
-  employee_onboarding.EmployeeNoticePeriodDays = ref(3);
-  employee_onboarding.DateOfConfirmation = ref("10-12-2019");
-  employee_onboarding.fatherName = ref("David");
-  employee_onboarding.fatherAge = ref("45");
-  employee_onboarding.fatherDateofBirth = ref("23-09-1968");
-  employee_onboarding.motherName = ref("Licas");
-  employee_onboarding.motherDateofBirth = ref("23-8-1970");
-  employee_onboarding.motherGender = ref("Female");
-  employee_onboarding.motherAge = ref("35");
-  employee_onboarding.spouseGender = ref("female");
-  employee_onboarding.SpouseDOB = ref("12-8-1995");
-  employee_onboarding.SpouseName = ref("priyanka");
-  employee_onboarding.noOfChildren = ref("5");
-  employee_onboarding.employee_code = ref("B101");
+  employee_onboarding.current_address_line_1 = ref("45/21 2nd Avenue,chennai");
+  employee_onboarding.current_address_line_2 = ref("45/21 2nd Avenue,chennai");
+  employee_onboarding.current_country = ref("India");
+  employee_onboarding.current_state = ref("Tamil Nadu");
+  employee_onboarding.current_city = ref("chennai");
+  employee_onboarding.current_pincode = ref("600023");
+  employee_onboarding.permanent_address_line_1 = ref("45/21 2nd Avenue,chennai");
+  employee_onboarding.permanent_address_line_2 = ref("45/21 2nd Avenue,chennai");
+  employee_onboarding.permanent_country = ref("India");
+  employee_onboarding.permanent_city = ref("chennai");
+  employee_onboarding.permanent_state = ref("Tamil Nadu");
+  employee_onboarding.permanent_pincode = ref("600003");
+  employee_onboarding.department = ref("IT");
+  employee_onboarding.process = ref("Iti");
+  employee_onboarding.designation = ref("Developer");
+  employee_onboarding.cost_center = ref("Chennai");
+  employee_onboarding.probation_period = ref("11 Month");
+  employee_onboarding.holiday_location = ref("Tamilnadu");
+  employee_onboarding.l1_manager_code = ref("PLIPL076-Muthu Selvan");
+  employee_onboarding.work_location = ref("chennai");
+  employee_onboarding.officical_mail = ref("voidmax@gmail.com");
+  employee_onboarding.official_mobile = ref("4646454547");
+  employee_onboarding.emp_notice = ref(3);
+  employee_onboarding.confirmation_period = ref("10-12-2019");
+  employee_onboarding.father_name = ref("David");
+  employee_onboarding.father_age = ref("45");
+  employee_onboarding.dob_father = ref("23-09-1968");
+  employee_onboarding.mother_name = ref("Licas");
+  employee_onboarding.dob_mother = ref("23-8-1970");
+  employee_onboarding.mother_gender = ref("Female");
+  employee_onboarding.mother_age = ref("35");
+  employee_onboarding.spouse_gender = ref("female");
+  employee_onboarding.dob_spouse = ref("12-8-1995");
+  employee_onboarding.spouse_name = ref("priyanka");
+  employee_onboarding.no_of_children = ref("5");
 };
 </script>
 
