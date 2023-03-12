@@ -2377,10 +2377,6 @@ const AadharDocFrontInvalid = ref(false);
 const AadharDocBackInvalid = ref(false);
 const PancardInvalid = ref(false);
 const EducationCertificateInvalid = ref(false);
-const VoterIdInvalid = ref(false);
-const PassPortInvalid = ref(false);
-const DrivingLisenceInvalid = ref(false);
-const ReleivingLetterInvalid = ref(false);
 
 //   Events
 
@@ -2417,10 +2413,8 @@ const handleSubmit = (isFormValid) => {
   SumbitDisable.value = false;
 };
 const toggleDialog = () => {
-  showMessage.value = !showMessage.value;
+//   showMessage.value = !showMessage.value;
 
-  if (!showMessage.value) {
-  }
 };
 
 const spouseDisable = () => {
