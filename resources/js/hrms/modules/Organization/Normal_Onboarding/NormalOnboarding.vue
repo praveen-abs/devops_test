@@ -7,48 +7,33 @@
           <div id="msform">
             <form @submit.prevent="handleSubmit(!v$.$invalid)" class="p-fluid">
               <input type="hidden" name="user_id" id="user_id" value="" />
-              <input
-                type="hidden"
-                name="can_redirect"
-                id="can_redirect"
-                value="0"
-              />
+              <input type="hidden" name="can_redirect" id="can_redirect" value="0" />
 
               <!-- Personal Details Start -->
 
               <div class="card shadow profile-box card-top-border p-2">
-                <div
-                  class="card-body justify-content-center align-items-center"
-                >
+                <div class="card-body justify-content-center align-items-center">
                   <div class="header-card-text">
                     <h6>Personal Details</h6>
                   </div>
 
                   <div class="form-card">
                     <div class="row mt-1">
-                      <div
-                        class="col-md -6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
-                      >
+                      <div class="col-md -6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                         <div class="floating">
-                          <label for="" class="float-label"
-                            >Employee Code</label
-                          >
+                          <label for="" class="float-label">Employee Code</label>
                           <InputText
                             class="form-onboard-form form-control textbox capitalize"
                             type="text"
-                            v-model="v$.EmployeeCode.$model"
+                            v-model="v$.employee_code.$model"
                             placeholder="Employee Code"
                           />
                         </div>
                       </div>
 
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                         <div class="floating">
-                          <label
-                            for="EmployeeNameasperAadhar"
-                            class="float-label"
+                          <label for="employee_name" class="float-label"
                             >Employee Name as per Aadhar
                             <span class="text-danger">*</span>
                           </label>
@@ -56,11 +41,9 @@
                           <InputText
                             class="onboard-form form-control textbox capitalize"
                             type="text"
-                            v-model="v$.EmployeeNameAsPerAadhar.$model"
+                            v-model="v$.employee_name.$model"
                             :class="{
-                              'p-invalid':
-                                v$.EmployeeNameAsPerAadhar.$invalid &&
-                                submitted,
+                              'p-invalid': v$.employee_name.$invalid && submitted,
                             }"
                             style="text-transform: uppercase"
                             placeholder="Employee Name as per Aadhar "
@@ -68,13 +51,12 @@
 
                           <span
                             v-if="
-                              (v$.EmployeeNameAsPerAadhar.$invalid &&
-                                submitted) ||
-                              v$.EmployeeNameAsPerAadhar.$pending.$response
+                              (v$.employee_name.$invalid && submitted) ||
+                              v$.employee_name.$pending.$response
                             "
                             class="p-error"
                             >{{
-                              v$.EmployeeNameAsPerAadhar.required.$message.replace(
+                              v$.employee_name.required.$message.replace(
                                 "Value",
                                 "Employee Name as per in Aadhar"
                               )
@@ -82,17 +64,13 @@
                           >
                         </div>
                       </div>
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                         <div class="floating">
-                          <label for="" class="float-label"
-                            >Date of Birth</label
-                          >
+                          <label for="" class="float-label">Date of Birth</label>
                           <input
                             type="text"
                             max="9999-12-31"
-                            v-model="v$.PersonDetialsDateofBirth.$model"
+                            v-model="v$.dob.$model"
                             placeholder="Date of birth"
                             id="doj"
                             name="doj"
@@ -103,42 +81,41 @@
                           <span class="error" id="error_pan_no"></span>
                         </div>
                       </div>
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Marital Status
-                            <span class="text-danger">*</span></label
+                            >Marital Status <span class="text-danger">*</span></label
                           >
-                          <select
+                          <Dropdown
+                            editable
+                            v-model="v$.marital_status.$model"
+                            :options="maritalDetails"
+                            optionLabel="name"
+                            optionValue="id"
+                            placeholder="Select Bank Name"
+                          />
+                          <!-- <select
                             class="form-control textbox"
                             placeholder="Marital Status"
                             @click="spouseDisable"
-                            v-model="v$.PersonDetialsMaritalStatus.$model"
+                            v-model="v$.marital_status.$model"
                             :class="{
-                              'is-invalid':
-                                v$.PersonDetialsMaritalStatus.$invalid &&
-                                submitted,
+                              'is-invalid': v$.marital_status.$invalid && submitted,
                             }"
                           >
-                            <option
-                              v-for="marry in MaritalStatus"
-                              :key="marry.value"
-                            >
+                            <option v-for="marry in MaritalStatus" :key="marry.value">
                               {{ marry.name }}
                             </option>
-                          </select>
+                          </select> -->
 
                           <span
                             v-if="
-                              (v$.PersonDetialsMaritalStatus.$invalid &&
-                                submitted) ||
-                              v$.PersonDetialsMaritalStatus.$pending.$response
+                              (v$.marital_status.$invalid && submitted) ||
+                              v$.marital_status.$pending.$response
                             "
                             class="p-error"
                             >{{
-                              v$.PersonDetialsMaritalStatus.required.$message.replace(
+                              v$.marital_status.required.$message.replace(
                                 "Value",
                                 "Marital Status"
                               )
@@ -146,26 +123,21 @@
                           >
                         </div>
                       </div>
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Date of Joining<span class="text-danger"
-                              >*</span
-                            ></label
+                            >Date of Joining<span class="text-danger">*</span></label
                           >
 
                           <InputText
                             type="text"
                             max="9999-12-31"
-                            v-model="v$.DateOfJoining.$model"
+                            v-model="v$.doj.$model"
                             placeholder="Date of Joining"
                             id="doj"
                             name="doj"
                             :class="{
-                              'p-invalid':
-                                v$.DateOfJoining.$invalid && submitted,
+                              'p-invalid': v$.doj.$invalid && submitted,
                             }"
                             class="form-control textbox"
                             onfocus="(this.type='date')"
@@ -173,61 +145,53 @@
 
                           <span
                             v-if="
-                              (v$.DateOfJoining.$invalid && submitted) ||
-                              v$.DateOfJoining.$pending.$response
+                              (v$.doj.$invalid && submitted) || v$.doj.$pending.$response
                             "
                             class="p-error"
                             >{{
-                              v$.DateOfJoining.required.$message.replace(
-                                "Value",
-                                "Date Of Joining"
-                              )
+                              v$.doj.required.$message.replace("Value", "Date Of Joining")
                             }}</span
                           >
                         </div>
                       </div>
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                         <div class="floating">
                           <label for="" class="float-label"
                             >Gender<span class="text-danger">*</span></label
                           >
-
-                          <select
-                            v-model="v$.PersonDetialsGender.$model"
+                          <Dropdown
+                            v-model="v$.gender.$model"
+                            :options="Gender"
+                            optionLabel="name"
+                            optionValue="value"
+                            placeholder="Select Gender"
+                          />
+                          <!-- <select
+                            v-model="v$.gender.$model"
                             placeholder="Choose Gender"
                             :class="{
-                              'is-invalid':
-                                v$. PersonDetialsGender.$invalid && submitted,
+                              'is-invalid': v$.gender.$invalid && submitted,
                             }"
                             class="form-control textbox"
                           >
-                            <option
-                              v-for="gender in Gender" :key="gender.id"
-                             >
+                            <option v-for="gender in Gender" :key="gender.value">
                               {{ gender.name }}
                             </option>
-                          </select>
+                          </select> -->
 
                           <span
                             v-if="
-                              (v$.PersonDetialsGender.$invalid && submitted) ||
-                              v$.PersonDetialsGender.$pending.$response
+                              (v$.gender.$invalid && submitted) ||
+                              v$.gender.$pending.$response
                             "
                             class="p-error"
                             >{{
-                              v$.PersonDetialsGender.required.$message.replace(
-                                "Value",
-                                "Gender"
-                              )
+                              v$.gender.required.$message.replace("Value", "Gender")
                             }}</span
                           >
                         </div>
                       </div>
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                         <div class="floating">
                           <label for="" class="float-label"
                             >Mobile Number<span class="text">*</span></label
@@ -236,11 +200,9 @@
                             type="text"
                             placeholder="Mobile Number"
                             :class="{
-                              'p-invalid':
-                                v$.PersonDetialsMobileNumber.$invalid &&
-                                submitted,
+                              'p-invalid': v$.mobile_number.$invalid && submitted,
                             }"
-                            v-model="v$.PersonDetialsMobileNumber.$model"
+                            v-model="v$.mobile_number.$model"
                             class="form-control textbox"
                             minlength="10"
                             maxlength="10"
@@ -248,22 +210,19 @@
                         </div>
                         <span
                           v-if="
-                            (v$.PersonDetialsMobileNumber.$invalid &&
-                              submitted) ||
-                            v$.PersonDetialsMobileNumber.$pending.$response
+                            (v$.mobile_number.$invalid && submitted) ||
+                            v$.mobile_number.$pending.$response
                           "
                           class="p-error"
                           >{{
-                            v$.PersonDetialsMobileNumber.required.$message.replace(
+                            v$.mobile_number.required.$message.replace(
                               "Value",
                               "Mobile Number"
                             )
                           }}</span
                         >
                       </div>
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                         <div class="floating">
                           <label for="" class="float-label"
                             >Email<span class="text-danger">*</span></label
@@ -272,8 +231,7 @@
                             type="text"
                             placeholder="Email ID"
                             :class="{
-                              'p-invalid':
-                                v$.PersonDetialsEmail.$invalid && submitted,
+                              'p-invalid': v$.PersonDetialsEmail.$invalid && submitted,
                             }"
                             v-model="v$.PersonDetialsEmail.$model"
                             class="form-control textbox"
@@ -296,14 +254,10 @@
                         </div>
                         <span class="error" id="error_email"></span>
                       </div>
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Aadhaar Number<span class="text-danger"
-                              >*</span
-                            ></label
+                            >Aadhaar Number<span class="text-danger">*</span></label
                           >
                           <!-- <InputText class="onboard-form form-control textbox " id="AadharNumber"
                                                         placeholder="Aadhaar Number"
@@ -314,20 +268,19 @@
                             id="ssn"
                             mask="9999 9999 9999"
                             placeholder="9999 9999 9999"
-                            v-model="v$.AadhaarNumber.$model"
+                            v-model="v$.aadhar_number.$model"
                             :class="{
-                              'p-invalid':
-                                v$.AadhaarNumber.$invalid && submitted,
+                              'p-invalid': v$.aadhar_number.$invalid && submitted,
                             }"
                           />
                           <span
                             v-if="
-                              (v$.AadhaarNumber.$invalid && submitted) ||
-                              v$.AadhaarNumber.$pending.$response
+                              (v$.aadhar_number.$invalid && submitted) ||
+                              v$.aadhar_number.$pending.$response
                             "
                             class="p-error"
                             >{{
-                              v$.AadhaarNumber.required.$message.replace(
+                              v$.aadhar_number.required.$message.replace(
                                 "Value",
                                 "Aadhaar Number"
                               )
@@ -335,13 +288,10 @@
                           >
                         </div>
                       </div>
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-12 co l-lg-3 col-xl-3 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-12 co l-lg-3 col-xl-3 mb-2">
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Pan Number / Pan Acknowlegement<span
-                              class="text-danger"
+                            >Pan Number / Pan Acknowlegement<span class="text-danger"
                               >*</span
                             ></label
                           >
@@ -352,23 +302,23 @@
                           <InputMask
                             id="serial"
                             mask="aaaaa9999a"
-                            v-model="v$.PanNumber.$model"
+                            v-model="v$.pan_number.$model"
                             placeholder="AHFCS1234F"
                             style="text-transform: uppercase"
                             class="form-control textbox"
                             :class="{
-                              'p-invalid': v$.PanNumber.$invalid && submitted,
+                              'p-invalid': v$.pan_number.$invalid && submitted,
                             }"
                           />
 
                           <span
                             v-if="
-                              (v$.PanNumber.$invalid && submitted) ||
-                              v$.PanNumber.$pending.$response
+                              (v$.pan_number.$invalid && submitted) ||
+                              v$.pan_number.$pending.$response
                             "
                             class="p-error"
                             >{{
-                              v$.PanNumber.required.$message.replace(
+                              v$.pan_number.required.$message.replace(
                                 "Value",
                                 "Pan Number"
                               )
@@ -376,15 +326,13 @@
                           >
                         </div>
                       </div>
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                         <div class="floating">
                           <label for="" class="float-label">DL Number</label>
                           <InputText
                             class="onboard-form form-control textbox"
                             type="text"
-                            v-model="v$.DLNumber.$model"
+                            v-model="v$.dl_no.$model"
                             placeholder="DL Number"
                             minlength="16"
                             maxlength="16"
@@ -398,43 +346,42 @@
                           <span class="error" id="error_dl_no"></span>
                         </div>
                       </div>
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Choose nationality<span class="text-danger"
-                              >*</span
-                            ></label
+                            >Choose nationality<span class="text-danger">*</span></label
                           >
+                          <Dropdown
+                            v-model="v$.nationality.$model"
+                            :options="Nationality"
+                            optionLabel="name"
+                            optionValue="value"
+                            placeholder="Select Nationality"
+                          />
 
-                          <select
+                          <!-- <select
                             @click="NationalityCheck"
                             name=""
                             id=""
                             :class="{
-                              'is-invalid':
-                                v$.ChooseNationality.$invalid && submitted,
+                              'is-invalid': v$.nationality.$invalid && submitted,
                             }"
-                            v-model="v$.ChooseNationality.$model"
+                            v-model="v$.nationality.$model"
                             class="form-control"
                           >
-                            <option
-                              v-for="nation in Nationality"
-                              :key="nation.name"
-                            >
+                            <option v-for="nation in Nationality" :key="nation.name">
                               {{ nation.name }}
                             </option>
-                          </select>
+                          </select> -->
 
                           <span
                             v-if="
-                              (v$.ChooseNationality.$invalid && submitted) ||
-                              v$.ChooseNationality.$pending.$response
+                              (v$.nationality.$invalid && submitted) ||
+                              v$.nationality.$pending.$response
                             "
                             class="p-error"
                             >{{
-                              v$.ChooseNationality.required.$message.replace(
+                              v$.nationality.required.$message.replace(
                                 "Value",
                                 "Choose Nationality"
                               )
@@ -457,7 +404,7 @@
                             minlength="8"
                             maxlength="8"
                             class="form-control textbox"
-                            v-model="v$.PassportNumber.$model"
+                            v-model="v$.passport_number.$model"
                             placeholder="Passport Number"
                           />
 
@@ -477,8 +424,8 @@
                           ></label>
                           <input
                             type="text"
-                            v-model="v$.PassportExpDate.$model"
-                            placeholder="Date of Joining"
+                            v-model="v$.passport_date.$model"
+                            placeholder="Passport Expiry Date"
                             id="doj"
                             name="doj"
                             class="onboard-form form-control textbox"
@@ -489,105 +436,86 @@
                         </div>
                       </div>
 
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                         <div class="floating">
                           <label for="" class="float-label">Blood Group</label>
 
-                          <select
-                            v-model="v$.PersonDetialsBloodGroup.$model"
-                            placeholder="Blood Group"
-                            name="blood_group"
-                            class="onboard-form form-control textbox"
-                          >
-                            <option
-                              v-for="bloodGroup in BloodGroup"
-                              :key="bloodGroup.id"
-                            >
-                              {{ bloodGroup.name }}
-                            </option>
-                            choose
-                          </select>
-                        </div>
-                      </div>
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
-                      >
-                        <div class="floating">
-                          <label for="" class="float-label"
-                            >Physically Challenged</label
-                          >
+                          <Dropdown
+                            v-model="v$.blood_group_id.$model"
+                            :options="bloodGroups"
+                            optionLabel="name"
+                            optionValue="id"
+                            placeholder="Select Bloodgroup"
+                          />
 
-                          <select
-                            name=""
-                            id=""
-                            class="onboard-form form-control textbox"
-                            placeholder="Physically Challenged"
-                            v-model="v$.PhysicallyChallenged.$model"
-                          >
-                            <option
-                              v-for="Physically in PhyChallenged"
-                              :key="Physically.name"
-                            >
-                              {{ Physically.name }}
-                            </option>
-                          </select>
                         </div>
                       </div>
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                        <div class="floating">
+                          <label for="" class="float-label">Physically Challenged</label>
+
+                          <Dropdown
+                            v-model="v$.physically_challenged.$model"
+                            :options="PhyChallenged"
+                            optionLabel="name"
+                            optionValue="value"
+                            placeholder="Physically Challenged"
+                          />
+
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                         <div class="floating">
                           <label for="" class="float-label"
                             >Bank Name<span class="text-danger">*</span></label
                           >
+                          <Dropdown
+                            editable
+                            v-model="v$.bank_id.$model"
+                            :options="bankList"
+                            optionLabel="bank_name"
+                            optionValue="id"
+                            placeholder="Select Bank Name"
+                          />
 
+                          <!--
                           <select
                             name=""
                             id=" "
                             placeholder="Bank Name"
                             :class="{
-                              'is-invalid': v$.BankName.$invalid && submitted,
+                              'is-invalid': v$.bank_id.$invalid && submitted,
                             }"
                             class="form-control textbox"
-                            v-model="v$.BankName.$model"
+                            v-model="v$.bank_id.$model"
                           >
                             <option v-for="bank in bankList" :key="bank.id">
                               {{ bank.bank_name }}
                             </option>
-                          </select>
+                          </select> -->
 
-                          <span
+                          <!-- <span
                             v-if="
-                              (v$.BankName.$invalid && submitted) ||
-                              v$.BankName.$pending.$response
+                              (v$.bank_id.$invalid && submitted) ||
+                              v$.bank_id.$pending.$response
                             "
                             class="p-error"
                             >{{
-                              v$.BankName.required.$message.replace(
-                                "Value",
-                                "BankName "
-                              )
+                              v$.bank_id.required.$message.replace("Value", "bank_id ")
                             }}</span
-                          >
+                          > -->
                         </div>
                       </div>
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Account Number<span class="text-danger"
-                              >*</span
-                            ></label
+                            >Account Number<span class="text-danger">*</span></label
                           >
                           <InputText
                             placeholder="Account Number"
                             minlength="10"
                             :class="{
-                              'p-invalid':
-                                v$.AccountNumber.$invalid && submitted,
+                              'p-invalid': v$.AccountNumber.$invalid && submitted,
                             }"
                             maxlength="18"
                             class="onboard-form form-control textbox"
@@ -610,21 +538,16 @@
                           >
                         </div>
                       </div>
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Bank IFSC Code<span class="text-danger"
-                              >*</span
-                            ></label
+                            >Bank IFSC Code<span class="text-danger">*</span></label
                           >
                           <InputText
                             type="text"
                             v-model="v$.BankIFSCCode.$model"
                             :class="{
-                              'p-invalid':
-                                v$.BankIFSCCode.$invalid && submitted,
+                              'p-invalid': v$.BankIFSCCode.$invalid && submitted,
                             }"
                             class="form-control textbox"
                             pattern="^[A-Z]{4}0[A-Z0-9]{6}$"
@@ -766,17 +689,13 @@
               <!-- Current Address Start -->
 
               <div class="card shadow profile-box card-top-border p-2">
-                <div
-                  class="card-body justify-content-center align-items-center"
-                >
+                <div class="card-body justify-content-center align-items-center">
                   <div class="form-card">
                     <div class="header-card-text">
                       <h6>Current Address</h6>
                     </div>
                     <div class="row mt-1">
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6 mb-2">
                         <div class="floating">
                           <label for="" class="float-label"
                             >Address 1<span class="text-danger">*</span></label
@@ -788,8 +707,7 @@
                             rows="3"
                             current_address_line_1
                             :class="{
-                              'p-invalid':
-                                v$.CurrentAddress1.$invalid && submitted,
+                              'p-invalid': v$.CurrentAddress1.$invalid && submitted,
                             }"
                             v-model="v$.CurrentAddress1.$model"
                             placeholder="Current Address"
@@ -810,9 +728,7 @@
                           >
                         </div>
                       </div>
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6 mb-2">
                         <div class="floating">
                           <label for="" class="float-label"
                             >Address 2<span class="text-danger">*</span></label
@@ -825,8 +741,7 @@
                             rows="3"
                             current_address_line_2
                             :class="{
-                              'p-invalid':
-                                v$.CurrentAddress2.$invalid && submitted,
+                              'p-invalid': v$.CurrentAddress2.$invalid && submitted,
                             }"
                             v-model="v$.CurrentAddress2.$model"
                             placeholder="Current Address"
@@ -847,9 +762,7 @@
                           >
                         </div>
                       </div>
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                         <div class="floating">
                           <label for="" class="float-label"
                             >Country<span class="text-danger">*</span></label
@@ -860,16 +773,12 @@
                             name="current_country"
                             v-model="v$.CurrentCountry.$model"
                             :class="{
-                              'is-invalid':
-                                v$.CurrentCountry.$invalid && submitted,
+                              'is-invalid': v$.CurrentCountry.$invalid && submitted,
                             }"
                             id="current_country"
                             class="form-control textbox"
                           >
-                            <option
-                              v-for="countries in country"
-                              :key="countries.id"
-                            >
+                            <option v-for="countries in country" :key="countries.id">
                               {{ countries.country_name }}
                             </option>
                           </select>
@@ -888,9 +797,7 @@
                           >
                         </div>
                       </div>
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                         <div class="floating">
                           <label for="" class="float-label"
                             >State<span class="text-danger">*</span></label
@@ -900,8 +807,7 @@
                             name="current_state"
                             v-model="v$.CurrentState.$model"
                             :class="{
-                              'is-invalid':
-                                v$.CurrentState.$invalid && submitted,
+                              'is-invalid': v$.CurrentState.$invalid && submitted,
                             }"
                             id="current_state"
                             class="form-control textbox"
@@ -917,17 +823,12 @@
                             "
                             class="p-error"
                             >{{
-                              v$.CurrentState.required.$message.replace(
-                                "Value",
-                                "State"
-                              )
+                              v$.CurrentState.required.$message.replace("Value", "State")
                             }}</span
                           >
                         </div>
                       </div>
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                         <div class="floating">
                           <label for="" class="float-label">
                             City<span class="text-danger">*</span></label
@@ -950,16 +851,11 @@
                           "
                           class="p-error"
                           >{{
-                            v$.CurrentCity.required.$message.replace(
-                              "Value",
-                              "City"
-                            )
+                            v$.CurrentCity.required.$message.replace("Value", "City")
                           }}</span
                         >
                       </div>
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                         <div class="floating">
                           <label for="" class="float-label"
                             >Pincode<span class="text-danger">*</span></label
@@ -972,8 +868,7 @@
                             minlength="6"
                             maxlength="6"
                             :class="{
-                              'p-invalid':
-                                v$.CurrentPincode.$invalid && submitted,
+                              'p-invalid': v$.CurrentPincode.$invalid && submitted,
                             }"
                             v-model="v$.CurrentPincode.$model"
                             placeholder="Pincode"
@@ -996,18 +891,14 @@
                     </div>
 
                     <div class="row">
-                      <div
-                        class="col-md-12 col-sm-12 col-xs-12 col-lg-12 col-xl-12 my-3"
-                      >
+                      <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 col-xl-12 my-3">
                         <Checkbox
                           inputId=""
                           @click="ForCopyAdrress"
                           v-model="CopyAddresschecked"
                           :binary="true"
                         />
-                        <label
-                          style="margin-left: 10px"
-                          for="current_address_copy"
+                        <label style="margin-left: 10px" for="current_address_copy"
                           >Copy current address to the permanent address</label
                         >
                       </div>
@@ -1015,9 +906,7 @@
                       <!-- Current Address End -->
 
                       <!-- Permanent Address Start -->
-                      <div
-                        class="col-md-12 col-sm-12 col-xs-12 col-lg-12 col-xl-12"
-                      >
+                      <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 col-xl-12">
                         <h6>Permanent Address</h6>
                         <div class="row mt-1">
                           <div
@@ -1025,9 +914,7 @@
                           >
                             <div class="floating">
                               <label for="" class="float-label"
-                                >Address 1<span class="text-danger"
-                                  >*</span
-                                ></label
+                                >Address 1<span class="text-danger">*</span></label
                               >
 
                               <Textarea
@@ -1038,15 +925,13 @@
                                 rows="3"
                                 id="permanent_address_line_1"
                                 :class="{
-                                  'p-invalid':
-                                    v$.PermanentAddress1.$invalid && submitted,
+                                  'p-invalid': v$.PermanentAddress1.$invalid && submitted,
                                 }"
                                 v-model="v$.PermanentAddress1.$model"
                               />
                               <span
                                 v-if="
-                                  (v$.PermanentAddress1.$invalid &&
-                                    submitted) ||
+                                  (v$.PermanentAddress1.$invalid && submitted) ||
                                   v$.PermanentAddress1.$pending.$response
                                 "
                                 class="p-error"
@@ -1064,9 +949,7 @@
                           >
                             <div class="floating">
                               <label for="" class="float-label"
-                                >Address 2<span class="text-danger"
-                                  >*</span
-                                ></label
+                                >Address 2<span class="text-danger">*</span></label
                               >
 
                               <Textarea
@@ -1077,16 +960,14 @@
                                 rows="3"
                                 id="permanent_address_line_2"
                                 :class="{
-                                  'p-invalid':
-                                    v$.PermanentAddress2.$invalid && submitted,
+                                  'p-invalid': v$.PermanentAddress2.$invalid && submitted,
                                 }"
                                 v-model="v$.PermanentAddress2.$model"
                               />
 
                               <span
                                 v-if="
-                                  (v$.PermanentAddress2.$invalid &&
-                                    submitted) ||
+                                  (v$.PermanentAddress2.$invalid && submitted) ||
                                   v$.PermanentAddress2.$pending.$response
                                 "
                                 class="p-error"
@@ -1104,25 +985,19 @@
                           >
                             <div class="floating">
                               <label for="" class="float-label"
-                                >Country<span class="text-danger"
-                                  >*</span
-                                ></label
+                                >Country<span class="text-danger">*</span></label
                               >
 
                               <select
                                 placeholder="Country"
                                 v-model="v$.Permanentcountry.$model"
                                 :class="{
-                                  'is-invalid':
-                                    v$.Permanentcountry.$invalid && submitted,
+                                  'is-invalid': v$.Permanentcountry.$invalid && submitted,
                                 }"
                                 id="current_country"
                                 class="onboard-form form-control textbox"
                               >
-                                <option
-                                  v-for="countries in country"
-                                  :key="countries.id"
-                                >
+                                <option v-for="countries in country" :key="countries.id">
                                   {{ countries.country_name }}
                                 </option>
                               </select>
@@ -1153,15 +1028,11 @@
                                 name="Permanent_state"
                                 v-model="v$.Permanentstate.$model"
                                 :class="{
-                                  'is-invalid':
-                                    v$.Permanentstate.$invalid && submitted,
+                                  'is-invalid': v$.Permanentstate.$invalid && submitted,
                                 }"
                                 class="form-control textbox"
                               >
-                                <option
-                                  v-for="states in state"
-                                  :key="states.id"
-                                >
+                                <option v-for="states in state" :key="states.id">
                                   {{ states.state_name }}
                                 </option>
                               </select>
@@ -1193,8 +1064,7 @@
                                 class="onboard-form form-control textbox capitalize"
                                 type="text"
                                 :class="{
-                                  'p-invalid':
-                                    v$.PermanentCity.$invalid && submitted,
+                                  'p-invalid': v$.PermanentCity.$invalid && submitted,
                                 }"
                                 v-model="v$.PermanentCity.$model"
                                 placeholder="City"
@@ -1220,9 +1090,7 @@
                           >
                             <div class="floating">
                               <label for="" class="float-label"
-                                >Pincode<span class="text-danger"
-                                  >*</span
-                                ></label
+                                >Pincode<span class="text-danger">*</span></label
                               >
 
                               <InputText
@@ -1231,8 +1099,7 @@
                                 minlength="6"
                                 maxlength="6"
                                 :class="{
-                                  'p-invalid':
-                                    v$.PermanentPincode.$invalid && submitted,
+                                  'p-invalid': v$.PermanentPincode.$invalid && submitted,
                                 }"
                                 v-model="v$.PermanentPincode.$model"
                                 placeholder="Pincode"
@@ -1264,9 +1131,7 @@
               <!-- Office Details Start -->
 
               <div class="card shadow profile-box card-top-border p-2">
-                <div
-                  class="card-body justify-content-center align-items-center"
-                >
+                <div class="card-body justify-content-center align-items-center">
                   <div class="header-card-text">
                     <h6 class="">Official Details</h6>
                   </div>
@@ -1322,10 +1187,7 @@
                             "
                             class="p-error"
                             >{{
-                              v$.Process.required.$message.replace(
-                                "Value",
-                                "Process"
-                              )
+                              v$.Process.required.$message.replace("Value", "Process")
                             }}</span
                           >
                         </div>
@@ -1363,9 +1225,7 @@
                           </span>
                         </div>
                       </div>
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                         <div class="floating">
                           <label for="" class="float-label">Cost Center</label>
 
@@ -1378,13 +1238,9 @@
                           />
                         </div>
                       </div>
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                         <div class="floating">
-                          <label for="" class="float-label"
-                            >Probation Period</label
-                          >
+                          <label for="" class="float-label">Probation Period</label>
 
                           <select
                             placeholder="Probation Period"
@@ -1416,17 +1272,14 @@
                       >
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Work Location<span class="text-danger"
-                              >*</span
-                            ></label
+                            >Work Location<span class="text-danger">*</span></label
                           >
                           <InputText
                             class="onboard-form form-control"
                             type="text"
                             placeholder="Work Location"
                             :class="{
-                              'p-invalid':
-                                v$.WorkLocation.$invalid && submitted,
+                              'p-invalid': v$.WorkLocation.$invalid && submitted,
                             }"
                             v-model="v$.WorkLocation.$model"
                           />
@@ -1453,8 +1306,7 @@
                             id="l1_manager_code_select"
                             v-model="v$.ReportingManagerCode.$model"
                             :class="{
-                              'is-invalid':
-                                v$.ReportingManagerCode.$invalid && submitted,
+                              'is-invalid': v$.ReportingManagerCode.$invalid && submitted,
                             }"
                             class="onboard-form form-control textbox"
                           >
@@ -1483,13 +1335,9 @@
                           </span>
                         </div>
                       </div>
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                         <div class="floating">
-                          <label for="" class="float-label"
-                            >Holiday Location</label
-                          >
+                          <label for="" class="float-label">Holiday Location</label>
                           <select
                             placeholder="Holiday Location"
                             name="holiday_location"
@@ -1497,19 +1345,13 @@
                             v-model="holidayLocation"
                             class="textbox onboard-form form-control select2_form_without_search"
                           >
-                            <option value=""   disabled>
-                              Holiday Location
-                            </option>
+                            <option value="" disabled>Holiday Location</option>
                           </select>
                         </div>
                       </div>
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                         <div class="floating">
-                          <label for="" class="float-label"
-                            >Official Email
-                          </label>
+                          <label for="" class="float-label">Official Email </label>
                           <input
                             type="email"
                             placeholder="Official E-Mail Id"
@@ -1519,13 +1361,9 @@
                           />
                         </div>
                       </div>
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                         <div class="floating">
-                          <label for="" class="float-label"
-                            >Official Mobile</label
-                          >
+                          <label for="" class="float-label">Official Mobile</label>
                           <input
                             type="text"
                             minlength="10"
@@ -1538,9 +1376,7 @@
                           />
                         </div>
                       </div>
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                         <div class="floating">
                           <label for="" class="float-label"
                             >Employee Notice Period Days</label
@@ -1555,14 +1391,10 @@
                         </div>
                       </div>
 
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Date of confirmation<span class="text-danger"
-                              >*</span
-                            ></label
+                            >Date of confirmation<span class="text-danger">*</span></label
                           >
                           <InputText
                             class="onboard-form form-control"
@@ -1570,8 +1402,7 @@
                             placeholder="Date of confirmation"
                             max="9999-12-31"
                             :class="{
-                              'p-invalid':
-                                v$.DateOfConfirmation.$invalid && submitted,
+                              'p-invalid': v$.DateOfConfirmation.$invalid && submitted,
                             }"
                             v-model="v$.DateOfConfirmation.$model"
                           />
@@ -1601,22 +1432,16 @@
               <!-- Family Detials Start -->
 
               <div class="card shadow profile-box card-top-border p-2">
-                <div
-                  class="card-body justify-content-center align-items-center"
-                >
+                <div class="card-body justify-content-center align-items-center">
                   <div class="header-card-text">
                     <h6 class="mb-0">Family Details</h6>
                   </div>
                   <div class="form-card">
                     <div class="row mt-1">
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Father Name<span class="text-danger"
-                              >*</span
-                            ></label
+                            >Father Name<span class="text-danger">*</span></label
                           >
 
                           <InputText
@@ -1645,13 +1470,10 @@
                           </span>
                         </div>
                       </div>
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Date of Birth
-                            <span class="text-danger">*</span></label
+                            >Date of Birth <span class="text-danger">*</span></label
                           >
 
                           <InputText
@@ -1660,8 +1482,7 @@
                             placeholder="Date of Birth"
                             @change="fnCalculateAge"
                             :class="{
-                              'p-invalid':
-                                v$.fatherDateofBirth.$invalid && submitted,
+                              'p-invalid': v$.fatherDateofBirth.$invalid && submitted,
                             }"
                             v-model="v$.fatherDateofBirth.$model"
                             onfocus="(this.type='date')"
@@ -1683,9 +1504,7 @@
                         </div>
                       </div>
 
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                         <div class="floating">
                           <label for="" class="float-label">Gender</label>
                           <input
@@ -1698,9 +1517,7 @@
                           />
                         </div>
                       </div>
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                         <div class="floating">
                           <label for="" class="float-label">Age </label>
 
@@ -1718,13 +1535,10 @@
                         </div>
                       </div>
 
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Mother Name
-                            <span class="text-danger">*</span></label
+                            >Mother Name <span class="text-danger">*</span></label
                           >
 
                           <InputText
@@ -1754,13 +1568,10 @@
                         </div>
                       </div>
 
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Date of Birth
-                            <span class="text-danger">*</span></label
+                            >Date of Birth <span class="text-danger">*</span></label
                           >
 
                           <InputText
@@ -1768,8 +1579,7 @@
                             type="text"
                             placeholder="Date of Birth"
                             :class="{
-                              'p-invalid':
-                                v$.motherDateofBirth.$invalid && submitted,
+                              'p-invalid': v$.motherDateofBirth.$invalid && submitted,
                             }"
                             v-model="v$.motherDateofBirth.$model"
                             @change="fnCalculateAge"
@@ -1791,9 +1601,7 @@
                           </span>
                         </div>
                       </div>
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                         <div class="floating">
                           <label for="" class="float-label">Gender</label>
 
@@ -1802,15 +1610,12 @@
                             class="form-control"
                             name="mother_gender"
                             id=""
-                            vmodel
                             value="Female"
                             readonly
                           />
                         </div>
                       </div>
-                      <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
-                      >
+                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                         <div class="floating">
                           <label for="" class="float-label">Age</label>
 
@@ -1834,8 +1639,7 @@
                       >
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Spouse Name
-                            <span class="text-danger">*</span></label
+                            >Spouse Name <span class="text-danger">*</span></label
                           >
                           <InputText
                             v-if="sposeData"
@@ -1870,8 +1674,7 @@
                       >
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Date of Wedding
-                            <span class="text-danger">*</span></label
+                            >Date of Wedding <span class="text-danger">*</span></label
                           >
 
                           <InputText
@@ -1880,8 +1683,7 @@
                             placeholder="Date of Wedding"
                             name="wedding_date"
                             :class="{
-                              'is-invalid':
-                                v$.dateOfWedding.$invalid && submitted,
+                              'is-invalid': v$.dateOfWedding.$invalid && submitted,
                             }"
                             v-model="v$.dateOfWedding.$model"
                             onfocus="(this.type='date')"
@@ -1950,8 +1752,7 @@
                       >
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Spouse DOB
-                            <span class="text-danger">*</span></label
+                            >Spouse DOB <span class="text-danger">*</span></label
                           >
 
                           <InputText
@@ -1988,9 +1789,7 @@
                         class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
                       >
                         <div class="floating">
-                          <label for="" class="float-label"
-                            >Number of Children</label
-                          >
+                          <label for="" class="float-label">Number of Children</label>
 
                           <select
                             placeholder="Number of Children"
@@ -2021,9 +1820,7 @@
               <!-- Personal Documents start -->
 
               <div class="card shadow mb-0 profile-box card-top-border p-2">
-                <div
-                  class="card-body justify-content-center align-items-center"
-                >
+                <div class="card-body justify-content-center align-items-center">
                   <div class="header-card-text">
                     <h6 class="mb-0">Personal Documents</h6>
                   </div>
@@ -2031,9 +1828,7 @@
                     <div class="row mt-1">
                       <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                         <label for="" class="float-label"
-                          >Aadhar Card Front<span class="text-danger"
-                            >*</span
-                          ></label
+                          >Aadhar Card Front<span class="text-danger">*</span></label
                         >
                         <!-- <div class="form-control md"
                                                          id="aadhar_card_file_label"><span class="file_label">Choose
@@ -2064,9 +1859,7 @@
                         id="aadhar_card_backend_content"
                       >
                         <label for="" class="float-label">
-                          Aadhar Card Back<span class="text-danger"
-                            >*</span
-                          ></label
+                          Aadhar Card Back<span class="text-danger">*</span></label
                         >
                         <!-- <div class="addfiles form-control"
                                                          id="aadhar_card_backend_file_label"><span
@@ -2162,9 +1955,7 @@
                         />
                       </div>
                       <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
-                        <label for="" class="float-label">
-                          Driving License</label
-                        >
+                        <label for="" class="float-label"> Driving License</label>
                         <!-- <div class="addfiles form-control" data="#dl_file"
                                                          id="dl_file_label"><span class="file_label">Choose Driving
                                                                      License</span></div> -->
@@ -2181,9 +1972,7 @@
                       </div>
                       <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
                         <label for="" class="float-label"
-                          >Educations Certificate<span class="text-danger"
-                            >*</span
-                          ></label
+                          >Educations Certificate<span class="text-danger">*</span></label
                         >
                         <input
                           type="file"
@@ -2214,9 +2003,7 @@
                         >
                       </div>
                       <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
-                        <label for="" class="float-label">
-                          Relieving Letter</label
-                        >
+                        <label for="" class="float-label"> Relieving Letter</label>
                         <!-- <div class="addfiles form-control" data="#reliving_letter_file"
                                                                  id="reliving_letter_file_label"><span class="file_label">Choose Relieving Letter</span></div> -->
                         <input
@@ -2288,8 +2075,8 @@
 
   <Dialog
     v-if="
-      !employee_onboarding.EmployeeNameAsPerAadhar.length > 0 &&
-      !employee_onboarding.AadhaarNumber.length > 0
+      !employee_onboarding.employee_name.length > 0 &&
+      !employee_onboarding.aadhar_number.length > 0
     "
     header="Documents Required"
     v-model:visible="RequiredDocument"
@@ -2298,32 +2085,31 @@
   >
     <li
       v-if="
-        employee_onboarding.EmployeeNameAsPerAadhar == '' ||
-        employee_onboarding.EmployeeNameAsPerAadhar.length < 0
+        employee_onboarding.employee_name == '' ||
+        employee_onboarding.employee_name.length < 0
       "
     >
       Employee As Per Name Required
     </li>
     <li
       v-if="
-        employee_onboarding.AadhaarNumber == '' ||
-        employee_onboarding.AadhaarNumber.length < 0
+        employee_onboarding.aadhar_number == '' ||
+        employee_onboarding.aadhar_number.length < 0
       "
     >
       Aadhaar Number Required
     </li>
     <li
       v-if="
-        employee_onboarding.PanNumber == '' ||
-        employee_onboarding.PanNumber.length < 0
+        employee_onboarding.pan_number == '' || employee_onboarding.pan_number.length < 0
       "
     >
       Pan Number Required
     </li>
     <li
       v-if="
-        employee_onboarding.PersonDetialsMobileNumber == '' ||
-        employee_onboarding.PersonDetialsMobileNumber.length < 0
+        employee_onboarding.mobile_number == '' ||
+        employee_onboarding.mobile_number.length < 0
       "
     >
       Mobile Number Required
@@ -2344,11 +2130,10 @@
       <h5 class="mb-6">Onboarding Successful!</h5>
       <p :style="{ lineHeight: 1.5, textIndent: '1rem' }">
         Your account is registered under name
-        <b>{{ employee_onboarding.EmployeeNameAsPerAadhar }}</b
+        <b>{{ employee_onboarding.employee_name }}</b
         ><br />
         Please check
-        <b>{{ employee_onboarding.PersonDetialsEmail }}</b> for Further
-        Information
+        <b>{{ employee_onboarding.PersonDetialsEmail }}</b> for Further Information
       </p>
     </div>
     <template #footer>
@@ -2373,15 +2158,16 @@ import {
   getStateList,
   ManagerDetails,
   DepartmentDetails,
+  getMaritalStatus,
+  getBloodGroups,
 } from "./NormalOnboardingService";
 
-const gen=ref("red")
+const gen = ref("red");
 
 onMounted(() => {
+  employee_onboarding.blood_group_id = gen.value;
 
-    employee_onboarding.PersonDetialsBloodGroup=gen.value
-
-    console.log(gen.value);
+  console.log(gen.value);
   // For Bank Data
   getBankList().then((result) => (bankList.value = result));
   //  For Countries
@@ -2401,29 +2187,34 @@ onMounted(() => {
   //Get Department details
 
   DepartmentDetails().then((result) => (departmentDetails.value = result));
+
+  getMaritalStatus().then((result) => (maritalDetails.value = result));
+
+  getBloodGroups().then((result) => (bloodGroups.value = result));
+
 });
 
 const employee_onboarding = reactive({
   can_onboard_employee: true,
-  EmployeeCode: "",
-  DateOfJoining: "",
-  AadhaarNumber: "",
-  PassportNumber: "",
-  BankName: "",
-  EmployeeNameAsPerAadhar: "",
-  PersonDetialsGender: "",
-  PanNumber: "",
-  PassportExpDate: "",
+  employee_code: "",
+  doj: "",
+  aadhar_number: "",
+  passport_number: "",
+  bank_id: "",
+  employee_name: "",
+  gender: "",
+  pan_number: "",
+  passport_date: "",
   AccountNumber: "",
-  PersonDetialsDateofBirth: "",
-  PersonDetialsMobileNumber: "",
-  DLNumber: "",
-  PersonDetialsBloodGroup: "",
+  dob: "",
+  mobile_number: "",
+  dl_no: "",
+  blood_group_id: "",
   BankIFSCCode: "",
-  PersonDetialsMaritalStatus: "",
+  marital_status: "",
   PersonDetialsEmail: "",
-  ChooseNationality: "",
-  PhysicallyChallenged: "",
+  nationality: "",
+  physically_challenged: "",
 
   // person Detials End
 
@@ -2498,6 +2289,9 @@ const country = ref();
 const departmentDetails = ref();
 const state = ref();
 const Managerdetails = ref();
+const maritalDetails = ref();
+const bloodGroups = ref();
+
 
 const NationalityData = ref(true);
 const CopyAddresschecked = ref(false);
@@ -2571,7 +2365,7 @@ const toggleDialog = () => {
 };
 
 const spouseDisable = () => {
-  if (employee_onboarding.PersonDetialsMaritalStatus == "Married") {
+  if (employee_onboarding.marital_status == "Married") {
     sposeData.value = true;
   } else {
     sposeData.value = false;
@@ -2601,7 +2395,7 @@ const ForCopyAdrress = () => {
 // Nationality Check
 
 const NationalityCheck = () => {
-  if (employee_onboarding.ChooseNationality == "Indian") {
+  if (employee_onboarding.nationality == "Indian") {
     NationalityData.value = false;
   } else {
     NationalityData.value = true;
@@ -2681,12 +2475,9 @@ const AadharFront = (e) => {
     // Get uploaded file
     (AadharCardFront.file = e.target.files[0]),
       // Get file size
-      (AadharCardFront.fileSize =
-        Math.round((file.size / 1024 / 1024) * 100) / 100),
+      (AadharCardFront.fileSize = Math.round((file.size / 1024 / 1024) * 100) / 100),
       // Get file extension
-      (AadharCardFront.fileExtention = AadharCardFront.file.name
-        .split(".")
-        .pop()),
+      (AadharCardFront.fileExtention = AadharCardFront.file.name.split(".").pop()),
       // Get file name
       (AadharCardFront.fileName = AadharCardFront.file.name.split(".").shift()),
       // Check if file is an image
@@ -2706,9 +2497,7 @@ const AadharBack = (e) => {
       (AadharCardBack.fileSize =
         Math.round((AadharCardBack.size / 1024 / 1024) * 100) / 100),
       // Get file extension
-      (AadharCardBack.fileExtention = AadharCardBack.file.name
-        .split(".")
-        .pop()),
+      (AadharCardBack.fileExtention = AadharCardBack.file.name.split(".").pop()),
       // Get file name
       (AadharCardBack.fileName = AadharCardBack.file.name.split(".").shift()),
       // Check if file is an image
@@ -2725,8 +2514,7 @@ const PanCard = (e) => {
     // Get uploaded file
     (PanCardDoc.file = e.target.files[0]),
       // Get file size
-      (PanCardDoc.fileSize =
-        Math.round((PanCardDoc.size / 1024 / 1024) * 100) / 100),
+      (PanCardDoc.fileSize = Math.round((PanCardDoc.size / 1024 / 1024) * 100) / 100),
       // Get file extension
       (PanCardDoc.fileExtention = PanCardDoc.file.name.split(".").pop()),
       // Get file name
@@ -2745,8 +2533,7 @@ const Passport = (e) => {
     // Get uploaded file
     (PassportDoc.file = e.target.files[0]),
       // Get file size
-      (PassportDoc.fileSize =
-        Math.round((PassportDoc.size / 1024 / 1024) * 100) / 100),
+      (PassportDoc.fileSize = Math.round((PassportDoc.size / 1024 / 1024) * 100) / 100),
       // Get file extension
       (PassportDoc.fileExtention = PassportDoc.file.name.split(".").pop()),
       // Get file name
@@ -2768,13 +2555,9 @@ const DrivingLisence = (e) => {
       (DrivingLicenseDoc.fileSize =
         Math.round((DrivingLicenseDoc.size / 1024 / 1024) * 100) / 100),
       // Get file extension
-      (DrivingLicenseDoc.fileExtention = DrivingLicenseDoc.file.name
-        .split(".")
-        .pop()),
+      (DrivingLicenseDoc.fileExtention = DrivingLicenseDoc.file.name.split(".").pop()),
       // Get file name
-      (DrivingLicenseDoc.fileName = DrivingLicenseDoc.file.name
-        .split(".")
-        .shift()),
+      (DrivingLicenseDoc.fileName = DrivingLicenseDoc.file.name.split(".").shift()),
       // Check if file is an image
       (DrivingLicenseDoc.isImage = ["jpg", "jpeg", "png", "gif"].includes(
         DrivingLicenseDoc.fileExtention
@@ -2789,8 +2572,7 @@ const VoterId = (e) => {
     // Get uploaded file
     (VoterIdDoc.file = e.target.files[0]),
       // Get file size
-      (VoterIdDoc.fileSize =
-        Math.round((VoterIdDoc.size / 1024 / 1024) * 100) / 100),
+      (VoterIdDoc.fileSize = Math.round((VoterIdDoc.size / 1024 / 1024) * 100) / 100),
       // Get file extension
       (VoterIdDoc.fileExtention = VoterIdDoc.file.name.split(".").pop()),
       // Get file name
@@ -2809,8 +2591,7 @@ const EductionCertifacte = (e) => {
     // Get uploaded file
     (EductionDoc.file = e.target.files[0]),
       // Get file size
-      (EductionDoc.fileSize =
-        Math.round((EductionDoc.size / 1024 / 1024) * 100) / 100),
+      (EductionDoc.fileSize = Math.round((EductionDoc.size / 1024 / 1024) * 100) / 100),
       // Get file extension
       (EductionDoc.fileExtention = EductionDoc.file.name.split(".").pop()),
       // Get file name
@@ -2832,13 +2613,9 @@ const ReleivingLetter = (e) => {
       (ReleivingLetterDoc.fileSize =
         Math.round((ReleivingLetterDoc.size / 1024 / 1024) * 100) / 100),
       // Get file extension
-      (ReleivingLetterDoc.fileExtention = ReleivingLetterDoc.file.name
-        .split(".")
-        .pop()),
+      (ReleivingLetterDoc.fileExtention = ReleivingLetterDoc.file.name.split(".").pop()),
       // Get file name
-      (ReleivingLetterDoc.fileName = ReleivingLetterDoc.file.name
-        .split(".")
-        .shift()),
+      (ReleivingLetterDoc.fileName = ReleivingLetterDoc.file.name.split(".").shift()),
       // Check if file is an image
       (ReleivingLetterDoc.isImage = ["jpg", "jpeg", "png", "gif"].includes(
         ReleivingLetterDoc.fileExtention
@@ -2872,16 +2649,22 @@ const submit = () => {
     });
 };
 
-const Gender = ref([{ name: "Male", id:1 }, { name: "Female",id:2 }, { name: "Others",id:3 }]);
-const MaritalStatus = ref([
-  { name: "Married", value: 1 },
-  { name: "UnMarried", value: 2 },
-  { name: "Windowed", value: 3 },
-  { name: "Seperated", value: 4 },
-  { name: "Divorced", value: 5 },
+const Gender = ref([
+  { name: "Male", value: "male" },
+  { name: "Female", value: "female" },
+  { name: "Others", value: "others" },
 ]);
-const Nationality = ref([{ name: "Indian",value:"1" }, { name: "Other Nationality",value:"2" }]);
-const PhyChallenged = ref([{ name: "Yes",value:"1" }, { name: "No",value:"2" }]);
+
+const Nationality = ref([
+  { name: "Indian", value: "indian" },
+  { name: "Other Nationality", value: "others" },
+]);
+
+const PhyChallenged = ref([
+  { name: "Yes", value: "yes" },
+  { name: "No", value: "no" },
+]);
+
 const BloodGroup = ref([
   { id: "1", name: "A Positive" },
   { id: "2", name: "A Negative" },
@@ -2896,25 +2679,25 @@ const BloodGroup = ref([
 // Sample testong Data
 
 const Sampledata = () => {
-  employee_onboarding.EmployeeCode = ref("B090");
-  employee_onboarding.EmployeeNameAsPerAadhar = ref("George David");
-  employee_onboarding.AadhaarNumber = ref("3977 8798 6564");
-  employee_onboarding.DateOfJoining = ref("23-4-2020");
-  employee_onboarding.PanNumber = ref("BGAJP6646F");
-  employee_onboarding.PersonDetialsBloodGroup = ref("B Positive");
-  employee_onboarding.PersonDetialsDateofBirth = ref("23-07-2000");
+  employee_onboarding.employee_code = ref("B090");
+  employee_onboarding.employee_name = ref("George David");
+  employee_onboarding.aadhar_number = ref("3977 8798 6564");
+  employee_onboarding.doj = ref("23-4-2020");
+  employee_onboarding.pan_number = ref("BGAJP6646F");
+  employee_onboarding.blood_group_id = ref("B Positive");
+  employee_onboarding.dob = ref("23-07-2000");
   employee_onboarding.PersonDetialsEmail = ref("example@gmail.com");
-  employee_onboarding.DLNumber = ref("HR-0619850034761");
-  employee_onboarding.PassportNumber = ref("A2096457");
-  employee_onboarding.PassportExpDate = ref("23-5-2030");
-  employee_onboarding.BankName = ref("ANDHRA BANK");
-  employee_onboarding.PhysicallyChallenged=ref("No")
+  employee_onboarding.dl_no = ref("HR-0619850034761");
+  employee_onboarding.passport_number = ref("A2096457");
+  employee_onboarding.passport_date = ref("23-5-2030");
+  employee_onboarding.bank_id = ref("ANDHRA BANK");
+  employee_onboarding.physically_challenged = ref("No");
   employee_onboarding.AccountNumber = ref("35216644292");
   employee_onboarding.BankIFSCCode = ref("SBIN0121325");
-  employee_onboarding.ChooseNationality = ref("Indian");
-  employee_onboarding.PersonDetialsGender = ref("Male");
-  employee_onboarding.PersonDetialsMaritalStatus = ref("Married");
-  employee_onboarding.PersonDetialsMobileNumber = ref("897898797");
+  employee_onboarding.nationality = ref("Indian");
+  employee_onboarding.gender = ref("Male");
+  employee_onboarding.marital_status = ref("Married");
+  employee_onboarding.mobile_number = ref("897898797");
   employee_onboarding.CurrentAddress1 = ref("45/21 2nd Avenue,chennai");
   employee_onboarding.CurrentAddress2 = ref("45/21 2nd Avenue,chennai");
   employee_onboarding.CurrentCountry = ref("India");
@@ -2944,13 +2727,13 @@ const Sampledata = () => {
   employee_onboarding.fatherDateofBirth = ref("23-09-1968");
   employee_onboarding.motherName = ref("Licas");
   employee_onboarding.motherDateofBirth = ref("23-8-1970");
-  employee_onboarding.motherGender=ref("Female")
+  employee_onboarding.motherGender = ref("Female");
   employee_onboarding.motherAge = ref("35");
   employee_onboarding.spouseGender = ref("female");
   employee_onboarding.SpouseDOB = ref("12-8-1995");
   employee_onboarding.SpouseName = ref("priyanka");
   employee_onboarding.noOfChildren = ref("5");
-  employee_onboarding.EmployeeCode = ref("B101");
+  employee_onboarding.employee_code = ref("B101");
 };
 </script>
 

@@ -37,48 +37,55 @@ export async function DepartmentDetails(){
     return response.data
 }
 
+export async function getMaritalStatus(){
+    const response=await axios.get(`/fetch-marital-details`);
+    return response.data
+}
+
+
+export async function getBloodGroups(){
+    const response=await axios.get(`/fetch-blood-groups`);
+    return response.data
+}
+
 // Validation
 
 export default function validation(rules) {
     return (rules = {
         //   Person Detials Validation start
 
-        EmployeeCode: {},
-        PersonDetialsDateofBirth: {},
-        PersonDetialsGender: {},
-        DLNumber: {},
-        ChooseNationality: {},
-        PassportNumber: {},
-        PassportExpDate: {},
-        PersonDetialsBloodGroup: {},
-        PhysicallyChallenged: {},
-        PersonDetialsGender: {},
-        DLNumber: {},
-        PhysicallyChallenged: {},
-        ChooseNationality: {},
-        PersonDetialsBloodGroup: {},
+        employee_code: {},
+        dob: {},
+        gender: {},
+        passport_number: {},
+        passport_date: {},
+        blood_group_id: {},
+        physically_challenged: {},
+        gender: {},
+        dl_no: {},
+        nationality: {},
 
-        DateOfJoining: {
+        doj: {
             required,
         },
 
-        AadhaarNumber: {
+        aadhar_number: {
             required,
             ValidateAadhar(value) {
                 const regex = /^\d{4}\s\d{4}\s\d{4}$/;
                 return regex.test(value);
             },
         },
-        BankName: {
+        bank_id: {
             required,
         },
-        EmployeeNameAsPerAadhar: {
+        employee_name: {
             required,
         },
-        PersonDetialsGender: {
+        gender: {
             required,
         },
-        PanNumber: {
+        pan_number: {
             required,
             ValidatePan(value) {
                 const regex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}/;
@@ -94,10 +101,10 @@ export default function validation(rules) {
             },
         },
 
-        PersonDetialsDateofBirth: {
+        dob: {
             required,
         },
-        PersonDetialsMobileNumber: {
+        mobile_number: {
             required,
             maxLength: 10,
         },
@@ -108,16 +115,16 @@ export default function validation(rules) {
                 return regex.test(value);
             },
         },
-        PersonDetialsMaritalStatus: { required   },
+        marital_status: { required   },
 
         PersonDetialsEmail: {
             required,
             email,
         },
-        ChooseNationality: {
+        nationality: {
             required,
         },
-        PhysicallyChallenged: {
+        physically_challenged: {
             required,
         },
         //  Person Details End

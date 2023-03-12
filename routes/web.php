@@ -279,6 +279,8 @@ Route::post('vmt-general-settings', [App\Http\Controllers\HomeController::class,
      Route::get('fetch-managers-name', [App\Http\Controllers\VmtEmployeeController::class, 'fetchManagerName'])->name('fetch-managers-name');
 
      Route::get('/fetch-departments', [App\Http\Controllers\VmtEmployeeController::class, 'fetchDepartmentDetails'])->name('fetch-departments');
+     Route::get('/fetch-marital-details', [App\Http\Controllers\VmtEmployeeController::class, 'fetchMaritalStatus'])->name('fetch-marital-details');
+     Route::get('/fetch-blood-groups', [App\Http\Controllers\VmtEmployeeController::class, 'fetchBloodGroups'])->name('fetch-blood-groups');
 
      // store employee
     Route::post('vmt-employee-store', 'App\Http\Controllers\VmtEmployeeController@storeEmployeeData');

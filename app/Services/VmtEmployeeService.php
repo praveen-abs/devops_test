@@ -149,7 +149,7 @@ class VmtEmployeeService {
     private function CreateNewUser($data, $can_onboard_employee)
     {
         $newUser = new User;
-        dd($data->employee_onboarding['EmployeeNamesper']);
+
         $newUser->name = $data['employee_name'];
         $newUser->email = $data["email"];
         $newUser->password = Hash::make('Abs@123123');
@@ -223,7 +223,7 @@ class VmtEmployeeService {
         $newEmployee->mobile_number  = strval($row["mobile_no"]);
         $newEmployee->blood_group_id  = $row["blood_group"] ?? '';
         $newEmployee->physically_challenged  = $row["physically_challenged"] ?? 'no';
-        $newEmployee->bank_id   = $row["bank_name"] ?? '';
+        $newEmployee->bank_id   = $row["bank_id"] ?? '';
         $newEmployee->bank_ifsc_code  = $row["bank_ifsc"] ?? '';
         $newEmployee->bank_account_number  = $row["account_no"] ?? '';
         // $newEmployee->present_address   = $row["current_address_line_1"] ?? '' . ' , ' . $row["current_address_line_2"] ?? '';
