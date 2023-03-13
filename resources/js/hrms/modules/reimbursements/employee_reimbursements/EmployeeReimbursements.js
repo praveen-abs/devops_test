@@ -33,7 +33,7 @@ import FileUpload from 'primevue/fileupload';
 import Calendar from 'primevue/calendar'
 import Textarea from 'primevue/textarea'
 
-import  employee_reimbursement from './employee_reimbursements.vue'
+import  employee_reimbursement from './EmployeeReimbursements.vue'
 
 
 const app = createApp(employee_reimbursement);
