@@ -169,7 +169,7 @@ class VmtEmployeeService {
 
     private function createOrUpdate_EmployeeDetails($user,$row)
     {
-        //dd($row);
+        dd($row);
         $newEmployee = VmtEmployee::where('userid',$user->id);
 
         if($newEmployee->exists())
