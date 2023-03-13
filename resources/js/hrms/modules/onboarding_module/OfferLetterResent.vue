@@ -19,18 +19,30 @@
             <Column field="candidate_status" header="Status ">
                 <template #body>
 
-                    <div class="status">
+                    <div class="status d-flex justify-content-center">
+                        <div class="arrow">
+                            <span class=" text-initial "><span class="me-1 font-medium">Offer Sent </span> <a
+                                    class="fa text-muted fa-eye me-1" @click="viewOffer" href="#"></a></span>
+                            <span class="fs-10 text-initial">01-Jan-2023</span>
+                        </div>
                         <div class="arrow ">
-
+                            <span class="me-1 text-danger font-medium">Declined </span>
+                            <span class="fs-10 text-initial">01-Jan-2023</span>
+                        </div>
+                        <div class="arrow ">
+                            <span class=" text-initial "><span class="me-1 font-medium">Resent </span> <a
+                                    class="fa text-muted fa-eye me-1" @click="viewOffer" href="#"></a></span>
+                            <span class="fs-10 text-initial">01-Jan-2023</span>
+                        </div>
+                        <div class="arrow">
+                            <span class="me-1 text-success font-medium">Accepted </span>
+                            <span class="fs-10 text-initial">01-Jan-2023</span>
+                        </div>
+                        <!-- <div class="arrow ">
                             <p class=" text-initial "><span class="me-1 font-medium">Offer Sent </span> <a
                                     class="fa text-muted fa-eye me-1" @click="viewOffer" href="#"></a></p>
                             <p class="fs-10 text-initial">01-Jan-2023</p>
-                        </div>
-                        <div class="arrow ">
-                            <p class=" text-initial "><span class="me-1 font-medium">Offer Sent </span> <a
-                                    class="fa text-muted fa-eye me-1" @click="viewOffer" href="#"></a></p>
-                            <p class="fs-10 text-initial">01-Jan-2023</p>
-                        </div>
+                        </div> -->
                     </div>
 
                     <!-- <button  class="bg-transparent outline-none border-0 btn "  @click="viewOffer"><span class="me-1 text-info font-medium">Accepted </span> <i class="fa text-muted fa-eye me-1"></i></button>
@@ -84,6 +96,17 @@ export default {
         function getProductDetails() {
             return {
                 "data": [
+                    { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_status": "5L,Net", },
+                    { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_status": "5L,Net", },
+                    { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_status": "5L,Net", },
+                    { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_status": "5L,Net", },
+                    { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_status": "5L,Net", },
+                    { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_status": "5L,Net", },
+                    { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_status": "5L,Net", },
+                    { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_status": "5L,Net", },
+                    { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_status": "5L,Net", },
+                    { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_status": "5L,Net", },
+                    { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_status": "5L,Net", },
                     { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_status": "5L,Net", }
 
                 ]
@@ -104,39 +127,21 @@ export default {
 
 // }
 
-.status{
+.arrow {
     position: relative;
-}
-.arrow{
-    position: absolute;
-    /* top: 25px; */
-    width: 49%;
-    height: 4px;
-    background-color: #141414;
-    box-shadow: 0 3px 5px rgb(202 202 202 / 40%);
-}
+    display: flex;
+    flex-direction: column;
+    padding: 0px 25px;
+    justify-content: center;
 
-.arrow::after,
-.arrow::before {
-    content: " ";
-    position: absolute;
-    width: 60%;
-    height: 10px;
-    right: -8px;
-    /*   left:-8px; */
-    background-color: #141414;
-}
+    &:not(:last-child)::after {
+        content: "\f061";
+        font-family: FontAwesome;
+        font-size: 12px;
+        position: absolute;
+        right: 0px;
 
-.arrow::after {
-    top: -12px;
-    /*   box-shadow:0 3px 5px rgba(0,0,0,.2); */
+    }
 
-    transform: rotate(45deg);
-}
-
-.arrow::before {
-    top: 12px;
-    transform: rotate(-45deg);
-    box-shadow: 0 3px 5px rgba(0, 0, 0, .2)
 }
 </style>

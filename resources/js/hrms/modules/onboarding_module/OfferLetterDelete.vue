@@ -20,8 +20,10 @@
             <Column field="actions" header="Actions">
                 <template #body>
 
-                        <button class="btn fs-15 fa fa-pencil-square-o  bg-transparent outline-none border-0 me-1" @click="editDeletedOffer"></button>
-                    <button class="btn fs-15 fa fa-trash text-danger bg-transparent outline-none border-0" @click="removeDeletedOffer"></button>
+                    <button class="btn fs-15 fa fa-pencil-square-o  bg-transparent outline-none border-0 me-1"
+                        @click="editDeletedOffer"></button>
+                    <button class="btn fs-15 fa fa-trash text-danger bg-transparent outline-none border-0"
+                        @click="removeDeletedOffer"></button>
                 </template>
             </Column>
         </DataTable>
@@ -33,7 +35,6 @@
         <p></p>
 
     </Dialog>
-
 </template>
 
 
@@ -51,10 +52,10 @@ const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 
-const editDeletedOffer=()=>{
+const editDeletedOffer = () => {
     notifyPopup.value = true;
 }
-const removeDeletedOffer=()=>{
+const removeDeletedOffer = () => {
     notifyPopup.value = true;
 }
 onMounted(() => {
@@ -70,7 +71,21 @@ onMounted(() => {
 function getProductDetails() {
     return {
         "data": [
+            { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_offerPay": "5L,Net", "actions": "" },
+            { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_offerPay": "5L,Net", "actions": "" },
+            { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_offerPay": "5L,Net", "actions": "" },
+            { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_offerPay": "5L,Net", "actions": "" },
+            { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_offerPay": "5L,Net", "actions": "" },
+            { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_offerPay": "5L,Net", "actions": "" },
+            { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_offerPay": "5L,Net", "actions": "" },
+            { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_offerPay": "5L,Net", "actions": "" },
+            { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_offerPay": "5L,Net", "actions": "" },
+
+            { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_offerPay": "5L,Net", "actions": "" },
+            { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_offerPay": "5L,Net", "actions": "" },
+            { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_offerPay": "5L,Net", "actions": "" },
             { "candidate_id": "ABS001", "candidate_name": "Joe", "candidate_role": "UI designer", "candidate_offerPay": "5L,Net", "actions": "" }
+
 
         ]
     };

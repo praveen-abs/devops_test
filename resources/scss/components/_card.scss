@@ -1,11 +1,9 @@
+// //
+// // _card.scss
+// //
+
 .card-border {
     box-shadow: $box-shadow-light;
-}
-
-
-.card{
-    // border: 0;
-    margin-bottom: 0.8rem;
 }
 
 // .card {
@@ -54,12 +52,10 @@
 //     }
 // }
 
-// // card color variant
-
-// @mixin card-variant($bg) {
-//     color: $white;
-//     background-color: $bg;
-// }
+.card{
+    // border: 0;
+    margin-bottom: 0.8rem;
+}
 
 // @each $color,
 // $value in $theme-colors {
