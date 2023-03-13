@@ -147,8 +147,8 @@ class ManagerReimbursementsExport implements FromArray,ShouldAutoSize,WithHeadin
         $drawing->setDescription($this->client_name);
         $drawing->setPath(public_path('assets/images/'.$this->client_name.'_logo.jpg'));
         $drawing->setHeight(60);
-        $drawing->setWidth(60);
-        $drawing->setCoordinates('E1');
+        $drawing->setWidth(65);
+        $drawing->setCoordinates('F1');
 
         return $drawing;
     }
