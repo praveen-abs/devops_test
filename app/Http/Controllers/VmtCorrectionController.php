@@ -12,13 +12,13 @@ class VmtCorrectionController extends Controller
                                                          ->get();
         foreach( $reimbursement_details as $single_details){
                  if($single_details->vehicle_type=='2-Wheeler'){
-                    $totalExpense=3*$single_details->distance_travelled;
+                    $totalExpense=3.5*$single_details->distance_travelled;
                     $UpdateDetails = VmtEmployeeReimbursements::where('id', '=',  $single_details->id)->first();
                     $UpdateDetails->total_expenses= $totalExpense;
                     $UpdateDetails->save();
 
                  }else if( $single_details->vehicle_type=='4-Wheeler'){
-                    $totalExpense=4*$single_details->distance_travelled;
+                    $totalExpense=6*$single_details->distance_travelled;
                     $UpdateDetails = VmtEmployeeReimbursements::where('id', '=',  $single_details->id)->first();
                     $UpdateDetails->total_expenses= $totalExpense;
                     $UpdateDetails->save();

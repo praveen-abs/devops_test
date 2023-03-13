@@ -39,6 +39,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Crypt;
 
 use App\Models\VmtEmployeeFamilyDetails;
+use App\Models\VmtMaritalStatus;
 use App\Services\VmtEmployeeService;
 
 class VmtEmployeeController extends Controller
@@ -987,6 +988,22 @@ class VmtEmployeeController extends Controller
     {
         $state = State::where('country_code', $request->code)->get();
         return response()->json($state);
+    }
+
+    public function fetchDepartmentDetails(Request $request){
+        $query = Department::all(['id','name']);
+        return response()->json($query);
+    }
+
+
+    public function fetchMaritalStatus(Request $request){
+        $query = VmtMaritalStatus::all(['id','name']);
+        return response()->json($query);
+    }
+
+    public function fetchBloodGroups(Request $request){
+        $query = VmtBloodGroup::all(['id','name']);
+        return response()->json($query);
     }
 
     public function updateUserAccountStatus(Request $request)

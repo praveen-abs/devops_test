@@ -4,12 +4,11 @@ import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
 
 
-
 import { createApp } from "vue";
 import { createPinia } from "pinia";
-
 import PrimeVue from "primevue/config";
 import BadgeDirective from "primevue/badgedirective";
+import BlockUI from 'primevue/blockui';
 import Button from 'primevue/button';
 import FocusTrap from 'primevue/focustrap';
 import Ripple from 'primevue/ripple';
@@ -28,15 +27,25 @@ import ProgressSpinner from 'primevue/progressspinner';
 import InputText from 'primevue/inputtext'
 import Row from 'primevue/row'
 import ColumnGroup from 'primevue/columngroup'
+<<<<<<<< HEAD:resources/js/hrms/modules/reimbursements/employee_reimbursements/EmployeeReimbursements.js
 import InputNumber from 'primevue/inputnumber'
 import FileUpload from 'primevue/fileupload';
 import Calendar from 'primevue/calendar'
 import Textarea from 'primevue/textarea'
 
 import  employee_reimbursement from './EmployeeReimbursements.vue'
+========
+import Calendar from 'primevue/calendar';
+import Textarea from 'primevue/textarea';
+import Chips from 'primevue/chips';
+>>>>>>>> 600ab8eb257ca711fa17549ebb2ac2cc819503b0:resources/js/hrms/modules/leave_module/leave_apply/LeaveApply.js
 
 
-const app = createApp(employee_reimbursement);
+
+
+import leaveapply from './LeaveApply.vue'
+
+const app = createApp(leaveapply);
 const pinia=createPinia()
 
 app.use(PrimeVue, { ripple: true });
@@ -63,10 +72,9 @@ app.component('Dropdown',Dropdown);
 app.component('InputText', InputText);
 app.component('Dialog', Dialog);
 app.component('ProgressSpinner', ProgressSpinner)
-app.component('InputNumber', InputNumber)
-app.component('FileUpload', FileUpload)
 app.component('Calendar', Calendar)
 app.component('Textarea', Textarea)
+app.component('Chips', Chips)
 
-app.mount("#vjs_employee_reimbursement");
+app.mount("#vjs_leaveapply");
 

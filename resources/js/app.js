@@ -104,11 +104,9 @@ import TriStateCheckbox from 'primevue/tristatecheckbox';
 import VirtualScroller from 'primevue/virtualscroller';
 import primeTable from './components/primeTable.vue'
 
-import leave from './hrms/modules/testings/leave.vue'
 
 
 const app = createApp(leave);
-//const app2 = createApp(testbuttonclick);
 
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);

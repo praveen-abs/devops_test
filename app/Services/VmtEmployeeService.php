@@ -75,6 +75,7 @@ class VmtEmployeeService {
     {
 
         $response = $this->createOrUpdate_User(data: $data, can_onboard_employee : $can_onboard_employee, user_id: $existing_user_id);
+
         if(!empty($response) && $response->status == 'success')
         {
             try
@@ -100,6 +101,7 @@ class VmtEmployeeService {
 
     private function createOrUpdate_User($data, $can_onboard_employee,$user_id=null)
     {
+
         $newUser = null;
 
         try
@@ -149,12 +151,12 @@ class VmtEmployeeService {
     private function CreateNewUser($data, $can_onboard_employee)
     {
         $newUser = new User;
-        dd($data->employee_onboarding['EmployeeNamesper']);
-        $newUser->name = $data['employee_name'];
-        $newUser->email = $data["email"];
+
+        $newUser->name =$data['employee_onboarding']['employee_name'];
+        $newUser->email = $data['employee_onboarding']["email"];
         $newUser->password = Hash::make('Abs@123123');
         //$newUser->avatar = $data['employee_code'] . '_avatar.jpg';
-        $newUser->user_code = strtoupper($data['employee_code']);
+        $newUser->user_code = strtoupper($data['employee_onboarding']['employee_code']);
         $newUser->active = '0';
         $newUser->is_default_password_updated = '0';
 
@@ -169,7 +171,7 @@ class VmtEmployeeService {
 
     private function createOrUpdate_EmployeeDetails($user,$row)
     {
-        //dd($row);
+
         $newEmployee = VmtEmployee::where('userid',$user->id);
 
         if($newEmployee->exists())
@@ -180,14 +182,15 @@ class VmtEmployeeService {
         {
             $newEmployee = new VmtEmployee;
         }
+        // dd($row);
 
         $newEmployee->userid = $user->id;
-        $newEmployee->emp_no   =    $row["employee_code"] ?? '';
-        $newEmployee->gender   =    $row["gender"] ?? '';
+        $newEmployee->emp_no   =    $row['employee_onboarding']["employee_code"] ?? '';
+        $newEmployee->gender   =    $row['employee_onboarding']["gender"] ?? '';
         //dd($row['doj']);
 
         //Check if its in proper format
-        $processed_DOJ = \DateTime::createFromFormat('d-m-Y', $row['doj']);
+        $processed_DOJ = \DateTime::createFromFormat('d-m-Y', $row['employee_onboarding']['doj']);
 
         //If date is in 'd-m-y' format, then convert into one
         if($processed_DOJ)
@@ -199,51 +202,51 @@ class VmtEmployeeService {
         {
             //If date is not in 'd-m-y' format, then convert into 'd-m-y'
 
-            $processed_DOJ = \DateTime::createFromFormat('Y-m-d', $row['doj'])->format('Y-m-d');
+            $processed_DOJ = \DateTime::createFromFormat('Y-m-d', $row['employee_onboarding']['doj'])->format('Y-m-d');
 
         }
 
         $newEmployee->doj   =    $processed_DOJ;
         $newEmployee->dol   =    $processed_DOJ;
-        $newEmployee->location   =    $row["work_location"] ?? '';
-        $newEmployee->dob   =    $row["dob"] ?? '';
-        $newEmployee->father_name   =  $row["father_name"] ?? '';
-        $newEmployee->pan_number   =  isset($row["pan_no"]) ? ($row["pan_no"]) : "";
-        $newEmployee->dl_no   =  $row["dl_no"] ?? '';
-        $newEmployee->passport_number = $row["passport_no"] ?? '';
-        $newEmployee->passport_date = $row["passport_date"] ?? '';
+        $newEmployee->location   =    $row['employee_onboarding']["work_location"] ?? '';
+        $newEmployee->dob   =    $row['employee_onboarding']["dob"] ?? '';
+        $newEmployee->father_name   =  $row['employee_onboarding']["father_name"] ?? '';
+        $newEmployee->pan_number   =  isset($row['employee_onboarding']["pan_number"]) ? ($row['employee_onboarding']["pan_number"]) : "";
+        $newEmployee->dl_no   =  $row['employee_onboarding']["dl_no"] ?? '';
+        $newEmployee->passport_number = $row['employee_onboarding']["passport_no"] ?? '';
+        $newEmployee->passport_date = $row['employee_onboarding']["passport_date"] ?? '';
 
         //$newEmployee->pan_ack   =    $row["pan_ack"];
-        $newEmployee->aadhar_number = $row["aadhar"] ?? '';
+        $newEmployee->aadhar_number = $row['employee_onboarding']["aadhar_number"] ?? '';
 
-        $newEmployee->marital_status = $row["marital_status"] ?? '';
+        $newEmployee->marital_status = $row['employee_onboarding']["marital_status"] ?? '';
 
-        $newEmployee->nationality = $row["nationality"] ?? '';
+        $newEmployee->nationality = $row['employee_onboarding']["nationality"] ?? '';
 
-        $newEmployee->mobile_number  = strval($row["mobile_no"]);
-        $newEmployee->blood_group_id  = $row["blood_group"] ?? '';
-        $newEmployee->physically_challenged  = $row["physically_challenged"] ?? 'no';
-        $newEmployee->bank_id   = $row["bank_name"] ?? '';
-        $newEmployee->bank_ifsc_code  = $row["bank_ifsc"] ?? '';
-        $newEmployee->bank_account_number  = $row["account_no"] ?? '';
+        $newEmployee->mobile_number  = strval($row['employee_onboarding']["mobile_number"]);
+        $newEmployee->blood_group_id  = $row['employee_onboarding']["blood_group_id"] ?? '';
+        $newEmployee->physically_challenged  = $row['employee_onboarding']["physically_challenged"] ?? 'no';
+        $newEmployee->bank_id   = $row['employee_onboarding']["bank_id"] ?? '';
+        $newEmployee->bank_ifsc_code  = $row['employee_onboarding']["bank_ifsc"] ?? '';
+        $newEmployee->bank_account_number  = $row['employee_onboarding']["AccountNumber"] ?? '';
         // $newEmployee->present_address   = $row["current_address_line_1"] ?? '' . ' , ' . $row["current_address_line_2"] ?? '';
         // $newEmployee->permanent_address   = $row["permanent_address_line_1"] ?? '' . ' , ' . $row["permanent_address_line_2"] ?? '';
-        $newEmployee->current_address_line_1   = $row["current_address_line_1"] ?? '';
-        $newEmployee->current_address_line_2   = $row["current_address_line_2"] ?? '' ;
-        $newEmployee->permanent_address_line_1   = $row["permanent_address_line_1"] ?? '';
-        $newEmployee->permanent_address_line_2   = $row["permanent_address_line_2"] ?? '';
-        $newEmployee->current_country_id   = $row["current_country"] ?? '';
-        $newEmployee->permanent_country_id   = $row["permanent_country"] ?? '';
-        $newEmployee->current_state_id   = $row["current_state"] ?? '';
-        $newEmployee->permanent_state_id   = $row["permanent_state"] ?? '';
-        $newEmployee->current_city   = $row["current_city"] ?? '';
-        $newEmployee->permanent_city   = $row["permanent_city"] ?? '';
-        $newEmployee->current_pincode   = $row["current_pincode"] ?? '';
-        $newEmployee->permanent_pincode   = $row["permanent_pincode"] ?? '';
+        $newEmployee->current_address_line_1   = $row['employee_onboarding']["current_address_line_1"] ?? '';
+        $newEmployee->current_address_line_2   = $row['employee_onboarding']["current_address_line_2"] ?? '' ;
+        $newEmployee->permanent_address_line_1   = $row['employee_onboarding']["permanent_address_line_1"] ?? '';
+        $newEmployee->permanent_address_line_2   = $row['employee_onboarding']["permanent_address_line_2"] ?? '';
+        $newEmployee->current_country_id   = $row['employee_onboarding']["current_country"] ?? '';
+        $newEmployee->permanent_country_id   = $row['employee_onboarding']["permanent_country"] ?? '';
+        $newEmployee->current_state_id   = $row['employee_onboarding']["current_state"] ?? '';
+        $newEmployee->permanent_state_id   = $row['employee_onboarding']["permanent_state"] ?? '';
+        $newEmployee->current_city   = $row['employee_onboarding']["current_city"] ?? '';
+        $newEmployee->permanent_city   = $row['employee_onboarding']["permanent_city"] ?? '';
+        $newEmployee->current_pincode   = $row['employee_onboarding']["current_pincode"] ?? '';
+        $newEmployee->permanent_pincode   = $row['employee_onboarding']["permanent_pincode"] ?? '';
 
-        if (!empty($row['marital_status'])) {
-            if ($row['marital_status'] <> 'unmarried') {
-                $newEmployee->no_of_children   = $row["no_of_children"] ?? 0;
+        if (!empty($row['employee_onboarding']['marital_status'])) {
+            if ($row['employee_onboarding']['marital_status'] <> 'unmarried') {
+                $newEmployee->no_of_children   = $row['employee_onboarding']["no_of_children"] ?? 0;
 
                 if (!empty($row['no_of_children']) && $row['no_of_children'] > 0) {
                     // $newEmployee->kid_name   = json_encode($row["child_name"]);
@@ -251,7 +254,7 @@ class VmtEmployeeService {
                 }
             }
         } else {
-            $row['marital_status'] = '';
+            $row['employee_onboarding']['marital_status'] = '';
         }
 
         $newEmployee->aadhar_card_file = $this->fileUpload('aadhar_card_file', $user->user_code);
@@ -465,10 +468,13 @@ class VmtEmployeeService {
 
     }
 
+    public function uploadDocument($file, $emp_code){
+
+    }
 
     public function fileUpload($file, $emp_code)
     {
-
+         dd($file);
         if (request()->has($file)) {
             $docUploads = request()->file($file);
             $docUploadsName = 'doc_' .$emp_code.'_'. $file . "_" . time() . '.' . $docUploads->getClientOriginalExtension();
@@ -494,8 +500,6 @@ class VmtEmployeeService {
                    //If file doesnt exists, delete the entry
 
                 }
-
-
             }
 
             //Upload the new file

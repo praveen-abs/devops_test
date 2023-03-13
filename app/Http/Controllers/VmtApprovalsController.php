@@ -9,7 +9,9 @@ use App\Models\VmtEmployee;
 use App\Models\VmtEmployeeReimbursements;
 use App\Models\VmtPMS_KPIFormReviewsModel;
 use App\Models\VmtPMS_KPIFormAssignedModel;
+use App\Services\VmtReimbursementsService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class VmtApprovalsController extends Controller
 {
@@ -285,9 +287,55 @@ class VmtApprovalsController extends Controller
          return $reimbursement_query;
     }
 
+    /*
+        Returns all the reimbursements data for the given month and all emps are
+        grouped together.
+
+        [
+            {
+                "employee_name" : "Karthick",
+                "user_code" : "ABS001",
+                "user_id":178,
+                "reimbursement_data":[
+                    { "id": "10","date" : "2023-03-08 00:35:49" , "user_comments":"sdfsdf" ,"status":"Pending" , "from" : "chennai", "to": "bangalore", "vehicle_type": "2-wheeler", "distance_travelled" :"100","total_expenses":"1500" },
+                    { "id": "11","date" : "2023-03-08 00:35:49" , "user_comments":"sdfsdf" ,"status":"Pending" , "from" : "chennai", "to": "bangalore", "vehicle_type": "2-wheeler", "distance_travelled" :"100","total_expenses":"1500" },
+                    { "id": "12","date" : "2023-03-08 00:35:49" , "user_comments":"sdfsdf" ,"status":"Pending" , "from" : "chennai", "to": "bangalore", "vehicle_type": "2-wheeler", "distance_travelled" :"100","total_expenses":"1500" },
+                ]
+            },
+            {
+                "employee_name" : "Narasimma",
+                "user_code" : "ABS002",
+                "user_id":179,
+                "reimbursement_data":[
+                    { "id": "10","date" : "2023-03-08 00:35:49" , "user_comments":"sdfsdf" ,"status":"Pending" , "from" : "chennai", "to": "bangalore", "vehicle_type": "2-wheeler", "distance_travelled" :"100","total_expenses":"1500" },
+                    { "id": "11","date" : "2023-03-08 00:35:49" , "user_comments":"sdfsdf" ,"status":"Pending" , "from" : "chennai", "to": "bangalore", "vehicle_type": "2-wheeler", "distance_travelled" :"100","total_expenses":"1500" },
+                    { "id": "12","date" : "2023-03-08 00:35:49" , "user_comments":"sdfsdf" ,"status":"Pending" , "from" : "chennai", "to": "bangalore", "vehicle_type": "2-wheeler", "distance_travelled" :"100","total_expenses":"1500" },
+                ]
+            },
+
+        ]
+
+
+    */
+    function fetchAllReimbursementsAsGroups(Request $request, VmtReimbursementsService $service){
+
+        $year = $request->selected_year;
+        $month = $request->selected_month;
+        $status = $request->selected_status;
+        $reimbursement_type_id = "1"; //Hardcoded Local
+       return  $service->fetchAllReimbursementsAsGroups( $year, $month , $status, $reimbursement_type_id);
+    }
+
+    /*
+
+
+    */
+    public function processReimbursementBulkApprovals(Request $request,  VmtReimbursementsService $service){
+        return $service->processReimbursementBulkApprovals($request->all());
+    }
+
 
     function approveRejectReimbursements(Request $request){
-        //dd($request->all());
 
         $query_review_reimbursement = VmtEmployeeReimbursements::find($request->reimbursement_id);
        // dd($query_review_reimbursement);

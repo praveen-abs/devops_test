@@ -7,10 +7,15 @@ use Illuminate\Http\Request;
 class VmtReimbursementController extends Controller
 {
     public function showReimbursementsPage(Request $request){
-       // return view('')
+       return view('approvals.vmt_employee_reimbursements');
     }
 
+
     public function fetchReimbursementsData(Request $request){
+
+    }
+
+    public function fetchLocalConveyanceData(Request $request){
 
     }
 

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Session as Ses;
+use App\Models\Department;
 use App\Models\User;
 use App\Models\Bank;
-use App\Models\Department;
 use App\Models\Experience;
 use App\Models\VmtBloodGroup;
 use App\Models\VmtEmployee;
@@ -45,7 +45,7 @@ class VmtProfilePagesController extends Controller
         $department  = Department::find($user_full_details->department_id)->name;
 
         $familydetails = VmtEmployeeFamilyDetails::where('user_id',$user->id)->get();
-        $statutory_info= VmtEmployeeStatutoryDetails ::where('user_id',$user->id)->first();
+        $statutory_info= VmtEmployeeStatutoryDetails::where('user_id',$user->id)->first();
 
 
         $exp = Experience::where('user_id', $user->id)->get();
@@ -60,6 +60,7 @@ class VmtProfilePagesController extends Controller
 
         $genderArray = array("Male", "Female", "Other");
         $bank = Bank::all();
+        $department = Department::find($user_full_details->department_id)->name;
 
         //dd($maritalStatus);
         if (!empty($user_full_details->l1_manager_code))
@@ -231,35 +232,41 @@ class VmtProfilePagesController extends Controller
 
     public function updateStatutoryInfo(Request $request)
     {
-        // dd($request->all());
+       //  dd($request->all());
 
         $statutory = VmtEmployeeStatutoryDetails::where('user_id', $request->id);
 
-        // dd($statutory->exists());
 
-        if ($statutory->exists()) {
+      // dd($statutory);
+
+
+       if ($statutory->exists()) {
             $statutory = $statutory->first();
+            $statutory->user_id= $request->id;
             $statutory->pf_applicable=$request->input('pf_applicable');
             $statutory->epf_number=$request->input('epf_number');
             $statutory->uan_number=$request->input('uan_number');
             $statutory->esic_applicable=$request->input('esic_applicable');
             $statutory->esic_number=$request->input('esic_number');
-            $statutory->epf_abry_eligible= $request->input('epf_abry_eligible');
-            $statutory->eps_pansion_eligible=$requst->input('eps_pansion_eligible');
+            //$statutory->epf_abry_eligible= $request->input('epf_abry_eligible');
+            //$statutory->eps_pansion_eligible=$request->input('eps_pansion_eligible');
             $statutory->save();
-        } else {
+        }
+        else
+        {
             $statutory = new VmtEmployeeStatutoryDetails;
+            $statutory->user_id= $request->id;
             $statutory->pf_applicable=$request->input('pf_applicable');
             $statutory->epf_number=$request->input('epf_number');
             $statutory->uan_number=$request->input('uan_number');
             $statutory->esic_applicable=$request->input('esic_applicable');
             $statutory->esic_number=$request->input('esic_number');
-            $statutory->epf_abry_eligible->input('epf_abry_eligible');
-            $statutory->eps_pansion_eligible->input('eps_pansion_eligible');
+            //$statutory->epf_abry_eligible =$request->input('epf_abry_eligible');
+            //$statutory->eps_pansion_eligible =$request->input('eps_pansion_eligible');
             $statutory->save();
         }
 
-        return redirect()->back();
+         return  redirect()->back();
     }
 
 

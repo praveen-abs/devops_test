@@ -5,8 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class VmtEmployeePMSGoals extends Model
+class VmtMaritalStatus extends Model
 {
     use HasFactory;
-    protected $table = "vmt_employee_pms_goals_table"; 
+
+    protected $table = 'vmt_marital_status';
 }
