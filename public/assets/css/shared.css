@@ -13,11 +13,7 @@
 }
 
 button,label,p,span,*{
-    text-transform: capitalize;
     font-size: 13px;
-}
-input,select,textarea{
-text-transform: capitalize;
 }
 
 .first-letter-captialize{
@@ -1340,7 +1336,7 @@ button.gridjs-sort-desc {
 .modal-title::after {
     content: "";
     background-color: var(--color-primary_orange);
-    height: 20px;
+    height: 100%;
     width: 3px;
     position: absolute;
     top: 1px;

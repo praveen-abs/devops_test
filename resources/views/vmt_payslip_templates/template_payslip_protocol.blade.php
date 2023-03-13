@@ -202,13 +202,13 @@ $bank_names = \DB::table('vmt_banks')->get();
                     <p>EPF NUMBER</p>
                 </td>
                 <td colspan="6">
-                    <p>{{ $employee_details->epf_number }}</p>
+                    <p>{{ $employee_statutory_details->epf_number }}</p>
                 </td>
                 <td colspan="6" class=" bg-ash text-strong">
                     <p>ESIC NUMBER</p>
                 </td>
                 <td colspan="6">
-                    <p>{{ $employee_details->esic_number }}</p>
+                    <p>{{ $employee_statutory_details->esic_number }}</p>
                 </td>
 
             </tr>
@@ -217,7 +217,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                     <p>UAN</p>
                 </td>
                 <td colspan="6">
-                    <p>{{ $employee_details->uan }}</p>
+                    <p>{{$employee_statutory_details->uan_number }}</p>
                 </td>
                 <td colspan="6" class=" bg-ash text-strong">
                     <p>PAN</p>
@@ -541,9 +541,9 @@ $bank_names = \DB::table('vmt_banks')->get();
                     <p class="txt-left text-strong">NET PAY</p>
                 </td>
                 <td colspan="16" class="">
-                    <p class="txt-center "> <img height="8" width="12"
+                    <p class="txt-center "> <img height="8.5" width="12"
                         src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right" alt=""
-                        style="padding-right:0px;margin-top:2px;">  {{ number_format(round($employee_payslip->NET_TAKE_HOME), 2) }}</p>
+                        style="padding-right:0px;">  {{ number_format(round($employee_payslip->NET_TAKE_HOME), 2) }}</p>
                 </td>
             </tr>
             <tr>
@@ -602,13 +602,13 @@ $bank_names = \DB::table('vmt_banks')->get();
                     <p class="txt-center text-strong">Casual Leave</p>
                 </td>
                 <td colspan="6" class="">
-                    <p class="txt-center"></p>
+                    <p class="txt-center">{{ $employee_payslip->SL_Opn_Bal }}</p>
                 </td>
                 <td colspan="6" class="">
-                    <p class="txt-center text-strong"></p>
+                    <p class="txt-center">{{ $employee_payslip->Availed_SL }}</p>
                 </td>
                 <td colspan="6" class="">
-                    <p class="txt-center"></p>
+                    <p class="txt-center">{{ $employee_payslip->Balance_SL }}</p>
                 </td>
             </tr>
             <tr>
@@ -616,13 +616,13 @@ $bank_names = \DB::table('vmt_banks')->get();
                     <p class="txt-center text-strong">Sick Leave</p>
                 </td>
                 <td colspan="6" class="">
-                    <p class="txt-center"></p>
+                    <p class="txt-center">{{ $employee_payslip->SL_Opn_Bal }}</p>
                 </td>
                 <td colspan="6" class="">
-                    <p class="txt-center text-strong"></p>
+                    <p class="txt-center">{{ $employee_payslip->Availed_SL }}</p>
                 </td>
                 <td colspan="6" class="">
-                    <p class="txt-center"></p>
+                    <p class="txt-center">{{ $employee_payslip->Balance_SL }}</p>
                 </td>
             </tr>
             <tr>
@@ -630,13 +630,13 @@ $bank_names = \DB::table('vmt_banks')->get();
                     <p class="txt-center text-strong">Earned Leave</p>
                 </td>
                 <td colspan="6" class="">
-                    <p class="txt-center"></p>
+                    <p class="txt-center">{{ $employee_payslip->EL_Opn_Bal }}</p>
                 </td>
                 <td colspan="6" class="">
-                    <p class="txt-center text-strong"></p>
+                    <p class="txt-center">{{ $employee_payslip->Availed_EL }}</p>
                 </td>
                 <td colspan="6" class="">
-                    <p class="txt-center"></p>
+                    <p class="txt-center">{{ $employee_payslip->Balance_EL }}</p>
                 </td>
             </tr>
             <tr>

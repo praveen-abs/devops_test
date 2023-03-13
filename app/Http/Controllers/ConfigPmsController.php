@@ -49,7 +49,7 @@ class ConfigPmsController extends Controller
             array_push($selectedColumn, 'kpi');
         }
         if ($request->input('operational_check')) {
-            array_push($selectedColumn, 'operational');
+            array_push($selectedColumn, 'operational_definition');
         }
         if ($request->input('measure_check')) {
             array_push($selectedColumn, 'measure');
@@ -61,13 +61,13 @@ class ConfigPmsController extends Controller
             array_push($selectedColumn, 'target');
         }
         if ($request->input('stretchTarget_check')) {
-            array_push($selectedColumn, 'stretchTarget');
+            array_push($selectedColumn, 'stretch_target');
         }
         if ($request->input('source_check')) {
             array_push($selectedColumn, 'source');
         }
         if ($request->input('kpiWeightage_check')) {
-            array_push($selectedColumn, 'kpiWeightage');
+            array_push($selectedColumn, 'kpi_weightage');
         }
 
         $config = ConfigPms::first();

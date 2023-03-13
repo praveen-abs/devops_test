@@ -1587,11 +1587,13 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
                                         // if (ajax_data_currentdate.absent_status == "Not Applied")
                                         // {
-                                        //     cell.innerHTML = cell.innerHTML + "<span>Leave Applied</span>";
+                                        //     cell.innerHTML = cell.innerHTML + "<span>Leave not Applied</span>";
                                         //     $("#statement").html(" Leave Not Applied")
 
                                         // }
                                         // else
+                                        if (ajax_data_currentdate.absent_status == "Pending")
+                                        {
                                         if (ajax_data_currentdate.absent_status == "Pending")
                                         {
                                             // $("#statement").attr("src","{{ URL::asset($svg_icon_pending) }}")

@@ -84,7 +84,7 @@
 
 
         <!-- jQuery easing plugin -->
-        <script src="http://thecodeplayer.com/uploads/js/jquery.easing.min.js" type="text/javascript"></script>
+        <!-- <script src="http://thecodeplayer.com/uploads/js/jquery.easing.min.js" type="text/javascript"></script> -->
 
         <script src="{{ URL::asset('/assets/premassets/js/sweetalert.js') }}"></script>
         <!--Progressbar JS-->
@@ -101,7 +101,7 @@
 
 
 
-        <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
+        <!-- <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script> -->
 
         {{-- for date picker --}}
 
