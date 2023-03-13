@@ -185,7 +185,7 @@ class VmtEmployeeOnboardingController extends Controller
     public function processEmployeeOnboardForm_Normal_Quick(Request $request, VmtEmployeeService $employeeService)
     {
          $employee_onboarding=$request->employee_onboarding;
-        //  dd($employee_onboarding);
+        // dd($employee_onboarding);
 
         $user_id = $employee_onboarding['employee_code'];
         $response = "";
@@ -198,7 +198,9 @@ class VmtEmployeeOnboardingController extends Controller
 
 
         //Check whether we are updating existing user or adding new user.
+
         $existingUser = User::where('id',$user_id);
+       /// dd($existingUser->exists());
         if($existingUser->exists())
         {
 
@@ -315,7 +317,7 @@ class VmtEmployeeOnboardingController extends Controller
             if(Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]) )
             {
                 $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->employee_onboarding['can_onboard_employee'], null);
-
+                
                 if($result->status == "success")
                 {
                     $response = [
