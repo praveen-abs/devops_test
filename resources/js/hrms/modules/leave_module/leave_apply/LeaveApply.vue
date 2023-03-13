@@ -1,7 +1,28 @@
 <template>
     <Toast />
     <Button label="Apply Leave" class="bg-orange-500 border-none h-3rem" @click="visible = true" />
+    <Dialog header="Header" v-model:visible="service.data_checking" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+    :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
+    <template #header>
+        <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+            animationDuration="2s" aria-label="Custom ProgressSpinner" />
+    </template>
+    <template #footer>
+        <h5 style="text-align: center">Please wait...</h5>
+    </template>
+</Dialog>
 
+<Dialog header="Header" v-model:visible="service.Email_Service" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+:style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
+<template #header>
+<h5 class="m-auto"> Email sent Successfully</h5>
+</template>
+<template #footer>
+    <div class="text-center">
+        <Button label="OK" style="justify-content: center;" severity="help" @click="service.Email_Service = false" raised  class="justify-content-center"/>
+    </div>
+</template>
+</Dialog>
 <Dialog v-model:visible="visible"  :style="{ width: '80vw' }" :breakpoints="{ '960px': '75vw', '641px': '100vw' }">
 
 
@@ -23,21 +44,14 @@
                             <div class="col-md-7 col-sm-7  mb-md-0 mb-3">
                                 <div class="form-group">
 
-                                    <select style="  height: 38px;font-weight: 500;" name="" id="leave_type_id"
+
+
+                                    <select style="  height: 38px;font-weight: 500;" name="" id="leave_type_id" aria-label="Default select example"
                                         class="form-select outline-none" v-model="service.leave_data.selected_leave"
                                         @change="service.Permission">
-                                        <option value="Select" selected>Select</option>
-                                        <option>Sick Leave / Casual Leave</option>
-                                        <option>Maternity Leave</option>
-                                        <option>Paternity Leave</option>
-                                        <option>On Duty</option>
-                                        <option>Permission</option>
-                                        <option>Compensatory Off</option>
-
-
-
+                                        <option v-for="leavetype in service.leave_types" :key="leavetype.id">
+                                            {{ leavetype.leave_type }}</option>
                                     </select>
-
 
                                 </div>
                             </div>
@@ -88,8 +102,8 @@
                             </div>
                             <div class="col-md-7  mb-md-0 mb-3">
                                 <div class="form-group">
-                                    <Calendar inputId="icon" v-model="service.leave_data.full_day_leave_date" dateFormat="yy-mm-dd"
-                                        :showIcon="true" style="width: 350px;"  />
+                                    <Calendar inputId="icon" v-model="service.leave_data.full_day_leave_date" dateFormat="dd-mm-yy"
+                                        :showIcon="true" style="width: 350px;"  :minDate="new Date()" />
 
 
                                 </div>
@@ -134,10 +148,10 @@
 
 
                                         <label for="" class="float-label">Start Date</label>
-                                        <Calendar inputId="icon" dateFormat="yy-mm-dd" :showIcon="true"
+                                        <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true"
                                             v-model="service.leave_data.custom_start_date"
                                             :disabledDates="service.invalidDates" :disabledDays="[0, 6]"
-                                            :manualInput="true" />
+                                            :manualInput="true"  />
 
                                     </div>
 
@@ -162,8 +176,8 @@
                                     <div class="floating">
 
                                         <label for="" class="float-label">End Day</label>
-                                        <Calendar inputId="icon" @date-select="service.dayCalculation" dateFormat="yy-mm-dd"
-                                            :showIcon="true" v-model="service.leave_data.custom_end_date" />
+                                        <Calendar inputId="icon" @date-select="service.dayCalculation" dateFormat="dd-mm-yy"
+                                            :showIcon="true" v-model="service.leave_data.custom_end_date" :minDate="new Date()"  />
 
                                     </div>
                                 </div>
@@ -235,9 +249,6 @@
 
                                 </div>
                             </div>
-                            <!-- <span>
-                                                {{ leaved.array_leave_details['Compensatory Leave'] }}
-                                                </span> -->
 
                             <div class="col-md-7  mb-md-0 mb-3">
                                 <div class="form-group">
@@ -257,7 +268,7 @@
                                         <div class="floating">
 
                                             <label for="" class="float-label">Start Date</label>
-                                            <Calendar inputId="icon" dateFormat="yy-mm-dd" :showIcon="true" style="z-index: 1300;" />
+                                            <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true" style="z-index: 1300;" />
 
                                         </div>
 
@@ -281,7 +292,7 @@
                                         <div class="floating">
 
                                             <label for="" class="float-label">End Day</label>
-                                            <Calendar inputId="icon" dateFormat="yy-mm-dd" :showIcon="true" />
+                                            <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true" />
 
                                         </div>
                                     </div>
@@ -302,7 +313,7 @@
                             </div>
                             <div class="col-md-8  mb-md-0 mb-3">
                                 <div class="form-group">
-                                    <Chips v-model="service.leave_data.notifyTo" separator=","  />
+                                    <Chips class="   " v-model="service.leave_data.notifyTo" separator=","  />
                                 </div>
                             </div>
                         </div>
@@ -335,7 +346,7 @@
 
                         <div class="text-center mt-6 ">
                             <button type="button" class="btn btn-border-primary"  @click="visible = false">Cancel</button>
-                            <button type="button" id="btn_request_leave" class="btn btn-primary ms-4"
+                            <button type="button" id="btn_request_leave" class="btn btn-primary ms-4" :disabled="service.leave_data.selected_leave.length>0 ? false : true"
                                 @click="service.Submit">
                                 Request Leave</button>
                         </div>
@@ -368,29 +379,16 @@ import {Service} from './leave_apply_service'
 
 const visible=ref(false)
 
+const leave_types=ref()
 
 // Check All Varaibles and Events Here
 const service = Service()
 
 onMounted(() => {
 
+    service.get_leave_types()
     service.leave_data.custom_start_date = new Date().toJSON().slice(0, 10);
     service.leave_data.permission_start_time = new Date()
-
-
-    let url_org_leave = window.location.origin + '/fetch-org-leaves-balance';
-
-    console.log("Fetching ORG LEAVE from url : " + url_org_leave);
-
-
-    axios.get(url_org_leave).then((response) => {
-
-        // leaves.value =Object.values(response.data)
-        // leave_type.value=Object.values(response.data.leave_types)
-        // leave_Data.value=response.data.employees
-        // console.log(leave_Data.value);
-    });
-
 
 });
 

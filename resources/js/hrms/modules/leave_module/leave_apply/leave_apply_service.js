@@ -32,12 +32,16 @@ export const Service = defineStore("Service", () => {
     const Permission_format = ref(false);
     const compensatory_format = ref(false);
     const invalidDates = ref();
+    const leave_types=ref()
     let today = new Date();
     const RequiredField = ref(false);
+    const data_checking=ref(false)
+    const Email_Service=ref(false)
 
     let invalidDate = new Date();
     invalidDate.setDate(today.getDate() - 1);
     invalidDates.value = [today, invalidDate];
+
 
 
     // Events
@@ -101,6 +105,9 @@ export const Service = defineStore("Service", () => {
             }
         }
 
+        if(!leave_data.custom_total_days<0){
+            alert("")
+        }
         console.log(leave_data.custom_start_date);
         console.log(leave_data.custom_end_date);
         var date1 = new Date(leave_data.custom_start_date);
@@ -164,31 +171,27 @@ export const Service = defineStore("Service", () => {
         }
     };
 
+    const get_leave_types=()=>{
+        axios.get('/fetch-leave-policy-details').then(res=>{
+            console.log(res.data);
+            leave_types.value=res.data
+        })
+    }
+
     // Request leave Events
 
     const leave_Request_data=reactive({
-        leave_type:'',
-        total_duration:'',
-        requested_leave_date:'',
+        leave_type_id:1,
+        leave_Request_date:new Date().toISOString().slice(0,10),
+        leave_type_name:'',
+        leave_session:'',
+        start_date:'',
+        end_date:'',
+        no_of_days:'',
+        hours_diff:'',
         notify_to:'',
-        leave_reason:''
+        leave_reason:'',
     })
-
-    leave_Request_data.leave_type=leave_data.selected_leave
-    if(full_day_format.value==true || leave_data.radiobtn_full_day=="full_day"){
-        leave_Request_data.total_duration="full day"
-    }else
-    if(leave_data.radiobtn_half_day=="half_day"){
-        leave_Request_data.total_duration="half day"
-
-    }else
-    if(leave_data.radiobtn_custom=="custom"){
-        leave_Request_data.total_duration="custom "
-    }else{
-         console.log("leave duration not selected")
-    }
-
-
 
 
 
@@ -196,41 +199,65 @@ export const Service = defineStore("Service", () => {
     // write Email service and axios service here
 
     const Submit = () => {
-        leave_Request_data.leave_type=leave_data.selected_leave
+
+
+
+        leave_Request_data.leave_type_name=leave_data.selected_leave
         if( leave_data.radiobtn_full_day=="full_day"){
-            leave_Request_data.total_duration="full day"
-            leave_Request_data.requested_leave_date=leave_data.full_day_leave_date
+            leave_Request_data.no_of_days="full day"
+            leave_Request_data.start_date=new Date(leave_data.full_day_leave_date).toISOString().slice(0,10)
+            leave_Request_data.end_date="null"
         }else
         if(leave_data.radiobtn_half_day=="half_day"){
-            leave_Request_data.total_duration="half day"
-            leave_Request_data.requested_leave_date=new Date().toISOString()
+            leave_Request_data.no_of_days="half day"
+            leave_Request_data.start_date=new Date().toISOString().slice(0,10)
+            leave_Request_data.end_date="null"
 
             if(leave_data.half_day_leave_session=="forenoon"){
-                leave_Request_data.total_duration="forenoon"
+                leave_Request_data.leave_session="FN"
             }else{
-                leave_Request_data.total_duration="afternoon"
+                leave_Request_data.leave_session="AN"
             }
 
       }else
         if(leave_data.radiobtn_custom=="custom"){
-            leave_Request_data.total_duration="custom "
+            leave_Request_data.no_of_days="custom"
+            leave_Request_data.start_date=leave_data.custom_start_date
+            leave_Request_data.end_date=new Date(leave_data.custom_end_date).toISOString().slice(0,10)
+            leave_Request_data.no_of_days=leave_data.custom_total_days
         }else{
-            alert("not working")
+            toast.add({
+                severity: "info",
+                summary: "Info Message",
+                detail: "Select Leave",
+                life: 3000,
+            });
       }
       leave_Request_data.notify_to=leave_data.notifyTo
       leave_Request_data.leave_reason=leave_data.leave_reason
 
         RequiredField.value = true;
+        data_checking.value=true
 
         console.log(leave_Request_data);
 
-        axios.post('/attendance-applyleave',{
+        axios.post('/applyLeaveRequest',{
             leave_Request_data
         }).then(res=>{
-            console.log(res);
+            if(res.data.status=='success'){
+                Email_Service.value=true
+            }
+
+            console.log(res.data.status);
+            data_checking.value=false
+
         }).catch(err=>{
             console.log(err);
         })
+        console.log("Leave"+leave_data.selected_leave);
+
+
+
     };
 
 
@@ -244,6 +271,10 @@ export const Service = defineStore("Service", () => {
         invalidDates,
         toast,
         leave_Request_data,
+        leave_types,
+        data_checking,
+        Email_Service,
+
 
 
         // Events
@@ -254,6 +285,7 @@ export const Service = defineStore("Service", () => {
         Submit,
         dayCalculation,
         time_difference,
+        get_leave_types,
 
         // Boolean values
         full_day_format,

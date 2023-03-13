@@ -184,15 +184,17 @@ class VmtEmployeeOnboardingController extends Controller
 
     public function processEmployeeOnboardForm_Normal_Quick(Request $request, VmtEmployeeService $employeeService)
     {
+         $employee_onboarding=$request->employee_onboarding;
+        //  dd($employee_onboarding);
 
-
-        $user_id = $request->employee_onboarding['EmployeeCode'];
+        $user_id = $employee_onboarding['employee_code'];
         $response = "";
         $isEmailSent = "";
         $onboard_form_data =  array();
         //parse_str($request->all(), $onboard_form_data); (Removing this line, input from data is alreay in array)
         $onboard_form_data  = $request->all();
         $currentLoggedinInUser = auth()->user();
+        // dd($employee_onboarding['can_onboard_employee']);
 
 
         //Check whether we are updating existing user or adding new user.
@@ -203,7 +205,9 @@ class VmtEmployeeOnboardingController extends Controller
             //If current user is Admin, then its normal onboarding or updating existing user details.
             if(Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]) )
             {
-                $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), $existingUser->first()->id);
+                // $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), $existingUser->first()->id);
+
+                $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $employee_onboarding['can_onboard_employee'], $existingUser->first()->id);
 
                 $message = "";
 
@@ -364,6 +368,9 @@ class VmtEmployeeOnboardingController extends Controller
     */
     private function storeEmployeeNormalOnboardForm($row, $can_onboard_employee)
     {
+
+
+        // dd($can_onboard_employee);
         // code...
         try {
 

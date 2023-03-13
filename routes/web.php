@@ -127,6 +127,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/get-singleleavepolicy-record/{id}', [App\Http\Controllers\VmtAttendanceController::class, 'fetchSingleLeavePolicyRecord'])->name('get-singleleavepolicy-record');
     Route::post('/set-singleleavepolicy-record', [App\Http\Controllers\VmtAttendanceController::class, 'updateSingleLeavePolicyRecord'])->name('set-singleleavepolicy-record');
     Route::post('/attendance-applyleave', [App\Http\Controllers\VmtAttendanceController::class, 'saveLeaveRequestDetails'])->name('attendance-applyleave');
+    Route::post('/applyLeaveRequest', [App\Http\Controllers\VmtAttendanceController::class, 'applyLeaveRequest'])->name('applyLeaveRequest');
 
     Route::post('/attendance-approve-rejectleave', [App\Http\Controllers\VmtAttendanceController::class, 'approveRejectRevokeLeaveRequest'])->name('processLeaveRequest');
     Route::get('/attendance-leave-getdetails', [App\Http\Controllers\VmtAttendanceController::class, 'fetchLeaveDetails'])->name('attendance-leave-getdetails');
@@ -298,9 +299,13 @@ Route::post('vmt-general-settings', [App\Http\Controllers\HomeController::class,
         Route::get('employee-hierarchy/getSiblingsForUser/{user_code}', 'App\Http\Controllers\VmtOrgTreeController@getSiblingsForUser')->name('getSiblingsForUser');
 
      //Fetch Mangaers Names
-     Route::get('fetch-manahgers-name', [App\Http\Controllers\VmtEmployeeController::class, 'fetchManagerName'])->name('fetch-manahgers-name');
+     Route::get('fetch-managers-name', [App\Http\Controllers\VmtEmployeeController::class, 'fetchManagerName'])->name('fetch-managers-name');
 
-    // store employee
+     Route::get('/fetch-departments', [App\Http\Controllers\VmtEmployeeController::class, 'fetchDepartmentDetails'])->name('fetch-departments');
+     Route::get('/fetch-marital-details', [App\Http\Controllers\VmtEmployeeController::class, 'fetchMaritalStatus'])->name('fetch-marital-details');
+     Route::get('/fetch-blood-groups', [App\Http\Controllers\VmtEmployeeController::class, 'fetchBloodGroups'])->name('fetch-blood-groups');
+
+     // store employee
     Route::post('vmt-employee-store', 'App\Http\Controllers\VmtEmployeeController@storeEmployeeData');
 
     Route::post('/vmt-employee-onboard', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@processEmployeeOnboardForm_Normal_Quick');
@@ -424,11 +429,10 @@ Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 's
     Route::get('/employee_reimbursements',  [App\Http\Controllers\VmtReimbursementController::class, 'showReimbursementsPage'])->name('showReimbursementsPage');
     Route::get('/approval_reimbursements',  [App\Http\Controllers\VmtApprovalsController::class, 'showReimbursementApprovalPage'])->name('showReimbursementApprovalPage');
     Route::get('/fetch_all_reimbursements',  [App\Http\Controllers\VmtApprovalsController::class, 'fetchAllReimbursements'])->name('fetchAllReimbursements');
-    Route::get('/fetch_all_reimbursements',  [App\Http\Controllers\VmtApprovalsController::class, 'fetchAllReimbursementsAsGroups'])->name('fetchAllReimbursements');
+    Route::post('/fetch_all_reimbursements_as_groups',  [App\Http\Controllers\VmtApprovalsController::class, 'fetchAllReimbursementsAsGroups'])->name('fetchAllReimbursements');
     Route::post('/reimbursements_bulk_approval',  [App\Http\Controllers\VmtApprovalsController::class, 'processReimbursementBulkApprovals'])->name('processReimbursementBulkApprovals');
     Route::post('/reimbursements-approve-reject', [App\Http\Controllers\VmtApprovalsController::class, 'approveRejectReimbursements'])->name('approveRejectReimbursements');
     Route::post('/saveReimbursementsData', [App\Http\Controllers\VmtReimbursementController::class, 'saveReimbursementsData'])->name('saveReimbursementsData');
-    Route::post('/fetch_all_reimbursements_as_groups',  [App\Http\Controllers\VmtApprovalsController::class, 'fetchAllReimbursementsAsGroups'])->name('fetchAllReimbursementsAsGroups');
 
 
 
@@ -548,5 +552,6 @@ Route::get('/testing_sass', function(){
 
 //DONT WRITE ANT ROUTES BELOW THIS
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index']);
+
 
 
