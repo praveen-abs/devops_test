@@ -1693,19 +1693,27 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         ajax_data_currentdate.user_id + "' data-applystatus='" + ajax_data_currentdate
                                         .mop_status + "' data-currentdate='" + currentDate + "' value='MOP' />&nbsp;&nbsp;";
 
+                                    const clientName = "  {{ sessionGetSelectedClientName() }} ";
+
+                                    if(clientName.includes('All') || clientName.includes('Brand Avatar') ){
+
                                     if (ajax_data_currentdate.isLC) {
                                         final_checkin_button_code = html_LC_Button + getStatusIcon(ajax_data_currentdate
                                             .lc_status);
-                                    } else
+                                    }
+
+                                    }  else
                                     if (ajax_data_currentdate.isMIP) {
                                         final_checkin_button_code = html_MIP_Button + getStatusIcon(ajax_data_currentdate
                                             .mip_status);
                                     }
 
-                                    if (ajax_data_currentdate.isEG) {
+                                     if(clientName.includes('All') || clientName.includes('Brand Avatar') ){
+                                        if (ajax_data_currentdate.isEG) {
                                         final_checkout_button_code = html_EG_Button + getStatusIcon(ajax_data_currentdate
                                             .eg_status);
-                                    } else
+                                    }
+                                     }else
                                     if (ajax_data_currentdate.isMOP) {
                                         final_checkout_button_code = html_MOP_Button + getStatusIcon(ajax_data_currentdate
                                             .mop_status);
@@ -1787,34 +1795,6 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
         }
 
-        // Showing Selfie Image
-
-        function generate(){
-            $('<img>', {id: 'check_in_selfie',
-                        class: 'some-class some-other-class',
-                        title: 'now this div has a title!',
-                        }).appendTo('#selfie');
-
-                        console.log("generated");
-         }
-
-                  function onclickShowSelfie(){
-                $('#SelfieImage').fadeIn(0);
-                // $('#check_in_selfie').attr('src');
-                 }
-
-                 $( document ).ready(function() {
-                   console.log("generated")
-                    generate();
-                 });
-
-                 $('.modal-close').click(function() {
-                    $('#SelfieImage').fadeOut(0);
-                //   $("#check_in_selfie").remove();
-                    // setTimeout(generate, 300);
-
-                   })
-
 
 
 
@@ -1824,14 +1804,6 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
         function getAttendanceModeIcon(data_currentdate, t_punch_type) {
 
             let attendance_mode = null;
-
-            //find the attendance mode.
-            if(t_punch_type == "checkin")
-                attendance_mode = data_currentdate.attendance_mode_checkin;
-            else
-            if(t_punch_type == "checkout")
-                attendance_mode = data_currentdate.attendance_mode_checkout;
-
             if (attendance_mode == "biometric")
                 // return '&nbsp;<i class="fa-solid fa-fingerprint"></i>';
                 return '&nbsp;<i class="fas fa-fingerprint"></i>';
