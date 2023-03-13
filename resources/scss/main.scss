@@ -5,13 +5,14 @@
 
 
 
-$gray-100:#ededed;
+
 
 * {
     // font-size: 1vw;
     font-weight: $font-weight-medium;
+    box-sizing: border-box;
 }
 
 body {
-    background-color:#{$gray-100};
+    background-color:$bg-body;
 }

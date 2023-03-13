@@ -45,7 +45,7 @@
                                         </div>
                                         <div class="mb-1 d-flex justify-content-between ">
                                             <span class="text-muted f-12">Profile Completeness :</span>
-                                            <span class="text-muted text-end f-12 fw-bold" id="prograssBar_percentage">
+                                            <span class="text-muted text-end f-12 fw-medium" id="prograssBar_percentage">
 
                                             </span>
                                         </div>
@@ -54,43 +54,43 @@
                                                 aria-valuenow="{{ $profileCompletenessValue }}" aria-valuemin="0"
                                                 aria-valuemax="100"></div>
                                         </div>
-                                        <p class="text-muted f-10 text-start mb-2 fw-bold">Your profile is completed</p>
+                                        <p class="text-muted f-10 text-start mb-2 fw-medium">Your profile is completed</p>
                                     </div>
 
                                     <div class="profile-mid-right-content mb-4 text-center ">
                                         <div class="border-bottom-liteAsh py-2">
-                                            <p class="text-muted f-12 fw-bold">Employee Status</p>
-                                            <p class="text-primary-old f-15 fw-bold">
+                                            <p class="text-muted f-12 fw-medium">Employee Status</p>
+                                            <p class="text-primary-old f-15 fw-medium">
                                                 {{ getEmployeeActiveStatus($user->id) ?? '-' }}
                                             </p>
 
                                         </div>
                                         <div class="border-bottom-liteAsh py-2">
-                                            <p class="text-muted f-12 fw-bold">Employee Code</p>
-                                            <p class="text-primary-old f-15 fw-bold">
+                                            <p class="text-muted f-12 fw-medium">Employee Code</p>
+                                            <p class="text-primary-old f-15 fw-medium">
                                                 {{ $user_full_details->user_code ?? '-' }}
                                             </p>
 
                                         </div>
                                         <div class="border-bottom-liteAsh py-2">
-                                            <p class="text-muted f-12 fw-bold">Employee Designation</p>
-                                            <p class="text-primary-old f-15 fw-bold">
+                                            <p class="text-muted f-12 fw-medium">Employee Designation</p>
+                                            <p class="text-primary-old f-15 fw-mediam">
                                                 {{ $user_full_details->designation ?? '-' }}
                                             </p>
                                         </div>
                                         <div class="border-bottom-liteAsh py-2">
-                                            <p class="text-muted f-12 fw-bold">Location</p>
-                                            <p class="text-primary-old f-15 fw-bold">
+                                            <p class="text-muted f-12 fw-medium">Location</p>
+                                            <p class="text-primary-old f-15 fw-medium">
                                                 {{ $user_full_details->work_location ?? '-' }}</p>
                                         </div>
                                         <div class="border-bottom-liteAsh py-2">
-                                            <p class="text-muted f-12 fw-bold">Department</p>
-                                            <p class="text-primary-old f-15 fw-bold">
+                                            <p class="text-muted f-12 fw-medium">Department</p>
+                                            <p class="text-primary-old f-15 fw-medium">
                                                 {{ $department ?? '-' }}</p>
                                         </div>
                                         <div class="border-bottom-liteAsh py-2">
-                                            <p class="text-muted f-12 fw-bold">Reporting To</p>
-                                            <p class="text-primary-old f-15 fw-bold">
+                                            <p class="text-muted f-12 fw-medium">Reporting To</p>
+                                            <p class="text-primary-old f-15 fw-medium">
                                                 {{ $user_full_details->l1_manager_name ?? '-' }}</p>
                                         </div>
                                     </div>
@@ -291,7 +291,7 @@
                                                     <tr>
                                                         <td>{{ $singledetail->name }}</td>
                                                         <td>{{ $singledetail->relationship }}</td>
-                                                        <td>{{ date('d-M-Y',strtotime($singledetail->dob)) }}</td>
+                                                        <td>{{ date('d-M-Y', strtotime($singledetail->dob)) }}</td>
                                                         <td>{{ $singledetail->phone_number }}</td>
                                                     </tr>
                                                 @endforeach
@@ -306,49 +306,105 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="experience_det" role="tabpanel" aria-labelledby="">
-                        <div class="card mb-2">
-                            <div class="card-body">
-                                <h6 class="">Experience Information
-                                    <span class="personal-edit"><a href="#" class="edit-icon"
-                                            data-bs-toggle="modal" data-bs-target="#edit_experienceInfo"><i
-                                                class="ri-pencil-fill"></i></a></span>
-                                </h6>
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <thead class="bg-primary">
-                                            <th>
-                                                Organization
-                                            </th>
-                                            <th>
-                                                Designation
-                                            </th>
-                                            <th>
-                                                From
-                                            </th>
-                                            <th>
-                                                To
-                                            </th>
-                                        </thead>
-                                        <tbody>
-                                            @if ($exp)
-                                                @foreach ($exp as $k => $info)
-                                                    <tr>
-                                                        {{-- date('M-Y', strtotime($employee_payslip->PAYROLL_MONTH))) --}}
-                                                        <td>{{ $info['company_name'] }}</td>
-                                                        <td>{{ $info['job_position'] }}</td>
-                                                        <td>{{ date('d-M-Y',strtotime($info['period_from'])) }}</td>
-                                                        <td>{{date('d-M-Y',strtotime( $info['period_to'])) }}</td>
-                                                    </tr>
-                                                @endforeach
-                                            @endif
 
+                        <div class="text-end">
+                            <button type="button" class="btn btn-border-primary" data-bs-target="#edit_experienceInfo"
+                                data-bs-toggle="modal"><i class="fa fa-plus-circle me-2"></i>Add More</button>
+                        </div>
 
+                        <div class="timeline">
+                            <div class="container left" id="experience_card">
+                                <div class="card   experience-card  ">
+                                    <div class="card-body py-1">
+                                        <ul class="personal-info ">
+                                            <li class="border-bottom-liteAsh border-0 pb-1">
+                                                <div class="title"></div>
+                                                <div class="text text-end">
+                                                    <a class="edit-icon" data-bs-toggle="modal" data-bs-target=""><i
+                                                            class="ri-pencil-fill"></i></a>
 
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                                </div>
+                                            </li>
+                                            <li class="border-bottom-liteAsh pb-1">
+                                                <div class="title">Organization</div>
+                                                <div class="text" data-toggle="tooltip" data-placement="bottom">
+                                                    Organization Organization Organization
+
+                                                </div>
+                                            </li>
+                                            <li class="border-bottom-liteAsh pb-1">
+                                                <div class="title">Designation</div>
+                                                <div class="text">
+                                                    Designation
+                                                </div>
+                                            </li>
+                                            <li class="border-bottom-liteAsh pb-1 ">
+                                                <div class="title">From <i
+                                                        class="fa fa-exclamation-circle text-muted ms-2"
+                                                        data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        title="DOJ"></i></div>
+                                                <div class="text">
+                                                    From
+                                                </div>
+                                            </li>
+                                            <li class="border-bottom-liteAsh pb-1 border-0">
+                                                <div class="title">To <i class="fa fa-exclamation-circle text-muted ms-2"
+                                                        data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        title="LWD"></i></div>
+                                                <div class="text">
+                                                    To
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
-                                </form>
+                            </div>
+                            <div class="container right">
+                                <div class="card   experience-card  ">
+                                    <div class="card-body py-1">
+                                        <ul class="personal-info">
+                                            <li class="border-bottom-liteAsh border-0 pb-1">
+                                                <div class="title"></div>
+                                                <div class="text text-end">
+                                                    <a class="edit-icon" data-bs-toggle="modal"
+                                                        data-bs-target="#edit_generalInfo"><i
+                                                            class="ri-pencil-fill"></i></a>
+
+                                                </div>
+                                            </li>
+                                            <li class="border-bottom-liteAsh pb-1">
+                                                <div class="title">Organization</div>
+                                                <div class="text">
+                                                    Organization
+
+                                                </div>
+                                            </li>
+                                            <li class="border-bottom-liteAsh pb-1">
+                                                <div class="title">Designation</div>
+                                                <div class="text">
+                                                    Designation
+                                                </div>
+                                            </li>
+                                            <li class="border-bottom-liteAsh pb-1 ">
+                                                <div class="title">From <i
+                                                        class="fa fa-exclamation-circle text-muted ms-2"
+                                                        data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        title="DOJ"></i></div>
+                                                <div class="text">
+                                                    From
+                                                </div>
+                                            </li>
+                                            <li class="border-bottom-liteAsh pb-1 border-0">
+                                                <div class="title">To <i class="fa fa-exclamation-circle text-muted ms-2"
+                                                        data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        title="LWD"></i></div>
+                                                <div class="text">
+                                                    To
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -456,7 +512,8 @@
                                         <form action="" method="POST" enctype="multipart/form-data">
                                             <h6 class="">Statutory Information
                                                 <span class="personal-edit"><a href="#" class="edit-icon"
-                                                        data-bs-toggle="modal" data-bs-target="#statutory_info
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#statutory_info
                                                         "><i
                                                             class="ri-pencil-fill"></i></a></span>
                                             </h6>
@@ -524,7 +581,7 @@
                                                 </a>
                                             </li>
                                         </ul>
-                                         <div class="tab-content " id="pills-tabContent">
+                                        <div class="tab-content " id="pills-tabContent">
                                             <div class="tab-pane fade active show" id="pay_slips" role="tabpanel"
                                                 aria-labelledby="">
 
@@ -601,7 +658,7 @@
 
                                             </div>
 
-                                           </table>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
@@ -653,7 +710,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div id="edit_generalInfo" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                         <div class="modal-content profile-box top-line">
@@ -772,7 +828,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- personal informatios -->
                 <div id="personal_info_modal" class="modal custom-modal fade" role="dialog">
                     <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
@@ -830,7 +885,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- payslip informatios -->
                 <div id="payslipModal" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
@@ -850,7 +904,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- address informatios -->
                 <div id="edit_addressInfo" class="modal custom-modal fade" role="dialog">
                     <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
@@ -889,7 +942,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- family informatios -->
                 <div id="edit_familyInfo" class="modal custom-modal fade " role="dialog" aria-modal="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -975,8 +1027,8 @@
                                             <div class="card mb-3 addition-content" id="content1">
                                                 <div class="card-body">
                                                     <!-- <h3 class="card-title fw-bold">Education Informations <a href="javascript:void(0);"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    {{-- class="delete-icon"><i class="   ri-delete-bin-line"></i></a> --}}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                            </h3> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    {{-- class="delete-icon"><i class="   ri-delete-bin-line"></i></a> --}}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </h3> -->
 
                                                     <div class="row ">
                                                         <div class="col-md-12 m-0 text-end">
@@ -1023,9 +1075,9 @@
                                                             </div>
                                                         </div>
 
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
                                     @endif
                                 </div>
                                 <div class=" text-end mb-2" style="cursor:pointer;">
@@ -1044,11 +1096,11 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- experience informatios -->
-                <div id="edit_experienceInfo" class="modal custom-modal fade " role="dialog" aria-modal="true">
+                <div id="edit_experienceInfo" class="modal fade" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                        <div class="modal-content profile-box top-line">
+                        <div class="modal-content profile-box ">
+
                             <div class="modal-header border-0">
                                 <h6 class="modal-title">Experience
                                     Information</h6>
@@ -1108,8 +1160,7 @@
                                                         <div class="form-group mb-3 form-focus focused">
                                                             <div class="cal-icon">
                                                                 <label class="focus-label">Period To</label>
-                                                                <input type="date" max="9999-12-31"
-                                                                    name="period_to[]"
+                                                                <input type="date" max="9999-12-31" name="period_to[]"
                                                                     class="form-control floating datetimepicker"
                                                                     value="" required>
                                                             </div>
@@ -1212,7 +1263,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!--Statutory Details  -->
                 <div id="statutory_info" class="modal custom-modal fade" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -1320,8 +1370,6 @@
                         </div>
                     </div>
                 </div>
-
-
                 <div id="show_idCard" class="modal custom-modal fade" aria-hidden="true">
                     <div class="modal-dialog  modal-dialog-centered modal-md" role="document">
                         <div class="modal-content profile-box">
@@ -1369,7 +1417,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div id="show_documents" class="modal custom-modal fade" aria-hidden="true">
                     <div class="modal-dialog  modal-dialog-centered modal-md" role="document">
                         <div class="modal-content profile-box">
@@ -1383,18 +1430,14 @@
                             <div class="modal-body ">
                                 <div id="documents_content"></div>
 
-
-
                             </div>
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>
-    </div>
+
 @endsection
 @section('script')
     @yield('script-profile-avatar')
@@ -2047,6 +2090,37 @@
                 });
             });
         });
+
+
+        // $(function() {
+        //     $('#experience_card li .text').each(function(index) {
+        //         var lengthText = 20;
+        //         console.log($(this).text());
+        //         var text =$(this).text();
+        //         console.log(text);
+        //         var shortText = $.trim(text).substring(0, lengthText).split(" ").slice(0, -1).join(" ") +
+        //             "...";
+        //             console.log(text);
+        //         $('#experience_card li .text').prop("title", text);
+        //         $('#experience_card li .text').text(shortText);
+
+        //         $('[data-toggle="tooltip"]').tooltip();
+        //     });
+        // })
+
+
+
+        // $(function() {
+        //     var lengthText = 25;
+        //     var text = $('#experience_card li .text').text();
+
+        //     var shortText = $.trim(text).substring(0, lengthText).split(" ").slice(0, -1).join(" ") + "...";
+
+        //     $('#experience_card li .text').prop("title", text);
+        //     $('#experience_card li .text').text(shortText);
+
+        //     $('[data-toggle="tooltip"]').tooltip();
+        // })
 
 
         $(document).ready(function() {
