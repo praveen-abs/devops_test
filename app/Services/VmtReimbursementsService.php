@@ -19,6 +19,9 @@ use App\Models\VmtPMS_KPIFormAssignedModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
+use App\Models\VmtLocalConveyanceVehicles;
+use App\Models\VmtEmployeeReimbursements;
+
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\Compensatory;
 use App\Models\VmtEmployeeStatutoryDetails;
@@ -31,6 +34,75 @@ use App\Mail\WelcomeMail;
 
 class VmtReimbursementsService {
 
+    protected $kmsCost_2_wheeler = 0;
+    protected $kmsCost_4_wheeler = 0;
+
+    protected $instance;
+
+    /**
+     * Constructs a new cart object.
+     *
+     * @param Illuminate\Session\SessionManager $session
+     */
+    public function __construct(SessionManager $session)
+    {
+        //$query_LocalConveyance = VmtLocalConveyanceVehicles::all();
+
+        $this->kmsCost_2_wheeler = 3.5;
+        $this->kmsCost_4_wheeler = 6;
+        $this->kmsCost_misc = 1;
+
+    }
+
+    private function getLocalConveyanceCost($vehicle_type){
+
+        switch ($vehicle_type) {
+            case "bike":
+                return $this->kmsCost_2_wheeler;
+            case "car":
+                return $this->kmsCost_4_wheeler;
+            case "public transport":
+                return $this->kmsCost_misc;
+            default:
+                return null;
+        }
+    }
+
+    function createReimbursement_LocalConveyance($reimbursement_type_id, $date, $user_comments, $from, $to, $vehicle_type, $distance_travelled ){
+
+        try{
+            //Get KMS cost based on vehicle type
+            $current_kmsCost_vehicle = getLocalConveyanceCost($vehicle_type);
+
+            if($current_kmsCost_vehicle)
+            {
+
+            }
+            else
+            {
+
+                return [
+                    "status" => "failure",
+                    "message" => "Vehicle type is invalid"
+                ];
+
+            }
+
+            //Save in DB
+            $emp_reimbursements = new VmtEmployeeReimbursements;
+            $emp_reimbursements->vehicle_type
+            $emp_reimbursements->from
+            $emp_reimbursements->to
+
+
+
+
+        }
+        catch(Exception $e){
+
+        }
+
+    }
 
 
     function fetchAllReimbursementsAsGroups($year, $month, $status ,$reimbursement_type_id){
