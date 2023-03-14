@@ -22,14 +22,23 @@ Auth::routes();
 //Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
 
 Route::get('/vuejs', function () {
-
     return view('test_vuejs.app');
 });
+
+Route::get('/create-offer', function () {
+    return view('offer_letter/Create_OfferLetter.blade.php');
+
+})->name('create-offer');
+
 
 
 Route::get('/roles', function () {
     return view('rolesAndPermission');
 })->name('roles');
+
+Route::get('/integrations', function () {
+    return view('Integrations_Auth');
+})->name('integrations');
 
 Route::get('/addPermission', function () {
     return view('addPermissionTo_role');

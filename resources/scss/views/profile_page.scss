@@ -1,4 +1,4 @@
-@use "../components/variable" as v;
+@use "../utilities/variable" as v;
 /* The actual timeline (the vertical ruler) */
 .timeline {
     position: relative;

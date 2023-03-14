@@ -565,6 +565,11 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                                     role="button"><span>
                                         Form 16</span></a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('integrations') }}" class="nav-link sidebar py-1"
+                                    role="button"><span>
+                                        Auth</span></a>
+                            </li>
                         </ul>
                     </div>
                 </li>
@@ -718,6 +723,11 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                                     <a href="{{ route('document_preview') }}" class="nav-link"><span>Document
                                             Template
                                         </span></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('create-offer') }}" class="nav-link"><span>
+
+                                            create offer</span></a>
                                 </li>
 
                                 {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}

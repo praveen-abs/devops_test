@@ -1,8 +1,7 @@
 @import "./components/table";
-@import "./components/variable";
+@import "./utilities/variable";
 @import "./components/card";
 @import "./utilities/helpers";
-
 
 
 
@@ -11,6 +10,10 @@
     // font-size: 1vw;
     font-weight: $font-weight-medium;
     box-sizing: border-box;
+}
+
+label,p,span{
+    color: $gray-600;
 }
 
 body {

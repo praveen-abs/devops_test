@@ -1,8 +1,8 @@
-@use '../components/variable' as var;
+@use '../utilities/variable' as v;
 
 
 .bg-lite-gray{
-    background-color:var.$gray-100;
+    background-color:v.$gray-100;
 }
 
 // input[name="offer-mode"]:checked{
