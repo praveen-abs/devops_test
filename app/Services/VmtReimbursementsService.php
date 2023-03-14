@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\VmtLocalConveyanceVehicles;
-use App\Models\VmtEmployeeReimbursements;
+// use App\Models\VmtEmployeeReimbursements;
 
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\Compensatory;
@@ -89,10 +89,10 @@ class VmtReimbursementsService {
             }
 
             //Save in DB
-            $emp_reimbursements = new VmtEmployeeReimbursements;
-            $emp_reimbursements->vehicle_type
-            $emp_reimbursements->from
-            $emp_reimbursements->to
+            // $emp_reimbursements = new VmtEmployeeReimbursements;
+            // $emp_reimbursements->vehicle_type
+            // $emp_reimbursements->from
+            // $emp_reimbursements->to
 
 
 

@@ -46,7 +46,7 @@
         </Dialog>
         <div>
             <DataTable :value="data_reimbursements" :paginator="true" :rows="10" class="mt-6 " dataKey="user_id"
-                @rowExpand="onRowExpand" @rowCollapse="onRowCollapse" v-model:expandedRows="expandedRows" v-model:selection="selected"
+                @rowExpand="onRowExpand" @rowCollapse="onRowCollapse" v-model:expandedRows="expandedRows" v-model:selection="selectedAllEmployee"
                 paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
                 responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}">
                 <template #empty> No Reimbursement data for the selected status filter </template>
@@ -64,18 +64,6 @@
                             class="p-column-filter" :showClear="true" />
                     </template>
                 </Column>
-                <!-- <Column  header="Details">
-                    <template #body>
-                        <h6 style="cursor: pointer;" @click="view_reimbursment_detials = true">view</h6>
-                    </template>
-                </Column>
-
-                <Column  header="Action">
-                    <template #body>
-                        <h6 style="cursor: pointer;" @click="view_reimbursment_action = true">view</h6>
-                    </template>
-                </Column> -->
-
 
                 <Column class="fontSize13px" field="total_distance_travelled" header="Overall Distance Travelled"
                     :sortable="false">
@@ -105,7 +93,7 @@
                 <template #expansion="slotProps">
 
                     <div class="orders-subtable">
-                        <DataTable :value="slotProps.data.reimbursement_data" responsiveLayout="scroll" v-model:selection="selected">
+                        <DataTable :value="slotProps.data.reimbursement_data" responsiveLayout="scroll"  v-model:selection="selectedOneEmployee">
                             <Column selectionMode="multiple" style="width: 3rem" :exportable="false"></Column>
                             <Column field="" header="Date" sortable>
                                 <template #body="slotProps">
@@ -147,6 +135,7 @@ import { FilterMatchMode, FilterOperator } from "primevue/api";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 import moment from 'moment'
+import { url } from "@vuelidate/validators";
 
 
 let data_reimbursements = ref();
@@ -159,7 +148,8 @@ const loading = ref(true);
 const expandedRows = ref([]);
 const  view_reimbursment_detials=ref(false);
 const view_reimbursment_action=ref(false);
-const selected=ref();
+const selectedAllEmployee=ref();
+const selectedOneEmployee=ref();
 
 
 
@@ -231,6 +221,8 @@ const show_table = ref(false)
 const get_data = ref()
 
 const generate_ajax = () => {
+
+
     let filter_date = new Date(selected_date.value);
 
     let year = filter_date.getFullYear();
@@ -263,6 +255,7 @@ const generate_ajax = () => {
 
 const download_ajax = () => {
     let filter_date = new Date(selected_date.value);
+    data_checking.value=true
 
     let year = filter_date.getFullYear();
     let month = filter_date.getMonth() + 1;
@@ -271,7 +264,16 @@ const download_ajax = () => {
     let URL = '/reports/generate-manager-reimbursements-reports?selected_year=' + year + '&selected_month=' + month +
         '&selected_status=' + selected_status.value + '&_token={{ csrf_token() }}';
     window.location = URL;
+    setTimeout(greet, 1000);
+
 }
+
+const greet=()=> {
+    data_checking.value=false
+}
+
+setTimeout(greet, 3000);
+
 
 const css_statusColumn = (data) => {
     return [
