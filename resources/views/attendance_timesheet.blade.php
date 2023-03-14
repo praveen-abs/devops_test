@@ -1584,16 +1584,6 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                             "'><br><span style='color:black;font-size:10px;text-align:center;margin-left:5px' id='statement'></span></span>";
 
 
-
-                                        // if (ajax_data_currentdate.absent_status == "Not Applied")
-                                        // {
-                                        //     cell.innerHTML = cell.innerHTML + "<span>Leave not Applied</span>";
-                                        //     $("#statement").html(" Leave Not Applied")
-
-                                        // }
-                                        // else
-                                        if (ajax_data_currentdate.absent_status == "Pending")
-                                        {
                                         if (ajax_data_currentdate.absent_status == "Pending")
                                         {
                                             // $("#statement").attr("src","{{ URL::asset($svg_icon_pending) }}")
@@ -1793,9 +1783,10 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                 }
 
                 tbl.appendChild(row);
+                 }
+
             }
 
-        }
 
 
 
