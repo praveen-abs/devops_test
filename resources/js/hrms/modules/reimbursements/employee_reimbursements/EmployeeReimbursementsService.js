@@ -11,9 +11,10 @@ import axios from "axios";
 
 export const employee_reimbursment_service = defineStore('employee_reimbursment_service', () => {
 
+    const toast = useToast();
+
+
     const reimbursement_datas = ref([
-        // { "id": "1000", "claim_type": "Bamboo Watch", "claim_amount": 65, "eligible_amount": 24,"reimbursment_remarks":"red","status":"Approved" },
-        // { "id": "1001", "claim_type": "Black Watch", "claim_amount": 72, "eligible_amount": 61,"status":"Pending" },
    ]);
     const reimbursementsScreen = ref(true)
     const reimbursements_dailog = ref(false);
@@ -35,7 +36,7 @@ export const employee_reimbursment_service = defineStore('employee_reimbursment_
 
 
 
-    const employee_local_conveyance = ref({
+    const employee_local_conveyance = reactive({
         travelled_date: '',
         mode_of_transport: '',
         travel_from: '',
@@ -58,6 +59,14 @@ export const employee_reimbursment_service = defineStore('employee_reimbursment_
 
 
     }
+
+    const formatDate = (value) => {
+        return value.toLocaleDateString('es-PE', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        });
+    };
 
 
      const submitted = ref(false);
@@ -188,6 +197,9 @@ export const employee_reimbursment_service = defineStore('employee_reimbursment_
         }).catch(response=>{
             console.log(response);
         });
+
+        toast.add({ severity: 'success', summary: 'Saved', detail: 'Reimbursement drafted', life: 3000 });
+
     }
 
     const data_local_convergance=ref([])
@@ -202,7 +214,7 @@ export const employee_reimbursment_service = defineStore('employee_reimbursment_
 
         axios.get(url_all_reimbursements)
             .then((response) => {
-                data_local_convergance.value = response.data;
+                // data_local_convergance.value = response.data;
                 console.log(response.data);
                 loading_spinner.value=false
 
@@ -213,8 +225,11 @@ export const employee_reimbursment_service = defineStore('employee_reimbursment_
 
         const post_data_for_local_convergance=()=>{
 
+            localconvergance_dailog.value = false;
+
             console.log(employee_local_conveyance.value);
-            data_local_convergance.value.push(employee_local_conveyance.value);
+            data_local_convergance.value.push(employee_local_conveyance);
+            toast.add({severity:'success', summary: 'Draft', detail:'Draft Saved', life: 3000});
 
 
 
@@ -231,6 +246,24 @@ export const employee_reimbursment_service = defineStore('employee_reimbursment_
 
             }
 
+            const amount_calculation=()=>{
+                console.log(employee_local_conveyance.mode_of_transport);
+                if(employee_local_conveyance.mode_of_transport=='Car'){
+                    console.log("Car");
+
+                 employee_local_conveyance.local_convenyance_total_amount = employee_local_conveyance.total_distance_travelled * 6;
+                 console.log(employee_local_conveyance.local_convenyance_total_amount);
+
+                }else
+                if(employee_local_conveyance.mode_of_transport=='Bike'){
+                    employee_local_conveyance.local_convenyance_total_amount = employee_local_conveyance.total_distance_travelled * 3.5;
+                    console.log("Bike");
+                }else{
+                    employee_local_conveyance.local_convenyance_total_amount =null;
+
+                }
+
+            }
 
 
 
@@ -240,7 +273,7 @@ export const employee_reimbursment_service = defineStore('employee_reimbursment_
          hideDialog,  localconvergance_dailog, saveProduct, employee_reimbursement, employee_local_conveyance,
          open_reimbursment, open_local_convergance,reimbursements_dailog,
         reimbursementsScreen, localconverganceScreen, Switch_to_localC, Switch_to_reimbursment,
-        fetch_data_from_reimbursment,data_reimbursements,loading_spinner,
+        fetch_data_from_reimbursment,data_reimbursements,loading_spinner,formatDate,amount_calculation,
 
 
         // employee_reimbursement

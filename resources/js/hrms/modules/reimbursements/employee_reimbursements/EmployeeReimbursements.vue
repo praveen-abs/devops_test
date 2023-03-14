@@ -1,4 +1,5 @@
 <template>
+    <Toast />
   <div class="reimbursement-wrapper mt-30">
     <div class="card left-line mb-2">
       <div class="card-body pb-1 pt-1">
@@ -34,11 +35,12 @@
           <div
             class="col-sm-12 col-md-5 col-lg-5 col-xl-5 col-xxl-5 d-flex justify-content-end"
           >
-            <select name="" id="" class="form-select border-primary w-50 me-3">
+          <Calendar v-model="date" view="month" dateFormat="mm/yy" class="mr-4" placeholder="Select Month" />
+            <!-- <select name="" id="" class="form-select border-primary w-50 me-3">
               <option value="" disabled hidden selected>Choose Month</option>
               <option value="">Jan 2023</option>
               <option value="">Feb 2023</option>
-            </select>
+            </select> -->
             <button
               v-if="employee_service.reimbursementsScreen"
               @click="employee_service.open_reimbursment"
@@ -73,7 +75,7 @@
                 <div class="card">
                   <DataTable
                     ref="dt"
-                    :value="employee_service.products"
+                    :value="employee_service.reimbursement_datas"
                     dataKey="id"
                     :paginator="true"
                     :rows="10"
@@ -82,23 +84,49 @@
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
                     responsiveLayout="scroll"
                   >
-                    <Column
-                      field="claim_type"
-                      header="Claim type"
-                      style="min-width: 12rem"
-                    >
+                  <Column :exportable="false" style="min-width:8rem">
+                    <template #body="slotProps">
+                        <Button icon="pi pi-trash" outlined rounded severity="danger" @click="confirmDeleteProduct(slotProps.data)" />
+                    </template>
+                </Column>
+                    <Column header="Claim Type" style="min-width: 8rem">
+                      <template #body="slotProps">
+                        {{  slotProps.data.claim_type }}
+                      </template>
                     </Column>
-                    <Column header="Claim amount" style="min-width: 8rem">
+
+                    <Column field="" header="Claim Amount" style="min-width: 12rem">
                       <template #body="slotProps">
                         {{ "&#x20B9;" + slotProps.data.claim_amount }}
                       </template>
                     </Column>
 
                     <Column field="" header="Eligible Amount" style="min-width: 12rem">
-                      <template #body="slotProps">
-                        {{ "&#x20B9;" + slotProps.data.eligible_amount }}
-                      </template>
-                    </Column>
+                        <template #body="slotProps">
+                          {{ "&#x20B9;" + slotProps.data.eligible_amount }}
+                        </template>
+                      </Column>
+
+                      <Column field="" header="Remarks" style="min-width: 12rem">
+                        <template #body="slotProps">
+                          {{  slotProps.data.reimbursment_remarks }}
+                        </template>
+                      </Column>
+                      <Column field="" header="Status" style="min-width: 12rem">
+                        <template #body="slotProps">
+                          {{ slotProps.data.eligible_amount }}
+                        </template>
+                      </Column>
+                      <Column field="" header="Date Of Dispatch" style="min-width: 12rem">
+                        <template #body="slotProps">
+                          {{ "&#x20B9;" + slotProps.data.eligible_amount }}
+                        </template>
+                      </Column>
+                      <Column field="" header="Proof Of Delivery" style="min-width: 12rem">
+                        <template #body="slotProps">
+                          {{ "&#x20B9;" + slotProps.data.eligible_amount }}
+                        </template>
+                      </Column>
 
                     <!-- <Column :exportable="false" field="upload" header="Action" style="min-width:8rem">
                                             <template #body="slotProps">
@@ -109,7 +137,7 @@
                                                     class="p-button-rounded p-button-danger mr-2"
                                                     @click="confirmDeleteSelected(slotProps.data)" />
                                             </template>
-                                        </Column> -->
+                     </Column> -->
                   </DataTable>
                 </div>
 
@@ -122,18 +150,8 @@
                 >
                   <div class="field">
                     <label for="name">Claim Type</label>
-                    <!-- <Dropdown id="inventoryStatus" v-model="employee_reimbursement.claim_type" :options="statuses" optionLabel="label" placeholder="Select a Status"></Dropdown> -->
-                    <select
-                      class="form-select textbox onboard-form form-control"
-                      v-model="employee_service.employee_reimbursement.claim_type"
-                    >
-                      <option
-                        v-for="types in employee_service.statuses"
-                        :key="types.value"
-                      >
-                        {{ types.label }}
-                      </option>
-                    </select>
+                    <Dropdown  v-model="employee_service.employee_reimbursement.claim_type" :options="employee_service.reimbursment_claim_types"
+                     optionLabel="label" optionValue="value" placeholder="Select Claim Type"></Dropdown>
                   </div>
 
                   <div class="formgrid grid">
@@ -156,6 +174,12 @@
                         locale="en-IN"
                         integeronly
                       />
+                    </div>
+                  </div>
+                  <div class="field">
+                    <label class="mb-3">Remarks</label>
+                    <div class="formgrid">
+                      <Textarea v-model="employee_service.employee_reimbursement.reimbursment_remarks" autoResize rows="2" cols="30" />
                     </div>
                   </div>
                   <div class="field">
@@ -186,6 +210,7 @@
                     />
                     <Button
                       label="Save"
+                      :disabled="!employee_service.employee_reimbursement.claim_type=='' && !employee_service.employee_reimbursement.claim_amount=='' ? false :true"
                       icon="pi pi-check"
                       style="height: 30px; background: rgb(255 135 38); color: white"
                       @click="employee_service.post_reimbursment_data"
@@ -196,6 +221,8 @@
             </div>
           </div>
         </div>
+
+        <!-- ----------------------------------------------------------------------------------------------------------------------------------------- -->
 
         <!-- Local conveyance -->
         <div
@@ -240,50 +267,70 @@
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
                 responsiveLayout="scroll"
               >
-                <Column header="Employee Name  " style="min-width: 8rem">
+              <Column :exportable="false" style="min-width:8rem">
+                <template #body="slotProps">
+                    <Button icon="pi pi-trash" outlined rounded severity="danger" @click="confirmDeleteProduct(slotProps.data)" />
+                </template>
+            </Column>
+
+                <Column field="reimbursement_date" header="Date" style="min-width: 12rem"  dataType="date">
+                    <template #body="slotProps">
+                        {{ employee_service.formatDate(slotProps.data.travelled_date) }}
+                      </template>
+                </Column>
+                <Column header="Mode Of Transport" style="min-width: 12rem">
                   <template #body="slotProps">
-                    {{ slotProps.data.name }}
+                    {{ slotProps.data.mode_of_transport }}
                   </template>
                 </Column>
 
-                <Column field="reimbursement_date" header="Date" style="min-width: 12rem">
-                </Column>
-                <Column header="Mode Of Transport  " style="min-width: 8rem">
+                <Column field="travel_from" header="From " style="min-width: 8rem">
                   <template #body="slotProps">
-                    {{ slotProps.data.vehicle_type }}
+                    {{ slotProps.data.travel_from }}
                   </template>
                 </Column>
-
-                <Column field="from" header="From " style="min-width: 12rem">
+                <Column field="travel_to" header="To" style="min-width: 8rem">
                   <template #body="slotProps">
-                    {{ slotProps.data.from }}
+                    {{ slotProps.data.travel_to }}
                   </template>
                 </Column>
-                <Column field="to" header="To" style="min-width: 12rem">
-                  <template #body="slotProps">
-                    {{ slotProps.data.to }}
-                  </template>
-                </Column>
-
                 <Column
-                  field="distance_travelled"
-                  header="Total Distance"
-                  style="min-width: 12rem"
-                >
+                field="total_distance_travelled"
+                header="Total Distance"
+                style="min-width: 12rem"
+              >
+                <template #body="slotProps">
+                  {{ slotProps.data.total_distance_travelled }}
+                </template>
+              </Column>
+                <Column field="Amt_km" header="Amt/Km" style="min-width: 12rem">
                   <template #body="slotProps">
-                    {{ slotProps.data.distance_travelled }}
+                    {{ slotProps.data.Amt_km }}
                   </template>
                 </Column>
 
-                <Column
-                  field="total_expenses"
-                  header="Total Expenses"
-                  style="min-width: 8rem"
-                >
+                <Column field="local_convenyance_total_amount" header="Amount" style="min-width: 12rem">
                   <template #body="slotProps">
-                    {{ slotProps.data.total_expenses }}
+                    {{ slotProps.data.local_convenyance_total_amount }}
                   </template>
                 </Column>
+                <Column field="local_conveyance_remarks" header="Remarks" style="min-width: 12rem">
+                  <template #body="slotProps">
+                    {{ slotProps.data.local_conveyance_remarks }}
+                  </template>
+                </Column>
+                <template #footer>
+                 <div class="text-center" v-if="!employee_service.data_local_convergance.length==0">
+                    <Button
+                  label="Submit"
+                  icon="pi pi-check"
+                  class="px-6" style="background: #003056;"
+
+                />
+                 </div>
+                </template>
+
+
               </DataTable>
             </div>
 
@@ -299,16 +346,16 @@
                 <Calendar
                   inputId="dateformat"
                   v-model="employee_service.employee_local_conveyance.travelled_date"
-                  dateFormat="yy-mm-dd"
+                  dateFormat="dd/mm/yy"
                 />
                 <!-- {{ employee_local_conveyance.travelled_date }} -->
               </div>
 
               <div class="field col">
                 <label for="Claim Amount">Mode of transport</label>
-                <InputText
-                  v-model="employee_service.employee_local_conveyance.mode_of_transport"
-                />
+                <Dropdown v-model="employee_service.employee_local_conveyance.mode_of_transport" :options="employee_service.local_Conveyance_Mode_of_transport"
+                 optionLabel="label"  optionValue="value" placeholder="Select Mode Of Transport"
+                  class="w-full" />
               </div>
 
               <div class="formgrid grid">
@@ -325,13 +372,39 @@
                   />
                 </div>
               </div>
+              <div class="formgrid grid">
+                <div class="field col">
+                    <label for="Eligible Amount">Total Distance</label>
+                    <InputText
+                      v-model="
+                        employee_service.employee_local_conveyance.total_distance_travelled
+                      "
+                      @input="employee_service.amount_calculation"
+                    />
+                  </div>
+                  <div class="field col">
+                    <label for="Eligible Amount">Amt/Km</label>
+                    <InputText
+                      v-model="
+                        employee_service.employee_local_conveyance.total_distance_travelled
+                      "
+                    />
+                  </div>
+              </div>
+
+
               <div class="field col">
-                <label for="Eligible Amount">Distance travelled</label>
+                <label for="Eligible Amount">Amount</label>
                 <InputText
                   v-model="
-                    employee_service.employee_local_conveyance.total_distance_travelledPle
+                    employee_service.employee_local_conveyance.local_convenyance_total_amount
                   "
+
                 />
+              </div>
+              <div class="field col">
+                <label for="Eligible Amount">Remarks</label>
+                <Textarea v-model="employee_service.employee_local_conveyance.local_conveyance_remarks" autoResize rows="2" cols="30" />
               </div>
 
               <template #footer>
