@@ -9,10 +9,12 @@ use App\Models\Compensatory;
 use App\Imports\VmtPaySlip;
 use Dompdf\Options;
 use Dompdf\Dompdf;
+use Illuminate\Support\Facades\File;
 use PDF;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\VmtGeneralInfo;
+use Illuminate\Support\Facades\Storage;
 
 class VmtTestingController extends Controller
 {
@@ -61,9 +63,30 @@ class VmtTestingController extends Controller
 
                 return $pdf->stream($client_name.'.pdf');
     }
+    public function fileUploadingTest(Request $request){
+        $fileName = time().'_'. $request->file->getClientOriginalName();
+       // Storage::disk('private')->put('new'.$fileName, $request->file);
+       $emp_document_path = Storage::disk('private');
+
+        dd(File::makeDirectory('storage/app/uploads/Emp_code', 0777, true, true)); 
+       if(!$emp_document_path->exists('Emp_code')){
+        File::makeDirectory('storage/app/uploads/Emp_code', 0777, true, true);
+    }
+    dd($emp_document_path->exists('Emp_code'));
+       dd(Storage::directories()->has('/uploads'));
+       dd(!File::isDirectory( $emp_document_path));
+        // $filePath =  $request->file->storeAs('Emp_code', $fileName, 'private');
+        // $fileModel->name = time().'_'.$req->file->getClientOriginalName();
+        // $fileModel->file_path = '/storage/' . $filePath;
+        // $fileModel->save();
+        dd('--------'. $fileName.'-------'.$filePath);
+        return back()
+        ->with('success','File has been uploaded.')
+        ->with('file', $fileName);
+    }
 
     public function viewpdf(){
-        return view('vmt_appointment_templates.mailtemplate_appointmentletter_brandavatar');
+        return view('testing');
     }
 
 }

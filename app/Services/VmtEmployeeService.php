@@ -80,6 +80,7 @@ class VmtEmployeeService {
         {
             try
             {
+
                 $onboard_user = $response->response_object;
                 $this->createOrUpdate_EmployeeDetails( $onboard_user, $data);
                 $this->createOrUpdate_EmployeeOfficeDetails( $onboard_user->id, $data);
@@ -95,6 +96,7 @@ class VmtEmployeeService {
                return null;
             }
         }
+        dd($response);
 
         return $response;
     }
@@ -171,9 +173,9 @@ class VmtEmployeeService {
 
     private function createOrUpdate_EmployeeDetails($user,$row)
     {
-
+        //Sdd("Inside emp details");
         $newEmployee = VmtEmployee::where('userid',$user->id);
-
+        // dd($newEmployee->exists());
         if($newEmployee->exists())
         {
             $newEmployee = $newEmployee->first();
@@ -182,12 +184,12 @@ class VmtEmployeeService {
         {
             $newEmployee = new VmtEmployee;
         }
-        // dd($row);
 
-        $newEmployee->userid = $user->id;
+        // dd( $user->id);
+        $newEmployee->userid   =    $user->id;
         $newEmployee->emp_no   =    $row['employee_onboarding']["employee_code"] ?? '';
         $newEmployee->gender   =    $row['employee_onboarding']["gender"] ?? '';
-        //dd($row['doj']);
+        dd("File : ". $row['AadharCardFront']);
 
         //Check if its in proper format
         $processed_DOJ = \DateTime::createFromFormat('d-m-Y', $row['employee_onboarding']['doj']);
@@ -257,7 +259,8 @@ class VmtEmployeeService {
             $row['employee_onboarding']['marital_status'] = '';
         }
 
-        $newEmployee->aadhar_card_file = $this->fileUpload('aadhar_card_file', $user->user_code);
+
+        $newEmployee->aadhar_card_file = $this->fileUpload( $row['AadharCardFront'], $user->user_code);
         $newEmployee->aadhar_card_backend_file = $this->fileUpload('aadhar_card_backend_file', $user->user_code);
         $newEmployee->pan_card_file = $this->fileUpload('pan_card_file', $user->user_code);
         $newEmployee->passport_file = $this->fileUpload('passport_file', $user->user_code);
@@ -474,14 +477,14 @@ class VmtEmployeeService {
 
     public function fileUpload($file, $emp_code)
     {
-         dd($file);
-        if (request()->has($file)) {
-            $docUploads = request()->file($file);
+        // dd( $file->file->getClientOriginalName());
+        if (!empty($file)) {
+            $docUploads =$file;
             $docUploadsName = 'doc_' .$emp_code.'_'. $file . "_" . time() . '.' . $docUploads->getClientOriginalExtension();
-
-            $emp_document_path = public_path('employee_documents/'.$emp_code);
+            dd(Storage::disk('private')->exists($emp_code));
+            $emp_document_path = Storage::disk('private');
             // dd($emp_document_path);
-            if(!File::isDirectory($emp_document_path)){
+            if(!$emp_document_path->exists($emp_code)){
                 File::makeDirectory($emp_document_path, 0777, true, true);
             }
             else
@@ -491,9 +494,9 @@ class VmtEmployeeService {
                 $existing_file = VmtEmployee::where('userid',$user_id->id)->value($file);
 
                 //Delete the old file
-                if( isset($existing_file) && File::isFile($emp_document_path.'/'.$existing_file)){
+                if( isset($existing_file) && File::isFile($emp_document_path.'/'.$emp_code.'/'.$existing_file)){
                    // dd("File found : ".$emp_document_path.'/'.$existing_file);
-                   File::delete($emp_document_path.'/'.$existing_file);
+                   File::delete($emp_document_path.'/'.$emp_code.'/'.$existing_file);
                 }
                 else
                 {
@@ -503,7 +506,8 @@ class VmtEmployeeService {
             }
 
             //Upload the new file
-            $docUploads->move($emp_document_path, $docUploadsName);
+            $docUploads->storeAs($emp_code,$docUploadsName,'private');
+            //$docUploads->move($emp_document_path, $docUploadsName);
             return $docUploadsName;
         }
         else

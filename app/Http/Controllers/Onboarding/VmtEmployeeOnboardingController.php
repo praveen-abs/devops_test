@@ -200,7 +200,7 @@ class VmtEmployeeOnboardingController extends Controller
         //Check whether we are updating existing user or adding new user.
 
         $existingUser = User::where('id',$user_id);
-       /// dd($existingUser->exists());
+    //    dd($existingUser->exists());
         if($existingUser->exists())
         {
 
@@ -316,8 +316,10 @@ class VmtEmployeeOnboardingController extends Controller
             //Check whether current login is admin
             if(Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]) )
             {
+              
                 $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->employee_onboarding['can_onboard_employee'], null);
-                
+                // dd($result);
+
                 if($result->status == "success")
                 {
                     $response = [
