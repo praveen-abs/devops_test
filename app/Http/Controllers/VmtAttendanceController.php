@@ -667,6 +667,7 @@ class VmtAttendanceController extends Controller
         //TODO : get the attendance data for the given month
         $employeeAttendanceData = VmtEmployeeAttendance::all();
 
+
         //dd($employeeAttendanceData);
         return view('old_vmt_attendance_timesheet', compact('employeeAttendanceData'));
     }
@@ -737,6 +738,11 @@ class VmtAttendanceController extends Controller
     {
         $shift_start_time = VmtWorkShifts::where('shift_type', "First Shift")->value('shift_start_time');
         $shift_end_time = VmtWorkShifts::where('shift_type', "First Shift")->value('shift_end_time');
+        $leaveTypes = VmtLeaves::all();
+        $leaveData_currentUser = VmtEmployeeLeaves::where('user_id', auth::user()->id);
+          //Get how many leaves taken for each leave_type
+         $leaveData_currentUser = getLeaveCountDetails(auth::user()->id);
+
 
         //Show the single employee timesheet detail in sidepanel
 
@@ -744,9 +750,9 @@ class VmtAttendanceController extends Controller
             ->where('users.id', auth::user()->id)
             ->first(['users.id', 'users.name', 'vmt_employee_office_details.designation']);
 
-        $current_employee_detail->employee_avatar = json_decode( getEmployeeAvatarOrShortName(auth()->user()->id), false);
-        //dd( $current_employee_detail->employee_avatar);
-        return view('attendance_timesheet', compact('current_employee_detail', 'shift_start_time', 'shift_end_time'));
+        $current_employee_detail->employee_avatar = getEmployeeAvatarOrShortName($current_employee_detail->id);
+
+        return view('attendance_timesheet', compact('current_employee_detail', 'shift_start_time', 'shift_end_time','leaveTypes'));
     }
 
 
@@ -819,7 +825,7 @@ class VmtAttendanceController extends Controller
         $attendance_WebMobile = VmtEmployeeAttendance::where('user_id', $request->user_id)
             ->whereMonth('date', $request->month)
             ->orderBy('checkin_time', 'asc')
-            ->get(['date', 'checkin_time', 'checkout_time','attendance_mode_checkin','attendance_mode_checkout']);
+            ->get(['date', 'checkin_time', 'checkout_time','attendance_mode_checkin','attendance_mode_checkout','selfie_checkin','selfie_checkout']);
 
         //dd($attendance_WebMobile);
 
@@ -848,7 +854,8 @@ class VmtAttendanceController extends Controller
 
 
            $attendanceResponseArray[$fulldate] = array( "user_id"=>$request->user_id,"isAbsent"=>false, "attendance_mode_checkin"=>null, "attendance_mode_checkout"=>null,
-                                                        "absent_status"=>null,"checkin_time"=>null, "checkout_time"=>null,
+                                                        "absent_status"=>null,"leave_type"=>null,"checkin_time"=>null, "checkout_time"=>null,
+                                                        "selfie_checkin"=>null, "selfie_checkout"=>null,
                                                         "isLC"=>false, "lc_status"=>null, "lc_reason"=>null,"lc_reason_custom"=>null,
                                                         "isEG"=>false, "eg_status"=>null, "eg_reason"=>null,"eg_reason_custom"=>null,
                                                         "isMIP"=>false, "mip_status"=>null, "isMOP"=>false, "mop_status"=>null
@@ -939,6 +946,14 @@ class VmtAttendanceController extends Controller
             $attendanceResponseArray[$key]["attendance_mode_checkin"] = $attendance_mode_checkin;
             $attendanceResponseArray[$key]["attendance_mode_checkout"] = $attendance_mode_checkout;
 
+            //selfies
+            //format : http://127.0.0.1:8000/employees/PLIPL068/selfies/checkout.png
+            if($singleValue["checkin_time"] && !empty($singleValue["selfie_checkin"]))
+                $attendanceResponseArray[$key]["selfie_checkin"] = 'employees/'.$user->user_code.'/selfies/'.$singleValue["selfie_checkin"];
+
+            if($singleValue["checkout_time"] && !empty($singleValue["selfie_checkout"]))
+                $attendanceResponseArray[$key]["selfie_checkout"] = 'employees/'.$user->user_code.'/selfies/'.$singleValue["selfie_checkout"];
+
         }
         //dd($attendanceResponseArray);
 
@@ -1023,7 +1038,22 @@ class VmtAttendanceController extends Controller
                 $attendanceResponseArray[$key]["isAbsent"] = true;
 
                 //Check whether leave is applied or not.
-                $attendanceResponseArray[$key]["absent_status"] = $this->isLeaveRequestApplied($request->user_id, $key);
+                $year=$request->year;
+                $month=$request->month;
+                $t_leaveRequestDetails = $this->isLeaveRequestApplied($request->user_id, $key,$year,$month);
+
+                if(empty($t_leaveRequestDetails))
+                {
+
+                    $attendanceResponseArray[$key]["absent_status"] = "Not Applied";
+                    $attendanceResponseArray[$key]["leave_type"] = null;
+
+                }
+                else
+                {
+                    $attendanceResponseArray[$key]["absent_status"] = $t_leaveRequestDetails->status;
+                    $attendanceResponseArray[$key]["leave_type"] = $t_leaveRequestDetails->leave_type;
+                }
 
             }
             elseif($checkin_time != null && $checkout_time == null)
@@ -1068,25 +1098,55 @@ class VmtAttendanceController extends Controller
 
         }//for each
 
-        //dd($attendanceResponseArray);
+       // dd($attendanceResponseArray);
 
         return $attendanceResponseArray;
     }
 
-    public function isLeaveRequestApplied($user_id, $attendance_date){
+    public function isLeaveRequestApplied($user_id, $attendance_date,$year,$month){
+                        // dd($year);
+
+        $leave_Details=VmtEmployeeLeaves::join('vmt_leaves','vmt_leaves.id','=','vmt_employee_leaves.leave_type_id')
+                                  ->where('user_id',$user_id)
+                                  ->whereYear('end_date', $year)
+                                  ->whereMonth('end_date',$month)
+                                  ->get(['start_date','end_date','status','vmt_leaves.leave_type','total_leave_datetime']);
+
+                if( $leave_Details->count()==0){
+                       return null;
+                }else{
+                    foreach( $leave_Details as $single_leave_details){
+                                   $startDate = Carbon::parse($single_leave_details->start_date)->subDay();
+                                   $endDate = Carbon::parse($single_leave_details->end_date);
+                                   $currentDate =  Carbon::parse($attendance_date);
+                             // dd($startDate.'-----'.$currentDate.'------------'.$endDate.'-----');
+                                    if($currentDate->gt( $startDate) && $currentDate->lte($endDate) ){
+                                       // dd($single_leave_details);
+                                            return $single_leave_details;
+
+                                    }else{
+                                        $single_leave_details=null;
+                                    }
+                     }
+                     return $single_leave_details;
+                }
 
 
+
+
+
+          dd($attendance_date);
         //check whether leave applied.If yes, check leave status
         $leave_record = VmtEmployeeLeaves::where('user_id',$user_id)->
-                            whereDate('leaverequest_date',$attendance_date);
+                            whereDate('end_date',$attendance_date);
 
         if($leave_record->exists()){
-            return $leave_record->first()->status;
+            return $leave_record->first();
 
         }
         else
         {
-            return "Not Applied";
+            return null;
         }
     }
 
