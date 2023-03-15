@@ -334,11 +334,48 @@ class VmtAttendanceController extends Controller
         return $daterange;
     }
 
+    private function findLeaveTypeId($leave_type_name){
+
+        switch ($leave_type_name) {
+            case "Sick Leave":
+                return 1;
+            case "Earned Leave":
+                return 2;
+            case "Casual Leave":
+                return 3;
+            case "Compensatory Leave":
+                return 4;
+            case "On Duty":
+                return 5;
+            case "Work From Home":
+                return 6;
+            case "Permission":
+                return 7;
+            default:
+                return null;
+        }
+    }
+
+    private function findHalfDaySesssion($leave_session){
+
+        switch ($leave_session) {
+            case "FN":
+                return "forenoon";
+            case "AN":
+                return "afternoon";
+        }
+
+
+    }
+
 
     public function applyLeaveRequest(Request $request){
 
+        $leave_type_id=$this->findLeaveTypeId($request->leave_Request_data['leave_type_name']);
 
-        $leave_month = date('m',strtotime($request->start_date));
+
+
+        $leave_month = date('m',strtotime($request->leave_Request_data['start_date']));
 
         //get the existing Pending/Approved leaves. No need to check Rejected
         $existingNonPendingLeaves = VmtEmployeeLeaves::where('user_id', auth::user()->id)
@@ -348,10 +385,9 @@ class VmtAttendanceController extends Controller
 
         //dd($existingNonPendingLeaves);
         //coverting start_date and end_date for comparison
-        $processed_leave_start_date =($request->start_date);
-        $processed_leave_end_date = ($request->end_date);
-        // $processed_leave_start_date = new Carbon($request->start_date);
-        // $processed_leave_end_date = new Carbon($request->end_date);
+        $processed_leave_start_date =($request->leave_Request_data['start_date']);
+        $processed_leave_end_date = ($request->leave_Request_data['end_date']);
+
 
         //dd($processed_leave_start_date->format('Y-m-d'));
 
@@ -361,6 +397,8 @@ class VmtAttendanceController extends Controller
 
             //create leave range
             $leave_range = $this->createLeaveRange($singleLeaveRange->start_date, $endDate);
+
+            dd($leave_range);
 
             //check with the user given leave range
             foreach ($leave_range as $date) {
@@ -382,17 +420,22 @@ class VmtAttendanceController extends Controller
         $diff="ERROR";
         $mailtext_total_leave = " 0-0";
 
+
           //Check if its Leave or Permission
-        if (isPermissionLeaveType($request->leave_type_id)) {
+        if (isPermissionLeaveType($leave_type_id==7)) {
+
             $diff = $request->hours_diff;
             $mailtext_total_leave = $diff . " Hour(s)";
         } else {
             //Check if its 0.5 day leave, then handle separately
-            if($request->no_of_days == "0.5"){
-                $diff = "0.5 ".$request->leave_session;
+            if($request->leave_Request_data['leave_session'] == "FN"){
+                $diff = $request->leave_Request_data['leave_session'];
+            } else
+            if($request->leave_Request_data['leave_session'] == "AN"){
+                $diff = $request->leave_Request_data['leave_session'];
             } else {
                 //If its not half day leave, then its fullday or custom days
-                $diff = intval($request->no_of_days);
+                $diff = intval($request->leave_Request_data['no_of_days']);
             }
 
             $mailtext_total_leave = $diff . " Day(s)";
@@ -402,12 +445,13 @@ class VmtAttendanceController extends Controller
         //Save in DB
         $emp_leave_details =  new VmtEmployeeLeaves;
         $emp_leave_details->user_id = auth::user()->id;
-        $emp_leave_details->leave_type_id = $request->leave_type_id;
+        $emp_leave_details->leave_type_id = $leave_type_id;
         $emp_leave_details->leaverequest_date = $request->leave_request_date;
-        $emp_leave_details->start_date = $request->start_date;
-        $emp_leave_details->end_date = $request->end_date;
-        $emp_leave_details->leave_reason = $request->leave_reason;
-        $emp_leave_details->total_leave_datetime = $diff;
+        $emp_leave_details->start_date = $request->leave_Request_data['start_date'];
+        $emp_leave_details->end_date = $request->leave_Request_data['end_date'];
+        $emp_leave_details->leave_reason = $request->leave_Request_data['leave_reason'];
+        $emp_leave_details->total_leave_datetime = $request->leave_Request_data['no_of_days'];
+        // $emp_leave_details->total_leave_datetime = $diff;
 
 
         //get manager of this employee
@@ -479,16 +523,12 @@ class VmtAttendanceController extends Controller
 
 
 
-
-
-
-
-
-
-
-
     public function saveLeaveRequestDetails(Request $request)
     {
+
+
+        dd($request);
+
         $leave_month = date('m',strtotime($request->start_date));
 
         //get the existing Pending/Approved leaves. No need to check Rejected

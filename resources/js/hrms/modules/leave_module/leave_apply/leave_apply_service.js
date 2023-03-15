@@ -204,7 +204,7 @@ export const Service = defineStore("Service", () => {
 
         leave_Request_data.leave_type_name=leave_data.selected_leave
         if( leave_data.radiobtn_full_day=="full_day"){
-            leave_Request_data.no_of_days="full day"
+            leave_Request_data.no_of_days=1
             leave_Request_data.start_date=new Date(leave_data.full_day_leave_date).toISOString().slice(0,10)
             leave_Request_data.end_date="null"
         }else
@@ -221,7 +221,6 @@ export const Service = defineStore("Service", () => {
 
       }else
         if(leave_data.radiobtn_custom=="custom"){
-            leave_Request_data.no_of_days="custom"
             leave_Request_data.start_date=leave_data.custom_start_date
             leave_Request_data.end_date=new Date(leave_data.custom_end_date).toISOString().slice(0,10)
             leave_Request_data.no_of_days=leave_data.custom_total_days
