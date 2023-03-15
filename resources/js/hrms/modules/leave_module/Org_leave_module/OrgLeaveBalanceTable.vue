@@ -94,7 +94,7 @@ onMounted(() => {
 
 .p-datatable .p-datatable-thead > tr > th {
   text-align: center;
-  padding: 1.3rem 1rem;
+  padding: 1rem 1rem;
   border: 1px solid #dee2e6;
   border-top-width: 1px;
   border-right-width: 1px;
