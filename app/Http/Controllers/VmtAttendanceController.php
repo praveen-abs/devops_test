@@ -1682,4 +1682,10 @@ class VmtAttendanceController extends Controller
 
 
     }
+
+    public function fetchEmployeeCompensatoryOffDays(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+        //dd($request->user_id);
+        //TODO : Need to get current user_id instead of fetching from req params.
+        return $serviceVmtAttendanceService->fetchEmployeeCompensatoryOffDays($request->user_id);
+    }
 }
