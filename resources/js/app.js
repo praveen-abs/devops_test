@@ -120,7 +120,7 @@ app.directive('focustrap', FocusTrap);
 
 app.component('Accordion', Accordion);
 app.component('AccordionTab', AccordionTab);
-app.component('AutoComplete', AutoComplete);
+app.component('AutoComplete', AutoComplete)
 app.component('Avatar', Avatar);
 app.component('AvatarGroup', AvatarGroup);
 app.component('Badge', Badge);

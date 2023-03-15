@@ -13,7 +13,7 @@
                   href="#reimbursement"
                   aria-selected="true"
                   role="tab"
-                  @click="employee_service.Switch_to_reimbursment"
+                  @click="employee_service.onclickSwitchToReimbursmentTab"
                 >
                   Reimbursement
                 </a>
@@ -25,7 +25,7 @@
                   href="#localConveyance"
                   aria-selected="true"
                   role="tab"
-                  @click="employee_service.Switch_to_localC"
+                  @click="employee_service.onclickSwitchToLocalCoverganceTab"
                 >
                   Local Conveyance
                 </a>
@@ -36,14 +36,9 @@
             class="col-sm-12 col-md-5 col-lg-5 col-xl-5 col-xxl-5 d-flex justify-content-end"
           >
           <Calendar v-model="date" view="month" dateFormat="mm/yy" class="mr-4" placeholder="Select Month" />
-            <!-- <select name="" id="" class="form-select border-primary w-50 me-3">
-              <option value="" disabled hidden selected>Choose Month</option>
-              <option value="">Jan 2023</option>
-              <option value="">Feb 2023</option>
-            </select> -->
             <button
               v-if="employee_service.reimbursementsScreen"
-              @click="employee_service.open_reimbursment"
+              @click="employee_service.onclickOpenReimbursmentDailog"
               class="btn btn-orange"
             >
               <i class="fa fa-plus-circle me-1"></i>Add Claim
@@ -51,7 +46,7 @@
 
             <button
               v-if="employee_service.localconverganceScreen"
-              @click="employee_service.open_local_convergance"
+              @click="employee_service.onclickOpenLocalConverganceDailog"
               class="btn btn-orange"
             >
               <i class="fa fa-plus-circle me-1"></i>Add Claim
@@ -273,7 +268,7 @@
                 </template>
             </Column>
 
-                <Column field="reimbursement_date" header="Date" style="min-width: 12rem"  dataType="date">
+                <Column field="reimbursement_date"  header="Date" style="min-width: 12rem"  dataType="date">
                     <template #body="slotProps">
                         {{ employee_service.formatDate(slotProps.data.travelled_date) }}
                       </template>

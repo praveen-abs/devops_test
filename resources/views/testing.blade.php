@@ -12,7 +12,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <title>Laravel File Upload</title>
+    @vite('resources/js/hrms/modules/reimbursements/employee_reimbursements/EmployeeReimbursements.js')
+    <!-- <title>Laravel File Upload</title>
     <style>
         .container {
             max-width: 500px;
@@ -22,10 +23,11 @@
             padding: 0;
             list-style: none;
         }
-    </style>
+    </style> -->
 </head>
 <body>
-    <div class="container mt-5">
+    <div id="vjs_employee_reimbursement"></div>
+    <!-- <div class="container mt-5">
         <form action="{{route('fileUploadingTest')}}" method="post" enctype="multipart/form-data">
           <h3 class="text-center mb-5">Upload File in Laravel</h3>
             @csrf
@@ -51,7 +53,7 @@
                 Upload Files
             </button>
         </form>
-    </div>
+    </div> -->
 </body>
 </html>
 @endsection

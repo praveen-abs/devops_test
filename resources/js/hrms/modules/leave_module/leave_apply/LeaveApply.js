@@ -27,20 +27,9 @@ import ProgressSpinner from 'primevue/progressspinner';
 import InputText from 'primevue/inputtext'
 import Row from 'primevue/row'
 import ColumnGroup from 'primevue/columngroup'
-<<<<<<<< HEAD:resources/js/hrms/modules/reimbursements/employee_reimbursements/EmployeeReimbursements.js
-import InputNumber from 'primevue/inputnumber'
-import FileUpload from 'primevue/fileupload';
 import Calendar from 'primevue/calendar'
 import Textarea from 'primevue/textarea'
-
-import  employee_reimbursement from './EmployeeReimbursements.vue'
-========
-import Calendar from 'primevue/calendar';
-import Textarea from 'primevue/textarea';
-import Chips from 'primevue/chips';
->>>>>>>> 600ab8eb257ca711fa17549ebb2ac2cc819503b0:resources/js/hrms/modules/leave_module/leave_apply/LeaveApply.js
-
-
+import Chips from 'primevue/chips'
 
 
 import leaveapply from './LeaveApply.vue'

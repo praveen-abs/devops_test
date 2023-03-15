@@ -68,6 +68,10 @@ class VmtReimbursementsService {
         }
     }
 
+   public function testCreateLocalCovergance(Request $request){
+        dd($request->all());
+    }
+
     function createReimbursement_LocalConveyance($reimbursement_type_id, $date, $user_comments, $from, $to, $vehicle_type, $distance_travelled ){
 
         try{
