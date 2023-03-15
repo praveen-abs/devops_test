@@ -64,22 +64,25 @@ class VmtTestingController extends Controller
                 return $pdf->stream($client_name.'.pdf');
     }
     public function fileUploadingTest(Request $request){
+
+        dd($request->all());
+
         $fileName = time().'_'. $request->file->getClientOriginalName();
        // Storage::disk('private')->put('new'.$fileName, $request->file);
-       $emp_document_path = Storage::disk('private');
+         $emp_document_path = Storage::disk('private');
 
-        dd(File::makeDirectory('storage/app/uploads/Emp_code', 0777, true, true)); 
-       if(!$emp_document_path->exists('Emp_code')){
+        dd(File::makeDirectory('storage/app/uploads/Emp_code', 0777, true, true));
+        if(!$emp_document_path->exists('Emp_code')){
         File::makeDirectory('storage/app/uploads/Emp_code', 0777, true, true);
-    }
-    dd($emp_document_path->exists('Emp_code'));
-       dd(Storage::directories()->has('/uploads'));
-       dd(!File::isDirectory( $emp_document_path));
-        // $filePath =  $request->file->storeAs('Emp_code', $fileName, 'private');
-        // $fileModel->name = time().'_'.$req->file->getClientOriginalName();
-        // $fileModel->file_path = '/storage/' . $filePath;
-        // $fileModel->save();
-        dd('--------'. $fileName.'-------'.$filePath);
+        }
+       //  dd($emp_document_path->exists('Emp_code'));
+        //    dd(Storage::directories()->has('/uploads'));
+        //    dd(!File::isDirectory( $emp_document_path));
+        $filePath =  $request->file->storeAs('Emp_code', $fileName, 'private');
+        $fileModel->name = time().'_'.$request->file->getClientOriginalName();
+        $fileModel->file_path = '/storage/' . $filePath;
+        $fileModel->save();
+        // dd('--------'. $fileName.'-------'.$filePath);
         return back()
         ->with('success','File has been uploaded.')
         ->with('file', $fileName);
@@ -89,4 +92,14 @@ class VmtTestingController extends Controller
         return view('testing');
     }
 
+    public function formSubmit(Request $request)
+    {
+        dd($request->all());
+        $fileName = time().'.'.$request->file->getClientOriginalExtension();
+        $request->file->move(public_path('upload'), $fileName);
+
+        return response()->json(['success'=>'You have successfully upload file.']);
+    }
 }
+
+
