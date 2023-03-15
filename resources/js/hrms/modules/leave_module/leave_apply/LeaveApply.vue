@@ -48,9 +48,9 @@
 
                                     <select style="  height: 38px;font-weight: 500;" name="" id="leave_type_id" aria-label="Default select example"
                                         class="form-select outline-none" v-model="service.leave_data.selected_leave"
-                                        @change="service.Permission">
+                                        @change="service.Permission" >
                                         <option v-for="leavetype in service.leave_types" :key="leavetype.id">
-                                            {{ leavetype.leave_type }}</option>
+                                            {{ leavetype.leave_type}}</option>
                                     </select>
 
                                 </div>
@@ -122,7 +122,7 @@
                             </div>
                             <div class="col-md-7  mb-md-0 mb-3">
                                 <div class="form-group">
-                                    <Calendar inputId="icon" v-model="service.leave_data.full_day_leave_date" dateFormat="dd-mm-yy"
+                                    <Calendar inputId="icon" v-model="service.leave_data.half_day_leave_date" dateFormat="dd-mm-yy"
                                         :showIcon="true" style="width: 350px;"  :minDate="new Date()" />
 
 

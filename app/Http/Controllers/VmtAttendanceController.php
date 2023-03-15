@@ -337,7 +337,8 @@ class VmtAttendanceController extends Controller
     public function applyLeaveRequest(Request $request){
 
         $leave_month = date('m',strtotime($request->start_date));
-
+        $leave_type_id = VmtLeaves::where('leave_type',$request->leave_type_name)->value('id');
+        //dd($leave_type_id);
         //get the existing Pending/Approved leaves. No need to check Rejected
         $existingNonPendingLeaves = VmtEmployeeLeaves::where('user_id', auth::user()->id)
                                     ->whereMonth('start_date','>=',$leave_month)
@@ -375,18 +376,25 @@ class VmtAttendanceController extends Controller
 
 
           //Check if its Leave or Permission
-        if (isPermissionLeaveType($request->leave_type_id)) {
+        if (isPermissionLeaveType($leave_type_id)) {
 
             $diff = $request->hours_diff;
             $mailtext_total_leave = $diff . " Hour(s)";
         } else {
-            //Check if its 0.5 day leave, then handle separately
-            if($request->leave_session == "FN"){
-                $diff = "Fore-noon ";
-            } else
-            if($request->leave_session == "AN"){
-                $diff = "After-noon ";
-            } else {
+            //Now its leave type
+            ////Check if its 0.5 day leave, then handle separately
+
+            if($request->no_of_days == '0.5')
+            {
+                if($request->leave_session == "FN"){
+                    $diff = "Fore-noon ";
+                } else
+                if($request->leave_session == "AN"){
+                    $diff = "After-noon ";
+                }
+            }
+            else
+            {
                 //If its not half day leave, then its fullday or custom days
                 $diff = intval($request->no_of_days);
             }
@@ -398,12 +406,12 @@ class VmtAttendanceController extends Controller
         //Save in DB
         $emp_leave_details =  new VmtEmployeeLeaves;
         $emp_leave_details->user_id = auth::user()->id;
-        $emp_leave_details->leave_type_id = $request->leave_type_id;
+        $emp_leave_details->leave_type_id = $leave_type_id;
         $emp_leave_details->leaverequest_date = $request->leave_request_date;
         $emp_leave_details->start_date = $request->start_date;
         $emp_leave_details->end_date = $request->end_date;
         $emp_leave_details->leave_reason = $request->leave_reason;
-        $emp_leave_details->total_leave_datetime = $request->no_of_days;
+        $emp_leave_details->total_leave_datetime = $request->no_of_days." ".$request->leave_session;
         // $emp_leave_details->total_leave_datetime = $diff;
 
 
@@ -444,7 +452,7 @@ class VmtAttendanceController extends Controller
                                                     uStartDate : Carbon::parse($request->start_date)->format('M jS Y'),
                                                     uEndDate : Carbon::parse($request->end_date)->format('M jS Y'),
                                                     uReason : $request->leave_reason,
-                                                    uLeaveType : VmtLeaves::find($request->leave_type_id)->leave_type,
+                                                    uLeaveType : $request->leave_type_name,
                                                     uTotal_leave_datetime : $mailtext_total_leave,
                                                     //Carbon::parse($request->total_leave_datetime)->format('M jS Y \\, h:i:s A'),
                                                     loginLink : request()->getSchemeAndHttpHost(),
