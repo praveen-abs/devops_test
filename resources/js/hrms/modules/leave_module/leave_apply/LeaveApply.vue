@@ -112,6 +112,23 @@
 
 
                         <!-- Half day leave -->
+                        <div v-if="service.half_day_format" class="row mb-4">
+                            <div class="col-md-4  mb-md-0 mb-3">
+                                <div class="form-group">
+                                    <label for="">Date<span class="text-danger">*</span>
+                                    </label>
+
+                                </div>
+                            </div>
+                            <div class="col-md-7  mb-md-0 mb-3">
+                                <div class="form-group">
+                                    <Calendar inputId="icon" v-model="service.leave_data.full_day_leave_date" dateFormat="dd-mm-yy"
+                                        :showIcon="true" style="width: 350px;"  :minDate="new Date()" />
+
+
+                                </div>
+                            </div>
+                        </div>
                         <div v-if="service.half_day_format" class="row mb-3">
                             <div class="col-md-4  mb-md-0 mb-3">
                                 <div class="form-group">

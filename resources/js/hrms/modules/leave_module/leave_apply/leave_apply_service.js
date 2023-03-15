@@ -205,13 +205,13 @@ export const Service = defineStore("Service", () => {
         leave_Request_data.leave_type_name=leave_data.selected_leave
         if( leave_data.radiobtn_full_day=="full_day"){
             leave_Request_data.no_of_days=1
-            leave_Request_data.start_date=new Date(leave_data.full_day_leave_date).toISOString().slice(0,10)
-            leave_Request_data.end_date="null"
+            leave_Request_data.start_date = new Date(leave_data.full_day_leave_date).toISOString().slice(0,10)
+            leave_Request_data.end_date = leave_Request_data.start_date
         }else
         if(leave_data.radiobtn_half_day=="half_day"){
             leave_Request_data.no_of_days="half day"
             leave_Request_data.start_date=new Date().toISOString().slice(0,10)
-            leave_Request_data.end_date="null"
+            leave_Request_data.end_date = leave_Request_data.start_date
 
             if(leave_data.half_day_leave_session=="forenoon"){
                 leave_Request_data.leave_session="FN"
@@ -241,7 +241,16 @@ export const Service = defineStore("Service", () => {
         console.log(leave_Request_data);
 
         axios.post('/applyLeaveRequest',{
-            leave_Request_data
+            "leave_request_date": leave_Request_data.leave_Request_date,
+            "leave_type_id": leave_Request_data.leave_type_id,
+            "leave_type_name": leave_Request_data.leave_type_name,
+            "leave_session": leave_Request_data.leave_session,
+            "start_date":leave_Request_data.start_date ,
+            "end_date": leave_Request_data.end_date,
+            "no_of_days": leave_Request_data.no_of_days,
+            "hours_diff": leave_Request_data.hours_diff,
+            "notify_to": leave_Request_data.notify_to,
+            "leave_reason": leave_Request_data.leave_reason,
         }).then(res=>{
             if(res.data.status=='success'){
                 Email_Service.value=true
