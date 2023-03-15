@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { ref, reactive } from "vue";
 import { useToast } from "primevue/usetoast";
 import axios from "axios";
+import moment from "moment";
 
 export const Service = defineStore("Service", () => {
 
@@ -25,6 +26,8 @@ export const Service = defineStore("Service", () => {
         notifyTo: "",
         leave_reason: "",
     });
+
+
     const TotalNoOfDays = ref(true);
     const full_day_format = ref(true);
     const half_day_format = ref(false);
@@ -182,7 +185,7 @@ export const Service = defineStore("Service", () => {
 
     const leave_Request_data=reactive({
         leave_type_id:1,
-        leave_Request_date:new Date().toISOString().slice(0,10),
+        leave_Request_date:moment().format( 'YYYY-MM-DD  HH:mm:ss' ),
         leave_type_name:'',
         leave_session:'',
         start_date:'',

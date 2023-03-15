@@ -345,19 +345,19 @@ class VmtAttendanceController extends Controller
                                     ->get(['start_date','end_date','status']);
 
         foreach($existingNonPendingLeaves as $singleLeaveRange){
-            $endDate = new Carbon($singleLeaveRange->end_date);
-            $endDate->addDay();
+            //$endDate = new Carbon($singleLeaveRange->end_date);
+            //$endDate->addDay();
 
             //create leave range
-            $leave_range = $this->createLeaveRange($singleLeaveRange->start_date, $endDate);
+            $leave_range = $this->createLeaveRange($singleLeaveRange->start_date, $singleLeaveRange->end_date);
 
-            dd($leave_range);
+            //dd($leave_range);
 
             //check with the user given leave range
             foreach ($leave_range as $date) {
                 //if date already exists in previous leaves
                 // if ($processed_leave_start_date->format('Y-m-d') == $date->format('Y-m-d') || $processed_leave_end_date->format('Y-m-d') == $date->format('Y-m-d'))
-                if ($request->start_date->format('Y-m-d') == $date->format('Y-m-d') || $request->end_date->format('Y-m-d') == $date->format('Y-m-d'))
+                if ($request->start_date == $date->format('Y-m-d') || $request->end_date == $date->format('Y-m-d') )
                 {
                     return $response = [
                         'status' => 'failure',
