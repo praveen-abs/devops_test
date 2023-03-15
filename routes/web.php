@@ -510,6 +510,10 @@ Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 's
     Route::get('/processsExpense',  [App\Http\Controllers\VmtCorrectionController::class, 'processsExpense'])->name('processsExpense');
 
 
+
+    Route::post('/formSubmit',[App\Http\Controllers\VmtTestingController::class, 'formSubmit'])->name('formSubmit');
+
+
     //Configrations
     ////Attendance Settings
     Route::get('/configurations/attendance_settings',  [App\Http\Controllers\VmtAttendanceSettingsController::class, 'showAttendanceSettingsPage'])->name('showAttendanceSettingsPage');
@@ -523,7 +527,6 @@ Route::get('/resetPassword', 'App\Http\Controllers\Auth\LoginController@showRese
 Route::get('/forgetPassword', 'App\Http\Controllers\Auth\LoginController@showForgetPasswordPage')->name('vmt-forgetpassword-page');
 Route::post('/send-passwordresetlink', 'App\Http\Controllers\Auth\LoginController@sendPasswordResetLink')->name('vmt-send-passwordresetlink');
 Route::get('/signed-passwordresetlink', 'App\Http\Controllers\Auth\LoginController@processSignedPasswordResetLink')->name('vmt-signed-passwordresetlink');
-
 
 //
 Route::get('syncStaffAttendanceFromDeviceDatabase', [App\Http\Controllers\VmtStaffAttendanceController::class, 'syncStaffAttendanceFromDeviceDatabase']);
