@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
           <div id="msform">
-            <form @submit.prevent="handleSubmit(!v$.$invalid)" class="p-fluid">
+            <form @submit.prevent="handleSubmit(!v$.$invalid)" class="p-fluid" enctype="multipart/form-data">
               <input type="hidden" name="user_id" id="user_id" value="" />
               <input type="hidden" name="can_redirect" id="can_redirect" value="0" />
 
@@ -2087,6 +2087,8 @@
                       </div>
                     </div>
                   </div>
+
+                  <input type="file" class="form-control" @change="onFileChange"> <input type="button" value="click" @click="formSubmit">
                   <div class="row">
                     <div class="col-12 text-right">
                       <input
@@ -2346,10 +2348,22 @@ const employee_onboarding = reactive({
   dob_spouse: "",
   no_of_children: "",
 
+    AadharCardFront:'',
+    AadharCardBack:'',
+    PanCardDoc:'',
+    DrivingLicenseDoc:'',
+    EductionDoc:'',
+    VoterIdDoc:'',
+    ReleivingLetterDoc:'',
+    PassportDoc:''
+
   // family Details End
 
   // Personal Documents Start
 });
+
+
+
 
 // variableDeclarations
 
@@ -2484,17 +2498,47 @@ const SaveEmployeeOnboardingData = () => {
   console.log("Saving onboarding form");
   employee_onboarding.can_onboard_employee = false;
   submit();
+  fileUpload();
 };
 
 const SubmitEmployeeOnboardingData = () => {
 
-    if(AadharCardFront.fileName == undefined || AadharCardBack.fileName == undefined || PanCardDoc.fileName== undefined || EductionDoc.fileName == undefined){
+    if(employee_onboarding.AadharCardFront.fileName == undefined || employee_onboarding.AadharCardBack.fileName == undefined || employee_onboarding.PanCardDoc.fileName== undefined || employee_onboarding.EductionDoc.fileName == undefined){
         employee_onboarding.can_onboard_employee = true;
         console.log(employee_onboarding);
          jsonFormat();
+
     }
 
 
+};
+
+const submit = () => {
+
+    let currentObj = this;
+     const config = {
+         headers: { 'content-type': 'multipart/form-data' }
+     }
+
+     let formData = new FormData();
+     formData.append('employee_onboarding', JSON.stringify(employee_onboarding))
+     formData.append('Aadharfront', employee_onboarding.AadharCardFront);
+     formData.append('AadharBack', employee_onboarding.AadharCardBack);
+     formData.append('panDoc', employee_onboarding.PanCardDoc);
+     formData.append('eductionDoc', employee_onboarding.EductionDoc);
+     formData.append('releivingDoc', employee_onboarding.ReleivingLetterDoc)
+     formData.append('voterId', employee_onboarding.VoterIdDoc);
+     formData.append('passport', employee_onboarding.PassportDoc)
+
+     console.log(formData);
+
+     axios.post('/fileUploadingTest', formData, config)
+     .then(function (response) {
+         currentObj.success = response.data.success;
+     })
+     .catch(function (error) {
+         currentObj.output = error;
+     });
 };
 
 // Generate data into JSON Format
@@ -2516,195 +2560,193 @@ const jsonFormat = () => {
 
 //  File Upload Function Declaration
 
-const file = ref();
-const AadharCardFront = ref();
-const AadharCardBack = ref();
-const PanCardDoc = ref();
-const PassportDoc = ref();
-const VoterIdDoc = ref();
-const DrivingLicenseDoc = ref();
-const EductionDoc = ref();
-const ReleivingLetterDoc = ref();
+const fileUpload=()=> {
+
+    let currentObj = this;
+     const config = {
+         headers: { 'content-type': 'multipart/form-data' }
+     }
+
+     let formData = new FormData();
+     formData.append('employee_onboarding', JSON.stringify(employee_onboarding))
+     formData.append('Aadharfront', employee_onboarding.AadharCardFront);
+     formData.append('AadharBack', employee_onboarding.AadharCardBack);
+     formData.append('panDoc', employee_onboarding.PanCardDoc);
+     formData.append('eductionDoc', employee_onboarding.EductionDoc);
+     formData.append('releivingDoc', employee_onboarding.ReleivingLetterDoc)
+     formData.append('voterId', employee_onboarding.VoterIdDoc);
+     formData.append('passport', employee_onboarding.PassportDoc)
+
+     console.log(formData);
+
+     axios.post('/fileUploadingTest', formData, config)
+     .then(function (response) {
+         currentObj.success = response.data.success;
+     })
+     .catch(function (error) {
+         currentObj.output = error;
+     });
+ }
 
 const AadharFront = (e) => {
   // Check if file is selected
   if (e.target.files && e.target.files[0]) {
     // Get uploaded file
-    (AadharCardFront.file = e.target.files[0]),
+    (employee_onboarding.AadharCardFront = e.target.files[0]),
       // Get file size
-      (AadharCardFront.fileSize = Math.round((file.size / 1024 / 1024) * 100) / 100),
+      (employee_onboarding.AadharCardFront.fileSize = Math.round((employee_onboarding.AadharCardFront.size / 1024 / 1024) * 100) / 100),
       // Get file extension
-      (AadharCardFront.fileExtention = AadharCardFront.file.name.split(".").pop()),
+      (employee_onboarding.AadharCardFront.fileExtention = employee_onboarding.AadharCardFront.name.split(".").pop()),
       // Get file name
-      (AadharCardFront.fileName = AadharCardFront.file.name.split(".").shift()),
+      (employee_onboarding.AadharCardFront.fileName = employee_onboarding.AadharCardFront.name.split(".").shift()),
       // Check if file is an image
-      (AadharCardFront.isImage = ["jpg", "jpeg", "png", "gif"].includes(
-        AadharCardFront.fileExtention
+      (employee_onboarding.AadharCardFront.isImage = ["jpg", "jpeg", "png", "gif"].includes(
+        employee_onboarding.AadharCardFront.fileExtention
       ));
     // Print to console
-    console.log(AadharCardFront);
+    console.log(employee_onboarding.AadharCardFront);
   }
 };
 const AadharBack = (e) => {
   // Check if file is selected
   if (e.target.files && e.target.files[0]) {
     // Get uploaded file
-    (AadharCardBack.file = e.target.files[0]),
+    (employee_onboarding.AadharCardBack = e.target.files[0]),
       // Get file size
-      (AadharCardBack.fileSize =
-        Math.round((AadharCardBack.size / 1024 / 1024) * 100) / 100),
+      (employee_onboarding.AadharCardBack.fileSize =
+        Math.round((employee_onboarding.AadharCardBack.size / 1024 / 1024) * 100) / 100),
       // Get file extension
-      (AadharCardBack.fileExtention = AadharCardBack.file.name.split(".").pop()),
+      (employee_onboarding.AadharCardBack.fileExtention = employee_onboarding.AadharCardBack.name.split(".").pop()),
       // Get file name
-      (AadharCardBack.fileName = AadharCardBack.file.name.split(".").shift()),
+      (employee_onboarding.AadharCardBack.fileName = employee_onboarding.AadharCardBack.name.split(".").shift()),
       // Check if file is an image
-      (AadharCardBack.isImage = ["jpg", "jpeg", "png", "gif"].includes(
-        AadharCardBack.fileExtention
+      (employee_onboarding.AadharCardBack.isImage = ["jpg", "jpeg", "png", "gif"].includes(
+        employee_onboarding.AadharCardBack.fileExtention
       ));
     // Print to console
-    console.log(AadharCardBack);
+    console.log(employee_onboarding.AadharCardBack);
   }
 };
 const PanCard = (e) => {
   // Check if file is selected
   if (e.target.files && e.target.files[0]) {
     // Get uploaded file
-    (PanCardDoc.file = e.target.files[0]),
+    (employee_onboarding.PanCardDoc = e.target.files[0]),
       // Get file size
-      (PanCardDoc.fileSize = Math.round((PanCardDoc.size / 1024 / 1024) * 100) / 100),
+      (employee_onboarding.PanCardDoc.fileSize = Math.round((employee_onboarding.PanCardDoc.size / 1024 / 1024) * 100) / 100),
       // Get file extension
-      (PanCardDoc.fileExtention = PanCardDoc.file.name.split(".").pop()),
+      (employee_onboarding.PanCardDoc.fileExtention = employee_onboarding.PanCardDoc.name.split(".").pop()),
       // Get file name
-      (PanCardDoc.fileName = PanCardDoc.file.name.split(".").shift()),
+      (employee_onboarding.PanCardDoc.fileName = employee_onboarding.PanCardDoc.name.split(".").shift()),
       // Check if file is an image
-      (PanCardDoc.isImage = ["jpg", "jpeg", "png", "gif"].includes(
-        PanCardDoc.fileExtention
+      (employee_onboarding.PanCardDoc.isImage = ["jpg", "jpeg", "png", "gif"].includes(
+        employee_onboarding.PanCardDoc.fileExtention
       ));
     // Print to console
-    console.log(PanCardDoc);
+    console.log(employee_onboarding.PanCardDoc);
   }
 };
 const Passport = (e) => {
   // Check if file is selected
   if (e.target.files && e.target.files[0]) {
     // Get uploaded file
-    (PassportDoc.file = e.target.files[0]),
+    (employee_onboarding.PassportDoc = e.target.files[0]),
       // Get file size
-      (PassportDoc.fileSize = Math.round((PassportDoc.size / 1024 / 1024) * 100) / 100),
+      (employee_onboarding.PassportDoc.fileSize = Math.round((employee_onboarding.PassportDoc.size / 1024 / 1024) * 100) / 100),
       // Get file extension
-      (PassportDoc.fileExtention = PassportDoc.file.name.split(".").pop()),
+      (employee_onboarding.PassportDoc.fileExtention = employee_onboarding.PassportDoc.name.split(".").pop()),
       // Get file name
-      (PassportDoc.fileName = PassportDoc.file.name.split(".").shift()),
+      (employee_onboarding.PassportDoc.fileName = employee_onboarding.PassportDoc.name.split(".").shift()),
       // Check if file is an image
-      (PassportDoc.isImage = ["jpg", "jpeg", "png", "gif"].includes(
-        PassportDoc.fileExtention
+      (employee_onboarding.PassportDoc.isImage = ["jpg", "jpeg", "png", "gif"].includes(
+        employee_onboarding.PassportDoc.fileExtention
       ));
     // Print to console
-    console.log(PassportDoc);
+    console.log(employee_onboarding.PassportDoc);
   }
 };
 const DrivingLisence = (e) => {
   // Check if file is selected
   if (e.target.files && e.target.files[0]) {
     // Get uploaded file
-    (DrivingLicenseDoc.file = e.target.files[0]),
+    (employee_onboarding.DrivingLicenseDoc = e.target.files[0]),
       // Get file size
-      (DrivingLicenseDoc.fileSize =
-        Math.round((DrivingLicenseDoc.size / 1024 / 1024) * 100) / 100),
+      (employee_onboarding.DrivingLicenseDoc.fileSize =
+        Math.round((employee_onboarding.DrivingLicenseDoc.size / 1024 / 1024) * 100) / 100),
       // Get file extension
-      (DrivingLicenseDoc.fileExtention = DrivingLicenseDoc.file.name.split(".").pop()),
+      (employee_onboarding.DrivingLicenseDoc.fileExtention = employee_onboarding.DrivingLicenseDoc.name.split(".").pop()),
       // Get file name
-      (DrivingLicenseDoc.fileName = DrivingLicenseDoc.file.name.split(".").shift()),
+      (employee_onboarding.DrivingLicenseDoc.fileName = employee_onboarding.DrivingLicenseDoc.name.split(".").shift()),
       // Check if file is an image
-      (DrivingLicenseDoc.isImage = ["jpg", "jpeg", "png", "gif"].includes(
-        DrivingLicenseDoc.fileExtention
+      (employee_onboarding.DrivingLicenseDoc.isImage = ["jpg", "jpeg", "png", "gif"].includes(
+        employee_onboarding.DrivingLicenseDoc.fileExtention
       ));
     // Print to console
-    console.log(DrivingLicenseDoc);
+    console.log(employee_onboarding.DrivingLicenseDoc);
   }
 };
 const VoterId = (e) => {
   // Check if file is selected
   if (e.target.files && e.target.files[0]) {
     // Get uploaded file
-    (VoterIdDoc.file = e.target.files[0]),
+    (employee_onboarding.VoterIdDoc = e.target.files[0]),
       // Get file size
-      (VoterIdDoc.fileSize = Math.round((VoterIdDoc.size / 1024 / 1024) * 100) / 100),
+      (employee_onboarding.VoterIdDoc.fileSize = Math.round((employee_onboarding.VoterIdDoc.size / 1024 / 1024) * 100) / 100),
       // Get file extension
-      (VoterIdDoc.fileExtention = VoterIdDoc.file.name.split(".").pop()),
+      (employee_onboarding.VoterIdDoc.fileExtention = employee_onboarding.VoterIdDoc.name.split(".").pop()),
       // Get file name
-      (VoterIdDoc.fileName = VoterIdDoc.file.name.split(".").shift()),
+      (employee_onboarding.VoterIdDoc.fileName = employee_onboarding.VoterIdDoc.name.split(".").shift()),
       // Check if file is an image
-      (VoterIdDoc.isImage = ["jpg", "jpeg", "png", "gif"].includes(
-        VoterIdDoc.fileExtention
+      (employee_onboarding.VoterIdDoc.isImage = ["jpg", "jpeg", "png", "gif"].includes(
+        employee_onboarding.VoterIdDoc.fileExtention
       ));
     // Print to console
-    console.log(VoterIdDoc);
+    console.log(employee_onboarding.VoterIdDoc);
   }
 };
 const EductionCertifacte = (e) => {
   // Check if file is selected
   if (e.target.files && e.target.files[0]) {
     // Get uploaded file
-    (EductionDoc.file = e.target.files[0]),
+    (employee_onboarding.EductionDoc = e.target.files[0]),
       // Get file size
-      (EductionDoc.fileSize = Math.round((EductionDoc.size / 1024 / 1024) * 100) / 100),
+      (employee_onboarding.EductionDoc.fileSize = Math.round((employee_onboarding.EductionDoc.size / 1024 / 1024) * 100) / 100),
       // Get file extension
-      (EductionDoc.fileExtention = EductionDoc.file.name.split(".").pop()),
+      (employee_onboarding.EductionDoc.fileExtention = employee_onboarding.EductionDoc.name.split(".").pop()),
       // Get file name
-      (EductionDoc.fileName = EductionDoc.file.name.split(".").shift()),
+      (employee_onboarding.EductionDoc.fileName = employee_onboarding.EductionDoc.name.split(".").shift()),
       // Check if file is an image
-      (EductionDoc.isImage = ["jpg", "jpeg", "png", "gif"].includes(
-        EductionDoc.fileExtention
+      (employee_onboarding.EductionDoc.isImage = ["jpg", "jpeg", "png", "gif"].includes(
+        employee_onboarding.EductionDoc.fileExtention
       ));
     // Print to console
-    console.log(EductionDoc);
+    console.log(employee_onboarding.EductionDoc);
   }
 };
 const ReleivingLetter = (e) => {
   // Check if file is selected
   if (e.target.files && e.target.files[0]) {
     // Get uploaded file
-    (ReleivingLetterDoc.file = e.target.files[0]),
+    (employee_onboarding.ReleivingLetterDoc = e.target.files[0]),
       // Get file size
-      (ReleivingLetterDoc.fileSize =
-        Math.round((ReleivingLetterDoc.size / 1024 / 1024) * 100) / 100),
+      (employee_onboarding.ReleivingLetterDoc.fileSize =
+        Math.round((employee_onboarding.ReleivingLetterDoc.size / 1024 / 1024) * 100) / 100),
       // Get file extension
-      (ReleivingLetterDoc.fileExtention = ReleivingLetterDoc.file.name.split(".").pop()),
+      (employee_onboarding.ReleivingLetterDoc.fileExtention = employee_onboarding.ReleivingLetterDoc.name.split(".").pop()),
       // Get file name
-      (ReleivingLetterDoc.fileName = ReleivingLetterDoc.file.name.split(".").shift()),
+      (employee_onboarding.ReleivingLetterDoc.fileName = employee_onboarding.ReleivingLetterDoc.name.split(".").shift()),
       // Check if file is an image
-      (ReleivingLetterDoc.isImage = ["jpg", "jpeg", "png", "gif"].includes(
-        ReleivingLetterDoc.fileExtention
+      (employee_onboarding.ReleivingLetterDoc.isImage = ["jpg", "jpeg", "png", "gif"].includes(
+        employee_onboarding.ReleivingLetterDoc.fileExtention
       ));
     // Print to console
-    console.log(ReleivingLetterDoc);
+    console.log(employee_onboarding.ReleivingLetterDoc);
   }
 };
 
 // for Testing Post Data
 
-const submit = () => {
-  axios
-    .post("/vmt-employee-onboard", {
-      employee_onboarding,
-      AadharCardFront,
-      AadharCardBack,
-      PanCardDoc,
-      EductionDoc,
-      DrivingLicenseDoc,
-      VoterIdDoc,
-      PassportDoc,
-    })
-    .then((res) => {
-      //alert("sent");
-      console.log("Ajax Response : " + res);
-    })
-    .catch((err) => {
-      //alert("Ajax Response : not sent "+err);
-      console.log("Ajax Response : not sent " + err);
-    });
-};
+
 
 const Gender = ref([
   { name: "Male", value: "male" },
