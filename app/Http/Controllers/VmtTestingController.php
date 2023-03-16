@@ -63,43 +63,53 @@ class VmtTestingController extends Controller
 
                 return $pdf->stream($client_name.'.pdf');
     }
-    public function fileUploadingTest(Request $request){
+    // public function fileUploadingTest(Request $request){
+    //     dd($request->all());
+    //     $emp_code='SA300';
+    //     $date=date('d-m-Y H-i-s');
+    //     $fileName = 'aadhar_'.$emp_code.'_'.$date.'.'.$request->file->extension();
+    //     $path='employee/emp_';
 
-        dd($request->all());
-
-        $fileName = time().'_'. $request->file->getClientOriginalName();
-       // Storage::disk('private')->put('new'.$fileName, $request->file);
-         $emp_document_path = Storage::disk('private');
-
-        dd(File::makeDirectory('storage/app/uploads/Emp_code', 0777, true, true));
-        if(!$emp_document_path->exists('Emp_code')){
-        File::makeDirectory('storage/app/uploads/Emp_code', 0777, true, true);
-        }
-       //  dd($emp_document_path->exists('Emp_code'));
-        //    dd(Storage::directories()->has('/uploads'));
-        //    dd(!File::isDirectory( $emp_document_path));
-        $filePath =  $request->file->storeAs('Emp_code', $fileName, 'private');
-        $fileModel->name = time().'_'.$request->file->getClientOriginalName();
-        $fileModel->file_path = '/storage/' . $filePath;
-        $fileModel->save();
-        // dd('--------'. $fileName.'-------'.$filePath);
-        return back()
-        ->with('success','File has been uploaded.')
-        ->with('file', $fileName);
-    }
+    //     dd(File::makeDirectory('storage/app/uploads/Emp_code', 0777, true, true));
+    //    if(!$emp_document_path->exists('Emp_code')){
+    //     File::makeDirectory('storage/app/uploads/Emp_code', 0777, true, true);
+    // }
+    // dd($emp_document_path->exists('Emp_code'));
+    //    dd(Storage::directories()->has('/uploads'));
+    //    dd(!File::isDirectory( $emp_document_path));
+    //     // $filePath =  $request->file->storeAs('Emp_code', $fileName, 'private');
+    //     // $fileModel->name = time().'_'.$req->file->getClientOriginalName();
+    //     // $fileModel->file_path = '/storage/' . $filePath;
+    //     // $fileModel->save();
+    //     dd('--------'. $fileName.'-------'.$filePath);
+    //     return back()
+    //     ->with('success','File has been uploaded.')
+    //     ->with('file', $fileName);
+    // }
 
     public function viewpdf(){
         return view('testing');
     }
 
-    public function formSubmit(Request $request)
-    {
-        dd($request->all());
-        $fileName = time().'.'.$request->file->getClientOriginalExtension();
-        $request->file->move(public_path('upload'), $fileName);
 
-        return response()->json(['success'=>'You have successfully upload file.']);
-    }
+    public function fileUploadingTest(Request $request)
+    {
+      dd($request->all());
+       $file=new Files();
+       if($request->file()) {
+            $file=new Files();
+             $file_name = time().'_'.$request->file->getClientOriginalName();
+             $file_path = $request->file('file_link')->storeAs('uploads', $file_name, 'public');
+
+             $file->file_name = time().'_'.$request->file->getClientOriginalName();
+             $file->file_path = '/storage/' . $file_path;
+             $file->save();
+             return response()->json([
+                'message' => 'File  added'
+            ]);
+        }
+}
+
 }
 
 

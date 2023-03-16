@@ -2514,10 +2514,26 @@ const SubmitEmployeeOnboardingData = () => {
 };
 
 const submit = () => {
+
+    let currentObj = this;
+     const config = {
+         headers: { 'content-type': 'multipart/form-data' }
+     }
+
+     let formData = new FormData();
+     formData.append('employee_onboarding', JSON.stringify(employee_onboarding))
+     formData.append('Aadharfront', employee_onboarding.AadharCardFront);
+     formData.append('AadharBack', employee_onboarding.AadharCardBack);
+     formData.append('panDoc', employee_onboarding.PanCardDoc);
+     formData.append('eductionDoc', employee_onboarding.EductionDoc);
+     formData.append('releivingDoc', employee_onboarding.ReleivingLetterDoc)
+     formData.append('voterId', employee_onboarding.VoterIdDoc);
+     formData.append('passport', employee_onboarding.PassportDoc)
+
+
+
   axios
-    .post("/vmt-employee-onboard", {
-      employee_onboarding,
-    })
+    .post("/vmt-employee-onboard", formData, config)
     .then((res) => {
       //alert("sent");
       console.log("Ajax Response : " + res);
@@ -2555,6 +2571,7 @@ const fileUpload=()=> {
      }
 
      let formData = new FormData();
+     formData.append('employee_onboarding', JSON.stringify(employee_onboarding))
      formData.append('Aadharfront', employee_onboarding.AadharCardFront);
      formData.append('AadharBack', employee_onboarding.AadharCardBack);
      formData.append('panDoc', employee_onboarding.PanCardDoc);

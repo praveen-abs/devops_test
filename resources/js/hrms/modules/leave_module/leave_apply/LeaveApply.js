@@ -30,6 +30,7 @@ import ColumnGroup from 'primevue/columngroup'
 import Calendar from 'primevue/calendar'
 import Textarea from 'primevue/textarea'
 import Chips from 'primevue/chips'
+import MultiSelect from 'primevue/multiselect';
 
 
 import leaveapply from './LeaveApply.vue'
@@ -64,6 +65,7 @@ app.component('ProgressSpinner', ProgressSpinner)
 app.component('Calendar', Calendar)
 app.component('Textarea', Textarea)
 app.component('Chips', Chips)
+app.component('MultiSelect', MultiSelect)
 
 app.mount("#vjs_leaveapply");
 
