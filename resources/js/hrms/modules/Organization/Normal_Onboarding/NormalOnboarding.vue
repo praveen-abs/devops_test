@@ -2532,7 +2532,7 @@ const submit = () => {
 
      console.log(formData);
 
-     axios.post('/fileUploadingTest', formData, config)
+     axios.post('/vmt-employee-onboard', formData, config)
      .then(function (response) {
          currentObj.success = response.data.success;
      })
