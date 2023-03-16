@@ -186,18 +186,19 @@ class VmtEmployeeOnboardingController extends Controller
     {
 
         $data=$request->all();
-        dd($data);
+
         // dd( $data['Aadharfront']);
         foreach( $data as $key=>$value){
 
-            if( $key=='employee_onboarding'){
+            if( $key!='employee_onboarding'){
+                //dd( $data['employee_onboarding']);
                 $data['employee_onboarding'][$key]=$value;
+                //dd( $data['employee_onboarding'][$key]);
             }else{
-                dd($value);
-               $assocArray = json_decode($value, true);
-               dd( $assocArray);
+                $data['employee_onboarding'] = json_decode($value, true);
             }
         }
+
         $data = $data['employee_onboarding'] ;
         dd( $data);
         $user_id =$data['employee_code'];

@@ -2543,20 +2543,20 @@ const submit = () => {
 
 // Generate data into JSON Format
 
-const jsonFormat = () => {
-  const data = JSON.stringify(
-    employee_onboarding,
-    AadharCardFront,
-    AadharCardBack,
-    PanCardDoc,
-    DrivingLicenseDoc,
-    EductionDoc,
-    VoterIdDoc,
-    ReleivingLetterDoc,
-    PassportDoc
-  );
-  console.log(data);
-};
+// const jsonFormat = () => {
+//   const data = JSON.stringify(
+//     employee_onboarding,
+//     AadharCardFront,
+//     AadharCardBack,
+//     PanCardDoc,
+//     DrivingLicenseDoc,
+//     EductionDoc,
+//     VoterIdDoc,
+//     ReleivingLetterDoc,
+//     PassportDoc
+//   );
+//   console.log(data);
+// };
 
 //  File Upload Function Declaration
 
