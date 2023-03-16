@@ -149,13 +149,22 @@ export const Service = defineStore("Service", () => {
         // half_day_format.value=false
         // custom_format.value=false
 
+
+        if (leave_data.selected_leave == "Select Leave Type") {
+            Permission_format.value = true;
+            TotalNoOfDays.value = true;
+
+
+        }
+
         if (leave_data.selected_leave == "Permission") {
             Permission_format.value = true;
             TotalNoOfDays.value = false;
             half_day_format.value = false;
             custom_format.value = false;
             compensatory_format.value = false;
-        } else if (leave_data.selected_leave == "Compensatory Leave") {
+        }
+         else if (leave_data.selected_leave == "Compensatory Leave") {
             compensatory_format.value = true;
             Permission_format.value = false;
             full_day_format.value = false;
