@@ -71,8 +71,11 @@ class VmtAttendanceService{
 
     }
 
-
-    public function fetchEmployeeCompensatoryOffDays($user_id){
+    /*
+        Get the employee's compensatory work days (Worked on holidays)
+        This wont check whether these comp days are used by emps
+    */
+    private function fetchEmployeeCompensatoryOffDays($user_id){
 
         //Final array response
         $response_employee_comp_dates = array();
@@ -86,8 +89,8 @@ class VmtAttendanceService{
             });
 
         //Get list of attendance days
-        $query_emp_attendanceDetails = VmtEmployeeAttendance::where('user_id',$user_id)->pluck('date');
-        //dd($query_emp_attendanceDetails);
+        $query_emp_attendanceDetails = VmtEmployeeAttendance::where('user_id',$user_id)->get(['id','date'])->keyBy('id');
+        dd($query_emp_attendanceDetails->toArray());
 
             $yearTrimmed_query_emp_attendanceDetails = $query_emp_attendanceDetails->map(function ($item,$key) {
                 return substr($item,5);
@@ -109,4 +112,22 @@ class VmtAttendanceService{
         return $response_employee_comp_dates;
 
     }
+
+    private function isCompWorkDaysAlreadyUsed($employee_attendance_id){
+
+    }
+
+    /*
+        Returns the unused comp off days for the given emp
+    */
+    public function fetchUnusedCompensatoryOffDays($user_id){
+
+        //Get all the comp work days
+        $emp_comp_off_days = $this->fetchEmployeeCompensatoryOffDays($user_id);
+
+        //Check whether its used or not
+        dd($emp_comp_off_days);
+
+    }
+
 }
