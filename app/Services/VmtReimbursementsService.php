@@ -122,7 +122,7 @@ class VmtReimbursementsService {
 
 
     function createReimbursement($reimbursement_type_id, $claim_type, $claim_amount, $eligible_amount, $user_comments, $status,$date_of_dispatch, $proof_of_delivery){
-            dd($reimbursement_type_id);
+
     }
 
 

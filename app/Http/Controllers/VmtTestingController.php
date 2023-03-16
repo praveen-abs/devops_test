@@ -64,8 +64,11 @@ class VmtTestingController extends Controller
                 return $pdf->stream($client_name.'.pdf');
     }
     public function fileUploadingTest(Request $request){
-
         dd($request->all());
+        $emp_code='SA300';
+        $date=date('d-m-Y H-i-s');
+        $fileName = 'aadhar_'.$emp_code.'_'.$date.'.'.$request->file->extension();
+        $path='employee/emp_';
 
         $fileName = time().'_'. $request->file->getClientOriginalName();
          $emp_document_path = Storage::disk('private');
@@ -87,14 +90,29 @@ class VmtTestingController extends Controller
         return view('testing');
     }
 
-    public function formSubmit(Request $request)
-    {
-        dd($request->all());
-        $fileName = time().'.'.$request->file->getClientOriginalExtension();
-        $request->file->move(public_path('upload'), $fileName);
 
-        return response()->json(['success'=>'You have successfully upload file.']);
-    }
+    // public function fileUploadingTest(Request $request)
+    // {
+    //   dd($request->all());
+    //    $file=new Files();
+    //    if($request->file()) {
+    //         $file=new Files();
+    //          $file_name = time().'_'.$request->file->getClientOriginalName();
+    //          $file_path = $request->file('file_link')->storeAs('uploads', $file_name, 'public');
+
+    //          $file->file_name = time().'_'.$request->file->getClientOriginalName();
+    //          $file->file_path = '/storage/' . $file_path;
+    //          $file->save();
+    //          return response()->json([
+    //             'message' => 'File  added'
+    //         ]);
+    //     }
+    // }
+
+
 }
+
+
+
 
 

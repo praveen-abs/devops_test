@@ -2514,36 +2514,49 @@ const SubmitEmployeeOnboardingData = () => {
 };
 
 const submit = () => {
-  axios
-    .post("/vmt-employee-onboard", {
-      employee_onboarding,
-    })
-    .then((res) => {
-      //alert("sent");
-      console.log("Ajax Response : " + res);
-    })
-    .catch((err) => {
-      //alert("Ajax Response : not sent "+err);
-      console.log("Ajax Response : not sent " + err);
-    });
+
+    let currentObj = this;
+     const config = {
+         headers: { 'content-type': 'multipart/form-data' }
+     }
+
+     let formData = new FormData();
+     formData.append('employee_onboarding', JSON.stringify(employee_onboarding))
+     formData.append('Aadharfront', employee_onboarding.AadharCardFront);
+     formData.append('AadharBack', employee_onboarding.AadharCardBack);
+     formData.append('panDoc', employee_onboarding.PanCardDoc);
+     formData.append('eductionDoc', employee_onboarding.EductionDoc);
+     formData.append('releivingDoc', employee_onboarding.ReleivingLetterDoc)
+     formData.append('voterId', employee_onboarding.VoterIdDoc);
+     formData.append('passport', employee_onboarding.PassportDoc)
+
+     console.log(formData);
+
+     axios.post('/vmt-employee-onboard', formData, config)
+     .then(function (response) {
+         currentObj.success = response.data.success;
+     })
+     .catch(function (error) {
+         currentObj.output = error;
+     });
 };
 
 // Generate data into JSON Format
 
-const jsonFormat = () => {
-  const data = JSON.stringify(
-    employee_onboarding,
-    AadharCardFront,
-    AadharCardBack,
-    PanCardDoc,
-    DrivingLicenseDoc,
-    EductionDoc,
-    VoterIdDoc,
-    ReleivingLetterDoc,
-    PassportDoc
-  );
-  console.log(data);
-};
+// const jsonFormat = () => {
+//   const data = JSON.stringify(
+//     employee_onboarding,
+//     AadharCardFront,
+//     AadharCardBack,
+//     PanCardDoc,
+//     DrivingLicenseDoc,
+//     EductionDoc,
+//     VoterIdDoc,
+//     ReleivingLetterDoc,
+//     PassportDoc
+//   );
+//   console.log(data);
+// };
 
 //  File Upload Function Declaration
 
@@ -2555,6 +2568,7 @@ const fileUpload=()=> {
      }
 
      let formData = new FormData();
+     formData.append('employee_onboarding', JSON.stringify(employee_onboarding))
      formData.append('Aadharfront', employee_onboarding.AadharCardFront);
      formData.append('AadharBack', employee_onboarding.AadharCardBack);
      formData.append('panDoc', employee_onboarding.PanCardDoc);

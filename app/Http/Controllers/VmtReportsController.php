@@ -221,7 +221,13 @@ class VmtReportsController extends Controller
 
         foreach($payroll_data as $singlePayrollData)
         {
-            $singlePayrollData['bank_name'] = Bank::find($singlePayrollData->bank_id)->bank_name;
+            // $singlePayrollData['bank_name'] = Bank::find($singlePayrollData->bank_id)->bank_name;
+            $singlePayrollData['bank_name'] = Bank::find($singlePayrollData->bank_id);
+            if( $singlePayrollData['bank_name']){
+                $singlePayrollData['bank_name']= $singlePayrollData['bank_name']->bank_name;
+            }else{
+                $singlePayrollData['bank_name']='';
+            }
         }
 
         //dd($payroll_data->get());
