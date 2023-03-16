@@ -184,15 +184,22 @@ class VmtEmployeeOnboardingController extends Controller
 
     public function processEmployeeOnboardForm_Normal_Quick(Request $request, VmtEmployeeService $employeeService)
     {
-         $employee_onboarding=$request->employee_onboarding;
-        // dd($employee_onboarding);
 
-        $user_id = $employee_onboarding['employee_code'];
+        $data=$request->all();
+        dd( $data);
+        foreach( $data as $key=>$value){
+            if( $key!='employee_onboarding'){
+                $data['employee_onboarding'][$key]=$value;
+            }
+        }
+        $data = $data['employee_onboarding'] ;
+
+        $user_id =$data['employee_code'];
         $response = "";
         $isEmailSent = "";
         $onboard_form_data =  array();
         //parse_str($request->all(), $onboard_form_data); (Removing this line, input from data is alreay in array)
-        $onboard_form_data  = $request->all();
+        $onboard_form_data  = $data;
         $currentLoggedinInUser = auth()->user();
         // dd($employee_onboarding['can_onboard_employee']);
 
@@ -316,9 +323,9 @@ class VmtEmployeeOnboardingController extends Controller
             //Check whether current login is admin
             if(Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]) )
             {
-              
-                $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->employee_onboarding['can_onboard_employee'], null);
-                // dd($result);
+
+                $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $onboard_form_data['can_onboard_employee'], null);
+
 
                 if($result->status == "success")
                 {
