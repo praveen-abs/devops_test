@@ -24,6 +24,10 @@ export const Service = defineStore("Service", () => {
         permission_start_time: "",
         permission_total_time: "",
         permission_end_time: "",
+        selected_compensatory_leaves:"",
+        compensatory_start_date:"",
+        compensatory_total_days:"",
+        compensatory_end_date:"",
         notifyTo: "",
         leave_reason: "",
     });
@@ -45,6 +49,20 @@ export const Service = defineStore("Service", () => {
     let invalidDate = new Date();
     invalidDate.setDate(today.getDate() - 1);
     invalidDates.value = [today, invalidDate];
+
+
+    // compensatory leave
+
+
+     const selected_compensatory_leaves = ref();
+        const compensatory_leaves = ref([
+            { date: '20/02/2023', id: '156' },
+            { date: '25/02/2023', id: '157' },
+            { date: '2/02/2023', id: '158' },
+            // { date: '12/02/2023', id: '159' },
+            // { date: '09/02/2023', id: '160' }
+        ]);
+
 
 
 
@@ -204,6 +222,7 @@ export const Service = defineStore("Service", () => {
         hours_diff:'',
         notify_to:'',
         leave_reason:'',
+        compensatory_leave_id:[]
     })
 
 
@@ -244,7 +263,23 @@ export const Service = defineStore("Service", () => {
             leave_Request_data.no_of_days=leave_data.custom_total_days
             leave_Request_data.leave_session="";
 
-        }else{
+        }else
+        if(leave_data.selected_leave=='Compensatory Leave'){
+             leave_Request_data.start_date=  moment(leave_data.compensatory_start_date).format('YYYY-MM-DD');
+            leave_Request_data.end_date= moment(leave_data.compensatory_end_date).format('YYYY-MM-DD');
+            leave_Request_data.no_of_days=leave_data.compensatory_total_days;
+
+            console.log(leave_data.selected_compensatory_leaves);
+
+            const  find_compensatory_id=Object.values(leave_data.selected_compensatory_leaves)
+
+             find_compensatory_id.map(data=>{
+                let id=data.id
+                leave_Request_data.compensatory_leave_id.push(id)
+                console.log(leave_Request_data.compensatory_leave_id);
+            })
+        }
+        else{
             toast.add({
                 severity: "info",
                 summary: "Info Message",
@@ -256,19 +291,19 @@ export const Service = defineStore("Service", () => {
       leave_Request_data.leave_reason=leave_data.leave_reason
 
         RequiredField.value = true;
-        data_checking.value=true
+        // data_checking.value=true
 
         console.log(leave_Request_data);
 
-        axios.post('/applyLeaveRequest',{
+        axios.post('/applyLeaveReques',{
             "leave_request_date": leave_Request_data.leave_Request_date,
-            //"leave_type_id": leave_Request_data.leave_type_id,
             "leave_type_name": leave_Request_data.leave_type_name,
             "leave_session": leave_Request_data.leave_session,
             "start_date":leave_Request_data.start_date ,
             "end_date": leave_Request_data.end_date,
             "no_of_days": leave_Request_data.no_of_days,
             "hours_diff": leave_Request_data.hours_diff,
+            "compesatory_leave_id" : leave_Request_data.compensatory_leave_id,
             "notify_to": leave_Request_data.notify_to,
             "leave_reason": leave_Request_data.leave_reason,
         }).then(res=>{
@@ -302,6 +337,8 @@ export const Service = defineStore("Service", () => {
         leave_types,
         data_checking,
         Email_Service,
+        compensatory_leaves,
+        selected_compensatory_leaves,
 
 
 

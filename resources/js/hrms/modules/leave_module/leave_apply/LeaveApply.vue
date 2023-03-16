@@ -30,7 +30,7 @@
         <div class="row ">
             <div class="col-md-7 col-sm-12">
                 <div class="row mb-3">
-                    <div class="col-md-12  col-sm-12 col-lg-6 col-xl-6 col-xxl-6  mb-md-0 mb-3">
+                    <div class="col-md-12  col-sm-12 col-lg-5 col-xl-5 col-xxl-5  mb-md-0 mb-3">
                         <label for="">Choose Leave Type <span class="text-danger">*</span> </label>
                     </div>
                     <div class="col-md-12  col-sm-12 col-lg-6 col-xl-6 col-xxl-6  mb-md-0 mb-3">
@@ -48,7 +48,7 @@
                     </div>
                 </div>
                 <div v-if="service.TotalNoOfDays" class="row mb-3">
-                    <div class="col-md-12  col-sm-12 col-lg-6 col-xl-6 col-xxl-6  mb-md-0 mb-3">
+                    <div class="col-md-12  col-sm-12 col-lg-5 col-xl-5 col-xxl-5  mb-md-0 mb-3">
 
                         <label for="">No of Days<span class="text-danger">*</span>
                         </label>
@@ -79,8 +79,8 @@
                 </div>
 
                 <!-- Full Day -->
-                <div v-if="service.full_day_format" class="row mb-4">
-                    <div class="col-md-12  col-sm-12 col-lg-6 col-xl-6 col-xxl-6  mb-md-0 mb-3">
+                <div v-if="service.full_day_format" class="row mb-3">
+                    <div class="col-md-12  col-sm-12 col-lg-5 col-xl-5 col-xxl-5  mb-md-0 mb-3">
                         <label for="">Date<span class="text-danger">*</span>
                         </label>
                     </div>
@@ -92,8 +92,8 @@
 
 
                 <!-- Half day leave -->
-                <div v-if="service.half_day_format" class="row mb-4">
-                    <div class="col-md-12  col-sm-12 col-lg-6 col-xl-6 col-xxl-6  mb-md-0 mb-3">
+                <div v-if="service.half_day_format" class="row mb-3">
+                    <div class="col-md-12  col-sm-12 col-lg-5 col-xl-5 col-xxl-5  mb-md-0 mb-3">
                         <label for="">Date<span class="text-danger">*</span>
                         </label>
                     </div>
@@ -104,14 +104,14 @@
                 </div>
 
                 <div v-if="service.half_day_format" class="row mb-3">
-                    <div class="col-md-4  mb-md-0 mb-3">
+                    <div class="col-md-12  col-sm-12 col-lg-5 col-xl-5 col-xxl-5  mb-md-0 mb-3">
                         <div class="form-group">
                             <label for="">Session<span class="text-danger">*</span>
                             </label>
 
                         </div>
                     </div>
-                    <div class="col-md-8  mb-md-0 mb-3">
+                    <div class="col-md-12  col-sm-12 col-lg-7 col-xl-7 col-xxl-7  mb-md-0 mb-3 ms-6">
                         <div class="form-group">
                             <div class="form-check form-check-inline">
                                 <input style="height: 20px;width: 20px;" class="form-check-input" type="radio"
@@ -133,7 +133,7 @@
                 </div>
 
                 <!-- Custom Leave -->
-                <div v-if="service.custom_format" class="row mb-2 ">
+                <div v-if="service.custom_format" class="row mb-3 ">
                     <div class=" col-md-6 col-lg-5  col-sm-4  mb-md-0 mb-3">
                         <div class="form-group">
                             <div class="floating">
@@ -230,14 +230,14 @@
 
                 <!--compensatory off  -->
                 <div v-if="service.compensatory_format" class="row mb-2">
-                    <div class="col-md-12  col-sm-12 col-lg-6 col-xl-6 col-xxl-6  mb-md-0 mb-3">
+                    <div class="col-md-12  col-sm-12 col-lg-5 col-xl-5 col-xxl-5  mb-md-0 mb-3">
                         <label for="">Worked Date <span class="text-danger">*</span> </label>
                     </div>
                     <div class="col-md-12  col-sm-12 col-lg-6 col-xl-6 col-xxl-6  mb-md-0 mb-3">
 
-                        <MultiSelect v-model="selected_compenstory_leaves" display="chip" :options="compenstory_leaves" optionLabel="date" placeholder="Select worked date"
-                        :maxSelectedLabels="5" class="w-full md:full form-select" />
-                        <p class="opacity-50 fs-10">(note:Worked dates will get expired after 60 days)</p> <input type="button" value="click" @click="test">
+                        <MultiSelect v-model="service.leave_data.selected_compensatory_leaves" display="chip" :options="service.compensatory_leaves" optionLabel="date" placeholder="Select worked date"
+                        :maxSelectedLabels="5" class="w-full md:full " />
+                        <p class="opacity-50 fs-10">(note:Worked dates will get expired after 60 days)</p>
                     </div>
                     <div class="col-md-12  col-sm-12 col-lg-4 col-xl-4 col-xxl-4  mb-md-0 mb-3 ">
                         <div class="col-md-12  col-sm-12 col-lg-12 col-xl-12 col-xxl-12">
@@ -245,15 +245,15 @@
                         </div>
                         <div class="col-md-12  col-sm-12 col-lg-12 col-xl-12 col-xxl-12">
                             <Calendar inputId="icon" dateFormat="dd-mm-yy" class="w-100" :showIcon="true"
-                                style="z-index: 1300;" />
+                              v-model="service.leave_data.compensatory_start_date"   style="z-index: 1300;" />
                         </div>
                     </div>
-                    <div class="col-md-12  col-sm-12 col-lg-3 col-xl-3 col-xxl-3   mb-3">
+                    <div class="col-md-12  col-sm-12 col-lg-3 col-xl-3 col-xxl-3   mb-3 ms-5">
                         <div class="col-md-12  col-sm-12 col-lg-12 col-xl-12 col-xxl-12">
                             <label for="" class="float-label ms-10">Total Days</label>
                         </div>
                         <div class="col-md-12  col-sm-12 col-lg-12 col-xl-12 col-xxl-12">
-                            <InputText style="min-width: 60px" class=" form-control w-100    " type="text" />
+                            <InputText style="min-width: 60px" class=" form-control w-100 " v-model="service.leave_data.compensatory_total_days"  type="text" readonly/>
                         </div>
                     </div>
                     <div class="col-md-12  col-sm-12 col-lg-4 col-xl-4 col-xxl-4 mb-3">
@@ -261,34 +261,34 @@
                             <label for="" class="float-label">End Day</label>
                         </div>
                         <div class="col-md-12  col-sm-12 col-lg-12 col-xl-12 col-xxl-12">
-                            <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true" class="w-100" />
+                            <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true" class="w-100" v-model="service.leave_data.compensatory_end_date"  />
                         </div>
                     </div>
                 </div>
 
                 <div class="row mb-3">
-                    <div class="col-md-4  mb-md-0 mb-3">
+                    <div class="col-md-12  col-sm-12 col-lg-5 col-xl-5 col-xxl-5  mb-md-0 mb-3">
                         <div class="form-group">
                             <label for="">Notify to <span class="text-danger">*</span>
                             </label>
 
                         </div>
                     </div>
-                    <div class="col-md-8  mb-md-0 mb-3">
+                    <div class="col-md-12  col-sm-12 col-lg-6 col-xl-6 col-xxl-6  mb-md-0 mb-3">
                         <div class="form-group">
                             <Chips class="   " v-model="service.leave_data.notifyTo" separator="," />
                         </div>
                     </div>
                 </div>
                 <div class="row mb-3 ">
-                    <div class="col-md-4  mb-md-0 mb-3">
+                    <div class="col-md-12  col-sm-12 col-lg-5 col-xl-5 col-xxl-5  mb-md-0 mb-3">
                         <div class="form-group">
                             <label for="">Reason <span class="text-danger">*</span>
                             </label>
 
                         </div>
                     </div>
-                    <div class="col-md-10 col-lg-6 col-sm-10  mb-md-0 mb-3">
+                    <div class="col-md-12  col-sm-12 col-lg-6 col-xl-6 col-xxl-6  mb-md-0 mb-3">
                         <div class="form-group">
                             <Textarea :autoResize="true" rows="3" cols="60" placeholder="Enter the Reason"
                                 v-model="service.leave_data.leave_reason" />
@@ -344,18 +344,20 @@ onMounted(() => {
 
 });
 
-const selected_compenstory_leaves = ref();
-const compenstory_leaves = ref([
-    { date: '20/02/2023', id: '156' },
-    { date: '25/02/2023', id: '157' },
-    { date: '2/02/2023', id: '158' },
-    // { date: '12/02/2023', id: '159' },
-    // { date: '09/02/2023', id: '160' }
-]);
+
 
 const test=()=>{
-    console.log(selected_compenstory_leaves.value);
+    const  tet=Object.values(service.leave_data.selected_compensatory_leaves)
+
+    tet.map(evnt=>{
+        console.log(evnt.id);
+    })
+
+
+
 }
+
+
 
 
 
