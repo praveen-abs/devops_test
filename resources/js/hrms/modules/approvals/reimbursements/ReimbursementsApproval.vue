@@ -4,16 +4,10 @@
         <div class="flex justify-content-between align-items-center">
             <Calendar v-model="selected_date" view="month" dateFormat="mm/yy"  class=""/>
             <Dropdown v-model="selected_status" :options="statuses" placeholder="Status" class="w-full md:w-14rem mx-3" />
-            <button label="Submit" class="btn btn-primary" severity="danger"  @click="generate_ajax"> <i class="fa fa-cog me-2"></i> Generate</button>
+            <button label="Submit" class="btn btn-primary" severity="danger" :disabled="!selected_status=='' ? false : true"  @click="generate_ajax"> <i class="fa fa-cog me-2"></i> Generate</button>
         </div>
 
-        <button class="btn btn-primary"
-
-
-
-
-
-         severity="success" @click="download_ajax"><i class="fas fa-file-download me-2" ></i>Download</button>
+        <button class="btn btn-primary" :disabled="data_reimbursements=='' ? true : false "  severity="success" @click="download_ajax"><i class="fas fa-file-download me-2"  ></i>Download</button>
     </div>
     <div>
         <!-- <ConfirmDialog></ConfirmDialog> -->
@@ -52,12 +46,13 @@
         </Dialog>
         <div>
             <DataTable :value="data_reimbursements" :paginator="true" :rows="10" class="mt-6 " dataKey="user_id"
-                @rowExpand="onRowExpand" @rowCollapse="onRowCollapse" v-model:expandedRows="expandedRows"
+                @rowExpand="onRowExpand" @rowCollapse="onRowCollapse" v-model:expandedRows="expandedRows" v-model:selection="selectedAllEmployee"
                 paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
                 responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}">
                 <template #empty> No Reimbursement data for the selected status filter </template>
                 <template #loading> Loading customers data. Please wait. </template>
                 <Column :expander="true" headerStyle="width: 0.5rem" />
+                <Column selectionMode="multiple" style="width: 3rem" :exportable="false"></Column>
                 <Column field="user_code" header="Employee Id" sortable></Column>
 
                 <Column field="name" header="Employee Name">
@@ -83,17 +78,6 @@
                         {{ "&#8377; " + slotProps.data.total_expenses }}
                     </template>
                 </Column>
-                <!-- <Column field="user_data" header="User Data"></Column> -->
-                <!-- <Column class="fontSize13px" field="from" header="From"></Column>
-                <Column class="fontSize13px" field="to" header="To"></Column>
-                <Column class="fontSize13px" field="vehicle_type" header="Mode Of Transport"></Column>
-                <Column class="fontSize13px" field="distance_travelled" header="Distance Covered"></Column>
-                <Column class="fontSize13px" field="total_expenses" header="Total Expenses">
-                    <template #body="slotProps">
-                        {{  "&#8377; "+slotProps.data.total_expenses  }}
-                    </template>
-                </Column> -->
-
                 <Column field="" header="Action">
                     <template #body="slotProps">
                         <span v-if="slotProps.data.has_pending_reimbursements == 'true'">
@@ -109,7 +93,8 @@
                 <template #expansion="slotProps">
 
                     <div class="orders-subtable">
-                        <DataTable :value="slotProps.data.reimbursement_data" responsiveLayout="scroll">
+                        <DataTable :value="slotProps.data.reimbursement_data" responsiveLayout="scroll"  v-model:selection="selectedOneEmployee">
+                            <Column selectionMode="multiple" style="width: 3rem" :exportable="false"></Column>
                             <Column field="" header="Date" sortable>
                                 <template #body="slotProps">
                                     <p style="white-space: nowrap;"> {{ moment(slotProps.data.date).format('DD-MMM-YYYY') }}
@@ -138,6 +123,8 @@
             </DataTable>
         </div>
     </div>
+
+
 </template>
 
 <script setup>
@@ -148,6 +135,8 @@ import { FilterMatchMode, FilterOperator } from "primevue/api";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 import moment from 'moment'
+import { url } from "@vuelidate/validators";
+
 
 let data_reimbursements = ref();
 let canShowConfirmation = ref(false);
@@ -157,6 +146,11 @@ const confirm = useConfirm();
 const toast = useToast();
 const loading = ref(true);
 const expandedRows = ref([]);
+const  view_reimbursment_detials=ref(false);
+const view_reimbursment_action=ref(false);
+const selectedAllEmployee=ref();
+const selectedOneEmployee=ref();
+
 
 
 
@@ -227,6 +221,8 @@ const show_table = ref(false)
 const get_data = ref()
 
 const generate_ajax = () => {
+
+
     let filter_date = new Date(selected_date.value);
 
     let year = filter_date.getFullYear();
@@ -259,6 +255,7 @@ const generate_ajax = () => {
 
 const download_ajax = () => {
     let filter_date = new Date(selected_date.value);
+    data_checking.value=true
 
     let year = filter_date.getFullYear();
     let month = filter_date.getMonth() + 1;
@@ -267,7 +264,16 @@ const download_ajax = () => {
     let URL = '/reports/generate-manager-reimbursements-reports?selected_year=' + year + '&selected_month=' + month +
         '&selected_status=' + selected_status.value + '&_token={{ csrf_token() }}';
     window.location = URL;
+    setTimeout(greet, 1000);
+
 }
+
+const greet=()=> {
+    data_checking.value=false
+}
+
+setTimeout(greet, 3000);
+
 
 const css_statusColumn = (data) => {
     return [

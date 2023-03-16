@@ -85,11 +85,6 @@
                                             0</span>
                                     </div> --}}
 
-                                <!-- <button class="btn btn-orange" data-bs-target="#leaveApply_modal" data-bs-toggle="modal"
-                                    onclick="resetLeaveModalValues()">
-                                    Apply Leave
-                                </button> -->
-
                                 @vite('resources/js/hrms/modules/leave_module/leave_apply/LeaveApply.js')
                                  <div id="vjs_leaveapply"> </div>
                             </div>

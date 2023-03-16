@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Models\User;
 use App\Models\VmtEmployeeAttendanceRegularization;
 use App\Models\VmtEmployeeOfficeDetails;
+use App\Models\vmtHolidays;
+use App\Models\VmtEmployeeAttendance;
 
 
 class VmtAttendanceService{
@@ -66,6 +68,45 @@ class VmtAttendanceService{
 
        // dd($allEmployees_lateComing);
         return $allEmployees_lateComing;
+
+    }
+
+
+    public function fetchEmployeeCompensatoryOffDays($user_id){
+
+        //Final array response
+        $response_employee_comp_dates = array();
+
+        //Get list of holidays
+        $query_holidays = vmtHolidays::selectRaw('DATE(holiday_date) as holiday_date')->pluck('holiday_date');
+
+            //Remove the year part
+            $query_holidays = $query_holidays->map(function ($item,$key) {
+                return substr($item,5);
+            });
+
+        //Get list of attendance days
+        $query_emp_attendanceDetails = VmtEmployeeAttendance::where('user_id',$user_id)->pluck('date');
+        //dd($query_emp_attendanceDetails);
+
+            $yearTrimmed_query_emp_attendanceDetails = $query_emp_attendanceDetails->map(function ($item,$key) {
+                return substr($item,5);
+            });
+
+
+        //Find the matching dates using array_intersect()
+        $matching_comp_dates = array_intersect( $yearTrimmed_query_emp_attendanceDetails->toArray(), $query_holidays->toArray());
+
+            //get the keys and fetch the dates from 'query_emp_attendanceDetails' array
+            $keys_matching_comp_dates =  array_keys($matching_comp_dates);
+
+
+        //get the emp attendance dates based on matched array keys
+        foreach($keys_matching_comp_dates as $singleKey){
+            array_push($response_employee_comp_dates,  $query_emp_attendanceDetails[$singleKey]);
+        }
+
+        return $response_employee_comp_dates;
 
     }
 }

@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { ref, reactive } from "vue";
 import { useToast } from "primevue/usetoast";
 import axios from "axios";
+import moment from "moment";
 
 export const Service = defineStore("Service", () => {
 
@@ -12,6 +13,7 @@ export const Service = defineStore("Service", () => {
     const leave_data = reactive({
         selected_leave: "",
         full_day_leave_date: "",
+        half_day_leave_date: "",
         half_day_leave_session:"",
         radiobtn_full_day: "",
         radiobtn_half_day: "",
@@ -25,6 +27,8 @@ export const Service = defineStore("Service", () => {
         notifyTo: "",
         leave_reason: "",
     });
+
+
     const TotalNoOfDays = ref(true);
     const full_day_format = ref(true);
     const half_day_format = ref(false);
@@ -151,7 +155,7 @@ export const Service = defineStore("Service", () => {
             half_day_format.value = false;
             custom_format.value = false;
             compensatory_format.value = false;
-        } else if (leave_data.selected_leave == "Compensatory Off") {
+        } else if (leave_data.selected_leave == "Compensatory Leave") {
             compensatory_format.value = true;
             Permission_format.value = false;
             full_day_format.value = false;
@@ -182,7 +186,7 @@ export const Service = defineStore("Service", () => {
 
     const leave_Request_data=reactive({
         leave_type_id:1,
-        leave_Request_date:new Date().toISOString().slice(0,10),
+        leave_Request_date:moment().format( 'YYYY-MM-DD  HH:mm:ss' ),
         leave_type_name:'',
         leave_session:'',
         start_date:'',
@@ -204,14 +208,19 @@ export const Service = defineStore("Service", () => {
 
         leave_Request_data.leave_type_name=leave_data.selected_leave
         if( leave_data.radiobtn_full_day=="full_day"){
-            leave_Request_data.no_of_days="full day"
-            leave_Request_data.start_date=new Date(leave_data.full_day_leave_date).toISOString().slice(0,10)
-            leave_Request_data.end_date="null"
+            console.log("Full day leave : "+leave_data.full_day_leave_date);
+            leave_Request_data.no_of_days=1
+            //leave_Request_data.start_date = new Date(leave_data.full_day_leave_date).toISOString().slice(0,10)
+            leave_Request_data.start_date = moment(leave_data.full_day_leave_date).format('YYYY-MM-DD');
+            leave_Request_data.end_date = leave_Request_data.start_date
+            leave_Request_data.leave_session="";
+
         }else
         if(leave_data.radiobtn_half_day=="half_day"){
-            leave_Request_data.no_of_days="half day"
-            leave_Request_data.start_date=new Date().toISOString().slice(0,10)
-            leave_Request_data.end_date="null"
+            console.log("Applying half-day leave...");
+            leave_Request_data.no_of_days = 0.5
+            leave_Request_data.start_date = moment(leave_data.half_day_leave_date).format('YYYY-MM-DD');
+            leave_Request_data.end_date = leave_Request_data.start_date
 
             if(leave_data.half_day_leave_session=="forenoon"){
                 leave_Request_data.leave_session="FN"
@@ -221,10 +230,11 @@ export const Service = defineStore("Service", () => {
 
       }else
         if(leave_data.radiobtn_custom=="custom"){
-            leave_Request_data.no_of_days="custom"
-            leave_Request_data.start_date=leave_data.custom_start_date
-            leave_Request_data.end_date=new Date(leave_data.custom_end_date).toISOString().slice(0,10)
+            leave_Request_data.start_date=  moment(leave_data.custom_start_date).format('YYYY-MM-DD');
+            leave_Request_data.end_date= moment(leave_data.custom_end_date).format('YYYY-MM-DD');
             leave_Request_data.no_of_days=leave_data.custom_total_days
+            leave_Request_data.leave_session="";
+
         }else{
             toast.add({
                 severity: "info",
@@ -242,7 +252,16 @@ export const Service = defineStore("Service", () => {
         console.log(leave_Request_data);
 
         axios.post('/applyLeaveRequest',{
-            leave_Request_data
+            "leave_request_date": leave_Request_data.leave_Request_date,
+            //"leave_type_id": leave_Request_data.leave_type_id,
+            "leave_type_name": leave_Request_data.leave_type_name,
+            "leave_session": leave_Request_data.leave_session,
+            "start_date":leave_Request_data.start_date ,
+            "end_date": leave_Request_data.end_date,
+            "no_of_days": leave_Request_data.no_of_days,
+            "hours_diff": leave_Request_data.hours_diff,
+            "notify_to": leave_Request_data.notify_to,
+            "leave_reason": leave_Request_data.leave_reason,
         }).then(res=>{
             if(res.data.status=='success'){
                 Email_Service.value=true

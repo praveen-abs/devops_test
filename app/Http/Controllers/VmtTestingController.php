@@ -70,15 +70,22 @@ class VmtTestingController extends Controller
     //     $fileName = 'aadhar_'.$emp_code.'_'.$date.'.'.$request->file->extension();
     //     $path='employee/emp_';
 
-    //     $filePath =  $request->file->storeAs($path.$emp_code.'/documents', $fileName, 'private');
-    //     // $fileModel->name = time().'_'.$req->file->getClientOriginalName();
-    //     // $fileModel->file_path = '/storage/' . $filePath;
-    //     // $fileModel->save();
-    //     dd('--------'. $fileName.'-------'.$filePath);
-    //     return back()
-    //     ->with('success','File has been uploaded.')
-    //     ->with('file', $fileName);
-    // }
+        dd(File::makeDirectory('storage/app/uploads/Emp_code', 0777, true, true));
+       if(!$emp_document_path->exists('Emp_code')){
+        File::makeDirectory('storage/app/uploads/Emp_code', 0777, true, true);
+    }
+    dd($emp_document_path->exists('Emp_code'));
+       dd(Storage::directories()->has('/uploads'));
+       dd(!File::isDirectory( $emp_document_path));
+        // $filePath =  $request->file->storeAs('Emp_code', $fileName, 'private');
+        // $fileModel->name = time().'_'.$req->file->getClientOriginalName();
+        // $fileModel->file_path = '/storage/' . $filePath;
+        // $fileModel->save();
+        dd('--------'. $fileName.'-------'.$filePath);
+        return back()
+        ->with('success','File has been uploaded.')
+        ->with('file', $fileName);
+    }
 
     public function viewpdf(){
         return view('testing');
@@ -105,3 +112,5 @@ class VmtTestingController extends Controller
 }
 
 }
+
+

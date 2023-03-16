@@ -247,7 +247,7 @@ class VmtEmployeeOnboardingController extends Controller
 
                     $response = [
                         'status' => $result->status,
-                        'message' => "Error while creating/update User details",
+                        'message' => "Error while creating/update User details. LINE : ".__LINE__,
                         'error' => $result->message,
                         'error_verbose' =>''
                     ];
@@ -282,7 +282,7 @@ class VmtEmployeeOnboardingController extends Controller
                         //When error occured while storing User, then show error to UI
                         $response = [
                                 'status' => $result->status,
-                                'message' => "Error while creating/update User details",
+                                'message' => "Error while creating/update User details : LINE : ".__LINE__,
                                 'error' => $result->message,
                                 'error_verbose' =>''
                         ];
@@ -324,8 +324,13 @@ class VmtEmployeeOnboardingController extends Controller
             if(Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]) )
             {
 
+<<<<<<< HEAD
                 $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $onboard_form_data['can_onboard_employee'], null);
 
+=======
+                $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->employee_onboarding['can_onboard_employee'], null);
+                // dd($result);
+>>>>>>> 71e4c81c932c81811c945d41b7d5c92db59f57b1
 
                 if($result->status == "success")
                 {
@@ -341,10 +346,11 @@ class VmtEmployeeOnboardingController extends Controller
                 }
                 else
                 {
+
                     //When error occured while storing User, then show error to UI
                     $response = [
                             'status' => $result->status,
-                            'message' => "Error while creating/update User details",
+                            'message' => "Error while creating/update User details : LINE : ".__LINE__,
                             'error' => $result->message,
                             'error_verbose' =>''
                     ];
