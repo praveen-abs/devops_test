@@ -2530,18 +2530,15 @@ const submit = () => {
      formData.append('voterId', employee_onboarding.VoterIdDoc);
      formData.append('passport', employee_onboarding.PassportDoc)
 
+     console.log(formData);
 
-
-  axios
-    .post("/vmt-employee-onboard", formData, config)
-    .then((res) => {
-      //alert("sent");
-      console.log("Ajax Response : " + res);
-    })
-    .catch((err) => {
-      //alert("Ajax Response : not sent "+err);
-      console.log("Ajax Response : not sent " + err);
-    });
+     axios.post('/vmt-employee-onboard', formData, config)
+     .then(function (response) {
+         currentObj.success = response.data.success;
+     })
+     .catch(function (error) {
+         currentObj.output = error;
+     });
 };
 
 // Generate data into JSON Format

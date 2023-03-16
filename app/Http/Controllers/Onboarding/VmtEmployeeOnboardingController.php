@@ -186,14 +186,20 @@ class VmtEmployeeOnboardingController extends Controller
     {
 
         $data=$request->all();
-        dd( $data);
+        dd($data);
+        // dd( $data['Aadharfront']);
         foreach( $data as $key=>$value){
-            if( $key!='employee_onboarding'){
+
+            if( $key=='employee_onboarding'){
                 $data['employee_onboarding'][$key]=$value;
+            }else{
+                dd($value);
+               $assocArray = json_decode($value, true);
+               dd( $assocArray);
             }
         }
         $data = $data['employee_onboarding'] ;
-
+        dd( $data);
         $user_id =$data['employee_code'];
         $response = "";
         $isEmailSent = "";
@@ -324,13 +330,8 @@ class VmtEmployeeOnboardingController extends Controller
             if(Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]) )
             {
 
-<<<<<<< HEAD
                 $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $onboard_form_data['can_onboard_employee'], null);
 
-=======
-                $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->employee_onboarding['can_onboard_employee'], null);
-                // dd($result);
->>>>>>> 71e4c81c932c81811c945d41b7d5c92db59f57b1
 
                 if($result->status == "success")
                 {
