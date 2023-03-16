@@ -70,22 +70,22 @@ class VmtTestingController extends Controller
     //     $fileName = 'aadhar_'.$emp_code.'_'.$date.'.'.$request->file->extension();
     //     $path='employee/emp_';
 
-        dd(File::makeDirectory('storage/app/uploads/Emp_code', 0777, true, true));
-       if(!$emp_document_path->exists('Emp_code')){
-        File::makeDirectory('storage/app/uploads/Emp_code', 0777, true, true);
-    }
-    dd($emp_document_path->exists('Emp_code'));
-       dd(Storage::directories()->has('/uploads'));
-       dd(!File::isDirectory( $emp_document_path));
-        // $filePath =  $request->file->storeAs('Emp_code', $fileName, 'private');
-        // $fileModel->name = time().'_'.$req->file->getClientOriginalName();
-        // $fileModel->file_path = '/storage/' . $filePath;
-        // $fileModel->save();
-        dd('--------'. $fileName.'-------'.$filePath);
-        return back()
-        ->with('success','File has been uploaded.')
-        ->with('file', $fileName);
-    }
+    //     dd(File::makeDirectory('storage/app/uploads/Emp_code', 0777, true, true));
+    //    if(!$emp_document_path->exists('Emp_code')){
+    //     File::makeDirectory('storage/app/uploads/Emp_code', 0777, true, true);
+    // }
+    // dd($emp_document_path->exists('Emp_code'));
+    //    dd(Storage::directories()->has('/uploads'));
+    //    dd(!File::isDirectory( $emp_document_path));
+    //     // $filePath =  $request->file->storeAs('Emp_code', $fileName, 'private');
+    //     // $fileModel->name = time().'_'.$req->file->getClientOriginalName();
+    //     // $fileModel->file_path = '/storage/' . $filePath;
+    //     // $fileModel->save();
+    //     dd('--------'. $fileName.'-------'.$filePath);
+    //     return back()
+    //     ->with('success','File has been uploaded.')
+    //     ->with('file', $fileName);
+    // }
 
     public function viewpdf(){
         return view('testing');
@@ -94,15 +94,14 @@ class VmtTestingController extends Controller
 
     public function fileUploadingTest(Request $request)
     {
-
+      dd($request->all());
        $file=new Files();
-       dd($request);
        if($request->file()) {
             $file=new Files();
-             $file_name = time().'_'.$request->aadhar_front->getClientOriginalName();
+             $file_name = time().'_'.$request->file->getClientOriginalName();
              $file_path = $request->file('file_link')->storeAs('uploads', $file_name, 'public');
 
-             $file->file_name = time().'_'.$request->aadhar_front->getClientOriginalName();
+             $file->file_name = time().'_'.$request->file->getClientOriginalName();
              $file->file_path = '/storage/' . $file_path;
              $file->save();
              return response()->json([
