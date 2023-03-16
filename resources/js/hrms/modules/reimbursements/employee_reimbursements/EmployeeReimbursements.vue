@@ -123,16 +123,6 @@
                         </template>
                       </Column>
 
-                    <!-- <Column :exportable="false" field="upload" header="Action" style="min-width:8rem">
-                                            <template #body="slotProps">
-                                                <Button style="height: 30px;" icon="pi pi-pencil"
-                                                    class="p-button-rounded p-button-warning mr-2"
-                                                    @click="editProduct(slotProps.data)" />
-                                                <Button style="height: 30px;" icon="pi pi-trash"
-                                                    class="p-button-rounded p-button-danger mr-2"
-                                                    @click="confirmDeleteSelected(slotProps.data)" />
-                                            </template>
-                     </Column> -->
                   </DataTable>
                 </div>
 
@@ -182,10 +172,7 @@
                     <div class="formgrid">
                       <input
                         @change="
-                          employee_service.employee_reimbursement_attachment_upload(
-                            $event
-                          )
-                        "
+                          employee_service.employee_reimbursement_attachment_upload($event)"
                         ref="employee_service.employee_reimbursement_attachment"
                         type="file"
                         id="upload"
@@ -353,6 +340,7 @@
                   class="w-full" />
               </div>
 
+
               <div class="formgrid grid">
                 <div class="field col">
                   <label for="Eligible Amount">From</label>
@@ -388,7 +376,7 @@
               </div>
 
 
-              <div class="field col">
+              <div class="field col" :hidden="employee_service.employee_local_conveyance.mode_of_transport == 'Public Transport' ? false : true ">
                 <label for="Eligible Amount">Amount</label>
                 <InputText
                   v-model="

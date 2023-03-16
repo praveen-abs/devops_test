@@ -57,30 +57,29 @@ class VmtReimbursementsService {
     private function getLocalConveyanceCost($vehicle_type){
 
         switch ($vehicle_type) {
-            case "bike":
+            case "Bike":
                 return $this->kmsCost_2_wheeler;
-            case "car":
+            case "Car":
                 return $this->kmsCost_4_wheeler;
-            case "public transport":
+            case "Public Transport":
                 return $this->kmsCost_misc;
             default:
                 return null;
         }
     }
 
-   public function testCreateLocalCovergance(Request $request){
-        dd($request->all());
-    }
 
-    function createReimbursement_LocalConveyance($reimbursement_type_id, $date, $user_comments, $from, $to, $vehicle_type, $distance_travelled ){
+    public function createReimbursement_LocalConveyance($reimbursement_type_id, $date, $user_comments, $from, $to, $vehicle_type, $distance_travelled ){
+
 
         try{
             //Get KMS cost based on vehicle type
-            $current_kmsCost_vehicle = getLocalConveyanceCost($vehicle_type);
+            $current_kmsCost_vehicle = $this->getLocalConveyanceCost($vehicle_type);
+
 
             if($current_kmsCost_vehicle)
             {
-
+              $total_amount= $current_kmsCost_vehicle *  $distance_travelled;
             }
             else
             {
@@ -93,10 +92,21 @@ class VmtReimbursementsService {
             }
 
             //Save in DB
-            // $emp_reimbursements = new VmtEmployeeReimbursements;
-            // $emp_reimbursements->vehicle_type
-            // $emp_reimbursements->from
-            // $emp_reimbursements->to
+            $emp_reimbursements = new VmtEmployeeReimbursements;
+            $emp_reimbursements->reimbursement_type_id = $reimbursement_type_id ;
+            $emp_reimbursements->date = $date;
+            $emp_reimbursements->user_comments = $user_comments;
+            $emp_reimbursements->vehicle_type = $vehicle_type;
+            $emp_reimbursements->from = $from ;
+            $emp_reimbursements->to = $to;
+            $emp_reimbursements->distance_travelled = $distance_travelled;
+            // $emp_reimbursements->save();
+
+            return [
+                "status" => "success",
+                "message" => "Reimbursement data saved",
+                "total_amount" => $total_amount
+            ];
 
 
 
@@ -104,8 +114,15 @@ class VmtReimbursementsService {
         }
         catch(Exception $e){
 
+            return $e;
+
         }
 
+    }
+
+
+    function createReimbursement($reimbursement_type_id, $claim_type, $claim_amount, $eligible_amount, $user_comments, $status,$date_of_dispatch, $proof_of_delivery){
+            dd($reimbursement_type_id);
     }
 
 

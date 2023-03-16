@@ -14,13 +14,15 @@ export const employee_reimbursment_service = defineStore(
         const reimbursementsScreen = ref(true);
         const reimbursements_dailog = ref(false);
 
-        const employee_reimbursement = ref({
+        const employee_reimbursement = reactive({
+            type_id:1,
             claim_type: "",
             claim_amount: Number,
             eligible_amount: Number,
             date_of_dispatch: "",
             proof_of_delivery: "",
             reimbursment_remarks: "",
+            employee_reimbursement_attachment:''
         });
 
 
@@ -39,6 +41,7 @@ export const employee_reimbursment_service = defineStore(
         const localconvergance_dailog = ref(false);
 
         const employee_local_conveyance = reactive({
+            type_id:1,
             travelled_date: "",
             mode_of_transport: "",
             travel_from: "",
@@ -86,63 +89,28 @@ export const employee_reimbursment_service = defineStore(
         ]);
 
         const local_Conveyance_Mode_of_transport = ref([
-            { label: "public Transport", value: "public Transport" },
+            { label: "Public Transport", value: "Public Transport" },
             { label: "Car", value: "Car" },
             { label: "Bike", value: "Bike" },
         ]);
 
 
 
-        const employee_reimbursement_attachment = ref();
-
-        const file = ref();
 
         const employee_reimbursement_attachment_upload = (e) => {
-            // Check if file is selected
-            if (e.target.files && e.target.files[0]) {
+
                 // Get uploaded file
-                (employee_reimbursement_attachment.file = e.target.files[0]),
-                    // Get file size
-                    (employee_reimbursement_attachment.fileSize =
-                        Math.round((file.size / 1024 / 1024) * 100) / 100),
-                    // Get file extension
-                    (employee_reimbursement_attachment.fileExtention =
-                        employee_reimbursement_attachment.file.name
-                            .split(".")
-                            .pop()),
-                    // Get file name
-                    (employee_reimbursement_attachment.fileName =
-                        employee_reimbursement_attachment.file.name
-                            .split(".")
-                            .shift()),
-                    // Check if file is an image
-                    (employee_reimbursement_attachment.isImage = [
-                        "jpg",
-                        "jpeg",
-                        "png",
-                        "gif",
-                    ].includes(
-                        employee_reimbursement_attachment.fileExtention
-                    ));
+                employee_reimbursement.employee_reimbursement_attachment = e.target.files[0];
 
                 // Print to console
-                console.log(employee_reimbursement_attachment.file);
+                console.log(employee_reimbursement.employee_reimbursement_attachment.file);
             }
-        };
 
-
-
-        // const saveProduct = () => {
-        //     submitted.value = true;
-        //     reimbursement_datas.value.push(employee_reimbursement.value);
-        //     console.log(employee_reimbursement.value);
-        // };
 
         // Fetching
 
         const data_reimbursements = ref();
         const loading_spinner = ref(true);
-        const reimbursment_file = ref();
 
         const fetch_data_from_reimbursment = () => {
             let url_all_reimbursements =
@@ -158,32 +126,44 @@ export const employee_reimbursment_service = defineStore(
         };
 
         const reimbursement_data = reactive(employee_reimbursement.value);
-        const reimbursement_attachment = reactive(
-            employee_reimbursement_attachment
-        );
-
-        const post_reimbursment_data = () => {
+        const post_reimbursment_data = (e) => {
             submitted.value = true;
-            reimbursement_datas.value.push(employee_reimbursement.value);
+            reimbursement_datas.value.push(employee_reimbursement);
             reimbursements_dailog.value = false;
-            console.log(employee_reimbursement.value);
+            console.log(employee_reimbursement);
             console.log("post reiburmentt");
-            console.log(employee_reimbursement_attachment.value);
+            console.log(employee_reimbursement.employee_reimbursement_attachment);
             const data = JSON.stringify({
                 reimbursement_data,
-                reimbursement_attachment,
             });
             console.log(data);
+
+            e.preventDefault();
+                let currentObj = this;
+
+                const config = {
+                    headers: { 'content-type': 'multipart/form-data' }
+                }
+
+                let formData = new FormData();
+                formData.append('reimbursement_type_id', employee_reimbursement.type_id)
+                formData.append('file', employee_reimbursement.employee_reimbursement_attachment);
+                formData.append('claim_type', employee_reimbursement.claim_type);
+                formData.append('claim_amount', employee_reimbursement.claim_amount);
+                formData.append('eligible_amount', employee_reimbursement.eligible_amount);
+                formData.append('remarks', employee_reimbursement.reimbursment_remarks);
+                formData.append('date_of_dispatch', employee_reimbursement.date_of_dispatch);
+                formData.append('proof_of_delivery', employee_reimbursement.proof_of_delivery);
 
             let url_all_reimbursements =
                 window.location.origin + "/saveReimbursementsData";
             axios
-                .post(url_all_reimbursements, {
-                    reimbursement_data,
-                    reimbursement_attachment,
+                .post(url_all_reimbursements,formData )
+                .then((response) => {
+                    currentObj.success = response.data.success;
                 })
-                .then((response) => {})
                 .catch((response) => {
+                    currentObj.output = error;
                     console.log(response);
                 });
 
@@ -209,16 +189,38 @@ export const employee_reimbursment_service = defineStore(
             });
         };
 
-        const post_data_for_local_convergance = () => {
+        const post_data_for_local_convergance = (e) => {
 
-            let url_all_local_convergance = window.location.origin + '/testCreateLocalCovergance';
+            e.preventDefault();
+            let currentObj = this;
+
+            const config = {
+                headers: { 'content-type': 'multipart/form-data' }
+            }
+
+            let formData = new FormData();
+
+            formData.append('reimbursement_type_id', employee_local_conveyance.type_id)
+            formData.append('date',employee_local_conveyance.travelled_date)
+            formData.append('user_comments',employee_local_conveyance.local_conveyance_remarks)
+            formData.append('from',employee_local_conveyance.travel_from)
+            formData.append('to',employee_local_conveyance.travel_to)
+            formData.append('vehicle_type',employee_local_conveyance.mode_of_transport)
+            formData.append('distance_travelled',employee_local_conveyance.total_distance_travelled)
+
+
+            let url_all_local_convergance = window.location.origin + '/saveReimbursementsData';
 
             console.log("AJAX URL : " + url_all_local_convergance);
 
-            axios.post(url_all_local_convergance)
+            axios.post(url_all_local_convergance,formData)
                 .then((response) => {
+                employee_local_conveyance.local_convenyance_total_amount = response.data.total_amount;
                  console.log(response);
-              }).catch(err=>console.log(err))
+                 currentObj.success = response.data.success;
+              }).catch(err=>{
+                currentObj.output = err;
+                console.log(err)})
               .finally(res =>{
                 console.log(res);
               });
@@ -273,15 +275,13 @@ export const employee_reimbursment_service = defineStore(
             // employee_reimbursement
 
             employee_reimbursement_attachment_upload,
-            employee_reimbursement_attachment,
             onclickSwitchToReimbursmentTab,
-            file,
             reimbursement_data,
-            reimbursement_attachment,
             post_reimbursment_data,
             reimbursement_datas,
             reimbursment_claim_types,
             onclickOpenReimbursmentDailog,
+
 
             // employee_local_convergance
 
@@ -290,6 +290,7 @@ export const employee_reimbursment_service = defineStore(
             onclickSwitchToLocalCoverganceTab,
             data_local_convergance,
             local_Conveyance_Mode_of_transport,
+
         };
     }
 );
