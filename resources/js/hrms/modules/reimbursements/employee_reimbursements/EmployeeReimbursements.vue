@@ -1,5 +1,10 @@
 <template>
     <Toast />
+    <!-- Loading Spinner -->
+    <Transition name="modal" >
+        <ABS_loading_spinner v-if="employee_service.loading_spinner" />
+
+    </Transition>
   <div class="reimbursement-wrapper mt-30">
     <div class="card left-line mb-2">
       <div class="card-body pb-1 pt-1">
@@ -204,6 +209,9 @@
           </div>
         </div>
 
+
+
+
         <!-- ----------------------------------------------------------------------------------------------------------------------------------------- -->
 
         <!-- Local conveyance -->
@@ -215,11 +223,11 @@
         >
           <div>
             <div class="card">
-              <Dialog
+              <!-- <Dialog
                 header="Header"
                 v-model:visible="employee_service.loading_spinner"
                 :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-                :style="{ width: '25vw' }"
+                :style="{ width: '25vw'  }"
                 :modal="true"
                 :closable="false"
                 :closeOnEscape="false"
@@ -236,7 +244,7 @@
                 <template #footer>
                   <h5 style="text-align: center">Please wait...</h5>
                 </template>
-              </Dialog>
+              </Dialog> -->
 
               <DataTable
                 ref="dt"
@@ -416,6 +424,7 @@
 <script setup>
 import { ref, onMounted, reactive } from "vue";
 import { employee_reimbursment_service } from "./EmployeeReimbursementsService";
+import ABS_loading_spinner from "../../../components/ABS_loading_spinner.vue";
 
 const employee_service = employee_reimbursment_service();
 
@@ -631,4 +640,5 @@ onMounted(() => {
   font-weight: 700;
   text-align: center;
 }
+
 </style>

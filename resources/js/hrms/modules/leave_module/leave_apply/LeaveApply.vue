@@ -1,7 +1,10 @@
 <template>
     <Toast />
     <Button label="Apply Leave" class="bg-orange-500 border-none h-3rem" @click="visible = true" />
-    <Dialog header="Header" v-model:visible="service.data_checking" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+    <Transition name="modal" >
+        <ABS_loading_spinner v-if="service.data_checking" />
+    </Transition>
+    <!-- <Dialog header="Header" v-model:visible="service.data_checking" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
         :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
         <template #header>
             <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
@@ -10,7 +13,7 @@
         <template #footer>
             <h5 style="text-align: center">Please wait...</h5>
         </template>
-    </Dialog>
+    </Dialog> -->
     <Dialog header="Header" v-model:visible="service.Email_Service" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
         :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
         <template #header>
@@ -24,7 +27,7 @@
         </template>
     </Dialog>
     <Dialog v-model:visible="visible" :style="{ width: '80vw' }" :breakpoints="{ '960px': '75vw', '641px': '100vw' }">
-
+        {{ service.data_checking }}
         <h6 class="modal-title mb-4  fs-21">
             Leave Request</h6>
         <div class="row ">
@@ -325,6 +328,7 @@
 
 
 import { onMounted, reactive, ref } from "vue";
+import ABS_loading_spinner from "../../../components/ABS_loading_spinner.vue";
 import axios from "axios";
 
 import { Service } from './leave_apply_service'

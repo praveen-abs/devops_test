@@ -291,11 +291,11 @@ export const Service = defineStore("Service", () => {
       leave_Request_data.leave_reason=leave_data.leave_reason
 
         RequiredField.value = true;
-        // data_checking.value=true
+        data_checking.value=true
 
         console.log(leave_Request_data);
 
-        axios.post('/applyLeaveReques',{
+        axios.post('/applyLeaveRequest',{
             "leave_request_date": leave_Request_data.leave_Request_date,
             "leave_type_name": leave_Request_data.leave_type_name,
             "leave_session": leave_Request_data.leave_session,
