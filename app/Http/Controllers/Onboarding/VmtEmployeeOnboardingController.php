@@ -200,7 +200,6 @@ class VmtEmployeeOnboardingController extends Controller
         }
 
         $data = $data['employee_onboarding'] ;
-        dd( $data);
         $user_id =$data['employee_code'];
         $response = "";
         $isEmailSent = "";
