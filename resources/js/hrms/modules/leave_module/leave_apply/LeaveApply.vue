@@ -27,7 +27,6 @@
         </template>
     </Dialog>
     <Dialog v-model:visible="visible" :style="{ width: '80vw' }" :breakpoints="{ '960px': '75vw', '641px': '100vw' }">
-        {{ service.data_checking }}
         <h6 class="modal-title mb-4  fs-21">
             Leave Request</h6>
         <div class="row ">
