@@ -2528,7 +2528,8 @@ const submit = () => {
      formData.append('eductionDoc', employee_onboarding.EductionDoc);
      formData.append('releivingDoc', employee_onboarding.ReleivingLetterDoc)
      formData.append('voterId', employee_onboarding.VoterIdDoc);
-     formData.append('passport', employee_onboarding.PassportDoc)
+     formData.append('passport', employee_onboarding.PassportDoc);
+     formData.append('dlDoc', employee_onboarding.DrivingLicenseDoc);
 
      console.log(formData);
 
@@ -2575,7 +2576,8 @@ const fileUpload=()=> {
      formData.append('eductionDoc', employee_onboarding.EductionDoc);
      formData.append('releivingDoc', employee_onboarding.ReleivingLetterDoc)
      formData.append('voterId', employee_onboarding.VoterIdDoc);
-     formData.append('passport', employee_onboarding.PassportDoc)
+     formData.append('passport', employee_onboarding.PassportDoc);
+     formData.append('dlDoc', employee_onboarding.DrivingLicenseDoc);
 
      console.log(formData);
 

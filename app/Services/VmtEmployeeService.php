@@ -86,6 +86,7 @@ class VmtEmployeeService {
                 $onboard_user = $response->response_object;
                 $this->createOrUpdate_EmployeeDetails( $onboard_user, $data);
                 $this->createOrUpdate_EmployeeOfficeDetails( $onboard_user->id, $data);
+                dd('---------------------');
                 $this->createOrUpdate_EmployeeStatutoryDetails( $onboard_user->id, $data);
                 $this->createOrUpdate_EmployeeFamilyDetails( $onboard_user->id, $data);
                 $this->createOrUpdate_EmployeeCompensatory( $onboard_user->id, $data);
@@ -147,6 +148,7 @@ class VmtEmployeeService {
         $response = new stdClass;
         $response->status = "success";
         $response->response_object = $newUser;
+
         return $response;
     }
 
@@ -185,34 +187,17 @@ class VmtEmployeeService {
             $newEmployee = new VmtEmployee;
         }
 
+        $doj=$row["doj"];
+        $dob=$row["dob"];
+
 
         $newEmployee->userid   =    $user->id;
         $newEmployee->emp_no   =    $row["employee_code"] ?? '';
         $newEmployee->gender   =    $row["gender"] ?? '';
-
-
-
-        //Check if its in proper format
-        $processed_DOJ = \DateTime::createFromFormat('d-m-Y', $row['doj']);
-
-        //If date is in 'd-m-y' format, then convert into one
-        if($processed_DOJ)
-        {
-            //Then convert to Y-m-d
-            $processed_DOJ = $processed_DOJ->format('Y-m-d');
-        }
-        else
-        {
-            //If date is not in 'd-m-y' format, then convert into 'd-m-y'
-
-            $processed_DOJ = \DateTime::createFromFormat('Y-m-d', $row['doj'])->format('Y-m-d');
-
-        }
-
-        $newEmployee->doj   =    $processed_DOJ;
-        $newEmployee->dol   =    $processed_DOJ;
+        $newEmployee->doj   =    $this->getdateFormatForDb($doj);
+        $newEmployee->dol   =    $this->getdateFormatForDb($doj);
+        $newEmployee->dob   =    $this->getdateFormatForDb($dob);
         $newEmployee->location   =    $row["work_location"] ?? '';
-        $newEmployee->dob   =    $row["dob"] ?? '';
         $newEmployee->father_name   =  $row["father_name"] ?? '';
         $newEmployee->pan_number   =  isset($row["pan_number"]) ? ($row["pan_number"]) : "";
         $newEmployee->dl_no   =  $row["dl_no"] ?? '';
@@ -260,15 +245,15 @@ class VmtEmployeeService {
             $row['marital_status'] = '';
         }
 
-                         dd($row['AadharCardFront']['_rawValue']);
-        $newEmployee->aadhar_card_file = $this->uploadDocument( $row['AadharCardFront'], $user->user_code, 'aadhar_front_');
-        $newEmployee->aadhar_card_backend_file = $this->uploadDocument('aadhar_card_backend_file', $user->user_code);
-        $newEmployee->pan_card_file = $this->uploadDocument('pan_card_file', $user->user_code);
-        $newEmployee->passport_file = $this->uploadDocument('passport_file', $user->user_code);
-        $newEmployee->voters_id_file = $this->uploadDocument('voters_id_file', $user->user_code);
-        $newEmployee->dl_file = $this->uploadDocument('dl_file', $user->user_code);
-        $newEmployee->education_certificate_file = $this->uploadDocument('education_certificate_file', $user->user_code);
-        $newEmployee->reliving_letter_file = $this->uploadDocument('reliving_letter_file',$user->user_code);
+
+        $newEmployee->aadhar_card_file = $this->uploadDocument( $row['Aadharfront'], $user->user_code, 'aadhar_front_');
+        $newEmployee->aadhar_card_backend_file = $this->uploadDocument($row['AadharBack'], $user->user_code,'aadhar_back_');
+        $newEmployee->pan_card_file = $this->uploadDocument($row['panDoc'], $user->user_code,'pan_');
+        $newEmployee->passport_file = $this->uploadDocument($row['passport'], $user->user_code,'passport_');
+        $newEmployee->voters_id_file = $this->uploadDocument($row['voterId'], $user->user_code,'voter_id_');
+        $newEmployee->dl_file = $this->uploadDocument($row['dlDoc'], $user->user_code,'driver_license_');
+        $newEmployee->education_certificate_file = $this->uploadDocument($row['eductionDoc'], $user->user_code,'edu_doc_');
+        $newEmployee->reliving_letter_file = $this->uploadDocument($row['releivingDoc'],$user->user_code,'reliving_letter_');
         $docReviewArray = array(
             'aadhar_card_file' => -1,
             'aadhar_card_backend_file' => -1,
@@ -474,13 +459,12 @@ class VmtEmployeeService {
 
     public function uploadDocument($fileObject, $emp_code, $filename){
 
-        dd($fileObject['file']);
+
         $date=date('d-m-Y H-i-s');
-        $fileName = $filename.$emp_code.'_'.$date.'.'.$fileObject['fileExtention'];
+        $fileName = $filename.$emp_code.'_'.$date.'.'.$fileObject->extension();
         $path='employee/emp_'.$emp_code.'/documents';
-        dd($fileObject);
-        $filePath = $fileObject['file']->storeAs($path,$fileName, 'private');
-        dd( $filePath);
+        $filePath = $fileObject->storeAs($path,$fileName, 'private');
+        return $fileName;
     }
 
     // public function fileUpload($file, $emp_code)
@@ -577,6 +561,27 @@ class VmtEmployeeService {
             return false;
         else
             return true;
+    }
+
+    private function getdateFormatForDb($date){
+          //Check if its in proper format
+          $processed_date = \DateTime::createFromFormat('d-m-Y', $row['doj']);
+
+          //If date is in 'd-m-y' format, then convert into one
+          if( $processed_date)
+          {
+              //Then convert to Y-m-d
+              $processed_date =  $processed_date->format('Y-m-d');
+          }
+          else
+          {
+              //If date is not in 'd-m-y' format, then convert into 'd-m-y'
+
+              $processed_date = \DateTime::createFromFormat('Y-m-d', $date)->format('Y-m-d');
+
+          }
+
+        return $processed_date;
     }
 
 }
