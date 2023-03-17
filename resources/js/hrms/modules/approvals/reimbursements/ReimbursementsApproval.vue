@@ -1,15 +1,30 @@
 <template>
+    <Dialog v-model:visible="show" modal header="Header" :style="{ width: '25vw' }">
+
+        <h5>Do you want to approve all?</h5>
+
+        <template #footer>
+            <Button label="No" icon="pi pi-times" @click="show = false" text />
+            <Button label="Yes" icon="pi pi-check" @click="show = false" autofocus />
+        </template>
+    </Dialog>
     <div class="flex justify-content-between align-items-center">
 
         <div class="flex justify-content-between align-items-center">
-            <Calendar v-model="selected_date" view="month" dateFormat="mm/yy"  class=""/>
+            <Calendar v-model="selected_date" view="month" dateFormat="mm/yy" class="" />
             <Dropdown v-model="selected_status" :options="statuses" placeholder="Status" class="w-full md:w-14rem mx-3" />
-            <button label="Submit" class="btn btn-primary" severity="danger" :disabled="!selected_status=='' ? false : true"  @click="generate_ajax"> <i class="fa fa-cog me-2"></i> Generate</button>
+            <button label="Submit" class="btn btn-primary" severity="danger" :disabled="!selected_status == '' ? false : true"
+                @click="generate_ajax"> <i class="fa fa-cog me-2"></i> Generate</button>
         </div>
-
-        <button class="btn btn-primary" :disabled="data_reimbursements=='' ? true : false "  severity="success" @click="download_ajax"><i class="fas fa-file-download me-2"  ></i>Download</button>
+        <Button label="Approve all" icon="pi pi-check" severity="success" @click="showConfirmDialogForBulkApproval(selectedAllEmployee, 'Approve')"
+            v-if="!selectedAllEmployee == ''" style="margin-left: 30rem; height: 2.5em;" />
+        <Button type="button" icon="pi pi-times-circle" severity="danger" v-if="!selectedAllEmployee == ''"
+            label="Reject all" style=" height: 2.5em" @click="showConfirmDialogForBulkApproval(selectedAllEmployee, 'Reject')" />
+        <button class="btn btn-primary" :disabled="data_reimbursements == '' ? true : false" severity="success"
+            @click="download_ajax"><i class="fas fa-file-download me-2"></i>Download</button>
     </div>
     <div>
+
         <!-- <ConfirmDialog></ConfirmDialog> -->
         <Toast />
         <Dialog header="Header" v-model:visible="data_checking" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
@@ -46,13 +61,14 @@
         </Dialog>
         <div>
             <DataTable :value="data_reimbursements" :paginator="true" :rows="10" class="mt-6 " dataKey="user_id"
-                @rowExpand="onRowExpand" @rowCollapse="onRowCollapse" v-model:expandedRows="expandedRows" v-model:selection="selectedAllEmployee"
+                @rowExpand="onRowExpand" @rowCollapse="onRowCollapse" v-model:expandedRows="expandedRows"
+                v-model:selection="selectedAllEmployee"  :selectAll="selectAll" @select-all-change="onSelectAllChange" @row-select="onRowSelect" @row-unselect="onRowUnselect"
                 paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
                 responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}">
                 <template #empty> No Reimbursement data for the selected status filter </template>
                 <template #loading> Loading customers data. Please wait. </template>
-                <Column :expander="true" headerStyle="width: 0.5rem" />
-                <Column selectionMode="multiple" style="width: 3rem" :exportable="false"></Column>
+                <Column :expander="true" />
+                <Column selectionMode="multiple" style="width: 1rem" :exportable="false"></Column>
                 <Column field="user_code" header="Employee Id" sortable></Column>
 
                 <Column field="name" header="Employee Name">
@@ -93,7 +109,8 @@
                 <template #expansion="slotProps">
 
                     <div class="orders-subtable">
-                        <DataTable :value="slotProps.data.reimbursement_data" responsiveLayout="scroll"  v-model:selection="selectedOneEmployee">
+                        <DataTable :value="slotProps.data.reimbursement_data" responsiveLayout="scroll"
+                            v-model:selection="selectedAllEmployee" :selectAll="selectAll" @select-all-change="onSelectAllChange">
                             <Column selectionMode="multiple" style="width: 3rem" :exportable="false"></Column>
                             <Column field="" header="Date" sortable>
                                 <template #body="slotProps">
@@ -103,6 +120,7 @@
                             </Column>
                             <Column field="from" header="From"></Column>
                             <Column field="to" header="To"></Column>
+                            <Column field="user_comments" header="Comments"></Column>
                             <Column field="vehicle_type" header="Mode of transport"></Column>
                             <Column class="fontSize13px" field="distance_travelled" header="Distance Covered"></Column>
                             <Column class="fontSize13px" field="total_expenses" header="Total Expenses">
@@ -124,7 +142,6 @@
         </div>
     </div>
 
-
 </template>
 
 <script setup>
@@ -135,21 +152,27 @@ import { FilterMatchMode, FilterOperator } from "primevue/api";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 import moment from 'moment'
-import { url } from "@vuelidate/validators";
 
 
 let data_reimbursements = ref();
 let canShowConfirmation = ref(false);
 let canShowLoadingScreen = ref(false);
-const data_checking=ref(false)
+const data_checking = ref(false)
 const confirm = useConfirm();
 const toast = useToast();
 const loading = ref(true);
 const expandedRows = ref([]);
-const  view_reimbursment_detials=ref(false);
-const view_reimbursment_action=ref(false);
-const selectedAllEmployee=ref();
-const selectedOneEmployee=ref();
+const view_reimbursment_detials = ref(false);
+const view_reimbursment_action = ref(false);
+const selectedAllEmployee = ref();
+const selectedOneEmployee = ref();
+const metaKey = ref(true);
+
+
+const data=()=>{
+    show.value=true;
+
+}
 
 
 
@@ -169,7 +192,7 @@ const statuses = ref(["Pending", "Approved", "Rejected"]);
 
 let currentlySelectedStatus = null;
 let currentlySelectedRowData = null;
-const isdisabled=ref(true)
+const isdisabled = ref(true)
 
 onMounted(() => {
     data_reimbursements.value = [];
@@ -202,6 +225,21 @@ function showConfirmDialog(selectedRowData, status) {
 
     console.log("Selected Row Data : " + JSON.stringify(selectedRowData));
 }
+function showConfirmDialogForBulkApproval(selectedRowData, status) {
+    console.log(selectedAllEmployee.value);
+    const ob=Object.values(selectedAllEmployee.value)
+
+
+    ob.forEach(ent=>{
+        console.log(ent.employee_name);
+    })
+
+    canShowConfirmation.value = true;
+    currentlySelectedStatus = status;
+    currentlySelectedRowData = selectedRowData;
+
+    console.log("Selected Row Data : " + JSON.stringify(selectedRowData));
+}
 
 function hideConfirmDialog(canClearData) {
     canShowConfirmation.value = false;
@@ -218,6 +256,8 @@ const selected_date = ref()
 const selected_status = ref()
 const show_table = ref(false)
 
+const show = ref(false)
+
 const get_data = ref()
 
 const generate_ajax = () => {
@@ -233,7 +273,7 @@ const generate_ajax = () => {
 
     //show_table.value=true
 
-    data_checking.value=true
+    data_checking.value = true
 
 
 
@@ -246,7 +286,7 @@ const generate_ajax = () => {
         console.log("data from " + res.employee_name);
         data_reimbursements.value = res.data
         get_data.value = res.data
-        data_checking.value=false
+        data_checking.value = false
     }).catch(err => {
         console.log(err);
     })
@@ -255,11 +295,11 @@ const generate_ajax = () => {
 
 const download_ajax = () => {
     let filter_date = new Date(selected_date.value);
-    data_checking.value=true
+    data_checking.value = true
 
     let year = filter_date.getFullYear();
     let month = filter_date.getMonth() + 1;
-    isdisabled.value=false
+    isdisabled.value = false
 
     let URL = '/reports/generate-manager-reimbursements-reports?selected_year=' + year + '&selected_month=' + month +
         '&selected_status=' + selected_status.value + '&_token={{ csrf_token() }}';
@@ -268,8 +308,13 @@ const download_ajax = () => {
 
 }
 
-const greet=()=> {
-    data_checking.value=false
+const test = () => {
+
+    toast.add({ severity: 'warn', summary: 'Are you sure?', detail: 'Proceed to confirm', group: 'bc' });
+}
+
+const greet = () => {
+    data_checking.value = false
 }
 
 setTimeout(greet, 3000);
@@ -321,6 +366,49 @@ function processApproveReject() {
             console.log(error.toJSON());
         });
 }
+
+
+const expandedRowGroups = ref();
+const onRowGroupExpand = (event) => {
+    toast.add({ severity: 'info', summary: 'Row Group Expanded', detail: 'Value: ' + event.data, life: 3000 });
+};
+const onRowGroupCollapse = (event) => {
+    toast.add({ severity: 'success', summary: 'Row Group Collapsed', detail: 'Value: ' + event.data, life: 3000 });
+};
+const calculateCustomerTotal = (name) => {
+    let total = 0;
+
+    if (customers.value) {
+        for (let customer of customers.value) {
+            if (customer.representative.name === name) {
+                total++;
+            }
+        }
+    }
+
+    return total;
+};
+const getSeverity = (status) => {
+    switch (status) {
+        case 'unqualified':
+            return 'danger';
+
+        case 'qualified':
+            return 'success';
+
+        case 'new':
+            return 'info';
+
+        case 'negotiation':
+            return 'warning';
+
+        case 'renewal':
+            return null;
+    }
+};
+
+
+
 </script>
 
 <style lang="scss">
@@ -437,9 +525,6 @@ function processApproveReject() {
     }
 }
 
-.p-datatable .p-datatable-tbody>tr>td:nth-child(1) {
-    width: 100px;
-}
 
 .p-confirm-dialog-icon.pi.pi-exclamation-triangle {
     color: red;
@@ -515,5 +600,4 @@ function processApproveReject() {
 .pi-sort-amount-up-alt::before {
     content: "\e9a2";
     color: white;
-}
-</style>
+}</style>
