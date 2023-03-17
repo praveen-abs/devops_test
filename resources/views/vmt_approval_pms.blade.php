@@ -38,10 +38,11 @@
 
         if (document.getElementById("table_pms_approvals")) {
             gridTable_pms_approvals = new gridjs.Grid({
-                columns: [{
-                        id: 'pms_kpiform_review_id',
-                        name: 'ID',
-                    },
+                columns: [
+                    // {
+                    //     id: 'pms_kpiform_review_id',
+                    //     name: 'ID',
+                    // },
                     {
                         id: 'name',
                         name: 'Assignee Name'
@@ -49,6 +50,9 @@
                     {
                         id: 'assignment_period',
                         name: 'Assignment Period',
+                        formatter: function formatter(cell) {
+                                return cell.toUpperCase();
+                            }
 
                     },
 
@@ -104,7 +108,7 @@
                         approvals_pms => [
                             // Assignee name, Assignment period, Approval Status      Reviewer Name, BUTTON(View, Approve, Reject)
 
-                            approvals_pms.pms_kpiform_review_id,
+                            //approvals_pms.pms_kpiform_review_id,
                             approvals_pms.assignee_name,
                             approvals_pms.assignment_period,
                             approvals_pms.reviewer_name,

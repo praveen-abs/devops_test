@@ -65,7 +65,7 @@
                                 </div>
                             </td>
                             <td> {{$employee->user_code}}</td>
-                            <td>{{ Carbon\Carbon::parse($employee->doj)->format('d-m-Y') }}</td>
+                            <td>{{ Carbon\Carbon::parse($employee->doj)->format('d-M-Y') }}</td>
                             <td> Yet to approve</td>
                             <td>
                                 <!-- <div class="d-flex justify-content-center align-items-center"> -->

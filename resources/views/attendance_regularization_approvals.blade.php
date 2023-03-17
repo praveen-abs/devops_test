@@ -338,8 +338,9 @@
                             id: 'attendance_date',
                             name: 'Date',
                             formatter: function formatter(cell) {
-                                return gridjs.html(cell);
+                                return moment(cell).format('DD-MMM-YYYY');
                             }
+
                         },
                         {
                             id: 'regularization_type',

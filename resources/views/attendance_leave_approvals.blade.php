@@ -317,11 +317,17 @@
                         {
                             id: 'start_date',
                             name: 'Start Date',
+                            formatter: function formatter(cell) {
+                                return moment(cell).format('DD-MMM-YYYY');
+                            }
                         },
 
                         {
                             id: 'end_date',
                             name: 'End Date',
+                            formatter: function formatter(cell) {
+                                return moment(cell).format('DD-MMM-YYYY');
+                            }
                         },
 
                         {
