@@ -28,6 +28,7 @@ import Row from 'primevue/row'
 import ColumnGroup from 'primevue/columngroup'
 import Calendar from 'primevue/calendar'
 import moment from 'moment'
+import Checkbox from 'primevue/checkbox'
 
 import ReimbursementsApproval from './ReimbursementsApproval.vue';
 
@@ -57,7 +58,8 @@ app.component('InputText', InputText);
 app.component('Dialog', Dialog);
 app.component('ProgressSpinner', ProgressSpinner);
 app.component('Calendar', Calendar);
-app.component('moment',moment)
+app.component('moment',moment);
+app.component('Checkbox',Checkbox)
 
 app.mount("#vjs_reimbursementsApprovalTable");
 

@@ -521,6 +521,12 @@ Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 's
     Route::get('/attendance_settings/fetch-emp-details',  [App\Http\Controllers\VmtAttendanceSettingsController::class, 'fetchEmployeeDetails'])->name('attendance_settings-fetchEmployeeDetails');
     Route::post('/attendance_settings/save-shiftdetails',  [App\Http\Controllers\VmtAttendanceSettingsController::class, 'assignEmployeesToWorkShift'])->name('attendance_settings-save-shiftdetails');
 
+    //Holidays
+    ////Holidays creation
+    Route::get('/holiday/master-page',  [App\Http\Controllers\VmtHolidaysController::class, 'showHolidaysMasterPage'])->name('holidays-masterpage');
+
+
+
 });
 
 Route::post('updatePassword', 'App\Http\Controllers\VmtEmployeeController@updatePassword')->name('vmt-updatepassword');
