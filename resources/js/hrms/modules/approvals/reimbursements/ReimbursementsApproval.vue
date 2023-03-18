@@ -1,4 +1,5 @@
 <template>
+    <Toast />
     <Dialog v-model:visible="show" modal header="Header" :style="{ width: '25vw' }">
 
         <h5>Do you want to approve all?</h5>
@@ -16,17 +17,15 @@
             <button label="Submit" class="btn btn-primary" severity="danger" :disabled="!selected_status == '' ? false : true"
                 @click="generate_ajax"> <i class="fa fa-cog me-2"></i> Generate</button>
         </div>
-        <Button label="Approve all" icon="pi pi-check" severity="success" @click="showConfirmDialogForBulkApproval(selectedAllEmployee, 'Approve')"
+        <!-- <Button label="Approve all" icon="pi pi-check" severity="success" @click="showConfirmDialogForBulkApproval(selectedAllEmployee, 'Approve')"
             v-if="!selectedAllEmployee == ''" style="margin-left: 30rem; height: 2.5em;" />
         <Button type="button" icon="pi pi-times-circle" severity="danger" v-if="!selectedAllEmployee == ''"
-            label="Reject all" style=" height: 2.5em" @click="showConfirmDialogForBulkApproval(selectedAllEmployee, 'Reject')" />
+            label="Reject all" style=" height: 2.5em" @click="showConfirmDialogForBulkApproval(selectedAllEmployee, 'Reject')" /> -->
         <button class="btn btn-primary" :disabled="data_reimbursements == '' ? true : false" severity="success"
             @click="download_ajax"><i class="fas fa-file-download me-2"></i>Download</button>
     </div>
     <div>
 
-        <!-- <ConfirmDialog></ConfirmDialog> -->
-        <Toast />
         <Dialog header="Header" v-model:visible="data_checking" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
             :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
             <template #header>
