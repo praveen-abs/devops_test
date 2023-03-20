@@ -68,7 +68,13 @@ Route::middleware(['auth'])->group(function () {
     Route::controller(VmtEmployeeOnboardingController::class)->group(function () {
         Route::get('/employee-onboarding-v2', 'showNormalOnboardingPage')->name('employee-onboarding-v2');
 
+        //normal onboarding checks
+        Route::get('/personal-mail-exists/{mail}', 'isEmployeePersonalEmailAlreadyExists')->name('personal-mail-exists');
+        Route::get('/user-code-exists/{user_code}', 'isEmployeeCodeAlreadyExists')->name('user-code-exists');
+
     });
+
+
 
 
     //Attendance
