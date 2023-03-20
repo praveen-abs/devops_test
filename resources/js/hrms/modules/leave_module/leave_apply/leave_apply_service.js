@@ -30,6 +30,7 @@ export const Service = defineStore("Service", () => {
         compensatory_end_date:"",
         notifyTo: "",
         leave_reason: "",
+        test:''
     });
 
 
@@ -127,9 +128,7 @@ export const Service = defineStore("Service", () => {
             }
         }
 
-        if(!leave_data.custom_total_days<0){
-            alert("")
-        }
+
         console.log(leave_data.custom_start_date);
         console.log(leave_data.custom_end_date);
         var date1 = new Date(leave_data.custom_start_date);
@@ -159,30 +158,18 @@ export const Service = defineStore("Service", () => {
         leave_data.permission_total_time = total_hours;
         console.log(total_hours);
     };
+
+
     const Permission = () => {
-        // leave_data.selected_leave=='Permission' ? Permission_format.value=true:Permission_format.value=false
-        // leave_data.selected_leave=='Compensatory Off'  ?  compensatory_format.value=true : compensatory_format.value=false
 
-        // full_day_format.value=false
-        // half_day_format.value=false
-        // custom_format.value=false
-
-
-        if (leave_data.selected_leave == "Select Leave Type") {
-            Permission_format.value = true;
-            TotalNoOfDays.value = true;
-
-
-        }
-
-        if (leave_data.selected_leave == "Permission") {
+        if (leave_data.selected_leave.includes("Permission")) {
             Permission_format.value = true;
             TotalNoOfDays.value = false;
             half_day_format.value = false;
             custom_format.value = false;
             compensatory_format.value = false;
         }
-         else if (leave_data.selected_leave == "Compensatory Leave") {
+         else if (leave_data.selected_leave.includes('Compensatory')) {
             compensatory_format.value = true;
             Permission_format.value = false;
             full_day_format.value = false;
@@ -199,14 +186,22 @@ export const Service = defineStore("Service", () => {
         } else {
             Permission_format.value = false;
             compensatory_format.value = false;
+            full_day_format.value=true
+            TotalNoOfDays.value=true
+            half_day_format.value=false
+            custom_format.value=false
         }
     };
 
+
+
+
     const get_leave_types=()=>{
+
         axios.get('/fetch-leave-policy-details').then(res=>{
             console.log(res.data);
             leave_types.value=res.data
-        })
+       })
     }
 
     // Request leave Events
@@ -222,7 +217,9 @@ export const Service = defineStore("Service", () => {
         hours_diff:'',
         notify_to:'',
         leave_reason:'',
-        compensatory_leave_id:[]
+        compensatory_leave_id:[],
+
+
     })
 
 
@@ -231,7 +228,6 @@ export const Service = defineStore("Service", () => {
     // write Email service and axios service here
 
     const Submit = () => {
-
 
 
         leave_Request_data.leave_type_name=leave_data.selected_leave

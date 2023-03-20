@@ -256,7 +256,7 @@
                     </div>
 
 
-                    <div class="col-md-12  col-sm-12 col-lg-3 col-xl-3 col-xxl-5  mb-3 ms-5">
+                    <div class="col-md-12  col-sm-12 col-lg-3 col-xl-3 col-xxl-5  ">
 
                         <div class="col-md-12  col-sm-12 col-lg-12 col-xl-12 col-xxl-12 text-center">
                             <label for="" class="float-label ms-10">Total Days</label>
@@ -266,7 +266,7 @@
                         </div>
 
                     </div>
-                    <div class="col-md-12  col-sm-12 col-lg-4 col-xl-4 col-xxl-4 mb-3">
+                    <div class="col-md-12  col-sm-12 col-lg-4 col-xl-4 col-xxl-3 mb-3">
                         <div class="col-md-12  col-sm-12 col-lg-12 col-xl-12 col-xxl-12">
                             <label for="" class="float-label">End Day</label>
                         </div>
@@ -347,7 +347,9 @@ const leave_types = ref()
 // Check All Varaibles and Events Here
 const service = Service()
 
+
 onMounted(() => {
+
 
     service.get_leave_types()
     service.leave_data.custom_start_date = new Date().toJSON().slice(0, 10);
@@ -357,16 +359,6 @@ onMounted(() => {
 
 
 
-const test=()=>{
-    const  tet=Object.values(service.leave_data.selected_compensatory_leaves)
-
-    tet.map(evnt=>{
-        console.log(evnt.id);
-    })
-
-
-
-}
 
 
 
