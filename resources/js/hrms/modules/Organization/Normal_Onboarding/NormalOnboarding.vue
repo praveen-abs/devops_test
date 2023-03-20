@@ -87,7 +87,7 @@
                             >Marital Status <span class="text-danger">*</span></label
                           >
                           <Dropdown
-                            editable
+
                             v-model="v$.marital_status.$model"
                             :options="maritalDetails"
                             optionLabel="name"
@@ -165,7 +165,6 @@
                             :options="Gender"
                             optionLabel="name"
                             optionValue="value"
-                            editable
                             placeholder="Select Gender"
                           />
                           <!-- <select
@@ -450,7 +449,6 @@
                             optionLabel="name"
                             optionValue="id"
                             placeholder="Select Bloodgroup"
-                            editable
                           />
 
                         </div>
@@ -464,7 +462,6 @@
                             :options="PhyChallenged"
                             optionLabel="name"
                             optionValue="value"
-                            editable
                             placeholder="Physically Challenged"
                           />
 
