@@ -128,9 +128,7 @@ export const Service = defineStore("Service", () => {
             }
         }
 
-        if(!leave_data.custom_total_days<0){
-            alert("")
-        }
+
         console.log(leave_data.custom_start_date);
         console.log(leave_data.custom_end_date);
         var date1 = new Date(leave_data.custom_start_date);
@@ -163,19 +161,6 @@ export const Service = defineStore("Service", () => {
 
 
     const Permission = () => {
-        // leave_data.selected_leave=='Permission' ? Permission_format.value=true:Permission_format.value=false
-        // leave_data.selected_leave=='Compensatory Off'  ?  compensatory_format.value=true : compensatory_format.value=false
-
-        // full_day_format.value=false
-        // half_day_format.value=false
-        // custom_format.value=false
-
-        if (leave_data.selected_leave == "Select Leave Type") {
-            Permission_format.value = true;
-            TotalNoOfDays.value = true;
-
-
-        }
 
         if (leave_data.selected_leave.includes("Permission")) {
             Permission_format.value = true;
@@ -201,6 +186,10 @@ export const Service = defineStore("Service", () => {
         } else {
             Permission_format.value = false;
             compensatory_format.value = false;
+            full_day_format.value=true
+            TotalNoOfDays.value=true
+            half_day_format.value=false
+            custom_format.value=false
         }
     };
 
