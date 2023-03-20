@@ -524,10 +524,13 @@ Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 's
     //Holidays
     ////Holidays creation
     Route::get('/holiday/master-page',  [App\Http\Controllers\VmtHolidaysController::class, 'showHolidaysMasterPage'])->name('holidays-masterpage');
-
-
+    Route::get('/test_ui/master-page',  [App\Http\Controllers\VmtHolidaysController::class, 'createHoliday'])->name('test_ui-masterpage');
+    Route::get('/get_data', function () {
+        return view('holidays.test_ui.edit_holidays_list');
+    })->name('/get_data');
 
 });
+
 
 Route::post('updatePassword', 'App\Http\Controllers\VmtEmployeeController@updatePassword')->name('vmt-updatepassword');
 Route::get('/resetPassword', 'App\Http\Controllers\Auth\LoginController@showResetPasswordPage')->name('vmt-resetpassword-page');

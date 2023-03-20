@@ -20,15 +20,20 @@
                     </div>
                 </div>
                 <div id="VJS_LeaveApproval">
+                    @foreach ($master_holidays as $singleHoliday)
                     <br/>
                         <div>
                             <span> {{ $singleHoliday->holiday_name}} </span> <br/>
                             <span> {{ $singleHoliday->holiday_date}}</span> <br/>
-                            <span><input type="button" class="editHoliday" value="Edit" />
+                            <span><a href="../get_data"><input type="button" class="editHoliday" value="Edit" /></a>
                             </span>
                             <span><input type="button" class="editHoliday" value="Delete" /></span>
                         </div>
-                </div>
+
+
+                    @endforeach
+
+
             </div>
          </div>
 

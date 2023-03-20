@@ -16,16 +16,36 @@ class VmtHolidaysController extends Controller
 
         $master_holidays = vmtHolidays::all();
 
-        return view('holidays.holidays_master_page',compact('master_holidays'));
+        return view('holidays.test_ui.edit_holiday',compact('master_holidays'));
     }
 
     public function createHoliday(Request $request){
+//create object for table vmt_holidays
 
+        $vmt_holidays_data= new vmtHolidays;
+        $vmt_holidays_data->holiday_name=$request['holiday_name'];
+        $vmt_holidays_data->holiday_date=$request['holiday_date'];
+        $vmt_holidays_data->aholiday_description=$request['holiday_description'];
+// insert the image
+
+        $uploadedFile = $request->file('file');
+
+        if($uploadedFile) {
+
+
+            $fileName = 'Hello_'.$uploadedFile->hashName();
+            $filePath = $uploadedFile->storeAs('new_uploads',$fileName, 'public');
+            $vmt_holidays_data->image=$request['image'];
+            $vmt_holidays_data->save();
+          //  dd($vmt_holidays_data);
+            $result ="saved";
+            return view('holidays.test_ui.edit_holiday',compact('vmt_holidays_data'));
+    }
     }
 
     //test
     public function editHoliday(Request $request){
-        
+
     }
 
     public function updateHoliday(Request $request){
