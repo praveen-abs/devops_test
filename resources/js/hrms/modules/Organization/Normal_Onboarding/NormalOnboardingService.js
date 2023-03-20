@@ -51,14 +51,13 @@ export async function getBloodGroups(){
 
 export default function validation(rules) {
     return (rules = {
-        //   Person Detials Validation start
 
         employee_code: {},
         dob: {},
         gender: {},
         passport_number: {},
         passport_date: {},
-        blood_group_id: {},
+        blood_group_name: {},
         physically_challenged: {},
         gender: {},
         dl_no: {},
@@ -75,7 +74,7 @@ export default function validation(rules) {
                 return regex.test(value);
             },
         },
-        bank_id: {
+        bank_name: {
             required,
         },
         employee_name: {
@@ -209,6 +208,5 @@ export default function validation(rules) {
         dob_spouse: { required },
 
         // Personal Documents
-
-    });
+});
 }
