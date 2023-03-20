@@ -1301,29 +1301,19 @@
                             >Probation Period</label
                           >
 
-                          <select
-                            placeholder="Probation Period"
-                            name="probation_period"
-                            id="probation_period"
-                            style="height: 2.9em"
-                            v-model="v$.probation_period.$model"
-                            class="onboard-form form-control textbox"
-                          >
-                            <!-- <option value="" hidden selected disabled>Select
-                                                            Probabition Period</option> -->
-                            <option value="1 Month">1 Month</option>
-                            <option value="2 Month">2 Month</option>
-                            <option value="3 Month">3 Month</option>
-                            <option value="4 Month">4 Month</option>
-                            <option value="5 Month">5 Month</option>
-                            <option value="6 Month">6 Month</option>
-                            <option value="7 Month">7 Month</option>
-                            <option value="8 Month">8 Month</option>
-                            <option value="9 Month">9 Month</option>
-                            <option value="10 Month">10 Month</option>
-                            <option value="11 Month">11 Month</option>
-                            <option value="12 Month">12 Month</option>
-                          </select>
+
+                           <Dropdown
+                           v-model="v$.probation_period.$model"
+                            :options="probation_period"
+                            optionLabel="name"
+                            optionValue="name"
+                            editable
+                            placeholder="Select Probation Period"
+                             :class="{
+                              'is-invalid': v$.probation_period.$invalid && submitted,
+                            }"
+
+                          />
                         </div>
                       </div>
                       <div
@@ -1362,54 +1352,45 @@
                             ></label
                           >
 
-                          <!-- <Dropdown
-                             v-model="v$.l1_manager_code.$model"
-                            :options="Nationality"
-                            optionLabel="name"
-                            optionValue="name"
-                            editable
-                            placeholder="Select l1_manager_code"
-                            @change="NationalityCheck"
-                             :class="{
-                              'is-invalid': v$.l1_manager_code.$invalid && submitted,
-                            }"
+                                <Dropdown  :options="Managerdetails" optionLabel="name" placeholder="Reporting Manager Name"
+                                v-model="v$.l1_manager_code.$model"   :class="{
+                                    'is-invalid':
+                                      v$.l1_manager_code.$invalid && submitted,
+                                  }">
+                                    <template #value="slotProps">
+                                        <div v-if="slotProps.value" class="flex align-items-center">
+                                            <div>{{ slotProps.value.user_code }} - {{ slotProps.value.name }}</div>
+                                        </div>
+                                        <span v-else>
+                                            {{ slotProps.placeholder }}
+                                        </span>
+                                    </template>
+                                    <template #option="slotProps">
+                                        <div class="flex align-items-center">
+                                            <div>{{ slotProps.option.user_code }} - {{ slotProps.option.name }} </div>
+                                            <div></div>
 
-                          /> -->
 
-                          <select
-                            placeholder="Reporting Manager Name"
-                            name="l1_manager_code"
-                            id="l1_manager_code_select"
-                            v-model="v$.l1_manager_code.$model"
-                            :class="{
-                              'is-invalid':
-                                v$.l1_manager_code.$invalid && submitted,
-                            }"
-                            class="onboard-form form-control textbox"
-                          >
-                            <option
-                              v-for="singleManagerDetail in Managerdetails"
-                              :key="singleManagerDetail.user_code"
-                            >
-                              {{ singleManagerDetail.user_code }}
-                              -
-                              {{ singleManagerDetail.name }}
-                            </option>
-                          </select>
+                                        </div>
+                                    </template>
+                                </Dropdown>
 
-                          <span
-                            v-if="
-                              (v$.l1_manager_code.$invalid && submitted) ||
-                              v$.l1_manager_code.$pending.$response
-                            "
-                            class="p-error"
-                            >{{
-                              v$.l1_manager_code.required.$message.replace(
-                                "Value",
-                                "Reporting Manager Code"
-                              )
-                            }}
-                          </span>
+                                <span
+                                v-if="
+                                  (v$.l1_manager_code.$invalid && submitted) ||
+                                  v$.l1_manager_code.$pending.$response
+                                "
+                                class="p-error"
+                                >{{
+                                  v$.l1_manager_code.required.$message.replace(
+                                    "Value",
+                                    "Reporting Manager Code"
+                                  )
+                                }}
+                              </span>
+
+
+
                         </div>
                       </div>
                       <div
@@ -1419,15 +1400,18 @@
                           <label for="" class="float-label"
                             >Holiday Location</label
                           >
-                          <select
-                            placeholder="Holiday Location"
-                            name="holiday_location"
-                            id="holiday_location"
-                            v-model="v$.holiday_location.$model"
-                            class="textbox onboard-form form-control select2_form_without_search"
-                          >
-                            <option value="" disabled>Holiday Location</option>
-                          </select>
+
+
+                          <InputText
+                          class="onboard-form form-control"
+                          type="text"
+                          :class="{
+                            'p-invalid': v$.holiday_location.$invalid && submitted,
+                          }"
+                          v-model="v$.holiday_location.$model"
+                          placeholder="Holiday Location"
+                        />
+
                         </div>
                       </div>
                       <div
@@ -2608,6 +2592,7 @@ const get_id = () => {
   employee_onboarding.permanent_state_id =
     employee_onboarding.permanent_state.id;
   employee_onboarding.department_id = employee_onboarding.department.id;
+  employee_onboarding.l1_manager_code_id = employee_onboarding.l1_manager_code.id
 
   console.log(
     employee_onboarding.bank_id,
