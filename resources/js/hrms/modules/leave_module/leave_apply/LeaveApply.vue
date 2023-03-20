@@ -27,8 +27,12 @@
         </template>
     </Dialog>
     <Dialog v-model:visible="visible" :style="{ width: '80vw' }" :breakpoints="{ '960px': '75vw', '641px': '100vw' }">
-        <h6 class="modal-title mb-4  fs-21">
-            Leave Request</h6>
+        <template #header>
+
+            <h6 class="modal-title mb-4  fs-21">
+                Leave Request</h6>
+        </template>
+
         <div class="row ">
             <div class="col-md-7 col-sm-12">
                 <div class="row mb-3">
@@ -60,22 +64,22 @@
                     <div class="col-md-12  col-sm-12 col-lg-6 col-xl-6 col-xxl-6  mb-md-0 mb-3">
                         <div class="form-check form-check-inline">
                             <input style="height: 20px;width: 20px;" class="form-check-input" type="radio" name="leave"
-                                id="" value="full_day" v-model="service.leave_data.radiobtn_full_day"
+                                id="full_day" value="full_day" v-model="service.leave_data.radiobtn_full_day"
                                 @click="service.full_day">
-                            <label class="form-check-label leave_type ms-3" for="">Full Day</label>
+                            <label class="form-check-label leave_type ms-3" for="full_day">Full Day</label>
 
                         </div>
                         <div class="form-check form-check-inline">
                             <input style="height: 20px;width: 20px;" class="form-check-input" type="radio" name="leave"
-                                id="" value="half_day" v-model="service.leave_data.radiobtn_half_day"
+                                id="half_day" value="half_day" v-model="service.leave_data.radiobtn_half_day"
                                 @click="service.half_day">
-                            <label class="form-check-label leave_type ms-3" for="">Half Day</label>
+                            <label class="form-check-label leave_type ms-3" for="half_day">Half Day</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input style="height: 20px;width: 20px;" class="form-check-input" type="radio" name="leave"
-                                id="" value="custom" v-model="service.leave_data.radiobtn_custom"
+                                id="custom" value="custom" v-model="service.leave_data.radiobtn_custom"
                                 @click="service.custom_day">
-                            <label class="form-check-label leave_type ms-3" for="">Custom</label>
+                            <label class="form-check-label leave_type ms-3" for="custom">Custom</label>
                         </div>
                     </div>
                 </div>
@@ -117,16 +121,16 @@
                         <div class="form-group">
                             <div class="form-check form-check-inline">
                                 <input style="height: 20px;width: 20px;" class="form-check-input" type="radio"
-                                    name="session" id="" value="forenoon"
+                                    name="session" id="forenoon" value="forenoon"
                                     v-model="service.leave_data.half_day_leave_session">
-                                <label class="form-check-label leave_type ms-3" for="">Forenoon</label>
+                                <label class="form-check-label leave_type ms-3" for="forenoon">Forenoon</label>
 
                             </div>
                             <div class="form-check form-check-inline">
                                 <input style="height: 20px;width: 20px;" class="form-check-input" type="radio"
-                                    name="session" id="" value="afternoon"
+                                    name="session" id="afternoon" value="afternoon"
                                     v-model="service.leave_data.half_day_leave_session">
-                                <label class="form-check-label leave_type ms-3" for="">Afternoon</label>
+                                <label class="form-check-label leave_type ms-3" for="afternoon">Afternoon</label>
                             </div>
 
 
@@ -136,34 +140,34 @@
 
                 <!-- Custom Leave -->
                 <div v-if="service.custom_format" class="row mb-3 ">
-                    <div class=" col-md-6 col-lg-5  col-sm-4  mb-md-0 mb-3">
+                    <div class="col-md-12  col-sm-12 col-lg-3 col-xl-3 col-xxl-3  mb-md-0 mb-3">
                         <div class="form-group">
                             <div class="floating">
 
 
                                 <label for="" class="float-label">Start Date</label><br>
                                 <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true"
-                                    v-model="service.leave_data.custom_start_date" :disabledDates="service.invalidDates"
-                                    :disabledDays="[0, 6]" :manualInput="true" />
+                                    v-model="service.leave_data.custom_start_date"
+                                    :minDate="new Date()"  :manualInput="true" />
 
                             </div>
 
                         </div>
                     </div>
-                    <div class="col-md-2 col-lg-3  mb-md-0 mb-3  ">
+                    <div class="col-md-12  col-sm-12 col-lg-3 col-xl-3 col-xxl-5  mb-md-0 mb-3">
                         <div class="form-group">
-                            <div class="floating">
+                            <div class="floating" style="text-align: center;">
 
                                 <label for="" class="float-label ">Total Days</label>
-                                <InputText style="width: 60px;text-align: center;"
+                                <InputText style="width: 60px;text-align: center;margin: auto;"
                                     class="form-onboard-form form-control  textbox  capitalize " type="text"
-                                    v-model="service.leave_data.custom_total_days" />
+                                    v-model="service.leave_data.custom_total_days" readonly />
 
                             </div>
 
                         </div>
                     </div>
-                    <div class="col-md-6 col-lg-4  mb-md-0 mb-3 ">
+                    <div class="col-md-12  col-sm-12 col-lg-3 col-xl-3 col-xxl-3  mb-md-0 mb-3">
                         <div class="form-group">
 
                             <div class="floating">
@@ -202,7 +206,7 @@
                                 <label for="" class="float-label">Total Hour</label>
                                 <InputText class="form-onboard-form form-control  textbox  capitalize " type="text"
                                     style="width: 67px;text-align: center;"
-                                    v-model="service.leave_data.permission_total_time" />
+                                    v-model="service.leave_data.permission_total_time" readonly />
 
                             </div>
 
@@ -241,29 +245,33 @@
                         :maxSelectedLabels="5" class="w-full md:full " />
                         <p class="opacity-50 fs-10">(note:Worked dates will get expired after 60 days)</p>
                     </div>
-                    <div class="col-md-12  col-sm-12 col-lg-4 col-xl-4 col-xxl-4  mb-md-0 mb-3 ">
+                    <div class="col-md-12  col-sm-12 col-lg-4 col-xl-4 col-xxl-3  mb-md-0 mb-3 ">
                         <div class="col-md-12  col-sm-12 col-lg-12 col-xl-12 col-xxl-12">
                             <label for="" class="float-label">Start Date</label>
                         </div>
                         <div class="col-md-12  col-sm-12 col-lg-12 col-xl-12 col-xxl-12">
-                            <Calendar inputId="icon" dateFormat="dd-mm-yy" class="w-100" :showIcon="true"
-                              v-model="service.leave_data.compensatory_start_date"   style="z-index: 1300;" />
+                            <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true"
+                              v-model="service.leave_data.compensatory_start_date" />
                         </div>
                     </div>
-                    <div class="col-md-12  col-sm-12 col-lg-3 col-xl-3 col-xxl-3   mb-3 ms-5">
-                        <div class="col-md-12  col-sm-12 col-lg-12 col-xl-12 col-xxl-12">
+
+
+                    <div class="col-md-12  col-sm-12 col-lg-3 col-xl-3 col-xxl-5  mb-3 ms-5">
+
+                        <div class="col-md-12  col-sm-12 col-lg-12 col-xl-12 col-xxl-12 text-center">
                             <label for="" class="float-label ms-10">Total Days</label>
                         </div>
-                        <div class="col-md-12  col-sm-12 col-lg-12 col-xl-12 col-xxl-12">
-                            <InputText style="min-width: 60px" class=" form-control w-100 " v-model="service.leave_data.compensatory_total_days"  type="text" readonly/>
+                        <div class="col-md-12  col-sm-12 col-lg-2 col-xl-2 col-xxl-2 m-auto" >
+                            <InputText style="min-width: 60px" class=" form-control " v-model="service.leave_data.compensatory_total_days"  type="text" readonly/>
                         </div>
+
                     </div>
                     <div class="col-md-12  col-sm-12 col-lg-4 col-xl-4 col-xxl-4 mb-3">
                         <div class="col-md-12  col-sm-12 col-lg-12 col-xl-12 col-xxl-12">
                             <label for="" class="float-label">End Day</label>
                         </div>
                         <div class="col-md-12  col-sm-12 col-lg-12 col-xl-12 col-xxl-12">
-                            <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true" class="w-100" v-model="service.leave_data.compensatory_end_date"  />
+                            <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true" v-model="service.leave_data.compensatory_end_date"  />
                         </div>
                     </div>
                 </div>
@@ -293,7 +301,7 @@
                     <div class="col-md-12  col-sm-12 col-lg-6 col-xl-6 col-xxl-6  mb-md-0 mb-3">
                         <div class="form-group">
                             <Textarea :autoResize="true" rows="3" cols="60" placeholder="Enter the Reason"
-                                v-model="service.leave_data.leave_reason" />
+                                v-model="service.leave_data.leave_reason" class="form-control" />
                         </div>
                     </div>
                 </div>
@@ -305,7 +313,7 @@
                 <div class="text-center mt-6 ">
                     <button type="button" class="btn btn-border-primary" @click="visible = false">Cancel</button>
                     <button type="button" id="btn_request_leave" class="btn btn-primary ms-4"
-                        :disabled="service.leave_data.selected_leave.length > 0 ? false : true" @click="service.Submit">
+                        :disabled="service.leave_data.selected_leave.length > 0 && service.leave_data.leave_reason ? false : true" @click="service.Submit">
                         Request Leave</button>
                 </div>
             </div>
@@ -442,4 +450,37 @@ label {
     border-color: #3B82F6;
     background: #103674;
 }
+
+.p-chips .p-chips-multiple-container {
+    padding: 0.375rem 0.75rem;
+    min-width: 315px;
+}
+
+.p-chips.p-component.p-inputwrapper {
+    width: 100%;
+}
+
+.form-select:focus {
+    border-color: #002f56;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 5%);
+}
+.form-control:focus {
+    border-color: #002f56;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 5%);
+}
+.p-chips-multiple-container {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    cursor: text;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+
 </style>
