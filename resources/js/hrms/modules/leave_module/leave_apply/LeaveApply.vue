@@ -16,7 +16,9 @@
     </Dialog> -->
     <Dialog header="Header" v-model:visible="service.Email_Service" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
         :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
+
         <template #header>
+
             <h5 class="m-auto"> Email sent Successfully</h5>
         </template>
         <template #footer>
@@ -26,9 +28,21 @@
             </div>
         </template>
     </Dialog>
-    <Dialog v-model:visible="visible" :style="{ width: '80vw' }" :breakpoints="{ '960px': '75vw', '641px': '100vw' }">
-        <template #header>
+    <Dialog header="Header" v-model:visible="service.Email_Error" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+        :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
 
+        <template #header>
+            <h5 class="m-auto"> {{service.leave_data.leave_request_error_messege}}</h5>
+        </template>
+        <template #footer>
+            <div class="text-center">
+                <Button label="OK" style="justify-content: center;" severity="help" @click="service.Email_Error = false"
+                    raised class="justify-content-center" />
+            </div>
+        </template>
+    </Dialog>
+    <Dialog v-model:visible="visible" :style="{ width: '80vw' }" :breakpoints="{ '960px': '75vw', '641px': '100vw' }">
+    <template #header>
             <h6 class="modal-title mb-4  fs-21">
                 Leave Request</h6>
         </template>
@@ -104,7 +118,7 @@
                         </label>
                     </div>
                     <div class="col-md-12  col-sm-12 col-lg-6 col-xl-6 col-xxl-6  mb-md-0 mb-3">
-                        <Calendar inputId="icon" v-model="service.leave_data.full_day_leave_date" dateFormat="dd-mm-yy"
+                        <Calendar inputId="icon" v-model="service.leave_data.half_day_leave_date" dateFormat="dd-mm-yy"
                             :showIcon="true" style="width: 350px;" :minDate="new Date()" />
                     </div>
                 </div>
@@ -473,6 +487,14 @@ label {
     flex-wrap: wrap;
     width: 100%;
 }
+/*.p-dialog.p-component:before {
+    content: "";
+    background: #002f56;
+    height: 8px;
+    border-radius: 50px 50px 0px;
+    position: relative;
+    top: 3px;
+}*/
 
 
 </style>
