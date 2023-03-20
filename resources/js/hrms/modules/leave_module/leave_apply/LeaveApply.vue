@@ -352,7 +352,7 @@ onMounted(() => {
 
 
     service.get_leave_types()
-    service.leave_data.custom_start_date = new Date().toJSON().slice(0, 10);
+    service.leave_data.custom_start_date = new Date()
     service.leave_data.permission_start_time = new Date()
 
 });

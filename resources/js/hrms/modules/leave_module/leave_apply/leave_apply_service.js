@@ -128,22 +128,24 @@ export const Service = defineStore("Service", () => {
             }
         }
 
-
+        let day1= new Date().toJSON().slice(0, 10);
+        console.log(day1);
+        var date1 = new Date(day1);
         console.log(leave_data.custom_start_date);
-        console.log(leave_data.custom_end_date);
-        var date1 = new Date(leave_data.custom_start_date);
         var date2 = new Date(leave_data.custom_end_date);
-
+        console.log(leave_data.custom_end_date);
         // To calculate the time difference of two dates
         var Difference_In_Time = date2.getTime() - date1.getTime();
-        console.log("Differnece" + Difference_In_Time);
+        console.log("Differenece" + Difference_In_Time);
 
         // To calculate the no. of days between two dates
         var Difference_In_Days = (
             Difference_In_Time /
             (1000 * 60 * 60 * 24)
         ).toFixed(0);
-        leave_data.custom_total_days = Difference_In_Days;
+        let total = Difference_In_Days;
+        console.log(total);
+        leave_data.custom_total_days=parseInt(total)+1
         console.log(leave_data.custom_total_days);
     };
 
@@ -161,6 +163,7 @@ export const Service = defineStore("Service", () => {
 
 
     const Permission = () => {
+
 
         if (leave_data.selected_leave.includes("Permission")) {
             Permission_format.value = true;
