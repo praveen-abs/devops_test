@@ -11,6 +11,7 @@ export const Service = defineStore("Service", () => {
 
     // Variable Declarations
     const leave_data = reactive({
+        current_login_user:"",
         selected_leave: "",
         full_day_leave_date: "",
         half_day_leave_date: "",
@@ -57,15 +58,7 @@ export const Service = defineStore("Service", () => {
 
 
      const selected_compensatory_leaves = ref();
-        const compensatory_leaves = ref([
-            { date: '20/02/2023', id: '156' },
-            { date: '25/02/2023', id: '157' },
-            { date: '2/02/2023', id: '158' },
-            // { date: '12/02/2023', id: '159' },
-            // { date: '09/02/2023', id: '160' }
-        ]);
-
-
+     const compensatory_leaves = ref();
 
 
     // Events
@@ -195,6 +188,15 @@ export const Service = defineStore("Service", () => {
     };
 
 
+    const get_user=()=>{
+        axios.get('/currentUser').then(res=>{
+             leave_data.current_login_user=res.data
+            console.log("currently logined User:" + res.data);
+        }).catch(err=>{
+            console.log(err);
+        })
+    }
+
 
 
     const get_leave_types=()=>{
@@ -203,6 +205,17 @@ export const Service = defineStore("Service", () => {
             console.log(res.data);
             leave_types.value=res.data
        })
+    }
+
+
+    const get_compensatroy_leaves=() =>{
+        let user_id=141;
+        axios.get(`/fetch-employee-unused-compensatory-days/${user_id}`).then(res=>{
+            compensatory_leaves.value=res.data
+            console.log("Employeee compensatory leaves: " + Object.values(res.data));
+        }).catch(res=>{
+            console.log(res);
+        })
     }
 
     // Request leave Events
@@ -365,7 +378,9 @@ export const Service = defineStore("Service", () => {
         Submit,
         dayCalculation,
         time_difference,
+        get_user,
         get_leave_types,
+        get_compensatroy_leaves,
 
         // Boolean values
         full_day_format,
