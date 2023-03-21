@@ -99,7 +99,7 @@ class VmtEmployeeService {
                return null;
             }
         }
-        dd($response);
+
 
         return $response;
     }
@@ -190,7 +190,7 @@ class VmtEmployeeService {
 
         $doj=$row["doj"];
         $dob=$row["dob"];
-
+        $passport_date =  $row["passport_date"];
 
         $newEmployee->userid   =    $user->id;
         $newEmployee->emp_no   =    $row["employee_code"] ?? '';
@@ -203,12 +203,12 @@ class VmtEmployeeService {
         $newEmployee->pan_number   =  isset($row["pan_number"]) ? ($row["pan_number"]) : "";
         $newEmployee->dl_no   =  $row["dl_no"] ?? '';
         $newEmployee->passport_number = $row["passport_no"] ?? '';
-        $newEmployee->passport_date = $row["passport_date"] ?? '';
+        $newEmployee->passport_date =  $this->getdateFormatForDb( $passport_date) ?? '';
 
         //$newEmployee->pan_ack   =    $row["pan_ack"];
         $newEmployee->aadhar_number = $row["aadhar_number"] ?? '';
 
-        $newEmployee->marital_status = $row["marital_status"] ?? '';
+        $newEmployee->marital_status = $row["marital_status_id"] ?? '';
 
         $newEmployee->nationality = $row["nationality"] ?? '';
 
@@ -224,17 +224,17 @@ class VmtEmployeeService {
         $newEmployee->current_address_line_2   = $row["current_address_line_2"] ?? '' ;
         $newEmployee->permanent_address_line_1   = $row["permanent_address_line_1"] ?? '';
         $newEmployee->permanent_address_line_2   = $row["permanent_address_line_2"] ?? '';
-        $newEmployee->current_country_id   = $row["current_country"] ?? '';
-        $newEmployee->permanent_country_id   = $row["permanent_country"] ?? '';
-        $newEmployee->current_state_id   = $row["current_state"] ?? '';
-        $newEmployee->permanent_state_id   = $row["permanent_state"] ?? '';
+        $newEmployee->current_country_id   = $row["current_country_id"] ?? '';
+        $newEmployee->permanent_country_id   = $row["permanent_country_id"] ?? '';
+        $newEmployee->current_state_id   = $row["current_state_id"] ?? '';
+        $newEmployee->permanent_state_id   = $row["permanent_state_id"] ?? '';
         $newEmployee->current_city   = $row["current_city"] ?? '';
         $newEmployee->permanent_city   = $row["permanent_city"] ?? '';
         $newEmployee->current_pincode   = $row["current_pincode"] ?? '';
         $newEmployee->permanent_pincode   = $row["permanent_pincode"] ?? '';
 
         if (!empty($row['marital_status'])) {
-            if ($row['marital_status'] <> 'unmarried') {
+            if ($row['marital_status'] <> 1) {
                 $newEmployee->no_of_children   = $row["no_of_children"] ?? 0;
 
                 if (!empty($row['no_of_children']) && $row['no_of_children'] > 0) {
@@ -267,6 +267,7 @@ class VmtEmployeeService {
         );
         $newEmployee->docs_reviewed = json_encode($docReviewArray);
         $newEmployee->save();
+
     }
 
     private function createOrUpdate_EmployeeOfficeDetails($user_id,$row)
@@ -283,15 +284,16 @@ class VmtEmployeeService {
             $empOffice = new VmtEmployeeOfficeDetails;
         }
         //dd($row);
+        $confirmation_period= $row['confirmation_period'];
          $empOffice->user_id = $user_id; //Link between USERS and VmtEmployeeOfficeDetails table
-         $empOffice->department_id = $row["department"] ?? ''; // => "lk"
+         $empOffice->department_id = $row["department_id"] ?? ''; // => "lk"
          $empOffice->process = $row["process"] ?? ''; // => "k"
          $empOffice->designation = $row["designation"] ?? ''; // => "k"
          $empOffice->cost_center = $row["cost_center"] ?? ''; // => "k"
          $empOffice->probation_period  = $row['probation_period'] ?? ''; // => "k"
-         $empOffice->confirmation_period  = $row['confirmation_period'] ?? ''; // => "k"
+         $empOffice->confirmation_period  = $this->getdateFormatForDb( $confirmation_period) ?? ''; // => "k"
          $empOffice->holiday_location  = $row["holiday_location"] ?? ''; // => "k"
-         $empOffice->l1_manager_code  = $row["l1_manager_code"] ?? ''; // => "k"
+         $empOffice->l1_manager_code  = $row["l1_manager_code_id"] ?? ''; // => "k"
 
          if ( !empty($row["l1_manager_code"]) && $this->isUserExist($row["l1_manager_code"]))
          {
@@ -306,6 +308,7 @@ class VmtEmployeeService {
          $empOffice->official_mobile  = $row["official_mobile"] ?? ''; // => "1234567890"
          $empOffice->emp_notice  = $row["emp_notice"] ?? ''; // => "0"
          $empOffice->save();
+
     }
 
     private function createOrUpdate_EmployeeStatutoryDetails($user_id,$row)
@@ -332,6 +335,7 @@ class VmtEmployeeService {
         $newEmployee_statutoryDetails->tax_regime = $row["tax_regime"] ?? '';
         $newEmployee_statutoryDetails->lwf_location_state_id = $row["lwf_location"] ?? '';
         $newEmployee_statutoryDetails->save();
+
     }
 
     private function createOrUpdate_EmployeeFamilyDetails($user_id, $familyData)
@@ -350,7 +354,8 @@ class VmtEmployeeService {
 
             //dd($familyData["dob_father"]);
             if(!empty($familyData["dob_father"]))
-                $familyMember->dob = $familyData["dob_father"];
+                $dob_father=$familyData["dob_father"];
+                $familyMember->dob = $this->getdateFormatForDb( $dob_father);
 
             $familyMember->save();
            // dd($familyMember);
@@ -365,14 +370,15 @@ class VmtEmployeeService {
             $familyMember->gender = $familyData['mother_gender'];
 
             if(!empty($familyData["dob_mother"]))
-                $familyMember->dob = $familyData["dob_mother"];
+            $dob_mother=$familyData["dob_mother"];
+                $familyMember->dob = $this->getdateFormatForDb( $dob_mother) ;
             //$familyData["mother_dob"];
 
             $familyMember->save();
         }
         //dd($familyData);
 
-        if (!empty($familyData['marital_status']) && $familyData['marital_status'] <> 'unmarried') {
+        if (!empty($familyData['marital_status']) && $familyData['marital_status'] != 1) {
             $familyMember =  new VmtEmployeeFamilyDetails;
             $familyMember->user_id  = $user_id;
             $familyMember->name =   $familyData['spouse_name'];
@@ -380,10 +386,12 @@ class VmtEmployeeService {
             $familyMember->gender = $familyData['spouse_gender'] ?? '';
 
             if(!empty($familyData["dob_spouse"]))
-                $familyMember->dob =  $familyData["dob_spouse"];
+            $dob_spouse =  $familyData["dob_spouse"];
+                $familyMember->dob = $this->getdateFormatForDb(  $dob_spouse);
 
             if(!empty($familyData["wedding_date"]))
-                $familyMember->wedding_date =  $familyData["wedding_date"];
+               $wedding_date = $familyData["wedding_date"];
+                $familyMember->wedding_date = $this->getdateFormatForDb( $wedding_date) ;
 
 
             $familyMember->save();
@@ -396,7 +404,8 @@ class VmtEmployeeService {
                 $familyMember->gender = '---';
 
                 if(isset($familyData["child_dob"]))
-                    $familyMember->dob =   $familyData["child_dob"];
+                $child_dob= $familyData["child_dob"];
+                    $familyMember->dob = $this->getdateFormatForDb( $child_dob) ;
                 //$familyData["child_dob"];
 
                 $familyMember->save();
@@ -444,6 +453,7 @@ class VmtEmployeeService {
         $compensatory->labour_welfare_fund = $row["labour_welfare_fund"] ?? '' ;
         $compensatory->net_income = $row["net_income"] ?? '' ;
         $compensatory->save();
+
     }
 
 

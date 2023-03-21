@@ -314,7 +314,7 @@
                     </div>
                     <div class="col-md-12  col-sm-12 col-lg-8 col-xl-6 col-xxl-6  mb-md-0 mb-3">
                         <div class="form-group">
-                            <Textarea :autoResize="true" rows="3" cols="60" placeholder="Enter the Reason"
+                            <Textarea :autoResize="true" rows="3" cols="90" placeholder="Enter the Reason"
                                 v-model="service.leave_data.leave_reason" class="form-control" />
                         </div>
                     </div>
@@ -458,7 +458,6 @@ label {
 
 .p-chips .p-chips-multiple-container {
     padding: 0.375rem 0.75rem;
-    min-width: 315px;
 }
 
 .p-chips.p-component.p-inputwrapper {

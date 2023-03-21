@@ -4,11 +4,6 @@
     @lang('translation.dashboards')
 @endsection
 @section('content')
-    {{-- @component('components.attendance_breadcrumb')
-        @slot('li_1')
-        @endslot
-    @endcomponent --}}
-
 
         <div class="card mb-0 approvals_wrapper mt-30">
             <div class="card-body ">
@@ -19,38 +14,11 @@
                         </div>
                     </div>
                 </div>
-                <div id="VJS_LeaveApproval">
-                    @foreach ($master_holidays as $singleHoliday)
-                    <br/>
-                        <div>
-                            <span> {{ $singleHoliday->holiday_name}} </span> <br/>
-                            <span> {{ $singleHoliday->holiday_date}}</span> <br/>
-                            <span><input type="button" class="editHoliday" value="Edit" />
-                            </span>
-                            <span><input type="button" class="editHoliday" value="Delete" /></span>
-                        </div>
-                    @endforeach
-
-
+                <div id="vjs_holidays_tab">
+                @vite('resources/js/hrms/modules/holidays/Holidays_MasterList.js')
                 </div>
             </div>
          </div>
 
 
-@endsection
-
-@section('script')
-<script>
-
-    $(document).ready(function() {
-
-        console.log("Holiday page opened");
-
-    });
-
-    $('#myBtn').click(function(e) {
-        $("#myModal").modal();
-    });
-
-</script>
 @endsection
