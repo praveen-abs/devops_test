@@ -76,6 +76,7 @@ class VmtEmployeeService {
 
 
 
+
         $response = $this->createOrUpdate_User(data: $data, can_onboard_employee : $can_onboard_employee, user_id: $existing_user_id);
 
         if(!empty($response) && $response->status == 'success')
@@ -86,7 +87,6 @@ class VmtEmployeeService {
                 $onboard_user = $response->response_object;
                 $this->createOrUpdate_EmployeeDetails( $onboard_user, $data);
                 $this->createOrUpdate_EmployeeOfficeDetails( $onboard_user->id, $data);
-                dd('---------------------');
                 $this->createOrUpdate_EmployeeStatutoryDetails( $onboard_user->id, $data);
                 $this->createOrUpdate_EmployeeFamilyDetails( $onboard_user->id, $data);
                 $this->createOrUpdate_EmployeeCompensatory( $onboard_user->id, $data);
@@ -175,6 +175,7 @@ class VmtEmployeeService {
 
     private function createOrUpdate_EmployeeDetails($user,$row)
     {
+
         //Sdd("Inside emp details");
         $newEmployee = VmtEmployee::where('userid',$user->id);
         // dd($newEmployee->exists());
@@ -248,10 +249,10 @@ class VmtEmployeeService {
 
         $newEmployee->aadhar_card_file = $this->uploadDocument( $row['Aadharfront'], $user->user_code, 'aadhar_front_');
         $newEmployee->aadhar_card_backend_file = $this->uploadDocument($row['AadharBack'], $user->user_code,'aadhar_back_');
-        $newEmployee->pan_card_file = $this->uploadDocument($row['panDoc'], $user->user_code,'pan_');
-        $newEmployee->passport_file = $this->uploadDocument($row['passport'], $user->user_code,'passport_');
-        $newEmployee->voters_id_file = $this->uploadDocument($row['voterId'], $user->user_code,'voter_id_');
-        $newEmployee->dl_file = $this->uploadDocument($row['dlDoc'], $user->user_code,'driver_license_');
+        $newEmployee->pan_card_file = $this->uploadDocument($row['panDoc'], $user->user_code,'panDoc');
+        $newEmployee->passport_file = $this->uploadDocument($row['passport'], $user->user_code,'passport');
+        $newEmployee->voters_id_file = $this->uploadDocument($row['voterId'], $user->user_code,'voterId');
+        $newEmployee->dl_file = $this->uploadDocument($row['dlDoc'], $user->user_code,'dlDoc');
         $newEmployee->education_certificate_file = $this->uploadDocument($row['eductionDoc'], $user->user_code,'edu_doc_');
         $newEmployee->reliving_letter_file = $this->uploadDocument($row['releivingDoc'],$user->user_code,'reliving_letter_');
         $docReviewArray = array(
@@ -458,7 +459,6 @@ class VmtEmployeeService {
     }
 
     public function uploadDocument($fileObject, $emp_code, $filename){
-
 
         $date=date('d-m-Y H-i-s');
         $fileName = $filename.$emp_code.'_'.$date.'.'.$fileObject->extension();
