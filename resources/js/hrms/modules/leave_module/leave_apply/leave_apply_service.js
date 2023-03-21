@@ -30,6 +30,7 @@ export const Service = defineStore("Service", () => {
         compensatory_end_date:"",
         notifyTo: "",
         leave_reason: "",
+        leave_request_error_messege:""
     });
 
 
@@ -45,6 +46,7 @@ export const Service = defineStore("Service", () => {
     const RequiredField = ref(false);
     const data_checking=ref(false)
     const Email_Service=ref(false)
+    const Email_Error=ref(false)
 
     let invalidDate = new Date();
     invalidDate.setDate(today.getDate() - 1);
@@ -127,24 +129,24 @@ export const Service = defineStore("Service", () => {
             }
         }
 
-        if(!leave_data.custom_total_days<0){
-            alert("")
-        }
+        let day1= new Date().toJSON().slice(0, 10);
+        console.log(day1);
+        var date1 = new Date(day1);
         console.log(leave_data.custom_start_date);
-        console.log(leave_data.custom_end_date);
-        var date1 = new Date(leave_data.custom_start_date);
         var date2 = new Date(leave_data.custom_end_date);
-
+        console.log(leave_data.custom_end_date);
         // To calculate the time difference of two dates
         var Difference_In_Time = date2.getTime() - date1.getTime();
-        console.log("Differnece" + Difference_In_Time);
+        console.log("Differenece" + Difference_In_Time);
 
         // To calculate the no. of days between two dates
         var Difference_In_Days = (
             Difference_In_Time /
             (1000 * 60 * 60 * 24)
         ).toFixed(0);
-        leave_data.custom_total_days = Difference_In_Days;
+        let total = Difference_In_Days;
+        console.log(total);
+        leave_data.custom_total_days=parseInt(total)+1
         console.log(leave_data.custom_total_days);
     };
 
@@ -159,30 +161,19 @@ export const Service = defineStore("Service", () => {
         leave_data.permission_total_time = total_hours;
         console.log(total_hours);
     };
+
+
     const Permission = () => {
-        // leave_data.selected_leave=='Permission' ? Permission_format.value=true:Permission_format.value=false
-        // leave_data.selected_leave=='Compensatory Off'  ?  compensatory_format.value=true : compensatory_format.value=false
-
-        // full_day_format.value=false
-        // half_day_format.value=false
-        // custom_format.value=false
 
 
-        if (leave_data.selected_leave == "Select Leave Type") {
-            Permission_format.value = true;
-            TotalNoOfDays.value = true;
-
-
-        }
-
-        if (leave_data.selected_leave == "Permission") {
+        if (leave_data.selected_leave.includes("Permission")) {
             Permission_format.value = true;
             TotalNoOfDays.value = false;
             half_day_format.value = false;
             custom_format.value = false;
             compensatory_format.value = false;
         }
-         else if (leave_data.selected_leave == "Compensatory Leave") {
+         else if (leave_data.selected_leave.includes('Compensatory')) {
             compensatory_format.value = true;
             Permission_format.value = false;
             full_day_format.value = false;
@@ -199,14 +190,19 @@ export const Service = defineStore("Service", () => {
         } else {
             Permission_format.value = false;
             compensatory_format.value = false;
+            TotalNoOfDays.value=true
         }
     };
 
+
+
+
     const get_leave_types=()=>{
+
         axios.get('/fetch-leave-policy-details').then(res=>{
             console.log(res.data);
             leave_types.value=res.data
-        })
+       })
     }
 
     // Request leave Events
@@ -222,16 +218,16 @@ export const Service = defineStore("Service", () => {
         hours_diff:'',
         notify_to:'',
         leave_reason:'',
-        compensatory_leave_id:[]
-    })
+        compensatory_leave_id:[],
 
+
+    })
 
 
 
     // write Email service and axios service here
 
     const Submit = () => {
-
 
 
         leave_Request_data.leave_type_name=leave_data.selected_leave
@@ -246,9 +242,10 @@ export const Service = defineStore("Service", () => {
         }else
         if(leave_data.radiobtn_half_day=="half_day"){
             console.log("Applying half-day leave...");
-            leave_Request_data.no_of_days = 0.5
+            leave_Request_data.no_of_days = 0.5;
+            console.log("half day leave date"+leave_data.half_day_leave_date);
             leave_Request_data.start_date = moment(leave_data.half_day_leave_date).format('YYYY-MM-DD');
-            leave_Request_data.end_date = leave_Request_data.start_date
+            leave_Request_data.end_date = leave_Request_data.start_date;
 
             if(leave_data.half_day_leave_session=="forenoon"){
                 leave_Request_data.leave_session="FN"
@@ -287,14 +284,26 @@ export const Service = defineStore("Service", () => {
                 life: 3000,
             });
       }
-      leave_Request_data.notify_to=leave_data.notifyTo
-      leave_Request_data.leave_reason=leave_data.leave_reason
-
+        leave_Request_data.notify_to=leave_data.notifyTo
+        leave_Request_data.leave_reason=leave_data.leave_reason
         RequiredField.value = true;
-        data_checking.value=true
-
         console.log(leave_Request_data);
 
+      if(leave_data.radiobtn_half_day == 'half_day'){
+        if(leave_data.half_day_leave_session  == ''){
+            toast.add({
+                severity: "info",
+                summary: "Select Session",
+                detail: "Select Leave Session",
+                life: 3000,
+            });
+
+           }
+      }
+       else
+       {
+
+        data_checking.value=true
         axios.post('/applyLeaveRequest',{
             "leave_request_date": leave_Request_data.leave_Request_date,
             "leave_type_name": leave_Request_data.leave_type_name,
@@ -307,16 +316,21 @@ export const Service = defineStore("Service", () => {
             "notify_to": leave_Request_data.notify_to,
             "leave_reason": leave_Request_data.leave_reason,
         }).then(res=>{
+            data_checking.value=false
             if(res.data.status=='success'){
                 Email_Service.value=true
+            }else
+            if(res.data.status=='failure'){
+                leave_data.leave_request_error_messege=res.data.message;
+                Email_Error.value=true
             }
 
-            console.log(res.data.status);
-            data_checking.value=false
+            console.log("Email status"+res.data.status);
 
         }).catch(err=>{
             console.log(err);
         })
+       }
         console.log("Leave"+leave_data.selected_leave);
 
 
@@ -337,6 +351,7 @@ export const Service = defineStore("Service", () => {
         leave_types,
         data_checking,
         Email_Service,
+        Email_Error,
         compensatory_leaves,
         selected_compensatory_leaves,
 

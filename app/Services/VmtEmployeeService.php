@@ -565,7 +565,7 @@ class VmtEmployeeService {
 
     private function getdateFormatForDb($date){
           //Check if its in proper format
-          $processed_date = \DateTime::createFromFormat('d-m-Y', $row['doj']);
+          $processed_date = \DateTime::createFromFormat('d-m-Y', $date);
 
           //If date is in 'd-m-y' format, then convert into one
           if( $processed_date)
