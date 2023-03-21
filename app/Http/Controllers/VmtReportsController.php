@@ -118,11 +118,11 @@ class VmtReportsController extends Controller
 
     public function fetchPayrollReport(Request $request){
 
-        $payroll_data=VmtEmployeePaySlip::join('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'vmt_employee_payslip.user_id')
+        $payroll_data=VmtEmployeePaySlip::leftjoin('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'vmt_employee_payslip.user_id')
         ->join('users', 'users.id', '=', 'vmt_employee_payslip.user_id')
         ->join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'vmt_employee_payslip.user_id')
         ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'vmt_employee_payslip.user_id')
-        ->join('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'vmt_employee_payslip.user_id')
+        ->leftJoin('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'vmt_employee_payslip.user_id')
         ->whereYear('vmt_employee_payslip.PAYROLL_MONTH', $request->payroll_year)
         // ->orWhere('vmt_employee_office_details.work_location',$request->work_location)
         ->select('users.user_code',
