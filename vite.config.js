@@ -36,6 +36,10 @@ export default defineConfig({
                     //Employee Reimbursements
                     'resources/js/hrms/modules/reimbursements/employee_reimbursements/EmployeeReimbursements.js',
 
+                    //Holidays
+                    'resources/js/hrms/modules/holidays/Holidays_MasterList.js',
+                    'resources/js/hrms/modules/holidays/Holidays_Lists.js',
+
                     //Configurations
 
                     'resources/js/hrms/modules/configurations/attendance_settings/Att_AssignWorkShifts.js',
