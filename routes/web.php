@@ -529,7 +529,7 @@ Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 's
 
     //Holidays
     ////Holidays creation
-    Route::get('/holiday/master-page',  [App\Http\Controllers\VmtHolidaysController::class, 'showHolidaysMasterPage'])->name('holidays-masterpage');
+    Route::get('/holidays/master-page',  [App\Http\Controllers\VmtHolidaysController::class, 'showHolidaysMasterPage'])->name('holidays-masterpage');
 
 
 
