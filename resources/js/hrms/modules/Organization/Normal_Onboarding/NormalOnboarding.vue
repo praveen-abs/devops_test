@@ -2549,8 +2549,6 @@ const SubmitEmployeeOnboardingData = () => {
 };
 
 
-
-
 const submit = () => {
   let currentObj = this;
   const config = {
@@ -2558,7 +2556,72 @@ const submit = () => {
   };
 
   let formData = new FormData();
-  formData.append("employee_onboarding", JSON.stringify(employee_onboarding));
+  formData.append("can_onboard_employee", employee_onboarding.can_onboard_employee)
+  formData.append("employee_code", employee_onboarding.employee_code );
+  formData.append("doj", employee_onboarding.doj);
+  formData.append("aadhar_number", employee_onboarding.aadhar_number );
+  formData.append("passport_number", employee_onboarding.passport_number );
+  formData.append("bank_id", employee_onboarding.bank_id );
+//   formData.append("bank_name ", employee_onboarding.bank_name.bank_name );
+  formData.append("employee_name", employee_onboarding.employee_name );
+  formData.append(" gender", employee_onboarding. gender);
+  formData.append("pan_number", employee_onboarding.pan_number);
+  formData.append("passport_date", employee_onboarding.passport_date);
+  formData.append("AccountNumber", employee_onboarding.AccountNumber);
+  formData.append("dob", employee_onboarding.dob);
+  formData.append("mobile_number", employee_onboarding.mobile_number);
+  formData.append("dl_no", employee_onboarding.dl_no);
+//   formData.append("blood_group_name", employee_onboarding.blood_group_name.name);
+  formData.append("blood_group_id", employee_onboarding.blood_group_id);
+  formData.append("bank_ifsc", employee_onboarding.bank_ifsc);
+//   formData.append("marital_status", employee_onboarding.marital_status.name);
+  formData.append("marital_status_id", employee_onboarding.marital_status_id);
+  formData.append("email", employee_onboarding.email);
+  formData.append("nationality", employee_onboarding.nationality);
+  formData.append("physically_challenged", employee_onboarding.physically_challenged);
+  formData.append("current_address_line_1", employee_onboarding.current_address_line_1);
+  formData.append("current_address_line_2", employee_onboarding.current_address_line_2);
+//   formData.append("current_country", employee_onboarding.current_country.country_name);
+  formData.append("current_country_id", employee_onboarding.current_country_id);
+//   formData.append("current_state", employee_onboarding.current_state.state_name);
+  formData.append("current_state_id", employee_onboarding.current_state_id);
+  formData.append("current_city", employee_onboarding.current_city);
+  formData.append("current_pincode", employee_onboarding.current_pincode);
+  formData.append(" permanent_address_line_1", employee_onboarding.permanent_address_line_1);
+  formData.append("permanent_address_line_2", employee_onboarding.permanent_address_line_2);
+//   formData.append("permanent_country", employee_onboarding.permanent_country.country_name);
+  formData.append("permanent_country_id", employee_onboarding.permanent_country_id);
+//   formData.append("permanent_state", employee_onboarding.permanent_state.state_name);
+  formData.append("permanent_state_id", employee_onboarding.permanent_state_id);
+  formData.append("permanent_city", employee_onboarding.permanent_city);
+  formData.append("permanent_pincode", employee_onboarding.permanent_pincode);
+//   formData.append("department", employee_onboarding.department.name);
+  formData.append("department_id", employee_onboarding.department_id);
+  formData.append("process", employee_onboarding.process);
+  formData.append("designation", employee_onboarding.designation);
+  formData.append("cost_center", employee_onboarding.cost_center);
+  formData.append("probation_period", employee_onboarding.probation_period);
+  formData.append("work_location", employee_onboarding.work_location);
+//   formData.append("l1_manager_code", employee_onboarding.l1_manager_code.name);
+  formData.append("l1_manager_code_id", employee_onboarding.l1_manager_code_id);
+  formData.append("holiday_location", employee_onboarding.holiday_location);
+  formData.append("officical_mail", employee_onboarding.officical_mail);
+  formData.append("official_mobile", employee_onboarding.official_mobile);
+  formData.append("emp_notice", employee_onboarding.emp_notice);
+  formData.append("confirmation_period", employee_onboarding.confirmation_period);
+  formData.append("father_name", employee_onboarding.father_name);
+  formData.append("dob_father", employee_onboarding.dob_father);
+  formData.append("father_gender", employee_onboarding.father_gender);
+  formData.append("father_age", employee_onboarding.father_age);
+  formData.append("mother_name", employee_onboarding.mother_name);
+  formData.append("dob_mother", employee_onboarding.dob_mother);
+  formData.append("mother_gender", employee_onboarding.mother_gender);
+  formData.append("mother_age", employee_onboarding.mother_age);
+  formData.append("spouse_name", employee_onboarding.spouse_name);
+  formData.append("wedding_date", employee_onboarding.wedding_date);
+  formData.append("spouse_gender", employee_onboarding.spouse_gender);
+  formData.append("dob_spouse", employee_onboarding.dob_spouse);
+  formData.append("no_of_children", employee_onboarding.no_of_children);
   formData.append("Aadharfront", employee_onboarding.AadharCardFront);
   formData.append("AadharBack", employee_onboarding.AadharCardBack);
   formData.append("panDoc", employee_onboarding.PanCardDoc);

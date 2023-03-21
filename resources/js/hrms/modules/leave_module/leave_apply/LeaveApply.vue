@@ -50,10 +50,10 @@
         <div class="row ">
             <div class="col-md-7 col-sm-12">
                 <div class="row mb-3">
-                    <div class="col-md-12  col-sm-12 col-lg-5 col-xl-5 col-xxl-5  mb-md-0 mb-3">
+                    <div class="col-md-12  col-sm-12 col-lg-4 col-xl-5 col-xxl-5  mb-md-0 mb-3">
                         <label for="">Choose Leave Type <span class="text-danger">*</span> </label>
                     </div>
-                    <div class="col-md-12  col-sm-12 col-lg-6 col-xl-6 col-xxl-6  mb-md-0 mb-3">
+                    <div class="col-md-12  col-sm-12 col-lg-8 col-xl-6 col-xxl-6  mb-md-0 mb-3">
                         <div class="form-group">
                             <select style="  height: 38px;font-weight: 500;" name="" id="leave_type_id"
                                 aria-label="Default select example" class="form-select outline-none"
@@ -68,43 +68,43 @@
                     </div>
                 </div>
                 <div v-if="service.TotalNoOfDays" class="row mb-3">
-                    <div class="col-md-12  col-sm-12 col-lg-5 col-xl-5 col-xxl-5  mb-md-0 mb-3">
+                    <div class="col-md-6  col-sm-12 col-lg-4 col-xl-5 col-xxl-5  mb-md-0 mb-3">
 
                         <label for="">No of Days<span class="text-danger">*</span>
                         </label>
 
 
                     </div>
-                    <div class="col-md-12  col-sm-12 col-lg-6 col-xl-6 col-xxl-6  mb-md-0 mb-3">
+                    <div class="col-md-2  col-sm-12 col-lg-8 col-xl-6 col-xxl-6  mb-md-0 mb-3">
                         <div class="form-check form-check-inline">
                             <input style="height: 20px;width: 20px;" class="form-check-input" type="radio" name="leave"
                                 id="full_day" value="full_day" v-model="service.leave_data.radiobtn_full_day"
                                 @click="service.full_day">
-                            <label class="form-check-label leave_type ms-3" for="full_day">Full Day</label>
+                            <label class="form-check-label leave_type ms-2" for="full_day">Full Day</label>
 
                         </div>
                         <div class="form-check form-check-inline">
                             <input style="height: 20px;width: 20px;" class="form-check-input" type="radio" name="leave"
                                 id="half_day" value="half_day" v-model="service.leave_data.radiobtn_half_day"
                                 @click="service.half_day">
-                            <label class="form-check-label leave_type ms-3" for="half_day">Half Day</label>
+                            <label class="form-check-label leave_type ms-2" for="half_day">Half Day</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input style="height: 20px;width: 20px;" class="form-check-input" type="radio" name="leave"
                                 id="custom" value="custom" v-model="service.leave_data.radiobtn_custom"
                                 @click="service.custom_day">
-                            <label class="form-check-label leave_type ms-3" for="custom">Custom</label>
+                            <label class="form-check-label leave_type ms-2" for="custom">Custom</label>
                         </div>
                     </div>
                 </div>
 
                 <!-- Full Day -->
                 <div v-if="service.full_day_format" class="row mb-3">
-                    <div class="col-md-12  col-sm-12 col-lg-5 col-xl-5 col-xxl-5  mb-md-0 mb-3">
+                    <div class="col-md-12  col-sm-12 col-lg-4 col-xl-5 col-xxl-5  mb-md-0 mb-3">
                         <label for="">Date<span class="text-danger">*</span>
                         </label>
                     </div>
-                    <div class="col-md-12  col-sm-12 col-lg-6 col-xl-6 col-xxl-6  mb-md-0 mb-3">
+                    <div class="col-md-12  col-sm-12 col-lg-8 col-xl-6 col-xxl-6  mb-md-0 mb-3">
                         <Calendar inputId="icon" v-model="service.leave_data.full_day_leave_date" dateFormat="dd-mm-yy"
                             :showIcon="true" style="width: 350px;" :minDate="new Date()" />
                     </div>
@@ -113,25 +113,25 @@
 
                 <!-- Half day leave -->
                 <div v-if="service.half_day_format" class="row mb-3">
-                    <div class="col-md-12  col-sm-12 col-lg-5 col-xl-5 col-xxl-5  mb-md-0 mb-3">
+                    <div class="col-md-12  col-sm-12 col-lg-4 col-xl-5 col-xxl-5  mb-md-0 mb-3">
                         <label for="">Date<span class="text-danger">*</span>
                         </label>
                     </div>
-                    <div class="col-md-12  col-sm-12 col-lg-6 col-xl-6 col-xxl-6  mb-md-0 mb-3">
+                    <div class="col-md-12  col-sm-12 col-lg-8 col-xl-6 col-xxl-6  mb-md-0 mb-3">
                         <Calendar inputId="icon" v-model="service.leave_data.half_day_leave_date" dateFormat="dd-mm-yy"
                             :showIcon="true" style="width: 350px;" :minDate="new Date()" />
                     </div>
                 </div>
 
                 <div v-if="service.half_day_format" class="row mb-3">
-                    <div class="col-md-12  col-sm-12 col-lg-5 col-xl-5 col-xxl-5  mb-md-0 mb-3">
+                    <div class="col-md-12  col-sm-12 col-lg-4 col-xl-5 col-xxl-5  mb-md-0 mb-3">
                         <div class="form-group">
                             <label for="">Session<span class="text-danger">*</span>
                             </label>
 
                         </div>
                     </div>
-                    <div class="col-md-12  col-sm-12 col-lg-7 col-xl-7 col-xxl-7  mb-md-0 mb-3 ms-6">
+                    <div class="col-md-12  col-sm-12 col-lg-8 col-xl-7 col-xxl-7  mb-md-0 mb-3 ms-6">
                         <div class="form-group">
                             <div class="form-check form-check-inline">
                                 <input style="height: 20px;width: 20px;" class="form-check-input" type="radio"
@@ -154,7 +154,7 @@
 
                 <!-- Custom Leave -->
                 <div v-if="service.custom_format" class="row mb-3 ">
-                    <div class="col-md-12  col-sm-12 col-lg-3 col-xl-3 col-xxl-3  mb-md-0 mb-3">
+                    <div class="col-md-1  col-sm-1 col-lg-3 col-xl-3 col-xxl-3  mb-md-0 mb-3">
                         <div class="form-group">
                             <div class="floating">
 
@@ -168,7 +168,7 @@
 
                         </div>
                     </div>
-                    <div class="col-md-12  col-sm-12 col-lg-3 col-xl-3 col-xxl-5  mb-md-0 mb-3">
+                    <div class="col-md-1  col-sm-1 col-lg-6 col-xl-3 col-xxl-5  mb-md-0 mb-3">
                         <div class="form-group">
                             <div class="floating" style="text-align: center;">
 
@@ -181,7 +181,7 @@
 
                         </div>
                     </div>
-                    <div class="col-md-12  col-sm-12 col-lg-3 col-xl-3 col-xxl-3  mb-md-0 mb-3">
+                    <div class="col-md-1 col-sm-1 col-lg-3 col-xl-3 col-xxl-3  mb-md-0 mb-3">
                         <div class="form-group">
 
                             <div class="floating">
@@ -291,37 +291,37 @@
                 </div>
 
                 <div class="row mb-3">
-                    <div class="col-md-12  col-sm-12 col-lg-5 col-xl-5 col-xxl-5  mb-md-0 mb-3">
+                    <div class="col-md-12  col-sm-12 col-lg-4 col-xl-5 col-xxl-5  mb-md-0 mb-3">
                         <div class="form-group">
                             <label for="">Notify to <span class="text-danger">*</span>
                             </label>
 
                         </div>
                     </div>
-                    <div class="col-md-12  col-sm-12 col-lg-6 col-xl-6 col-xxl-6  mb-md-0 mb-3">
+                    <div class="col-md-12  col-sm-12 col-lg-8 col-xl-6 col-xxl-6  mb-md-0 mb-3">
                         <div class="form-group">
-                            <Chips class="   " v-model="service.leave_data.notifyTo" separator="," />
+                            <Chips class="lg:w-1em   " v-model="service.leave_data.notifyTo" separator="," />
                         </div>
                     </div>
                 </div>
                 <div class="row mb-3 ">
-                    <div class="col-md-12  col-sm-12 col-lg-5 col-xl-5 col-xxl-5  mb-md-0 mb-3">
+                    <div class="col-md-12  col-sm-12 col-lg-4 col-xl-5 col-xxl-5  mb-md-0 mb-3">
                         <div class="form-group">
                             <label for="">Reason <span class="text-danger">*</span>
                             </label>
 
                         </div>
                     </div>
-                    <div class="col-md-12  col-sm-12 col-lg-6 col-xl-6 col-xxl-6  mb-md-0 mb-3">
+                    <div class="col-md-12  col-sm-12 col-lg-8 col-xl-6 col-xxl-6  mb-md-0 mb-3">
                         <div class="form-group">
-                            <Textarea :autoResize="true" rows="3" cols="60" placeholder="Enter the Reason"
+                            <Textarea :autoResize="true" rows="3" cols="90" placeholder="Enter the Reason"
                                 v-model="service.leave_data.leave_reason" class="form-control" />
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-5 col-sm-12 ">
-                <div class="col-12  ">
+            <div class="col-md-5 col-lg-5 col-sm-12 ">
+                <div class="col-lg-12  ">
                     <Calendar :inline="true" :showWeek="true" style="min-width:100%" />
                 </div>
                 <div class="text-center mt-6 ">
@@ -394,8 +394,6 @@ label {
 }
 
 
-
-
 .p-datepicker .p-datepicker-header {
     padding: 0.5rem;
     color: #061328;
@@ -459,7 +457,6 @@ label {
 
 .p-chips .p-chips-multiple-container {
     padding: 0.375rem 0.75rem;
-    min-width: 315px;
 }
 
 .p-chips.p-component.p-inputwrapper {
