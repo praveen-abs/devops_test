@@ -117,12 +117,12 @@ class VmtReportsController extends Controller
     }
 
     public function fetchPayrollReport(Request $request){
-        //  dd($request->all());
-        $payroll_data=VmtEmployeePaySlip::leftJoin('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'vmt_employee_payslip.user_id')
-        ->leftJoin('users', 'users.id', '=', 'vmt_employee_payslip.user_id')
-        ->leftJoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'vmt_employee_payslip.user_id')
-        ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'vmt_employee_payslip.user_id')
-        ->leftJoin('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'vmt_employee_payslip.user_id')
+
+        $payroll_data=VmtEmployeePaySlip::join('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'vmt_employee_payslip.user_id')
+        ->join('users', 'users.id', '=', 'vmt_employee_payslip.user_id')
+        ->join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'vmt_employee_payslip.user_id')
+        ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'vmt_employee_payslip.user_id')
+        ->join('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'vmt_employee_payslip.user_id')
         ->whereYear('vmt_employee_payslip.PAYROLL_MONTH', $request->payroll_year)
         // ->orWhere('vmt_employee_office_details.work_location',$request->work_location)
         ->select('users.user_code',
@@ -218,7 +218,13 @@ class VmtReportsController extends Controller
 
         foreach($payroll_data as $singlePayrollData)
         {
-            $singlePayrollData['bank_name'] = Bank::find($singlePayrollData->bank_id)->bank_name;
+            // $singlePayrollData['bank_name'] = Bank::find($singlePayrollData->bank_id)->bank_name;
+            $singlePayrollData['bank_name'] = Bank::find($singlePayrollData->bank_id);
+            if( $singlePayrollData['bank_name']){
+                $singlePayrollData['bank_name']= $singlePayrollData['bank_name']->bank_name;
+            }else{
+                $singlePayrollData['bank_name']='';
+            }
         }
 
         //dd($payroll_data->get());
