@@ -336,7 +336,6 @@ class VmtAttendanceController extends Controller
     }
 
     public function applyLeaveRequest(Request $request){
-
         $leave_month = date('m',strtotime($request->start_date));
         $compensatory_leavetype_id = VmtLeaves::where('leave_type','Compensatory Leave')->value('id');
 
@@ -434,12 +433,14 @@ class VmtAttendanceController extends Controller
 
         //dd($emp_leave_details->toArray());
         $emp_leave_details->save();
-
         ////If compensatory leave, then store the comp work days in 'vmt_employee_compensatory_leaves'
-
         if($leave_type_id == $compensatory_leavetype_id)
         {
+            dd($request->compensatory_work_days_ids);
             $array_comp_work_days_ids = $request->compensatory_work_days_ids == '' ? null : $request->compensatory_work_days_ids;
+
+            dd($array_comp_work_days_ids);
+
 
             if(!empty($array_comp_work_days_ids) && is_array($array_comp_work_days_ids))
             {
