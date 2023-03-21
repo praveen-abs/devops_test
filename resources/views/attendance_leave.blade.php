@@ -76,7 +76,7 @@
                             <div class="col-sm-6 col-xl-6 col-md-6 col-lg-6">
                                 <h6 class="text-left fw-bold">Leave Balance</h6>
                             </div>
-                            <div class="col-sm-6 col-xl-6 col-md-6 col-lg-6  justify-content-end d-flex">
+                            <div class="col-6  justify-content-end d-flex">
                                 {{-- <div class="pendingLeave_notify me-3">
                                         <button class="btn btn-border-primary " data-bs-target="#leavepending_modal" data-bs-toggle="modal">
                                             Pending
@@ -85,7 +85,7 @@
                                             0</span>
                                     </div> --}}
                                     @vite('resources/js/hrms/modules/leave_module/leave_apply/LeaveApply.js')
-                                 <div class=" -mt-4 mb-2" id="vjs_leaveapply"> </div>
+                                 <div id="vjs_leaveapply"> </div>
 
 
                             </div>
