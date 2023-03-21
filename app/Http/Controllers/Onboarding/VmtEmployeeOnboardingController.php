@@ -42,6 +42,25 @@ use App\Services\VmtEmployeeService;
 class VmtEmployeeOnboardingController extends Controller
 {
 
+    public function isEmployeePersonalEmailAlreadyExists(Request $request){
+        //dd($request->all());
+        //dd(User::where('email',$request->mail)->exists());
+
+        if(!empty($request->mail))
+            return User::where('email',$request->mail)->exists() ? "true" : "false";
+        else
+            return false;
+    }
+
+    public function isEmployeeCodeAlreadyExists(Request $request){
+        //dd($request->all());
+        //dd(User::where('email',$request->mail)->exists());
+
+        if(!empty($request->user_code))
+            return User::where('user_code',$request->user_code)->exists() ? "true" : "false";
+        else
+            return false;
+    }
 
     private function generateEmployeeCode()
     {
