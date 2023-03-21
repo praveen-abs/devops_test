@@ -436,10 +436,8 @@ class VmtAttendanceController extends Controller
         ////If compensatory leave, then store the comp work days in 'vmt_employee_compensatory_leaves'
         if($leave_type_id == $compensatory_leavetype_id)
         {
-            dd($request->compensatory_work_days_ids);
             $array_comp_work_days_ids = $request->compensatory_work_days_ids == '' ? null : $request->compensatory_work_days_ids;
 
-            dd($array_comp_work_days_ids);
 
 
             if(!empty($array_comp_work_days_ids) && is_array($array_comp_work_days_ids))
