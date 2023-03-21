@@ -384,6 +384,7 @@ class VmtAttendanceController extends Controller
             $mailtext_total_leave = $diff . " Hour(s)";
         } else {
             //Now its leave type
+
             ////Check if its 0.5 day leave, then handle separately
 
             if($request->no_of_days == '0.5')
@@ -999,10 +1000,6 @@ class VmtAttendanceController extends Controller
                 }
 
 
-
-
-
-          dd($attendance_date);
         //check whether leave applied.If yes, check leave status
         $leave_record = VmtEmployeeLeaves::where('user_id',$user_id)->
                             whereDate('end_date',$attendance_date);
@@ -1268,8 +1265,6 @@ class VmtAttendanceController extends Controller
             $mail_status = "There was one or more failures.";
         }
 
-
-
         return $responseJSON = [
             'status' => 'success',
             'message' => 'Request sent successfully!',
@@ -1487,8 +1482,6 @@ class VmtAttendanceController extends Controller
                                                                                         $array_template_leaveTypes
                                                                                     );
 
-
-
            }
 
            //dd($single_leave_balance_data);
@@ -1507,7 +1500,6 @@ class VmtAttendanceController extends Controller
         //dd($final_output);
         return $final_output;
 
-
     }
 
     public function fetchUnusedCompensatoryOffDays(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
@@ -1515,4 +1507,5 @@ class VmtAttendanceController extends Controller
         //TODO : Need to get current user_id instead of fetching from req params.
         return $serviceVmtAttendanceService->fetchUnusedCompensatoryOffDays($request->user_id);
     }
+
 }
