@@ -396,13 +396,15 @@ function calculateProfileCompleteness($user_id)
             'vmt_employee_details.present_address',
             'vmt_employee_details.gender',
             'vmt_employee_office_details.l1_manager_code',
+
             //Personal Info
             'vmt_employee_details.passport_number',
             'vmt_employee_details.passport_date',
             'vmt_employee_details.nationality',
             'vmt_employee_details.religion',
             'vmt_employee_details.marital_status',
-            'vmt_employee_details.spouse_name',
+            //'vmt_employee_details.spouse_name',
+
             //Documents
             'vmt_employee_details.aadhar_card_file',
             'vmt_employee_details.aadhar_card_backend_file',
