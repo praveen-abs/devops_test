@@ -147,7 +147,6 @@ class VmtMainDashboardController extends Controller
                 'users.id',
                 'users.name',
                 'users.avatar',
-                'vmt_employee_details.emp_no',
                 'vmt_employee_office_details.designation',
                 'vmt_employee_details.dob',
                 'vmt_employee_details.doj'
