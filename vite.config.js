@@ -34,6 +34,10 @@ export default defineConfig({
                     //Configurations
 
                     'resources/js/hrms/modules/configurations/attendance_settings/Att_AssignWorkShifts.js',
+
+                    // Offer Letter
+
+                    'resources/js/hrms/modules/onboarding_module/offer_leave/offer_letter_generation/offer_letter_generation.js'
             ],
             refresh: true,
         }),
