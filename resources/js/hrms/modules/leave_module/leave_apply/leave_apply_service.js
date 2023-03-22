@@ -25,6 +25,7 @@ export const Service = defineStore("Service", () => {
         permission_start_time: "",
         permission_total_time: "",
         permission_end_time: "",
+        compensatory_leaves:'',
         compensatory_leaves_dates:"",
         selected_compensatory_leaves:"",
         compensatory_start_date:"",
@@ -59,7 +60,7 @@ export const Service = defineStore("Service", () => {
 
 
      const selected_compensatory_leaves = ref();
-     const compensatory_leaves = ref();
+    //  const compensatory_leaves = ref([]);
 
 
     // Events
@@ -202,6 +203,11 @@ export const Service = defineStore("Service", () => {
             half_day_format.value = false;
             custom_format.value = false;
             TotalNoOfDays.value = false;
+            get_compensatroy_leaves();
+
+            leave_data.compensatory_leaves_dates=moment(leave_data.compensatory_leaves.emp_attendance_date).format(`dddd DD-MMM-YYYY`);
+            console.log("kn"+leave_data.compensatory_leaves.emp_attendance_date);
+
         } else if (leave_data.selected_leave == "Select") {
             compensatory_format.value = false;
             Permission_format.value = false;
@@ -219,13 +225,15 @@ export const Service = defineStore("Service", () => {
 
     const get_user=()=>{
 
+        data_checking.value=true
+
         axios.get('/currentUser').then(res=>{
              leave_data.current_login_user=res.data
-            console.log("currently logined User:" + res.data);
-            console.log("currently logined UserCode:" + leave_data.current_login_user);
+             data_checking.value=false
         }).catch(err=>{
             console.log(err);
         })
+
     }
 
 
@@ -240,11 +248,12 @@ export const Service = defineStore("Service", () => {
 
 
     const get_compensatroy_leaves=() =>{
+
         let user_id= leave_data.current_login_user;
         axios.get(`/fetch-employee-unused-compensatory-days/${user_id}`).then(res=>{
-            compensatory_leaves.value=res.data
-            leave_data.compensatory_leaves_dates=moment(res.data.emp_attendance_date).format(`dddd DD-MMM-YYYY`);
-            console.log("Employeee compensatory leaves: " + compensatory_leaves.value);
+            leave_data.compensatory_leaves=res.data
+
+
         }).catch(res=>{
             console.log(res);
         })
@@ -397,7 +406,6 @@ export const Service = defineStore("Service", () => {
         data_checking,
         Email_Service,
         Email_Error,
-        compensatory_leaves,
         selected_compensatory_leaves,
 
 
