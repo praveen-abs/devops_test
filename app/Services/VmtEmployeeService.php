@@ -470,11 +470,16 @@ class VmtEmployeeService {
 
     public function uploadDocument($fileObject, $emp_code, $filename){
 
-        $date=date('d-m-Y H-i-s');
-        $fileName = $filename.$emp_code.'_'.$date.'.'.$fileObject->extension();
-        $path='employee/emp_'.$emp_code.'/documents';
-        $filePath = $fileObject->storeAs($path,$fileName, 'private');
-        return $fileName;
+        if(empty($fileObject)){
+           return null;
+        }else{
+            $date=date('d-m-Y H-i-s');
+            $fileName = $filename.$emp_code.'_'.$date.'.'.$fileObject->extension();
+            $path='employee/emp_'.$emp_code.'/documents';
+            $filePath = $fileObject->storeAs($path,$fileName, 'private');
+            return $fileName;
+        }
+
     }
 
     // public function fileUpload($file, $emp_code)
