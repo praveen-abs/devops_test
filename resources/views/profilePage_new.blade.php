@@ -995,7 +995,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <div class="family-addition-container">
+                                <div>
                                     @csrf
                                     @if (!empty($familydetails) && count($familydetails) > 0)
                                         @foreach ($familydetails as $singledetail)
@@ -1073,7 +1073,7 @@
                                                     <div class="row ">
                                                         <div class="col-md-12 m-0 text-end">
                                                             <button
-                                                                class="btn text-danger delete-btn p-0 bg-transparent outline-none border-0 f-12 plus-sign"
+                                                                class="btn text-danger delete-btn-family p-0 bg-transparent outline-none border-0 f-12 plus-sign"
                                                                 type="button"><i
                                                                     class="f-12 me-1 fa text-danger  fa-trash"
                                                                     aria-hidden="true"></i>Delete
@@ -1117,6 +1117,7 @@
 
                                                 </div>
                                             </div>
+
                                         </div>
                                     @endif
                                 </div>
@@ -1629,10 +1630,30 @@
             if (id) {
                 length = parseInt(id.replace('content', '')) + 1;
             }
+
             $('.family-addition-container').append(' <div class="card mb-2  addition-content" id="content' +
                 length +
-                '"><div class="card-body"> <div class="row" > <div class="col-md-12 m-0 text-end"><button class="btn text-danger delete-btn p-0 bg-transparent outline-none border-0 f-12 plus-sign" type="button"><i class="f-12 me-1 fa text-danger  fa-trash" aria-hidden="true"></i>Delete</i></button></div><div class="col-md-6"><div class="form-group mb-3"><label>Name <span class="text-danger">*</span></label><input name="name[]" class="form-control onboard-form" type="text" pattern-data="name" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Relationship <span class="text-danger">*</span></label><input name="relationship[]" class="form-control onboard-form" type="text" pattern-data="alpha" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Date of birth <span class="text-danger">*</span></label><input name="dob[]" class="form-control onboard-form" type="date" max="9999-12-31" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Phone <span class="text-danger">*</span></label><input name="phone_number[]" class="form-control onboard-form" type="number" maxlength="10" minlength="10" required></div></div></div>'
+                '"><div class="card-body"> <div class="row" > <div class="col-md-12 m-0 text-end"><button class="btn text-danger delete-btn-family p-0 bg-transparent outline-none border-0 f-12 plus-sign" type="button"><i class="f-12 me-1 fa text-danger  fa-trash" aria-hidden="true"></i>Delete</i></button></div><div class="col-md-6"><div class="form-group mb-3"><label>Name <span class="text-danger">*</span></label><input name="name[]" class="form-control onboard-form" type="text" pattern-data="name" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Relationship <span class="text-danger">*</span></label><input name="relationship[]" class="form-control onboard-form" type="text" pattern-data="alpha" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Date of birth <span class="text-danger">*</span></label><input name="dob[]" class="form-control onboard-form" type="date" max="9999-12-31" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Phone <span class="text-danger">*</span></label><input name="phone_number[]" class="form-control onboard-form" type="number" maxlength="10" minlength="10" required></div></div></div>'
             );
+            //$('.family-addition-container').append('<h2>test</h2>');
+        });
+
+        $('.delete-btn-family').click(function(){
+//            console.log("Family Details : Deleting DIV id : "+parentDiV);
+            console.log("Family Details delete button clicked");
+
+            let parentDiv = $(this).parent().parent().parent().parent().attr('id');
+
+            //Remove the div
+            $('#'+parentDiv).remove();
+
+            //Need to put sweet alert for deleting data in backend
+
+
+
+
+            console.log("Family Details : Deleting DIV id : "+parentDiv);
+
         });
 
         // emergency contact
@@ -2039,7 +2060,7 @@
                     return this.value;
                 }).get();
 
-                var location = $('input[name="location[]"]').map(function() {
+                var t_location = $('input[name="location[]"]').map(function() {
                     return this.value;
                 }).get();
 
@@ -2062,7 +2083,7 @@
                     data: {
                         'ids[]': ids,
                         'company_name[]': company_name,
-                        'location[]': location,
+                        'location[]': t_location,
                         'job_position[]': job_position,
                         'period_from[]': period_from,
                         'period_to[]': period_to,
@@ -2074,6 +2095,7 @@
                             text: 'Experience Information Updated',
                             icon: 'success'
                         }).then((result) => {
+                            console.log("Experience Update status : "+result);
                             /* Read more about isConfirmed, isDenied below */
                             if (result.isConfirmed) {
                                 location.reload();
