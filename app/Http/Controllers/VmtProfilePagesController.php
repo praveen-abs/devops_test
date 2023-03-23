@@ -98,6 +98,20 @@ class VmtProfilePagesController extends Controller
         return view('profilePage_new', compact('user','department', 'documents_filenames', 'array_bloodgroup', 'enc_user_id', 'allEmployees', 'maritalStatus', 'genderArray', 'user_full_details', 'familydetails', 'exp', 'reportingManager', 'profileCompletenessValue', 'bank', 'data', 'employees', 'statutory_info'));
     }
 
+    public function updateReportingManager(Request $request){
+
+        $emp_id = $request->emp_id;
+        $manager_code = $request->manager_code;
+
+        $query_EmpOfficeDetails = VmtEmployeeOfficeDetails::where('user_id', $emp_id)->first();
+
+        if($query_EmpOfficeDetails){
+            $query_EmpOfficeDetails->l1_manager_code = $manager_code;
+            $query_EmpOfficeDetails->save();
+        }
+
+        return redirect()->back();
+    }
 
     public function updateGeneralInfo(Request $request) {
          //dd($request->all());
