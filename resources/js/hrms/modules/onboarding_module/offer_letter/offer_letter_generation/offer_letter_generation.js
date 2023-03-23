@@ -6,6 +6,7 @@ import "primeicons/primeicons.css";
 
 
 import { createApp } from "vue";
+import { createPinia } from "pinia";
 import router from '../router'
 import PrimeVue from "primevue/config";
 import BadgeDirective from "primevue/badgedirective";
@@ -29,9 +30,11 @@ import OfferLetter from './offer_letter_generation.vue'
 
 
 const app = createApp(OfferLetter);
+const pinia=createPinia()
 
 app.use(PrimeVue, { ripple: true });
 app.use(router);
+app.use(pinia)
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);

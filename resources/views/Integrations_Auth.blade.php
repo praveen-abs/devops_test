@@ -23,6 +23,8 @@
                     <li class="nav-item text-muted mx-4" role="presentation">
                         <a class="nav-link  pb-2" data-bs-toggle="tab" href="#bank_tab" aria-selected="true" role="tab">
                             Bank
+                            @vite('resources/js/hrms/modules/configurations/integration_auth/integration_auth.js')
+                        <div id=""integration></div>
                         </a>
                     </li>
                 </ul>
@@ -257,6 +259,8 @@
                     </div>
                     <div class="tab-pane show fade   " id="bank_tab" role="tabpanel"
                         aria-labelledby="pills-profile-tab">
+
+
 
                     </div>
                 </div>

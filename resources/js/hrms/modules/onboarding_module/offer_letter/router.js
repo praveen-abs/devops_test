@@ -7,7 +7,7 @@ import offer_letter_generation from './offer_letter_generation/offer_letter_gene
 import offer_letter_template from './offer_letter_template/offer_letter_template.vue'
 const routes = [
   {
-    path: '/offer_letter',
+    path: '/offer',
     name: 'offer_master',
     component: offer_master
   },
@@ -39,7 +39,7 @@ const routes = [
 
 ]
 const router = createRouter({
-    history: createWebHistory(import.meta.env.BASE_URL),
+    history: createWebHistory(),
   routes
 })
 export default router

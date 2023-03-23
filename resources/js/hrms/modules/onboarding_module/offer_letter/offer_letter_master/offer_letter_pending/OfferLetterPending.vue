@@ -1,5 +1,50 @@
 <template>
     <div>
+
+        <div class="tab-pane show fade active" id="offer_pending" role="tabpanel" aria-labelledby="pills-profile-tab">
+            <div class="card ">
+                <div class="card-body">
+                    <div class="offer-pending-content">
+                        <div class="row">
+                            <div class="col-xl-8 col-sm-8 col-lg-8 col-md-8 col-xxl-8"><span
+                                    class="text-muted font-medium">Here you
+                                    can
+                                    view the saved offer letters to be sent</span></div>
+                            <div class="col-xl-4 col-sm-4 col-lg-4 col-md-4 col-xxl-4 text-end">
+                                <button  class="btn btn-orange">
+                                    <i class=" fa fa-plus-circle me-1"></i>
+                                    <router-link class="text-white" to="/offer_letter_generation">
+                                        Create offer</router-link>
+                                </button>
+
+                                <!-- <a href="{{ route('create-offer') }}" class="btn btn-orange">
+                                    <i class=" fa fa-plus-circle me-1"></i>
+                                        <router-link to="/offer_letter_generation">link</router-link> Create
+                                    Offer</a> -->
+                            </div>
+                        </div>
+                        <div id="offerletter_pending" class="" style=""></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-0">
+                <div class="card-body">
+                    <div class="offer-delete-content">
+                        <div class="row">
+                            <div class="col-xl-12 col-sm-12 col-lg-12 col-md-12 col-xxl-12"><span
+                                    class="text-muted font-medium">
+                                    Deleted offer letters are stored here for 10 days</span>
+                            </div>
+                            <div class="col-xl-12 col-sm-12 col-lg-12 col-md-12 col-xxl-12">
+                                <div id="deleted_offerletter" style=""></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <DataTable :value="products" :paginator="true" :rows="10" dataKey="id" :rowHover="true" :paginatorPosition="right"
             v-model:selection="selectedCustomers" v-model:filters="filters" filterDisplay="menu" :loading="loading"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"

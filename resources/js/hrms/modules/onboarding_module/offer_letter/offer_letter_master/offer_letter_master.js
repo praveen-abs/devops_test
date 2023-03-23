@@ -23,7 +23,7 @@ import Row from 'primevue/row';
 import InputText from 'primevue/inputtext'
 import Dialog from 'primevue/dialog'
 
-import OfferLetterMaster from './offer_letter_generation.vue'
+import OfferLetterMaster from './offer_letter_master.vue'
 import router from '../router'
 
 
