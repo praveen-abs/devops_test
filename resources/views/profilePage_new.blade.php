@@ -1,3 +1,4 @@
+
 <?php use Carbon\Carbon; ?>
 @extends('layouts.master')
 @section('title')
@@ -86,12 +87,17 @@
                                         <div class="border-bottom-liteAsh py-2">
                                             <p class="text-muted f-12 fw-bold">Department</p>
                                             <p class="text-primary-old f-15 fw-bold">
-                                                {{ $department ?? '-' }}</p>
+                                                {{ $department ?? '-' }}
+                                                <a href="#" class="edit-icon" data-bs-toggle="modal"
+                                                data-bs-target="#edit_department"><i class="ri-pencil-fill"></i></a>
+                                            </p>
                                         </div>
                                         <div class="border-bottom-liteAsh py-2">
                                             <p class="text-muted f-12 fw-bold">Reporting To</p>
                                             <p class="text-primary-old f-15 fw-bold">
                                                 {{ $user_full_details->l1_manager_name ?? '-' }}</p>
+                                            <a href="#" class="edit-icon" data-bs-toggle="modal"
+                                            data-bs-target="#edit_reportingManager"><i class="ri-pencil-fill"></i></a>
                                         </div>
                                     </div>
                                     <div class="profile-bottom-right-content  text-center ">
@@ -609,6 +615,92 @@
                         </div>
                     </div>
                 </div>
+
+
+
+                <div id="edit_department" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content profile-box">
+                            <div class="modal-header  ">
+                                <h6 class="modal-title">Edit Department
+                                </h6>
+                                <button type="button" class="close  border-0 h3" data-bs-dismiss="modal"
+                                    aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div>
+                                    <label>Department<span class="text-danger">*</span></label>
+
+                                    <select class="form-select form-control" name="gender"
+                                        aria-label="Default select">
+                                        <option selected hidden disabled>Choose Gender</option>
+                                        @foreach ($allDepartments as $singleDepartment)
+                                            <option value="{{ $singleDepartment->id }}"
+                                                @if (!empty($department) && $department == $singleDepartment->name) selected @endif>
+                                                {{ $singleDepartment->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="text-right">
+                                    <button class="btn btn-orange submit-btn" id="save_department">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div id="edit_reportingManager" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content profile-box">
+                            <div class="modal-header  ">
+                                <h6 class="modal-title">Edit Reporting Manager
+                                </h6>
+                                <button type="button" class="close  border-0 h3" data-bs-dismiss="modal"
+                                    aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div>
+                                    <label>Manager Name<span class="text-danger">*</span></label>
+
+                                    <select class="form-select form-control" name="gender"
+                                        aria-label="Default select">
+                                        <option selected hidden disabled>Choose Reporting Manager</option>
+                                        @foreach ($allEmployees as $singleEmployee)
+                                            <option value="{{ $singleEmployee->user_code }}" >
+                                                {{ $singleEmployee->user_code }} - {{ $singleEmployee->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="text-right">
+                                    <button class="btn btn-orange submit-btn" id="save_reportingManager">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
 
                 <div id="edit_profileImg" class="modal  custom-modal fade" style="display: none;" aria-hidden="true">
                     <div class="modal-dialog  modal-dialog-centered " role="document">
@@ -1443,6 +1535,17 @@
             // @endif
 
             console.log("ready!");
+        });
+
+        $('#save_department').click(function() {
+
+            let emp_id = "{{ $user_full_details->id }}";
+
+            console.log("Save dept button clicked");
+        });
+
+        $('#save_reportingManager').click(function() {
+            console.log("save_reportingManager button clicked");
         });
 
 
