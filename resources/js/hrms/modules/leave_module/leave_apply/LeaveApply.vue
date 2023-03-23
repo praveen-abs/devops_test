@@ -255,12 +255,8 @@
                     </div>
                     <div class="col-md-12  col-sm-12 col-lg-6 col-xl-6 col-xxl-6  mb-md-0 mb-3">
 
-                        <MultiSelect v-model="service.leave_data.selected_compensatory_leaves" :options="service.compensatory_leaves" optionLabel="emp_attendance_date" placeholder="Select worked Date" display="chip" class="w-full md:w-full" :maxSelectedLabels="5" >
-                            <template #option>
-                                <div class="flex align-items-center">
-                                    <div>{{  service.leave_data.compensatory_leaves_dates  }}</div>
-                                </div>
-                            </template>
+                        <MultiSelect v-model="service.leave_data.selected_compensatory_leaves" :options="service.leave_data.compensatory_leaves" optionLabel="emp_attendance_date" placeholder="Select worked Date" display="chip" class="w-full md:w-full" :maxSelectedLabels="5" >
+
                             <template #footer>
                                 <div class="py-2 px-3">
                                     <b>{{ service.leave_data.selected_compensatory_leaves ? service.leave_data.selected_compensatory_leaves.length : 0 }}</b> Date{{ (service.leave_data.selected_compensatory_leaves ? service.leave_data.selected_compensatory_leaves.length : 0) > 1 ? 's' : '' }} selected.
@@ -376,9 +372,9 @@ const service = Service()
 
 onMounted(() => {
 
+
     service.get_user()
     service.get_leave_types()
-    service.get_compensatroy_leaves()
     service.leave_data.custom_start_date = new Date()
     service.leave_data.permission_start_time = new Date()
 

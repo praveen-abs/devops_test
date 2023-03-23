@@ -193,13 +193,11 @@ class VmtEmployeeService {
         $passport_date =  $row["passport_date"];
 
         $newEmployee->userid   =    $user->id;
-        $newEmployee->emp_no   =    $row["employee_code"] ?? '';
         $newEmployee->gender   =    $row["gender"] ?? '';
         $newEmployee->doj   =    $this->getdateFormatForDb($doj);
         $newEmployee->dol   =    $this->getdateFormatForDb($doj);
         $newEmployee->dob   =    $this->getdateFormatForDb($dob);
         $newEmployee->location   =    $row["work_location"] ?? '';
-        $newEmployee->father_name   =  $row["father_name"] ?? '';
         $newEmployee->pan_number   =  isset($row["pan_number"]) ? ($row["pan_number"]) : "";
         $newEmployee->dl_no   =  $row["dl_no"] ?? '';
         $newEmployee->passport_number = $row["passport_no"] ?? '';

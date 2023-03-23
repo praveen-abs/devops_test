@@ -42,7 +42,11 @@
                             type="text"
                             v-model="v$.employee_code.$model"
                             placeholder="Employee Code"
+                            @input="userCodeExists"
                           />
+
+                          <span v-if=" user_code_exists "  class="p-error">Employee code Already Exists</span>
+
                         </div>
                       </div>
 
@@ -249,11 +253,14 @@
                             placeholder="Email ID"
                             :class="{
                               'p-invalid': v$.email.$invalid && submitted,
-                            }"
+                            }" @input="personalMailExists"
                             v-model="v$.email.$model"
                             class="form-control textbox"
                             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                           />
+
+                          <span v-if="personal_mail_exists "  class="p-error">Email is already exists</span>
+
 
                           <span
                             v-if="
@@ -2682,6 +2689,39 @@ const checkInputFiles=()=>{
   }else{
     fileUploadValidation.value=false
   }
+}
+
+const  user_code_exists=ref(false)
+
+const userCodeExists = () =>{
+
+    let user_code=employee_onboarding.employee_code;
+
+    axios.get(`/user-code-exists/${user_code}`).then(res=>{
+        console.log(res.data);
+        user_code_exists.value=res.data
+    }).catch(err=>{
+        console.log(err);
+    }).finally(()=>{
+        console.log("completed");
+    })
+
+}
+
+const personal_mail_exists = ref(false)
+
+const personalMailExists=()=>{
+
+    let mail=employee_onboarding.email;
+
+    axios.get(`/personal-mail-exists/${mail}`).then(res=>{
+        console.log(res.data);
+        personal_mail_exists.value=res.data
+    }).catch(err=>{
+        console.log(err);
+    }).finally(()=>{
+        console.log("completed");
+    })
 }
 
 // const fileUpload = () => {

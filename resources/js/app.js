@@ -3,6 +3,9 @@ import "primevue/resources/themes/lara-light-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
 
+import './bootstrap';
+import '../../public/assets/css/app.css';
+
 
 import { createApp } from "vue";
 import PrimeVue from "primevue/config";
@@ -101,9 +104,9 @@ import TreeSelect from 'primevue/treeselect';
 import TreeTable from 'primevue/treetable';
 import TriStateCheckbox from 'primevue/tristatecheckbox';
 import VirtualScroller from 'primevue/virtualscroller';
-import primeTable from './components/primeTable.vue'
 
 
+import leave from './testings/leave.vue'
 
 const app = createApp(leave);
 

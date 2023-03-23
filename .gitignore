@@ -29,3 +29,5 @@ Homestead.json
 
 /composer.lock
 /.history/
+
+/storage/uploads/employee/
