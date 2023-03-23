@@ -42,6 +42,25 @@ use App\Services\VmtEmployeeService;
 class VmtEmployeeOnboardingController extends Controller
 {
 
+    public function isEmployeePersonalEmailAlreadyExists(Request $request){
+        //dd($request->all());
+        //dd(User::where('email',$request->mail)->exists());
+
+        if(!empty($request->mail))
+            return User::where('email',$request->mail)->exists() ? "true" : "false";
+        else
+            return false;
+    }
+
+    public function isEmployeeCodeAlreadyExists(Request $request){
+        //dd($request->all());
+        //dd(User::where('email',$request->mail)->exists());
+
+        if(!empty($request->user_code))
+            return User::where('user_code',$request->user_code)->exists() ? "true" : "false";
+        else
+            return false;
+    }
 
     private function generateEmployeeCode()
     {
@@ -184,15 +203,18 @@ class VmtEmployeeOnboardingController extends Controller
 
     public function processEmployeeOnboardForm_Normal_Quick(Request $request, VmtEmployeeService $employeeService)
     {
-         $employee_onboarding=$request->employee_onboarding;
-        // dd($employee_onboarding);
 
-        $user_id = $employee_onboarding['employee_code'];
+
+
+        $data=$request->all();
+
+
+        $user_id =$data['employee_code'];
         $response = "";
         $isEmailSent = "";
         $onboard_form_data =  array();
         //parse_str($request->all(), $onboard_form_data); (Removing this line, input from data is alreay in array)
-        $onboard_form_data  = $request->all();
+        $onboard_form_data  = $data;
         $currentLoggedinInUser = auth()->user();
         // dd($employee_onboarding['can_onboard_employee']);
 
@@ -200,7 +222,7 @@ class VmtEmployeeOnboardingController extends Controller
         //Check whether we are updating existing user or adding new user.
 
         $existingUser = User::where('id',$user_id);
-       /// dd($existingUser->exists());
+    //    dd($existingUser->exists());
         if($existingUser->exists())
         {
 
@@ -240,7 +262,7 @@ class VmtEmployeeOnboardingController extends Controller
 
                     $response = [
                         'status' => $result->status,
-                        'message' => "Error while creating/update User details",
+                        'message' => "Error while creating/update User details. LINE : ".__LINE__,
                         'error' => $result->message,
                         'error_verbose' =>''
                     ];
@@ -275,7 +297,7 @@ class VmtEmployeeOnboardingController extends Controller
                         //When error occured while storing User, then show error to UI
                         $response = [
                                 'status' => $result->status,
-                                'message' => "Error while creating/update User details",
+                                'message' => "Error while creating/update User details : LINE : ".__LINE__,
                                 'error' => $result->message,
                                 'error_verbose' =>''
                         ];
@@ -316,8 +338,10 @@ class VmtEmployeeOnboardingController extends Controller
             //Check whether current login is admin
             if(Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]) )
             {
-                $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->employee_onboarding['can_onboard_employee'], null);
-                
+
+                $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $onboard_form_data['can_onboard_employee'], null);
+
+
                 if($result->status == "success")
                 {
                     $response = [
@@ -332,10 +356,11 @@ class VmtEmployeeOnboardingController extends Controller
                 }
                 else
                 {
+
                     //When error occured while storing User, then show error to UI
                     $response = [
                             'status' => $result->status,
-                            'message' => "Error while creating/update User details",
+                            'message' => "Error while creating/update User details : LINE : ".__LINE__,
                             'error' => $result->message,
                             'error_verbose' =>''
                     ];
@@ -435,7 +460,7 @@ class VmtEmployeeOnboardingController extends Controller
                 $newEmployee->epf_number = $row["epf_number"] ?? '';
 
                 $newEmployee->esic_number = $row["esic_number"] ?? '';
-                $newEmployee->marital_status = $row["marital_status"] ?? '';
+                $newEmployee->marital_status = $row["marital_status_id"] ?? '';
 
                 $newEmployee->mobile_number  = strval($row["mobile_no"]);
                 $newEmployee->blood_group  = $row["blood_group"] ?? '';
@@ -1318,6 +1343,8 @@ class VmtEmployeeOnboardingController extends Controller
             'status' => 'empty',
             'message' => 'empty',
         ];
+
+        dd($request->all());
 
         //This wont work for super-admin for now.
         $currentEmployeeDetails = VmtEmployee::where('userid', auth()->user()->id)->first();

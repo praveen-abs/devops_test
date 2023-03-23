@@ -1,9 +1,11 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue'
+import FullReload from 'vite-plugin-full-reload'
 
 export default defineConfig({
     plugins: [
+        FullReload(['config/routes.rb', 'app/views/**/*']),
         vue(),
         laravel({
             input: [
@@ -29,7 +31,14 @@ export default defineConfig({
                     'resources/js/hrms/modules/approvals/leaves/LeaveApproval.js',
                     'resources/js/hrms/modules/approvals/pms/PMSApprovalTable.js',
                     'resources/js/hrms/modules/profile_pages/EmployeeDocumentsManager.js',
-                    //'resources/js/hrms/modules/approvals/employee_reimbursements/employee_local_covegance.js',
+
+                    ////Reimbursements Module
+                    //Employee Reimbursements
+                    'resources/js/hrms/modules/reimbursements/employee_reimbursements/EmployeeReimbursements.js',
+
+                    //Holidays
+                    'resources/js/hrms/modules/holidays/Holidays_MasterList.js',
+                    'resources/js/hrms/modules/holidays/Holidays_Lists.js',
 
                     //Configurations
 

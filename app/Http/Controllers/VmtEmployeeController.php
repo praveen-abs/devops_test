@@ -1036,8 +1036,7 @@ class VmtEmployeeController extends Controller
             )
             ->orderBy('users.name', 'ASC')
             ->where('users.active', '1')
-            ->where('users.is_ssa', '0')
-            ->whereNotNull('emp_no');
+            ->where('users.is_ssa', '0');
 
         //if '1', then show all client's employees
         if (session('client_id') == '1')
@@ -1082,8 +1081,7 @@ class VmtEmployeeController extends Controller
             )
             ->orderBy('users.name', 'ASC')
             ->where('users.active', '0')
-            ->where('users.is_ssa', '0')
-            ->whereNotNull('emp_no');
+            ->where('users.is_ssa', '0');
 
         //if '1', then show all client's employees
         if (session('client_id') == '1')
@@ -1127,8 +1125,7 @@ class VmtEmployeeController extends Controller
             )
             ->orderBy('users.name', 'ASC')
             ->where('users.active', '-1')
-            ->where('users.is_ssa', '0')
-            ->whereNotNull('emp_no');
+            ->where('users.is_ssa', '0');
 
         //if '1', then show all client's employees
         if (session('client_id') == '1')

@@ -12,6 +12,7 @@ use App\Models\VmtClientMaster;
 use App\Models\User;
 use App\Models\VmtEmployeeAttendance;
 use App\Models\VmtEmployeeLeaves;
+use App\Models\VmtEmployeeCompensatoryLeave;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtLeaves;
 use App\Models\VmtGeneralInfo;
@@ -334,39 +335,32 @@ class VmtAttendanceController extends Controller
         return $daterange;
     }
 
-
     public function applyLeaveRequest(Request $request){
-
-
         $leave_month = date('m',strtotime($request->start_date));
+        $compensatory_leavetype_id = VmtLeaves::where('leave_type','Compensatory Leave')->value('id');
 
+        $leave_type_id = VmtLeaves::where('leave_type',$request->leave_type_name)->value('id');
+        //dd($leave_type_id);
         //get the existing Pending/Approved leaves. No need to check Rejected
         $existingNonPendingLeaves = VmtEmployeeLeaves::where('user_id', auth::user()->id)
                                     ->whereMonth('start_date','>=',$leave_month)
                                     ->whereIn('status',['Pending','Approved'])
                                     ->get(['start_date','end_date','status']);
 
-        //dd($existingNonPendingLeaves);
-        //coverting start_date and end_date for comparison
-        $processed_leave_start_date =($request->start_date);
-        $processed_leave_end_date = ($request->end_date);
-        // $processed_leave_start_date = new Carbon($request->start_date);
-        // $processed_leave_end_date = new Carbon($request->end_date);
-
-        //dd($processed_leave_start_date->format('Y-m-d'));
-
         foreach($existingNonPendingLeaves as $singleLeaveRange){
-            $endDate = new Carbon($singleLeaveRange->end_date);
-            $endDate->addDay();
+            //$endDate = new Carbon($singleLeaveRange->end_date);
+            //$endDate->addDay();
 
             //create leave range
-            $leave_range = $this->createLeaveRange($singleLeaveRange->start_date, $endDate);
+            $leave_range = $this->createLeaveRange($singleLeaveRange->start_date, $singleLeaveRange->end_date);
+
+            //dd($leave_range);
 
             //check with the user given leave range
             foreach ($leave_range as $date) {
                 //if date already exists in previous leaves
                 // if ($processed_leave_start_date->format('Y-m-d') == $date->format('Y-m-d') || $processed_leave_end_date->format('Y-m-d') == $date->format('Y-m-d'))
-                if ($request->start_date->format('Y-m-d') == $date->format('Y-m-d') || $request->end_date->format('Y-m-d') == $date->format('Y-m-d'))
+                if ($request->start_date == $date->format('Y-m-d') || $request->end_date == $date->format('Y-m-d') )
                 {
                     return $response = [
                         'status' => 'failure',
@@ -382,15 +376,28 @@ class VmtAttendanceController extends Controller
         $diff="ERROR";
         $mailtext_total_leave = " 0-0";
 
+
           //Check if its Leave or Permission
-        if (isPermissionLeaveType($request->leave_type_id)) {
+        if (isPermissionLeaveType($leave_type_id)) {
+
             $diff = $request->hours_diff;
             $mailtext_total_leave = $diff . " Hour(s)";
         } else {
-            //Check if its 0.5 day leave, then handle separately
-            if($request->no_of_days == "0.5"){
-                $diff = "0.5 ".$request->leave_session;
-            } else {
+            //Now its leave type
+
+            ////Check if its 0.5 day leave, then handle separately
+
+            if($request->no_of_days == '0.5')
+            {
+                if($request->leave_session == "FN"){
+                    $diff = "Fore-noon ";
+                } else
+                if($request->leave_session == "AN"){
+                    $diff = "After-noon ";
+                }
+            }
+            else
+            {
                 //If its not half day leave, then its fullday or custom days
                 $diff = intval($request->no_of_days);
             }
@@ -402,12 +409,13 @@ class VmtAttendanceController extends Controller
         //Save in DB
         $emp_leave_details =  new VmtEmployeeLeaves;
         $emp_leave_details->user_id = auth::user()->id;
-        $emp_leave_details->leave_type_id = $request->leave_type_id;
+        $emp_leave_details->leave_type_id = $leave_type_id;
         $emp_leave_details->leaverequest_date = $request->leave_request_date;
         $emp_leave_details->start_date = $request->start_date;
         $emp_leave_details->end_date = $request->end_date;
         $emp_leave_details->leave_reason = $request->leave_reason;
-        $emp_leave_details->total_leave_datetime = $diff;
+        $emp_leave_details->total_leave_datetime = $request->no_of_days." ".$request->leave_session;
+        // $emp_leave_details->total_leave_datetime = $diff;
 
 
         //get manager of this employee
@@ -426,6 +434,26 @@ class VmtAttendanceController extends Controller
 
         //dd($emp_leave_details->toArray());
         $emp_leave_details->save();
+        ////If compensatory leave, then store the comp work days in 'vmt_employee_compensatory_leaves'
+        if($leave_type_id == $compensatory_leavetype_id)
+        {
+            $array_comp_work_days_ids = $request->compensatory_work_days_ids == '' ? null : $request->compensatory_work_days_ids;
+
+
+
+            if(!empty($array_comp_work_days_ids) && is_array($array_comp_work_days_ids))
+            {
+
+                foreach($array_comp_work_days_ids as $singleCompWorkDayID)
+                {
+                    $emp_compensatory_leave = new VmtEmployeeCompensatoryLeave;
+                    $emp_compensatory_leave->employee_leave_id = $emp_leave_details->id;
+                    $emp_compensatory_leave->employee_attendance_id = $singleCompWorkDayID;
+                    $emp_compensatory_leave->save();
+                }
+            }
+        }
+        ////
 
         //Need to send mail to 'reviewer' and 'notifications_users_id' list
         $reviewer_mail =  VmtEmployeeOfficeDetails::where('user_id', $manager_id)->value('officical_mail');
@@ -439,23 +467,19 @@ class VmtAttendanceController extends Controller
         // dd($request->leave_type_id);
 
         $isSent    = \Mail::to($reviewer_mail)->send(new RequestLeaveMail(
-                                                    auth::user()->name,
-                                                    auth::user()->user_code,
-                                                    $emp_avatar,
-                                                    $manager_name,
-                                                    Carbon::parse($request->leave_request_date)->format('M jS Y'),
-                                                    Carbon::parse($request->start_date)->format('M jS Y'),
-                                                    Carbon::parse($request->end_date)->format('M jS Y'),
-                                                    $request->leaverequest_date,
-                                                    $request->start_date,
-                                                    $request->end_date,
-                                                    $request->leave_reason,
-                                                    // VmtLeaves::find($request->leave_type_id)->leave_type,
-                                                    VmtLeaves::find($request->leave_type_id),
-                                                    $mailtext_total_leave,
+                                                    uEmployeeName : auth::user()->name,
+                                                    uEmpCode : auth::user()->user_code,
+                                                    uEmpAvatar : $emp_avatar,
+                                                    uManagerName : $manager_name,
+                                                    uLeaveRequestDate : Carbon::parse($request->leave_request_date)->format('M jS Y'),
+                                                    uStartDate : Carbon::parse($request->start_date)->format('M jS Y'),
+                                                    uEndDate : Carbon::parse($request->end_date)->format('M jS Y'),
+                                                    uReason : $request->leave_reason,
+                                                    uLeaveType : $request->leave_type_name,
+                                                    uTotal_leave_datetime : $mailtext_total_leave,
                                                     //Carbon::parse($request->total_leave_datetime)->format('M jS Y \\, h:i:s A'),
-                                                    request()->getSchemeAndHttpHost(),
-                                                    $image_view
+                                                    loginLink : request()->getSchemeAndHttpHost(),
+                                                    image_view : $image_view
                                                 ));
 
         if ($isSent) {
@@ -476,162 +500,6 @@ class VmtAttendanceController extends Controller
 
     }
 
-
-
-
-
-
-
-
-
-
-
-
-    public function saveLeaveRequestDetails(Request $request)
-    {
-        $leave_month = date('m',strtotime($request->start_date));
-
-        //get the existing Pending/Approved leaves. No need to check Rejected
-        $existingNonPendingLeaves = VmtEmployeeLeaves::where('user_id', auth::user()->id)
-                                    ->whereMonth('start_date','>=',$leave_month)
-                                    ->whereIn('status',['Pending','Approved'])
-                                    ->get(['start_date','end_date','status']);
-
-        //dd($existingNonPendingLeaves);
-        //coverting start_date and end_date for comparison
-        $processed_leave_start_date = new Carbon($request->start_date);
-        $processed_leave_end_date = new Carbon($request->end_date);
-
-        //dd($processed_leave_start_date->format('Y-m-d'));
-
-        foreach($existingNonPendingLeaves as $singleLeaveRange){
-            $endDate = new Carbon($singleLeaveRange->end_date);
-            $endDate->addDay();
-
-            //create leave range
-            $leave_range = $this->createLeaveRange($singleLeaveRange->start_date, $endDate);
-
-            //check with the user given leave range
-            foreach ($leave_range as $date) {
-                //if date already exists in previous leaves
-                if ($processed_leave_start_date->format('Y-m-d') == $date->format('Y-m-d') || $processed_leave_end_date->format('Y-m-d') == $date->format('Y-m-d'))
-                {
-                    return $response = [
-                        'status' => 'failure',
-                        'message' => 'Leave Request already applied for this date',
-                        'mail_status' => '',
-                        'error' => '',
-                        'error_verbose' => ''
-                    ];
-                }
-            }
-        }
-
-       //dd("Leave not found");
-
-
-
-        $leave_request_date = Carbon::now();
-
-        //Calculate total leave days...
-        $start = Carbon::parse($request->start_date);
-        $end = Carbon::parse($request->end_date);
-
-        //$diff = $start->diff($end)->format('%D day(s) , %H hour(s)');
-        $diff="ERROR";
-        $mailtext_total_leave = " 0-0";
-
-        //Check if its Leave or Permission
-        if (isPermissionLeaveType($request->leave_type_id)) {
-            $diff = intval( $start->diff($end)->format('%H'));
-            $mailtext_total_leave = $diff . " Hour(s)";
-
-            //dd("Time diff : ".$mailtext_total_leave);
-        } else {
-            //Check if its 0.5 day leave, then handle separately
-            if($request->half_day_leave == "0.5"){
-                $diff = "0.5 ".$request->half_day_type;
-            } else {
-                //If its not half day leave, then find the leave days
-                $diff = intval($start->diff($end)->format('%D')) + 1; //day adjusted by adding '1'
-            }
-
-            $mailtext_total_leave = $diff . " Day(s)";
-        }
-
-        //dd($diff);
-
-        $emp_leave_details =  new VmtEmployeeLeaves;
-        $emp_leave_details->user_id = auth::user()->id;
-        $emp_leave_details->leave_type_id = $request->leave_type_id;
-        $emp_leave_details->leave_request_date = $request->leave_request_date;
-        $emp_leave_details->start_date = $request->start_date;
-        $emp_leave_details->end_date = $request->end_date;
-        $emp_leave_details->leave_reason = $request->leave_reason;
-        $emp_leave_details->total_leave_datetime = $diff;
-
-        //get manager of this employee
-        $manager_emp_code = VmtEmployeeOfficeDetails::where('user_id', auth::user()->id)->value('l1_manager_code');
-        $manager_name = User::where('user_code', $manager_emp_code)->value('name');
-        $manager_id = User::where('user_code', $manager_emp_code)->value('id');
-
-        $emp_leave_details->reviewer_user_id = $manager_id;
-        $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id));
-
-        if (!empty($request->notifications_users_id))
-            $emp_leave_details->notifications_users_id = implode(",", $request->notifications_users_id);
-
-        $emp_leave_details->reviewer_comments = "";
-        $emp_leave_details->status = "Pending";
-
-        //dd($emp_leave_details->toArray());
-        $emp_leave_details->save();
-
-        //Need to send mail to 'reviewer' and 'notifications_users_id' list
-        $reviewer_mail =  VmtEmployeeOfficeDetails::where('user_id', $manager_id)->value('officical_mail');
-
-        $message = "";
-        $mail_status = "";
-
-        $VmtGeneralInfo = VmtGeneralInfo::first();
-        $image_view = url('/') . $VmtGeneralInfo->logo_img;
-
-
-        $isSent    = \Mail::to($reviewer_mail)->send(new RequestLeaveMail(
-                                                    auth::user()->name,
-                                                    auth::user()->user_code,
-                                                    $emp_avatar,
-                                                    $manager_name,
-                                                    // Carbon::parse($leave_request_date)->format('M jS Y'),
-                                                    // Carbon::parse($request->start_date)->format('M jS Y'),
-                                                    // Carbon::parse($request->end_date)->format('M jS Y'),
-                                                    $request->leave_request_date,
-                                                    $request->start_date,
-                                                    $request->end_date,
-                                                    $request->leave_reason,
-                                                    VmtLeaves::find($request->leave_type_id)->leave_type,
-                                                    $mailtext_total_leave,
-                                                    //Carbon::parse($request->total_leave_datetime)->format('M jS Y \\, h:i:s A'),
-                                                    request()->getSchemeAndHttpHost(),
-                                                    $image_view
-                                                ));
-
-        if ($isSent) {
-            $mail_status = "Mail sent successfully";
-        } else {
-            $mail_status = "There was one or more failures.";
-        }
-
-        $response = [
-            'status' => 'success',
-            'message' => 'Leave Request applied successfully',
-            'mail_status' => $mail_status,
-            'error' => '',
-            'error_verbose' => ''
-        ];
-
-        return $response;
-    }
 
     public function withdrawLeave(Request $request){
         $withdraw_leave_query=VmtEmployeeLeaves::where('id',$request->leave_id)
@@ -1132,10 +1000,6 @@ class VmtAttendanceController extends Controller
                 }
 
 
-
-
-
-          dd($attendance_date);
         //check whether leave applied.If yes, check leave status
         $leave_record = VmtEmployeeLeaves::where('user_id',$user_id)->
                             whereDate('end_date',$attendance_date);
@@ -1401,8 +1265,6 @@ class VmtAttendanceController extends Controller
             $mail_status = "There was one or more failures.";
         }
 
-
-
         return $responseJSON = [
             'status' => 'success',
             'message' => 'Request sent successfully!',
@@ -1620,8 +1482,6 @@ class VmtAttendanceController extends Controller
                                                                                         $array_template_leaveTypes
                                                                                     );
 
-
-
            }
 
            //dd($single_leave_balance_data);
@@ -1640,6 +1500,12 @@ class VmtAttendanceController extends Controller
         //dd($final_output);
         return $final_output;
 
-
     }
+
+    public function fetchUnusedCompensatoryOffDays(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+        //dd($request->user_id);
+        //TODO : Need to get current user_id instead of fetching from req params.
+        return $serviceVmtAttendanceService->fetchUnusedCompensatoryOffDays($request->user_id);
+    }
+
 }

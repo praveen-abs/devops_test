@@ -110,7 +110,16 @@
         <Column field="regularization_type" header="Type"></Column>
         <Column field="user_time" header="Actual Time"></Column>
         <Column field="regularize_time" header="Regularize Time"></Column>
-        <Column field="reason_type" header="Reason"></Column>
+        <Column field="reason_type" header="Reason">
+            <template #body="slotProps">
+
+            <span v-if="slotProps.data.reason_type == 'Others'">
+                {{  slotProps.data.custom_reason }}
+            </span>
+            <span v-else>{{ slotProps.data.reason_type }}</span>
+
+            </template>
+        </Column>
         <Column field="reviewer_comments" header="Approve Comments"></Column>
         <Column field="reviewer_reviewed_date" header="Reviewed Date"></Column>
 

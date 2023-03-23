@@ -98,7 +98,13 @@ Route::middleware(['auth'])->group(function () {
     Route::controller(VmtEmployeeOnboardingController::class)->group(function () {
         Route::get('/employee-onboarding-v2', 'showNormalOnboardingPage')->name('employee-onboarding-v2');
 
+        //normal onboarding checks
+        Route::get('/personal-mail-exists/{mail}', 'isEmployeePersonalEmailAlreadyExists')->name('personal-mail-exists');
+        Route::get('/user-code-exists/{user_code}', 'isEmployeeCodeAlreadyExists')->name('user-code-exists');
+
     });
+
+
 
 
     //Attendance
@@ -144,6 +150,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/attendance-approve-rejectleave', [App\Http\Controllers\VmtAttendanceController::class, 'approveRejectRevokeLeaveRequest'])->name('processLeaveRequest');
     Route::get('/attendance-leave-getdetails', [App\Http\Controllers\VmtAttendanceController::class, 'fetchLeaveDetails'])->name('attendance-leave-getdetails');
+    //Route::get('/fetch-employee-compensatory-days/{user_id}', [App\Http\Controllers\VmtAttendanceController::class, 'fetchEmployeeCompensatoryOffDays'])->name('fetch-employee-compensatory-days');
+    Route::get('/fetch-employee-unused-compensatory-days/{user_id}', [App\Http\Controllers\VmtAttendanceController::class, 'fetchUnusedCompensatoryOffDays'])->name('fetch-employee-unused-compensatory-days');
+
+
 
     //Ajax For Leave withdraw
     Route::get('/withdrawLeave', [App\Http\Controllers\VmtAttendanceController::class, 'withdrawLeave'])->name('withdrawLeave');
@@ -193,7 +203,11 @@ Route::post('/profile-page/uploadEmployeeDocs',[App\Http\Controllers\VmtProfileP
 
 Route::get('pages-profile', [App\Http\Controllers\HomeController::class, 'showProfile'])->name('pages-profile');
 
+Route::get('/testing-file-upload', [App\Http\Controllers\VmtTestingController::class, 'viewpdf'])->name('viewpdf');
 
+Route::post('/fileUploadingTest', [App\Http\Controllers\VmtTestingController::class, 'fileUploadingTest'])->name('fileUploadingTest');
+
+Route::get('/retrive-files', [App\Http\Controllers\VmtTestingController::class, 'retriveFiles'])->name('retriveFiles');
 // notifications
 Route::get('/notifications/{id}', [App\Http\Controllers\HomeController::class, 'delete'])->name('delete');
 
@@ -447,6 +461,9 @@ Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 's
     Route::post('/reimbursements-approve-reject', [App\Http\Controllers\VmtApprovalsController::class, 'approveRejectReimbursements'])->name('approveRejectReimbursements');
     Route::post('/saveReimbursementsData', [App\Http\Controllers\VmtReimbursementController::class, 'saveReimbursementsData'])->name('saveReimbursementsData');
 
+    Route::post('/getLocalConveyanceCost',[App\Http\Controllers\VmtReimbursementController::class ,'getLocalConveyanceCost'])->name('getLocalConveyanceCost');
+    Route::post('/testCreateLocalCovergance',[App\Http\Controllers\VmtReimbursementController::class ,'testCreateLocalCovergance'])->name('testCreateLocalCovergance');
+
 
 
 
@@ -536,11 +553,21 @@ Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 's
     Route::get('/processsExpense',  [App\Http\Controllers\VmtCorrectionController::class, 'processsExpense'])->name('processsExpense');
 
 
+
+    Route::post('/formSubmit',[App\Http\Controllers\VmtTestingController::class, 'formSubmit'])->name('formSubmit');
+
+
     //Configrations
     ////Attendance Settings
     Route::get('/configurations/attendance_settings',  [App\Http\Controllers\VmtAttendanceSettingsController::class, 'showAttendanceSettingsPage'])->name('showAttendanceSettingsPage');
     Route::get('/attendance_settings/fetch-emp-details',  [App\Http\Controllers\VmtAttendanceSettingsController::class, 'fetchEmployeeDetails'])->name('attendance_settings-fetchEmployeeDetails');
     Route::post('/attendance_settings/save-shiftdetails',  [App\Http\Controllers\VmtAttendanceSettingsController::class, 'assignEmployeesToWorkShift'])->name('attendance_settings-save-shiftdetails');
+
+    //Holidays
+    ////Holidays creation
+    Route::get('/holidays/master-page',  [App\Http\Controllers\VmtHolidaysController::class, 'showHolidaysMasterPage'])->name('holidays-masterpage');
+
+
 
 });
 
@@ -549,7 +576,6 @@ Route::get('/resetPassword', 'App\Http\Controllers\Auth\LoginController@showRese
 Route::get('/forgetPassword', 'App\Http\Controllers\Auth\LoginController@showForgetPasswordPage')->name('vmt-forgetpassword-page');
 Route::post('/send-passwordresetlink', 'App\Http\Controllers\Auth\LoginController@sendPasswordResetLink')->name('vmt-send-passwordresetlink');
 Route::get('/signed-passwordresetlink', 'App\Http\Controllers\Auth\LoginController@processSignedPasswordResetLink')->name('vmt-signed-passwordresetlink');
-
 
 //
 Route::get('syncStaffAttendanceFromDeviceDatabase', [App\Http\Controllers\VmtStaffAttendanceController::class, 'syncStaffAttendanceFromDeviceDatabase']);

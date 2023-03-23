@@ -1522,30 +1522,48 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                     }
 
 
-                                    cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
+                                    if(ajax_data_currentdate.attendance_mode_checkin=="mobile" || ajax_data_currentdate.attendance_mode_checkout=="mobile" ){
 
-                                        "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-center' ><div class='check-in f-10 text-success w-100 d-flex align-items-center justify-content-start'><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
-                                        year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkin_time +
-                                        getAttendanceModeIcon(ajax_data_currentdate, "checkin") +
-                                        "</span>" +
-                                        final_checkin_button_code +
-                                        "</div> <div class='w-100 d-flex align-items-center justify-content-start  check-out mt-2 f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span class='f-11' id='checkout_time_" +
-                                        year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkout_time +
-                                        getAttendanceModeIcon(ajax_data_currentdate, "checkout") +
-                                        "</span>" +
-                                        final_checkout_button_code +
-                                        "</div></div></div>";
+                                        if(ajax_data_currentdate.selfie_checkin){
+
+                                            var selfie_checkin=ajax_data_currentdate.selfie_checkin;
+                                        }else{
+                                            var selfie_checkin="https://t4.ftcdn.net/jpg/02/35/35/39/360_F_235353990_f0UX1nFRDaaxHH48CU0UQ32rYxvOrPbM.jpg"
+                                        }
+                                        if(ajax_data_currentdate.selfie_checkout){
+                                           var selfie_checkout=ajax_data_currentdate.selfie_checkout;
+                                        }else{
+                                            var selfie_checkout="https://t4.ftcdn.net/jpg/02/35/35/39/360_F_235353990_f0UX1nFRDaaxHH48CU0UQ32rYxvOrPbM.jpg"
+                                        }
 
 
-                            }else{
 
-                            cell.innerHTML =
-                                " <div class='w-100 h-100 p-2' style='background-color:#e7e7e7;'> <span class='show_date' >" +
-                                date +
-                                "</span> <span>Week Off </span> <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex justify-content-between'> </div> <div class='w-100 d-flex justify-content-between check-out mt-2 f-10 text-danger'> </div></div></div>";
+
+                                                cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
+
+                                             "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-center' ><div class='check-in f-10 text-success w-100 d-flex align-items-center justify-content-start'><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
+                                               year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkin_time +
+                                               getAttendanceModeIcon(ajax_data_currentdate, "checkin") +"</span><span><button style='border: none;background: none;width: 23px;'><a style='color: black;' target='_blank'  href="+selfie_checkin+"><i style='width:0px' class='fa fa-picture-o me-2'></i></a></button></span>" +
+                                               final_checkin_button_code +
+                                               "</div> <div class='w-100 d-flex align-items-center justify-content-start  check-out mt-2 f-10 text-danger'><i  class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span style='width: 46px;' class='f-11' id='checkout_time_" +
+                                               year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkout_time +
+                                               getAttendanceModeIcon(ajax_data_currentdate, "checkout") +"</span><span><button style='border: none;background: none;width: 23px;'><a target='_blank'  style='color: black;' href="+ajax_data_currentdate.selfie_checkout+"><i style='width:0px'color: black;'' class='fa fa-picture-o me-2'></i></a></button></span>" +
+                                               "</span>" +
+                                               final_checkout_button_code +
+                                               "</div></div></div>"
+                                               console.log("---check in selfie-----"+ajax_data_currentdate.selfie_checkin+"------------");
+                                               console.log("---check out selfie-----"+ajax_data_currentdate.selfie_checkout+"------------");
+
+                                    }
+                                }else{
+
+                                        cell.innerHTML =
+                                       " <div class='w-100 h-100 p-2' style='background-color:#e7e7e7;'> <span class='show_date' >" +
+                                     date +
+                                     "</span> <span>Week Off </span> <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex justify-content-between'> </div> <div class='w-100 d-flex justify-content-between check-out mt-2 f-10 text-danger'> </div></div></div>";
                             }
 
-                        } else {
+                         } else {
 
                             let processedMonth = month + 1;
 
@@ -1584,16 +1602,6 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                             "'><br><span style='color:black;font-size:10px;text-align:center;margin-left:5px' id='statement'></span></span>";
 
 
-
-                                        // if (ajax_data_currentdate.absent_status == "Not Applied")
-                                        // {
-                                        //     cell.innerHTML = cell.innerHTML + "<span>Leave not Applied</span>";
-                                        //     $("#statement").html(" Leave Not Applied")
-
-                                        // }
-                                        // else
-                                        if (ajax_data_currentdate.absent_status == "Pending")
-                                        {
                                         if (ajax_data_currentdate.absent_status == "Pending")
                                         {
                                             // $("#statement").attr("src","{{ URL::asset($svg_icon_pending) }}")
@@ -1723,16 +1731,28 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
                                      if(ajax_data_currentdate.attendance_mode_checkin=="mobile" || ajax_data_currentdate.attendance_mode_checkout=="mobile" ){
 
+                                        if(ajax_data_currentdate.selfie_checkin){
+
+                                            var selfie_checkin=ajax_data_currentdate.selfie_checkin;
+                                        }else{
+                                            var selfie_checkin="https://t4.ftcdn.net/jpg/02/35/35/39/360_F_235353990_f0UX1nFRDaaxHH48CU0UQ32rYxvOrPbM.jpg"
+                                        }
+                                        if(ajax_data_currentdate.selfie_checkout){
+                                           var selfie_checkout=ajax_data_currentdate.selfie_checkout;
+                                        }else{
+                                            var selfie_checkout="https://t4.ftcdn.net/jpg/02/35/35/39/360_F_235353990_f0UX1nFRDaaxHH48CU0UQ32rYxvOrPbM.jpg"
+                                        }
+
 
                                         cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
 
                                         "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-center' ><div class='check-in f-10 text-success w-100 d-flex align-items-center justify-content-start'><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
                                         year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkin_time +
-                                        getAttendanceModeIcon(ajax_data_currentdate, "checkin") +"<span><button style='border: none;background: none;width: 16px;'><a style='color: black;' target='_blank'  href="+ajax_data_currentdate.selfie_checkin+"><i style='width:0px' class='fa fa-picture-o me-2'></i></a></button></span>" +
+                                        getAttendanceModeIcon(ajax_data_currentdate, "checkin") +"</span><span><button style='border: none;background: none;width: 23px;'><a style='color: black;' target='_blank'  href="+selfie_checkin+"><i style='width:0px' class='fa fa-picture-o me-2'></i></a></button></span>" +
                                         final_checkin_button_code +
-                                        "</div> <div class='w-100 d-flex align-items-center justify-content-start  check-out mt-2 f-10 text-danger'><i  class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span class='f-11' id='checkout_time_" +
+                                        "</div> <div class='w-100 d-flex align-items-center justify-content-start  check-out mt-2 f-10 text-danger'><i  class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span style='width: 50px;' class='f-11' id='checkout_time_" +
                                         year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkout_time +
-                                        getAttendanceModeIcon(ajax_data_currentdate, "checkout") +"<span><button style='border: none;background: none;width: 16px;'><a target='_blank'  style='color: black;' href="+ajax_data_currentdate.selfie_checkout+"><i style='width:0px'color: black;'' class='fa fa-picture-o me-2'></i></a></button></span>" +
+                                        getAttendanceModeIcon(ajax_data_currentdate, "checkout") +"</span><span><button style='border: none;background: none;'><a target='_blank'  style='color: black;' href="+ajax_data_currentdate.selfie_checkout+"><i style='width:0px'color: black;'' class='fa fa-picture-o me-2'></i></a></button></span>" +
                                         "</span>" +
                                         final_checkout_button_code +
                                         "</div></div></div>"
@@ -1793,9 +1813,9 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                 }
 
                 tbl.appendChild(row);
-            }
+                 }
 
-        }
+            }
 
 
 
@@ -1806,6 +1826,13 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
         function getAttendanceModeIcon(data_currentdate, t_punch_type) {
 
             let attendance_mode = null;
+
+            if(t_punch_type == "checkin")
+                attendance_mode = data_currentdate.attendance_mode_checkin;
+            else
+            if(t_punch_type == "checkout")
+                attendance_mode = data_currentdate.attendance_mode_checkout;
+
             if (attendance_mode == "biometric")
                 // return '&nbsp;<i class="fa-solid fa-fingerprint"></i>';
                 return '&nbsp;<i class="fas fa-fingerprint"></i>';

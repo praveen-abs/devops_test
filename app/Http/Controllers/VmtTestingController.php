@@ -9,10 +9,12 @@ use App\Models\Compensatory;
 use App\Imports\VmtPaySlip;
 use Dompdf\Options;
 use Dompdf\Dompdf;
+use Illuminate\Support\Facades\File;
 use PDF;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\VmtGeneralInfo;
+use Illuminate\Support\Facades\Storage;
 
 class VmtTestingController extends Controller
 {
@@ -61,9 +63,65 @@ class VmtTestingController extends Controller
 
                 return $pdf->stream($client_name.'.pdf');
     }
+    public function fileUploadingTest(Request $request){
+        dd($request->all());
+        $emp_code='SA300';
+        $date=date('d-m-Y H-i-s');
+        $fileName = 'aadhar_'.$emp_code.'_'.$date.'.'.$request->file->extension();
+        $path='employee/emp_';
 
-    public function viewpdf(){
-        return view('vmt_appointment_templates.mailtemplate_appointmentletter_brandavatar');
+        $fileName = time().'_'. $request->file->getClientOriginalName();
+         $emp_document_path = Storage::disk('private');
+
+        dd(File::makeDirectory('storage/app/uploads/Emp_code', 0777, true, true));
+        if(!$emp_document_path->exists('Emp_code')){
+        File::makeDirectory('storage/app/uploads/Emp_code', 0777, true, true);
+        }
+        $filePath =  $request->file->storeAs('Emp_code', $fileName, 'private');
+        $fileModel->name = time().'_'.$request->file->getClientOriginalName();
+        $fileModel->file_path = '/storage/' . $filePath;
+        $fileModel->save();
+        return back()
+        ->with('success','File has been uploaded.')
+        ->with('file', $fileName);
     }
 
+    public function viewpdf(){
+        return view('testing');
+    }
+
+
+    // public function fileUploadingTest(Request $request)
+    // {
+    //   dd($request->all());
+    //    $file=new Files();
+    //    if($request->file()) {
+    //         $file=new Files();
+    //          $file_name = time().'_'.$request->file->getClientOriginalName();
+    //          $file_path = $request->file('file_link')->storeAs('uploads', $file_name, 'public');
+
+    //          $file->file_name = time().'_'.$request->file->getClientOriginalName();
+    //          $file->file_path = '/storage/' . $file_path;
+    //          $file->save();
+    //          return response()->json([
+    //             'message' => 'File  added'
+    //         ]);
+    //     }
+    // }
+
+    public function retriveFiles(Request $request){
+        dd(Storage::disk('local')->getAdapter()->applyPathPrefix('\employee\emp_B090\documents'));
+        dd(Storage::disk('private')->path(''));
+        dd(Storage::disk('private')->getAdapter()->setprefixer());
+        dd(Storage::disk('private')->get('voterIdB090_21-03-2023 12-32-42.png'));
+         //dd(Storage::disk('private')->directories('employee/emp_B090') );
+       dd(Storage::disk('D:\Laravelworks\lara_abs_pms\storage\uploads\employee\emp_B090\documents')->exists('voterIdB090_21-03-2023 12-32-42.png'));
+    }
+
+
 }
+
+
+
+
+

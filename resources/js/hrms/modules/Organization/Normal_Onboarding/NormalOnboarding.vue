@@ -5,33 +5,54 @@
       <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
           <div id="msform">
-            <form @submit.prevent="handleSubmit(!v$.$invalid)" class="p-fluid">
+            <form
+              @submit.prevent="handleSubmit(!v$.$invalid)"
+              class="p-fluid"
+              enctype="multipart/form-data"
+            >
               <input type="hidden" name="user_id" id="user_id" value="" />
-              <input type="hidden" name="can_redirect" id="can_redirect" value="0" />
+              <input
+                type="hidden"
+                name="can_redirect"
+                id="can_redirect"
+                value="0"
+              />
 
               <!-- Personal Details Start -->
 
               <div class="card shadow profile-box card-top-border p-2">
-                <div class="card-body justify-content-center align-items-center">
+                <div
+                  class="card-body justify-content-center align-items-center"
+                >
                   <div class="header-card-text">
                     <h6>Personal Details</h6>
                   </div>
 
                   <div class="form-card">
                     <div class="row mt-1">
-                      <div class="col-md -6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md -6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
-                          <label for="" class="float-label">Employee Code</label>
+                          <label for="" class="float-label"
+                            >Employee Code</label
+                          >
                           <InputText
                             class="form-onboard-form form-control textbox capitalize"
                             type="text"
                             v-model="v$.employee_code.$model"
                             placeholder="Employee Code"
+                            @input="userCodeExists"
                           />
+
+                          <span v-if=" user_code_exists "  class="p-error">Employee code Already Exists</span>
+
                         </div>
                       </div>
 
-                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
                           <label for="employee_name" class="float-label"
                             >Employee Name as per Aadhar
@@ -43,7 +64,8 @@
                             type="text"
                             v-model="v$.employee_name.$model"
                             :class="{
-                              'p-invalid': v$.employee_name.$invalid && submitted,
+                              'p-invalid':
+                                v$.employee_name.$invalid && submitted,
                             }"
                             style="text-transform: uppercase"
                             placeholder="Employee Name as per Aadhar "
@@ -64,9 +86,13 @@
                           >
                         </div>
                       </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
-                          <label for="" class="float-label">Date of Birth</label>
+                          <label for="" class="float-label"
+                            >Date of Birth</label
+                          >
                           <input
                             type="text"
                             max="9999-12-31"
@@ -81,33 +107,21 @@
                           <span class="error" id="error_pan_no"></span>
                         </div>
                       </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Marital Status <span class="text-danger">*</span></label
+                            >Marital Status
+                            <span class="text-danger">*</span></label
                           >
                           <Dropdown
-                            editable
                             v-model="v$.marital_status.$model"
                             :options="maritalDetails"
                             optionLabel="name"
-                            optionValue="name"
                             placeholder="Select Martial Status"
                             @change="spouseDisable"
                           />
-                          <!-- <select
-                            class="form-control textbox"
-                            placeholder="Marital Status"
-                            @click="spouseDisable"
-                            v-model="v$.marital_status.$model"
-                            :class="{
-                              'is-invalid': v$.marital_status.$invalid && submitted,
-                            }"
-                          >
-                            <option v-for="marry in MaritalStatus" :key="marry.value">
-                              {{ marry.name }}
-                            </option>
-                          </select> -->
 
                           <span
                             v-if="
@@ -124,10 +138,14 @@
                           >
                         </div>
                       </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Date of Joining<span class="text-danger">*</span></label
+                            >Date of Joining<span class="text-danger"
+                              >*</span
+                            ></label
                           >
 
                           <InputText
@@ -146,16 +164,22 @@
 
                           <span
                             v-if="
-                              (v$.doj.$invalid && submitted) || v$.doj.$pending.$response
+                              (v$.doj.$invalid && submitted) ||
+                              v$.doj.$pending.$response
                             "
                             class="p-error"
                             >{{
-                              v$.doj.required.$message.replace("Value", "Date Of Joining")
+                              v$.doj.required.$message.replace(
+                                "Value",
+                                "Date Of Joining"
+                              )
                             }}</span
                           >
                         </div>
                       </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
                           <label for="" class="float-label"
                             >Gender<span class="text-danger">*</span></label
@@ -165,21 +189,8 @@
                             :options="Gender"
                             optionLabel="name"
                             optionValue="value"
-                            editable
                             placeholder="Select Gender"
                           />
-                          <!-- <select
-                            v-model="v$.gender.$model"
-                            placeholder="Choose Gender"
-                            :class="{
-                              'is-invalid': v$.gender.$invalid && submitted,
-                            }"
-                            class="form-control textbox"
-                          >
-                            <option v-for="gender in Gender" :key="gender.value">
-                              {{ gender.name }}
-                            </option>
-                          </select> -->
 
                           <span
                             v-if="
@@ -188,12 +199,17 @@
                             "
                             class="p-error"
                             >{{
-                              v$.gender.required.$message.replace("Value", "Gender")
+                              v$.gender.required.$message.replace(
+                                "Value",
+                                "Gender"
+                              )
                             }}</span
                           >
                         </div>
                       </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
                           <label for="" class="float-label"
                             >Mobile Number<span class="text">*</span></label
@@ -202,7 +218,8 @@
                             type="text"
                             placeholder="Mobile Number"
                             :class="{
-                              'p-invalid': v$.mobile_number.$invalid && submitted,
+                              'p-invalid':
+                                v$.mobile_number.$invalid && submitted,
                             }"
                             v-model="v$.mobile_number.$model"
                             class="form-control textbox"
@@ -224,7 +241,9 @@
                           }}</span
                         >
                       </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
                           <label for="" class="float-label"
                             >Email<span class="text-danger">*</span></label
@@ -234,11 +253,14 @@
                             placeholder="Email ID"
                             :class="{
                               'p-invalid': v$.email.$invalid && submitted,
-                            }"
+                            }" @input="personalMailExists"
                             v-model="v$.email.$model"
                             class="form-control textbox"
                             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                           />
+
+                          <span v-if="personal_mail_exists "  class="p-error">Email is already exists</span>
+
 
                           <span
                             v-if="
@@ -256,10 +278,14 @@
                         </div>
                         <span class="error" id="error_email"></span>
                       </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Aadhaar Number<span class="text-danger">*</span></label
+                            >Aadhaar Number<span class="text-danger"
+                              >*</span
+                            ></label
                           >
                           <!-- <InputText class="onboard-form form-control textbox " id="AadharNumber"
                                                         placeholder="Aadhaar Number"
@@ -272,7 +298,8 @@
                             placeholder="9999 9999 9999"
                             v-model="v$.aadhar_number.$model"
                             :class="{
-                              'p-invalid': v$.aadhar_number.$invalid && submitted,
+                              'p-invalid':
+                                v$.aadhar_number.$invalid && submitted,
                             }"
                           />
                           <span
@@ -290,17 +317,17 @@
                           >
                         </div>
                       </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12 co l-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-12 co l-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Pan Number / Pan Acknowlegement<span class="text-danger"
+                            >Pan Number / Pan Acknowlegement<span
+                              class="text-danger"
                               >*</span
                             ></label
                           >
-                          <!-- <InputText  type="text"
 
-                                                        pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}"
-                                                         maxlength="10" /> -->
                           <InputMask
                             id="serial"
                             mask="aaaaa9999a"
@@ -328,7 +355,9 @@
                           >
                         </div>
                       </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
                           <label for="" class="float-label">DL Number</label>
                           <InputText
@@ -348,35 +377,23 @@
                           <span class="error" id="error_dl_no"></span>
                         </div>
                       </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Choose nationality<span class="text-danger">*</span></label
+                            >Choose nationality<span class="text-danger"
+                              >*</span
+                            ></label
                           >
                           <Dropdown
                             v-model="v$.nationality.$model"
                             :options="Nationality"
                             optionLabel="name"
                             optionValue="name"
-                            editable
                             placeholder="Select Nationality"
                             @change="NationalityCheck"
                           />
-
-                          <!-- <select
-                            @click="NationalityCheck"
-                            name=""
-                            id=""
-                            :class="{
-                              'is-invalid': v$.nationality.$invalid && submitted,
-                            }"
-                            v-model="v$.nationality.$model"
-                            class="form-control"
-                          >
-                            <option v-for="nation in Nationality" :key="nation.name">
-                              {{ nation.name }}
-                            </option>
-                          </select> -->
 
                           <span
                             v-if="
@@ -440,88 +457,82 @@
                         </div>
                       </div>
 
-                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
                           <label for="" class="float-label">Blood Group</label>
 
                           <Dropdown
-                            v-model="v$.blood_group_id.$model"
+                            v-model="v$.blood_group_name.$model"
                             :options="bloodGroups"
                             optionLabel="name"
-                            optionValue="id"
                             placeholder="Select Bloodgroup"
-                            editable
                           />
-
                         </div>
                       </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
-                          <label for="" class="float-label">Physically Challenged</label>
+                          <label for="" class="float-label"
+                            >Physically Challenged</label
+                          >
 
                           <Dropdown
                             v-model="v$.physically_challenged.$model"
                             :options="PhyChallenged"
                             optionLabel="name"
                             optionValue="value"
-                            editable
                             placeholder="Physically Challenged"
                           />
-
                         </div>
                       </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
                           <label for="" class="float-label"
                             >Bank Name<span class="text-danger">*</span></label
                           >
                           <Dropdown
                             editable
-                            v-model="v$.bank_id.$model"
+                            v-model="v$.bank_name.$model"
                             :options="bankList"
                             optionLabel="bank_name"
-                            optionValue="id"
                             placeholder="Select Bank Name"
                           />
 
-                          <!--
-                          <select
-                            name=""
-                            id=" "
-                            placeholder="Bank Name"
-                            :class="{
-                              'is-invalid': v$.bank_id.$invalid && submitted,
-                            }"
-                            class="form-control textbox"
-                            v-model="v$.bank_id.$model"
-                          >
-                            <option v-for="bank in bankList" :key="bank.id">
-                              {{ bank.bank_name }}
-                            </option>
-                          </select> -->
-
-                          <!-- <span
+                          <span
                             v-if="
-                              (v$.bank_id.$invalid && submitted) ||
-                              v$.bank_id.$pending.$response
+                              (v$.bank_name.$invalid && submitted) ||
+                              v$.bank_name.$pending.$response
                             "
                             class="p-error"
                             >{{
-                              v$.bank_id.required.$message.replace("Value", "bank_id ")
+                              v$.bank_name.required.$message.replace(
+                                "Value",
+                                "Bank Name "
+                              )
                             }}</span
-                          > -->
+                          >
                         </div>
                       </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Account Number<span class="text-danger">*</span></label
+                            >Account Number<span class="text-danger"
+                              >*</span
+                            ></label
                           >
                           <InputText
                             placeholder="Account Number"
                             minlength="10"
                             :class="{
-                              'p-invalid': v$.AccountNumber.$invalid && submitted,
+                              'p-invalid':
+                                v$.AccountNumber.$invalid && submitted,
                             }"
                             maxlength="18"
                             class="onboard-form form-control textbox"
@@ -544,10 +555,14 @@
                           >
                         </div>
                       </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Bank IFSC Code<span class="text-danger">*</span></label
+                            >Bank IFSC Code<span class="text-danger"
+                              >*</span
+                            ></label
                           >
                           <InputText
                             type="text"
@@ -695,13 +710,17 @@
               <!-- Current Address Start -->
 
               <div class="card shadow profile-box card-top-border p-2">
-                <div class="card-body justify-content-center align-items-center">
+                <div
+                  class="card-body justify-content-center align-items-center"
+                >
                   <div class="form-card">
                     <div class="header-card-text">
                       <h6>Current Address</h6>
                     </div>
                     <div class="row mt-1">
-                      <div class="col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6 mb-2"
+                      >
                         <div class="floating">
                           <label for="" class="float-label"
                             >Address 1<span class="text-danger">*</span></label
@@ -713,7 +732,8 @@
                             rows="3"
                             current_address_line_1
                             :class="{
-                              'p-invalid': v$.current_address_line_1.$invalid && submitted,
+                              'p-invalid':
+                                v$.current_address_line_1.$invalid && submitted,
                             }"
                             v-model="v$.current_address_line_1.$model"
                             placeholder="Current Address"
@@ -721,7 +741,8 @@
 
                           <span
                             v-if="
-                              (v$.current_address_line_1.$invalid && submitted) ||
+                              (v$.current_address_line_1.$invalid &&
+                                submitted) ||
                               v$.current_address_line_1.$pending.$response
                             "
                             class="p-error"
@@ -734,7 +755,9 @@
                           >
                         </div>
                       </div>
-                      <div class="col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6 mb-2"
+                      >
                         <div class="floating">
                           <label for="" class="float-label"
                             >Address 2<span class="text-danger">*</span></label
@@ -747,7 +770,8 @@
                             rows="3"
                             current_address_line_2
                             :class="{
-                              'p-invalid': v$.current_address_line_2.$invalid && submitted,
+                              'p-invalid':
+                                v$.current_address_line_2.$invalid && submitted,
                             }"
                             v-model="v$.current_address_line_2.$model"
                             placeholder="Current Address"
@@ -755,7 +779,8 @@
 
                           <span
                             v-if="
-                              (v$.current_address_line_2.$invalid && submitted) ||
+                              (v$.current_address_line_2.$invalid &&
+                                submitted) ||
                               v$.current_address_line_2.$pending.$response
                             "
                             class="p-error"
@@ -768,38 +793,24 @@
                           >
                         </div>
                       </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
                           <label for="" class="float-label"
                             >Country<span class="text-danger">*</span></label
                           >
-<!--
-                          <select
-                            placeholder="Country"
-                            name="current_country"
+                          <Dropdown
+                            editable
                             v-model="v$.current_country.$model"
                             :class="{
-                              'is-invalid': v$.current_country.$invalid && submitted,
+                              'p-invalid':
+                                v$.current_country.$invalid && submitted,
                             }"
-                            id="current_country"
-                            class="form-control textbox"
-                          >
-                            <option v-for="countries in country" :key="countries.id">
-                              {{ countries.country_name }}
-                            </option>
-                          </select> -->
-
-                          <Dropdown
-                          editable
-                          v-model="v$.current_country.$model"
-                          :class="{
-                            'p-invalid': v$.current_country.$invalid && submitted,
-                          }"
-                          :options="country"
-                          optionLabel="country_name"
-                          optionValue="id"
-                          placeholder="Select Country Name"
-                        />
+                            :options="country"
+                            optionLabel="country_name"
+                            placeholder="Select Country Name"
+                          />
                           <span
                             v-if="
                               (v$.current_country.$invalid && submitted) ||
@@ -815,37 +826,25 @@
                           >
                         </div>
                       </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
                           <label for="" class="float-label"
                             >State<span class="text-danger">*</span></label
                           >
-                          <!-- <select
-                            placeholder="State"
-                            name="current_state"
-                            v-model="v$.current_state.$model"
-                            :class="{
-                              'is-invalid': v$.current_state.$invalid && submitted,
-                            }"
-                            id="current_state"
-                            class="form-control textbox"
-                          >
-                            <option v-for="states in state" :key="states.id">
-                              {{ states.state_name }}
-                            </option>
-                          </select> -->
 
                           <Dropdown
-                          editable
-                          v-model="v$.current_state.$model"
-                          :class="{
-                            'p-invalid': v$.current_state.$invalid && submitted,
-                          }"
-                          :options="state"
-                          optionLabel="state_name"
-                          optionValue="id"
-                          placeholder="Select State Name"
-                        />
+                            editable
+                            v-model="v$.current_state.$model"
+                            :class="{
+                              'p-invalid':
+                                v$.current_state.$invalid && submitted,
+                            }"
+                            :options="state"
+                            optionLabel="state_name"
+                            placeholder="Select State Name"
+                          />
                           <span
                             v-if="
                               (v$.current_state.$invalid && submitted) ||
@@ -853,12 +852,17 @@
                             "
                             class="p-error"
                             >{{
-                              v$.current_state.required.$message.replace("Value", "State")
+                              v$.current_state.required.$message.replace(
+                                "Value",
+                                "State"
+                              )
                             }}</span
                           >
                         </div>
                       </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
                           <label for="" class="float-label">
                             City<span class="text-danger">*</span></label
@@ -868,7 +872,8 @@
                             class="form-control"
                             type="text"
                             :class="{
-                              'p-invalid': v$.current_city.$invalid && submitted,
+                              'p-invalid':
+                                v$.current_city.$invalid && submitted,
                             }"
                             v-model="v$.current_city.$model"
                             placeholder="current city"
@@ -881,11 +886,16 @@
                           "
                           class="p-error"
                           >{{
-                            v$.current_city.required.$message.replace("Value", "City")
+                            v$.current_city.required.$message.replace(
+                              "Value",
+                              "City"
+                            )
                           }}</span
                         >
                       </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
                           <label for="" class="float-label"
                             >Pincode<span class="text-danger">*</span></label
@@ -894,11 +904,12 @@
                           <InputText
                             class="form-control"
                             type="number
-                                                            "
+                                                                            "
                             minlength="6"
                             maxlength="6"
                             :class="{
-                              'p-invalid': v$.current_pincode.$invalid && submitted,
+                              'p-invalid':
+                                v$.current_pincode.$invalid && submitted,
                             }"
                             v-model="v$.current_pincode.$model"
                             placeholder="Pincode"
@@ -921,14 +932,18 @@
                     </div>
 
                     <div class="row">
-                      <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 col-xl-12 my-3">
+                      <div
+                        class="col-md-12 col-sm-12 col-xs-12 col-lg-12 col-xl-12 my-3"
+                      >
                         <Checkbox
                           inputId=""
                           @click="ForCopyAdrress"
                           v-model="CopyAddresschecked"
                           :binary="true"
                         />
-                        <label style="margin-left: 10px" for="current_address_copy"
+                        <label
+                          style="margin-left: 10px"
+                          for="current_address_copy"
                           >Copy current address to the permanent address</label
                         >
                       </div>
@@ -936,7 +951,9 @@
                       <!-- Current Address End -->
 
                       <!-- Permanent Address Start -->
-                      <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 col-xl-12">
+                      <div
+                        class="col-md-12 col-sm-12 col-xs-12 col-lg-12 col-xl-12"
+                      >
                         <h6>Permanent Address</h6>
                         <div class="row mt-1">
                           <div
@@ -944,7 +961,9 @@
                           >
                             <div class="floating">
                               <label for="" class="float-label"
-                                >Address 1<span class="text-danger">*</span></label
+                                >Address 1<span class="text-danger"
+                                  >*</span
+                                ></label
                               >
 
                               <Textarea
@@ -955,13 +974,16 @@
                                 rows="3"
                                 id="permanent_address_line_1"
                                 :class="{
-                                  'p-invalid': v$.permanent_address_line_1.$invalid && submitted,
+                                  'p-invalid':
+                                    v$.permanent_address_line_1.$invalid &&
+                                    submitted,
                                 }"
                                 v-model="v$.permanent_address_line_1.$model"
                               />
                               <span
                                 v-if="
-                                  (v$.permanent_address_line_1.$invalid && submitted) ||
+                                  (v$.permanent_address_line_1.$invalid &&
+                                    submitted) ||
                                   v$.permanent_address_line_1.$pending.$response
                                 "
                                 class="p-error"
@@ -979,7 +1001,9 @@
                           >
                             <div class="floating">
                               <label for="" class="float-label"
-                                >Address 2<span class="text-danger">*</span></label
+                                >Address 2<span class="text-danger"
+                                  >*</span
+                                ></label
                               >
 
                               <Textarea
@@ -990,14 +1014,17 @@
                                 rows="3"
                                 id="permanent_address_line_2"
                                 :class="{
-                                  'p-invalid': v$.permanent_address_line_2.$invalid && submitted,
+                                  'p-invalid':
+                                    v$.permanent_address_line_2.$invalid &&
+                                    submitted,
                                 }"
                                 v-model="v$.permanent_address_line_2.$model"
                               />
 
                               <span
                                 v-if="
-                                  (v$.permanent_address_line_2.$invalid && submitted) ||
+                                  (v$.permanent_address_line_2.$invalid &&
+                                    submitted) ||
                                   v$.permanent_address_line_2.$pending.$response
                                 "
                                 class="p-error"
@@ -1015,36 +1042,25 @@
                           >
                             <div class="floating">
                               <label for="" class="float-label"
-                                >Country<span class="text-danger">*</span></label
+                                >Country<span class="text-danger"
+                                  >*</span
+                                ></label
                               >
-
-                              <!-- <select
-                                placeholder="Country"
+                              <Dropdown
+                                editable
                                 v-model="v$.permanent_country.$model"
                                 :class="{
-                                  'is-invalid': v$.permanent_country.$invalid && submitted,
+                                  'p-invalid':
+                                    v$.permanent_country.$invalid && submitted,
                                 }"
-                                id="permanent_country"
-                                class="onboard-form form-control textbox"
-                              >
-                                <option v-for="countries in country" :key="countries.id">
-                                  {{ countries.country_name }}
-                                </option>
-                              </select> -->
-                              <Dropdown
-                              editable
-                              v-model="v$.permanent_country.$model"
-                              :class="{
-                                'p-invalid': v$.permanent_country.$invalid && submitted,
-                              }"
-                              :options="country"
-                              optionLabel="country_name"
-                              optionValue="id"
-                              placeholder="Select Country Name"
-                            />
+                                :options="country"
+                                optionLabel="country_name"
+                                placeholder="Select Country Name"
+                              />
                               <span
                                 v-if="
-                                  (v$.permanent_country.$invalid && submitted) ||
+                                  (v$.permanent_country.$invalid &&
+                                    submitted) ||
                                   v$.permanent_country.$pending.$response
                                 "
                                 class="p-error"
@@ -1064,30 +1080,17 @@
                               <label for="" class="float-label"
                                 >State<span class="text-danger">*</span></label
                               >
-                              <!-- <select
-                                placeholder="State"
-                                name="Permanent_state"
+                              <Dropdown
+                                editable
                                 v-model="v$.permanent_state.$model"
                                 :class="{
-                                  'is-invalid': v$.permanent_state.$invalid && submitted,
+                                  'p-invalid':
+                                    v$.permanent_state.$invalid && submitted,
                                 }"
-                                class="form-control textbox"
-                              >
-                                <option v-for="states in state" :key="states.id">
-                                  {{ states.state_name }}
-                                </option>
-                              </select> -->
-                              <Dropdown
-                          editable
-                          v-model="v$.permanent_state.$model"
-                          :class="{
-                            'p-invalid': v$.permanent_state.$invalid && submitted,
-                          }"
-                          :options="state"
-                          optionLabel="state_name"
-                          optionValue="id"
-                          placeholder="Select State Name"
-                        />
+                                :options="state"
+                                optionLabel="state_name"
+                                placeholder="Select State Name"
+                              />
 
                               <span
                                 v-if="
@@ -1117,7 +1120,8 @@
                                 class="onboard-form form-control textbox capitalize"
                                 type="text"
                                 :class="{
-                                  'p-invalid': v$.permanent_city.$invalid && submitted,
+                                  'p-invalid':
+                                    v$.permanent_city.$invalid && submitted,
                                 }"
                                 v-model="v$.permanent_city.$model"
                                 placeholder="City"
@@ -1143,7 +1147,9 @@
                           >
                             <div class="floating">
                               <label for="" class="float-label"
-                                >Pincode<span class="text-danger">*</span></label
+                                >Pincode<span class="text-danger"
+                                  >*</span
+                                ></label
                               >
 
                               <InputText
@@ -1152,14 +1158,16 @@
                                 minlength="6"
                                 maxlength="6"
                                 :class="{
-                                  'p-invalid': v$.permanent_pincode.$invalid && submitted,
+                                  'p-invalid':
+                                    v$.permanent_pincode.$invalid && submitted,
                                 }"
                                 v-model="v$.permanent_pincode.$model"
                                 placeholder="Pincode"
                               />
                               <span
                                 v-if="
-                                  (v$.permanent_pincode.$invalid && submitted) ||
+                                  (v$.permanent_pincode.$invalid &&
+                                    submitted) ||
                                   v$.permanent_pincode.$pending.$response
                                 "
                                 class="p-error"
@@ -1184,7 +1192,9 @@
               <!-- Office Details Start -->
 
               <div class="card shadow profile-box card-top-border p-2">
-                <div class="card-body justify-content-center align-items-center">
+                <div
+                  class="card-body justify-content-center align-items-center"
+                >
                   <div class="header-card-text">
                     <h6 class="">Official Details</h6>
                   </div>
@@ -1196,24 +1206,18 @@
                         <div class="floating">
                           <label for="" class="float-label">Department</label>
 
-                          <select
+                          <Dropdown
+                            editable
+                            v-model="v$.department.$model"
+                            :class="{
+                              'p-invalid': v$.department.$invalid && submitted,
+                            }"
+                            :options="departmentDetails"
+                            optionLabel="name"
                             placeholder="Department"
                             name="department"
-                            v-model="v$.department.$model"
-                            style="height: 2.9em"
                             id="department"
-                            class="onboard-form form-control textbox"
-                          >
-                            <!-- <option value="" hidden selected disabled>Select
-                                                            Department</option> -->
-
-                            <option
-                              v-for="department in departmentDetails"
-                              :key="department.id"
-                            >
-                              {{ department.name }}
-                            </option>
-                          </select>
+                          />
                         </div>
                       </div>
                       <div
@@ -1240,7 +1244,10 @@
                             "
                             class="p-error"
                             >{{
-                              v$.process.required.$message.replace("Value", "Process")
+                              v$.process.required.$message.replace(
+                                "Value",
+                                "Process"
+                              )
                             }}</span
                           >
                         </div>
@@ -1278,7 +1285,9 @@
                           </span>
                         </div>
                       </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
                           <label for="" class="float-label">Cost Center</label>
 
@@ -1291,33 +1300,27 @@
                           />
                         </div>
                       </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
-                          <label for="" class="float-label">Probation Period</label>
-
-                          <select
-                            placeholder="Probation Period"
-                            name="probation_period"
-                            id="probation_period"
-                            style="height: 2.9em"
-                            v-model="v$.probation_period.$model"
-                            class="onboard-form form-control textbox"
+                          <label for="" class="float-label"
+                            >Probation Period</label
                           >
-                            <!-- <option value="" hidden selected disabled>Select
-                                                            Probabition Period</option> -->
-                            <option value="1 Month">1 Month</option>
-                            <option value="2 Month">2 Month</option>
-                            <option value="3 Month">3 Month</option>
-                            <option value="4 Month">4 Month</option>
-                            <option value="5 Month">5 Month</option>
-                            <option value="6 Month">6 Month</option>
-                            <option value="7 Month">7 Month</option>
-                            <option value="8 Month">8 Month</option>
-                            <option value="9 Month">9 Month</option>
-                            <option value="10 Month">10 Month</option>
-                            <option value="11 Month">11 Month</option>
-                            <option value="12 Month">12 Month</option>
-                          </select>
+
+
+                           <Dropdown
+                           v-model="v$.probation_period.$model"
+                            :options="probation_period"
+                            optionLabel="name"
+                            optionValue="name"
+                            editable
+                            placeholder="Select Probation Period"
+                             :class="{
+                              'is-invalid': v$.probation_period.$invalid && submitted,
+                            }"
+
+                          />
                         </div>
                       </div>
                       <div
@@ -1325,14 +1328,17 @@
                       >
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Work Location<span class="text-danger">*</span></label
+                            >Work Location<span class="text-danger"
+                              >*</span
+                            ></label
                           >
                           <InputText
                             class="onboard-form form-control"
                             type="text"
                             placeholder="Work Location"
                             :class="{
-                              'p-invalid': v$.work_location.$invalid && submitted,
+                              'p-invalid':
+                                v$.work_location.$invalid && submitted,
                             }"
                             v-model="v$.work_location.$model"
                           />
@@ -1353,73 +1359,75 @@
                             ></label
                           >
 
-                          <!-- <Dropdown
-                             v-model="v$.l1_manager_code.$model"
-                            :options="Nationality"
-                            optionLabel="name"
-                            optionValue="name"
-                            editable
-                            placeholder="Select l1_manager_code"
-                            @change="NationalityCheck"
-                             :class="{
-                              'is-invalid': v$.l1_manager_code.$invalid && submitted,
-                            }"
+                                <Dropdown  :options="Managerdetails" optionLabel="name" placeholder="Reporting Manager Name"
+                                v-model="v$.l1_manager_code.$model"   :class="{
+                                    'is-invalid':
+                                      v$.l1_manager_code.$invalid && submitted,
+                                  }">
+                                    <template #value="slotProps">
+                                        <div v-if="slotProps.value" class="flex align-items-center">
+                                            <div>{{ slotProps.value.user_code }} - {{ slotProps.value.name }}</div>
+                                        </div>
+                                        <span v-else>
+                                            {{ slotProps.placeholder }}
+                                        </span>
+                                    </template>
+                                    <template #option="slotProps">
+                                        <div class="flex align-items-center">
+                                            <div>{{ slotProps.option.user_code }} - {{ slotProps.option.name }} </div>
+                                            <div></div>
 
-                          /> -->
+
+                                        </div>
+                                    </template>
+                                </Dropdown>
+
+                                <span
+                                v-if="
+                                  (v$.l1_manager_code.$invalid && submitted) ||
+                                  v$.l1_manager_code.$pending.$response
+                                "
+                                class="p-error"
+                                >{{
+                                  v$.l1_manager_code.required.$message.replace(
+                                    "Value",
+                                    "Reporting Manager Code"
+                                  )
+                                }}
+                              </span>
 
 
-                          <select
-                            placeholder="Reporting Manager Name"
-                            name="l1_manager_code"
-                            id="l1_manager_code_select"
-                            v-model="v$.l1_manager_code.$model"
-                            :class="{
-                              'is-invalid': v$.l1_manager_code.$invalid && submitted,
-                            }"
-                            class="onboard-form form-control textbox"
-                          >
-                            <option
-                              v-for="singleManagerDetail in Managerdetails"
-                              :key="singleManagerDetail.user_code"
-                            >
-                              {{ singleManagerDetail.user_code }}
-                              -
-                              {{ singleManagerDetail.name }}
-                            </option>
-                          </select>
 
-                          <span
-                            v-if="
-                              (v$.l1_manager_code.$invalid && submitted) ||
-                              v$.l1_manager_code.$pending.$response
-                            "
-                            class="p-error"
-                            >{{
-                              v$.l1_manager_code.required.$message.replace(
-                                "Value",
-                                "Reporting Manager Code"
-                              )
-                            }}
-                          </span>
                         </div>
                       </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
-                          <label for="" class="float-label">Holiday Location</label>
-                          <select
-                            placeholder="Holiday Location"
-                            name="holiday_location"
-                            id="holiday_location"
-                            v-model="holiday_location"
-                            class="textbox onboard-form form-control select2_form_without_search"
+                          <label for="" class="float-label"
+                            >Holiday Location</label
                           >
-                            <option value="" disabled>Holiday Location</option>
-                          </select>
+
+
+                          <InputText
+                          class="onboard-form form-control"
+                          type="text"
+                          :class="{
+                            'p-invalid': v$.holiday_location.$invalid && submitted,
+                          }"
+                          v-model="v$.holiday_location.$model"
+                          placeholder="Holiday Location"
+                        />
+
                         </div>
                       </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
-                          <label for="" class="float-label">Official Email </label>
+                          <label for="" class="float-label"
+                            >Official Email
+                          </label>
                           <input
                             type="email"
                             placeholder="Official E-Mail Id"
@@ -1429,9 +1437,13 @@
                           />
                         </div>
                       </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
-                          <label for="" class="float-label">Official Mobile</label>
+                          <label for="" class="float-label"
+                            >Official Mobile</label
+                          >
                           <input
                             type="text"
                             minlength="10"
@@ -1444,7 +1456,9 @@
                           />
                         </div>
                       </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
                           <label for="" class="float-label"
                             >Employee Notice Period Days</label
@@ -1459,10 +1473,14 @@
                         </div>
                       </div>
 
-                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Date of confirmation<span class="text-danger">*</span></label
+                            >Date of confirmation<span class="text-danger"
+                              >*</span
+                            ></label
                           >
                           <InputText
                             class="onboard-form form-control"
@@ -1470,9 +1488,11 @@
                             placeholder="Date of confirmation"
                             max="9999-12-31"
                             :class="{
-                              'p-invalid': v$.confirmation_period.$invalid && submitted,
+                              'p-invalid':
+                                v$.confirmation_period.$invalid && submitted,
                             }"
                             v-model="v$.confirmation_period.$model"
+                            onfocus="(this.type='date')"
                           />
 
                           <span
@@ -1500,16 +1520,22 @@
               <!-- Family Detials Start -->
 
               <div class="card shadow profile-box card-top-border p-2">
-                <div class="card-body justify-content-center align-items-center">
+                <div
+                  class="card-body justify-content-center align-items-center"
+                >
                   <div class="header-card-text">
                     <h6 class="mb-0">Family Details</h6>
                   </div>
                   <div class="form-card">
                     <div class="row mt-1">
-                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Father Name<span class="text-danger">*</span></label
+                            >Father Name<span class="text-danger"
+                              >*</span
+                            ></label
                           >
 
                           <InputText
@@ -1538,10 +1564,13 @@
                           </span>
                         </div>
                       </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Date of Birth <span class="text-danger">*</span></label
+                            >Date of Birth
+                            <span class="text-danger">*</span></label
                           >
 
                           <InputText
@@ -1572,7 +1601,9 @@
                         </div>
                       </div>
 
-                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
                           <label for="" class="float-label">Gender</label>
                           <input
@@ -1585,7 +1616,9 @@
                           />
                         </div>
                       </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
                           <label for="" class="float-label">Age </label>
 
@@ -1603,10 +1636,13 @@
                         </div>
                       </div>
 
-                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Mother Name <span class="text-danger">*</span></label
+                            >Mother Name
+                            <span class="text-danger">*</span></label
                           >
 
                           <InputText
@@ -1636,10 +1672,13 @@
                         </div>
                       </div>
 
-                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Date of Birth <span class="text-danger">*</span></label
+                            >Date of Birth
+                            <span class="text-danger">*</span></label
                           >
 
                           <InputText
@@ -1669,7 +1708,9 @@
                           </span>
                         </div>
                       </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
                           <label for="" class="float-label">Gender</label>
 
@@ -1683,7 +1724,9 @@
                           />
                         </div>
                       </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                      <div
+                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                      >
                         <div class="floating">
                           <label for="" class="float-label">Age</label>
 
@@ -1707,7 +1750,8 @@
                       >
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Spouse Name <span class="text-danger">*</span></label
+                            >Spouse Name
+                            <span class="text-danger">*</span></label
                           >
                           <InputText
                             v-if="sposeData"
@@ -1742,7 +1786,8 @@
                       >
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Date of Wedding <span class="text-danger">*</span></label
+                            >Date of Wedding
+                            <span class="text-danger">*</span></label
                           >
 
                           <InputText
@@ -1751,7 +1796,8 @@
                             placeholder="Date of Wedding"
                             name="wedding_date"
                             :class="{
-                              'is-invalid': v$.wedding_date.$invalid && submitted,
+                              'is-invalid':
+                                v$.wedding_date.$invalid && submitted,
                             }"
                             v-model="v$.wedding_date.$model"
                             onfocus="(this.type='date')"
@@ -1787,7 +1833,8 @@
                             v-model="v$.spouse_gender.$model"
                             id="spouse_gender"
                             :class="{
-                              'is-invalid': v$.spouse_gender.$invalid && submitted,
+                              'is-invalid':
+                                v$.spouse_gender.$invalid && submitted,
                             }"
                             class="textbox onboard-form form-control"
                           >
@@ -1820,7 +1867,8 @@
                       >
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Spouse DOB <span class="text-danger">*</span></label
+                            >Spouse DOB
+                            <span class="text-danger">*</span></label
                           >
 
                           <InputText
@@ -1857,7 +1905,9 @@
                         class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
                       >
                         <div class="floating">
-                          <label for="" class="float-label">Number of Children</label>
+                          <label for="" class="float-label"
+                            >Number of Children</label
+                          >
 
                           <select
                             placeholder="Number of Children"
@@ -1888,7 +1938,9 @@
               <!-- Personal Documents start -->
 
               <div class="card shadow mb-0 profile-box card-top-border p-2">
-                <div class="card-body justify-content-center align-items-center">
+                <div
+                  class="card-body justify-content-center align-items-center"
+                >
                   <div class="header-card-text">
                     <h6 class="mb-0">Personal Documents</h6>
                   </div>
@@ -1896,12 +1948,11 @@
                     <div class="row mt-1">
                       <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                         <label for="" class="float-label"
-                          >Aadhar Card Front<span class="text-danger">*</span></label
+                          >Aadhar Card Front<span class="text-danger"
+                            >*</span
+                          ></label
                         >
-                        <!-- <div class="form-control md"
-                                                         id="aadhar_card_file_label"><span class="file_label">Choose
-                                                             Aadhar
-                                                                     Card Front</span></div>-->
+
                         <input
                           v-if="AadharDocFrontInvalid"
                           type="file"
@@ -1927,12 +1978,11 @@
                         id="aadhar_card_backend_content"
                       >
                         <label for="" class="float-label">
-                          Aadhar Card Back<span class="text-danger">*</span></label
+                          Aadhar Card Back<span class="text-danger"
+                            >*</span
+                          ></label
                         >
-                        <!-- <div class="addfiles form-control"
-                                                         id="aadhar_card_backend_file_label"><span
-                                                             class="file_label">Choose
-                                                                     Aadhar Card Back </span></div> -->
+
                         <input
                           v-if="AadharDocBackInvalid"
                           type="file"
@@ -1958,9 +2008,7 @@
                         <label for="" class="float-label">
                           Pan Card<span class="text-danger">*</span></label
                         >
-                        <!-- <div class="addfiles form-control" data="#pan_card_file"
-                                                         id="pan_card_file_label"><span class="file_label">Upload Pan
-                                                                     Card</span></div> -->
+
                         <input
                           v-if="PancardInvalid"
                           type="file"
@@ -1991,9 +2039,7 @@
                       </div>
                       <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                         <label for="" class="float-label"> Passport</label>
-                        <!-- <div class="addfiles form-control" data="#passport_file"
-                                                         id="passport_file_label"><span class="file_label">Choose
-                                                                     Passport</span></div> -->
+
                         <input
                           type="file"
                           accept="image/png, image/gif, image/jpeg"
@@ -2007,10 +2053,7 @@
                       </div>
                       <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                         <label for="" class="float-label"> ID</label>
-                        <!-- <div class="addfiles form-control" data="#voters_id_file"
-                                                         id="voters_id_file_label"><span class="file_label">Choose
-                                                             Voters
-                                                                     ID</span></div> -->
+
                         <input
                           type="file"
                           accept="image/png, image/gif, image/jpeg"
@@ -2023,10 +2066,10 @@
                         />
                       </div>
                       <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
-                        <label for="" class="float-label"> Driving License</label>
-                        <!-- <div class="addfiles form-control" data="#dl_file"
-                                                         id="dl_file_label"><span class="file_label">Choose Driving
-                                                                     License</span></div> -->
+                        <label for="" class="float-label">
+                          Driving License</label
+                        >
+
                         <input
                           type="file"
                           accept="image/png, image/gif, image/jpeg"
@@ -2040,7 +2083,9 @@
                       </div>
                       <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
                         <label for="" class="float-label"
-                          >Educations Certificate<span class="text-danger">*</span></label
+                          >Educations Certificate<span class="text-danger"
+                            >*</span
+                          ></label
                         >
                         <input
                           type="file"
@@ -2071,9 +2116,9 @@
                         >
                       </div>
                       <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
-                        <label for="" class="float-label"> Relieving Letter</label>
-                        <!-- <div class="addfiles form-control" data="#reliving_letter_file"
-                                                                 id="reliving_letter_file_label"><span class="file_label">Choose Relieving Letter</span></div> -->
+                        <label for="" class="float-label">
+                          Relieving Letter</label
+                        >
                         <input
                           type="file"
                           accept="image/png, image/gif, image/jpeg"
@@ -2087,20 +2132,14 @@
                       </div>
                     </div>
                   </div>
+
                   <div class="row">
                     <div class="col-12 text-right">
                       <input
                         type="button"
-                        value="FileUploadText"
-                        @click="submit"
-                        class="btn btn-orange text-center processOnboardForm"
-                      />
-
-                      <input
-                        type="button"
                         value="sample"
                         @click="Sampledata"
-                        class="btn btn-orange text-center processOnboardForm"
+                        class="btn btn-orange text-center processOnboardForm mr-4"
                       />
 
                       <button
@@ -2110,7 +2149,7 @@
                         placeholder=""
                         name="save_form"
                         id="save_button"
-                        class="btn btn-orange text-center processOnboardForm"
+                        class="btn btn-orange text-center processOnboardForm mr-4"
                         value="Submit"
                         @click="SaveEmployeeOnboardingData"
                       >
@@ -2126,6 +2165,7 @@
                         id="msform"
                         class="btn btn-orange text-center processOnboardForm"
                         value="Submit"
+                        :disabled="fileUploadValidation"
                         @click="SubmitEmployeeOnboardingData"
                       >
                         Submit
@@ -2169,7 +2209,8 @@
     </li>
     <li
       v-if="
-        employee_onboarding.pan_number == '' || employee_onboarding.pan_number.length < 0
+        employee_onboarding.pan_number == '' ||
+        employee_onboarding.pan_number.length < 0
       "
     >
       Pan Number Required
@@ -2230,39 +2271,32 @@ import {
   getBloodGroups,
 } from "./NormalOnboardingService";
 
-const gen = ref("red");
-
 onMounted(() => {
-  employee_onboarding.blood_group_id = gen.value;
-
-  console.log(gen.value);
   // For Bank Data
   getBankList().then((result) => (bankList.value = result));
   //  For Countries
   getCountryList().then((result) => (country.value = result));
-  console.log(country.country_name);
-  employee_onboarding.current_country = "India";
-  employee_onboarding.permanent_country = "India";
+//   console.log(country.country_name);
+//   employee_onboarding.current_country = "India";
+//   employee_onboarding.permanent_country = "India";
 
   // for state
   getStateList().then((result) => (state.value = result));
-  employee_onboarding.current_state = "Tamil Nadu";
-  employee_onboarding.permanent_state = "Tamil Nadu";
+//   employee_onboarding.current_state = "Tamil Nadu";
+//   employee_onboarding.permanent_state = "Tamil Nadu";
   // for Manager Details
   ManagerDetails().then((result) => (Managerdetails.value = result));
-  console.log(Managerdetails);
+
 
   //Get Department details
 
   DepartmentDetails().then((result) => (departmentDetails.value = result));
 
-  getMaritalStatus().then((result) =>{
-    console.log(result);
-     (maritalDetails.value = result)});
-
+  getMaritalStatus().then((result) => {
+    maritalDetails.value = result;
+  });
 
   getBloodGroups().then((result) => (bloodGroups.value = result));
-
 });
 
 const employee_onboarding = reactive({
@@ -2272,6 +2306,7 @@ const employee_onboarding = reactive({
   aadhar_number: "",
   passport_number: "",
   bank_id: "",
+  bank_name: "",
   employee_name: "",
   gender: "",
   pan_number: "",
@@ -2280,9 +2315,11 @@ const employee_onboarding = reactive({
   dob: "",
   mobile_number: "",
   dl_no: "",
+  blood_group_name: "",
   blood_group_id: "",
   bank_ifsc: "",
   marital_status: "",
+  marital_status_id: "",
   email: "",
   nationality: "",
   physically_challenged: "",
@@ -2297,6 +2334,8 @@ const employee_onboarding = reactive({
   current_address_line_2: "",
   current_country: "",
   current_state: "",
+  current_country_id: "",
+  current_state_id: "",
   current_city: "",
   current_pincode: "",
 
@@ -2308,6 +2347,8 @@ const employee_onboarding = reactive({
   permanent_address_line_2: "",
   permanent_country: "",
   permanent_state: "",
+  permanent_country_id: "",
+  permanent_state_id: "",
   permanent_city: "",
   permanent_pincode: "",
 
@@ -2316,12 +2357,14 @@ const employee_onboarding = reactive({
   // Office Detials Start
 
   department: "",
+  department_id: "",
   process: "",
   designation: "",
   cost_center: "",
   probation_period: "",
   work_location: "",
   l1_manager_code: "",
+  l1_manager_code_id: "",
   holiday_location: "",
   officical_mail: "",
   official_mobile: "",
@@ -2346,6 +2389,15 @@ const employee_onboarding = reactive({
   dob_spouse: "",
   no_of_children: "",
 
+  AadharCardFront: "",
+  AadharCardBack: "",
+  PanCardDoc: "",
+  DrivingLicenseDoc: "",
+  EductionDoc: "",
+  VoterIdDoc: "",
+  ReleivingLetterDoc: "",
+  PassportDoc: "",
+
   // family Details End
 
   // Personal Documents Start
@@ -2362,7 +2414,6 @@ const Managerdetails = ref();
 const maritalDetails = ref();
 const bloodGroups = ref();
 
-
 const NationalityData = ref(true);
 const CopyAddresschecked = ref(false);
 const sposeData = ref(false);
@@ -2377,6 +2428,9 @@ const AadharDocFrontInvalid = ref(false);
 const AadharDocBackInvalid = ref(false);
 const PancardInvalid = ref(false);
 const EducationCertificateInvalid = ref(false);
+const fileUploadValidation=ref(true)
+
+
 
 //   Events
 
@@ -2385,19 +2439,18 @@ const handleSubmit = (isFormValid) => {
 
   submitted.value = true;
 
-  AadharCardFront.fileName == undefined
+  employee_onboarding.AadharCardFront.fileName == undefined
     ? (AadharDocFrontInvalid.value = true)
     : (AadharDocFrontInvalid.value = false);
-  AadharCardBack.fileName == undefined
+  employee_onboarding.AadharCardBack.fileName == undefined
     ? (AadharDocBackInvalid.value = true)
     : (AadharDocBackInvalid.value = false);
-  PanCardDoc.fileName == undefined
+  employee_onboarding.PanCardDoc.fileName == undefined
     ? (PancardInvalid.value = true)
     : (PancardInvalid.value = false);
-  EductionDoc.fileName == undefined
+  employee_onboarding.EductionDoc.fileName == undefined
     ? (EducationCertificateInvalid.value = true)
     : (EducationCertificateInvalid.value = false);
-
 
   if (!isFormValid) {
     toast.add({
@@ -2407,14 +2460,14 @@ const handleSubmit = (isFormValid) => {
       life: 3000,
     });
     RequiredDocument.value = true;
+    fileUploadValidation.value=true;
     return;
   }
   toggleDialog();
   SumbitDisable.value = false;
 };
 const toggleDialog = () => {
-//   showMessage.value = !showMessage.value;
-
+  //   showMessage.value = !showMessage.value;
 };
 
 const spouseDisable = () => {
@@ -2429,8 +2482,10 @@ const spouseDisable = () => {
 
 const ForCopyAdrress = () => {
   if (CopyAddresschecked.value == false) {
-    employee_onboarding.permanent_address_line_1 = employee_onboarding.current_address_line_1;
-    employee_onboarding.permanent_address_line_2 = employee_onboarding.current_address_line_2;
+    employee_onboarding.permanent_address_line_1 =
+      employee_onboarding.current_address_line_1;
+    employee_onboarding.permanent_address_line_2 =
+      employee_onboarding.current_address_line_2;
     employee_onboarding.permanent_country = employee_onboarding.current_country;
     employee_onboarding.permanent_state = employee_onboarding.current_state;
     employee_onboarding.permanent_city = employee_onboarding.current_city;
@@ -2438,7 +2493,7 @@ const ForCopyAdrress = () => {
   } else if (CopyAddresschecked.value == true) {
     employee_onboarding.permanent_address_line_1 = "";
     employee_onboarding.permanent_address_line_2 = "";
-    employee_onboarding.permanent_country="";
+    employee_onboarding.permanent_country = "";
     employee_onboarding.permanent_city = "";
     employee_onboarding.permanent_state = "";
     employee_onboarding.permanent_pincode = "";
@@ -2470,7 +2525,8 @@ const fnCalculateAge = () => {
     var ageDate = new Date(difference);
     var calculatedAge = Math.abs(ageDate.getUTCFullYear() - 1970);
     employee_onboarding.father_age = calculatedAge;
-  } else if (employee_onboarding.dob_mother) {
+  }
+  if (employee_onboarding.dob_mother) {
     var birthDate = new Date(employee_onboarding.dob_mother);
     console.log(" birthDate" + birthDate);
     var difference = Date.now() - birthDate.getTime();
@@ -2482,229 +2538,435 @@ const fnCalculateAge = () => {
 
 const SaveEmployeeOnboardingData = () => {
   console.log("Saving onboarding form");
+  console.log(employee_onboarding);
   employee_onboarding.can_onboard_employee = false;
   submit();
+  get_id();
+  checkInputFiles();
+
+  console.log(employee_onboarding);
 };
 
 const SubmitEmployeeOnboardingData = () => {
-
-    if(AadharCardFront.fileName == undefined || AadharCardBack.fileName == undefined || PanCardDoc.fileName== undefined || EductionDoc.fileName == undefined){
-        employee_onboarding.can_onboard_employee = true;
-        console.log(employee_onboarding);
-         jsonFormat();
-    }
-
+    employee_onboarding.can_onboard_employee = true;
+    console.log(employee_onboarding);
+    get_id();
+    submit();
 
 };
 
-// Generate data into JSON Format
 
-const jsonFormat = () => {
-  const data = JSON.stringify(
-    employee_onboarding,
-    AadharCardFront,
-    AadharCardBack,
-    PanCardDoc,
-    DrivingLicenseDoc,
-    EductionDoc,
-    VoterIdDoc,
-    ReleivingLetterDoc,
-    PassportDoc
+const submit = () => {
+  let currentObj = this;
+  const config = {
+    headers: { "content-type": "multipart/form-data" },
+  };
+
+  let formData = new FormData();
+  formData.append("can_onboard_employee", employee_onboarding.can_onboard_employee)
+  formData.append("employee_code", employee_onboarding.employee_code );
+  formData.append("doj", employee_onboarding.doj);
+  formData.append("aadhar_number", employee_onboarding.aadhar_number );
+  formData.append("passport_number", employee_onboarding.passport_number );
+  formData.append("bank_id", employee_onboarding.bank_id );
+//   formData.append("bank_name ", employee_onboarding.bank_name.bank_name );
+  formData.append("employee_name", employee_onboarding.employee_name );
+  formData.append(" gender", employee_onboarding. gender);
+  formData.append("pan_number", employee_onboarding.pan_number);
+  formData.append("passport_date", employee_onboarding.passport_date);
+  formData.append("AccountNumber", employee_onboarding.AccountNumber);
+  formData.append("dob", employee_onboarding.dob);
+  formData.append("mobile_number", employee_onboarding.mobile_number);
+  formData.append("dl_no", employee_onboarding.dl_no);
+//   formData.append("blood_group_name", employee_onboarding.blood_group_name.name);
+  formData.append("blood_group_id", employee_onboarding.blood_group_id);
+  formData.append("bank_ifsc", employee_onboarding.bank_ifsc);
+//   formData.append("marital_status", employee_onboarding.marital_status.name);
+  formData.append("marital_status_id", employee_onboarding.marital_status_id);
+  formData.append("email", employee_onboarding.email);
+  formData.append("nationality", employee_onboarding.nationality);
+  formData.append("physically_challenged", employee_onboarding.physically_challenged);
+  formData.append("current_address_line_1", employee_onboarding.current_address_line_1);
+  formData.append("current_address_line_2", employee_onboarding.current_address_line_2);
+//   formData.append("current_country", employee_onboarding.current_country.country_name);
+  formData.append("current_country_id", employee_onboarding.current_country_id);
+//   formData.append("current_state", employee_onboarding.current_state.state_name);
+  formData.append("current_state_id", employee_onboarding.current_state_id);
+  formData.append("current_city", employee_onboarding.current_city);
+  formData.append("current_pincode", employee_onboarding.current_pincode);
+  formData.append(" permanent_address_line_1", employee_onboarding.permanent_address_line_1);
+  formData.append("permanent_address_line_2", employee_onboarding.permanent_address_line_2);
+//   formData.append("permanent_country", employee_onboarding.permanent_country.country_name);
+  formData.append("permanent_country_id", employee_onboarding.permanent_country_id);
+//   formData.append("permanent_state", employee_onboarding.permanent_state.state_name);
+  formData.append("permanent_state_id", employee_onboarding.permanent_state_id);
+  formData.append("permanent_city", employee_onboarding.permanent_city);
+  formData.append("permanent_pincode", employee_onboarding.permanent_pincode);
+//   formData.append("department", employee_onboarding.department.name);
+  formData.append("department_id", employee_onboarding.department_id);
+  formData.append("process", employee_onboarding.process);
+  formData.append("designation", employee_onboarding.designation);
+  formData.append("cost_center", employee_onboarding.cost_center);
+  formData.append("probation_period", employee_onboarding.probation_period);
+  formData.append("work_location", employee_onboarding.work_location);
+//   formData.append("l1_manager_code", employee_onboarding.l1_manager_code.name);
+  formData.append("l1_manager_code_id", employee_onboarding.l1_manager_code_id);
+  formData.append("holiday_location", employee_onboarding.holiday_location);
+  formData.append("officical_mail", employee_onboarding.officical_mail);
+  formData.append("official_mobile", employee_onboarding.official_mobile);
+  formData.append("emp_notice", employee_onboarding.emp_notice);
+  formData.append("confirmation_period", employee_onboarding.confirmation_period);
+  formData.append("father_name", employee_onboarding.father_name);
+  formData.append("dob_father", employee_onboarding.dob_father);
+  formData.append("father_gender", employee_onboarding.father_gender);
+  formData.append("father_age", employee_onboarding.father_age);
+  formData.append("mother_name", employee_onboarding.mother_name);
+  formData.append("dob_mother", employee_onboarding.dob_mother);
+  formData.append("mother_gender", employee_onboarding.mother_gender);
+  formData.append("mother_age", employee_onboarding.mother_age);
+  formData.append("spouse_name", employee_onboarding.spouse_name);
+  formData.append("wedding_date", employee_onboarding.wedding_date);
+  formData.append("spouse_gender", employee_onboarding.spouse_gender);
+  formData.append("dob_spouse", employee_onboarding.dob_spouse);
+  formData.append("no_of_children", employee_onboarding.no_of_children);
+  formData.append("Aadharfront", employee_onboarding.AadharCardFront);
+  formData.append("AadharBack", employee_onboarding.AadharCardBack);
+  formData.append("panDoc", employee_onboarding.PanCardDoc);
+  formData.append("eductionDoc", employee_onboarding.EductionDoc);
+  formData.append("releivingDoc", employee_onboarding.ReleivingLetterDoc);
+  formData.append("voterId", employee_onboarding.VoterIdDoc);
+  formData.append("passport", employee_onboarding.PassportDoc);
+  formData.append("dlDoc", employee_onboarding.DrivingLicenseDoc);
+
+  console.log(formData);
+
+  axios
+    .post("/vmt-employee-onboard", formData, config)
+    .then(function (response) {
+      currentObj.success = response.data.success;
+    })
+    .catch(function (error) {
+      currentObj.output = error;
+    });
+};
+
+const get_id = () => {
+  employee_onboarding.bank_id = employee_onboarding.bank_name.id;
+  employee_onboarding.blood_group_id = employee_onboarding.blood_group_name.id;
+  employee_onboarding.marital_status_id = employee_onboarding.marital_status.id;
+  employee_onboarding.current_country_id =
+    employee_onboarding.current_country.id;
+  employee_onboarding.current_state_id = employee_onboarding.current_state.id;
+  employee_onboarding.permanent_country_id =
+    employee_onboarding.permanent_country.id;
+  employee_onboarding.permanent_state_id =
+    employee_onboarding.permanent_state.id;
+  employee_onboarding.department_id = employee_onboarding.department.id;
+  employee_onboarding.l1_manager_code_id = employee_onboarding.l1_manager_code.id
+
+  console.log(
+    employee_onboarding.bank_id,
+    employee_onboarding.blood_group_id,
+    employee_onboarding.marital_status_id,
+    employee_onboarding.current_country_id,
+    employee_onboarding.current_state_id,
+    employee_onboarding.permanent_country_id,
+    employee_onboarding.permanent_state_id,
+    employee_onboarding.department_id
   );
-  console.log(data);
 };
 
 //  File Upload Function Declaration
 
-const file = ref();
-const AadharCardFront = ref();
-const AadharCardBack = ref();
-const PanCardDoc = ref();
-const PassportDoc = ref();
-const VoterIdDoc = ref();
-const DrivingLicenseDoc = ref();
-const EductionDoc = ref();
-const ReleivingLetterDoc = ref();
+const checkInputFiles=()=>{
+    if (
+    employee_onboarding.AadharCardFront.fileName == undefined ||
+    employee_onboarding.AadharCardBack.fileName == undefined ||
+    employee_onboarding.PanCardDoc.fileName == undefined ||
+    employee_onboarding.EductionDoc.fileName == undefined
+  ){
+     fileUploadValidation.value=true
+  }else{
+    fileUploadValidation.value=false
+  }
+}
+
+const  user_code_exists=ref(false)
+
+const userCodeExists = () =>{
+
+    let user_code=employee_onboarding.employee_code;
+
+    axios.get(`/user-code-exists/${user_code}`).then(res=>{
+        console.log(res.data);
+        user_code_exists.value=res.data
+    }).catch(err=>{
+        console.log(err);
+    }).finally(()=>{
+        console.log("completed");
+    })
+
+}
+
+const personal_mail_exists = ref(false)
+
+const personalMailExists=()=>{
+
+    let mail=employee_onboarding.email;
+
+    axios.get(`/personal-mail-exists/${mail}`).then(res=>{
+        console.log(res.data);
+        personal_mail_exists.value=res.data
+    }).catch(err=>{
+        console.log(err);
+    }).finally(()=>{
+        console.log("completed");
+    })
+}
+
+// const fileUpload = () => {
+//   let currentObj = this;
+//   const config = {
+//     headers: { "content-type": "multipart/form-data" },
+//   };
+
+//   let formData = new FormData();
+//   formData.append("employee_onboarding", JSON.stringify(employee_onboarding));
+//   formData.append("Aadharfront", employee_onboarding.AadharCardFront);
+//   formData.append("AadharBack", employee_onboarding.AadharCardBack);
+//   formData.append("panDoc", employee_onboarding.PanCardDoc);
+//   formData.append("eductionDoc", employee_onboarding.EductionDoc);
+//   formData.append("releivingDoc", employee_onboarding.ReleivingLetterDoc);
+//   formData.append("voterId", employee_onboarding.VoterIdDoc);
+//   formData.append("passport", employee_onboarding.PassportDoc);
+//   formData.append("dlDoc", employee_onboarding.DrivingLicenseDoc);
+
+//   console.log(formData);
+
+//   axios
+//     .post("/fileUploadingTest", formData, config)
+//     .then(function (response) {
+//       currentObj.success = response.data.success;
+//     })
+//     .catch(function (error) {
+//       currentObj.output = error;
+//     });
+// };
 
 const AadharFront = (e) => {
   // Check if file is selected
   if (e.target.files && e.target.files[0]) {
     // Get uploaded file
-    (AadharCardFront.file = e.target.files[0]),
+    (employee_onboarding.AadharCardFront = e.target.files[0]),
       // Get file size
-      (AadharCardFront.fileSize = Math.round((file.size / 1024 / 1024) * 100) / 100),
+      (employee_onboarding.AadharCardFront.fileSize =
+        Math.round(
+          (employee_onboarding.AadharCardFront.size / 1024 / 1024) * 100
+        ) / 100),
       // Get file extension
-      (AadharCardFront.fileExtention = AadharCardFront.file.name.split(".").pop()),
+      (employee_onboarding.AadharCardFront.fileExtention =
+        employee_onboarding.AadharCardFront.name.split(".").pop()),
       // Get file name
-      (AadharCardFront.fileName = AadharCardFront.file.name.split(".").shift()),
+      (employee_onboarding.AadharCardFront.fileName =
+        employee_onboarding.AadharCardFront.name.split(".").shift()),
       // Check if file is an image
-      (AadharCardFront.isImage = ["jpg", "jpeg", "png", "gif"].includes(
-        AadharCardFront.fileExtention
-      ));
+      (employee_onboarding.AadharCardFront.isImage = [
+        "jpg",
+        "jpeg",
+        "png",
+        "gif",
+      ].includes(employee_onboarding.AadharCardFront.fileExtention));
     // Print to console
-    console.log(AadharCardFront);
+    console.log(employee_onboarding.AadharCardFront);
   }
 };
 const AadharBack = (e) => {
   // Check if file is selected
   if (e.target.files && e.target.files[0]) {
     // Get uploaded file
-    (AadharCardBack.file = e.target.files[0]),
+    (employee_onboarding.AadharCardBack = e.target.files[0]),
       // Get file size
-      (AadharCardBack.fileSize =
-        Math.round((AadharCardBack.size / 1024 / 1024) * 100) / 100),
+      (employee_onboarding.AadharCardBack.fileSize =
+        Math.round(
+          (employee_onboarding.AadharCardBack.size / 1024 / 1024) * 100
+        ) / 100),
       // Get file extension
-      (AadharCardBack.fileExtention = AadharCardBack.file.name.split(".").pop()),
+      (employee_onboarding.AadharCardBack.fileExtention =
+        employee_onboarding.AadharCardBack.name.split(".").pop()),
       // Get file name
-      (AadharCardBack.fileName = AadharCardBack.file.name.split(".").shift()),
+      (employee_onboarding.AadharCardBack.fileName =
+        employee_onboarding.AadharCardBack.name.split(".").shift()),
       // Check if file is an image
-      (AadharCardBack.isImage = ["jpg", "jpeg", "png", "gif"].includes(
-        AadharCardBack.fileExtention
-      ));
+      (employee_onboarding.AadharCardBack.isImage = [
+        "jpg",
+        "jpeg",
+        "png",
+        "gif",
+      ].includes(employee_onboarding.AadharCardBack.fileExtention));
     // Print to console
-    console.log(AadharCardBack);
+    console.log(employee_onboarding.AadharCardBack);
   }
 };
 const PanCard = (e) => {
   // Check if file is selected
   if (e.target.files && e.target.files[0]) {
     // Get uploaded file
-    (PanCardDoc.file = e.target.files[0]),
+    (employee_onboarding.PanCardDoc = e.target.files[0]),
       // Get file size
-      (PanCardDoc.fileSize = Math.round((PanCardDoc.size / 1024 / 1024) * 100) / 100),
+      (employee_onboarding.PanCardDoc.fileSize =
+        Math.round((employee_onboarding.PanCardDoc.size / 1024 / 1024) * 100) /
+        100),
       // Get file extension
-      (PanCardDoc.fileExtention = PanCardDoc.file.name.split(".").pop()),
+      (employee_onboarding.PanCardDoc.fileExtention =
+        employee_onboarding.PanCardDoc.name.split(".").pop()),
       // Get file name
-      (PanCardDoc.fileName = PanCardDoc.file.name.split(".").shift()),
+      (employee_onboarding.PanCardDoc.fileName =
+        employee_onboarding.PanCardDoc.name.split(".").shift()),
       // Check if file is an image
-      (PanCardDoc.isImage = ["jpg", "jpeg", "png", "gif"].includes(
-        PanCardDoc.fileExtention
-      ));
+      (employee_onboarding.PanCardDoc.isImage = [
+        "jpg",
+        "jpeg",
+        "png",
+        "gif",
+      ].includes(employee_onboarding.PanCardDoc.fileExtention));
     // Print to console
-    console.log(PanCardDoc);
+    console.log(employee_onboarding.PanCardDoc);
   }
 };
 const Passport = (e) => {
   // Check if file is selected
   if (e.target.files && e.target.files[0]) {
     // Get uploaded file
-    (PassportDoc.file = e.target.files[0]),
+    (employee_onboarding.PassportDoc = e.target.files[0]),
       // Get file size
-      (PassportDoc.fileSize = Math.round((PassportDoc.size / 1024 / 1024) * 100) / 100),
+      (employee_onboarding.PassportDoc.fileSize =
+        Math.round((employee_onboarding.PassportDoc.size / 1024 / 1024) * 100) /
+        100),
       // Get file extension
-      (PassportDoc.fileExtention = PassportDoc.file.name.split(".").pop()),
+      (employee_onboarding.PassportDoc.fileExtention =
+        employee_onboarding.PassportDoc.name.split(".").pop()),
       // Get file name
-      (PassportDoc.fileName = PassportDoc.file.name.split(".").shift()),
+      (employee_onboarding.PassportDoc.fileName =
+        employee_onboarding.PassportDoc.name.split(".").shift()),
       // Check if file is an image
-      (PassportDoc.isImage = ["jpg", "jpeg", "png", "gif"].includes(
-        PassportDoc.fileExtention
-      ));
+      (employee_onboarding.PassportDoc.isImage = [
+        "jpg",
+        "jpeg",
+        "png",
+        "gif",
+      ].includes(employee_onboarding.PassportDoc.fileExtention));
     // Print to console
-    console.log(PassportDoc);
+    console.log(employee_onboarding.PassportDoc);
   }
 };
 const DrivingLisence = (e) => {
   // Check if file is selected
   if (e.target.files && e.target.files[0]) {
     // Get uploaded file
-    (DrivingLicenseDoc.file = e.target.files[0]),
+    (employee_onboarding.DrivingLicenseDoc = e.target.files[0]),
       // Get file size
-      (DrivingLicenseDoc.fileSize =
-        Math.round((DrivingLicenseDoc.size / 1024 / 1024) * 100) / 100),
+      (employee_onboarding.DrivingLicenseDoc.fileSize =
+        Math.round(
+          (employee_onboarding.DrivingLicenseDoc.size / 1024 / 1024) * 100
+        ) / 100),
       // Get file extension
-      (DrivingLicenseDoc.fileExtention = DrivingLicenseDoc.file.name.split(".").pop()),
+      (employee_onboarding.DrivingLicenseDoc.fileExtention =
+        employee_onboarding.DrivingLicenseDoc.name.split(".").pop()),
       // Get file name
-      (DrivingLicenseDoc.fileName = DrivingLicenseDoc.file.name.split(".").shift()),
+      (employee_onboarding.DrivingLicenseDoc.fileName =
+        employee_onboarding.DrivingLicenseDoc.name.split(".").shift()),
       // Check if file is an image
-      (DrivingLicenseDoc.isImage = ["jpg", "jpeg", "png", "gif"].includes(
-        DrivingLicenseDoc.fileExtention
-      ));
+      (employee_onboarding.DrivingLicenseDoc.isImage = [
+        "jpg",
+        "jpeg",
+        "png",
+        "gif",
+      ].includes(employee_onboarding.DrivingLicenseDoc.fileExtention));
     // Print to console
-    console.log(DrivingLicenseDoc);
+    console.log(employee_onboarding.DrivingLicenseDoc);
   }
 };
 const VoterId = (e) => {
   // Check if file is selected
   if (e.target.files && e.target.files[0]) {
     // Get uploaded file
-    (VoterIdDoc.file = e.target.files[0]),
+    (employee_onboarding.VoterIdDoc = e.target.files[0]),
       // Get file size
-      (VoterIdDoc.fileSize = Math.round((VoterIdDoc.size / 1024 / 1024) * 100) / 100),
+      (employee_onboarding.VoterIdDoc.fileSize =
+        Math.round((employee_onboarding.VoterIdDoc.size / 1024 / 1024) * 100) /
+        100),
       // Get file extension
-      (VoterIdDoc.fileExtention = VoterIdDoc.file.name.split(".").pop()),
+      (employee_onboarding.VoterIdDoc.fileExtention =
+        employee_onboarding.VoterIdDoc.name.split(".").pop()),
       // Get file name
-      (VoterIdDoc.fileName = VoterIdDoc.file.name.split(".").shift()),
+      (employee_onboarding.VoterIdDoc.fileName =
+        employee_onboarding.VoterIdDoc.name.split(".").shift()),
       // Check if file is an image
-      (VoterIdDoc.isImage = ["jpg", "jpeg", "png", "gif"].includes(
-        VoterIdDoc.fileExtention
-      ));
+      (employee_onboarding.VoterIdDoc.isImage = [
+        "jpg",
+        "jpeg",
+        "png",
+        "gif",
+      ].includes(employee_onboarding.VoterIdDoc.fileExtention));
     // Print to console
-    console.log(VoterIdDoc);
+    console.log(employee_onboarding.VoterIdDoc);
   }
 };
 const EductionCertifacte = (e) => {
   // Check if file is selected
   if (e.target.files && e.target.files[0]) {
     // Get uploaded file
-    (EductionDoc.file = e.target.files[0]),
+    (employee_onboarding.EductionDoc = e.target.files[0]),
       // Get file size
-      (EductionDoc.fileSize = Math.round((EductionDoc.size / 1024 / 1024) * 100) / 100),
+      (employee_onboarding.EductionDoc.fileSize =
+        Math.round((employee_onboarding.EductionDoc.size / 1024 / 1024) * 100) /
+        100),
       // Get file extension
-      (EductionDoc.fileExtention = EductionDoc.file.name.split(".").pop()),
+      (employee_onboarding.EductionDoc.fileExtention =
+        employee_onboarding.EductionDoc.name.split(".").pop()),
       // Get file name
-      (EductionDoc.fileName = EductionDoc.file.name.split(".").shift()),
+      (employee_onboarding.EductionDoc.fileName =
+        employee_onboarding.EductionDoc.name.split(".").shift()),
       // Check if file is an image
-      (EductionDoc.isImage = ["jpg", "jpeg", "png", "gif"].includes(
-        EductionDoc.fileExtention
-      ));
+      (employee_onboarding.EductionDoc.isImage = [
+        "jpg",
+        "jpeg",
+        "png",
+        "gif",
+      ].includes(employee_onboarding.EductionDoc.fileExtention));
     // Print to console
-    console.log(EductionDoc);
+    console.log(employee_onboarding.EductionDoc);
   }
 };
 const ReleivingLetter = (e) => {
   // Check if file is selected
   if (e.target.files && e.target.files[0]) {
     // Get uploaded file
-    (ReleivingLetterDoc.file = e.target.files[0]),
+    (employee_onboarding.ReleivingLetterDoc = e.target.files[0]),
       // Get file size
-      (ReleivingLetterDoc.fileSize =
-        Math.round((ReleivingLetterDoc.size / 1024 / 1024) * 100) / 100),
+      (employee_onboarding.ReleivingLetterDoc.fileSize =
+        Math.round(
+          (employee_onboarding.ReleivingLetterDoc.size / 1024 / 1024) * 100
+        ) / 100),
       // Get file extension
-      (ReleivingLetterDoc.fileExtention = ReleivingLetterDoc.file.name.split(".").pop()),
+      (employee_onboarding.ReleivingLetterDoc.fileExtention =
+        employee_onboarding.ReleivingLetterDoc.name.split(".").pop()),
       // Get file name
-      (ReleivingLetterDoc.fileName = ReleivingLetterDoc.file.name.split(".").shift()),
+      (employee_onboarding.ReleivingLetterDoc.fileName =
+        employee_onboarding.ReleivingLetterDoc.name.split(".").shift()),
       // Check if file is an image
-      (ReleivingLetterDoc.isImage = ["jpg", "jpeg", "png", "gif"].includes(
-        ReleivingLetterDoc.fileExtention
-      ));
+      (employee_onboarding.ReleivingLetterDoc.isImage = [
+        "jpg",
+        "jpeg",
+        "png",
+        "gif",
+      ].includes(employee_onboarding.ReleivingLetterDoc.fileExtention));
     // Print to console
-    console.log(ReleivingLetterDoc);
+    console.log(employee_onboarding.ReleivingLetterDoc);
   }
 };
 
 // for Testing Post Data
-
-const submit = () => {
-  axios
-    .post("/vmt-employee-onboard", {
-      employee_onboarding,
-      AadharCardFront,
-      AadharCardBack,
-      PanCardDoc,
-      EductionDoc,
-      DrivingLicenseDoc,
-      VoterIdDoc,
-      PassportDoc,
-    })
-    .then((res) => {
-      //alert("sent");
-      console.log("Ajax Response : " + res);
-    })
-    .catch((err) => {
-      //alert("Ajax Response : not sent "+err);
-      console.log("Ajax Response : not sent " + err);
-    });
-};
 
 const Gender = ref([
   { name: "Male", value: "male" },
@@ -2741,13 +3003,13 @@ const Sampledata = () => {
   employee_onboarding.aadhar_number = ref("3977 8798 6564");
   employee_onboarding.doj = ref("23-4-2020");
   employee_onboarding.pan_number = ref("BGAJP6646F");
-  employee_onboarding.blood_group_id = ref("B Positive");
+  employee_onboarding.blood_group_name = ref("B Positive");
   employee_onboarding.dob = ref("23-07-2000");
   employee_onboarding.email = ref("example@gmail.com");
   employee_onboarding.dl_no = ref("HR-0619850034761");
   employee_onboarding.passport_number = ref("A2096457");
   employee_onboarding.passport_date = ref("23-5-2030");
-  employee_onboarding.bank_id = ref("ANDHRA BANK");
+  employee_onboarding.bank_name = ref("ANDHRA BANK");
   employee_onboarding.physically_challenged = ref("No");
   employee_onboarding.AccountNumber = ref("35216644292");
   employee_onboarding.bank_ifsc = ref("SBIN0121325");
@@ -2761,8 +3023,12 @@ const Sampledata = () => {
   employee_onboarding.current_state = ref("Tamil Nadu");
   employee_onboarding.current_city = ref("chennai");
   employee_onboarding.current_pincode = ref("600023");
-  employee_onboarding.permanent_address_line_1 = ref("45/21 2nd Avenue,chennai");
-  employee_onboarding.permanent_address_line_2 = ref("45/21 2nd Avenue,chennai");
+  employee_onboarding.permanent_address_line_1 = ref(
+    "45/21 2nd Avenue,chennai"
+  );
+  employee_onboarding.permanent_address_line_2 = ref(
+    "45/21 2nd Avenue,chennai"
+  );
   employee_onboarding.permanent_country = ref("India");
   employee_onboarding.permanent_city = ref("chennai");
   employee_onboarding.permanent_state = ref("Tamil Nadu");

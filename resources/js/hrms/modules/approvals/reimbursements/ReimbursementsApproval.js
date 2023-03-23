@@ -3,6 +3,8 @@ import "primevue/resources/themes/lara-light-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
 
+import '../../../../../../public/assets/css/tailwind.css';
+
 
 import { createApp } from "vue";
 import PrimeVue from "primevue/config";
@@ -28,6 +30,7 @@ import Row from 'primevue/row'
 import ColumnGroup from 'primevue/columngroup'
 import Calendar from 'primevue/calendar'
 import moment from 'moment'
+import Checkbox from 'primevue/checkbox'
 
 import ReimbursementsApproval from './ReimbursementsApproval.vue';
 
@@ -57,7 +60,8 @@ app.component('InputText', InputText);
 app.component('Dialog', Dialog);
 app.component('ProgressSpinner', ProgressSpinner);
 app.component('Calendar', Calendar);
-app.component('moment',moment)
+app.component('moment',moment);
+app.component('Checkbox',Checkbox)
 
 app.mount("#vjs_reimbursementsApprovalTable");
 
