@@ -1,4 +1,3 @@
-
 <?php use Carbon\Carbon; ?>
 @extends('layouts.master')
 @section('title')
@@ -85,19 +84,21 @@
                                                 {{ $user_full_details->work_location ?? '-' }}</p>
                                         </div>
                                         <div class="border-bottom-liteAsh py-2">
-                                            <p class="text-muted f-12 fw-bold">Department</p>
+                                            <p class="text-muted f-12 fw-bold">Department  <a role="button" class="edit-icon" data-bs-toggle="modal"
+                                                data-bs-target="#edit_department"><i class="ri-pencil-fill"></i></a></p>
                                             <p class="text-primary-old f-15 fw-bold">
                                                 {{ $department ?? '-' }}
-                                                <a href="#" class="edit-icon" data-bs-toggle="modal"
-                                                data-bs-target="#edit_department"><i class="ri-pencil-fill"></i></a>
+
                                             </p>
                                         </div>
                                         <div class="border-bottom-liteAsh py-2">
-                                            <p class="text-muted f-12 fw-bold">Reporting To</p>
+                                            <p class="text-muted f-12 fw-bold">Reporting To <a role="button"
+                                                    class="edit-icon" data-bs-toggle="modal"
+                                                    data-bs-target="#edit_reportingManager"><i
+                                                        class="ri-pencil-fill"></i></a></p>
                                             <p class="text-primary-old f-15 fw-bold">
                                                 {{ $user_full_details->l1_manager_name ?? '-' }}</p>
-                                            <a href="#" class="edit-icon" data-bs-toggle="modal"
-                                            data-bs-target="#edit_reportingManager"><i class="ri-pencil-fill"></i></a>
+
                                         </div>
                                     </div>
                                     <div class="profile-bottom-right-content  text-center ">
@@ -297,7 +298,7 @@
                                                     <tr>
                                                         <td>{{ $singledetail->name }}</td>
                                                         <td>{{ $singledetail->relationship }}</td>
-                                                        <td>{{ date('d-M-Y',strtotime($singledetail->dob)) }}</td>
+                                                        <td>{{ date('d-M-Y', strtotime($singledetail->dob)) }}</td>
                                                         <td>{{ $singledetail->phone_number }}</td>
                                                     </tr>
                                                 @endforeach
@@ -342,8 +343,8 @@
                                                         {{-- date('M-Y', strtotime($employee_payslip->PAYROLL_MONTH))) --}}
                                                         <td>{{ $info['company_name'] }}</td>
                                                         <td>{{ $info['job_position'] }}</td>
-                                                        <td>{{ date('d-M-Y',strtotime($info['period_from'])) }}</td>
-                                                        <td>{{date('d-M-Y',strtotime( $info['period_to'])) }}</td>
+                                                        <td>{{ date('d-M-Y', strtotime($info['period_from'])) }}</td>
+                                                        <td>{{ date('d-M-Y', strtotime($info['period_to'])) }}</td>
                                                     </tr>
                                                 @endforeach
                                             @endif
@@ -462,7 +463,8 @@
                                         <form action="" method="POST" enctype="multipart/form-data">
                                             <h6 class="">Statutory Information
                                                 <span class="personal-edit"><a href="#" class="edit-icon"
-                                                        data-bs-toggle="modal" data-bs-target="#statutory_info
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#statutory_info
                                                         "><i
                                                             class="ri-pencil-fill"></i></a></span>
                                             </h6>
@@ -530,7 +532,7 @@
                                                 </a>
                                             </li>
                                         </ul>
-                                         <div class="tab-content " id="pills-tabContent">
+                                        <div class="tab-content " id="pills-tabContent">
                                             <div class="tab-pane fade active show" id="pay_slips" role="tabpanel"
                                                 aria-labelledby="">
 
@@ -607,7 +609,7 @@
 
                                             </div>
 
-                                           </table>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
@@ -633,8 +635,8 @@
                                 <div>
                                     <label>Department<span class="text-danger">*</span></label>
 
-                                    <select class="form-select form-control" name="gender"
-                                        aria-label="Default select" id="selected_dep">
+                                    <select class="form-select form-control" name="gender" aria-label="Default select"
+                                        id="selected_dep">
                                         <option selected hidden disabled>Choose Gender</option>
                                         @foreach ($allDepartments as $singleDepartment)
                                             <option value="{{ $singleDepartment->id }}"
@@ -655,7 +657,8 @@
 
 
 
-                <div id="edit_reportingManager" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
+                <div id="edit_reportingManager" class="modal custom-modal fade" style="display: none;"
+                    aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
                         <div class="modal-content profile-box">
                             <div class="modal-header  ">
@@ -674,7 +677,7 @@
                                         aria-label="Default select"id="selected_report_manager">
                                         <option selected hidden disabled>Choose Reporting Manager</option>
                                         @foreach ($allEmployees as $singleEmployee)
-                                            <option value="{{ $singleEmployee->user_code }}" >
+                                            <option value="{{ $singleEmployee->user_code }}">
                                                 {{ $singleEmployee->user_code }} - {{ $singleEmployee->name }}
                                             </option>
                                         @endforeach
@@ -1067,8 +1070,8 @@
                                             <div class="card mb-3 addition-content" id="content1">
                                                 <div class="card-body">
                                                     <!-- <h3 class="card-title fw-bold">Education Informations <a href="javascript:void(0);"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    {{-- class="delete-icon"><i class="   ri-delete-bin-line"></i></a> --}}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                            </h3> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {{-- class="delete-icon"><i class="   ri-delete-bin-line"></i></a> --}}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </h3> -->
 
                                                     <div class="row ">
                                                         <div class="col-md-12 m-0 text-end">
@@ -1115,9 +1118,9 @@
                                                             </div>
                                                         </div>
 
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
                                     @endif
                                 </div>
                                 <div class=" text-end mb-2" style="cursor:pointer;">
@@ -1200,8 +1203,7 @@
                                                         <div class="form-group mb-3 form-focus focused">
                                                             <div class="cal-icon">
                                                                 <label class="focus-label">Period To</label>
-                                                                <input type="date" max="9999-12-31"
-                                                                    name="period_to[]"
+                                                                <input type="date" max="9999-12-31" name="period_to[]"
                                                                     class="form-control floating datetimepicker"
                                                                     value="" required>
                                                             </div>
@@ -1543,38 +1545,38 @@
             let emp_id = "{{ $user_full_details->user_id }}";
 
             $.ajax({
-                    url: "{{ route('profile-pages-updatedepartment') }}",
-                    type: 'POST',
-                    data: {
-                        emp_id : emp_id  ,
-                        department_id:department_id,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(data) {
-                        location.reload();
-                    }
-                   });
+                url: "{{ route('profile-pages-updatedepartment') }}",
+                type: 'POST',
+                data: {
+                    emp_id: emp_id,
+                    department_id: department_id,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(data) {
+                    location.reload();
+                }
+            });
 
 
         });
 
         $('#save_reportingManager').click(function() {
             var manager_user_code = $('#selected_report_manager').val();
-            var current_user_id =  '{{ $user_full_details->user_id }}';
+            var current_user_id = '{{ $user_full_details->user_id }}';
             console.log(current_user_id);
 
-              $.ajax({
-                    url: "{{ route('profile-pages-update-reporting-mgr') }}",
-                    type: 'POST',
-                    data: {
-                        manager_user_code: manager_user_code,
-                        current_user_id:current_user_id,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(data) {
-                        location.reload();
-                    }
-                   });
+            $.ajax({
+                url: "{{ route('profile-pages-update-reporting-mgr') }}",
+                type: 'POST',
+                data: {
+                    manager_user_code: manager_user_code,
+                    current_user_id: current_user_id,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(data) {
+                    location.reload();
+                }
+            });
         });
 
 
