@@ -671,7 +671,7 @@
                                     <label>Manager Name<span class="text-danger">*</span></label>
 
                                     <select class="form-select form-control" name="gender"
-                                        aria-label="Default select">
+                                        aria-label="Default select"id="selected_report_manager">
                                         <option selected hidden disabled>Choose Reporting Manager</option>
                                         @foreach ($allEmployees as $singleEmployee)
                                             <option value="{{ $singleEmployee->user_code }}" >
@@ -1545,7 +1545,22 @@
         });
 
         $('#save_reportingManager').click(function() {
-            console.log("save_reportingManager button clicked");
+            var manager_user_code = $('#selected_report_manager').val();
+            var current_user_id =  '{{ $user_full_details->user_id }}';
+            console.log(current_user_id);
+
+              $.ajax({
+                    url: "{{ route('profile-pages-update-reporting-mgr') }}",
+                    type: 'POST',
+                    data: {
+                        manager_user_code: manager_user_code,
+                        current_user_id:current_user_id,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(data) {
+                        location.reload();
+                    }
+                   });
         });
 
 
