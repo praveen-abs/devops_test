@@ -58,8 +58,15 @@ class VmtProfilePagesController extends Controller
 
         $genderArray = array("Male", "Female", "Other");
         $bank = Bank::all();
-        $department = Department::find($user_full_details->department_id)->name;
-        $allDepartments = Department::all();
+       // dd(Department::find($user_full_details->department_id)->name);
+       $department = Department::find($user_full_details->department_id);
+       if(!empty($department))
+           $department =  $department->name;
+       else
+           $department = "-";
+
+
+       $allDepartments = Department::all();
 
 
         //dd($maritalStatus);
