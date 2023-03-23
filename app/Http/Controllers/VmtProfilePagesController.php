@@ -100,13 +100,17 @@ class VmtProfilePagesController extends Controller
 
     public function updateReportingManager(Request $request){
 
-        $emp_id = $request->emp_id;
-        $manager_code = $request->manager_code;
-
+        $emp_id = $request->current_user_id;
+        $manager_code = $request->manager_user_code;
+        $manager_id = User::where('user_code', $manager_code)->get(['id','name'])->toArray();
+        $manager_name = $manager_id[0]['name'] ;
+        $manager_id =  $manager_id[0]['id'] ;
+        $manager_designation = VmtEmployeeOfficeDetails::where('user_id',  $manager_id)->pluck('designation')->first();
         $query_EmpOfficeDetails = VmtEmployeeOfficeDetails::where('user_id', $emp_id)->first();
-
-        if($query_EmpOfficeDetails){
+        if(!empty($query_EmpOfficeDetails)){
             $query_EmpOfficeDetails->l1_manager_code = $manager_code;
+            $query_EmpOfficeDetails->l1_manager_designation = $manager_designation;
+            $query_EmpOfficeDetails->l1_manager_name =  $manager_name;
             $query_EmpOfficeDetails->save();
         }
 
