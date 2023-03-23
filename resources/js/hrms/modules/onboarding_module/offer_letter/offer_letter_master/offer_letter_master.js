@@ -23,10 +23,12 @@ import Row from 'primevue/row';
 import InputText from 'primevue/inputtext'
 import Dialog from 'primevue/dialog'
 
-import OfferLetter from './offer_letter_generation.vue'
+import OfferLetterMaster from './offer_letter_generation.vue'
+import router from '../router'
 
 
-const app = createApp(OfferLetter);
+const app = createApp(OfferLetterMaster);
+app.use(router);
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
 app.use(ToastService);
@@ -41,4 +43,4 @@ app.component('Column', Column);
 app.component('InputText', InputText)
 app.component('Dialog',Dialog)
 app.component('Button', Button)
-app.mount("#OfferLetter");
+app.mount("#OfferLetterMaster");

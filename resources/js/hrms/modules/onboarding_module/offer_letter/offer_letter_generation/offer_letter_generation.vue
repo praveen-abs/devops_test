@@ -6,7 +6,6 @@
                     <img alt="no-data" id="" src="{{ URL::asset('assets/images/svg/offer-noData.svg') }}" />
                     <a target="_self" id="create_offer" role="button" href="#" class="btn btn-orange"><i
                             class="fa fa-plus-circle me-1" aria-hidden="true"></i> Create Offer</a>
-
                 </div>
 
                 <div class="crate-offer-content" id="createOffer_content" style="display:none;">
@@ -174,10 +173,9 @@
                     </div>
                     <div class="row">
                         <div class="col-xl-12 col-sm-12 text-end col-lg-12 col-md-12 mb-3 col-xxl-12 ">
-                            <a href="{{ route('view-offer') }}" role="button"
+
+                            <a href="/offer-letter" role="button"
                                 class="btn btn-border-primary me-3">Save</a>
-                            <!-- <a href="{{ route('view-offer') }}" role="button"
-                                class="btn btn-border-primary me-3">Save</a> -->
                             <button class="btn btn-dark me-3">Preview</button>
                             <button class="btn btn-orange me-3">Send to candidate</button>
                         </div>
@@ -187,5 +185,7 @@
             </div>
         </div>
     </div>
+
+
 
 </template>

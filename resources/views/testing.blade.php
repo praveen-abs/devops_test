@@ -6,7 +6,7 @@
 @endsection
 @endsection
 @section('content')
-@vite('resources/js/hrms/modules/leave_module/leave_apply/LeaveApply.js')
-<div id="vjs_leaveapply"></div>
+@vite('resources/js/hrms/modules/onboarding_module/offer_letter/offer_letter_template/offer_letter_template.js')
+     <div id="offer_template"></div>
 @endsection
 

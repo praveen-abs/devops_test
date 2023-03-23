@@ -37,8 +37,15 @@ export default defineConfig({
 
                     // Offer Letter
 
-                    'resources/js/hrms/modules/onboarding_module/offer_leave/offer_letter_generation/offer_letter_generation.js'
+                    'resources/js/hrms/modules/onboarding_module/offer_letter/offer_letter_generation/offer_letter_generation.js',
+                    'resources/js/hrms/modules/onboarding_module/offer_letter/offer_letter_template/offer_letter_template.js'
+
+
+
             ],
+            define: {
+                'process.env':  process.env
+            },
             refresh: true,
         }),
     ],

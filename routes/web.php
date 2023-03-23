@@ -30,6 +30,10 @@ Route::get('/create-offer', function () {
 
 })->name('create-offer');
 
+Route::get('/offer-letter' , function () {
+    return view('offer_letter/View_OfferLetter');
+})->name('offer-letter');
+
 
 
 Route::get('/roles', function () {
