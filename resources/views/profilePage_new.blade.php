@@ -634,7 +634,7 @@
                                     <label>Department<span class="text-danger">*</span></label>
 
                                     <select class="form-select form-control" name="gender"
-                                        aria-label="Default select">
+                                        aria-label="Default select" id="selected_dep">
                                         <option selected hidden disabled>Choose Gender</option>
                                         @foreach ($allDepartments as $singleDepartment)
                                             <option value="{{ $singleDepartment->id }}"
@@ -1538,10 +1538,24 @@
         });
 
         $('#save_department').click(function() {
+            var department_id = $('#selected_dep').val();
 
-            let emp_id = "{{ $user_full_details->id }}";
+            let emp_id = "{{ $user_full_details->user_id }}";
 
-            console.log("Save dept button clicked");
+            $.ajax({
+                    url: "{{ route('profile-pages-updatedepartment') }}",
+                    type: 'POST',
+                    data: {
+                        emp_id : emp_id  ,
+                        department_id:department_id,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(data) {
+                        location.reload();
+                    }
+                   });
+
+
         });
 
         $('#save_reportingManager').click(function() {
