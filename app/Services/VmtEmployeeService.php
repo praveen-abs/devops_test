@@ -480,28 +480,6 @@ class VmtEmployeeService {
 
     }
 
-    // public function fileUpload($file, $emp_code)
-    // {
-
-    //     // dd( $file->file->getClientOriginalName());
-    //     if (!empty($file)) {
-    //         $docUploads =$file;
-    //         $docUploadsName = 'doc_' .$emp_code.'_'. $file . "_" . time() . '.' . $docUploads->getClientOriginalExtension();
-    //         dd(Storage::disk('private')->exists($emp_code));
-    //         $emp_document_path = Storage::disk('private');
-
-
-    //         //Upload the new file
-    //         $docUploads->storeAs($emp_code,$docUploadsName,'private');
-    //         //$docUploads->move($emp_document_path, $docUploadsName);
-    //         return $docUploadsName;
-    //     }
-    //     else
-    //     {
-    //         return "";
-    //     }
-    // }
-
     // Generate Employee Apoinment PDF after onboarding
     public function attachApoinmentPdf($employeeData)
     {
@@ -595,6 +573,100 @@ class VmtEmployeeService {
           }
 
         return $processed_date;
+    }
+
+
+    /*
+
+        Fetch all the documents uploaded by the employees.
+
+
+
+
+    */
+    function fetchAllEmployeesDocumentsAsGroups($sub_client_id){
+
+
+
+        $json_response = array();
+
+        //Fetch how many unique users for the given filters
+        //SELECT distinct user_id FROM `vmt_employee_reimbursements` where MONTH(date) = '3' AND YEAR(date) = '2023';
+        $array_unique_users = VmtEmployeeReimbursements::leftJoin('users','users.id','=','vmt_employee_reimbursements.user_id')
+                                ->whereYear('vmt_employee_reimbursements.date',$year)
+                                ->whereMonth('vmt_employee_reimbursements.date',$month)
+                                ->groupBy('user_code')
+                                ->select('vmt_employee_reimbursements.user_id as user_id','users.name as employee_name',
+                                'users.user_code as user_code',DB::raw('sum(distance_travelled) as total_distance_travelled'),
+                                DB::raw('sum(total_expenses) as total_total_expenses'));
+
+        if($status!=null){
+            $array_unique_users=$array_unique_users->where('vmt_employee_reimbursements.status', $status);
+        }
+        $array_unique_users=$array_unique_users->get();
+        foreach($array_unique_users as $single_user){
+
+            //dd($single_user->user_id);
+            $single_user_data["employee_name"] = $single_user->employee_name;
+            $single_user_data["user_code"] = $single_user->user_code;
+            $single_user_data["user_id"] = $single_user->user_id;
+            $single_user_data["total_distance_travelled"]=$single_user->total_distance_travelled;
+            $single_user_data["total_expenses"]=$single_user->total_total_expenses;
+
+
+            //Get all the reimbursement data for the given user_id
+            $reimbursement_data = VmtEmployeeReimbursements::where('user_id',$single_user->user_id)
+                                ->whereYear('vmt_employee_reimbursements.date',$year)
+                                ->whereMonth('vmt_employee_reimbursements.date',$month)
+                                ->where('reimbursement_type_id',$reimbursement_type_id)
+                                ->select('id','reimbursement_type_id','date','from','to','vehicle_type','distance_travelled','total_expenses','status');
+
+            if($status!=null){
+                $reimbursement_data = $reimbursement_data->where('vmt_employee_reimbursements.status', $status);
+            }
+            $reimbursement_data = $reimbursement_data->get();
+
+           foreach($reimbursement_data as $singledata){
+                if($singledata->status=='Pending'){
+                    $single_user_data["has_pending_reimbursements"] = "true";
+                    break;
+                }else{
+                    $single_user_data["has_pending_reimbursements"] = "false";
+                }
+                 //dd();
+           }
+            $single_user_data["overall_expenses"] = "0";    //TODO : Need to calculate the overall expenses
+              //TODO : Need to find if any pending reimbursement there for the given user.
+
+            //dd($reimbursement_data->toArray());
+            $single_user_data["reimbursement_data"] = $reimbursement_data->toArray();
+
+            //dd($single_user_data);
+
+            array_push($json_response, $single_user_data);
+
+        }
+
+        //dd($json_response);
+
+        return $json_response;
+
+    }
+
+    public function processEmployeeDocumentsBulkApprovals($data){
+        $reimbursement_data = $data['reimbursement_id']["reimbursement_data"];
+      //  dd( $reimbursement_data);
+             for($i=0;$i<count($reimbursement_data);$i++){
+                if($reimbursement_data[$i]['status']=='Pending'){
+                    VmtEmployeeReimbursements::where('id',$reimbursement_data[$i]['id'])
+                                            ->update([
+                                                'status' => $data['status']
+                                            ]);
+                }
+
+             }
+
+
     }
 
 }
