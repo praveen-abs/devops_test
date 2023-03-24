@@ -1,10 +1,10 @@
 <?php
-  
+
 namespace Database\Seeders;
-  
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-  
+
 class CountriesTableSeeder extends Seeder
 {
     /**
@@ -14,7 +14,7 @@ class CountriesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('countries_list')->insert([
+        DB::table('vmt_country')->insert([
             ['country_name' => 'Afghanistan', 'country_code' =>	'AF', 'dialing_code' => '+93', 'currency_name' => 'Afghan afghani ', 'currency_code' => 'AFN', 'timezone' => 'UTC+04:30 ', 'status' =>  'A'],
             ['country_name' => 'Aland Islands', 'country_code' =>	'AX', 'dialing_code' => '+358', 'currency_name' => 'Euro ', 'currency_code' => 'EUR', 'timezone' => '', 'status' =>  'A'],
             ['country_name' => 'Albania', 'country_code' =>	'AL', 'dialing_code' => '+355', 'currency_name' => 'Albanian lek ', 'currency_code' => 'ALL', 'timezone' => 'UTC+01:00 ', 'status' =>  'A'],
