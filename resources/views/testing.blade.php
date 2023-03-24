@@ -9,14 +9,14 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    @vite('resources/js/app.js')
+
 
 </head>
 <body>
-    <div id="app"></div>
+ <h6>IMAGE VIEW</h6>
+ <b>{{ $image_data }}</b>
+ <img src="data:image/png;base64,{{$base64 }}" />
+ <img src="{{$pathToFile}}"  />
 </body>
 </html>
 @endsection
