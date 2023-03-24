@@ -27,6 +27,12 @@ Route::get('/vuejs', function () {
 });
 
 
+Route::get('/create-holiday', function () {
+    return view('createHoliday');
+})->name('create-holiday');
+
+
+
 Route::middleware(['auth'])->group(function () {
 
     //Basic DB data
