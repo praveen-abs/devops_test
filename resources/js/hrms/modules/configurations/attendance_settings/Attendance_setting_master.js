@@ -27,9 +27,9 @@ import InputText from 'primevue/inputtext'
 import Row from 'primevue/row'
 import ColumnGroup from 'primevue/columngroup'
 
-import Att_AssignWorkShifts from '../configurations/attendance_settings/Att_AssignWorkShifts.vue'
+import Attendance_master from './Attendance_setting_Master.vue'
 
-const app = createApp(Att_AssignWorkShifts);
+const app = createApp(Attendance_master);
 
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
@@ -55,5 +55,5 @@ app.component('InputText', InputText);
 app.component('Dialog', Dialog);
 app.component('ProgressSpinner', ProgressSpinner)
 
-app.mount("#VJS_AttSettings_AssignWorkShifts");
+app.mount("#vjs_Attendance_master");
 

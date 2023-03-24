@@ -26,10 +26,13 @@ import ProgressSpinner from 'primevue/progressspinner';
 import InputText from 'primevue/inputtext'
 import Row from 'primevue/row'
 import ColumnGroup from 'primevue/columngroup'
+import Calendar from 'primevue/calendar';
+import FileUpload from 'primevue/fileupload';
 
-import Att_AssignWorkShifts from '../configurations/attendance_settings/Att_AssignWorkShifts.vue'
 
-const app = createApp(Att_AssignWorkShifts);
+import holiday_list from './Holidays_Lists.vue'
+
+const app = createApp(holiday_list);
 
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
@@ -54,6 +57,7 @@ app.component('Dropdown',Dropdown);
 app.component('InputText', InputText);
 app.component('Dialog', Dialog);
 app.component('ProgressSpinner', ProgressSpinner)
-
-app.mount("#VJS_AttSettings_AssignWorkShifts");
+app.component('Calendar' ,Calendar)
+app.component('FileUpload',FileUpload)
+app.mount("#VJS_holiday_list");
 
