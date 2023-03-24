@@ -59,7 +59,12 @@ Route::middleware(['auth'])->group(function () {
 
     })->name('isEmailExists');
 
-    Route::get('/isEmpCodeExists/{emp_code?}', function($emp_code){
+
+    Route::post('/profile-pages/updateReportingManager', [App\Http\Controllers\VmtProfilePagesController::class, 'updateReportingManager'])->name('profile-pages-update-reporting-mgr');
+    Route::post('/profile-pages/updateDepartment', [App\Http\Controllers\VmtProfilePagesController::class, 'updateDepartment'])->name('profile-pages-updatedepartment');
+
+
+    Route::get('/addDepartment/{emp_code?}', function($emp_code){
 
         return isEmpCodeExists($emp_code);
 
@@ -177,7 +182,7 @@ Route::get('/testing-file-upload', [App\Http\Controllers\VmtTestingController::c
 
 Route::post('/fileUploadingTest', [App\Http\Controllers\VmtTestingController::class, 'fileUploadingTest'])->name('fileUploadingTest');
 
-
+Route::get('/retrive-files', [App\Http\Controllers\VmtTestingController::class, 'retriveFiles'])->name('retriveFiles');
 // notifications
 Route::get('/notifications/{id}', [App\Http\Controllers\HomeController::class, 'delete'])->name('delete');
 

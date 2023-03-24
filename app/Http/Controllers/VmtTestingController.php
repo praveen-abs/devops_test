@@ -109,6 +109,15 @@ class VmtTestingController extends Controller
     //     }
     // }
 
+    public function retriveFiles(Request $request){
+        dd(Storage::disk('local')->getAdapter()->applyPathPrefix('\employee\emp_B090\documents'));
+        dd(Storage::disk('private')->path(''));
+        dd(Storage::disk('private')->getAdapter()->setprefixer());
+        dd(Storage::disk('private')->get('voterIdB090_21-03-2023 12-32-42.png'));
+         //dd(Storage::disk('private')->directories('employee/emp_B090') );
+       dd(Storage::disk('D:\Laravelworks\lara_abs_pms\storage\uploads\employee\emp_B090\documents')->exists('voterIdB090_21-03-2023 12-32-42.png'));
+    }
+
 
 }
 

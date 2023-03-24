@@ -84,14 +84,30 @@
                                                 {{ $user_full_details->work_location ?? '-' }}</p>
                                         </div>
                                         <div class="border-bottom-liteAsh py-2">
-                                            <p class="text-muted f-12 fw-bold">Department</p>
+                                            <p class="text-muted f-12 fw-bold">Department
+                                                @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
+                                                <a role="button" class="edit-icon" data-bs-toggle="modal"
+                                                data-bs-target="#edit_department"><i class="ri-pencil-fill"></i></a>
+                                                @endif
+                                            </p>
                                             <p class="text-primary-old f-15 fw-bold">
-                                                {{ $department ?? '-' }}</p>
+                                                {{ $department ?? '-' }}
+
+                                            </p>
                                         </div>
                                         <div class="border-bottom-liteAsh py-2">
-                                            <p class="text-muted f-12 fw-bold">Reporting To</p>
+                                            <p class="text-muted f-12 fw-bold">Reporting To
+                                                @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
+
+                                                <a role="button"
+                                                    class="edit-icon" data-bs-toggle="modal"
+                                                    data-bs-target="#edit_reportingManager"><i
+                                                        class="ri-pencil-fill"></i></a>
+                                                @endif
+                                                    </p>
                                             <p class="text-primary-old f-15 fw-bold">
                                                 {{ $user_full_details->l1_manager_name ?? '-' }}</p>
+
                                         </div>
                                     </div>
                                     <div class="profile-bottom-right-content  text-center ">
@@ -291,7 +307,7 @@
                                                     <tr>
                                                         <td>{{ $singledetail->name }}</td>
                                                         <td>{{ $singledetail->relationship }}</td>
-                                                        <td>{{ date('d-M-Y',strtotime($singledetail->dob)) }}</td>
+                                                        <td>{{ date('d-M-Y', strtotime($singledetail->dob)) }}</td>
                                                         <td>{{ $singledetail->phone_number }}</td>
                                                     </tr>
                                                 @endforeach
@@ -336,8 +352,8 @@
                                                         {{-- date('M-Y', strtotime($employee_payslip->PAYROLL_MONTH))) --}}
                                                         <td>{{ $info['company_name'] }}</td>
                                                         <td>{{ $info['job_position'] }}</td>
-                                                        <td>{{ date('d-M-Y',strtotime($info['period_from'])) }}</td>
-                                                        <td>{{date('d-M-Y',strtotime( $info['period_to'])) }}</td>
+                                                        <td>{{ date('d-M-Y', strtotime($info['period_from'])) }}</td>
+                                                        <td>{{ date('d-M-Y', strtotime($info['period_to'])) }}</td>
                                                     </tr>
                                                 @endforeach
                                             @endif
@@ -456,7 +472,8 @@
                                         <form action="" method="POST" enctype="multipart/form-data">
                                             <h6 class="">Statutory Information
                                                 <span class="personal-edit"><a href="#" class="edit-icon"
-                                                        data-bs-toggle="modal" data-bs-target="#statutory_info
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#statutory_info
                                                         "><i
                                                             class="ri-pencil-fill"></i></a></span>
                                             </h6>
@@ -524,7 +541,7 @@
                                                 </a>
                                             </li>
                                         </ul>
-                                         <div class="tab-content " id="pills-tabContent">
+                                        <div class="tab-content " id="pills-tabContent">
                                             <div class="tab-pane fade active show" id="pay_slips" role="tabpanel"
                                                 aria-labelledby="">
 
@@ -601,7 +618,7 @@
 
                                             </div>
 
-                                           </table>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
@@ -609,6 +626,93 @@
                         </div>
                     </div>
                 </div>
+
+
+
+                <div id="edit_department" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content profile-box">
+                            <div class="modal-header  ">
+                                <h6 class="modal-title">Edit Department
+                                </h6>
+                                <button type="button" class="close  border-0 h3" data-bs-dismiss="modal"
+                                    aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div>
+                                    <label>Department<span class="text-danger">*</span></label>
+
+                                    <select class="form-select form-control" name="gender" aria-label="Default select"
+                                        id="selected_dep">
+                                        <option selected hidden disabled>Choose Gender</option>
+                                        @foreach ($allDepartments as $singleDepartment)
+                                            <option value="{{ $singleDepartment->id }}"
+                                                @if (!empty($department) && $department == $singleDepartment->name) selected @endif>
+                                                {{ $singleDepartment->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="text-right">
+                                    <button class="btn btn-orange submit-btn" id="save_department">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div id="edit_reportingManager" class="modal custom-modal fade" style="display: none;"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content profile-box">
+                            <div class="modal-header  ">
+                                <h6 class="modal-title">Edit Reporting Manager
+                                </h6>
+                                <button type="button" class="close  border-0 h3" data-bs-dismiss="modal"
+                                    aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div>
+                                    <label>Manager Name<span class="text-danger">*</span></label>
+
+                                    <select class="form-select form-control" name="gender"
+                                        aria-label="Default select"id="selected_report_manager">
+                                        <option selected hidden disabled>Choose Reporting Manager</option>
+                                        @foreach ($allEmployees as $singleEmployee)
+                                            <option value="{{ $singleEmployee->user_code }}">
+                                                {{ $singleEmployee->user_code }} - {{ $singleEmployee->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="text-right">
+                                    <button class="btn btn-orange submit-btn" id="save_reportingManager">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
 
                 <div id="edit_profileImg" class="modal  custom-modal fade" style="display: none;" aria-hidden="true">
                     <div class="modal-dialog  modal-dialog-centered " role="document">
@@ -903,7 +1007,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <div class="family-addition-container">
+                                <div>
                                     @csrf
                                     @if (!empty($familydetails) && count($familydetails) > 0)
                                         @foreach ($familydetails as $singledetail)
@@ -975,13 +1079,13 @@
                                             <div class="card mb-3 addition-content" id="content1">
                                                 <div class="card-body">
                                                     <!-- <h3 class="card-title fw-bold">Education Informations <a href="javascript:void(0);"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    {{-- class="delete-icon"><i class="   ri-delete-bin-line"></i></a> --}}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                            </h3> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {{-- class="delete-icon"><i class="   ri-delete-bin-line"></i></a> --}}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </h3> -->
 
                                                     <div class="row ">
                                                         <div class="col-md-12 m-0 text-end">
                                                             <button
-                                                                class="btn text-danger delete-btn p-0 bg-transparent outline-none border-0 f-12 plus-sign"
+                                                                class="btn text-danger delete-btn-family p-0 bg-transparent outline-none border-0 f-12 plus-sign"
                                                                 type="button"><i
                                                                     class="f-12 me-1 fa text-danger  fa-trash"
                                                                     aria-hidden="true"></i>Delete
@@ -1025,6 +1129,7 @@
 
                                                 </div>
                                             </div>
+
                                         </div>
                                     @endif
                                 </div>
@@ -1108,8 +1213,7 @@
                                                         <div class="form-group mb-3 form-focus focused">
                                                             <div class="cal-icon">
                                                                 <label class="focus-label">Period To</label>
-                                                                <input type="date" max="9999-12-31"
-                                                                    name="period_to[]"
+                                                                <input type="date" max="9999-12-31" name="period_to[]"
                                                                     class="form-control floating datetimepicker"
                                                                     value="" required>
                                                             </div>
@@ -1445,6 +1549,46 @@
             console.log("ready!");
         });
 
+        $('#save_department').click(function() {
+            var department_id = $('#selected_dep').val();
+
+            let emp_id = "{{ $user_full_details->user_id }}";
+
+            $.ajax({
+                url: "{{ route('profile-pages-updatedepartment') }}",
+                type: 'POST',
+                data: {
+                    emp_id: emp_id,
+                    department_id: department_id,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(data) {
+                    location.reload();
+                }
+            });
+
+
+        });
+
+        $('#save_reportingManager').click(function() {
+            var manager_user_code = $('#selected_report_manager').val();
+            var current_user_id = '{{ $user_full_details->user_id }}';
+            console.log(current_user_id);
+
+            $.ajax({
+                url: "{{ route('profile-pages-update-reporting-mgr') }}",
+                type: 'POST',
+                data: {
+                    manager_user_code: manager_user_code,
+                    current_user_id: current_user_id,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(data) {
+                    location.reload();
+                }
+            });
+        });
+
 
 
         $('body').on('keyup', ".onboard-form", function() {
@@ -1526,10 +1670,30 @@
             if (id) {
                 length = parseInt(id.replace('content', '')) + 1;
             }
+
             $('.family-addition-container').append(' <div class="card mb-2  addition-content" id="content' +
                 length +
-                '"><div class="card-body"> <div class="row" > <div class="col-md-12 m-0 text-end"><button class="btn text-danger delete-btn p-0 bg-transparent outline-none border-0 f-12 plus-sign" type="button"><i class="f-12 me-1 fa text-danger  fa-trash" aria-hidden="true"></i>Delete</i></button></div><div class="col-md-6"><div class="form-group mb-3"><label>Name <span class="text-danger">*</span></label><input name="name[]" class="form-control onboard-form" type="text" pattern-data="name" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Relationship <span class="text-danger">*</span></label><input name="relationship[]" class="form-control onboard-form" type="text" pattern-data="alpha" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Date of birth <span class="text-danger">*</span></label><input name="dob[]" class="form-control onboard-form" type="date" max="9999-12-31" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Phone <span class="text-danger">*</span></label><input name="phone_number[]" class="form-control onboard-form" type="number" maxlength="10" minlength="10" required></div></div></div>'
+                '"><div class="card-body"> <div class="row" > <div class="col-md-12 m-0 text-end"><button class="btn text-danger delete-btn-family p-0 bg-transparent outline-none border-0 f-12 plus-sign" type="button"><i class="f-12 me-1 fa text-danger  fa-trash" aria-hidden="true"></i>Delete</i></button></div><div class="col-md-6"><div class="form-group mb-3"><label>Name <span class="text-danger">*</span></label><input name="name[]" class="form-control onboard-form" type="text" pattern-data="name" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Relationship <span class="text-danger">*</span></label><input name="relationship[]" class="form-control onboard-form" type="text" pattern-data="alpha" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Date of birth <span class="text-danger">*</span></label><input name="dob[]" class="form-control onboard-form" type="date" max="9999-12-31" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Phone <span class="text-danger">*</span></label><input name="phone_number[]" class="form-control onboard-form" type="number" maxlength="10" minlength="10" required></div></div></div>'
             );
+            //$('.family-addition-container').append('<h2>test</h2>');
+        });
+
+        $('.delete-btn-family').click(function(){
+//            console.log("Family Details : Deleting DIV id : "+parentDiV);
+            console.log("Family Details delete button clicked");
+
+            let parentDiv = $(this).parent().parent().parent().parent().attr('id');
+
+            //Remove the div
+            $('#'+parentDiv).remove();
+
+            //Need to put sweet alert for deleting data in backend
+
+
+
+
+            console.log("Family Details : Deleting DIV id : "+parentDiv);
+
         });
 
         // emergency contact
@@ -1936,7 +2100,7 @@
                     return this.value;
                 }).get();
 
-                var location = $('input[name="location[]"]').map(function() {
+                var t_location = $('input[name="location[]"]').map(function() {
                     return this.value;
                 }).get();
 
@@ -1959,7 +2123,7 @@
                     data: {
                         'ids[]': ids,
                         'company_name[]': company_name,
-                        'location[]': location,
+                        'location[]': t_location,
                         'job_position[]': job_position,
                         'period_from[]': period_from,
                         'period_to[]': period_to,
@@ -1971,6 +2135,7 @@
                             text: 'Experience Information Updated',
                             icon: 'success'
                         }).then((result) => {
+                            console.log("Experience Update status : "+result);
                             /* Read more about isConfirmed, isDenied below */
                             if (result.isConfirmed) {
                                 location.reload();
