@@ -42,8 +42,6 @@ class VmtProfilePagesController extends Controller
             ->leftjoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->where('users.id', $user->id)->first();
 
-        $department  = Department::find($user_full_details->department_id)->name;
-
         $familydetails = VmtEmployeeFamilyDetails::where('user_id',$user->id)->get();
         $statutory_info= VmtEmployeeStatutoryDetails::where('user_id',$user->id)->first();
 
@@ -60,7 +58,16 @@ class VmtProfilePagesController extends Controller
 
         $genderArray = array("Male", "Female", "Other");
         $bank = Bank::all();
-        $department = Department::find($user_full_details->department_id)->name;
+       // dd(Department::find($user_full_details->department_id)->name);
+       $department = Department::find($user_full_details->department_id);
+       if(!empty($department))
+           $department =  $department->name;
+       else
+           $department = "-";
+
+
+       $allDepartments = Department::all();
+
 
         //dd($maritalStatus);
         if (!empty($user_full_details->l1_manager_code))
@@ -68,7 +75,7 @@ class VmtProfilePagesController extends Controller
         else
             $reportingManager = null;
 
-        $allEmployees = User::where('user_code', '<>', $user->id)->where('active', 1)->get(['user_code', 'name']);
+        $allEmployees = User::where('id', '<>', $user->id)->where('is_ssa', 0)->where('active', 1)->get(['id','user_code', 'name']);
         $profileCompletenessValue  = calculateProfileCompleteness($user->id);
 
         //Payslip Tab
@@ -95,9 +102,42 @@ class VmtProfilePagesController extends Controller
 
 
         //dd($documents_filenames);
-        return view('profilePage_new', compact('user','department', 'documents_filenames', 'array_bloodgroup', 'enc_user_id', 'allEmployees', 'maritalStatus', 'genderArray', 'user_full_details', 'familydetails', 'exp', 'reportingManager', 'profileCompletenessValue', 'bank', 'data', 'employees', 'statutory_info'));
+        return view('profilePage_new', compact('user','department','allDepartments', 'documents_filenames', 'array_bloodgroup', 'enc_user_id', 'allEmployees', 'maritalStatus', 'genderArray', 'user_full_details', 'familydetails', 'exp', 'reportingManager', 'profileCompletenessValue', 'bank', 'data', 'employees', 'statutory_info'));
     }
 
+    public function updateReportingManager(Request $request){
+
+        $emp_id = $request->current_user_id;
+        $manager_code = $request->manager_user_code;
+        $manager_id = User::where('user_code', $manager_code)->get(['id','name'])->toArray();
+        $manager_name = $manager_id[0]['name'] ;
+        $manager_id =  $manager_id[0]['id'] ;
+        $manager_designation = VmtEmployeeOfficeDetails::where('user_id',  $manager_id)->pluck('designation')->first();
+        $query_EmpOfficeDetails = VmtEmployeeOfficeDetails::where('user_id', $emp_id)->first();
+        if(!empty($query_EmpOfficeDetails)){
+            $query_EmpOfficeDetails->l1_manager_code = $manager_code;
+            $query_EmpOfficeDetails->l1_manager_designation = $manager_designation;
+            $query_EmpOfficeDetails->l1_manager_name =  $manager_name;
+            $query_EmpOfficeDetails->save();
+        }
+
+        return redirect()->back();
+    }
+
+    public function updateDepartment(Request $request){
+
+        $emp_id = $request->emp_id;
+        $department_id = $request->department_id;
+
+        $query_EmpOfficeDetails = VmtEmployeeOfficeDetails::where('user_id', $emp_id)->first();
+
+        if($query_EmpOfficeDetails){
+            $query_EmpOfficeDetails->department_id = $department_id;
+            $query_EmpOfficeDetails->save();
+        }
+
+        return redirect()->back();
+    }
 
     public function updateGeneralInfo(Request $request) {
          //dd($request->all());

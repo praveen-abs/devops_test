@@ -11,6 +11,7 @@ export const Service = defineStore("Service", () => {
 
     // Variable Declarations
     const leave_data = reactive({
+        current_login_user:"",
         selected_leave: "",
         full_day_leave_date: "",
         half_day_leave_date: "",
@@ -24,6 +25,8 @@ export const Service = defineStore("Service", () => {
         permission_start_time: "",
         permission_total_time: "",
         permission_end_time: "",
+        compensatory_leaves:'',
+        compensatory_leaves_dates:"",
         selected_compensatory_leaves:"",
         compensatory_start_date:"",
         compensatory_total_days:"",
@@ -57,15 +60,7 @@ export const Service = defineStore("Service", () => {
 
 
      const selected_compensatory_leaves = ref();
-        const compensatory_leaves = ref([
-            { date: '20/02/2023', id: '156' },
-            { date: '25/02/2023', id: '157' },
-            { date: '2/02/2023', id: '158' },
-            // { date: '12/02/2023', id: '159' },
-            // { date: '09/02/2023', id: '160' }
-        ]);
-
-
+    //  const compensatory_leaves = ref([]);
 
 
     // Events
@@ -102,6 +97,11 @@ export const Service = defineStore("Service", () => {
         compensatory_format.value = false;
     };
     const dayCalculation = () => {
+
+
+
+
+
         if (custom_format.value == true) {
             if (
                 leave_data.custom_start_date.length < 0 ||
@@ -129,14 +129,15 @@ export const Service = defineStore("Service", () => {
             }
         }
 
-        let day1= new Date().toJSON().slice(0, 10);
-        console.log(day1);
-        var date1 = new Date(day1);
+        // Custom Day Calculations
+
+        let Custom_date= new Date().toJSON().slice(0, 10);
+        var Custom_date1 = new Date(leave_data.custom_start_date);
         console.log(leave_data.custom_start_date);
-        var date2 = new Date(leave_data.custom_end_date);
+        var custom_date2 = new Date(leave_data.custom_end_date);
         console.log(leave_data.custom_end_date);
         // To calculate the time difference of two dates
-        var Difference_In_Time = date2.getTime() - date1.getTime();
+        var Difference_In_Time = custom_date2.getTime() - Custom_date1.getTime();
         console.log("Differenece" + Difference_In_Time);
 
         // To calculate the no. of days between two dates
@@ -144,10 +145,32 @@ export const Service = defineStore("Service", () => {
             Difference_In_Time /
             (1000 * 60 * 60 * 24)
         ).toFixed(0);
-        let total = Difference_In_Days;
-        console.log(total);
-        leave_data.custom_total_days=parseInt(total)+1
+        let total_custom_days = Difference_In_Days;
+        console.log(total_custom_days);
+        leave_data.custom_total_days=parseInt(total_custom_days)+1
         console.log(leave_data.custom_total_days);
+
+        // Compensatory Calculation
+
+        var Compensatory_date1 = new Date(leave_data.compensatory_start_date);
+        console.log(leave_data.compensatory_start_date);
+        var Compensatory_date2 = new Date(leave_data.compensatory_end_date);
+        console.log(leave_data.compensatory_end_date);
+        // To calculate the time difference of two dates
+        var Difference_In_Time = Compensatory_date2.getTime() -Compensatory_date1.getTime();
+        console.log("Differenece" + Difference_In_Time);
+
+        // To calculate the no. of days between two dates
+        var Difference_In_Days = (
+            Difference_In_Time /
+            (1000 * 60 * 60 * 24)
+        ).toFixed(0);
+        let total_Compensatory_days = Difference_In_Days;
+        console.log(total_Compensatory_days);
+        leave_data.compensatory_total_days=parseInt(total_Compensatory_days)+1
+        console.log(leave_data.compensatory_total_days);
+
+
     };
 
     const time_difference = () => {
@@ -180,6 +203,11 @@ export const Service = defineStore("Service", () => {
             half_day_format.value = false;
             custom_format.value = false;
             TotalNoOfDays.value = false;
+            get_compensatroy_leaves();
+
+            leave_data.compensatory_leaves_dates=moment(leave_data.compensatory_leaves.emp_attendance_date).format(`dddd DD-MMM-YYYY`);
+            console.log("kn"+leave_data.compensatory_leaves.emp_attendance_date);
+
         } else if (leave_data.selected_leave == "Select") {
             compensatory_format.value = false;
             Permission_format.value = false;
@@ -195,6 +223,19 @@ export const Service = defineStore("Service", () => {
     };
 
 
+    const get_user=()=>{
+
+        data_checking.value=true
+
+        axios.get('/currentUser').then(res=>{
+             leave_data.current_login_user=res.data
+             data_checking.value=false
+        }).catch(err=>{
+            console.log(err);
+        })
+
+    }
+
 
 
     const get_leave_types=()=>{
@@ -203,6 +244,19 @@ export const Service = defineStore("Service", () => {
             console.log(res.data);
             leave_types.value=res.data
        })
+    }
+
+
+    const get_compensatroy_leaves=() =>{
+
+        let user_id= leave_data.current_login_user;
+        axios.get(`/fetch-employee-unused-compensatory-days/${user_id}`).then(res=>{
+            leave_data.compensatory_leaves=res.data
+
+
+        }).catch(res=>{
+            console.log(res);
+        })
     }
 
     // Request leave Events
@@ -261,17 +315,17 @@ export const Service = defineStore("Service", () => {
             leave_Request_data.leave_session="";
 
         }else
-        if(leave_data.selected_leave=='Compensatory Leave'){
+        if(leave_data.selected_leave.includes('Compensatory')){
              leave_Request_data.start_date=  moment(leave_data.compensatory_start_date).format('YYYY-MM-DD');
             leave_Request_data.end_date= moment(leave_data.compensatory_end_date).format('YYYY-MM-DD');
             leave_Request_data.no_of_days=leave_data.compensatory_total_days;
 
-            console.log(leave_data.selected_compensatory_leaves);
+            console.log( "Selected Compensatory Leaves:"+leave_data.selected_compensatory_leaves.emp_attendance_id);
 
             const  find_compensatory_id=Object.values(leave_data.selected_compensatory_leaves)
 
              find_compensatory_id.map(data=>{
-                let id=data.id
+                let id=data.emp_attendance_id
                 leave_Request_data.compensatory_leave_id.push(id)
                 console.log(leave_Request_data.compensatory_leave_id);
             })
@@ -303,7 +357,7 @@ export const Service = defineStore("Service", () => {
        else
        {
 
-        data_checking.value=true
+        // data_checking.value=true
         axios.post('/applyLeaveRequest',{
             "leave_request_date": leave_Request_data.leave_Request_date,
             "leave_type_name": leave_Request_data.leave_type_name,
@@ -312,7 +366,7 @@ export const Service = defineStore("Service", () => {
             "end_date": leave_Request_data.end_date,
             "no_of_days": leave_Request_data.no_of_days,
             "hours_diff": leave_Request_data.hours_diff,
-            "compesatory_leave_id" : leave_Request_data.compensatory_leave_id,
+            "compensatory_work_days_ids" : leave_Request_data.compensatory_leave_id,
             "notify_to": leave_Request_data.notify_to,
             "leave_reason": leave_Request_data.leave_reason,
         }).then(res=>{
@@ -352,7 +406,6 @@ export const Service = defineStore("Service", () => {
         data_checking,
         Email_Service,
         Email_Error,
-        compensatory_leaves,
         selected_compensatory_leaves,
 
 
@@ -365,7 +418,10 @@ export const Service = defineStore("Service", () => {
         Submit,
         dayCalculation,
         time_difference,
+        get_user,
         get_leave_types,
+        get_compensatroy_leaves,
+
 
         // Boolean values
         full_day_format,

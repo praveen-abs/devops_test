@@ -15,7 +15,7 @@ class Seeder_VmtMaritalStatus extends Seeder
      */
     public function run()
     {
-        DB::table('vmt_marital_status')->truncate();
+      
 
         DB::table('vmt_marital_status')->insert([
             ['name'=>'Unmarried'],

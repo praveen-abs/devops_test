@@ -146,7 +146,9 @@ class VmtAttendanceService{
         $map_comp_off_days = array();
 
         foreach($emp_comp_off_days as $singleDay){
-            $map_comp_off_days[ $singleDay["id"] ] = $singleDay["date"];
+            //$map_comp_off_days[ $singleDay["id"] ] = $singleDay["date"];
+            array_push($map_comp_off_days, array("emp_attendance_id" => $singleDay["id"],
+                                                 "emp_attendance_date" => $singleDay["date"]));
             //dd($singleDay["id"]);
         }
 

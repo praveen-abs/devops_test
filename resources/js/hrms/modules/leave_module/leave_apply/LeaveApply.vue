@@ -48,7 +48,7 @@
         </template>
 
         <div class="row ">
-            <div class="col-md-7 col-sm-12">
+            <div class="col-md-6 col-sm-12">
                 <div class="row mb-3">
                     <div class="col-md-12  col-sm-12 col-lg-4 col-xl-5 col-xxl-5  mb-md-0 mb-3">
                         <label for="">Choose Leave Type <span class="text-danger">*</span> </label>
@@ -68,14 +68,14 @@
                     </div>
                 </div>
                 <div v-if="service.TotalNoOfDays" class="row mb-3">
-                    <div class="col-md-6  col-sm-12 col-lg-4 col-xl-5 col-xxl-5  mb-md-0 mb-3">
+                    <div class="col-md-12  col-sm-12 col-lg-4 col-xl-5 col-xxl-5  mb-md-0 mb-3">
 
                         <label for="">No of Days<span class="text-danger">*</span>
                         </label>
 
 
                     </div>
-                    <div class="col-md-2  col-sm-12 col-lg-8 col-xl-6 col-xxl-6  mb-md-0 mb-3">
+                    <div class="col-md-12  col-sm-12 col-lg-8 col-xl-7 col-xxl-6  mb-md-0 mb-3">
                         <div class="form-check form-check-inline">
                             <input style="height: 20px;width: 20px;" class="form-check-input" type="radio" name="leave"
                                 id="full_day" value="full_day" v-model="service.leave_data.radiobtn_full_day"
@@ -154,7 +154,7 @@
 
                 <!-- Custom Leave -->
                 <div v-if="service.custom_format" class="row mb-3 ">
-                    <div class="col-md-1  col-sm-1 col-lg-3 col-xl-3 col-xxl-3  mb-md-0 mb-3">
+                    <div class="col-md-1  col-sm-1 col-lg-3 col-xl-4 col-xxl-3  mb-md-0 mb-3">
                         <div class="form-group">
                             <div class="floating">
 
@@ -168,7 +168,7 @@
 
                         </div>
                     </div>
-                    <div class="col-md-1  col-sm-1 col-lg-6 col-xl-3 col-xxl-5  mb-md-0 mb-3">
+                    <div class="col-md-1  col-sm-1 col-lg-6 col-xl-4 col-xxl-5  mb-md-0 mb-3">
                         <div class="form-group">
                             <div class="floating" style="text-align: center;">
 
@@ -181,7 +181,7 @@
 
                         </div>
                     </div>
-                    <div class="col-md-1 col-sm-1 col-lg-3 col-xl-3 col-xxl-3  mb-md-0 mb-3">
+                    <div class="col-md-1 col-sm-1 col-lg-3 col-xl-4 col-xxl-3  mb-md-0 mb-3">
                         <div class="form-group">
 
                             <div class="floating">
@@ -255,37 +255,45 @@
                     </div>
                     <div class="col-md-12  col-sm-12 col-lg-6 col-xl-6 col-xxl-6  mb-md-0 mb-3">
 
-                        <MultiSelect v-model="service.leave_data.selected_compensatory_leaves" display="chip" :options="service.compensatory_leaves" optionLabel="date" placeholder="Select worked date"
-                        :maxSelectedLabels="5" class="w-full md:full " />
+                        <MultiSelect v-model="service.leave_data.selected_compensatory_leaves" :options="service.leave_data.compensatory_leaves" optionLabel="emp_attendance_date" placeholder="Select worked Date" display="chip" class="w-full md:w-full" :maxSelectedLabels="5" >
+
+                            <template #footer>
+                                <div class="py-2 px-3">
+                                    <b>{{ service.leave_data.selected_compensatory_leaves ? service.leave_data.selected_compensatory_leaves.length : 0 }}</b> Date{{ (service.leave_data.selected_compensatory_leaves ? service.leave_data.selected_compensatory_leaves.length : 0) > 1 ? 's' : '' }} selected.
+                                </div>
+                            </template>
+                        </MultiSelect>
                         <p class="opacity-50 fs-10">(note:Worked dates will get expired after 60 days)</p>
                     </div>
-                    <div class="col-md-12  col-sm-12 col-lg-4 col-xl-4 col-xxl-3  mb-md-0 mb-3 ">
+                    <div class="col-md-4  col-sm-12 col-lg-4 col-xl-4 col-xxl-3  mb-md-0 mb-3 ">
                         <div class="col-md-12  col-sm-12 col-lg-12 col-xl-12 col-xxl-12">
                             <label for="" class="float-label">Start Date</label>
                         </div>
                         <div class="col-md-12  col-sm-12 col-lg-12 col-xl-12 col-xxl-12">
                             <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true"
-                              v-model="service.leave_data.compensatory_start_date" />
+                              v-model="service.leave_data.compensatory_start_date" :minDate="new Date()" />
                         </div>
                     </div>
 
+                    <div class="col-md-1  col-sm-1 col-lg-6 col-xl-4 col-xxl-5  mb-md-0 mb-3">
+                        <div class="form-group">
+                            <div class="floating" style="text-align: center;">
 
-                    <div class="col-md-12  col-sm-12 col-lg-3 col-xl-3 col-xxl-5  ">
+                                <label for="" class="float-label ">Total Days</label>
+                                <InputText style="width: 60px;text-align: center;margin: auto;"
+                                    class="form-onboard-form form-control  textbox  capitalize " type="text"
+                                    v-model="service.leave_data.compensatory_total_days" readonly />
 
-                        <div class="col-md-12  col-sm-12 col-lg-12 col-xl-12 col-xxl-12 text-center">
-                            <label for="" class="float-label ms-10">Total Days</label>
+                            </div>
+
                         </div>
-                        <div class="col-md-12  col-sm-12 col-lg-2 col-xl-2 col-xxl-2 m-auto" >
-                            <InputText style="min-width: 60px" class=" form-control " v-model="service.leave_data.compensatory_total_days"  type="text" readonly/>
-                        </div>
-
                     </div>
-                    <div class="col-md-12  col-sm-12 col-lg-4 col-xl-4 col-xxl-3 mb-3">
+                    <div class="col-md-4  col-sm-12 col-lg-4 col-xl-4 col-xxl-3 mb-3">
                         <div class="col-md-12  col-sm-12 col-lg-12 col-xl-12 col-xxl-12">
                             <label for="" class="float-label">End Day</label>
                         </div>
                         <div class="col-md-12  col-sm-12 col-lg-12 col-xl-12 col-xxl-12">
-                            <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true" v-model="service.leave_data.compensatory_end_date"  />
+                            <Calendar @date-select="service.dayCalculation" inputId="icon" dateFormat="dd-mm-yy" :showIcon="true" v-model="service.leave_data.compensatory_end_date" :minDate="new Date()"   />
                         </div>
                     </div>
                 </div>
@@ -320,8 +328,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-5 col-lg-5 col-sm-12 ">
-                <div class="col-lg-12  ">
+            <div class="col-md-6 col-lg-5 col-sm-12 ">
+                <div class="col-lg-12 col-md-12  ">
                     <Calendar :inline="true" :showWeek="true" style="min-width:100%" />
                 </div>
                 <div class="text-center mt-6 ">
@@ -365,6 +373,7 @@ const service = Service()
 onMounted(() => {
 
 
+    service.get_user()
     service.get_leave_types()
     service.leave_data.custom_start_date = new Date()
     service.leave_data.permission_start_time = new Date()
