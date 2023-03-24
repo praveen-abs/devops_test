@@ -16,11 +16,6 @@
                                     <router-link class="text-white" to="/offer_letter_generation">
                                         Create offer</router-link>
                                 </button>
-
-                                <!-- <a href="{{ route('create-offer') }}" class="btn btn-orange">
-                                    <i class=" fa fa-plus-circle me-1"></i>
-                                        <router-link to="/offer_letter_generation">link</router-link> Create
-                                    Offer</a> -->
                             </div>
                         </div>
                         <div id="offerletter_pending" class="" style=""></div>
@@ -141,4 +136,27 @@ function getProductDetails() {
 
 
 
+
 </script>
+
+
+<style >
+
+
+.p-datatable .p-datatable-thead>tr>th {
+    text-align: center;
+    padding: 1.3rem 1rem;
+    border: 1px solid #dee2e6;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-width: 0 0 1px 0;
+    font-weight: 600;
+    color: #fff;
+    background: #003056;
+    transition: box-shadow 0.2s;
+    font-size: 13px;
+}
+
+</style>

@@ -9,7 +9,7 @@
   @vite('resources/js/hrms/modules/onboarding_module/offer_letter/offer_letter_generation/offer_letter_generation.js')
      <div id="OfferLetter"></div>
    @endsection
-<!--
+
 @section('script')
   <script>
         $(document).ready(function() {
@@ -24,4 +24,4 @@
 
         })
     </script>
-@endsection -->
+@endsection

@@ -2,13 +2,13 @@
     <div class="offer-letter-wrapper mt-30">
         <div class="card">
             <div class="card-body mx-5">
-                <!-- <div class="no-data-wrapper text-center mx-auto col-lg-5" id="">
+                <div class="no-data-wrapper text-center mx-auto col-lg-5" id="">
                     <img alt="no-data" id="" src="{{ URL::asset('assets/images/svg/offer-noData.svg') }}" />
                     <a target="_self" id="create_offer" role="button" href="#" class="btn btn-orange"><i
                             class="fa fa-plus-circle me-1" aria-hidden="true"></i> Create Offer</a>
-                </div> -->
+                </div>
 
-                <div class="crate-offer-content" id="createOffer_content">
+                <div class="crate-offer-content" id="createOffer_content" style="display: none;">
                     <div class="row mb-3">
                         <div class="col-xl-6 col-sm-6 col-lg-6 col-md-6 col-xxl-6 ">
                             <p class="text-muted fs-16 font-medium">Offer letter generation</p>
@@ -158,8 +158,8 @@
                             <div class="bulk-offer-content">
                             </div>
                         </div>
-                        <div class="col-xl-6 col-sm-12  col-lg-6 col-md-6 mb-3 col-xxl-6 ">
 
+                        <div class="col-xl-6 col-sm-12  col-lg-6 col-md-6 mb-3 col-xxl-6 ">
                             <div class="card mb-3 mt-4  m-auto bg-lite-gray offer-view-content">
 
                             <div class="flex gap-2 mx-4 my-4">
@@ -210,7 +210,7 @@
 
                             <a href="/offer-letter" role="button"
                                 class="btn btn-border-primary me-3">Save</a>
-                            <button class="btn btn-dark me-3">Preview</button>
+                            <button class="btn btn-dark me-3" @click="RequiredField=true">Preview</button>
                             <button class="btn btn-orange me-3">Send to candidate</button>
                         </div>
                     </div>
@@ -221,12 +221,65 @@
     </div>
 
 
+    <Dialog :style="{ width: '50vw' }" header="Offer Letter Preview" :modal="true" v-model:visible="RequiredField">
+        <div class="w-full">
+            <div class="card mb-3 mt-4  m-auto bg-lite-gray offer-view-content">
+
+            <div class="flex gap-2 mx-4 my-4">
+                <p class="text-red-600 my-1">[Date,Month,Year]</p>
+                <p>[]</p>
+            </div>
+
+            <div class="mx-4 my-4 text-black">
+                <p v-if="offer.candidate_details.candidate_name == ''" class="text-red-600 my-1">Employeee Name</p>
+                <p  v-else class="text-red-600 my-1">{{offer.candidate_details.candidate_name}}</p>
+                <p class="text-red-600 my-1">Address line 1</p>
+                <p class="text-red-600 my-1">Address line 2</p>
+                <p class="text-red-600 my-1">[City][State][Pincode]</p>
+
+            </div>
+
+            <div class="mx-4 my-4">
+                <p v-if="offer.role_details.designation == ''" class="text-lg font-bold text-black">Subject:Appointment for post of [Designation]</p>
+                <p v-else class="text-lg font-bold text-black">Subject:Appointment for post of <strong class="text-red-600 text-2xl font-bold">{{offer.role_details.designation}}</strong></p>
+            </div>
+
+            <div class="mx-4 my-2">
+                <p><strong class="font-bold text-lg text-black">Commencement of employment</strong></p>
+                <p>Your employment will be effective as of [Starting date,month,year]</p>
+            </div>
+            <div class="mx-4 my-2">
+                <p><strong class="font-bold text-lg text-black">Job title</strong></p>
+                <p>Your job will be [Designation], and you will report to [Mr.][name],[supervisor][Designation]</p>
+            </div>
+            <div class="mx-4 my-2">
+                <p><strong class="font-bold text-lg text-black">Salary</strong></p>
+                <p>Your salary and other benefits will be set out in schedule 1,here to.</p>
+            </div>
+            <div class="mx-4 my-2">
+                <p><strong class="font-bold text-lg text-black">Place of posting</strong></p>
+                <p>You will be posted at [city,state],you may however be required to work at any place of business which the company has,or may later acquire.</p>
+            </div>
+            <div class="mx-4 my-2">
+                <p><strong class="font-bold text-lg text-black">Hour of Work </strong></p>
+                <p>The normal workings days are[Start day ]through [end day].You will be required to work for such hours as necessary for the proper discharge of your duties to the company.The normal workings hours are from [start] to [end] and you are</p>
+            </div>
+
+            </div>
+        </div>
+  </Dialog>
+
+
 
 </template>
 
 
 <script setup>
+import { ref } from 'vue'
 import {offer_letter} from '../offer_letter_service'
+
+
+const RequiredField=ref(false)
 
 const offer  = offer_letter()
 </script>

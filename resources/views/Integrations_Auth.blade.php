@@ -23,14 +23,15 @@
                     <li class="nav-item text-muted mx-4" role="presentation">
                         <a class="nav-link  pb-2" data-bs-toggle="tab" href="#bank_tab" aria-selected="true" role="tab">
                             Bank
-                            @vite('resources/js/hrms/modules/configurations/integration_auth/integration_auth.js')
-                        <div id=""integration></div>
+
                         </a>
                     </li>
                 </ul>
             </div>
         </div>
-
+        @vite('resources/js/hrms/modules/configurations/integration_auth/integration_auth.js')
+                          <div id="integration"></div>
+<!--
         <div class="card">
             <div class="card-body">
                 <div class="tab-content" id="pills-tabContent">
@@ -265,7 +266,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <div class="modal fade" id="integrate_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="staticBackdropLabel" aria-hidden="true">
