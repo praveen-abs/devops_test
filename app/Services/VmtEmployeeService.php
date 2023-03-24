@@ -473,8 +473,8 @@ class VmtEmployeeService {
         }else{
             $date=date('d-m-Y H-i-s');
             $fileName = $filename.$emp_code.'_'.$date.'.'.$fileObject->extension();
-            $path='employee/emp_'.$emp_code.'/documents';
-            $filePath = $fileObject->storeAs($path,$fileName, 'private');
+           // $path='employee_documents/'.$emp_code;
+            $filePath = $fileObject->move(public_path('employee_documents/'.$emp_code),$fileName);
             return $fileName;
         }
 
