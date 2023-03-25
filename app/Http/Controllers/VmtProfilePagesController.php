@@ -197,6 +197,7 @@ class VmtProfilePagesController extends Controller
     }
     public function updateFamilyInfo(Request $request)
     {
+        //dd($request->all());
 
         $familyDetails = VmtEmployeeFamilyDetails::where('user_id', $request->id)->delete();
 

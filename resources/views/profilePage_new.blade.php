@@ -280,9 +280,15 @@
                         <div class="card mb-2">
                             <div class="card-body">
                                 <h6 class="">Family Information
-                                    <span class="personal-edit"><a href="#" class="edit-icon"
-                                            data-bs-toggle="modal" data-bs-target="#edit_familyInfo"><i
-                                                class="ri-pencil-fill"></i></a></span>
+                                    <!-- <span class="personal-edit">
+                                        <a href="#" class="edit-icon"
+                                            data-bs-toggle="modal" data-bs-target="#edit_familyInfo">
+
+                                            </a>
+                                    </span> -->
+                                    <button type="button" class="btn_txt edit-icon" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                            <i class="ri-pencil-fill"></i>
+                                            </button>
                                 </h6>
 
                                 <div class="table-responsive">
@@ -1087,71 +1093,49 @@
                                             </div>
                                         @endforeach
 
-                                        <div class="add-more text-end mb-2" style="cursor:pointer;">
-                                            {{-- <div id="add_more" class="text-primary-old  cursor-pointer">
-                                        <i class=" ri-add-circle-fill"></i> Add More
-                                    </div> --}}
-                                            <button id="add_more"
-                                                class="btn text-primary-old p-0 bg-transparent outline-none border-0 f-12 plus-sign"
-                                                type="button"><i class="f-12 me-1 fa  fa-plus-circle"
-                                                    aria-hidden="true"></i>Add
-                                                More</i></button>
-                                        </div>
-                                    @else
-                                        <div class="family-addition-container">
-                                            <div class="card mb-3 addition-content" id="content1">
-                                                <div class="card-body">
-                                                    <!-- <h3 class="card-title fw-bold">Education Informations <a href="javascript:void(0);"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {{-- class="delete-icon"><i class="   ri-delete-bin-line"></i></a> --}}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </h3> -->
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        @else
+                            @foreach ($familydetails as $singledetail)
 
-                                                    <div class="row ">
-                                                        <div class="col-md-12 m-0 text-end">
-                                                            <button
-                                                                class="btn text-danger delete-btn-family p-0 bg-transparent outline-none border-0 f-12 plus-sign"
-                                                                type="button"><i
-                                                                    class="f-12 me-1 fa text-danger  fa-trash"
-                                                                    aria-hidden="true"></i>Delete
-                                                                </i></button>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form-group mb-3">
-                                                                <label>Name<span class="text-danger">*</span></label>
-                                                                <input name="name[]" class="form-control onboard-form"
-                                                                    type="text" pattern-data="name" required
-                                                                    value="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form-group mb-3">
-                                                                <label>Relationship <span
-                                                                        class="text-danger">*</span></label>
-                                                                <input name="relationship[]"
-                                                                    class="form-control onboard-form" type="text"
-                                                                    pattern-data="alpha" required value="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form-group mb-3">
-                                                                <label>Date of birth <span
-                                                                        class="text-danger">*</span></label>
-                                                                <input name="dob[]" class="form-control onboard-form"
-                                                                    type="date" max="9999-12-31" required
-                                                                    value="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form-group ">
-                                                                <label>Phone <span class="text-danger">*</span></label>
-                                                                <input name="phone_number[]"
-                                                                    class="form-control onboard-form" type="number"
-                                                                    maxlength="10" minlength="10" required
-                                                                    value="">
-                                                            </div>
-                                                        </div>
-
+                                <div class="modal-body" id="ul_id">
+                                    <div class="input-card">
+                                        <button id="delete_Btn" class="delete_btn text-danger">
+                                            <i class="f-12 me-1 fa text-danger  fa-trash"aria-hidden="true"></i>
+                                        Delete </button>
+                                        <ul>
+                                            <li>
+                                                <div class="space-between">
+                                                    <div class="input_text flex-col">
+                                                    <span>Name <span class="text-danger">*</span></span>
+                                                    <input type="text" name="familyDetails_Name[]" pattern-data="name"
+                                                     value="{{ $singledetail->name }}" required  >
+                                                    </div>
+                                                    <div class="input_text flex-col">
+                                                    <span>Relationship<span class="text-danger">*</span></span>
+                                                    <input type="text" name="familyDetails_Relationship[]"  pattern-data="alpha"
+                                                    value="{{ $singledetail->relationship }}" required >
+                                                    </div>
                                                 </div>
-                                            </div>
+                                                <div class="space-between M-T">
+                                                    <div class="input_text flex-col">
+                                                    <span>Date of birth <span class="text-danger">*</span></span>
+                                                    <input type="date"  name="familyDetails_dob[]"
+                                                    value="{{ date('Y-m-d', strtotime($singledetail->dob)) }}"  min="2000-01-02">
+                                                    </div>
+
+                                                    <div class="input_text flex-col">
+                                                    <span>Phone<span class="text-danger">*</span></span>
+                                                    <input type="number"   minlength="10" maxlength="10" name="familyDetails_phoneNumber[]" value="{{ $singledetail->phone_number }}">
+                                                    </div>
+                                                </div>
+
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
 
                                         </div>
                                     @endif
@@ -1563,6 +1547,9 @@
 
             console.log("ready!");
         });
+
+
+
 
         $('#save_department').click(function() {
             var department_id = $('#selected_dep').val();
@@ -2057,51 +2044,6 @@
         });
 
         $(document).ready(function() {
-            $("#btn_submit_family_info").on('click', function(e) {
-                e.preventDefault();
-
-                var name = $('input[name="name[]"]').map(function() {
-                    return this.value;
-                }).get();
-
-                var relationship = $('input[name="relationship[]"]').map(function() {
-                    return this.value;
-                }).get();
-
-                var dob = $('input[name="dob[]"]').map(function() {
-                    return this.value;
-                }).get();
-
-                var phone_number = $('input[name="phone_number[]"]').map(function() {
-                    return this.value;
-                }).get();
-
-
-                $.ajax({
-                    url: "{{ route('updateFamilyInfo', $user->id) }}",
-                    type: 'POST',
-                    data: {
-                        'name[]': name,
-                        'relationship[]': relationship,
-                        'dob[]': dob,
-                        'phone_number[]': phone_number,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(data) {
-                        Swal.fire({
-                            text: 'Family Information Updated',
-                            icon: 'success'
-                        }).then((result) => {
-                            /* Read more about isConfirmed, isDenied below */
-                            if (result.isConfirmed) {
-                                location.reload();
-                            }
-                        })
-                    }
-
-                });
-
-            });
         });
 
         $(document).ready(function() {
@@ -2308,6 +2250,160 @@
                 //     }
                 // });
             });
+
+            // new code---->
+
+
+            $(document).ready(function(){
+              $("#Add_More").click(function(){
+                // $("#ul_id").append(`<li class="list">${$("#val").val()}<button id="delete"><i class="fa-solid fa-xmark" ></i></button</li>`);
+                  $("#ul_id").append(
+                    ` <div class="input-card">
+                    <button id="delete_Btn" class="delete_btn text-danger">
+                          <i class="f-12 me-1 fa text-danger  fa-trash"aria-hidden="true"></i>
+                          Delete
+                    </button>
+          <ul >
+            <li>
+              <div class="space-between">
+                <div class="input_text flex-col">
+                  <span>Name <span class="text-danger">*</span></span>
+                  <input type="text" name="familyDetails_Name[]">
+                </div>
+                <div class="input_text flex-col">
+                  <span>Relationship<span class="text-danger">*</span></span>
+                  <input type="text" name="familyDetails_Relationship[]">
+                </div>
+              </div>
+              <!--  -->
+              <!--  -->
+
+              <!--  -->
+              <div class="space-between M-T">
+                <div class="input_text flex-col">
+                  <span>Date of birth <span class="text-danger">*</span></span>
+                  <input type="date" id="datemin" name="familyDetails_dob[]"  min="2000-01-02">
+                </div>
+                <!--  -->
+                <div class="input_text flex-col">
+                  <span>phone<span class="text-danger">*</span></span>
+                  <input type="number" name="familyDetails_phoneNumber[]"  minlength="10" maxlength="10">
+                </div>
+              </div>
+              <!--  -->
+            </li>
+          </ul>
+        </div>`
+                  );
+
+              });
+             });
+
+
+             $("#submit_button_family_details").click(function(){
+
+                // // console.log("hello world");
+                // Swal.fire({
+                //                 position: 'center',
+                //                 icon: 'success',
+                //                 title: 'Family Information Updated',
+                //                 showConfirmButton: false,
+                //                 timer: 1500
+                //                 }).then((result) => {
+                //             /* Read more about isConfirmed, isDenied below */
+                //             if (result.isConfirmed) {
+                //                 location.reload();
+                //             }
+                //         })
+
+                let test = $("input[name='familyDetails_Name[]'").map(function(){return $(this).val();}).get();
+                console.log("hello world : "+test);
+
+
+
+                var name = $('input[name="familyDetails_Name[]"]').map(function() {
+                    return this.value;
+                }).get();
+
+                var relationship = $('input[name="familyDetails_Relationship[]"]').map(function() {
+                    return this.value;
+                }).get();
+
+                var dob = $('input[name="familyDetails_dob[]"]').map(function() {
+                    return this.value;
+                }).get();
+
+                var phone_number = $('input[name="familyDetails_phoneNumber[]"]').map(function() {
+                    return this.value;
+                }).get();
+
+
+                $.ajax({
+                    url: "{{ route('updateFamilyInfo', $user->id) }}",
+                    type: 'POST',
+                    data: {
+                        'name[]': name,
+                        'relationship[]': relationship,
+                        'dob[]': dob,
+                        'phone_number[]': phone_number,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(data) {
+                        // Swal.fire({
+                        //     text: 'Family Information Updated',
+                        //     icon: 'success'
+                        // })
+                            Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Your work has been saved',
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then((result) => {
+                            /* Read more about isConfirmed, isDenied below */
+                                location.reload();
+                        })
+                    }
+
+
+
+                });
+
+             });
+
+
+
+
+             $(document).on('click','#delete_Btn',function(){
+                            $(this).parent().remove();
+              })
+            $(".delete_btn").click(function(){
+                console.log("logg");
+                Swal.fire({
+                          title: 'Are you sure?',
+                          text: "You won't be able to revert this!",
+                          icon: 'warning',
+                          showCancelButton: true,
+                          confirmButtonColor: '#3085d6',
+                          cancelButtonColor: '#d33',
+                          confirmButtonText: 'Yes, delete it!',
+                          }).then((result) => {
+                          if (result.isConfirmed) {
+                          Swal.fire(
+                          'Deleted!',
+                          'Your file has been deleted.',
+                          'success'
+                          )
+                          }
+                          })
+            })
+
+
+
         });
     </script>
+
+    <style>
+
+</style>
 @endsection

@@ -225,11 +225,11 @@ export const Service = defineStore("Service", () => {
 
     const get_user=()=>{
 
-        data_checking.value=true
+        // data_checking.value=true
 
         axios.get('/currentUser').then(res=>{
-             leave_data.current_login_user=res.data
-             data_checking.value=false
+             leave_data.current_login_user=res.data;
+             data_checking.value=false;
         }).catch(err=>{
             console.log(err);
         })

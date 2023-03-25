@@ -10,37 +10,43 @@ export default defineConfig({
         laravel({
             input: [
 
-                    'resources/js/app.js',
+                'resources/js/app.js',
 
-                    // Leaves
-                    'resources/js/hrms/modules/leave_module/leave_apply/LeaveApply.js',
-                    'resources/js/hrms/modules/leave_module/org_leave_module/OrgLeaveBalance.js',
-                    'resources/js/hrms/modules/leave_module/org_leave_module/OrgLeaveHistoryTable.js',
+                // Leaves
+                'resources/js/hrms/modules/leave_module/leave_apply/LeaveApply.js',
+                'resources/js/hrms/modules/leave_module/org_leave_module/OrgLeaveBalance.js',
+                'resources/js/hrms/modules/leave_module/org_leave_module/OrgLeaveHistoryTable.js',
 
-                    'resources/js/hrms/modules/leave_module/team_leave_module/TeamLeaveBalance.js',
-                    //Reports
-                    'resources/js/hrms/modules/reports/pms/PMSFormsDownloadTable.js',
+                'resources/js/hrms/modules/leave_module/team_leave_module/TeamLeaveBalance.js',
+                //Reports
+                'resources/js/hrms/modules/reports/pms/PMSFormsDownloadTable.js',
 
-                    //Organization Module
+                //Organization Module
 
-                    'resources/js/hrms/modules/Organization/Normal_Onboarding/NormalOnboarding.js',
+                'resources/js/hrms/modules/Organization/Normal_Onboarding/NormalOnboarding.js',
 
-                    // Approval Module
-                    'resources/js/hrms/modules/approvals/att_regularization/AttRegularizationApproval.js',
-                    'resources/js/hrms/modules/approvals/reimbursements/ReimbursementsApproval.js',
-                    'resources/js/hrms/modules/approvals/leaves/LeaveApproval.js',
-                    'resources/js/hrms/modules/approvals/pms/PMSApprovalTable.js',
-                    'resources/js/hrms/modules/profile_pages/EmployeeDocumentsManager.js',
+                // Approval Module
+                'resources/js/hrms/modules/approvals/att_regularization/AttRegularizationApproval.js',
+                'resources/js/hrms/modules/approvals/reimbursements/ReimbursementsApproval.js',
+                'resources/js/hrms/modules/approvals/onboarding/review_document.js',
+                'resources/js/hrms/modules/approvals/leaves/LeaveApproval.js',
+                'resources/js/hrms/modules/approvals/pms/PMSApprovalTable.js',
+                'resources/js/hrms/modules/profile_pages/EmployeeDocumentsManager.js',
 
-                    ////Reimbursements Module
-                    //Employee Reimbursements
-                    'resources/js/hrms/modules/reimbursements/employee_reimbursements/EmployeeReimbursements.js',
 
-                    //Holidays
-                    'resources/js/hrms/modules/holidays/Holidays_MasterList.js',
-                    'resources/js/hrms/modules/holidays/Holidays_Lists.js',
+                ////Reimbursements Module
+                //Employee Reimbursements
+                'resources/js/hrms/modules/reimbursements/employee_reimbursements/EmployeeReimbursements.js',
 
-                    //Configurations
+                //Configurations
+
+                'resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_master.js',
+
+                // Assign Shift
+                'resources/js/hrms/modules/configurations/attendance_settings/Att_AssignWorkShifts.js',
+
+                //Holidays
+                'resources/js/hrms/modules/configurations/holidays/Holidays_Lists.js',
 
                     'resources/js/hrms/modules/configurations/attendance_settings/Att_AssignWorkShifts.js',
 

@@ -600,4 +600,5 @@ const getSeverity = (status) => {
 .pi-sort-amount-up-alt::before {
     content: "\e9a2";
     color: white;
-}</style>
+}
+</style>
