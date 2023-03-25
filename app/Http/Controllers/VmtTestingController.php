@@ -24,32 +24,28 @@ class VmtTestingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    // public function index()
-    // {
 
-    //     $generalInfo = VmtGeneralInfo::first();
 
-    //     // $month = $request->selectedPaySlipMonth;
-    //     $data= VmtEmployeePaySlip::where([
-    //                 ['user_id','=', auth()->user()->id],
+     /*
+        Download private file.
 
-    //                 ])->first();
-    //       //dd($data);
-    //     // return view('vmt_payslipTemplate', $data);
-    //     // download PDF file with download method
-    //     // $pdf = new Dompdf();
-    //     $html =  view('testing', $data);
-    //     // $pdf->loadHtml($html, 'UTF-8');
-    //     // $pdf->setPaper('A4', 'portrait');
-    //     // $pdf->render();
-    //     // $filename = $data['employee']->Rename;
-    //     // return $pdf->stream($filename, ["Attachment" => false]);
-    //     // dd($html);
+     */
+    public function downloadPrivateFile(){
+        $private_file = "employee/emp_B090/documents/voterIdB090_22-03-2023 15-47-22.jpg";
 
-    //     // return $pdf->download($data['employee']->Rename.'.pdf');
-    //     return $html;
-    // }
+        //dd(Storage::disk('private')->allFiles());
+        return Storage::disk('private')->download($private_file);
+    }
 
+    /*
+       View private file such as image
+
+    */
+    public function viewPrivateFile(){
+        $private_file = "employee/emp_B090/documents/voterIdB090_22-03-2023 15-47-22.jpg";
+
+        return response()->file(storage_path('uploads/'.$private_file));
+    }
 
     public function testingpdf(){
         $client_name='brandavatar';
