@@ -22,14 +22,14 @@
                     <span>Jan1 (sunday)</span>
                 </div>
                 <div class="card  clr-trans card-w">
-                    <img src="../../../../../images/holiday/photo_2023-03-22_11-14-58.jpg" class="card-img-top" alt="...">
+                    <!-- <img src="../../../../../images/holiday/photo_2023-03-22_11-14-58.jpg" class="card-img-top" alt="..."> -->
                     <div class="overlay"></div>
                     <div class="hover_btn_div d-ard">
                         <Button label="Edit" @click="visible = true">
                             Edit
                             <Dialog v-model:visible="visible" modal header="Holiday " :style="{ width: '25vw'  }" class="popup_card">
                                 <div class="img_container">
-                                    <img src=".//../../../../../images/holiday/Holi.jpg" alt="" class="card-img">
+                                    <!-- <img src=".//../../../../../images/holiday/Holi.jpg" alt="" class="card-img"> -->
                                 </div>
                                 <div class="card-title">
                                     <div class="flex flex-column gap-2 mt-5">
@@ -63,7 +63,7 @@
                     <span>May1 (sunday)</span>
                 </div>
                 <div class="card  clr-trans card-w">
-                    <img src="../../../../../images/holiday/May_day.jpg" class="card-img-top" alt="...">
+                    <!-- <img src="../../../../../images/holiday/May_day.jpg" class="card-img-top" alt="..."> -->
 
                     <div class="overlay"></div>
                     <div class="hover_btn_div d-ard">
@@ -71,7 +71,7 @@
                             Edit
                             <Dialog v-model:visible="visible" modal header="Holiday " :style="{ width: '25vw' }">
                                 <div class="img_container">
-                                    <img src=".//../../../../../images/holiday/Holi.jpg" alt="" class="card-img">
+                                    <!-- <img src=".//../../../../../images/holiday/Holi.jpg" alt="" class="card-img"> -->
                                     <div class="formgrid">
                                     <input  type="file" id="upload"
                                         hidden />
@@ -112,14 +112,14 @@
                     <span>Jan1 (sunday)</span>
                 </div>
                 <div class="card  clr-trans card-w">
-                    <img src="../../../../../images/holiday/photo_2023-03-22_11-14-58.jpg" class="card-img-top" alt="...">
+                    <!-- <img src="../../../../../images/holiday/photo_2023-03-22_11-14-58.jpg" class="card-img-top" alt="..."> -->
                     <div class="overlay"></div>
                     <div class="hover_btn_div d-ard">
                         <Button label="Edit" @click="visible = true">
                             Edit
                             <Dialog v-model:visible="visible" modal header="Holiday " :style="{ width: '25vw' }">
                                 <div class="img_container">
-                                    <img src=".//../../../../../images/holiday/Holi.jpg" alt="" class="card-img">
+                                    <!-- <img src=".//../../../../../images/holiday/Holi.jpg" alt="" class="card-img"> -->
                                 </div>
                                 <div class="card-title">
                                     <div class="flex flex-column gap-2 mt-5">
@@ -153,14 +153,14 @@
                     <span>Jan1 (sunday)</span>
                 </div>
                 <div class="card  clr-trans card-w">
-                    <img src="../../../../../images/holiday/photo_2023-03-22_11-14-58.jpg" class="card-img-top" alt="...">
+                    <!-- <img src="../../../../../images/holiday/photo_2023-03-22_11-14-58.jpg" class="card-img-top" alt="..."> -->
                     <div class="overlay"></div>
                     <div class="hover_btn_div d-ard">
                         <Button label="Edit" @click="visible = true">
                             Edit
                             <Dialog v-model:visible="visible" modal header="Holiday " :style="{ width: '25vw' }">
                                 <div class="img_container">
-                                    <img src=".//../../../../../images/holiday/Holi.jpg" alt="" class="card-img">
+                                    <!-- <img src=".//../../../../../images/holiday/Holi.jpg" alt="" class="card-img"> -->
                                 </div>
                                 <div class="card-title">
                                     <div class="flex flex-column gap-2 mt-5">
@@ -199,14 +199,14 @@
                     <span>Jan1 (sunday)</span>
                 </div>
                 <div class="card  clr-trans card-w">
-                    <img src="../../../../../images/holiday/photo_2023-03-22_11-14-58.jpg" class="card-img-top" alt="...">
+                    <!-- <img src="../../../../../images/holiday/photo_2023-03-22_11-14-58.jpg" class="card-img-top" alt="..."> -->
                     <div class="overlay"></div>
                     <div class="hover_btn_div d-ard">
                         <Button label="Edit" @click="visible = true">
                             Edit
                             <Dialog v-model:visible="visible" modal header="Holiday " :style="{ width: '25vw' }">
                                 <div class="img_container">
-                                    <img src=".//../../../../../images/holiday/Holi.jpg" alt="" class="card-img">
+                                    <!-- <img src=".//../../../../../images/holiday/Holi.jpg" alt="" class="card-img"> -->
                                 </div>
                                 <div class="card-title">
                                     <div class="flex flex-column gap-2 mt-5">
@@ -240,14 +240,14 @@
                     <span>Jan1 (sunday)</span>
                 </div>
                 <div class="card  clr-trans card-w">
-                    <img src="../../../../../images/holiday/photo_2023-03-22_11-14-58.jpg" class="card-img-top" alt="...">
+                    <!-- <img src="../../../../../images/holiday/photo_2023-03-22_11-14-58.jpg" class="card-img-top" alt="..."> -->
                     <div class="overlay"></div>
                     <div class="hover_btn_div d-ard">
                         <Button label="Edit" @click="visible = true">
                             Edit
                             <Dialog v-model:visible="visible" modal header="Holiday " :style="{ width: '25vw' }">
                                 <div class="img_container">
-                                    <img src=".//../../../../../images/holiday/Holi.jpg" alt="" class="card-img">
+                                    <!-- <img src=".//../../../../../images/holiday/Holi.jpg" alt="" class="card-img"> -->
                                 </div>
                                 <div class="card-title">
                                     <div class="flex flex-column gap-2 mt-5">
@@ -281,14 +281,14 @@
                     <span>Jan1 (sunday)</span>
                 </div>
                 <div class="card  clr-trans card-w">
-                    <img src="../../../../../images/holiday/photo_2023-03-22_11-14-58.jpg" class="card-img-top" alt="...">
+                    <!-- <img src="../../../../../images/holiday/photo_2023-03-22_11-14-58.jpg" class="card-img-top" alt="..."> -->
                     <div class="overlay"></div>
                     <div class="hover_btn_div d-ard">
                         <Button label="Edit" @click="visible = true">
                             Edit
                             <Dialog v-model:visible="visible" modal header="Holiday " :style="{ width: '25vw' }">
                                 <div class="img_container">
-                                    <img src=".//../../../../../images/holiday/Holi.jpg" alt="" class="card-img">
+                                    <!-- <img src=".//../../../../../images/holiday/Holi.jpg" alt="" class="card-img"> -->
                                 </div>
                                 <div class="card-title">
                                     <div class="flex flex-column gap-2 mt-5">
@@ -323,14 +323,14 @@
                     <span>Jan1 (sunday)</span>
                 </div>
                 <div class="card  clr-trans card-w">
-                    <img src="../../../../../images/holiday/photo_2023-03-22_11-14-58.jpg" class="card-img-top" alt="...">
+                    <!-- <img src="../../../../../images/holiday/photo_2023-03-22_11-14-58.jpg" class="card-img-top" alt="..."> -->
                     <div class="overlay"></div>
                     <div class="hover_btn_div d-ard">
                         <Button label="Edit" @click="visible = true">
                             Edit
                             <Dialog v-model:visible="visible" modal header="Holiday " :style="{ width: '25vw' }">
                                 <div class="img_container">
-                                    <img src=".//../../../../../images/holiday/Holi.jpg" alt="" class="card-img">
+                                    <!-- <img src=".//../../../../../images/holiday/Holi.jpg" alt="" class="card-img"> -->
                                 </div>
                                 <div class="card-title">
                                     <div class="flex flex-column gap-2 mt-5">
