@@ -8,6 +8,7 @@
 @section('content')
     @vite('resources/js/hrms/modules/onboarding_module/offer_letter/offer_letter_master/offer_letter_master.js')
     <div id="OfferLetterMaster"></div>
+
 @endsection
 
 

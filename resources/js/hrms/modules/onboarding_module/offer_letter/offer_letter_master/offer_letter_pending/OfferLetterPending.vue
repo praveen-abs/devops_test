@@ -13,7 +13,7 @@
                             <div class="col-xl-4 col-sm-4 col-lg-4 col-md-4 col-xxl-4 text-end">
                                 <button  class="btn btn-orange">
                                     <i class=" fa fa-plus-circle me-1"></i>
-                                    <router-link class="text-white" to="/offer_letter_generation">
+                                    <router-link active-class="active" class="text-white" to="/offer_letter_generation">
                                         Create offer</router-link>
                                 </button>
                             </div>
@@ -78,13 +78,17 @@
         <p></p>
 
     </Dialog>
+    <router-view></router-view>
 </template>
+
 
 
 
 <script setup>
 
 import { ref, onMounted } from 'vue';
+import { initFlowbite } from 'flowbite'
+
 import axios from 'axios';
 import { FilterMatchMode, FilterOperator } from "primevue/api";
 
@@ -97,6 +101,7 @@ const filters = ref({
 });
 
 onMounted(() => {
+    initFlowbite();
     products.value = getProductDetails().data;
 
     axios.get('https://jsonplaceholder.typicode.com/posts/1')

@@ -3,7 +3,8 @@
         <div class="card">
             <div class="card-body mx-5">
                 <div class="no-data-wrapper text-center mx-auto col-lg-5" id="">
-                    <img alt="no-data" id="" src="{{ URL::asset('assets/images/svg/offer-noData.svg') }}" />
+                    <img alt="no-data" id="" src="../images/no-data.svg" />
+
                     <a target="_self" id="create_offer" role="button" href="#" class="btn btn-orange"><i
                             class="fa fa-plus-circle me-1" aria-hidden="true"></i> Create Offer</a>
                 </div>
@@ -207,7 +208,6 @@
                     </div>
                     <div class="row">
                         <div class="col-xl-12 col-sm-12 text-end col-lg-12 col-md-12 mb-3 col-xxl-12 ">
-
                             <a href="/offer-letter" role="button"
                                 class="btn btn-border-primary me-3">Save</a>
                             <button class="btn btn-dark me-3" @click="RequiredField=true">Preview</button>
@@ -219,6 +219,7 @@
             </div>
         </div>
     </div>
+
 
 
     <Dialog :style="{ width: '50vw' }" header="Offer Letter Preview" :modal="true" v-model:visible="RequiredField">

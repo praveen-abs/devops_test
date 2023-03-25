@@ -6,6 +6,7 @@ import "primeicons/primeicons.css";
 
 import { createApp } from "vue";
 import PrimeVue from "primevue/config";
+import router from '../../router'
 import BadgeDirective from "primevue/badgedirective";
 import BlockUI from 'primevue/blockui';
 import Button from 'primevue/button';
@@ -27,6 +28,7 @@ import Dialog from 'primevue/dialog'
 import OfferLetterPending from './OfferLetterPending.vue';
 
 const app = createApp(OfferLetterPending);
+app.use(router);
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
 app.use(ToastService);
