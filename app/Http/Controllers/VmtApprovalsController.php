@@ -88,6 +88,51 @@ class VmtApprovalsController extends Controller
     }
 
 
+    //ajax for fetch uploaded docs
+    public function fetchDocsForUser(Request $request)
+    {
+        $documents_filenames =null ;
+        $user_code =null ;
+        $docs_reviewed =null ;
+
+
+        if(isset($request->user_code))
+        {
+            $user_code = $request->user_code;
+
+
+            $user_id = User::where('user_code',$user_code)->value('id');
+
+            $documents_filenames = VmtEmployee::where('userid',$user_id)
+                                    ->get([
+                                        'aadhar_card_file',
+                                        'aadhar_card_backend_file',
+                                        'pan_card_file',
+                                        'passport_file',
+                                        'voters_id_file',
+                                        'dl_file',
+                                        'education_certificate_file',
+                                        'reliving_letter_file',
+                                        'docs_reviewed'
+                                    ]);
+
+            $docs_reviewed  =  json_decode($documents_filenames[0]-> docs_reviewed);
+            //dd($documents_filenames[0]->aadhar_card_file);
+
+
+        }
+        else
+        {
+            $docs_reviewed =  null;
+        }
+
+        //Get all documents for the given user
+        //dd($docs_reviewed);
+         $response=array($documents_filenames,$user_code,$docs_reviewed);
+
+        return  $response ;
+    }
+
     // Store Document Review in docs_reviewed column
     public function storeDocumentsReviewByAdmin(Request $request){
 

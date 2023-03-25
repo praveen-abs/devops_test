@@ -1933,7 +1933,294 @@
                 </div>
               </div>
 
-              <!-- family Detiaals End -->
+              <!-- family Detials End -->
+
+
+
+              <!-- Compensatory Details start-->
+
+
+
+
+
+              <div class="card shadow  profile-box card-top-border p-2">
+                <div class="card-body justify-content-center align-items-center">
+                    <div class="header-card-text">
+                        <h6>Compensatory</h6>
+                    </div>
+                    <div class="form-card">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+
+
+                                    <div class="floating">
+
+                                        <label for="" class="float-label">Basic
+                                            Salary</label>
+                                        <input type="number" placeholder="Basic Salary"
+                                            name="basic"  v-model="employee_onboarding.basic"
+                                            class="textbox   onboard-form form-control  calculation_data gross_data"
+                                            step="0.01" />
+                                    </div>
+
+
+                            </div>
+
+                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+
+                                    <div class="floating">
+                                        <label for="" class="float-label">HRA</label>
+
+                                        <input type="number" placeholder="HRA" name="hra" v-model="employee_onboarding.hra"
+                                            class="onboard-form form-control textbox   calculation_data gross_data "
+                                            step="0.01" />
+                                    </div>
+
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+
+                                    <div class="floating">
+                                        <label for="" class="float-label">Statutory
+                                            Bonus</label>
+                                        <input type="number" placeholder="Statutory Bonus"
+                                            name="statutory_bonus"  v-model="employee_onboarding.statutory_bonus"
+                                            class="onboard-form form-control textbox   calculation_data gross_data"
+                                            step="0.01" />
+                                    </div>
+
+
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+
+                                    <div class="floating">
+                                        <label for="" class="float-label">Child
+                                            Education Allowance</label>
+                                        <input type="number"
+                                            placeholder="Child Education Allowance"
+                                            name="child_education_allowance" v-model="employee_onboarding.child_education_allowance"
+                                            class="onboard-form form-control textbox   calculation_data gross_data"
+                                            step="0.01" />
+                                    </div>
+
+
+
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+
+                                    <div class="floating">
+                                        <label for="" class="float-label">Food
+                                            Coupon</label>
+                                        <input type="number" placeholder="Food Coupon"
+                                            name="food_coupon" v-model="employee_onboarding.food_coupon"
+                                            class="onboard-form form-control textbox  calculation_data gross_data"
+                                            step="0.01" />
+                                    </div>
+
+
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+
+                                    <div class="floating">
+                                        <label for="" class="float-label">LTA</label>
+                                        <input type="number" placeholder="LTA" name="lta"  v-model="employee_onboarding.lta"
+                                            class="textbox onboard-form form-control     calculation_data gross_data"
+                                            step="0.01" />
+                                    </div>
+
+
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+
+                                    <div class="floating">
+                                        <label for="" class="float-label">Special
+                                            Allowance</label>
+                                        <input type="number" placeholder="Special Allowance"
+                                            name="special_allowance" v-model="employee_onboarding.special_allowance"
+                                            class="onboard-form form-control textbox   calculation_data gross_data"
+                                            step="0.01" />
+                                    </div>
+
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+
+                                    <div class="floating">
+                                        <label for="" class="float-label">Other
+                                            Allowance</label>
+
+                                        <input type="number" placeholder="Other Allowance"
+                                            name="other_allowance"  v-model="employee_onboarding.other_allowance"
+                                            class="textbox  onboard-form form-control  calculation_data gross_data"
+                                            step="0.01" />
+                                    </div>
+
+
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+
+                                    <div class="floating">
+                                        <label for="" class="float-label">Gross
+                                            Salary</label>
+
+                                        <input type="number" placeholder="Gross Salary"
+                                            name="gross"  v-model="employee_onboarding.gross"
+                                            class="textbox  onboard-form form-control "
+                                            step="0.01" required readonly />
+                                    </div>
+
+
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+
+                                    <div class="floating">
+                                        <label for="" class="float-label">EPF employer
+                                            contribution</label>
+
+                                        <input type="number"
+                                            placeholder="EPF employer contribution"
+                                            name="epf_employer_contribution"  v-model="employee_onboarding.epf_employer_contribution"
+                                            class="textbox   onboard-form form-control  calculation_data cic_data"
+                                            step="0.01" />
+                                    </div>
+
+
+
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+
+                                    <div class="floating">
+                                        <label for="" class="float-label">ESIC employer
+                                            contribution</label>
+                                        <input type="number"
+                                            placeholder="ESIC employer contribution"
+                                            name="esic_employer_contribution"  v-model="employee_onboarding.esic_employer_contribution"
+                                            class="onboard-form form-control textbox   calculation_data cic_data"
+                                            step="0.01" />
+                                    </div>
+
+
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+
+                                    <div class="floating">
+                                        <label for="" class="float-label">Insurance</label>
+                                        <input type="number" placeholder="Insurance"
+                                            name="insurance"   v-model="employee_onboarding.insurance"
+                                            class="onboard-form form-control textbox   calculation_data cic_data"
+                                            step="0.01" />
+                                    </div>
+
+
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+
+                                    <div class="floating">
+                                        <label for="" class="float-label">Graduity</label>
+                                        <input type="number" placeholder="Graduity"
+                                            name="graduity"  v-model="employee_onboarding.graduity"
+                                            class="onboard-form form-control textbox   calculation_data cic_data"
+                                            step="0.01" />
+                                    </div>
+
+
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+
+                                    <div class="floating">
+                                        <label for="" class="float-label">Cost of
+                                            Company</label>
+
+                                        <input type="number" placeholder="Cost of Company"
+                                            name="cic"   v-model="employee_onboarding.cic"
+                                            id="cic"
+                                            class="onboard-form form-control textbox "
+                                            step="0.01" required readonly />
+                                    </div>
+
+
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+
+                                    <div class="floating">
+                                        <label for="" class="float-label">EPF
+                                            Employee</label>
+
+                                        <input type="number" placeholder="EPF Employee"
+                                            name="epf_employee"   v-model="employee_onboarding.epf_employee"
+                                            class="onboard-form form-control  calculation_data net_data textbox "
+                                            step="0.01" />
+                                    </div>
+
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+
+                                    <div class="floating">
+                                        <label for="" class="float-label">ESIC
+                                            Employee</label>
+
+                                        <input type="number" placeholder="ESIC Employee"
+                                            name="esic_employee"   v-model="employee_onboarding.esic_employee"
+                                            class="textbox  onboard-form form-control  calculation_data net_data"
+                                            step="0.01" />
+                                    </div>
+
+
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+
+                                    <div class="floating">
+                                        <label for="" class="float-label">Professional
+                                            Tax</label>
+
+                                        <input type="number" placeholder="Professional Tax"
+                                            name="professional_tax"  v-model="employee_onboarding.professional_tax"
+                                            class="textbox  onboard-form form-control  calculation_data net_data "
+                                            step="0.01" />
+                                    </div>
+
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+
+                                    <div class="floating">
+                                        <label for="" class="float-label">Labour welfare
+                                            fund</label>
+
+                                        <input type="number" placeholder="labour welfare fund"
+                                            name="labour_welfare_fund"  v-model="employee_onboarding.labour_welfare_fund"
+                                            class="onboard-form form-control calculation_data net_data textbox "
+                                            step="0.01" />
+                                    </div>
+
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+
+                                    <div class="floating">
+                                        <label for="" class="float-label">Net
+                                            Income</label>
+
+                                        <input type="number" placeholder="Net Income"
+                                            name="net_income"   v-model="employee_onboarding.net_income"
+                                            class="onboard-form form-control textbox "
+                                            step="0.01" required readonly />
+                                    </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+              <!-- Compensatory Details end -->
 
               <!-- Personal Documents start -->
 
@@ -2389,6 +2676,29 @@ const employee_onboarding = reactive({
   dob_spouse: "",
   no_of_children: "",
 
+  // family Details End
+
+
+//   compensatory Detials start
+
+    basic:'',
+    hra:'',
+    statutoy_bonus:'',
+    child_education_allowance:'',
+    food_coupon:'',
+    lta:'',
+    special_allowance:'',
+    graduity:'',
+    cic:'',
+    epf_employee:'',
+    esic_employee:'',
+    professional_tax:'',
+    labour_welfare_fund:'',
+    net_income:'',
+
+  // Personal Documents Start
+
+
   AadharCardFront: "",
   AadharCardBack: "",
   PanCardDoc: "",
@@ -2397,10 +2707,6 @@ const employee_onboarding = reactive({
   VoterIdDoc: "",
   ReleivingLetterDoc: "",
   PassportDoc: "",
-
-  // family Details End
-
-  // Personal Documents Start
 });
 
 // variableDeclarations
@@ -2629,6 +2935,20 @@ const submit = () => {
   formData.append("spouse_gender", employee_onboarding.spouse_gender);
   formData.append("dob_spouse", employee_onboarding.dob_spouse);
   formData.append("no_of_children", employee_onboarding.no_of_children);
+  formData.append("basic", employee_onboarding.basic);
+  formData.append("hra", employee_onboarding.hra);
+  formData.append("statutoy_bonus", employee_onboarding.statutoy_bonus);
+  formData.append("child_education_allowance", employee_onboarding.child_education_allowance);
+  formData.append("food_coupon", employee_onboarding.food_coupon);
+  formData.append("lta", employee_onboarding.lta);
+  formData.append("special_allowance", employee_onboarding.special_allowance);
+  formData.append("graduity", employee_onboarding.graduity);
+  formData.append("cic", employee_onboarding.cic);
+  formData.append("epf_employee", employee_onboarding.epf_employee);
+  formData.append("esic_employee", employee_onboarding.esic_employee);
+  formData.append("professional_tax", employee_onboarding.professional_tax);
+  formData.append("labour_welfare_fund", employee_onboarding.labour_welfare_fund);
+  formData.append("net_income", employee_onboarding.net_income);
   formData.append("Aadharfront", employee_onboarding.AadharCardFront);
   formData.append("AadharBack", employee_onboarding.AadharCardBack);
   formData.append("panDoc", employee_onboarding.PanCardDoc);
