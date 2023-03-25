@@ -13,10 +13,9 @@
 
 </head>
 <body>
- <h6>IMAGE VIEW</h6>
- <b>{{ $image_data }}</b>
- <img src="data:image/png;base64,{{$base64 }}" />
- <img src="{{$pathToFile}}"  />
+@vite('resources/js/hrms/modules/approvals/onboarding/review_document.js')
+
+<div id="ReviewDocuments"></div>
 </body>
 </html>
 @endsection
