@@ -36,10 +36,10 @@ import { router } from "./router";
 
 
 
-import payroll_setup from './payroll_setup.vue'
+import general_payroll_setting from './general_payroll_setting.vue'
 
 
-const app = createApp(payroll_setup);
+const app = createApp(general_payroll_setting);
 const pinia=createPinia()
 
 app.use(PrimeVue, { ripple: true });
@@ -74,5 +74,5 @@ app.component('Chips', Chips)
 app.component('InputNumber', InputNumber)
 app.component('Steps', Steps)
 
-app.mount("#payroll_setup");
+app.mount("#general_payroll_setting");
 
