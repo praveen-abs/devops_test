@@ -62,7 +62,17 @@ export default defineConfig({
 
                 // Pay check
 
-                'resources/js/hrms/modules/paycheck/declaration/declaration.js'
+                'resources/js/hrms/modules/paycheck/declaration/declaration.js',
+
+                // Payroll Setting  resources\js\hrms\modules\payroll\payroll_setting\
+
+                'resources/js/hrms/modules/payroll/payroll_setting/payroll_setting.js',
+
+                //   Payroll Setup
+
+                'resources/js/hrms/modules/payroll/payroll_setting/payroll_setup/payroll_setup.js',
+
+
 
 
 
