@@ -48,7 +48,31 @@ export default defineConfig({
                 //Holidays
                 'resources/js/hrms/modules/configurations/holidays/Holidays_Lists.js',
 
+                'resources/js/hrms/modules/configurations/attendance_settings/Att_AssignWorkShifts.js',
+
+                // Integration
+
+                'resources/js/hrms/modules/configurations/integration_auth/integration_auth.js',
+
+                // Offer Letter
+
+                'resources/js/hrms/modules/onboarding_module/offer_letter/offer_letter_generation/offer_letter_generation.js',
+                'resources/js/hrms/modules/onboarding_module/offer_letter/offer_letter_template/offer_letter_template.js',
+                'resources/js/hrms/modules/onboarding_module/offer_letter/offer_letter_master/offer_letter_master.js',
+
+                // Pay check
+
+                'resources/js/hrms/modules/paycheck/declaration/declaration.js'
+
+
+
+
+
+
             ],
+            define: {
+                'process.env': process.env
+            },
             refresh: true,
         }),
     ],

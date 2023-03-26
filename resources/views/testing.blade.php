@@ -6,16 +6,12 @@
 @endsection
 @endsection
 @section('content')
-<!doctype html>
-<html lang="en">
-<head>
+<!-- @vite('resources/js/hrms/modules/onboarding_module/offer_letter/offer_letter_template/offer_letter_template.js')
+     <div id="offer_template"></div> -->
 
+@vite('resources/js/hrms/modules/paycheck/declaration/declaration.js')
 
-</head>
-<body>
-    <h6>PRIVATE IMAGE VIEW</h6>
-    <img src="{{route('viewPrivateFile')}}"  />
-</body>
-</html>
+  <div id="declaration"></div>
+
 @endsection
 

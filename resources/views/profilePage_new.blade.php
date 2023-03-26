@@ -45,7 +45,7 @@
                                         </div>
                                         <div class="mb-1 d-flex justify-content-between ">
                                             <span class="text-muted f-12">Profile Completeness :</span>
-                                            <span class="text-muted text-end f-12 fw-bold" id="prograssBar_percentage">
+                                            <span class="text-muted text-end f-12 fw-medium" id="prograssBar_percentage">
 
                                             </span>
                                         </div>
@@ -54,33 +54,33 @@
                                                 aria-valuenow="{{ $profileCompletenessValue }}" aria-valuemin="0"
                                                 aria-valuemax="100"></div>
                                         </div>
-                                        <p class="text-muted f-10 text-start mb-2 fw-bold">Your profile is completed</p>
+                                        <p class="text-muted f-10 text-start mb-2 fw-medium">Your profile is completed</p>
                                     </div>
 
                                     <div class="profile-mid-right-content mb-4 text-center ">
                                         <div class="border-bottom-liteAsh py-2">
-                                            <p class="text-muted f-12 fw-bold">Employee Status</p>
-                                            <p class="text-primary-old f-15 fw-bold">
+                                            <p class="text-muted f-12 fw-medium">Employee Status</p>
+                                            <p class="text-primary-old f-15 fw-medium">
                                                 {{ getEmployeeActiveStatus($user->id) ?? '-' }}
                                             </p>
 
                                         </div>
                                         <div class="border-bottom-liteAsh py-2">
-                                            <p class="text-muted f-12 fw-bold">Employee Code</p>
-                                            <p class="text-primary-old f-15 fw-bold">
+                                            <p class="text-muted f-12 fw-medium">Employee Code</p>
+                                            <p class="text-primary-old f-15 fw-medium">
                                                 {{ $user_full_details->user_code ?? '-' }}
                                             </p>
 
                                         </div>
                                         <div class="border-bottom-liteAsh py-2">
-                                            <p class="text-muted f-12 fw-bold">Employee Designation</p>
-                                            <p class="text-primary-old f-15 fw-bold">
+                                            <p class="text-muted f-12 fw-medium">Employee Designation</p>
+                                            <p class="text-primary-old f-15 fw-mediam">
                                                 {{ $user_full_details->designation ?? '-' }}
                                             </p>
                                         </div>
                                         <div class="border-bottom-liteAsh py-2">
-                                            <p class="text-muted f-12 fw-bold">Location</p>
-                                            <p class="text-primary-old f-15 fw-bold">
+                                            <p class="text-muted f-12 fw-medium">Location</p>
+                                            <p class="text-primary-old f-15 fw-medium">
                                                 {{ $user_full_details->work_location ?? '-' }}</p>
                                         </div>
                                         <div class="border-bottom-liteAsh py-2">
@@ -364,13 +364,41 @@
                                                 @endforeach
                                             @endif
 
+                                                </div>
+                                            </li>
+                                            <li class="border-bottom-liteAsh pb-1">
+                                                <div class="title">Organization</div>
+                                                <div class="text">
+                                                    Organization
 
-
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                                </div>
+                                            </li>
+                                            <li class="border-bottom-liteAsh pb-1">
+                                                <div class="title">Designation</div>
+                                                <div class="text">
+                                                    Designation
+                                                </div>
+                                            </li>
+                                            <li class="border-bottom-liteAsh pb-1 ">
+                                                <div class="title">From <i
+                                                        class="fa fa-exclamation-circle text-muted ms-2"
+                                                        data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        title="DOJ"></i></div>
+                                                <div class="text">
+                                                    From
+                                                </div>
+                                            </li>
+                                            <li class="border-bottom-liteAsh pb-1 border-0">
+                                                <div class="title">To <i class="fa fa-exclamation-circle text-muted ms-2"
+                                                        data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        title="LWD"></i></div>
+                                                <div class="text">
+                                                    To
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
-                                </form>
                             </div>
                         </div>
                     </div>
@@ -763,7 +791,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div id="edit_generalInfo" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                         <div class="modal-content profile-box top-line">
@@ -882,7 +909,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- personal informatios -->
                 <div id="personal_info_modal" class="modal custom-modal fade" role="dialog">
                     <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
@@ -940,7 +966,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- payslip informatios -->
                 <div id="payslipModal" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
@@ -960,7 +985,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- address informatios -->
                 <div id="edit_addressInfo" class="modal custom-modal fade" role="dialog">
                     <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
@@ -999,59 +1023,75 @@
                         </div>
                     </div>
                 </div>
-
-                <!--  -->
-                <!--  -->
-                <!--  -->
-                <!--  -->
-
-
-                <!-- family informatios old -->
-
-<!-- end -->
-
-                <!--  -->
-                <!--  -->
-                <!--  -->
-                <!-- family informatios new  -->
-
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg div">
-                        <div class="modal-content">
-                        <div class="modal-header">
-                            <h6 class="modal-title txt" id="exampleModalLabel">Family Information
-                            </h6>
-                            <button type="button" class="btn-close rounded-circle Btn" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        @if (empty($familydetails))
-                        <div class="modal-body" id="ul_id">
-                            <div class="input-card">
-                                <button id="delete_Btn" class="delete_btn text-danger">
-                                    <i class="f-12 me-1 fa text-danger  fa-trash"aria-hidden="true"></i>
-                                 Delete </button>
-                                <ul>
-                                    <li>
-                                        <div class="space-between">
-                                            <div class="input_text flex-col">
-                                            <span>Name <span class="text-danger">*</span></span>
-                                            <input type="text" name="familyDetails_Name[]" pattern-data="name" id="familyDetails_Name" required  >
+                <!-- family informatios -->
+                <div id="edit_familyInfo" class="modal custom-modal fade " role="dialog" aria-modal="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content profile-box">
+                            <div class="modal-header  border-0">
+                                <h6 class="modal-title">Family
+                                    Information</h6>
+                                <button type="button" class="close  border-0 h3" data-bs-dismiss="modal"
+                                    aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div>
+                                    @csrf
+                                    @if (!empty($familydetails) && count($familydetails) > 0)
+                                        @foreach ($familydetails as $singledetail)
+                                            <div class="card mb-3 addition-content" id="content1">
+                                                <div class="card-body">
+                                                    <div class="row ">
+                                                        <div class="col-md-12 m-0 text-end">
+                                                            <button
+                                                                class="btn text-danger delete-btn p-0 bg-transparent outline-none border-0 f-12 "
+                                                                type="button" id="deleteFamily_btn"><i
+                                                                    class="f-12 me-1 fa text-danger  fa-trash"
+                                                                    aria-hidden="true"></i>Delete
+                                                                </i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group mb-3">
+                                                                <label>Name <span class="text-danger">*</span></label>
+                                                                <input name="name[]" class="form-control onboard-form"
+                                                                    type="text" pattern-data="name" required
+                                                                    value="{{ $singledetail->name }}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group mb-3">
+                                                                <label>Relationship <span
+                                                                        class="text-danger">*</span></label>
+                                                                <input name="relationship[]"
+                                                                    class="form-control onboard-form" type="text"
+                                                                    pattern-data="alpha" required
+                                                                    value="{{ $singledetail->relationship }}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group mb-3">
+                                                                <label>Date of birth <span
+                                                                        class="text-danger">*</span></label>
+                                                                <input name="dob[]" class="form-control onboard-form"
+                                                                    type="date" max="9999-12-31" required
+                                                                    value="{{ $singledetail->dob }}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group ">
+                                                                <label>Phone <span class="text-danger">*</span></label>
+                                                                <input name="phone_number[]"
+                                                                    class="form-control onboard-form" type="number"
+                                                                    maxlength="10" minlength="10" required
+                                                                    value="{{ $singledetail->phone_number }}">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="input_text flex-col">
-                                            <span>Relationship<span class="text-danger">*</span></span>
-                                            <input type="text" name="familyDetails_Relationship[]" id="familyDetails_Relationship"  pattern-data="alpha" required >
-                                            </div>
-                                        </div>
-                                        <div class="space-between M-T">
-                                            <div class="input_text flex-col">
-                                            <span>Date of birth <span class="text-danger">*</span></span>
-                                            <input type="date" id="datemin" name="familyDetails_dob[]"  min="2000-01-02">
-                                            </div>
-
-                                            <div class="input_text flex-col">
-                                            <span>phone<span class="text-danger">*</span></span>
-                                            <input type="number"   minlength="10" maxlength="10" id="familyDetails_phoneNumber" name="familyDetails_phoneNumber[]">
-                                            </div>
-                                        </div>
+                                        @endforeach
 
                                     </li>
                                 </ul>
@@ -1097,30 +1137,30 @@
                                     </div>
                                 </div>
 
-                            @endforeach
-                        @endif
-                        <div class="modal-footer flex-column mdl">
-                            <button type="button" class="add_more bg-light " id="Add_More">
-                            <i class=" ri-add-circle-fill"></i>
-                            <h6>Add More</h6>
-                            </button>
-                            <button type="button" class="submit_btn" id="submit_button_family_details">submit</button>
-                        </div>
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class=" text-end mb-2" style="cursor:pointer;">
+                                    <button id="addMore_family"
+                                        class="btn text-primary p-0 bg-transparent outline-none border-0 f-12 plus-sign"
+                                        type="button"><i class="f-12 me-1 fa  fa-plus-circle" aria-hidden="true"></i>Add
+                                        More</i>
+                                    </button>
+                                </div>
+                                <div class="col-12 text-right">
+                                    <button id="btn_submit_family_info" class="btn btn-orange submit-btn">Submit
+                                    </button>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
-
-              <!--  -->
-              <!--  -->
-
-              <!--  -->
-
-
-
                 <!-- experience informatios -->
-                <div id="edit_experienceInfo" class="modal custom-modal fade " role="dialog" aria-modal="true">
+                <div id="edit_experienceInfo" class="modal fade" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                        <div class="modal-content profile-box top-line">
+                        <div class="modal-content profile-box ">
+
                             <div class="modal-header border-0">
                                 <h6 class="modal-title">Experience
                                     Information</h6>
@@ -1283,7 +1323,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!--Statutory Details  -->
                 <div id="statutory_info" class="modal custom-modal fade" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -1391,8 +1430,6 @@
                         </div>
                     </div>
                 </div>
-
-
                 <div id="show_idCard" class="modal custom-modal fade" aria-hidden="true">
                     <div class="modal-dialog  modal-dialog-centered modal-md" role="document">
                         <div class="modal-content profile-box">
@@ -1440,7 +1477,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div id="show_documents" class="modal custom-modal fade" aria-hidden="true">
                     <div class="modal-dialog  modal-dialog-centered modal-md" role="document">
                         <div class="modal-content profile-box">
@@ -1454,18 +1490,14 @@
                             <div class="modal-body ">
                                 <div id="documents_content"></div>
 
-
-
                             </div>
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>
-    </div>
+
 @endsection
 @section('script')
     @yield('script-profile-avatar')
@@ -2137,6 +2169,37 @@
                 });
             });
         });
+
+
+        // $(function() {
+        //     $('#experience_card li .text').each(function(index) {
+        //         var lengthText = 20;
+        //         console.log($(this).text());
+        //         var text =$(this).text();
+        //         console.log(text);
+        //         var shortText = $.trim(text).substring(0, lengthText).split(" ").slice(0, -1).join(" ") +
+        //             "...";
+        //             console.log(text);
+        //         $('#experience_card li .text').prop("title", text);
+        //         $('#experience_card li .text').text(shortText);
+
+        //         $('[data-toggle="tooltip"]').tooltip();
+        //     });
+        // })
+
+
+
+        // $(function() {
+        //     var lengthText = 25;
+        //     var text = $('#experience_card li .text').text();
+
+        //     var shortText = $.trim(text).substring(0, lengthText).split(" ").slice(0, -1).join(" ") + "...";
+
+        //     $('#experience_card li .text').prop("title", text);
+        //     $('#experience_card li .text').text(shortText);
+
+        //     $('[data-toggle="tooltip"]').tooltip();
+        // })
 
 
         $(document).ready(function() {

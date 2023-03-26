@@ -18,11 +18,14 @@
         "tailwindcss": "^3.2.7"
     },
     "dependencies": {
+        "@headlessui/vue": "^1.7.12",
+        "@heroicons/vue": "^2.0.16",
         "@vitejs/plugin-vue": "^4.0.0",
         "@vitejs/plugin-vue-jsx": "^3.0.0",
         "@vuelidate/core": "^2.0.0",
         "@vuelidate/validators": "^2.0.0",
         "@vuepic/vue-datepicker": "^4.2.0",
+        "@vueup/vue-quill": "^1.1.1",
         "bootstrap": "^5.2.3",
         "bootstrap-vue": "^2.23.1",
         "built": "^1.3.2",
@@ -42,6 +45,8 @@
         "filepond-plugin-image-exif-orientation": "^1.0.11",
         "filepond-plugin-image-preview": "^4.6.11",
         "flatpickr": "^4.6.13",
+        "flowbite": "^1.6.4",
+        "flowbite-vue": "^0.0.10",
         "fs": "^0.0.1-security",
         "fullcalendar": "^5.11.3",
         "gridjs": "^5.1.0",
@@ -55,13 +60,16 @@
         "primeflex": "^3.3.0",
         "primeicons": "^6.0.1",
         "primevue": "^3.22.0",
+        "quill": "^1.3.6",
         "sortablejs": "^1.15.0",
         "sweetalert2": "^11.4.8",
         "swiper": "^7.2.0",
+        "vee-validate": "^4.8.3",
         "vite": "^4.0.0",
         "vite-plugin-full-reload": "^1.0.5",
         "vue": "^3.2.36",
         "vue-loader": "^17.0.1",
-        "vue-router": "^4.1.6"
+        "vue-router": "^4.1.6",
+        "vue3-quill": "^0.3.0"
     }
 }

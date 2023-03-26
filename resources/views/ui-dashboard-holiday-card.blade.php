@@ -15,7 +15,7 @@
                 </div>
 
                 <div class="table-responsive">
-                    <table class="table table-hover table-bordered kpi_appraisal-table" >
+                    <table class="table table-hover table-bordered kpi_appraisal-table">
                         <thead>
                             <tr>
                                 <th>List Of Holidays</th>
@@ -46,10 +46,8 @@
         </div>
     </div>
 </div>
-<div class="card profile-box flex-fill line-0 border-0">
-    <div class="card-body " style="padding:0px !important">
-        <!-- <div class="card-img"> -->
-
+<div class="card w-100 border-0 box-shadow-md">
+    <div class="card-body p-0">
         <div class="slideshow-container ">
             @foreach ($holidays as $day)
                 <div class="slides fade-slider ">
@@ -62,7 +60,6 @@
                     </div>
                 </div>
             @endforeach
-
             <div class="d-flex">
                 <a class="slide-next" onclick="plusSlides(1)"> <i class="ri-arrow-right-s-line text-white"></i> </a>
                 <a class="slide-prev" onclick="plusSlides(-1)"><i class="ri-arrow-left-s-line text-white"></i></a>
