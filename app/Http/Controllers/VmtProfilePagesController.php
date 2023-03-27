@@ -219,10 +219,11 @@ class VmtProfilePagesController extends Controller
 
     public function updateExperienceInfo(Request $request)
     {
+        // dd($request->all());
 
         $idArr = $request->input('ids');
         $companyNameArr = $request->input('company_name');
-        $locationArr = $request->input('location');
+        $locationArr = $request->input('experience_location');
         $jobPositionArr = $request->input('job_position');
         $periodFromArr = $request->input('period_from');
         $periodToArr = $request->input('period_to');
