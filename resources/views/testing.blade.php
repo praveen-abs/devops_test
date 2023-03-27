@@ -13,10 +13,8 @@
 
 </head>
 <body>
- <h6>IMAGE VIEW</h6>
- <b>{{ $image_data }}</b>
- <img src="data:image/png;base64,{{$base64 }}" />
- <img src="{{$pathToFile}}"  />
+    <h6>PRIVATE IMAGE VIEW</h6>
+    <img src="{{route('viewPrivateFile')}}"  />
 </body>
 </html>
 @endsection

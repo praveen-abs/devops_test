@@ -141,22 +141,38 @@ class VmtAttendanceService{
         //dd($emp_comp_off_days);
 
         //Check whether its used or not ( Leave request should be Rejected or Not applied)
-        //// Create a new array with (k,v)=(attendance_id, attendance_date)
+        //// Create a new array with (k,v)=(attendance_id, [attendance_id, attendance_date])
 
         $map_comp_off_days = array();
 
         foreach($emp_comp_off_days as $singleDay){
             //$map_comp_off_days[ $singleDay["id"] ] = $singleDay["date"];
-            array_push($map_comp_off_days, array("emp_attendance_id" => $singleDay["id"],
-                                                 "emp_attendance_date" => $singleDay["date"]));
+            // array_push($map_comp_off_days, array("emp_attendance_id" => $singleDay["id"],
+            //                                      "emp_attendance_date" => $singleDay["date"]));
+            $map_comp_off_days[ $singleDay["id"] ] = array("emp_attendance_id" => $singleDay["id"],
+                                                 "emp_attendance_date" => $singleDay["date"]);
             //dd($singleDay["id"]);
         }
 
         //dd($map_comp_off_days);
 
+        //TESTING ARRAY ELEMENT DELETION
+
+        // foreach($map_comp_off_days as $k => $singleCompOff){
+        //    // dd($singleCompOff["emp_attendance_id"] );
+        //     if($singleCompOff["emp_attendance_id"] == "107")
+        //     {
+        //         unset($map_comp_off_days[$k]);
+        //     }
+
+        // }
+
+        // dd($map_comp_off_days);
+
         //Check whether the comp days exists in this table
         $query_emp_comp_leaves = VmtEmployeeCompensatoryLeave::whereIn('employee_attendance_id',array_keys($map_comp_off_days))->get(['employee_leave_id','employee_attendance_id']);
 
+       // $i = 0;
         //Check whether its leave request is Rejected
         foreach($query_emp_comp_leaves as $singleEmpCompLeave)
         {
@@ -180,7 +196,8 @@ class VmtAttendanceService{
 
         }
 
-        return $map_comp_off_days;
+        //Remove the keys and send only the values.
+        return array_values($map_comp_off_days);
     }
 
 }

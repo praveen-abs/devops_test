@@ -19,6 +19,8 @@ use App\Models\Compensatory;
 use App\Models\VmtEmployeeStatutoryDetails;
 use App\Models\VmtEmployeeFamilyDetails;
 use App\Models\VmtOrgRoles;
+use App\Models\VmtOnboardingDocuments;
+use App\Models\VmtEmployeeDocuments;
 use App\Notifications\ViewNotification;
 use Illuminate\Support\Facades\Notification;
 use App\Mail\WelcomeMail;
@@ -88,8 +90,8 @@ class VmtEmployeeService {
                 $this->createOrUpdate_EmployeeDetails( $onboard_user, $data);
                 $this->createOrUpdate_EmployeeOfficeDetails( $onboard_user->id, $data);
                 $this->createOrUpdate_EmployeeStatutoryDetails( $onboard_user->id, $data);
-                $this->createOrUpdate_EmployeeFamilyDetails( $onboard_user->id, $data);
-                $this->createOrUpdate_EmployeeCompensatory( $onboard_user->id, $data);
+                // $this->createOrUpdate_EmployeeFamilyDetails( $onboard_user->id, $data);
+                // $this->createOrUpdate_EmployeeCompensatory( $onboard_user->id, $data);
 
                 //$message_part =" onboarded successfully.";
             }
@@ -245,14 +247,14 @@ class VmtEmployeeService {
         }
 
 
-        $newEmployee->aadhar_card_file = $this->uploadDocument( $row['Aadharfront'], $user->user_code, 'aadhar_front_');
-        $newEmployee->aadhar_card_backend_file = $this->uploadDocument($row['AadharBack'], $user->user_code,'aadhar_back_');
-        $newEmployee->pan_card_file = $this->uploadDocument($row['panDoc'], $user->user_code,'panDoc');
-        $newEmployee->passport_file = $this->uploadDocument($row['passport'], $user->user_code,'passport');
-        $newEmployee->voters_id_file = $this->uploadDocument($row['voterId'], $user->user_code,'voterId');
-        $newEmployee->dl_file = $this->uploadDocument($row['dlDoc'], $user->user_code,'dlDoc');
-        $newEmployee->education_certificate_file = $this->uploadDocument($row['eductionDoc'], $user->user_code,'edu_doc_');
-        $newEmployee->reliving_letter_file = $this->uploadDocument($row['releivingDoc'],$user->user_code,'reliving_letter_');
+        $newEmployee->aadhar_card_file = $this->uploadDocument( $user->id, $row['Aadharfront'], $user->user_code, 'Aadhar Card Front');
+        $newEmployee->aadhar_card_backend_file = $this->uploadDocument($user->id,$row['AadharBack'], $user->user_code,'Aadhar Card Back');
+        $newEmployee->pan_card_file = $this->uploadDocument($user->id,$row['panDoc'], $user->user_code,'Pan Card');
+        $newEmployee->passport_file = $this->uploadDocument($user->id,$row['passport'], $user->user_code,'Passport');
+        $newEmployee->voters_id_file = $this->uploadDocument($user->id,$row['voterId'], $user->user_code,'Voter ID');
+        $newEmployee->dl_file = $this->uploadDocument($user->id,$row['dlDoc'], $user->user_code,'Driving License');
+        $newEmployee->education_certificate_file = $this->uploadDocument($user->id,$row['eductionDoc'], $user->user_code,'Education Certificate');
+        $newEmployee->reliving_letter_file = $this->uploadDocument($user->id,$row['releivingDoc'],$user->user_code,'Relieving Letter');
         $docReviewArray = array(
             'aadhar_card_file' => -1,
             'aadhar_card_backend_file' => -1,
@@ -466,41 +468,47 @@ class VmtEmployeeService {
 
     }
 
-    public function uploadDocument($fileObject, $emp_code, $filename){
+    public function uploadDocument($emp_id,$fileObject, $emp_code, $onboard_document_type){
+        if(empty($fileObject))
+        return null;
 
-        if(empty($fileObject)){
-           return null;
-        }else{
+        //check if document already uploaded
+        $onboard_doc_id = VmtOnboardingDocuments::where('document_name',$onboard_document_type)->first()->id;
+        $employee_documents = VmtEmployeeDocuments::where('user_id', $emp_id)->where('doc_id',$onboard_doc_id);
+
+        //check if document already uploaded
+         if( $employee_documents->exists()){
+            $employee_documents = $employee_documents->first();
+         }else{
+            $employee_documents = new VmtEmployeeDocuments;
+         }
+
+
             $date=date('d-m-Y H-i-s');
-            $fileName = $filename.$emp_code.'_'.$date.'.'.$fileObject->extension();
-            $path='employee/emp_'.$emp_code.'/documents';
+            $fileName =  $onboard_document_type.'_'.$emp_code.'_'.$date.'.'.$fileObject->extension();
+            $path=$emp_code.'/onboarding_documents';
             $filePath = $fileObject->storeAs($path,$fileName, 'private');
+           // dd($emp_id);
+            $employee_documents->user_id = $emp_id;
+            $employee_documents->doc_id = $onboard_doc_id;
+            $employee_documents->doc_url = $fileName;
+            $employee_documents->status = 'Pending';
+            $employee_documents->save();
             return $fileName;
-        }
+
 
     }
 
-    // public function fileUpload($file, $emp_code)
-    // {
-
-    //     // dd( $file->file->getClientOriginalName());
-    //     if (!empty($file)) {
-    //         $docUploads =$file;
-    //         $docUploadsName = 'doc_' .$emp_code.'_'. $file . "_" . time() . '.' . $docUploads->getClientOriginalExtension();
-    //         dd(Storage::disk('private')->exists($emp_code));
-    //         $emp_document_path = Storage::disk('private');
+    public function viewDocument($fileObject, $emp_code, $filename){
 
 
-    //         //Upload the new file
-    //         $docUploads->storeAs($emp_code,$docUploadsName,'private');
-    //         //$docUploads->move($emp_document_path, $docUploadsName);
-    //         return $docUploadsName;
-    //     }
-    //     else
-    //     {
-    //         return "";
-    //     }
-    // }
+    }
+
+    public function downloadDocument($fileObject, $emp_code, $filename){
+
+
+    }
+
 
     // Generate Employee Apoinment PDF after onboarding
     public function attachApoinmentPdf($employeeData)
@@ -595,6 +603,71 @@ class VmtEmployeeService {
           }
 
         return $processed_date;
+    }
+
+
+    /*
+
+        Fetch all the documents uploaded by the employees.
+
+
+
+
+    */
+    function fetchAllEmployeesDocumentsAsGroups(Request $request){
+
+
+
+        $json_response = array();
+
+        $array_unique_users = User::where('is_onboarded' ,0)->get(['id','user_code','name']);
+
+
+        foreach($array_unique_users as $single_user){
+
+            //dd($single_user->user_id);
+            $single_user_data["user_id"] = $single_user->id;
+            $single_user_data["employee_name"] = $single_user->name;
+            $single_user_data["user_code"] = $single_user->user_code;
+
+
+
+            //Get all the  doc for the given user_id
+            $onboard_doc = VmtEmployeeDocuments::join('vmt_onboarding_documents','vmt_onboarding_documents.id','=','vmt_employee_documents.doc_id')
+                                ->where('user_id',$single_user->id)
+                                ->get(['vmt_onboarding_documents.document_name','doc_url']);
+
+
+
+
+            $single_user_data["onboard_doc"] = $onboard_doc->toArray();
+
+            //dd($single_user_data);
+
+            array_push($json_response, $single_user_data);
+
+        }
+
+        //dd($json_response);
+
+        return $json_response;
+
+    }
+
+    public function processEmployeeDocumentsBulkApprovals($data){
+        $reimbursement_data = $data['reimbursement_id']["reimbursement_data"];
+      //  dd( $reimbursement_data);
+             for($i=0;$i<count($reimbursement_data);$i++){
+                if($reimbursement_data[$i]['status']=='Pending'){
+                    VmtEmployeeReimbursements::where('id',$reimbursement_data[$i]['id'])
+                                            ->update([
+                                                'status' => $data['status']
+                                            ]);
+                }
+
+             }
+
+
     }
 
 }
