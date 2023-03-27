@@ -355,7 +355,7 @@
                                             @if ($exp)
                                                 @foreach ($exp as $k => $info)
                                                     <tr>
-                                                        {{-- date('M-Y', strtotime($employee_payslip->PAYROLL_MONTH))) --}}
+                                                        {{-- date('M-Y', strtotime($employee_payslip->PAYROLL_MONTH)) --}}
                                                         <td>{{ $info['company_name'] }}</td>
                                                         <td>{{ $info['job_position'] }}</td>
                                                         <td>{{ date('d-M-Y', strtotime($info['period_from'])) }}</td>
@@ -1025,10 +1025,11 @@
                         </div>
                         @if (empty($familydetails))
                         <div class="modal-body" id="ul_id">
+
                             <div class="input-card">
-                                <button id="delete_Btn" class="delete_btn text-danger">
+                                <!-- <button class="delete_btn text-danger">
                                     <i class="f-12 me-1 fa text-danger  fa-trash"aria-hidden="true"></i>
-                                 Delete </button>
+                                 Delete </button> -->
                                 <ul>
                                     <li>
                                         <div class="space-between">
@@ -1059,10 +1060,10 @@
                         </div>
                         @else
                             @foreach ($familydetails as $singledetail)
-
                                 <div class="modal-body" id="ul_id">
+
                                     <div class="input-card">
-                                        <button id="delete_Btn" class="delete_btn text-danger">
+                                        <button class="delete_button_family_details text-danger" data-family-details-id="{{ $singledetail->id }}" >
                                             <i class="f-12 me-1 fa text-danger  fa-trash"aria-hidden="true"></i>
                                         Delete </button>
                                         <ul>
@@ -1095,12 +1096,14 @@
                                             </li>
                                         </ul>
                                     </div>
+
                                 </div>
 
-                            @endforeach
+                                @endforeach
                         @endif
+
                         <div class="modal-footer flex-column mdl">
-                            <button type="button" class="add_more bg-light " id="Add_More">
+                            <button type="button" class="add_more bg-light " id="Add_Mores">
                             <i class=" ri-add-circle-fill"></i>
                             <h6>Add More</h6>
                             </button>
@@ -1135,11 +1138,71 @@
                                 <div class="form-scroll">
                                     <div class="card">
                                         <div class="card-body">
-                                            <a href="javascript:void(0);" class="delete-icon text-end"><i
-                                                    class="   ri-delete-bin-line"></i></a>
+                                            <!-- <a href="javascript:void(0);" class="delete-icon text-end"><i
+                                                    class="   ri-delete-bin-line"></i>
+                                            </a> -->
 
                                             <div class="exp-content-container">
-                                                <div class="row exp-addition-content" id="content1">
+
+                                                <ul id="experienceinfo_ul_list_id">
+
+                                                        <li>
+                                                            <div class="row exp-addition-content" id="content1">
+                                                                    <a href="javascript:void(0);" class="delete-icon text-end"><i
+                                                                    class="ri-delete-bin-line"></i>
+                                                                    </a>
+                                                                <input type="hidden" name="ids[]">
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group mb-3 form-focus focused">
+                                                                            <label class="focus-label">Company Name</label>
+                                                                            <input type="text" name="experienceDetials_company_name[]"
+                                                                                class="form-control floating" value="" required>
+                                                                        </div>
+                                                                    </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group mb-3 form-focus focused">
+                                                                        <label class="focus-label">Location</label>
+                                                                        <input type="text" name="experienceDetials_location[]"
+                                                                            class="form-control floating" value="" required>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group mb-3 form-focus focused">
+                                                                        <label class="focus-label">Job Position</label>
+                                                                        <input type="text" name="experienceDetials_job_position[]"
+                                                                            class="form-control floating" value="" required>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group mb-3 form-focus focused">
+                                                                        <label class="focus-label">Period From</label>
+                                                                        <div class="cal-icon">
+                                                                            <input type="date" max="9999-12-31"
+                                                                                name="experienceDetials_period_from[]"
+                                                                                class="form-control floating datetimepicker"
+                                                                                value="" required>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group mb-3 form-focus focused">
+                                                                        <div class="cal-icon">
+                                                                            <label class="focus-label">Period To</label>
+                                                                            <input type="date" max="9999-12-31" name="experienceDetials_period_to[]"
+                                                                                class="form-control floating datetimepicker"
+                                                                                value="" required>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </li>
+                                                    </ul>
+                                                <!-- <div class="row exp-addition-content" id="content1">
                                                     <input type="hidden" name="ids[]">
                                                     <div class="col-md-6">
                                                         <div class="form-group mb-3 form-focus focused">
@@ -1187,19 +1250,30 @@
 
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> -->
+
+
+
                                             </div>
-                                            <div class="add-more text-end">
+                                            <!-- <div class="add-more text-end">
                                                 <div class="text-primary f-13" id="exp-add-more">
                                                     <i class=" ri-add-circle-fill"></i> Add More
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         </div>
+
                                     </div>
+                                    <!--  -->
+                                    <div class="add-more text-end">
+                                                <div class="text-primary f-13" id="exp-add-more">
+                                                    <i class=" ri-add-circle-fill"></i> Add More
+                                                </div>
+                                    </div>
+
                                 </div>
                                 <div class="col-12">
                                     <div class="text-right">
-                                        <button id=btn_submit_experience_info
+                                        <button id="btn_submit_experience_info"
                                             class="btn btn-orange submit-btn">Submit</button>
                                     </div>
                                 </div>
@@ -1940,7 +2014,6 @@
                     },
                     success: function(data) {
                         Swal.fire({
-
                             text: 'Address Information Updated',
                             icon: 'success'
                         }).then((result) => {
@@ -2014,65 +2087,67 @@
         $(document).ready(function() {
         });
 
-        $(document).ready(function() {
-            $("#btn_submit_experience_info").on('click', function(e) {
-                e.preventDefault();
-                var ids = $('input[name="ids[]"]').map(function() {
-                    return this.value;
-                }).get();
+        // $(document).ready(function() {
+        //     $("#btn_submit_experience_info").on('click', function(e) {
+        //         e.preventDefault();
+        // 'ids[]': ids,
+        // name="ids[]"
+        //         var ids = $('input[name="ids[]"]').map(function() {
+        //             return this.value;
+        //         }).get();
 
-                var company_name = $('input[name="company_name[]"]').map(function() {
-                    return this.value;
-                }).get();
+        //         var company_name = $('input[name="company_name[]"]').map(function() {
+        //             return this.value;
+        //         }).get();
 
-                var t_location = $('input[name="location[]"]').map(function() {
-                    return this.value;
-                }).get();
+        //         var t_location = $('input[name="location[]"]').map(function() {
+        //             return this.value;
+        //         }).get();
 
-                var job_position = $('input[name="job_position[]"]').map(function() {
-                    return this.value;
-                }).get();
+        //         var job_position = $('input[name="job_position[]"]').map(function() {
+        //             return this.value;
+        //         }).get();
 
-                var period_from = $('input[name="period_from[]"]').map(function() {
-                    return this.value;
-                }).get();
+        //         var period_from = $('input[name="period_from[]"]').map(function() {
+        //             return this.value;
+        //         }).get();
 
-                var period_to = $('input[name="period_to[]"]').map(function() {
-                    return this.value;
-                }).get();
-
-
-                $.ajax({
-                    url: "{{ route('updateExperienceInfo', $user->id) }}",
-                    type: 'POST',
-                    data: {
-                        'ids[]': ids,
-                        'company_name[]': company_name,
-                        'location[]': t_location,
-                        'job_position[]': job_position,
-                        'period_from[]': period_from,
-                        'period_to[]': period_to,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(data) {
-                        Swal.fire({
-
-                            text: 'Experience Information Updated',
-                            icon: 'success'
-                        }).then((result) => {
-                            console.log("Experience Update status : "+result);
-                            /* Read more about isConfirmed, isDenied below */
-                            if (result.isConfirmed) {
-                                location.reload();
-                            }
-                        })
-                    }
+        //         var period_to = $('input[name="period_to[]"]').map(function() {
+        //             return this.value;
+        //         }).get();
 
 
-                });
+        //         $.ajax({
+        //             url: "{{ route('updateExperienceInfo', $user->id) }}",
+        //             type: 'POST',
+        //             data: {
+        //                 'ids[]': ids,
+        //                 'company_name[]': company_name,
+        //                 'location[]': t_location,
+        //                 'job_position[]': job_position,
+        //                 'period_from[]': period_from,
+        //                 'period_to[]': period_to,
+        //                 _token: '{{ csrf_token() }}'
+        //             },
+        //             success: function(data) {
+        //                 Swal.fire({
 
-            });
-        });
+        //                     text: 'Experience Information Updated',
+        //                     icon: 'success'
+        //                 }).then((result) => {
+        //                     console.log("Experience Update status : "+result);
+        //                     /* Read more about isConfirmed, isDenied below */
+        //                     if (result.isConfirmed) {
+        //                         location.reload();
+        //                     }
+        //                 })
+        //             }
+
+
+        //         });
+
+        //     });
+        // });
 
         $(document).ready(function() {
             $("#btn_submit_bank_info").on('click', function(e) {
@@ -2190,68 +2265,113 @@
 
             // new code---->
 
-
-            $(document).ready(function(){
-              $("#Add_More").click(function(){
-                // $("#ul_id").append(`<li class="list">${$("#val").val()}<button id="delete"><i class="fa-solid fa-xmark" ></i></button</li>`);
-                  $("#ul_id").append(
+            $("#Add_Mores").click(()=>{
+                console.log("hi");
+                $('#ul_id').prepend(
                     ` <div class="input-card">
-                    <button id="delete_Btn" class="delete_btn text-danger">
+                    <button class="delete_button_family_details text-danger">
                           <i class="f-12 me-1 fa text-danger  fa-trash"aria-hidden="true"></i>
                           Delete
                     </button>
-          <ul >
-            <li>
-              <div class="space-between">
-                <div class="input_text flex-col">
-                  <span>Name <span class="text-danger">*</span></span>
-                  <input type="text" name="familyDetails_Name[]">
-                </div>
-                <div class="input_text flex-col">
-                  <span>Relationship<span class="text-danger">*</span></span>
-                  <input type="text" name="familyDetails_Relationship[]">
-                </div>
-              </div>
-              <!--  -->
-              <!--  -->
+                        <ul >
+                            <li>
+                            <div class="space-between">
+                                <div class="input_text flex-col">
+                                <span>Name <span class="text-danger">*</span></span>
+                                <input type="text" name="familyDetails_Name[]">
+                                </div>
+                                <div class="input_text flex-col">
+                                <span>Relationship<span class="text-danger">*</span></span>
+                                <input type="text" name="familyDetails_Relationship[]">
+                                </div>
+                            </div>
+                            <!--  -->
+                            <!--  -->
 
-              <!--  -->
-              <div class="space-between M-T">
-                <div class="input_text flex-col">
-                  <span>Date of birth <span class="text-danger">*</span></span>
-                  <input type="date" id="datemin" name="familyDetails_dob[]"  min="2000-01-02">
-                </div>
-                <!--  -->
-                <div class="input_text flex-col">
-                  <span>phone<span class="text-danger">*</span></span>
-                  <input type="number" name="familyDetails_phoneNumber[]"  minlength="10" maxlength="10">
-                </div>
-              </div>
-              <!--  -->
-            </li>
-          </ul>
-        </div>`
-                  );
+                            <!--  -->
+                            <div class="space-between M-T">
+                                <div class="input_text flex-col">
+                                <span>Date of birth <span class="text-danger">*</span></span>
+                                <input type="date" id="datemin" name="familyDetails_dob[]"  min="2000-01-02">
+                                </div>
+                                <!--  -->
+                                <div class="input_text flex-col">
+                                <span>phone<span class="text-danger">*</span></span>
+                                <input type="number" name="familyDetails_phoneNumber[]"  minlength="10" maxlength="10">
+                                </div>
+                            </div>
+                            <!--  -->
+                            </li>
+                        </ul>
+                        </div>`
+                )
+            })
 
+            $(document).on('click','.delete_button_family_details',function(){
+                            $(this).parent().remove();
               });
-             });
+
+            // $(document).ready(function(){
+            //   $("#Add_Mores").click(function(){
+            //     // $("#ul_id").append(`<li class="list">${$("#val").val()}<button id="delete"><i class="fa-solid fa-xmark" ></i></button</li>`);
+            //       $("#ul_id").append(
+            //         ` <div class="input-card">
+            //         <button class="delete_button_family_details text-danger">
+            //               <i class="f-12 me-1 fa text-danger  fa-trash"aria-hidden="true"></i>
+            //               Delete
+            //         </button>
+            //             <ul >
+            //                 <li>
+            //                 <div class="space-between">
+            //                     <div class="input_text flex-col">
+            //                     <span>Name <span class="text-danger">*</span></span>
+            //                     <input type="text" name="familyDetails_Name[]">
+            //                     </div>
+            //                     <div class="input_text flex-col">
+            //                     <span>Relationship<span class="text-danger">*</span></span>
+            //                     <input type="text" name="familyDetails_Relationship[]">
+            //                     </div>
+            //                 </div>
+            //                 <!--  -->
+            //                 <!--  -->
+
+            //                 <!--  -->
+            //                 <div class="space-between M-T">
+            //                     <div class="input_text flex-col">
+            //                     <span>Date of birth <span class="text-danger">*</span></span>
+            //                     <input type="date" id="datemin" name="familyDetails_dob[]"  min="2000-01-02">
+            //                     </div>
+            //                     <!--  -->
+            //                     <div class="input_text flex-col">
+            //                     <span>phone<span class="text-danger">*</span></span>
+            //                     <input type="number" name="familyDetails_phoneNumber[]"  minlength="10" maxlength="10">
+            //                     </div>
+            //                 </div>
+            //                 <!--  -->
+            //                 </li>
+            //             </ul>
+            //             </div>`
+            //       );
+
+            //   });
+            //  });
+
+            //  $('.delete_button_family_details').on('click', function() {
+            //     let familyDetails_id = $(this).attr('data-family-details-id');
+            //     // let t_paySlipMonth = $(this).attr('data');
+            //     console.log("Deleting familyDetails_id : "+familyDetails_id);
+
+
+            // });
+
+
+
+
+
+
 
 
              $("#submit_button_family_details").click(function(){
-
-                // // console.log("hello world");
-                // Swal.fire({
-                //                 position: 'center',
-                //                 icon: 'success',
-                //                 title: 'Family Information Updated',
-                //                 showConfirmButton: false,
-                //                 timer: 1500
-                //                 }).then((result) => {
-                //             /* Read more about isConfirmed, isDenied below */
-                //             if (result.isConfirmed) {
-                //                 location.reload();
-                //             }
-                //         })
 
                 let test = $("input[name='familyDetails_Name[]'").map(function(){return $(this).val();}).get();
                 console.log("hello world : "+test);
@@ -2273,6 +2393,9 @@
                 var phone_number = $('input[name="familyDetails_phoneNumber[]"]').map(function() {
                     return this.value;
                 }).get();
+
+
+
 
 
                 $.ajax({
@@ -2306,38 +2429,208 @@
 
                 });
 
+
+
              });
 
 
 
 
-             $(document).on('click','#delete_Btn',function(){
+        });
+
+        // $(document).ready(()=>{
+        //     $.ajax({
+        //             url: "{{ route('updateFamilyInfo', $user->id) }}",
+        //             type: 'GET',
+        //             data: {
+        //                console.log(data);
+        //             },
+        //             success: function(data) {
+        //                       console.log("Documents:" + data);
+        //                 // })
+        //                     Swal.fire({
+        //                     position: 'center',
+        //                     icon: 'success',
+        //                     title: 'Your work has been saved',
+        //                     showConfirmButton: false,
+        //                     timer: 1500
+        //                 }).then((result) => {
+        //                     /* Read more about isConfirmed, isDenied below */
+        //                         location.reload();
+        //                 })
+        //             }
+
+
+
+        //         });
+        // })
+
+        // experience information bug fixing:
+        // content1
+
+        $(document).ready(function(){
+              $("#exp-add-more").click(function(){
+                // $("#ul_id").append(`<li class="list">${$("#val").val()}<button id="delete"><i class="fa-solid fa-xmark" ></i></button</li>`);
+                  $("#experienceinfo_ul_list_id").append(
+                    ` <div class="row exp-addition-content" id="content1">
+                                                                    <a href="javascript:void(0);" class="delete-icon text-end"><i
+                                                                    class="ri-delete-bin-line"></i>
+                                                                    </a>
+
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group mb-3 form-focus focused">
+                                                                            <label class="focus-label">Company Name</label>
+                                                                            <input type="text" name="experienceDetials_company_name[]"
+                                                                                class="form-control floating" value="" required>
+                                                                        </div>
+                                                                    </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group mb-3 form-focus focused">
+                                                                        <label class="focus-label">Location</label>
+                                                                        <input type="text" name="experienceDetials_location[]"
+                                                                            class="form-control floating" value="" required>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group mb-3 form-focus focused">
+                                                                        <label class="focus-label">Job Position</label>
+                                                                        <input type="text" name="experienceDetials_job_position[]"
+                                                                            class="form-control floating" value="" required>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group mb-3 form-focus focused">
+                                                                        <label class="focus-label">Period From</label>
+                                                                        <div class="cal-icon">
+                                                                            <input type="date" max="9999-12-31"
+                                                                                name="experienceDetials_period_from[]"
+                                                                                class="form-control floating datetimepicker"
+                                                                                value="" required>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group mb-3 form-focus focused">
+                                                                        <div class="cal-icon">
+                                                                            <label class="focus-label">Period To</label>
+                                                                            <input type="date" max="9999-12-31" name="experienceDetials_period_to[]"
+                                                                                class="form-control floating datetimepicker"
+                                                                                value="" required>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>`
+                  )
+                })
+        });
+
+                // content1
+
+
+
+
+
+              //
+
+
+        $(document).on('click','.delete-icon ',function(){
                             $(this).parent().remove();
-              })
-            $(".delete_btn").click(function(){
+              });
+
+        $("#delete-icon").click(function(){
                 console.log("logg");
                 Swal.fire({
-                          title: 'Are you sure?',
-                          text: "You won't be able to revert this!",
-                          icon: 'warning',
-                          showCancelButton: true,
-                          confirmButtonColor: '#3085d6',
-                          cancelButtonColor: '#d33',
-                          confirmButtonText: 'Yes, delete it!',
-                          }).then((result) => {
-                          if (result.isConfirmed) {
-                          Swal.fire(
-                          'Deleted!',
-                          'Your file has been deleted.',
-                          'success'
-                          )
-                          }
+                            title: 'Are you sure?',
+                            text: "You won't be able to revert this!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Yes, delete it!',
+                            }).then((result) => {
+                            if (result.isConfirmed) {
+                            Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                            )
+                            }
                           })
             })
 
 
+            $("#btn_submit_experience_info").click(function(){
+                // console.log("hello guys");
+
+                let test = $("input[name='experienceDetials_company_name[]'").map(function(){return $(this).val();}).get();
+                console.log("hello world : "+test);
+
+
+
+
+                var ids = $('input[name="ids[]"]').map(function() {
+                    return this.value;
+                }).get();
+
+                var company_name = $('input[name="experienceDetials_company_name[]"]').map(function() {
+                    return this.value;
+                }).get();
+
+                var experience_location = $('input[name="experienceDetials_location[]"]').map(function() {
+                    return this.value;
+                }).get();
+
+                var job_position = $('input[name="experienceDetials_job_position[]"]').map(function() {
+                    return this.value;
+                }).get();
+
+                var period_from = $('input[name="experienceDetials_period_from[]"]').map(function() {
+                    return this.value;
+                }).get();
+
+                var period_to = $('input[name="experienceDetials_period_to[]"]').map(function() {
+                    return this.value;
+                }).get();
+
+                $.ajax({
+                    url: "{{ route('updateExperienceInfo', $user->id) }}",
+                    type: 'POST',
+                    data: {
+                        'ids[]': ids,
+                        'company_name[]': company_name,
+                        'experience_location[]': experience_location,
+                        'job_position[]':job_position,
+                        'period_from[]': period_from,
+                        'period_to[]':  period_to,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(data) {
+                        // Swal.fire({
+                        //     text: 'Family Information Updated',
+                        //     icon: 'success'
+                        // })
+                            Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Your work has been saved',
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then((result) => {
+                            /* Read more about isConfirmed, isDenied below */
+                                location.reload();
+                        })
+                    }
+                });
 
         });
+
+
+
+
     </script>
 
     <style>
