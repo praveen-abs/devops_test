@@ -1558,7 +1558,7 @@
                             >{{
                               v$.father_name.required.$message.replace(
                                 "Value",
-                                "father Name"
+                                "Father Name"
                               )
                             }}
                           </span>
@@ -1594,7 +1594,7 @@
                             >{{
                               v$.dob_father.required.$message.replace(
                                 "Value",
-                                "father Date of Birth"
+                                "Father Date of Birth"
                               )
                             }}
                           </span>
@@ -1665,7 +1665,7 @@
                             >{{
                               v$.mother_name.required.$message.replace(
                                 "Value",
-                                "mother Name"
+                                "Mother Name"
                               )
                             }}
                           </span>
@@ -1702,7 +1702,7 @@
                             >{{
                               v$.dob_mother.required.$message.replace(
                                 "Value",
-                                "mother Date of Birth"
+                                "Mother Date of Birth"
                               )
                             }}
                           </span>
@@ -2014,7 +2014,7 @@
 
                                         <label for="" class="float-label">Basic
                                             Salary</label>
-                                        <input @input="compensatory_calculation" type="number" placeholder="Basic Salary"
+                                        <input  type="number" placeholder="Basic Salary"
                                             name="basic"  v-model="employee_onboarding.basic"
                                             class="textbox onboard-form form-control calculation_data gross_data"
                                             step="0.01" />
@@ -2040,7 +2040,7 @@
                                         <label for="" class="float-label">Statutory
                                             Bonus</label>
                                         <input type="number" placeholder="Statutory Bonus"
-                                            name="statutory_bonus"  v-model="employee_onboarding.statutory_bonus"
+                                            name="statutory_bonus"  v-model="employee_onboarding.statutoy_bonus"
                                             class="onboard-form form-control textbox calculation_data gross_data"
                                             step="0.01" />
                                     </div>
@@ -2183,16 +2183,17 @@
                             <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
 
                                     <div class="floating">
-                                        <label for="" class="float-label">Cost of
+                                        <label for="" class="float-label">Cost to
                                             Company</label>
+                                            <button @click="compensatory_calculation">test</button>
 
                                         <input type="number" placeholder="Cost of Company"
                                             name="cic"   v-model="employee_onboarding.cic"
-                                            id="cic"
+                                            id="cic" 
                                             class="onboard-form form-control textbox "
-                                            step="0.01" required readonly />
+                                            step="0.01" required  />
                                     </div>
-
+                                    <!-- @input="compensatory_calculation" -->
 
                             </div>
                             <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
@@ -2757,7 +2758,9 @@ const employee_onboarding = reactive({
     graduity:'',
     cic:'',
     epf_employee:'',
+    epf_employer_contribution:'',
     esic_employee:'',
+    esic_employer_contribution:'',
     professional_tax:'',
     labour_welfare_fund:'',
     net_income:'',
@@ -2984,7 +2987,6 @@ const submit = () => {
   formData.append("cost_center", employee_onboarding.cost_center);
   formData.append("probation_period", employee_onboarding.probation_period);
   formData.append("work_location", employee_onboarding.work_location);
-//   formData.append("l1_manager_code", employee_onboarding.l1_manager_code.name);
   formData.append("l1_manager_code_id", employee_onboarding.l1_manager_code_id);
   formData.append("holiday_location", employee_onboarding.holiday_location);
   formData.append("officical_mail", employee_onboarding.officical_mail);
@@ -3015,6 +3017,7 @@ const submit = () => {
   formData.append("cic", employee_onboarding.cic);
   formData.append("epf_employee", employee_onboarding.epf_employee);
   formData.append("esic_employee", employee_onboarding.esic_employee);
+  formData.append("esic_employer_contribution", employee_onboarding.esic_employer_contribution);
   formData.append("professional_tax", employee_onboarding.professional_tax);
   formData.append("labour_welfare_fund", employee_onboarding.labour_welfare_fund);
   formData.append("net_income", employee_onboarding.net_income);
@@ -3117,8 +3120,62 @@ const personalMailExists=()=>{
 // compensatory Logic
 
 const compensatory_calculation = () =>{
-   let basic = employee_onboarding.basic * 50/100
-   console.log(basic);
+  //  let basic = employee_onboarding.cic * 50/100
+  //  console.log("Gross :"+basic);
+  //  employee_onboarding.basic = basic
+  //  employee_onboarding.gross =basic
+  //  employee_onboarding.hra = basic * 50/100
+  //  employee_onboarding.special_allowance = basic * 50/100
+    
+  //  employee_onboarding.epf_employee = basic * 12/100
+
+     
+  let gross = (employee_onboarding.basic + employee_onboarding.hra
+                   + employee_onboarding.statutoy_bonus + employee_onboarding.child_education_allowance 
+                   +employee_onboarding.food_coupon + employee_onboarding.lta ) ;
+  console.log("gross:"  +gross);     
+  
+  employee_onboarding.gross = gross ;
+
+  let hra = employee_onboarding.basic * 50/100;
+
+  let SA =employee_onboarding.basic * 50/100; 
+
+  let CTC = employee_onboarding.basic * 2 ;
+
+  employee_onboarding.cic = CTC ;
+
+  employee_onboarding.hra = hra;
+
+  employee_onboarding.special_allowance = SA;
+
+  let EpfCalculation = employee_onboarding.gross - employee_onboarding.hra ;
+
+  console.log("EpfCalculation:"+EpfCalculation );
+
+  if(EpfCalculation < 15000){
+    employee_onboarding.epf_employee = EpfCalculation * 12/100 ;
+    employee_onboarding.epf_employer_contribution = EpfCalculation * 12/100 ;
+  }else 
+  if(EpfCalculation > 15000){
+    let epfConstant = 1800
+    employee_onboarding.epf_employee =  epfConstant ;
+    employee_onboarding.epf_employer_contribution = epfConstant ;
+  }
+ 
+   if(gross < 21000 ){
+    employee_onboarding.esic_employee  =  gross - hra * 12/100;
+    employee_onboarding.esic_employer_contribution = gross - hra * 12/100;
+   }else
+   if(gross > 2100){
+    let EsicConstant = 0 ;
+    employee_onboarding.esic_employee  = EsicConstant;
+    employee_onboarding.esic_employer_contribution = EsicConstant;
+   }
+    
+
+
+
 }
 
 const mon=ref(false)
