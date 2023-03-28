@@ -20,7 +20,7 @@
 
               <!-- Personal Details Start -->
 
-              <div class="card shadow profile-box card-top-border p-2">
+              <div class="p-2 shadow card profile-box card-top-border">
                 <div
                   class="card-body justify-content-center align-items-center"
                 >
@@ -29,16 +29,16 @@
                   </div>
 
                   <div class="form-card">
-                    <div class="row mt-1">
+                    <div class="mt-1 row">
                       <div
-                        class="col-md -6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md -6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
                             >Employee Code</label
                           >
                           <InputText
-                            class="form-onboard-form form-control textbox capitalize"
+                            class="capitalize form-onboard-form form-control textbox"
                             type="text"
                             v-model="v$.employee_code.$model"
                             placeholder="Employee Code"
@@ -51,7 +51,7 @@
                       </div>
 
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="employee_name" class="float-label"
@@ -60,7 +60,7 @@
                           </label>
 
                           <InputText
-                            class="onboard-form form-control textbox capitalize"
+                            class="capitalize onboard-form form-control textbox"
                             type="text"
                             v-model="v$.employee_name.$model"
                             :class="{
@@ -87,7 +87,7 @@
                         </div>
                       </div>
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -108,7 +108,7 @@
                         </div>
                       </div>
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -139,7 +139,7 @@
                         </div>
                       </div>
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -178,7 +178,7 @@
                         </div>
                       </div>
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -208,7 +208,7 @@
                         </div>
                       </div>
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -242,7 +242,7 @@
                         >
                       </div>
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -279,7 +279,7 @@
                         <span class="error" id="error_email"></span>
                       </div>
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -318,7 +318,7 @@
                         </div>
                       </div>
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 co l-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 co l-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -356,7 +356,7 @@
                         </div>
                       </div>
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label">DL Number</label>
@@ -378,7 +378,7 @@
                         </div>
                       </div>
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -412,7 +412,7 @@
                       </div>
                       <div
                         v-if="NationalityData"
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -434,7 +434,7 @@
                       </div>
                       <div
                         v-if="NationalityData"
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -458,7 +458,7 @@
                       </div>
 
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label">Blood Group</label>
@@ -472,7 +472,7 @@
                         </div>
                       </div>
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -489,7 +489,7 @@
                         </div>
                       </div>
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -519,7 +519,7 @@
                         </div>
                       </div>
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -556,7 +556,7 @@
                         </div>
                       </div>
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -601,25 +601,25 @@
 
               <!-- Statustory start -->
 
-              <!-- <div class="card shadow  profile-box card-top-border p-2">
+              <!-- <div class="p-2 shadow card profile-box card-top-border">
         <div class="card-body justify-content-center align-items-center">
             <div class="form-card">
                 <div class=" header-card-text">
                     <h6>Statutory Details</h6>
                 </div>
                 <div class="row ">
-                    <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                    <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                             <label for="" class="float-label">PF
                                 Applicable<span class="text-danger">*</span></label>
                             <InputText
-                                class="onboard-form form-control textbox  select2_form_without_search"
+                                class="onboard-form form-control textbox select2_form_without_search"
                                 type="text" v-model="PFApplicable"
                                 placeholder="PF Applicable" />
 
                         </div>
                     </div>
-                    <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                    <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                             <label for="" class="float-label">EPF Number</label>
                             <InputText class="onboard-form form-control textbox "
@@ -628,7 +628,7 @@
                             <span class="error" id="error_epf_number"></span>
                         </div>
                     </div>
-                    <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                    <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
 
                         <div class="floating">
                             <label for="" class="float-label">UAN Number</label>
@@ -639,18 +639,18 @@
 
                         </div>
                     </div>
-                    <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                    <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                             <label for="" class="float-label">ESIC
                                 Applicable<span class="text-danger">*</span></label>
                             <Dropdown style="height: 2.4em;"
-                                class="onboard-form form-control textbox  select2_form_without_search"
+                                class="onboard-form form-control textbox select2_form_without_search"
                                 placeholder="ESIC Applicable" v-model="selectedCity2"
                                 :options="cities" optionLabel="name" :editable="true" />
 
                         </div>
                     </div>
-                    <div class="col-md-6 col-sm-6 col-xs-6 col-lg-3 col-xl-3 mb-2">
+                    <div class="mb-2 col-md-6 col-sm-6 col-xs-6 col-lg-3 col-xl-3">
                         <div class="floating">
                             <label for="" class="float-label">ESIC Number</label>
 
@@ -663,24 +663,24 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6 col-sm-6 col-xs-6 col-lg-3 col-xl-3 mb-2">
+                    <div class="mb-2 col-md-6 col-sm-6 col-xs-6 col-lg-3 col-xl-3">
                         <div class="floating">
                             <label for="" class="float-label">Ptax
                                 Location</label>
                             <Dropdown style="height: 2.4em;"
-                                class="onboard-form form-control textbox  select2_form_without_search"
+                                class="onboard-form form-control textbox select2_form_without_search"
                                 placeholder="Ptax Location" v-model="selectedCity2"
                                 :options="cities" optionLabel="name" :editable="true" />
 
 
                         </div>
                     </div>
-                    <div class="col-md-6 col-sm-6 col-xs-6 col-lg-3 col-xl-3 mb-2">
+                    <div class="mb-2 col-md-6 col-sm-6 col-xs-6 col-lg-3 col-xl-3">
                         <div class="floating">
                             <label for="" class="float-label">TAX Regime<span
                                     class="text-danger">*</span> </label>
                             <Dropdown style="height: 2.4em;"
-                                class="onboard-form form-control textbox  select2_form_without_search"
+                                class="onboard-form form-control textbox select2_form_without_search"
                                 placeholder="TAX Regime" v-model="selectedCity2"
                                 :options="cities" optionLabel="name" :editable="true" />
 
@@ -689,11 +689,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                     <div class="floating">
                         <label for="" class="float-label">LWF Location</label>
                         <Dropdown style="height: 2.4em;" placeholder="LWF Location"
-                            class="onboard-form form-control textbox  select2_form_without_search"
+                            class="onboard-form form-control textbox select2_form_without_search"
                             v-model="selectedCity2" :options="cities" optionLabel="name"
                             :editable="true" />
 
@@ -709,7 +709,7 @@
 
               <!-- Current Address Start -->
 
-              <div class="card shadow profile-box card-top-border p-2">
+              <div class="p-2 shadow card profile-box card-top-border">
                 <div
                   class="card-body justify-content-center align-items-center"
                 >
@@ -717,9 +717,9 @@
                     <div class="header-card-text">
                       <h6>Current Address</h6>
                     </div>
-                    <div class="row mt-1">
+                    <div class="mt-1 row">
                       <div
-                        class="col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -727,7 +727,7 @@
                           >
                           <Textarea
                             style="height: 100px"
-                            class="form-control textbox capitalize"
+                            class="capitalize form-control textbox"
                             type="text"
                             rows="3"
                             current_address_line_1
@@ -756,7 +756,7 @@
                         </div>
                       </div>
                       <div
-                        class="col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -765,7 +765,7 @@
 
                           <Textarea
                             style="height: 100px"
-                            class="form-control textbox capitalize"
+                            class="capitalize form-control textbox"
                             type="text"
                             rows="3"
                             current_address_line_2
@@ -794,7 +794,7 @@
                         </div>
                       </div>
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -827,7 +827,7 @@
                         </div>
                       </div>
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -861,7 +861,7 @@
                         </div>
                       </div>
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label">
@@ -894,7 +894,7 @@
                         >
                       </div>
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -933,7 +933,7 @@
 
                     <div class="row">
                       <div
-                        class="col-md-12 col-sm-12 col-xs-12 col-lg-12 col-xl-12 my-3"
+                        class="my-3 col-md-12 col-sm-12 col-xs-12 col-lg-12 col-xl-12"
                       >
                         <Checkbox
                           inputId=""
@@ -955,9 +955,9 @@
                         class="col-md-12 col-sm-12 col-xs-12 col-lg-12 col-xl-12"
                       >
                         <h6>Permanent Address</h6>
-                        <div class="row mt-1">
+                        <div class="mt-1 row">
                           <div
-                            class="col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6 mb-2"
+                            class="mb-2 col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6"
                           >
                             <div class="floating">
                               <label for="" class="float-label"
@@ -968,7 +968,7 @@
 
                               <Textarea
                                 placeholder="Permanent Address"
-                                class="form-control textbox capitalize"
+                                class="capitalize form-control textbox"
                                 style="height: 100px"
                                 type="text"
                                 rows="3"
@@ -997,7 +997,7 @@
                             </div>
                           </div>
                           <div
-                            class="col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6 mb-2"
+                            class="mb-2 col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6"
                           >
                             <div class="floating">
                               <label for="" class="float-label"
@@ -1008,7 +1008,7 @@
 
                               <Textarea
                                 placeholder="Permanent Address"
-                                class="form-control textbox capitalize"
+                                class="capitalize form-control textbox"
                                 style="height: 100px"
                                 type="text"
                                 rows="3"
@@ -1038,7 +1038,7 @@
                             </div>
                           </div>
                           <div
-                            class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                            class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                           >
                             <div class="floating">
                               <label for="" class="float-label"
@@ -1074,7 +1074,7 @@
                             </div>
                           </div>
                           <div
-                            class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                            class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                           >
                             <div class="floating">
                               <label for="" class="float-label"
@@ -1109,7 +1109,7 @@
                           </div>
 
                           <div
-                            class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                            class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                           >
                             <div class="floating">
                               <label for="" class="float-label">
@@ -1117,7 +1117,7 @@
                               >
 
                               <InputText
-                                class="onboard-form form-control textbox capitalize"
+                                class="capitalize onboard-form form-control textbox"
                                 type="text"
                                 :class="{
                                   'p-invalid':
@@ -1143,7 +1143,7 @@
                             </div>
                           </div>
                           <div
-                            class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                            class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                           >
                             <div class="floating">
                               <label for="" class="float-label"
@@ -1153,7 +1153,7 @@
                               >
 
                               <InputText
-                                class="onboard-form form-control textbox capitalize"
+                                class="capitalize onboard-form form-control textbox"
                                 type="number"
                                 minlength="6"
                                 maxlength="6"
@@ -1191,7 +1191,7 @@
 
               <!-- Office Details Start -->
 
-              <div class="card shadow profile-box card-top-border p-2">
+              <div class="p-2 shadow card profile-box card-top-border">
                 <div
                   class="card-body justify-content-center align-items-center"
                 >
@@ -1199,9 +1199,9 @@
                     <h6 class="">Official Details</h6>
                   </div>
                   <div class="form-card">
-                    <div class="row mt-1">
+                    <div class="mt-1 row">
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 col-xxl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 col-xxl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label">Department</label>
@@ -1221,7 +1221,7 @@
                         </div>
                       </div>
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 col-xxl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 col-xxl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -1253,7 +1253,7 @@
                         </div>
                       </div>
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 col-xxl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 col-xxl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -1286,7 +1286,7 @@
                         </div>
                       </div>
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label">Cost Center</label>
@@ -1301,7 +1301,7 @@
                         </div>
                       </div>
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -1324,7 +1324,7 @@
                         </div>
                       </div>
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2 col-xl-3"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -1350,7 +1350,7 @@
                         </div>
                       </div>
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2 col-xxl-3"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 col-xxl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -1401,7 +1401,7 @@
                         </div>
                       </div>
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -1422,7 +1422,7 @@
                         </div>
                       </div>
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -1438,7 +1438,7 @@
                         </div>
                       </div>
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -1457,7 +1457,7 @@
                         </div>
                       </div>
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -1474,7 +1474,7 @@
                       </div>
 
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -1519,7 +1519,7 @@
 
               <!-- Family Detials Start -->
 
-              <div class="card shadow profile-box card-top-border p-2">
+              <div class="p-2 shadow card profile-box card-top-border">
                 <div
                   class="card-body justify-content-center align-items-center"
                 >
@@ -1527,9 +1527,9 @@
                     <h6 class="mb-0">Family Details</h6>
                   </div>
                   <div class="form-card">
-                    <div class="row mt-1">
+                    <div class="mt-1 row">
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -1539,7 +1539,7 @@
                           >
 
                           <InputText
-                            class="nboard-form form-control textbox capitalize"
+                            class="capitalize nboard-form form-control textbox"
                             type="text"
                             placeholder="Father Name"
                             name="father_name"
@@ -1565,7 +1565,7 @@
                         </div>
                       </div>
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -1602,7 +1602,7 @@
                       </div>
 
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label">Gender</label>
@@ -1617,7 +1617,7 @@
                         </div>
                       </div>
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label">Age </label>
@@ -1637,7 +1637,7 @@
                       </div>
 
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -1673,7 +1673,7 @@
                       </div>
 
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -1709,7 +1709,7 @@
                         </div>
                       </div>
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label">Gender</label>
@@ -1725,7 +1725,7 @@
                         </div>
                       </div>
                       <div
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label">Age</label>
@@ -1746,7 +1746,7 @@
 
                       <div
                         v-if="sposeData"
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -1782,7 +1782,7 @@
                       </div>
                       <div
                         v-if="sposeData"
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -1820,7 +1820,7 @@
                       </div>
                       <div
                         v-if="sposeData"
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -1863,7 +1863,7 @@
                       </div>
                       <div
                         v-if="sposeData"
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -1902,7 +1902,7 @@
                       </div>
                       <div
                         v-if="sposeData"
-                        class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
                           <label for="" class="float-label"
@@ -1941,16 +1941,15 @@
 
 
 
-
-
-              <div class="card shadow  profile-box card-top-border p-2">
+              <div class="p-2 shadow card profile-box card-top-border">
                 <div class="card-body justify-content-center align-items-center">
                     <div class="header-card-text">
                         <h6>Compensatory</h6>
                     </div>
+
                     <div class="form-card">
                         <div class="row">
-                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
 
 
                                     <div class="floating">
@@ -1959,38 +1958,38 @@
                                             Salary</label>
                                         <input type="number" placeholder="Basic Salary"
                                             name="basic"  v-model="employee_onboarding.basic"
-                                            class="textbox   onboard-form form-control  calculation_data gross_data"
+                                            class="textbox onboard-form form-control calculation_data gross_data"
                                             step="0.01" />
                                     </div>
 
 
                             </div>
 
-                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
 
                                     <div class="floating">
                                         <label for="" class="float-label">HRA</label>
 
                                         <input type="number" placeholder="HRA" name="hra" v-model="employee_onboarding.hra"
-                                            class="onboard-form form-control textbox   calculation_data gross_data "
+                                            class="onboard-form form-control textbox calculation_data gross_data "
                                             step="0.01" />
                                     </div>
 
                             </div>
-                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
 
                                     <div class="floating">
                                         <label for="" class="float-label">Statutory
                                             Bonus</label>
                                         <input type="number" placeholder="Statutory Bonus"
                                             name="statutory_bonus"  v-model="employee_onboarding.statutory_bonus"
-                                            class="onboard-form form-control textbox   calculation_data gross_data"
+                                            class="onboard-form form-control textbox calculation_data gross_data"
                                             step="0.01" />
                                     </div>
 
 
                             </div>
-                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
 
                                     <div class="floating">
                                         <label for="" class="float-label">Child
@@ -1998,50 +1997,50 @@
                                         <input type="number"
                                             placeholder="Child Education Allowance"
                                             name="child_education_allowance" v-model="employee_onboarding.child_education_allowance"
-                                            class="onboard-form form-control textbox   calculation_data gross_data"
+                                            class="onboard-form form-control textbox calculation_data gross_data"
                                             step="0.01" />
                                     </div>
 
 
 
                             </div>
-                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
 
                                     <div class="floating">
                                         <label for="" class="float-label">Food
                                             Coupon</label>
                                         <input type="number" placeholder="Food Coupon"
                                             name="food_coupon" v-model="employee_onboarding.food_coupon"
-                                            class="onboard-form form-control textbox  calculation_data gross_data"
+                                            class="onboard-form form-control textbox calculation_data gross_data"
                                             step="0.01" />
                                     </div>
 
 
                             </div>
-                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
 
                                     <div class="floating">
                                         <label for="" class="float-label">LTA</label>
                                         <input type="number" placeholder="LTA" name="lta"  v-model="employee_onboarding.lta"
-                                            class="textbox onboard-form form-control     calculation_data gross_data"
+                                            class="textbox onboard-form form-control calculation_data gross_data"
                                             step="0.01" />
                                     </div>
 
 
                             </div>
-                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
 
                                     <div class="floating">
                                         <label for="" class="float-label">Special
                                             Allowance</label>
                                         <input type="number" placeholder="Special Allowance"
                                             name="special_allowance" v-model="employee_onboarding.special_allowance"
-                                            class="onboard-form form-control textbox   calculation_data gross_data"
+                                            class="onboard-form form-control textbox calculation_data gross_data"
                                             step="0.01" />
                                     </div>
 
                             </div>
-                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
 
                                     <div class="floating">
                                         <label for="" class="float-label">Other
@@ -2049,13 +2048,13 @@
 
                                         <input type="number" placeholder="Other Allowance"
                                             name="other_allowance"  v-model="employee_onboarding.other_allowance"
-                                            class="textbox  onboard-form form-control  calculation_data gross_data"
+                                            class="textbox onboard-form form-control calculation_data gross_data"
                                             step="0.01" />
                                     </div>
 
 
                             </div>
-                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
 
                                     <div class="floating">
                                         <label for="" class="float-label">Gross
@@ -2063,13 +2062,13 @@
 
                                         <input type="number" placeholder="Gross Salary"
                                             name="gross"  v-model="employee_onboarding.gross"
-                                            class="textbox  onboard-form form-control "
+                                            class="textbox onboard-form form-control "
                                             step="0.01" required readonly />
                                     </div>
 
 
                             </div>
-                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
 
                                     <div class="floating">
                                         <label for="" class="float-label">EPF employer
@@ -2078,14 +2077,14 @@
                                         <input type="number"
                                             placeholder="EPF employer contribution"
                                             name="epf_employer_contribution"  v-model="employee_onboarding.epf_employer_contribution"
-                                            class="textbox   onboard-form form-control  calculation_data cic_data"
+                                            class="textbox onboard-form form-control calculation_data cic_data"
                                             step="0.01" />
                                     </div>
 
 
 
                             </div>
-                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
 
                                     <div class="floating">
                                         <label for="" class="float-label">ESIC employer
@@ -2093,37 +2092,37 @@
                                         <input type="number"
                                             placeholder="ESIC employer contribution"
                                             name="esic_employer_contribution"  v-model="employee_onboarding.esic_employer_contribution"
-                                            class="onboard-form form-control textbox   calculation_data cic_data"
+                                            class="onboard-form form-control textbox calculation_data cic_data"
                                             step="0.01" />
                                     </div>
 
 
                             </div>
-                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
 
                                     <div class="floating">
                                         <label for="" class="float-label">Insurance</label>
                                         <input type="number" placeholder="Insurance"
                                             name="insurance"   v-model="employee_onboarding.insurance"
-                                            class="onboard-form form-control textbox   calculation_data cic_data"
+                                            class="onboard-form form-control textbox calculation_data cic_data"
                                             step="0.01" />
                                     </div>
 
 
                             </div>
-                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
 
                                     <div class="floating">
                                         <label for="" class="float-label">Graduity</label>
                                         <input type="number" placeholder="Graduity"
                                             name="graduity"  v-model="employee_onboarding.graduity"
-                                            class="onboard-form form-control textbox   calculation_data cic_data"
+                                            class="onboard-form form-control textbox calculation_data cic_data"
                                             step="0.01" />
                                     </div>
 
 
                             </div>
-                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
 
                                     <div class="floating">
                                         <label for="" class="float-label">Cost of
@@ -2138,7 +2137,7 @@
 
 
                             </div>
-                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
 
                                     <div class="floating">
                                         <label for="" class="float-label">EPF
@@ -2146,12 +2145,12 @@
 
                                         <input type="number" placeholder="EPF Employee"
                                             name="epf_employee"   v-model="employee_onboarding.epf_employee"
-                                            class="onboard-form form-control  calculation_data net_data textbox "
+                                            class="onboard-form form-control calculation_data net_data textbox "
                                             step="0.01" />
                                     </div>
 
                             </div>
-                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
 
                                     <div class="floating">
                                         <label for="" class="float-label">ESIC
@@ -2159,13 +2158,13 @@
 
                                         <input type="number" placeholder="ESIC Employee"
                                             name="esic_employee"   v-model="employee_onboarding.esic_employee"
-                                            class="textbox  onboard-form form-control  calculation_data net_data"
+                                            class="textbox onboard-form form-control calculation_data net_data"
                                             step="0.01" />
                                     </div>
 
 
                             </div>
-                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
 
                                     <div class="floating">
                                         <label for="" class="float-label">Professional
@@ -2173,12 +2172,12 @@
 
                                         <input type="number" placeholder="Professional Tax"
                                             name="professional_tax"  v-model="employee_onboarding.professional_tax"
-                                            class="textbox  onboard-form form-control  calculation_data net_data "
+                                            class="textbox onboard-form form-control calculation_data net_data "
                                             step="0.01" />
                                     </div>
 
                             </div>
-                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
 
                                     <div class="floating">
                                         <label for="" class="float-label">Labour welfare
@@ -2191,7 +2190,7 @@
                                     </div>
 
                             </div>
-                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
 
                                     <div class="floating">
                                         <label for="" class="float-label">Net
@@ -2224,16 +2223,16 @@
 
               <!-- Personal Documents start -->
 
-              <div class="card shadow mb-0 profile-box card-top-border p-2">
+              <div class="p-2 mb-0 shadow card profile-box card-top-border">
                 <div
                   class="card-body justify-content-center align-items-center"
                 >
                   <div class="header-card-text">
                     <h6 class="mb-0">Personal Documents</h6>
                   </div>
-                  <div class="form-card mb-2">
-                    <div class="row mt-1">
-                      <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
+                  <div class="mb-2 form-card">
+                    <div class="mt-1 row">
+                      <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6">
                         <label for="" class="float-label"
                           >Aadhar Card Front<span class="text-danger"
                             >*</span
@@ -2261,7 +2260,7 @@
                         >
                       </div>
                       <div
-                        class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2"
+                        class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6"
                         id="aadhar_card_backend_content"
                       >
                         <label for="" class="float-label">
@@ -2291,7 +2290,7 @@
                           >Aadhar Card Back is Required</span
                         >
                       </div>
-                      <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
+                      <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6">
                         <label for="" class="float-label">
                           Pan Card<span class="text-danger">*</span></label
                         >
@@ -2324,7 +2323,7 @@
                           >Pan Card is Required</span
                         >
                       </div>
-                      <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
+                      <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6">
                         <label for="" class="float-label"> Passport</label>
 
                         <input
@@ -2338,7 +2337,7 @@
                           class="onboard-form form-control file"
                         />
                       </div>
-                      <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
+                      <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6">
                         <label for="" class="float-label"> ID</label>
 
                         <input
@@ -2352,7 +2351,7 @@
                           class="onboard-form form-control file"
                         />
                       </div>
-                      <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
+                      <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6">
                         <label for="" class="float-label">
                           Driving License</label
                         >
@@ -2421,12 +2420,12 @@
                   </div>
 
                   <div class="row">
-                    <div class="col-12 text-right">
+                    <div class="text-right col-12">
                       <input
                         type="button"
                         value="sample"
                         @click="Sampledata"
-                        class="btn btn-orange text-center processOnboardForm mr-4"
+                        class="mr-4 text-center btn btn-orange processOnboardForm"
                       />
 
                       <button
@@ -2436,7 +2435,7 @@
                         placeholder=""
                         name="save_form"
                         id="save_button"
-                        class="btn btn-orange text-center processOnboardForm mr-4"
+                        class="mr-4 text-center btn btn-orange processOnboardForm"
                         value="Submit"
                         @click="SaveEmployeeOnboardingData"
                       >
@@ -2450,7 +2449,7 @@
                         placeholder=""
                         name="submit_form"
                         id="msform"
-                        class="btn btn-orange text-center processOnboardForm"
+                        class="text-center btn btn-orange processOnboardForm"
                         value="Submit"
                         :disabled="fileUploadValidation"
                         @click="SubmitEmployeeOnboardingData"
@@ -2467,6 +2466,45 @@
       </div>
     </div>
   </div>
+
+  <div>Compensation</div>
+  <div class="form-card">
+    <div class="row">
+        <div class="form-check form-check-inline">
+            <input style="height: 20px;width: 20px;" class="form-check-input" type="radio" name="compensation"
+                @click="comp_mon" v-model="comp.compensation_monthly" value="compensation_monthly">
+            <label class="form-check-label leave_type ms-2" for="compensation_monthly">compensation_monthly</label>
+
+        </div>
+        <div class="form-check form-check-inline">
+            <input style="height: 20px;width: 20px;" class="form-check-input" type="radio" name="compensation"
+                id="compensation_yearly" value="compensation_yearly"
+                @click="comp_year" v-model="comp.compensation_yearly">
+            <label class="form-check-label leave_type ms-2" for="compensation_yearly">compensation_yearly</label>
+        </div>
+    </div>
+
+            <Dropdown v-if="mon"
+            :options="compensation_month"
+            optionLabel="name"
+            optionValue="id"
+            placeholder="Select Monthly"
+          />{{ mon }}
+          <Dropdown v-if="year"
+                :options="compensation_yearly"
+                optionLabel="name"
+                optionValue="id"
+                placeholder="Select Yearly"
+              />{{year}}
+
+
+              <div v-if="te">test</div>
+
+              <button @click="compensation">cl</button>
+        </div>
+
+
+
 
   <Dialog
     v-if="
@@ -2518,7 +2556,7 @@
     :style="{ width: '30vw' }"
     position="center"
   >
-    <div class="flex align-items-center text-center flex-column pt-6 px-3">
+    <div class="flex px-3 pt-6 text-center align-items-center flex-column">
       <i
         class="pi pi-check-circle"
         :style="{ fontSize: '5rem', color: 'var(--green-500)' }"
@@ -2557,6 +2595,29 @@ import {
   getMaritalStatus,
   getBloodGroups,
 } from "./NormalOnboardingService";
+
+const mon=ref(false)
+const year=ref(false)
+
+const te =ref(true)
+
+const comp =reactive ({
+    compensation_monthly:'',
+    compensation_yearly:""
+})
+
+const compensation =() =>{
+    console.log(comp.compensation_monthly);
+    console.log(comp.compensation_yearly);
+    console.log(mon.value);
+    console.log(year.value);
+    year.value =true
+    te.value =false
+    console.log(te.value);
+
+    console.log("working");
+
+}
 
 onMounted(() => {
   // For Bank Data
@@ -2735,6 +2796,9 @@ const AadharDocBackInvalid = ref(false);
 const PancardInvalid = ref(false);
 const EducationCertificateInvalid = ref(false);
 const fileUploadValidation=ref(true)
+
+
+
 
 
 
@@ -3044,34 +3108,7 @@ const personalMailExists=()=>{
     })
 }
 
-// const fileUpload = () => {
-//   let currentObj = this;
-//   const config = {
-//     headers: { "content-type": "multipart/form-data" },
-//   };
 
-//   let formData = new FormData();
-//   formData.append("employee_onboarding", JSON.stringify(employee_onboarding));
-//   formData.append("Aadharfront", employee_onboarding.AadharCardFront);
-//   formData.append("AadharBack", employee_onboarding.AadharCardBack);
-//   formData.append("panDoc", employee_onboarding.PanCardDoc);
-//   formData.append("eductionDoc", employee_onboarding.EductionDoc);
-//   formData.append("releivingDoc", employee_onboarding.ReleivingLetterDoc);
-//   formData.append("voterId", employee_onboarding.VoterIdDoc);
-//   formData.append("passport", employee_onboarding.PassportDoc);
-//   formData.append("dlDoc", employee_onboarding.DrivingLicenseDoc);
-
-//   console.log(formData);
-
-//   axios
-//     .post("/fileUploadingTest", formData, config)
-//     .then(function (response) {
-//       currentObj.success = response.data.success;
-//     })
-//     .catch(function (error) {
-//       currentObj.output = error;
-//     });
-// };
 
 const AadharFront = (e) => {
   // Check if file is selected
@@ -3313,6 +3350,22 @@ const BloodGroup = ref([
   { id: "6", name: "AB Negative" },
   { id: "7", name: "O Positive" },
   { id: "8", name: "O Negative" },
+]);
+
+
+const compensation_month = ref([
+  { id: "1", name: "Monthly gross" },
+  { id: "2", name: "Monthly NET" },
+  { id: "3", name: "Monthly " },
+
+
+]);
+const compensation_yearly = ref([
+  { id: "1", name: "yearly gross" },
+  { id: "2", name: "yearly NET" },
+  { id: "3", name: "yearly " },
+
+
 ]);
 
 // Sample testong Data
