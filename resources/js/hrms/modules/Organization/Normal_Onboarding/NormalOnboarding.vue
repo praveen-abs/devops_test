@@ -1949,7 +1949,51 @@
 
                     <div class="form-card">
                         <div class="row">
-                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
+
+
+                     <div  class="row mb-3">
+                     <div class="col-md-12  col-sm-12 col-lg-4 col-xl-6 col-xxl-6  mb-md-0 mb-3">
+
+                         <div class="form-check form-check-inline mt-2">
+                                    <input style="height: 20px;width: 20px;" class="form-check-input" type="radio" name="compensation"
+                                     id="compensation_monthly"   @click="comp_mon" v-model="comp.compensation_monthly" value="compensation_monthly" >
+                                    <label class="form-check-label leave_type ms-2" for="compensation_monthly">Compensation Monthly</label>
+
+                                </div>
+                                <div class="form-check form-check-inline ml-8">
+                                    <input style="height: 20px;width: 20px;" class="form-check-input" type="radio" name="compensation"
+                                        id="compensation_yearly" value="compensation_yearly"
+                                        @click="comp_year" v-model="comp.compensation_yearly" >
+                                    <label class="form-check-label leave_type ms-2" for="compensation_yearly">Compensation Yearly</label>
+                                </div>
+
+
+                    </div>
+                    <div class="col-md-12  col-sm-12 col-lg-8 col-xl-4 col-xxl-4  mb-md-0 mb-3">
+                       <div class="form-check form-check-inline" v-if="mon">
+
+                                            <Dropdown
+                                            :options="compensation_month"
+                                            optionLabel="name"
+                                            optionValue="id"
+                                            placeholder="Select Monthly"
+                                        />
+                                         </div>
+                                        <div class="form-check form-check-inline" v-if="year">
+
+                                        <Dropdown
+                                                :options="compensation_yearly"
+                                                optionLabel="name"
+                                                optionValue="id"
+                                                placeholder="Select Yearly"
+                                            />
+                                        </div>
+
+                    </div>
+                </div>
+
+
+                            <!-- <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
 
 
                                     <div class="floating">
@@ -1963,9 +2007,9 @@
                                     </div>
 
 
-                            </div>
+                            </div> -->
 
-                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
+                            <!-- <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
 
                                     <div class="floating">
                                         <label for="" class="float-label">HRA</label>
@@ -1988,8 +2032,8 @@
                                     </div>
 
 
-                            </div>
-                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
+                            </div> -->
+                            <!-- <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
 
                                     <div class="floating">
                                         <label for="" class="float-label">Child
@@ -2003,8 +2047,8 @@
 
 
 
-                            </div>
-                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
+                            </div> -->
+                            <!-- <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
 
                                     <div class="floating">
                                         <label for="" class="float-label">Food
@@ -2016,8 +2060,8 @@
                                     </div>
 
 
-                            </div>
-                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
+                            </div> -->
+                            <!-- <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
 
                                     <div class="floating">
                                         <label for="" class="float-label">LTA</label>
@@ -2203,7 +2247,7 @@
                                     </div>
 
 
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -2472,14 +2516,14 @@
     <div class="row">
         <div class="form-check form-check-inline">
             <input style="height: 20px;width: 20px;" class="form-check-input" type="radio" name="compensation"
-                @click="comp_mon" v-model="comp.compensation_monthly" value="compensation_monthly">
+                @click="comp_mon" v-model="comp.compensation_monthly" value="compensation_monthly" >
             <label class="form-check-label leave_type ms-2" for="compensation_monthly">compensation_monthly</label>
 
         </div>
         <div class="form-check form-check-inline">
             <input style="height: 20px;width: 20px;" class="form-check-input" type="radio" name="compensation"
                 id="compensation_yearly" value="compensation_yearly"
-                @click="comp_year" v-model="comp.compensation_yearly">
+                @click="comp_year" v-model="comp.compensation_yearly" >
             <label class="form-check-label leave_type ms-2" for="compensation_yearly">compensation_yearly</label>
         </div>
     </div>
@@ -2489,13 +2533,13 @@
             optionLabel="name"
             optionValue="id"
             placeholder="Select Monthly"
-          />{{ mon }}
+          />
           <Dropdown v-if="year"
                 :options="compensation_yearly"
                 optionLabel="name"
                 optionValue="id"
                 placeholder="Select Yearly"
-              />{{year}}
+              />
 
 
               <div v-if="te">test</div>
@@ -2580,7 +2624,7 @@
 
 <script setup>
 import { useVuelidate } from "@vuelidate/core";
-import { useToast } from "primevue/usetoast";
+// import { useToast } from "primevue/usetoast";
 import axios from "axios";
 import { reactive } from "@vue/reactivity";
 import { onMounted } from "@vue/runtime-core";
@@ -2606,16 +2650,29 @@ const comp =reactive ({
     compensation_yearly:""
 })
 
-const compensation =() =>{
-    console.log(comp.compensation_monthly);
-    console.log(comp.compensation_yearly);
-    console.log(mon.value);
-    console.log(year.value);
-    year.value =true
-    te.value =false
-    console.log(te.value);
 
-    console.log("working");
+
+const comp_mon =() =>{
+     mon.value =true
+     year.value =false
+}
+const comp_year =() =>{
+     year.value =true
+     mon.value =false
+}
+
+const compensation =() =>{
+
+   if(comp.compensation_monthly == 'compensation_monthly'){
+        mon.value =true
+   }else
+   if(comp.compensation_yearly == 'compensation_yearly' ){
+       year.value =true
+   }else{
+     mon.value =false
+     year.value =false
+
+   }
 
 }
 
@@ -2772,7 +2829,7 @@ const employee_onboarding = reactive({
 
 // variableDeclarations
 
-const toast = useToast();
+// const toast = useToast();
 const bankList = ref();
 const country = ref();
 const departmentDetails = ref();
@@ -2823,12 +2880,12 @@ const handleSubmit = (isFormValid) => {
     : (EducationCertificateInvalid.value = false);
 
   if (!isFormValid) {
-    toast.add({
-      severity: "error",
-      summary: "Error Message",
-      detail: "Message Content",
-      life: 3000,
-    });
+    // toast.add({
+    //   severity: "error",
+    //   summary: "Error Message",
+    //   detail: "Message Content",
+    //   life: 3000,
+    // });
     RequiredDocument.value = true;
     fileUploadValidation.value=true;
     return;
