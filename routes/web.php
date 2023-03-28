@@ -544,13 +544,16 @@ Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 's
     //Holidays
     ////Holidays creation
     Route::get('/holidays/master-page',  [App\Http\Controllers\VmtHolidaysController::class, 'showHolidaysMasterPage'])->name('holidays-masterpage');
-
-
+    Route::get('/test_ui/master-page',  [App\Http\Controllers\VmtHolidaysController::class, 'createHoliday'])->name('test_ui-masterpage');
+    Route::get('/get_data', function () {
+        return view('holidays.test_ui.edit_holidays_list');
+    })->name('/get_data');
     //Testing controller
     Route::get('/download-private-file', [App\Http\Controllers\VmtTestingController::class, 'downloadPrivateFile'])->name('downloadPrivateFile');
     Route::get('/view-private-file', [App\Http\Controllers\VmtTestingController::class, 'viewPrivateFile'])->name('viewPrivateFile');
 
 });
+
 
 Route::post('updatePassword', 'App\Http\Controllers\VmtEmployeeController@updatePassword')->name('vmt-updatepassword');
 Route::get('/resetPassword', 'App\Http\Controllers\Auth\LoginController@showResetPasswordPage')->name('vmt-resetpassword-page');

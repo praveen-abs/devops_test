@@ -466,8 +466,13 @@ class VmtAttendanceController extends Controller
         $image_view = url('/') . $VmtGeneralInfo->logo_img;
 
         // dd($request->leave_type_id);
+        if(!empty($request->notifications_users_id))
+            $notification_mails = VmtEmployeeOfficeDetails::whereIn('user_id',$request->notifications_users_id)->pluck('officical_mail');
+        else
+            $notification_mails = array();
 
-        $isSent    = \Mail::to($reviewer_mail)->send(new RequestLeaveMail(
+
+        $isSent    = \Mail::to($reviewer_mail)->cc($notification_mails)->send(new RequestLeaveMail(
                                                     uEmployeeName : auth::user()->name,
                                                     uEmpCode : auth::user()->user_code,
                                                     uEmpAvatar : $emp_avatar,
