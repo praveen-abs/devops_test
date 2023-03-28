@@ -1951,7 +1951,7 @@
                         <div class="row">
 
 
-                     <div  class="row mb-3">
+                     <!-- <div  class="row mb-3">
                      <div class="col-md-12  col-sm-12 col-lg-4 col-xl-6 col-xxl-6  mb-md-0 mb-3">
 
                          <div class="form-check form-check-inline mt-2">
@@ -1969,13 +1969,14 @@
 
 
                     </div>
-                    <div class="col-md-12  col-sm-12 col-lg-8 col-xl-4 col-xxl-4  mb-md-0 mb-3">
+                    <div class="col-md-12  col-sm-12 col-lg- col-xl-4 col-xxl-6  mb-md-0 mb-3">
                        <div class="form-check form-check-inline" v-if="mon">
 
                                             <Dropdown
                                             :options="compensation_month"
                                             optionLabel="name"
                                             optionValue="id"
+                                            style="height: 2.9em;"
                                             placeholder="Select Monthly"
                                         />
                                          </div>
@@ -1985,31 +1986,44 @@
                                                 :options="compensation_yearly"
                                                 optionLabel="name"
                                                 optionValue="id"
+                                                style="height: 2.9em;"
                                                 placeholder="Select Yearly"
                                             />
                                         </div>
 
+                                        <div class="floating">
+
+                                            <label for="" class="float-label">Basic
+                                                Salary</label>
+                                            <input type="number" placeholder="Basic Salary"
+                                                name="basic"  v-model="employee_onboarding.basic"
+                                                class="textbox onboard-form form-control calculation_data gross_data"
+                                                step="0.01" />
+                                        </div>
+
+
                     </div>
-                </div>
+
+                </div>-->
 
 
-                            <!-- <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
+                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
 
 
                                     <div class="floating">
 
                                         <label for="" class="float-label">Basic
                                             Salary</label>
-                                        <input type="number" placeholder="Basic Salary"
+                                        <input @input="compensatory_calculation" type="number" placeholder="Basic Salary"
                                             name="basic"  v-model="employee_onboarding.basic"
                                             class="textbox onboard-form form-control calculation_data gross_data"
                                             step="0.01" />
                                     </div>
 
 
-                            </div> -->
+                            </div>
 
-                            <!-- <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
+                             <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
 
                                     <div class="floating">
                                         <label for="" class="float-label">HRA</label>
@@ -2032,8 +2046,8 @@
                                     </div>
 
 
-                            </div> -->
-                            <!-- <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
+                            </div>
+                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
 
                                     <div class="floating">
                                         <label for="" class="float-label">Child
@@ -2047,8 +2061,8 @@
 
 
 
-                            </div> -->
-                            <!-- <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
+                            </div>
+                             <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
 
                                     <div class="floating">
                                         <label for="" class="float-label">Food
@@ -2060,8 +2074,8 @@
                                     </div>
 
 
-                            </div> -->
-                            <!-- <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
+                            </div>
+                             <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
 
                                     <div class="floating">
                                         <label for="" class="float-label">LTA</label>
@@ -2247,7 +2261,7 @@
                                     </div>
 
 
-                            </div> -->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -2511,41 +2525,7 @@
     </div>
   </div>
 
-  <div>Compensation</div>
-  <div class="form-card">
-    <div class="row">
-        <div class="form-check form-check-inline">
-            <input style="height: 20px;width: 20px;" class="form-check-input" type="radio" name="compensation"
-                @click="comp_mon" v-model="comp.compensation_monthly" value="compensation_monthly" >
-            <label class="form-check-label leave_type ms-2" for="compensation_monthly">compensation_monthly</label>
 
-        </div>
-        <div class="form-check form-check-inline">
-            <input style="height: 20px;width: 20px;" class="form-check-input" type="radio" name="compensation"
-                id="compensation_yearly" value="compensation_yearly"
-                @click="comp_year" v-model="comp.compensation_yearly" >
-            <label class="form-check-label leave_type ms-2" for="compensation_yearly">compensation_yearly</label>
-        </div>
-    </div>
-
-            <Dropdown v-if="mon"
-            :options="compensation_month"
-            optionLabel="name"
-            optionValue="id"
-            placeholder="Select Monthly"
-          />
-          <Dropdown v-if="year"
-                :options="compensation_yearly"
-                optionLabel="name"
-                optionValue="id"
-                placeholder="Select Yearly"
-              />
-
-
-              <div v-if="te">test</div>
-
-              <button @click="compensation">cl</button>
-        </div>
 
 
 
@@ -2640,41 +2620,9 @@ import {
   getBloodGroups,
 } from "./NormalOnboardingService";
 
-const mon=ref(false)
-const year=ref(false)
-
-const te =ref(true)
-
-const comp =reactive ({
-    compensation_monthly:'',
-    compensation_yearly:""
-})
 
 
 
-const comp_mon =() =>{
-     mon.value =true
-     year.value =false
-}
-const comp_year =() =>{
-     year.value =true
-     mon.value =false
-}
-
-const compensation =() =>{
-
-   if(comp.compensation_monthly == 'compensation_monthly'){
-        mon.value =true
-   }else
-   if(comp.compensation_yearly == 'compensation_yearly' ){
-       year.value =true
-   }else{
-     mon.value =false
-     year.value =false
-
-   }
-
-}
 
 onMounted(() => {
   // For Bank Data
@@ -3166,6 +3114,34 @@ const personalMailExists=()=>{
 }
 
 
+// compensatory Logic
+
+const compensatory_calculation = () =>{
+   let basic = employee_onboarding.basic * 50/100
+   console.log(basic);
+}
+
+const mon=ref(false)
+const year=ref(false)
+
+
+const comp =reactive ({
+    compensation_monthly:'',
+    compensation_yearly:""
+})
+
+
+
+const comp_mon =() =>{
+     mon.value =true
+     year.value =false
+}
+const comp_year =() =>{
+     year.value =true
+     mon.value =false
+}
+
+
 
 const AadharFront = (e) => {
   // Check if file is selected
@@ -3412,15 +3388,14 @@ const BloodGroup = ref([
 
 const compensation_month = ref([
   { id: "1", name: "Monthly gross" },
-  { id: "2", name: "Monthly NET" },
-  { id: "3", name: "Monthly " },
+  { id: "2", name: "Monthly Net" },
 
 
 ]);
 const compensation_yearly = ref([
-  { id: "1", name: "yearly gross" },
-  { id: "2", name: "yearly NET" },
-  { id: "3", name: "yearly " },
+  { id: "1", name: "Yearly Gross" },
+  { id: "2", name: "Yearly Net" },
+
 
 
 ]);
