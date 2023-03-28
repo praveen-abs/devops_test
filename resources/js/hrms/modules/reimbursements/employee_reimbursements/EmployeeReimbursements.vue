@@ -40,7 +40,7 @@
           <div
             class="col-sm-12 col-md-5 col-lg-5 col-xl-5 col-xxl-5 d-flex justify-content-end"
           >
-          <Calendar v-model="date" view="month" dateFormat="mm/yy" class="mr-4" placeholder="Select Month" />
+          <Calendar  v-model="date" view="month" dateFormat="mm/yy" class="mr-4 " placeholder="Select Month" />
             <button
               v-if="employee_service.reimbursementsScreen"
               @click="employee_service.onclickOpenReimbursmentDailog"
@@ -640,5 +640,31 @@ onMounted(() => {
   font-weight: 700;
   text-align: center;
 }
+
+.p-calendar .p-inputtext  .p-inputwrapper .p-component {
+    flex: 1 1 auto;
+    width: 1%;
+    background: rebeccapurple;
+}
+
+.p-calendar .p-inputwrapper .p-inputtext .p-component::-webkit-input-placeholder{ /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: red;
+  }
+.p-calendar .p-inputwrapper .p-inputtext .p-component:-ms-input-placeholder{ /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: red;
+  }
+.p-calendar .p-inputwrapper .p-inputtext .p-component::-ms-input-placeholder{ /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: red;
+  }
+
+
+
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: red;
+  }
+
+  ::-ms-input-placeholder { /* Microsoft Edge */
+    color: red;
+  }
 
 </style>

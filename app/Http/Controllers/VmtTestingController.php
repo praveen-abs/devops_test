@@ -10,6 +10,7 @@ use App\Imports\VmtPaySlip;
 use Dompdf\Options;
 use Dompdf\Dompdf;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
 use PDF;
 
 use Illuminate\Support\Facades\DB;
@@ -23,32 +24,28 @@ class VmtTestingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    // public function index()
-    // {
 
-    //     $generalInfo = VmtGeneralInfo::first();
 
-    //     // $month = $request->selectedPaySlipMonth;
-    //     $data= VmtEmployeePaySlip::where([
-    //                 ['user_id','=', auth()->user()->id],
+     /*
+        Download private file.
 
-    //                 ])->first();
-    //       //dd($data);
-    //     // return view('vmt_payslipTemplate', $data);
-    //     // download PDF file with download method
-    //     // $pdf = new Dompdf();
-    //     $html =  view('testing', $data);
-    //     // $pdf->loadHtml($html, 'UTF-8');
-    //     // $pdf->setPaper('A4', 'portrait');
-    //     // $pdf->render();
-    //     // $filename = $data['employee']->Rename;
-    //     // return $pdf->stream($filename, ["Attachment" => false]);
-    //     // dd($html);
+     */
+    public function downloadPrivateFile(){
+        $private_file = "employee/emp_B090/documents/voterIdB090_22-03-2023 15-47-22.jpg";
 
-    //     // return $pdf->download($data['employee']->Rename.'.pdf');
-    //     return $html;
-    // }
+        //dd(Storage::disk('private')->allFiles());
+        return Storage::disk('private')->download($private_file);
+    }
 
+    /*
+       View private file such as image
+
+    */
+    public function viewPrivateFile(){
+        $private_file = "employee/emp_B090/documents/voterIdB090_22-03-2023 15-47-22.jpg";
+
+        return response()->file(storage_path('uploads/'.$private_file));
+    }
 
     public function testingpdf(){
         $client_name='brandavatar';
@@ -87,7 +84,22 @@ class VmtTestingController extends Controller
     }
 
     public function viewpdf(){
-        return view('testing');
+       $pathToFile = storage_path('uploads\employee\emp_B090\documents/' . "voterIdB090_21-03-2023 12-32-42.png");
+        //$pathToFile = public_path('images/'.'avatar_SA100_2023-01-18_05_57_46pm.JPG');
+
+        // if(!File::exists($pathToFile)){
+        //     abort(404);
+        // }else{
+        //     $file = File::get( $pathToFile);
+        //     $type = File::mimeType($pathToFile);
+        //     $response = Response::make($file, 200);
+        //     $response->header("Content-Type", $type);
+        // }
+
+        $base64 = base64_encode( $pathToFile);
+        $image_data = 'data:'.mime_content_type( $pathToFile) . ';base64,' . $base64;
+       // dd( $image_data);
+        return view('testing',compact('pathToFile','image_data','base64'));
     }
 
 
@@ -108,6 +120,19 @@ class VmtTestingController extends Controller
     //         ]);
     //     }
     // }
+
+    public function retriveFiles(Request $request){
+        $pathToFile = storage_path('uploads\employee\emp_B090\documents/' . "voterIdB090_21-03-2023 12-32-42.png");
+    //     dd( $pathToFile);
+    //     dd(Storage::disk('local')->getAdapter()->applyPathPrefix('\employee\emp_B090\documents'));
+    //     dd(Storage::disk('private')->path(''));
+    //     dd(Storage::disk('private')->getAdapter()->setprefixer());
+    //     dd(Storage::disk('private')->get('voterIdB090_21-03-2023 12-32-42.png'));
+    //      //dd(Storage::disk('private')->directories('employee/emp_B090') );
+    //    dd(Storage::disk('D:\Laravelworks\lara_abs_pms\storage\uploads\employee\emp_B090\documents')->exists('voterIdB090_21-03-2023 12-32-42.png'));
+        //  dd((Storage::get($pathToFile)));
+    return $pathToFile;
+    }
 
 
 }

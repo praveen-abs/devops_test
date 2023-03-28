@@ -149,7 +149,7 @@ class HomeController extends Controller
 
 
     public function updateExperienceInfo(Request $request) {
-
+        // dd($request->all());
         $idArr = $request->input('ids');
         $companyNameArr = $request->input('company_name');
         $locationArr = $request->input('location');

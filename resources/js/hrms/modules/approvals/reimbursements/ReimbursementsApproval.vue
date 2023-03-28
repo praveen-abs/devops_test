@@ -12,8 +12,8 @@
     <div class="flex justify-content-between align-items-center">
 
         <div class="flex justify-content-between align-items-center">
-            <Calendar v-model="selected_date" view="month" dateFormat="mm/yy" class="" />
-            <Dropdown v-model="selected_status" :options="statuses" placeholder="Status" class="w-full md:w-14rem mx-3" />
+            <Calendar v-model="selected_date" view="month" dateFormat="mm/yy" class="" style=" border: 1px solid orange; border-radius: 7px;" />
+            <Dropdown v-model="selected_status" :options="statuses" placeholder="Status" class="w-full md:w-14rem mx-3" style=" border: 1px solid orange; border-radius: 7px;" />
             <button label="Submit" class="btn btn-primary" severity="danger" :disabled="!selected_status == '' ? false : true"
                 @click="generate_ajax"> <i class="fa fa-cog me-2"></i> Generate</button>
         </div>
@@ -110,7 +110,7 @@
                     <div class="orders-subtable">
                         <DataTable :value="slotProps.data.reimbursement_data" responsiveLayout="scroll"
                             v-model:selection="selectedAllEmployee" :selectAll="selectAll" @select-all-change="onSelectAllChange">
-                            <Column selectionMode="multiple" style="width: 3rem" :exportable="false"></Column>
+                            <!-- <Column selectionMode="multiple" style="width: 3rem" :exportable="false"></Column> -->
                             <Column field="" header="Date" sortable>
                                 <template #body="slotProps">
                                     <p style="white-space: nowrap;"> {{ moment(slotProps.data.date).format('DD-MMM-YYYY') }}
@@ -140,6 +140,7 @@
             </DataTable>
         </div>
     </div>
+
 
 </template>
 
@@ -599,4 +600,5 @@ const getSeverity = (status) => {
 .pi-sort-amount-up-alt::before {
     content: "\e9a2";
     color: white;
-}</style>
+}
+</style>

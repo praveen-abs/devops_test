@@ -204,21 +204,11 @@ class VmtEmployeeOnboardingController extends Controller
     public function processEmployeeOnboardForm_Normal_Quick(Request $request, VmtEmployeeService $employeeService)
     {
 
+
+
         $data=$request->all();
 
-        // dd( $data['Aadharfront']);
-        foreach( $data as $key=>$value){
 
-            if( $key!='employee_onboarding'){
-                //dd( $data['employee_onboarding']);
-                $data['employee_onboarding'][$key]=$value;
-                //dd( $data['employee_onboarding'][$key]);
-            }else{
-                $data['employee_onboarding'] = json_decode($value, true);
-            }
-        }
-
-        $data = $data['employee_onboarding'] ;
         $user_id =$data['employee_code'];
         $response = "";
         $isEmailSent = "";
@@ -470,7 +460,7 @@ class VmtEmployeeOnboardingController extends Controller
                 $newEmployee->epf_number = $row["epf_number"] ?? '';
 
                 $newEmployee->esic_number = $row["esic_number"] ?? '';
-                $newEmployee->marital_status = $row["marital_status"] ?? '';
+                $newEmployee->marital_status = $row["marital_status_id"] ?? '';
 
                 $newEmployee->mobile_number  = strval($row["mobile_no"]);
                 $newEmployee->blood_group  = $row["blood_group"] ?? '';
@@ -1353,6 +1343,8 @@ class VmtEmployeeOnboardingController extends Controller
             'status' => 'empty',
             'message' => 'empty',
         ];
+
+        dd($request->all());
 
         //This wont work for super-admin for now.
         $currentEmployeeDetails = VmtEmployee::where('userid', auth()->user()->id)->first();

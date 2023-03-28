@@ -27,6 +27,12 @@ Route::get('/vuejs', function () {
 });
 
 
+Route::get('/create-holiday', function () {
+    return view('createHoliday');
+})->name('create-holiday');
+
+
+
 Route::middleware(['auth'])->group(function () {
 
     //Basic DB data
@@ -59,7 +65,12 @@ Route::middleware(['auth'])->group(function () {
 
     })->name('isEmailExists');
 
-    Route::get('/isEmpCodeExists/{emp_code?}', function($emp_code){
+
+    Route::post('/profile-pages/updateReportingManager', [App\Http\Controllers\VmtProfilePagesController::class, 'updateReportingManager'])->name('profile-pages-update-reporting-mgr');
+    Route::post('/profile-pages/updateDepartment', [App\Http\Controllers\VmtProfilePagesController::class, 'updateDepartment'])->name('profile-pages-updatedepartment');
+
+
+    Route::get('/addDepartment/{emp_code?}', function($emp_code){
 
         return isEmpCodeExists($emp_code);
 
@@ -136,7 +147,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/attendance-regularization-approvals', [App\Http\Controllers\VmtAttendanceController::class, 'approveRejectAttendanceRegularization'])->name('process-attendance-regularization-approvals');
     Route::get('/fetch-att-regularization-data', [App\Http\Controllers\VmtAttendanceController::class, 'fetchAttendanceRegularizationData'])->name('fetch-regularization-approvals');
 
-
+    Route::get('/fetch-onboarded-doc',[App\Services\VmtEmployeeService::class,'fetchAllEmployeesDocumentsAsGroups'])->name('fetch-onboarded-doc');
 
     //Update User Details
 
@@ -177,7 +188,7 @@ Route::get('/testing-file-upload', [App\Http\Controllers\VmtTestingController::c
 
 Route::post('/fileUploadingTest', [App\Http\Controllers\VmtTestingController::class, 'fileUploadingTest'])->name('fileUploadingTest');
 
-
+Route::get('/retrive-files', [App\Http\Controllers\VmtTestingController::class, 'retriveFiles'])->name('retriveFiles');
 // notifications
 Route::get('/notifications/{id}', [App\Http\Controllers\HomeController::class, 'delete'])->name('delete');
 
@@ -390,14 +401,17 @@ Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 's
     Route::get('/document_preview', 'App\Http\Controllers\HomeController@showDocumentTemplate')->name('document_preview');
 
     Route::get('/documents',  [App\Http\Controllers\VmtEmployeeController::class, 'showEmployeeDocumentsPage'])->name('vmt-documents-route');
+    // Route::get('/employee-documents',  [App\Http\Controllers\VmtEmployeeController::class, 'fetchDocsForUser'])->name('vmt-documents-routes');
 
     Route::post('vmt-documents-route', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@storeEmployeeDocuments')->name('vmt-storedocuments-route');
 
     //Documents Approvals
     Route::get('approvals-documents', 'App\Http\Controllers\VmtApprovalsController@showDocumentsApprovalPage')->name('vmt-approvals-emp-documents');
+    Route::get('/employee-documents/{user_code}', 'App\Http\Controllers\VmtApprovalsController@fetchDocsForUser')->name('vmt-documents-routes');
     Route::get('/documents-review-page/{user_code}', 'App\Http\Controllers\VmtApprovalsController@showDocumentsReviewPage')->name('vmt-emp-documents-review');
     Route::post('documents-review', 'App\Http\Controllers\VmtApprovalsController@storeDocumentsReviewByAdmin')->name('vmt-store-documents-review');
     Route::post('documents-review-approve-all', 'App\Http\Controllers\VmtApprovalsController@approveAllDocumentByAdmin')->name('vmt-store-documents-review-approve-all');
+
 
     //PMS Approvals
     Route::post('/approvals-pms', 'App\Http\Controllers\VmtApprovalsController@approveRejectPMSForm')->name('vmt-approvals-pms');
@@ -529,11 +543,14 @@ Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 's
 
     //Holidays
     ////Holidays creation
-    Route::get('/holiday/master-page',  [App\Http\Controllers\VmtHolidaysController::class, 'showHolidaysMasterPage'])->name('holidays-masterpage');
+    Route::get('/holidays/master-page',  [App\Http\Controllers\VmtHolidaysController::class, 'showHolidaysMasterPage'])->name('holidays-masterpage');
     Route::get('/test_ui/master-page',  [App\Http\Controllers\VmtHolidaysController::class, 'createHoliday'])->name('test_ui-masterpage');
     Route::get('/get_data', function () {
         return view('holidays.test_ui.edit_holidays_list');
     })->name('/get_data');
+    //Testing controller
+    Route::get('/download-private-file', [App\Http\Controllers\VmtTestingController::class, 'downloadPrivateFile'])->name('downloadPrivateFile');
+    Route::get('/view-private-file', [App\Http\Controllers\VmtTestingController::class, 'viewPrivateFile'])->name('viewPrivateFile');
 
 });
 
