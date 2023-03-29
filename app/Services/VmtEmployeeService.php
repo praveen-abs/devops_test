@@ -510,8 +510,8 @@ class VmtEmployeeService {
     }
 
 
-    // Generate Employee Apoinment PDF after onboarding
-    public function attachApoinmentPdf($employeeData)
+    // Generate Employee Appointment PDF after onboarding
+    public function attachAppointmentLetterPDF($employeeData)
     {
         //dd($employeeData);
         $VmtGeneralInfo = VmtGeneralInfo::first();
