@@ -2017,7 +2017,7 @@
                                         <input  type="number" placeholder="Basic Salary"
                                             name="basic"  v-model="employee_onboarding.basic"
                                             class="textbox onboard-form form-control calculation_data gross_data"
-                                            step="0.01" />
+                                            step="0.01"  readonly/>
                                     </div>
 
 
@@ -2030,7 +2030,7 @@
 
                                         <input type="number" placeholder="HRA" name="hra" v-model="employee_onboarding.hra"
                                             class="onboard-form form-control textbox calculation_data gross_data "
-                                            step="0.01" />
+                                            step="0.01" readonly />
                                     </div>
 
                             </div>
@@ -2094,7 +2094,7 @@
                                         <input type="number" placeholder="Special Allowance"
                                             name="special_allowance" v-model="employee_onboarding.special_allowance"
                                             class="onboard-form form-control textbox calculation_data gross_data"
-                                            step="0.01" />
+                                            step="0.01" readonly />
                                     </div>
 
                             </div>
@@ -2136,7 +2136,7 @@
                                             placeholder="EPF employer contribution"
                                             name="epf_employer_contribution"  v-model="employee_onboarding.epf_employer_contribution"
                                             class="textbox onboard-form form-control calculation_data cic_data"
-                                            step="0.01" />
+                                            step="0.01" readonly />
                                     </div>
 
 
@@ -2151,7 +2151,7 @@
                                             placeholder="ESIC employer contribution"
                                             name="esic_employer_contribution"  v-model="employee_onboarding.esic_employer_contribution"
                                             class="onboard-form form-control textbox calculation_data cic_data"
-                                            step="0.01" />
+                                            step="0.01" readonly />
                                     </div>
 
 
@@ -2205,7 +2205,7 @@
                                         <input type="number" placeholder="EPF Employee"
                                             name="epf_employee"   v-model="employee_onboarding.epf_employee"
                                             class="onboard-form form-control calculation_data net_data textbox "
-                                            step="0.01" />
+                                            step="0.01"  readonly/>
                                     </div>
 
                             </div>
@@ -2218,7 +2218,7 @@
                                         <input type="number" placeholder="ESIC Employee"
                                             name="esic_employee"   v-model="employee_onboarding.esic_employee"
                                             class="textbox onboard-form form-control calculation_data net_data"
-                                            step="0.01" />
+                                            step="0.01" readonly />
                                     </div>
 
 
@@ -2754,6 +2754,7 @@ const employee_onboarding = reactive({
     child_education_allowance:'',
     food_coupon:'',
     lta:'',
+    other_allowance:'',
     special_allowance:'',
     graduity:'',
     cic:'',
@@ -3120,42 +3121,43 @@ const personalMailExists=()=>{
 // compensatory Logic
 
 const compensatory_calculation = () =>{
-  //  let basic = employee_onboarding.cic * 50/100
-  //  console.log("Gross :"+basic);
-  //  employee_onboarding.basic = basic
+    let basic = employee_onboarding.cic * 50/100
+    console.log("Basic :"+basic);
+
+      
+     employee_onboarding.basic = basic ;
   //  employee_onboarding.gross =basic
-  //  employee_onboarding.hra = basic * 50/100
-  //  employee_onboarding.special_allowance = basic * 50/100
     
   //  employee_onboarding.epf_employee = basic * 12/100
 
      
-  let gross = (employee_onboarding.basic + employee_onboarding.hra
-                   + employee_onboarding.statutoy_bonus + employee_onboarding.child_education_allowance 
-                   +employee_onboarding.food_coupon + employee_onboarding.lta ) ;
-  console.log("gross:"  +gross);     
-  
-  employee_onboarding.gross = gross ;
+
 
   let hra = employee_onboarding.basic * 50/100;
 
   let SA =employee_onboarding.basic * 50/100; 
 
-  let CTC = employee_onboarding.basic * 2 ;
-
-  employee_onboarding.cic = CTC ;
-
   employee_onboarding.hra = hra;
 
   employee_onboarding.special_allowance = SA;
+
+  let gross = (employee_onboarding.basic + employee_onboarding.hra
+                   + employee_onboarding.statutoy_bonus + employee_onboarding.child_education_allowance 
+                   +employee_onboarding.food_coupon + employee_onboarding.lta 
+                   +employee_onboarding.other_allowance + employee_onboarding.special_allowance) ;
+
+  console.log("gross:"  +gross);    
+  
+  employee_onboarding.gross = gross;
+
 
   let EpfCalculation = employee_onboarding.gross - employee_onboarding.hra ;
 
   console.log("EpfCalculation:"+EpfCalculation );
 
   if(EpfCalculation < 15000){
-    employee_onboarding.epf_employee = EpfCalculation * 12/100 ;
     employee_onboarding.epf_employer_contribution = EpfCalculation * 12/100 ;
+    employee_onboarding.epf_employee = EpfCalculation * 12/100 ;
   }else 
   if(EpfCalculation > 15000){
     let epfConstant = 1800
@@ -3163,11 +3165,11 @@ const compensatory_calculation = () =>{
     employee_onboarding.epf_employer_contribution = epfConstant ;
   }
  
-   if(gross < 21000 ){
-    employee_onboarding.esic_employee  =  gross - hra * 12/100;
-    employee_onboarding.esic_employer_contribution = gross - hra * 12/100;
+   if(gross <= 21000 ){
+    employee_onboarding.esic_employer_contribution  =  gross * 3.25/100;
+    employee_onboarding.esic_employee = gross * 0.75/100;
    }else
-   if(gross > 2100){
+   if(gross > 21000){
     let EsicConstant = 0 ;
     employee_onboarding.esic_employee  = EsicConstant;
     employee_onboarding.esic_employer_contribution = EsicConstant;
