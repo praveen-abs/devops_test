@@ -91,7 +91,9 @@ class VmtEmployeeService {
                 $this->createOrUpdate_EmployeeOfficeDetails( $onboard_user->id, $data);
                 $this->createOrUpdate_EmployeeStatutoryDetails( $onboard_user->id, $data);
                 // $this->createOrUpdate_EmployeeFamilyDetails( $onboard_user->id, $data);
-                // $this->createOrUpdate_EmployeeCompensatory( $onboard_user->id, $data);
+                 $this->createOrUpdate_EmployeeCompensatory( $onboard_user->id, $data);
+                $this->attachApoinmentPdf($employeeData);
+
 
                 //$message_part =" onboarded successfully.";
             }
@@ -473,7 +475,13 @@ class VmtEmployeeService {
         return null;
 
         //check if document already uploaded
-        $onboard_doc_id = VmtOnboardingDocuments::where('document_name',$onboard_document_type)->first()->id;
+
+        $onboard_doc_id = VmtOnboardingDocuments::where('document_name',$onboard_document_type)->first();
+        if( !empty($onboard_doc_id))
+        {
+            $onboard_doc_id = $onboard_doc_id->id;
+        }
+
         $employee_documents = VmtEmployeeDocuments::where('user_id', $emp_id)->where('doc_id',$onboard_doc_id);
 
         //check if document already uploaded
@@ -510,8 +518,8 @@ class VmtEmployeeService {
     }
 
 
-    // Generate Employee Apoinment PDF after onboarding
-    public function attachApoinmentPdf($employeeData)
+    // Generate Employee Appointment PDF after onboarding
+    public function attachAppointmentLetterPDF($employeeData)
     {
         //dd($employeeData);
         $VmtGeneralInfo = VmtGeneralInfo::first();

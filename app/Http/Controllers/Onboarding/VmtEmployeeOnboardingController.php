@@ -207,9 +207,10 @@ class VmtEmployeeOnboardingController extends Controller
 
 
         $data=$request->all();
-
+        dd($data);
 
         $user_id =$data['employee_code'];
+        //dd( $user_id);
         $response = "";
         $isEmailSent = "";
         $onboard_form_data =  array();
@@ -221,8 +222,8 @@ class VmtEmployeeOnboardingController extends Controller
 
         //Check whether we are updating existing user or adding new user.
 
-        $existingUser = User::where('id',$user_id);
-    //    dd($existingUser->exists());
+        $existingUser = User::where('user_code',$user_id);
+       // dd($existingUser->exists());
         if($existingUser->exists())
         {
 
@@ -231,7 +232,7 @@ class VmtEmployeeOnboardingController extends Controller
             {
                 // $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), $existingUser->first()->id);
 
-                $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $employee_onboarding['can_onboard_employee'], $existingUser->first()->id);
+                $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $onboard_form_data['can_onboard_employee'], $existingUser->first()->id);
 
                 $message = "";
 
