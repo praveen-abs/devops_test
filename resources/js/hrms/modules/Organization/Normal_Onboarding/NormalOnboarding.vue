@@ -1951,16 +1951,16 @@
                         <div class="row">
 
 
-                     <!-- <div  class="row mb-3">
-                     <div class="col-md-12  col-sm-12 col-lg-4 col-xl-6 col-xxl-6  mb-md-0 mb-3">
+                     <!-- <div  class="mb-3 row">
+                     <div class="mb-3 col-md-12 col-sm-12 col-lg-4 col-xl-6 col-xxl-6 mb-md-0">
 
-                         <div class="form-check form-check-inline mt-2">
+                         <div class="mt-2 form-check form-check-inline">
                                     <input style="height: 20px;width: 20px;" class="form-check-input" type="radio" name="compensation"
                                      id="compensation_monthly"   @click="comp_mon" v-model="comp.compensation_monthly" value="compensation_monthly" >
                                     <label class="form-check-label leave_type ms-2" for="compensation_monthly">Compensation Monthly</label>
 
                                 </div>
-                                <div class="form-check form-check-inline ml-8">
+                                <div class="ml-8 form-check form-check-inline">
                                     <input style="height: 20px;width: 20px;" class="form-check-input" type="radio" name="compensation"
                                         id="compensation_yearly" value="compensation_yearly"
                                         @click="comp_year" v-model="comp.compensation_yearly" >
@@ -1969,7 +1969,7 @@
 
 
                     </div>
-                    <div class="col-md-12  col-sm-12 col-lg- col-xl-4 col-xxl-6  mb-md-0 mb-3">
+                    <div class="mb-3 col-md-12 col-sm-12 col-lg- col-xl-4 col-xxl-6 mb-md-0">
                        <div class="form-check form-check-inline" v-if="mon">
 
                                             <Dropdown
@@ -3146,11 +3146,20 @@ const compensatory_calculation = () =>{
                    +employee_onboarding.food_coupon + employee_onboarding.lta 
                    +employee_onboarding.other_allowance + employee_onboarding.special_allowance) ;
 
-  console.log("gross:"  +gross);    
-  
-  employee_onboarding.gross = gross;
+                   if(employee_onboarding.statutoy_bonus == '' || employee_onboarding.child_education_allowance == '' && employee_onboarding.food_coupon  == '' || employee_onboarding.lta == '' || employee_onboarding.other_allowance == ''){
+                    employee_onboarding.gross = 0;
+                   }else{
+                    console.log("gross:"  +gross);    
+                    employee_onboarding.gross = gross;
+                    epf_esic_calculation();
+                   }           
+                 employee_onboarding.net_income =  employee_onboarding.gross -  employee_onboarding.epf_employee - employee_onboarding.esic_employee - employee_onboarding.professional_tax -  employee_onboarding.labour_welfare_fund
 
 
+}
+
+
+const epf_esic_calculation = () =>{
   let EpfCalculation = employee_onboarding.gross - employee_onboarding.hra ;
 
   console.log("EpfCalculation:"+EpfCalculation );
@@ -3165,19 +3174,15 @@ const compensatory_calculation = () =>{
     employee_onboarding.epf_employer_contribution = epfConstant ;
   }
  
-   if(gross <= 21000 ){
-    employee_onboarding.esic_employer_contribution  =  gross * 3.25/100;
-    employee_onboarding.esic_employee = gross * 0.75/100;
+   if(employee_onboarding.gross <= 21000 ){
+    employee_onboarding.esic_employer_contribution  =  employee_onboarding.gross * 3.25/100;
+    employee_onboarding.esic_employee = employee_onboarding.gross * 0.75/100;
    }else
-   if(gross > 21000){
+   if(employee_onboarding.gross > 21000){
     let EsicConstant = 0 ;
     employee_onboarding.esic_employee  = EsicConstant;
     employee_onboarding.esic_employer_contribution = EsicConstant;
    }
-    
-
-
-
 }
 
 const mon=ref(false)
