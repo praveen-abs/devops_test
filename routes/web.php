@@ -548,9 +548,12 @@ Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 's
     Route::get('/get_data', function () {
         return view('holidays.test_ui.edit_holidays_list');
     })->name('/get_data');
+
+
     //Testing controller
     Route::get('/download-private-file', [App\Http\Controllers\VmtTestingController::class, 'downloadPrivateFile'])->name('downloadPrivateFile');
     Route::get('/view-private-file', [App\Http\Controllers\VmtTestingController::class, 'viewPrivateFile'])->name('viewPrivateFile');
+    Route::get('/mail-test/appointment-letter', [App\Http\Controllers\VmtTestingController::class, 'mailTest_sendAppointmentLetter'])->name('mailTest_sendAppointmentLetter');
 
 });
 
