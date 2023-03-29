@@ -7,5 +7,6 @@
     "cSpell.words": [
         "badgedirective",
         "confirmationservice"
-    ]
+    ],
+    "liveServer.settings.port": 5501
 }
