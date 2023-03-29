@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use App\Models\VmtGeneralInfo;
 use Dompdf\Dompdf;
+use Dompdf\Options;
 use \stdClass;
 
 use App\Models\User;
@@ -91,7 +92,9 @@ class VmtEmployeeService {
                 $this->createOrUpdate_EmployeeOfficeDetails( $onboard_user->id, $data);
                 $this->createOrUpdate_EmployeeStatutoryDetails( $onboard_user->id, $data);
                 // $this->createOrUpdate_EmployeeFamilyDetails( $onboard_user->id, $data);
-                // $this->createOrUpdate_EmployeeCompensatory( $onboard_user->id, $data);
+                 $this->createOrUpdate_EmployeeCompensatory( $onboard_user->id, $data);
+                $this->attachApoinmentPdf($employeeData);
+
 
                 //$message_part =" onboarded successfully.";
             }
@@ -473,7 +476,13 @@ class VmtEmployeeService {
         return null;
 
         //check if document already uploaded
-        $onboard_doc_id = VmtOnboardingDocuments::where('document_name',$onboard_document_type)->first()->id;
+
+        $onboard_doc_id = VmtOnboardingDocuments::where('document_name',$onboard_document_type)->first();
+        if( !empty($onboard_doc_id))
+        {
+            $onboard_doc_id = $onboard_doc_id->id;
+        }
+
         $employee_documents = VmtEmployeeDocuments::where('user_id', $emp_id)->where('doc_id',$onboard_doc_id);
 
         //check if document already uploaded
@@ -551,14 +560,18 @@ class VmtEmployeeService {
 
             //check if template exists
             if (view()->exists($viewfile_appointmentletter)) {
-
                 $html =  view($viewfile_appointmentletter, compact('data'));
+               // dd($data);
+                $options = new Options();
+                $options->set('isHtml5ParserEnabled', true);
+                $options->set('isRemoteEnabled', true);
 
-                $pdf = new Dompdf();
+                $pdf = new Dompdf($options);
                 $pdf->loadHtml($html, 'UTF-8');
                 $pdf->setPaper('A4', 'portrait');
                 $pdf->render();
                 $docUploads =  $pdf->output();
+               // dd( $docUploads);
                 \File::put(public_path('appoinmentLetter/') . $filename, $docUploads);
                 $appoinmentPath = public_path('appoinmentLetter/') . $filename;
 
