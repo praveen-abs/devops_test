@@ -2040,7 +2040,7 @@
                                         <label for="" class="float-label">Statutory
                                             Bonus</label>
                                         <input type="number" placeholder="Statutory Bonus"
-                                            name="statutory_bonus"  v-model="employee_onboarding.statutoy_bonus"
+                                            name="statutory_bonus"  v-model="employee_onboarding.statutory_bonus"
                                             class="onboard-form form-control textbox calculation_data gross_data"
                                             step="0.01" />
                                     </div>
@@ -2189,7 +2189,7 @@
 
                                         <input type="number" placeholder="Cost of Company"
                                             name="cic"   v-model="employee_onboarding.cic"
-                                            id="cic" 
+                                            id="cic"
                                             class="onboard-form form-control textbox "
                                             step="0.01" required  />
                                     </div>
@@ -2750,7 +2750,7 @@ const employee_onboarding = reactive({
 
     basic:'',
     hra:'',
-    statutoy_bonus:'',
+    statutory_bonus:'',
     child_education_allowance:'',
     food_coupon:'',
     lta:'',
@@ -2764,7 +2764,7 @@ const employee_onboarding = reactive({
     esic_employer_contribution:'',
     professional_tax:'',
     labour_welfare_fund:'',
-    net_income:'',
+    net_income:'0',
 
   // Personal Documents Start
 
@@ -3009,11 +3009,13 @@ const submit = () => {
   formData.append("no_of_children", employee_onboarding.no_of_children);
   formData.append("basic", employee_onboarding.basic);
   formData.append("hra", employee_onboarding.hra);
-  formData.append("statutoy_bonus", employee_onboarding.statutoy_bonus);
+  formData.append("statutory_bonus", employee_onboarding.statutory_bonus);
   formData.append("child_education_allowance", employee_onboarding.child_education_allowance);
   formData.append("food_coupon", employee_onboarding.food_coupon);
   formData.append("lta", employee_onboarding.lta);
   formData.append("special_allowance", employee_onboarding.special_allowance);
+  formData.append("other_allowance", employee_onboarding.other_allowance);
+  formData.append("epf_employer_contribution", employee_onboarding.epf_employer_contribution);
   formData.append("graduity", employee_onboarding.graduity);
   formData.append("cic", employee_onboarding.cic);
   formData.append("epf_employee", employee_onboarding.epf_employee);
@@ -3124,30 +3126,34 @@ const compensatory_calculation = () =>{
     let basic = employee_onboarding.cic * 50/100
     console.log("Basic :"+basic);
 
-      
+
      employee_onboarding.basic = basic ;
   //  employee_onboarding.gross =basic
-    
+  //  employee_onboarding.hra = basic * 50/100
+  //  employee_onboarding.special_allowance = basic * 50/100
+
+
   //  employee_onboarding.epf_employee = basic * 12/100
-
-     
-
 
   let hra = employee_onboarding.basic * 50/100;
 
-  let SA =employee_onboarding.basic * 50/100; 
+  let SA =employee_onboarding.basic * 50/100;
+
+  let CTC = employee_onboarding.basic * 2 ;
+
+  employee_onboarding.cic = CTC ;
 
   employee_onboarding.hra = hra;
 
   employee_onboarding.special_allowance = SA;
 
   let gross = (employee_onboarding.basic + employee_onboarding.hra
-                   + employee_onboarding.statutoy_bonus + employee_onboarding.child_education_allowance 
-                   +employee_onboarding.food_coupon + employee_onboarding.lta 
+                   + employee_onboarding.statutory_bonus + employee_onboarding.child_education_allowance
+                   +employee_onboarding.food_coupon + employee_onboarding.lta
                    +employee_onboarding.other_allowance + employee_onboarding.special_allowance) ;
 
-  console.log("gross:"  +gross);    
-  
+  console.log("gross:"  +gross);
+
   employee_onboarding.gross = gross;
 
 
@@ -3158,13 +3164,13 @@ const compensatory_calculation = () =>{
   if(EpfCalculation < 15000){
     employee_onboarding.epf_employer_contribution = EpfCalculation * 12/100 ;
     employee_onboarding.epf_employee = EpfCalculation * 12/100 ;
-  }else 
+  }else
   if(EpfCalculation > 15000){
     let epfConstant = 1800
     employee_onboarding.epf_employee =  epfConstant ;
     employee_onboarding.epf_employer_contribution = epfConstant ;
   }
- 
+
    if(gross <= 21000 ){
     employee_onboarding.esic_employer_contribution  =  gross * 3.25/100;
     employee_onboarding.esic_employee = gross * 0.75/100;
@@ -3174,7 +3180,7 @@ const compensatory_calculation = () =>{
     employee_onboarding.esic_employee  = EsicConstant;
     employee_onboarding.esic_employer_contribution = EsicConstant;
    }
-    
+
 
 
 

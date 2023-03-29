@@ -91,22 +91,22 @@ class VmtEmployeeService {
                 $this->createOrUpdate_EmployeeDetails( $onboard_user, $data);
                 $this->createOrUpdate_EmployeeOfficeDetails( $onboard_user->id, $data);
                 $this->createOrUpdate_EmployeeStatutoryDetails( $onboard_user->id, $data);
-                // $this->createOrUpdate_EmployeeFamilyDetails( $onboard_user->id, $data);
-                 $this->createOrUpdate_EmployeeCompensatory( $onboard_user->id, $data);
-                $this->attachApoinmentPdf($employeeData);
+                $this->createOrUpdate_EmployeeFamilyDetails( $onboard_user->id, $data);
+                $this->createOrUpdate_EmployeeCompensatory( $onboard_user->id, $data);
 
 
-                //$message_part =" onboarded successfully.";
+                return "success";
             }
             catch(\Exception $e)
             {
-                dd($e);
-               return null;
+               // dd($e);
+
+                return "failure : ".$e;
             }
         }
 
 
-        return $response;
+        return "Normal Onboarding : Failure in TRY or CATCH method";
     }
 
     private function createOrUpdate_User($data, $can_onboard_employee,$user_id=null)
@@ -522,7 +522,7 @@ class VmtEmployeeService {
     // Generate Employee Appointment PDF after onboarding
     public function attachAppointmentLetterPDF($employeeData)
     {
-        //dd($employeeData);
+       // dd($employeeData);
         $VmtGeneralInfo = VmtGeneralInfo::first();
         $empNameString  = $employeeData['employee_name'];
         $filename = 'appoinment_letter_' . $empNameString . '_' . time() . '.pdf';
