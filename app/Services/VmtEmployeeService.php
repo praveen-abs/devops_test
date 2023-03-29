@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use App\Models\VmtGeneralInfo;
 use Dompdf\Dompdf;
+use Dompdf\Options;
 use \stdClass;
 
 use App\Models\User;
@@ -559,14 +560,18 @@ class VmtEmployeeService {
 
             //check if template exists
             if (view()->exists($viewfile_appointmentletter)) {
-
                 $html =  view($viewfile_appointmentletter, compact('data'));
+               // dd($data);
+                $options = new Options();
+                $options->set('isHtml5ParserEnabled', true);
+                $options->set('isRemoteEnabled', true);
 
-                $pdf = new Dompdf();
+                $pdf = new Dompdf($options);
                 $pdf->loadHtml($html, 'UTF-8');
                 $pdf->setPaper('A4', 'portrait');
                 $pdf->render();
                 $docUploads =  $pdf->output();
+               // dd( $docUploads);
                 \File::put(public_path('appoinmentLetter/') . $filename, $docUploads);
                 $appoinmentPath = public_path('appoinmentLetter/') . $filename;
 
