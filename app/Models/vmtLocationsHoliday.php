@@ -5,19 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class vmtHolidays extends Model
+class vmtLocationsHoliday extends Model
 {
     use HasFactory;
-
-
-
-    protected $table = 'vmt_holidays';
+    protected $table = 'vmt_locations_holiday';
 
     protected $fillable = [
-        'holiday_name',
-        'holiday_date',
-        'holiday_description',
-        'image',
+        'vmt_locations_id',
+        'vmt_holidays_list_id',
     ];
-    
 }

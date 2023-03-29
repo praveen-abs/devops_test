@@ -208,11 +208,6 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                                             structure</span></a>
                                 </li>
                                 <li class="nav-item ">
-                                    <a href="{{ route('create-holiday') }}" id="tds"
-                                        class="nav-link sidebar py-1"><span>
-                                            create holiday</span></a>
-                                </li>
-                                <li class="nav-item ">
                                     <a href="{{ route('department') }}" id="tds"
                                         class="nav-link sidebar py-1"><span>Department</span></a>
                                 </li>

@@ -16,6 +16,7 @@ use PDF;
 use Illuminate\Support\Facades\DB;
 use App\Models\VmtGeneralInfo;
 use Illuminate\Support\Facades\Storage;
+use App\Services\VmtEmployeeService;
 
 class VmtTestingController extends Controller
 {
@@ -24,32 +25,28 @@ class VmtTestingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    // public function index()
-    // {
 
-    //     $generalInfo = VmtGeneralInfo::first();
 
-    //     // $month = $request->selectedPaySlipMonth;
-    //     $data= VmtEmployeePaySlip::where([
-    //                 ['user_id','=', auth()->user()->id],
+     /*
+        Download private file.
 
-    //                 ])->first();
-    //       //dd($data);
-    //     // return view('vmt_payslipTemplate', $data);
-    //     // download PDF file with download method
-    //     // $pdf = new Dompdf();
-    //     $html =  view('testing', $data);
-    //     // $pdf->loadHtml($html, 'UTF-8');
-    //     // $pdf->setPaper('A4', 'portrait');
-    //     // $pdf->render();
-    //     // $filename = $data['employee']->Rename;
-    //     // return $pdf->stream($filename, ["Attachment" => false]);
-    //     // dd($html);
+     */
+    public function downloadPrivateFile(){
+        $private_file = "employee/emp_B090/documents/voterIdB090_22-03-2023 15-47-22.jpg";
 
-    //     // return $pdf->download($data['employee']->Rename.'.pdf');
-    //     return $html;
-    // }
+        //dd(Storage::disk('private')->allFiles());
+        return Storage::disk('private')->download($private_file);
+    }
 
+    /*
+       View private file such as image
+
+    */
+    public function viewPrivateFile(){
+        $private_file = "employee/emp_B090/documents/voterIdB090_22-03-2023 15-47-22.jpg";
+
+        return response()->file(storage_path('uploads/'.$private_file));
+    }
 
     public function testingpdf(){
         $client_name='brandavatar';
@@ -107,24 +104,6 @@ class VmtTestingController extends Controller
     }
 
 
-    // public function fileUploadingTest(Request $request)
-    // {
-    //   dd($request->all());
-    //    $file=new Files();
-    //    if($request->file()) {
-    //         $file=new Files();
-    //          $file_name = time().'_'.$request->file->getClientOriginalName();
-    //          $file_path = $request->file('file_link')->storeAs('uploads', $file_name, 'public');
-
-    //          $file->file_name = time().'_'.$request->file->getClientOriginalName();
-    //          $file->file_path = '/storage/' . $file_path;
-    //          $file->save();
-    //          return response()->json([
-    //             'message' => 'File  added'
-    //         ]);
-    //     }
-    // }
-
     public function retriveFiles(Request $request){
         $pathToFile = storage_path('uploads\employee\emp_B090\documents/' . "voterIdB090_21-03-2023 12-32-42.png");
     //     dd( $pathToFile);
@@ -138,6 +117,43 @@ class VmtTestingController extends Controller
     return $pathToFile;
     }
 
+    /*
+        Send appointment letter as PDF attachement in email
+
+
+    */
+    public function mailTest_sendAppointmentLetter(Request $request, VmtEmployeeService $employeeService){
+
+        $to_email = $request->email;
+        $employeeData = array();
+
+        //Add dummy data
+        $employeeData['employee_name'] = "TestUser";
+        $employeeData['employee_code'] = "ABS001";
+        $employeeData['email'] = "karthigaiselvan28072000@gmail.com";
+
+        $employeeData['basic'] = 10000;
+        $employeeData['hra'] = 10000;
+        $employeeData['special_allowance'] = 10000;
+        $employeeData["basic"]  = 10000;
+        $employeeData["statutory_bonus"] = 10000;
+        $employeeData["child_education_allowance"]  = 10000;
+        $employeeData["food_coupon"]  = 10000;
+        $employeeData["lta"]  = 10000;
+        $employeeData["special_allowance"]  = 10000;
+        $employeeData["other_allowance"] = 10000;
+        $employeeData['epf_employer_contribution'] = 10000;
+        $employeeData['esic_employer_contribution'] = 10000;
+        $employeeData['gross_monthly'] = 10000;
+        $employeeData["epf_employer_contribution"] = 10000;
+        $employeeData["professional_tax"] = 10000;
+        $employeeData["net_income"] = 10000;
+
+        $response = $employeeService->attachAppointmentLetterPDF($employeeData);
+
+        return $response;
+
+    }
 
 }
 

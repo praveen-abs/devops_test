@@ -177,7 +177,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/attendance-regularization-approvals', [App\Http\Controllers\VmtAttendanceController::class, 'approveRejectAttendanceRegularization'])->name('process-attendance-regularization-approvals');
     Route::get('/fetch-att-regularization-data', [App\Http\Controllers\VmtAttendanceController::class, 'fetchAttendanceRegularizationData'])->name('fetch-regularization-approvals');
 
-
+    Route::get('/fetch-onboarded-doc',[App\Services\VmtEmployeeService::class,'fetchAllEmployeesDocumentsAsGroups'])->name('fetch-onboarded-doc');
 
     //Update User Details
 
@@ -579,9 +579,33 @@ Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 's
 
     //Holidays
     ////Holidays creation
-    Route::get('/holidays/master-page',  [App\Http\Controllers\VmtHolidaysController::class, 'showHolidaysMasterPage'])->name('holidays-masterpage');
+    Route::get('/holiday/master-page',  [App\Http\Controllers\VmtHolidaysController::class, 'showHolidaysMasterPage'])->name('holiday-masterpage');
+    Route::post('holiday/create_holiday', [App\Http\Controllers\VmtHolidaysController::class, 'createHoliday'])->name('holiday-create-holiday');
+    Route::get('/holiday/edit_holiday/{id}/',  [App\Http\Controllers\VmtHolidaysController::class, 'editHoliday'])->name('edit-holiday');
+    Route::post('holidays/update_holiday/{id}/',  [App\Http\Controllers\VmtHolidaysController::class, 'updateHoliday'])->name('update_holiday');
+    Route::get('holidays/delete_holiday/{id}/',  [App\Http\Controllers\VmtHolidaysController::class, 'deleteHoliday'])->name('delete_holiday');
+
+    Route::get('/holidays/add_holidays', function () {
+          return view('holidays.test_ui.add_holidays');
+    })->name('add-holidays');
+
+   //holiday list
+   Route::get('/holiday/visit-page',  [App\Http\Controllers\VmtHolidaysController::class, 'showHolidaysListPage'])->name('holiday-masterpage');
+   Route::post('holiday/create_holidaylist', [App\Http\Controllers\VmtHolidaysController::class, 'createHolidayList'])->name('holiday-create-holidaylist');
+   Route::get('/holidays/add_holidayslist',[App\Http\Controllers\VmtHolidaysController::class, 'fetchHolidays'])->name('add-holidayslist');
+   Route::get('/holiday/edit_holiday_list/{id}/',  [App\Http\Controllers\VmtHolidaysController::class, 'editHolidayList'])->name('edit-holiday-list');
+   Route::post('holidays/update_holiday_list/{id}/',  [App\Http\Controllers\VmtHolidaysController::class, 'updateHolidayList'])->name('update_holiday-list');
+   Route::get('holidays/delete_holiday_list/{id}/',  [App\Http\Controllers\VmtHolidaysController::class, 'deleteHolidayList'])->name('delete_holiday-list');
 
 
+   //location
+   Route::post('holiday/create_holidaylocation', [App\Http\Controllers\VmtHolidaysController::class, 'createHolidayLocation'])->name('holiday-create-holidaylocation');
+   Route::get('/holidays/add_holidayslocation',[App\Http\Controllers\VmtHolidaysController::class, 'fetchlocation'])->name('add-holidays-location');
+
+    //Testing controller
+    Route::get('/download-private-file', [App\Http\Controllers\VmtTestingController::class, 'downloadPrivateFile'])->name('downloadPrivateFile');
+    Route::get('/view-private-file', [App\Http\Controllers\VmtTestingController::class, 'viewPrivateFile'])->name('viewPrivateFile');
+    Route::get('/mail-test/appointment-letter', [App\Http\Controllers\VmtTestingController::class, 'mailTest_sendAppointmentLetter'])->name('mailTest_sendAppointmentLetter');
 
 });
 
