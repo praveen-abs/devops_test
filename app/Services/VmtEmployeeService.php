@@ -91,22 +91,22 @@ class VmtEmployeeService {
                 $this->createOrUpdate_EmployeeDetails( $onboard_user, $data);
                 $this->createOrUpdate_EmployeeOfficeDetails( $onboard_user->id, $data);
                 $this->createOrUpdate_EmployeeStatutoryDetails( $onboard_user->id, $data);
-                // $this->createOrUpdate_EmployeeFamilyDetails( $onboard_user->id, $data);
-                 $this->createOrUpdate_EmployeeCompensatory( $onboard_user->id, $data);
-                $this->attachApoinmentPdf($employeeData);
+                $this->createOrUpdate_EmployeeFamilyDetails( $onboard_user->id, $data);
+                $this->createOrUpdate_EmployeeCompensatory( $onboard_user->id, $data);
 
 
-                //$message_part =" onboarded successfully.";
+                return "success";
             }
             catch(\Exception $e)
             {
-                dd($e);
-               return null;
+               // dd($e);
+
+                return "failure : ".$e;
             }
         }
 
 
-        return $response;
+        return "Normal Onboarding : Failure in TRY or CATCH method";
     }
 
     private function createOrUpdate_User($data, $can_onboard_employee,$user_id=null)
@@ -494,7 +494,7 @@ class VmtEmployeeService {
 
 
             $date=date('d-m-Y H-i-s');
-            $fileName =  $onboard_document_type.'_'.$emp_code.'_'.$date.'.'.$fileObject->extension();
+            $fileName =  str_replace(' ', '', $onboard_document_type).'_'.$emp_code.'_'.$date.'.'.$fileObject->extension();
             $path=$emp_code.'/onboarding_documents';
             $filePath = $fileObject->storeAs($path,$fileName, 'private');
            // dd($emp_id);
@@ -522,7 +522,7 @@ class VmtEmployeeService {
     // Generate Employee Appointment PDF after onboarding
     public function attachAppointmentLetterPDF($employeeData)
     {
-        //dd($employeeData);
+       // dd($employeeData);
         $VmtGeneralInfo = VmtGeneralInfo::first();
         $empNameString  = $employeeData['employee_name'];
         $filename = 'appoinment_letter_' . $empNameString . '_' . time() . '.pdf';
@@ -649,6 +649,12 @@ class VmtEmployeeService {
             $onboard_doc = VmtEmployeeDocuments::join('vmt_onboarding_documents','vmt_onboarding_documents.id','=','vmt_employee_documents.doc_id')
                                 ->where('user_id',$single_user->id)
                                 ->get(['vmt_onboarding_documents.document_name','doc_url']);
+
+            $onboard_doc->each(function ($item, int $key) use ($single_user){
+
+                $item["doc_url"] = "employees/". $single_user->user_code."/onboarding_documents/".$item["doc_url"];
+                  //dd($item["doc_url"]);
+                });
 
 
 

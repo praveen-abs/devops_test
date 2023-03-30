@@ -2,9 +2,11 @@ import "primeflex/primeflex.css";
 import "primevue/resources/themes/lara-light-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 
 import { createApp } from "vue";
+import VueSweetalert2 from 'vue-sweetalert2';
 import PrimeVue from "primevue/config";
 import AutoComplete from 'primevue/autocomplete';
 import Accordion from 'primevue/accordion';
@@ -51,6 +53,7 @@ app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
+app.use(VueSweetalert2);
 
 
 app.directive('tooltip', Tooltip);
