@@ -262,9 +262,9 @@ class VmtEmployeeOnboardingController extends Controller
                     //When error occured while storing User, then show error to UI
 
                     $response = [
-                        'status' => $result->status,
+                        'status' => $result,
                         'message' => "Error while creating/update User details. LINE : ".__LINE__,
-                        'error' => $result->message,
+                        'error' => "",
                         'error_verbose' =>''
                     ];
 
@@ -297,9 +297,9 @@ class VmtEmployeeOnboardingController extends Controller
                     {
                         //When error occured while storing User, then show error to UI
                         $response = [
-                                'status' => $result->status,
+                                'status' => $result,
                                 'message' => "Error while creating/update User details : LINE : ".__LINE__,
-                                'error' => $result->message,
+                                'error' => "",
                                 'error_verbose' =>''
                         ];
 
@@ -351,8 +351,6 @@ class VmtEmployeeOnboardingController extends Controller
                         'mail_status' => '',
                         'error' => '',
                         'error_verbose' =>'',
-                        'user_id' => $result->response_object->id  //send the user id to front-end
-
                     ];
                 }
                 else
@@ -360,9 +358,9 @@ class VmtEmployeeOnboardingController extends Controller
 
                     //When error occured while storing User, then show error to UI
                     $response = [
-                            'status' => $result->status,
+                            'status' => $result,
                             'message' => "Error while creating/update User details : LINE : ".__LINE__,
-                            'error' => $result->message,
+                            'error' => "",
                             'error_verbose' =>''
                     ];
 
