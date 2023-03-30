@@ -2987,7 +2987,7 @@ const submit = () => {
   formData.append("permanent_city", employee_onboarding.permanent_city);
   formData.append("permanent_pincode", employee_onboarding.permanent_pincode);
 //   formData.append("department", employee_onboarding.department.name);
-  formData.append("department_id", employee_onboarding.department_id);
+  formData.append("department_id", employee_onboarding.departmentDetails.id);
   formData.append("process", employee_onboarding.process);
   formData.append("designation", employee_onboarding.designation);
   formData.append("cost_center", employee_onboarding.cost_center);
@@ -3053,7 +3053,7 @@ const submit = () => {
             response.data.status,
             response.data.message,
            'success')
-        
+
          }
           employee_onboarding.save_draft_messege =res.data
     })
@@ -3064,7 +3064,7 @@ const submit = () => {
 };
 
 const get_id = () => {
-  employee_onboarding.bank_id = employee_onboarding.bank_name.id;
+  employee_onboarding.bank_id = employee_onboarding.bankList.id;
   employee_onboarding.blood_group_id = employee_onboarding.blood_group_name.id;
   employee_onboarding.marital_status_id = employee_onboarding.marital_status.id;
   employee_onboarding.current_country_id =
@@ -3142,7 +3142,7 @@ const personalMailExists=()=>{
 // compensatory Logic
 
 const compensatory_calculation = () =>{
- 
+
     let basic = employee_onboarding.cic * 50/100
     console.log("Basic :"+basic);
 
@@ -3150,7 +3150,7 @@ const compensatory_calculation = () =>{
 
   let hra = employee_onboarding.basic * 50/100;
 
-  let SA =employee_onboarding.basic * 50/100; 
+  let SA =employee_onboarding.basic * 50/100;
 
   employee_onboarding.hra = hra;
 
@@ -3163,7 +3163,7 @@ const compensatory_calculation = () =>{
    epf_esic_calculation();
 
    gross_calculation();
-        
+
   employee_onboarding.net_income =  employee_onboarding.gross -  employee_onboarding.epf_employee - employee_onboarding.esic_employee - employee_onboarding.professional_tax -  employee_onboarding.labour_welfare_fund
 
 
@@ -3180,7 +3180,7 @@ const gross_calculation =() =>{
                     employee_onboarding.gross= employee_onboarding.basic + employee_onboarding.hra +employee_onboarding.statutory_bonus+ employee_onboarding.child_education_allowance +employee_onboarding.food_coupon + employee_onboarding.lta  +employee_onboarding.other_allowance + employee_onboarding.special_allowance ;
                     console.log("gross:" + employee_onboarding.gross);
                     epf_esic_calculation();
-                   }   
+                   }
 }
 
 
@@ -3192,13 +3192,13 @@ const epf_esic_calculation = () =>{
   if(EpfCalculation < 15000){
     employee_onboarding.epf_employer_contribution = EpfCalculation * 12/100 ;
     employee_onboarding.epf_employee = EpfCalculation * 12/100 ;
-  }else 
+  }else
   if(EpfCalculation > 15000){
     let epfConstant = 1800
     employee_onboarding.epf_employee =  epfConstant ;
     employee_onboarding.epf_employer_contribution = epfConstant ;
   }
- 
+
    if(employee_onboarding.gross <= 21000 ){
     employee_onboarding.esic_employer_contribution  =  employee_onboarding.gross * 3.25/100;
     employee_onboarding.esic_employee = employee_onboarding.gross * 0.75/100;
@@ -3464,18 +3464,6 @@ const PhyChallenged = ref([
   { name: "Yes", value: "yes" },
   { name: "No", value: "no" },
 ]);
-
-const BloodGroup = ref([
-  { id: "1", name: "A Positive" },
-  { id: "2", name: "A Negative" },
-  { id: "3", name: "B Positive" },
-  { id: "4", name: "B Negative" },
-  { id: "5", name: "AB Positive" },
-  { id: "6", name: "AB Negative" },
-  { id: "7", name: "O Positive" },
-  { id: "8", name: "O Negative" },
-]);
-
 
 const compensation_month = ref([
   { id: "1", name: "Monthly gross" },
