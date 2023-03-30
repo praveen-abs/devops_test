@@ -13,14 +13,14 @@
 
   <div id="declaration"></div> -->
 
-<!-- @vite('resources/js/hrms/modules/payroll/payroll_setting/payroll_setting.js')
+@vite('resources/js/hrms/modules/payroll/payroll_setting/payroll_setting.js')
 
-  <div id="payroll_setting"></div> -->
+  <div id="payroll_setting"></div>
 
-
+<!-- 
 @vite('resources/js/hrms/modules/payroll/payroll_setting/payroll_setup/payroll_setup.js')
 
-  <div id="payroll_setup"></div>
+  <div id="payroll_setup"></div> -->
 
 @endsection
 

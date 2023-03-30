@@ -66,7 +66,6 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
-import { initFlowbite } from "flowbite";
 import general_payroll_setting from "./general_payroll_setting/general_payroll_setting.vue";
 import pf_esi from './pf_esi_setting/pf_esi_setting.vue'
 import salary_components from "./salary_components/salary_components.vue";
@@ -76,10 +75,6 @@ import finance_setting from "./finance_setting/finance_setting.vue";
 
 const activetab = ref(1);
 
-// initialize components based on data attribute selectors
-onMounted(() => {
-  initFlowbite();
-});
 </script>
 
 <style>
