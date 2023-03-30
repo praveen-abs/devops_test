@@ -23,7 +23,7 @@ class VmtEmployeeLeaveService
     */
 
     private function insertAccrualLeaveRecord($user_id, $date, $leave_type_id, $accrual_leave_count){
-        $current_month = $date('n');
+        $current_month = Carbon::parse($date)->format('n');
 
         if(VmtEmployeesLeavesAccrued::whereMonth('date',$current_month)->exists())
         {
@@ -67,9 +67,26 @@ class VmtEmployeeLeaveService
         if($calendar_type=='financial_year'){
                $year=ConfigPms::first()->year;
                preg_match_all('!\d+!', $year, $years);
-               dd($years);
+               $financial_year_start_date=Carbon::parse($years[0]['0'].'-04-01');
+               $financial_year_end_date=Carbon::parse($years[0]['1'].'-03-31');
+               $emp_doj = Carbon::parse($emp_doj);
+               if($emp_doj->between($financial_year_start_date, $financial_year_end_date)){
 
+               }else{
+                while(Carbon::now()->gte($financial_year_start_date)){
+                    $year=$financial_year_start_date->format('Y');
+                    $month=$financial_year_start_date->format('n');
 
+                    if($month<10)
+                     $month='0'.$month;
+
+                    $date=$year."-".$month."-15";
+                    $accrual_leave_count='1';
+                    $this->insertAccrualLeaveRecord($user_id, $date, $leave_type_id, $accrual_leave_count);
+                    $financial_year_start_date->addMonth();
+                }
+
+               }
         }
         else if($calendar_type=='calendar_year'){
             $monthsSinceJoin = $today->diffInMonths($emp_doj);
