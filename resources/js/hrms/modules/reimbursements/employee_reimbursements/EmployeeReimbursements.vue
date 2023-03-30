@@ -1,19 +1,18 @@
 <template>
-    <Toast />
-    <!-- Loading Spinner -->
-    <Transition name="modal" >
-        <ABS_loading_spinner v-if="employee_service.loading_spinner" />
-
-    </Transition>
+  <Toast />
+  <!-- Loading Spinner -->
+  <Transition name="modal">
+    <ABS_loading_spinner v-if="employee_service.loading_spinner" />
+  </Transition>
   <div class="reimbursement-wrapper mt-30">
-    <div class="card left-line mb-2">
-      <div class="card-body pb-1 pt-1">
+    <div class="mb-2 card left-line">
+      <div class="pt-1 pb-1 card-body">
         <div class="row">
           <div class="col-sm-12 col-md-7 col-lg-7 col-xl-7 col-xxl-7">
             <ul class="nav nav-pills nav-tabs-dashed" role="tablist">
               <li class="nav-item text-muted" role="presentation">
                 <a
-                  class="nav-link active pb-2"
+                  class="pb-2 nav-link active"
                   data-bs-toggle="tab"
                   href="#reimbursement"
                   aria-selected="true"
@@ -23,9 +22,10 @@
                   Reimbursement
                 </a>
               </li>
+          
               <li class="nav-item text-muted ms-5" role="presentation">
                 <a
-                  class="nav-link pb-2"
+                  class="pb-2 nav-link"
                   data-bs-toggle="tab"
                   href="#localConveyance"
                   aria-selected="true"
@@ -40,7 +40,13 @@
           <div
             class="col-sm-12 col-md-5 col-lg-5 col-xl-5 col-xxl-5 d-flex justify-content-end"
           >
-          <Calendar  v-model="date" view="month" dateFormat="mm/yy" class="mr-4 " placeholder="Select Month" />
+            <Calendar
+              v-model="date"
+              view="month"
+              dateFormat="mm/yy"
+              class="mr-4"
+              placeholder="Select Month"
+            />
             <button
               v-if="employee_service.reimbursementsScreen"
               @click="employee_service.onclickOpenReimbursmentDailog"
@@ -84,14 +90,20 @@
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
                     responsiveLayout="scroll"
                   >
-                  <Column :exportable="false" style="min-width:8rem">
-                    <template #body="slotProps">
-                        <Button icon="pi pi-trash" outlined rounded severity="danger" @click="confirmDeleteProduct(slotProps.data)" />
-                    </template>
-                </Column>
+                    <Column :exportable="false" style="min-width: 8rem">
+                      <template #body="slotProps">
+                        <Button
+                          icon="pi pi-trash"
+                          outlined
+                          rounded
+                          severity="danger"
+                          @click="confirmDeleteProduct(slotProps.data)"
+                        />
+                      </template>
+                    </Column>
                     <Column header="Claim Type" style="min-width: 8rem">
                       <template #body="slotProps">
-                        {{  slotProps.data.claim_type }}
+                        {{ slotProps.data.claim_type }}
                       </template>
                     </Column>
 
@@ -102,49 +114,53 @@
                     </Column>
 
                     <Column field="" header="Eligible Amount" style="min-width: 12rem">
-                        <template #body="slotProps">
-                          {{ "&#x20B9;" + slotProps.data.eligible_amount }}
-                        </template>
-                      </Column>
+                      <template #body="slotProps">
+                        {{ "&#x20B9;" + slotProps.data.eligible_amount }}
+                      </template>
+                    </Column>
 
-                      <Column field="" header="Remarks" style="min-width: 12rem">
-                        <template #body="slotProps">
-                          {{  slotProps.data.reimbursment_remarks }}
-                        </template>
-                      </Column>
-                      <Column field="" header="Status" style="min-width: 12rem">
-                        <template #body="slotProps">
-                          {{ slotProps.data.eligible_amount }}
-                        </template>
-                      </Column>
-                      <Column field="" header="Date Of Dispatch" style="min-width: 12rem">
-                        <template #body="slotProps">
-                          {{ "&#x20B9;" + slotProps.data.eligible_amount }}
-                        </template>
-                      </Column>
-                      <Column field="" header="Proof Of Delivery" style="min-width: 12rem">
-                        <template #body="slotProps">
-                          {{ "&#x20B9;" + slotProps.data.eligible_amount }}
-                        </template>
-                      </Column>
-
+                    <Column field="" header="Remarks" style="min-width: 12rem">
+                      <template #body="slotProps">
+                        {{ slotProps.data.reimbursment_remarks }}
+                      </template>
+                    </Column>
+                    <Column field="" header="Status" style="min-width: 12rem">
+                      <template #body="slotProps">
+                        {{ slotProps.data.eligible_amount }}
+                      </template>
+                    </Column>
+                    <Column field="" header="Date Of Dispatch" style="min-width: 12rem">
+                      <template #body="slotProps">
+                        {{ "&#x20B9;" + slotProps.data.eligible_amount }}
+                      </template>
+                    </Column>
+                    <Column field="" header="Proof Of Delivery" style="min-width: 12rem">
+                      <template #body="slotProps">
+                        {{ "&#x20B9;" + slotProps.data.eligible_amount }}
+                      </template>
+                    </Column>
                   </DataTable>
                 </div>
 
                 <Dialog
                   v-model:visible="employee_service.reimbursements_dailog"
-                  :style="{ width: '450px' }"
+                  :style="{width: '450px'}"
                   header="Reimbursement Detials"
                   :modal="true"
                   class="p-fluid"
                 >
                   <div class="field">
                     <label for="name">Claim Type</label>
-                    <Dropdown  v-model="employee_service.employee_reimbursement.claim_type" :options="employee_service.reimbursment_claim_types"
-                     optionLabel="label" optionValue="value" placeholder="Select Claim Type"></Dropdown>
+                    <Dropdown
+                      v-model="employee_service.employee_reimbursement.claim_type"
+                      :options="employee_service.reimbursment_claim_types"
+                      optionLabel="label"
+                      optionValue="value"
+                      placeholder="Select Claim Type"
+                    ></Dropdown>
                   </div>
 
-                  <div class="formgrid grid">
+                  <div class="grid formgrid">
                     <div class="field col">
                       <label for="Claim Amount">Claim Amount</label>
                       <InputNumber
@@ -169,7 +185,14 @@
                   <div class="field">
                     <label class="mb-3">Remarks</label>
                     <div class="formgrid">
-                      <Textarea v-model="employee_service.employee_reimbursement.reimbursment_remarks" autoResize rows="2" cols="30" />
+                      <Textarea
+                        v-model="
+                          employee_service.employee_reimbursement.reimbursment_remarks
+                        "
+                        autoResize
+                        rows="2"
+                        cols="30"
+                      />
                     </div>
                   </div>
                   <div class="field">
@@ -177,7 +200,10 @@
                     <div class="formgrid">
                       <input
                         @change="
-                          employee_service.employee_reimbursement_attachment_upload($event)"
+                          employee_service.employee_reimbursement_attachment_upload(
+                            $event
+                          )
+                        "
                         ref="employee_service.employee_reimbursement_attachment"
                         type="file"
                         id="upload"
@@ -197,7 +223,12 @@
                     />
                     <Button
                       label="Save"
-                      :disabled="!employee_service.employee_reimbursement.claim_type=='' && !employee_service.employee_reimbursement.claim_amount=='' ? false :true"
+                      :disabled="
+                        !employee_service.employee_reimbursement.claim_type == '' &&
+                        !employee_service.employee_reimbursement.claim_amount == ''
+                          ? false
+                          : true
+                      "
                       icon="pi pi-check"
                       style="height: 30px; background: rgb(255 135 38); color: white"
                       @click="employee_service.post_reimbursment_data"
@@ -208,9 +239,6 @@
             </div>
           </div>
         </div>
-
-
-
 
         <!-- ----------------------------------------------------------------------------------------------------------------------------------------- -->
 
@@ -257,16 +285,27 @@
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
                 responsiveLayout="scroll"
               >
-              <Column :exportable="false" style="min-width:8rem">
-                <template #body="slotProps">
-                    <Button icon="pi pi-trash" outlined rounded severity="danger" @click="confirmDeleteProduct(slotProps.data)" />
-                </template>
-            </Column>
+                <Column :exportable="false" style="min-width: 8rem">
+                  <template #body="slotProps">
+                    <Button
+                      icon="pi pi-trash"
+                      outlined
+                      rounded
+                      severity="danger"
+                      @click="confirmDeleteProduct(slotProps.data)"
+                    />
+                  </template>
+                </Column>
 
-                <Column field="reimbursement_date"  header="Date" style="min-width: 12rem"  dataType="date">
-                    <template #body="slotProps">
-                        {{ employee_service.formatDate(slotProps.data.travelled_date) }}
-                      </template>
+                <Column
+                  field="reimbursement_date"
+                  header="Date"
+                  style="min-width: 12rem"
+                  dataType="date"
+                >
+                  <template #body="slotProps">
+                    {{ employee_service.formatDate(slotProps.data.travelled_date) }}
+                  </template>
                 </Column>
                 <Column header="Mode Of Transport" style="min-width: 12rem">
                   <template #body="slotProps">
@@ -285,48 +324,57 @@
                   </template>
                 </Column>
                 <Column
-                field="total_distance_travelled"
-                header="Total Distance"
-                style="min-width: 12rem"
-              >
-                <template #body="slotProps">
-                  {{ slotProps.data.total_distance_travelled }}
-                </template>
-              </Column>
+                  field="total_distance_travelled"
+                  header="Total Distance"
+                  style="min-width: 12rem"
+                >
+                  <template #body="slotProps">
+                    {{ slotProps.data.total_distance_travelled }}
+                  </template>
+                </Column>
                 <Column field="Amt_km" header="Amt/Km" style="min-width: 12rem">
                   <template #body="slotProps">
                     {{ slotProps.data.Amt_km }}
                   </template>
                 </Column>
 
-                <Column field="local_convenyance_total_amount" header="Amount" style="min-width: 12rem">
+                <Column
+                  field="local_convenyance_total_amount"
+                  header="Amount"
+                  style="min-width: 12rem"
+                >
                   <template #body="slotProps">
                     {{ slotProps.data.local_convenyance_total_amount }}
                   </template>
                 </Column>
-                <Column field="local_conveyance_remarks" header="Remarks" style="min-width: 12rem">
+                <Column
+                  field="local_conveyance_remarks"
+                  header="Remarks"
+                  style="min-width: 12rem"
+                >
                   <template #body="slotProps">
                     {{ slotProps.data.local_conveyance_remarks }}
                   </template>
                 </Column>
                 <template #footer>
-                 <div class="text-center" v-if="!employee_service.data_local_convergance.length==0">
+                  <div
+                    class="text-center"
+                    v-if="!employee_service.data_local_convergance.length == 0"
+                  >
                     <Button
-                  label="Submit"
-                  icon="pi pi-check"
-                  class="px-6" style="background: #003056;"
-
-                />
-                 </div>
+                      label="Submit"
+                      icon="pi pi-check"
+                      class="px-6"
+                      style="background: #003056"
+                    />
+                  </div>
                 </template>
-
-
               </DataTable>
             </div>
 
             <Dialog
               v-model:visible="employee_service.localconvergance_dailog"
-              :style="{ width: '450px' }"
+              :style="{width: '450px'}"
               header="Local Conveyance"
               :modal="true"
               class="p-fluid"
@@ -343,13 +391,17 @@
 
               <div class="field col">
                 <label for="Claim Amount">Mode of transport</label>
-                <Dropdown v-model="employee_service.employee_local_conveyance.mode_of_transport" :options="employee_service.local_Conveyance_Mode_of_transport"
-                 optionLabel="label"  optionValue="value" placeholder="Select Mode Of Transport"
-                  class="w-full" />
+                <Dropdown
+                  v-model="employee_service.employee_local_conveyance.mode_of_transport"
+                  :options="employee_service.local_Conveyance_Mode_of_transport"
+                  optionLabel="label"
+                  optionValue="value"
+                  placeholder="Select Mode Of Transport"
+                  class="w-full"
+                />
               </div>
 
-
-              <div class="formgrid grid">
+              <div class="grid formgrid">
                 <div class="field col">
                   <label for="Eligible Amount">From</label>
                   <InputText
@@ -363,39 +415,53 @@
                   />
                 </div>
               </div>
-              <div class="formgrid grid">
+              <div class="grid formgrid">
                 <div class="field col">
-                    <label for="Eligible Amount">Total Distance</label>
-                    <InputText
-                      v-model="
-                        employee_service.employee_local_conveyance.total_distance_travelled
-                      "
-                      @input="employee_service.amount_calculation"
-                    />
-                  </div>
-                  <div class="field col">
-                    <label for="Eligible Amount">Amt/Km</label>
-                    <InputText
-                      v-model="
-                        employee_service.employee_local_conveyance.total_distance_travelled
-                      "
-                    />
-                  </div>
+                  <label for="Eligible Amount">Total Distance</label>
+                  <InputText
+                    v-model="
+                      employee_service.employee_local_conveyance.total_distance_travelled
+                    "
+                    @input="employee_service.amount_calculation"
+                  />
+                </div>
+                <div class="field col">
+                  <label for="Eligible Amount">Amt/Km</label>
+                  <InputText
+                    v-model="
+                      employee_service.employee_local_conveyance.total_distance_travelled
+                    "
+                  />
+                </div>
               </div>
 
-
-              <div class="field col" :hidden="employee_service.employee_local_conveyance.mode_of_transport == 'Public Transport' ? false : true ">
+              <div
+                class="field col"
+                :hidden="
+                  employee_service.employee_local_conveyance.mode_of_transport ==
+                  'Public Transport'
+                    ? false
+                    : true
+                "
+              >
                 <label for="Eligible Amount">Amount</label>
                 <InputText
                   v-model="
-                    employee_service.employee_local_conveyance.local_convenyance_total_amount
+                    employee_service.employee_local_conveyance
+                      .local_convenyance_total_amount
                   "
-
                 />
               </div>
               <div class="field col">
                 <label for="Eligible Amount">Remarks</label>
-                <Textarea v-model="employee_service.employee_local_conveyance.local_conveyance_remarks" autoResize rows="2" cols="30" />
+                <Textarea
+                  v-model="
+                    employee_service.employee_local_conveyance.local_conveyance_remarks
+                  "
+                  autoResize
+                  rows="2"
+                  cols="30"
+                />
               </div>
 
               <template #footer>
@@ -422,8 +488,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted, reactive } from "vue";
-import { employee_reimbursment_service } from "./EmployeeReimbursementsService";
+import {ref, onMounted, reactive} from "vue";
+import {employee_reimbursment_service} from "./EmployeeReimbursementsService";
 import ABS_loading_spinner from "../../../components/ABS_loading_spinner.vue";
 
 const employee_service = employee_reimbursment_service();
@@ -641,30 +707,34 @@ onMounted(() => {
   text-align: center;
 }
 
-.p-calendar .p-inputtext  .p-inputwrapper .p-component {
-    flex: 1 1 auto;
-    width: 1%;
-    background: rebeccapurple;
+.p-calendar .p-inputtext .p-inputwrapper .p-component {
+  flex: 1 1 auto;
+  width: 1%;
+  background: rebeccapurple;
 }
 
-.p-calendar .p-inputwrapper .p-inputtext .p-component::-webkit-input-placeholder{ /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: red;
-  }
-.p-calendar .p-inputwrapper .p-inputtext .p-component:-ms-input-placeholder{ /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: red;
-  }
-.p-calendar .p-inputwrapper .p-inputtext .p-component::-ms-input-placeholder{ /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: red;
-  }
+.p-calendar .p-inputwrapper .p-inputtext .p-component::-webkit-input-placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: red;
+}
 
+.p-calendar .p-inputwrapper .p-inputtext .p-component:-ms-input-placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: red;
+}
 
+.p-calendar .p-inputwrapper .p-inputtext .p-component::-ms-input-placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: red;
+}
 
-  :-ms-input-placeholder { /* Internet Explorer 10-11 */
-    color: red;
-  }
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: red;
+}
 
-  ::-ms-input-placeholder { /* Microsoft Edge */
-    color: red;
-  }
-
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: red;
+}
 </style>

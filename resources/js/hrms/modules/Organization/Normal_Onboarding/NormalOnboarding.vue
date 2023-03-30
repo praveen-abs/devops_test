@@ -2962,7 +2962,7 @@ const submit = () => {
   formData.append("dob", employee_onboarding.dob);
   formData.append("mobile_number", employee_onboarding.mobile_number);
   formData.append("dl_no", employee_onboarding.dl_no);
-//   formData.append("blood_group_name", employee_onboarding.blood_group_name.name);
+//   formData.append("blood_group_name", employee_onboarding.blood_group_name.name);     
   formData.append("blood_group_id", employee_onboarding.blood_group_id);
   formData.append("bank_ifsc", employee_onboarding.bank_ifsc);
 //   formData.append("marital_status", employee_onboarding.marital_status.name);
