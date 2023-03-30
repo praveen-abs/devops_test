@@ -1951,16 +1951,16 @@
                         <div class="row">
 
 
-                     <!-- <div  class="row mb-3">
-                     <div class="col-md-12  col-sm-12 col-lg-4 col-xl-6 col-xxl-6  mb-md-0 mb-3">
+                     <!-- <div  class="mb-3 row">
+                     <div class="mb-3 col-md-12 col-sm-12 col-lg-4 col-xl-6 col-xxl-6 mb-md-0">
 
-                         <div class="form-check form-check-inline mt-2">
+                         <div class="mt-2 form-check form-check-inline">
                                     <input style="height: 20px;width: 20px;" class="form-check-input" type="radio" name="compensation"
                                      id="compensation_monthly"   @click="comp_mon" v-model="comp.compensation_monthly" value="compensation_monthly" >
                                     <label class="form-check-label leave_type ms-2" for="compensation_monthly">Compensation Monthly</label>
 
                                 </div>
-                                <div class="form-check form-check-inline ml-8">
+                                <div class="ml-8 form-check form-check-inline">
                                     <input style="height: 20px;width: 20px;" class="form-check-input" type="radio" name="compensation"
                                         id="compensation_yearly" value="compensation_yearly"
                                         @click="comp_year" v-model="comp.compensation_yearly" >
@@ -1969,7 +1969,7 @@
 
 
                     </div>
-                    <div class="col-md-12  col-sm-12 col-lg- col-xl-4 col-xxl-6  mb-md-0 mb-3">
+                    <div class="mb-3 col-md-12 col-sm-12 col-lg- col-xl-4 col-xxl-6 mb-md-0">
                        <div class="form-check form-check-inline" v-if="mon">
 
                                             <Dropdown
@@ -2107,7 +2107,7 @@
                                         <input type="number" placeholder="Other Allowance"
                                             name="other_allowance"  v-model="employee_onboarding.other_allowance"
                                             class="textbox onboard-form form-control calculation_data gross_data"
-                                            step="0.01" />
+                                            step="0.01" @input="gross_calculation" />
                                     </div>
 
 
@@ -2185,11 +2185,10 @@
                                     <div class="floating">
                                         <label for="" class="float-label">Cost to
                                             Company</label>
-                                            <button @click="compensatory_calculation">test</button>
 
                                         <input type="number" placeholder="Cost of Company"
                                             name="cic"   v-model="employee_onboarding.cic"
-                                            id="cic"
+                                            id="cic" @input="compensatory_calculation"
                                             class="onboard-form form-control textbox "
                                             step="0.01" required  />
                                     </div>
@@ -2525,7 +2524,7 @@
       </div>
     </div>
   </div>
-
+  <p> {{ employee_onboarding.save_draft_messege }}</p>
 
 
 
@@ -2601,6 +2600,8 @@
       </div>
     </template>
   </Dialog>
+
+
 </template>
 
 <script setup>
@@ -2610,7 +2611,9 @@ import axios from "axios";
 import { reactive } from "@vue/reactivity";
 import { onMounted } from "@vue/runtime-core";
 import { ref } from "@vue/runtime-core";
+import { inject } from "vue";
 import validation from "./NormalOnboardingService";
+
 import {
   getBankList,
   getCountryList,
@@ -2622,7 +2625,7 @@ import {
 } from "./NormalOnboardingService";
 
 
-
+const swal = inject('$swal')
 
 
 onMounted(() => {
@@ -2777,6 +2780,8 @@ const employee_onboarding = reactive({
   VoterIdDoc: "",
   ReleivingLetterDoc: "",
   PassportDoc: "",
+
+  save_draft_messege :''
 });
 
 // variableDeclarations
@@ -3035,13 +3040,26 @@ const submit = () => {
 
   console.log(formData);
 
+
   axios
     .post("/vmt-employee-onboard", formData, config)
-    .then(function (response) {
-      currentObj.success = response.data.success;
+    .then( (response) => {
+      // currentObj.success = response.data.success;
+      console.log("response" +response.data);
+      console.log(Object(response.data));
+         if(response.data.status == 'success'){
+
+          Swal.fire(
+            response.data.status,
+            response.data.message,
+           'success')
+        
+         }
+          employee_onboarding.save_draft_messege =res.data
     })
     .catch(function (error) {
-      currentObj.output = error;
+      // currentObj.output = error;
+      console.log(error);
     });
 };
 
@@ -3120,43 +3138,51 @@ const personalMailExists=()=>{
 }
 
 
+
 // compensatory Logic
 
 const compensatory_calculation = () =>{
+ 
     let basic = employee_onboarding.cic * 50/100
     console.log("Basic :"+basic);
 
-
-     employee_onboarding.basic = basic ;
-  //  employee_onboarding.gross =basic
-  //  employee_onboarding.hra = basic * 50/100
-  //  employee_onboarding.special_allowance = basic * 50/100
-
-
-  //  employee_onboarding.epf_employee = basic * 12/100
+    employee_onboarding.basic = basic ;
 
   let hra = employee_onboarding.basic * 50/100;
 
-  let SA =employee_onboarding.basic * 50/100;
-
-  let CTC = employee_onboarding.basic * 2 ;
-
-  employee_onboarding.cic = CTC ;
+  let SA =employee_onboarding.basic * 50/100; 
 
   employee_onboarding.hra = hra;
 
   employee_onboarding.special_allowance = SA;
 
-  let gross = (employee_onboarding.basic + employee_onboarding.hra
-                   + employee_onboarding.statutory_bonus + employee_onboarding.child_education_allowance
-                   +employee_onboarding.food_coupon + employee_onboarding.lta
-                   +employee_onboarding.other_allowance + employee_onboarding.special_allowance) ;
+  employee_onboarding.gross = basic + hra + SA ;
 
-  console.log("gross:"  +gross);
+  console.log("gross:" + employee_onboarding.gross);
 
-  employee_onboarding.gross = gross;
+   epf_esic_calculation();
+        
+  employee_onboarding.net_income =  employee_onboarding.gross -  employee_onboarding.epf_employee - employee_onboarding.esic_employee - employee_onboarding.professional_tax -  employee_onboarding.labour_welfare_fund
 
 
+}
+
+
+const gross_calculation =() =>{
+
+  if(employee_onboarding.statutory_bonus == '' && employee_onboarding.child_education_allowance == '' && employee_onboarding.food_coupon  == '' || employee_onboarding.lta == '' && employee_onboarding.other_allowance == ''){
+                     console.log("empty");
+
+                   }else{
+                    console.log("entered");
+                    employee_onboarding.gross= employee_onboarding.basic + employee_onboarding.hra +employee_onboarding.statutory_bonus+ employee_onboarding.child_education_allowance +employee_onboarding.food_coupon + employee_onboarding.lta  +employee_onboarding.other_allowance + employee_onboarding.special_allowance ;
+                    console.log("gross:" + employee_onboarding.gross);
+                    epf_esic_calculation();
+                   }   
+}
+
+
+const epf_esic_calculation = () =>{
   let EpfCalculation = employee_onboarding.gross - employee_onboarding.hra ;
 
   console.log("EpfCalculation:"+EpfCalculation );
@@ -3164,27 +3190,25 @@ const compensatory_calculation = () =>{
   if(EpfCalculation < 15000){
     employee_onboarding.epf_employer_contribution = EpfCalculation * 12/100 ;
     employee_onboarding.epf_employee = EpfCalculation * 12/100 ;
-  }else
+  }else 
   if(EpfCalculation > 15000){
     let epfConstant = 1800
     employee_onboarding.epf_employee =  epfConstant ;
     employee_onboarding.epf_employer_contribution = epfConstant ;
   }
-
-   if(gross <= 21000 ){
-    employee_onboarding.esic_employer_contribution  =  gross * 3.25/100;
-    employee_onboarding.esic_employee = gross * 0.75/100;
+ 
+   if(employee_onboarding.gross <= 21000 ){
+    employee_onboarding.esic_employer_contribution  =  employee_onboarding.gross * 3.25/100;
+    employee_onboarding.esic_employee = employee_onboarding.gross * 0.75/100;
    }else
-   if(gross > 21000){
+   if(employee_onboarding.gross > 21000){
     let EsicConstant = 0 ;
     employee_onboarding.esic_employee  = EsicConstant;
     employee_onboarding.esic_employer_contribution = EsicConstant;
    }
-
-
-
-
 }
+
+
 
 const mon=ref(false)
 const year=ref(false)
