@@ -258,6 +258,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
             $onLeaveCount = $dailyAttendanceReport->whereNotNull('leave_type_id')->count() ;
 
             $monthlyReport[]  =  array(
+                                    "year_value" => substr($dailyAttendanceReport[0]["date"],0,4),
                                     "month_value"  => $value->month,
                                     "working_days" => $workingCount,
                                     "on_time" => $onTimeCount,
