@@ -528,6 +528,23 @@ Route::get('/documents',  [App\Http\Controllers\VmtEmployeeController::class, 's
      //Ajax For Fetch Month For Given Year for payroll
      Route::get('/fetch-payroll-month-for-given-year', [App\Http\Controllers\VmtReportsController::class, 'fetchPayrollMonthForGivenYear'])->name('fetchPayrollMonthForGivenYear');
 
+<<<<<<< Updated upstream
+=======
+
+    //Attendance Reports
+    Route::get('/reports/attendance',  [App\Http\Controllers\VmtReportsController::class, 'showAttendanceReport'])->name('showAttendanceReport');
+    Route::get('/reports/basic-attendance-report',  [App\Http\Controllers\VmtReportsController::class, 'showBasicAttendanceReport'])->name('showBasicAttendanceReport');
+    Route::get('/reports/generate-attendance-report',  [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'generateAttendanceReports'])->name('generateAttendanceReports');
+
+    //basic Attedance Report
+    Route::get('/reports/basic-attendance',  [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'basicAttendanceReport'])->name('basicAttendanceReport');
+
+     //Ajax Part
+     Route::get('/attendance-filter-info', [App\Http\Controllers\VmtReportsController::class, 'fetchAttendanceInfo'])->name('fetchAttendanceInfo');
+     //Ajax For Fetch Month For Given Year fetchAttendanceForGivenYear
+     Route::get('/fetch-attendance-for-given-year', [App\Http\Controllers\VmtReportsController::class, 'fetchAttendanceForGivenYear'])->name('fetchAttendanceForGivenYear');
+
+>>>>>>> Stashed changes
     //pms reviwes report
     Route::get('/reports/pmsreviews',  [App\Http\Controllers\VmtReportsController::class, 'showPmsReviewsReportPage'])->name('showPmsReviewsReportPage');
     Route::get('/reports/generatePmsReviewsReports',  [App\Http\Controllers\VmtReportsController::class, 'generatePmsReviewsReports'])->name('generatePmsReviewsReports');

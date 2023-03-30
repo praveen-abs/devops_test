@@ -129,6 +129,22 @@
                 </div>
             </div>
 
+            <div id="attendance_tab" class="tab-pane fade show active">
+                <div class="card top-line mb-0">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-3">
+                                <ul class=' list-style-circle px-4'>
+                                    <li class=""><a href="#" class="">Detailed Report</a></li>
+                                    <li class=""><a href="{{ route('showBasicAttendanceReport') }}">Basic Report</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
 
             <div id="pms_tab" class="tab-pane fade ">
                 <div class="card top-line mb-0">
