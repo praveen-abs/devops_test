@@ -70,7 +70,33 @@ class VmtEmployeeLeaveService
                $financial_year_start_date=Carbon::parse($years[0]['0'].'-04-01');
                $financial_year_end_date=Carbon::parse($years[0]['1'].'-03-31');
                $emp_doj = Carbon::parse($emp_doj);
+
                if($emp_doj->between($financial_year_start_date, $financial_year_end_date)){
+
+                while(Carbon::now()->gte($emp_doj)){
+                    $year=$emp_doj->format('Y');
+                    $month=$emp_doj->format('n');
+
+                    if($emp_doj_Array ['month']==$month){
+                        if($emp_doj_Array ['day']==15){
+                            $accrual_leave_count='0.5';
+                        }else if($emp_doj_Array ['day']>15){
+                            $accrual_leave_count='0';
+                        }else if($emp_doj_Array ['day']<15){
+                            $accrual_leave_count='1';
+                        }
+                    }else{
+                        $accrual_leave_count='1';
+                    }
+
+                    if($month<10)
+                    $month='0'.$month;
+
+                   $date=$year."-".$month."-15";
+                   $this->insertAccrualLeaveRecord($user_id, $date, $leave_type_id, $accrual_leave_count);
+
+                    $emp_doj->addMonth();
+                }
 
                }else{
                 while(Carbon::now()->gte($financial_year_start_date)){
@@ -104,7 +130,9 @@ class VmtEmployeeLeaveService
                         if($emp_doj_Array ['day']==15){
                             $accrual_leave_count='0.5';
                         }else if($emp_doj_Array ['day']>15){
-                            $accrual_leave_count='0.5';
+                            $accrual_leave_count='0';
+                        }else if($emp_doj_Array ['day']<15){
+                            $accrual_leave_count='1';
                         }
                     }else{
                         $accrual_leave_count='1';
