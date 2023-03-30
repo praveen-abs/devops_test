@@ -2987,7 +2987,7 @@ const submit = () => {
   formData.append("permanent_city", employee_onboarding.permanent_city);
   formData.append("permanent_pincode", employee_onboarding.permanent_pincode);
 //   formData.append("department", employee_onboarding.department.name);
-  formData.append("department_id", employee_onboarding.departmentDetails.id);
+  formData.append("department_id", employee_onboarding.department_id);
   formData.append("process", employee_onboarding.process);
   formData.append("designation", employee_onboarding.designation);
   formData.append("cost_center", employee_onboarding.cost_center);
@@ -3064,7 +3064,7 @@ const submit = () => {
 };
 
 const get_id = () => {
-  employee_onboarding.bank_id = employee_onboarding.bankList.id;
+  employee_onboarding.bank_id = employee_onboarding.bank_name.id;
   employee_onboarding.blood_group_id = employee_onboarding.blood_group_name.id;
   employee_onboarding.marital_status_id = employee_onboarding.marital_status.id;
   employee_onboarding.current_country_id =
