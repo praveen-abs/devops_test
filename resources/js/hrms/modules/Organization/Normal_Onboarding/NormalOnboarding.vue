@@ -3161,6 +3161,8 @@ const compensatory_calculation = () =>{
   console.log("gross:" + employee_onboarding.gross);
 
    epf_esic_calculation();
+
+   gross_calculation();
         
   employee_onboarding.net_income =  employee_onboarding.gross -  employee_onboarding.epf_employee - employee_onboarding.esic_employee - employee_onboarding.professional_tax -  employee_onboarding.labour_welfare_fund
 
