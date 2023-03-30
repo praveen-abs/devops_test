@@ -23,7 +23,7 @@ class VmtEmployeeLeaveService
     */
 
     private function insertAccrualLeaveRecord($user_id, $date, $leave_type_id, $accrual_leave_count){
-        $current_month = date('n');
+        $current_month = $date('n');
 
         if(VmtEmployeesLeavesAccrued::whereMonth('date',$current_month)->exists())
         {
@@ -50,6 +50,7 @@ class VmtEmployeeLeaveService
 
 
         $calendar_type =ConfigPms::first()->calendar_type;
+
         //dd( $calendar_type);
         $accrualLeaveAdd_startDate = 15; //TODO : Move to Leave Settings page
 
@@ -65,13 +66,12 @@ class VmtEmployeeLeaveService
 
         if($calendar_type=='financial_year'){
                $year=ConfigPms::first()->year;
-               dd($year);
-              //dd($emp_doj_Array ['year']."-".$emp_doj_Array ['month']);
+               preg_match_all('!\d+!', $year, $years);
+               dd($years);
 
-              dd();
+
         }
-        else
-        if($calendar_type=='calendar_year'){
+        else if($calendar_type=='calendar_year'){
             $monthsSinceJoin = $today->diffInMonths($emp_doj);
 
            // Logic for Check and add accured leaves
@@ -98,6 +98,7 @@ class VmtEmployeeLeaveService
             }else{
                 $calendar_year_start_month=1;
                 $current_month = date('n');
+
                 for($i=$calendar_year_start_month;$i<=$current_month;$i++){
                     $date="2023"."-0".$i."-15";
                     $accrual_leave_count='1';
