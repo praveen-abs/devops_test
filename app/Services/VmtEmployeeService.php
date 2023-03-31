@@ -26,6 +26,7 @@ use App\Notifications\ViewNotification;
 use Illuminate\Support\Facades\Notification;
 use App\Mail\WelcomeMail;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 
 class VmtEmployeeService {
@@ -104,7 +105,6 @@ class VmtEmployeeService {
                 return "failure : ".$e;
             }
         }
-
 
         return "Normal Onboarding : Failure in TRY or CATCH method";
     }
@@ -473,11 +473,11 @@ class VmtEmployeeService {
 
     public function uploadDocument($emp_id,$fileObject, $emp_code, $onboard_document_type){
         if(empty($fileObject))
-        return null;
+            return null;
 
         //check if document already uploaded
-
         $onboard_doc_id = VmtOnboardingDocuments::where('document_name',$onboard_document_type)->first();
+
         if( !empty($onboard_doc_id))
         {
             $onboard_doc_id = $onboard_doc_id->id;
@@ -486,25 +486,42 @@ class VmtEmployeeService {
         $employee_documents = VmtEmployeeDocuments::where('user_id', $emp_id)->where('doc_id',$onboard_doc_id);
 
         //check if document already uploaded
-         if( $employee_documents->exists()){
+        if( $employee_documents->exists()){
             $employee_documents = $employee_documents->first();
-         }else{
+
+            $file_path = '/'.$emp_code.'/onboarding_documents'.'/'.$employee_documents->doc_url;
+
+            //fetch the existing document and delete its file from STORAGE folder
+            $file_exists_status = Storage::disk('private')->exists($file_path);
+
+            if($file_exists_status){
+
+                //delete the file
+                Storage::disk('private')->delete($file_path);
+
+            }
+
+        }
+        else
+        {
             $employee_documents = new VmtEmployeeDocuments;
-         }
-
-
-            $date=date('d-m-Y H-i-s');
-            $fileName =  str_replace(' ', '', $onboard_document_type).'_'.$emp_code.'_'.$date.'.'.$fileObject->extension();
-            $path=$emp_code.'/onboarding_documents';
-            $filePath = $fileObject->storeAs($path,$fileName, 'private');
-           // dd($emp_id);
             $employee_documents->user_id = $emp_id;
             $employee_documents->doc_id = $onboard_doc_id;
-            $employee_documents->doc_url = $fileName;
-            $employee_documents->status = 'Pending';
-            $employee_documents->save();
-            return $fileName;
+        }
 
+
+        $date = date('d-m-Y H-i-s');
+        $fileName =  str_replace(' ', '', $onboard_document_type).'_'.$emp_code.'_'.$date.'.'.$fileObject->extension();
+        $path = $emp_code.'/onboarding_documents';
+        $filePath = $fileObject->storeAs($path,$fileName, 'private');
+
+
+        $employee_documents->doc_url = $fileName;
+        $employee_documents->status = 'Pending';
+
+        $employee_documents->save();
+
+        return $fileName;
 
     }
 

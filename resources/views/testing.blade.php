@@ -1,3 +1,8 @@
+<?php
+
+    use Illuminate\Support\Facades\Storage;
+?>
+
 @extends('layouts.master')
 @section('title')
     @lang('translation.dashboards')
@@ -17,7 +22,7 @@
 
   <div id="payroll_setting"></div>
 
-<!-- 
+<!--
 @vite('resources/js/hrms/modules/payroll/payroll_setting/payroll_setup/payroll_setup.js')
 
   <div id="payroll_setup"></div> -->

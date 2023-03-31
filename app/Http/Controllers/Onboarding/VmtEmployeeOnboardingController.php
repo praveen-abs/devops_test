@@ -207,7 +207,7 @@ class VmtEmployeeOnboardingController extends Controller
 
 
         $data=$request->all();
-        //dd($data);
+        // dd($data);
 
         $user_id =$data['employee_code'];
         //dd( $user_id);
