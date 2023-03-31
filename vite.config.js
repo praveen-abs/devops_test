@@ -48,6 +48,18 @@ export default defineConfig({
                 //Holidays
                 'resources/js/hrms/modules/configurations/holidays/Holidays_Lists.js',
 
+
+                // Profile page
+
+                'resources/js/hrms/modules/profile_pages/EmployeeDetails.js',
+
+                // familyinfo_table_page
+
+                'resources/js/hrms/modules/profile_pages/FamilyDetails.js',
+
+                // Experience page
+                'resources/js/hrms/modules/profile_pages/ExperienceDetails.js'
+
             ],
             refresh: true,
         }),
