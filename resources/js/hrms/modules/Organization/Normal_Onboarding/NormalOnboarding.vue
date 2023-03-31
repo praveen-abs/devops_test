@@ -11,32 +11,21 @@
               enctype="multipart/form-data"
             >
               <input type="hidden" name="user_id" id="user_id" value="" />
-              <input
-                type="hidden"
-                name="can_redirect"
-                id="can_redirect"
-                value="0"
-              />
+              <input type="hidden" name="can_redirect" id="can_redirect" value="0" />
 
               <!-- Personal Details Start -->
 
               <div class="p-2 shadow card profile-box card-top-border">
-                <div
-                  class="card-body justify-content-center align-items-center"
-                >
+                <div class="card-body justify-content-center align-items-center">
                   <div class="header-card-text">
                     <h6>Personal Details</h6>
                   </div>
 
                   <div class="form-card">
                     <div class="mt-1 row">
-                      <div
-                        class="mb-2 col-md -6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md -6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
-                          <label for="" class="float-label"
-                            >Employee Code</label
-                          >
+                          <label for="" class="float-label">Employee Code</label>
                           <InputText
                             class="capitalize form-onboard-form form-control textbox"
                             type="text"
@@ -45,14 +34,14 @@
                             @input="userCodeExists"
                           />
 
-                          <span v-if=" user_code_exists "  class="p-error">Employee code Already Exists</span>
-
+                          <span v-if="user_code_exists" class="p-error"
+                            >Employee code Already Exists</span
+                          >
+                        
                         </div>
                       </div>
 
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="employee_name" class="float-label"
                             >Employee Name as per Aadhar
@@ -61,15 +50,30 @@
 
                           <InputText
                             class="capitalize onboard-form form-control textbox"
-                            type="text"
+                            type="text" @input="first_second_letter"
                             v-model="v$.employee_name.$model"
                             :class="{
-                              'p-invalid':
-                                v$.employee_name.$invalid && submitted,
+                              'p-invalid': v$.employee_name.$invalid && submitted,
                             }"
-                            style="text-transform: uppercase"
+                            pattern="[a-zA-Z]"
                             placeholder="Employee Name as per Aadhar "
                           />
+                          <span v-if="employee_name_invalid" class="p-error"
+                            >Employee Name Must be in Letters</span
+                          >
+
+
+                          <!-- <InputMask
+                            id="serial"
+                            mask="a"
+                            v-model="v$.pan_number.$model"
+                            placeholder="AHFCS1234F"
+                            style="text-transform: uppercase"
+                            class="form-control textbox"
+                            :class="{
+                              'p-invalid': v$.pan_number.$invalid && submitted,
+                            }"
+                          /> -->
 
                           <span
                             v-if="
@@ -86,13 +90,9 @@
                           >
                         </div>
                       </div>
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
-                          <label for="" class="float-label"
-                            >Date of Birth</label
-                          >
+                          <label for="" class="float-label">Date of Birth</label>
                           <input
                             type="text"
                             max="9999-12-31"
@@ -107,13 +107,10 @@
                           <span class="error" id="error_pan_no"></span>
                         </div>
                       </div>
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Marital Status
-                            <span class="text-danger">*</span></label
+                            >Marital Status <span class="text-danger">*</span></label
                           >
                           <Dropdown
                             v-model="v$.marital_status.$model"
@@ -121,6 +118,11 @@
                             optionLabel="name"
                             placeholder="Select Martial Status"
                             @change="spouseDisable"
+                            class="p-error"
+                            :class="{
+                              'p-invalid':
+                                v$.marital_status.$invalid && submitted,
+                            }"
                           />
 
                           <span
@@ -138,14 +140,10 @@
                           >
                         </div>
                       </div>
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Date of Joining<span class="text-danger"
-                              >*</span
-                            ></label
+                            >Date of Joining<span class="text-danger">*</span></label
                           >
 
                           <InputText
@@ -164,22 +162,16 @@
 
                           <span
                             v-if="
-                              (v$.doj.$invalid && submitted) ||
-                              v$.doj.$pending.$response
+                              (v$.doj.$invalid && submitted) || v$.doj.$pending.$response
                             "
                             class="p-error"
                             >{{
-                              v$.doj.required.$message.replace(
-                                "Value",
-                                "Date Of Joining"
-                              )
+                              v$.doj.required.$message.replace("Value", "Date Of Joining")
                             }}</span
                           >
                         </div>
                       </div>
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label"
                             >Gender<span class="text-danger">*</span></label
@@ -190,6 +182,11 @@
                             optionLabel="name"
                             optionValue="value"
                             placeholder="Select Gender"
+                            class="p-error"
+                            :class="{
+                              'p-invalid':
+                                v$.gender.$invalid && submitted,
+                            }"
                           />
 
                           <span
@@ -199,17 +196,12 @@
                             "
                             class="p-error"
                             >{{
-                              v$.gender.required.$message.replace(
-                                "Value",
-                                "Gender"
-                              )
+                              v$.gender.required.$message.replace("Value", "Gender")
                             }}</span
                           >
                         </div>
                       </div>
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label"
                             >Mobile Number<span class="text">*</span></label
@@ -218,8 +210,7 @@
                             type="text"
                             placeholder="Mobile Number"
                             :class="{
-                              'p-invalid':
-                                v$.mobile_number.$invalid && submitted,
+                              'p-invalid': v$.mobile_number.$invalid && submitted,
                             }"
                             v-model="v$.mobile_number.$model"
                             class="form-control textbox"
@@ -241,9 +232,7 @@
                           }}</span
                         >
                       </div>
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label"
                             >Email<span class="text-danger">*</span></label
@@ -253,14 +242,16 @@
                             placeholder="Email ID"
                             :class="{
                               'p-invalid': v$.email.$invalid && submitted,
-                            }" @input="personalMailExists"
+                            }"
+                            @input="personalMailExists"
                             v-model="v$.email.$model"
                             class="form-control textbox"
                             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                           />
 
-                          <span v-if="personal_mail_exists "  class="p-error">Email is already exists</span>
-
+                          <span v-if="personal_mail_exists" class="p-error"
+                            >Email is already exists</span
+                          >
 
                           <span
                             v-if="
@@ -269,23 +260,16 @@
                             "
                             class="p-error"
                             >{{
-                              v$.email.required.$message.replace(
-                                "Value",
-                                "Email"
-                              )
+                              v$.email.required.$message.replace("Value", "Email")
                             }}</span
                           >
                         </div>
                         <span class="error" id="error_email"></span>
                       </div>
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Aadhaar Number<span class="text-danger"
-                              >*</span
-                            ></label
+                            >Aadhaar Number<span class="text-danger">*</span></label
                           >
                           <!-- <InputText class="onboard-form form-control textbox " id="AadharNumber"
                                                         placeholder="Aadhaar Number"
@@ -298,8 +282,7 @@
                             placeholder="9999 9999 9999"
                             v-model="v$.aadhar_number.$model"
                             :class="{
-                              'p-invalid':
-                                v$.aadhar_number.$invalid && submitted,
+                              'p-invalid': v$.aadhar_number.$invalid && submitted,
                             }"
                           />
                           <span
@@ -317,13 +300,10 @@
                           >
                         </div>
                       </div>
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 co l-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 co l-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Pan Number / Pan Acknowlegement<span
-                              class="text-danger"
+                            >Pan Number / Pan Acknowlegement<span class="text-danger"
                               >*</span
                             ></label
                           >
@@ -355,9 +335,7 @@
                           >
                         </div>
                       </div>
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label">DL Number</label>
                           <InputText
@@ -377,14 +355,10 @@
                           <span class="error" id="error_dl_no"></span>
                         </div>
                       </div>
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Choose nationality<span class="text-danger"
-                              >*</span
-                            ></label
+                            >Choose nationality<span class="text-danger">*</span></label
                           >
                           <Dropdown
                             v-model="v$.nationality.$model"
@@ -393,6 +367,11 @@
                             optionValue="name"
                             placeholder="Select Nationality"
                             @change="NationalityCheck"
+                            class="p-error"
+                            :class="{
+                              'p-invalid':
+                                v$.nationality.$invalid && submitted,
+                            }"
                           />
 
                           <span
@@ -457,9 +436,7 @@
                         </div>
                       </div>
 
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label">Blood Group</label>
 
@@ -468,16 +445,13 @@
                             :options="bloodGroups"
                             optionLabel="name"
                             placeholder="Select Bloodgroup"
+                            class="p-error"
                           />
                         </div>
                       </div>
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
-                          <label for="" class="float-label"
-                            >Physically Challenged</label
-                          >
+                          <label for="" class="float-label">Physically Challenged</label>
 
                           <Dropdown
                             v-model="v$.physically_challenged.$model"
@@ -485,12 +459,11 @@
                             optionLabel="name"
                             optionValue="value"
                             placeholder="Physically Challenged"
+                            class="p-error"
                           />
                         </div>
                       </div>
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label"
                             >Bank Name<span class="text-danger">*</span></label
@@ -501,6 +474,11 @@
                             :options="bankList"
                             optionLabel="bank_name"
                             placeholder="Select Bank Name"
+                            class="p-error"
+                            :class="{
+                              'p-invalid':
+                                v$.bank_name.$invalid && submitted,
+                            }"
                           />
 
                           <span
@@ -518,21 +496,16 @@
                           >
                         </div>
                       </div>
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Account Number<span class="text-danger"
-                              >*</span
-                            ></label
+                            >Account Number<span class="text-danger">*</span></label
                           >
                           <InputText
                             placeholder="Account Number"
                             minlength="10"
                             :class="{
-                              'p-invalid':
-                                v$.AccountNumber.$invalid && submitted,
+                              'p-invalid': v$.AccountNumber.$invalid && submitted,
                             }"
                             maxlength="18"
                             class="onboard-form form-control textbox"
@@ -555,14 +528,10 @@
                           >
                         </div>
                       </div>
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Bank IFSC Code<span class="text-danger"
-                              >*</span
-                            ></label
+                            >Bank IFSC Code<span class="text-danger">*</span></label
                           >
                           <InputText
                             type="text"
@@ -710,17 +679,13 @@
               <!-- Current Address Start -->
 
               <div class="p-2 shadow card profile-box card-top-border">
-                <div
-                  class="card-body justify-content-center align-items-center"
-                >
+                <div class="card-body justify-content-center align-items-center">
                   <div class="form-card">
                     <div class="header-card-text">
                       <h6>Current Address</h6>
                     </div>
                     <div class="mt-1 row">
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6">
                         <div class="floating">
                           <label for="" class="float-label"
                             >Address 1<span class="text-danger">*</span></label
@@ -741,8 +706,7 @@
 
                           <span
                             v-if="
-                              (v$.current_address_line_1.$invalid &&
-                                submitted) ||
+                              (v$.current_address_line_1.$invalid && submitted) ||
                               v$.current_address_line_1.$pending.$response
                             "
                             class="p-error"
@@ -755,9 +719,7 @@
                           >
                         </div>
                       </div>
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6">
                         <div class="floating">
                           <label for="" class="float-label"
                             >Address 2<span class="text-danger">*</span></label
@@ -779,8 +741,7 @@
 
                           <span
                             v-if="
-                              (v$.current_address_line_2.$invalid &&
-                                submitted) ||
+                              (v$.current_address_line_2.$invalid && submitted) ||
                               v$.current_address_line_2.$pending.$response
                             "
                             class="p-error"
@@ -793,9 +754,7 @@
                           >
                         </div>
                       </div>
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label"
                             >Country<span class="text-danger">*</span></label
@@ -804,12 +763,12 @@
                             editable
                             v-model="v$.current_country.$model"
                             :class="{
-                              'p-invalid':
-                                v$.current_country.$invalid && submitted,
+                              'p-invalid': v$.current_country.$invalid && submitted,
                             }"
                             :options="country"
                             optionLabel="country_name"
                             placeholder="Select Country Name"
+                            class="p-error"
                           />
                           <span
                             v-if="
@@ -826,9 +785,7 @@
                           >
                         </div>
                       </div>
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label"
                             >State<span class="text-danger">*</span></label
@@ -838,12 +795,12 @@
                             editable
                             v-model="v$.current_state.$model"
                             :class="{
-                              'p-invalid':
-                                v$.current_state.$invalid && submitted,
+                              'p-invalid': v$.current_state.$invalid && submitted,
                             }"
                             :options="state"
                             optionLabel="state_name"
                             placeholder="Select State Name"
+                            class="p-error"
                           />
                           <span
                             v-if="
@@ -852,17 +809,12 @@
                             "
                             class="p-error"
                             >{{
-                              v$.current_state.required.$message.replace(
-                                "Value",
-                                "State"
-                              )
+                              v$.current_state.required.$message.replace("Value", "State")
                             }}</span
                           >
                         </div>
                       </div>
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label">
                             City<span class="text-danger">*</span></label
@@ -872,8 +824,7 @@
                             class="form-control"
                             type="text"
                             :class="{
-                              'p-invalid':
-                                v$.current_city.$invalid && submitted,
+                              'p-invalid': v$.current_city.$invalid && submitted,
                             }"
                             v-model="v$.current_city.$model"
                             placeholder="current city"
@@ -886,16 +837,11 @@
                           "
                           class="p-error"
                           >{{
-                            v$.current_city.required.$message.replace(
-                              "Value",
-                              "City"
-                            )
+                            v$.current_city.required.$message.replace("Value", "City")
                           }}</span
                         >
                       </div>
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label"
                             >Pincode<span class="text-danger">*</span></label
@@ -908,8 +854,7 @@
                             minlength="6"
                             maxlength="6"
                             :class="{
-                              'p-invalid':
-                                v$.current_pincode.$invalid && submitted,
+                              'p-invalid': v$.current_pincode.$invalid && submitted,
                             }"
                             v-model="v$.current_pincode.$model"
                             placeholder="Pincode"
@@ -932,18 +877,14 @@
                     </div>
 
                     <div class="row">
-                      <div
-                        class="my-3 col-md-12 col-sm-12 col-xs-12 col-lg-12 col-xl-12"
-                      >
+                      <div class="my-3 col-md-12 col-sm-12 col-xs-12 col-lg-12 col-xl-12">
                         <Checkbox
                           inputId=""
                           @click="ForCopyAdrress"
                           v-model="CopyAddresschecked"
                           :binary="true"
                         />
-                        <label
-                          style="margin-left: 10px"
-                          for="current_address_copy"
+                        <label style="margin-left: 10px" for="current_address_copy"
                           >Copy current address to the permanent address</label
                         >
                       </div>
@@ -951,9 +892,7 @@
                       <!-- Current Address End -->
 
                       <!-- Permanent Address Start -->
-                      <div
-                        class="col-md-12 col-sm-12 col-xs-12 col-lg-12 col-xl-12"
-                      >
+                      <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 col-xl-12">
                         <h6>Permanent Address</h6>
                         <div class="mt-1 row">
                           <div
@@ -961,9 +900,7 @@
                           >
                             <div class="floating">
                               <label for="" class="float-label"
-                                >Address 1<span class="text-danger"
-                                  >*</span
-                                ></label
+                                >Address 1<span class="text-danger">*</span></label
                               >
 
                               <Textarea
@@ -975,15 +912,13 @@
                                 id="permanent_address_line_1"
                                 :class="{
                                   'p-invalid':
-                                    v$.permanent_address_line_1.$invalid &&
-                                    submitted,
+                                    v$.permanent_address_line_1.$invalid && submitted,
                                 }"
                                 v-model="v$.permanent_address_line_1.$model"
                               />
                               <span
                                 v-if="
-                                  (v$.permanent_address_line_1.$invalid &&
-                                    submitted) ||
+                                  (v$.permanent_address_line_1.$invalid && submitted) ||
                                   v$.permanent_address_line_1.$pending.$response
                                 "
                                 class="p-error"
@@ -1001,9 +936,7 @@
                           >
                             <div class="floating">
                               <label for="" class="float-label"
-                                >Address 2<span class="text-danger"
-                                  >*</span
-                                ></label
+                                >Address 2<span class="text-danger">*</span></label
                               >
 
                               <Textarea
@@ -1015,16 +948,14 @@
                                 id="permanent_address_line_2"
                                 :class="{
                                   'p-invalid':
-                                    v$.permanent_address_line_2.$invalid &&
-                                    submitted,
+                                    v$.permanent_address_line_2.$invalid && submitted,
                                 }"
                                 v-model="v$.permanent_address_line_2.$model"
                               />
 
                               <span
                                 v-if="
-                                  (v$.permanent_address_line_2.$invalid &&
-                                    submitted) ||
+                                  (v$.permanent_address_line_2.$invalid && submitted) ||
                                   v$.permanent_address_line_2.$pending.$response
                                 "
                                 class="p-error"
@@ -1042,25 +973,22 @@
                           >
                             <div class="floating">
                               <label for="" class="float-label"
-                                >Country<span class="text-danger"
-                                  >*</span
-                                ></label
+                                >Country<span class="text-danger">*</span></label
                               >
                               <Dropdown
                                 editable
                                 v-model="v$.permanent_country.$model"
                                 :class="{
-                                  'p-invalid':
-                                    v$.permanent_country.$invalid && submitted,
+                                  'p-invalid': v$.permanent_country.$invalid && submitted,
                                 }"
                                 :options="country"
                                 optionLabel="country_name"
                                 placeholder="Select Country Name"
+                                class="p-error"
                               />
                               <span
                                 v-if="
-                                  (v$.permanent_country.$invalid &&
-                                    submitted) ||
+                                  (v$.permanent_country.$invalid && submitted) ||
                                   v$.permanent_country.$pending.$response
                                 "
                                 class="p-error"
@@ -1084,12 +1012,12 @@
                                 editable
                                 v-model="v$.permanent_state.$model"
                                 :class="{
-                                  'p-invalid':
-                                    v$.permanent_state.$invalid && submitted,
+                                  'p-invalid': v$.permanent_state.$invalid && submitted,
                                 }"
                                 :options="state"
                                 optionLabel="state_name"
                                 placeholder="Select State Name"
+                                class="p-error"
                               />
 
                               <span
@@ -1120,8 +1048,7 @@
                                 class="capitalize onboard-form form-control textbox"
                                 type="text"
                                 :class="{
-                                  'p-invalid':
-                                    v$.permanent_city.$invalid && submitted,
+                                  'p-invalid': v$.permanent_city.$invalid && submitted,
                                 }"
                                 v-model="v$.permanent_city.$model"
                                 placeholder="City"
@@ -1147,9 +1074,7 @@
                           >
                             <div class="floating">
                               <label for="" class="float-label"
-                                >Pincode<span class="text-danger"
-                                  >*</span
-                                ></label
+                                >Pincode<span class="text-danger">*</span></label
                               >
 
                               <InputText
@@ -1158,16 +1083,14 @@
                                 minlength="6"
                                 maxlength="6"
                                 :class="{
-                                  'p-invalid':
-                                    v$.permanent_pincode.$invalid && submitted,
+                                  'p-invalid': v$.permanent_pincode.$invalid && submitted,
                                 }"
                                 v-model="v$.permanent_pincode.$model"
                                 placeholder="Pincode"
                               />
                               <span
                                 v-if="
-                                  (v$.permanent_pincode.$invalid &&
-                                    submitted) ||
+                                  (v$.permanent_pincode.$invalid && submitted) ||
                                   v$.permanent_pincode.$pending.$response
                                 "
                                 class="p-error"
@@ -1192,9 +1115,7 @@
               <!-- Office Details Start -->
 
               <div class="p-2 shadow card profile-box card-top-border">
-                <div
-                  class="card-body justify-content-center align-items-center"
-                >
+                <div class="card-body justify-content-center align-items-center">
                   <div class="header-card-text">
                     <h6 class="">Official Details</h6>
                   </div>
@@ -1217,6 +1138,7 @@
                             placeholder="Department"
                             name="department"
                             id="department"
+                            class="p-error"
                           />
                         </div>
                       </div>
@@ -1244,10 +1166,7 @@
                             "
                             class="p-error"
                             >{{
-                              v$.process.required.$message.replace(
-                                "Value",
-                                "Process"
-                              )
+                              v$.process.required.$message.replace("Value", "Process")
                             }}</span
                           >
                         </div>
@@ -1285,9 +1204,7 @@
                           </span>
                         </div>
                       </div>
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label">Cost Center</label>
 
@@ -1300,53 +1217,51 @@
                           />
                         </div>
                       </div>
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
-                          <label for="" class="float-label"
-                            >Probation Period</label
-                          >
+                          <label for="" class="float-label">Probation Period</label>
 
-
-                           <Dropdown
-                           v-model="v$.probation_period.$model"
+                          <Dropdown
+                            v-model="v$.probation_period.$model"
                             :options="probation_period"
                             optionLabel="name"
                             optionValue="name"
                             editable
+                            class="p-error"
                             placeholder="Select Probation Period"
-                             :class="{
+                            :class="{
                               'is-invalid': v$.probation_period.$invalid && submitted,
                             }"
-
                           />
                         </div>
                       </div>
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Work Location<span class="text-danger"
-                              >*</span
-                            ></label
+                            >Work Location<span class="text-danger">*</span></label
                           >
                           <InputText
                             class="onboard-form form-control"
                             type="text"
                             placeholder="Work Location"
                             :class="{
-                              'p-invalid':
-                                v$.work_location.$invalid && submitted,
+                              'p-invalid': v$.work_location.$invalid && submitted,
                             }"
                             v-model="v$.work_location.$model"
                           />
-                          <label
-                            class="error star_error work_location_label"
-                            for="work_location"
-                            style="display: none"
-                          ></label>
+                          <span
+                            v-if="
+                              (v$.work_location.$invalid && submitted) ||
+                              v$.work_location.$pending.$response
+                            "
+                            class="p-error"
+                            >{{
+                              v$.work_location.required.$message.replace(
+                                "Value",
+                                "Work Location"
+                              )
+                            }}
+                          </span>
                         </div>
                       </div>
                       <div
@@ -1359,75 +1274,72 @@
                             ></label
                           >
 
-                                <Dropdown  :options="Managerdetails" optionLabel="name" placeholder="Reporting Manager Name"
-                                v-model="v$.l1_manager_code.$model"   :class="{
-                                    'is-invalid':
-                                      v$.l1_manager_code.$invalid && submitted,
-                                  }">
-                                    <template #value="slotProps">
-                                        <div v-if="slotProps.value" class="flex align-items-center">
-                                            <div>{{ slotProps.value.user_code }} - {{ slotProps.value.name }}</div>
-                                        </div>
-                                        <span v-else>
-                                            {{ slotProps.placeholder }}
-                                        </span>
-                                    </template>
-                                    <template #option="slotProps">
-                                        <div class="flex align-items-center">
-                                            <div>{{ slotProps.option.user_code }} - {{ slotProps.option.name }} </div>
-                                            <div></div>
-
-
-                                        </div>
-                                    </template>
-                                </Dropdown>
-
-                                <span
-                                v-if="
-                                  (v$.l1_manager_code.$invalid && submitted) ||
-                                  v$.l1_manager_code.$pending.$response
-                                "
-                                class="p-error"
-                                >{{
-                                  v$.l1_manager_code.required.$message.replace(
-                                    "Value",
-                                    "Reporting Manager Code"
-                                  )
-                                }}
+                          <Dropdown
+                            :options="Managerdetails"
+                            optionLabel="name"
+                            placeholder="Reporting Manager Name"
+                            v-model="v$.l1_manager_code.$model"
+                            class="p-error"
+                            :class="{
+                              'p-invalid':
+                                v$.l1_manager_code.$invalid && submitted,
+                            }"
+                          >
+                            <template #value="slotProps">
+                              <div v-if="slotProps.value" class="flex align-items-center">
+                                <div>
+                                  {{ slotProps.value.user_code }} -
+                                  {{ slotProps.value.name }}
+                                </div>
+                              </div>
+                              <span v-else>
+                                {{ slotProps.placeholder }}
                               </span>
+                            </template>
+                            <template #option="slotProps">
+                              <div class="flex align-items-center">
+                                <div>
+                                  {{ slotProps.option.user_code }} -
+                                  {{ slotProps.option.name }}
+                                </div>
+                                <div></div>
+                              </div>
+                            </template>
+                          </Dropdown>
 
-
-
+                          <span
+                            v-if="
+                              (v$.l1_manager_code.$invalid && submitted) ||
+                              v$.l1_manager_code.$pending.$response
+                            "
+                            class="p-error"
+                            >{{
+                              v$.l1_manager_code.required.$message.replace(
+                                "Value",
+                                "Reporting Manager Code"
+                              )
+                            }}
+                          </span>
                         </div>
                       </div>
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
-                          <label for="" class="float-label"
-                            >Holiday Location</label
-                          >
-
+                          <label for="" class="float-label">Holiday Location</label>
 
                           <InputText
-                          class="onboard-form form-control"
-                          type="text"
-                          :class="{
-                            'p-invalid': v$.holiday_location.$invalid && submitted,
-                          }"
-                          v-model="v$.holiday_location.$model"
-                          placeholder="Holiday Location"
-                        />
-
+                            class="onboard-form form-control"
+                            type="text"
+                            :class="{
+                              'p-invalid': v$.holiday_location.$invalid && submitted,
+                            }"
+                            v-model="v$.holiday_location.$model"
+                            placeholder="Holiday Location"
+                          />
                         </div>
                       </div>
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
-                          <label for="" class="float-label"
-                            >Official Email
-                          </label>
+                          <label for="" class="float-label">Official Email </label>
                           <input
                             type="email"
                             placeholder="Official E-Mail Id"
@@ -1437,13 +1349,9 @@
                           />
                         </div>
                       </div>
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
-                          <label for="" class="float-label"
-                            >Official Mobile</label
-                          >
+                          <label for="" class="float-label">Official Mobile</label>
                           <input
                             type="text"
                             minlength="10"
@@ -1456,9 +1364,7 @@
                           />
                         </div>
                       </div>
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label"
                             >Employee Notice Period Days</label
@@ -1473,14 +1379,10 @@
                         </div>
                       </div>
 
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Date of confirmation<span class="text-danger"
-                              >*</span
-                            ></label
+                            >Date of confirmation<span class="text-danger">*</span></label
                           >
                           <InputText
                             class="onboard-form form-control"
@@ -1488,8 +1390,7 @@
                             placeholder="Date of confirmation"
                             max="9999-12-31"
                             :class="{
-                              'p-invalid':
-                                v$.confirmation_period.$invalid && submitted,
+                              'p-invalid': v$.confirmation_period.$invalid && submitted,
                             }"
                             v-model="v$.confirmation_period.$model"
                             onfocus="(this.type='date')"
@@ -1520,22 +1421,16 @@
               <!-- Family Detials Start -->
 
               <div class="p-2 shadow card profile-box card-top-border">
-                <div
-                  class="card-body justify-content-center align-items-center"
-                >
+                <div class="card-body justify-content-center align-items-center">
                   <div class="header-card-text">
                     <h6 class="mb-0">Family Details</h6>
                   </div>
                   <div class="form-card">
                     <div class="mt-1 row">
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Father Name<span class="text-danger"
-                              >*</span
-                            ></label
+                            >Father Name<span class="text-danger">*</span></label
                           >
 
                           <InputText
@@ -1564,13 +1459,10 @@
                           </span>
                         </div>
                       </div>
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Date of Birth
-                            <span class="text-danger">*</span></label
+                            >Date of Birth <span class="text-danger">*</span></label
                           >
 
                           <InputText
@@ -1601,9 +1493,7 @@
                         </div>
                       </div>
 
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label">Gender</label>
                           <input
@@ -1616,9 +1506,7 @@
                           />
                         </div>
                       </div>
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label">Age </label>
 
@@ -1636,13 +1524,10 @@
                         </div>
                       </div>
 
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Mother Name
-                            <span class="text-danger">*</span></label
+                            >Mother Name <span class="text-danger">*</span></label
                           >
 
                           <InputText
@@ -1672,13 +1557,10 @@
                         </div>
                       </div>
 
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Date of Birth
-                            <span class="text-danger">*</span></label
+                            >Date of Birth <span class="text-danger">*</span></label
                           >
 
                           <InputText
@@ -1708,9 +1590,7 @@
                           </span>
                         </div>
                       </div>
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label">Gender</label>
 
@@ -1724,9 +1604,7 @@
                           />
                         </div>
                       </div>
-                      <div
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label">Age</label>
 
@@ -1750,8 +1628,7 @@
                       >
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Spouse Name
-                            <span class="text-danger">*</span></label
+                            >Spouse Name <span class="text-danger">*</span></label
                           >
                           <InputText
                             v-if="sposeData"
@@ -1786,8 +1663,7 @@
                       >
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Date of Wedding
-                            <span class="text-danger">*</span></label
+                            >Date of Wedding <span class="text-danger">*</span></label
                           >
 
                           <InputText
@@ -1796,8 +1672,7 @@
                             placeholder="Date of Wedding"
                             name="wedding_date"
                             :class="{
-                              'is-invalid':
-                                v$.wedding_date.$invalid && submitted,
+                              'is-invalid': v$.wedding_date.$invalid && submitted,
                             }"
                             v-model="v$.wedding_date.$model"
                             onfocus="(this.type='date')"
@@ -1833,8 +1708,7 @@
                             v-model="v$.spouse_gender.$model"
                             id="spouse_gender"
                             :class="{
-                              'is-invalid':
-                                v$.spouse_gender.$invalid && submitted,
+                              'is-invalid': v$.spouse_gender.$invalid && submitted,
                             }"
                             class="textbox onboard-form form-control"
                           >
@@ -1867,8 +1741,7 @@
                       >
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Spouse DOB
-                            <span class="text-danger">*</span></label
+                            >Spouse DOB <span class="text-danger">*</span></label
                           >
 
                           <InputText
@@ -1905,9 +1778,7 @@
                         class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
-                          <label for="" class="float-label"
-                            >Number of Children</label
-                          >
+                          <label for="" class="float-label">Number of Children</label>
 
                           <select
                             placeholder="Number of Children"
@@ -1935,294 +1806,331 @@
 
               <!-- family Detials End -->
 
-
-
               <!-- Compensatory Details start-->
-
-
 
               <div class="p-2 shadow card profile-box card-top-border">
                 <div class="card-body justify-content-center align-items-center">
-                    <div class="header-card-text">
-                        <h6>Compensatory</h6>
-                    </div>
-
-                    <div class="form-card">
-                        <div class="row">
-
-
-                     <!-- <div  class="mb-3 row">
-                     <div class="mb-3 col-md-12 col-sm-12 col-lg-4 col-xl-6 col-xxl-6 mb-md-0">
-
-                         <div class="mt-2 form-check form-check-inline">
-                                    <input style="height: 20px;width: 20px;" class="form-check-input" type="radio" name="compensation"
-                                     id="compensation_monthly"   @click="comp_mon" v-model="comp.compensation_monthly" value="compensation_monthly" >
-                                    <label class="form-check-label leave_type ms-2" for="compensation_monthly">Compensation Monthly</label>
-
-                                </div>
-                                <div class="ml-8 form-check form-check-inline">
-                                    <input style="height: 20px;width: 20px;" class="form-check-input" type="radio" name="compensation"
-                                        id="compensation_yearly" value="compensation_yearly"
-                                        @click="comp_year" v-model="comp.compensation_yearly" >
-                                    <label class="form-check-label leave_type ms-2" for="compensation_yearly">Compensation Yearly</label>
-                                </div>
-
-
-                    </div>
-                    <div class="mb-3 col-md-12 col-sm-12 col-lg- col-xl-4 col-xxl-6 mb-md-0">
-                       <div class="form-check form-check-inline" v-if="mon">
-
-                                            <Dropdown
-                                            :options="compensation_month"
-                                            optionLabel="name"
-                                            optionValue="id"
-                                            style="height: 2.9em;"
-                                            placeholder="Select Monthly"
-                                        />
-                                         </div>
-                                        <div class="form-check form-check-inline" v-if="year">
-
-                                        <Dropdown
-                                                :options="compensation_yearly"
-                                                optionLabel="name"
-                                                optionValue="id"
-                                                style="height: 2.9em;"
-                                                placeholder="Select Yearly"
-                                            />
-                                        </div>
-
-                                        <div class="floating">
-
-                                            <label for="" class="float-label">Basic
-                                                Salary</label>
-                                            <input type="number" placeholder="Basic Salary"
-                                                name="basic"  v-model="employee_onboarding.basic"
-                                                class="textbox onboard-form form-control calculation_data gross_data"
-                                                step="0.01" />
-                                        </div>
-
-
-                    </div>
-
-                </div>-->
-
-
-                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
-
-
-                                    <div class="floating">
-
-                                        <label for="" class="float-label">Basic
-                                            Salary</label>
-                                        <input  type="number" placeholder="Basic Salary"
-                                            name="basic"  v-model="employee_onboarding.basic"
-                                            class="textbox onboard-form form-control calculation_data gross_data"
-                                            step="0.01"  readonly/>
-                                    </div>
-
-
-                            </div>
-
-                             <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
-
-                                    <div class="floating">
-                                        <label for="" class="float-label">HRA</label>
-
-                                        <input type="number" placeholder="HRA" name="hra" v-model="employee_onboarding.hra"
-                                            class="onboard-form form-control textbox calculation_data gross_data "
-                                            step="0.01" readonly />
-                                    </div>
-
-                            </div>
-                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
-
-                                    <div class="floating">
-                                        <label for="" class="float-label">Statutory
-                                            Bonus</label>
-                                        <input type="number" placeholder="Statutory Bonus"
-                                            name="statutory_bonus"  v-model="employee_onboarding.statutory_bonus"
-                                            class="onboard-form form-control textbox calculation_data gross_data"
-                                            step="0.01" />
-                                    </div>
-
-
-                            </div>
-                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
-
-                                    <div class="floating">
-                                        <label for="" class="float-label">Child
-                                            Education Allowance</label>
-                                        <input type="number"
-                                            placeholder="Child Education Allowance"
-                                            name="child_education_allowance" v-model="employee_onboarding.child_education_allowance"
-                                            class="onboard-form form-control textbox calculation_data gross_data"
-                                            step="0.01" />
-                                    </div>
-
-
-
-                            </div>
-                             <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
-
-                                    <div class="floating">
-                                        <label for="" class="float-label">Food
-                                            Coupon</label>
-                                        <input type="number" placeholder="Food Coupon"
-                                            name="food_coupon" v-model="employee_onboarding.food_coupon"
-                                            class="onboard-form form-control textbox calculation_data gross_data"
-                                            step="0.01" />
-                                    </div>
-
-
-                            </div>
-                             <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
-
-                                    <div class="floating">
-                                        <label for="" class="float-label">LTA</label>
-                                        <input type="number" placeholder="LTA" name="lta"  v-model="employee_onboarding.lta"
-                                            class="textbox onboard-form form-control calculation_data gross_data"
-                                            step="0.01" />
-                                    </div>
-
-
-                            </div>
-                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
-
-                                    <div class="floating">
-                                        <label for="" class="float-label">Special
-                                            Allowance</label>
-                                        <input type="number" placeholder="Special Allowance"
-                                            name="special_allowance" v-model="employee_onboarding.special_allowance"
-                                            class="onboard-form form-control textbox calculation_data gross_data"
-                                            step="0.01" readonly />
-                                    </div>
-
-                            </div>
-                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
-
-                                    <div class="floating">
-                                        <label for="" class="float-label">Other
-                                            Allowance</label>
-
-                                        <input type="number" placeholder="Other Allowance"
-                                            name="other_allowance"  v-model="employee_onboarding.other_allowance"
-                                            class="textbox onboard-form form-control calculation_data gross_data"
-                                            step="0.01" @input="gross_calculation" />
-                                    </div>
-
-
-                            </div>
-                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
-
-                                    <div class="floating">
-                                        <label for="" class="float-label">Gross
-                                            Salary</label>
-
-                                        <input type="number" placeholder="Gross Salary"
-                                            name="gross"  v-model="employee_onboarding.gross"
-                                            class="textbox onboard-form form-control "
-                                            step="0.01" required readonly />
-                                    </div>
-
-
-                            </div>
-                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
-
-                                    <div class="floating">
-                                        <label for="" class="float-label">EPF employer
-                                            contribution</label>
-
-                                        <input type="number"
-                                            placeholder="EPF employer contribution"
-                                            name="epf_employer_contribution"  v-model="employee_onboarding.epf_employer_contribution"
-                                            class="textbox onboard-form form-control calculation_data cic_data"
-                                            step="0.01" readonly />
-                                    </div>
-
-
-
-                            </div>
-                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
-
-                                    <div class="floating">
-                                        <label for="" class="float-label">ESIC employer
-                                            contribution</label>
-                                        <input type="number"
-                                            placeholder="ESIC employer contribution"
-                                            name="esic_employer_contribution"  v-model="employee_onboarding.esic_employer_contribution"
-                                            class="onboard-form form-control textbox calculation_data cic_data"
-                                            step="0.01" readonly />
-                                    </div>
-
-
-                            </div>
-                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
-
-                                    <div class="floating">
-                                        <label for="" class="float-label">Insurance</label>
-                                        <input type="number" placeholder="Insurance"
-                                            name="insurance"   v-model="employee_onboarding.insurance"
-                                            class="onboard-form form-control textbox calculation_data cic_data"
-                                            step="0.01" />
-                                    </div>
-
-
-                            </div>
-                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
-
-                                    <div class="floating">
-                                        <label for="" class="float-label">Graduity</label>
-                                        <input type="number" placeholder="Graduity"
-                                            name="graduity"  v-model="employee_onboarding.graduity"
-                                            class="onboard-form form-control textbox calculation_data cic_data"
-                                            step="0.01" />
-                                    </div>
-
-
-                            </div>
-                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
-
-                                    <div class="floating">
-                                        <label for="" class="float-label">Cost to
-                                            Company</label>
-
-                                        <input type="number" placeholder="Cost of Company"
-                                            name="cic"   v-model="employee_onboarding.cic"
-                                            id="cic" @input="compensatory_calculation"
-                                            class="onboard-form form-control textbox "
-                                            step="0.01" required  />
-                                    </div>
-                                    <!-- @input="compensatory_calculation" -->
-
-                            </div>
-                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
-
-                                    <div class="floating">
-                                        <label for="" class="float-label">EPF
-                                            Employee</label>
-
-                                        <input type="number" placeholder="EPF Employee"
-                                            name="epf_employee"   v-model="employee_onboarding.epf_employee"
-                                            class="onboard-form form-control calculation_data net_data textbox "
-                                            step="0.01"  readonly/>
-                                    </div>
-
-                            </div>
-                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
-
-                                    <div class="floating">
-                                        <label for="" class="float-label">ESIC
-                                            Employee</label>
-
-                                        <input type="number" placeholder="ESIC Employee"
-                                            name="esic_employee"   v-model="employee_onboarding.esic_employee"
-                                            class="textbox onboard-form form-control calculation_data net_data"
-                                            step="0.01" readonly />
-                                    </div>
-
-
-                            </div>
-                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
+                  <div class="header-card-text">
+                    <h6>Compensatory</h6>
+                  </div>
+
+                  <div class="form-card">
+                    <div class="row">
+                      <div class="mb-3 row">
+                        <!-- <div class="my-5 mb-3 col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xxl-6 mb-md-0">
+
+                          <div class="mt-2 form-check form-check-inline">
+                            <label class="form-check-label leave_type ms-2" for="compensation_monthly">Compensation
+                              Monthly</label>
+
+                          </div>
+                          <div class="ml-2 form-check form-check-inline">
+                            <input type="number" placeholder="Cost of Company" name="cic" v-model="employee_onboarding.cic"
+                            id="cic" @input="compensatory_calculation" class="onboard-form form-control textbox "
+                            step="0.01" required />
+                          </div>
+
+
+                        </div>
+                        <div class="mb-3 col-md-12 col-sm-12 col-lg-5 col-xl-5 col-xxl-5 mb-md-0">
+                          <div class="form-check form-check-inline" v-if="mon">
+
+                            <Dropdown :options="compensation_month" optionLabel="name" optionValue="id"
+                              style="height: 2.9em;" placeholder="Select Monthly" />
+                          </div>
+                          <div class="form-check form-check-inline" v-if="year">
+
+                            <Dropdown :options="compensation_yearly" optionLabel="name" optionValue="id"
+                              style="height: 2.9em;" placeholder="Select Yearly" />
+                          </div>
+
+                          <div class="form-check form-check-inline" >
+
+                            <label for="" class="float-label">Cost To Company</label>
+                            <input type="number" placeholder="Cost To Company" name="basic"
+                              v-model="employee_onboarding.basic" style="height: 2.9em;" 
+                              class="textbox onboard-form form-control calculation_data gross_data" step="0.01" />
+
+                          </div>
+
+
+
+
+                        </div>-->
+
+                        <div
+                          class="my-5 mb-3 col-md-12 col-sm-12 col-lg-12 col-xl-12 col-xxl-12 mb-md-0"
+                        >
+                          <div class="mt-2 form-check form-check-inline">
+                            <label
+                              class="form-check-label leave_type ms-2"
+                              for="compensation_monthly"
+                            >
+                              Enter Monthly Gross</label
+                            >
+                          </div>
+                          <div class="ml-2 form-check form-check-inline">
+                            <input
+                              type="number"
+                              placeholder="Enter Monthly Gross"
+                              name="cic"
+                              v-model="employee_onboarding.cic"
+                              id="cic"
+                              @input="compensatory_calculation"
+                              class="onboard-form form-control textbox"
+                              step="0.01"
+                              required
+                            />
+                          </div>
+                          <div class="ml-2 form-check form-check-inline">
+                            <p>
+                              Cost to Company :
+                              <strong v-if="employee_onboarding.total_ctc < 0">0</strong>
+                              <strong v-else-if="employee_onboarding.total_ctc > 0">{{
+                                Math.floor(employee_onboarding.total_ctc)
+                              }}</strong>
+                              <strong v-else>0</strong>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
+                        <div class="floating">
+                          <label for="" class="float-label">Basic Salary</label>
+                          <input
+                            type="number"
+                            placeholder="Basic Salary"
+                            name="basic"
+                            v-model="employee_onboarding.basic"
+                            class="textbox onboard-form form-control calculation_data gross_data"
+                            step="0.01"
+                            readonly
+                          />
+                        </div>
+                      </div>
+
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
+                        <div class="floating">
+                          <label for="" class="float-label">HRA</label>
+
+                          <input
+                            type="number"
+                            placeholder="HRA"
+                            name="hra"
+                            v-model="employee_onboarding.hra"
+                            class="onboard-form form-control textbox calculation_data gross_data"
+                            step="0.01"
+                            readonly
+                          />
+                        </div>
+                      </div>
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
+                        <div class="floating">
+                          <label for="" class="float-label">Statutory Bonus</label>
+                          <input
+                            type="number"
+                            placeholder="Statutory Bonus"
+                            name="statutory_bonus"
+                            v-model="employee_onboarding.statutory_bonus"
+                            @input="statutory_bonus"
+                            class="onboard-form form-control textbox calculation_data gross_data"
+                            step="0.01"
+                          />
+                        </div>
+                      </div>
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
+                        <div class="floating">
+                          <label for="" class="float-label"
+                            >Child Education Allowance</label
+                          >
+                          <input
+                            type="number"
+                            placeholder="Child Education Allowance"
+                            name="child_education_allowance"
+                            v-model="employee_onboarding.child_education_allowance"
+                            class="onboard-form form-control textbox calculation_data gross_data"
+                            step="0.01"
+                            @input="child_allowance"
+                          />
+                        </div>
+                      </div>
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
+                        <div class="floating">
+                          <label for="" class="float-label">Food Coupon</label>
+                          <input
+                            type="number"
+                            placeholder="Food Coupon"
+                            name="food_coupon"
+                            v-model="employee_onboarding.food_coupon"
+                            @input="food_coupon"
+                            class="onboard-form form-control textbox calculation_data gross_data"
+                            step="0.01"
+                          />
+                        </div>
+                      </div>
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
+                        <div class="floating">
+                          <label for="" class="float-label">LTA</label>
+                          <input
+                            type="number"
+                            placeholder="LTA"
+                            name="lta"
+                            v-model="employee_onboarding.lta"
+                            class="textbox onboard-form form-control calculation_data gross_data"
+                            step="0.01"
+                            @input="lta"
+                          />
+                        </div>
+                      </div>
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
+                        <div class="floating">
+                          <label for="" class="float-label">Special Allowance</label>
+                          <input
+                            type="number"
+                            placeholder="Special Allowance"
+                            name="special_allowance"
+                            v-model="employee_onboarding.special_allowance"
+                            class="onboard-form form-control textbox calculation_data gross_data"
+                            step="0.01"
+                            readonly
+                          />
+                        </div>
+                      </div>
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
+                        <div class="floating">
+                          <label for="" class="float-label">Other Allowance</label>
+
+                          <input
+                            type="number"
+                            placeholder="Other Allowance"
+                            name="other_allowance"
+                            v-model="employee_onboarding.other_allowance"
+                            class="textbox onboard-form form-control calculation_data gross_data"
+                            step="0.01"
+                            @input="other_allowance"
+                          />
+                        </div>
+                      </div>
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
+                        <div class="floating">
+                          <label for="" class="float-label">Gross Salary</label>
+
+                          <input
+                            type="number"
+                            placeholder="Gross Salary"
+                            name="gross"
+                            v-model="employee_onboarding.gross"
+                            class="textbox onboard-form form-control"
+                            step="0.01"
+                            readonly
+                          />
+                        </div>
+                      </div>
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
+                        <div class="floating">
+                          <label for="" class="float-label"
+                            >EPF employer contribution</label
+                          >
+
+                          <input
+                            type="number"
+                            placeholder="EPF employer contribution"
+                            name="epf_employer_contribution"
+                            v-model="employee_onboarding.epf_employer_contribution"
+                            class="textbox onboard-form form-control calculation_data cic_data"
+                            step="0.01"
+                            readonly
+                          />
+                        </div>
+                      </div>
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
+                        <div class="floating">
+                          <label for="" class="float-label"
+                            >ESIC employer contribution</label
+                          >
+                          <input
+                            type="number"
+                            placeholder="ESIC employer contribution"
+                            name="esic_employer_contribution"
+                            v-model="employee_onboarding.esic_employer_contribution"
+                            class="onboard-form form-control textbox calculation_data cic_data"
+                            step="0.01"
+                            readonly
+                          />
+                        </div>
+                      </div>
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
+                        <div class="floating">
+                          <label for="" class="float-label">Insurance</label>
+                          <input
+                            type="number"
+                            placeholder="Insurance"
+                            name="insurance"
+                            v-model="employee_onboarding.insurance"
+                            @input="insurance"
+                            class="onboard-form form-control textbox calculation_data cic_data"
+                            step="0.01"
+                          />
+                        </div>
+                      </div>
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
+                        <div class="floating">
+                          <label for="" class="float-label">Graduity</label>
+                          <input
+                            type="number"
+                            placeholder="Graduity"
+                            name="graduity"
+                            v-model="employee_onboarding.graduity"
+                            @input="graduity"
+                            class="onboard-form form-control textbox calculation_data cic_data"
+                            step="0.01"
+                          />
+                        </div>
+                      </div>
+                      <!-- <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
+
+                        <div class="floating">
+                          <label for="" class="float-label">Cost to
+                            Company</label>
+
+                          <input type="number" placeholder="Cost of Company" name="cic" v-model="employee_onboarding.cic"
+                            id="cic" @input="compensatory_calculation" class="onboard-form form-control textbox "
+                            step="0.01" required />
+                        </div>
+
+                      </div> -->
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
+                        <div class="floating">
+                          <label for="" class="float-label">EPF Employee</label>
+
+                          <input
+                            type="number"
+                            placeholder="EPF Employee"
+                            name="epf_employee"
+                            v-model="employee_onboarding.epf_employee"
+                            class="onboard-form form-control calculation_data net_data textbox"
+                            step="0.01"
+                            readonly
+                          />
+                        </div>
+                      </div>
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
+                        <div class="floating">
+                          <label for="" class="float-label">ESIC Employee</label>
+
+                          <input
+                            type="number"
+                            placeholder="ESIC Employee"
+                            name="esic_employee"
+                            v-model="employee_onboarding.esic_employee"
+                            class="textbox onboard-form form-control calculation_data net_data"
+                            step="0.01"
+                            readonly
+                          />
+                        </div>
+                      </div>
+                      <!-- <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
 
                                     <div class="floating">
                                         <label for="" class="float-label">Professional
@@ -2247,44 +2155,34 @@
                                             step="0.01" />
                                     </div>
 
-                            </div>
-                            <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
+                            </div> -->
+                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
+                        <div class="floating">
+                          <label for="" class="float-label">Net Income</label>
 
-                                    <div class="floating">
-                                        <label for="" class="float-label">Net
-                                            Income</label>
-
-                                        <input type="number" placeholder="Net Income"
-                                            name="net_income"   v-model="employee_onboarding.net_income"
-                                            class="onboard-form form-control textbox "
-                                            step="0.01" required readonly />
-                                    </div>
-
-
-                            </div>
+                          <input
+                            type="number"
+                            placeholder="Net Income"
+                            name="net_income"
+                            v-model="employee_onboarding.net_income"
+                            class="onboard-form form-control textbox"
+                            step="0.01"
+                            required
+                            readonly
+                          />
                         </div>
+                      </div>
                     </div>
+                  </div>
                 </div>
-            </div>
-
-
-
-
-
-
-
-
-
-
+              </div>
 
               <!-- Compensatory Details end -->
 
               <!-- Personal Documents start -->
 
               <div class="p-2 mb-0 shadow card profile-box card-top-border">
-                <div
-                  class="card-body justify-content-center align-items-center"
-                >
+                <div class="card-body justify-content-center align-items-center">
                   <div class="header-card-text">
                     <h6 class="mb-0">Personal Documents</h6>
                   </div>
@@ -2292,9 +2190,7 @@
                     <div class="mt-1 row">
                       <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6">
                         <label for="" class="float-label"
-                          >Aadhar Card Front<span class="text-danger"
-                            >*</span
-                          ></label
+                          >Aadhar Card Front<span class="text-danger">*</span></label
                         >
 
                         <input
@@ -2322,9 +2218,7 @@
                         id="aadhar_card_backend_content"
                       >
                         <label for="" class="float-label">
-                          Aadhar Card Back<span class="text-danger"
-                            >*</span
-                          ></label
+                          Aadhar Card Back<span class="text-danger">*</span></label
                         >
 
                         <input
@@ -2410,9 +2304,7 @@
                         />
                       </div>
                       <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6">
-                        <label for="" class="float-label">
-                          Driving License</label
-                        >
+                        <label for="" class="float-label"> Driving License</label>
 
                         <input
                           type="file"
@@ -2427,9 +2319,7 @@
                       </div>
                       <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
                         <label for="" class="float-label"
-                          >Educations Certificate<span class="text-danger"
-                            >*</span
-                          ></label
+                          >Educations Certificate<span class="text-danger">*</span></label
                         >
                         <input
                           type="file"
@@ -2460,9 +2350,7 @@
                         >
                       </div>
                       <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
-                        <label for="" class="float-label">
-                          Relieving Letter</label
-                        >
+                        <label for="" class="float-label"> Relieving Letter</label>
                         <input
                           type="file"
                           accept="image/png, image/gif, image/jpeg"
@@ -2524,69 +2412,84 @@
       </div>
     </div>
   </div>
-  <p> {{ employee_onboarding.save_draft_messege }}</p>
-
-
-
-
+  <p>{{ employee_onboarding.save_draft_messege }}</p>
 
   <Dialog
     v-if="
+      !employee_onboarding.employee_code.length > 0 &&
+      !employee_onboarding.aadhar_number.length > 0 ||
       !employee_onboarding.employee_name.length > 0 &&
-      !employee_onboarding.aadhar_number.length > 0
+      !employee_onboarding.email.length > 0   ||
+      !employee_onboarding.mobile_number.length > 0 &&
+      !employee_onboarding.dob.length > 0  
     "
     header="Documents Required"
     v-model:visible="RequiredDocument"
-    :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-    :style="{ width: '50vw' }"
+    :breakpoints="{'960px': '75vw', '640px': '90vw'}"
+    :style="{width: '50vw'}"
   >
-    <li
+  <li class="my-4"
+      v-if="
+        employee_onboarding.employee_code == '' ||
+        employee_onboarding.employee_code.length < 0
+      "
+    >
+      Employee Code is Required
+    </li>
+    <li class="my-4"
       v-if="
         employee_onboarding.employee_name == '' ||
         employee_onboarding.employee_name.length < 0
       "
     >
-      Employee As Per Name Required
+      Employee As Per Name is Required
     </li>
-    <li
+    <li class="my-4"
       v-if="
         employee_onboarding.aadhar_number == '' ||
         employee_onboarding.aadhar_number.length < 0
       "
     >
-      Aadhaar Number Required
+      Aadhaar Number is Required
     </li>
-    <li
+    <li class="my-4"
       v-if="
-        employee_onboarding.pan_number == '' ||
-        employee_onboarding.pan_number.length < 0
+        employee_onboarding.pan_number == '' || employee_onboarding.pan_number.length < 0
       "
     >
-      Pan Number Required
+      Pan Number is Required
     </li>
-    <li
+    <li class="my-4"
       v-if="
         employee_onboarding.mobile_number == '' ||
         employee_onboarding.mobile_number.length < 0
       "
     >
-      Mobile Number Required
+      Mobile Number is Required
+    </li>
+    <li class="my-4"
+      v-if="
+        employee_onboarding.email == '' ||
+        employee_onboarding.email.length < 0
+      "
+    >
+      Email is  Required
     </li>
   </Dialog>
 
   <Dialog
     v-model:visible="showMessage"
-    :breakpoints="{ '960px': '80vw' }"
-    :style="{ width: '30vw' }"
+    :breakpoints="{'960px': '80vw'}"
+    :style="{width: '30vw'}"
     position="center"
   >
     <div class="flex px-3 pt-6 text-center align-items-center flex-column">
       <i
         class="pi pi-check-circle"
-        :style="{ fontSize: '5rem', color: 'var(--green-500)' }"
+        :style="{fontSize: '5rem', color: 'var(--green-500)'}"
       ></i>
       <h5 class="mb-6">Onboarding Successful!</h5>
-      <p :style="{ lineHeight: 1.5, textIndent: '1rem' }">
+      <p :style="{lineHeight: 1.5, textIndent: '1rem'}">
         Your account is registered under name
         <b>{{ employee_onboarding.employee_name }}</b
         ><br />
@@ -2600,13 +2503,11 @@
       </div>
     </template>
   </Dialog>
-
-
 </template>
 
 <script setup>
 import { useVuelidate } from "@vuelidate/core";
-// import { useToast } from "primevue/usetoast";
+import { useToast } from "primevue/usetoast";
 import axios from "axios";
 import { reactive } from "@vue/reactivity";
 import { onMounted } from "@vue/runtime-core";
@@ -2624,26 +2525,23 @@ import {
   getBloodGroups,
 } from "./NormalOnboardingService";
 
-
-const swal = inject('$swal')
-
+const swal = inject("$swal");
 
 onMounted(() => {
   // For Bank Data
   getBankList().then((result) => (bankList.value = result));
   //  For Countries
   getCountryList().then((result) => (country.value = result));
-//   console.log(country.country_name);
-//   employee_onboarding.current_country = "India";
-//   employee_onboarding.permanent_country = "India";
+  //   console.log(country.country_name);
+  //   employee_onboarding.current_country = "India";
+  //   employee_onboarding.permanent_country = "India";
 
   // for state
   getStateList().then((result) => (state.value = result));
-//   employee_onboarding.current_state = "Tamil Nadu";
-//   employee_onboarding.permanent_state = "Tamil Nadu";
+  //   employee_onboarding.current_state = "Tamil Nadu";
+  //   employee_onboarding.permanent_state = "Tamil Nadu";
   // for Manager Details
   ManagerDetails().then((result) => (Managerdetails.value = result));
-
 
   //Get Department details
 
@@ -2680,6 +2578,8 @@ const employee_onboarding = reactive({
   email: "",
   nationality: "",
   physically_challenged: "",
+  first_letter_emp_name:'',
+  second_letter_emp_name:'',
 
   // person Detials End
 
@@ -2748,29 +2648,29 @@ const employee_onboarding = reactive({
 
   // family Details End
 
+  //   compensatory Detials start
 
-//   compensatory Detials start
-
-    basic:'',
-    hra:'',
-    statutory_bonus:'',
-    child_education_allowance:'',
-    food_coupon:'',
-    lta:'',
-    other_allowance:'',
-    special_allowance:'',
-    graduity:'',
-    cic:'',
-    epf_employee:'',
-    epf_employer_contribution:'',
-    esic_employee:'',
-    esic_employer_contribution:'',
-    professional_tax:'',
-    labour_welfare_fund:'',
-    net_income:'0',
+  basic: "",
+  hra: "",
+  statutory_bonus: "",
+  child_education_allowance: "",
+  food_coupon: "",
+  lta: "",
+  other_allowance: "",
+  special_allowance: "",
+  graduity: "",
+  cic: "",
+  insurance: "",
+  epf_employee: "",
+  epf_employer_contribution: "",
+  esic_employee: "",
+  esic_employer_contribution: "",
+  professional_tax: "",
+  labour_welfare_fund: "",
+  net_income: "0",
+  total_ctc: 0,
 
   // Personal Documents Start
-
 
   AadharCardFront: "",
   AadharCardBack: "",
@@ -2781,12 +2681,12 @@ const employee_onboarding = reactive({
   ReleivingLetterDoc: "",
   PassportDoc: "",
 
-  save_draft_messege :''
+  save_draft_messege: "",
 });
 
 // variableDeclarations
 
-// const toast = useToast();
+const toast = useToast();
 const bankList = ref();
 const country = ref();
 const departmentDetails = ref();
@@ -2809,12 +2709,8 @@ const AadharDocFrontInvalid = ref(false);
 const AadharDocBackInvalid = ref(false);
 const PancardInvalid = ref(false);
 const EducationCertificateInvalid = ref(false);
-const fileUploadValidation=ref(true)
-
-
-
-
-
+const fileUploadValidation = ref(true);
+const employee_name_invalid =ref(false)
 
 //   Events
 
@@ -2844,7 +2740,7 @@ const handleSubmit = (isFormValid) => {
     //   life: 3000,
     // });
     RequiredDocument.value = true;
-    fileUploadValidation.value=true;
+    fileUploadValidation.value = true;
     return;
   }
   toggleDialog();
@@ -2924,21 +2820,22 @@ const SaveEmployeeOnboardingData = () => {
   console.log("Saving onboarding form");
   console.log(employee_onboarding);
   employee_onboarding.can_onboard_employee = false;
+  RequiredDocument.value = true
   submit();
   get_id();
   checkInputFiles();
+  handleSubmit();
 
   console.log(employee_onboarding);
 };
 
 const SubmitEmployeeOnboardingData = () => {
-    employee_onboarding.can_onboard_employee = true;
-    console.log(employee_onboarding);
-    get_id();
-    submit();
-
+  employee_onboarding.can_onboard_employee = true;
+  console.log(employee_onboarding);
+  get_id();
+  submit();
+  handleSubmit();
 };
-
 
 const submit = () => {
   let currentObj = this;
@@ -2947,46 +2844,67 @@ const submit = () => {
   };
 
   let formData = new FormData();
-  formData.append("can_onboard_employee", employee_onboarding.can_onboard_employee)
-  formData.append("employee_code", employee_onboarding.employee_code );
+  formData.append(
+    "can_onboard_employee",
+    employee_onboarding.can_onboard_employee
+  );
+  formData.append("employee_code", employee_onboarding.employee_code);
   formData.append("doj", employee_onboarding.doj);
-  formData.append("aadhar_number", employee_onboarding.aadhar_number );
-  formData.append("passport_number", employee_onboarding.passport_number );
-  formData.append("bank_id", employee_onboarding.bank_id );
-//   formData.append("bank_name ", employee_onboarding.bank_name.bank_name );
-  formData.append("employee_name", employee_onboarding.employee_name );
-  formData.append(" gender", employee_onboarding. gender);
+  formData.append("aadhar_number", employee_onboarding.aadhar_number);
+  formData.append("passport_number", employee_onboarding.passport_number);
+  formData.append("bank_id", employee_onboarding.bank_id);
+  //   formData.append("bank_name ", employee_onboarding.bank_name.bank_name );
+  formData.append("employee_name", employee_onboarding.employee_name);
+  formData.append(" gender", employee_onboarding.gender);
   formData.append("pan_number", employee_onboarding.pan_number);
   formData.append("passport_date", employee_onboarding.passport_date);
   formData.append("AccountNumber", employee_onboarding.AccountNumber);
   formData.append("dob", employee_onboarding.dob);
   formData.append("mobile_number", employee_onboarding.mobile_number);
   formData.append("dl_no", employee_onboarding.dl_no);
-//   formData.append("blood_group_name", employee_onboarding.blood_group_name.name);     
+  //   formData.append("blood_group_name", employee_onboarding.blood_group_name.name);
   formData.append("blood_group_id", employee_onboarding.blood_group_id);
   formData.append("bank_ifsc", employee_onboarding.bank_ifsc);
-//   formData.append("marital_status", employee_onboarding.marital_status.name);
+  //   formData.append("marital_status", employee_onboarding.marital_status.name);
   formData.append("marital_status_id", employee_onboarding.marital_status_id);
   formData.append("email", employee_onboarding.email);
   formData.append("nationality", employee_onboarding.nationality);
-  formData.append("physically_challenged", employee_onboarding.physically_challenged);
-  formData.append("current_address_line_1", employee_onboarding.current_address_line_1);
-  formData.append("current_address_line_2", employee_onboarding.current_address_line_2);
-//   formData.append("current_country", employee_onboarding.current_country.country_name);
+  formData.append(
+    "physically_challenged",
+    employee_onboarding.physically_challenged
+  );
+  formData.append(
+    "current_address_line_1",
+    employee_onboarding.current_address_line_1
+  );
+  formData.append(
+    "current_address_line_2",
+    employee_onboarding.current_address_line_2
+  );
+  //   formData.append("current_country", employee_onboarding.current_country.country_name);
   formData.append("current_country_id", employee_onboarding.current_country_id);
-//   formData.append("current_state", employee_onboarding.current_state.state_name);
+  //   formData.append("current_state", employee_onboarding.current_state.state_name);
   formData.append("current_state_id", employee_onboarding.current_state_id);
   formData.append("current_city", employee_onboarding.current_city);
   formData.append("current_pincode", employee_onboarding.current_pincode);
-  formData.append(" permanent_address_line_1", employee_onboarding.permanent_address_line_1);
-  formData.append("permanent_address_line_2", employee_onboarding.permanent_address_line_2);
-//   formData.append("permanent_country", employee_onboarding.permanent_country.country_name);
-  formData.append("permanent_country_id", employee_onboarding.permanent_country_id);
-//   formData.append("permanent_state", employee_onboarding.permanent_state.state_name);
+  formData.append(
+    " permanent_address_line_1",
+    employee_onboarding.permanent_address_line_1
+  );
+  formData.append(
+    "permanent_address_line_2",
+    employee_onboarding.permanent_address_line_2
+  );
+  //   formData.append("permanent_country", employee_onboarding.permanent_country.country_name);
+  formData.append(
+    "permanent_country_id",
+    employee_onboarding.permanent_country_id
+  );
+  //   formData.append("permanent_state", employee_onboarding.permanent_state.state_name);
   formData.append("permanent_state_id", employee_onboarding.permanent_state_id);
   formData.append("permanent_city", employee_onboarding.permanent_city);
   formData.append("permanent_pincode", employee_onboarding.permanent_pincode);
-//   formData.append("department", employee_onboarding.department.name);
+  //   formData.append("department", employee_onboarding.department.name);
   formData.append("department_id", employee_onboarding.department_id);
   formData.append("process", employee_onboarding.process);
   formData.append("designation", employee_onboarding.designation);
@@ -2998,7 +2916,10 @@ const submit = () => {
   formData.append("officical_mail", employee_onboarding.officical_mail);
   formData.append("official_mobile", employee_onboarding.official_mobile);
   formData.append("emp_notice", employee_onboarding.emp_notice);
-  formData.append("confirmation_period", employee_onboarding.confirmation_period);
+  formData.append(
+    "confirmation_period",
+    employee_onboarding.confirmation_period
+  );
   formData.append("father_name", employee_onboarding.father_name);
   formData.append("dob_father", employee_onboarding.dob_father);
   formData.append("father_gender", employee_onboarding.father_gender);
@@ -3015,19 +2936,31 @@ const submit = () => {
   formData.append("basic", employee_onboarding.basic);
   formData.append("hra", employee_onboarding.hra);
   formData.append("statutory_bonus", employee_onboarding.statutory_bonus);
-  formData.append("child_education_allowance", employee_onboarding.child_education_allowance);
+  formData.append(
+    "child_education_allowance",
+    employee_onboarding.child_education_allowance
+  );
   formData.append("food_coupon", employee_onboarding.food_coupon);
   formData.append("lta", employee_onboarding.lta);
   formData.append("special_allowance", employee_onboarding.special_allowance);
   formData.append("other_allowance", employee_onboarding.other_allowance);
-  formData.append("epf_employer_contribution", employee_onboarding.epf_employer_contribution);
+  formData.append(
+    "epf_employer_contribution",
+    employee_onboarding.epf_employer_contribution
+  );
   formData.append("graduity", employee_onboarding.graduity);
   formData.append("cic", employee_onboarding.cic);
   formData.append("epf_employee", employee_onboarding.epf_employee);
   formData.append("esic_employee", employee_onboarding.esic_employee);
-  formData.append("esic_employer_contribution", employee_onboarding.esic_employer_contribution);
+  formData.append(
+    "esic_employer_contribution",
+    employee_onboarding.esic_employer_contribution
+  );
   formData.append("professional_tax", employee_onboarding.professional_tax);
-  formData.append("labour_welfare_fund", employee_onboarding.labour_welfare_fund);
+  formData.append(
+    "labour_welfare_fund",
+    employee_onboarding.labour_welfare_fund
+  );
   formData.append("net_income", employee_onboarding.net_income);
   formData.append("Aadharfront", employee_onboarding.AadharCardFront);
   formData.append("AadharBack", employee_onboarding.AadharCardBack);
@@ -3040,22 +2973,16 @@ const submit = () => {
 
   console.log(formData);
 
-
   axios
     .post("/vmt-employee-onboard", formData, config)
-    .then( (response) => {
+    .then((response) => {
       // currentObj.success = response.data.success;
-      console.log("response" +response.data);
+      console.log("response" + response.data);
       console.log(Object(response.data));
-         if(response.data.status == 'success'){
-
-          Swal.fire(
-            response.data.status,
-            response.data.message,
-           'success')
-
-         }
-          employee_onboarding.save_draft_messege =res.data
+      if (response.data.status == "success") {
+        Swal.fire(response.data.status, response.data.message, "success");
+      }
+      employee_onboarding.save_draft_messege = res.data;
     })
     .catch(function (error) {
       // currentObj.output = error;
@@ -3075,7 +3002,8 @@ const get_id = () => {
   employee_onboarding.permanent_state_id =
     employee_onboarding.permanent_state.id;
   employee_onboarding.department_id = employee_onboarding.department.id;
-  employee_onboarding.l1_manager_code_id = employee_onboarding.l1_manager_code.id
+  employee_onboarding.l1_manager_code_id =
+    employee_onboarding.l1_manager_code.id;
 
   console.log(
     employee_onboarding.bank_id,
@@ -3091,148 +3019,372 @@ const get_id = () => {
 
 //  File Upload Function Declaration
 
-const checkInputFiles=()=>{
-    if (
+const checkInputFiles = () => {
+  if (
     employee_onboarding.AadharCardFront.fileName == undefined ||
     employee_onboarding.AadharCardBack.fileName == undefined ||
     employee_onboarding.PanCardDoc.fileName == undefined ||
     employee_onboarding.EductionDoc.fileName == undefined
-  ){
-     fileUploadValidation.value=true
-  }else{
-    fileUploadValidation.value=false
+  ) {
+    fileUploadValidation.value = true;
+  } else {
+    fileUploadValidation.value = false;
   }
-}
+};
 
-const  user_code_exists=ref(false)
+const user_code_exists = ref(false);
 
-const userCodeExists = () =>{
+const userCodeExists = () => {
+  let user_code = employee_onboarding.employee_code;
 
-    let user_code=employee_onboarding.employee_code;
-
-    axios.get(`/user-code-exists/${user_code}`).then(res=>{
-        console.log(res.data);
-        user_code_exists.value=res.data
-    }).catch(err=>{
-        console.log(err);
-    }).finally(()=>{
-        console.log("completed");
+  axios
+    .get(`/user-code-exists/${user_code}`)
+    .then((res) => {
+      console.log(res.data);
+      user_code_exists.value = res.data;
     })
-
-}
-
-const personal_mail_exists = ref(false)
-
-const personalMailExists=()=>{
-
-    let mail=employee_onboarding.email;
-
-    axios.get(`/personal-mail-exists/${mail}`).then(res=>{
-        console.log(res.data);
-        personal_mail_exists.value=res.data
-    }).catch(err=>{
-        console.log(err);
-    }).finally(()=>{
-        console.log("completed");
+    .catch((err) => {
+      console.log(err);
     })
+    .finally(() => {
+      console.log("completed");
+    });
+};
+
+
+const first_second_letter= ()=>{
+
+ let emp=  `${employee_onboarding.employee_name.charAt(0).toUpperCase()} ${employee_onboarding.employee_name.charAt(1).toUpperCase()}`
+
+ employee_onboarding.employee_name = emp
+
+                if(employee_onboarding.employee_name.match(1) || employee_onboarding.employee_name.match(2) ||
+                 employee_onboarding.employee_name.match(3) || employee_onboarding.employee_name.match(4 ) ||
+                 employee_onboarding.employee_name.match(5) || employee_onboarding.employee_name.match(6) ||
+                 employee_onboarding.employee_name.match(7) || employee_onboarding.employee_name.match(8) ||
+                 employee_onboarding.employee_name.match(9) || employee_onboarding.employee_name.match(0) ){
+                  employee_name_invalid.value =true
+                }else{
+                  employee_name_invalid.value =false
+                }
+              
+
+
 }
 
+const personal_mail_exists = ref(false);
 
+const personalMailExists = () => {
+  let mail = employee_onboarding.email;
+
+  axios
+    .get(`/personal-mail-exists/${mail}`)
+    .then((res) => {
+      console.log(res.data);
+      personal_mail_exists.value = res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      console.log("completed");
+    });
+};
 
 // compensatory Logic
 
-const compensatory_calculation = () =>{
+const compensatory_calculation = () => {
+  let basic = (employee_onboarding.cic * 50) / 100;
+  console.log("Basic :" + basic);
 
-    let basic = employee_onboarding.cic * 50/100
-    console.log("Basic :"+basic);
+  // employee_onboarding.gross
 
-    employee_onboarding.basic = basic ;
+  // let basic = employee_onboarding.gross * 60 / 100
+  // console.log("Basic :" + basic);
 
-  let hra = employee_onboarding.basic * 50/100;
+  employee_onboarding.basic = Math.floor(basic);
 
-  let SA =employee_onboarding.basic * 50/100;
+  let hra = (employee_onboarding.basic * 50) / 100;
 
-  employee_onboarding.hra = hra;
+  // let SA = employee_onboarding.basic  - employee_onboarding.hra
 
-  employee_onboarding.special_allowance = SA;
+  // employee_onboarding.gross = basic + hra + SA
 
-  employee_onboarding.gross = basic + hra + SA ;
+  employee_onboarding.hra = Math.floor(hra);
 
-  console.log("gross:" + employee_onboarding.gross);
+  employee_onboarding.special_allowance =
+    employee_onboarding.basic - employee_onboarding.hra;
 
-   epf_esic_calculation();
+  console.log(employee_onboarding.special_allowance);
 
-   gross_calculation();
+  let gross = basic + hra + employee_onboarding.special_allowance;
+  employee_onboarding.gross = Math.floor(gross);
 
-  employee_onboarding.net_income =  employee_onboarding.gross -  employee_onboarding.epf_employee - employee_onboarding.esic_employee - employee_onboarding.professional_tax -  employee_onboarding.labour_welfare_fund
+  epf_esic_calculation();
 
+  setTimeout(() => {
+    gross_calculation();
+  }, 1000);
 
-}
+  setTimeout(() => {
+    net_calculation();
+  }, 1000);
+};
 
+const net_calculation = () => {
+  employee_onboarding.net_income =
+    employee_onboarding.gross -
+    employee_onboarding.epf_employee -
+    employee_onboarding.esic_employee;
+};
 
-const gross_calculation =() =>{
+const gross_calculation = () => {
+  employee_onboarding.total_ctc =
+    employee_onboarding.gross +
+    employee_onboarding.epf_employer_contribution +
+    employee_onboarding.esic_employer_contribution +
+    employee_onboarding.insurance +
+    employee_onboarding.graduity;
 
-  if(employee_onboarding.statutory_bonus == '' && employee_onboarding.child_education_allowance == '' && employee_onboarding.food_coupon  == '' || employee_onboarding.lta == '' && employee_onboarding.other_allowance == ''){
-                     console.log("empty");
+  console.log("ctc" + employee_onboarding.total_ctc);
+};
 
-                   }else{
-                    console.log("entered");
-                    employee_onboarding.gross= employee_onboarding.basic + employee_onboarding.hra +employee_onboarding.statutory_bonus+ employee_onboarding.child_education_allowance +employee_onboarding.food_coupon + employee_onboarding.lta  +employee_onboarding.other_allowance + employee_onboarding.special_allowance ;
-                    console.log("gross:" + employee_onboarding.gross);
-                    epf_esic_calculation();
-                   }
-}
+const statutory_bonus = () => {
+  let total = employee_onboarding.statutory_bonus;
 
+  let sa = employee_onboarding.special_allowance;
 
-const epf_esic_calculation = () =>{
-  let EpfCalculation = employee_onboarding.gross - employee_onboarding.hra ;
+  console.log(total, sa);
 
-  console.log("EpfCalculation:"+EpfCalculation );
+  setTimeout(() => {
+    employee_onboarding.special_allowance = sa - total;
+    if (employee_onboarding.special_allowance < 0) {
+      toast.add({
+        severity: "error",
+        summary: " Special Allowance",
+        detail: "Not less than zero",
+        life: 3000,
+      });
 
-  if(EpfCalculation < 15000){
-    employee_onboarding.epf_employer_contribution = EpfCalculation * 12/100 ;
-    employee_onboarding.epf_employee = EpfCalculation * 12/100 ;
-  }else
-  if(EpfCalculation > 15000){
-    let epfConstant = 1800
-    employee_onboarding.epf_employee =  epfConstant ;
-    employee_onboarding.epf_employer_contribution = epfConstant ;
+      compensatory_calculation();
+      employee_onboarding.statutory_bonus = "";
+      employee_onboarding.child_education_allowance = "";
+      employee_onboarding.food_coupon = "";
+      employee_onboarding.lta = "";
+      employee_onboarding.other_allowance = "";
+    }
+  }, 1000);
+};
+
+const special_allowance_cal = () => {
+  let total =
+    employee_onboarding.statutory_bonus +
+    employee_onboarding.child_education_allowance +
+    employee_onboarding.food_coupon +
+    employee_onboarding.other_allowance;
+
+  let sa = employee_onboarding.special_allowance;
+
+  console.log(total, sa);
+
+  setTimeout(() => {
+    employee_onboarding.special_allowance = sa - total;
+    if (employee_onboarding.special_allowance < 0) {
+      toast.add({
+        severity: "error",
+        summary: " Special Allowance",
+        detail: "Not less than zero",
+        life: 3000,
+      });
+
+      compensatory_calculation();
+      employee_onboarding.statutory_bonus = "";
+      employee_onboarding.child_education_allowance = "";
+      employee_onboarding.food_coupon = "";
+      employee_onboarding.lta = "";
+      employee_onboarding.other_allowance = "";
+    }
+  }, 3000);
+};
+
+const child_allowance = () => {
+  let total = employee_onboarding.child_education_allowance;
+
+  let sa = employee_onboarding.special_allowance;
+
+  console.log(total, sa);
+
+  setTimeout(() => {
+    employee_onboarding.special_allowance = sa - total;
+    if (employee_onboarding.special_allowance < 0) {
+      toast.add({
+        severity: "error",
+        summary: " Special Allowance",
+        detail: "Not less than zero",
+        life: 3000,
+      });
+
+      compensatory_calculation();
+      employee_onboarding.statutory_bonus = "";
+      employee_onboarding.child_education_allowance = "";
+      employee_onboarding.food_coupon = "";
+      employee_onboarding.lta = "";
+      employee_onboarding.other_allowance = "";
+    }
+  }, 1100);
+};
+
+const food_coupon = () => {
+  let total = employee_onboarding.food_coupon;
+
+  let sa = employee_onboarding.special_allowance;
+
+  console.log(total, sa);
+
+  setTimeout(() => {
+    employee_onboarding.special_allowance = sa - total;
+    if (employee_onboarding.special_allowance < 0) {
+      toast.add({
+        severity: "error",
+        summary: " Special Allowance",
+        detail: "Not less than zero",
+        life: 3000,
+      });
+
+      compensatory_calculation();
+      employee_onboarding.statutory_bonus = "";
+      employee_onboarding.child_education_allowance = "";
+      employee_onboarding.food_coupon = "";
+      employee_onboarding.lta = "";
+      employee_onboarding.other_allowance = "";
+    }
+  }, 1150);
+};
+
+const lta = () => {
+  let total = employee_onboarding.lta;
+
+  let sa = employee_onboarding.special_allowance;
+
+  console.log(total, sa);
+
+  setTimeout(() => {
+    employee_onboarding.special_allowance = sa - total;
+    if (employee_onboarding.special_allowance < 0) {
+      toast.add({
+        severity: "error",
+        summary: " Special Allowance",
+        detail: "Not less than zero",
+        life: 2000,
+      });
+
+      compensatory_calculation();
+      employee_onboarding.statutory_bonus = "";
+      employee_onboarding.child_education_allowance = "";
+      employee_onboarding.food_coupon = "";
+      employee_onboarding.lta = "";
+      employee_onboarding.other_allowance = "";
+    }
+  }, 1200);
+};
+
+const other_allowance = () => {
+  let total = employee_onboarding.other_allowance;
+
+  let sa = employee_onboarding.special_allowance;
+
+  console.log(total, sa);
+
+  setTimeout(() => {
+    employee_onboarding.special_allowance = sa - total;
+    if (employee_onboarding.special_allowance < 0) {
+      toast.add({
+        severity: "error",
+        summary: " Special Allowance",
+        detail: "Not less than zero",
+        life: 3000,
+      });
+
+      compensatory_calculation();
+      employee_onboarding.statutory_bonus = "";
+      employee_onboarding.child_education_allowance = "";
+      employee_onboarding.food_coupon = "";
+      employee_onboarding.lta = "";
+      employee_onboarding.other_allowance = "";
+    }
+  }, 1250);
+};
+
+const insurance = () => {
+  let total = employee_onboarding.total_ctc;
+  console.log("total" + total);
+  let sum = parseInt(total) + parseInt(employee_onboarding.insurance);
+  console.log("sum " + sum);
+  setTimeout(() => {
+    employee_onboarding.total_ctc = sum;
+  }, 1000);
+};
+const graduity = () => {
+  let total = employee_onboarding.total_ctc;
+  console.log("total" + total);
+  let sum =
+    parseInt(employee_onboarding.total_ctc) +
+    parseInt(employee_onboarding.graduity);
+
+  console.log(sum);
+  console.log(employee_onboarding.total_ctc);
+
+  setTimeout(() => {
+    employee_onboarding.total_ctc = sum;
+  }, 1000);
+};
+
+const epf_esic_calculation = () => {
+  let EpfCalculation = employee_onboarding.gross - employee_onboarding.hra;
+
+  console.log("EpfCalculation:" + EpfCalculation);
+
+  if (EpfCalculation < 15000) {
+    employee_onboarding.epf_employer_contribution = Math.floor(
+      (EpfCalculation * 12) / 100
+    );
+    employee_onboarding.epf_employee = Math.floor((EpfCalculation * 12) / 100);
+  } else if (EpfCalculation > 15000) {
+    let epfConstant = 1800;
+    employee_onboarding.epf_employee = epfConstant;
+    employee_onboarding.epf_employer_contribution = epfConstant;
   }
 
-   if(employee_onboarding.gross <= 21000 ){
-    employee_onboarding.esic_employer_contribution  =  employee_onboarding.gross * 3.25/100;
-    employee_onboarding.esic_employee = employee_onboarding.gross * 0.75/100;
-   }else
-   if(employee_onboarding.gross > 21000){
-    let EsicConstant = 0 ;
-    employee_onboarding.esic_employee  = EsicConstant;
+  if (employee_onboarding.gross <= 21000) {
+    employee_onboarding.esic_employer_contribution = Math.floor(
+      (employee_onboarding.gross * 3.25) / 100
+    );
+    employee_onboarding.esic_employee = Math.floor(
+      (employee_onboarding.gross * 0.75) / 100
+    );
+  } else if (employee_onboarding.gross > 21000) {
+    let EsicConstant = 0;
+    employee_onboarding.esic_employee = EsicConstant;
     employee_onboarding.esic_employer_contribution = EsicConstant;
-   }
-}
+  }
+};
 
+const mon = ref(false);
+const year = ref(false);
 
+const comp = reactive({
+  compensation_monthly: "",
+  compensation_yearly: "",
+});
 
-const mon=ref(false)
-const year=ref(false)
-
-
-const comp =reactive ({
-    compensation_monthly:'',
-    compensation_yearly:""
-})
-
-
-
-const comp_mon =() =>{
-     mon.value =true
-     year.value =false
-}
-const comp_year =() =>{
-     year.value =true
-     mon.value =false
-}
-
-
+const comp_mon = () => {
+  mon.value = true;
+  year.value = false;
+};
+const comp_year = () => {
+  year.value = true;
+  mon.value = false;
+};
 
 const AadharFront = (e) => {
   // Check if file is selected
@@ -3468,15 +3620,10 @@ const PhyChallenged = ref([
 const compensation_month = ref([
   { id: "1", name: "Monthly gross" },
   { id: "2", name: "Monthly Net" },
-
-
 ]);
 const compensation_yearly = ref([
   { id: "1", name: "Yearly Gross" },
   { id: "2", name: "Yearly Net" },
-
-
-
 ]);
 
 // Sample testong Data
