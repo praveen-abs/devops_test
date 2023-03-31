@@ -32,9 +32,9 @@ class VmtAttendanceReportsService{
         $regularize_record = VmtEmployeeAttendanceRegularization::where('attendance_date',$date)
                            ->where('user_id',  $user_id)->where('regularization_type', $regularizeType);
            if ($regularize_record->exists()) {
-                 return true;
+                 return $regularize_record->value('status');
            }else{
-                return true;
+                return null;
             }
     }
 
@@ -174,7 +174,7 @@ class VmtAttendanceReportsService{
                 $attendanceResponseArray[$fulldate] = array(
                  //"user_id"=>$request->user_id,
                  "user_id"=> $singleUser->id,"DOJ"=>$singleUser->doj,"isAbsent"=>false,"isLeave"=>false,
-                 "is_weekoff"=>false,"isLC"=>false,"isEG"=>false,"date"=>$fulldate,"is_holiday"=>false,
+                 "is_weekoff"=>false,"isLC"=>null,"isEG"=>null,"date"=>$fulldate,"is_holiday"=>false,
                  "attendance_mode_checkin"=>null,"attendance_mode_checkout"=>null, "absent_status"=>null,
                  "checkin_time"=>null,"checkout_time"=>null,"leave_type"=>null,"half_day_status"=>null,"half_day_type"=>null
                                                              );
@@ -456,11 +456,11 @@ class VmtAttendanceReportsService{
                        $total_leave++;
                    }
                  } else if($attendanceResponseArray[$key]['checkin_time']!=null || $attendanceResponseArray[$key]['checkout_time']!=null) {
-                     if($total_LC>=4&&$attendanceResponseArray[$key]['isLC']){
+                     if($attendanceResponseArray[$key]['isLC']=='Rejected'){
                         array_push($arrayReport,'P/LC');
                         $total_present++;
-                        $total_lop=  $total_lop+0.5;
-                     }else if($total_EG>=4&&$attendanceResponseArray[$key]['isEG']){
+                        $total_lop =  $total_lop+0.5;
+                     }else if($attendanceResponseArray[$key]['isEG']=='Rejected'){
                         array_push($arrayReport,'P/EG');
                         $total_present++;
                      }else{
@@ -469,11 +469,11 @@ class VmtAttendanceReportsService{
                      }
 
                      //Count For LG AND EG
-                 if($attendanceResponseArray[$key]['isLC']){
+                 if($attendanceResponseArray[$key]['isLC']!=null){
                     $total_LC++;
                  }
 
-                if($attendanceResponseArray[$key]['isEG']){
+                if($attendanceResponseArray[$key]['isEG']!=null){
                    $total_EG++;
                }
 
