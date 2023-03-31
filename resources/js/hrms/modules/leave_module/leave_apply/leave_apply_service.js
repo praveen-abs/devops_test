@@ -277,7 +277,9 @@ export const Service = defineStore("Service", () => {
 
     })
 
-
+    const ReloadPage = () => {
+        location.reload();
+    }
 
     // write Email service and axios service here
 
@@ -293,9 +295,10 @@ export const Service = defineStore("Service", () => {
             leave_Request_data.end_date = leave_Request_data.start_date
             leave_Request_data.leave_session="";
 
-        }else
+        }
+        else
         if(leave_data.radiobtn_half_day=="half_day"){
-            console.log("Applying half-day leave...");
+            console.log("Applying half-day leave on : "+leave_data.half_day_leave_date);
             leave_Request_data.no_of_days = 0.5;
             console.log("half day leave date"+leave_data.half_day_leave_date);
             leave_Request_data.start_date = moment(leave_data.half_day_leave_date).format('YYYY-MM-DD');
@@ -303,18 +306,34 @@ export const Service = defineStore("Service", () => {
 
             if(leave_data.half_day_leave_session=="forenoon"){
                 leave_Request_data.leave_session="FN"
-            }else{
+            }
+            else
+            if(leave_data.half_day_leave_session=="afternoon"){
                 leave_Request_data.leave_session="AN"
             }
+            else{
+                //No session selected, show error
 
-      }else
+                toast.add({
+                    severity: "info",
+                    summary: "Select Session",
+                    detail: "Select Leave Session",
+                    life: 3000,
+                });
+
+               return;
+            }
+
+        }
+        else
         if(leave_data.radiobtn_custom=="custom"){
             leave_Request_data.start_date=  moment(leave_data.custom_start_date).format('YYYY-MM-DD');
             leave_Request_data.end_date= moment(leave_data.custom_end_date).format('YYYY-MM-DD');
             leave_Request_data.no_of_days=leave_data.custom_total_days
             leave_Request_data.leave_session="";
 
-        }else
+        }
+        else
         if(leave_data.selected_leave.includes('Compensatory')){
              leave_Request_data.start_date=  moment(leave_data.compensatory_start_date).format('YYYY-MM-DD');
             leave_Request_data.end_date= moment(leave_data.compensatory_end_date).format('YYYY-MM-DD');
@@ -337,25 +356,17 @@ export const Service = defineStore("Service", () => {
                 detail: "Select Leave",
                 life: 3000,
             });
-      }
+        }
+
         leave_Request_data.notify_to=leave_data.notifyTo
         leave_Request_data.leave_reason=leave_data.leave_reason
         RequiredField.value = true;
         console.log(leave_Request_data);
 
-      if(leave_data.radiobtn_half_day == 'half_day'){
-        if(leave_data.half_day_leave_session  == ''){
-            toast.add({
-                severity: "info",
-                summary: "Select Session",
-                detail: "Select Leave Session",
-                life: 3000,
-            });
+        console.log("Applying Leave...");
 
-           }
-      }
-       else
-       {
+        //show loading screen
+        data_checking.value=true;
 
         // data_checking.value=true
         axios.post('/applyLeaveRequest',{
@@ -371,6 +382,7 @@ export const Service = defineStore("Service", () => {
             "leave_reason": leave_Request_data.leave_reason,
         }).then(res=>{
             data_checking.value=false
+
             if(res.data.status=='success'){
                 Email_Service.value=true
             }else
@@ -384,10 +396,6 @@ export const Service = defineStore("Service", () => {
         }).catch(err=>{
             console.log(err);
         })
-       }
-        console.log("Leave"+leave_data.selected_leave);
-
-
 
     };
 
@@ -416,6 +424,7 @@ export const Service = defineStore("Service", () => {
         custom_day,
         Permission,
         Submit,
+        ReloadPage,
         dayCalculation,
         time_difference,
         get_user,
