@@ -85,10 +85,7 @@ export default function validation(rules) {
         },
         employee_name: {
             required,
-            ValidateEmp(value) {
-                const regex =  /^[A-Za-z]+$/;
-                return regex.test(value);
-            },
+           
         },
         gender: {
             required,

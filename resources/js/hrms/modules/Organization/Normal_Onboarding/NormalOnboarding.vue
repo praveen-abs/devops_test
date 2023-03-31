@@ -678,7 +678,7 @@
 
               <!-- Current Address Start -->
 
-              <div class="p-2 shadow card profile-box card-top-border">
+              <div class="p-2 my-6 shadow card profile-box card-top-border">
                 <div class="card-body justify-content-center align-items-center">
                   <div class="form-card">
                     <div class="header-card-text">
@@ -1420,7 +1420,7 @@
 
               <!-- Family Detials Start -->
 
-              <div class="p-2 shadow card profile-box card-top-border">
+              <div class="p-2 my-6 shadow card profile-box card-top-border">
                 <div class="card-body justify-content-center align-items-center">
                   <div class="header-card-text">
                     <h6 class="mb-0">Family Details</h6>
@@ -1808,7 +1808,7 @@
 
               <!-- Compensatory Details start-->
 
-              <div class="p-2 shadow card profile-box card-top-border">
+              <div class="p-2 my-6 shadow card profile-box card-top-border">
                 <div class="card-body justify-content-center align-items-center">
                   <div class="header-card-text">
                     <h6>Compensatory</h6>
@@ -2181,7 +2181,7 @@
 
               <!-- Personal Documents start -->
 
-              <div class="p-2 mb-0 shadow card profile-box card-top-border">
+              <div class="p-2 my-6 mb-0 shadow card profile-box card-top-border">
                 <div class="card-body justify-content-center align-items-center">
                   <div class="header-card-text">
                     <h6 class="mb-0">Personal Documents</h6>
@@ -3097,18 +3097,9 @@ const compensatory_calculation = () => {
   let basic = (employee_onboarding.cic * 50) / 100;
   console.log("Basic :" + basic);
 
-  // employee_onboarding.gross
-
-  // let basic = employee_onboarding.gross * 60 / 100
-  // console.log("Basic :" + basic);
-
   employee_onboarding.basic = Math.floor(basic);
 
   let hra = (employee_onboarding.basic * 50) / 100;
-
-  // let SA = employee_onboarding.basic  - employee_onboarding.hra
-
-  // employee_onboarding.gross = basic + hra + SA
 
   employee_onboarding.hra = Math.floor(hra);
 
@@ -3340,15 +3331,14 @@ const graduity = () => {
 };
 
 const epf_esic_calculation = () => {
+  
   let EpfCalculation = employee_onboarding.gross - employee_onboarding.hra;
 
   console.log("EpfCalculation:" + EpfCalculation);
 
   if (EpfCalculation < 15000) {
-    employee_onboarding.epf_employer_contribution = Math.floor(
-      (EpfCalculation * 12) / 100
-    );
-    employee_onboarding.epf_employee = Math.floor((EpfCalculation * 12) / 100);
+    employee_onboarding.epf_employer_contribution = Math.floor(EpfCalculation * 12 / 100);
+    employee_onboarding.epf_employee = Math.floor(EpfCalculation * 12 / 100);
   } else if (EpfCalculation > 15000) {
     let epfConstant = 1800;
     employee_onboarding.epf_employee = epfConstant;
@@ -3356,11 +3346,9 @@ const epf_esic_calculation = () => {
   }
 
   if (employee_onboarding.gross <= 21000) {
-    employee_onboarding.esic_employer_contribution = Math.floor(
-      (employee_onboarding.gross * 3.25) / 100
+    employee_onboarding.esic_employer_contribution = Math.floor( (employee_onboarding.gross * 3.25) / 100
     );
-    employee_onboarding.esic_employee = Math.floor(
-      (employee_onboarding.gross * 0.75) / 100
+    employee_onboarding.esic_employee = Math.floor( (employee_onboarding.gross * 0.75) / 100
     );
   } else if (employee_onboarding.gross > 21000) {
     let EsicConstant = 0;
