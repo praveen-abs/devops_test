@@ -161,123 +161,15 @@
                 </div>
 
                 <div class="tab-content " id="pills-tabContent">
+
                     <div class="tab-pane fade active show" id="employee_details" role="tabpanel" aria-labelledby="">
-                        <div class="card mb-2">
-                            <div class="card-body">
-                                <h6 class="">General Information
-                                    <a href="#" class="edit-icon" data-bs-toggle="modal"
-                                        data-bs-target="#edit_generalInfo"><i class="ri-pencil-fill"></i></a>
-                                </h6>
-                                <ul class="personal-info">
-                                    <li class="border-bottom-liteAsh pb-1">
-                                        <div class="title">Birthday</div>
-                                        <div class="text">
-                                            {{ date('d-M-Y', strtotime($user_full_details->dob ?? '-')) }}
-                                        </div>
-                                    </li>
-                                    <li class="border-bottom-liteAsh pb-1">
-                                        <div class="title">Gender </div>
-                                        <div class="text">{{ $user_full_details->gender ?? '-' }}</div>
-                                    </li>
-                                    <li class="border-bottom-liteAsh pb-1">
-                                        <div class="title">Date Of Joining (DOJ)</div>
-                                        <div class="text">
-                                            {{ date('d-M-Y', strtotime($user_full_details->doj ?? '-')) }}
-                                        </div>
-                                    </li>
-                                    <li class="border-bottom-liteAsh pb-1">
-                                        <div class="title">Marital Status </div>
-                                        <div class="text text-capitalize">
-                                            {{ $user_full_details->marital_status ?? '-' }}</div>
-                                    </li>
-                                    <li class="border-bottom-liteAsh pb-1">
-                                        <div class="title"> Blood Group</div>
-                                        <div class="text">
-                                            {{ getBloodGroupName($user_full_details->blood_group_id) ?? '-' }}</div>
-                                    </li>
-                                    <li class=" pb-1">
-                                        <div class="title">Physically Handicapped</div>
-                                        <div class="text">
-
-                                            {{ $user_full_details->physically_challenged ?? '-' }}</div>
-                                    </li>
-                                </ul>
-                                </form>
-                            </div>
-
-                        </div>
-
-                        <div class="card mb-2">
-                            <div class="card-body">
-                                <h6 class="">Contact Information
-                                    <span class="personal-edit"><a href="#" class="edit-icon"
-                                            data-bs-toggle="modal" data-bs-target="#personal_info_modal"><i
-                                                class="ri-pencil-fill"></i></a>
-                                    </span>
-                                </h6>
-
-                                <ul class="personal-info">
-                                    <li class="border-bottom-liteAsh pb-1">
-                                        <div class="title">Personal Email</div>
-                                        <div class="text">
-                                            {{ $user->email }}
-                                        </div>
-                                    </li>
-                                    <li class="border-bottom-liteAsh pb-1">
-                                        <div class="title">Office Email</div>
-                                        <div class="text">
-                                            {{ !empty($user_full_details->officical_mail) ? $user_full_details->officical_mail : '-' }}
-                                        </div>
-                                    </li>
-                                    <li class=" pb-1">
-                                        <div class="title">Mobile Number</div>
-                                        <div class="text">
-                                            {{ !empty($user_full_details->mobile_number) ? $user_full_details->mobile_number : '-' }}
-                                        </div>
-                                    </li>
-                                </ul>
-
-                                </form>
-                            </div>
-
-                        </div>
-                        <div class="card mb-2">
-                            <div class="card-body">
-                                <h6 class="">Address
-                                    <span class="personal-edit"><a href="#" class="edit-icon"
-                                            data-bs-toggle="modal" data-bs-target="#edit_addressInfo"><i
-                                                class="ri-pencil-fill"></i></a></span>
-                                </h6>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <ul class="personal-info">
-                                            <li class="border-bottom-liteAsh pb-1 flex-column">
-                                                <div class="title">Current Address </div>
-                                                <div class="text">
-                                                    {{ $user_full_details->current_address_line_1 ?? '' }}
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-6">
-                                        <ul class="personal-info">
-                                            <li class="border-bottom-liteAsh pb-1 flex-column">
-                                                <div class="title">permanent Address </div>
-                                                <div class="text">
-                                                    {{ $user_full_details->permanent_address_line_1 ?? '' }}
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                </form>
-                            </div>
-
-                        </div>
+                        @vite('resources/js/hrms/modules/profile_pages/EmployeeDetails.js')
+                        <div id="EmployeeDetails"></div>
                     </div>
+
+                    {{-- family_det --}}
                     <div class="tab-pane fade" id="family_det" role="tabpanel" aria-labelledby="">
-                        <div class="card mb-2">
+                        {{-- <div class="card mb-2">
                             <div class="card-body">
                                 <h6 class="">Family Information
                                     <!-- <span class="personal-edit">
@@ -325,10 +217,17 @@
 
                                 </form>
                             </div>
+                        </div> --}}
+
+                        @vite('resources/js/hrms/modules/profile_pages/FamilyDetails.js')
+                        <div id="familyinformation">
                         </div>
+
                     </div>
+
+                    {{-- experience_det --}}
                     <div class="tab-pane fade" id="experience_det" role="tabpanel" aria-labelledby="">
-                        <div class="card mb-2">
+                        {{-- <div class="card mb-2">
                             <div class="card-body">
                                 <h6 class="">Experience Information
                                     <span class="personal-edit"><a href="#" class="edit-icon"
@@ -355,7 +254,7 @@
                                             @if ($exp)
                                                 @foreach ($exp as $k => $info)
                                                     <tr>
-                                                        {{-- date('M-Y', strtotime($employee_payslip->PAYROLL_MONTH)) --}}
+                                                         date('M-Y', strtotime($employee_payslip->PAYROLL_MONTH))
                                                         <td>{{ $info['company_name'] }}</td>
                                                         <td>{{ $info['job_position'] }}</td>
                                                         <td>{{ date('d-M-Y', strtotime($info['period_from'])) }}</td>
@@ -372,9 +271,14 @@
                                 </div>
                                 </form>
                             </div>
-                        </div>
+                        </div>--}}
+
+                        @vite('resources/js/hrms/modules/profile_pages/ExperienceDetails.js')
+                        <div id="ExperienceDetails"></div>
+
                     </div>
 
+                    {{-- finance_det --}}
                     <div class="tab-pane fade" id="finance_det" role="tabpanel" aria-labelledby="">
                         <div class="card left-line mb-2 ">
                             <div class="card-body pb-0 pt-1">
@@ -631,6 +535,7 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
 
 
@@ -775,7 +680,7 @@
                                     <span aria-hidden="true">×</span>
                                 </button>
                             </div>
-                            <div class="modal-body">
+                            {{-- <div class="modal-body">
                                 <div class="row">
                                     <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-lg-6 col-xxl-6">
                                         <div class="form-group mb-3">
@@ -878,7 +783,7 @@
                                         class="btn btn-border-orange submit-btn">Save</button>
                                 </div>
 
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -1015,7 +920,7 @@
                 <!--  -->
                 <!-- family informatios new  -->
 
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                {{-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg div">
                         <div class="modal-content">
                         <div class="modal-header">
@@ -1111,7 +1016,7 @@
                         </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
               <!--  -->
               <!--  -->
@@ -1145,7 +1050,6 @@
                                             <div class="exp-content-container">
 
                                                 <ul id="experienceinfo_ul_list_id">
-
                                                         <li>
                                                             <div class="row exp-addition-content" id="content1">
                                                                     <a href="javascript:void(0);" class="delete-icon text-end"><i

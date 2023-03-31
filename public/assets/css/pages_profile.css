@@ -90,7 +90,7 @@
 }
 
 .edit-icon {
-    box-shadow: rgb(0 0 0 / 15%) 0px 2px 8px;
+    box-shadow: rgb(0 0 0 / 15%) 0px 2px 8px ;
     background-color: #ffffff;
     border: 1px solid #ffffff;
     color: #e63b1f;
@@ -101,7 +101,7 @@
     height: 22px;
     text-align: center;
     width: 22px;
-    border-radius: 50%;
+    border-radius: 50% ;
 }
 
 .box {
@@ -407,9 +407,8 @@ color: var(--color-blue);
 /* */
 .card{
     border:none !important;
-    box-shadow:none !important;
-
-    /* box-shadow: 0 1px 2px rgba(56, 65, 74, 0.15); */
+    margin-bottom: 8px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px !important  ;
 }
 .exp-addition-content{
     margin-bottom:1rem;
