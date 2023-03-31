@@ -38,15 +38,15 @@
                     <div class="col-3">
                         <label for=""> Month</label>
                         <select id="dropdown_attendance_month" class="form-select " style="">
-                            <option value="1">January</option>
-                            <option value="2">February</option>
-                            <option value="3">March</option>
-                            <option value="4">April</option>
-                            <option value="5">May</option>
-                            <option value="6">June</option>
-                            <option value="7">July</option>
-                            <option value="8">August</option>
-                            <option value="9">September</option>
+                            <option value="01">January</option>
+                            <option value="02">February</option>
+                            <option value="03">March</option>
+                            <option value="04">April</option>
+                            <option value="05">May</option>
+                            <option value="06">June</option>
+                            <option value="07">July</option>
+                            <option value="08">August</option>
+                            <option value="09">September</option>
                             <option value="10">October</option>
                             <option value="11">November</option>
                             <option value="12">December</option>
@@ -69,7 +69,7 @@
                     </div> --}}
 
                     <div class="col-3 d-flex align-items-center justify-content-end text-end">
-                        <button id="loadData" class="btn btn-orange " style="margin-top:22px"><i
+                        <button id="generate_btn" class="btn btn-orange " style="margin-top:22px"><i
                                 class="fa fa-file-o me-2"></i>Generate</button>
                     </div>
 
@@ -91,9 +91,34 @@
 
     <script>
            $(document).ready(function(){
-            let year= $('#dropdown_attendance_year').val();
-            let month=$('#dropdown_attendance_month').val();
-            console.log(month);
+
+            $('#generate_btn').on('click',function(){
+                let year= $('#dropdown_attendance_year').val();
+                let month=$('#dropdown_attendance_month').val();
+                $.ajax({
+                        type: 'GET',
+                        url: '{{ route("basicAttendanceReport") }}',
+                        data: {
+                                year:year,
+                                month:month,
+                                "_token": "{{ csrf_token() }}"
+                        },
+                        xhrFields:{
+                                    responseType: 'blob'
+                         },
+                beforeSend: function() {
+                //
+               },
+                success: function(data) {
+                var url = window.URL || window.webkitURL;
+                var objectUrl = url.createObjectURL(data);
+                window.open(objectUrl);
+               },
+               error: function(data) {
+                //
+               }
+        });
+            });
            });
     </script>
 @endsection

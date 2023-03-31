@@ -32,31 +32,23 @@ class VmtEmployeeAttendanceController extends Controller
 
     }
 
-    public function showAttendanceReport(){
-        $attendance_details = VmtEmployeeAttendance::leftJoin('users', 'users.id', '=', 'vmt_employee_attendance.user_id')
-                ->leftjoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=','users.id')
-                ->leftjoin('vmt_employee_attendance_regularizations','vmt_employee_attendance_regularizations.user_id','=','users.id')
-                ->select([
-                       'users.user_code',
-                       'users.name',
-                       'vmt_employee_office_details.designation',
-                       'vmt_employee_attendance.date',
-                       'vmt_employee_attendance.checkin_time',
-                       'vmt_employee_attendance.checkout_time',
-                       'vmt_employee_attendance_regularizations.regularization_type',
-                       'vmt_employee_attendance_regularizations.status',
-                       ]
-                 )//->where('vmt_employee_attendance.date','=','2022-'.'09-'.$i)
-                 //->orderby('vmt_employee_attendance.date')
-                 ->limit(3)
-                 ->get();
-        return view('attendance_reports', compact('attendance_details'));
+    public function showBasicAttendanceReport(Request $request){
+        $attendance_year=VmtEmployeeAttendance::groupby('date')->pluck('date');
+
+        for($i=0; $i < count($attendance_year); $i++)
+        {
+            $attendance_year[$i] = date("Y",strtotime($attendance_year[$i]));
+        }
+
+        $attendance_available_years = array_unique($attendance_year->toArray());
+
+        return view('reports.vmt_basic_attendance_reports',compact('attendance_available_years'));
     }
 
     public function basicAttendanceReport(Request $request,VmtAttendanceReportsService $attendance_report_service){
 
-        $year='2023';
-        $month='02';
+        $year=$request->year;
+        $month=$request->month;
          // dd($attendance_report_service->basicAttendanceReport($year)[0]);
           //return $attendance_report_service->basicAttendanceReport($year);
          return Excel::download(new BasicAttendanceExport($attendance_report_service->basicAttendanceReport($year,$month)), 'Test.xlsx');

@@ -470,11 +470,11 @@ Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 's
 
     //Attendance Reports
     Route::get('/reports/attendance',  [App\Http\Controllers\VmtReportsController::class, 'showAttendanceReport'])->name('showAttendanceReport');
-    Route::get('/reports/basic-attendance-report',  [App\Http\Controllers\VmtReportsController::class, 'showBasicAttendanceReport'])->name('showBasicAttendanceReport');
+    Route::get('/reports/basic-attendance-report',  [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showBasicAttendanceReport'])->name('showBasicAttendanceReport');
     Route::get('/reports/generate-attendance-report',  [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'generateAttendanceReports'])->name('generateAttendanceReports');
 
     //basic Attedance Report
-    Route::get('/reports/basic-attendance',  [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'basicAttendanceReport'])->name('basicAttendanceReport');
+    Route::get('/reports/generate-basic-attendance',  [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'basicAttendanceReport'])->name('basicAttendanceReport');
 
      //Ajax Part
      Route::get('/attendance-filter-info', [App\Http\Controllers\VmtReportsController::class, 'fetchAttendanceInfo'])->name('fetchAttendanceInfo');
