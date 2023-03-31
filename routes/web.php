@@ -475,7 +475,7 @@ Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 's
 
     //basic Attedance Report
     Route::get('/reports/generate-basic-attendance',  [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'basicAttendanceReport'])->name('basicAttendanceReport');
-
+    Route::get('fetch-attendance-month-for-given-year',  [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'fetchAttendanceMonthForGivenYear'])->name('fetchAttendanceMonthForGivenYear');
      //Ajax Part
      Route::get('/attendance-filter-info', [App\Http\Controllers\VmtReportsController::class, 'fetchAttendanceInfo'])->name('fetchAttendanceInfo');
      //Ajax For Fetch Month For Given Year fetchAttendanceForGivenYear

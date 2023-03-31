@@ -33,16 +33,32 @@ class VmtEmployeeAttendanceController extends Controller
     }
 
     public function showBasicAttendanceReport(Request $request){
-        $attendance_year=VmtEmployeeAttendance::groupby('date')->pluck('date');
-         //dd( $attendance_year);
+        $attendance_year=VmtEmployeeAttendance::groupBy(\DB::raw("YEAR(date)"))->pluck('date')->toArray();
+        $attendance_year_device = VmtStaffAttendanceDevice::groupBY(\DB::raw("YEAR(date)"))->pluck('date')->toArray();
+        $attendance_year = array_merge( $attendance_year, $attendance_year_device);
         for($i=0; $i < count($attendance_year); $i++)
         {
             $attendance_year[$i] = date("Y",strtotime($attendance_year[$i]));
         }
 
-        $attendance_available_years = array_unique($attendance_year->toArray());
-
+        $attendance_available_years = array_unique($attendance_year);
         return view('reports.vmt_basic_attendance_reports',compact('attendance_available_years'));
+    }
+
+    public function fetchAttendanceMonthForGivenYear(Request $request){
+        $attendance_month=VmtEmployeeAttendance::whereYear('date',$request->attendance_year)
+                                              ->groupBy(\DB::raw("MONTH(date)"))->pluck('date')->toArray();
+        $attendance_month_device = VmtStaffAttendanceDevice::whereyear('date',$request->attendance_year)
+                                              ->groupBY(\DB::raw("MONTH(date)"))->pluck('date')->toArray();
+        $attendance_month = array_merge( $attendance_month, $attendance_month_device);
+        for($i=0; $i < count($attendance_month); $i++)
+        {
+            $attendance_month[$i] = date("m",strtotime($attendance_month[$i]));
+        }
+
+        $attendance_available_months = array_unique($attendance_month);
+
+       return  $attendance_available_months;
     }
 
     public function basicAttendanceReport(Request $request,VmtAttendanceReportsService $attendance_report_service){

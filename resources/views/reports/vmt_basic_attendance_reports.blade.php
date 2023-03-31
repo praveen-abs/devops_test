@@ -52,7 +52,8 @@
                     <div  class="col-3">
                         <label for=""> Month</label>
                         <select id="dropdown_attendance_month" class="form-select " style="">
-                            <option value="01">January</option>
+                            <option value="all" selected>---Select Month----</option>
+                            {{-- <option value="01">January</option>
                             <option value="02">February</option>
                             <option value="03">March</option>
                             <option value="04">April</option>
@@ -63,7 +64,7 @@
                             <option value="09">September</option>
                             <option value="10">October</option>
                             <option value="11">November</option>
-                            <option value="12">December</option>
+                            <option value="12">December</option> --}}
 
 
 
@@ -107,6 +108,67 @@
     <script>
            $(document).ready(function(){
 
+            $('#dropdown_attendance_year').on('change',function(){
+                let selectedYear= $('#dropdown_attendance_year').val();
+                $.ajax({
+                    url: "{{ route('fetchAttendanceMonthForGivenYear') }}",
+                    type: 'GET',
+                    contentType: "text/plain",
+                    dataType: 'json',
+                    data: {
+                        attendance_year: selectedYear,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(data) {
+                        var monthsArray = Object.values(data);
+                        //console.log(monthsArray);
+                        var len = monthsArray.length;
+                        //console.log(len);
+                        $("#dropdown_attendance_month").empty();
+                        for (var i = 0; i < len; i++) {
+                            var month;
+                            if (monthsArray[i] == 01) {
+                                month = "January";
+                            } else if (monthsArray[i] == 02) {
+                                month = "February";
+                            } else if (monthsArray[i] == 03) {
+                                month = "March";
+                            } else if (monthsArray[i] == 04) {
+                                month = "April";
+                            } else if (monthsArray[i] == 05) {
+                                month = "May";
+                            } else if (monthsArray[i] == 06) {
+                                month = "June";
+                            } else if (monthsArray[i] == 07) {
+                                month = "July";
+                            } else if (monthsArray[i] == 08) {
+                                month = "August";
+                            } else if (monthsArray[i] == 09) {
+                                month = "September";
+                            } else if (monthsArray[i] == 10) {
+                                month = "October";
+                            } else if (monthsArray[i] == 11) {
+                                month = "November";
+                            } else if (monthsArray[i] == 12) {
+                                month = "December";
+                            }
+                            console.log(month);
+
+
+                            $("#dropdown_attendance_month").append("<option value='" +
+                                monthsArray[i] + "'>" + month +
+                                "</option>");
+
+                        }
+
+                    },
+                    error: function(e) {
+                        console.log("There was an error with your request...");
+                        console.log("error: " + JSON.stringify(e));
+                    }
+                });
+            });
+
             $('#generate_btn').on('click',function(){
                 let year= $('#dropdown_attendance_year').val();
                 let month=$('#dropdown_attendance_month').val();
@@ -127,7 +189,7 @@
                 success: function(data) {
                 var link = document.createElement('a');
                 link.href = window.URL.createObjectURL(data);
-                link.download = `Basic Report.xlsx`;
+                link.download =  year+`Basic Report.xlsx`;
                  link.click();
                },
                error: function(data) {
