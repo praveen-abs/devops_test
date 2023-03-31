@@ -34,7 +34,7 @@ class VmtAttendanceReportsService{
            if ($regularize_record->exists()) {
                  return $regularize_record->value('status');
            }else{
-                return null;
+                return 'Not Applied';
             }
     }
 
@@ -182,7 +182,7 @@ class VmtAttendanceReportsService{
                 //echo "Date is ".$fulldate."\n";
                 ///$month_array[""]
               }
-              array_push($heading_dates, "Total Weekoff", "Total Holiday","Total Present", "Total Absent","Total LOP","Total Leave","Total Halfday","Total On Duty","Total LC","Total EG","Total Payable Days");
+              array_push($heading_dates, "Total Weekoff", "Total Holiday","Total Present", "Total Absent","Total Late LOP","Total Leave","Total Halfday","Total On Duty","Total LC","Total EG","Total Payable Days");
 
 
 
@@ -456,11 +456,11 @@ class VmtAttendanceReportsService{
                        $total_leave++;
                    }
                  } else if($attendanceResponseArray[$key]['checkin_time']!=null || $attendanceResponseArray[$key]['checkout_time']!=null) {
-                     if($attendanceResponseArray[$key]['isLC']=='Rejected'){
+                     if($attendanceResponseArray[$key]['isLC']=='Rejected' || $attendanceResponseArray[$key]['isLC']=='Not Applied'){
                         array_push($arrayReport,'P/LC');
                         $total_present++;
                         $total_lop =  $total_lop+0.5;
-                     }else if($attendanceResponseArray[$key]['isEG']=='Rejected'){
+                     }else if($attendanceResponseArray[$key]['isEG']=='Rejected'|| $attendanceResponseArray[$key]['isEG'] =='Not Applied'){
                         array_push($arrayReport,'P/EG');
                         $total_present++;
                      }else{
@@ -491,8 +491,8 @@ class VmtAttendanceReportsService{
               //dd(($attendanceResponseArray));
 
            // dd();
-           // $total_payable_days=($total_weekoff+$total_holidays+$total_present+$total_leave+$total_halfday+$total_OD)-$total_lop;
-           $total_payable_days=$total_weekoff+$total_holidays+$total_present+$total_leave+$total_halfday+$total_OD;
+            $total_payable_days=($total_weekoff+$total_holidays+$total_present+$total_leave+$total_halfday+$total_OD)-$total_lop;
+           //$total_payable_days=$total_weekoff+$total_holidays+$total_present+$total_leave+$total_halfday+$total_OD;
             array_push($arrayReport,$total_weekoff,$total_holidays,$total_present,$total_absent, $total_lop,$total_leave, $total_halfday,$total_OD,$total_LC,$total_EG, $total_payable_days);
             array_push($reportresponse,$arrayReport);
 
