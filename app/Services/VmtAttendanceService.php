@@ -154,20 +154,6 @@ class VmtAttendanceService{
             //dd($singleDay["id"]);
         }
 
-        //dd($map_comp_off_days);
-
-        //TESTING ARRAY ELEMENT DELETION
-
-        // foreach($map_comp_off_days as $k => $singleCompOff){
-        //    // dd($singleCompOff["emp_attendance_id"] );
-        //     if($singleCompOff["emp_attendance_id"] == "107")
-        //     {
-        //         unset($map_comp_off_days[$k]);
-        //     }
-
-        // }
-
-        // dd($map_comp_off_days);
 
         //Check whether the comp days exists in this table
         $query_emp_comp_leaves = VmtEmployeeCompensatoryLeave::whereIn('employee_attendance_id',array_keys($map_comp_off_days))->get(['employee_leave_id','employee_attendance_id']);
