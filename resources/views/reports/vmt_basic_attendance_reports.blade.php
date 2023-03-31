@@ -15,15 +15,29 @@
             margin: 5px 5px 0px 0px;
             float: right;
         }
+
+        #loading {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(192, 192, 192, 0.5);
+            background-image: url("https://i.stack.imgur.com/MnyxU.gif");
+            background-repeat: no-repeat;
+            background-position: center;
+        }
     </style>
 @endsection
 
 @section('content')
-    <div class="parollReports-wrapper mt-30 ">
-        <div class="card">
+    <div class="parollReports-wrapper mt-30 " >
+        <div class="card" >
             <div class="card-body">
-                <div class="row mb-3">
-                    <div class="col-3">
+                <div class="row mb-3" >
+                    <div class="col-3" >
                         <label for="">year</label>
                         <select id="dropdown_attendance_year" class="form-select ">
                             <option value="all" selected>---Select Year----</option>
@@ -35,7 +49,7 @@
                         </select>
 
                     </div>
-                    <div class="col-3">
+                    <div  class="col-3">
                         <label for=""> Month</label>
                         <select id="dropdown_attendance_month" class="form-select " style="">
                             <option value="01">January</option>
@@ -56,6 +70,7 @@
                         </select>
 
                     </div>
+
                     {{-- <div class="col-3">
                         <label for="">Designation</label>
                         <select id="dropdown_designation" class="form-select " style=""
@@ -75,16 +90,16 @@
 
                 </div>
 
-                <div class="row">
+                <div class="row" >
                     <div class="col-12">
 
-
-
                     </div>
+
                 </div>
 
             </div>
         </div>
+        <div id="loading"></div>
     </div>
 @endsection
 @section('script')
@@ -107,16 +122,21 @@
                                     responseType: 'blob'
                          },
                 beforeSend: function() {
-                //
+                    $("#loader").show();
                },
                 success: function(data) {
-                var url = window.URL || window.webkitURL;
-                var objectUrl = url.createObjectURL(data);
-                window.open(objectUrl);
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(data);
+                link.download = `Basic Report.xlsx`;
+                 link.click();
                },
                error: function(data) {
                 //
-               }
+               },
+               complete:function(data){
+                     $("#loader").hide();
+
+                }
         });
             });
            });

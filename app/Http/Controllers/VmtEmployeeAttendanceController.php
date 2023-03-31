@@ -34,7 +34,7 @@ class VmtEmployeeAttendanceController extends Controller
 
     public function showBasicAttendanceReport(Request $request){
         $attendance_year=VmtEmployeeAttendance::groupby('date')->pluck('date');
-
+         //dd( $attendance_year);
         for($i=0; $i < count($attendance_year); $i++)
         {
             $attendance_year[$i] = date("Y",strtotime($attendance_year[$i]));
