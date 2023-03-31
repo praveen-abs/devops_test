@@ -172,6 +172,7 @@
             $('#generate_btn').on('click',function(){
                 let year= $('#dropdown_attendance_year').val();
                 let month=$('#dropdown_attendance_month').val();
+                let month_name=$('#dropdown_attendance_month option:selected').text();
                 $.ajax({
                         type: 'GET',
                         url: '{{ route("basicAttendanceReport") }}',
@@ -189,7 +190,7 @@
                 success: function(data) {
                 var link = document.createElement('a');
                 link.href = window.URL.createObjectURL(data);
-                link.download =  year+`Basic Report.xlsx`;
+                link.download =  year+' - '+month_name+` Basic Report.xlsx`;
                  link.click();
                },
                error: function(data) {
