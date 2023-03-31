@@ -14,6 +14,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use App\Exports\VmtPayrollReports;
 use App\Exports\VmtPmsReviewsReport;
+use App\Models\VmtEmployeeAttendance;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -306,18 +307,6 @@ class VmtReportsController extends Controller
         $attendance_available_years = array_unique($attendance_year->toArray());
 
         return view('reports.vmt_attendance_reports',compact('attendance_available_years'));
-    }
-
-    public function showBasicAttendanceReport(){
-        $attendance_year=VmtEmployeeAttendance::groupby('date')->pluck('date');
-
-        for($i=0; $i < count($attendance_year); $i++)
-        {
-            $attendance_year[$i] = date("Y",strtotime($attendance_year[$i]));
-        }
-
-        $attendance_available_years = array_unique($attendance_year->toArray());
-        return view('reports.vmt_basic_attendance_reports',compact('attendance_available_years'));
     }
 
     /*

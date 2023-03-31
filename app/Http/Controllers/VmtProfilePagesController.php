@@ -6,6 +6,7 @@ use Session as Ses;
 use App\Models\Department;
 use App\Models\User;
 use App\Models\Bank;
+use App\Models\Department;
 use App\Models\Experience;
 use App\Models\VmtBloodGroup;
 use App\Models\VmtEmployee;
@@ -42,9 +43,10 @@ class VmtProfilePagesController extends Controller
             ->leftjoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->where('users.id', $user->id)->first();
 
+        $department  = Department::find($user_full_details->department_id)->name;
 
-        $familydetails = VmtEmployeeFamilyDetails::where('user_id', $user->id)->get();
-        $statutory_info = VmtEmployeeStatutoryDetails::where('user_id', $user->id)->get();
+        $familydetails = VmtEmployeeFamilyDetails::where('user_id',$user->id)->get();
+        $statutory_info= VmtEmployeeStatutoryDetails ::where('user_id',$user->id)->first();
 
 
         $exp = Experience::where('user_id', $user->id)->get();
@@ -92,21 +94,21 @@ class VmtProfilePagesController extends Controller
                 'docs_reviewed'
             ])->toArray();
 
+
         //dd($documents_filenames);
-        return view('profilePage_new', compact('user', 'department','documents_filenames', 'array_bloodgroup', 'enc_user_id', 'allEmployees', 'maritalStatus', 'genderArray', 'user_full_details', 'familydetails', 'exp', 'reportingManager', 'profileCompletenessValue', 'bank', 'data', 'employees', 'statutory_info'));
+        return view('profilePage_new', compact('user', 'documents_filenames', 'array_bloodgroup', 'enc_user_id', 'allEmployees', 'maritalStatus', 'genderArray', 'user_full_details', 'familydetails', 'exp', 'reportingManager', 'profileCompletenessValue', 'bank', 'data', 'employees', 'statutory_info'));
     }
 
 
-    public function updateGeneralInfo(Request $request)
-    {
-        //dd($request->all());
-        $details = VmtEmployee::where('userid', $request->id)->first();
-        $details->dob = $request->input('dob');
-        $details->gender = $request->input('gender');
-        $details->marital_status = $request->input('marital_status');
-        $details->doj = $request->input('doj');
-        $details->blood_group_id = $request->input('blood_group');
-        $details->physically_challenged = $request->input('physically_challenge');
+    public function updateGeneralInfo(Request $request) {
+         //dd($request->all());
+         $details = VmtEmployee::where('userid', $request->id)->first();
+         $details->dob = $request->input('dob');
+         $details->gender = $request->input('gender');
+         $details->marital_status = $request->input('marital_status');
+         $details->doj=$request->input('doj');
+         $details->blood_group_id = $request->input('blood_group');
+         $details->physically_challenged = $request->input('physically_challenged');
 
         $details->save();
 
@@ -199,6 +201,7 @@ class VmtProfilePagesController extends Controller
             $exp->save();
         }
 
+
         return redirect()->back();
     }
 
@@ -238,19 +241,23 @@ class VmtProfilePagesController extends Controller
 
         if ($statutory->exists()) {
             $statutory = $statutory->first();
-            $statutory->pf_applicable = $request->input('pf_applicable');
-            $statutory->epf_number = $request->input('epf_number');
-            $statutory->uan_number = $request->input('uan_number');
-            $statutory->esic_applicable = $request->input('esic_applicable');
-            $statutory->esic_number = $request->input('esic_number');
+            $statutory->pf_applicable=$request->input('pf_applicable');
+            $statutory->epf_number=$request->input('epf_number');
+            $statutory->uan_number=$request->input('uan_number');
+            $statutory->esic_applicable=$request->input('esic_applicable');
+            $statutory->esic_number=$request->input('esic_number');
+            $statutory->epf_abry_eligible= $request->input('epf_abry_eligible');
+            $statutory->eps_pansion_eligible=$requst->input('eps_pansion_eligible');
             $statutory->save();
         } else {
             $statutory = new VmtEmployeeStatutoryDetails;
-            $statutory->pf_applicable = $request->input('pf_applicable');
-            $statutory->epf_number = $request->input('epf_number');
-            $statutory->uan_number = $request->input('uan_number');
-            $statutory->esic_applicable = $request->input('esic_applicable');
-            $statutory->esic_number = $request->input('esic_number');
+            $statutory->pf_applicable=$request->input('pf_applicable');
+            $statutory->epf_number=$request->input('epf_number');
+            $statutory->uan_number=$request->input('uan_number');
+            $statutory->esic_applicable=$request->input('esic_applicable');
+            $statutory->esic_number=$request->input('esic_number');
+            $statutory->epf_abry_eligible->input('epf_abry_eligible');
+            $statutory->eps_pansion_eligible->input('eps_pansion_eligible');
             $statutory->save();
         }
 
@@ -272,6 +279,18 @@ class VmtProfilePagesController extends Controller
         $user->save();
         $report = $request->input('report');
         $code = VmtEmployee::select('emp_no', 'name', 'designation')->join('vmt_employee_office_details', 'user_id', '=', 'vmt_employee_details.userid')->join('users', 'users.id', '=', 'vmt_employee_details.userid')->where('emp_no', $report)->first();
+        $documents_filenames = VmtEmployee::where('userid',$user_id)
+        ->get([
+            'aadhar_card_file',
+            'aadhar_card_backend_file',
+            'pan_card_file',
+            'passport_file',
+            'voters_id_file',
+            'dl_file',
+            'education_certificate_file',
+            'reliving_letter_file',
+            'docs_reviewed'
+        ]);
 
         // $reDetails = VmtEmployee::where('userid', $request->id)->first();
         // $details = VmtEmployee::find($reDetails->id);
@@ -282,4 +301,19 @@ class VmtProfilePagesController extends Controller
 
         return redirect()->back();
     }
+
+    /*
+        Req. params :
+         File name, Document_type, which document
+
+    */
+    public function uploadEmployeeDocument(Request $request){
+        //dd($request->file());
+        $docName = time().'_'.$request->file->getClientOriginalName();
+        $docPath = $request->file('file')->storeAs('employee_documents', $docName);
+       // dd('----------'.$docName.'----------------------'. $docPath);
+       dd($docPath);
+       return $docPath;
+    }
+
 }

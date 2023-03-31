@@ -113,7 +113,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                     <td colspan="12" class=" bg-ash">
                         <p class="sub-header txt-center text-strong">PAYSLIP FOR THE MONTH OF &ndash;
                             <span style="text-transform:uppercase;">
-                                {{ strtoupper(date('M-Y', strtotime($employee_payslip->PAYROLL_MONTH))) }}</span>
+                                {{ strtoupper(date('F-Y', strtotime($employee_payslip->PAYROLL_MONTH))) }}</span>
                         </p>
                     </td>
                 </tr>
@@ -269,13 +269,13 @@ $bank_names = \DB::table('vmt_banks')->get();
                         <p class="txt-center text-strong">DESCRIPTION</p>
                     </td>
                     <td colspan="2" class="bg-ash">
-                        <p class="txt-center text-strong">AMOUNT</p>
+                        <p class="txt-center text-strong">FIXED GROSS</p>
                     </td>
                     <td colspan="2" class="bg-ash">
-                        <p class="txt-center text-strong">ARREAR AMOUNT</p>
+                        <p class="txt-center text-strong">ARREAR GROSS</p>
                     </td>
                     <td colspan="2" class="bg-ash">
-                        <p class="txt-center text-strong">EARNED AMOUNT</p>
+                        <p class="txt-center text-strong">EARNED GROSS</p>
                     </td>
                     <td colspan="2" class="bg-ash">
                         <p class="txt-center text-strong">DEDUCTION</p>
