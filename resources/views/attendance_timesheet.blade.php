@@ -27,25 +27,25 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
         {{-- <button type="button" class="btn btn-orange" data-bs-target="#regularizationModal" data-bs-toggle="modal">Apply Request</button> --}}
 
-        <div class="card left-line mb-2">
-            <div class="card-body py-1">
+        <div class="mb-2 card left-line">
+            <div class="py-1 card-body">
                 <div class="row">
-                    {{-- <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 col-xxl-12 mb-3">
+                    {{-- <div class="mb-3 col-sm-12 col-md-12 col-xl-12 col-lg-12 col-xxl-12">
                         <h6>Timesheet</h6>
                     </div> --}}
 
                     <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 col-xxl-12 ">
                         <div class="calender-mid_content">
                             <div class="row ">
-                                <div class=" col-sm-3 col-md-3 col-xl-3 col-lg-3 col-xxl-3  ">
+                                <div class=" col-sm-3 col-md-3 col-xl-3 col-lg-3 col-xxl-3">
                                     <p class="text-muted fw-normal f-18"><i class="fa fa-calendar me-2" id="calendarIcon"
                                             aria-hidden="true"></i>
                                         <span class="dates " id="display_date"></span>
                                     </p>
                                 </div>
-                                <div class=" col-sm-5 col-md-5 col-xl-5 col-lg-5 col-xxl-5  ">
+                                <div class=" col-sm-5 col-md-5 col-xl-5 col-lg-5 col-xxl-5">
 
-                                    <ul class="nav nav-pills    nav-tabs-dashed" id="pills-tab" role="tablist">
+                                    <ul class="nav nav-pills nav-tabs-dashed" id="pills-tab" role="tablist">
                                         <li class="nav-item active ember-view me-2" role="presentation">
                                             <a class="nav-link active ember-view " id="tab_timesheet" data-bs-toggle="pill"
                                                 href="" data-bs-target="#" role="tab" aria-controls="pills-home"
@@ -54,7 +54,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         </li>
 
                                         @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR', 'Manager']))
-                                            <li class="nav-item mx-2 ember-view" role="presentation ">
+                                            <li class="mx-2 nav-item ember-view" role="presentation ">
                                                 <a class="nav-link ember-view" id="tab_teamtimesheet" data-bs-toggle="pill"
                                                     data-bs-target="#" type="button" role="tab"
                                                     aria-controls="payslips" aria-selected="false">Team Timesheet</a>
@@ -62,7 +62,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         @endif
 
                                         @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
-                                            <li class="nav-item ml-2  ember-view" role="presentation ">
+                                            <li class="ml-2 nav-item ember-view" role="presentation ">
                                                 <a class="nav-link ember-view" id="tab_orgtimesheet" data-bs-toggle="pill"
                                                     data-bs-target="#" type="button" role="tab"
                                                     aria-controls="annual-earnings" aria-selected="false">Org Timesheet</a>
@@ -72,7 +72,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                     </ul>
 
                                 </div>
-                                <div class=" col-sm-4 col-md-4 col-xl-4 col-lg-4 col-xxl-4 ">
+                                <div class=" col-sm-4 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
                                     <div class="d-flex justify-content-end">
                                         <select class="form-select border-orange me-2" id="">
                                             <option selected hidden disabled>Department</option>
@@ -92,18 +92,18 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                 </div>
             </div>
         </div>
-        <div class="card mb-2">
+        <div class="mb-2 card">
             <div class="card-body">
 
                 <div class="row ">
-                   <div class="col-xl-2 col-xxl-2 col-lg-2 mb-2 col-md-3 col-sm-4">
+                   <div class="mb-2 col-xl-2 col-xxl-2 col-lg-2 col-md-3 col-sm-4">
 
                         <p class="fw-bold text-primary fs-12"><i
-                                class="fas fa-fingerprint me-2  text-success "></i>Biometric</p>
+                                class="fas fa-fingerprint me-2 text-success "></i>Biometric</p>
 
                     </div>
 
-                   <div class="col-xl-2 col-xxl-2 col-lg-2 mb-2 col-md-3 col-sm-4">
+                   <div class="mb-2 col-xl-2 col-xxl-2 col-lg-2 col-md-3 col-sm-4">
 
                         <p class="fw-bold text-primary fs-12"><i
                                 class="fa fa-exclamation-circle text-warning fs-15 me-2"></i>Not
@@ -111,28 +111,28 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
                     </div>
 
-                   <div class="col-xl-2 col-xxl-2 col-lg-2 mb-2 col-md-3 col-sm-4">
+                   <div class="mb-2 col-xl-2 col-xxl-2 col-lg-2 col-md-3 col-sm-4">
 
-                        <p class="fw-bold text-primary fs-12"><i class="badge bg-primary rounded-pill  me-2  ">LC</i>Late
+                        <p class="fw-bold text-primary fs-12"><i class="badge bg-primary rounded-pill me-2 ">LC</i>Late
                             Coming
                         </p>
 
                     </div>
-                   <div class="col-xl-2 col-xxl-2 col-lg-2 mb-2 col-md-3 col-sm-4">
+                   <div class="mb-2 col-xl-2 col-xxl-2 col-lg-2 col-md-3 col-sm-4">
 
-                        <p class="fw-bold text-primary fs-12"><i class="badge bg-info  rounded-pill  me-2  ">MOP</i>Missed
+                        <p class="fw-bold text-primary fs-12"><i class="badge bg-info rounded-pill me-2 ">MOP</i>Missed
                             Out
                             Punch</p>
 
                     </div>
-                   <div class="col-xl-2 col-xxl-2 col-lg-2 mb-2 col-md-3 col-sm-4">
+                   <div class="mb-2 col-xl-2 col-xxl-2 col-lg-2 col-md-3 col-sm-4">
 
-                        <p class="fw-bold text-primary fs-12"><i class="fa fa-laptop  me-2 text-info"></i>Web </p>
+                        <p class="fw-bold text-primary fs-12"><i class="fa fa-laptop me-2 text-info"></i>Web </p>
 
                     </div>
-                   <div class="col-xl-2 col-xxl-2 col-lg-2 mb-2 col-md-3 col-sm-3">
+                   <div class="mb-2 col-xl-2 col-xxl-2 col-lg-2 col-md-3 col-sm-3">
 
-                        <p class="fw-bold text-primary fs-12"><i class="fa fa-times-circle  me-2 text-danger"></i>Rejected
+                        <p class="fw-bold text-primary fs-12"><i class="fa fa-times-circle me-2 text-danger"></i>Rejected
                         </p>
 
                     </div>
@@ -140,13 +140,13 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
 
 
-                   <div class="col-xl-2 col-xxl-2 col-lg-2  col-md-3 col-sm-4">
+                   <div class="col-xl-2 col-xxl-2 col-lg-2 col-md-3 col-sm-4">
 
                         <p class="fw-bold text-primary fs-12"><i class='fa fa-check-circle text-success me-1'></i> Approved
                         </p>
 
                     </div>
-                   <div class="col-xl-2 col-xxl-2 col-lg-2  col-md-3 col-sm-4">
+                   <div class="col-xl-2 col-xxl-2 col-lg-2 col-md-3 col-sm-4">
 
                         <p class="fw-bold text-primary fs-12"><i
                                 class="fa fa-question-circle fs-15 text-secondary me-2"></i>Pending</p>
@@ -155,23 +155,23 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
                     <div class="col-xl-2 col-xxl-2 col-lg-2 col-md-3 col-sm-4 ">
 
-                        <p class="fw-bold text-primary fs-12"><i class="badge bg-orange rounded-pill  me-2  ">EG</i>Early
+                        <p class="fw-bold text-primary fs-12"><i class="badge bg-orange rounded-pill me-2 ">EG</i>Early
                             Going
                         </p>
 
                     </div>
-                   <div class="col-xl-2 col-xxl-2 col-lg-2  col-md-3 col-sm-4">
+                   <div class="col-xl-2 col-xxl-2 col-lg-2 col-md-3 col-sm-4">
 
-                        <p class="fw-bold text-primary fs-12"><i class="badge bg-dark rounded-pill  me-3  ">MIP</i>Missed In
+                        <p class="fw-bold text-primary fs-12"><i class="badge bg-dark rounded-pill me-3 ">MIP</i>Missed In
                             Punch</p>
 
                     </div>
-                   <div class="col-xl-2 col-xxl-2 col-lg-2  col-md-3 col-sm-4">
+                   <div class="col-xl-2 col-xxl-2 col-lg-2 col-md-3 col-sm-4">
 
-                        <p class="fw-bold text-primary fs-12"><i class="fa fa-mobile text-dark fs-15 me-3  "></i>Mobile</p>
+                        <p class="fw-bold text-primary fs-12"><i class="fa fa-mobile text-dark fs-15 me-3 "></i>Mobile</p>
 
                     </div>
-                    <div class="col-xl-2 col-xxl-2 col-lg-2  col-md-3 col-sm-4">
+                    <div class="col-xl-2 col-xxl-2 col-lg-2 col-md-3 col-sm-4">
 
                      <p class="fw-bold text-primary fs-12"><i class="fa fa-picture-o me-2" aria-hidden="true"></i>View Image</p>
 
@@ -183,12 +183,12 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-12 col-md-12 pe-0 col-xl-3 col-lg-3 col-xxl-3  left-panel">
-                <div class="card  mb-0" style="height:500px;min-height:657px;overflow-y:auto;">
-                    <div class="card-body px-1">
-                        <div class="search-content ms-2  mb-3">
-                            <i class=" ri-search-line "></i>
-                            <input type="text" class="search-bar form-control w-100 py-1 rounded" id="searchInput_box"
+            <div class="col-sm-12 col-md-12 pe-0 col-xl-3 col-lg-3 col-xxl-3 left-panel">
+                <div class="mb-0 card" style="height:500px;min-height:657px;overflow-y:auto;">
+                    <div class="px-1 card-body">
+                        <div class="mb-3 search-content ms-2">
+                            <i class=" ri-search-line"></i>
+                            <input type="text" class="py-1 rounded search-bar form-control w-100" id="searchInput_box"
                                 placeholder="Search Employees...">
                         </div>
 
@@ -205,10 +205,10 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane show active fade" id="attendanceMonth_tab" role="tabpanel"
                         aria-labelledby="pills-contact-tab">
-                        <div class="calendar-wrapper card box_shadow_0 card mb-0 border-0">
+                        <div class="mb-0 border-0 calendar-wrapper card box_shadow_0">
                             <div class="card-body ">
                                 <div class="_wrapper vh-100">
-                                    <div class=" h-100  _container-calendar">
+                                    <div class=" h-100 _container-calendar">
                                         <div
                                             class="_button-container-calendar d-flex align-items-center justify-content-between">
                                             <button id="_previous" onclick="previous()" class="previous"><i
@@ -239,13 +239,13 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
 
 
-        <div class="modal  custom-modal" aria-hidden="true" id="regularizationModal" tabindex="-1" aria-labelledby=""
+        <div class="modal custom-modal" aria-hidden="true" id="regularizationModal" tabindex="-1" aria-labelledby=""
             aria-modal="true" role="dialog">
-            <div class="modal-dialog modal-dialog-centered   modal-md">
+            <div class="modal-dialog modal-dialog-centered modal-md">
                 <div class="modal-content top-line">
-                    <div class="modal-header border-0 py-2">
+                    <div class="py-2 border-0 modal-header">
                         <h6 class="modal-title" id="exampleModalLabel">Attendance Regularization</h6>
-                        <button type="button" class="modal-close popUp-close outline-none  border-0"
+                        <button type="button" class="border-0 outline-none modal-close popUp-close"
                             data-bs-dismiss="modal" aria-label="Close">×</button>
                     </div>
 
@@ -254,7 +254,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                             @csrf
                             <input type="hidden" name="regularization_type" id="regularization_type" value="" />
                             <div class="row">
-                                <div class="col-12 mb-2">
+                                <div class="mb-2 col-12">
                                     <div class="row">
                                         <div class="col-6"><label class="text-ash-medium fs-15">Date</label></div>
                                         <div class="col-6">
@@ -265,7 +265,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 mb-2" id="div_actual_user_time">
+                                <div class="mb-2 col-12" id="div_actual_user_time">
                                     <div class="row">
                                         <div class="col-6">
                                             <label class="text-ash-medium fs-15">
@@ -280,7 +280,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 mb-2">
+                                <div class="mb-2 col-12">
                                     <div class="row">
                                         <div class="col-6"><label class="text-ash-medium fs-15">Regularize Timing
                                                 as</label>
@@ -292,7 +292,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                     </div>
                                 </div>
                                 <div id="div_reason_editable">
-                                    <div class="col-12 mb-2">
+                                    <div class="mb-2 col-12">
                                         <div class="row">
                                             <div class="col-6"><label class="text-ash-medium fs-15">Reason</label></div>
                                             <div class="col-6">
@@ -348,7 +348,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                 </div>
 
                                 <div id="div_reason_noneditable">
-                                    <div class="col-12 mb-2">
+                                    <div class="mb-2 col-12">
                                         <div class="row">
                                             <div class="col-6"><label class="text-ash-medium fs-15">Reason</label>
                                             </div>
@@ -360,7 +360,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         </div>
                                     </div>
 
-                                    <div class="col-12 mb-2" id="div_custom_reason">
+                                    <div class="mb-2 col-12" id="div_custom_reason">
                                         <div class="row">
                                             <div class="col-6"><label class="text-ash-medium fs-15">Custom Reason</label>
                                             </div>
@@ -372,7 +372,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         </div>
                                     </div>
 
-                                    <div class="col-12 mb-2">
+                                    <div class="mb-2 col-12">
                                         <div class="row">
                                             <div class="col-6"><label class="text-ash-medium fs-15">Status</label>
                                             </div>
@@ -390,7 +390,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
 
                     </div>
-                    <div class="modal-footer border-0 py-2" id="div_btn_applyRegularize">
+                    <div class="py-2 border-0 modal-footer" id="div_btn_applyRegularize">
 
                         <button type="button" class="btn btn-orange" onclick="attendanceRegularize()">Apply
                             Request</button>
@@ -402,13 +402,13 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
         </div>
 
-        <div class="modal  custom-modal" aria-hidden="true" id="SelfieImage" tabindex="-1" aria-labelledby=""
+        <div class="modal custom-modal" aria-hidden="true" id="SelfieImage" tabindex="-1" aria-labelledby=""
             aria-modal="true" role="dialog">
-            <div class="modal-dialog modal-dialog-centered   modal-md">
+            <div class="modal-dialog modal-dialog-centered modal-md">
                 <div class="modal-content top-line">
-                    <div class="modal-header border-0 py-2">
+                    <div class="py-2 border-0 modal-header">
                         <h6 class="modal-title" id="exampleModalLabel">Selfie</h6>
-                        <button type="button" class="modal-close popUp-close outline-none  border-0"
+                        <button type="button" class="border-0 outline-none modal-close popUp-close"
                             data-bs-dismiss="modal" aria-label="Close">×</button>
                     </div>
 
@@ -428,18 +428,18 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
     <!-- for leave popup -->
 
         <div id="leave_availed-modal" class="modal custom-modal fade" role="dialog">
-        <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable  modal-xl" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
             <div class="modal-content top-line">
-                <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h6 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
+                <div class="py-2 border-0 modal-header new-role-header d-flex align-items-center">
+                    <h6 class="mb-1 modal-title text-primary" style="border-bottom:5px solid #d0d4e2;">
                     </h6>
-                    <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
+                    <button type="button" class="bg-transparent border-0 outline-none close h3" data-bs-dismiss="modal"
                         aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="d-flex mb-2 justify-content-between ">
+                    <div class="mb-2 d-flex justify-content-between ">
                         <div class="d-flex">
                             <button class="btn btn-orange me-2"><i class="fa fa-filter" aria-hidden="true"></i></button>
                             <button class="btn btn-border-primary me-2">Employee</button>
@@ -450,7 +450,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                             <label for=""></label>
                         </div>
 
-                        <div class="input-group  w-25 me-2">
+                        <div class="input-group w-25 me-2">
                             <label class="input-group-text " for="inputGroupSelect01"><i
                                     class="fa fa-calendar text-primary " aria-hidden="true"></i></label>
                             <select class="form-select btn-line-primary" id="inputGroupSelect01">
@@ -469,18 +469,18 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
     </div>
 
     <div id="leave_balance-modal" class="modal custom-modal fade" role="dialog">
-        <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable  modal-xl" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
             <div class="modal-content top-line">
-                <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h6 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
+                <div class="py-2 border-0 modal-header new-role-header d-flex align-items-center">
+                    <h6 class="mb-1 modal-title text-primary" style="border-bottom:5px solid #d0d4e2;">
                     </h6>
-                    <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
+                    <button type="button" class="bg-transparent border-0 outline-none close h3" data-bs-dismiss="modal"
                         aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="d-flex mb-2 justify-content-between ">
+                    <div class="mb-2 d-flex justify-content-between ">
                         <div class="d-flex">
                             <button class="btn btn-orange me-2"><i class="fa fa-filter" aria-hidden="true"></i></button>
                             <button class="btn btn-border-primary me-2">Employee</button>
@@ -491,7 +491,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                             <label for=""></label>
                         </div>
 
-                        <div class="input-group  w-25 me-2">
+                        <div class="input-group w-25 me-2">
                             <label class="input-group-text " for="inputGroupSelect01"><i
                                     class="fa fa-calendar text-primary " aria-hidden="true"></i></label>
                             <select class="form-select btn-line-primary" id="inputGroupSelect01">
@@ -509,12 +509,12 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
     </div>
 
     <div id="leavepending_modal" class="modal custom-modal fade" role="dialog">
-        <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable  modal-lg" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
             <div class="modal-content top-line">
-                <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h6 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
+                <div class="py-2 border-0 modal-header new-role-header d-flex align-items-center">
+                    <h6 class="mb-1 modal-title text-primary" style="border-bottom:5px solid #d0d4e2;">
                         Pending Request</h6>
-                    <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
+                    <button type="button" class="bg-transparent border-0 outline-none close h3" data-bs-dismiss="modal"
                         aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -531,12 +531,12 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
 
     <div id="leaveApply_modal" class="modal custom-modal fade" role="dialog">
-        <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable  modal-xl" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
             <div class="modal-content top-line">
-                <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h6 class="modal-title mb-1 text-primary">
+                <div class="py-2 border-0 modal-header new-role-header d-flex align-items-center">
+                    <h6 class="mb-1 modal-title text-primary">
                         Leave Request</h6>
-                    <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
+                    <button type="button" class="bg-transparent border-0 outline-none close h3" data-bs-dismiss="modal"
                         aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -544,28 +544,28 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                 <div class="modal-body">
 
                     <!-- MODEL : Request leave -->
-                    <div id="modal_request_leave" class="card top-line mb-0">
+                    <div id="modal_request_leave" class="mb-0 card top-line">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-xl-8 col-sm-12 col-lg-8 col-xxl-8 col-md-12">
-                                    <div class="row mb-3">
-                                        <div class="col-md-12 text-md-start mb-md-0 mb-3">
-                                            <h6 class=" mb-1">Leave Type</h6>
+                                    <div class="mb-3 row">
+                                        <div class="mb-3 col-md-12 text-md-start mb-md-0">
+                                            <h6 class="mb-1 ">Leave Type</h6>
                                         </div>
                                     </div>
-                                    <div class="row mb-3">
-                                        <div class="col-md-6  mb-md-0 mb-3">
+                                    <div class="mb-3 row">
+                                        <div class="mb-3 col-md-6 mb-md-0">
                                             <div class="form-group">
                                                 <label for="">Choose Leave Type <span class="text-danger">*</span>
                                                 </label>
 
                                             </div>
                                         </div>
-                                        <div class="col-md-6  mb-md-0 mb-3">
+                                        <div class="mb-3 col-md-6 mb-md-0">
                                             <div class="form-group">
 
                                                 <select name="" id="leave_type_id"
-                                                    class="form-select outline-none">
+                                                    class="outline-none form-select">
                                                     <option value="" selected>Select Leave Type
                                                     </option>
 
@@ -595,31 +595,31 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         </div>
                                     </div>
 
-                                    <div class="row mb-3">
-                                        <div class="col-md-4 text-md-start mb-md-0 mb-3">
+                                    <div class="mb-3 row">
+                                        <div class="mb-3 col-md-4 text-md-start mb-md-0">
                                             <label class="fw-bold">Start Date</label>
                                             <input type="datetime-local" id="start_date"
-                                                class="form-control outline-none border-0 shadow-lite leave_date">
+                                                class="border-0 outline-none form-control shadow-lite leave_date">
                                         </div>
                                         <div class="col-md-4 text-md-center mb-md-0 " id="div_totaldays">
-                                            <p class="fw-bold  text-muted mb-2">Total Days</p>
-                                            <span class="shadow-lite px-2 py-1" id="total_leave_days">-</span>
+                                            <p class="mb-2 fw-bold text-muted">Total Days</p>
+                                            <span class="px-2 py-1 shadow-lite" id="total_leave_days">-</span>
                                         </div>
                                         <div class="col-md-4 text-md-center mb-md-0 " id="div_totalhours">
-                                            <p class="fw-bold  text-muted mb-2">Total Hours</p>
-                                            <span class="shadow-lite px-2 py-1" id="total_permission_hours">-</span>
+                                            <p class="mb-2 fw-bold text-muted">Total Hours</p>
+                                            <span class="px-2 py-1 shadow-lite" id="total_permission_hours">-</span>
                                         </div>
                                         <div class="col-md-4 text-md-end ">
                                             <label class="fw-bold">End Date</label>
                                             <input type="datetime-local" id="end_date"
-                                                class="form-control outline-none border-0 shadow-lite leave_date">
+                                                class="border-0 outline-none form-control shadow-lite leave_date">
                                         </div>
                                     </div>
-                                    <textarea id="leave_reason" placeholder="Reason here..." class="w-100 outline-none border-0 shadow-lite form-control"
+                                    <textarea id="leave_reason" placeholder="Reason here..." class="border-0 outline-none w-100 shadow-lite form-control"
                                         rows="4" style=""></textarea>
                                     <div class="py-2" style="border-bottom: 1px solid #cecece;"></div>
-                                    <h6 class="modal-sub-title py-2">Notify to</h6>
-                                    <div class="row mb-3">
+                                    <h6 class="py-2 modal-sub-title">Notify to</h6>
+                                    <div class="mb-3 row">
                                         <div>
 
                                             <select class="" name="notifications_users_id[]"
@@ -644,17 +644,17 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                             Leave</button>
                                     </div>
                                 </div>
-                                <div class="col-xl-4 col-sm-12 col-lg-4 col-xxl-4 col-md-12  mt-md-3 mt-sm-3">
+                                <div class="col-xl-4 col-sm-12 col-lg-4 col-xxl-4 col-md-12 mt-md-3 mt-sm-3">
 
-                                    <div class="calendar-wrapper card mb-4 border-0">
-                                        <div class="card-body p-0">
+                                    <div class="mb-4 border-0 calendar-wrapper card">
+                                        <div class="p-0 card-body">
                                             <div class="_wrapper">
-                                                <div class="h-100  _container-calendar">
+                                                <div class="h-100 _container-calendar">
                                                     <div
                                                         class="_button-container-calendar d-flex align-items-center justify-content-between">
                                                         <button id="_previous" onclick="previous()" class="previous"><i
                                                                 class="fa fa-chevron-left"></i></button>
-                                                        <h6 id="_monthAndYear" class="_monthAndYear text-white"></h6>
+                                                        <h6 id="_monthAndYear" class="text-white _monthAndYear"></h6>
                                                         <button id="_next" onclick="next()" class="next"><i
                                                                 class="fa fa-chevron-right"></i></button>
                                                     </div>
@@ -738,12 +738,12 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                     // //update sidepanel
                     // $('#sidepanel_employees_list').html('');
 
-                    // var html = '<li class="list_employee_attendance p-2 w-100" >'+
+                    // var html = '<li class="p-2 list_employee_attendance w-100" >'+
                     //                 '<div class="d-flex">'+
                     //                     '<div class="user_pic me-3 d-flex justify-content-center align-items-center bg-primary rounded-circle">'+
                     //                         '<span class="text-white">Pr</span>'+
                     //                     '</div>'+
-                    //                     '<div class="user_content d-flex  align-items-center flex-column">'+
+                    //                     '<div class="user_content d-flex align-items-center flex-column">'+
                     //                         '<p class="fw-bold text-primary f-15">'+element.name+'</p>'+
                     //                         '<p class=" text-muted f-12">'+element.designation+'</p>'+
                     //                     '</div>'+
@@ -794,12 +794,12 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                 imageURL + '" alt="user"></div>';
                         }
 
-                        var html = '<li class="list_employee_attendance p-1 w-100" >' +
-                            '<a class="w-100  d-flex employee_list_item w-100 p-2" data-userid=' +
+                        var html = '<li class="p-1 list_employee_attendance w-100" >' +
+                            '<a class="p-2 w-100 d-flex employee_list_item" data-userid=' +
 
                             element
                             .id + '>' +
-                            '<div class=" me-2 d-flex col-auto">' +
+                            '<div class="col-auto me-2 d-flex">' +
                             avatar_data +
                             '</div>' +
                             '<div class="user_content text-start">' +
@@ -851,7 +851,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                             var userBgColor = empAvatarDetails.color;
                             console.log("color", empAvatarDetails.color);
                             avatar_data =
-                                ' <div class=" ' + userBgColor +
+                                ' <div class="' + userBgColor +
                                 '  user_pic d-flex  justify-content-center align-items-center  rounded-circle"> <span class="text-white fw-bold">' +
                                 empAvatarDetails.data +
                                 '</span></div>';
@@ -863,15 +863,15 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                             var imageURL = "images/" + empAvatarDetails.data;
 
                             avatar_data =
-                                '<div class="user_pic bg-ash rounded-circle"><img class=" w-100 rounded-circle  h-100 header-profile-user" src="' +
+                                '<div class="user_pic bg-ash rounded-circle"><img class=" w-100 rounded-circle h-100 header-profile-user" src="' +
                                 imageURL + '" alt="user"></div>';
 
 
                         }
 
 
-                        var html = '<li class="list_employee_attendance p-1 " >' +
-                            '<a class="  d-flex employee_list_item w-100 p-2" data-userid=' +
+                        var html = '<li class="p-1 list_employee_attendance " >' +
+                            '<a class="p-2 d-flex employee_list_item w-100" data-userid=' +
 
                             element
                             .id + '>' +
@@ -936,14 +936,14 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
             $('#sidepanel_employees_list').html('');
 
 
-            var html = '<li class="list_employee_attendance p-1 " >' +
-                '<a class="  d-flex employee_list_item w-100 p-2" data-userid=' +
+            var html = '<li class="p-1 list_employee_attendance " >' +
+                '<a class="p-2 d-flex employee_list_item w-100" data-userid=' +
                 '{{ $current_employee_detail->id }}' +
                 '>' +
                 '<div class="col-auto me-2 ">' +
                 avatar_data +
                 '</div>' +
-                '<div class="user_content  text-start">' +
+                '<div class="user_content text-start">' +
                 '<p class="fw-bold text-primary text-capitalize">{{ $current_employee_detail->name }}</p>' +
                 '<p class=" text-muted f-11">{{ $current_employee_detail->designation }}</p>' +
                 '</div>' +
@@ -1026,7 +1026,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
             ajaxGetMonthlyDate_TimeSheet(currentMonth, currentYear, {{ Auth::user()->id }});
 
 
-            $('#tab_timesheet').click(function() {
+            $('#tab_timesheet').click(()=> {
 
                 console.log("Timesheet");
                 const d = new Date();
@@ -1482,24 +1482,24 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         "<img src='{{ URL::asset($svg_icon_pending) }}' class='calendar_icon'>" : "";
 
                                     let html_LC_Button =
-                                        "<input type='button' onclick ='showRegularizationModal(this)' title='Late Coming' class='f-10 btn-primary bn ms-2 lc_btn border-0 p-1 text-white' data-userid='" +
+                                        "<input type='button' onclick ='showRegularizationModal(this)' title='Late Coming' class='p-1 text-white border-0 f-10 btn-primary bn ms-2 lc_btn' data-userid='" +
                                         ajax_data_currentdate.user_id + "' data-applystatus='" + ajax_data_currentdate
                                         .lc_status + "' data-currentdate='" + currentDate + "' data-checkintime='" +
                                         final_checkin_time + "' value='LC' />&nbsp;&nbsp;";
 
                                     let html_MIP_Button =
-                                        "<input type='button' onclick ='showRegularizationModal(this)' title='Missed In Punch' class='f-10 btn-primary bn ms-2 lc_btn border-0 p-1 text-white' data-userid='" +
+                                        "<input type='button' onclick ='showRegularizationModal(this)' title='Missed In Punch' class='p-1 text-white border-0 f-10 btn-primary bn ms-2 lc_btn' data-userid='" +
                                         ajax_data_currentdate.user_id + "' data-applystatus='" + ajax_data_currentdate
                                         .mip_status + "' data-currentdate='" + currentDate + "' value='MIP' />&nbsp;&nbsp;";
 
                                     let html_EG_Button =
-                                        "<input type='button' onclick ='showRegularizationModal(this)' title='Early Going' class='f-10 btn-orange bn ms-2 lc_btn border-0 p-1 text-white' data-userid='" +
+                                        "<input type='button' onclick ='showRegularizationModal(this)' title='Early Going' class='p-1 text-white border-0 f-10 btn-orange bn ms-2 lc_btn' data-userid='" +
                                         ajax_data_currentdate.user_id + "' data-applystatus='" + ajax_data_currentdate
                                         .eg_status + "' data-currentdate='" + currentDate + "' data-checkouttime='" +
                                         final_checkout_time + "' value='EG'/>&nbsp;&nbsp;";
 
                                     let html_MOP_Button =
-                                        "<input type='button' onclick ='showRegularizationModal(this)' title='Missed Out Punch'  class='f-10 btn-orange bn ms-2 lc_btn border-0 p-1 text-white ' data-userid='" +
+                                        "<input type='button' onclick ='showRegularizationModal(this)' title='Missed Out Punch'  class='p-1 text-white border-0 f-10 btn-orange bn ms-2 lc_btn ' data-userid='" +
                                         ajax_data_currentdate.user_id + "' data-applystatus='" + ajax_data_currentdate
                                         .mop_status + "' data-currentdate='" + currentDate + "' value='MOP' />&nbsp;&nbsp;";
 
@@ -1539,13 +1539,13 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
 
 
-                                                cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
+                                                cell.innerHTML = " <div class='p-2 w-100 h-100'><p class='show_date' >" + date +
 
-                                             "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-center' ><div class='check-in f-10 text-success w-100 d-flex align-items-center justify-content-start'><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
+                                             "</p>  <div class='mt-2 d-flex flex-column bio_check align-items-center' ><div class='check-in f-10 text-success w-100 d-flex align-items-center justify-content-start'><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
                                                year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkin_time +
                                                getAttendanceModeIcon(ajax_data_currentdate, "checkin") +"</span><span><button style='border: none;background: none;width: 23px;'><a style='color: black;' target='_blank'  href="+selfie_checkin+"><i style='width:0px' class='fa fa-picture-o me-2'></i></a></button></span>" +
                                                final_checkin_button_code +
-                                               "</div> <div class='w-100 d-flex align-items-center justify-content-start  check-out mt-2 f-10 text-danger'><i  class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span style='width: 46px;' class='f-11' id='checkout_time_" +
+                                               "</div> <div class='mt-2 w-100 d-flex align-items-center justify-content-start check-out f-10 text-danger'><i  class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span style='width: 46px;' class='f-11' id='checkout_time_" +
                                                year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkout_time +
                                                getAttendanceModeIcon(ajax_data_currentdate, "checkout") +"</span><span><button style='border: none;background: none;width: 23px;'><a target='_blank'  style='color: black;' href="+ajax_data_currentdate.selfie_checkout+"><i style='width:0px'color: black;'' class='fa fa-picture-o me-2'></i></a></button></span>" +
                                                "</span>" +
@@ -1558,9 +1558,9 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                 }else{
 
                                         cell.innerHTML =
-                                       " <div class='w-100 h-100 p-2' style='background-color:#e7e7e7;'> <span class='show_date' >" +
+                                       " <div class='p-2 w-100 h-100' style='background-color:#e7e7e7;'> <span class='show_date' >" +
                                      date +
-                                     "</span> <span>Week Off </span> <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex justify-content-between'> </div> <div class='w-100 d-flex justify-content-between check-out mt-2 f-10 text-danger'> </div></div></div>";
+                                     "</span> <span>Week Off </span> <div class='mt-2 d-flex flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex justify-content-between'> </div> <div class='mt-2 w-100 d-flex justify-content-between check-out f-10 text-danger'> </div></div></div>";
                             }
 
                          } else {
@@ -1596,8 +1596,8 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         if(Pending || Rejected || Revoked || Approved){
 
 
-                                        cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
-                                            "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start'><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><span class='f-11' id='checkout_time_" +
+                                        cell.innerHTML = " <div class='p-2 w-100 h-100'><p class='show_date' >" + date +
+                                            "</p>  <div class='mt-2 d-flex flex-column bio_check align-items-start'><div class='mt-2 w-100 d-flex check-out f-10 text-danger'><span class='f-11' id='checkout_time_" +
                                             year + "-" + (month + 1) + "-" + dateText +
                                             "'><br><span style='color:black;font-size:10px;text-align:center;margin-left:5px' id='statement'></span></span>";
 
@@ -1606,8 +1606,8 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         {
                                             // $("#statement").attr("src","{{ URL::asset($svg_icon_pending) }}")
                                             // cell.innerHTML = cell.innerHTML + "<span style='position: relative;top: -30px; font-weight: 700;color: #f8f8ce;'>Approval Pending</span>";
-                                            cell.innerHTML = " <div class='w-100 h-100 p-2' style='background: #f8f8ce;'><p class='show_date' >" + date +
-                                                "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start'><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'>"+
+                                            cell.innerHTML = " <div class='p-2 w-100 h-100' style='background: #f8f8ce;'><p class='show_date' >" + date +
+                                                "</p>  <div class='mt-2 d-flex flex-column bio_check align-items-start'><div class='mt-2 w-100 d-flex check-out f-10 text-danger'>"+
                                                 "<span style='position: relative;font-weight: 700;color: #b2b223;'>Approval Pending</span><span style='margin-left: 7px'><i class= 'fa fa-question-circle text-secondary me-2 fs-15 ' title='Pending'  ></i></span>";
 
 
@@ -1617,8 +1617,8 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         {
 
 
-                                            cell.innerHTML = " <div class='w-100 h-100 p-2' style='background: #fad8d8;'><p class='show_date' >" + date +
-                                                "</p><span style='top: -22px;color: red;font-weight: 700;position:relative'>Absent</span>  <div class='d-flex mt-2 flex-column bio_check align-items-start'><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><span style='position:relative;font-weight: 700;color: red;top: -15px;'>"+ ajax_data_currentdate.leave_type+'&nbsp;'+"<span>Rejected</span><span style='margin-left: 7px'><i class='fa fa-times-circle text-danger fs-15'  title='Rejected'></i></span></span>";
+                                            cell.innerHTML = " <div class='p-2 w-100 h-100' style='background: #fad8d8;'><p class='show_date' >" + date +
+                                                "</p><span style='top: -22px;color: red;font-weight: 700;position:relative'>Absent</span>  <div class='mt-2 d-flex flex-column bio_check align-items-start'><div class='mt-2 w-100 d-flex check-out f-10 text-danger'><span style='position:relative;font-weight: 700;color: red;top: -15px;'>"+ ajax_data_currentdate.leave_type+'&nbsp;'+"<span>Rejected</span><span style='margin-left: 7px'><i class='fa fa-times-circle text-danger fs-15'  title='Rejected'></i></span></span>";
 
 
                                         }
@@ -1633,8 +1633,8 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         if (ajax_data_currentdate.absent_status == "Approved")
                                         {
 
-                                            cell.innerHTML = " <div class='w-100 h-100 p-2' style='background: #d0dfd0;'><p class='show_date' >" + date +
-                                                "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start'><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><span style='position: relative;top: -5px;font-weight: 700;color: green;'>" +
+                                            cell.innerHTML = " <div class='p-2 w-100 h-100' style='background: #d0dfd0;'><p class='show_date' >" + date +
+                                                "</p>  <div class='mt-2 d-flex flex-column bio_check align-items-start'><div class='mt-2 w-100 d-flex check-out f-10 text-danger'><span style='position: relative;top: -5px;font-weight: 700;color: green;'>" +
                                                 ajax_data_currentdate.leave_type+'&nbsp;'+"<span>Approved</span><span style='margin-left: 7px'><i class='fa fa-check-circle text-success fs-15'  title='Approved'></i></span></span>";
 
 
@@ -1643,8 +1643,8 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                     }
 
                                     else{
-                                        cell.innerHTML = " <div class='w-100 h-100 p-2' style='background: #fad8d8;'><p class='show_date' >" + date +
-                                                "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start'><div class='w-100 d-flex  check-out mt-2 f-10 text-danger'><span style='margin-left: 45px;font-size: 13px;color: red;font-weight: 700;' class='f-11' id='checkout_time_" +
+                                        cell.innerHTML = " <div class='p-2 w-100 h-100' style='background: #fad8d8;'><p class='show_date' >" + date +
+                                                "</p>  <div class='mt-2 d-flex flex-column bio_check align-items-start'><div class='mt-2 w-100 d-flex check-out f-10 text-danger'><span style='margin-left: 45px;font-size: 13px;color: red;font-weight: 700;' class='f-11' id='checkout_time_" +
                                                 year + "-" + (month + 1) + "-" + dateText +
                                                 "'>Absent</span><span style='margin-left: 7px'><i class='fa fa-exclamation-circle fs-15 text-warning me-2' title='Not Applied'></i></span>";
 
@@ -1653,7 +1653,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
                                     }
                                     else {
-                                        cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
+                                        cell.innerHTML = " <div class='p-2 w-100 h-100'><p class='show_date' >" + date +
                                             "</p>  </div>"
 
                                     }
@@ -1682,24 +1682,24 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         "<img src='{{ URL::asset($svg_icon_pending) }}' class='calendar_icon'>" : "";
 
                                     let html_LC_Button =
-                                        "<input type='button' onclick ='showRegularizationModal(this)' title='Late Coming' class='f-10 btn-primary bn ms-2 lc_btn border-0 p-1 text-white' data-userid='" +
+                                        "<input type='button' onclick ='showRegularizationModal(this)' title='Late Coming' class='p-1 text-white border-0 f-10 btn-primary bn ms-2 lc_btn' data-userid='" +
                                         ajax_data_currentdate.user_id + "' data-applystatus='" + ajax_data_currentdate
                                         .lc_status + "' data-currentdate='" + currentDate + "' data-checkintime='" +
                                         final_checkin_time + "' value='LC' />&nbsp;&nbsp;";
 
                                     let html_MIP_Button =
-                                        "<input type='button' onclick ='showRegularizationModal(this)' title='Missed In Punch' class='f-10 btn-primary bn ms-2 lc_btn border-0 p-1 text-white' data-userid='" +
+                                        "<input type='button' onclick ='showRegularizationModal(this)' title='Missed In Punch' class='p-1 text-white border-0 f-10 btn-primary bn ms-2 lc_btn' data-userid='" +
                                         ajax_data_currentdate.user_id + "' data-applystatus='" + ajax_data_currentdate
                                         .mip_status + "' data-currentdate='" + currentDate + "' value='MIP' />&nbsp;&nbsp;";
 
                                     let html_EG_Button =
-                                        "<input type='button' onclick ='showRegularizationModal(this)' title='Early Going' class='f-10 btn-orange bn ms-2 lc_btn border-0 p-1 text-white' data-userid='" +
+                                        "<input type='button' onclick ='showRegularizationModal(this)' title='Early Going' class='p-1 text-white border-0 f-10 btn-orange bn ms-2 lc_btn' data-userid='" +
                                         ajax_data_currentdate.user_id + "' data-applystatus='" + ajax_data_currentdate
                                         .eg_status + "' data-currentdate='" + currentDate + "' data-checkouttime='" +
                                         final_checkout_time + "' value='EG'/>&nbsp;&nbsp;";
 
                                     let html_MOP_Button =
-                                        "<input type='button' onclick ='showRegularizationModal(this)' title='Missed Out Punch'  class='f-10 btn-orange bn ms-2 lc_btn border-0 p-1 text-white ' data-userid='" +
+                                        "<input type='button' onclick ='showRegularizationModal(this)' title='Missed Out Punch'  class='p-1 text-white border-0 f-10 btn-orange bn ms-2 lc_btn ' data-userid='" +
                                         ajax_data_currentdate.user_id + "' data-applystatus='" + ajax_data_currentdate
                                         .mop_status + "' data-currentdate='" + currentDate + "' value='MOP' />&nbsp;&nbsp;";
 
@@ -1744,13 +1744,13 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         }
 
 
-                                        cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
+                                        cell.innerHTML = " <div class='p-2 w-100 h-100'><p class='show_date' >" + date +
 
-                                        "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-center' ><div class='check-in f-10 text-success w-100 d-flex align-items-center justify-content-start'><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
+                                        "</p>  <div class='mt-2 d-flex flex-column bio_check align-items-center' ><div class='check-in f-10 text-success w-100 d-flex align-items-center justify-content-start'><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
                                         year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkin_time +
                                         getAttendanceModeIcon(ajax_data_currentdate, "checkin") +"</span><span><button style='border: none;background: none;width: 23px;'><a style='color: black;' target='_blank'  href="+selfie_checkin+"><i style='width:0px' class='fa fa-picture-o me-2'></i></a></button></span>" +
                                         final_checkin_button_code +
-                                        "</div> <div class='w-100 d-flex align-items-center justify-content-start  check-out mt-2 f-10 text-danger'><i  class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span style='width: 50px;' class='f-11' id='checkout_time_" +
+                                        "</div> <div class='mt-2 w-100 d-flex align-items-center justify-content-start check-out f-10 text-danger'><i  class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span style='width: 50px;' class='f-11' id='checkout_time_" +
                                         year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkout_time +
                                         getAttendanceModeIcon(ajax_data_currentdate, "checkout") +"</span><span><button style='border: none;background: none;'><a target='_blank'  style='color: black;' href="+ajax_data_currentdate.selfie_checkout+"><i style='width:0px'color: black;'' class='fa fa-picture-o me-2'></i></a></button></span>" +
                                         "</span>" +
@@ -1762,14 +1762,14 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
                                      }else{
 
-                                        cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
+                                        cell.innerHTML = " <div class='p-2 w-100 h-100'><p class='show_date' >" + date +
 
-                                        "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-center' ><div class='check-in f-10 text-success w-100 d-flex align-items-center justify-content-start'><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
+                                        "</p>  <div class='mt-2 d-flex flex-column bio_check align-items-center' ><div class='check-in f-10 text-success w-100 d-flex align-items-center justify-content-start'><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
                                         year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkin_time +
                                         getAttendanceModeIcon(ajax_data_currentdate, "checkin") +
                                         "</span>" +
                                         final_checkin_button_code +
-                                        "</div> <div class='w-100 d-flex align-items-center justify-content-start  check-out mt-2 f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span class='f-11' id='checkout_time_" +
+                                        "</div> <div class='mt-2 w-100 d-flex align-items-center justify-content-start check-out f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span class='f-11' id='checkout_time_" +
                                         year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkout_time +
                                         getAttendanceModeIcon(ajax_data_currentdate, "checkout") +
                                         "</span>" +
@@ -1781,14 +1781,14 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
 
 
-                                    //  cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
+                                    //  cell.innerHTML = " <div class='p-2 w-100 h-100'><p class='show_date' >" + date +
 
-                                    //     "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-center' ><div class='check-in f-10 text-success w-100 d-flex align-items-center justify-content-start'><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
+                                    //     "</p>  <div class='mt-2 d-flex flex-column bio_check align-items-center' ><div class='check-in f-10 text-success w-100 d-flex align-items-center justify-content-start'><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
                                     //     year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkin_time +
                                     //     getAttendanceModeIcon(ajax_data_currentdate, "checkin") +
                                     //     "</span>" +
                                     //     final_checkin_button_code +
-                                    //     "</div> <div class='w-100 d-flex align-items-center justify-content-start  check-out mt-2 f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span class='f-11' id='checkout_time_" +
+                                    //     "</div> <div class='mt-2 w-100 d-flex align-items-center justify-content-start check-out f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span class='f-11' id='checkout_time_" +
                                     //     year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkout_time +
                                     //     getAttendanceModeIcon(ajax_data_currentdate, "checkout") +
                                     //     "</span>" +

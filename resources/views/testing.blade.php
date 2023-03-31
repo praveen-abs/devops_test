@@ -1,3 +1,8 @@
+<?php
+
+    use Illuminate\Support\Facades\Storage;
+?>
+
 @extends('layouts.master')
 @section('title')
     @lang('translation.dashboards')
@@ -15,6 +20,22 @@
 <body>
     <h6>PRIVATE IMAGE VIEW</h6>
     <img src="{{route('viewPrivateFile')}}"  />
+
+    <?php
+
+        $file_status = Storage::disk('private')->exists('/B090/onboarding_documents/test.sql');
+
+        if($file_status)
+        {
+            $file_delete_status = Storage::disk('private')->delete('/B090/onboarding_documents/test.sql');
+            echo "File Deleted";
+        }
+        else
+        {
+            dd("File doesnt exist");
+        }
+
+    ?>
 </body>
 </html>
 @endsection
