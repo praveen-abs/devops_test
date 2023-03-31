@@ -510,7 +510,7 @@ class VmtEmployeeService {
         }
 
 
-        $date = date('d-m-Y H-i-s');
+        $date = date('d-m-Y_H-i-s');
         $fileName =  str_replace(' ', '', $onboard_document_type).'_'.$emp_code.'_'.$date.'.'.$fileObject->extension();
         $path = $emp_code.'/onboarding_documents';
         $filePath = $fileObject->storeAs($path,$fileName, 'private');
