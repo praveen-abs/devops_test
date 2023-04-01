@@ -281,16 +281,19 @@ function saveGeneralInformationDetails() {
         });
     }
 
+  const fetchGeneralInformationDetails = () =>{
+    let url ="http://localhost:3000/Empdetails"
     axios.get(url).then((response) => {
         console.log("Axios : " + response.data);
         console.log(response.data);
         employee_details.value = response.data;
         // loading.value = false;
     });
-};
+}
+
 
 onMounted(() => {
-    fetchGeneralInformationDetails()
+  fetchGeneralInformationDetails()
   fetch_data.getBloodGroups().then((result) => {
         console.log(result);
         options_blood_group.value = result.data;
