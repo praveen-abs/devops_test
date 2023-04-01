@@ -15,8 +15,21 @@
       "id": 1
     }
   ],
-  "FinanceDetails" : [],
-
+  "FinanceDetails": [
+    {
+      "bank_name": {
+        "id": 2,
+        "bank_name": "ANDHRA PRADESH GRAMEENA VIKAS BANK",
+        "min_length": "11",
+        "max_length": "11",
+        "status": "A"
+      },
+      "bank_ac_no": 100,
+      "ifsc_code": "asdsdsdsdsdfddg",
+      "pan_no": "sdsdsd",
+      "id": 1
+    }
+  ],
   "posts": [
     {
       "name": "Nomlanga Hopkins",

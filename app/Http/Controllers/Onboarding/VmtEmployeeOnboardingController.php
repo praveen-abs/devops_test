@@ -20,7 +20,6 @@ use App\Models\VmtClientMaster;
 use App\Models\VmtMasterConfig;
 use App\Models\VmtGeneralInfo;
 use App\Models\Compensatory;
-use App\Models\VmtEmployee;
 use App\Models\VmtEmployeePMSGoals;
 use App\Models\VmtAppraisalQuestion;
 use Illuminate\Support\Facades\Hash;
