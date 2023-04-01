@@ -8,10 +8,6 @@
                 </a>
 
                 <Dialog v-model:visible="visible" modal header="General Information" :style="{ width: '50vw' }">
-                    <div>
-                        <div class="modal-content" style=" ">
-
-                            <div class="modal-body">
                                 <div class="row">
                                     <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
                                         <div class="mb-3 form-group">
@@ -84,11 +80,6 @@
                                         @click="general_information_save()">Save</button>
                                 </div>
 
-                            </div>
-
-                        </div>
-
-                    </div>
                 </Dialog>
             </h6>
             <ul class="personal-info" v-for="emp_details in employee_details"  :key="emp_details.id">
@@ -214,7 +205,8 @@ const fetch_data = Service()
 
 const toast = useToast();
 
-const visible = ref(false);
+    const visible = ref(false);
+
 
 const employee_details = ref()
 
@@ -270,32 +262,24 @@ function saveGeneralInformationDetails() {
         });
 }
 
-const general_information_save = () => {
-    // location.reload();
-    console.log(general_information);
-    confirm.require({
-        message: "Are you sure you want to proceed?",
-        header: "Confirmation",
-        icon: "pi pi-exclamation-triangle",
-        accept: () => {
-            saveGeneralInformationDetails();
-        },
-        reject: () => {
-            toast.add({
-                severity: "error",
-                summary: "Rejected",
-                detail: "You have rejected",
-                life: 3000,
-            });
-        },
-    });
-};
+    const general_information_save = ()=>{
 
-const fetchGeneralInformationDetails = () => {
-    // let url = window.location.origin + "/fetch-att-regularization-data";
-    let url =  'http://localhost:3000/Empdetails'
+        // location.reload();
+        console.log(general_information);
+        confirm.require({
+                    message: 'Are you sure you want to proceed?',
+                    header: 'Confirmation',
+                    icon: 'pi pi-exclamation-triangle',
+                    accept: () => {
 
-    console.log("AJAX URL : " + url);
+                        saveGeneralInformationDetails();
+
+                    },
+                    reject: () => {
+                        toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+                    }
+        });
+    }
 
     axios.get(url).then((response) => {
         console.log("Axios : " + response.data);
