@@ -519,6 +519,74 @@
                                                     value=" {{ $user_full_details->physically_challenged }}">
 
 
+                                <div class="text-right col-12">
+                                    <button id="btn_submit_generalInfo"
+                                        class="btn btn-border-orange submit-btn">Save</button>
+                                </div>
+
+                            </div> --}}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- personal informatios -->
+                <div id="personal_info_modal" class="modal custom-modal fade" role="dialog">
+                    <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
+                        <div class="modal-content top-line">
+                            <div class="modal-header border-0 ">
+                                <h6 class="modal-title"> Contact Information
+                                </h6>
+                                <button type="button" class="close  border-0 h3" data-bs-dismiss="modal"
+                                    aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+
+                                @csrf
+                                <div class="row">
+
+                                    <div class="col-md-6">
+
+                                        <div class="form-group mb-3">
+                                            <label>Personal Email</label>
+                                            <input type="email" name="present_email"
+                                                onkeypress='return isValidEmail(email)' class="form-control"
+                                                value="{{ $user->email ?? '' }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-3">
+                                            <label> Office Email</label>
+                                            <input type="email" onkeypress='return isValidEmail (email)'
+                                                class="form-control" name="officical_mail"
+                                                value="{{ !empty($user_full_details->officical_mail) ? $user_full_details->officical_mail : '-' }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+
+                                        <div class="form-group mb-3">
+                                            <label>Mobile Number</label>
+                                            <input type="text" size=20 maxlength=10 name="mobile_number"
+                                                onkeypress='return isNumberKey(event)' class="form-control"
+                                                value="{{ !empty($user_full_details->mobile_number) ? $user_full_details->mobile_number : '-' }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="text-right">
+                                            <button id="btn_submit_contact_info"
+                                                class="btn btn-border-orange submit-btn">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- payslip informatios -->
                 <div id="payslipModal" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
@@ -543,10 +611,10 @@
                 <div id="edit_addressInfo" class="modal custom-modal fade" role="dialog">
                     <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
                         <div class="modal-content top-line">
-                            <div class="border-0 modal-header ">
+                            <div class="modal-header border-0 ">
                                 <h6 class="modal-title"> Address
                                 </h6>
-                                <button type="button" class="border-0 close h3" data-bs-dismiss="modal"
+                                <button type="button" class="close  border-0 h3" data-bs-dismiss="modal"
                                     aria-label="Close">
                                     <span aria-hidden="true">×</span>
                                 </button>
@@ -554,29 +622,18 @@
                             <div class="modal-body">
                                 @csrf
                                 <div class="col-md-12">
-                                    <div class="mb-3 form-group">
+                                    <div class="form-group mb-3">
                                         <label>Current Address</label>
                                         <textarea name="current_address_line_1" id="current_address_line_1" cols="30" rows="3"
                                             class="form-control" value="{{ $user_full_details->current_address_line_1 ?? '-' }}">{{ $user_full_details->current_address_line_1 ?? '-' }}</textarea>
                                     </div>
-                                    <div class="mb-3 form-group">
+                                    <div class="form-group mb-3">
                                         <label>Permanent Address </label>
                                         <textarea name="permanent_address_line_1" id="permanent_address_line_1" cols="30" rows="3"
                                             class="form-control" value="{{ $user_full_details->permanent_address_line_1 ?? '-' }}">{{ $user_full_details->permanent_address_line_1 ?? '-' }}</textarea>
                                     </div>
                                 </div>
 
-                                <div class="col-12">
-                                    <div class="text-right">
-                                        <button
-                                            id="btn_submit_address"class="btn btn-border-orange submit-btn">Save</button>
-                                    </div>
-                                </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                 <!--  -->
                 <!--  -->
