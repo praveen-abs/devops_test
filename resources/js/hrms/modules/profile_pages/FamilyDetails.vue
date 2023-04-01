@@ -50,8 +50,9 @@
 
 
                     <template #footer>
+                        <Toast/>
                       <div>
-                        <button type="button" class="submit_btn" id="submit_button_family_details"
+                        <button type="button" class="submit_btn warning success" id="submit_button_family_details"
                             @click="saveFamilyDetails">submit</button>
                       </div>
 
@@ -159,10 +160,11 @@ const familydetails = reactive({
 
 const saveFamilyDetails = () => {
 
-   if(familydetails.name == ''  && familydetails.dob == '' && familydetails.relationship == '' && familydetails.ph_no == " " && familydetails.ph_no.length >=10 ){
-        alert("Fill data");
+   if(familydetails.name == ''  || familydetails.dob == '' || familydetails.relationship == '' || familydetails.ph_no == " " || familydetails.ph_no.length >=10 ){
+    toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
    }else{
     let url = 'http://localhost:3000/posts';
+    toast.add({ severity: 'success', summary: 'Success Message', detail: 'Message Content', life: 3000 });
 
 visible.value = false
 

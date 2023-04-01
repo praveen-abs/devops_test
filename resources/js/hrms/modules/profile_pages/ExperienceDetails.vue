@@ -44,24 +44,28 @@
                                 <span>Job Position <span class="text-danger">*</span></span>
                                 <!-- <input type="text" id="datemin" name="familyDetails_dob[]"
                                     v-model="ExperienceDet.job_position"> -->
-                                    <Calendar  showIcon v-model="ExperienceDet.job_position" :style="{height:' 2.8rem', width:'100%'}"   name="experienceDet_job_position[]"  />
+                                    <InputText type="text" v-model="ExperienceDet.job_position" name="experienceDet_job_position[]"  required />
+
 
                                     <!-- <InputText type="" v-model="ExperienceDet.job_position" name="experienceDet_job_position[]"  required /> -->
 
                             </div>
 
-                            <div class="input_text flex-col">
-                                <span>Period From<span class="text-danger">*</span></span>
-                                <input type="date"  id="familyDetails_phoneNumber"
-                                    name="familyDetails_phoneNumber[]" min="2000-01-02" v-model="ExperienceDet.period_from">
+                            <div class="input_text flex-col" style="margin-right: 7px;">
+                                <span :style="{paddingLeft: '6px'}">Period From<span class="text-danger">*</span></span>
+                                <!-- <input type="date"  id="familyDetails_phoneNumber"
+                                    name="familyDetails_phoneNumber[]" min="2000-01-02" v-model="ExperienceDet.period_from"> -->
+                                    <Calendar  showIcon v-model="ExperienceDet.period_from" :style="{height:' 2.3rem', width:'100%',marginRight:'20px'}"   name="experienceDet_period_from[]"  />
                             </div>
                         </div>
 
                         <div class="space-between M-T">
-                            <div class="input_text flex-col">
-                                <span>Period To <span class="text-danger">*</span></span>
-                                <input type="date" id="datemin" name="familyDetails_dob[]"
-                                    v-model="ExperienceDet.job_position">
+                            <div class="input_text flex-col" :style="{ marginLeft:'-6px'}">
+                                <span :style="{paddingLeft: '6px'}">Period To <span class="text-danger">*</span></span>
+                                <!-- <input type="date" id="datemin" name="familyDetails_dob[]"
+                                    v-model="ExperienceDet.period_to"> -->
+
+                                    <Calendar  showIcon v-model="ExperienceDet.period_to" class="" :style="{height:' 2.3rem',width:'100%' ,borderRadius:'2px' }"   name="experienceDet_period_to[]" />
                             </div>
                         </div>
 
@@ -73,8 +77,9 @@
 
                     <template #footer>
                       <div>
-                        <button type="button" class="submit_btn" id="submit_button_family_details"
-                            @click="saveFamilyDetails">submit</button>
+                        <Toast />
+                        <button type="button" class="submit_btn success warning"  severity="success"  id=""
+                            @click="saveExperienceDetails">submit</button>
                       </div>
 
                     </template>
@@ -94,25 +99,31 @@
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
                     responsiveLayout="scroll">
 
-                    <Column header="Name" field="name" style="min-width: 8rem">
+                    <Column header="Company Name" field="company_name" style="min-width: 8rem">
                         <!-- <template #body="slotProps">
                         {{  slotProps.data.claim_type }}
                       </template> -->
                     </Column>
 
-                    <Column field="relationship" header="Relationship" style="min-width: 12rem">
+                    <Column field="location" header="Loaction" style="min-width: 12rem">
                         <!-- <template #body="slotProps">
                         {{ "&#x20B9;" + slotProps.data.claim_amount }}
                       </template> -->
                     </Column>
 
-                    <Column field="dob" header="Date of Birth " style="min-width: 12rem">
+                    <Column field="job_position" header="Job Position " style="min-width: 12rem">
                         <!-- <template #body="slotProps">
                           {{ "&#x20B9;" + slotProps.data.eligible_amount }}
                         </template> -->
                     </Column>
 
-                    <Column field="ph_no" header="Phone" style="min-width: 12rem">
+                    <Column field="period_from" header="Period from" style="min-width: 12rem">
+                        <!-- <template #body="slotProps">
+                          {{  slotProps.data.reimbursment_remarks }}
+                        </template> -->
+                    </Column>
+
+                    <Column field="period_to" header="Period To" style="min-width: 12rem">
                         <!-- <template #body="slotProps">
                           {{  slotProps.data.reimbursment_remarks }}
                         </template> -->
@@ -137,12 +148,14 @@
     import { ref, onMounted, reactive, onUpdated  } from 'vue';
     import axios from 'axios'
     import { useToast } from "primevue/usetoast";
+    // import { log } from 'console';
 
-    const toast =useToast();
+    const toast = useToast();
+    const toasts = useToast();
+
+
 
     const PersonalDocument =ref('');
-
-
     const visible = ref(false);
 
     const ExperienceDet = reactive({
@@ -153,6 +166,53 @@
     period_to:''
 
 })
+const saveExperienceDetails =()=>{
+    console.log(ExperienceDet);
+
+    if(ExperienceDet.company_name == ' '  || ExperienceDet.job_position === '' || ExperienceDet.location === '' || ExperienceDet.period_from === " " || ExperienceDet.period_to ===" " ){
+
+        toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
+
+   }else{
+    let url = 'http://localhost:3000/Experience';
+
+    toast.add({ severity: 'success', summary: 'Success Message', detail: 'Message Content', life: 3000 });
+
+
+        visible.value = false
+
+
+axios.post(url, ExperienceDet).then(res => {
+    console.log("sent sucessfully");
+    console.log(res.status);
+
+if(res.status == 201){
+    toast.add({ severity: 'success', summary: 'Success Message', detail: 'Message Content', life: 3000 });
+}
+    // fetchData();
+
+}).catch(err => {
+    console.log(err);
+}).finally(() => {
+    console.log("completed");
+})
+   }
+}
+
+
+onMounted(() => {
+    fetchData();
+})
+
+
+const fetchData= ()=>{
+    let url = 'http://localhost:3000/Experience'
+    axios.get(url)
+        .then((response) => {
+            console.log(response.data);
+            PersonalDocument.value = response.data;
+        });
+}
 
 
 
@@ -165,16 +225,15 @@
 
 
 
-
-    onMounted(() => {
-        // let url = window.location.origin + '/fetch-regularization-approvals';
-        // console.log("AJAX URL : " + url);
-        // axios.get(url)
-        //     .then((response) => {
-        //         console.log("Axios : " + response.data);
-        //         att_regularization.value = response.data;
-        //     });
-    })
+    // onMounted(() => {
+    //     // let url = window.location.origin + '/fetch-regularization-approvals';
+    //     // console.log("AJAX URL : " + url);
+    //     // axios.get(url)
+    //     //     .then((response) => {
+    //     //         console.log("Axios : " + response.data);
+    //     //         att_regularization.value = response.data;
+    //     //     });
+    // })
 
 
 
@@ -182,6 +241,17 @@
 </script>
 
 <style  lang="scss">
+.p-button.p-component.p-button-icon-only.p-datepicker-trigger {
+height: 100%;}
+.p-inputtext.p-component {
+    border: 0.1px solid rgb(187, 187, 187);
+    width: 100%;
+}
+span .p-calendar.p-component.p-inputwrapper.p-calendar-w-btn {
+    margin-right: 25px !important;
+}
+
+
 .p-button .p-component .p-button-icon-only .p-datepicker-trigger >button{
     height: 100%;
 
@@ -450,3 +520,53 @@
         margin: 0;
     }
 </style>
+
+
+{
+<!--
+<template>
+    <div class="card">
+        <Message severity="success">Success Message Content</Message>
+        <Message severity="info">Info Message Content</Message>
+
+        <Message severity="error">Error Message Content</Message>
+    </div>
+</template>
+
+
+<template>
+    <div class="card flex justify-content-center">
+        <Toast />
+        <div class="flex flex-wrap gap-2">
+            <Button label="Success" severity="success" @click="showSuccess" />
+            <Button label="Info" severity="info" @click="showInfo" />
+            <Button label="Warn" severity="warning" @click="showWarn" />
+            <Button label="Error" severity="danger" @click="showError" />
+        </div>
+    </div>
+</template>
+
+<script setup>
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
+
+const showSuccess = () => {
+    toast.add({ severity: 'success', summary: 'Success Message', detail: 'Message Content', life: 3000 });
+};
+
+const showInfo = () => {
+    toast.add({ severity: 'info', summary: 'Info Message', detail: 'Message Content', life: 3000 });
+};
+
+const showWarn = () => {
+    toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
+};
+
+const showError = () => {
+    toast.add({ severity: 'error', summary: 'Error Message', detail: 'Message Content', life: 3000 });
+};
+</script>
+
+<script setup>
+</script> -->
+}
