@@ -89,20 +89,29 @@
                             <Column field="document_name" header="Document Name"></Column>
                             <Column field="doc_url" header="Document Url"></Column>
                             <Column field="" header="View">
+                                <template #body="slotProps">
+                                    <Button
+                                      type="button"
+                                      icon="pi pi-eye"
+                                      class="p-button-success Button"
+                                      label="View"
+                                      @click="showConfirmDialog(slotProps.data, 'Approve')"
+                                      style="height: 2em"
+                                      text raised
+                                    />
+                                  </template>
                             </Column>
-                            <!-- <Column field="vehicle_type" header="Mode of transport"></Column>
-                            <Column class="fontSize13px" field="distance_travelled" header="Distance Covered"></Column>
-                            <Column class="fontSize13px" field="total_expenses" header="Total Expenses">
+                            <Column field="" header="Action">
                                 <template #body="slotProps">
-                                    {{ "&#8377; " + slotProps.data.total_expenses }}
+                                    <span v-if="slotProps.data.has_pending_reimbursements == 'true'">
+                                        <Button type="button" icon="pi pi-check-circle" class="p-button-success Button" label="Approve"
+                                            @click="showConfirmDialog(slotProps.data, 'Approve')" style="height: 2.5em" />
+                                        <Button type="button" icon="pi pi-times-circle" class="p-button-danger Button" label="Reject"
+                                            style="margin-left: 8px; height: 2.5em"
+                                            @click="showConfirmDialog(slotProps.data, 'Reject')" />
+                                    </span>
                                 </template>
-                            </Column> -->
-                            <!-- <Column field="status" header="Status" sortable>
-                                <template #body="slotProps">
-                                    <img :alt="slotProps.data.name" :src="`http://localhost:8000/${slotProps.data.doc_url}`" width="32" style="vertical-align: middle" class="ml-2" />
-
-                                </template>
-                            </Column> -->
+                            </Column>
                         </DataTable>
                     </div>
                 </template>

@@ -21,8 +21,9 @@ export default defineConfig({
                 //Reports
                 'resources/js/hrms/modules/reports/pms/PMSFormsDownloadTable.js',
 
-                //Organization Module
+                //Organization Module  
 
+                'resources/js/hrms/modules/Organization/manage_employee/manage_employee.js',
                 'resources/js/hrms/modules/Organization/Normal_Onboarding/NormalOnboarding.js',
 
                 // Approval Module
