@@ -849,7 +849,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                         if (empAvatarDetails.type == 'shortname') {
 
                             var userBgColor = empAvatarDetails.color;
-                            //console.log("color", empAvatarDetails.color);
+                            console.log("color", empAvatarDetails.color);
                             avatar_data =
                                 ' <div class="' + userBgColor +
                                 '  user_pic d-flex  justify-content-center align-items-center  rounded-circle"> <span class="text-white fw-bold">' +

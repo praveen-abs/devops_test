@@ -7,7 +7,7 @@
                     <i class="ri-pencil-fill"></i>
                 </a>
 
-                <Dialog v-model:visible="visible" modal header="General Information" :style="{ width: '50vw', borderTop: '5px solid var(--color-primary_blue) '}">
+                <Dialog v-model:visible="visible" modal header="General Information" :style="{ width: '50vw' }">
                                 <div class="row">
                                     <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
                                         <div class="mb-3 form-group">
@@ -127,56 +127,10 @@
     <div class="mb-2 card">
         <div class="card-body">
             <h6 class="">Contact Information
-                <span class="personal-edit"><a href="#" class="edit-icon"
-                        data-bs-target="#personal_info_modal" @click="contactVisible = true" >
-                        <i class="ri-pencil-fill"></i></a>
+                <span class="personal-edit"><a href="#" class="edit-icon" data-bs-toggle="modal"
+                        data-bs-target="#personal_info_modal"><i class="ri-pencil-fill"></i></a>
                 </span>
             </h6>
-
-            <Dialog v-model:visible="contactVisible" modal header="Contact Information" :style="{ width: '50vw' , borderTop: '5px solid var(--color-primary_blue) '}">
-
-                <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-6">
-
-                        <div class="form-group mb-3">
-                            <label>Personal Email</label>
-                            <input type="email" name="present_email"
-                                onkeypress='return isValidEmail(email)' class="form-control"
-                                value="">
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group mb-3">
-                            <label> Office Email</label>
-                            <input type="email" onkeypress='return isValidEmail (email)'
-                                class="form-control" name="officical_mail"
-                                value="">
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-
-                        <div class="form-group mb-3">
-                            <label>Mobile Number</label>
-                            <input type="text" size=20 maxlength=10 name="mobile_number"
-                                onkeypress='return isNumberKey(event)' class="form-control"
-                                value="">
-                        </div>
-                    </div>
-
-                    <div class="col-12">
-                        <div class="text-right">
-                            <button id="btn_submit_contact_info"
-                                class="btn btn-border-orange submit-btn">Save</button>
-                        </div>
-                    </div>
-                </div>
-                </div>
-
-            </Dialog>
-
 
             <ul class="personal-info">
                 <li class="pb-1 border-bottom-liteAsh">
@@ -206,37 +160,9 @@
     <div class="mb-2 card">
         <div class="card-body">
             <h6 class="">Address
-                <span class="personal-edit"><a href="#" class="edit-icon" @click="AddressVisible=true"
+                <span class="personal-edit"><a href="#" class="edit-icon" data-bs-toggle="modal"
                         data-bs-target="#edit_addressInfo"><i class="ri-pencil-fill"></i></a></span>
             </h6>
-
-
-            <Dialog v-model:visible="AddressVisible" modal header="Contact Information" :style="{ width: '50vw' , borderTop: '5px solid var(--color-primary_blue) '}">
-                <div class="modal-body">
-
-                                <div class="col-md-12">
-                                    <div class="form-group mb-3">
-                                        <label>Current Address</label>
-                                        <textarea name="current_address_line_1" id="current_address_line_1" cols="30" rows="3"
-                                            class="form-control" value=""></textarea>
-                                    </div>
-                                    <div class="form-group mb-3">
-                                        <label>Permanent Address </label>
-                                        <textarea name="permanent_address_line_1" id="permanent_address_line_1" cols="30" rows="3"
-                                            class="form-control" value=""></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="text-right">
-                                        <button
-                                            id="btn_submit_address" class="btn btn-border-orange submit-btn">Save</button>
-                                    </div>
-                                </div>
-
-                            </div>
-            </Dialog>
-
             <div class="row">
                 <div class="col-6">
                     <ul class="personal-info">
@@ -275,27 +201,13 @@ import axios from "axios";
 
 import { Service } from "../Service/Service";
 
-<<<<<<< HEAD
-    import {
-        getBloodGroups,
-        getMaritalStatus
-    } from "./ProfilePagesService";
-   import { log } from 'console';
-=======
 const fetch_data = Service()
->>>>>>> 3bcec287140a2825f9a0ff0c02241747ae2b9099
 
 const toast = useToast();
 
     const visible = ref(false);
 
-    const contactVisible = ref(false);
 
-<<<<<<< HEAD
-    const AddressVisible =ref(false);
-
-    const general_information =reactive ({ });
-=======
 const employee_details = ref()
 
 const general_information = reactive({
@@ -306,7 +218,6 @@ const general_information = reactive({
     marital_status_id: "",
     phy_handicapped: "",
 });
->>>>>>> 3bcec287140a2825f9a0ff0c02241747ae2b9099
 
 const options_gender = ref([
     { name: "Male", value: "male" },
@@ -351,8 +262,6 @@ function saveGeneralInformationDetails() {
         });
 }
 
-
-
     const general_information_save = ()=>{
 
         // location.reload();
@@ -383,69 +292,11 @@ function saveGeneralInformationDetails() {
 }
 
 
-<<<<<<< HEAD
-    const contact_information =reactive ({
-        // personal_email :,
-        // office_email:'',
-        // contact_num:'',
-    })
-
-
-
-    function saveContactInformationDetails(){
-
-        console.log("calling save contact info details");
-
-        axios.post('/',{
-          "user_id":contact_information.used_id ,
-          "present_email":contact_information.personal_email,
-          "officical_mail":contact_information.office_email,
-          "mobile_number":contact_information.contact_num
-        }).then(res =>{
-            data_checking.value = false
-            if(res.data.status == 'success'){
-
-            }
-            else if(res.data.status =='false'){
-
-            }
-
-        }).catch(err=>{
-            console.log();
-        })
-
-    }
-
-
-
-    onMounted(() => {
-        // let url = window.location.origin + '/fetch-regularization-approvals';
-        // console.log("AJAX URL : " + url);
-        // axios.get(url)
-        //     .then((response) => {
-        //         console.log("Axios : " + response.data);
-        //         att_regularization.value = response.data;
-        //     });
-
-        getBloodGroups().then((result) => {
-            console.log(result);
-            options_blood_group.value = result;
-        });
-
-        getMaritalStatus().then((result)=>{
-            console.log(result);
-            option_maritals_status.value = result;
-
-        })
-
-
-=======
 onMounted(() => {
   fetchGeneralInformationDetails()
   fetch_data.getBloodGroups().then((result) => {
         console.log(result);
         options_blood_group.value = result.data;
->>>>>>> 3bcec287140a2825f9a0ff0c02241747ae2b9099
     });
 
     fetch_data.getMaritalStatus().then((result) => {
@@ -543,30 +394,50 @@ Dialog {
 <!--
 
 <template>
-<<<<<<< HEAD
-    <div class="card flex justify-content-center">
-        <Button label="Show" icon="pi pi-external-link" @click="contactVisible = true" />
-        <Dialog v-model:visible="visible" modal header="Header" :style="{ width: '50vw' }">
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
-        </Dialog>
-=======
 
     <div class="flex flex-wrap gap-2 card justify-content-center">
         <Button @click="confirm1()" icon="pi pi-check" label="Confirm"></Button>
         <Button @click="confirm2()" icon="pi pi-times" label="Delete"></Button>
->>>>>>> 3bcec287140a2825f9a0ff0c02241747ae2b9099
     </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { useConfirm } from "primevue/useconfirm";
+import { useToast } from "primevue/usetoast";
 
-const visible = ref(false);
-</script>
- -->
+const confirm = useConfirm();
+const toast = useToast();
+
+const confirm1 = () => {
+    confirm.require({
+        message: 'Are you sure you want to proceed?',
+        header: 'Confirmation',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+            toast.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted', life: 3000 });
+
+        },
+        reject: () => {
+            toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+        }
+    });
+};
+
+const confirm2 = () => {
+    confirm.require({
+        message: 'Do you want to delete this record?',
+        header: 'Delete Confirmation',
+        icon: 'pi pi-info-circle',
+        acceptClass: 'p-button-danger',
+        accept: () => {
+            toast.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted', life: 3000 });
+        },
+        reject: () => {
+            toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+        }
+    });
+};
+</script> -->
 
 }
 
