@@ -8,10 +8,6 @@
                 </a>
 
                 <Dialog v-model:visible="visible" modal header="General Information" :style="{ width: '50vw' }">
-                    <div>
-                        <div class="modal-content" style=" ">
-
-                                    <div class="modal-body">
                                 <div class="row">
                                     <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-lg-6 col-xxl-6">
                                         <div class="form-group mb-3">
@@ -78,11 +74,6 @@
                                         class="btn btn-border-orange submit-btn" @click="general_information_save()" >Save</button>
                                 </div>
 
-                            </div>
-
-                        </div>
-
-                    </div>
                 </Dialog>
             </h6>
             <ul class="personal-info">
@@ -216,6 +207,7 @@
 
     const visible = ref(false);
 
+
     const general_information =reactive ({
         birth_date :'',
         gender:'',
@@ -289,8 +281,6 @@
                         toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
                     }
         });
-
-
     }
 
 

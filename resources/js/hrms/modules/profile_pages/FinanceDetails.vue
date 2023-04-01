@@ -213,7 +213,7 @@
                         <!-- <form action="" method="POST" enctype="multipart/form-data"> -->
                             <h6 class="">Statutory Information
                                 <span class="personal-edit">
-                                    <a href="#" class="edit-icon" data-bs-target="#statutory_info" @click="visible = true">
+                                    <a href="#" class="edit-icon" data-bs-target="#statutory_info" @click="visible2 = true">
                                         <i class="ri-pencil-fill"></i>
                                     </a>
                                 </span>
@@ -221,106 +221,91 @@
 
 
 
-                            <Dialog v-model:visible="visible" modal header="Header" :style="{ width: '50vw' }">
+                            <Dialog v-model:visible="visible2" modal header="Statutory Details" :style="{ width: '50vw',borderTop:'5px solid #002f56'}">
 
-                                <div id="statutory_info" class="modal custom-modal fade" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                        <div class="modal-content profile-box  ">
-                            <div class="modal-header   border-0">
-                                <h6>Statutory Details</h6>
-                                <button type="button" class="close  border-0 h3" data-bs-dismiss="modal"
-                                    aria-label="Close">
-                                    <span aria-hidden="true">×</span>
-                                </button>
-                            </div>
-                            @csrf
-
-                            <div class="modal-body">
-                                <div class="row ">
-                                    <div class="col-md-6">
-                                        <div class="floating">
-                                            <label for="" class="float-label">PF
-                                                Applicable<span class="text-danger">*</span></label>
-                                            <select placeholder="PF Applicable" name="pf_applicable" id="pf_applicable"
-                                                class="onboard-form form-control textbox  select2_form_without_search"
-                                                required>
-                                                <option value="" hidden selected disabled>PF
-                                                    Applicable</option>
-                                                <option value="yes">Yes</option>
-                                                <option value="no">No</option>
-                                            </select>
-                                        </div>
-                                    </div>
+                                            <div class="modal-body">
+                                                <div class="row ">
+                                                    <div class="col-md-6">
+                                                        <div class="floating">
+                                                            <label for="" class="float-label">PF
+                                                                Applicable<span class="text-danger">*</span></label>
+                                                            <select placeholder="PF Applicable" name="pf_applicable" id="pf_applicable"
+                                                                class="onboard-form form-control textbox  select2_form_without_search"
+                                                                required>
+                                                                <option value="" hidden selected disabled>PF
+                                                                    Applicable</option>
+                                                                <option value="yes">Yes</option>
+                                                                <option value="no">No</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
 
 
 
 
-                                    <div class="col-md-6 ">
-                                        <div class="form-group mb-3">
-                                            <label>EPF Number</label>
-                                            <input type="text" placeholder="EPF Number" name="epf_number"
-                                                id="epf_number" class="onboard-form form-control "
-                                                value=" ">
-                                        </div>
-                                    </div>
+                                                    <div class="col-md-6 ">
+                                                        <div class="form-group mb-3">
+                                                            <label>EPF Number</label>
+                                                            <input type="text" placeholder="EPF Number" name="epf_number"
+                                                                id="epf_number" class="onboard-form form-control "
+                                                                value=" ">
+                                                        </div>
+                                                    </div>
 
-                                    <div class="col-md-6">
-                                        <div class="form-group mb-3">
-                                            <label>UAN Number</label>
-                                            <input name="uan_number" id="uan_number" minlength="12" maxlength="12"
-                                                class="form-control onboard-form" value=""
-                                                type="text" pattern-data="ifsc" required>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="col-md-6">
-                                        <div class="form-group mb-3">
-                                            <label class="float-label">ESIC
-                                                Applicable<span class="text-danger">*</span></label>
-                                            <select placeholder="ESIC Applicable" name="esic_applicable"
-                                                id="esic_applicable"
-                                                class="onboard-form form-control textbox  select2_form_without_search"
-                                                required>
-                                                <option value="" hidden selected disabled>ESIC
-                                                    Applicable</option>
-                                                <option value="yes">
-                                                    Yes
-                                                </option>
-                                                <option value="no">
-                                                    No
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6 ">
-                                        <div class="floating">
-                                            <label for="" class="float-label">ESIC Number</label>
-
-                                            <input type="text" placeholder="ESIC Number" name="esic_number"
-                                                id="esic_number" minlength="10" maxlength="10"
-                                                class="onboard-form form-control textbox "
-                                                value="{{ $detail->esic_number ?? '' }}" />
-                                            <span class="error" id="error_esic_number"></span>
-                                        </div>
-                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group mb-3">
+                                                            <label>UAN Number</label>
+                                                            <input name="uan_number" id="uan_number" minlength="12" maxlength="12"
+                                                                class="form-control onboard-form" value=""
+                                                                type="text" pattern-data="ifsc" required>
+                                                        </div>
+                                                    </div>
 
 
+                                                    <div class="col-md-6">
+                                                        <div class="form-group mb-3">
+                                                            <label class="float-label">ESIC
+                                                                Applicable<span class="text-danger">*</span></label>
+                                                            <select placeholder="ESIC Applicable" name="esic_applicable"
+                                                                id="esic_applicable"
+                                                                class="onboard-form form-control textbox  select2_form_without_search"
+                                                                required>
+                                                                <option value="" hidden selected disabled>ESIC
+                                                                    Applicable</option>
+                                                                <option value="yes">
+                                                                    Yes
+                                                                </option>
+                                                                <option value="no">
+                                                                    No
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 ">
+                                                        <div class="floating">
+                                                            <label for="" class="float-label">ESIC Number</label>
+
+                                                            <input type="text" placeholder="ESIC Number" name="esic_number"
+                                                                id="esic_number" minlength="10" maxlength="10"
+                                                                class="onboard-form form-control textbox "
+                                                                value="" />
+                                                            <span class="error" id="error_esic_number"></span>
+                                                        </div>
+                                                    </div>
 
 
-                                </div>
 
-                                <div class="col-12">
-                                    <div class="text-right">
-                                        <button
-                                            id="btn_submit_statutory_info" class="btn btn-border-orange submit-btn">Save</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
+                                                </div>
+
+                                                <div class="col-12">
+                                                    <div class="text-right">
+                                                        <button
+                                                            id="btn_submit_statutory_info" class="btn btn-border-orange submit-btn">Save</button>
+                                                    </div>
+                                                </div>
+                                            </div>
 
 
 
@@ -471,6 +456,7 @@ import axios from 'axios'
 import { useToast } from "primevue/usetoast";
 
 const visible = ref(false);
+const visible2 = ref(false);
 
 const selectedCountry = ref();
 
