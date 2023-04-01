@@ -23,6 +23,7 @@ export default defineConfig({
 
                 //Organization Module
 
+                'resources/js/hrms/modules/Organization/manage_employee/manage_employee.js',
                 'resources/js/hrms/modules/Organization/Normal_Onboarding/NormalOnboarding.js',
 
                 // Approval Module
@@ -61,7 +62,10 @@ export default defineConfig({
                 'resources/js/hrms/modules/profile_pages/ExperienceDetails.js',
 
                 // financeDetails page
-                'resources/js/hrms/modules/profile_pages/FinanceDetails.js'
+                'resources/js/hrms/modules/profile_pages/FinanceDetails.js',
+                // Documents Review
+
+                'resources/js/hrms/modules/approvals/onboarding/review_document.js'
 
             ],
             refresh: true,

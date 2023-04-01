@@ -19,11 +19,11 @@
 
         <template #header>
 
-            <h5 class="m-auto"> Email sent Successfully</h5>
+            <h5 class="m-auto">Leave applied Successfully</h5>
         </template>
         <template #footer>
             <div class="text-center">
-                <Button label="OK" style="justify-content: center;" severity="help" @click="service.Email_Service = false"
+                <Button label="OK" style="justify-content: center;" severity="help" @click="service.ReloadPage"
                     raised class="justify-content-center" />
             </div>
         </template>
@@ -42,7 +42,7 @@
         </template>
     </Dialog>
     <Dialog v-model:visible="visible" :style="{ width: '80vw' }" :breakpoints="{ '960px': '75vw', '641px': '100vw' }">
-    <template #header>
+        <template #header>
             <h6 class="modal-title mb-4  fs-21">
                 Leave Request</h6>
         </template>
