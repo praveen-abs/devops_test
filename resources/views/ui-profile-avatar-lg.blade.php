@@ -7,7 +7,7 @@
 @if( $t_userAvatarDetails["type"]=="shortname")
         <div id="" class="align-middle rounded-circle h-100 w-100 user-name-container d-flex align-items-center justify-content-center  <?php echo $t_userAvatarDetails['color']; ?>">{{ $t_userAvatarDetails["data"] }}</div>
 @else
-    <img class="rounded-circle header-profile-user img-xl" src=" {{URL::asset('images/'. $t_userAvatarDetails['data'])}}" alt="user-image" >
+    <img class="rounded-circle header-profile-user h-100 w-100" src=" {{URL::asset('images/'. $t_userAvatarDetails['data'])}}" alt="user-image" >
 @endif
 
 

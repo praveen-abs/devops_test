@@ -16,71 +16,9 @@
     <div class="card-body">
         <h6 class="">Documents Approvals</h6>
         <div class="table-responsive">
-            <div class="container-fluid px-2 bg-white" style="position:relative;">
-                <table class=" table table-borderd " id="directory-table-1">
-                    <thead class="table-light">
-                        <tr>
-                            <th scope="col">Employee Name</th>
-                            <th scope="col">Employee Code</th>
-                            <th scope="col">Date Of Joining</th>
-                            <th scope="col">Approval Status</th>
-                            <th scope="col">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($vmtEmployees_InActive as $employee)
-                        <tr id="tr_{{$employee->user_id}}">
-
-                            <td>
-                                <div class="d-flex justify-content-start align-items-center table-img">
-                                    <div class="mx-2 d-flex justify-content-center align-items-center profile-name-icon">
-                                        @if( empty($employee->avatar) || !file_exists(public_path('images/'. $employee->avatar)) )
-                                        @php
-                                        try{
-                                            $splitArray = explode(" ",trim($employee->emp_name));
-
-                                            if(count($splitArray) == 1)
-                                            $name = strtoupper($splitArray[0][0].$splitArray[0][1]);
-                                            else
-                                            $name = strtoupper($splitArray[0][0].$splitArray[1][0]);
-                                            // $name = $employee->emp_name;
-                                        }
-                                        catch(Exception $e) {
-                                           echo 'Error for username ,arraysize: '.$employee->emp_name." , ".count($splitArray);
-                                           echo '\nMessage: ' .$e->getMessage();
-                                        }
-                                        @endphp
-                                        <span class="align-middle fw-bold text-white">{{$name}}</span>
-                                        <!--/span-->
-                                        @else
-                                        <img src="{{ URL::asset('images/'.$employee->avatar) }}" alt="" class="h-100 w-100" />
-                                        @endif
-
-                                    </div>
-                                    <span>
-
-                                        {{$employee->emp_name}}
-
-                                    </span>
-                                </div>
-                            </td>
-                            <td> {{$employee->user_code}}</td>
-                            <td>{{ Carbon\Carbon::parse($employee->doj)->format('d-m-Y') }}</td>
-                            <td> Yet to approve</td>
-                            <td>
-                                <!-- <div class="d-flex justify-content-center align-items-center"> -->
-                                <a href="{{route('vmt-emp-documents-review',$employee->user_code)}}" class="btn border-0 outline-none bg-transparent p-0  mx-1">
-                                    <i class="ri-pencil-line text-orange fw-bold"></i>
-                                </a>
-
-                                <!-- </div> -->
-                            </td>
-                        </tr>
-                        @endforeach
-
-                    </tbody>
-
-                </table>
+            <div class="px-2 bg-white container-fluid" style="position:relative;">
+               @vite('resources/js/hrms/modules/approvals/onboarding/review_document.js')
+               <div id="ReviewDocuments"></div>
 
             </div>
         </div>

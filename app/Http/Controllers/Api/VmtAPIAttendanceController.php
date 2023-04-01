@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\File;
 class VmtAPIAttendanceController extends HRMSBaseAPIController
 {
 
-    private $cost_per_km_2wheeler = 3;
-    private $cost_per_km_4wheeler = 4;
+    private $cost_per_km_2wheeler = 3.5;
+    private $cost_per_km_4wheeler = 6;
 
     /*
         get current day attendance details
@@ -182,6 +182,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         $emp_reimbursement_data->to = $request->to;
         $emp_reimbursement_data->vehicle_type = $request->vehicle_type;
         $emp_reimbursement_data->distance_travelled = $request->distance_travelled;
+        $emp_reimbursement_data->user_comments = $request->user_comments ?? "";
 
         if($request->vehicle_type == "2-Wheeler")
             $emp_reimbursement_data-> total_expenses  = $request->distance_travelled * $this->cost_per_km_2wheeler;
@@ -257,6 +258,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
             $onLeaveCount = $dailyAttendanceReport->whereNotNull('leave_type_id')->count() ;
 
             $monthlyReport[]  =  array(
+                                    "year_value" => substr($dailyAttendanceReport[0]["date"],0,4),
                                     "month_value"  => $value->month,
                                     "working_days" => $workingCount,
                                     "on_time" => $onTimeCount,

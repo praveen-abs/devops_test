@@ -1,10 +1,9 @@
 /*
-Normal Onboarding 
+Normal Onboarding
 
 HTML fields
 Validation
 AJAX
-
 
 
 */
@@ -27,50 +26,71 @@ export async function getStateList() {
     const response = await axios.get(`/db/getStatesDetails`);
     return response.data;
 }
+export async function ManagerDetails(){
+    const response=await axios.get(`/fetch-managers-name`);
+    return response.data
+}
 
+export async function DepartmentDetails(){
+    const response=await axios.get(`/fetch-departments`);
+    return response.data
+}
+
+export async function getMaritalStatus(){
+    const response=await axios.get(`/fetch-marital-details`);
+    return response.data
+}
+
+
+export async function getBloodGroups(){
+    const response=await axios.get(`/fetch-blood-groups`);
+    return response.data
+}
 
 // Validation
 
 export default function validation(rules) {
     return (rules = {
-        //   Person Detials Validation start
 
-        EmployeeCode: {},
-        PersonDetialsDateofBirth: {},
-        PersonDetialsGender: {},
-        DLNumber: {},
-        ChooseNationality: {},
-        PassportNumber: {},
-        PassportExpDate: {},
-        PersonDetialsBloodGroup: {},
-        PhysicallyChallenged: {},
-        PersonDetialsGender: {},
-        DLNumber: {},
-        PhysicallyChallenged: {},
-        ChooseNationality: {},
-        PersonDetialsBloodGroup: {},
+        employee_code: {},
+        dob: {},
+        gender: {},
+        passport_number: {  
+            required,
+        ValidateAadhar(value) {
+            const regex = /^(?!^0+$)[a-zA-Z0-9]{3,20}$/;
+            return regex.test(value);
+        },
+        },
+        passport_date: {},
+        blood_group_name: {},
+        physically_challenged: {},
+        gender: {},
+        dl_no: {},
+        nationality: {},
 
-        DateOfJoining: {
+        doj: {
             required,
         },
 
-        AadhaarNumber: {
+        aadhar_number: {
             required,
             ValidateAadhar(value) {
                 const regex = /^\d{4}\s\d{4}\s\d{4}$/;
                 return regex.test(value);
             },
         },
-        BankName: {
+        bank_name: {
             required,
         },
-        EmployeeNameasper: {
+        employee_name: {
+            required,
+           
+        },
+        gender: {
             required,
         },
-        PersonDetialsGender: {
-            required,
-        },
-        PanNumber: {
+        pan_number: {
             required,
             ValidatePan(value) {
                 const regex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}/;
@@ -86,71 +106,70 @@ export default function validation(rules) {
             },
         },
 
-        PersonDetialsDateofBirth: {
+        dob: {
             required,
         },
-        PersonDetialsMobileNumber: {
+        mobile_number: {
             required,
             maxLength: 10,
         },
-        BankIFSCCode: {
+        bank_ifsc: {
             required,
             ValidateIfscNo(value) {
                 const regex = /^[A-Z]{4}0[A-Z0-9]{6}$/;
                 return regex.test(value);
             },
         },
-        PersonDetialsMaritalStatus: {
-            required,
-        },
-        PersonDetialsEmail: {
+        marital_status: { required   },
+
+        email: {
             required,
             email,
         },
-        ChooseNationality: {
+        nationality: {
             required,
         },
-        PhysicallyChallenged: {
+        physically_challenged: {
             required,
         },
         //  Person Details End
 
         // Address Validation Start
-        currentAddress1: {
+        current_address_line_1: {
             required,
         },
-        currentAddress2: {
+        current_address_line_2: {
             required,
         },
-        currentcountry: {
+        current_country: {
             required,
         },
-        currentstate: {
+        current_state: {
             required,
         },
-        currentCity: {
+        current_city: {
             required,
         },
-        currentPincode: {
+        current_pincode: {
             required,
             maxLength: 6,
         },
-        PermanentAddress1: {
+        permanent_address_line_1: {
             required,
         },
-        PermanentAddress2: {
+        permanent_address_line_2: {
             required,
         },
-        Permanentcountry: {
+        permanent_country: {
             required,
         },
-        Permanentstate: {
+        permanent_state: {
             required,
         },
-        PermanentCity: {
+        permanent_city: {
             required,
         },
-        PermanentPincode: {
+        permanent_pincode: {
             required,
             maxLength: 6,
         },
@@ -158,28 +177,27 @@ export default function validation(rules) {
         // Addres End
 
         // Office Details Start
-        Process: {
+        process: {
             required,
         },
-        Designation: {
+        designation: {
             required,
         },
-        Departmant: {},
-        CostCenter: {},
-        probationPeriod: {},
-        ReportingManagerName: {},
-        holidayLocation: {},
-        OfficialEmail: {},
-        OfficialMobileNO: {},
-        probationPeriod: {},
-        EmployeeNoticePeriodDays: {},
-        WorkLocation: {
+        department: {},
+        cost_center: {},
+        probation_period: {},
+        holiday_location: {},
+        officical_mail: {},
+        official_mobile: {},
+        probation_period: {},
+        emp_notice: {},
+        work_location: {
             required,
         },
-        ReportingManagerCode: {
+        l1_manager_code: {
             required,
         },
-        DateOfConfirmation: {
+        confirmation_period: {
             required,
         },
 
@@ -187,23 +205,15 @@ export default function validation(rules) {
 
         // Family Details Start
 
-        fatherName: { required },
-        fatherDateofBirth: { required },
-        motherName: { required },
-        motherDateofBirth: { required },
-        SpouseName: { required },
-        dateOfWedding: { required },
-        spouseGender:{required},
-        SpouseDOB: { required },
+        father_name: { required },
+        dob_father: { required },
+        mother_name: { required },
+        dob_mother: { required },
+        spouse_name: { required },
+        wedding_date: {  },
+        spouse_gender: { required },
+        dob_spouse: { required },
 
         // Personal Documents
-        // AadharCardFront:{required},
-        // AadharCardBack:{required},
-        // PanCardDoc:{required},
-        // PassportDoc:{required},
-        // VoterIdDoc:{required},
-        // DrivingLicenseDoc:{required},
-        // EductionDoc:{required},
-        // ReleivingLetterDoc:{required}
-    });
+});
 }

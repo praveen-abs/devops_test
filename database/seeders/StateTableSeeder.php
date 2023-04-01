@@ -1,10 +1,10 @@
 <?php
-  
+
 namespace Database\Seeders;
-  
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-  
+
 class StateTableSeeder extends Seeder
 {
     /**
@@ -13,8 +13,8 @@ class StateTableSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
-        DB::table('state')->insert([
+{
+        DB::table('vmt_states')->insert([
             ['country_id'=>'359', 'country_code' => 'IN', 'state_name'=>'Andhra Pradesh', 'status' => 'A'],
             ['country_id'=>'359', 'country_code' => 'IN', 'state_name'=>'Andaman and Nicobar Islands', 'status' => 'A'],
             ['country_id'=>'359', 'country_code' => 'IN', 'state_name'=>'Arunachal Pradesh', 'status' => 'A'],

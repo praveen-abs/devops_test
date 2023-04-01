@@ -6,16 +6,17 @@
             <h6 class="text-primary">Events</h6>
             <div class="row ">
                 <?php $anyUpcoming_Current_Events = false; ?>
-
                 @if ($dashboardEmployeeEventsData['hasData'] == 'true')
                     @foreach ($dashboardEmployeeEventsData['birthday'] as $employee)
                         <?php $text = null; ?>
 
-                        @if (\Carbon\Carbon::parse($employee['dob'])->month == date('m') &&
-                            \Carbon\Carbon::parse($employee['dob'])->day == date('d'))
-                            <?php $text = 'Today'; ?>
-                        @elseif (\Carbon\Carbon::parse($employee['dob'])->month >= date('m') &&
-                            \Carbon\Carbon::parse($employee['dob'])->day > date('d'))
+                        @if (\Carbon\Carbon::parse($employee['dob'])->month == date('m'))
+                            @if (\Carbon\Carbon::parse($employee['dob'])->day == date('d'))
+                                <?php $text = 'Today'; ?>
+                            @elseif  (\Carbon\Carbon::parse($employee['dob'])->day > date('d'))
+                                <?php $text = 'Upcoming'; ?>
+                            @endif
+                        @elseif (\Carbon\Carbon::parse($employee['dob'])->month >= date('m'))
                             <?php $text = 'Upcoming'; ?>
                         @endif
                         @if ($text != null)
@@ -79,11 +80,13 @@
                     @foreach ($dashboardEmployeeEventsData['work_anniversary'] as $employee)
                         <?php $text = null; ?>
 
-                        @if (\Carbon\Carbon::parse($employee['doj'])->month == date('m') &&
-                            \Carbon\Carbon::parse($employee['doj'])->day == date('d'))
-                            <?php $text = 'Today'; ?>
-                        @elseif (\Carbon\Carbon::parse($employee['doj'])->month >= date('m') &&
-                            \Carbon\Carbon::parse($employee['doj'])->day > date('d'))
+                        @if (\Carbon\Carbon::parse($employee['doj'])->month == date('m'))
+                            @if (\Carbon\Carbon::parse($employee['doj'])->day == date('d'))
+                                <?php $text = 'Today'; ?>
+                            @elseif  (\Carbon\Carbon::parse($employee['doj'])->day > date('d'))
+                                <?php $text = 'Upcoming'; ?>
+                            @endif
+                        @elseif (\Carbon\Carbon::parse($employee['doj'])->month >= date('m'))
                             <?php $text = 'Upcoming'; ?>
                         @endif
 

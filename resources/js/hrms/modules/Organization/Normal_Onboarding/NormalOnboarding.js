@@ -2,9 +2,11 @@ import "primeflex/primeflex.css";
 import "primevue/resources/themes/lara-light-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 
 import { createApp } from "vue";
+import VueSweetalert2 from 'vue-sweetalert2';
 import PrimeVue from "primevue/config";
 import AutoComplete from 'primevue/autocomplete';
 import Accordion from 'primevue/accordion';
@@ -40,7 +42,7 @@ import StyleClass from 'primevue/styleclass';
 import Toast from 'primevue/toast';
 import ToastService from 'primevue/toastservice';
 import Tooltip from 'primevue/tooltip';
-
+import Textarea from 'primevue/textarea';
 
 import NormalOnboarding from './NormalOnboarding.vue'
 
@@ -51,6 +53,7 @@ app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
+app.use(VueSweetalert2);
 
 
 app.directive('tooltip', Tooltip);
@@ -85,6 +88,7 @@ app.component('Listbox', Listbox);
 app.component('ProgressSpinner', ProgressSpinner);
 app.component('RadioButton', RadioButton);
 app.component('Toast', Toast)
+app.component('Textarea', Textarea)
 
 app.mount("#vjs_normal_onboarding");
 

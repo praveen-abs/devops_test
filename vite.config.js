@@ -1,30 +1,69 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue'
+import FullReload from 'vite-plugin-full-reload'
 
 export default defineConfig({
     plugins: [
+        FullReload(['config/routes.rb', 'app/views/**/*']),
         vue(),
         laravel({
             input: [
-                    //sass files
-                    'resources/sass/testsass.scss',
 
-                    'resources/js/app.js',  
+                'resources/js/app.js',
 
-                    // Leaves Module
-                    'resources/js/hrms/modules/leave_module/org_leave_module/OrgLeaveBalance.js',
-                    'resources/js/hrms/modules/leave_module/team_leave_module/TeamLeaveBalance.js',
+                // Leaves
+                'resources/js/hrms/modules/leave_module/leave_apply/LeaveApply.js',
+                'resources/js/hrms/modules/leave_module/org_leave_module/OrgLeaveBalance.js',
+                'resources/js/hrms/modules/leave_module/org_leave_module/OrgLeaveHistoryTable.js',
 
-                    //Organization Module
+                'resources/js/hrms/modules/leave_module/team_leave_module/TeamLeaveBalance.js',
+                //Reports
+                'resources/js/hrms/modules/reports/pms/PMSFormsDownloadTable.js',
 
-                    'resources/js/hrms/modules/Organization/Normal_Onboarding/NormalOnboarding.js',
+                //Organization Module
 
-                    // Approval Module
-                    'resources/js/hrms/modules/approvals/att_regularization/AttRegularizationApproval.js',
-                    'resources/js/hrms/modules/approvals/reimbursements/ReimbursementsApproval.js',
-                    'resources/js/hrms/modules/approvals/leaves/LeaveApproval.js',
-                    'resources/js/hrms/modules/profile_pages/EmployeeDocumentsManager.js'
+                'resources/js/hrms/modules/Organization/Normal_Onboarding/NormalOnboarding.js',
+
+                // Approval Module
+                'resources/js/hrms/modules/approvals/att_regularization/AttRegularizationApproval.js',
+                'resources/js/hrms/modules/approvals/reimbursements/ReimbursementsApproval.js',
+                'resources/js/hrms/modules/approvals/onboarding/review_document.js',
+                'resources/js/hrms/modules/approvals/leaves/LeaveApproval.js',
+                'resources/js/hrms/modules/approvals/pms/PMSApprovalTable.js',
+                'resources/js/hrms/modules/profile_pages/EmployeeDocumentsManager.js',
+
+
+                ////Reimbursements Module
+                //Employee Reimbursements
+                'resources/js/hrms/modules/reimbursements/employee_reimbursements/EmployeeReimbursements.js',
+
+                //Configurations
+
+                'resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_master.js',
+
+                // Assign Shift
+                'resources/js/hrms/modules/configurations/attendance_settings/Att_AssignWorkShifts.js',
+
+                //Holidays
+                'resources/js/hrms/modules/configurations/holidays/Holidays_Lists.js',
+
+
+                // Profile page
+
+                'resources/js/hrms/modules/profile_pages/EmployeeDetails.js',
+
+                // familyinfo_table_page
+
+                'resources/js/hrms/modules/profile_pages/FamilyDetails.js',
+
+                // Experience page
+                'resources/js/hrms/modules/profile_pages/ExperienceDetails.js',
+
+                // Documents Review
+
+                'resources/js/hrms/modules/approvals/onboarding/review_document.js'
+
             ],
             refresh: true,
         }),
