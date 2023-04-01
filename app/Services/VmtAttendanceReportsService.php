@@ -39,15 +39,15 @@ class VmtAttendanceReportsService{
     }
 
     public function basicAttendanceReport($year,$month){
-       //dd($month);
+         //dd($month);
         $reportresponse=array();
-
         $user = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
                       ->join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
                       ->where('is_ssa','0')
                       ->where('active','1')
+                      ->where('vmt_employee_details.doj','<',Carbon::parse($year.'-'.$month.'-'.'01')->endOfMonth())
                       ->get(['users.id','users.user_code','users.name','vmt_employee_office_details.designation','vmt_employee_details.doj']);
-
+       // print($user);exit;
         $holidays = vmtHolidays::whereMonth('holiday_date','=',$month)->pluck('holiday_date');
         foreach($user as $singleUser){
 
