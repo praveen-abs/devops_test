@@ -4,9 +4,12 @@
 
         <div class="row">
             <div class="col-8 col-sm-8 col-md-8 col-xl-8 col-lg-8 col-xxl-8">
-                <p class="fw-bold f-18 text-primary" id="greeting_text">-</p>
+                <p class="fw-bold f-18 text-primary" id="greeting_text">
+                -
+                </p>
                 <p class="my-1 fw-bold fs-16 text-orange">
                     <!-- {{ auth()->user()->name }} -->
+                    {{ name }}
                 </p>
 
                 <div class="my-3"><i class="fa fa-sun-o me-3 text-warning" aria-hidden="true"></i>General Shift <label
@@ -29,6 +32,7 @@
                         <span class="test-primary f-12"> {{ '-' }}</span>
                     @endif
                     </-> -->
+                </p>
             </div>
             <div class="col-4 col-sm-4 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
                 <img src="{{ URL::asset('assets/images/dashboard/girl_walk.jpg') }}" class="" alt="girl-walk"
@@ -109,5 +113,21 @@
 
 
 
-
 </template>
+
+
+
+<script setup>
+import { onMounted, ref } from "vue";
+
+onMounted(() => {
+    console.log(data.value.name);
+});
+
+const name = ref("george")
+
+const data = ref([
+                { id: 1, name: 'george', img: 'https://cdn.icon-icons.com/icons2/1156/PNG/512/1486565573-microsoft-office_81557.png', des: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.Pariatur voluptatemLorem ' },
+                { id: 1, name: 'Max', img: 'https://cdn.icon-icons.com/icons2/1156/PNG/512/1486565573-microsoft-office_81557.png', des: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.Pariatur voluptatemLorem ' },
+])
+</script>

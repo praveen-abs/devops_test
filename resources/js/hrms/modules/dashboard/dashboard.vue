@@ -34,9 +34,7 @@
             <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 col-xxl-12">
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 ipad-query">
-                        <!-- @include('ui-dashboard-event-card', [
-                            'dashboardEmployeeEventsData' => $dashboardEmployeeEventsData,
-                        ]) -->
+                     <!-- <Events /> -->
 
                     </div>
                 </div>
@@ -55,5 +53,6 @@
 <script setup>
 import employee_dashboard from './employee_dashboard/employee_dashboard.vue'
 import hr_dashboard from './hr_dashboard/hr_dashboard.vue'
+import Events from './events/events.vue'
 
 </script>
