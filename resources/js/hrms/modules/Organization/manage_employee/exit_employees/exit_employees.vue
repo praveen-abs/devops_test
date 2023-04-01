@@ -5,8 +5,8 @@
     <Dialog
       header="Header"
       v-model:visible="loading"
-      :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-      :style="{ width: '25vw' }"
+      :breakpoints="{'960px': '75vw', '640px': '90vw'}"
+      :style="{width: '25vw'}"
       :modal="true"
       :closable="false"
       :closeOnEscape="false"
@@ -27,8 +27,8 @@
     <Dialog
       header="Header"
       v-model:visible="canShowLoadingScreen"
-      :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-      :style="{ width: '25vw' }"
+      :breakpoints="{'960px': '75vw', '640px': '90vw'}"
+      :style="{width: '25vw'}"
       :modal="true"
       :closable="false"
       :closeOnEscape="false"
@@ -50,8 +50,8 @@
     <Dialog
       header="Confirmation"
       v-model:visible="canShowConfirmation"
-      :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-      :style="{ width: '350px' }"
+      :breakpoints="{'960px': '75vw', '640px': '90vw'}"
+      :style="{width: '350px'}"
       :modal="true"
     >
       <div class="confirmation-content">
@@ -77,7 +77,7 @@
 
     <div>
       <DataTable
-        :value="att_regularization"
+        :value="employee.exit_employees_data"
         :paginator="true"
         :rows="10"
         dataKey="id"
@@ -96,7 +96,7 @@
           <template #body="slotProps">
             {{ slotProps.data.employee_name }}
           </template>
-          <template #filter="{ filterModel, filterCallback }">
+          <template #filter="{filterModel, filterCallback}">
             <InputText
               v-model="filterModel.value"
               @input="filterCallback()"
@@ -106,74 +106,25 @@
             />
           </template>
         </Column>
-        <Column field="attendance_date" header="Date" :sortable="true"></Column>
-        <Column field="regularization_type" header="Type"></Column>
-        <Column field="user_time" header="Actual Time"></Column>
-        <Column field="regularize_time" header="Regularize Time"></Column>
-        <Column field="reason_type" header="Reason">
-            <template #body="slotProps">
-
-            <span v-if="slotProps.data.reason_type == 'Others'">
-                {{  slotProps.data.custom_reason }}
-            </span>
-            <span v-else>{{ slotProps.data.reason_type }}</span>
-
-            </template>
-        </Column>
-        <Column field="reviewer_comments" header="Approve Comments"></Column>
-        <Column field="reviewer_reviewed_date" header="Reviewed Date"></Column>
-
-        <Column field="status" header="Status" icon="pi pi-check">
-          <template #body="{ data }">
-            <span :class="'customer-badge status-' + data.status">{{ data.status }}</span>
-          </template>
-          <template #filter="{ filterModel, filterCallback }">
-            <Dropdown
-              v-model="filterModel.value"
-              @change="filterCallback()"
-              :options="statuses"
-              placeholder="Select"
-              class="p-column-filter"
-              :showClear="true"
-            >
-              <template #value="slotProps">
-                <span
-                  :class="'customer-badge status-' + slotProps.value"
-                  v-if="slotProps.value"
-                  >{{ slotProps.value }}</span
-                >
-                <span v-else>{{ slotProps.placeholder }}</span>
-              </template>
-              <template #option="slotProps">
-                <span :class="'customer-badge status-' + slotProps.option">{{
-                  slotProps.option
-                }}</span>
-              </template>
-            </Dropdown>
-          </template>
-        </Column>
-        <Column style="width: 300px" field="" header="Action">
+        <Column field="employee_code" header="Employee Code" :sortable="true"></Column>
+        <Column field="designation" header="Designation"></Column>
+        <Column field="l1_manager" header="Reporting Manager"></Column>
+        <Column field="doj" header="DOJ"></Column>
+        <Column field="blood_group" header="Blood Group"></Column>
+        <Column field="com" header="Profile Completeness"></Column>
+        <Column field="onstatus" header="Onboarding Status"></Column>
+        <Column field="onstatus" header="Approval Status"></Column>
+        <Column style="width: 300px" field="" header="View Profile">
           <template #body="slotProps">
-            <!-- <Button icon="pi pi-check" class="p-button-success"  @click="confirmDialog(slotProps.data,'Approved')" label="Approval" />
-                        <Button icon="pi pi-times" class="p-button-danger" @click="confirmDialog(slotProps.data,'Rejected')" label="Rejected" /> -->
-            <span v-if="slotProps.data.status == 'Pending'">
-              <Button
-                type="button"
-                icon="pi pi-check-circle"
-                class="p-button-success Button"
-                label="Approval"
-                @click="showConfirmDialog(slotProps.data, 'Approve')"
-                style="height: 2em"
-              />
-              <Button
-                type="button"
-                icon="pi pi-times-circle"
-                class="p-button-danger Button"
-                label="Rejected"
-                style="margin-left: 8px; height: 2em"
-                @click="showConfirmDialog(slotProps.data, 'Reject')"
-              />
-            </span>
+            <Button
+              type="button"
+              icon="pi pi-eye"
+              class="p-button-success Button"
+              label="View"
+              @click="showConfirmDialog(slotProps.data, 'Approve')"
+              style="height: 2em"
+              text raised
+            />
           </template>
         </Column>
       </DataTable>
@@ -181,21 +132,31 @@
   </div>
 </template>
 <script setup>
-import { ref, onMounted } from "vue";
+import {ref, onMounted} from "vue";
 import axios from "axios";
-import { FilterMatchMode, FilterOperator } from "primevue/api";
-import { useConfirm } from "primevue/useconfirm";
-import { useToast } from "primevue/usetoast";
+import {FilterMatchMode, FilterOperator} from "primevue/api";
+import {useConfirm} from "primevue/useconfirm";
+import {useToast} from "primevue/usetoast";
+
+import { Service } from '../manage_service'
+
+const employee = Service()
+
+
+
+onMounted(() => {
+   employee.ajax_exit_employees_data()
+});
 
 let att_regularization = ref();
 let canShowConfirmation = ref(false);
 let canShowLoadingScreen = ref(false);
 const confirm = useConfirm();
 const toast = useToast();
-const loading = ref(true);
+// const loading = ref(true);
 
 const filters = ref({
-  global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  global: {value: null, matchMode: FilterMatchMode.CONTAINS},
   employee_name: {
     value: null,
     matchMode: FilterMatchMode.STARTS_WITH,
@@ -203,7 +164,7 @@ const filters = ref({
     matchMode: FilterMatchMode.CONTAINS,
   },
 
-  status: { value: null, matchMode: FilterMatchMode.EQUALS },
+  status: {value: null, matchMode: FilterMatchMode.EQUALS},
 });
 
 const statuses = ref(["Pending", "Approved", "Rejected"]);
@@ -211,9 +172,7 @@ const statuses = ref(["Pending", "Approved", "Rejected"]);
 let currentlySelectedStatus = null;
 let currentlySelectedRowData = null;
 
-onMounted(() => {
-  ajax_GetAttRegularizationData();
-});
+
 
 function ajax_GetAttRegularizationData() {
   let url = window.location.origin + "/fetch-att-regularization-data";
@@ -299,7 +258,7 @@ function processApproveReject() {
 
       canShowLoadingScreen.value = false;
 
-      toast.add({ severity: "success", summary: "Info", detail: "Success", life: 3000 });
+      toast.add({severity: "success", summary: "Info", detail: "Success", life: 3000});
       ajax_GetAttRegularizationData();
 
       resetVars();
