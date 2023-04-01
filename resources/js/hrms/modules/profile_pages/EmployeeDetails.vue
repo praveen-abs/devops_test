@@ -2,119 +2,88 @@
     <div class="card mb-2">
         <div class="card-body">
             <h6 class="">General Information
-                <!-- <a href="#" class="edit-icon" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                     <i class="ri-pencil-fill"></i>
-                    </a> -->
                      <!-- Button trigger modal -->
-                        <a type="button" class="edit-icon" data-bs-toggle="modal" data-bs-target="#staticBackdrop"  @click="visible = true" >
-                            <i class="ri-pencil-fill"></i>
-                        </a>
+                <a type="button" class="edit-icon"  @click="visible = true" >
+                    <i class="ri-pencil-fill"></i>
+                </a>
 
-                        <!-- <div class="card flex justify-content-center"> -->
-                            <Dialog v-model:visible="visible" modal header="General Information" :style="{ width: '50vw' }">
-                                <div>
-                                    <div class="modal-content" style=" ">
+                <Dialog v-model:visible="visible" modal header="General Information" :style="{ width: '50vw' }">
+                    <div>
+                        <div class="modal-content" style=" ">
 
-                                                <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-lg-6 col-xxl-6">
-                                                    <div class="form-group mb-3">
-                                                        <label>Birth Date<span class="text-danger">*</span></label>
-                                                        <div class="cal-icon">
-                                                                    <Calendar showIcon class="form-selects mb-3" v-model="general_information.birth_date"  placeholder="9999-12-31" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-lg-6 col-xxl-6">
-                                                    <div class="form-group mb-3">
-                                                        <label>Gender<span class="text-danger">*</span></label>
-                                                            <!-- <select v-model="general_information.gender"  class="form-select form-control" name="gender"  aria-label="Default select">
-                                                                <option  disabled value="">Choose Gender</option>
-                                                                <option v-for="option in options" :value="option.value" :key="option.text">
-
-                                                                {{ option.text }}
-                                                                </option>
-                                                            </select> -->
-                                                            <Dropdown v-model="general_information.gender" :options="options_gender" optionLabel="name" placeholder="Choose Gender" class="form-selects" />
-
-
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-lg-6 col-xxl-6">
-                                                    <div class="form-group mb-3">
-                                                        <label>Date Of Joining(DOJ)<span class="text-danger">*</span></label>
-                                                        <div class="cal-icon">
-                                                                <!-- <input class="form-control onboard" type="date" max="9999-12-31"
-                                                                    name="doj" v-model="general_information.date_Of_joining">
-                                                                     -->
-                                                                    <Calendar showIcon class="form-selects mb-3" v-model="general_information.date_Of_joining"  placeholder="9999-12-31" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-lg-6 col-xxl-6">
-                                                    <div class="form-group mb-3">
-                                                        <label>Blood Group <span class="text-danger"></span></label>
-                                                        <!-- <select v-model="general_information.blood_group"  class="form-select form-control text-capitalize" name="blood_group"  aria-label="Default select">
-                                                                <option  disabled value="">Blood Group</option>
-                                                                <option v-for="option in options_blood_group" :key="option.id">
-                                                                {{ option.name }}
-                                                                </option>
-                                                            </select> -->
-                                                            <Dropdown
-                                                                    v-model="general_information.blood_group"
-                                                                    :options="options_blood_group"
-                                                                    optionLabel="name"
-                                                                    placeholder="Select Bloodgroup"
-                                                                    class="form-selects"
-                                                                />
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-lg-6 col-xxl-6">
-                                                    <div class="form-group mb-3">
-                                                        <label>Marital status <span class="text-danger">*</span></label>
-
-                                                        <!-- <select v-model="general_information.marital_status"  class="form-select form-control text-capitalize" name="marital_status"  aria-label="Default select">
-                                                                <option  disabled value="">Select Marital</option>
-                                                                <option v-for="option in marital_status" :value="option.value" :key="option.text">
-                                                                {{ option.text }}
-                                                                </option>
-                                                            </select> -->
-                                                            <Dropdown v-model="general_information.marital_status" :options="option_maritals_status" optionLabel="name" placeholder="Select Marital" class="form-selects" />
-
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-lg-6 col-xxl-6">
-                                                    <div class="form-group mb-3">
-                                                        <label>Physically Handicapped</label>
-                                                            <!-- <input type="text" v-model="general_information.phy_Handicapped" name="physically_challenged"
-                                                                id="physical_challenge" class="form-control "> -->
-                                                                <InputText type="text" v-model="general_information.phy_Handicapped" name="physically_challenged" class="form-control "/>
-                                                    </div>
-                                                </div>
+                                    <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-lg-6 col-xxl-6">
+                                        <div class="form-group mb-3">
+                                            <label :style="{marginLeft:'10px'}">Birth Date<span class="text-danger">*</span></label>
+                                            <div class="cal-icon">
+                                                        <Calendar showIcon class="form-selects mb-3" v-model="general_information.birth_date"  placeholder="9999-12-31" />
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-lg-6 col-xxl-6">
+                                        <div class="form-group mb-3">
+                                            <label >Gender<span class="text-danger">*</span></label>
 
-                                            <div class="text-right col-12">
-                                                <Toast />
-                                                <ConfirmDialog></ConfirmDialog>
-                                                <button id="btn_submit_generalInfo"
-                                                    class="btn btn-border-orange submit-btn" @click="general_information_save()" >Save</button>
+                                                <Dropdown v-model="general_information.gender" :options="options_gender" optionLabel="name" placeholder="Choose Gender" class="form-selects" />
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-lg-6 col-xxl-6">
+                                        <div class="form-group mb-3">
+                                            <label :style="{marginLeft:'10px'}">Date Of Joining(DOJ)<span class="text-danger">*</span></label>
+                                            <div class="cal-icon">
+                                                        <Calendar showIcon class="form-selects mb-3" v-model="general_information.date_of_joining"  placeholder="9999-12-31" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-lg-6 col-xxl-6">
+                                        <div class="form-group mb-3">
+                                            <label>Blood Group<span class="text-danger">*</span></label>
+                                            <div class="cal-icon">
+                                                <Dropdown
+                                                        v-model="general_information.blood_group_id"
+                                                        :options="options_blood_group"
+                                                        optionLabel="name"
+                                                        placeholder="Select Bloodgroup"
+                                                        class="form-selects"
+                                                    />
                                             </div>
 
                                         </div>
-
                                     </div>
 
+
+                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-lg-6 col-xxl-6">
+                                        <div class="form-group mb-3" :style="{marginLeft:'10px'}">
+                                            <label>Marital status <span class="text-danger">*</span></label>
+                                                <Dropdown v-model="general_information.marital_status_id" :options="option_maritals_status" optionLabel="name" placeholder="Select Marital Status" class="form-selects" />
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-lg-6 col-xxl-6">
+                                        <div class="form-group mb-3">
+                                            <label>Physically Handicapped</label>
+                                                <Dropdown v-model="general_information.phy_handicapped" :options="options_phy_challenged" optionLabel="name" placeholder="Select" class="form-selects" />
+                                        </div>
+                                    </div>
                                 </div>
-                            </Dialog>
-                        <!-- </div> -->
 
+                                <div class="text-right col-12">
+                                    <Toast />
+                                    <ConfirmDialog></ConfirmDialog>
+                                    <button id="btn_submit_generalInfo"
+                                        class="btn btn-border-orange submit-btn" @click="general_information_save()" >Save</button>
+                                </div>
 
+                            </div>
 
+                        </div>
 
+                    </div>
+                </Dialog>
             </h6>
             <ul class="personal-info">
                 <li class="border-bottom-liteAsh pb-1">
@@ -229,120 +198,140 @@
 </template>
 <script setup>
 
-import { ref, onMounted, reactive } from 'vue';
+    import { ref, onMounted, reactive } from 'vue';
 
-import { useToast } from "primevue/usetoast";
-import { useConfirm } from "primevue/useconfirm";
+    import { useToast } from "primevue/usetoast";
+    import { useConfirm } from "primevue/useconfirm";
 
-import axios from 'axios';
-import {
-    getBloodGroups,
-    getMaritalStatus
-} from "./ProfilePagesService";
+    import axios from 'axios';
 
-
-
-const toast = useToast();
-
-const visible = ref(false);
-
-const general_information =reactive ({
-    birth_date :'',
-    gender:'',
-    date_Of_joining:'',
-    blood_group:'',
-    marital_status:'',
-    phy_Handicapped:'',
-
-})
-
-// const options_gender = ref([
-//   { text: 'Male', value: 'A' },
-//   { text: 'Female', value: 'B' },
-//   { text: 'Others', value: 'C' }
-
-// ])
-
-const options_blood_group = ref();
-const option_maritals_status =ref();
-
-const marital_status = ref([
-  { text: 'Married', value: 'A' },
-  { text: 'UnMarried', value: 'B' }
-])
-
-const confirm = useConfirm();
-const general_information_save = ()=>{
-
-    // location.reload();
-    console.log(general_information);
-    confirm.require({
-                message: 'Are you sure you want to proceed?',
-                header: 'Confirmation',
-                icon: 'pi pi-exclamation-triangle',
-                accept: () => {
-                    toast.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted', life: 3000 }),
-                    axios.post(' http://localhost:3000/posts',general_information).then(res=>{
-
-                setTimeout(() => {
-                location.reload();
-                }, "1000");
-                console.log(res);
-                }).catch(err =>{
-                    console.log(err);
-                }).finally(()=>{
-                    console.log("completed");
-                })
-
-                },
-                reject: () => {
-                    toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
-                }
-    });
+    import {
+        getBloodGroups,
+        getMaritalStatus
+    } from "./ProfilePagesService";
 
 
-}
 
-    const options_gender = ref([
-        { name: 'Male', value: 'male' },
-        { name: 'Female', value: 'female' },
-        { name: 'Others', value: 'others' }
-    ]);
+    const toast = useToast();
 
-onMounted(() => {
-    // let url = window.location.origin + '/fetch-regularization-approvals';
-    // console.log("AJAX URL : " + url);
-    // axios.get(url)
-    //     .then((response) => {
-    //         console.log("Axios : " + response.data);
-    //         att_regularization.value = response.data;
-    //     });
+    const visible = ref(false);
 
-    getBloodGroups().then((result) => {
-        console.log(result);
-        options_blood_group.value = result;
-    });
-
-    getMaritalStatus().then((result)=>{
-        console.log(result);
-        option_maritals_status.value = result;
+    const general_information =reactive ({
+        birth_date :'',
+        gender:'',
+        date_of_joining:'',
+        blood_group_id:'',
+        marital_status_id:'',
+        phy_handicapped:'',
 
     })
 
+    const options_gender = ref([
+            { name: 'Male', value: 'male' },
+            { name: 'Female', value: 'female' },
+            { name: 'Others', value: 'others' }
+        ]);
 
-});
+    const options_phy_challenged = ref([
+        { name: 'Yes', value: 'yes' },
+        { name: 'No', value: 'no' }
+    ]);
+
+    const options_blood_group = ref();
+    const option_maritals_status =ref();
+
+    const confirm = useConfirm();
+
+
+    function saveGeneralInformationDetails(){
+
+        console.log("Called saveGeneralInformationDetails.... ");
+
+        axios.post('/profile-pages-update-generalinfo/',{
+            "user_id": general_information.user_id,
+            "dob": general_information.birth_date,
+            "gender": general_information.gender,
+            "marital_status_id":general_information.marital_status_id ,
+            "doj": general_information.date_of_joining,
+            "blood_group_id": general_information.blood_group_id,
+            "physically_challenged": general_information.hours_diff,
+        }).then(res=>{
+            data_checking.value=false
+            if(res.data.status=='success'){
+
+            }else
+            if(res.data.status=='failure'){
+                leave_data.leave_request_error_messege=res.data.message;
+
+            }
+
+
+        }).catch(err=>{
+            console.log(err);
+        })
+
+    }
+
+    const general_information_save = ()=>{
+
+        // location.reload();
+        console.log(general_information);
+        confirm.require({
+                    message: 'Are you sure you want to proceed?',
+                    header: 'Confirmation',
+                    icon: 'pi pi-exclamation-triangle',
+                    accept: () => {
+
+                        saveGeneralInformationDetails();
+
+                    },
+                    reject: () => {
+                        toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+                    }
+        });
+
+
+    }
+
+
+
+    onMounted(() => {
+        // let url = window.location.origin + '/fetch-regularization-approvals';
+        // console.log("AJAX URL : " + url);
+        // axios.get(url)
+        //     .then((response) => {
+        //         console.log("Axios : " + response.data);
+        //         att_regularization.value = response.data;
+        //     });
+
+        getBloodGroups().then((result) => {
+            console.log(result);
+            options_blood_group.value = result;
+        });
+
+        getMaritalStatus().then((result)=>{
+            console.log(result);
+            option_maritals_status.value = result;
+
+        })
+
+
+    });
 
 
 
 </script>
 
 <style scoped>
-.p-button {
-    height: 2.5em;
+.p-dropdown .p-dropdown-label.p-placeholder {
+    position: relative;
+    top: -5px;
+    border: 1px solid red;
+    color: #6c757d;
 }
 
 .p-button .p-fileupload-choose {
-    height: 2.1em;
+    /* height: 2.1em; */
 }
 
 i,
@@ -374,6 +363,7 @@ color: #002f56 !important;
 .form-selects {
     padding: 0;
     width: 100%;
+    height: 2.5rem;
 }
 .save{
     border: 1px solid #e63b1f ;

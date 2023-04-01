@@ -58,7 +58,10 @@ export default defineConfig({
                 'resources/js/hrms/modules/profile_pages/FamilyDetails.js',
 
                 // Experience page
-                'resources/js/hrms/modules/profile_pages/ExperienceDetails.js'
+                'resources/js/hrms/modules/profile_pages/ExperienceDetails.js',
+
+                // financeDetails page
+                'resources/js/hrms/modules/profile_pages/FinanceDetails.js'
 
             ],
             refresh: true,
