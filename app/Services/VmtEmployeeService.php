@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use App\Models\VmtGeneralInfo;
 use Dompdf\Dompdf;
+use Dompdf\Options;
 use \stdClass;
 
 use App\Models\User;
@@ -25,6 +26,7 @@ use App\Notifications\ViewNotification;
 use Illuminate\Support\Facades\Notification;
 use App\Mail\WelcomeMail;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 
 class VmtEmployeeService {
@@ -90,22 +92,21 @@ class VmtEmployeeService {
                 $this->createOrUpdate_EmployeeDetails( $onboard_user, $data);
                 $this->createOrUpdate_EmployeeOfficeDetails( $onboard_user->id, $data);
                 $this->createOrUpdate_EmployeeStatutoryDetails( $onboard_user->id, $data);
-                // $this->createOrUpdate_EmployeeFamilyDetails( $onboard_user->id, $data);
-                 $this->createOrUpdate_EmployeeCompensatory( $onboard_user->id, $data);
-                $this->attachApoinmentPdf($employeeData);
+                $this->createOrUpdate_EmployeeFamilyDetails( $onboard_user->id, $data);
+                $this->createOrUpdate_EmployeeCompensatory( $onboard_user->id, $data);
 
 
-                //$message_part =" onboarded successfully.";
+                return "success";
             }
             catch(\Exception $e)
             {
-                dd($e);
-               return null;
+               // dd($e);
+
+                return "failure : ".$e;
             }
         }
 
-
-        return $response;
+        return "Normal Onboarding : Failure in TRY or CATCH method";
     }
 
     private function createOrUpdate_User($data, $can_onboard_employee,$user_id=null)
@@ -472,11 +473,11 @@ class VmtEmployeeService {
 
     public function uploadDocument($emp_id,$fileObject, $emp_code, $onboard_document_type){
         if(empty($fileObject))
-        return null;
+            return null;
 
         //check if document already uploaded
-
         $onboard_doc_id = VmtOnboardingDocuments::where('document_name',$onboard_document_type)->first();
+
         if( !empty($onboard_doc_id))
         {
             $onboard_doc_id = $onboard_doc_id->id;
@@ -485,25 +486,42 @@ class VmtEmployeeService {
         $employee_documents = VmtEmployeeDocuments::where('user_id', $emp_id)->where('doc_id',$onboard_doc_id);
 
         //check if document already uploaded
-         if( $employee_documents->exists()){
+        if( $employee_documents->exists()){
             $employee_documents = $employee_documents->first();
-         }else{
+
+            $file_path = '/'.$emp_code.'/onboarding_documents'.'/'.$employee_documents->doc_url;
+
+            //fetch the existing document and delete its file from STORAGE folder
+            $file_exists_status = Storage::disk('private')->exists($file_path);
+
+            if($file_exists_status){
+
+                //delete the file
+                Storage::disk('private')->delete($file_path);
+
+            }
+
+        }
+        else
+        {
             $employee_documents = new VmtEmployeeDocuments;
-         }
-
-
-            $date=date('d-m-Y H-i-s');
-            $fileName =  $onboard_document_type.'_'.$emp_code.'_'.$date.'.'.$fileObject->extension();
-            $path=$emp_code.'/onboarding_documents';
-            $filePath = $fileObject->storeAs($path,$fileName, 'private');
-           // dd($emp_id);
             $employee_documents->user_id = $emp_id;
             $employee_documents->doc_id = $onboard_doc_id;
-            $employee_documents->doc_url = $fileName;
-            $employee_documents->status = 'Pending';
-            $employee_documents->save();
-            return $fileName;
+        }
 
+
+        $date = date('d-m-Y_H-i-s');
+        $fileName =  str_replace(' ', '', $onboard_document_type).'_'.$emp_code.'_'.$date.'.'.$fileObject->extension();
+        $path = $emp_code.'/onboarding_documents';
+        $filePath = $fileObject->storeAs($path,$fileName, 'private');
+
+
+        $employee_documents->doc_url = $fileName;
+        $employee_documents->status = 'Pending';
+
+        $employee_documents->save();
+
+        return $fileName;
 
     }
 
@@ -521,7 +539,7 @@ class VmtEmployeeService {
     // Generate Employee Appointment PDF after onboarding
     public function attachAppointmentLetterPDF($employeeData)
     {
-        //dd($employeeData);
+       // dd($employeeData);
         $VmtGeneralInfo = VmtGeneralInfo::first();
         $empNameString  = $employeeData['employee_name'];
         $filename = 'appoinment_letter_' . $empNameString . '_' . time() . '.pdf';
@@ -559,14 +577,18 @@ class VmtEmployeeService {
 
             //check if template exists
             if (view()->exists($viewfile_appointmentletter)) {
-
                 $html =  view($viewfile_appointmentletter, compact('data'));
+               // dd($data);
+                $options = new Options();
+                $options->set('isHtml5ParserEnabled', true);
+                $options->set('isRemoteEnabled', true);
 
-                $pdf = new Dompdf();
+                $pdf = new Dompdf($options);
                 $pdf->loadHtml($html, 'UTF-8');
                 $pdf->setPaper('A4', 'portrait');
                 $pdf->render();
                 $docUploads =  $pdf->output();
+               // dd( $docUploads);
                 \File::put(public_path('appoinmentLetter/') . $filename, $docUploads);
                 $appoinmentPath = public_path('appoinmentLetter/') . $filename;
 
@@ -644,6 +666,12 @@ class VmtEmployeeService {
             $onboard_doc = VmtEmployeeDocuments::join('vmt_onboarding_documents','vmt_onboarding_documents.id','=','vmt_employee_documents.doc_id')
                                 ->where('user_id',$single_user->id)
                                 ->get(['vmt_onboarding_documents.document_name','doc_url']);
+
+            $onboard_doc->each(function ($item, int $key) use ($single_user){
+
+                $item["doc_url"] = "employees/". $single_user->user_code."/onboarding_documents/".$item["doc_url"];
+                  //dd($item["doc_url"]);
+                });
 
 
 

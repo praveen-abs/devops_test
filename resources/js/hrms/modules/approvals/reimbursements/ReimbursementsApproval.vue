@@ -12,10 +12,13 @@
     <div class="flex justify-content-between align-items-center">
 
         <div class="flex justify-content-between align-items-center">
-            <Calendar v-model="selected_date" view="month" dateFormat="mm/yy" class="" style=" border: 1px solid orange; border-radius: 7px;" />
-            <Dropdown v-model="selected_status" :options="statuses" placeholder="Status" class="w-full md:w-14rem mx-3" style=" border: 1px solid orange; border-radius: 7px;" />
-            <button label="Submit" class="btn btn-primary" severity="danger" :disabled="!selected_status == '' ? false : true"
-                @click="generate_ajax"> <i class="fa fa-cog me-2"></i> Generate</button>
+            <Calendar v-model="selected_date" view="month" dateFormat="mm/yy" class=""
+                style=" border: 1px solid orange; border-radius: 7px;" />
+            <Dropdown v-model="selected_status" :options="statuses" placeholder="Status" class="w-full mx-3 md:w-14rem"
+                style=" border: 1px solid orange; border-radius: 7px;" />
+            <button label="Submit" class="btn btn-primary" severity="danger"
+                :disabled="!selected_status == '' ? false : true" @click="generate_ajax"> <i class="fa fa-cog me-2"></i>
+                Generate</button>
         </div>
         <!-- <Button label="Approve all" icon="pi pi-check" severity="success" @click="showConfirmDialogForBulkApproval(selectedAllEmployee, 'Approve')"
             v-if="!selectedAllEmployee == ''" style="margin-left: 30rem; height: 2.5em;" />
@@ -50,7 +53,7 @@
         <Dialog header="Confirmation" v-model:visible="canShowConfirmation"
             :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '350px' }" :modal="true">
             <div class="confirmation-content">
-                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
                 <span>Are you sure you want to {{ currentlySelectedStatus }}?</span>
             </div>
             <template #footer>
@@ -61,7 +64,8 @@
         <div>
             <DataTable :value="data_reimbursements" :paginator="true" :rows="10" class="mt-6 " dataKey="user_id"
                 @rowExpand="onRowExpand" @rowCollapse="onRowCollapse" v-model:expandedRows="expandedRows"
-                v-model:selection="selectedAllEmployee"  :selectAll="selectAll" @select-all-change="onSelectAllChange" @row-select="onRowSelect" @row-unselect="onRowUnselect"
+                v-model:selection="selectedAllEmployee" :selectAll="selectAll" @select-all-change="onSelectAllChange"
+                @row-select="onRowSelect" @row-unselect="onRowUnselect"
                 paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
                 responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}">
                 <template #empty> No Reimbursement data for the selected status filter </template>
@@ -109,7 +113,8 @@
 
                     <div class="orders-subtable">
                         <DataTable :value="slotProps.data.reimbursement_data" responsiveLayout="scroll"
-                            v-model:selection="selectedAllEmployee" :selectAll="selectAll" @select-all-change="onSelectAllChange">
+                            v-model:selection="selectedAllEmployee" :selectAll="selectAll"
+                            @select-all-change="onSelectAllChange">
                             <!-- <Column selectionMode="multiple" style="width: 3rem" :exportable="false"></Column> -->
                             <Column field="" header="Date" sortable>
                                 <template #body="slotProps">
@@ -140,18 +145,16 @@
             </DataTable>
         </div>
     </div>
-
-
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import dateFormat, { masks } from "dateformat";
+import { ref, onMounted, onRenderTracked, onUpdated, nextTick,onBeforeMount, onBeforeUpdate } from "vue";
 import axios from "axios";
 import { FilterMatchMode, FilterOperator } from "primevue/api";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 import moment from 'moment'
+import { watch } from "vue";
 
 
 let data_reimbursements = ref();
@@ -169,8 +172,8 @@ const selectedOneEmployee = ref();
 const metaKey = ref(true);
 
 
-const data=()=>{
-    show.value=true;
+const data = () => {
+    show.value = true;
 
 }
 
@@ -197,12 +200,12 @@ const isdisabled = ref(true)
 onMounted(() => {
     data_reimbursements.value = [];
     selected_date.value = new Date()
-
-    console.log(selected_date.value);
-
+   console.log(selected_date.value);
 
 
 });
+
+
 
 function ajax_GetReimbursementData() {
     let url_all_reimbursements =
@@ -227,10 +230,10 @@ function showConfirmDialog(selectedRowData, status) {
 }
 function showConfirmDialogForBulkApproval(selectedRowData, status) {
     console.log(selectedAllEmployee.value);
-    const ob=Object.values(selectedAllEmployee.value)
+    const ob = Object.values(selectedAllEmployee.value)
 
 
-    ob.forEach(ent=>{
+    ob.forEach(ent => {
         console.log(ent.employee_name);
     })
 
@@ -333,7 +336,7 @@ const css_statusColumn = (data) => {
 function processApproveReject() {
     hideConfirmDialog(false);
 
-    canShowLoadingScreen.value = true;
+    // canShowLoadingScreen.value = true;
 
     console.log("Processing Rowdata : " + JSON.stringify(currentlySelectedRowData));
     console.log("currentlySelectedStatus : " + currentlySelectedStatus);
@@ -351,11 +354,10 @@ function processApproveReject() {
         })
         .then((response) => {
             console.log(response);
-
-            canShowLoadingScreen.value = false;
+                generate_ajax();
+            // canShowLoadingScreen.value = false;
 
             toast.add({ severity: "success", summary: "", detail: " Successfully Approved !", life: 3000 });
-            ajax_GetReimbursementData();
 
             resetVars();
         })
@@ -366,6 +368,10 @@ function processApproveReject() {
             console.log(error.toJSON());
         });
 }
+
+
+
+
 
 
 const expandedRowGroups = ref();
@@ -600,5 +606,4 @@ const getSeverity = (status) => {
 .pi-sort-amount-up-alt::before {
     content: "\e9a2";
     color: white;
-}
-</style>
+}</style>

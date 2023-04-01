@@ -13,7 +13,7 @@
 
         <Dialog header="Confirmation" v-model:visible="canShowConfirmation" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '350px'}" :modal="true" >
             <div class="confirmation-content">
-                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
                 <span>Are you sure you want to {{currentlySelectedStatus}}?</span>
             </div>
             <template #footer>

@@ -207,7 +207,7 @@ class VmtEmployeeOnboardingController extends Controller
 
 
         $data=$request->all();
-        dd($data);
+        // dd($data);
 
         $user_id =$data['employee_code'];
         //dd( $user_id);
@@ -236,12 +236,12 @@ class VmtEmployeeOnboardingController extends Controller
 
                 $message = "";
 
-                if($result->status == "success")
+                if($result == "success")
                 {
 
-                    if($request->input('can_onboard_employee') == "1")
+                    if($request->input('can_onboard_employee') == "true")
                     {
-                        $isEmailSent  = $employeeService->attachApoinmentPdf($onboard_form_data);
+                        $isEmailSent  = $employeeService->attachAppointmentLetterPDF($onboard_form_data);
                         $message="Employee onboarded successfully";
                     }
                     else
@@ -262,9 +262,9 @@ class VmtEmployeeOnboardingController extends Controller
                     //When error occured while storing User, then show error to UI
 
                     $response = [
-                        'status' => $result->status,
+                        'status' => $result,
                         'message' => "Error while creating/update User details. LINE : ".__LINE__,
-                        'error' => $result->message,
+                        'error' => "",
                         'error_verbose' =>''
                     ];
 
@@ -297,9 +297,9 @@ class VmtEmployeeOnboardingController extends Controller
                     {
                         //When error occured while storing User, then show error to UI
                         $response = [
-                                'status' => $result->status,
+                                'status' => $result,
                                 'message' => "Error while creating/update User details : LINE : ".__LINE__,
-                                'error' => $result->message,
+                                'error' => "",
                                 'error_verbose' =>''
                         ];
 
@@ -343,7 +343,7 @@ class VmtEmployeeOnboardingController extends Controller
                 $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $onboard_form_data['can_onboard_employee'], null);
 
 
-                if($result->status == "success")
+                if($result =="success")
                 {
                     $response = [
                         'status' => 'success',
@@ -351,8 +351,6 @@ class VmtEmployeeOnboardingController extends Controller
                         'mail_status' => '',
                         'error' => '',
                         'error_verbose' =>'',
-                        'user_id' => $result->response_object->id  //send the user id to front-end
-
                     ];
                 }
                 else
@@ -360,9 +358,9 @@ class VmtEmployeeOnboardingController extends Controller
 
                     //When error occured while storing User, then show error to UI
                     $response = [
-                            'status' => $result->status,
+                            'status' => $result,
                             'message' => "Error while creating/update User details : LINE : ".__LINE__,
-                            'error' => $result->message,
+                            'error' => "",
                             'error_verbose' =>''
                     ];
 
@@ -601,11 +599,12 @@ class VmtEmployeeOnboardingController extends Controller
             $mail_status ="---";
 
             //If SAVE button pressed, dont onboard. Onboard if Submit button was pressed
-            if($can_onboard_employee == "1")
+            if($can_onboard_employee == "true")
             {
                 // sent welcome email along with appointment Letter
 
-                $isEmailSent  = $this->attachApoinmentPdf($row);
+                $isEmailSent  = $this->attachAppointmentLetterPDF($row);
+
 
                 if ($isEmailSent) {
                     $mail_status="success";
@@ -616,7 +615,7 @@ class VmtEmployeeOnboardingController extends Controller
                 $message_part =" onboarded successfully";
             }
             else
-            if($can_onboard_employee == "0")
+            if($can_onboard_employee == "false")
             {
                 $message_part =" saved in draft.";
 
@@ -989,7 +988,7 @@ class VmtEmployeeOnboardingController extends Controller
 
 
             if (fetchMasterConfigValue("can_send_appointmentmail_after_onboarding") == "true") {
-                $isEmailSent  = $this->attachApoinmentPdf($row);
+                $isEmailSent  = $this->attachAppointmentLetterPDF($row);
             }
 
             return $rowdata_response = [
@@ -1014,7 +1013,7 @@ class VmtEmployeeOnboardingController extends Controller
 
 
        // Generate Employee Apoinment PDF after onboarding
-    public function attachApoinmentPdf($employeeData)
+    public function attachAppointmentLetterPDF($employeeData)
        {
            //dd($employeeData);
            $empNameString  = $employeeData['employee_name'];

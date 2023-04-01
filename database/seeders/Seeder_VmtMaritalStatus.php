@@ -15,14 +15,14 @@ class Seeder_VmtMaritalStatus extends Seeder
      */
     public function run()
     {
-      
+
 
         DB::table('vmt_marital_status')->insert([
-            ['name'=>'Unmarried'],
-            ['name'=>'Married'],
-            ['name'=>'Separated'],
-            ['name'=>'Widowed'],
-            ['name'=>'Divorced'],
+            ['id'=>'1','name'=>'Unmarried'],
+            ['id'=>'2','name'=>'Married'],
+            ['id'=>'3','name'=>'Separated'],
+            ['id'=>'4','name'=>'Widowed'],
+            ['id'=>'5','name'=>'Divorced'],
         ]);
     }
 }

@@ -1,3 +1,8 @@
+<?php
+
+    use Illuminate\Support\Facades\Storage;
+?>
+
 @extends('layouts.master')
 @section('title')
     @lang('translation.dashboards')
