@@ -14,9 +14,9 @@
 <!-- @vite('resources/js/hrms/modules/onboarding_module/offer_letter/offer_letter_template/offer_letter_template.js')
      <div id="offer_template"></div> -->
 
-@vite('resources/js/hrms/modules/paycheck/declaration/declaration.js')
+@vite('resources/js/hrms/modules/dashboard/dashboard.js')
 
-  <div id="declaration"></div>
+  <div id="Dashboard"></div>
 
 @endsection
 

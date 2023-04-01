@@ -12,6 +12,10 @@ export default defineConfig({
 
                 'resources/js/app.js',
 
+                // Dashboard
+
+                'resources/js/hrms/modules/dashboard/dashboard.js',
+
                 // Leaves
                 'resources/js/hrms/modules/leave_module/leave_apply/LeaveApply.js',
                 'resources/js/hrms/modules/leave_module/org_leave_module/OrgLeaveBalance.js',
