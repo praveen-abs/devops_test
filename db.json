@@ -1,4 +1,22 @@
 {
+  "Empdetails": [
+    {
+      "dob": "2023-04-12T07:00:00.000Z",
+      "gender": {
+        "name": "Female",
+        "value": "female"
+      },
+      "marital_status_id": "",
+      "doj": "2023-04-18T07:00:00.000Z",
+      "blood_group_id": {
+        "id": 6,
+        "name": "AB Negative"
+      },
+      "id": 1
+    }
+  ],
+  "FinanceDetails" : [],
+
   "posts": [
     {
       "name": "Nomlanga Hopkins",

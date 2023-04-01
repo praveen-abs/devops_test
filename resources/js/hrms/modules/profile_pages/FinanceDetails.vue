@@ -1,14 +1,14 @@
 <template>
     <div>
-        <div class="card left-line mb-2 ">
-            <div class="card-body pb-0 pt-1">
-                <ul class="nav nav-pills    nav-tabs-dashed" id="pills-tab" role="tablist">
-                    <li class="nav-item  " role="presentation">
+        <div class="mb-2 card left-line ">
+            <div class="pt-1 pb-0 card-body">
+                <ul class="nav nav-pills nav-tabs-dashed" id="pills-tab" role="tablist">
+                    <li class="nav-item " role="presentation">
                         <a class="nav-link active " id="" data-bs-toggle="pill" href="" data-bs-target="#finance_summary"
                             role="tab" aria-controls="pills-home" aria-selected="true">Summary
                         </a>
                     </li>
-                    <li class="nav-item mx-4  " role="presentation">
+                    <li class="mx-4 nav-item " role="presentation">
                         <a class="nav-link " id="" data-bs-toggle="pill" href="" data-bs-target="#finance_pay" role="tab"
                             aria-controls="pills-home" aria-selected="true">
                             Paycheck
@@ -20,7 +20,7 @@
 
         <div class="tab-content " id="pills-tabContent">
             <div class="tab-pane fade active show" id="finance_summary" role="tabpanel" aria-labelledby="">
-                <div class="card mb-2">
+                <div class="mb-2 card">
                     <div class="card-body">
                         <form action="" method="POST" enctype="multipart/form-data">
 
@@ -34,19 +34,19 @@
 
 
                             <ul class="personal-info">
-                                <li class="border-bottom-liteAsh pb-1">
+                                <li class="pb-1 border-bottom-liteAsh">
                                     <div class="title">Last Processed</div>
                                     <div class="text">
                                         -
                                     </div>
                                 </li>
-                                <li class="border-bottom-liteAsh pb-1">
+                                <li class="pb-1 border-bottom-liteAsh">
                                     <div class="title">Total Working Days</div>
                                     <div class="text">
                                         -
                                     </div>
                                 </li>
-                                <li class=" pb-1">
+                                <li class="pb-1 ">
                                     <div class="title">Loss Of Pay(LOP)</div>
                                     <div class="text">
                                         -
@@ -59,7 +59,7 @@
                     </div>
                 </div>
 
-                <div class="card mb-2">
+                <div class="mb-2 card">
                     <div class="card-body">
                         <form action="" method="POST" enctype="multipart/form-data">
                             <!-- Vishnu V24, [31-03-2023 15:40] -->
@@ -85,50 +85,19 @@
 
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <div class="form-group mb-3">
+                                                <div class="mb-3 form-group">
                                                     <label>Bank Name</label>
 
-                                                    <!-- <select name="bank_name" id="bank_name"
-                                                                                    class="form-select form-control onboard-form" required>
-                                                                                    <option value="">Select</option>
-
-                                                                                            <option value="{{ $b->bank_name ?? '' }}"
-                                                                                                min-data="{{ $b->min_length }}" max-data="{{ $b->max_length }}"
-                                                                                               >
-                                                                                            </option>
-
-                                                                                </select> -->
-
-                                                    <!-- <Dropdown v-model="selectedCountry" field="name" :options="bankNameList" filter optionLabel="name"  class="form-controls w-full ">
-                                                                                    <template #value="slotProps">
-                                                                                        <div v-if="slotProps.value" class="flex align-items-center" :style="{ marginTop: '-5px'}">
-                                                                                            <div >{{ slotProps.value.bank_name }}</div>
-                                                                                        </div>
-                                                                                        <span v-else>
-                                                                                            {{ slotProps.placeholder }}
-                                                                                        </span>
-                                                                                    </template>
-                                                                                    <template #option="slotProps">
-                                                                                        <div class="flex align-items-center">
-                                                                                            <div>{{ slotProps.option.bank_name }}</div>
-                                                                                        </div>
-                                                                                    </template>
-                                                                                </Dropdown> -->
-
                                                     <Dropdown editable :options="bankNameList" optionLabel="bank_name"
-                                                        placeholder="Select Bank Name" class="form-controls w-full " />
+                                                        placeholder="Select Bank Name" class="w-full form-controls " />
 
 
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <div class="form-group mb-3">
+                                                <div class="mb-3 form-group">
                                                     <label>Bank Account No</label>
                                                     <div class="cal-icon">
-                                                        <!-- <input name="account_no" type="number" minlength="9" maxlength="18"
-                                                                                    class="form-control onboard-form"
-                                                                                    value="{{ $user_full_details->bank_account_number ?? '' }}"
-                                                                                    pattern-data="account" required> -->
 
                                                     </div>
                                                     <InputNumber v-model="value1" class="form-controls onboard-form"
@@ -137,7 +106,7 @@
 
                                             </div>
                                             <div class="col-md-6">
-                                                <div class="form-group mb-3">
+                                                <div class="mb-3 form-group">
                                                     <label>IFSC Code</label>
                                                     <!-- <input name="bank_ifsc" class="form-control onboard-form"
                                                                                 value="" type="text"
@@ -147,7 +116,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <div class="form-group mb-3">
+                                                <div class="mb-3 form-group">
                                                     <label>PAN No</label>
                                                     <!-- <input name="pan_no" class="form-control onboard-form"
                                                                                 value="" type="text"
@@ -208,7 +177,7 @@
                     </div>
                 </div>
 
-                <div class="card mb-2">
+                <div class="mb-2 card">
                     <div class="card-body">
                         <!-- <form action="" method="POST" enctype="multipart/form-data"> -->
                             <h6 class="">Statutory Information
@@ -309,7 +278,7 @@
 
 
 
-                            </Dialog>
+                        </Dialog>
 
 
 
@@ -318,47 +287,47 @@
 
 
 
-                            <!-- {{-- @if (!empty($statutory_info))
+                        <!-- {{-- @if (!empty($statutory_info))
                                                 @foreach ($statutory_info as $detail) --}} -->
-                             <ul class="personal-info">
-                                <li>
-                                    <div class="title">PF Applicable</div>
-                                    <div class="text">
-                                        <!-- {{ $statutory_info->pf_applicable ?? '-' }} -->
+                        <ul class="personal-info">
+                            <li>
+                                <div class="title">PF Applicable</div>
+                                <div class="text">
+                                    <!-- {{ $statutory_info->pf_applicable ?? '-' }} -->
 
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="title">EPF Number</div>
-                                    <div class="text">
-                                        <!-- {{ $statutory_info->epf_number ?? '-' }} -->
+                                </div>
+                            </li>
+                            <li>
+                                <div class="title">EPF Number</div>
+                                <div class="text">
+                                    <!-- {{ $statutory_info->epf_number ?? '-' }} -->
 
-                                    </div>
-                                </li>
-                                <!-- Vishnu V24, [31-03-2023 15:40] -->
-                                <li>
-                                    <div class="title">UAN Number</div>
-                                    <div class="text">
-                                        <!-- {{ $statutory_info->uan_number ?? '-' }} -->
+                                </div>
+                            </li>
+                            <!-- Vishnu V24, [31-03-2023 15:40] -->
+                            <li>
+                                <div class="title">UAN Number</div>
+                                <div class="text">
+                                    <!-- {{ $statutory_info->uan_number ?? '-' }} -->
 
-                                    </div>
-                                </li>
+                                </div>
+                            </li>
 
-                                <li>
-                                    <div class="title">ESIC Applicable</div>
-                                    <div class="text">
-                                        <!-- {{ $statutory_info->esic_applicable ?? '-' }} -->
+                            <li>
+                                <div class="title">ESIC Applicable</div>
+                                <div class="text">
+                                    <!-- {{ $statutory_info->esic_applicable ?? '-' }} -->
 
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="title">ESIC Number</div>
-                                    <div class="text">
+                                </div>
+                            </li>
+                            <li>
+                                <div class="title">ESIC Number</div>
+                                <div class="text">
 
 
-                                    </div>
-                                </li>
-                            </ul>
+                                </div>
+                            </li>
+                        </ul>
 
 
                         <!-- </form> -->
@@ -367,11 +336,11 @@
                 </div>
             </div>
             <div class="tab-pane fade" id="finance_pay" role="tabpanel" aria-labelledby="">
-                <div class="card mb-2">
+                <div class="mb-2 card">
                     <div class="card-body">
-                        <ul class="nav nav-pills mb-4   nav-tabs-dashed" id="pills-tab" role="tablist">
+                        <ul class="mb-4 nav nav-pills nav-tabs-dashed" id="pills-tab" role="tablist">
 
-                            <li class="nav-item   " role="presentation">
+                            <li class="nav-item " role="presentation">
                                 <a class="nav-link active" id="" data-bs-toggle="pill" href="" data-bs-target="#pay_slips"
                                     role="tab" aria-controls="" aria-selected="true">
                                     Pay Slips
@@ -393,7 +362,7 @@
                                                     <th width="">Reimbursements</th>
                                                     <th width="">Deductions</th>
                                                     <th data-url="{{ route('vmt_employee_payslip_pdf') }}"
-                                                        style="cursor: pointer" class="ember-view  paySlipPDF text-info">
+                                                        style="cursor: pointer" class="ember-view paySlipPDF text-info">
                                                         Download PDF
                                                     </th>
                                                 </tr>
@@ -418,10 +387,10 @@
         <div id="edit_department" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content profile-box">
-                    <div class="modal-header  ">
+                    <div class="modal-header ">
                         <h6 class="modal-title">Edit Department
                         </h6>
-                        <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
+                        <button type="button" class="border-0 close h3" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
@@ -454,6 +423,9 @@
 import { ref, onMounted, reactive, onUpdated } from 'vue';
 import axios from 'axios'
 import { useToast } from "primevue/usetoast";
+import { Service } from '../Service/Service';
+
+const fetch_data = Service()
 
 const visible = ref(false);
 const visible2 = ref(false);
@@ -463,6 +435,7 @@ const selectedCountry = ref();
 const Bank_Name = ref([
 
 ]);
+
 
 const bankNameList = ref();
 
@@ -484,18 +457,35 @@ const saveFinanceDetails = () => {
 
 
 onMounted(() => {
-    fetchData();
+    // fetchData();
+fetch_data.getBankList().then(res =>{
+    bankNameList.value = res.data;
+})
 });
 
 
-const fetchData = () => {
-    let url = '/db/getBankDetails'
-    axios.get(url)
-        .then((response) => {
-            console.log(response.data);
-            bankNameList.value = response.data;
-        });
-}
+// const fetchData = () => {
+//     let url = '/db/getBankDetails'
+//     axios.get(url)
+//         .then((response) => {
+//             console.log(response.data);
+//
+//         });
+// }
+
+const fetchGeneralInformationDetails = () => {
+    // let url = window.location.origin + "/fetch-att-regularization-data";
+    let url =  'http://localhost:3000/Empdetails'
+
+    console.log("AJAX URL : " + url);
+
+    axios.get(url).then((response) => {
+        console.log("Axios : " + response.data);
+        console.log(response.data);
+        employee_details.value = response.data;
+        // loading.value = false;
+    });
+};
 
 
 
@@ -516,50 +506,3 @@ Dropdown>placeholder {
 </style>
 
 
-
-
-
-{
-
-<!--
-
-<template>
-    <div class="card flex justify-content-center">
-        <Dropdown v-model="selectedCity" editable :options="cities" optionLabel="name" placeholder="Select a City" class="w-full md:w-14rem" />
-    </div>
-</template>
-
-<script setup>
-import { ref } from "vue";
-
-const selectedCity = ref();
-const cities = ref([
-    { name: 'New York', code: 'NY' },
-    { name: 'Rome', code: 'RM' },
-    { name: 'London', code: 'LDN' },
-    { name: 'Istanbul', code: 'IST' },
-    { name: 'Paris', code: 'PRS' }
-]);
-</script>
- -->
-
-
-
-<!-- <template>
-    <div class="card flex justify-content-center">
-        <Button label="Show" icon="pi pi-external-link" @click="visible = true" />
-        <Dialog v-model:visible="visible" modal header="Header" :style="{ width: '50vw' }">
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
-        </Dialog>
-    </div>
-</template>
-
-<script setup>
-import { ref } from "vue";
-
-// const visible = ref(false);
-</script> -->
-}
