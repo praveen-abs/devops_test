@@ -18,8 +18,9 @@ use PhpOffice\PhpSpreadsheet\Style\Border;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithCustomStartCell;
 use PhpOffice\PhpSpreadsheet\Style\Protection;
+use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
 
-class BasicAttendanceExport implements FromArray,WithHeadings,ShouldAutoSize,WithEvents,WithCustomStartCell
+class BasicAttendanceExport implements FromArray,WithHeadings,ShouldAutoSize,WithEvents,WithCustomStartCell,WithStrictNullComparison
 {
 
     /**
