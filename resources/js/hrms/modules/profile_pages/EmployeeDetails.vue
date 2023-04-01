@@ -274,7 +274,7 @@
         getBloodGroups,
         getMaritalStatus
     } from "./ProfilePagesService";
-import { log } from 'console';
+   import { log } from 'console';
 
 
 
@@ -373,6 +373,17 @@ import { log } from 'console';
           "present_email":contact_information.personal_email,
           "officical_mail":contact_information.office_email,
           "mobile_number":contact_information.contact_num
+        }).then(res =>{
+            data_checking.value = false
+            if(res.data.status == 'success'){
+
+            }
+            else if(res.data.status =='false'){
+
+            }
+
+        }).catch(err=>{
+            console.log();
         })
 
     }
