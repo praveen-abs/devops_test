@@ -41,8 +41,12 @@ import DialogService from 'primevue/dialogservice';
 import App from './FinanceDetails.vue'
 
 import { createApp } from "vue";
+import { createPinia } from "pinia";
+
 
 const app = createApp(App);
+const pinia=createPinia()
+
 app.directive('tooltip', Tooltip);
 app.directive('badge', BadgeDirective);
 app.directive('ripple', Ripple);
@@ -67,6 +71,7 @@ app.component('InputNumber', InputNumber)
 app.use(PrimeVue, { ripple: true });
 app.use(DialogService)
 app.use(ToastService)
+app.use(pinia)
 
 
 app.mount("#FinanceDetails");
