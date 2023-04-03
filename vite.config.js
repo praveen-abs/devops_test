@@ -25,7 +25,7 @@ export default defineConfig({
                 //Reports
                 'resources/js/hrms/modules/reports/pms/PMSFormsDownloadTable.js',
 
-                //Organization Module  
+                //Organization Module
 
                 'resources/js/hrms/modules/Organization/manage_employee/manage_employee.js',
                 'resources/js/hrms/modules/Organization/Normal_Onboarding/NormalOnboarding.js',
@@ -65,6 +65,8 @@ export default defineConfig({
                 // Experience page
                 'resources/js/hrms/modules/profile_pages/ExperienceDetails.js',
 
+                // financeDetails page
+                'resources/js/hrms/modules/profile_pages/FinanceDetails.js',
                 // Documents Review
 
                 'resources/js/hrms/modules/approvals/onboarding/review_document.js'

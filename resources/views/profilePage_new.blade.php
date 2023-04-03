@@ -12,27 +12,26 @@
         <div class="row">
             <div class="col-3 col-sm-12 col-md-3 col-lg-3 col-xxl-3 col-xl-3">
 
-                <div class="card top-line mb-0 ">
+                <div class="mb-0 card top-line ">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12 text-end">
-                                <button class="btn outline-none border-0 bg-transparent m-0 p-0"
+                                <button class="p-0 m-0 bg-transparent border-0 outline-none btn"
                                     data-bs-target="#show_idCard" data-bs-toggle="modal">
                                     <i class="fa fa-id-card text-success" aria-hidden="true"></i>
                                 </button>
 
                                 {{-- <i class="bi bi-person-vcard"></i> --}}
                             </div>
-                            <div class="col-12 text-center">
+                            <div class="text-center col-12">
 
 
-                                <div class="rounded-circle img-xl
-                                 mx-auto userActive-status profile-img"
+                                <div class="mx-auto rounded-circle img-xl userActive-status profile-img"
                                     style="border:6px solid #c2c2c2c2">
                                     @include('ui-profile-avatar-lg', [
                                         'currentUser' => $user,
                                     ])
-                                    <a class="edit-icon  " data-bs-toggle="modal" data-bs-target="#edit_profileImg"
+                                    <a class="edit-icon " data-bs-toggle="modal" data-bs-target="#edit_profileImg"
                                         id="">
                                         <i class="fa fa-camera"></i></a>
                                 </div>
@@ -49,41 +48,41 @@
 
                                             </span>
                                         </div>
-                                        <div class="progress progress-bar-content mb-2">
-                                            <div class="progress-bar  " role="progressbar" id="profile_progressBar"
+                                        <div class="mb-2 progress progress-bar-content">
+                                            <div class="progress-bar " role="progressbar" id="profile_progressBar"
                                                 aria-valuenow="{{ $profileCompletenessValue }}" aria-valuemin="0"
                                                 aria-valuemax="100"></div>
                                         </div>
-                                        <p class="text-muted f-10 text-start mb-2 fw-bold">Your profile is completed</p>
+                                        <p class="mb-2 text-muted f-10 text-start fw-bold">Your profile is completed</p>
                                     </div>
 
-                                    <div class="profile-mid-right-content mb-4 text-center ">
-                                        <div class="border-bottom-liteAsh py-2">
+                                    <div class="mb-4 text-center profile-mid-right-content ">
+                                        <div class="py-2 border-bottom-liteAsh">
                                             <p class="text-muted f-12 fw-bold">Employee Status</p>
                                             <p class="text-primary-old f-15 fw-bold">
                                                 {{ getEmployeeActiveStatus($user->id) ?? '-' }}
                                             </p>
 
                                         </div>
-                                        <div class="border-bottom-liteAsh py-2">
+                                        <div class="py-2 border-bottom-liteAsh">
                                             <p class="text-muted f-12 fw-bold">Employee Code</p>
                                             <p class="text-primary-old f-15 fw-bold">
                                                 {{ $user_full_details->user_code ?? '-' }}
                                             </p>
 
                                         </div>
-                                        <div class="border-bottom-liteAsh py-2">
+                                        <div class="py-2 border-bottom-liteAsh">
                                             <p class="text-muted f-12 fw-bold">Employee Designation</p>
                                             <p class="text-primary-old f-15 fw-bold">
                                                 {{ $user_full_details->designation ?? '-' }}
                                             </p>
                                         </div>
-                                        <div class="border-bottom-liteAsh py-2">
+                                        <div class="py-2 border-bottom-liteAsh">
                                             <p class="text-muted f-12 fw-bold">Location</p>
                                             <p class="text-primary-old f-15 fw-bold">
                                                 {{ $user_full_details->work_location ?? '-' }}</p>
                                         </div>
-                                        <div class="border-bottom-liteAsh py-2">
+                                        <div class="py-2 border-bottom-liteAsh">
                                             <p class="text-muted f-12 fw-bold">Department
                                                 @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
                                                 <a role="button" class="edit-icon" data-bs-toggle="modal"
@@ -95,7 +94,7 @@
 
                                             </p>
                                         </div>
-                                        <div class="border-bottom-liteAsh py-2">
+                                        <div class="py-2 border-bottom-liteAsh">
                                             <p class="text-muted f-12 fw-bold">Reporting To
                                                 @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
 
@@ -110,7 +109,7 @@
 
                                         </div>
                                     </div>
-                                    <div class="profile-bottom-right-content  text-center ">
+                                    <div class="text-center profile-bottom-right-content ">
                                         {{-- <button class="btn btn-danger"><i class="fa fa-sign-out me-2"></i> Logout </button> --}}
                                         <button class="btn btn-danger"><i class="fa fa-sign-out me-1"></i> Action </button>
                                     </div>
@@ -123,35 +122,35 @@
 
             </div>
             <div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xxl-9 col-xl-9">
-                <div class="card  mb-2 top-line">
-                    <div class="card-body pb-0 pt-1">
-                        <ul class="nav nav-pills    nav-tabs-dashed" id="pills-tab" role="tablist">
-                            <li class="nav-item  " role="presentation">
+                <div class="mb-2 card top-line">
+                    <div class="pt-1 pb-0 card-body">
+                        <ul class="nav nav-pills nav-tabs-dashed" id="pills-tab" role="tablist">
+                            <li class="nav-item " role="presentation">
                                 <a class="nav-link active " id="" data-bs-toggle="pill" href=""
                                     data-bs-target="#employee_details" role="tab" aria-controls="pills-home"
                                     aria-selected="true">
                                     Employee Details</a>
                             </li>
-                            <li class="nav-item  mx-4" role="presentation">
-                                <a class="nav-link  " id="pills-home-tab" data-bs-toggle="pill" href=""
+                            <li class="mx-4 nav-item" role="presentation">
+                                <a class="nav-link " id="pills-home-tab" data-bs-toggle="pill" href=""
                                     data-bs-target="#family_det" role="tab" aria-controls="pills-home"
                                     aria-selected="true">
                                     Family</a>
                             </li>
                             <li class="nav-item " role="presentation">
-                                <a class="nav-link  " id="pills-home-tab" data-bs-toggle="pill" href=""
+                                <a class="nav-link " id="pills-home-tab" data-bs-toggle="pill" href=""
                                     data-bs-target="#experience_det" role="tab" aria-controls="pills-home"
                                     aria-selected="true">
                                     Experience</a>
                             </li>
-                            <li class="nav-item  mx-4 " role="presentation">
-                                <a class="nav-link  " id="" data-bs-toggle="pill" href=""
+                            <li class="mx-4 nav-item " role="presentation">
+                                <a class="nav-link " id="" data-bs-toggle="pill" href=""
                                     data-bs-target="#finance_det" role="tab" aria-controls="pills-home"
                                     aria-selected="true">
                                     Finance</a>
                             </li>
                             <li class="nav-item " role="presentation">
-                                <a class="nav-link  " id="" data-bs-toggle="pill" href=""
+                                <a class="nav-link " id="" data-bs-toggle="pill" href=""
                                     data-bs-target="#document_det" role="tab" aria-controls="pills-home"
                                     aria-selected="true">
                                     Document</a>
@@ -169,7 +168,7 @@
 
                     {{-- family_det --}}
                     <div class="tab-pane fade" id="family_det" role="tabpanel" aria-labelledby="">
-                        {{-- <div class="card mb-2">
+                        {{-- <div class="mb-2 card">
                             <div class="card-body">
                                 <h6 class="">Family Information
                                     <!-- <span class="personal-edit">
@@ -227,7 +226,7 @@
 
                     {{-- experience_det --}}
                     <div class="tab-pane fade" id="experience_det" role="tabpanel" aria-labelledby="">
-                        {{-- <div class="card mb-2">
+                        {{-- <div class="mb-2 card">
                             <div class="card-body">
                                 <h6 class="">Experience Information
                                     <span class="personal-edit"><a href="#" class="edit-icon"
@@ -280,260 +279,9 @@
 
                     {{-- finance_det --}}
                     <div class="tab-pane fade" id="finance_det" role="tabpanel" aria-labelledby="">
-                        <div class="card left-line mb-2 ">
-                            <div class="card-body pb-0 pt-1">
-                                <ul class="nav nav-pills    nav-tabs-dashed" id="pills-tab" role="tablist">
-                                    <li class="nav-item  " role="presentation">
-                                        <a class="nav-link active " id="" data-bs-toggle="pill" href=""
-                                            data-bs-target="#finance_summary" role="tab" aria-controls="pills-home"
-                                            aria-selected="true">Summary
-                                        </a>
-                                    </li>
-                                    <li class="nav-item mx-4  " role="presentation">
-                                        <a class="nav-link " id="" data-bs-toggle="pill" href=""
-                                            data-bs-target="#finance_pay" role="tab" aria-controls="pills-home"
-                                            aria-selected="true">
-                                            Paycheck
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
 
-                        <div class="tab-content " id="pills-tabContent">
-                            <div class="tab-pane fade active show" id="finance_summary" role="tabpanel"
-                                aria-labelledby="">
-                                <div class="card mb-2">
-                                    <div class="card-body">
-                                        <form action="" method="POST" enctype="multipart/form-data">
-
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <h6 class="">
-                                                    Payroll Summary
-
-                                                </h6>
-                                                {{-- <button class="btn btn-border-orange">View Payslip </button> --}}
-                                            </div>
-
-
-                                            <ul class="personal-info">
-                                                <li class="border-bottom-liteAsh pb-1">
-                                                    <div class="title">Last Processed</div>
-                                                    <div class="text">
-                                                        -
-                                                    </div>
-                                                </li>
-                                                <li class="border-bottom-liteAsh pb-1">
-                                                    <div class="title">Total Working Days</div>
-                                                    <div class="text">
-                                                        -
-                                                    </div>
-                                                </li>
-                                                <li class=" pb-1">
-                                                    <div class="title">Loss Of Pay(LOP)</div>
-                                                    <div class="text">
-                                                        -
-                                                    </div>
-                                                </li>
-                                            </ul>
-
-                                        </form>
-
-                                    </div>
-                                </div>
-
-                                <div class="card mb-2">
-                                    <div class="card-body">
-                                        <form action="" method="POST" enctype="multipart/form-data">
-                                            <h6 class="">Bank Information
-                                                <span class="personal-edit"><a href="#" class="edit-icon"
-                                                        data-bs-toggle="modal" data-bs-target="#Bank_info"><i
-                                                            class="ri-pencil-fill"></i></a></span>
-                                            </h6>
-                                            <ul class="personal-info">
-                                                <li>
-                                                    <div class="title">Bank Name</div>
-                                                    <?php $bank_name = App\Models\Bank::where('id', $user_full_details->bank_id)->value('bank_name'); ?>
-                                                    <div class="text">{{ $bank_name ?? '-' }}</div>
-                                                </li>
-                                                <li>
-                                                    <div class="title">Bank Account No.</div>
-                                                    <div class="text">
-                                                        {{ $user_full_details->bank_account_number ?? '-' }}</div>
-                                                </li>
-                                                <li>
-                                                    <div class="title">IFSC Code</div>
-                                                    <div class="text">
-                                                        {{ $user_full_details->bank_ifsc_code ?? '-' }}
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="title">PAN No</div>
-                                                    <div class="text">{{ $user_full_details->pan_number ?? '-' }}
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </form>
-                                    </div>
-                                </div>
-
-                                <div class="card mb-2">
-                                    <div class="card-body">
-                                        <form action="" method="POST" enctype="multipart/form-data">
-                                            <h6 class="">Statutory Information
-                                                <span class="personal-edit"><a href="#" class="edit-icon"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#statutory_info
-                                                        "><i
-                                                            class="ri-pencil-fill"></i></a></span>
-                                            </h6>
-
-
-                                            {{-- @if (!empty($statutory_info))
-                                                @foreach ($statutory_info as $detail) --}}
-                                            <ul class="personal-info">
-                                                <li>
-                                                    <div class="title">PF Applicable</div>
-                                                    <div class="text">{{ $statutory_info->pf_applicable ?? '-' }}
-
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="title">EPF Number</div>
-                                                    <div class="text">{{ $statutory_info->epf_number ?? '-' }}
-
-                                                    </div>
-                                                </li>
-
-                                                <li>
-                                                    <div class="title">UAN Number</div>
-                                                    <div class="text">{{ $statutory_info->uan_number ?? '-' }}
-
-                                                    </div>
-                                                </li>
-
-                                                <li>
-                                                    <div class="title">ESIC Applicable</div>
-                                                    <div class="text">{{ $statutory_info->esic_applicable ?? '-' }}
-
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="title">ESIC Number</div>
-                                                    <div class="text">{{ $statutory_info->esic_number ?? '-' }}
-
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                            {{-- @endforeach
-                                            @endif --}}
-
-                                        </form>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="finance_pay" role="tabpanel" aria-labelledby="">
-                                <div class="card mb-2">
-                                    <div class="card-body">
-                                        <ul class="nav nav-pills mb-4   nav-tabs-dashed" id="pills-tab" role="tablist">
-                                            {{-- <li class="nav-item  " role="presentation">
-                                                <a class="nav-link active " id="" data-bs-toggle="pill"
-                                                    href="" data-bs-target="#pay_summary" role="tab"
-                                                    aria-controls="pills-home" aria-selected="true">Payroll Summary
-                                                </a>
-                                            </li> --}}
-                                            <li class="nav-item   " role="presentation">
-                                                <a class="nav-link active" id="" data-bs-toggle="pill"
-                                                    href="" data-bs-target="#pay_slips" role="tab"
-                                                    aria-controls="" aria-selected="true">
-                                                    Pay Slips
-                                                </a>
-                                            </li>
-                                        </ul>
-                                        <div class="tab-content " id="pills-tabContent">
-                                            <div class="tab-pane fade active show" id="pay_slips" role="tabpanel"
-                                                aria-labelledby="">
-
-                                                {{-- <h6 class=""> Pay Slips</h6> --}}
-                                                <div id="" class="ember-view">
-                                                    <div class="table-responsive ">
-                                                        <table class="table table-hover">
-                                                            <thead class="fw-bold text-muted h5">
-                                                                <tr>
-                                                                    <th width="">Month</th>
-                                                                    <th width="">Gross Pay</th>
-                                                                    <th width="">Reimbursements</th>
-                                                                    <th width="">Deductions</th>
-                                                                    <th width="">Take Home</th>
-                                                                    <th width="" class="text-capitalize">
-                                                                        payslip</th>
-                                                                    <th width="">Tax Worksheet</th>
-                                                                    <th width="">Action</th>
-                                                                </tr>
-                                                            </thead>
-
-                                                            <tbody>
-
-                                                                @foreach ($data as $d)
-                                                                    <tr data-ember-action="" data-ember-action-131="131">
-                                                                        <td>
-                                                                            <a href="#/salary-details/payslips/335214000001040001/details"
-                                                                                id="ember132"
-                                                                                class="ember-view text-secondary">
-                                                                                {{ Carbon::parse($d->PAYROLL_MONTH)->format('M-y') }}
-                                                                            </a>
-
-                                                                            <span class="status-label">
-                                                                                <!---->
-                                                                            </span>
-                                                                        </td>
-                                                                        <td>₹{{ $d->TOTAL_EARNED_GROSS }}
-                                                                        </td>
-                                                                        <td>₹0.00</td>
-                                                                        <td>₹{{ $d->TOTAL_DEDUCTIONS }}</td>
-                                                                        <td>₹{{ $d->NET_TAKE_HOME }}</td>
-                                                                        <td>
-                                                                            <div data="{{ $d->PAYROLL_MONTH }}"
-                                                                                data-url="{{ route('vmt_employee_payslip_htmlview') }}"
-                                                                                style="cursor: pointer"
-                                                                                class="ember-view  paySlipView text-info">
-                                                                                View
-                                                                            </div>
-                                                                        </td>
-                                                                        <td>
-                                                                            <a href="" id="ember134"
-                                                                                class="ember-view  text-info">
-                                                                                View
-                                                                            </a>
-                                                                        </td>
-                                                                        <td>
-                                                                            @php
-
-                                                                                $selectedPaySlipMonth = $d->PAYROLL_MONTH;
-                                                                            @endphp
-                                                                            <div data="{{ $d->PAYROLL_MONTH }}"
-                                                                                data-url="{{ route('vmt_employee_payslip_pdf') }}"
-                                                                                style="cursor: pointer"
-                                                                                class="ember-view  paySlipPDF text-info">
-                                                                                Download PDF
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                @endforeach
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @vite('resources/js/hrms/modules/profile_pages/FinanceDetails.js')
+                        <div id="FinanceDetails"></div>
                     </div>
 
                 </div>
@@ -543,10 +291,10 @@
                 <div id="edit_department" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
                         <div class="modal-content profile-box">
-                            <div class="modal-header  ">
+                            <div class="modal-header ">
                                 <h6 class="modal-title">Edit Department
                                 </h6>
-                                <button type="button" class="close  border-0 h3" data-bs-dismiss="modal"
+                                <button type="button" class="border-0 close h3" data-bs-dismiss="modal"
                                     aria-label="Close">
                                     <span aria-hidden="true">×</span>
                                 </button>
@@ -581,10 +329,10 @@
                     aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
                         <div class="modal-content profile-box">
-                            <div class="modal-header  ">
+                            <div class="modal-header ">
                                 <h6 class="modal-title">Edit Reporting Manager
                                 </h6>
-                                <button type="button" class="close  border-0 h3" data-bs-dismiss="modal"
+                                <button type="button" class="border-0 close h3" data-bs-dismiss="modal"
                                     aria-label="Close">
                                     <span aria-hidden="true">×</span>
                                 </button>
@@ -625,13 +373,13 @@
 
 
 
-                <div id="edit_profileImg" class="modal  custom-modal fade" style="display: none;" aria-hidden="true">
-                    <div class="modal-dialog  modal-dialog-centered " role="document">
+                <div id="edit_profileImg" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered " role="document">
                         <div class="modal-content profile-box">
-                            <div class="modal-header border-0  text-end d-flex justify-content-end">
+                            <div class="border-0 modal-header text-end d-flex justify-content-end">
                                 {{-- <h6 class="modal-title">Edit
                             User </h6> --}}
-                                <button type="button" class="close  border-0 h3" data-bs-dismiss="modal"
+                                <button type="button" class="border-0 close h3" data-bs-dismiss="modal"
                                     aria-label="Close">
                                     <span aria-hidden="true">×</span>
                                 </button>
@@ -672,18 +420,18 @@
                 <div id="edit_generalInfo" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                         <div class="modal-content profile-box top-line">
-                            <div class="modal-header border-0">
+                            <div class="border-0 modal-header">
                                 <h6 class="modal-title">General Information
                                 </h6>
-                                <button type="button" class="close  border-0 h3" data-bs-dismiss="modal"
+                                <button type="button" class="border-0 close h3" data-bs-dismiss="modal"
                                     aria-label="Close">
                                     <span aria-hidden="true">×</span>
                                 </button>
                             </div>
                             {{-- <div class="modal-body">
                                 <div class="row">
-                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-lg-6 col-xxl-6">
-                                        <div class="form-group mb-3">
+                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
+                                        <div class="mb-3 form-group">
                                             <label>Birth Date<span class="text-danger">*</span></label>
                                             <div class="cal-icon">
                                                 @if (!empty($user_full_details->dob))
@@ -697,8 +445,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-lg-6 col-xxl-6">
-                                        <div class="form-group mb-3">
+                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
+                                        <div class="mb-3 form-group">
                                             <label>Gender<span class="text-danger">*</span></label>
 
                                             <select class="form-select form-control" name="gender"
@@ -713,8 +461,8 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-lg-6 col-xxl-6">
-                                        <div class="form-group mb-3">
+                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
+                                        <div class="mb-3 form-group">
                                             <label>Date Of Joining(DOJ)<span class="text-danger">*</span></label>
                                             <div class="cal-icon">
                                                 @if (!empty($user_full_details->doj))
@@ -729,8 +477,8 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-lg-6 col-xxl-6">
-                                        <div class="form-group mb-3">
+                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
+                                        <div class="mb-3 form-group">
                                             <label>Blood Group <span class="text-danger"></span></label>
                                             <select class="form-select form-control text-capitalize" name="blood_group"
                                                 required>
@@ -746,8 +494,8 @@
                                     </div>
 
 
-                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-lg-6 col-xxl-6">
-                                        <div class="form-group mb-3">
+                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
+                                        <div class="mb-3 form-group">
                                             <label>Marital status <span class="text-danger">*</span></label>
                                             <select class="form-select form-control text-capitalize" name="marital_status"
                                                 required>
@@ -762,98 +510,23 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-lg-6 col-xxl-6">
-                                        <div class="form-group mb-3">
+                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
+                                        <div class="mb-3 form-group">
                                             <label>Physically Handicapped</label>
                                             @if (!empty($user_full_details->physically_challenged))
                                                 <input type="text" name="physically_challenged"
                                                     id="physical_challenge" class="form-control "
                                                     value=" {{ $user_full_details->physically_challenged }}">
-                                            @else
-                                                <input type="text" name="physically_challenged"
-                                                    id="physical_challenge" class="form-control " value="">
-                                            @endif
 
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="text-right col-12">
-                                    <button id="btn_submit_generalInfo"
-                                        class="btn btn-border-orange submit-btn">Save</button>
-                                </div>
-
-                            </div> --}}
-                        </div>
-                    </div>
-                </div>
-
-                <!-- personal informatios -->
-                <div id="personal_info_modal" class="modal custom-modal fade" role="dialog">
-                    <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
-                        <div class="modal-content top-line">
-                            <div class="modal-header border-0 ">
-                                <h6 class="modal-title"> Contact Information
-                                </h6>
-                                <button type="button" class="close  border-0 h3" data-bs-dismiss="modal"
-                                    aria-label="Close">
-                                    <span aria-hidden="true">×</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-
-                                @csrf
-                                <div class="row">
-
-                                    <div class="col-md-6">
-
-                                        <div class="form-group mb-3">
-                                            <label>Personal Email</label>
-                                            <input type="email" name="present_email"
-                                                onkeypress='return isValidEmail(email)' class="form-control"
-                                                value="{{ $user->email ?? '' }}">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="form-group mb-3">
-                                            <label> Office Email</label>
-                                            <input type="email" onkeypress='return isValidEmail (email)'
-                                                class="form-control" name="officical_mail"
-                                                value="{{ !empty($user_full_details->officical_mail) ? $user_full_details->officical_mail : '-' }}">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-
-                                        <div class="form-group mb-3">
-                                            <label>Mobile Number</label>
-                                            <input type="text" size=20 maxlength=10 name="mobile_number"
-                                                onkeypress='return isNumberKey(event)' class="form-control"
-                                                value="{{ !empty($user_full_details->mobile_number) ? $user_full_details->mobile_number : '-' }}">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12">
-                                        <div class="text-right">
-                                            <button id="btn_submit_contact_info"
-                                                class="btn btn-border-orange submit-btn">Save</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                 <!-- payslip informatios -->
                 <div id="payslipModal" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
                         <div class="modal-content profile-box">
-                            <div class="modal-header  ">
+                            <div class="modal-header ">
                                 <h6 class="modal-title">Pay Slip
                                 </h6>
-                                <button type="button" class="close  border-0 h3" data-bs-dismiss="modal"
+                                <button type="button" class="border-0 close h3" data-bs-dismiss="modal"
                                     aria-label="Close">
                                     <span aria-hidden="true">×</span>
                                 </button>
@@ -870,10 +543,10 @@
                 <div id="edit_addressInfo" class="modal custom-modal fade" role="dialog">
                     <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
                         <div class="modal-content top-line">
-                            <div class="modal-header border-0 ">
+                            <div class="border-0 modal-header ">
                                 <h6 class="modal-title"> Address
                                 </h6>
-                                <button type="button" class="close  border-0 h3" data-bs-dismiss="modal"
+                                <button type="button" class="border-0 close h3" data-bs-dismiss="modal"
                                     aria-label="Close">
                                     <span aria-hidden="true">×</span>
                                 </button>
@@ -881,12 +554,12 @@
                             <div class="modal-body">
                                 @csrf
                                 <div class="col-md-12">
-                                    <div class="form-group mb-3">
+                                    <div class="mb-3 form-group">
                                         <label>Current Address</label>
                                         <textarea name="current_address_line_1" id="current_address_line_1" cols="30" rows="3"
                                             class="form-control" value="{{ $user_full_details->current_address_line_1 ?? '-' }}">{{ $user_full_details->current_address_line_1 ?? '-' }}</textarea>
                                     </div>
-                                    <div class="form-group mb-3">
+                                    <div class="mb-3 form-group">
                                         <label>Permanent Address </label>
                                         <textarea name="permanent_address_line_1" id="permanent_address_line_1" cols="30" rows="3"
                                             class="form-control" value="{{ $user_full_details->permanent_address_line_1 ?? '-' }}">{{ $user_full_details->permanent_address_line_1 ?? '-' }}</textarea>
@@ -933,27 +606,27 @@
 
                             <div class="input-card">
                                 <!-- <button class="delete_btn text-danger">
-                                    <i class="f-12 me-1 fa text-danger  fa-trash"aria-hidden="true"></i>
+                                    <i class="f-12 me-1 fa text-danger fa-trash"aria-hidden="true"></i>
                                  Delete </button> -->
                                 <ul>
                                     <li>
                                         <div class="space-between">
-                                            <div class="input_text flex-col">
+                                            <div class="flex-col input_text">
                                             <span>Name <span class="text-danger">*</span></span>
                                             <input type="text" name="familyDetails_Name[]" pattern-data="name" id="familyDetails_Name" required  >
                                             </div>
-                                            <div class="input_text flex-col">
+                                            <div class="flex-col input_text">
                                             <span>Relationship<span class="text-danger">*</span></span>
                                             <input type="text" name="familyDetails_Relationship[]" id="familyDetails_Relationship"  pattern-data="alpha" required >
                                             </div>
                                         </div>
                                         <div class="space-between M-T">
-                                            <div class="input_text flex-col">
+                                            <div class="flex-col input_text">
                                             <span>Date of birth <span class="text-danger">*</span></span>
                                             <input type="date" id="datemin" name="familyDetails_dob[]"  min="2000-01-02">
                                             </div>
 
-                                            <div class="input_text flex-col">
+                                            <div class="flex-col input_text">
                                             <span>phone<span class="text-danger">*</span></span>
                                             <input type="number"   minlength="10" maxlength="10" id="familyDetails_phoneNumber" name="familyDetails_phoneNumber[]">
                                             </div>
@@ -969,30 +642,30 @@
 
                                     <div class="input-card">
                                         <button class="delete_button_family_details text-danger" data-family-details-id="{{ $singledetail->id }}" >
-                                            <i class="f-12 me-1 fa text-danger  fa-trash"aria-hidden="true"></i>
+                                            <i class="f-12 me-1 fa text-danger fa-trash"aria-hidden="true"></i>
                                         Delete </button>
                                         <ul>
                                             <li>
                                                 <div class="space-between">
-                                                    <div class="input_text flex-col">
+                                                    <div class="flex-col input_text">
                                                     <span>Name <span class="text-danger">*</span></span>
                                                     <input type="text" name="familyDetails_Name[]" pattern-data="name"
                                                      value="{{ $singledetail->name }}" required  >
                                                     </div>
-                                                    <div class="input_text flex-col">
+                                                    <div class="flex-col input_text">
                                                     <span>Relationship<span class="text-danger">*</span></span>
                                                     <input type="text" name="familyDetails_Relationship[]"  pattern-data="alpha"
                                                     value="{{ $singledetail->relationship }}" required >
                                                     </div>
                                                 </div>
                                                 <div class="space-between M-T">
-                                                    <div class="input_text flex-col">
+                                                    <div class="flex-col input_text">
                                                     <span>Date of birth <span class="text-danger">*</span></span>
                                                     <input type="date"  name="familyDetails_dob[]"
                                                     value="{{ date('Y-m-d', strtotime($singledetail->dob)) }}"  min="2000-01-02">
                                                     </div>
 
-                                                    <div class="input_text flex-col">
+                                                    <div class="flex-col input_text">
                                                     <span>Phone<span class="text-danger">*</span></span>
                                                     <input type="number"   minlength="10" maxlength="10" name="familyDetails_phoneNumber[]" value="{{ $singledetail->phone_number }}">
                                                     </div>
@@ -1029,10 +702,10 @@
                 <div id="edit_experienceInfo" class="modal custom-modal fade " role="dialog" aria-modal="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                         <div class="modal-content profile-box top-line">
-                            <div class="modal-header border-0">
+                            <div class="border-0 modal-header">
                                 <h6 class="modal-title">Experience
                                     Information</h6>
-                                <button type="button" class="close  border-0 h3" data-bs-dismiss="modal"
+                                <button type="button" class="border-0 close h3" data-bs-dismiss="modal"
                                     aria-label="Close">
                                     <span aria-hidden="true">×</span>
                                 </button>
@@ -1044,7 +717,7 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <!-- <a href="javascript:void(0);" class="delete-icon text-end"><i
-                                                    class="   ri-delete-bin-line"></i>
+                                                    class=" ri-delete-bin-line"></i>
                                             </a> -->
 
                                             <div class="exp-content-container">
@@ -1057,14 +730,14 @@
                                                                     </a>
                                                                 <input type="hidden" name="ids[]">
                                                                     <div class="col-md-6">
-                                                                        <div class="form-group mb-3 form-focus focused">
+                                                                        <div class="mb-3 form-group form-focus focused">
                                                                             <label class="focus-label">Company Name</label>
                                                                             <input type="text" name="experienceDetials_company_name[]"
                                                                                 class="form-control floating" value="" required>
                                                                         </div>
                                                                     </div>
                                                                 <div class="col-md-6">
-                                                                    <div class="form-group mb-3 form-focus focused">
+                                                                    <div class="mb-3 form-group form-focus focused">
                                                                         <label class="focus-label">Location</label>
                                                                         <input type="text" name="experienceDetials_location[]"
                                                                             class="form-control floating" value="" required>
@@ -1072,7 +745,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6">
-                                                                    <div class="form-group mb-3 form-focus focused">
+                                                                    <div class="mb-3 form-group form-focus focused">
                                                                         <label class="focus-label">Job Position</label>
                                                                         <input type="text" name="experienceDetials_job_position[]"
                                                                             class="form-control floating" value="" required>
@@ -1080,7 +753,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6">
-                                                                    <div class="form-group mb-3 form-focus focused">
+                                                                    <div class="mb-3 form-group form-focus focused">
                                                                         <label class="focus-label">Period From</label>
                                                                         <div class="cal-icon">
                                                                             <input type="date" max="9999-12-31"
@@ -1092,7 +765,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6">
-                                                                    <div class="form-group mb-3 form-focus focused">
+                                                                    <div class="mb-3 form-group form-focus focused">
                                                                         <div class="cal-icon">
                                                                             <label class="focus-label">Period To</label>
                                                                             <input type="date" max="9999-12-31" name="experienceDetials_period_to[]"
@@ -1109,14 +782,14 @@
                                                 <!-- <div class="row exp-addition-content" id="content1">
                                                     <input type="hidden" name="ids[]">
                                                     <div class="col-md-6">
-                                                        <div class="form-group mb-3 form-focus focused">
+                                                        <div class="mb-3 form-group form-focus focused">
                                                             <label class="focus-label">Company Name</label>
                                                             <input type="text" name="company_name[]"
                                                                 class="form-control floating" value="" required>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <div class="form-group mb-3 form-focus focused">
+                                                        <div class="mb-3 form-group form-focus focused">
                                                             <label class="focus-label">Location</label>
                                                             <input type="text" name="location[]"
                                                                 class="form-control floating" value="" required>
@@ -1124,7 +797,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <div class="form-group mb-3 form-focus focused">
+                                                        <div class="mb-3 form-group form-focus focused">
                                                             <label class="focus-label">Job Position</label>
                                                             <input type="text" name="job_position[]"
                                                                 class="form-control floating" value="" required>
@@ -1132,7 +805,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <div class="form-group mb-3 form-focus focused">
+                                                        <div class="mb-3 form-group form-focus focused">
                                                             <label class="focus-label">Period From</label>
                                                             <div class="cal-icon">
                                                                 <input type="date" max="9999-12-31"
@@ -1144,7 +817,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <div class="form-group mb-3 form-focus focused">
+                                                        <div class="mb-3 form-group form-focus focused">
                                                             <div class="cal-icon">
                                                                 <label class="focus-label">Period To</label>
                                                                 <input type="date" max="9999-12-31" name="period_to[]"
@@ -1186,224 +859,43 @@
                         </div>
                     </div>
                 </div>
-                <!-- bank informatios -->
-                <div id="Bank_info" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                        <div class="modal-content profile-box top-line">
-                            <div class="modal-header d-flex align-items-center border-0">
-                                <h6 class="">Bank Information
-                                </h6>
-                                <button type="button" class="close  border-0 h3" data-bs-dismiss="modal"
-                                    aria-label="Close">
-                                    <span aria-hidden="true">×</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                {{-- <form action="{{ route('updateBankInfo', $user->id) }}" Method="POST"> --}}
-                                @csrf
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group mb-3">
-                                            <label>Bank Name</label>
-                                            @if (!empty($bank))
-                                                <select name="bank_name" id="bank_name"
-                                                    class="form-select form-control onboard-form" required>
-                                                    <option value="">Select</option>
-                                                    @foreach ($bank as $b)
-                                                        @if (!empty($b->bank_name) && !empty($b->min_length) && !empty($b->max_length))
-                                                            <option value="{{ $b->bank_name ?? '' }}"
-                                                                min-data="{{ $b->min_length }}" max-data="{{ $b->max_length }}"
-                                                                @if (!empty($user_full_details->bank_name) && $user_full_details->bank_name == $b->bank_name) selected @endif>
-                                                                {{ $b->bank_name }}</option>
-                                                        @endif
-                                                    @endforeach
-                                                </select>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group mb-3">
-                                            <label>Bank Account No</label>
-                                            <div class="cal-icon">
-                                                <input name="account_no" type="number" minlength="9" maxlength="18"
-                                                    class="form-control onboard-form"
-                                                    value="{{ $user_full_details->bank_account_number ?? '' }}"
-                                                    pattern-data="account" required>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group mb-3">
-                                            <label>IFSC Code</label>
-                                            <input name="bank_ifsc" class="form-control onboard-form"
-                                                value="{{ $user_full_details->bank_ifsc_code ?? '' }}" type="text"
-                                                pattern-data="ifsc" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group mb-3">
-                                            <label>PAN No</label>
-                                            <input name="pan_no" class="form-control onboard-form"
-                                                value="{{ $user_full_details->pan_number ?? '' }}" type="text"
-                                                pattern-data="pan" required>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="col-12">
-                                    <div class="text-right">
-                                        <button id="btn_submit_bank_info"class="btn btn-orange submit-btn">Submit</button>
-                                    </div>
-                                </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!--Statutory Details  -->
-                <div id="statutory_info" class="modal custom-modal fade" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                        <div class="modal-content profile-box  ">
-                            <div class="modal-header   border-0">
-                                <h6>Statutory Details</h6>
-                                <button type="button" class="close  border-0 h3" data-bs-dismiss="modal"
-                                    aria-label="Close">
-                                    <span aria-hidden="true">×</span>
-                                </button>
-                            </div>
-                            @csrf
-
-                            <div class="modal-body">
-                                <div class="row ">
-                                    <div class="col-md-6">
-                                        <div class="floating">
-                                            <label for="" class="float-label">PF
-                                                Applicable<span class="text-danger">*</span></label>
-                                            <select placeholder="PF Applicable" name="pf_applicable" id="pf_applicable"
-                                                class="onboard-form form-control textbox  select2_form_without_search"
-                                                required>
-                                                <option value="" hidden selected disabled>PF
-                                                    Applicable</option>
-                                                <option value="yes">Yes</option>
-                                                <option value="no">No</option>
-                                            </select>
-                                        </div>
-                                    </div>
 
 
-
-
-                                    <div class="col-md-6 ">
-                                        <div class="form-group mb-3">
-                                            <label>EPF Number</label>
-                                            <input type="text" placeholder="EPF Number" name="epf_number"
-                                                id="epf_number" class="onboard-form form-control "
-                                                value=" {{ $detail->epf_number ?? '' }}">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="form-group mb-3">
-                                            <label>UAN Number</label>
-                                            <input name="uan_number" id="uan_number" minlength="12" maxlength="12"
-                                                class="form-control onboard-form" value="{{ $detail->uan_number ?? '' }}"
-                                                type="text" pattern-data="ifsc" required>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="col-md-6">
-                                        <div class="form-group mb-3">
-                                            <label class="float-label">ESIC
-                                                Applicable<span class="text-danger">*</span></label>
-                                            <?php
-                                            $value = '';
-
-                                            if (!empty($statutory) && $statutory->esic_applicable) {
-                                                $value = $statutory->esic_applicable;
-                                            }
-
-                                            ?>
-                                            <select placeholder="ESIC Applicable" name="esic_applicable"
-                                                id="esic_applicable"
-                                                class="onboard-form form-control textbox  select2_form_without_search"
-                                                required>
-                                                <option value="" hidden selected disabled>ESIC
-                                                    Applicable</option>
-                                                <option value="yes" @if ($value == 'yes') selected @endif>
-                                                    Yes
-                                                </option>
-                                                <option value="no" @if ($value == 'no') selected @endif>
-                                                    No
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6 ">
-                                        <div class="floating">
-                                            <label for="" class="float-label">ESIC Number</label>
-
-                                            <input type="text" placeholder="ESIC Number" name="esic_number"
-                                                id="esic_number" minlength="10" maxlength="10"
-                                                class="onboard-form form-control textbox "
-                                                value="{{ $detail->esic_number ?? '' }}" />
-                                            <span class="error" id="error_esic_number"></span>
-                                        </div>
-                                    </div>
-
-
-
-
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="text-right">
-                                        <button
-                                            id="btn_submit_statutory_info"class="btn btn-border-orange submit-btn">Save</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
 
                 <div id="show_idCard" class="modal custom-modal fade" aria-hidden="true">
-                    <div class="modal-dialog  modal-dialog-centered modal-md" role="document">
+                    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
                         <div class="modal-content profile-box">
-                            <div class="modal-header border-0  text-end d-flex justify-content-between">
+                            <div class="border-0 modal-header text-end d-flex justify-content-between">
                                 <h6 class="modal-title">Digital
                                     Id Preview </h6>
-                                <button type="button" class="close  border-0 h3" data-bs-dismiss="modal"
+                                <button type="button" class="border-0 close h3" data-bs-dismiss="modal"
                                     aria-label="Close">
                                     <span aria-hidden="true">×</span>
                                 </button>
                             </div>
-                            <div class="modal-body mx-auto text-center">
+                            <div class="mx-auto text-center modal-body">
 
-                                <div class="card-sm card mb-3" style="">
-                                    <div class="card-body text-center ">
+                                <div class="mb-3 card-sm card" style="">
+                                    <div class="text-center card-body ">
                                         <img src=" {{ URL::asset(session()->get('client_logo_url')) }}" alt=""
                                             class="" height="50" width="130">
 
 
                                         {{-- <img src="{{ URL::asset($generalInfo->logo_img) }}" alt=""
                                         class=""> --}}
-                                        {{-- <div class="profile-img d-flex justify-content-center flex-column text-center"> --}}
-                                        <div class="profile-img img-xl rounded my-2 mx-auto">
+                                        {{-- <div class="text-center profile-img d-flex justify-content-center flex-column"> --}}
+                                        <div class="mx-auto my-2 rounded profile-img img-xl">
                                             @include('ui-profile-avatar-lg', [
                                                 'currentUser' => $user,
                                             ])
                                         </div>
-                                        <p class="fw-bold f-14 text-primary text-center mt-4 ">{{ $user->name }}
+                                        <p class="mt-4 text-center fw-bold f-14 text-primary ">{{ $user->name }}
                                         </p>
-                                        <p class=" f-14 text-ash  text-center mt-2">
+                                        <p class="mt-2 text-center  f-14 text-ash">
                                             {{ !empty($user_full_details->designation) ? $user_full_details->designation : '' }}
                                         </p>
-                                        <p class="fw-bold f-14 text-center text-muted mt-2 ">
+                                        <p class="mt-2 text-center fw-bold f-14 text-muted ">
                                             {{ $user_full_details->user_code }}</p>
                                         {{-- </div> --}}
 
@@ -1420,11 +912,11 @@
                 </div>
 
                 <div id="show_documents" class="modal custom-modal fade" aria-hidden="true">
-                    <div class="modal-dialog  modal-dialog-centered modal-md" role="document">
+                    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
                         <div class="modal-content profile-box">
-                            <div class="modal-header border-0  text-end d-flex justify-content-between">
+                            <div class="border-0 modal-header text-end d-flex justify-content-between">
                                 <h6 class="modal-title">View Documents </h6>
-                                <button type="button" class="closes btn-close  border-0 h3" data-bs-dismiss="modal"
+                                <button type="button" class="border-0 closes btn-close h3" data-bs-dismiss="modal"
                                     aria-label="Close">
                                     <span aria-hidden="true">×</span>
                                 </button>
@@ -1605,9 +1097,9 @@
                 length = parseInt(id.replace('content', '')) + 1;
             }
             $('.exp-content-container').append(
-                '<input type="hidden" name="ids[]"><div class="card  exp-addition-card" id="content' +
+                '<input type="hidden" name="ids[]"><div class="card exp-addition-card" id="content' +
                 length +
-                '"><div class="card-body"><div class="row"> <div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Company Name</label><input type="text" class="form-control floating" name="company_name[]" required></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Location</label><input type="text" class="form-control floating" name="location[]" required></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Job Position</label><input type="text" class="form-control floating" name="job_position[]" required></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Period From</label><div class="cal-icon"><input type="date" max="9999-12-31" class="form-control floating datetimepicker" name="period_from[]" required></div></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><div class="cal-icon"><label class="focus-label">Period To</label><input type="date" max="9999-12-31"  class="form-control floating datetimepicker" name="period_to[]" required></div></div></div></div></div></div>'
+                '"><div class="card-body"><div class="row"> <div class="col-md-6"><div class="mb-3 form-group form-focus focused"><label class="focus-label">Company Name</label><input type="text" class="form-control floating" name="company_name[]" required></div></div><div class="col-md-6"><div class="mb-3 form-group form-focus focused"><label class="focus-label">Location</label><input type="text" class="form-control floating" name="location[]" required></div></div><div class="col-md-6"><div class="mb-3 form-group form-focus focused"><label class="focus-label">Job Position</label><input type="text" class="form-control floating" name="job_position[]" required></div></div><div class="col-md-6"><div class="mb-3 form-group form-focus focused"><label class="focus-label">Period From</label><div class="cal-icon"><input type="date" max="9999-12-31" class="form-control floating datetimepicker" name="period_from[]" required></div></div></div><div class="col-md-6"><div class="mb-3 form-group form-focus focused"><div class="cal-icon"><label class="focus-label">Period To</label><input type="date" max="9999-12-31"  class="form-control floating datetimepicker" name="period_to[]" required></div></div></div></div></div></div>'
             );
         });
 
@@ -1619,9 +1111,9 @@
                 length = parseInt(id.replace('content', '')) + 1;
             }
 
-            $('.family-addition-container').append(' <div class="card mb-2  addition-content" id="content' +
+            $('.family-addition-container').append(' <div class="mb-2 card addition-content" id="content' +
                 length +
-                '"><div class="card-body"> <div class="row" > <div class="col-md-12 m-0 text-end"><button class="btn text-danger delete-btn-family p-0 bg-transparent outline-none border-0 f-12 plus-sign" type="button"><i class="f-12 me-1 fa text-danger  fa-trash" aria-hidden="true"></i>Delete</i></button></div><div class="col-md-6"><div class="form-group mb-3"><label>Name <span class="text-danger">*</span></label><input name="name[]" class="form-control onboard-form" type="text" pattern-data="name" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Relationship <span class="text-danger">*</span></label><input name="relationship[]" class="form-control onboard-form" type="text" pattern-data="alpha" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Date of birth <span class="text-danger">*</span></label><input name="dob[]" class="form-control onboard-form" type="date" max="9999-12-31" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Phone <span class="text-danger">*</span></label><input name="phone_number[]" class="form-control onboard-form" type="number" maxlength="10" minlength="10" required></div></div></div>'
+                '"><div class="card-body"> <div class="row" > <div class="m-0 col-md-12 text-end"><button class="p-0 bg-transparent border-0 outline-none btn text-danger delete-btn-family f-12 plus-sign" type="button"><i class="f-12 me-1 fa text-danger fa-trash" aria-hidden="true"></i>Delete</i></button></div><div class="col-md-6"><div class="mb-3 form-group"><label>Name <span class="text-danger">*</span></label><input name="name[]" class="form-control onboard-form" type="text" pattern-data="name" required></div></div><div class="col-md-6"><div class="mb-3 form-group"><label>Relationship <span class="text-danger">*</span></label><input name="relationship[]" class="form-control onboard-form" type="text" pattern-data="alpha" required></div></div><div class="col-md-6"><div class="mb-3 form-group"><label>Date of birth <span class="text-danger">*</span></label><input name="dob[]" class="form-control onboard-form" type="date" max="9999-12-31" required></div></div><div class="col-md-6"><div class="mb-3 form-group"><label>Phone <span class="text-danger">*</span></label><input name="phone_number[]" class="form-control onboard-form" type="number" maxlength="10" minlength="10" required></div></div></div>'
             );
             //$('.family-addition-container').append('<h2>test</h2>');
         });
@@ -1653,9 +1145,9 @@
                 length = parseInt(id.replace('content', '')) + 1;
             }
             $('.emergency-content-wrapper').append(
-                ' <div class="card mb-3  emergency-addition-content" id="content' +
+                ' <div class="mb-3 card emergency-addition-content" id="content' +
                 length +
-                '"><div class="card-body"> <div class="row" > <div class="col-md-12 m-0 text-end"><button class="btn text-danger delete-btn p-0 bg-transparent outline-none border-0 f-12 plus-sign" type="button"><i class="f-12 me-1 fa text-danger  fa-trash" aria-hidden="true"></i>Delete</i></button></div><div class="col-md-6"><div class="form-group mb-3"><label>Name <span class="text-danger">*</span></label><input name="name[]" class="form-control onboard-form" type="text" pattern-data="name" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Relationship <span class="text-danger">*</span></label><input name="relationship[]" class="form-control onboard-form" type="text" pattern-data="alpha" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Phone<span class="text-danger">*</span></label><input name="dob[]" class="form-control onboard-form" type="text"  required></div></div></div>'
+                '"><div class="card-body"> <div class="row" > <div class="m-0 col-md-12 text-end"><button class="p-0 bg-transparent border-0 outline-none btn text-danger delete-btn f-12 plus-sign" type="button"><i class="f-12 me-1 fa text-danger fa-trash" aria-hidden="true"></i>Delete</i></button></div><div class="col-md-6"><div class="mb-3 form-group"><label>Name <span class="text-danger">*</span></label><input name="name[]" class="form-control onboard-form" type="text" pattern-data="name" required></div></div><div class="col-md-6"><div class="mb-3 form-group"><label>Relationship <span class="text-danger">*</span></label><input name="relationship[]" class="form-control onboard-form" type="text" pattern-data="alpha" required></div></div><div class="col-md-6"><div class="mb-3 form-group"><label>Phone<span class="text-danger">*</span></label><input name="dob[]" class="form-control onboard-form" type="text"  required></div></div></div>'
             );
         });
 
@@ -2131,7 +1623,7 @@
                     },
                     success: function(data) {
                         var content =
-                            '<div class="row " style=""><div class=""><div class="fill body payslip-filter-pdf mb-4"> <i class="icon icon-blue icon-xlg vertical-align-text-bottom text-secondary ri-filter-2-fill"> </i> <div class="dropdown cursor-pointer payslip-dropdown"><div id="ember127" class="ember-view"><div class="dropdown-toggle" data-toggle="dropdown"><span>Financial Year : </span><span class="font-semibold fw-bold text-dark h5">2022 - 23</span><span class="caret "></span></div><ul class="dropdown-menu dropdown-menu-right"><li data-ember-action="" data-ember-action-129="129"><a>2022 - 23</a></li> </ul></div></div></div></div><div class="">' +
+                            '<div class="row " style=""><div class=""><div class="mb-4 fill body payslip-filter-pdf"> <i class="icon icon-blue icon-xlg vertical-align-text-bottom text-secondary ri-filter-2-fill"> </i> <div class="cursor-pointer dropdown payslip-dropdown"><div id="ember127" class="ember-view"><div class="dropdown-toggle" data-toggle="dropdown"><span>Financial Year : </span><span class="font-semibold fw-bold text-dark h5">2022 - 23</span><span class="caret "></span></div><ul class="dropdown-menu dropdown-menu-right"><li data-ember-action="" data-ember-action-129="129"><a>2022 - 23</a></li> </ul></div></div></div></div><div class="">' +
                             data + '</div></div>';
                         $("#slipAfterView").html(content);
                         $('#payslipModal').modal('show');
@@ -2158,7 +1650,7 @@
                 //         console.log("Downloading Payslip PDF........");
                 //         return data;
                 //         // var content =
-                //         //     '<div class="row " style=""><div class=""><div class="fill body payslip-filter-pdf mb-4"> <i class="icon icon-blue icon-xlg vertical-align-text-bottom text-secondary ri-filter-2-fill"> </i> <div class="dropdown cursor-pointer payslip-dropdown"><div id="ember127" class="ember-view"><div class="dropdown-toggle" data-toggle="dropdown"><span>Financial Year : </span><span class="font-semibold fw-bold text-dark h5">2022 - 23</span><span class="caret "></span></div><ul class="dropdown-menu dropdown-menu-right"><li data-ember-action="" data-ember-action-129="129"><a>2022 - 23</a></li> </ul></div></div></div></div><div class="">' +
+                //         //     '<div class="row " style=""><div class=""><div class="mb-4 fill body payslip-filter-pdf"> <i class="icon icon-blue icon-xlg vertical-align-text-bottom text-secondary ri-filter-2-fill"> </i> <div class="cursor-pointer dropdown payslip-dropdown"><div id="ember127" class="ember-view"><div class="dropdown-toggle" data-toggle="dropdown"><span>Financial Year : </span><span class="font-semibold fw-bold text-dark h5">2022 - 23</span><span class="caret "></span></div><ul class="dropdown-menu dropdown-menu-right"><li data-ember-action="" data-ember-action-129="129"><a>2022 - 23</a></li> </ul></div></div></div></div><div class="">' +
                 //         //     data + '</div></div>';
                 //         // $("#slipAfterView").html(content);
                 //         // $('#payslipModal').modal('show');
@@ -2174,17 +1666,17 @@
                 $('#ul_id').prepend(
                     ` <div class="input-card">
                     <button class="delete_button_family_details text-danger">
-                          <i class="f-12 me-1 fa text-danger  fa-trash"aria-hidden="true"></i>
+                          <i class="f-12 me-1 fa text-danger fa-trash"aria-hidden="true"></i>
                           Delete
                     </button>
                         <ul >
                             <li>
                             <div class="space-between">
-                                <div class="input_text flex-col">
+                                <div class="flex-col input_text">
                                 <span>Name <span class="text-danger">*</span></span>
                                 <input type="text" name="familyDetails_Name[]">
                                 </div>
-                                <div class="input_text flex-col">
+                                <div class="flex-col input_text">
                                 <span>Relationship<span class="text-danger">*</span></span>
                                 <input type="text" name="familyDetails_Relationship[]">
                                 </div>
@@ -2194,12 +1686,12 @@
 
                             <!--  -->
                             <div class="space-between M-T">
-                                <div class="input_text flex-col">
+                                <div class="flex-col input_text">
                                 <span>Date of birth <span class="text-danger">*</span></span>
                                 <input type="date" id="datemin" name="familyDetails_dob[]"  min="2000-01-02">
                                 </div>
                                 <!--  -->
-                                <div class="input_text flex-col">
+                                <div class="flex-col input_text">
                                 <span>phone<span class="text-danger">*</span></span>
                                 <input type="number" name="familyDetails_phoneNumber[]"  minlength="10" maxlength="10">
                                 </div>
@@ -2221,17 +1713,17 @@
             //       $("#ul_id").append(
             //         ` <div class="input-card">
             //         <button class="delete_button_family_details text-danger">
-            //               <i class="f-12 me-1 fa text-danger  fa-trash"aria-hidden="true"></i>
+            //               <i class="f-12 me-1 fa text-danger fa-trash"aria-hidden="true"></i>
             //               Delete
             //         </button>
             //             <ul >
             //                 <li>
             //                 <div class="space-between">
-            //                     <div class="input_text flex-col">
+            //                     <div class="flex-col input_text">
             //                     <span>Name <span class="text-danger">*</span></span>
             //                     <input type="text" name="familyDetails_Name[]">
             //                     </div>
-            //                     <div class="input_text flex-col">
+            //                     <div class="flex-col input_text">
             //                     <span>Relationship<span class="text-danger">*</span></span>
             //                     <input type="text" name="familyDetails_Relationship[]">
             //                     </div>
@@ -2241,12 +1733,12 @@
 
             //                 <!--  -->
             //                 <div class="space-between M-T">
-            //                     <div class="input_text flex-col">
+            //                     <div class="flex-col input_text">
             //                     <span>Date of birth <span class="text-danger">*</span></span>
             //                     <input type="date" id="datemin" name="familyDetails_dob[]"  min="2000-01-02">
             //                     </div>
             //                     <!--  -->
-            //                     <div class="input_text flex-col">
+            //                     <div class="flex-col input_text">
             //                     <span>phone<span class="text-danger">*</span></span>
             //                     <input type="number" name="familyDetails_phoneNumber[]"  minlength="10" maxlength="10">
             //                     </div>
@@ -2382,14 +1874,14 @@
                                                                     </a>
 
                                                                     <div class="col-md-6">
-                                                                        <div class="form-group mb-3 form-focus focused">
+                                                                        <div class="mb-3 form-group form-focus focused">
                                                                             <label class="focus-label">Company Name</label>
                                                                             <input type="text" name="experienceDetials_company_name[]"
                                                                                 class="form-control floating" value="" required>
                                                                         </div>
                                                                     </div>
                                                                 <div class="col-md-6">
-                                                                    <div class="form-group mb-3 form-focus focused">
+                                                                    <div class="mb-3 form-group form-focus focused">
                                                                         <label class="focus-label">Location</label>
                                                                         <input type="text" name="experienceDetials_location[]"
                                                                             class="form-control floating" value="" required>
@@ -2397,7 +1889,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6">
-                                                                    <div class="form-group mb-3 form-focus focused">
+                                                                    <div class="mb-3 form-group form-focus focused">
                                                                         <label class="focus-label">Job Position</label>
                                                                         <input type="text" name="experienceDetials_job_position[]"
                                                                             class="form-control floating" value="" required>
@@ -2405,7 +1897,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6">
-                                                                    <div class="form-group mb-3 form-focus focused">
+                                                                    <div class="mb-3 form-group form-focus focused">
                                                                         <label class="focus-label">Period From</label>
                                                                         <div class="cal-icon">
                                                                             <input type="date" max="9999-12-31"
@@ -2417,7 +1909,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6">
-                                                                    <div class="form-group mb-3 form-focus focused">
+                                                                    <div class="mb-3 form-group form-focus focused">
                                                                         <div class="cal-icon">
                                                                             <label class="focus-label">Period To</label>
                                                                             <input type="date" max="9999-12-31" name="experienceDetials_period_to[]"

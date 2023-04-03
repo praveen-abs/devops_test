@@ -83,6 +83,12 @@ Route::middleware(['auth'])->group(function () {
         return auth()->user()->id;
     });
 
+    //Get current logged-in user name
+    Route::get('/currentUserName', function() {
+
+        return auth()->user()->name;
+    });
+
 
 
     //Department

@@ -5,49 +5,42 @@
         <div class="row">
             <div class="col-8 col-sm-8 col-md-8 col-xl-8 col-lg-8 col-xxl-8">
                 <p class="fw-bold f-18 text-primary" id="greeting_text">
-                -
+                {{ current_session }}
                 </p>
                 <p class="my-1 fw-bold fs-16 text-orange">
                     <!-- {{ auth()->user()->name }} -->
-                    {{ name }}
+                    {{ current_user }}
                 </p>
 
                 <div class="my-3"><i class="fa fa-sun-o me-3 text-warning" aria-hidden="true"></i>General Shift <label
                         class="switch-checkbox f-12 text-muted ms-3">
-                        <input type="checkbox" id="checkin_function" class="f-13 text-muted" />
-                            <!-- @if ($checked && $checked->checkin_time) @if ($checked->checkout_time)
-                            @else
-                            checked @endif
-                            @endif> -->
+                        <input type="checkbox" id="checkin_function" class="f-13 text-muted" v-model="welcome_card.check"
+                        @change="getTime" />
+                     
                         <span class="slider-checkbox check-in round">
                             <span class="slider-checkbox-text">
                             </span>
                         </span>
                     </label>
                 </div>
-                <p class="f-12 text-muted " id="time_duration">Time Duration:
-                    <!-- @if ($effective_hours)
-                        <span class="test-primary f-12"> {{ $effective_hours }}</span>
-                    @else
-                        <span class="test-primary f-12"> {{ '-' }}</span>
-                    @endif
-                    </-> -->
+                <p v-if="welcome_card.check" class="f-12 text-muted " id="time_duration">Time Duration:
+                   {{ welcome_card.check_in }}
+                </p>
+                <p v-else class="f-12 text-muted " id="time_duration">Time Duration:
+                   {{ welcome_card.check_out}}
                 </p>
             </div>
             <div class="col-4 col-sm-4 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
-                <img src="{{ URL::asset('assets/images/dashboard/girl_walk.jpg') }}" class="" alt="girl-walk"
-                    height="145px" width="100%">
+                <img src="../../dashboard/girl_walk.jpg" class="" alt="girl-walk"
+                   style="height: 140px;width: 140px;">
             </div>
         </div>
 
     </div>
 </div>
 
-<!-- staticBackdrop Modal -->
-<div class="modal fade" id="modal_checkin_confirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
+<Dialog v-model:visible="check_in_dailog" modal   :style="{ width: '25vw' }">
+    <div class="modal-content">
             <div class="p-1 text-center modal-body">
 
                 <div class="check-in-animate">
@@ -60,13 +53,12 @@
                     </lord-icon>
                 </div>
                 <div class="mt-2">
-                    <!-- <h4 class="mb-2">Welcome {{ auth()->user()->name }}</h4> -->
-                    <h4 class="mb-2">Welcome </h4>
+                    <h4 class="mb-2">Welcome {{ current_user }}</h4>
                     <p class="mb-4 text-muted">Have a good day !</p>
                     <div class="gap-2 hstack justify-content-center">
                         <a href="javascript:void(0);" class="btn btn-link link-success fw-medium"
                             data-bs-dismiss="modal">
-                            <button type="button" class="btn btn-primary">
+                            <button @click="check_in_dailog=false" type="button" class="btn btn-primary">
                                 Close
                             </button>
                         </a>
@@ -74,13 +66,9 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
-
-<div class="modal fade" id="modal_checkout_confirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
+</Dialog>
+<Dialog v-model:visible="check_out_dailog" modal  :style="{ width: '25vw' }">
+    <div class="modal-content">
             <div class="p-1 text-center modal-body">
 
                 <div class="check-in-animate">
@@ -94,13 +82,12 @@
 
                 </div>
                 <div class="mt-4">
-                    <!-- <h4 class="mb-3">Bye {{ auth()->user()->name }}</h4> -->
-                    <h4 class="mb-3">Bye </h4>
+                    <h4 class="mb-3">Bye  {{ current_user }} </h4>
                     <p class="mb-4 text-muted"> See you tommorrow</p>
                     <div class="gap-2 hstack justify-content-center">
                         <a href="javascript:void(0);" class="btn btn-link link-success fw-medium"
                             data-bs-dismiss="modal">
-                            <button type="button" class="btn btn-primary">
+                            <button type="button" class="btn btn-primary" @click="check_out_dailog = false">
                                 Close
                             </button>
                         </a>
@@ -108,8 +95,8 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
+</Dialog>
+
 
 
 
@@ -118,16 +105,78 @@
 
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref ,reactive } from "vue";
+import { Service } from "../../dashboard_service";
+
+const user = Service()
+
+const current_session = ref()
+const current_user =ref()
+
+const check_in_dailog =ref(false)
+const check_out_dailog =ref(false)
+
+const welcome_card = reactive({
+    check:'',
+    check_in:'',
+    check_out:'',
+})
+
+const  getSession = () =>{
+var today = new Date()
+var curHr = today.getHours()
+
+if (curHr < 12) {
+    current_session.value = 'good morning'
+  console.log('good morning')
+} else if (curHr < 18) {
+    current_session.value = 'good afternoon'
+  console.log('good afternoon')
+} else {
+    current_session.value = 'good evening'
+  console.log('good evening')
+}
+
+}
+
+const getTime = () =>{
+    if(welcome_card.check ==  true){
+        welcome_card.check_in = new Date().toLocaleTimeString()
+        check_in_dailog.value = true
+    }else{
+        welcome_card.check_out = new Date().toLocaleTimeString()
+        check_out_dailog.value = true
+    }
+
+    user.updateCheckin_out({
+        "check_in" : welcome_card.check_in,
+        "check_out" : welcome_card.check_out,
+    })
+    
+  
+
+}
 
 onMounted(() => {
-    console.log(data.value.name);
+    user.getCurrentlyLoginUser().then(res =>{
+        console.log(res.data);
+        current_user.value = res.data
+        getSession()
+    })
 });
 
-const name = ref("george")
 
-const data = ref([
-                { id: 1, name: 'george', img: 'https://cdn.icon-icons.com/icons2/1156/PNG/512/1486565573-microsoft-office_81557.png', des: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.Pariatur voluptatemLorem ' },
-                { id: 1, name: 'Max', img: 'https://cdn.icon-icons.com/icons2/1156/PNG/512/1486565573-microsoft-office_81557.png', des: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.Pariatur voluptatemLorem ' },
-])
+
+
+
 </script>
+
+
+<style>
+
+.p-dialog .p-dialog-header .p-dialog-header-icon:last-child {
+    margin-right: 0;
+    display: none;
+}
+
+</style>
