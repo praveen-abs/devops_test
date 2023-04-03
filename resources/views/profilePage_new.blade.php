@@ -1,4 +1,5 @@
 <?php use Carbon\Carbon; ?>
+
 @extends('layouts.master')
 @section('title')
     @lang('translation.settings')
@@ -44,8 +45,8 @@
                                             <h6 class="text-center">{{ $user->name }}</h6>
                                         </div>
                                         <div class="mb-1 d-flex justify-content-between ">
-                                            <span class="text-muted f-12">Profile Completeness :</span>
-                                            <span class="text-muted text-end f-12 fw-medium" id="prograssBar_percentage">
+                                            <span class="text-muted f-12">Profile Completeness</span>
+                                            <span class="text-muted text-end f-12 fw-bold" id="prograssBar_percentage">
 
                                             </span>
                                         </div>
@@ -54,60 +55,43 @@
                                                 aria-valuenow="{{ $profileCompletenessValue }}" aria-valuemin="0"
                                                 aria-valuemax="100"></div>
                                         </div>
-                                        <p class="text-muted f-10 text-start mb-2 fw-medium">Your profile is completed</p>
+                                        <p class="text-muted f-10 text-start mb-2 fw-bold">Your profile is completed</p>
                                     </div>
 
                                     <div class="profile-mid-right-content mb-4 text-center ">
                                         <div class="border-bottom-liteAsh py-2">
-                                            <p class="text-muted f-12 fw-medium">Employee Status</p>
-                                            <p class="text-primary-old f-15 fw-medium">
+                                            <p class="text-muted f-12 fw-bold">Employee Status</p>
+                                            <p class="text-primary f-15 fw-bold">
                                                 {{ getEmployeeActiveStatus($user->id) ?? '-' }}
                                             </p>
 
                                         </div>
                                         <div class="border-bottom-liteAsh py-2">
-                                            <p class="text-muted f-12 fw-medium">Employee Code</p>
-                                            <p class="text-primary-old f-15 fw-medium">
-                                                {{ $user_full_details->user_code ?? '-' }}
+                                            <p class="text-muted f-12 fw-bold">Employee Code</p>
+                                            <p class="text-primary f-15 fw-bold">{{ $user_full_details->user_code ?? '-' }}
                                             </p>
 
                                         </div>
                                         <div class="border-bottom-liteAsh py-2">
-                                            <p class="text-muted f-12 fw-medium">Employee Designation</p>
-                                            <p class="text-primary-old f-15 fw-mediam">
-                                                {{ $user_full_details->designation ?? '-' }}
+                                            <p class="text-muted f-12 fw-bold">Designation</p>
+                                            <p class="text-primary f-15 fw-bold">{{ $user_full_details->designation }}
                                             </p>
+
                                         </div>
                                         <div class="border-bottom-liteAsh py-2">
-                                            <p class="text-muted f-12 fw-medium">Location</p>
-                                            <p class="text-primary-old f-15 fw-medium">
+                                            <p class="text-muted f-12 fw-bold">Location</p>
+                                            <p class="text-primary f-15 fw-bold">
                                                 {{ $user_full_details->work_location ?? '-' }}</p>
                                         </div>
                                         <div class="border-bottom-liteAsh py-2">
-                                            <p class="text-muted f-12 fw-bold">Department
-                                                @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
-                                                <a role="button" class="edit-icon" data-bs-toggle="modal"
-                                                data-bs-target="#edit_department"><i class="ri-pencil-fill"></i></a>
-                                                @endif
-                                            </p>
-                                            <p class="text-primary-old f-15 fw-bold">
-                                                {{ $department ?? '-' }}
-
-                                            </p>
+                                            <p class="text-muted f-12 fw-bold">Department</p>
+                                            <p class="text-primary f-15 fw-bold">
+                                                {{ $department ?? '-' }}</p>
                                         </div>
                                         <div class="border-bottom-liteAsh py-2">
-                                            <p class="text-muted f-12 fw-bold">Reporting To
-                                                @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
-
-                                                <a role="button"
-                                                    class="edit-icon" data-bs-toggle="modal"
-                                                    data-bs-target="#edit_reportingManager"><i
-                                                        class="ri-pencil-fill"></i></a>
-                                                @endif
-                                                    </p>
-                                            <p class="text-primary-old f-15 fw-bold">
+                                            <p class="text-muted f-12 fw-bold">Reporting To</p>
+                                            <p class="text-primary f-15 fw-bold">
                                                 {{ $user_full_details->l1_manager_name ?? '-' }}</p>
-
                                         </div>
                                     </div>
                                     <div class="profile-bottom-right-content  text-center ">
@@ -123,535 +107,8 @@
 
             </div>
             <div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xxl-9 col-xl-9">
-                <div class="card  mb-2 top-line">
-                    <div class="card-body pb-0 pt-1">
-                        <ul class="nav nav-pills    nav-tabs-dashed" id="pills-tab" role="tablist">
-                            <li class="nav-item  " role="presentation">
-                                <a class="nav-link active " id="" data-bs-toggle="pill" href=""
-                                    data-bs-target="#employee_details" role="tab" aria-controls="pills-home"
-                                    aria-selected="true">
-                                    Employee Details</a>
-                            </li>
-                            <li class="nav-item  mx-4" role="presentation">
-                                <a class="nav-link  " id="pills-home-tab" data-bs-toggle="pill" href=""
-                                    data-bs-target="#family_det" role="tab" aria-controls="pills-home"
-                                    aria-selected="true">
-                                    Family</a>
-                            </li>
-                            <li class="nav-item " role="presentation">
-                                <a class="nav-link  " id="pills-home-tab" data-bs-toggle="pill" href=""
-                                    data-bs-target="#experience_det" role="tab" aria-controls="pills-home"
-                                    aria-selected="true">
-                                    Experience</a>
-                            </li>
-                            <li class="nav-item  mx-4 " role="presentation">
-                                <a class="nav-link  " id="" data-bs-toggle="pill" href=""
-                                    data-bs-target="#finance_det" role="tab" aria-controls="pills-home"
-                                    aria-selected="true">
-                                    Finance</a>
-                            </li>
-                            <li class="nav-item " role="presentation">
-                                <a class="nav-link  " id="" data-bs-toggle="pill" href=""
-                                    data-bs-target="#document_det" role="tab" aria-controls="pills-home"
-                                    aria-selected="true">
-                                    Document</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="tab-content " id="pills-tabContent">
-
-                    <div class="tab-pane fade active show" id="employee_details" role="tabpanel" aria-labelledby="">
-                        @vite('resources/js/hrms/modules/profile_pages/EmployeeDetails.js')
-                        <div id="EmployeeDetails"></div>
-                    </div>
-
-                    {{-- family_det --}}
-                    <div class="tab-pane fade" id="family_det" role="tabpanel" aria-labelledby="">
-                        {{-- <div class="card mb-2">
-                            <div class="card-body">
-                                <h6 class="">Family Information
-                                    <!-- <span class="personal-edit">
-                                        <a href="#" class="edit-icon"
-                                            data-bs-toggle="modal" data-bs-target="#edit_familyInfo">
-
-                                            </a>
-                                    </span> -->
-                                    <button type="button" class="btn_txt edit-icon" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                            <i class="ri-pencil-fill"></i>
-                                            </button>
-                                </h6>
-
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <thead class="bg-primary">
-                                            <th>
-                                                Name
-                                            </th>
-                                            <th>
-                                                Relationship
-                                            </th>
-                                            <th>
-                                                Date Of Birth
-                                            </th>
-                                            <th>
-                                                Phone
-                                            </th>
-                                        </thead>
-                                        <tbody>
-                                            @if (!empty($familydetails))
-                                                @foreach ($familydetails as $singledetail)
-                                                    <tr>
-                                                        <td>{{ $singledetail->name }}</td>
-                                                        <td>{{ $singledetail->relationship }}</td>
-                                                        <td>{{ date('d-M-Y', strtotime($singledetail->dob)) }}</td>
-                                                        <td>{{ $singledetail->phone_number }}</td>
-                                                    </tr>
-                                                @endforeach
-                                            @endif
-                                        </tbody>
-                                    </table>
-                                </div>
-
-
-                                </form>
-                            </div>
-                        </div> --}}
-
-                        @vite('resources/js/hrms/modules/profile_pages/FamilyDetails.js')
-                        <div id="familyinformation">
-                        </div>
-
-                    </div>
-
-                    {{-- experience_det --}}
-                    <div class="tab-pane fade" id="experience_det" role="tabpanel" aria-labelledby="">
-                        {{-- <div class="card mb-2">
-                            <div class="card-body">
-                                <h6 class="">Experience Information
-                                    <span class="personal-edit"><a href="#" class="edit-icon"
-                                            data-bs-toggle="modal" data-bs-target="#edit_experienceInfo"><i
-                                                class="ri-pencil-fill"></i></a></span>
-                                </h6>
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <thead class="bg-primary">
-                                            <th>
-                                                Organization
-                                            </th>
-                                            <th>
-                                                Designation
-                                            </th>
-                                            <th>
-                                                From
-                                            </th>
-                                            <th>
-                                                To
-                                            </th>
-                                        </thead>
-                                        <tbody>
-                                            @if ($exp)
-                                                @foreach ($exp as $k => $info)
-                                                    <tr>
-                                                         date('M-Y', strtotime($employee_payslip->PAYROLL_MONTH))
-                                                        <td>{{ $info['company_name'] }}</td>
-                                                        <td>{{ $info['job_position'] }}</td>
-                                                        <td>{{ date('d-M-Y', strtotime($info['period_from'])) }}</td>
-                                                        <td>{{ date('d-M-Y', strtotime($info['period_to'])) }}</td>
-                                                    </tr>
-                                                @endforeach
-                                            @endif
-
-                                                </div>
-                                            </li>
-                                            <li class="border-bottom-liteAsh pb-1">
-                                                <div class="title">Organization</div>
-                                                <div class="text">
-                                                    Organization
-
-                                                </div>
-                                            </li>
-                                            <li class="border-bottom-liteAsh pb-1">
-                                                <div class="title">Designation</div>
-                                                <div class="text">
-                                                    Designation
-                                                </div>
-                                            </li>
-                                            <li class="border-bottom-liteAsh pb-1 ">
-                                                <div class="title">From <i
-                                                        class="fa fa-exclamation-circle text-muted ms-2"
-                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        title="DOJ"></i></div>
-                                                <div class="text">
-                                                    From
-                                                </div>
-                                            </li>
-                                            <li class="border-bottom-liteAsh pb-1 border-0">
-                                                <div class="title">To <i class="fa fa-exclamation-circle text-muted ms-2"
-                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        title="LWD"></i></div>
-                                                <div class="text">
-                                                    To
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>--}}
-
-                        @vite('resources/js/hrms/modules/profile_pages/ExperienceDetails.js')
-                        <div id="ExperienceDetails"></div>
-
-                    </div>
-
-                    {{-- finance_det --}}
-                    <div class="tab-pane fade" id="finance_det" role="tabpanel" aria-labelledby="">
-                        <div class="card left-line mb-2 ">
-                            <div class="card-body pb-0 pt-1">
-                                <ul class="nav nav-pills    nav-tabs-dashed" id="pills-tab" role="tablist">
-                                    <li class="nav-item  " role="presentation">
-                                        <a class="nav-link active " id="" data-bs-toggle="pill" href=""
-                                            data-bs-target="#finance_summary" role="tab" aria-controls="pills-home"
-                                            aria-selected="true">Summary
-                                        </a>
-                                    </li>
-                                    <li class="nav-item mx-4  " role="presentation">
-                                        <a class="nav-link " id="" data-bs-toggle="pill" href=""
-                                            data-bs-target="#finance_pay" role="tab" aria-controls="pills-home"
-                                            aria-selected="true">
-                                            Paycheck
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="tab-content " id="pills-tabContent">
-                            <div class="tab-pane fade active show" id="finance_summary" role="tabpanel"
-                                aria-labelledby="">
-                                <div class="card mb-2">
-                                    <div class="card-body">
-                                        <form action="" method="POST" enctype="multipart/form-data">
-
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <h6 class="">
-                                                    Payroll Summary
-
-                                                </h6>
-                                                {{-- <button class="btn btn-border-orange">View Payslip </button> --}}
-                                            </div>
-
-
-                                            <ul class="personal-info">
-                                                <li class="border-bottom-liteAsh pb-1">
-                                                    <div class="title">Last Processed</div>
-                                                    <div class="text">
-                                                        -
-                                                    </div>
-                                                </li>
-                                                <li class="border-bottom-liteAsh pb-1">
-                                                    <div class="title">Total Working Days</div>
-                                                    <div class="text">
-                                                        -
-                                                    </div>
-                                                </li>
-                                                <li class=" pb-1">
-                                                    <div class="title">Loss Of Pay(LOP)</div>
-                                                    <div class="text">
-                                                        -
-                                                    </div>
-                                                </li>
-                                            </ul>
-
-                                        </form>
-
-                                    </div>
-                                </div>
-
-                                <div class="card mb-2">
-                                    <div class="card-body">
-                                        <form action="" method="POST" enctype="multipart/form-data">
-                                            <h6 class="">Bank Information
-                                                <span class="personal-edit"><a href="#" class="edit-icon"
-                                                        data-bs-toggle="modal" data-bs-target="#Bank_info"><i
-                                                            class="ri-pencil-fill"></i></a></span>
-                                            </h6>
-                                            <ul class="personal-info">
-                                                <li>
-                                                    <div class="title">Bank Name</div>
-                                                    <?php $bank_name = App\Models\Bank::where('id', $user_full_details->bank_id)->value('bank_name'); ?>
-                                                    <div class="text">{{ $bank_name ?? '-' }}</div>
-                                                </li>
-                                                <li>
-                                                    <div class="title">Bank Account No.</div>
-                                                    <div class="text">
-                                                        {{ $user_full_details->bank_account_number ?? '-' }}</div>
-                                                </li>
-                                                <li>
-                                                    <div class="title">IFSC Code</div>
-                                                    <div class="text">
-                                                        {{ $user_full_details->bank_ifsc_code ?? '-' }}
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="title">PAN No</div>
-                                                    <div class="text">{{ $user_full_details->pan_number ?? '-' }}
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </form>
-                                    </div>
-                                </div>
-
-                                <div class="card mb-2">
-                                    <div class="card-body">
-                                        <form action="" method="POST" enctype="multipart/form-data">
-                                            <h6 class="">Statutory Information
-                                                <span class="personal-edit"><a href="#" class="edit-icon"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#statutory_info
-                                                        "><i
-                                                            class="ri-pencil-fill"></i></a></span>
-                                            </h6>
-
-
-                                            {{-- @if (!empty($statutory_info))
-                                                @foreach ($statutory_info as $detail) --}}
-                                            <ul class="personal-info">
-                                                <li>
-                                                    <div class="title">PF Applicable</div>
-                                                    <div class="text">{{ $statutory_info->pf_applicable ?? '-' }}
-
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="title">EPF Number</div>
-                                                    <div class="text">{{ $statutory_info->epf_number ?? '-' }}
-
-                                                    </div>
-                                                </li>
-
-                                                <li>
-                                                    <div class="title">UAN Number</div>
-                                                    <div class="text">{{ $statutory_info->uan_number ?? '-' }}
-
-                                                    </div>
-                                                </li>
-
-                                                <li>
-                                                    <div class="title">ESIC Applicable</div>
-                                                    <div class="text">{{ $statutory_info->esic_applicable ?? '-' }}
-
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="title">ESIC Number</div>
-                                                    <div class="text">{{ $statutory_info->esic_number ?? '-' }}
-
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                            {{-- @endforeach
-                                            @endif --}}
-
-                                        </form>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="finance_pay" role="tabpanel" aria-labelledby="">
-                                <div class="card mb-2">
-                                    <div class="card-body">
-                                        <ul class="nav nav-pills mb-4   nav-tabs-dashed" id="pills-tab" role="tablist">
-                                            {{-- <li class="nav-item  " role="presentation">
-                                                <a class="nav-link active " id="" data-bs-toggle="pill"
-                                                    href="" data-bs-target="#pay_summary" role="tab"
-                                                    aria-controls="pills-home" aria-selected="true">Payroll Summary
-                                                </a>
-                                            </li> --}}
-                                            <li class="nav-item   " role="presentation">
-                                                <a class="nav-link active" id="" data-bs-toggle="pill"
-                                                    href="" data-bs-target="#pay_slips" role="tab"
-                                                    aria-controls="" aria-selected="true">
-                                                    Pay Slips
-                                                </a>
-                                            </li>
-                                        </ul>
-                                        <div class="tab-content " id="pills-tabContent">
-                                            <div class="tab-pane fade active show" id="pay_slips" role="tabpanel"
-                                                aria-labelledby="">
-
-                                                {{-- <h6 class=""> Pay Slips</h6> --}}
-                                                <div id="" class="ember-view">
-                                                    <div class="table-responsive ">
-                                                        <table class="table table-hover">
-                                                            <thead class="fw-bold text-muted h5">
-                                                                <tr>
-                                                                    <th width="">Month</th>
-                                                                    <th width="">Gross Pay</th>
-                                                                    <th width="">Reimbursements</th>
-                                                                    <th width="">Deductions</th>
-                                                                    <th width="">Take Home</th>
-                                                                    <th width="" class="text-capitalize">
-                                                                        payslip</th>
-                                                                    <th width="">Tax Worksheet</th>
-                                                                    <th width="">Action</th>
-                                                                </tr>
-                                                            </thead>
-
-                                                            <tbody>
-
-                                                                @foreach ($data as $d)
-                                                                    <tr data-ember-action="" data-ember-action-131="131">
-                                                                        <td>
-                                                                            <a href="#/salary-details/payslips/335214000001040001/details"
-                                                                                id="ember132"
-                                                                                class="ember-view text-secondary">
-                                                                                {{ Carbon::parse($d->PAYROLL_MONTH)->format('M-y') }}
-                                                                            </a>
-
-                                                                            <span class="status-label">
-                                                                                <!---->
-                                                                            </span>
-                                                                        </td>
-                                                                        <td>₹{{ $d->TOTAL_EARNED_GROSS }}
-                                                                        </td>
-                                                                        <td>₹0.00</td>
-                                                                        <td>₹{{ $d->TOTAL_DEDUCTIONS }}</td>
-                                                                        <td>₹{{ $d->NET_TAKE_HOME }}</td>
-                                                                        <td>
-                                                                            <div data="{{ $d->PAYROLL_MONTH }}"
-                                                                                data-url="{{ route('vmt_employee_payslip_htmlview') }}"
-                                                                                style="cursor: pointer"
-                                                                                class="ember-view  paySlipView text-info">
-                                                                                View
-                                                                            </div>
-                                                                        </td>
-                                                                        <td>
-                                                                            <a href="" id="ember134"
-                                                                                class="ember-view  text-info">
-                                                                                View
-                                                                            </a>
-                                                                        </td>
-                                                                        <td>
-                                                                            @php
-
-                                                                                $selectedPaySlipMonth = $d->PAYROLL_MONTH;
-                                                                            @endphp
-                                                                            <div data="{{ $d->PAYROLL_MONTH }}"
-                                                                                data-url="{{ route('vmt_employee_payslip_pdf') }}"
-                                                                                style="cursor: pointer"
-                                                                                class="ember-view  paySlipPDF text-info">
-                                                                                Download PDF
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                @endforeach
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-
-
-                <div id="edit_department" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
-                        <div class="modal-content profile-box">
-                            <div class="modal-header  ">
-                                <h6 class="modal-title">Edit Department
-                                </h6>
-                                <button type="button" class="close  border-0 h3" data-bs-dismiss="modal"
-                                    aria-label="Close">
-                                    <span aria-hidden="true">×</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div>
-                                    <label>Department<span class="text-danger">*</span></label>
-
-                                    <select class="form-select form-control" name="gender" aria-label="Default select"
-                                        id="selected_dep">
-                                        <option selected hidden disabled>Choose Gender</option>
-                                        @foreach ($allDepartments as $singleDepartment)
-                                            <option value="{{ $singleDepartment->id }}"
-                                                @if (!empty($department) && $department == $singleDepartment->name) selected @endif>
-                                                {{ $singleDepartment->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="text-right">
-                                    <button class="btn btn-orange submit-btn" id="save_department">Save</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-                <div id="edit_reportingManager" class="modal custom-modal fade" style="display: none;"
-                    aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
-                        <div class="modal-content profile-box">
-                            <div class="modal-header  ">
-                                <h6 class="modal-title">Edit Reporting Manager
-                                </h6>
-                                <button type="button" class="close  border-0 h3" data-bs-dismiss="modal"
-                                    aria-label="Close">
-                                    <span aria-hidden="true">×</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div>
-                                    <label>Manager Name<span class="text-danger">*</span></label>
-
-                                    <select class="form-select form-control" name="gender"
-                                        aria-label="Default select"id="selected_report_manager">
-                                        <option selected hidden disabled>Choose Reporting Manager</option>
-                                        @foreach ($allEmployees as $singleEmployee)
-                                            <option value="{{ $singleEmployee->user_code }}">
-                                                {{ $singleEmployee->user_code }} - {{ $singleEmployee->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="text-right">
-                                    <button class="btn btn-orange submit-btn" id="save_reportingManager">Save</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-
-
-
-
-
-
-
-
+              @vite('resources/js/hrms/modules/profile_pages/ProfilePageNew.js')
+              <div id="profilePage"></div>
 
                 <div id="edit_profileImg" class="modal  custom-modal fade" style="display: none;" aria-hidden="true">
                     <div class="modal-dialog  modal-dialog-centered " role="document">
@@ -696,6 +153,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div id="edit_generalInfo" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                         <div class="modal-content profile-box top-line">
@@ -707,7 +165,7 @@
                                     <span aria-hidden="true">×</span>
                                 </button>
                             </div>
-                            {{-- <div class="modal-body">
+                            <div class="modal-body">
                                 <div class="row">
                                     <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-lg-6 col-xxl-6">
                                         <div class="form-group mb-3">
@@ -810,10 +268,11 @@
                                         class="btn btn-border-orange submit-btn">Save</button>
                                 </div>
 
-                            </div> --}}
+                            </div>
                         </div>
                     </div>
                 </div>
+
                 <!-- personal informatios -->
                 <div id="personal_info_modal" class="modal custom-modal fade" role="dialog">
                     <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
@@ -871,6 +330,7 @@
                         </div>
                     </div>
                 </div>
+
                 <!-- payslip informatios -->
                 <div id="payslipModal" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
@@ -890,6 +350,7 @@
                         </div>
                     </div>
                 </div>
+
                 <!-- address informatios -->
                 <div id="edit_addressInfo" class="modal custom-modal fade" role="dialog">
                     <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
@@ -929,127 +390,145 @@
                     </div>
                 </div>
 
-                <!--  -->
-                <!--  -->
-                <!--  -->
-                <!--  -->
-
-
-                <!-- family informatios old -->
-
-<!-- end -->
-
-                <!--  -->
-                <!--  -->
-                <!--  -->
-                <!-- family informatios new  -->
-
-                {{-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg div">
-                        <div class="modal-content">
-                        <div class="modal-header">
-                            <h6 class="modal-title txt" id="exampleModalLabel">Family Information
-                            </h6>
-                            <button type="button" class="btn-close rounded-circle Btn" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        @if (empty($familydetails))
-                        <div class="modal-body" id="ul_id">
-
-                            <div class="input-card">
-                                <!-- <button class="delete_btn text-danger">
-                                    <i class="f-12 me-1 fa text-danger  fa-trash"aria-hidden="true"></i>
-                                 Delete </button> -->
-                                <ul>
-                                    <li>
-                                        <div class="space-between">
-                                            <div class="input_text flex-col">
-                                            <span>Name <span class="text-danger">*</span></span>
-                                            <input type="text" name="familyDetails_Name[]" pattern-data="name" id="familyDetails_Name" required  >
-                                            </div>
-                                            <div class="input_text flex-col">
-                                            <span>Relationship<span class="text-danger">*</span></span>
-                                            <input type="text" name="familyDetails_Relationship[]" id="familyDetails_Relationship"  pattern-data="alpha" required >
-                                            </div>
-                                        </div>
-                                        <div class="space-between M-T">
-                                            <div class="input_text flex-col">
-                                            <span>Date of birth <span class="text-danger">*</span></span>
-                                            <input type="date" id="datemin" name="familyDetails_dob[]"  min="2000-01-02">
-                                            </div>
-
-                                            <div class="input_text flex-col">
-                                            <span>phone<span class="text-danger">*</span></span>
-                                            <input type="number"   minlength="10" maxlength="10" id="familyDetails_phoneNumber" name="familyDetails_phoneNumber[]">
-                                            </div>
-                                        </div>
-
-                                    </li>
-                                </ul>
+                <!-- family informatios -->
+                <div id="edit_familyInfo" class="modal custom-modal fade " role="dialog" aria-modal="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content profile-box">
+                            <div class="modal-header  border-0">
+                                <h6 class="modal-title">Family
+                                    Information</h6>
+                                <button type="button" class="close  border-0 h3" data-bs-dismiss="modal"
+                                    aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
                             </div>
-                        </div>
-                        @else
-                            @foreach ($familydetails as $singledetail)
-                                <div class="modal-body" id="ul_id">
-
-                                    <div class="input-card">
-                                        <button class="delete_button_family_details text-danger" data-family-details-id="{{ $singledetail->id }}" >
-                                            <i class="f-12 me-1 fa text-danger  fa-trash"aria-hidden="true"></i>
-                                        Delete </button>
-                                        <ul>
-                                            <li>
-                                                <div class="space-between">
-                                                    <div class="input_text flex-col">
-                                                    <span>Name <span class="text-danger">*</span></span>
-                                                    <input type="text" name="familyDetails_Name[]" pattern-data="name"
-                                                     value="{{ $singledetail->name }}" required  >
-                                                    </div>
-                                                    <div class="input_text flex-col">
-                                                    <span>Relationship<span class="text-danger">*</span></span>
-                                                    <input type="text" name="familyDetails_Relationship[]"  pattern-data="alpha"
-                                                    value="{{ $singledetail->relationship }}" required >
+                            <div class="modal-body">
+                                <div class="family-addition-container">
+                                    @csrf
+                                    @if (!empty($familydetails) && count($familydetails) > 0)
+                                        @foreach ($familydetails as $singledetail)
+                                            <div class="card mb-3 addition-content" id="content1">
+                                                <div class="card-body">
+                                                    <div class="row ">
+                                                        <div class="col-md-12 m-0 text-end">
+                                                            <button
+                                                                class="btn text-danger delete-btn p-0 bg-transparent outline-none border-0 f-12 "
+                                                                type="button" id="deleteFamily_btn"><i
+                                                                    class="f-12 me-1 fa text-danger  fa-trash"
+                                                                    aria-hidden="true"></i>Delete
+                                                                </i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group mb-3">
+                                                                <label>Name <span class="text-danger">*</span></label>
+                                                                <input name="name[]" class="form-control onboard-form"
+                                                                    type="text" pattern-data="name" required
+                                                                    value="{{ $singledetail->name }}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group mb-3">
+                                                                <label>Relationship <span
+                                                                        class="text-danger">*</span></label>
+                                                                <input name="relationship[]"
+                                                                    class="form-control onboard-form" type="text"
+                                                                    pattern-data="alpha" required
+                                                                    value="{{ $singledetail->relationship }}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group mb-3">
+                                                                <label>Date of birth <span
+                                                                        class="text-danger">*</span></label>
+                                                                <input name="dob[]" class="form-control onboard-form"
+                                                                    type="date" max="9999-12-31" required
+                                                                    value="{{ $singledetail->dob }}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group ">
+                                                                <label>Phone <span class="text-danger">*</span></label>
+                                                                <input name="phone_number[]"
+                                                                    class="form-control onboard-form" type="number"
+                                                                    maxlength="10" minlength="10" required
+                                                                    value="{{ $singledetail->phone_number }}">
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="space-between M-T">
-                                                    <div class="input_text flex-col">
-                                                    <span>Date of birth <span class="text-danger">*</span></span>
-                                                    <input type="date"  name="familyDetails_dob[]"
-                                                    value="{{ date('Y-m-d', strtotime($singledetail->dob)) }}"  min="2000-01-02">
+                                            </div>
+                                        @endforeach
+                                    @else
+                                        <div class="card mb-3 addition-content" id="content1">
+                                            <div class="card-body">
+                                                <div class="row ">
+                                                    <div class="col-md-12 m-0 text-end">
+                                                        <button
+                                                            class="btn text-danger delete-btn p-0 bg-transparent outline-none border-0 f-12 plus-sign"
+                                                            type="button" id="deleteFamily_btn"><i
+                                                                class="f-12 me-1 fa text-danger  fa-trash"
+                                                                aria-hidden="true"></i>Delete
+                                                            </i></button>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group mb-3">
+                                                            <label>Name<span class="text-danger">*</span></label>
+                                                            <input name="name[]" class="form-control onboard-form"
+                                                                type="text" pattern-data="name" required
+                                                                value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group mb-3">
+                                                            <label>Relationship <span class="text-danger">*</span></label>
+                                                            <input name="relationship[]" class="form-control onboard-form"
+                                                                type="text" pattern-data="alpha" required
+                                                                value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group mb-3">
+                                                            <label>Date of birth <span class="text-danger">*</span></label>
+                                                            <input name="dob[]" class="form-control onboard-form"
+                                                                type="date" max="9999-12-31" required value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group ">
+                                                            <label>Phone <span class="text-danger">*</span></label>
+                                                            <input name="phone_number[]" class="form-control onboard-form"
+                                                                type="number" maxlength="10" minlength="10" required
+                                                                value="">
+                                                        </div>
                                                     </div>
 
-                                                    <div class="input_text flex-col">
-                                                    <span>Phone<span class="text-danger">*</span></span>
-                                                    <input type="number"   minlength="10" maxlength="10" name="familyDetails_phoneNumber[]" value="{{ $singledetail->phone_number }}">
-                                                    </div>
                                                 </div>
-
-                                            </li>
-                                        </ul>
-                                    </div>
-
+                                            </div>
+                                        </div>
+                                    @endif
                                 </div>
-
-                                @endforeach
-                        @endif
-
-                        <div class="modal-footer flex-column mdl">
-                            <button type="button" class="add_more bg-light " id="Add_Mores">
-                            <i class=" ri-add-circle-fill"></i>
-                            <h6>Add More</h6>
-                            </button>
-                            <button type="button" class="submit_btn" id="submit_button_family_details">submit</button>
-                        </div>
-                        </div>
-                    </div>
-                </div> --}}
+                                <div class=" text-end mb-2" style="cursor:pointer;">
+                                    <button id="addMore_family"
+                                        class="btn text-primary p-0 bg-transparent outline-none border-0 f-12 plus-sign"
+                                        type="button"><i class="f-12 me-1 fa  fa-plus-circle" aria-hidden="true"></i>Add
+                                        More</i>
+                                    </button>
+                                </div>
+                                <div class="col-12 text-right">
+                                    <button id="btn_submit_family_info" class="btn btn-orange submit-btn">Submit
+                                    </button>
+                                </div>
+                            </div>
 
                         </div>
                     </div>
                 </div>
-                <!-- experience informatios -->
-                <div id="edit_experienceInfo" class="modal fade" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                        <div class="modal-content profile-box ">
 
+                <!-- experience informatios -->
+                <div id="edit_experienceInfo" class="modal custom-modal fade " role="dialog" aria-modal="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content profile-box top-line">
                             <div class="modal-header border-0">
                                 <h6 class="modal-title">Experience
                                     Information</h6>
@@ -1059,154 +538,94 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                {{-- <form action="{{ route('updateExperienceInfo', $user->id) }}" Method="POST"> --}}
-                                @csrf
-                                <div class="form-scroll">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <!-- <a href="javascript:void(0);" class="delete-icon text-end"><i
-                                                    class="   ri-delete-bin-line"></i>
-                                            </a> -->
+                                @csrf <div class="exp-content-container">
+                                    {{-- <div class="card exp-addition-card" id="content1">
+                                        <div class="card-body"> --}}
 
-                                            <div class="exp-content-container">
-
-                                                <ul id="experienceinfo_ul_list_id">
-                                                        <li>
-                                                            <div class="row exp-addition-content" id="content1">
-                                                                    <a href="javascript:void(0);" class="delete-icon text-end"><i
-                                                                    class="ri-delete-bin-line"></i>
-                                                                    </a>
-                                                                <input type="hidden" name="ids[]">
-                                                                    <div class="col-md-6">
-                                                                        <div class="form-group mb-3 form-focus focused">
-                                                                            <label class="focus-label">Company Name</label>
-                                                                            <input type="text" name="experienceDetials_company_name[]"
-                                                                                class="form-control floating" value="" required>
-                                                                        </div>
-                                                                    </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group mb-3 form-focus focused">
-                                                                        <label class="focus-label">Location</label>
-                                                                        <input type="text" name="experienceDetials_location[]"
-                                                                            class="form-control floating" value="" required>
-
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group mb-3 form-focus focused">
-                                                                        <label class="focus-label">Job Position</label>
-                                                                        <input type="text" name="experienceDetials_job_position[]"
-                                                                            class="form-control floating" value="" required>
-
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group mb-3 form-focus focused">
-                                                                        <label class="focus-label">Period From</label>
-                                                                        <div class="cal-icon">
-                                                                            <input type="date" max="9999-12-31"
-                                                                                name="experienceDetials_period_from[]"
-                                                                                class="form-control floating datetimepicker"
-                                                                                value="" required>
-                                                                        </div>
-
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group mb-3 form-focus focused">
-                                                                        <div class="cal-icon">
-                                                                            <label class="focus-label">Period To</label>
-                                                                            <input type="date" max="9999-12-31" name="experienceDetials_period_to[]"
-                                                                                class="form-control floating datetimepicker"
-                                                                                value="" required>
-                                                                        </div>
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                        </li>
-                                                    </ul>
-                                                <!-- <div class="row exp-addition-content" id="content1">
-                                                    <input type="hidden" name="ids[]">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group mb-3 form-focus focused">
-                                                            <label class="focus-label">Company Name</label>
-                                                            <input type="text" name="company_name[]"
-                                                                class="form-control floating" value="" required>
-                                                        </div>
+                                    @if (!empty($exp) && count($exp) > 0)
+                                        @foreach ($exp as $experience)
+                                            <div class="row ">
+                                                <input type="hidden" name="ids[]">
+                                                {{-- <div class="col-12 text-end">
+                                                    <button
+                                                        class="btn text-danger delete-btn p-0 bg-transparent outline-none border-0 f-12 plus-sign"
+                                                        type="button" id="deleteFamily_btn"><i
+                                                            class="f-12 me-1 fa text-danger  fa-trash"
+                                                            aria-hidden="true"></i>Delete
+                                                    </button>
+                                                </div> --}}
+                                                <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-12">
+                                                    <div class="form-group mb-2">
+                                                        <label class="focus-label">Company Name</label>
+                                                        <input type="text" name="company_name[]"
+                                                            class="form-control floating"
+                                                            value="" required>
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group mb-3 form-focus focused">
-                                                            <label class="focus-label">Location</label>
-                                                            <input type="text" name="location[]"
-                                                                class="form-control floating" value="" required>
+                                                </div>
+                                                <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-12">
+                                                    <div class="form-group mb-2">
+                                                        <label class="focus-label">Location</label>
+                                                        <input type="text" name="location[]"
+                                                            class="form-control floating" value="{{ $exp }}"
+                                                            required>
 
-                                                        </div>
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group mb-3 form-focus focused">
-                                                            <label class="focus-label">Job Position</label>
-                                                            <input type="text" name="job_position[]"
-                                                                class="form-control floating" value="" required>
+                                                </div>
 
+                                                <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-12">
+                                                    <div class="form-group mb-2">
+                                                        <label class="focus-label">Period From</label>
+                                                        <div class="cal-icon">
+                                                            <input type="date" max="9999-12-31" name="period_from[]"
+                                                                class="form-control floating datetimepicker"
+                                                                value="" required>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group mb-3 form-focus focused">
-                                                            <label class="focus-label">Period From</label>
-                                                            <div class="cal-icon">
-                                                                <input type="date" max="9999-12-31"
-                                                                    name="period_from[]"
-                                                                    class="form-control floating datetimepicker"
-                                                                    value="" required>
-                                                            </div>
 
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-12">
+                                                    <div class="form-group mb-2">
+                                                        <div class="cal-icon">
+                                                            <label class="focus-label">Period To</label>
+                                                            <input type="date" max="9999-12-31" name="period_to[]"
+                                                                class="form-control floating datetimepicker"
+                                                                value="" required>
                                                         </div>
+
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group mb-3 form-focus focused">
-                                                            <div class="cal-icon">
-                                                                <label class="focus-label">Period To</label>
-                                                                <input type="date" max="9999-12-31" name="period_to[]"
-                                                                    class="form-control floating datetimepicker"
-                                                                    value="" required>
-                                                            </div>
+                                                </div>
+                                                <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-12">
+                                                    <div class="form-group mb-2">
+                                                        <label class="focus-label">Job Position</label>
+                                                        <input type="text" name="job_position[]"
+                                                            class="form-control floating" value="" required>
 
-                                                        </div>
                                                     </div>
-                                                </div> -->
-
-
-
+                                                </div>
                                             </div>
-                                            <!-- <div class="add-more text-end">
-                                                <div class="text-primary f-13" id="exp-add-more">
-                                                    <i class=" ri-add-circle-fill"></i> Add More
-                                                </div>
-                                            </div> -->
-                                        </div>
-
-                                    </div>
-                                    <!--  -->
-                                    <div class="add-more text-end">
-                                                <div class="text-primary f-13" id="exp-add-more">
-                                                    <i class=" ri-add-circle-fill"></i> Add More
-                                                </div>
-                                    </div>
-
+                                        @endforeach
+                                    @endif
                                 </div>
-                                <div class="col-12">
-                                    <div class="text-right">
-                                        <button id="btn_submit_experience_info"
-                                            class="btn btn-orange submit-btn">Submit</button>
-                                    </div>
+                                <div class="text-end col-12">
+                                    <button id=btn_submit_experience_info class="btn btn-orange submit-btn">Submit
+                                    </button>
                                 </div>
-                                {{-- </form> --}}
                             </div>
+
+                            {{-- <div class="text-right col-12 mb-2">
+                                    <button class="text-primary border-0 outline-none bg-transparent"
+                                        id="add_experienceDetails">
+                                        <i class=" ri-add-circle-fill"></i> Add More
+                                    </button>
+                                </div> --}}
+
+
+                            {{-- </div>
+                        </div> --}}
                         </div>
                     </div>
                 </div>
+
                 <!-- bank informatios -->
                 <div id="Bank_info" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -1282,6 +701,7 @@
                         </div>
                     </div>
                 </div>
+
                 <!--Statutory Details  -->
                 <div id="statutory_info" class="modal custom-modal fade" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -1389,6 +809,8 @@
                         </div>
                     </div>
                 </div>
+
+
                 <div id="show_idCard" class="modal custom-modal fade" aria-hidden="true">
                     <div class="modal-dialog  modal-dialog-centered modal-md" role="document">
                         <div class="modal-content profile-box">
@@ -1436,6 +858,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div id="show_documents" class="modal custom-modal fade" aria-hidden="true">
                     <div class="modal-dialog  modal-dialog-centered modal-md" role="document">
                         <div class="modal-content profile-box">
@@ -1449,18 +872,21 @@
                             <div class="modal-body ">
                                 <div id="documents_content"></div>
 
+
+
                             </div>
                         </div>
                     </div>
                 </div>
+
+
             </div>
         </div>
     </div>
-
+    </div>
 @endsection
 @section('script')
     @yield('script-profile-avatar')
-    @vite(['resources/js/hrms/modules/profile_pages/EmployeeDocumentsManager.js'])
 
 
     <script src="{{ URL::asset('assets/js/pages/profile-setting.init.js') }}"></script>
@@ -1500,54 +926,12 @@
                 }
             });
 
-            // @if (!empty($reportingManager))
-            //     generateProfileShortName_VendorScript("manager_shortname", "{{ $reportingManager->id }}");
-            // @endif
+            @if (!empty($reportingManager))
+                generateProfileShortName_VendorScript("manager_shortname",
+                    "{{ $reportingManager->name }}");
+            @endif
 
             console.log("ready!");
-        });
-
-
-
-
-        $('#save_department').click(function() {
-            var department_id = $('#selected_dep').val();
-
-            let emp_id = "{{ $user_full_details->user_id }}";
-
-            $.ajax({
-                url: "{{ route('profile-pages-updatedepartment') }}",
-                type: 'POST',
-                data: {
-                    emp_id: emp_id,
-                    department_id: department_id,
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function(data) {
-                    location.reload();
-                }
-            });
-
-
-        });
-
-        $('#save_reportingManager').click(function() {
-            var manager_user_code = $('#selected_report_manager').val();
-            var current_user_id = '{{ $user_full_details->user_id }}';
-            console.log(current_user_id);
-
-            $.ajax({
-                url: "{{ route('profile-pages-update-reporting-mgr') }}",
-                type: 'POST',
-                data: {
-                    manager_user_code: manager_user_code,
-                    current_user_id: current_user_id,
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function(data) {
-                    location.reload();
-                }
-            });
         });
 
 
@@ -1631,30 +1015,10 @@
             if (id) {
                 length = parseInt(id.replace('content', '')) + 1;
             }
-
             $('.family-addition-container').append(' <div class="card mb-2  addition-content" id="content' +
                 length +
-                '"><div class="card-body"> <div class="row" > <div class="col-md-12 m-0 text-end"><button class="btn text-danger delete-btn-family p-0 bg-transparent outline-none border-0 f-12 plus-sign" type="button"><i class="f-12 me-1 fa text-danger  fa-trash" aria-hidden="true"></i>Delete</i></button></div><div class="col-md-6"><div class="form-group mb-3"><label>Name <span class="text-danger">*</span></label><input name="name[]" class="form-control onboard-form" type="text" pattern-data="name" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Relationship <span class="text-danger">*</span></label><input name="relationship[]" class="form-control onboard-form" type="text" pattern-data="alpha" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Date of birth <span class="text-danger">*</span></label><input name="dob[]" class="form-control onboard-form" type="date" max="9999-12-31" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Phone <span class="text-danger">*</span></label><input name="phone_number[]" class="form-control onboard-form" type="number" maxlength="10" minlength="10" required></div></div></div>'
+                '"><div class="card-body"> <div class="row" > <div class="col-md-12 m-0 text-end"><button class="btn text-danger delete-btn p-0 bg-transparent outline-none border-0 f-12 plus-sign" type="button"><i class="f-12 me-1 fa text-danger  fa-trash" aria-hidden="true"></i>Delete</i></button></div><div class="col-md-6"><div class="form-group mb-3"><label>Name <span class="text-danger">*</span></label><input name="name[]" class="form-control onboard-form" type="text" pattern-data="name" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Relationship <span class="text-danger">*</span></label><input name="relationship[]" class="form-control onboard-form" type="text" pattern-data="alpha" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Date of birth <span class="text-danger">*</span></label><input name="dob[]" class="form-control onboard-form" type="date" max="9999-12-31" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Phone <span class="text-danger">*</span></label><input name="phone_number[]" class="form-control onboard-form" type="number" maxlength="10" minlength="10" required></div></div></div>'
             );
-            //$('.family-addition-container').append('<h2>test</h2>');
-        });
-
-        $('.delete-btn-family').click(function(){
-//            console.log("Family Details : Deleting DIV id : "+parentDiV);
-            console.log("Family Details delete button clicked");
-
-            let parentDiv = $(this).parent().parent().parent().parent().attr('id');
-
-            //Remove the div
-            $('#'+parentDiv).remove();
-
-            //Need to put sweet alert for deleting data in backend
-
-
-
-
-            console.log("Family Details : Deleting DIV id : "+parentDiv);
-
         });
 
         // emergency contact
@@ -1931,6 +1295,7 @@
                     },
                     success: function(data) {
                         Swal.fire({
+
                             text: 'Address Information Updated',
                             icon: 'success'
                         }).then((result) => {
@@ -2002,69 +1367,111 @@
         });
 
         $(document).ready(function() {
+            $("#btn_submit_family_info").on('click', function(e) {
+                e.preventDefault();
+
+                var name = $('input[name="name[]"]').map(function() {
+                    return this.value;
+                }).get();
+
+                var relationship = $('input[name="relationship[]"]').map(function() {
+                    return this.value;
+                }).get();
+
+                var dob = $('input[name="dob[]"]').map(function() {
+                    return this.value;
+                }).get();
+
+                var phone_number = $('input[name="phone_number[]"]').map(function() {
+                    return this.value;
+                }).get();
+
+
+                $.ajax({
+                    url: "{{ route('updateFamilyInfo', $user->id) }}",
+                    type: 'POST',
+                    data: {
+                        'name[]': name,
+                        'relationship[]': relationship,
+                        'dob[]': dob,
+                        'phone_number[]': phone_number,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(data) {
+                        Swal.fire({
+                            text: 'Family Information Updated',
+                            icon: 'success'
+                        }).then((result) => {
+                            /* Read more about isConfirmed, isDenied below */
+                            if (result.isConfirmed) {
+                                location.reload();
+                            }
+                        })
+                    }
+
+                });
+
+            });
         });
 
-        // $(document).ready(function() {
-        //     $("#btn_submit_experience_info").on('click', function(e) {
-        //         e.preventDefault();
-        // 'ids[]': ids,
-        // name="ids[]"
-        //         var ids = $('input[name="ids[]"]').map(function() {
-        //             return this.value;
-        //         }).get();
+        $(document).ready(function() {
+            $("#btn_submit_experience_info").on('click', function(e) {
+                e.preventDefault();
+                var ids = $('input[name="ids[]"]').map(function() {
+                    return this.value;
+                }).get();
 
-        //         var company_name = $('input[name="company_name[]"]').map(function() {
-        //             return this.value;
-        //         }).get();
+                var company_name = $('input[name="company_name[]"]').map(function() {
+                    return this.value;
+                }).get();
 
-        //         var t_location = $('input[name="location[]"]').map(function() {
-        //             return this.value;
-        //         }).get();
+                var location = $('input[name="location[]"]').map(function() {
+                    return this.value;
+                }).get();
 
-        //         var job_position = $('input[name="job_position[]"]').map(function() {
-        //             return this.value;
-        //         }).get();
+                var job_position = $('input[name="job_position[]"]').map(function() {
+                    return this.value;
+                }).get();
 
-        //         var period_from = $('input[name="period_from[]"]').map(function() {
-        //             return this.value;
-        //         }).get();
+                var period_from = $('input[name="period_from[]"]').map(function() {
+                    return this.value;
+                }).get();
 
-        //         var period_to = $('input[name="period_to[]"]').map(function() {
-        //             return this.value;
-        //         }).get();
+                var period_to = $('input[name="period_to[]"]').map(function() {
+                    return this.value;
+                }).get();
 
 
-        //         $.ajax({
-        //             url: "{{ route('updateExperienceInfo', $user->id) }}",
-        //             type: 'POST',
-        //             data: {
-        //                 'ids[]': ids,
-        //                 'company_name[]': company_name,
-        //                 'location[]': t_location,
-        //                 'job_position[]': job_position,
-        //                 'period_from[]': period_from,
-        //                 'period_to[]': period_to,
-        //                 _token: '{{ csrf_token() }}'
-        //             },
-        //             success: function(data) {
-        //                 Swal.fire({
+                $.ajax({
+                    url: "{{ route('updateExperienceInfo', $user->id) }}",
+                    type: 'POST',
+                    data: {
+                        'ids[]': ids,
+                        'company_name[]': company_name,
+                        'location[]': location,
+                        'job_position[]': job_position,
+                        'period_from[]': period_from,
+                        'period_to[]': period_to,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(data) {
+                        Swal.fire({
 
-        //                     text: 'Experience Information Updated',
-        //                     icon: 'success'
-        //                 }).then((result) => {
-        //                     console.log("Experience Update status : "+result);
-        //                     /* Read more about isConfirmed, isDenied below */
-        //                     if (result.isConfirmed) {
-        //                         location.reload();
-        //                     }
-        //                 })
-        //             }
+                            text: 'Experience Information Updated',
+                            icon: 'success'
+                        }).then((result) => {
+                            /* Read more about isConfirmed, isDenied below */
+                            if (result.isConfirmed) {
+                                location.reload();
+                            }
+                        })
+                    }
 
 
-        //         });
+                });
 
-        //     });
-        // });
+            });
+        });
 
         $(document).ready(function() {
             $("#btn_submit_bank_info").on('click', function(e) {
@@ -2131,37 +1538,6 @@
         });
 
 
-        // $(function() {
-        //     $('#experience_card li .text').each(function(index) {
-        //         var lengthText = 20;
-        //         console.log($(this).text());
-        //         var text =$(this).text();
-        //         console.log(text);
-        //         var shortText = $.trim(text).substring(0, lengthText).split(" ").slice(0, -1).join(" ") +
-        //             "...";
-        //             console.log(text);
-        //         $('#experience_card li .text').prop("title", text);
-        //         $('#experience_card li .text').text(shortText);
-
-        //         $('[data-toggle="tooltip"]').tooltip();
-        //     });
-        // })
-
-
-
-        // $(function() {
-        //     var lengthText = 25;
-        //     var text = $('#experience_card li .text').text();
-
-        //     var shortText = $.trim(text).substring(0, lengthText).split(" ").slice(0, -1).join(" ") + "...";
-
-        //     $('#experience_card li .text').prop("title", text);
-        //     $('#experience_card li .text').text(shortText);
-
-        //     $('[data-toggle="tooltip"]').tooltip();
-        // })
-
-
         $(document).ready(function() {
             $('.paySlipView').on('click', function() {
                 var url = $(this).attr('data-url');
@@ -2210,378 +1586,6 @@
                 //     }
                 // });
             });
-
-            // new code---->
-
-            $("#Add_Mores").click(()=>{
-                console.log("hi");
-                $('#ul_id').prepend(
-                    ` <div class="input-card">
-                    <button class="delete_button_family_details text-danger">
-                          <i class="f-12 me-1 fa text-danger  fa-trash"aria-hidden="true"></i>
-                          Delete
-                    </button>
-                        <ul >
-                            <li>
-                            <div class="space-between">
-                                <div class="input_text flex-col">
-                                <span>Name <span class="text-danger">*</span></span>
-                                <input type="text" name="familyDetails_Name[]">
-                                </div>
-                                <div class="input_text flex-col">
-                                <span>Relationship<span class="text-danger">*</span></span>
-                                <input type="text" name="familyDetails_Relationship[]">
-                                </div>
-                            </div>
-                            <!--  -->
-                            <!--  -->
-
-                            <!--  -->
-                            <div class="space-between M-T">
-                                <div class="input_text flex-col">
-                                <span>Date of birth <span class="text-danger">*</span></span>
-                                <input type="date" id="datemin" name="familyDetails_dob[]"  min="2000-01-02">
-                                </div>
-                                <!--  -->
-                                <div class="input_text flex-col">
-                                <span>phone<span class="text-danger">*</span></span>
-                                <input type="number" name="familyDetails_phoneNumber[]"  minlength="10" maxlength="10">
-                                </div>
-                            </div>
-                            <!--  -->
-                            </li>
-                        </ul>
-                        </div>`
-                )
-            })
-
-            $(document).on('click','.delete_button_family_details',function(){
-                            $(this).parent().remove();
-              });
-
-            // $(document).ready(function(){
-            //   $("#Add_Mores").click(function(){
-            //     // $("#ul_id").append(`<li class="list">${$("#val").val()}<button id="delete"><i class="fa-solid fa-xmark" ></i></button</li>`);
-            //       $("#ul_id").append(
-            //         ` <div class="input-card">
-            //         <button class="delete_button_family_details text-danger">
-            //               <i class="f-12 me-1 fa text-danger  fa-trash"aria-hidden="true"></i>
-            //               Delete
-            //         </button>
-            //             <ul >
-            //                 <li>
-            //                 <div class="space-between">
-            //                     <div class="input_text flex-col">
-            //                     <span>Name <span class="text-danger">*</span></span>
-            //                     <input type="text" name="familyDetails_Name[]">
-            //                     </div>
-            //                     <div class="input_text flex-col">
-            //                     <span>Relationship<span class="text-danger">*</span></span>
-            //                     <input type="text" name="familyDetails_Relationship[]">
-            //                     </div>
-            //                 </div>
-            //                 <!--  -->
-            //                 <!--  -->
-
-            //                 <!--  -->
-            //                 <div class="space-between M-T">
-            //                     <div class="input_text flex-col">
-            //                     <span>Date of birth <span class="text-danger">*</span></span>
-            //                     <input type="date" id="datemin" name="familyDetails_dob[]"  min="2000-01-02">
-            //                     </div>
-            //                     <!--  -->
-            //                     <div class="input_text flex-col">
-            //                     <span>phone<span class="text-danger">*</span></span>
-            //                     <input type="number" name="familyDetails_phoneNumber[]"  minlength="10" maxlength="10">
-            //                     </div>
-            //                 </div>
-            //                 <!--  -->
-            //                 </li>
-            //             </ul>
-            //             </div>`
-            //       );
-
-            //   });
-            //  });
-
-            //  $('.delete_button_family_details').on('click', function() {
-            //     let familyDetails_id = $(this).attr('data-family-details-id');
-            //     // let t_paySlipMonth = $(this).attr('data');
-            //     console.log("Deleting familyDetails_id : "+familyDetails_id);
-
-
-            // });
-
-
-
-
-
-
-
-
-             $("#submit_button_family_details").click(function(){
-
-                let test = $("input[name='familyDetails_Name[]'").map(function(){return $(this).val();}).get();
-                console.log("hello world : "+test);
-
-
-
-                var name = $('input[name="familyDetails_Name[]"]').map(function() {
-                    return this.value;
-                }).get();
-
-                var relationship = $('input[name="familyDetails_Relationship[]"]').map(function() {
-                    return this.value;
-                }).get();
-
-                var dob = $('input[name="familyDetails_dob[]"]').map(function() {
-                    return this.value;
-                }).get();
-
-                var phone_number = $('input[name="familyDetails_phoneNumber[]"]').map(function() {
-                    return this.value;
-                }).get();
-
-
-
-
-
-                $.ajax({
-                    url: "{{ route('updateFamilyInfo', $user->id) }}",
-                    type: 'POST',
-                    data: {
-                        'name[]': name,
-                        'relationship[]': relationship,
-                        'dob[]': dob,
-                        'phone_number[]': phone_number,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(data) {
-                        // Swal.fire({
-                        //     text: 'Family Information Updated',
-                        //     icon: 'success'
-                        // })
-                            Swal.fire({
-                            position: 'center',
-                            icon: 'success',
-                            title: 'Your work has been saved',
-                            showConfirmButton: false,
-                            timer: 1500
-                        }).then((result) => {
-                            /* Read more about isConfirmed, isDenied below */
-                                location.reload();
-                        })
-                    }
-
-
-
-                });
-
-
-
-             });
-
-
-
-
         });
-
-        // $(document).ready(()=>{
-        //     $.ajax({
-        //             url: "{{ route('updateFamilyInfo', $user->id) }}",
-        //             type: 'GET',
-        //             data: {
-        //                console.log(data);
-        //             },
-        //             success: function(data) {
-        //                       console.log("Documents:" + data);
-        //                 // })
-        //                     Swal.fire({
-        //                     position: 'center',
-        //                     icon: 'success',
-        //                     title: 'Your work has been saved',
-        //                     showConfirmButton: false,
-        //                     timer: 1500
-        //                 }).then((result) => {
-        //                     /* Read more about isConfirmed, isDenied below */
-        //                         location.reload();
-        //                 })
-        //             }
-
-
-
-        //         });
-        // })
-
-        // experience information bug fixing:
-        // content1
-
-        $(document).ready(function(){
-              $("#exp-add-more").click(function(){
-                // $("#ul_id").append(`<li class="list">${$("#val").val()}<button id="delete"><i class="fa-solid fa-xmark" ></i></button</li>`);
-                  $("#experienceinfo_ul_list_id").append(
-                    ` <div class="row exp-addition-content" id="content1">
-                                                                    <a href="javascript:void(0);" class="delete-icon text-end"><i
-                                                                    class="ri-delete-bin-line"></i>
-                                                                    </a>
-
-                                                                    <div class="col-md-6">
-                                                                        <div class="form-group mb-3 form-focus focused">
-                                                                            <label class="focus-label">Company Name</label>
-                                                                            <input type="text" name="experienceDetials_company_name[]"
-                                                                                class="form-control floating" value="" required>
-                                                                        </div>
-                                                                    </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group mb-3 form-focus focused">
-                                                                        <label class="focus-label">Location</label>
-                                                                        <input type="text" name="experienceDetials_location[]"
-                                                                            class="form-control floating" value="" required>
-
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group mb-3 form-focus focused">
-                                                                        <label class="focus-label">Job Position</label>
-                                                                        <input type="text" name="experienceDetials_job_position[]"
-                                                                            class="form-control floating" value="" required>
-
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group mb-3 form-focus focused">
-                                                                        <label class="focus-label">Period From</label>
-                                                                        <div class="cal-icon">
-                                                                            <input type="date" max="9999-12-31"
-                                                                                name="experienceDetials_period_from[]"
-                                                                                class="form-control floating datetimepicker"
-                                                                                value="" required>
-                                                                        </div>
-
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group mb-3 form-focus focused">
-                                                                        <div class="cal-icon">
-                                                                            <label class="focus-label">Period To</label>
-                                                                            <input type="date" max="9999-12-31" name="experienceDetials_period_to[]"
-                                                                                class="form-control floating datetimepicker"
-                                                                                value="" required>
-                                                                        </div>
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>`
-                  )
-                })
-        });
-
-                // content1
-
-
-
-
-
-              //
-
-
-        $(document).on('click','.delete-icon ',function(){
-                            $(this).parent().remove();
-              });
-
-        $("#delete-icon").click(function(){
-                console.log("logg");
-                Swal.fire({
-                            title: 'Are you sure?',
-                            text: "You won't be able to revert this!",
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'Yes, delete it!',
-                            }).then((result) => {
-                            if (result.isConfirmed) {
-                            Swal.fire(
-                            'Deleted!',
-                            'Your file has been deleted.',
-                            'success'
-                            )
-                            }
-                          })
-            })
-
-
-            $("#btn_submit_experience_info").click(function(){
-                // console.log("hello guys");
-
-                let test = $("input[name='experienceDetials_company_name[]'").map(function(){return $(this).val();}).get();
-                console.log("hello world : "+test);
-
-
-
-
-                var ids = $('input[name="ids[]"]').map(function() {
-                    return this.value;
-                }).get();
-
-                var company_name = $('input[name="experienceDetials_company_name[]"]').map(function() {
-                    return this.value;
-                }).get();
-
-                var experience_location = $('input[name="experienceDetials_location[]"]').map(function() {
-                    return this.value;
-                }).get();
-
-                var job_position = $('input[name="experienceDetials_job_position[]"]').map(function() {
-                    return this.value;
-                }).get();
-
-                var period_from = $('input[name="experienceDetials_period_from[]"]').map(function() {
-                    return this.value;
-                }).get();
-
-                var period_to = $('input[name="experienceDetials_period_to[]"]').map(function() {
-                    return this.value;
-                }).get();
-
-                $.ajax({
-                    url: "{{ route('updateExperienceInfo', $user->id) }}",
-                    type: 'POST',
-                    data: {
-                        'ids[]': ids,
-                        'company_name[]': company_name,
-                        'experience_location[]': experience_location,
-                        'job_position[]':job_position,
-                        'period_from[]': period_from,
-                        'period_to[]':  period_to,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(data) {
-                        // Swal.fire({
-                        //     text: 'Family Information Updated',
-                        //     icon: 'success'
-                        // })
-                            Swal.fire({
-                            position: 'center',
-                            icon: 'success',
-                            title: 'Your work has been saved',
-                            showConfirmButton: false,
-                            timer: 1500
-                        }).then((result) => {
-                            /* Read more about isConfirmed, isDenied below */
-                                location.reload();
-                        })
-                    }
-                });
-
-        });
-
-
-
-
     </script>
-
-    <style>
-
-</style>
 @endsection

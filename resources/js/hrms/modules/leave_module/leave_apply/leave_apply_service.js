@@ -27,9 +27,9 @@ export const Service = defineStore("Service", () => {
         permission_end_time: "",
         compensatory_leaves:'',
         compensatory_leaves_dates:"",
-        selected_compensatory_leaves:"",
+        selected_compensatory_leaves:"",//This refers to comp days selected in dropdown
         compensatory_start_date:"",
-        compensatory_total_days:"",
+        compensatory_total_days:"", //This refers to total days UI textbox
         compensatory_end_date:"",
         notifyTo: "",
         leave_reason: "",
@@ -170,7 +170,6 @@ export const Service = defineStore("Service", () => {
         leave_data.compensatory_total_days=parseInt(total_Compensatory_days)+1
         console.log(leave_data.compensatory_total_days);
 
-
     };
 
     const time_difference = () => {
@@ -277,7 +276,9 @@ export const Service = defineStore("Service", () => {
 
     })
 
-
+    const ReloadPage = () => {
+        location.reload();
+    }
 
     // write Email service and axios service here
 
@@ -293,9 +294,10 @@ export const Service = defineStore("Service", () => {
             leave_Request_data.end_date = leave_Request_data.start_date
             leave_Request_data.leave_session="";
 
-        }else
+        }
+        else
         if(leave_data.radiobtn_half_day=="half_day"){
-            console.log("Applying half-day leave...");
+            console.log("Applying half-day leave on : "+leave_data.half_day_leave_date);
             leave_Request_data.no_of_days = 0.5;
             console.log("half day leave date"+leave_data.half_day_leave_date);
             leave_Request_data.start_date = moment(leave_data.half_day_leave_date).format('YYYY-MM-DD');
@@ -303,32 +305,68 @@ export const Service = defineStore("Service", () => {
 
             if(leave_data.half_day_leave_session=="forenoon"){
                 leave_Request_data.leave_session="FN"
-            }else{
+            }
+            else
+            if(leave_data.half_day_leave_session=="afternoon"){
                 leave_Request_data.leave_session="AN"
             }
+            else{
+                //No session selected, show error
 
-      }else
+                toast.add({
+                    severity: "info",
+                    summary: "Select Session",
+                    detail: "Select Leave Session",
+                    life: 3000,
+                });
+
+               return;
+            }
+
+        }
+        else
         if(leave_data.radiobtn_custom=="custom"){
             leave_Request_data.start_date=  moment(leave_data.custom_start_date).format('YYYY-MM-DD');
             leave_Request_data.end_date= moment(leave_data.custom_end_date).format('YYYY-MM-DD');
             leave_Request_data.no_of_days=leave_data.custom_total_days
             leave_Request_data.leave_session="";
 
-        }else
+        }
+        else
         if(leave_data.selected_leave.includes('Compensatory')){
-             leave_Request_data.start_date=  moment(leave_data.compensatory_start_date).format('YYYY-MM-DD');
+            leave_Request_data.start_date=  moment(leave_data.compensatory_start_date).format('YYYY-MM-DD');
             leave_Request_data.end_date= moment(leave_data.compensatory_end_date).format('YYYY-MM-DD');
             leave_Request_data.no_of_days=leave_data.compensatory_total_days;
 
-            console.log( "Selected Compensatory Leaves:"+leave_data.selected_compensatory_leaves.emp_attendance_id);
+            let value_selected_compensatory_leaves = Object.values(leave_data.selected_compensatory_leaves).length;
+            console.log( "Selected Compensatory No.of days : "+leave_data.compensatory_total_days);
+            console.log( "Selected Compensatory Leaves : "+value_selected_compensatory_leaves);
 
-            const  find_compensatory_id=Object.values(leave_data.selected_compensatory_leaves)
+            const  find_compensatory_id=Object.values(leave_data.selected_compensatory_leaves);
 
-             find_compensatory_id.map(data=>{
-                let id=data.emp_attendance_id
-                leave_Request_data.compensatory_leave_id.push(id)
-                console.log(leave_Request_data.compensatory_leave_id);
-            })
+            //if textbox comp leave count != selected comp days in dropdown
+            //// TODO :  Need to check comp days based on 0.5 days also. Right it assumes as 1 day per comp day selected
+            if( parseInt(leave_data.compensatory_total_days) != value_selected_compensatory_leaves)
+            {
+                toast.add({
+                    severity: "info",
+                    summary: "Error",
+                    detail: "Compensatory leaves doesnt match with available leave days",
+                    life: 3000,
+                });
+
+                return
+            }
+            else
+            {
+
+                find_compensatory_id.map(data=>{
+                    let id=data.emp_attendance_id
+                    leave_Request_data.compensatory_leave_id.push(id)
+                    console.log(leave_Request_data.compensatory_leave_id);
+                })
+            }
+
         }
         else{
             toast.add({
@@ -337,25 +375,17 @@ export const Service = defineStore("Service", () => {
                 detail: "Select Leave",
                 life: 3000,
             });
-      }
+        }
+
+
         leave_Request_data.notify_to=leave_data.notifyTo
         leave_Request_data.leave_reason=leave_data.leave_reason
         RequiredField.value = true;
         console.log(leave_Request_data);
 
-      if(leave_data.radiobtn_half_day == 'half_day'){
-        if(leave_data.half_day_leave_session  == ''){
-            toast.add({
-                severity: "info",
-                summary: "Select Session",
-                detail: "Select Leave Session",
-                life: 3000,
-            });
+        //show loading screen
+        data_checking.value=true;
 
-           }
-      }
-       else
-       {
 
         // data_checking.value=true
         axios.post('/applyLeaveRequest',{
@@ -371,6 +401,7 @@ export const Service = defineStore("Service", () => {
             "leave_reason": leave_Request_data.leave_reason,
         }).then(res=>{
             data_checking.value=false
+
             if(res.data.status=='success'){
                 Email_Service.value=true
             }else
@@ -384,10 +415,6 @@ export const Service = defineStore("Service", () => {
         }).catch(err=>{
             console.log(err);
         })
-       }
-        console.log("Leave"+leave_data.selected_leave);
-
-
 
     };
 
@@ -416,6 +443,7 @@ export const Service = defineStore("Service", () => {
         custom_day,
         Permission,
         Submit,
+        ReloadPage,
         dayCalculation,
         time_difference,
         get_user,

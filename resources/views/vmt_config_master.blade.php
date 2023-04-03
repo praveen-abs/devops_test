@@ -135,7 +135,7 @@
                                             </div>
                                             <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
                                                 <select placeholder="Select HR" name="hr_userid" id="hr_userid"
-                                                    class="onboard-form form-control" required>
+                                                    class="onboard-form form-control">
                                                     <option value="">Select</option>
                                                 </select>
                                             </div>
@@ -148,13 +148,13 @@
                                         </div>
 
                                         <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
-                                        
-                                                    
-                                            <input name="attendancemode_web" type="checkbox" value="web">     
-                                            <label for="attendancemode_web"> Web</label> 
-                                            <input name="attendancemode_mobile" type ="checkbox"value="mobile">  
+
+
+                                            <input name="attendancemode_web" type="checkbox" value="web">
+                                            <label for="attendancemode_web"> Web</label>
+                                            <input name="attendancemode_mobile" type ="checkbox"value="mobile">
                                             <label for="attendancemode_moblie">  Moblie</label>
-                                            <input name="attendancemode_biometric" type="checkbox" value="biometric">  
+                                            <input name="attendancemode_biometric" type="checkbox" value="biometric">
                                             <label for="attendancemode_biometric">Biometric</label>
                                         </div>
                                         </div>
@@ -210,7 +210,7 @@
 
         $('#hr_userid').select2({
                 data : array_data,
-        });        
+        });
     });
 </script>
 

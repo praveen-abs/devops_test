@@ -3,8 +3,6 @@
     @lang('translation.dashboards')
 @endsection
 @section('css')
-    <link rel="stylesheet" href="{{ URL::asset('/assets/css/calendar-vanila.css') }}">
-    <script src="{{ URL::asset('assets/js/calendar-vanila.js') }}" defer></script>
     <link href="{{ URL::asset('assets/css/attendance.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ URL::asset('/assets/css/pages_profile.css') }}">
 
@@ -95,7 +93,7 @@
                             @foreach ($leaveTypes as $singleLeaveType)
                                 @if ($singleLeaveType->is_finite == '1')
                                     <div class="col-sm-3 col-sm-12 col-xl-4 col-md-4 col-lg-4 d-flex">
-                                        <div class="card  box_shadow_0 border-rtb left-line w-100">
+                                        <div class="card   border-rtb left-line w-100">
                                             <div class="card-body text-center">
                                                 <p class="text-ash-medium mb-2 f-13 ">{{ $singleLeaveType->leave_type }}</p>
                                                 <h5 class="mb-0">
@@ -114,7 +112,7 @@
 
                             @foreach ($leaveTypes as $singleLeaveType)
                                 <div class="col-sm-3 col-sm-12 col-xl-4 col-md-4 col-lg-4 d-flex">
-                                    <div class="card  box_shadow_0 border-rtb left-line w-100">
+                                    <div class="card   border-rtb left-line w-100">
                                         <div class="card-body text-center">
                                             <p class="text-ash-medium mb-2 f-13 ">{{ $singleLeaveType->leave_type }}</p>
                                             <h5 class="mb-0">
