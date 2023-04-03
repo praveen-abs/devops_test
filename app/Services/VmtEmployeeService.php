@@ -81,7 +81,7 @@ class VmtEmployeeService {
 
 
 
-        $response = $this->createOrUpdate_User(data: $data, can_onboard_employee : $can_onboard_employee, user_id: $existing_user_id);
+        $response = $this->createOrUpdate_User(data: $data, can_onboard_employee : $can_onboard_employee, user_id: $existing_user_id, onboard_type : $onboard_type);
 
         if(!empty($response) && $response->status == 'success')
         {
@@ -89,7 +89,7 @@ class VmtEmployeeService {
             {
                 $onboard_user = $response->response_object;
 
-                if($onboard_type == "quick_onboard")
+                if($onboard_type == "quick")
                 {
                     $this->createOrUpdate_EmployeeDetails( $onboard_user, $data, $onboard_type);
                     $this->createOrUpdate_EmployeeOfficeDetails( $onboard_user->id, $data);
@@ -118,7 +118,7 @@ class VmtEmployeeService {
         return "Normal Onboarding : Failure in TRY or CATCH method";
     }
 
-    private function createOrUpdate_User($data, $can_onboard_employee,$user_id=null)
+    private function createOrUpdate_User($data, $can_onboard_employee,$user_id=null, $onboard_type)
     {
         $newUser = null;
 
@@ -147,7 +147,7 @@ class VmtEmployeeService {
             }
             else
             {
-                $newUser = $this->CreateNewUser($data, $can_onboard_employee);
+                $newUser = $this->CreateNewUser($data, $can_onboard_employee, $onboard_type);
             }
         }
         catch(\Exception $e)
@@ -166,7 +166,7 @@ class VmtEmployeeService {
         return $response;
     }
 
-    private function CreateNewUser($data, $can_onboard_employee)
+    private function CreateNewUser($data, $can_onboard_employee, $onboard_type)
     {
         $newUser = new User;
 
@@ -179,7 +179,9 @@ class VmtEmployeeService {
         $newUser->is_default_password_updated = '0';
 
         $newUser->is_onboarded = $can_onboard_employee;
-        $newUser->onboard_type = 'normal';
+
+        $newUser->onboard_type = $onboard_type; //normal, quick, bulk
+
         $newUser->org_role = '5';
         $newUser->is_ssa = '0';
         $newUser->save();
@@ -259,7 +261,7 @@ class VmtEmployeeService {
             $row['marital_status'] = '';
         }
 
-        if($onboard_type == "quick_onboard")
+        if($onboard_type == "quick")
         {
             //In quick onboard excel upload, we wont upload docs
         }

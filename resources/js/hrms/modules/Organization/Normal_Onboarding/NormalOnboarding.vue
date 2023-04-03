@@ -2866,10 +2866,7 @@ const submit = () => {
   };
 
   let formData = new FormData();
-  formData.append(
-    "can_onboard_employee",
-    employee_onboarding.can_onboard_employee
-  );
+  formData.append("can_onboard_employee", employee_onboarding.can_onboard_employee);
   formData.append("employee_code", employee_onboarding.employee_code);
   formData.append("doj", employee_onboarding.doj);
   formData.append("aadhar_number", employee_onboarding.aadhar_number);
