@@ -61,8 +61,6 @@
 
                 <div class="mb-2 card">
                     <div class="card-body">
-                        <form action="" method="POST" enctype="multipart/form-data">
-                            <!-- Vishnu V24, [31-03-2023 15:40] -->
                             <h6 class="">Bank Information
                                 <span class="personal-edit">
                                     <a href="#" class="edit-icon" @click="visible = true"><i class="ri-pencil-fill"></i>
@@ -131,8 +129,8 @@
                                         </div>
                                         <div class="col-12">
                                             <div class="text-right">
-                                                <button id="btn_submit_bank_info"
-                                                    class="btn btn-orange submit-btn" @click="saveFinanceDetails">Submit</button>
+                                                <button id="btn_submit_bank_info" class="btn btn-orange submit-btn"
+                                                    @click="saveBankDetails">Submit</button>
                                             </div>
                                         </div>
                                     </div>
@@ -146,41 +144,39 @@
 
 
 
-
-                            <ul class="personal-info">
+                    <div v-for="bank_info in bank_info_data" :key="bank_info.id">
+                        <ul class="personal-info" >
                                 <li>
                                     <div class="title">Bank Name</div>
-                                    <!-- <?php $bank_name = App\Models\Bank::where('id', $user_full_details->bank_id)->value('bank_name'); ?> -->
                                     <div class="text">
-                                        <!-- {{ $bank_name ?? '-' }} -->
+                                        {{ bank_info.bank_name }}
                                     </div>
                                 </li>
                                 <li>
                                     <div class="title">Bank Account No.</div>
                                     <div class="text">
-                                        <!-- {{ $user_full_details->bank_account_number ?? '-' }} -->
-                                    </div>
+                                        {{ bank_info.bank_ac_no }}  
+                                       </div>                                 
                                 </li>
                                 <li>
                                     <div class="title">IFSC Code</div>
                                     <div class="text">
-                                        <!-- {{ $user_full_details->bank_ifsc_code ?? '-' }} -->
+                                        {{ bank_info.ifsc_code }}                                  
                                     </div>
                                 </li>
                                 <li>
                                     <div class="title">PAN No</div>
                                     <div class="text">
-                                        <!-- {{ $user_full_details->pan_number ?? '-' }} -->
+                                        {{ bank_info.pan_no }}                                  
                                     </div>
                                 </li>
                             </ul>
-                        </form>
+                    </div>
                     </div>
                 </div>
 
                 <div class="mb-2 card">
                     <div class="card-body">
-                        <!-- <form action="" method="POST" enctype="multipart/form-data"> -->
                         <h6 class="">Statutory Information
                             <span class="personal-edit">
                                 <a href="#" class="edit-icon" data-bs-target="#statutory_info" @click="visible2 = true">
@@ -202,7 +198,7 @@
                                                 Applicable<span class="text-danger">*</span></label>
                                             <select placeholder="PF Applicable" name="pf_applicable" id="pf_applicable"
                                                 class="onboard-form form-control textbox select2_form_without_search"
-                                                required>
+                                                required v-model="statutory_information.pf_applicable">
                                                 <option value="" hidden selected disabled>PF
                                                     Applicable</option>
                                                 <option value="yes">Yes</option>
@@ -218,7 +214,7 @@
                                         <div class="mb-3 form-group">
                                             <label>EPF Number</label>
                                             <input type="text" placeholder="EPF Number" name="epf_number" id="epf_number"
-                                                class="onboard-form form-control " value=" ">
+                                                class="onboard-form form-control " v-model="statutory_information.epf_no">
                                         </div>
                                     </div>
 
@@ -226,8 +222,8 @@
                                         <div class="mb-3 form-group">
                                             <label>UAN Number</label>
                                             <input name="uan_number" id="uan_number" minlength="12" maxlength="12"
-                                                class="form-control onboard-form" value="" type="text" pattern-data="ifsc"
-                                                required>
+                                                class="form-control onboard-form"  type="text" pattern-data="ifsc"
+                                                required v-model="statutory_information.uan_no">
                                         </div>
                                     </div>
 
@@ -239,7 +235,7 @@
                                             <select placeholder="ESIC Applicable" name="esic_applicable"
                                                 id="esic_applicable"
                                                 class="onboard-form form-control textbox select2_form_without_search"
-                                                required>
+                                                required v-model="statutory_information.esic_applicable">
                                                 <option value="" hidden selected disabled>ESIC
                                                     Applicable</option>
                                                 <option value="yes">
@@ -258,7 +254,7 @@
 
                                             <input type="text" placeholder="ESIC Number" name="esic_number" id="esic_number"
                                                 minlength="10" maxlength="10" class="onboard-form form-control textbox "
-                                                value="" />
+                                                v-model="statutory_information.esic_no" />
                                             <span class="error" id="error_esic_number"></span>
                                         </div>
                                     </div>
@@ -271,7 +267,7 @@
                                 <div class="col-12">
                                     <div class="text-right">
                                         <button id="btn_submit_statutory_info"
-                                            class="btn btn-border-orange submit-btn">Save</button>
+                                            class="btn btn-border-orange submit-btn" @click="saveStatutoryDetails">Save</button>
                                     </div>
                                 </div>
                             </div>
@@ -281,26 +277,18 @@
                         </Dialog>
 
 
-
-
-
-
-
-
-                        <!-- {{-- @if (!empty($statutory_info))
-                                                @foreach ($statutory_info as $detail) --}} -->
-                        <ul class="personal-info">
+                        <ul class="personal-info" v-for="statutory_info in statutory_info_data" :key="statutory_info.id" >
                             <li>
                                 <div class="title">PF Applicable</div>
                                 <div class="text">
-                                    <!-- {{ $statutory_info->pf_applicable ?? '-' }} -->
+                                    {{ statutory_info.pf_applicable  }}
 
                                 </div>
                             </li>
                             <li>
                                 <div class="title">EPF Number</div>
                                 <div class="text">
-                                    <!-- {{ $statutory_info->epf_number ?? '-' }} -->
+                                    {{ statutory_info.epf_no }}
 
                                 </div>
                             </li>
@@ -308,7 +296,7 @@
                             <li>
                                 <div class="title">UAN Number</div>
                                 <div class="text">
-                                    <!-- {{ $statutory_info->uan_number ?? '-' }} -->
+                                    {{ statutory_info.uan_no }}
 
                                 </div>
                             </li>
@@ -316,21 +304,20 @@
                             <li>
                                 <div class="title">ESIC Applicable</div>
                                 <div class="text">
-                                    <!-- {{ $statutory_info->esic_applicable ?? '-' }} -->
+                                    {{ statutory_info.esic_applicable }}
 
                                 </div>
                             </li>
                             <li>
                                 <div class="title">ESIC Number</div>
                                 <div class="text">
-
+                              {{ statutory_info.esic_no }}
 
                                 </div>
                             </li>
                         </ul>
 
 
-                        <!-- </form> -->
 
                     </div>
                 </div>
@@ -350,7 +337,6 @@
                         <div class="tab-content " id="pills-tabContent">
                             <div class="tab-pane fade active show" id="pay_slips" role="tabpanel" aria-labelledby="">
 
-                                <!-- {{-- <h6 class=""> Pay Slips</h6> --}} -->
                                 <div id="" class="ember-view">
                                     <div class="table-responsive ">
                                         <table class="table table-hover">
@@ -367,7 +353,6 @@
                                                     </th>
                                                 </tr>
                                             </thead>
-                                            <!-- @endforeach -->
 
                                         </table>
                                     </div>
@@ -376,41 +361,6 @@
                             </div>
 
 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- </div> -->
-
-        <div id="edit_department" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
-                <div class="modal-content profile-box">
-                    <div class="modal-header ">
-                        <h6 class="modal-title">Edit Department
-                        </h6>
-                        <button type="button" class="border-0 close h3" data-bs-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div>
-                            <label>Department<span class="text-danger">*</span></label>
-
-                            <select class="form-select form-control" name="gender" aria-label="Default select"
-                                id="selected_dep">
-                                <option selected hidden disabled>Choose Gender</option>
-                                <!-- @foreach ($allDepartments as $singleDepartment) -->
-                                <option value="{{ $singleDepartment->id }}">
-                                </option>
-                                <!-- @endforeach -->
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="text-right">
-                            <button class="btn btn-orange submit-btn" id="save_department">Save</button>
                         </div>
                     </div>
                 </div>
@@ -433,24 +383,37 @@ onMounted(() => {
     fetch_data.getBankList().then(res => {
         bankNameList.value = res.data;
     })
+    fetchFinanceDetails()
 });
+
+
+const visible = ref(false);
+const visible2 = ref(false);
+
+const bank_info_data =ref()
+const statutory_info_data =ref()
+
+const bankNameList = ref();
 
 const bank_information = reactive({
     bank_name: '',
     bank_ac_no: '',
     ifsc_code: '',
     pan_no: ''
-}
+})
 
-)
-const visible = ref(false);
-const visible2 = ref(false);
-const Bank_Name = ref([]);
-const bankNameList = ref();
+const statutory_information = reactive({
+    pf_applicable: '',
+    epf_no: '',
+    uan_no: '',
+    esic_applicable: '',
+    esic_no: ''
+})
 
 
 
-const saveFinanceDetails = () => {
+
+const saveBankDetails = () => {
     let url = ' http://localhost:3000/FinanceDetails';
 
     visible.value = false
@@ -467,20 +430,50 @@ const saveFinanceDetails = () => {
 }
 
 
+const saveStatutoryDetails = () => {
 
 
-const fetchGeneralInformationDetails = () => {
+    let url = ' http://localhost:3000/FinanceDetails';
+
+    visible2.value = false
+
+    console.log(statutory_information);
+
+    axios.post(url, statutory_information).then(res => {
+        console.log("sent sucessfully");
+    }).catch(err => {
+        console.log(err);
+    }).finally(() => {
+        console.log("completed");
+    })
+
+}
+
+
+
+
+const fetchFinanceDetails = () => {
+
     // let url = window.location.origin + "/fetch-att-regularization-data";
-    let url = 'http://localhost:3000/Empdetails'
+    let url = ' http://localhost:3000/FinanceDetails';
 
     console.log("AJAX URL : " + url);
 
     axios.get(url).then((response) => {
         console.log("Axios : " + response.data);
         console.log(response.data);
-        employee_details.value = response.data;
-        // loading.value = false;
+        bank_info_data.value = response.data;
+        statutory_info_data.value = response.data;
+
     });
+
+    // let statutory_info = 'http://localhost:3000/Empdetails'
+
+    // axios.get(statutory_info).then((response) => {
+    //     console.log("Axios : " + response.data);
+    //     console.log(response.data);
+    //     statutory_info_data.value = response.data;
+    // });
 };
 
 
