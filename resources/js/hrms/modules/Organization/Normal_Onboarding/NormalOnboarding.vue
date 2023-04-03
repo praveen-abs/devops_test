@@ -1882,14 +1882,17 @@
                             />
                           </div>
                           <div class="ml-2 form-check form-check-inline">
-                            <p>
-                              Cost to Company :
+                            
+                             
+                              <p>
+                                <strong>Annual Gross</strong> (Cost to Company) :
                               <strong v-if="employee_onboarding.total_ctc < 0">0</strong>
                               <strong v-else-if="employee_onboarding.total_ctc > 0">{{
                                 Math.floor(employee_onboarding.total_ctc)
                               }}</strong>
                               <strong v-else>0</strong>
                             </p>
+                            
                           </div>
                         </div>
                       </div>
@@ -2011,6 +2014,7 @@
                           />
                         </div>
                       </div>
+                      <!-- <button @click="special_allowance_cal">tets</button> -->
                       <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label">Gross Salary</label>
@@ -3168,7 +3172,10 @@ const statutory_bonus = () => {
 
   let sa = employee_onboarding.special_allowance;
 
+
   console.log(total, sa);
+
+  console.log(sa - total);
 
   setTimeout(() => {
     employee_onboarding.special_allowance = sa - total;
@@ -3189,7 +3196,7 @@ const statutory_bonus = () => {
     }
   }, 1000);
 };
-
+  
 const special_allowance_cal = () => {
   let total =
     employee_onboarding.statutory_bonus +
@@ -3200,6 +3207,8 @@ const special_allowance_cal = () => {
   let sa = employee_onboarding.special_allowance;
 
   console.log(total, sa);
+
+  console.log(sa - total);
 
   setTimeout(() => {
     employee_onboarding.special_allowance = sa - total;
@@ -3350,7 +3359,7 @@ const graduity = () => {
 
   setTimeout(() => {
     employee_onboarding.total_ctc = sum;
-  }, 1000);
+  }, 2000);
 };
 
 const epf_esic_calculation = () => {
