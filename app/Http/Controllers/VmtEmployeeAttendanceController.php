@@ -26,9 +26,9 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class VmtEmployeeAttendanceController extends Controller
 {
-    public function generateAttendanceReports()
+    public function generateDetailedAttendanceReports()
     {
-        return Excel::download(new EmployeeAttendanceExport, 'Attendance.xlsx');
+        return Excel::download(new DetailedAttendanceExport, 'Attendance.xlsx');
 
     }
 

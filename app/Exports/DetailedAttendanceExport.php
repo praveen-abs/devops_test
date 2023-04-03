@@ -18,7 +18,7 @@ use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
 
 
-class EmployeeAttendanceExport implements FromCollection,WithHeadings,WithStyles
+class DetailedAttendanceExport implements FromCollection,WithHeadings,WithStyles
 {
     /**
     * @return \Illuminate\Support\Collection
