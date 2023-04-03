@@ -23,6 +23,7 @@ export default defineConfig({
 
                 //Organization Module
 
+                'resources/js/hrms/modules/Organization/manage_employee/manage_employee.js',
                 'resources/js/hrms/modules/Organization/Normal_Onboarding/NormalOnboarding.js',
 
                 // Approval Module
@@ -48,41 +49,25 @@ export default defineConfig({
                 //Holidays
                 'resources/js/hrms/modules/configurations/holidays/Holidays_Lists.js',
 
-                'resources/js/hrms/modules/configurations/attendance_settings/Att_AssignWorkShifts.js',
 
-                // Integration
+                // Profile page
 
-                'resources/js/hrms/modules/configurations/integration_auth/integration_auth.js',
+                'resources/js/hrms/modules/profile_pages/ProfilePageNew.js',
 
-                // Offer Letter
+                // familyinfo_table_page
 
-                'resources/js/hrms/modules/onboarding_module/offer_letter/offer_letter_generation/offer_letter_generation.js',
-                'resources/js/hrms/modules/onboarding_module/offer_letter/offer_letter_template/offer_letter_template.js',
-                'resources/js/hrms/modules/onboarding_module/offer_letter/offer_letter_master/offer_letter_master.js',
+                // 'resources/js/hrms/modules/profile_pages/FamilyDetails.js',
 
-                // Pay check
+                // // Experience page
+                // 'resources/js/hrms/modules/profile_pages/ExperienceDetails.js',
 
-                'resources/js/hrms/modules/paycheck/declaration/declaration.js',
+                // // financeDetails page
+                // 'resources/js/hrms/modules/profile_pages/FinanceDetails.js',
+                // // Documents Review
 
-                // Payroll Setting  resources\js\hrms\modules\payroll\payroll_setting\
-
-                'resources/js/hrms/modules/payroll/payroll_setting/payroll_setting.js',
-
-                //   Payroll Setup
-
-                'resources/js/hrms/modules/payroll/payroll_setting/payroll_setup/payroll_setup.js',
-
-
-
-
-
-
-
+                // 'resources/js/hrms/modules/approvals/onboarding/review_document.js'
 
             ],
-            define: {
-                'process.env': process.env
-            },
             refresh: true,
         }),
     ],

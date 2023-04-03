@@ -55,7 +55,13 @@ export default function validation(rules) {
         employee_code: {},
         dob: {},
         gender: {},
-        passport_number: {},
+        passport_number: {  
+            required,
+        ValidateAadhar(value) {
+            const regex = /^(?!^0+$)[a-zA-Z0-9]{3,20}$/;
+            return regex.test(value);
+        },
+        },
         passport_date: {},
         blood_group_name: {},
         physically_challenged: {},
@@ -79,6 +85,7 @@ export default function validation(rules) {
         },
         employee_name: {
             required,
+           
         },
         gender: {
             required,

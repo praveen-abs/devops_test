@@ -35,11 +35,13 @@ import DialogService from 'primevue/dialogservice';
 import ToastService from 'primevue/toastservice';
 
 
-import EmployeeDetails from './EmployeeDetails.vue'
+import EmployeeDetails from '../EmployeeDetails.vue'
 
 import { createApp } from "vue";
+import { createPinia } from "pinia";
 
 const app = createApp(EmployeeDetails);
+const pinia=createPinia()
 app.component('TabView', TabView);
 app.component('TabPanel', TabPanel);
 app.component('FileUpload', FileUpload);
@@ -62,6 +64,7 @@ app.use(PrimeVue, { ripple: true });
 app.use(DialogService)
 app.use(ToastService)
 app.use(ConfirmationService);
+app.use(pinia)
 
 
 app.mount("#EmployeeDetails");

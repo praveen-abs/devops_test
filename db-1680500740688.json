@@ -1,0 +1,210 @@
+{
+  "Empdetails": [
+    {
+      "dob": "2023-04-12T07:00:00.000Z",
+      "gender": {
+        "name": "Female",
+        "value": "female"
+      },
+      "marital_status_id": "",
+      "doj": "2023-04-18T07:00:00.000Z",
+      "blood_group_id": {
+        "id": 6,
+        "name": "AB Negative"
+      },
+      "id": 1
+    }
+  ],
+  "FinanceDetails": [
+    {
+      "bank_name": {
+        "id": 2,
+        "bank_name": "ANDHRA PRADESH GRAMEENA VIKAS BANK",
+        "min_length": "11",
+        "max_length": "11",
+        "status": "A"
+      },
+      "bank_ac_no": 100,
+      "ifsc_code": "asdsdsdsdsdfddg",
+      "pan_no": "sdsdsd",
+      "id": 1
+    }
+  ],
+  "posts": [
+    {
+      "name": "Nomlanga Hopkins",
+      "relationship": "Nostrud dolor praese",
+      "dob": "2012-06-30",
+      "ph_no": 894,
+      "id": 2
+    },
+    {
+      "name": "Curran Maynard",
+      "relationship": "Reprehenderit ut dis",
+      "dob": "2004-01-20",
+      "ph_no": 418,
+      "id": 4
+    }
+  ],
+  "Experience": [
+    {
+      "company_name": "Harris and Snider Traders",
+      "location": "713",
+      "job_position": "686",
+      "period_from": "2023-03-29T18:30:00.000Z",
+      "period_to": "2023-03-30T18:30:00.000Z",
+      "id": 1
+    },
+    {
+      "company_name": "Castillo and Talley Plc",
+      "location": "406",
+      "job_position": "6",
+      "period_from": "2023-03-21T18:30:00.000Z",
+      "period_to": "2023-03-30T18:30:00.000Z",
+      "id": 4
+    },
+    {
+      "company_name": "Workman Mcintosh LLC",
+      "location": "486",
+      "job_position": "180",
+      "period_from": "2023-03-30T18:30:00.000Z",
+      "period_to": "2023-03-30T18:30:00.000Z",
+      "id": 5
+    },
+    {
+      "company_name": "Townsend and Ryan Trading",
+      "location": "270",
+      "job_position": "896",
+      "period_from": "2023-03-29T18:30:00.000Z",
+      "period_to": "2023-03-30T18:30:00.000Z",
+      "id": 6
+    },
+    {
+      "company_name": "Lynn and Harmon Associates",
+      "location": "507",
+      "job_position": "235",
+      "period_from": "2023-03-30T18:30:00.000Z",
+      "period_to": "2023-03-30T18:30:00.000Z",
+      "id": 7
+    },
+    {
+      "company_name": "Mills and Mathews Inc",
+      "location": "146",
+      "job_position": "517",
+      "period_from": "2023-03-30T18:30:00.000Z",
+      "period_to": "2023-03-30T18:30:00.000Z",
+      "id": 8
+    },
+    {
+      "company_name": "Fry Holden Traders",
+      "location": "Proident dolor et v",
+      "job_position": "Vitae quis qui dolor",
+      "period_from": "2023-04-04T18:30:00.000Z",
+      "period_to": "2023-03-31T18:30:00.000Z",
+      "id": 9
+    }
+  ],
+  "contact": [
+    {
+      "present_email": "xyxuwizy@mailinator.com",
+      "officical_mail": "sypijo@mailinator.com",
+      "mobile_number": "837",
+      "id": 1
+    },
+    {
+      "present_email": "hedijo@mailinator.com",
+      "officical_mail": "qeka@mailinator.com",
+      "mobile_number": "370",
+      "id": 2
+    },
+    {
+      "present_email": "xyxuwizy@mailinator.com",
+      "officical_mail": "sypijo@mailinator.com",
+      "mobile_number": "837",
+      "id": 3
+    },
+    {
+      "present_email": "tukifyd@mailinator.com",
+      "officical_mail": "kavu@mailinator.com",
+      "mobile_number": "881",
+      "id": 4
+    },
+    {
+      "present_email": "loqytys@mailinator.com",
+      "officical_mail": "jivyboma@mailinator.com",
+      "mobile_number": "427",
+      "id": 5
+    },
+    {
+      "present_email": "loqytys@mailinator.com",
+      "officical_mail": "jivyboma@mailinator.com",
+      "mobile_number": "427",
+      "id": 6
+    },
+    {
+      "present_email": "loqytys@mailinator.com",
+      "officical_mail": "jivyboma@mailinator.com",
+      "mobile_number": "427",
+      "id": 7
+    },
+    {
+      "present_email": "loqytys@mailinator.com",
+      "officical_mail": "jivyboma@mailinator.com",
+      "mobile_number": "427",
+      "id": 8
+    },
+    {
+      "present_email": "loqytys@mailinator.com",
+      "officical_mail": "jivyboma@mailinator.com",
+      "mobile_number": "427",
+      "id": 9
+    },
+    {
+      "present_email": "loqytys@mailinator.com",
+      "officical_mail": "jivyboma@mailinator.com",
+      "mobile_number": "427",
+      "id": 10
+    },
+    {
+      "present_email": "loqytys@mailinator.com",
+      "officical_mail": "jivyboma@mailinator.com",
+      "mobile_number": "427",
+      "id": 11
+    },
+    {
+      "present_email": "woqu@mailinator.com",
+      "officical_mail": "lucesaheze@mailinator.com",
+      "mobile_number": "497",
+      "id": 12
+    },
+    {
+      "present_email": "fawyrexyse@mailinator.com",
+      "officical_mail": "felycuvy@mailinator.com",
+      "mobile_number": "63",
+      "id": 13
+    },
+    {
+      "present_email": "ryremuk@mailinator.com",
+      "officical_mail": "bumiqod@mailinator.com",
+      "mobile_number": "768",
+      "id": 14
+    },
+    {
+      "present_email": "gurawumu@mailinator.com",
+      "officical_mail": "nytejyb@mailinator.com",
+      "mobile_number": "17",
+      "id": 15
+    }
+  ],
+  "Address_details": [],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}
