@@ -228,11 +228,11 @@ class VmtEmployeeOnboardingController extends Controller
         {
 
             //If current user is Admin, then its normal onboarding or updating existing user details.
-            if(Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]) )
+            if(Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"])  && $currentLoggedinInUser->onboard_type  == "normal")
             {
                 // $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), $existingUser->first()->id);
 
-                $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $onboard_form_data['can_onboard_employee'], $existingUser->first()->id);
+                $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $onboard_form_data['can_onboard_employee'], $existingUser->first()->id, "normal");
 
                 $message = "";
 
@@ -279,7 +279,7 @@ class VmtEmployeeOnboardingController extends Controller
                 {
                     //$response = $this->storeEmployeeNormalOnboardForm($onboard_form_data, $request->input('can_onboard_employee'));
 
-                    $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), $existingUser->first()->id);
+                    $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), $existingUser->first()->id,"quick");
 
                     $message = "";
 
@@ -335,12 +335,12 @@ class VmtEmployeeOnboardingController extends Controller
         }
         else
         {
-            //we are inserting new user.
+            //we are inserting new user as NORMAL onboard.
             //Check whether current login is admin
             if(Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]) )
             {
 
-                $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $onboard_form_data['can_onboard_employee'], null);
+                $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $onboard_form_data['can_onboard_employee'], null,"normal");
 
 
                 if($result =="success")
@@ -1225,7 +1225,7 @@ class VmtEmployeeOnboardingController extends Controller
                 $response = $employeeService->createOrUpdate_OnboardFormData(data: $row,
                                                                 can_onboard_employee:"1",
                                                                 existing_user_id : null,
-                                                                onboard_type  : "quick_onboard"
+                                                                onboard_type  : "quick"
                                                                 );
 
                $message = "Employee OnBoard was Created   ";
