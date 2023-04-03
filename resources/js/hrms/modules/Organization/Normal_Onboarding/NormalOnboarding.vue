@@ -37,7 +37,7 @@
                           <span v-if="user_code_exists" class="p-error"
                             >Employee code Already Exists</span
                           >
-                        
+
                         </div>
                       </div>
 
@@ -55,7 +55,6 @@
                             :class="{
                               'p-invalid': v$.employee_name.$invalid && submitted,
                             }"
-                            pattern="[a-zA-Z]"
                             placeholder="Employee Name as per Aadhar "
                           />
                           <span v-if="employee_name_invalid" class="p-error"
@@ -1848,7 +1847,7 @@
 
                             <label for="" class="float-label">Cost To Company</label>
                             <input type="number" placeholder="Cost To Company" name="basic"
-                              v-model="employee_onboarding.basic" style="height: 2.9em;" 
+                              v-model="employee_onboarding.basic" style="height: 2.9em;"
                               class="textbox onboard-form form-control calculation_data gross_data" step="0.01" />
 
                           </div>
@@ -2421,7 +2420,7 @@
       !employee_onboarding.employee_name.length > 0 &&
       !employee_onboarding.email.length > 0   ||
       !employee_onboarding.mobile_number.length > 0 &&
-      !employee_onboarding.dob.length > 0  
+      !employee_onboarding.dob.length > 0
     "
     header="Documents Required"
     v-model:visible="RequiredDocument"
@@ -2503,6 +2502,28 @@
       </div>
     </template>
   </Dialog>
+  <Dialog
+      header="Header"
+      v-model:visible="loading"
+      :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+      :style="{ width: '25vw' }"
+      :modal="true"
+      :closable="false"
+      :closeOnEscape="false"
+    >
+      <template #header>
+        <ProgressSpinner
+          style="width: 50px; height: 50px"
+          strokeWidth="8"
+          fill="var(--surface-ground)"
+          animationDuration="2s"
+          aria-label="Custom ProgressSpinner"
+        />
+      </template>
+      <template #footer>
+        <h5 style="text-align: center">Please wait...</h5>
+      </template>
+    </Dialog>
 </template>
 
 <script setup>
@@ -2711,6 +2732,7 @@ const PancardInvalid = ref(false);
 const EducationCertificateInvalid = ref(false);
 const fileUploadValidation = ref(true);
 const employee_name_invalid =ref(false)
+const loading = ref(false)
 
 //   Events
 
@@ -2740,7 +2762,6 @@ const handleSubmit = (isFormValid) => {
     //   life: 3000,
     // });
     RequiredDocument.value = true;
-    fileUploadValidation.value = true;
     return;
   }
   toggleDialog();
@@ -2838,6 +2859,7 @@ const SubmitEmployeeOnboardingData = () => {
 };
 
 const submit = () => {
+    loading.value = true
   let currentObj = this;
   const config = {
     headers: { "content-type": "multipart/form-data" },
@@ -2979,10 +3001,11 @@ const submit = () => {
       // currentObj.success = response.data.success;
       console.log("response" + response.data);
       console.log(Object(response.data));
+      loading.value = false
       if (response.data.status == "success") {
         Swal.fire(response.data.status, response.data.message, "success");
       }
-      employee_onboarding.save_draft_messege = res.data;
+      employee_onboarding.save_draft_messege = response.data;
     })
     .catch(function (error) {
       // currentObj.output = error;
@@ -3067,7 +3090,7 @@ const first_second_letter= ()=>{
                 }else{
                   employee_name_invalid.value =false
                 }
-              
+
 
 
 }
@@ -3331,7 +3354,7 @@ const graduity = () => {
 };
 
 const epf_esic_calculation = () => {
-  
+
   let EpfCalculation = employee_onboarding.gross - employee_onboarding.hra;
 
   console.log("EpfCalculation:" + EpfCalculation);
