@@ -2,15 +2,32 @@ import {
     defineStore
 } from "pinia";
 import axios from "axios";
+import { ref } from "vue";
 
 export const Service = defineStore("Service", () => {
+
+    const current_user_id = ref()
+    const current_user_name = ref()
+
+
+    axios.get('currentUser').then(res => {
+        current_user_id.value = res.data
+        console.log("service class" + res.data);
+    })
+
+    axios.get('currentUserName').then(res => {
+        current_user_name.value = res.data
+        console.log("service class" + res.data);
+
+    })
+
 
     const getBankList = () => {
         return axios.get(`/db/getBankDetails`)
     }
 
     const getCountryList = () => {
-       return axios.get(`/db/getCountryDetails`)
+        return axios.get(`/db/getCountryDetails`)
     }
     const getStateList = () => {
         return axios.get(`/db/getStatesDetails`);
@@ -21,7 +38,7 @@ export const Service = defineStore("Service", () => {
     }
 
     const DepartmentDetails = () => {
-       return  axios.get(`/fetch-departments`);
+        return axios.get(`/fetch-departments`);
 
     }
 
@@ -39,6 +56,8 @@ export const Service = defineStore("Service", () => {
 
         // varaible Declarations
 
+        current_user_id,
+        current_user_name,
 
 
         getBankList,

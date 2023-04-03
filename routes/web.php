@@ -52,6 +52,10 @@ Route::middleware(['auth'])->group(function () {
 
         return auth()->user()->id;
     });
+    Route::get('/currentUserName', function() {
+
+        return auth()->user()->name;
+    });
 
 
 

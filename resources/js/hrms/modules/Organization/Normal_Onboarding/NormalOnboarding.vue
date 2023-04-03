@@ -1862,13 +1862,13 @@
                         >
                           <div class="mt-2 form-check form-check-inline">
                             <label
-                              class="form-check-label leave_type ms-2"
+                              class="form-check-label leave_type -ml-4"
                               for="compensation_monthly"
                             >
                               Enter Monthly Gross</label
                             >
                           </div>
-                          <div class="ml-2 form-check form-check-inline">
+                          <div class=" form-check form-check-inline">
                             <input
                               type="number"
                               placeholder="Enter Monthly Gross"
@@ -1881,7 +1881,7 @@
                               required
                             />
                           </div>
-                          <div class="ml-2 form-check form-check-inline">
+                          <div class=" form-check form-check-inline">
                             
                              
                               <p>
@@ -2972,7 +2972,7 @@ const submit = () => {
     employee_onboarding.epf_employer_contribution
   );
   formData.append("graduity", employee_onboarding.graduity);
-  formData.append("cic", employee_onboarding.cic);
+  formData.append("cic", employee_onboarding.total_ctc);
   formData.append("epf_employee", employee_onboarding.epf_employee);
   formData.append("esic_employee", employee_onboarding.esic_employee);
   formData.append(
