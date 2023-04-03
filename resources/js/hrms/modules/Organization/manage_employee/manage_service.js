@@ -19,7 +19,7 @@ export const Service = defineStore("Service", () => {
 
     const ajax_active_employees_data = () => {
 
-        let url = window.location.origin + "/fetch-att-regularization-data";
+        let url = window.location.origin + "/vmt-yet-to-activeemployees-fetchall";
 
         console.log("AJAX URL : " + url);
 
@@ -31,7 +31,7 @@ export const Service = defineStore("Service", () => {
     }
     const ajax_yet_to_active_employees_data = () => {
 
-        let url = window.location.origin + "/fetch-att-regularization-data";
+        let url = window.location.origin + "/vmt-yet-to-activeemployees-fetchall";
 
         console.log("AJAX URL : " + url);
 
@@ -43,7 +43,7 @@ export const Service = defineStore("Service", () => {
     }
     const ajax_exit_employees_data = () => {
 
-        let url = window.location.origin + "/fetch-att-regularization-data";
+        let url = window.location.origin + "/vmt-exitemployees-fetchall";
 
         console.log("AJAX URL : " + url);
 
