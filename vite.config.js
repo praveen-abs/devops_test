@@ -51,8 +51,9 @@ export default defineConfig({
 
 
                 // Profile page
-
+            
                 'resources/js/hrms/modules/profile_pages/EmployeeDetails.js',
+                'resources/js/hrms/modules/profile_pages/ProfilePageNew.js',
 
                 // familyinfo_table_page
 

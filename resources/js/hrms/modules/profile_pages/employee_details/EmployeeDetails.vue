@@ -199,7 +199,7 @@ import { useConfirm } from "primevue/useconfirm";
 
 import axios from "axios";
 
-import { Service } from "../Service/Service";
+import { Service } from "../../Service/Service";
 
 const fetch_data = Service()
 

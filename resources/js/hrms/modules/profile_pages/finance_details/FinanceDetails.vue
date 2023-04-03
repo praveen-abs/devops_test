@@ -423,7 +423,7 @@
 import { ref, onMounted, reactive, onUpdated } from 'vue';
 import axios from 'axios'
 import { useToast } from "primevue/usetoast";
-import { Service } from '../Service/Service';
+import { Service } from '../../Service/Service';
 
 const fetch_data = Service()
 

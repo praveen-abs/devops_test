@@ -2,11 +2,13 @@ import "primeflex/primeflex.css";
 import "primevue/resources/themes/lara-light-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
+
+
+import { createApp } from "vue";
+import { createPinia } from "pinia";
 import PrimeVue from "primevue/config";
-
-
-// Primevue Components
 import BadgeDirective from "primevue/badgedirective";
+import BlockUI from 'primevue/blockui';
 import Button from 'primevue/button';
 import FocusTrap from 'primevue/focustrap';
 import Ripple from 'primevue/ripple';
@@ -15,6 +17,7 @@ import Tooltip from 'primevue/tooltip';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import ConfirmDialog from 'primevue/confirmdialog';
+import DialogService from 'primevue/dialogservice';
 import Toast from 'primevue/toast';
 import Dialog from 'primevue/dialog';
 import Dropdown from 'primevue/dropdown';
@@ -24,25 +27,24 @@ import ProgressSpinner from 'primevue/progressspinner';
 import InputText from 'primevue/inputtext'
 import Row from 'primevue/row'
 import ColumnGroup from 'primevue/columngroup'
-import InputNumber from 'primevue/inputnumber'
-import FileUpload from 'primevue/fileupload';
 import Calendar from 'primevue/calendar'
 import Textarea from 'primevue/textarea'
-import Chips from 'primevue/chips';
-import DialogService from 'primevue/dialogservice';
+import Chips from 'primevue/chips'
+import MultiSelect from 'primevue/multiselect';
 
 
+import profilePage from './profilePageNew.vue'
+
+const app = createApp(profilePage);
+const pinia=createPinia()
+
+app.use(PrimeVue, { ripple: true });
+app.use(ConfirmationService);
+app.use(ToastService);
+app.use(DialogService);
+app.use(pinia)
 
 
-
-// Primevue Services
-
-
-import App from './FamilyDetails.vue'
-
-import { createApp } from "vue";
-
-const app = createApp(App);
 app.directive('tooltip', Tooltip);
 app.directive('badge', BadgeDirective);
 app.directive('ripple', Ripple);
@@ -63,14 +65,7 @@ app.component('ProgressSpinner', ProgressSpinner)
 app.component('Calendar', Calendar)
 app.component('Textarea', Textarea)
 app.component('Chips', Chips)
-app.component('InputNumber', InputNumber)
-app.use(PrimeVue, { ripple: true });
-app.use(DialogService)
-app.use(ToastService)
+app.component('MultiSelect', MultiSelect)
 
-
-app.mount("#familyinformation");
-
-
-
+app.mount("#profilePage");
 

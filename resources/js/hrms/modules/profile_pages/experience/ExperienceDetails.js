@@ -39,7 +39,7 @@ import DialogService from 'primevue/dialogservice';
 // Primevue Services
 
 
-import App from './ExperienceDetails.vue' ;
+import App from '../ExperienceDetails.vue' ;
 
 import { createApp } from "vue";
 

@@ -35,7 +35,7 @@ import DialogService from 'primevue/dialogservice';
 import ToastService from 'primevue/toastservice';
 
 
-import EmployeeDetails from './EmployeeDetails.vue'
+import EmployeeDetails from '../EmployeeDetails.vue'
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";
