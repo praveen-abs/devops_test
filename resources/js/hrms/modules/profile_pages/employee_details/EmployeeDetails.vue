@@ -7,7 +7,15 @@
                     <i class="ri-pencil-fill"></i>
                 </a>
 
-                <Dialog v-model:visible="visible" modal header="General Information" :style="{ width: '50vw',border:'5p solid var(--color-primary_blue)' }">
+                <Dialog v-model:visible="visible" modal header="General Information" :style="{ width: '50vw', borderTop: '5px solid #002f56' }" >
+                    <template #header>
+                            <div>
+                                <h5
+                                    :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
+                                    General Information</h5>
+                            </div>
+                   </template>
+
                                 <div class="row">
                                     <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
                                         <div class="mb-3 form-group">
@@ -132,7 +140,14 @@
                         data-bs-target="#personal_info_modal" @click="contactVisible = true"><i class="ri-pencil-fill"></i></a>
                 </span>
 
-                <Dialog v-model:visible="contactVisible" modal header="Contact Information" :style="{ width: '50vw' ,boredTop:'5px solid #003056' }">
+                <Dialog v-model:visible="contactVisible" modal header="Contact Information" :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
+                    <template #header>
+                            <div>
+                                <h5
+                                    :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
+                                    Contact Information</h5>
+                            </div>
+                   </template>
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-6">
@@ -203,7 +218,14 @@
                 <span class="personal-edit"><a href="#" class="edit-icon"
                         data-bs-target="#edit_addressInfo" @click="addressVisible=true"><i class="ri-pencil-fill"></i></a></span>
 
-                        <Dialog v-model:visible="addressVisible" modal header="Address Information" :style="{ width: '50vw' ,boredTop:'5px solid #003056' }">
+                        <Dialog v-model:visible="addressVisible" modal header :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
+                            <template #header>
+                                <div>
+                                    <h5
+                                        :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
+                                        Address Information</h5>
+                                </div>
+                            </template>
 
                                         <div class="modal-body">
 

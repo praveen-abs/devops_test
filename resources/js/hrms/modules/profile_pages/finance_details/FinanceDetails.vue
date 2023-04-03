@@ -71,7 +71,7 @@
                             </h6>
 
                             <Dialog v-model:visible="visible" modal header="Header"
-                                :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
+                            :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
                                 <template #header>
                                     <div>
                                         <h5
@@ -193,6 +193,13 @@
 
                         <Dialog v-model:visible="visible2" modal header="Statutory Details"
                             :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
+                            <template #header>
+                                <div>
+                                    <h5
+                                        :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
+                                        Statutory information</h5>
+                                </div>
+                            </template>
 
                             <div class="modal-body">
                                 <div class="row ">

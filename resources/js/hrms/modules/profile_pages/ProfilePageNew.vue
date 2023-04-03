@@ -45,12 +45,11 @@
         </div>
 
         <div class="tab-pane fade" id="experience_det" role="tabpanel" aria-labelledby="">
-            <FinanceDetails />
-
+            <ExperienceDetails />
 
         </div>
         <div class="tab-pane fade" id="finance_det" role="tabpanel" aria-labelledby="">
-            <ExperienceDetails />
+            <FinanceDetails />
 
 
         </div>
