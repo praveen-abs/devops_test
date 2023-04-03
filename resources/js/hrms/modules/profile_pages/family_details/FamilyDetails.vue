@@ -12,7 +12,7 @@
                     @click="visible = true">
                     <i class="ri-pencil-fill"></i>
                 </button>
-                <Dialog v-model:visible="visible" modal :style="{ width: '40vw', color: 'red' }" id="">
+                <Dialog v-model:visible="visible" modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }" id="">
                     <template #header>
                         <div>
                             <h5

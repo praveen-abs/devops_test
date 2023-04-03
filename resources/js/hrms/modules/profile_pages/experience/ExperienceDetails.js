@@ -35,10 +35,11 @@ import DialogService from 'primevue/dialogservice';
 
 
 
+
 // Primevue Services
 
 
-import App from './FamilyDetails.vue'
+import App from '../ExperienceDetails.vue' ;
 
 import { createApp } from "vue";
 
@@ -64,13 +65,12 @@ app.component('Calendar', Calendar)
 app.component('Textarea', Textarea)
 app.component('Chips', Chips)
 app.component('InputNumber', InputNumber)
+
 app.use(PrimeVue, { ripple: true });
 app.use(DialogService)
 app.use(ToastService)
 
 
-app.mount("#familyinformation");
-
-
+app.mount("#ExperienceDetails");
 
 

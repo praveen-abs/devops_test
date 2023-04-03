@@ -7,7 +7,15 @@
                     <i class="ri-pencil-fill"></i>
                 </a>
 
-                <Dialog v-model:visible="visible" modal header="General Information" :style="{ width: '50vw' }">
+                <Dialog v-model:visible="visible" modal header="General Information" :style="{ width: '50vw', borderTop: '5px solid #002f56' }" >
+                    <template #header>
+                            <div>
+                                <h5
+                                    :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
+                                    General Information</h5>
+                            </div>
+                   </template>
+
                                 <div class="row">
                                     <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
                                         <div class="mb-3 form-group">
@@ -86,6 +94,7 @@
                 <li class="pb-1 border-bottom-liteAsh" >
                     <div class="title">Birthday</div>
                     <div class="text">
+
                         {{ emp_details.doj.slice(8,10)+ "-" + emp_details.doj.slice(5,7)+"-"+emp_details.doj.slice(0,4) }}
                     </div>
                 </li>
@@ -127,9 +136,55 @@
     <div class="mb-2 card">
         <div class="card-body">
             <h6 class="">Contact Information
-                <span class="personal-edit"><a href="#" class="edit-icon" data-bs-toggle="modal"
-                        data-bs-target="#personal_info_modal"><i class="ri-pencil-fill"></i></a>
+                <span class="personal-edit"><a href="#" class="edit-icon"
+                        data-bs-target="#personal_info_modal" @click="contactVisible = true"><i class="ri-pencil-fill"></i></a>
                 </span>
+
+                <Dialog v-model:visible="contactVisible" modal header="Contact Information" :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
+                    <template #header>
+                            <div>
+                                <h5
+                                    :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
+                                    Contact Information</h5>
+                            </div>
+                   </template>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label>Personal Email</label>
+                                    <input type="email" name="present_email"
+                                        class="form-control" v-model="contactinfo.personal_email">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label> Office Email</label>
+                                    <input type="email"
+                                        class="form-control" name="officical_mail" v-model="contactinfo.office_email">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <div class="form-group mb-3">
+                                    <label>Mobile Number</label>
+                                    <input type="text" size=20 maxlength=10 name="mobile_number"
+                                     class="form-control"  v-model="contactinfo.mobile_number">
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="text-right">
+                                    <button id="btn_submit_contact_info"
+                                        class="btn btn-border-orange submit-btn"  @click="savecontactInfoDetails()">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </Dialog>
             </h6>
 
             <ul class="personal-info">
@@ -160,8 +215,45 @@
     <div class="mb-2 card">
         <div class="card-body">
             <h6 class="">Address
-                <span class="personal-edit"><a href="#" class="edit-icon" data-bs-toggle="modal"
-                        data-bs-target="#edit_addressInfo"><i class="ri-pencil-fill"></i></a></span>
+                <span class="personal-edit"><a href="#" class="edit-icon"
+                        data-bs-target="#edit_addressInfo" @click="addressVisible=true"><i class="ri-pencil-fill"></i></a></span>
+
+                        <Dialog v-model:visible="addressVisible" modal header :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
+                            <template #header>
+                                <div>
+                                    <h5
+                                        :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
+                                        Address Information</h5>
+                                </div>
+                            </template>
+
+                                        <div class="modal-body">
+
+                                            <div class="col-md-12">
+                                                <div class="form-group mb-3">
+                                                    <label>Current Address</label>
+                                                    <textarea name="current_address_line_1" id="current_address_line_1" cols="30" rows="3"
+                                                        class="form-control" v-model="Addressinfo.current_address"></textarea>
+                                                </div>
+                                                <div class="form-group mb-3">
+                                                    <label>Permanent Address </label>
+                                                    <textarea name="permanent_address_line_1" id="permanent_address_line_1" cols="30" rows="3"
+                                                        class="form-control"  v-model="Addressinfo.Permanent_Address"></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="text-right">
+                                                    <Toast />
+                                                    <button
+                                                        id="btn_submit_address" class="btn btn-border-orange submit-btn warn" @click="saveAddressinfo" severity="warn">Save</button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                        </Dialog>
             </h6>
             <div class="row">
                 <div class="col-6">
@@ -190,6 +282,8 @@
         </div>
     </div>
 </template>
+
+
 <script setup>
 import { ref, onMounted, reactive } from "vue";
 import moment from "moment";
@@ -199,13 +293,16 @@ import { useConfirm } from "primevue/useconfirm";
 
 import axios from "axios";
 
-import { Service } from "../Service/Service";
+import { Service } from "../../Service/Service";
 
 const fetch_data = Service()
 
 const toast = useToast();
+const Addresstoast = useToast();
 
     const visible = ref(false);
+    const contactVisible = ref(false);
+    const addressVisible = ref(false);
 
 
 const employee_details = ref()
@@ -281,6 +378,7 @@ function saveGeneralInformationDetails() {
         });
     }
 
+
   const fetchGeneralInformationDetails = () =>{
     let url ="http://localhost:3000/Empdetails"
     axios.get(url).then((response) => {
@@ -303,7 +401,104 @@ onMounted(() => {
         console.log(result);
         option_maritals_status.value = result.data;
     });
+    fetchcontactInfoDetails();
+    fetchAddressInfoDetails();
+
 });
+
+const contact_details = ref();
+
+const contactinfo = reactive({
+    personal_email:"",
+    office_email:"",
+    mobile_number:""
+
+});
+
+const savecontactInfoDetails =()=>{
+    console.log("calling saveinfoDetails");
+
+
+    let url = 'http://localhost:3000/contact'
+
+    axios.post(url,{
+        user_id: contactinfo.user_id,
+        present_email:contactinfo.personal_email,
+        officical_mail:contactinfo.office_email,
+        mobile_number:contactinfo.mobile_number
+    })
+    .then((res)=>{
+            if (res.data.status == "success") {
+            } else if (res.data.status == "failure") {
+                leave_data.leave_request_error_messege = res.data.message;
+            }
+
+    }).catch((err)=>{
+        console.log(err);
+    })
+
+}
+const fetchcontactInfoDetails = () =>{
+    let url ='http://localhost:3000/contact'
+    axios.get(url).then((response) => {
+        console.log("Axios : " + response.data);
+        console.log(response.data);
+        contact_details.value = response.data;
+        // loading.value = false;
+    });
+}
+
+const addressUpdateDetails = ref();
+
+const Addressinfo = reactive({
+  current_address:"",
+  Permanent_Address:""
+});
+
+const saveAddressinfo=()=>{
+
+    console.log("calling saveinfoDetails");
+    if(Addressinfo.current_address ==" " || Addressinfo.Permanent_Address == " "){
+        Addresstoast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
+        console.log(Addressinfo);
+    }
+    else{
+        let url = 'http://localhost:3000/Address_details';
+        console.log("hello");
+        axios.post(url,{
+        user_id: Addressinfo.user_id,
+        current_address_line_1:Addressinfo.current_address,
+        permanent_address_line_1:Addressinfo.Permanent_Address
+        }).then((res)=>{
+            if(res.data.status == "success"){
+
+            }else if(res.data.status == "failure"){
+                console.log(res.data.message);
+            }
+        }).catch((err)=>{
+            console.log(err);
+        });
+    }
+
+}
+
+const fetchAddressInfoDetails = ()=>{
+    let url ='http://localhost:3000/Address_details'
+    axios.get(url).then((response) => {
+        console.log("Axios : " + response.data);
+        console.log(response.data);
+        addressUpdateDetails.value = response.data;
+        // loading.value = false;
+    });
+}
+
+
+
+
+
+
+
+
 </script>
 
 <style scoped>
@@ -437,7 +632,79 @@ const confirm2 = () => {
         }
     });
 };
-</script> -->
+</script>
+
+
+
+
+
+<template>
+    <div class="card flex justify-content-center">
+        <Button label="Show" icon="pi pi-external-link" @click="visible = true" />
+        <Dialog v-model:visible="visible" modal header="Header" :style="{ width: '50vw' }">
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+        </Dialog>
+    </div>
+</template>
+
+<script setup>
+import { ref } from "vue";
+
+const visible = ref(false);
+</script>
+
+
+<template>
+    <div class="card">
+        <Message severity="success" sticky>Success Message Content</Message>
+        <Message severity="info" sticky>Info Message Content</Message>
+        <Message severity="warn" sticky>Warning Message Content</Message>
+        <Message severity="error" sticky>Error Message Content</Message>
+    </div>
+</template>
+
+<script setup>
+</script>
+
+
+<template>
+    <div class="card flex justify-content-center">
+        <Toast />
+        <div class="flex flex-wrap gap-2">
+            <Button label="Success" severity="success" @click="showSuccess" />
+            <Button label="Info" severity="info" @click="showInfo" />
+            <Button label="Warn" severity="warning" @click="showWarn" />
+            <Button label="Error" severity="danger" @click="showError" />
+        </div>
+    </div>
+</template>
+
+<script setup>
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
+
+const showSuccess = () => {
+    toast.add({ severity: 'success', summary: 'Success Message', detail: 'Message Content', life: 3000 });
+};
+
+const showInfo = () => {
+    toast.add({ severity: 'info', summary: 'Info Message', detail: 'Message Content', life: 3000 });
+};
+
+const showWarn = () => {
+    toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
+};
+
+const showError = () => {
+    toast.add({ severity: 'error', summary: 'Error Message', detail: 'Message Content', life: 3000 });
+};
+</script>
+
+
+-->
 
 }
 
