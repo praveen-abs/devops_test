@@ -73,7 +73,7 @@ import salart_structure from "./salary_structure/salary_structure.vue";
 import statutory_filling from "./statutory_filling/statutory_filling.vue";
 import finance_setting from "./finance_setting/finance_setting.vue";
 
-const activetab = ref(1);
+const activetab = ref(4);
 
 </script>
 
