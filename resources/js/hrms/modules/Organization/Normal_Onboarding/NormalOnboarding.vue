@@ -1862,13 +1862,13 @@
                         >
                           <div class="mt-2 form-check form-check-inline">
                             <label
-                              class="form-check-label leave_type ms-2"
+                              class="form-check-label leave_type -ml-4"
                               for="compensation_monthly"
                             >
                               Enter Monthly Gross</label
                             >
                           </div>
-                          <div class="ml-2 form-check form-check-inline">
+                          <div class=" form-check form-check-inline">
                             <input
                               type="number"
                               placeholder="Enter Monthly Gross"
@@ -1881,15 +1881,18 @@
                               required
                             />
                           </div>
-                          <div class="ml-2 form-check form-check-inline">
-                            <p>
-                              Cost to Company :
+                          <div class=" form-check form-check-inline">
+                            
+                             
+                              <p>
+                                <strong>Annual Gross</strong> (Cost to Company) :
                               <strong v-if="employee_onboarding.total_ctc < 0">0</strong>
                               <strong v-else-if="employee_onboarding.total_ctc > 0">{{
                                 Math.floor(employee_onboarding.total_ctc)
                               }}</strong>
                               <strong v-else>0</strong>
                             </p>
+                            
                           </div>
                         </div>
                       </div>
@@ -2011,6 +2014,7 @@
                           />
                         </div>
                       </div>
+                      <!-- <button @click="special_allowance_cal">tets</button> -->
                       <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label">Gross Salary</label>
@@ -2866,10 +2870,7 @@ const submit = () => {
   };
 
   let formData = new FormData();
-  formData.append(
-    "can_onboard_employee",
-    employee_onboarding.can_onboard_employee
-  );
+  formData.append("can_onboard_employee", employee_onboarding.can_onboard_employee);
   formData.append("employee_code", employee_onboarding.employee_code);
   formData.append("doj", employee_onboarding.doj);
   formData.append("aadhar_number", employee_onboarding.aadhar_number);
@@ -2971,7 +2972,7 @@ const submit = () => {
     employee_onboarding.epf_employer_contribution
   );
   formData.append("graduity", employee_onboarding.graduity);
-  formData.append("cic", employee_onboarding.cic);
+  formData.append("cic", employee_onboarding.total_ctc);
   formData.append("epf_employee", employee_onboarding.epf_employee);
   formData.append("esic_employee", employee_onboarding.esic_employee);
   formData.append(
@@ -3168,7 +3169,10 @@ const statutory_bonus = () => {
 
   let sa = employee_onboarding.special_allowance;
 
+
   console.log(total, sa);
+
+  console.log(sa - total);
 
   setTimeout(() => {
     employee_onboarding.special_allowance = sa - total;
@@ -3189,7 +3193,7 @@ const statutory_bonus = () => {
     }
   }, 1000);
 };
-
+  
 const special_allowance_cal = () => {
   let total =
     employee_onboarding.statutory_bonus +
@@ -3200,6 +3204,8 @@ const special_allowance_cal = () => {
   let sa = employee_onboarding.special_allowance;
 
   console.log(total, sa);
+
+  console.log(sa - total);
 
   setTimeout(() => {
     employee_onboarding.special_allowance = sa - total;
@@ -3350,7 +3356,7 @@ const graduity = () => {
 
   setTimeout(() => {
     employee_onboarding.total_ctc = sum;
-  }, 1000);
+  }, 2000);
 };
 
 const epf_esic_calculation = () => {

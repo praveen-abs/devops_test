@@ -90,45 +90,47 @@
 
                 </Dialog>
             </h6>
-            <ul class="personal-info" v-for="emp_details in employee_details"  :key="emp_details.id">
+            <div >
+            <ul class="personal-info" >
                 <li class="pb-1 border-bottom-liteAsh" >
                     <div class="title">Birthday</div>
-                    <div class="text">
-
+                    <div class="text" v-for="emp_details in employee_details"  :key="emp_details.id">
                         {{ emp_details.doj.slice(8,10)+ "-" + emp_details.doj.slice(5,7)+"-"+emp_details.doj.slice(0,4) }}
                     </div>
                 </li>
                 <li class="pb-1 border-bottom-liteAsh">
                     <div class="title">Gender </div>
-                    <div class="text">
+                    <div class="text" v-for="emp_details in employee_details"  :key="emp_details.id">
                         {{ emp_details.gender.name }}
                     </div>
                 </li>
                 <li class="pb-1 border-bottom-liteAsh">
-                    <div class="title">Date Of Joining (DOJ)</div>
-                    <div class="text">
+                    <div class="title" >Date Of Joining (DOJ)</div>
+                    <div class="text" v-for="emp_details in employee_details"  :key="emp_details.id">
                         {{ emp_details.doj.slice(8,10)+ "-" + emp_details.doj.slice(5,7)+"-"+emp_details.doj.slice(0,4) }}
                     </div>
                 </li>
                 <li class="pb-1 border-bottom-liteAsh">
                     <div class="title">Marital Status </div>
-                    <div class="text text-capitalize">
+                    <div class="text text-capitalize" v-for="emp_details in employee_details"  :key="emp_details.id">
                         {{ emp_details.marital_status_id.name }}
                     </div>
                 </li>
                 <li class="pb-1 border-bottom-liteAsh">
                     <div class="title"> Blood Group</div>
-                    <div class="text">
+                    <div class="text" v-for="emp_details in employee_details"  :key="emp_details.id">
                         {{ emp_details.blood_group_id.name }}
                     </div>
                 </li>
                 <li class="pb-1 ">
                     <div class="title">Physically Handicapped</div>
-                    <div class="text">
+                    <div class="text" v-for="emp_details in employee_details"  :key="emp_details.id">
                         {{ emp_details.blood_group_id.physically_challenged }}
                     </div>
                 </li>
             </ul>
+        </div>
+
         </div>
     </div>
 
@@ -281,6 +283,8 @@
 
         </div>
     </div>
+
+
 </template>
 
 
@@ -296,6 +300,8 @@ import axios from "axios";
 import { Service } from "../../Service/Service";
 
 const fetch_data = Service()
+
+
 
 const toast = useToast();
 const Addresstoast = useToast();

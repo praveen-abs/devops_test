@@ -16,6 +16,7 @@
     }
   ],
   "FinanceDetails": [
+   
     {
       "bank_name": {
         "id": 2,
@@ -24,10 +25,18 @@
         "max_length": "11",
         "status": "A"
       },
-      "bank_ac_no": 100,
-      "ifsc_code": "asdsdsdsdsdfddg",
-      "pan_no": "sdsdsd",
-      "id": 1
+      "bank_ac_no": "",
+      "ifsc_code": "S01010",
+      "pan_no": "sasasaada",
+      "id": 2
+    },
+    {
+      "pf_applicable": "no",
+      "epf_no": "123456",
+      "uan_no": "123456",
+      "esic_applicable": "yes",
+      "esic_no": "1234567",
+      "id": 3
     }
   ],
   "posts": [

@@ -68,4 +68,13 @@ import FinanceDetails from './finance_details/FinanceDetails.vue'
 import ExperienceDetails from './experience/ExperienceDetails.vue'
 import Documents from './documents/documents.vue'
 
+import { Service } from '../Service/Service'
+import { onMounted } from 'vue'
+
+
+onMounted(() => {
+
+    Service()
+    
+})
 </script>

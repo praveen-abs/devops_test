@@ -54,4 +54,9 @@ import ActiveEmployees from './active_employees/active_employees.vue'
 import YetToActiveEmployees from './yet_to_active_employees/yet_to_active_employees.vue'
 import ExitEmployees from './exit_employees/exit_employees.vue'
 
+import { Service } from './manage_service';
+import { onMounted } from 'vue';
+
+
+
 </script>
