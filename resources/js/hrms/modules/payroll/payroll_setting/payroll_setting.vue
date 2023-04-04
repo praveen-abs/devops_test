@@ -1,7 +1,7 @@
 <template>
-    <div class="payroll-settings mx-4">
+    <div class="mx-4 payroll-settings">
 
-        <div class="payroll-settings-header mb-4">
+        <div class="mb-4 payroll-settings-header">
             <h4 class="mb-3 text-2xl font-medium">Payroll Settings</h4>
             <p class="mb-4">We kindly asked for your patience as we gather all the necessary information to process the
                 payroll.We understand that is may cause a sightly delay,and we appreciate you understanding during
@@ -11,125 +11,127 @@
         </div>
 
         <div class="payroll-settings-cards ">
-            <a
+            <a href="/payroll/work_location"
                 class="bg-blue-900   payroll-settings-content border-indigo-100  cursor-pointer shadow-md text-white flex items-center justify-between rounded-lg p-2.5 ">
                 <div class="flex items-center">
                     <img class="h-8" src="../../../../../../public/assets/images/dashboard/location.png" alt="">
-                    <span class="text-white text-lg ml-5">Work Location</span>
+                    <span class="ml-5 text-lg text-white">Work Location</span>
                 </div>
-                <div class="  flex justify-start items-center">
-                    <span class="text-base  font-light  text-gray-100">[Office Location and State Confirmation]</span>
+                <div class="flex items-center justify-start ">
+                    <span class="text-base font-light text-gray-100">[Office Location and State Confirmation]</span>
                 </div>
-                <div class="flex items-center   ">
+                <div class="flex items-center ">
                     <button class="rounded-full text-green-200 text-sm border-1 border-solid border-green-300 py-1.5 px-4">
-                        <i class="fa fa-check-circle mr-2"></i> Completed</button>
-                    <i class="fa fa-angle-double-right text-xl mr-6 ml-8 font-bold text-white"></i>
+                        <i class="mr-2 fa fa-check-circle"></i> Completed</button>
+                    <i class="ml-8 mr-6 text-xl font-bold text-white fa fa-angle-double-right" @click="test"></i>
                 </div>
             </a>
 
-            <a
+            <a   href="/payroll/setup"
                 class="bg-blue-900   payroll-settings-content border-orange-200  cursor-pointer shadow-md text-white flex items-center justify-between rounded-lg p-2.5 ">
                 <div class="flex items-center">
                     <img class="h-8" src="../../../../../../public/assets/images/dashboard/payroll.png" alt="">
-                    <span class="text-white text-lg ml-5">Payroll Setup</span>
+                    <span class="ml-5 text-lg text-white">Payroll Setup</span>
                 </div>
-                <div class="  flex justify-start items-center">
-                    <span class="text-base  font-light  text-gray-100">[General Setting,Salary Structure &
+                <div class="flex items-center justify-start ">
+                    <span class="text-base font-light text-gray-100">[General Setting,Salary Structure &
                         Compenents]</span>
                 </div>
-                <div class="flex items-center   ">
+                <div class="flex items-center ">
                     <button
                         class="rounded-full text-yellow-100 text-sm border-1 border-solid border-yellow-300 py-1.5 px-5">
-                        <i class="fa fa-exclamation-circle mr-2"></i> Pending
+                        <i class="mr-2 fa fa-exclamation-circle"></i> Pending
                     </button>
-                    <i class="fa fa-angle-double-right text-xl mr-6 text-white-200  ml-8 font-bold "></i>
+                    
+                    <i class="ml-8 mr-6 text-xl font-bold fa fa-angle-double-right text-white-200 ">
+                    </i>
                 </div>
             </a>
             <a
                 class="bg-blue-900   payroll-settings-content border-blue-200  cursor-pointer shadow-md text-white flex items-center justify-between rounded-lg p-2.5 ">
                 <div class="flex items-center">
                     <img class="h-8" src="../../../../../../public/assets/images/dashboard/categorize.png" alt="">
-                    <span class="text-white text-lg ml-5">Misc Settings</span>
+                    <span class="ml-5 text-lg text-white">Misc Settings</span>
                 </div>
-                <div class="  flex justify-start items-center">
-                    <span class="text-base  font-light  text-gray-100">[Payment Setting and Components Rounding]</span>
+                <div class="flex items-center justify-start ">
+                    <span class="text-base font-light text-gray-100">[Payment Setting and Components Rounding]</span>
                 </div>
-                <div class="flex items-center   ">
+                <div class="flex items-center ">
                     <button
                         class="rounded-full text-yellow-100 text-sm border-1 border-solid border-yellow-300 py-1.5 px-5">
-                        <i class="fa fa-exclamation-circle mr-2"></i> Pending
+                        <i class="mr-2 fa fa-exclamation-circle"></i> Pending
                     </button>
-                    <i class="fa fa-angle-double-right text-xl mr-6 ml-8 font-bold text-white"></i>
+                    <i class="ml-8 mr-6 text-xl font-bold text-white fa fa-angle-double-right"></i>
                 </div>
             </a>
             <a
                 class="bg-blue-900   payroll-settings-content border-yellow-200  cursor-pointer shadow-md text-white flex items-center justify-between rounded-lg p-2.5 ">
                 <div class="flex items-center">
                     <img class="h-8" src="../../../../../../public/assets/images/dashboard/purchase-order.png" alt="">
-                    <span class="text-white text-lg ml-5">Payslip</span>
+                    <span class="ml-5 text-lg text-white">Payslip</span>
                 </div>
-                <div class="  flex justify-start items-center">
-                    <span class="text-base  font-light  text-gray-100">[Payslip Option and Fields,Password
+                <div class="flex items-center justify-start ">
+                    <span class="text-base font-light text-gray-100">[Payslip Option and Fields,Password
                         protections]</span>
                 </div>
-                <div class="flex items-center   ">
+                <div class="flex items-center ">
                     <button
                         class="rounded-full text-yellow-100 text-sm border-1 border-solid border-yellow-300 py-1.5 px-5">
-                        <i class="fa fa-exclamation-circle mr-2"></i> Pending
+                        <i class="mr-2 fa fa-exclamation-circle"></i> Pending
                     </button>
-                    <i class="fa fa-angle-double-right text-xl mr-6 ml-8 font-bold text-white"></i>
+                    <i class="ml-8 mr-6 text-xl font-bold text-white fa fa-angle-double-right"></i>
                 </div>
             </a>
             <a
                 class="bg-blue-900   payroll-settings-content border-red-200  cursor-pointer shadow-md text-white flex items-center justify-between rounded-lg p-2.5 ">
                 <div class="flex items-center w-1/3">
                     <img class="h-8" src="../../../../../../public/assets/images/dashboard/money-bag.png" alt="">
-                    <span class="text-white text-lg ml-5">Full and Final Settlement</span>
+                    <span class="ml-5 text-lg text-white">Full and Final Settlement</span>
                 </div>
-                <div class="  flex justify-start items-center">
-                    <span class="text-base  font-light  text-gray-100">[Opening & closing Notes,Notice Period Buy
+                <div class="flex items-center justify-start ">
+                    <span class="text-base font-light text-gray-100">[Opening & closing Notes,Notice Period Buy
                         Out]</span>
                 </div>
-                <div class="flex items-center   ">
+                <div class="flex items-center ">
                     <button
                         class="rounded-full text-yellow-100 text-sm border-1 border-solid border-yellow-300 py-1.5 px-5">
-                        <i class="fa fa-exclamation-circle mr-2"></i> Pending
+                        <i class="mr-2 fa fa-exclamation-circle"></i> Pending
                     </button>
-                    <i class="fa fa-angle-double-right text-xl mr-6 ml-8 font-bold text-white"></i>
+                    <i class="ml-8 mr-6 text-xl font-bold text-white fa fa-angle-double-right"></i>
                 </div>
             </a>
             <a
                 class="bg-blue-900   payroll-settings-content border-green-600  cursor-pointer shadow-md text-white flex items-center justify-between rounded-lg p-2.5 ">
                 <div class="flex items-center">
                     <img class="h-8" src="../../../../../../public/assets/images/dashboard/donate.png" alt="">
-                    <span class="text-white text-lg ml-5">Contribution Rate</span>
+                    <span class="ml-5 text-lg text-white">Contribution Rate</span>
                 </div>
-                <div class="  flex justify-start items-center ">
-                    <span class="text-base  font-light  text-gray-100">[Manage PF Contribution Rate]</span>
+                <div class="flex items-center justify-start ">
+                    <span class="text-base font-light text-gray-100">[Manage PF Contribution Rate]</span>
                 </div>
-                <div class="flex items-center   ">
+                <div class="flex items-center ">
                     <button
                         class="rounded-full text-yellow-100 text-sm border-1 border-solid border-yellow-300 py-1.5 px-5">
-                        <i class="fa fa-exclamation-circle mr-2"></i> Pending
+                        <i class="mr-2 fa fa-exclamation-circle"></i> Pending
                     </button>
-                    <i class="fa fa-angle-double-right text-xl mr-6 ml-8 font-bold text-white"></i>
+                    <i class="ml-8 mr-6 text-xl font-bold text-white fa fa-angle-double-right"></i>
                 </div>
             </a>
             <a
                 class="bg-blue-900   payroll-settings-content border-blue-200  cursor-pointer shadow-md text-white flex items-center justify-between rounded-lg p-2.5 ">
                 <div class="flex items-center">
                     <img class="h-8" src="../../../../../../public/assets/images/dashboard/iencashment.png" alt="">
-                    <span class="text-white text-lg ml-5">Leave Encashment</span>
+                    <span class="ml-5 text-lg text-white">Leave Encashment</span>
                 </div>
-                <div class="  flex justify-start items-center">
-                    <span class="text-base  font-light  text-gray-100">[Leave Encashment Policies Calculation]</span>
+                <div class="flex items-center justify-start ">
+                    <span class="text-base font-light text-gray-100">[Leave Encashment Policies Calculation]</span>
                 </div>
-                <div class="flex items-center   ">
+                <div class="flex items-center ">
                     <button
                         class="rounded-full text-yellow-100 text-sm border-1 border-solid border-yellow-300 py-1.5 px-5">
-                        <i class="fa fa-exclamation-circle mr-2"></i> Pending
+                        <i class="mr-2 fa fa-exclamation-circle"></i> Pending
                     </button>
-                    <i class="fa fa-angle-double-right text-xl mr-6 ml-8 font-bold text-white"></i>
+                    <i class="ml-8 mr-6 text-xl font-bold text-white fa fa-angle-double-right"></i>
                 </div>
             </a>
 
@@ -142,6 +144,25 @@
     </div>
 </template>
 
+
+<script setup>
+import axios from "axios"
+
+
+
+const test = () => {
+    let app = this
+    axios.get('/payroll/setup')
+        .then(function (response) {
+            app.brands = response.data
+        })
+        .catch(function (error) {
+            console.log(error)
+        })
+
+}
+
+</script>
 
 <style scoped>
 .payroll-settings-content {

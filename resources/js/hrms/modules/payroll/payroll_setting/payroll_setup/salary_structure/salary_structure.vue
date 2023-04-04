@@ -1,11 +1,11 @@
 <template>
-<div class="mx-2 ">
-        <!-- <section id="header" class="flex ">
+<div class="mx-4 ">
+        <section id="header" class="flex ">
             <div class="w-10 my-6 ">Salary Structure(Paygroup)</div>
             <div><button class="my-6 btn btn-orange">Add Structure</button></div>
         </section>
     
-        <div id="table">
+        <div id="table mx-4 my-2">
             <DataTable :value="products" >
                 <Column field="product" header="Code"></Column>
                 <Column field="lastYearSale" header="Name"></Column>
@@ -13,8 +13,8 @@
                 <Column field="thisYearProfit" header="Quantity"></Column>
             </DataTable>
             
-        </div> -->
-        <new_salary_structure />
+        </div>
+        <!-- <new_salary_structure /> -->
     </div>
 </template>
 
