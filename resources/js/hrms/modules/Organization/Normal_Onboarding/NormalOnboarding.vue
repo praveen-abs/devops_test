@@ -37,7 +37,7 @@
                           <span v-if="user_code_exists" class="p-error"
                             >Employee code Already Exists</span
                           >
-                        
+
                         </div>
                       </div>
 
@@ -55,7 +55,6 @@
                             :class="{
                               'p-invalid': v$.employee_name.$invalid && submitted,
                             }"
-                            pattern="[a-zA-Z]"
                             placeholder="Employee Name as per Aadhar "
                           />
                           <span v-if="employee_name_invalid" class="p-error"
@@ -1848,7 +1847,7 @@
 
                             <label for="" class="float-label">Cost To Company</label>
                             <input type="number" placeholder="Cost To Company" name="basic"
-                              v-model="employee_onboarding.basic" style="height: 2.9em;" 
+                              v-model="employee_onboarding.basic" style="height: 2.9em;"
                               class="textbox onboard-form form-control calculation_data gross_data" step="0.01" />
 
                           </div>
@@ -1863,13 +1862,13 @@
                         >
                           <div class="mt-2 form-check form-check-inline">
                             <label
-                              class="form-check-label leave_type ms-2"
+                              class="form-check-label leave_type -ml-4"
                               for="compensation_monthly"
                             >
                               Enter Monthly Gross</label
                             >
                           </div>
-                          <div class="ml-2 form-check form-check-inline">
+                          <div class=" form-check form-check-inline">
                             <input
                               type="number"
                               placeholder="Enter Monthly Gross"
@@ -1882,15 +1881,18 @@
                               required
                             />
                           </div>
-                          <div class="ml-2 form-check form-check-inline">
-                            <p>
-                              Cost to Company :
+                          <div class=" form-check form-check-inline">
+                            
+                             
+                              <p>
+                                <strong>Annual Gross</strong> (Cost to Company) :
                               <strong v-if="employee_onboarding.total_ctc < 0">0</strong>
                               <strong v-else-if="employee_onboarding.total_ctc > 0">{{
                                 Math.floor(employee_onboarding.total_ctc)
                               }}</strong>
                               <strong v-else>0</strong>
                             </p>
+                            
                           </div>
                         </div>
                       </div>
@@ -2012,6 +2014,7 @@
                           />
                         </div>
                       </div>
+                      <!-- <button @click="special_allowance_cal">tets</button> -->
                       <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label">Gross Salary</label>
@@ -2421,7 +2424,7 @@
       !employee_onboarding.employee_name.length > 0 &&
       !employee_onboarding.email.length > 0   ||
       !employee_onboarding.mobile_number.length > 0 &&
-      !employee_onboarding.dob.length > 0  
+      !employee_onboarding.dob.length > 0
     "
     header="Documents Required"
     v-model:visible="RequiredDocument"
@@ -2503,6 +2506,28 @@
       </div>
     </template>
   </Dialog>
+  <Dialog
+      header="Header"
+      v-model:visible="loading"
+      :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+      :style="{ width: '25vw' }"
+      :modal="true"
+      :closable="false"
+      :closeOnEscape="false"
+    >
+      <template #header>
+        <ProgressSpinner
+          style="width: 50px; height: 50px"
+          strokeWidth="8"
+          fill="var(--surface-ground)"
+          animationDuration="2s"
+          aria-label="Custom ProgressSpinner"
+        />
+      </template>
+      <template #footer>
+        <h5 style="text-align: center">Please wait...</h5>
+      </template>
+    </Dialog>
 </template>
 
 <script setup>
@@ -2711,6 +2736,7 @@ const PancardInvalid = ref(false);
 const EducationCertificateInvalid = ref(false);
 const fileUploadValidation = ref(true);
 const employee_name_invalid =ref(false)
+const loading = ref(false)
 
 //   Events
 
@@ -2740,7 +2766,6 @@ const handleSubmit = (isFormValid) => {
     //   life: 3000,
     // });
     RequiredDocument.value = true;
-    fileUploadValidation.value = true;
     return;
   }
   toggleDialog();
@@ -2838,16 +2863,14 @@ const SubmitEmployeeOnboardingData = () => {
 };
 
 const submit = () => {
+    loading.value = true
   let currentObj = this;
   const config = {
     headers: { "content-type": "multipart/form-data" },
   };
 
   let formData = new FormData();
-  formData.append(
-    "can_onboard_employee",
-    employee_onboarding.can_onboard_employee
-  );
+  formData.append("can_onboard_employee", employee_onboarding.can_onboard_employee);
   formData.append("employee_code", employee_onboarding.employee_code);
   formData.append("doj", employee_onboarding.doj);
   formData.append("aadhar_number", employee_onboarding.aadhar_number);
@@ -2949,7 +2972,7 @@ const submit = () => {
     employee_onboarding.epf_employer_contribution
   );
   formData.append("graduity", employee_onboarding.graduity);
-  formData.append("cic", employee_onboarding.cic);
+  formData.append("cic", employee_onboarding.total_ctc);
   formData.append("epf_employee", employee_onboarding.epf_employee);
   formData.append("esic_employee", employee_onboarding.esic_employee);
   formData.append(
@@ -2979,10 +3002,11 @@ const submit = () => {
       // currentObj.success = response.data.success;
       console.log("response" + response.data);
       console.log(Object(response.data));
+      loading.value = false
       if (response.data.status == "success") {
         Swal.fire(response.data.status, response.data.message, "success");
       }
-      employee_onboarding.save_draft_messege = res.data;
+      employee_onboarding.save_draft_messege = response.data;
     })
     .catch(function (error) {
       // currentObj.output = error;
@@ -3067,7 +3091,7 @@ const first_second_letter= ()=>{
                 }else{
                   employee_name_invalid.value =false
                 }
-              
+
 
 
 }
@@ -3145,7 +3169,10 @@ const statutory_bonus = () => {
 
   let sa = employee_onboarding.special_allowance;
 
+
   console.log(total, sa);
+
+  console.log(sa - total);
 
   setTimeout(() => {
     employee_onboarding.special_allowance = sa - total;
@@ -3166,7 +3193,7 @@ const statutory_bonus = () => {
     }
   }, 1000);
 };
-
+  
 const special_allowance_cal = () => {
   let total =
     employee_onboarding.statutory_bonus +
@@ -3177,6 +3204,8 @@ const special_allowance_cal = () => {
   let sa = employee_onboarding.special_allowance;
 
   console.log(total, sa);
+
+  console.log(sa - total);
 
   setTimeout(() => {
     employee_onboarding.special_allowance = sa - total;
@@ -3327,11 +3356,11 @@ const graduity = () => {
 
   setTimeout(() => {
     employee_onboarding.total_ctc = sum;
-  }, 1000);
+  }, 2000);
 };
 
 const epf_esic_calculation = () => {
-  
+
   let EpfCalculation = employee_onboarding.gross - employee_onboarding.hra;
 
   console.log("EpfCalculation:" + EpfCalculation);

@@ -228,11 +228,11 @@ class VmtEmployeeOnboardingController extends Controller
         {
 
             //If current user is Admin, then its normal onboarding or updating existing user details.
-            if(Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]) )
+            if(Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"])  && $currentLoggedinInUser->onboard_type  == "normal")
             {
                 // $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), $existingUser->first()->id);
 
-                $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $onboard_form_data['can_onboard_employee'], $existingUser->first()->id);
+                $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $onboard_form_data['can_onboard_employee'], $existingUser->first()->id, "normal");
 
                 $message = "";
 
@@ -279,7 +279,7 @@ class VmtEmployeeOnboardingController extends Controller
                 {
                     //$response = $this->storeEmployeeNormalOnboardForm($onboard_form_data, $request->input('can_onboard_employee'));
 
-                    $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), $existingUser->first()->id);
+                    $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), $existingUser->first()->id,"quick");
 
                     $message = "";
 
@@ -335,12 +335,12 @@ class VmtEmployeeOnboardingController extends Controller
         }
         else
         {
-            //we are inserting new user.
+            //we are inserting new user as NORMAL onboard.
             //Check whether current login is admin
             if(Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]) )
             {
 
-                $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $onboard_form_data['can_onboard_employee'], null);
+                $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $onboard_form_data['can_onboard_employee'], null,"normal");
 
 
                 if($result =="success")
@@ -1084,17 +1084,17 @@ class VmtEmployeeOnboardingController extends Controller
 
 
        // Store employees with partial details for quick onboarding
-    public function importQuickOnboardEmployeesExcelData(Request $request)
+    public function importQuickOnboardEmployeesExcelData(Request $request, VmtEmployeeService $employeeService)
        {
            $request->validate([
                'file' => 'required|file|mimes:xls,xlsx'
            ]);
            $importDataArry = \Excel::toArray(new VmtEmployeeImport, request()->file('file'));
-           return $this->storeQuickOnboardEmployees($importDataArry);
+           return $this->storeQuickOnboardEmployees($importDataArry, $employeeService);
        }
 
        // insert the employee to database for quick onboarding
-    private function storeQuickOnboardEmployees($data)
+    private function storeQuickOnboardEmployees($data,  $employeeService)
        {
 
            //For output jsonresponse
@@ -1181,7 +1181,7 @@ class VmtEmployeeOnboardingController extends Controller
            //Runs only if all excel records are valid
            if ($isAllRecordsValid) {
                foreach ($excelRowdata_row[0]  as $key => $excelRowdata) {
-                   $rowdata_response = $this->storeSingleRecord_QuickEmployee($excelRowdata);
+                   $rowdata_response = $this->storeSingleRecord_QuickEmployee($excelRowdata, $employeeService);
 
                    array_push($data_array, $rowdata_response);
                }
@@ -1199,126 +1199,58 @@ class VmtEmployeeOnboardingController extends Controller
 
        }
 
-    private function storeSingleRecord_QuickEmployee($row)
+    private function storeSingleRecord_QuickEmployee($row, VmtEmployeeService $employeeService)
        {
 
+
+
+
+           // return $response;
+
            //DB level validation
-           if (isset($row['employee_code'])) {
-               $empNo = $row['employee_code'];
-           } else {
-               $clientData  = VmtClientMaster::first();
-               $maxId  = VmtEmployee::max('id') + 1;
-               if ($clientData) {
-                   $empNo = $clientData->client_code . $maxId;
-               } else {
-                   $empNo = $maxId;
-               }
-           }
+        //    if (isset($row['employee_code'])) {
+        //        $empNo = $row['employee_code'];
+        //    } else {
+        //        $clientData  = VmtClientMaster::first();
+        //        $maxId  = VmtEmployee::max('id') + 1;
+        //        if ($clientData) {
+        //            $empNo = $clientData->client_code . $maxId;
+        //        } else {
+        //            $empNo = $maxId;
+        //        }
+        //    }
 
            try {
 
-               $user =  User::create([
-                   'name' => $row['employee_name'],
-                   'email' => $row["email"],
-                   'password' => Hash::make('Abs@123123'),
-                   'avatar' =>  $row['employee_name'] . '_avatar.jpg',
-                   'user_code' =>  strtoupper($empNo),
-                   'can_login' => '1',
-                   'active' => '0',
-                   'is_onboarded' => '0',
-                   'onboard_type' => 'quick',
-                   'is_ssa' => '0',
-                   'is_default_password_updated' => '0',
-                   'org_role' => '5',
-               ]);
+                $response = $employeeService->createOrUpdate_OnboardFormData(data: $row,
+                                                                can_onboard_employee:"1",
+                                                                existing_user_id : null,
+                                                                onboard_type  : "quick"
+                                                                );
 
-               $user->save();
-
-               $newEmployee = new VmtEmployee;
-               $newEmployee->userid = $user->id;
-               $newEmployee->emp_no   =    $empNo;
-               //$newEmployee->gender   =    $row["gender"];
-               $newEmployee->doj   =   \DateTime::createFromFormat('d-m-Y', $row['doj'])->format('Y-m-d');
-               $newEmployee->dol   =   \DateTime::createFromFormat('d-m-Y', $row['doj'])->format('Y-m-d');
-               $newEmployee->mobile_number   =    strval($row['mobile_no']);
-               $docReviewArray = array(
-                   'aadhar_card_file' => -1,
-                   'aadhar_card_backend_file' => -1,
-                   'pan_card_file' => -1,
-                   'passport_file' => -1,
-                   'voters_id_file' => -1,
-                   'dl_file' => -1,
-                   'education_certificate_file' => -1,
-                   'reliving_letter_file' => -1
-               );
-               $newEmployee->docs_reviewed = json_encode($docReviewArray);
-               $newEmployee->save();
-
-               if ($newEmployee) {
-                   $empOffice  = new VmtEmployeeOfficeDetails;
-                   $empOffice->user_id     = $newEmployee->userid;
-                   $empOffice->designation = $row["designation"];
-
-                   if ( !empty($row["l1_manager_code"]) && $this->isUserExist($row["l1_manager_code"]))
-                   {
-                       $empOffice->l1_manager_code  = $row["l1_manager_code"];
-                       updateUserRole($empOffice->l1_manager_code,"Manager");
-
-                   }
-
-
-                   $empOffice->save();
-               }
-
-               if ($empOffice) {
-                   $compensatory = new Compensatory;
-                   $compensatory->user_id = $newEmployee->userid;
-                   $compensatory->basic = $row["basic"];
-                   $compensatory->hra = $row["hra"];
-                   $compensatory->Statutory_bonus = $row["statutory_bonus"];
-                   $compensatory->child_education_allowance = $row["child_education_allowance"];
-                   $compensatory->food_coupon = $row["food_coupon"];
-                   $compensatory->lta = $row["lta"];
-                   $compensatory->special_allowance = $row["special_allowance"];
-                   $compensatory->other_allowance = $row["other_allowance"];
-                   $compensatory->gross = $row["basic"] + $row["hra"] + $row["statutory_bonus"] + $row["child_education_allowance"] + $row["food_coupon"] + $row["lta"] + $row["special_allowance"] + $row["other_allowance"];
-                   $compensatory->epf_employer_contribution = $row["epf_employer_contribution"];
-                   $compensatory->esic_employer_contribution = $row["esic_employer_contribution"];
-                   $compensatory->insurance = $row["insurance"];
-                   $compensatory->graduity = $row["graduity"];
-                   $compensatory->cic = $compensatory->gross + $row["epf_employer_contribution"] + $row["esic_employer_contribution"] + $row["insurance"] + $row["graduity"];
-                   $compensatory->epf_employee = $row["epf_employee"];
-                   $compensatory->esic_employee = $row["esic_employee"];
-                   $compensatory->professional_tax = $row["professional_tax"];
-                   $compensatory->labour_welfare_fund = $row["labour_welfare_fund"];
-                   $compensatory->net_income = $compensatory->gross + $row["epf_employee"] + $row["esic_employee"] + $row["professional_tax"] + $row["labour_welfare_fund"] - ($row["epf_employer_contribution"] - $row["esic_employer_contribution"] - $row["insurance"] - $row["graduity"]);
-                   $compensatory->save();
-               }
-
-               $notification_user = User::where('id',auth::user()->id)->first();
                $message = "Employee OnBoard was Created   ";
                $VmtGeneralInfo = VmtGeneralInfo::first();
                $image_view = url('/') . $VmtGeneralInfo->logo_img;
-               Notification::send($notification_user ,new ViewNotification($message.$row['employee_name']));
-               \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $empNo, 'Abs@123123', request()->getSchemeAndHttpHost(), $image_view));
+
+               \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), $image_view));
 
                return $rowdata_response = [
                    'row_number' => '',
                    'status' => 'success',
-                   'message' => $empNo . ' added successfully',
+                   'message' => $row['employee_code']  . ' added successfully',
                    'error_fields' => [],
                ];
 
 
            } catch (\Exception $e) {
 
-               $this->deleteUser($user->id);
+              // $this->deleteUser($user->id);
 
 
                return $rowdata_response = [
                    'row_number' => '',
                    'status' => 'failure',
-                   'message' => $empNo . ' not added',
+                   'message' => $row['employee_code'] . ' not added',
                    'error_fields' => json_encode(['error' => $e->getMessage()]),
                ];
 

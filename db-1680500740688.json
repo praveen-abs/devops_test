@@ -13,54 +13,9 @@
         "name": "AB Negative"
       },
       "id": 1
-    },
-    {
-      "6:28:08 AM": "",
-      "id": 2
-    },
-    {
-      "check_in": "6:29:35 AM",
-      "check_out": "",
-      "id": 3
-    },
-    {
-      "check_in": "6:29:35 AM",
-      "check_out": "6:29:42 AM",
-      "id": 4
-    },
-    {
-      "check_in": "6:31:26 AM",
-      "check_out": "",
-      "id": 5
-    },
-    {
-      "check_in": "6:31:26 AM",
-      "check_out": "6:31:30 AM",
-      "id": 6
-    },
-    {
-      "check_in": "7:04:35 AM",
-      "check_out": "",
-      "id": 7
-    },
-    {
-      "check_in": "7:04:35 AM",
-      "check_out": "7:04:37 AM",
-      "id": 8
-    },
-    {
-      "check_in": "7:14:16 AM",
-      "check_out": "",
-      "id": 9
-    },
-    {
-      "check_in": "7:14:16 AM",
-      "check_out": "7:14:22 AM",
-      "id": 10
     }
   ],
   "FinanceDetails": [
-   
     {
       "bank_name": {
         "id": 2,
@@ -69,18 +24,10 @@
         "max_length": "11",
         "status": "A"
       },
-      "bank_ac_no": "",
-      "ifsc_code": "S01010",
-      "pan_no": "sasasaada",
-      "id": 2
-    },
-    {
-      "pf_applicable": "no",
-      "epf_no": "123456",
-      "uan_no": "123456",
-      "esic_applicable": "yes",
-      "esic_no": "1234567",
-      "id": 3
+      "bank_ac_no": 100,
+      "ifsc_code": "asdsdsdsdsdfddg",
+      "pan_no": "sdsdsd",
+      "id": 1
     }
   ],
   "posts": [
@@ -157,6 +104,99 @@
       "id": 9
     }
   ],
+  "contact": [
+    {
+      "present_email": "xyxuwizy@mailinator.com",
+      "officical_mail": "sypijo@mailinator.com",
+      "mobile_number": "837",
+      "id": 1
+    },
+    {
+      "present_email": "hedijo@mailinator.com",
+      "officical_mail": "qeka@mailinator.com",
+      "mobile_number": "370",
+      "id": 2
+    },
+    {
+      "present_email": "xyxuwizy@mailinator.com",
+      "officical_mail": "sypijo@mailinator.com",
+      "mobile_number": "837",
+      "id": 3
+    },
+    {
+      "present_email": "tukifyd@mailinator.com",
+      "officical_mail": "kavu@mailinator.com",
+      "mobile_number": "881",
+      "id": 4
+    },
+    {
+      "present_email": "loqytys@mailinator.com",
+      "officical_mail": "jivyboma@mailinator.com",
+      "mobile_number": "427",
+      "id": 5
+    },
+    {
+      "present_email": "loqytys@mailinator.com",
+      "officical_mail": "jivyboma@mailinator.com",
+      "mobile_number": "427",
+      "id": 6
+    },
+    {
+      "present_email": "loqytys@mailinator.com",
+      "officical_mail": "jivyboma@mailinator.com",
+      "mobile_number": "427",
+      "id": 7
+    },
+    {
+      "present_email": "loqytys@mailinator.com",
+      "officical_mail": "jivyboma@mailinator.com",
+      "mobile_number": "427",
+      "id": 8
+    },
+    {
+      "present_email": "loqytys@mailinator.com",
+      "officical_mail": "jivyboma@mailinator.com",
+      "mobile_number": "427",
+      "id": 9
+    },
+    {
+      "present_email": "loqytys@mailinator.com",
+      "officical_mail": "jivyboma@mailinator.com",
+      "mobile_number": "427",
+      "id": 10
+    },
+    {
+      "present_email": "loqytys@mailinator.com",
+      "officical_mail": "jivyboma@mailinator.com",
+      "mobile_number": "427",
+      "id": 11
+    },
+    {
+      "present_email": "woqu@mailinator.com",
+      "officical_mail": "lucesaheze@mailinator.com",
+      "mobile_number": "497",
+      "id": 12
+    },
+    {
+      "present_email": "fawyrexyse@mailinator.com",
+      "officical_mail": "felycuvy@mailinator.com",
+      "mobile_number": "63",
+      "id": 13
+    },
+    {
+      "present_email": "ryremuk@mailinator.com",
+      "officical_mail": "bumiqod@mailinator.com",
+      "mobile_number": "768",
+      "id": 14
+    },
+    {
+      "present_email": "gurawumu@mailinator.com",
+      "officical_mail": "nytejyb@mailinator.com",
+      "mobile_number": "17",
+      "id": 15
+    }
+  ],
+  "Address_details": [],
   "comments": [
     {
       "id": 1,

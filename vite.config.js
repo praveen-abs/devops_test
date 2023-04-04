@@ -56,20 +56,20 @@ export default defineConfig({
 
                 // Profile page
 
-                'resources/js/hrms/modules/profile_pages/EmployeeDetails.js',
+                'resources/js/hrms/modules/profile_pages/ProfilePageNew.js',
 
                 // familyinfo_table_page
 
-                'resources/js/hrms/modules/profile_pages/FamilyDetails.js',
+                // 'resources/js/hrms/modules/profile_pages/FamilyDetails.js',
 
-                // Experience page
-                'resources/js/hrms/modules/profile_pages/ExperienceDetails.js',
+                // // Experience page
+                // 'resources/js/hrms/modules/profile_pages/ExperienceDetails.js',
 
-                // financeDetails page
-                'resources/js/hrms/modules/profile_pages/FinanceDetails.js',
-                // Documents Review
+                // // financeDetails page
+                // 'resources/js/hrms/modules/profile_pages/FinanceDetails.js',
+                // // Documents Review
 
-                'resources/js/hrms/modules/approvals/onboarding/review_document.js'
+                // 'resources/js/hrms/modules/approvals/onboarding/review_document.js'
 
             ],
             define: {
