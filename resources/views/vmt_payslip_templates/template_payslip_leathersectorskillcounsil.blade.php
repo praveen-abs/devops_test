@@ -454,7 +454,7 @@ $bank_names = \DB::table('vmt_banks')->get();
             <td colspan="2" class="">
                 <p class="txt-right"><img height="8.5" width="12"
                         src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right" alt=""
-                        style="padding-right:0px;">{{ number_format(round((float) $employee_payslip->PROF_TAX), 2) }}
+                        style="padding-right:0px;">{{ number_format(round((float) $employee_payslip->income_tax), 2) }}
                 </p>
                 <p class="txt-right"></p>
             </td>

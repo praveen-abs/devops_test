@@ -75,26 +75,35 @@ class VmtEmployeeService {
         Called this when the normal onboard form is submitted
 
     */
-    public function createOrUpdate_OnboardFormData($data, $can_onboard_employee, $existing_user_id = null)
+    public function createOrUpdate_OnboardFormData($data, $can_onboard_employee, $existing_user_id = null, $onboard_type = null)
     {
 
 
 
 
-        $response = $this->createOrUpdate_User(data: $data, can_onboard_employee : $can_onboard_employee, user_id: $existing_user_id);
+        $response = $this->createOrUpdate_User(data: $data, can_onboard_employee : $can_onboard_employee, user_id: $existing_user_id, onboard_type : $onboard_type);
 
         if(!empty($response) && $response->status == 'success')
         {
             try
             {
-
                 $onboard_user = $response->response_object;
-                $this->createOrUpdate_EmployeeDetails( $onboard_user, $data);
-                $this->createOrUpdate_EmployeeOfficeDetails( $onboard_user->id, $data);
-                $this->createOrUpdate_EmployeeStatutoryDetails( $onboard_user->id, $data);
-                $this->createOrUpdate_EmployeeFamilyDetails( $onboard_user->id, $data);
-                $this->createOrUpdate_EmployeeCompensatory( $onboard_user->id, $data);
 
+                if($onboard_type == "quick")
+                {
+                    $this->createOrUpdate_EmployeeDetails( $onboard_user, $data, $onboard_type);
+                    $this->createOrUpdate_EmployeeOfficeDetails( $onboard_user->id, $data);
+                    $this->createOrUpdate_EmployeeCompensatory( $onboard_user->id, $data);
+
+                }
+                else
+                {
+                    $this->createOrUpdate_EmployeeDetails( $onboard_user, $data);
+                    $this->createOrUpdate_EmployeeOfficeDetails( $onboard_user->id, $data);
+                    $this->createOrUpdate_EmployeeStatutoryDetails( $onboard_user->id, $data);
+                    $this->createOrUpdate_EmployeeFamilyDetails( $onboard_user->id, $data);
+                    $this->createOrUpdate_EmployeeCompensatory( $onboard_user->id, $data);
+                }
 
                 return "success";
             }
@@ -109,7 +118,7 @@ class VmtEmployeeService {
         return "Normal Onboarding : Failure in TRY or CATCH method";
     }
 
-    private function createOrUpdate_User($data, $can_onboard_employee,$user_id=null)
+    private function createOrUpdate_User($data, $can_onboard_employee,$user_id=null, $onboard_type)
     {
         $newUser = null;
 
@@ -138,7 +147,7 @@ class VmtEmployeeService {
             }
             else
             {
-                $newUser = $this->CreateNewUser($data, $can_onboard_employee);
+                $newUser = $this->CreateNewUser($data, $can_onboard_employee, $onboard_type);
             }
         }
         catch(\Exception $e)
@@ -157,7 +166,7 @@ class VmtEmployeeService {
         return $response;
     }
 
-    private function CreateNewUser($data, $can_onboard_employee)
+    private function CreateNewUser($data, $can_onboard_employee, $onboard_type)
     {
         $newUser = new User;
 
@@ -170,7 +179,9 @@ class VmtEmployeeService {
         $newUser->is_default_password_updated = '0';
 
         $newUser->is_onboarded = $can_onboard_employee;
-        $newUser->onboard_type = 'normal';
+
+        $newUser->onboard_type = $onboard_type; //normal, quick, bulk
+
         $newUser->org_role = '5';
         $newUser->is_ssa = '0';
         $newUser->save();
@@ -178,7 +189,7 @@ class VmtEmployeeService {
         return $newUser;
     }
 
-    private function createOrUpdate_EmployeeDetails($user,$row)
+    private function createOrUpdate_EmployeeDetails($user,$row, $onboard_type= null)
     {
 
         //Sdd("Inside emp details");
@@ -193,20 +204,20 @@ class VmtEmployeeService {
             $newEmployee = new VmtEmployee;
         }
 
-        $doj=$row["doj"];
-        $dob=$row["dob"];
-        $passport_date =  $row["passport_date"];
+        $doj=$row["doj"] ?? '';
+        $dob=$row["dob"] ?? '';
+        $passport_date =  $row["passport_date"] ?? '';
 
         $newEmployee->userid   =    $user->id;
         $newEmployee->gender   =    $row["gender"] ?? '';
-        $newEmployee->doj   =    $this->getdateFormatForDb($doj);
-        $newEmployee->dol   =    $this->getdateFormatForDb($doj);
-        $newEmployee->dob   =    $this->getdateFormatForDb($dob);
+        $newEmployee->doj   =  $doj ? $this->getdateFormatForDb($doj) : '';
+        $newEmployee->dol   =  $doj ? $this->getdateFormatForDb($doj) : '';
+        $newEmployee->dob   =  $dob ? $this->getdateFormatForDb($dob) : '';
         $newEmployee->location   =    $row["work_location"] ?? '';
         $newEmployee->pan_number   =  isset($row["pan_number"]) ? ($row["pan_number"]) : "";
         $newEmployee->dl_no   =  $row["dl_no"] ?? '';
         $newEmployee->passport_number = $row["passport_no"] ?? '';
-        $newEmployee->passport_date =  $this->getdateFormatForDb( $passport_date) ?? '';
+        $newEmployee->passport_date =  $passport_date ? $this->getdateFormatForDb( $passport_date) : '';
 
         //$newEmployee->pan_ack   =    $row["pan_ack"];
         $newEmployee->aadhar_number = $row["aadhar_number"] ?? '';
@@ -214,8 +225,9 @@ class VmtEmployeeService {
         $newEmployee->marital_status = $row["marital_status_id"] ?? '';
 
         $newEmployee->nationality = $row["nationality"] ?? '';
+        $data_mobile_number = empty($row["mobile_number"]) ? "" : strval($row["mobile_number"]);
 
-        $newEmployee->mobile_number  = strval($row["mobile_number"]);
+        $newEmployee->mobile_number  = $data_mobile_number;
         $newEmployee->blood_group_id  = $row["blood_group_id"] ?? '';
         $newEmployee->physically_challenged  = $row["physically_challenged"] ?? 'no';
         $newEmployee->bank_id   = $row["bank_id"] ?? '';
@@ -249,26 +261,37 @@ class VmtEmployeeService {
             $row['marital_status'] = '';
         }
 
+        if($onboard_type == "quick")
+        {
+            //In quick onboard excel upload, we wont upload docs
+        }
+        else
+        {
+            $newEmployee->aadhar_card_file = $this->uploadDocument( $user->id, $row['Aadharfront'], $user->user_code, 'Aadhar Card Front');
+            $newEmployee->aadhar_card_backend_file = $this->uploadDocument($user->id,$row['AadharBack'], $user->user_code,'Aadhar Card Back');
+            $newEmployee->pan_card_file = $this->uploadDocument($user->id,$row['panDoc'], $user->user_code,'Pan Card');
+            $newEmployee->passport_file = $this->uploadDocument($user->id,$row['passport'], $user->user_code,'Passport');
+            $newEmployee->voters_id_file = $this->uploadDocument($user->id,$row['voterId'], $user->user_code,'Voter ID');
+            $newEmployee->dl_file = $this->uploadDocument($user->id,$row['dlDoc'], $user->user_code,'Driving License');
+            $newEmployee->education_certificate_file = $this->uploadDocument($user->id,$row['eductionDoc'], $user->user_code,'Education Certificate');
+            $newEmployee->reliving_letter_file = $this->uploadDocument($user->id,$row['releivingDoc'],$user->user_code,'Relieving Letter');
 
-        $newEmployee->aadhar_card_file = $this->uploadDocument( $user->id, $row['Aadharfront'], $user->user_code, 'Aadhar Card Front');
-        $newEmployee->aadhar_card_backend_file = $this->uploadDocument($user->id,$row['AadharBack'], $user->user_code,'Aadhar Card Back');
-        $newEmployee->pan_card_file = $this->uploadDocument($user->id,$row['panDoc'], $user->user_code,'Pan Card');
-        $newEmployee->passport_file = $this->uploadDocument($user->id,$row['passport'], $user->user_code,'Passport');
-        $newEmployee->voters_id_file = $this->uploadDocument($user->id,$row['voterId'], $user->user_code,'Voter ID');
-        $newEmployee->dl_file = $this->uploadDocument($user->id,$row['dlDoc'], $user->user_code,'Driving License');
-        $newEmployee->education_certificate_file = $this->uploadDocument($user->id,$row['eductionDoc'], $user->user_code,'Education Certificate');
-        $newEmployee->reliving_letter_file = $this->uploadDocument($user->id,$row['releivingDoc'],$user->user_code,'Relieving Letter');
-        $docReviewArray = array(
-            'aadhar_card_file' => -1,
-            'aadhar_card_backend_file' => -1,
-            'pan_card_file' => -1,
-            'passport_file' => -1,
-            'voters_id_file' => -1,
-            'dl_file' => -1,
-            'education_certificate_file' => -1,
-            'reliving_letter_file' => -1
-        );
-        $newEmployee->docs_reviewed = json_encode($docReviewArray);
+            $docReviewArray = array(
+                'aadhar_card_file' => -1,
+                'aadhar_card_backend_file' => -1,
+                'pan_card_file' => -1,
+                'passport_file' => -1,
+                'voters_id_file' => -1,
+                'dl_file' => -1,
+                'education_certificate_file' => -1,
+                'reliving_letter_file' => -1
+            );
+            $newEmployee->docs_reviewed = json_encode($docReviewArray);
+
+
+        }
+
+
         $newEmployee->save();
 
     }
@@ -287,14 +310,14 @@ class VmtEmployeeService {
             $empOffice = new VmtEmployeeOfficeDetails;
         }
         //dd($row);
-        $confirmation_period= $row['confirmation_period'];
+         $confirmation_period= $row['confirmation_period'] ?? '';
          $empOffice->user_id = $user_id; //Link between USERS and VmtEmployeeOfficeDetails table
          $empOffice->department_id = $row["department_id"] ?? ''; // => "lk"
          $empOffice->process = $row["process"] ?? ''; // => "k"
          $empOffice->designation = $row["designation"] ?? ''; // => "k"
          $empOffice->cost_center = $row["cost_center"] ?? ''; // => "k"
          $empOffice->probation_period  = $row['probation_period'] ?? ''; // => "k"
-         $empOffice->confirmation_period  = $this->getdateFormatForDb( $confirmation_period) ?? ''; // => "k"
+         $empOffice->confirmation_period  = $confirmation_period ? $this->getdateFormatForDb( $confirmation_period) : ''; // => "k"
          $empOffice->holiday_location  = $row["holiday_location"] ?? ''; // => "k"
          $empOffice->l1_manager_code  = $row["l1_manager_code_id"] ?? ''; // => "k"
 
@@ -635,6 +658,16 @@ class VmtEmployeeService {
         return $processed_date;
     }
 
+    public function getQuickOnboardedEmployeeData($user_id){
+
+        $query_emp_details  = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
+                                ->join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
+                                ->join('vmt_employee_compensatory_details','vmt_employee_compensatory_details.user_id','=','users.id')
+                                ->where('users.id','=',$user_id)
+                                ->first();
+
+        return $query_emp_details;
+    }
 
     /*
 

@@ -52,6 +52,10 @@ Route::middleware(['auth'])->group(function () {
 
         return auth()->user()->id;
     });
+    Route::get('/currentUserName', function() {
+
+        return auth()->user()->name;
+    });
 
 
 
@@ -82,6 +86,9 @@ Route::middleware(['auth'])->group(function () {
         //normal onboarding checks
         Route::get('/personal-mail-exists/{mail}', 'isEmployeePersonalEmailAlreadyExists')->name('personal-mail-exists');
         Route::get('/user-code-exists/{user_code}', 'isEmployeeCodeAlreadyExists')->name('user-code-exists');
+
+        //Fetch quick onboarded emp details
+        Route::post('fetch-quickonboarded-emp-details', 'fetchQuickOnboardedEmployeeData')->name('fetch-quickonboarded-emp-details');
 
     });
 
@@ -311,6 +318,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('vmt-employee-store', 'App\Http\Controllers\VmtEmployeeController@storeEmployeeData');
 
     Route::post('/vmt-employee-onboard', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@processEmployeeOnboardForm_Normal_Quick');
+
 
     Route::get('bulkEmployeeOnboarding', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@showBulkOnboardUploadPage')->name('bulkEmployeeOnboarding');
     Route::post('vmt-employess/bulk-upload', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@importBulkOnboardEmployeesExcelData');
