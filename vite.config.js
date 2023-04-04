@@ -34,6 +34,10 @@ export default defineConfig({
                 'resources/js/hrms/modules/approvals/pms/PMSApprovalTable.js',
                 'resources/js/hrms/modules/profile_pages/EmployeeDocumentsManager.js',
 
+                // Payroll
+
+                'resources/js/hrms/modules/payroll/payroll_setting/work_location/work_location_setup/work_location_setup.js',
+
 
                 ////Reimbursements Module
                 //Employee Reimbursements

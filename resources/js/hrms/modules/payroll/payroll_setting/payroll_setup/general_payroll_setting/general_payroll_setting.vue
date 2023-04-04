@@ -285,18 +285,18 @@
       <div class="w-6 p-4 my-4 ">
         <div class="my-2">
           <strong>EXPLANATION :</strong>
-          <div class="my-3">
+          <p class="my-3">
              <strong>Monthly :</strong>Monthly remuneration refers to the compensation paid to an employee
             in exchange for their services, which is calculated and defined on a monthly
             basis. This compensation serves as a form of payment for the employee's work
             performed throughout the month.
-          </div>
-          <div class="my-3">
+          </p>
+          <p class="my-3">
             <strong>Daily :</strong>Daily remuneration refers to the compensation paid to an employee for
             their services, which is calculated on a per-day basis. It is the amount that
             an employee is entitled to receive for each day of work performed as per the
             agreed terms of their employment contract.
-          </div>
+          </p>
         </div>
       </div>
     </div>

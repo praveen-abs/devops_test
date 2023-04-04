@@ -4,7 +4,6 @@
         <div>
         </div>
         <div>
-            <button class="mx-4">Add new</button>
             <button class="btn btn-orange">Add new</button>
         </div>
     </div>
