@@ -90,8 +90,8 @@ const activetab = ref(4);
     color: #aaa;
     background: #fff;
     border-radius: 50%;
-    width: 25px !important;
-    height: 25px;
+    width: 20px !important;
+    height: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -104,13 +104,14 @@ const activetab = ref(4);
 .tabs a:hover  {
   background-color: #aaa;
   color: #fff;
+  border-radius: 4px 4px 0 0;
 
 }
 .tabs a:hover >div {
     background: #F36826;
     color: #fff;
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
     padding: 0;
 }
 
@@ -126,8 +127,8 @@ const activetab = ref(4);
 .tabs a.active >div{
     background: #F36826;
     color: #fff;
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 }
 
 /* Style the tab content */

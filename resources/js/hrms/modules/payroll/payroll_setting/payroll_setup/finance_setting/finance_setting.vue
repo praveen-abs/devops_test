@@ -32,6 +32,7 @@
             <div class="card-body">
                 <div class="offer-pending-content">
                     <investment_declaration />
+
                 </div>
             </div>
 
