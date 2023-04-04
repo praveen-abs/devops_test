@@ -658,6 +658,16 @@ class VmtEmployeeService {
         return $processed_date;
     }
 
+    public function getQuickOnboardedEmployeeData($user_id){
+
+        $query_emp_details  = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
+                                ->join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
+                                ->join('vmt_employee_compensatory_details','vmt_employee_compensatory_details.user_id','=','users.id')
+                                ->where('users.id','=',$user_id)
+                                ->first();
+
+        return $query_emp_details;
+    }
 
     /*
 
