@@ -66,11 +66,13 @@ class VmtEmployeeAttendanceController extends Controller
 
     public function basicAttendanceReport(Request $request,VmtAttendanceReportsService $attendance_report_service){
 
+        $client_domain = $request->getHttpHost();
+        //$client_domain = 'brandavatar.abshrms.com';
         $year=$request->year;
         $month=$request->month;
          // dd($attendance_report_service->basicAttendanceReport($year)[0]);
           //return $attendance_report_service->basicAttendanceReport($year);
-         return Excel::download(new BasicAttendanceExport($attendance_report_service->basicAttendanceReport($year,$month)), 'Test.xlsx');
+         return Excel::download(new BasicAttendanceExport($attendance_report_service->basicAttendanceReport($year,$month,$client_domain)), 'Test.xlsx');
         }
     }
 
