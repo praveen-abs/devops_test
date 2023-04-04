@@ -3671,7 +3671,31 @@ const compensation_yearly = ref([
 function populateQuickOnboardData(emp_data){
     console.log("populateQuickOnboardData : "+ JSON.stringify(emp_data));
 
+
+
     employee_onboarding.employee_code = ref(emp_data.user_code);
+    employee_onboarding.employee_name = ref(emp_data.name);
+    employee_onboarding.email= ref(emp_data.email);
+    employee_onboarding.doj = ref(emp_data.doj);
+    employee_onboarding.mobile_number = ref(emp_data.mobile_number);
+    employee_onboarding.designation = ref(emp_data.designation);
+    employee_onboarding.l1_manager_code = ref(emp_data.l1_manager_code);
+    employee_onboarding.basic = ref(emp_data.basic);
+    employee_onboarding.hra = ref(emp_data.hra);
+    employee_onboarding.statutory_bonus=ref(emp_data.statutory_bonus);
+    employee_onboarding.child_education_allowance = ref(emp_data.child_education_allowance);
+    employee_onboarding.food_coupon = ref(emp_data.food_coupon);
+    employee_onboarding.lta = ref(emp_data.lta);
+    employee_onboarding.special_allowance = ref(emp_data.special_allowance);
+    employee_onboarding.other_allowance = ref(emp_data.other_allowance);
+    employee_onboarding.epf_employer_contribution = ref(emp_data.epf_employer_contribution);
+    employee_onboarding.esic_employer_contribution = ref(emp_data.esic_employer_contribution);
+    employee_onboarding.insurance= ref(emp_data.insurance);
+    employee_onboarding.graduity= ref(emp_data.graduity);
+    employee_onboarding.epf_employee= ref(emp_data.epf_employee);
+    employee_onboarding.esic_employee= ref(emp_data.esic_employee);
+    employee_onboarding.professional_tax= ref(emp_data.professional_tax);
+    employee_onboarding.labour_welfare_fund= ref(emp_data.labour_welfare_fund);
 
 }
 

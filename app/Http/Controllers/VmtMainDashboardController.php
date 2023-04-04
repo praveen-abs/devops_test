@@ -54,8 +54,10 @@ class VmtMainDashboardController extends Controller
 
         if(auth()->user()->active == 0)
         {
+
             if(auth()->user()->is_onboarded == 0)
             {
+
                 if(auth()->user()->onboard_type == 'quick')
                 {
 
