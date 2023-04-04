@@ -1,13 +1,21 @@
 <template>
     <div>
-        <div class="flex justify-between mx-5 my-4">
-        <div>
+        <div class="flex justify-between mx-2 my-4" >
+           <div>
+            <p>Non-PF Employees</p>
+          <div class="flex gap-6">
+            <div class="w-8 p-1 my-3 bg-red-100 rounded-lg">
+               <p class="text-blue"><strong>Note:</strong> Once payroll processing begins employees asigned to the Gross - HRA * 12% or restricted PF wage calculation Method cannot e swtiched to a non-pf employee status, nut the reverse is possible
+               </p>
+            </div>
+        <div class="mx-6 my-6 ml-9">
+        <button class="mx-4 btn btn-border-orange">Cancel</button>
+        <button class="btn btn-orange">Add More</button>
+      </div>
+          </div>
+           </div>
+      
         </div>
-        <div>
-            <button class="mx-4">Add new</button>
-            <button class="btn btn-orange">Add new</button>
-        </div>
-    </div>
         <div id="table">
             <DataTable :value="products" >
                 <Column field="product" header="Code"></Column>
