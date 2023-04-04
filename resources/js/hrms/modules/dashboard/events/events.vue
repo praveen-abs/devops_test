@@ -22,19 +22,19 @@
                         @endif
                         @if ($text != null)
                             <?php $anyUpcoming_Current_Events = true; ?> -->
-                            <div class="col-sm-6 col-md-4 col-xxl-3 col-xl-3 col-lg-3">
-                                <div class="mb-3 card wishes_content topOrange-line">
-                                    <div class="card-body ">
-
+                        <div class="row d-flex " :style="{width:'100%'}">
+                            <div class="col-sm-6 col-md-4 col-xxl-3 col-xl-3 col-lg-3" >
+                                <div class="mb-3 card wishes_content topOrange-line" >
+                                    <div class="card-body " >
 
                                         <!-- <p class="mb-1 text-right badge text-orange">{{ $text }}</p> -->
-                                        <p class="mb-1 text-right badge text-orange"></p>
+                                        <p class="mb-1 text-right badge text-orange">Upcoming</p>
 
                                         <!-- <?php
                                         $empAvatar = json_decode(getEmployeeAvatarOrShortName($employee->id));
                                         // dd($empAvatar->color);
                                         ?> -->
-                                        <div class="mb-2 d-flex justify-content-center align-items-center">
+                                        <div class="mb-2 d-flex justify-content-center align-items-center" >
                                             <!-- @if ($empAvatar->type == 'shortname') -->
                                                 <div
                                                     class=" img-xl  d-flex justify-content-center align-items-center   rounded <?php echo $empAvatar->color; ?>">
@@ -48,7 +48,7 @@
                                                 ?> -->
 
                                                 <img class="rounded userShort_name img-xl" src="{{ $imageURL }}"
-                                                    alt="">
+                                                    alt="" :style="{position:'relative',right:'35px'}">
                                             <!-- @endif -->
                                         </div>
 
@@ -57,6 +57,7 @@
                                                 <!-- {{ $employee->name }} -->
                                             </p>
                                             <p class="f-12 text-orange program-day ">
+                                                Lorem ipsum dolor si
                                                 <!-- {{ \Carbon\Carbon::parse($employee['dob'])->format('jS M') }} -->
                                             </p>
                                         </div>
@@ -77,6 +78,182 @@
 
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="col-sm-6 col-md-4 col-xxl-3 col-xl-3 col-lg-3" >
+                                <div class="mb-3 card wishes_content topOrange-line" >
+                                    <div class="card-body " >
+
+
+                                        <!-- <p class="mb-1 text-right badge text-orange">{{ $text }}</p> -->
+                                        <p class="mb-1 text-right badge text-orange">Upcoming</p>
+
+                                        <!-- <?php
+                                        $empAvatar = json_decode(getEmployeeAvatarOrShortName($employee->id));
+                                        // dd($empAvatar->color);
+                                        ?> -->
+                                        <div class="mb-2 d-flex justify-content-center align-items-center" >
+                                            <!-- @if ($empAvatar->type == 'shortname') -->
+                                                <div
+                                                    class=" img-xl  d-flex justify-content-center align-items-center   rounded <?php echo $empAvatar->color; ?>">
+                                                    <span class="text-white fw-bold">
+                                                        <!-- {{ $empAvatar->data }} -->
+                                                    </span>
+                                                </div>
+                                            <!-- @elseif($empAvatar->type == 'avatar')
+                                                <?php
+                                                $imageURL = request()->getSchemeAndHttpHost() . '/images/' . $empAvatar->data;
+                                                ?> -->
+
+                                                <img class="rounded userShort_name img-xl" src="{{ $imageURL }}"
+                                                    alt="" :style="{position:'relative',right:'35px'}">
+                                            <!-- @endif -->
+                                        </div>
+
+                                        <div class="text-center">
+                                            <p class=" text-muted">
+                                                <!-- {{ $employee->name }} -->
+                                            </p>
+                                            <p class="f-12 text-orange program-day ">
+                                                Lorem ipsum dolor si
+                                                <!-- {{ \Carbon\Carbon::parse($employee['dob'])->format('jS M') }} -->
+                                            </p>
+                                        </div>
+                                        <div class="row social_content">
+                                            <div class="col-6 text-start">
+                                                <i class="fa text-orange fa-birthday-cake"></i>
+                                            </div>
+                                            <div class="text-right col-6">
+                                                <button
+                                                    class="p-2 border-0 outline-none shadow-lite rounded-circle msg_box bg-ash text-orange"
+                                                    data-bs-target="#wishes_popup" data-bs-toggle="modal">
+                                                    <i class=" f-15 fa fa-commenting-o"></i></button>
+                                            </div>
+
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 col-md-4 col-xxl-3 col-xl-3 col-lg-3" >
+                                <div class="mb-3 card wishes_content topOrange-line" >
+                                    <div class="card-body " >
+
+
+                                        <!-- <p class="mb-1 text-right badge text-orange">{{ $text }}</p> -->
+                                        <p class="mb-1 text-right badge text-orange">Upcoming</p>
+
+                                        <!-- <?php
+                                        $empAvatar = json_decode(getEmployeeAvatarOrShortName($employee->id));
+                                        // dd($empAvatar->color);
+                                        ?> -->
+                                        <div class="mb-2 d-flex justify-content-center align-items-center" >
+                                            <!-- @if ($empAvatar->type == 'shortname') -->
+                                                <div
+                                                    class=" img-xl  d-flex justify-content-center align-items-center   rounded <?php echo $empAvatar->color; ?>">
+                                                    <span class="text-white fw-bold">
+                                                        <!-- {{ $empAvatar->data }} -->
+                                                    </span>
+                                                </div>
+                                            <!-- @elseif($empAvatar->type == 'avatar')
+                                                <?php
+                                                $imageURL = request()->getSchemeAndHttpHost() . '/images/' . $empAvatar->data;
+                                                ?> -->
+
+                                                <img class="rounded userShort_name img-xl" src="{{ $imageURL }}"
+                                                    alt="" :style="{position:'relative',right:'35px'}">
+                                            <!-- @endif -->
+                                        </div>
+
+                                        <div class="text-center">
+                                            <p class=" text-muted">
+                                                <!-- {{ $employee->name }} -->
+                                            </p>
+                                            <p class="f-12 text-orange program-day ">
+                                                Lorem ipsum dolor si
+                                                <!-- {{ \Carbon\Carbon::parse($employee['dob'])->format('jS M') }} -->
+                                            </p>
+                                        </div>
+                                        <div class="row social_content">
+                                            <div class="col-6 text-start">
+                                                <i class="fa text-orange fa-birthday-cake"></i>
+                                            </div>
+                                            <div class="text-right col-6">
+                                                <button
+                                                    class="p-2 border-0 outline-none shadow-lite rounded-circle msg_box bg-ash text-orange"
+                                                    data-bs-target="#wishes_popup" data-bs-toggle="modal">
+                                                    <i class=" f-15 fa fa-commenting-o"></i></button>
+                                            </div>
+
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 col-md-4 col-xxl-3 col-xl-3 col-lg-3" >
+                                <div class="mb-3 card wishes_content topOrange-line" >
+                                    <div class="card-body " >
+
+
+                                        <!-- <p class="mb-1 text-right badge text-orange">{{ $text }}</p> -->
+                                        <p class="mb-1 text-right badge text-orange">Upcoming</p>
+
+                                        <!-- <?php
+                                        $empAvatar = json_decode(getEmployeeAvatarOrShortName($employee->id));
+                                        // dd($empAvatar->color);
+                                        ?> -->
+                                        <div class="mb-2 d-flex justify-content-center align-items-center" >
+                                            <!-- @if ($empAvatar->type == 'shortname') -->
+                                                <div
+                                                    class=" img-xl  d-flex justify-content-center align-items-center   rounded <?php echo $empAvatar->color; ?>">
+                                                    <span class="text-white fw-bold">
+                                                        <!-- {{ $empAvatar->data }} -->
+                                                    </span>
+                                                </div>
+                                            <!-- @elseif($empAvatar->type == 'avatar')
+                                                <?php
+                                                $imageURL = request()->getSchemeAndHttpHost() . '/images/' . $empAvatar->data;
+                                                ?> -->
+
+                                                <img class="rounded userShort_name img-xl" src="{{ $imageURL }}"
+                                                    alt="" :style="{position:'relative',right:'35px'}">
+                                            <!-- @endif -->
+                                        </div>
+
+                                        <div class="text-center">
+                                            <p class=" text-muted">
+                                                <!-- {{ $employee->name }} -->
+                                            </p>
+                                            <p class="f-12 text-orange program-day ">
+                                                Lorem ipsum dolor si
+                                                <!-- {{ \Carbon\Carbon::parse($employee['dob'])->format('jS M') }} -->
+                                            </p>
+                                        </div>
+                                        <div class="row social_content">
+                                            <div class="col-6 text-start">
+                                                <i class="fa text-orange fa-birthday-cake"></i>
+                                            </div>
+                                            <div class="text-right col-6">
+                                                <button
+                                                    class="p-2 border-0 outline-none shadow-lite rounded-circle msg_box bg-ash text-orange"
+                                                    data-bs-target="#wishes_popup" data-bs-toggle="modal">
+                                                    <i class=" f-15 fa fa-commenting-o"></i></button>
+                                            </div>
+
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
                             <!-- </div>
                         @endif
                     @endforeach
@@ -96,63 +273,14 @@
 
                         @if ($text != null)
                             <?php $anyUpcoming_Current_Events = true; ?> -->
-                            <div class="col-sm-6 col-md-4 col-xxl-3 col-xl-3 col-lg-3">
-                                <div class="mb-3 card wishes_content borderTop-green">
-                                    <div class="card-body ">
 
 
 
-                                        <p class="text-right badge text-green"></p>
-                                        <!-- <p class="text-right badge text-green">{{ $text }}</p> -->
+                            <!-- removed -->
 
 
 
-<!--
-                                        <?php
-                                        $empAvatar = json_decode(getEmployeeAvatarOrShortName($employee->id));
-                                        //dd($empAvatar);
-                                        ?> -->
-                                        <div class="d-flex justify-content-center align-items-center">
-                                            <!-- @if ($empAvatar->type == 'shortname') -->
-                                                <div
-                                                    class=" img-xl mb-2 d-flex justify-content-center align-items-center   rounded <?php echo $empAvatar->color; ?>">
-                                                    <span class="text-white fw-bold">
-                                                        <!-- {{ $empAvatar->data }} -->
-                                                    </span>
-                                                </div>
-                                            <!-- @elseif($empAvatar->type == 'avatar')
-                                                <?php
-                                                $imageURL = request()->getSchemeAndHttpHost() . '/images/' . $empAvatar->data;
-                                                ?> -->
-                                                <div
-                                                    class="mb-3 text-center">
-                                                    <img class="mb-2 rounded userShort_name img-xl"
-                                                        src="{{ $imageURL }}" alt="">
-                                                </div>
-                                            <!-- @endif -->
-                                        </div>
-                                        <div class="text-center">
-                                            <!-- <p class="fw-bold f-14 text-muted ">
-                                                {{ $employee->name }}
-                                            </p>
-                                            <p class="f-12 fw-bold text-green program-day ">
-                                                {{ \Carbon\Carbon::parse($employee['dob'])->format('jS M') }}
-                                            </p> -->
-                                        </div>
-                                        <div class="row social_content">
-                                            <div class="col-6 text-start">
-                                                <i class="text-green ri-shopping-bag-fill"></i>
-                                            </div>
-                                            <div class="text-right col-6">
-                                                <button
-                                                    class="p-2 border-0 outline-none shadow-lite rounded-circle msg_box bg-ash text-green"
-                                                    data-bs-target="#wishes_popup" data-bs-toggle="modal">
-                                                    <i class=" f-15 fa fa-commenting-o"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
                         <!-- @endif
                     @endforeach
                 @else -->
@@ -171,7 +299,8 @@
                     </div>
                 @endif -->
 
-            </div>
+
+                        </div>
         </div>
     </div>
 
