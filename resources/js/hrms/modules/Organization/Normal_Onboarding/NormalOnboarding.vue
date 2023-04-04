@@ -1882,8 +1882,8 @@
                             />
                           </div>
                           <div class=" form-check form-check-inline">
-                            
-                             
+
+
                               <p>
                                 <strong>Annual Gross</strong> (Cost to Company) :
                               <strong v-if="employee_onboarding.total_ctc < 0">0</strong>
@@ -1892,7 +1892,7 @@
                               }}</strong>
                               <strong v-else>0</strong>
                             </p>
-                            
+
                           </div>
                         </div>
                       </div>
@@ -2548,6 +2548,7 @@ import {
   DepartmentDetails,
   getMaritalStatus,
   getBloodGroups,
+  fetchQuickOnboardedEmployeeDetails,
 } from "./NormalOnboardingService";
 
 const swal = inject("$swal");
@@ -2577,7 +2578,27 @@ onMounted(() => {
   });
 
   getBloodGroups().then((result) => (bloodGroups.value = result));
+
+
+  //If the URL has hashed param, then it means quick-onboarded user is accessing this page.So, fetch his existing data
+
+  let url_param_UID =  new URL(document.location).searchParams.get('uid');
+
+  if(url_param_UID)
+  {
+    fetchQuickOnboardedEmployeeDetails(url_param_UID).then(function(result){
+        populateQuickOnboardData(result.data);
+    });
+  }
+  else
+  {
+    console.log("UID not found in req params");
+  }
+
 });
+
+
+
 
 const employee_onboarding = reactive({
   can_onboard_employee: true,
@@ -3193,7 +3214,7 @@ const statutory_bonus = () => {
     }
   }, 1000);
 };
-  
+
 const special_allowance_cal = () => {
   let total =
     employee_onboarding.statutory_bonus +
@@ -3643,7 +3664,16 @@ const compensation_yearly = ref([
   { id: "2", name: "Yearly Net" },
 ]);
 
+//function
+
+
 // Sample testong Data
+function populateQuickOnboardData(emp_data){
+    console.log("populateQuickOnboardData : "+ JSON.stringify(emp_data));
+
+    employee_onboarding.employee_code = ref(emp_data.user_code);
+
+}
 
 const Sampledata = () => {
   employee_onboarding.employee_code = ref("B090");
