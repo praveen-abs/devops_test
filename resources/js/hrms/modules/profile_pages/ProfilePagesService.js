@@ -11,4 +11,7 @@ export async function getBloodGroups(){
     return response.data;
 }
 
-
+export async function getCurrentUser(){
+    const response=await axios.get('/currentUser');
+    return response.data;
+}

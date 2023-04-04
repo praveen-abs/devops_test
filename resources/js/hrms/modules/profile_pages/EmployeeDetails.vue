@@ -1,4 +1,4 @@
-<template>
+b<template>
     <div class="card mb-2">
         <div class="card-body">
             <h6 class="">General Information
@@ -198,7 +198,8 @@
 
     import {
         getBloodGroups,
-        getMaritalStatus
+        getMaritalStatus,
+        getCurrentUser
     } from "./ProfilePagesService";
 
 
@@ -238,15 +239,16 @@
     function saveGeneralInformationDetails(){
 
         console.log("Called saveGeneralInformationDetails.... ");
+        general_information.user_id = getCurrentUser;
 
-        axios.post('/profile-pages-update-generalinfo/',{
+        axios.post('/profile-pages-update-generalinfo/{id}',{
             "user_id": general_information.user_id,
             "dob": general_information.birth_date,
             "gender": general_information.gender,
             "marital_status_id":general_information.marital_status_id ,
             "doj": general_information.date_of_joining,
             "blood_group_id": general_information.blood_group_id,
-            "physically_challenged": general_information.hours_diff,
+            "physically_challenged": general_information.phy_handicapped,
         }).then(res=>{
             data_checking.value=false
             if(res.data.status=='success'){
