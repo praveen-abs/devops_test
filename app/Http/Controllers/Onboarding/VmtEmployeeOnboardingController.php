@@ -162,7 +162,28 @@ class VmtEmployeeOnboardingController extends Controller
         dd("un-implemented");
     }
 
+    /*
+        Fetches the quickonboarded emp data.
 
+
+    */
+    public function fetchQuickOnboardedEmployeeData(Request $request, VmtEmployeeService $employeeService){
+
+            try{
+
+                $user_id = Crypt::decrypt($request->encr_uid);
+                $response = $employeeService->getQuickOnboardedEmployeeData($user_id);
+
+                return response()->json($response, 200);
+            }
+            catch(\Exception $e)
+            {
+                return response()->json("Decrypt Error : ".$e->getMessage(), 500);
+
+            }
+
+            return $response;
+    }
 
      // Show quick onboard form to employee
      public function showQuickOnboardForEmployee(Request $request)
