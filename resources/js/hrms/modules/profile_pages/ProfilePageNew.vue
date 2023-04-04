@@ -39,9 +39,6 @@
 
         <div class="tab-pane fade" id="family_det" role="tabpanel" aria-labelledby="">
             <FamilyDetails />
-
-
-
         </div>
 
         <div class="tab-pane fade" id="experience_det" role="tabpanel" aria-labelledby="">

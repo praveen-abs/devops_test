@@ -430,7 +430,7 @@ const savecontactInfoDetails =()=>{
     .then((res)=>{
             if (res.data.status == "success") {
             } else if (res.data.status == "failure") {
-                leave_data.leave_request_error_messege = res.data.message;
+                contact_details.leave_request_error_messege = res.data.message;
             }
 
     }).catch((err)=>{
@@ -471,7 +471,7 @@ const saveAddressinfo=()=>{
         permanent_address_line_1:Addressinfo.Permanent_Address
         }).then((res)=>{
             if(res.data.status == "success"){
-
+                console.log("hi");
             }else if(res.data.status == "failure"){
                 console.log(res.data.message);
             }
@@ -587,120 +587,13 @@ Dialog {
 
 
 <!--
-
-<template>
-
-    <div class="flex flex-wrap gap-2 card justify-content-center">
-        <Button @click="confirm1()" icon="pi pi-check" label="Confirm"></Button>
-        <Button @click="confirm2()" icon="pi pi-times" label="Delete"></Button>
-    </div>
-</template>
-
-<script setup>
-import { useConfirm } from "primevue/useconfirm";
-import { useToast } from "primevue/usetoast";
-
-const confirm = useConfirm();
-const toast = useToast();
-
-const confirm1 = () => {
-    confirm.require({
-        message: 'Are you sure you want to proceed?',
-        header: 'Confirmation',
-        icon: 'pi pi-exclamation-triangle',
-        accept: () => {
-            toast.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted', life: 3000 });
-
-        },
-        reject: () => {
-            toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
-        }
-    });
-};
-
-const confirm2 = () => {
-    confirm.require({
-        message: 'Do you want to delete this record?',
-        header: 'Delete Confirmation',
-        icon: 'pi pi-info-circle',
-        acceptClass: 'p-button-danger',
-        accept: () => {
-            toast.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted', life: 3000 });
-        },
-        reject: () => {
-            toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
-        }
-    });
-};
-</script>
-
-
-
-
-
-<template>
-    <div class="card flex justify-content-center">
-        <Button label="Show" icon="pi pi-external-link" @click="visible = true" />
-        <Dialog v-model:visible="visible" modal header="Header" :style="{ width: '50vw' }">
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
-        </Dialog>
-    </div>
-</template>
-
-<script setup>
-import { ref } from "vue";
-
-const visible = ref(false);
-</script>
-
-
 <template>
     <div class="card">
-        <Message severity="success" sticky>Success Message Content</Message>
-        <Message severity="info" sticky>Info Message Content</Message>
-        <Message severity="warn" sticky>Warning Message Content</Message>
-        <Message severity="error" sticky>Error Message Content</Message>
+        <Message :closable="false">Message Content</Message>
     </div>
 </template>
 
 <script setup>
-</script>
-
-
-<template>
-    <div class="card flex justify-content-center">
-        <Toast />
-        <div class="flex flex-wrap gap-2">
-            <Button label="Success" severity="success" @click="showSuccess" />
-            <Button label="Info" severity="info" @click="showInfo" />
-            <Button label="Warn" severity="warning" @click="showWarn" />
-            <Button label="Error" severity="danger" @click="showError" />
-        </div>
-    </div>
-</template>
-
-<script setup>
-import { useToast } from "primevue/usetoast";
-const toast = useToast();
-
-const showSuccess = () => {
-    toast.add({ severity: 'success', summary: 'Success Message', detail: 'Message Content', life: 3000 });
-};
-
-const showInfo = () => {
-    toast.add({ severity: 'info', summary: 'Info Message', detail: 'Message Content', life: 3000 });
-};
-
-const showWarn = () => {
-    toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
-};
-
-const showError = () => {
-    toast.add({ severity: 'error', summary: 'Error Message', detail: 'Message Content', life: 3000 });
-};
 </script>
 
 
