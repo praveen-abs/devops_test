@@ -21,14 +21,17 @@ use DatePeriod;
 use DateInterval;
 use App\Exports\EmployeeAttendanceExport;
 use App\Exports\BasicAttendanceExport;
+use App\Exports\DetailedAttendanceExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class VmtEmployeeAttendanceController extends Controller
 {
-    public function generateDetailedAttendanceReports()
+    public function generateDetailedAttendanceReports(Request $request,VmtAttendanceReportsService $attendance_report_service)
     {
-        return Excel::download(new DetailedAttendanceExport, 'Attendance.xlsx');
+        $year=2023;
+        $month=3;
+        return Excel::download(new DetailedAttendanceExport($attendance_report_service->detailedAttendanceReport($year,$month)), 'Attendance.xlsx');
 
     }
 

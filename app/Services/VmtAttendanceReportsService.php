@@ -17,7 +17,7 @@ use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use DatePeriod;
 use DateInterval;
-use App\Exports\EmployeeAttendanceExport;
+use App\Exports\DetailedAttendanceExport;
 use App\Exports\BasicAttendanceExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -502,6 +502,10 @@ class VmtAttendanceReportsService{
         //dd($reportresponse);
         $data=array($heading_dates,$reportresponse);
        return $data;
+    }
+
+    public function detailedAttendanceReport($year,$month){
+       dd($year);
     }
 
 }
