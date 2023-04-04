@@ -1,42 +1,25 @@
 <template>
-  <!--
-    <ul class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
-        <li class="mr-2">
-            <a href="#" aria-current="page" class="inline-block p-4 text-blue-600 bg-gray-100 rounded-t-lg active dark:bg-gray-800 dark:text-blue-500">Profile</a>
-        </li>
-        <li class="mr-2">
-            <a href="#" :class="{}" class="inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300">Dashboard</a>
-        </li>
-        <li class="mr-2">
-            <a href="#" class="inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300">Settings</a>
-        </li>
-        <li class="mr-2">
-            <a href="#" class="inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300">Contacts</a>
-        </li>
-        <li>
-            <a class="inline-block p-4 text-gray-400 rounded-t-lg cursor-not-allowed dark:text-gray-500">Disabled</a>
-        </li>
-    </ul> -->
+
 
   <div class="w-full m-auto">
     <h1 class="text-white">Payroll Setting</h1>
     <div class="mt-4 tabs">
-      <a class="w-2" @click="activetab = 1" :class="[activetab === 1 ? 'active' : '']"
-        >General Payroll Setting</a
+      <a class="w-2 d-flex " @click="activetab = 1" :class="[activetab === 1 ? 'active' : '']"
+        ><div class="md:text-sm" :style="{width:'25px' }">1</div> General Payroll Setting</a
       >
-      <a class="w-2" @click="activetab = 2" :class="[activetab === 2 ? 'active' : '']"
-        >PF_ESI Setting</a
+      <a class="w-2 d-flex" @click="activetab = 2" :class="[activetab === 2 ? 'active' : '']"
+        ><div>2</div>PF_ESI Setting</a
       >
-      <a class="w-2" @click="activetab = 3" :class="[activetab === 3 ? 'active' : '']"
-        >Salary Components</a
+      <a class="w-2 d-flex" @click="activetab = 3" :class="[activetab === 3 ? 'active' : '']"
+        ><div>3</div>Salary Components</a
       >
-      <a class="w-2" @click="activetab = 4" :class="[activetab === 4 ? 'active' : '']"
-        >Salary Structure</a
+      <a class="w-2 d-flex" @click="activetab = 4" :class="[activetab === 4 ? 'active' : '']"
+        ><div>4</div>Salary Structure</a
       >
-      <a class="w-2" @click="activetab = 5" :class="[activetab === 5 ? 'active' : '']"
-        >Finance Setting
+      <a class="w-2 d-flex" @click="activetab = 5" :class="[activetab === 5 ? 'active' : '']"
+        ><div>5</div>Finance Setting
       </a>
-      <a class="w-2" @click="activetab = 6" :class="[activetab === 6 ? 'active' : '']">
+      <a class="w-2 d-flex" @click="activetab = 6" :class="[activetab === 6 ? 'active' : '']"><div>6</div>
         Statutory Filling</a
       >
     </div>
@@ -96,18 +79,39 @@ const activetab = ref(4);
   float: left;
   cursor: pointer;
   color: #fff;
-  padding: 12px 24px;
+  padding: 12px 18px;
   transition: background-color 0.2s;
   border: 1px solid #003056;
   border-right: none;
   background-color: #003056;
   font-weight: bold;
 }
+.tabs a > div {
+    color: #aaa;
+    background: #fff;
+    border-radius: 50%;
+    width: 25px !important;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 8px;
+    font-weight: 700;
+    font-family: sans-serif;
+}
 
 /* Change background color of tabs on hover */
-.tabs a:hover {
+.tabs a:hover  {
   background-color: #aaa;
   color: #fff;
+
+}
+.tabs a:hover >div {
+    background: #F36826;
+    color: #fff;
+    width: 25px;
+    height: 25px;
+    padding: 0;
 }
 
 /* Styling for active tab */
@@ -116,6 +120,14 @@ const activetab = ref(4);
   color: #0f0101;
   border-bottom: 2px solid #fff;
   cursor: default;
+  border-top:3px solid #F36826 ;
+  border-radius:4px 4px 0  0 ;
+}
+.tabs a.active >div{
+    background: #F36826;
+    color: #fff;
+    width: 25px;
+    height: 25px;
 }
 
 /* Style the tab content */

@@ -1,5 +1,5 @@
 <template>
- 
+
     <div class="mb-1 left-line">
         <div class="card ">
             <div class="card-body">
@@ -26,20 +26,20 @@
                 </li>
             </ul>
 
-      
+
 
 
 <div class="tab-content" id="pills-tabContent">
     <div class="tab-pane fade show active" id="pills-offer-pending" role="tabpanel"
         aria-labelledby="pills-offer-pending-tab">
-       
+
             <div class="card-body">
                 <div class="offer-pending-content">
                     <employees_provident_fund />
                 </div>
             </div>
 
-       
+
     </div>
     <div class="tab-pane fade active" id="pills-offer-completed" role="tabpanel"
         aria-labelledby="pills-offer-completed-tab">
@@ -55,7 +55,7 @@
             <div class="card-body">
                 <div class="offer-pending-content">
                 <abry_scheme />
-                        
+
             </div>
         </div>
     </div>
@@ -64,7 +64,7 @@
             <div class="card-body">
                 <div class="offer-pending-content">
                  <pmrpy_scheme />
-                
+
             </div>
         </div>
     </div>

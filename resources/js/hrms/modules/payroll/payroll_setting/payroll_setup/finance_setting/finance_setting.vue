@@ -1,5 +1,5 @@
 <template>
- 
+
     <div class="mb-1 left-line">
         <div class="card ">
             <div class="card-body">
@@ -7,30 +7,35 @@
                 <li class="nav-item text-muted" role="presentation">
                     <button class="pb-2 nav-link active" id="pills-offer-pending-tab" data-bs-toggle="pill"
                         data-bs-target="#pills-offer-pending" type="button" role="tab" aria-controls="pills-home"
-                        aria-selected="true">Employee's Provident Fund</button>
+                        aria-selected="true"></button>
                 </li>
                 <li class="mx-4 nav-item text-muted " role="presentation">
                     <button class="pb-2 nav-link" id="pills-offer-completed-tab" data-bs-toggle="pill"
                         data-bs-target="#pills-offer-completed" type="button" role="tab" aria-controls="pills-profile"
                         aria-selected="false">Employee's State Insurance</button>
                 </li>
-             
+                <li class="mx-4 nav-item text-muted " role="presentation">
+                    <button class="pb-2 nav-link" id="pills-offer-completed-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-offer-completed" type="button" role="tab" aria-controls="pills-profile"
+                        aria-selected="false">proof_of_investments</button>
+                </li>
+
             </ul>
 
-      
 
+            <!-- y-4 nav nav-pills nav-tabs-dashed -->
 
 <div class="tab-content" id="pills-tabContent">
     <div class="tab-pane fade show active" id="pills-offer-pending" role="tabpanel"
         aria-labelledby="pills-offer-pending-tab">
-       
+
             <div class="card-body">
                 <div class="offer-pending-content">
                     <investment_declaration />
                 </div>
             </div>
 
-       
+
     </div>
     <div class="tab-pane fade active" id="pills-offer-completed" role="tabpanel"
         aria-labelledby="pills-offer-completed-tab">
@@ -41,7 +46,7 @@
 
         </div>
     </div>
-    
+
 </div>
 
 </div>
