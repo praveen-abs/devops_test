@@ -1862,7 +1862,7 @@
                         >
                           <div class="mt-2 form-check form-check-inline">
                             <label
-                              class="form-check-label leave_type -ml-4"
+                              class="-ml-4 form-check-label leave_type"
                               for="compensation_monthly"
                             >
                               Enter Monthly Gross</label
@@ -2586,8 +2586,11 @@ onMounted(() => {
 
   if(url_param_UID)
   {
-    fetchQuickOnboardedEmployeeDetails(url_param_UID).then(function(result){
+    fetchQuickOnboardedEmployeeDetails(url_param_UID).then((result)=>
+    {
         populateQuickOnboardData(result.data);
+
+        console.log("result" + result.data);
     });
   }
   else
@@ -2596,6 +2599,8 @@ onMounted(() => {
   }
 
 });
+
+
 
 
 
@@ -2759,6 +2764,7 @@ const fileUploadValidation = ref(true);
 const employee_name_invalid =ref(false)
 const loading = ref(false)
 
+
 //   Events
 
 const handleSubmit = (isFormValid) => {
@@ -2780,12 +2786,7 @@ const handleSubmit = (isFormValid) => {
     : (EducationCertificateInvalid.value = false);
 
   if (!isFormValid) {
-    // toast.add({
-    //   severity: "error",
-    //   summary: "Error Message",
-    //   detail: "Message Content",
-    //   life: 3000,
-    // });
+
     RequiredDocument.value = true;
     return;
   }
@@ -3077,16 +3078,25 @@ const checkInputFiles = () => {
   }
 };
 
+const checkIsQuickOrNormal = ref()
+
 const user_code_exists = ref(false);
 
 const userCodeExists = () => {
   let user_code = employee_onboarding.employee_code;
 
+  console.log(checkIsQuickOrNormal.value);
+
   axios
     .get(`/user-code-exists/${user_code}`)
     .then((res) => {
       console.log(res.data);
-      user_code_exists.value = res.data;
+      if(checkIsQuickOrNormal.value == 'quick'){
+        console.log("quick onboarding");
+      }else{
+        user_code_exists.value = res.data;
+      }
+
     })
     .catch((err) => {
       console.log(err);
@@ -3671,7 +3681,33 @@ const compensation_yearly = ref([
 function populateQuickOnboardData(emp_data){
     console.log("populateQuickOnboardData : "+ JSON.stringify(emp_data));
 
+     checkIsQuickOrNormal.value = emp_data.onboard_type;
+
+console.log(emp_data.onboard_type);
+
     employee_onboarding.employee_code = ref(emp_data.user_code);
+    employee_onboarding.employee_name = ref(emp_data.name);
+    employee_onboarding.email= ref(emp_data.email);
+    employee_onboarding.doj = ref(emp_data.doj);
+    employee_onboarding.mobile_number = ref(emp_data.mobile_number);
+    employee_onboarding.designation = ref(emp_data.designation);
+    employee_onboarding.l1_manager_code = ref(emp_data.l1_manager_code);
+    employee_onboarding.basic = ref(emp_data.basic);
+    employee_onboarding.hra = ref(emp_data.hra);
+    employee_onboarding.statutory_bonus=ref(emp_data.statutory_bonus);
+    employee_onboarding.child_education_allowance = ref(emp_data.child_education_allowance);
+    employee_onboarding.food_coupon = ref(emp_data.food_coupon);
+    employee_onboarding.lta = ref(emp_data.lta);
+    employee_onboarding.special_allowance = ref(emp_data.special_allowance);
+    employee_onboarding.other_allowance = ref(emp_data.other_allowance);
+    employee_onboarding.epf_employer_contribution = ref(emp_data.epf_employer_contribution);
+    employee_onboarding.esic_employer_contribution = ref(emp_data.esic_employer_contribution);
+    employee_onboarding.insurance= ref(emp_data.insurance);
+    employee_onboarding.graduity= ref(emp_data.graduity);
+    employee_onboarding.epf_employee= ref(emp_data.epf_employee);
+    employee_onboarding.esic_employee= ref(emp_data.esic_employee);
+    employee_onboarding.professional_tax= ref(emp_data.professional_tax);
+    employee_onboarding.labour_welfare_fund= ref(emp_data.labour_welfare_fund);
 
 }
 

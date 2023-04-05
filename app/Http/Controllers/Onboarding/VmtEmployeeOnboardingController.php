@@ -304,7 +304,7 @@ class VmtEmployeeOnboardingController extends Controller
 
                     $message = "";
 
-                    if($result->status == "success")
+                    if($result == "success")
                     {
                         $response = [
                             'status' => 'success',
@@ -417,7 +417,7 @@ class VmtEmployeeOnboardingController extends Controller
     {
 
 
-        // dd($can_onboard_employee);
+         //dd($can_onboard_employee);
         // code...
         try {
 
@@ -1198,7 +1198,6 @@ class VmtEmployeeOnboardingController extends Controller
                    $isAllRecordsValid = false;
                }
            }//for each
-
            //Runs only if all excel records are valid
            if ($isAllRecordsValid) {
                foreach ($excelRowdata_row[0]  as $key => $excelRowdata) {
@@ -1244,7 +1243,7 @@ class VmtEmployeeOnboardingController extends Controller
            try {
 
                 $response = $employeeService->createOrUpdate_OnboardFormData(data: $row,
-                                                                can_onboard_employee:"1",
+                                                                can_onboard_employee:"0",
                                                                 existing_user_id : null,
                                                                 onboard_type  : "quick"
                                                                 );
@@ -1334,7 +1333,6 @@ class VmtEmployeeOnboardingController extends Controller
 
             if( $this->isAllDocumentsUploaded(auth()->user()->id) == 1)
             {
-                //dd("all docs uploaded");
 
                 // //set the onboard status to 1
                 $currentUser = User::where('id', auth()->user()->id)->first();

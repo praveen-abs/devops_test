@@ -15,52 +15,34 @@
       "id": 1
     },
     {
-      "6:28:08 AM": "",
+      "dob": "",
+      "gender": "",
+      "marital_status_id": "",
+      "doj": "",
+      "blood_group_id": "",
+      "physically_challenged": "",
       "id": 2
     },
     {
-      "check_in": "6:29:35 AM",
-      "check_out": "",
+      "dob": "",
+      "gender": "",
+      "marital_status_id": "",
+      "doj": "",
+      "blood_group_id": "",
+      "physically_challenged": "",
       "id": 3
     },
     {
-      "check_in": "6:29:35 AM",
-      "check_out": "6:29:42 AM",
+      "dob": "",
+      "gender": "",
+      "marital_status_id": "",
+      "doj": "",
+      "blood_group_id": "",
+      "physically_challenged": "",
       "id": 4
-    },
-    {
-      "check_in": "6:31:26 AM",
-      "check_out": "",
-      "id": 5
-    },
-    {
-      "check_in": "6:31:26 AM",
-      "check_out": "6:31:30 AM",
-      "id": 6
-    },
-    {
-      "check_in": "7:04:35 AM",
-      "check_out": "",
-      "id": 7
-    },
-    {
-      "check_in": "7:04:35 AM",
-      "check_out": "7:04:37 AM",
-      "id": 8
-    },
-    {
-      "check_in": "7:14:16 AM",
-      "check_out": "",
-      "id": 9
-    },
-    {
-      "check_in": "7:14:16 AM",
-      "check_out": "7:14:22 AM",
-      "id": 10
     }
   ],
   "FinanceDetails": [
-   
     {
       "bank_name": {
         "id": 2,
