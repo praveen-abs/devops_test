@@ -9,6 +9,7 @@ use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\vmtHolidays;
 use App\Models\VmtEmployeeAttendance;
 use App\Models\VmtEmployeeCompensatoryLeave;
+use App\Models\VmtLeaves;
 
 
 class VmtAttendanceService{
@@ -191,9 +192,6 @@ class VmtAttendanceService{
     {
         $response = array();
 
-        // $userId = VmtEmployeeLeaves::all()->where('user_id', '=' , '174');
-        // $findLeaveTypeId = VmtLeaves::find($request->id);
-
           $leaveTypes = VmtLeaves::all();
          $sickLeaveCount =  VmtEmployeeLeaves::where('leave_type_id', '=', '1')->count(); 
          $CausalLeaveCount =  VmtEmployeeLeaves::where('leave_type_id', '=', '2')->count(); 
@@ -212,4 +210,194 @@ class VmtAttendanceService{
     }
 
 
-}
+    public function  applyLeaveRequest($request){
+
+
+        $leave_month = date('m',strtotime($request->start_date));
+        $compensatory_leavetype_id = VmtLeaves::where('leave_type','LIKE','%Compensatory%')->value('id');
+
+        $leave_type_id = VmtLeaves::where('leave_type',$request->leave_type_name)->value('id');
+        //dd($leave_type_id);
+        //get the existing Pending/Approved leaves. No need to check Rejected
+        $existingNonPendingLeaves = VmtEmployeeLeaves::where('user_id', auth::user()->id)
+                                    ->whereMonth('start_date','>=',$leave_month)
+                                    ->whereIn('status',['Pending','Approved'])
+                                    ->get(['start_date','end_date','status']);
+
+        foreach($existingNonPendingLeaves as $singleLeaveRange){
+            //$endDate = new Carbon($singleLeaveRange->end_date);
+            //$endDate->addDay();
+
+            //create leave range
+            $leave_range = $this->createLeaveRange($singleLeaveRange->start_date, $singleLeaveRange->end_date);
+
+            //dd($leave_range);
+
+            //check with the user given leave range
+            foreach ($leave_range as $date) {
+                //if date already exists in previous leaves
+                // if ($processed_leave_start_date->format('Y-m-d') == $date->format('Y-m-d') || $processed_leave_end_date->format('Y-m-d') == $date->format('Y-m-d'))
+                if ($request->start_date == $date->format('Y-m-d') || $request->end_date == $date->format('Y-m-d') )
+                {
+                    return $response = [
+                        'status' => 'failure',
+                        'message' => 'Leave Request already applied for this date',
+                        'mail_status' => '',
+                        'error' => '',
+                        'error_verbose' => ''
+                    ];
+                }
+            }
+        }
+
+        $diff="ERROR";
+        $mailtext_total_leave = " 0-0";
+
+
+          //Check if its Leave or Permission
+        if (isPermissionLeaveType($leave_type_id)) {
+
+            $diff = $request->hours_diff;
+            $mailtext_total_leave = $diff . " Hour(s)";
+        } else {
+            //Now its leave type
+
+            ////Check if its 0.5 day leave, then handle separately
+
+            if($request->no_of_days == '0.5')
+            {
+                if($request->leave_session == "FN"){
+                    $diff = "Fore-noon ";
+                } else
+                if($request->leave_session == "AN"){
+                    $diff = "After-noon ";
+                }
+            }
+            else
+            {
+                //If its not half day leave, then its fullday or custom days
+                $diff = intval($request->no_of_days);
+            }
+
+            $mailtext_total_leave = $diff . " Day(s)";
+        }
+
+
+        //Save in DB
+        $emp_leave_details =  new VmtEmployeeLeaves;
+        $emp_leave_details->user_id = auth::user()->id;
+        $emp_leave_details->leave_type_id = $leave_type_id;
+        $emp_leave_details->leaverequest_date = $request->leave_request_date;
+        $emp_leave_details->start_date = $request->start_date;
+        $emp_leave_details->end_date = $request->end_date;
+        $emp_leave_details->leave_reason = $request->leave_reason;
+        $emp_leave_details->total_leave_datetime = $request->no_of_days." ".$request->leave_session;
+        // $emp_leave_details->total_leave_datetime = $diff;
+
+
+        //get manager of this employee
+        $manager_emp_code = VmtEmployeeOfficeDetails::where('user_id', auth::user()->id)->value('l1_manager_code');
+        $manager_name = User::where('user_code', $manager_emp_code)->value('name');
+        $manager_id = User::where('user_code', $manager_emp_code)->value('id');
+
+        $emp_leave_details->reviewer_user_id = $manager_id;
+        $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id));
+
+        if (!empty($request->notifications_users_id))
+            $emp_leave_details->notifications_users_id = implode(",", $request->notifications_users_id);
+
+        $emp_leave_details->reviewer_comments = "";
+        $emp_leave_details->status = "Pending";
+
+        //dd($emp_leave_details->toArray());
+        $emp_leave_details->save();
+
+
+        ////If compensatory leave, then store the comp work days in 'vmt_employee_compensatory_leaves'
+        if($leave_type_id == $compensatory_leavetype_id)
+        {
+            $array_comp_work_days_ids = $request->compensatory_work_days_ids == '' ? null : $request->compensatory_work_days_ids;
+
+
+            if(!empty($array_comp_work_days_ids) && is_array($array_comp_work_days_ids))
+            {
+
+                foreach($array_comp_work_days_ids as $singleCompWorkDayID)
+                {
+                    $emp_compensatory_leave = new VmtEmployeeCompensatoryLeave;
+                    $emp_compensatory_leave->employee_leave_id = $emp_leave_details->id;
+                    $emp_compensatory_leave->employee_attendance_id = $singleCompWorkDayID;
+                    $emp_compensatory_leave->save();
+                }
+            }
+        }
+        ////
+
+        //Need to send mail to 'reviewer' and 'notifications_users_id' list
+        $reviewer_mail =  VmtEmployeeOfficeDetails::where('user_id', $manager_id)->value('officical_mail');
+
+        $message = "";
+        $mail_status = "";
+
+        $VmtGeneralInfo = VmtGeneralInfo::first();
+        $image_view = url('/') . $VmtGeneralInfo->logo_img;
+
+        // dd($request->leave_type_id);
+        if(!empty($request->notifications_users_id))
+            $notification_mails = VmtEmployeeOfficeDetails::whereIn('user_id',$request->notifications_users_id)->pluck('officical_mail');
+        else
+            $notification_mails = array();
+
+
+        $isSent    = \Mail::to($reviewer_mail)->cc($notification_mails)->send(new RequestLeaveMail(
+                                                    uEmployeeName : auth::user()->name,
+                                                    uEmpCode : auth::user()->user_code,
+                                                    uEmpAvatar : $emp_avatar,
+                                                    uManagerName : $manager_name,
+                                                    uLeaveRequestDate : Carbon::parse($request->leave_request_date)->format('M jS Y'),
+                                                    uStartDate : Carbon::parse($request->start_date)->format('M jS Y'),
+                                                    uEndDate : Carbon::parse($request->end_date)->format('M jS Y'),
+                                                    uReason : $request->leave_reason,
+                                                    uLeaveType : $request->leave_type_name,
+                                                    uTotal_leave_datetime : $mailtext_total_leave,
+                                                    //Carbon::parse($request->total_leave_datetime)->format('M jS Y \\, h:i:s A'),
+                                                    loginLink : request()->getSchemeAndHttpHost(),
+                                                    image_view : $image_view
+                                                ));
+
+        if ($isSent) {
+            $mail_status = "Mail sent successfully";
+        } else {
+            $mail_status = "There was one or more failures.";
+        }
+
+        $response = [
+            'status' => 'success',
+            'message' => 'Leave Request applied successfully',
+            'mail_status' => $mail_status,
+            'error' => '',
+            'error_verbose' => ''
+        ];
+
+        return $response;
+
+    }
+
+
+    public function withdrawLeave(Request $request){
+        $withdraw_leave_query=VmtEmployeeLeaves::where('id',$request->leave_id)
+        ->update(array('status' => 'Withdrawn'));
+        $leave_status=VmtEmployeeLeaves::where('id',$request->leave_id)->first()->status;
+
+        $response = [
+            'status' => 'success',
+            'message' => 'Leave withdrawn successfully',
+            'error' => '',
+            'error_verbose' => ''
+        ];
+
+        return $response;
+    }
+    }
+
+

@@ -293,9 +293,9 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
             //If vaildation fails, send error json
 
             // $validated = $request->validate([
-            //     'title' => 'required|unique:posts|max:255',
-            //     'body' => 'required',
-            // ]);
+        //     'title' => 'required|unique:posts|max:255',
+        //     'body' => 'required',
+        // ]);
 
 
         //If validation success, fetch data
@@ -314,6 +314,12 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         */
 
         return $serviceVmtAttendanceService->fetchEmployeeLeaveBalance($request->user_id);
+    }
+
+    public function applyLeaveRequest(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+
+
+        return $serviceVmtAttendanceService->applyLeaveRequest($request);
     }
 
 }
