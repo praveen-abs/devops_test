@@ -4,13 +4,11 @@ import {
 } from "pinia";
 import { ref } from "vue";
 
-export const employeeService = defineStore("Service", () => {
-
-    alert("service ")
+export const  employeeService = defineStore("employeeService", () => {
 
     const employeeDetails  = ref()
 
-    axios.get('http://localhost:8000/api/profile-pages-getEmpDetails?user_id=174').then(res =>{
+     axios.get('http://localhost:8000/api/profile-pages-getEmpDetails?user_id=174').then(res =>{
         console.log(res.data);
         employeeDetails.value = res.data
     }).catch(e => console.log(e)).finally(()=>console.log("completed"))

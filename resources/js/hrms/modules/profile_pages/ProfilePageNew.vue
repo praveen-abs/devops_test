@@ -24,10 +24,11 @@
                                 </div>
 
 
-                                <div class="mt-4">
+                                <div class="mt-4" v-for="emp_details in employee_service.employeeDetails" :key="emp_details">
                                     <div class="progress-wrapper border-bottom-liteAsh ">
                                         <div class="mb-1 text-center">
                                             <h6 class="text-center">
+                                                {{ emp_details.id}}
                                                 {{service.current_user_name}}
                                             </h6>
                                         </div>
@@ -56,33 +57,33 @@
                                         <div class="py-2 border-bottom-liteAsh">
                                             <p class="text-muted f-12 fw-bold">Employee Code</p>
                                             <p class="text-primary f-15 fw-bold">
-                                               {{ service.current_user_id }}
+                                               {{ employee_service.employeeDetails.user_code }}
                                             </p>
 
                                         </div>
                                         <div class="py-2 border-bottom-liteAsh">
                                             <p class="text-muted f-12 fw-bold">Designation</p>
                                             <p class="text-primary f-15 fw-bold">
-                                                <!-- {{ $user_full_details->designation }} -->
+                                                {{ employee_service.employeeDetails.designation }}
                                             </p>
 
                                         </div>
                                         <div class="py-2 border-bottom-liteAsh">
                                             <p class="text-muted f-12 fw-bold">Location</p>
                                             <p class="text-primary f-15 fw-bold">
-                                                <!-- {{ $user_full_details->work_location ?? '-' }}-->
+                                                {{ employee_service.employeeDetails.work_location }}
                                             </p>
                                         </div>
                                         <div class="py-2 border-bottom-liteAsh">
                                             <p class="text-muted f-12 fw-bold">Department</p>
                                             <p class="text-primary f-15 fw-bold">
-                                                <!-- {{ $department ?? '-' }}-->
+                                                {{ employee_service.employeeDetails.department }}
                                             </p>
                                         </div>
                                         <div class="py-2 border-bottom-liteAsh">
                                             <p class="text-muted f-12 fw-bold">Reporting To</p>
                                             <p class="text-primary f-15 fw-bold">
-                                                <!-- {{ $user_full_details->l1_manager_name ?? '-' }}-->
+                                                {{ employee_service.employeeDetails.l1_manager_name }}
                                             </p>
                                         </div>
                                     </div>
@@ -166,6 +167,7 @@
             </div>
         </div>
     </div>
+    <!-- {{ employee_service.employeeDetails.id }} -->
 </template>
 
 
@@ -183,6 +185,8 @@ import { onMounted } from 'vue'
 
 const service = Service()
 
+const  employee_service= employeeService()
+
 
 
 
@@ -193,5 +197,7 @@ onMounted(() => {
     Service()
     employeeService()
 
+
+    alert("time")
 })
 </script>
