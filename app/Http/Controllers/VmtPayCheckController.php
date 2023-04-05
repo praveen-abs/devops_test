@@ -97,15 +97,18 @@ class VmtPayCheckController extends Controller
     */
     public function showSalaryDetailsPage(Request $request) {
 
-        $enc_user_id = Crypt::encryptString(auth()->user()->id);
+        try{
 
-        $data =  DB::table('vmt_employee_payslip')
-         ->where('vmt_employee_payslip.user_id', auth()->user()->id)->orderBy('PAYROLL_MONTH', 'DESC')
-         ->get();
+         $enc_user_id = Crypt::encryptString(auth()->user()->id);
+
+         $data =  DB::table('vmt_employee_payslip')
+             ->where('vmt_employee_payslip.user_id', auth()->user()->id)->orderBy('PAYROLL_MONTH', 'DESC')
+             ->get();
 
 
          if($data->count()!=0)
          {
+
              $compensatory =  Compensatory::where('user_id', auth()->user()->id)->first();
              $result['CTC'] = 0;
              $result['TOTAL_EARNED_GROSS'] = 0;
@@ -131,7 +134,7 @@ class VmtPayCheckController extends Controller
                  $result['PAYROLL_MONTH'] = $data[0]->PAYROLL_MONTH;
              }
              foreach($data as $d) {
-                 $result['TOTAL_PF_WAGES'] += $d->PF_WAGES;
+                 $result['TOTAL_PF_WAGES'] += (int)$d->PF_WAGES;
              }
 
              return view('vmt_salary_details', compact('data', 'result', 'compensatory','enc_user_id'));
@@ -142,8 +145,13 @@ class VmtPayCheckController extends Controller
              return view('vmt_nodata_salaryDetails');
 
          }
+        }
+        catch(\Exception $e){
+            dd("showSalaryDetailsPage : ".$e);
+        }
 
      }
+
 
      public function showInvestmentsPage(Request $request){
         return view('vmt_investments');

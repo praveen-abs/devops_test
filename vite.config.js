@@ -1,16 +1,15 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue'
-import FullReload from 'vite-plugin-full-reload'
 
 export default defineConfig({
     plugins: [
-        FullReload(['config/routes.rb', 'app/views/**/*']),
         vue(),
         laravel({
             input: [
-
+  
                 'resources/js/app.js',
+                'resources/js/hrms/modules/profile_pages/ProfilePageNew.js',
 
                 // Leaves
                 'resources/js/hrms/modules/leave_module/leave_apply/LeaveApply.js',
@@ -52,7 +51,7 @@ export default defineConfig({
 
                 // Profile page
 
-                'resources/js/hrms/modules/profile_pages/ProfilePageNew.js',
+                
 
                 // familyinfo_table_page
 

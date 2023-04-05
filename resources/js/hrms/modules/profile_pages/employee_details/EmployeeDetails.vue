@@ -94,38 +94,50 @@
             <ul class="personal-info" >
                 <li class="pb-1 border-bottom-liteAsh" >
                     <div class="title">Birthday</div>
-                    <div class="text" v-for="emp_details in employee_details"  :key="emp_details.id">
-                        {{ emp_details.doj.slice(8,10)+ "-" + emp_details.doj.slice(5,7)+"-"+emp_details.doj.slice(0,4) }}
+                    <div class="text">
+                        <!-- {{ emp_details.doj.slice(8,10)+ "-" + emp_details.doj.slice(5,7)+"-"+emp_details.doj.slice(0,4) }} -->
+                        {{ employee_service.employeeDetails.dob }}
                     </div>
                 </li>
                 <li class="pb-1 border-bottom-liteAsh">
                     <div class="title">Gender </div>
-                    <div class="text" v-for="emp_details in employee_details"  :key="emp_details.id">
-                        {{ emp_details.gender.name }}
+                    <div class="text" >
+                        <!-- {{ emp_details.gender.name }} -->
+                        {{ employee_service.employeeDetails.gender }}
+
+
                     </div>
                 </li>
                 <li class="pb-1 border-bottom-liteAsh">
                     <div class="title" >Date Of Joining (DOJ)</div>
-                    <div class="text" v-for="emp_details in employee_details"  :key="emp_details.id">
-                        {{ emp_details.doj.slice(8,10)+ "-" + emp_details.doj.slice(5,7)+"-"+emp_details.doj.slice(0,4) }}
+                    <div class="text">
+                        <!-- {{ emp_details.doj.slice(8,10)+ "-" + emp_details.doj.slice(5,7)+"-"+emp_details.doj.slice(0,4) }} -->
+                        {{ employee_service.employeeDetails.doj }}
+
                     </div>
                 </li>
                 <li class="pb-1 border-bottom-liteAsh">
                     <div class="title">Marital Status </div>
-                    <div class="text text-capitalize" v-for="emp_details in employee_details"  :key="emp_details.id">
-                        {{ emp_details.marital_status_id.name }}
+                    <div class="text text-capitalize" >
+                        <!-- {{ emp_details.marital_status_id.name }} -->
+                        {{ employee_service.employeeDetails.marital_status }}
+
                     </div>
                 </li>
                 <li class="pb-1 border-bottom-liteAsh">
                     <div class="title"> Blood Group</div>
-                    <div class="text" v-for="emp_details in employee_details"  :key="emp_details.id">
-                        {{ emp_details.blood_group_id.name }}
+                    <div class="text" >
+                        <!-- {{ emp_details.blood_group_id.name }} -->
+                        {{ employee_service.employeeDetails.blood_group_id }}
+
                     </div>
                 </li>
                 <li class="pb-1 ">
                     <div class="title">Physically Handicapped</div>
-                    <div class="text" v-for="emp_details in employee_details"  :key="emp_details.id">
-                        {{ emp_details.blood_group_id.physically_challenged }}
+                    <div class="text">
+                        <!-- {{ emp_details.blood_group_id.physically_challenged }} -->
+                        {{ employee_service.employeeDetails.physically_challenged }}
+
                     </div>
                 </li>
             </ul>
@@ -193,19 +205,22 @@
                 <li class="pb-1 border-bottom-liteAsh">
                     <div class="title">Personal Email</div>
                     <div class="text">
-                        <!-- {{ $user->email }} -->
+                        {{ employee_service.employeeDetails.email }}
+
                     </div>
                 </li>
                 <li class="pb-1 border-bottom-liteAsh">
                     <div class="title">Office Email</div>
                     <div class="text">
-                        <!-- {{ !empty($user_full_details->officical_mail) ? $user_full_details->officical_mail : '-' }} -->
+                        {{ employee_service.employeeDetails.officical_mail }}
+
                     </div>
                 </li>
                 <li class="pb-1 ">
                     <div class="title">Mobile Number</div>
                     <div class="text">
-                        <!-- {{ !empty($user_full_details->mobile_number) ? $user_full_details->mobile_number : '-' }} -->
+                        {{ employee_service.employeeDetails.official_mobile }}
+
                     </div>
                 </li>
             </ul>
@@ -263,7 +278,8 @@
                         <li class="pb-1 border-bottom-liteAsh flex-column">
                             <div class="title">Current Address </div>
                             <div class="text">
-                                <!-- {{ $user_full_details->current_address_line_1 ?? '' }} -->
+                                {{ employee_service.employeeDetails.current_address_line_1 }}
+
                             </div>
                         </li>
                     </ul>
@@ -273,7 +289,7 @@
                         <li class="pb-1 border-bottom-liteAsh flex-column">
                             <div class="title">permanent Address </div>
                             <div class="text">
-                                <!-- {{ $user_full_details->permanent_address_line_1 ?? '' }} -->
+                                {{ employee_service.employeeDetails.permanent_address_line_1 }}
                             </div>
                         </li>
                     </ul>
@@ -298,8 +314,11 @@ import { useConfirm } from "primevue/useconfirm";
 import axios from "axios";
 
 import { Service } from "../../Service/Service";
+import {employeeService} from  '../ProfilePagesService'
 
 const fetch_data = Service()
+
+const  employee_service= employeeService()
 
 
 
@@ -392,12 +411,12 @@ function saveGeneralInformationDetails() {
     
     // let url =`/profile-pages-update-generalinfo/${id}`
     let url ='';
-    axios.get('/local').then((response) => {
-        console.log("Axios : " + response.data);
-        console.log(response.data);
-        employee_details.value = response.data;
-        // loading.value = false;
-    });
+    // axios.get('/local').then((response) => {
+    //     console.log("Axios : " + response.data);
+    //     console.log(response.data);
+    //     employee_details.value = response.data;
+    //     // loading.value = false;
+    // });
 }
 
 
@@ -412,8 +431,8 @@ onMounted(() => {
         console.log(result);
         option_maritals_status.value = result.data;
     });
-    fetchcontactInfoDetails();
-    fetchAddressInfoDetails();
+    // fetchcontactInfoDetails();
+    // fetchAddressInfoDetails();
 
 
 
@@ -428,38 +447,38 @@ const contactinfo = reactive({
 
 });
 
-const savecontactInfoDetails =()=>{
-    console.log("calling saveinfoDetails");
+// const savecontactInfoDetails =()=>{
+//     console.log("calling saveinfoDetails");
 
 
-    let url = 'http://localhost:3000/contact'
+//     let url = 'http://localhost:3000/contact'
 
-    axios.post(url,{
-        user_id: contactinfo.user_id,
-        present_email:contactinfo.personal_email,
-        officical_mail:contactinfo.office_email,
-        mobile_number:contactinfo.mobile_number
-    })
-    .then((res)=>{
-            if (res.data.status == "success") {
-            } else if (res.data.status == "failure") {
-                contact_details.leave_request_error_messege = res.data.message;
-            }
+//     axios.post(url,{
+//         user_id: contactinfo.user_id,
+//         present_email:contactinfo.personal_email,
+//         officical_mail:contactinfo.office_email,
+//         mobile_number:contactinfo.mobile_number
+//     })
+//     .then((res)=>{
+//             if (res.data.status == "success") {
+//             } else if (res.data.status == "failure") {
+//                 contact_details.leave_request_error_messege = res.data.message;
+//             }
 
-    }).catch((err)=>{
-        console.log(err);
-    })
+//     }).catch((err)=>{
+//         console.log(err);
+//     })
 
-}
-const fetchcontactInfoDetails = () =>{
-    let url ='http://localhost:3000/contact'
-    axios.get(url).then((response) => {
-        console.log("Axios : " + response.data);
-        console.log(response.data);
-        contact_details.value = response.data;
-        // loading.value = false;
-    });
-}
+// }
+// const fetchcontactInfoDetails = () =>{
+//     let url ='http://localhost:3000/contact'
+//     axios.get(url).then((response) => {
+//         console.log("Axios : " + response.data);
+//         console.log(response.data);
+//         contact_details.value = response.data;
+//         // loading.value = false;
+//     });
+// }
 
 const addressUpdateDetails = ref();
 

@@ -422,21 +422,21 @@ const statutory_information = reactive({
 
 
 
-const saveBankDetails = () => {
-    let url = ' http://localhost:3000/FinanceDetails';
+// const saveBankDetails = () => {
+//     let url = ' http://localhost:3000/FinanceDetails';
 
-    visible.value = false
+//     visible.value = false
 
-    console.log(bank_information);
+//     console.log(bank_information);
 
-    axios.post(url, bank_information).then(res => {
-        console.log("sent sucessfully");
-    }).catch(err => {
-        console.log(err);
-    }).finally(() => {
-        console.log("completed");
-    })
-}
+//     axios.post(url, bank_information).then(res => {
+//         console.log("sent sucessfully");
+//     }).catch(err => {
+//         console.log(err);
+//     }).finally(() => {
+//         console.log("completed");
+//     })
+// }
 
 
 const saveStatutoryDetails = () => {
