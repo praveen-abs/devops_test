@@ -409,6 +409,7 @@ input:checked{
     border: 1px solid green;
     width: 8rem;
 }
+
 @media only screen and (max-width: 600px) {
     .cd{
         display: flex;
