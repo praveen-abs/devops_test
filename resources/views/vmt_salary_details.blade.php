@@ -21,16 +21,16 @@
                                 data-bs-target="#payslips" type="button" role="tab" aria-controls="payslips"
                                 aria-selected="false">Payslips</a>
                         </li>
-                        <li class="nav-item mx-4 ember-view" role="presentation ">
-                            <a class="nav-link ember-view" id="annual-earnings-tab" data-bs-toggle="pill"
-                                data-bs-target="#annual-earnings" type="button" role="tab"
-                                aria-controls="annual-earnings" aria-selected="false"> Annual Earnings</a>
-                        </li>
-                        <li class="nav-item mx-4 ember-view" role="presentation">
-                            <a class="nav-link ember-view" id="annual-earnings-tab" data-bs-toggle="pill"
-                                data-bs-target="#epf-contribution" type="button" role="tab"
-                                aria-controls="annual-earnings" aria-selected="false"> EPF Contribution Summar</a>
-                        </li>
+                        <!--<li class="nav-item mx-4 ember-view" role="presentation ">-->
+                        <!--    <a class="nav-link ember-view" id="annual-earnings-tab" data-bs-toggle="pill"-->
+                        <!--        data-bs-target="#annual-earnings" type="button" role="tab"-->
+                        <!--        aria-controls="annual-earnings" aria-selected="false"> Annual Earnings</a>-->
+                        <!--</li>-->
+                        <!--<li class="nav-item mx-4 ember-view" role="presentation">-->
+                        <!--    <a class="nav-link ember-view" id="annual-earnings-tab" data-bs-toggle="pill"-->
+                        <!--        data-bs-target="#epf-contribution" type="button" role="tab"-->
+                        <!--        aria-controls="annual-earnings" aria-selected="false"> EPF Contribution Summar</a>-->
+                        <!--</li>-->
                     </ul>
                 {{-- </div> --}}
             </div>
@@ -201,7 +201,7 @@
                                                     <th width="">Deductions</th>
                                                     <th width="">Take Home</th>
                                                     <th width="" class="text-capitalize">payslip</th>
-                                                    <th width="">Tax Worksheet</th>
+                                                    <!--<th width="">Tax Worksheet</th>-->
                                                     <th width="">Action</th>
                                                 </tr>
                                             </thead>
@@ -232,12 +232,12 @@
                                                                 View
                                                             </div>
                                                         </td>
-                                                        <td>
-                                                            <a href=""
-                                                                class="ember-view  text-info">
-                                                                View
-                                                            </a>
-                                                        </td>
+                                                        <!--<td>-->
+                                                        <!--    <a href=""-->
+                                                        <!--        class="ember-view  text-info">-->
+                                                        <!--        View-->
+                                                        <!--    </a>-->
+                                                        <!--</td>-->
                                                         <td>
                                                             @php
                                                                 $selectedPaySlipMonth = $d->PAYROLL_MONTH;
