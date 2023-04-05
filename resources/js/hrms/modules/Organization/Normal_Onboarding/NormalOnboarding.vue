@@ -1862,7 +1862,7 @@
                         >
                           <div class="mt-2 form-check form-check-inline">
                             <label
-                              class="form-check-label leave_type -ml-4"
+                              class="-ml-4 form-check-label leave_type"
                               for="compensation_monthly"
                             >
                               Enter Monthly Gross</label
