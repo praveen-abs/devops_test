@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\VmtAPIPMSModuleController;
 use App\Http\Controllers\Api\VmtAPIDashboardController;
 use App\Http\Controllers\Api\VmtAPIAttendanceController;
 use App\Http\Controllers\Api\VmtAPIPaySlipController;
+use App\Http\Controllers\Api\VmtAPIProfilePagesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -144,5 +145,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         'getMonthlyPayslipData']);
 
 
+////Profile Pages
+
+
 
 });
+
+Route::get('profile-pages-getEmpDetails', [VmtAPIProfilePagesController::class, 'fetchEmployeeProfileDetails']);
+

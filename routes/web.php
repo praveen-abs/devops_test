@@ -31,6 +31,8 @@ Route::get('/create-holiday', function () {
     return view('createHoliday');
 })->name('create-holiday');
 
+// Route::post('/employee_profile', [App\Http\Controllers\Api\VmtAPIAttendanceController::class, 'employeeProfile'])->name('employeeProfile');
+Route::get('/employee_profile', [App\Http\Controllers\VmtAttendanceController::class, 'employeeProfile'])->name('employeeProfile');
 
 
 Route::middleware(['auth'])->group(function () {
