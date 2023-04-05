@@ -38,21 +38,21 @@
         </div>
 
         <div class="tab-pane fade" id="family_det" role="tabpanel" aria-labelledby="">
-            <FamilyDetails />
+            <!-- <FamilyDetails /> -->
         </div>
 
         <div class="tab-pane fade" id="experience_det" role="tabpanel" aria-labelledby="">
-            <ExperienceDetails />
+            <!-- <ExperienceDetails /> -->
 
         </div>
         <div class="tab-pane fade" id="finance_det" role="tabpanel" aria-labelledby="">
-            <FinanceDetails />
+            <!-- <FinanceDetails /> -->
 
 
         </div>
         <div class="tab-pane fade" id="document_det" role="tabpanel" aria-labelledby="">
 
-            <Documents />
+            <!-- <Documents /> -->
 
         </div>
 
@@ -73,8 +73,6 @@ import { onMounted } from 'vue'
 
 
 onMounted(() => {
-
-    Service()
-    
+    Service() 
 })
 </script>

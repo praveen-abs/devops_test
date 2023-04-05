@@ -1,5 +1,5 @@
 b<template>
-    <div class="card mb-2">
+    <div class="mb-2 card">
         <div class="card-body">
             <h6 class="">General Information
                      <!-- Button trigger modal -->
@@ -9,16 +9,16 @@ b<template>
 
                 <Dialog v-model:visible="visible" modal header="General Information" :style="{ width: '50vw' }">
                                 <div class="row">
-                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-lg-6 col-xxl-6">
-                                        <div class="form-group mb-3">
+                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
+                                        <div class="mb-3 form-group">
                                             <label :style="{marginLeft:'10px'}">Birth Date<span class="text-danger">*</span></label>
                                             <div class="cal-icon">
-                                                        <Calendar showIcon class="form-selects mb-3" v-model="general_information.birth_date"  placeholder="9999-12-31" />
+                                                        <Calendar showIcon class="mb-3 form-selects" v-model="general_information.birth_date"  placeholder="9999-12-31" />
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-lg-6 col-xxl-6">
-                                        <div class="form-group mb-3">
+                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
+                                        <div class="mb-3 form-group">
                                             <label >Gender<span class="text-danger">*</span></label>
 
                                                 <Dropdown v-model="general_information.gender" :options="options_gender" optionLabel="name" placeholder="Choose Gender" class="form-selects" />
@@ -26,17 +26,17 @@ b<template>
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-lg-6 col-xxl-6">
-                                        <div class="form-group mb-3">
+                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
+                                        <div class="mb-3 form-group">
                                             <label :style="{marginLeft:'10px'}">Date Of Joining(DOJ)<span class="text-danger">*</span></label>
                                             <div class="cal-icon">
-                                                        <Calendar showIcon class="form-selects mb-3" v-model="general_information.date_of_joining"  placeholder="9999-12-31" />
+                                                        <Calendar showIcon class="mb-3 form-selects" v-model="general_information.date_of_joining"  placeholder="9999-12-31" />
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-lg-6 col-xxl-6">
-                                        <div class="form-group mb-3">
+                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
+                                        <div class="mb-3 form-group">
                                             <label>Blood Group<span class="text-danger">*</span></label>
                                             <div class="cal-icon">
                                                 <Dropdown
@@ -52,15 +52,15 @@ b<template>
                                     </div>
 
 
-                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-lg-6 col-xxl-6">
-                                        <div class="form-group mb-3" :style="{marginLeft:'10px'}">
+                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
+                                        <div class="mb-3 form-group" :style="{marginLeft:'10px'}">
                                             <label>Marital status <span class="text-danger">*</span></label>
                                                 <Dropdown v-model="general_information.marital_status_id" :options="option_maritals_status" optionLabel="name" placeholder="Select Marital Status" class="form-selects" />
 
                                         </div>
                                     </div>
-                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-lg-6 col-xxl-6">
-                                        <div class="form-group mb-3">
+                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
+                                        <div class="mb-3 form-group">
                                             <label>Physically Handicapped</label>
                                                 <Dropdown v-model="general_information.phy_handicapped" :options="options_phy_challenged" optionLabel="name" placeholder="Select" class="form-selects" />
                                         </div>
@@ -77,37 +77,37 @@ b<template>
                 </Dialog>
             </h6>
             <ul class="personal-info">
-                <li class="border-bottom-liteAsh pb-1">
+                <li class="pb-1 border-bottom-liteAsh">
                     <div class="title">Birthday</div>
                     <div class="text">
                         <!-- {{ date('d-M-Y', strtotime($user_full_details->dob ?? '-')) }} -->
                     </div>
                 </li>
-                <li class="border-bottom-liteAsh pb-1">
+                <li class="pb-1 border-bottom-liteAsh">
                     <div class="title">Gender </div>
                     <div class="text">
                         <!-- {{ $user_full_details->gender ?? '-' }} -->
                     </div>
                 </li>
-                <li class="border-bottom-liteAsh pb-1">
+                <li class="pb-1 border-bottom-liteAsh">
                     <div class="title">Date Of Joining (DOJ)</div>
                     <div class="text">
                         <!-- {{ date('d-M-Y', strtotime($user_full_details->doj ?? '-')) }} -->
                     </div>
                 </li>
-                <li class="border-bottom-liteAsh pb-1">
+                <li class="pb-1 border-bottom-liteAsh">
                     <div class="title">Marital Status </div>
                     <div class="text text-capitalize">
                         <!-- {{ $user_full_details->marital_status ?? '-' }} -->
                     </div>
                 </li>
-                <li class="border-bottom-liteAsh pb-1">
+                <li class="pb-1 border-bottom-liteAsh">
                     <div class="title"> Blood Group</div>
                     <div class="text">
                         <!-- {{ getBloodGroupName($user_full_details->blood_group_id) ?? '-' }} -->
                     </div>
                 </li>
-                <li class=" pb-1">
+                <li class="pb-1 ">
                     <div class="title">Physically Handicapped</div>
                     <div class="text">
 
@@ -119,7 +119,7 @@ b<template>
     </div>
 
 
-    <div class="card mb-2">
+    <div class="mb-2 card">
         <div class="card-body">
             <h6 class="">Contact Information
                 <span class="personal-edit"><a href="#" class="edit-icon" data-bs-toggle="modal"
@@ -128,19 +128,19 @@ b<template>
             </h6>
 
             <ul class="personal-info">
-                <li class="border-bottom-liteAsh pb-1">
+                <li class="pb-1 border-bottom-liteAsh">
                     <div class="title">Personal Email</div>
                     <div class="text">
                         <!-- {{ $user->email }} -->
                     </div>
                 </li>
-                <li class="border-bottom-liteAsh pb-1">
+                <li class="pb-1 border-bottom-liteAsh">
                     <div class="title">Office Email</div>
                     <div class="text">
                         <!-- {{ !empty($user_full_details->officical_mail) ? $user_full_details->officical_mail : '-' }} -->
                     </div>
                 </li>
-                <li class=" pb-1">
+                <li class="pb-1 ">
                     <div class="title">Mobile Number</div>
                     <div class="text">
                         <!-- {{ !empty($user_full_details->mobile_number) ? $user_full_details->mobile_number : '-' }} -->
@@ -152,7 +152,7 @@ b<template>
         </div>
 
     </div>
-    <div class="card mb-2">
+    <div class="mb-2 card">
         <div class="card-body">
             <h6 class="">Address
                 <span class="personal-edit"><a href="#" class="edit-icon" data-bs-toggle="modal"
@@ -161,7 +161,7 @@ b<template>
             <div class="row">
                 <div class="col-6">
                     <ul class="personal-info">
-                        <li class="border-bottom-liteAsh pb-1 flex-column">
+                        <li class="pb-1 border-bottom-liteAsh flex-column">
                             <div class="title">Current Address </div>
                             <div class="text">
                                 <!-- {{ $user_full_details->current_address_line_1 ?? '' }} -->
@@ -171,7 +171,7 @@ b<template>
                 </div>
                 <div class="col-6">
                     <ul class="personal-info">
-                        <li class="border-bottom-liteAsh pb-1 flex-column">
+                        <li class="pb-1 border-bottom-liteAsh flex-column">
                             <div class="title">permanent Address </div>
                             <div class="text">
                                 <!-- {{ $user_full_details->permanent_address_line_1 ?? '' }} -->
@@ -193,6 +193,7 @@ b<template>
 
     import { useToast } from "primevue/usetoast";
     import { useConfirm } from "primevue/useconfirm";
+    import { Service } from '../Service/Service';
 
     import axios from 'axios';
 
@@ -202,7 +203,7 @@ b<template>
         getCurrentUser
     } from "./ProfilePagesService";
 
-
+    const fetch_data = Service()
 
     const toast = useToast();
 
@@ -238,11 +239,10 @@ b<template>
 
     function saveGeneralInformationDetails(){
 
-        console.log("Called saveGeneralInformationDetails.... ");
-        general_information.user_id = getCurrentUser;
+        console.log("Called saveGeneralInformationDetails.... ")
 
+        
         axios.post('/profile-pages-update-generalinfo/{id}',{
-            "user_id": general_information.user_id,
             "dob": general_information.birth_date,
             "gender": general_information.gender,
             "marital_status_id":general_information.marital_status_id ,
@@ -252,7 +252,7 @@ b<template>
         }).then(res=>{
             data_checking.value=false
             if(res.data.status=='success'){
-
+                 alert("data sent")
             }else
             if(res.data.status=='failure'){
                 leave_data.leave_request_error_messege=res.data.message;
@@ -267,16 +267,14 @@ b<template>
     }
 
     const general_information_save = ()=>{
-
-        // location.reload();
         console.log(general_information);
         confirm.require({
                     message: 'Are you sure you want to proceed?',
                     header: 'Confirmation',
                     icon: 'pi pi-exclamation-triangle',
                     accept: () => {
-
-                        saveGeneralInformationDetails();
+          
+                        saveGeneralInformationDetails()
 
                     },
                     reject: () => {
@@ -288,13 +286,8 @@ b<template>
 
 
     onMounted(() => {
-        // let url = window.location.origin + '/fetch-regularization-approvals';
-        // console.log("AJAX URL : " + url);
-        // axios.get(url)
-        //     .then((response) => {
-        //         console.log("Axios : " + response.data);
-        //         att_regularization.value = response.data;
-        //     });
+
+
 
         getBloodGroups().then((result) => {
             console.log(result);
@@ -306,6 +299,12 @@ b<template>
             option_maritals_status.value = result;
 
         })
+
+
+        Service()
+
+        
+
 
 
     });
@@ -400,7 +399,7 @@ Dialog{
 
 <template>
 
-    <div class="card flex flex-wrap gap-2 justify-content-center">
+    <div class="flex flex-wrap gap-2 card justify-content-center">
         <Button @click="confirm1()" icon="pi pi-check" label="Confirm"></Button>
         <Button @click="confirm2()" icon="pi pi-times" label="Delete"></Button>
     </div>

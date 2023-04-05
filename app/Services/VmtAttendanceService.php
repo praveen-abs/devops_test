@@ -186,9 +186,30 @@ class VmtAttendanceService{
         return array_values($map_comp_off_days);
     }
 
-    // public function fetchEmployeeLeaveBalance(){
+    
+    public function fetchEmployeeLeaveBalance($user_id)
+    {
+        $response = array();
 
-    // }
+        // $userId = VmtEmployeeLeaves::all()->where('user_id', '=' , '174');
+        // $findLeaveTypeId = VmtLeaves::find($request->id);
+
+          $leaveTypes = VmtLeaves::all();
+         $sickLeaveCount =  VmtEmployeeLeaves::where('leave_type_id', '=', '1')->count(); 
+         $CausalLeaveCount =  VmtEmployeeLeaves::where('leave_type_id', '=', '2')->count(); 
+        $earnedleave_count =  VmtEmployeeLeaves::where('leave_type_id', '=', '3')->count(); 
+
+        $query_emp_leaves = VmtEmployeeLeaves::join('vmt_leaves','vmt_leaves.id','vmt_employee_leaves.leave_type_id')
+                                            ->where('user_id', '=' , '174');
+                                          
+        foreach($leaveTypes as $singleLeaveType)
+        {
+            $response[$singleLeaveType->leave_type] = $query_emp_leaves->where('leave_type_id',$singleLeaveType->id)->get()->count();
+        }
+
+        return $response;
+        
+    }
 
 
 }
