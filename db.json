@@ -13,10 +13,36 @@
         "name": "AB Negative"
       },
       "id": 1
+    },
+    {
+      "dob": "",
+      "gender": "",
+      "marital_status_id": "",
+      "doj": "",
+      "blood_group_id": "",
+      "physically_challenged": "",
+      "id": 2
+    },
+    {
+      "dob": "",
+      "gender": "",
+      "marital_status_id": "",
+      "doj": "",
+      "blood_group_id": "",
+      "physically_challenged": "",
+      "id": 3
+    },
+    {
+      "dob": "",
+      "gender": "",
+      "marital_status_id": "",
+      "doj": "",
+      "blood_group_id": "",
+      "physically_challenged": "",
+      "id": 4
     }
   ],
   "FinanceDetails": [
-   
     {
       "bank_name": {
         "id": 2,

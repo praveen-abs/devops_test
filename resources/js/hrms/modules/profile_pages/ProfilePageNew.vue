@@ -73,8 +73,6 @@ import { onMounted } from 'vue'
 
 
 onMounted(() => {
-
-    Service()
-    
+    Service() 
 })
 </script>

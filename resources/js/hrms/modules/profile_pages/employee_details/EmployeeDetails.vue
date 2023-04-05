@@ -153,7 +153,7 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="form-group mb-3">
+                                <div class="mb-3 form-group">
                                     <label>Personal Email</label>
                                     <input type="email" name="present_email"
                                         class="form-control" v-model="contactinfo.personal_email">
@@ -161,7 +161,7 @@
                             </div>
 
                             <div class="col-md-6">
-                                <div class="form-group mb-3">
+                                <div class="mb-3 form-group">
                                     <label> Office Email</label>
                                     <input type="email"
                                         class="form-control" name="officical_mail" v-model="contactinfo.office_email">
@@ -170,7 +170,7 @@
 
                             <div class="col-md-6">
 
-                                <div class="form-group mb-3">
+                                <div class="mb-3 form-group">
                                     <label>Mobile Number</label>
                                     <input type="text" size=20 maxlength=10 name="mobile_number"
                                      class="form-control"  v-model="contactinfo.mobile_number">
@@ -232,12 +232,12 @@
                                         <div class="modal-body">
 
                                             <div class="col-md-12">
-                                                <div class="form-group mb-3">
+                                                <div class="mb-3 form-group">
                                                     <label>Current Address</label>
                                                     <textarea name="current_address_line_1" id="current_address_line_1" cols="30" rows="3"
                                                         class="form-control" v-model="Addressinfo.current_address"></textarea>
                                                 </div>
-                                                <div class="form-group mb-3">
+                                                <div class="mb-3 form-group">
                                                     <label>Permanent Address </label>
                                                     <textarea name="permanent_address_line_1" id="permanent_address_line_1" cols="30" rows="3"
                                                         class="form-control"  v-model="Addressinfo.Permanent_Address"></textarea>
@@ -340,8 +340,9 @@ const confirm = useConfirm();
 
 function saveGeneralInformationDetails() {
     console.log("Called saveGeneralInformationDetails.... ");
-    let url =  'http://localhost:3000/Empdetails'
-  // let url = window.location.origin + "/profile-pages-update-generalinfo/";
+         let id = fetch_data.current_user_id
+        let url =`/profile-pages-update-generalinfo/${id}`
+
 
     axios
         .post(url,{
@@ -367,6 +368,8 @@ function saveGeneralInformationDetails() {
 
     const general_information_save = ()=>{
 
+        console.log(fetch_data.current_user_id);
+
         // location.reload();
         console.log(general_information);
         confirm.require({
@@ -386,8 +389,10 @@ function saveGeneralInformationDetails() {
 
 
   const fetchGeneralInformationDetails = () =>{
-    let url ="http://localhost:3000/Empdetails"
-    axios.get(url).then((response) => {
+    
+    // let url =`/profile-pages-update-generalinfo/${id}`
+    let url ='';
+    axios.get('/local').then((response) => {
         console.log("Axios : " + response.data);
         console.log(response.data);
         employee_details.value = response.data;
@@ -409,6 +414,8 @@ onMounted(() => {
     });
     fetchcontactInfoDetails();
     fetchAddressInfoDetails();
+
+
 
 });
 

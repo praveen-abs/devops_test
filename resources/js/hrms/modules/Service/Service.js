@@ -10,12 +10,12 @@ export const Service = defineStore("Service", () => {
     const current_user_name = ref()
 
 
-    axios.get('currentUser').then(res => {
+    axios.get('/currentUser').then(res => {
         current_user_id.value = res.data
         console.log("service class" + res.data);
     })
 
-    axios.get('currentUserName').then(res => {
+    axios.get('/currentUserName').then(res => {
         current_user_name.value = res.data
         console.log("service class" + res.data);
 
