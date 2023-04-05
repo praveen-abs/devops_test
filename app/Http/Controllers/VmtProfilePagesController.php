@@ -15,6 +15,8 @@ use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtEmployeeStatutoryDetails;
 use App\Models\VmtEmployeePaySlip;
 use App\Services\VmtEmployeePayslipService;
+use App\Services\VmtProfilePagesService;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 
@@ -329,17 +331,17 @@ class VmtProfilePagesController extends Controller
         $report = $request->input('report');
         $code = VmtEmployee::select('emp_no', 'name', 'designation')->join('vmt_employee_office_details', 'user_id', '=', 'vmt_employee_details.userid')->join('users', 'users.id', '=', 'vmt_employee_details.userid')->where('emp_no', $report)->first();
         $documents_filenames = VmtEmployee::where('userid',$user_id)
-        ->get([
-            'aadhar_card_file',
-            'aadhar_card_backend_file',
-            'pan_card_file',
-            'passport_file',
-            'voters_id_file',
-            'dl_file',
-            'education_certificate_file',
-            'reliving_letter_file',
-            'docs_reviewed'
-        ]);
+            ->get([
+                'aadhar_card_file',
+                'aadhar_card_backend_file',
+                'pan_card_file',
+                'passport_file',
+                'voters_id_file',
+                'dl_file',
+                'education_certificate_file',
+                'reliving_letter_file',
+                'docs_reviewed'
+            ]);
 
         // $reDetails = VmtEmployee::where('userid', $request->id)->first();
         // $details = VmtEmployee::find($reDetails->id);
@@ -363,6 +365,59 @@ class VmtProfilePagesController extends Controller
        // dd('----------'.$docName.'----------------------'. $docPath);
        dd($docPath);
        return $docPath;
+    }
+
+
+
+
+    //////////////////////////////////////////////////////////
+    // Updated functions via service class
+
+    public function showProfilePage_v3(Request $request){
+
+        // if($request->has('uid'))
+        //     if($request->has('sid'))
+        //     {
+        //         //if SID found, then admin is viewing employee profile
+        //         dd("SID : ".$request->sid);
+        //         return redirect()->route('profile-page-v3', ['uid' =>$request->uid , 'sid' =>$request->sid]);
+
+        //     }
+        //     else
+        //     {
+        //        // dd("UID : ".$request->uid);
+
+        //         //if no SID, then send current user_id. This means employee is seeing the profile
+        //         return redirect()->route('profile-page-v3', ['uid' =>$request->uid]);
+        //     }
+        // else
+        // {
+        //     //Then current user id in UID
+        //     return redirect()->route('profile-page-v3', ['uid' =>$request->uid]);
+
+        // }
+
+        //if ONLY uid found, show current logged in user
+        //if($request->)
+
+        //if uid and sid found, show selected emp user
+
+
+        //if nothing found, show current logged in user
+
+
+       // $user_id == Crypt::decrypt($request->uid);
+       // return redirect()->route('profile-page-v3', ['uid' =>$request->uid]);
+
+       return view('profilePage_new', compact('user', 'user_full_details', 'reportingManager', 'profileCompletenessValue', 'data', 'employees'));
+
+    }
+
+    public function fetchEmployeeProfilePagesDetails(Request $request, VmtProfilePagesService $serviceVmtProfilePagesService){
+
+        $user_id = $request->uid;
+
+        return $serviceVmtProfilePagesService->getEmployeeProfilePagesDetails($user_id);
     }
 
 }
