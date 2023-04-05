@@ -24,11 +24,11 @@
                                 </div>
 
 
-                                <div class="mt-4" v-for="emp_details in employee_service.employeeDetails" :key="emp_details">
+                                <div class="mt-4">
                                     <div class="progress-wrapper border-bottom-liteAsh ">
                                         <div class="mb-1 text-center">
                                             <h6 class="text-center">
-                                                {{ emp_details.id}}
+
                                                 {{service.current_user_name}}
                                             </h6>
                                         </div>
@@ -46,18 +46,19 @@
                                         <p class="mb-2 text-muted f-10 text-start fw-bold">Your profile is completed</p>
                                     </div>
 
-                                    <div class="mb-4 text-center profile-mid-right-content ">
+                                    <div class="mb-4 text-center profile-mid-right-content " >
                                         <div class="py-2 border-bottom-liteAsh">
                                             <p class="text-muted f-12 fw-bold">Employee Status</p>
                                             <p class="text-primary f-15 fw-bold">
                                                 <!-- {{ getEmployeeActiveStatus($user->id) ?? '-' }} -->
+                                                <!-- {{ emp }} -->
                                             </p>
 
                                         </div>
                                         <div class="py-2 border-bottom-liteAsh">
                                             <p class="text-muted f-12 fw-bold">Employee Code</p>
                                             <p class="text-primary f-15 fw-bold">
-                                               {{ employee_service.employeeDetails.user_code }}
+                                                {{ employee_service.employeeDetails.user_code }}
                                             </p>
 
                                         </div>
@@ -167,7 +168,6 @@
             </div>
         </div>
     </div>
-    <!-- {{ employee_service.employeeDetails.id }} -->
 </template>
 
 
@@ -181,23 +181,22 @@ import Documents from './documents/documents.vue'
 
 import { Service } from '../Service/Service'
 import {employeeService} from  './ProfilePagesService'
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 
 const service = Service()
 
 const  employee_service= employeeService()
 
-
+const emp_details = ref()
 
 
 
 onMounted(() => {
 
-
+    console.log("alert");
     Service()
-    employeeService()
 
 
-    alert("time")
+
 })
 </script>
