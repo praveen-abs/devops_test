@@ -85,10 +85,6 @@
 
 
         <div class="w-full">
-
-
-
-
             <div class="mt-5">
                 <h1 class="mt-5" >Approval of Financial Changes</h1>
 
@@ -128,20 +124,212 @@
 
                 <div class="card w-8 mt-2">
                     <div class="card-body" :style="{background:'#F7F7F7'}">
-                        <div class="row  d-flex  justify-around align-items-center md">
-                           <div class="col-11">
-                            <h1> The deadline for opting in or out of the new tax regime (Section 115BAC) is based on the financial year's cutoff date is </h1>
-                           </div>
-                        </div>
-                            <div class="col-sm  d-flex ">
-                                <ul class="ml-78 ul">
-                                    <li class="cd">Salary Payment Mode: Bank transfer, Cheque, or Cash.</li>
-                                    <li class="cd">Bank Information: Bank name, Account number, IFSC Code, or Name on account.</li>
-                                    <li class="cd">PF & ESI Information: PF number, UAN, Joining date, Name on account, or ESI number.</li>
-                                    <li class="cd">PAN Information: PAN number, Date of birth, Name on PAN card, or Father's Name.</li>
-                                    <li class="cd">Aadhaar Information: Aadhaar Number, Aadhaar enrolment number, or Name on Aadhaar.</li>
-                                </ul>
+
+                        <div class="row">
+                            <div class="col-md col-7  cd">
+                              <h1 >The deadline for opting in or out of the new tax regime (Section 115BAC) is based on the financial year's cutoff date is </h1>
                             </div>
+                            <div class="col-md d-flex">
+                                <div class="justify-around items-center  ">
+
+                                    <Dropdown v-model="month" :options="cities" optionLabel="name" placeholder="May" class="w-full md:w-7rem" />
+
+                                </div>
+                                <div class="justify-around items-center  ml-4">
+                                    <Dropdown v-model="month" :options="cities" optionLabel="name" placeholder="25" class="w-full md:w-7rem" />
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md col-10  cd">
+                              <h1 >For New Joinee, opting in or out to be done within
+                                <Dropdown v-model="month" :options="cities" optionLabel="name" placeholder="25" class="w-full md:w-7rem" /> days from the date of joining. </h1>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="mt-5">
+                <h1 class="mt-5" >Investments Declaration</h1>
+
+                <div class="card w-8 mt-2">
+                    <div class="card-body" :style="{background:'#F7F7F7'}">
+
+                        <div class="row">
+                            <div class="col-md col-12  cd">
+                              <h1 >Employees can update their Investments Declarations anytime during a month prior to month the
+                                <Dropdown v-model="month" :options="cities" optionLabel="name" placeholder="25" class="w-full md:w-7rem" />
+                                    month and before the cut-off period in the financial year, as defined below. </h1>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md d-flex mt-3">
+                                <div class="justify-around items-center  ">
+
+                                    <h1 :style="{lineHeight:'45px'}">Cutoff date for changing declaration in financial year is
+                                    </h1>
+                                </div>
+                                <div class="col-md-2 d-flex ">
+                                    <div class="justify-around items-center  ml-3">
+                                        <Dropdown v-model="month" :options="cities" optionLabel="name" placeholder="May" class="w-full md:w-7rem" />
+                                    </div>
+                                </div>
+                                <div class="col-md-2 d-flex ">
+                                    <div class="justify-around items-center  ml-3">
+                                        <Dropdown v-model="month" :options="cities" optionLabel="name" placeholder="25" class="w-full md:w-7rem" />
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="row mt-3">
+                            <div class="col-md col-10  cd">
+                              <h1 >For New Joinee, opting in or out to be done within
+                                <Dropdown v-model="month" :options="cities" optionLabel="name" placeholder="25" class="w-full md:w-7rem" /> days from the date of joining.</h1>
+                            </div>
+                        </div>
+
+                        <div class="row w-full d-flex  justify-around  md">
+                            <div class="col-md col-9  cd">
+                                <h1>Is approval required for any modifications in IT declarations submitted before Feb 27?</h1>
+                           </div>
+                            <div class="col-md d-flex">
+                                <div class="justify-around items-center  ">
+                                    <input type="radio" name="HRA-cal" id="">
+                                    <label for="" class="mx-3 text-1xl" :style="{color:'#002f56'}" @click="togglenavy">yes</label>
+                                </div>
+                                <div class="justify-around items-center  ml-3">
+                                    <input type="radio" name="HRA-cal" id="">
+                                    <label for="" class="mx-3 text-1xl" :style="{color:'#002f56'}" @click="togglegray">No</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="mt-5">
+                <h1 class="mt-5" >Investments Declaration</h1>
+
+                <div class="card w-8 mt-2">
+                    <div class="card-body" :style="{background:'#F7F7F7'}">
+
+                        <div class="row">
+                            <div class="col-md col-12  cd">
+                              <h1 >Employees can update their Investments Declarations anytime during a month prior to month the
+                                <Dropdown v-model="month" :options="cities" optionLabel="name" placeholder="25" class="w-full md:w-7rem" />
+                                    month and before the cut-off period in the financial year, as defined below. </h1>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md d-flex mt-3">
+                                <div class="justify-around items-center  ">
+
+                                    <h1 :style="{lineHeight:'45px'}">Cutoff date for changing declaration in financial year is
+                                    </h1>
+                                </div>
+                                <div class="col-md-2 d-flex ">
+                                    <div class="justify-around items-center  ml-3">
+                                        <Dropdown v-model="month" :options="cities" optionLabel="name" placeholder="May" class="w-full md:w-7rem" />
+                                    </div>
+                                </div>
+                                <div class="col-md-2 d-flex ">
+                                    <div class="justify-around items-center  ml-3">
+                                        <Dropdown v-model="month" :options="cities" optionLabel="name" placeholder="25" class="w-full md:w-7rem" />
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="row mt-3">
+                            <div class="col-md col-10  cd">
+                              <h1 >For New Joinee, opting in or out to be done within
+                                <Dropdown v-model="month" :options="cities" optionLabel="name" placeholder="25" class="w-full md:w-7rem" /> days from the date of joining.</h1>
+                            </div>
+                        </div>
+
+                        <div class="row w-full d-flex  justify-around  md">
+                            <div class="col-md col-9  cd">
+                                <h1>Is approval required for any modifications in IT declarations submitted before Feb 27?</h1>
+                           </div>
+
+                            <div class="col-md d-flex">
+                                <div class="justify-around items-center  ">
+                                    <input type="radio" name="HRA-cal" id="">
+                                    <label for="" class="mx-3 text-1xl" :style="{color:'#002f56'}" @click="togglenavy">yes</label>
+                                </div>
+                                <div class="justify-around items-center  ml-3">
+                                    <input type="radio" name="HRA-cal" id="">
+                                    <label for="" class="mx-3 text-1xl" :style="{color:'#002f56'}" @click="togglegray">No</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="mt-5">
+                <h1 class="mt-5" >Notification to Employees</h1>
+
+                <div class="card w-8 mt-2">
+                    <div class="card-body" :style="{background:'#F7F7F7'}">
+                        <div class="row d-flex  justify-around align-items-center md">
+
+                            <div class="col-1 col-lg">
+                                <label for=""><input type="checkbox" name="" id=""></label>
+                            </div>
+                            <div class="col-8 mr-5">
+                            <h1>Notify the employee when the investment Delaration is released. </h1>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md col-10  cd">
+                              <h1 >For New Joinee, opting in or out to be done within
+                                <Dropdown v-model="month" :options="cities" optionLabel="name" placeholder="25" class="w-full md:w-7rem" /> days from the date of joining.</h1>
+                            </div>
+                        </div>
+
+                        <div class="row w-full d-flex  justify-around  md">
+                            <div class="col-md col-9  cd">
+                                <h1>Is approval required for any modifications in IT declarations submitted before Feb 27?</h1>
+                           </div>
+
+                            <div class="col-md d-flex">
+                                <div class="justify-around items-center  ">
+                                    <input type="radio" name="HRA-cal" id="">
+                                    <label for="" class="mx-3 text-1xl" :style="{color:'#002f56'}" @click="togglenavy">yes</label>
+                                </div>
+                                <div class="justify-around items-center  ml-3">
+                                    <input type="radio" name="HRA-cal" id="">
+                                    <label for="" class="mx-3 text-1xl" :style="{color:'#002f56'}" @click="togglegray">No</label>
+                                </div>
+                            </div>
+                        </div>
 
 
 
@@ -182,6 +370,15 @@ function togglegray(){
 }
 
 
+const month = ref();
+const cities = ref([
+    { name: 'New York', code: 'NY' },
+    { name: 'Rome', code: 'RM' },
+    { name: 'London', code: 'LDN' },
+    { name: 'Istanbul', code: 'IST' },
+    { name: 'Paris', code: 'PRS' }
+]);
+
 
 
 </script>
@@ -205,6 +402,12 @@ input:checked{
 .ml-78{
     margin-left:6rem ;
     list-style:disc;
+}
+.Mon{
+    height: 2.5rem;
+    border-radius: 4px;
+    border: 1px solid green;
+    width: 8rem;
 }
 @media only screen and (max-width: 600px) {
     .cd{
@@ -260,6 +463,26 @@ import { ref } from 'vue';
 const ingredient = ref('');
 </script>
 
+
+
+<template>
+    <div class="card flex justify-content-center">
+        <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Select a City" class="w-full md:w-14rem" />
+    </div>
+</template>
+
+<script setup>
+import { ref } from "vue";
+
+const selectedCity = ref();
+const cities = ref([
+    { name: 'New York', code: 'NY' },
+    { name: 'Rome', code: 'RM' },
+    { name: 'London', code: 'LDN' },
+    { name: 'Istanbul', code: 'IST' },
+    { name: 'Paris', code: 'PRS' }
+]);
+</script>
 
 
 <template>
