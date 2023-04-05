@@ -240,8 +240,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
         //$reportMonth  = $request->has('month') ? $request->month : date('m');
 
-        $monthlyGroups = VmtEmployeeAttendance::select(\DB::raw('MONTH(date) month'))->groupBy('month')->orderBy('month', 'DESC')->get();
-
+        $monthlyGroups = VmtEmployeeAttendance::select(\DB::raw('MONTH(date) month'))->where('user_id', auth::user()->id)->groupBy('month')->orderBy('month', 'DESC')->get();
         $monthlyReport =  [];
 
         foreach ($monthlyGroups as $key => $value) {
