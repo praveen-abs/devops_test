@@ -155,19 +155,19 @@
                                 <li>
                                     <div class="title">Bank Account No.</div>
                                     <div class="text">
-                                        {{ bank_info.bank_ac_no }}  
-                                       </div>                                 
+                                        {{ bank_info.bank_ac_no }}
+                                       </div>
                                 </li>
                                 <li>
                                     <div class="title">IFSC Code</div>
                                     <div class="text">
-                                        {{ bank_info.ifsc_code }}                                  
+                                        {{ bank_info.ifsc_code }}
                                     </div>
                                 </li>
                                 <li>
                                     <div class="title">PAN No</div>
                                     <div class="text">
-                                        {{ bank_info.pan_no }}                                  
+                                        {{ bank_info.pan_no }}
                                     </div>
                                 </li>
                             </ul>
@@ -376,7 +376,7 @@
 
     </div>
 
-  
+
 </template>
 <script setup>
 import { ref, onMounted, reactive, onUpdated } from 'vue';

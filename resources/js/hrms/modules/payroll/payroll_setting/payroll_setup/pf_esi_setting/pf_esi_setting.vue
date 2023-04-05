@@ -78,6 +78,7 @@
 
 
 <script setup>
+
 import { onMounted } from 'vue'
 import { initFlowbite } from 'flowbite'
 import employees_provident_fund from './employees_provident_fund/employees_provident_fund.vue'

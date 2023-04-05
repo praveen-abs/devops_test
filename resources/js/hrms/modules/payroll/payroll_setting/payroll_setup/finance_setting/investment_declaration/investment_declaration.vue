@@ -19,14 +19,14 @@
                             <div class="col-md col-7  cd">
                               <h1 :class="{ navy: isnavy ,gary: isgray}">Do you want to consider default rent paid amount for HRA calculation?</h1>
                            </div>
-                            <div class="col-md d-flex">
+                            <div class="col-sm  d-flex">
                                 <div class="justify-around items-center  ">
-                                    <input type="radio" name="HRA-cal" id="">
-                                    <label for="" class="mx-3 text-1xl" :style="{color:'#002f56'}" @click="togglenavy">yes</label>
+                                    <input type="radio" name="INV" :style="{color:'#002f56'}" v-model="blu" value="blu_clr" @click="togglenavy">
+                                    <label for="" class="mx-3 text-1xl" :style="{color:'#002f56'}">yes</label>
                                 </div>
                                 <div class="justify-around items-center  ">
-                                    <input type="radio" name="HRA-cal" id="">
-                                    <label for="" class="mx-3 text-1xl" :style="{color:'#002f56'}" @click="togglegray">No</label>
+                                    <input type="radio" name="INV" :style="{color:'#002f56'}" value="gr_clr" @click="togglegray">
+                                    <label for="" class="mx-3 text-1xl" :style="{color:'#002f56'}">No</label>
                                 </div>
                             </div>
                         </div>
@@ -59,16 +59,16 @@
                 <div class="card w-8 mt-5">
                     <div class="card-body" :style="{background:'#F7F7F7'}">
                         <div class="row w-full d-flex  justify-around  md">
-                            <div class="col-9 col-lg cd">
-                              <h1 :class="{ navy: isnavy ,gary: isgray}" >Do you include future payout dates for bonuses (unpaid bonuses) when projecting tax calculations?</h1>
+                            <div class="col-9 col-lg cd " style="line-height: 12px;">
+                              <h1 :class="{ navy: isnavy ,gary: isgray} " >Do you include future payout dates for bonuses (unpaid bonuses) when projecting tax calculations?</h1>
                            </div>
                             <div class="col-sm  d-flex">
                                 <div class="justify-around items-center  ">
-                                    <input type="radio" name="INV" v-model="blu" value="blu_clr" @click="togglenavy">
+                                    <input type="radio" name="INV" :style="{color:'#002f56'}" v-model="blu" value="blu_clr" @click="togglenavy">
                                     <label for="" class="mx-3 text-1xl" :style="{color:'#002f56'}">yes</label>
                                 </div>
                                 <div class="justify-around items-center  ">
-                                    <input type="radio" name="INV" id="" value="gr_clr" @click="togglegray">
+                                    <input type="radio" name="INV" :style="{color:'#002f56'}" value="gr_clr" @click="togglegray">
                                     <label for="" class="mx-3 text-1xl" :style="{color:'#002f56'}">No</label>
                                 </div>
                             </div>
@@ -155,6 +155,8 @@
 
             </div>
 
+
+
             <div class="mt-5">
                 <h1 class="mt-5" >Investments Declaration</h1>
 
@@ -169,95 +171,21 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md d-flex mt-3">
-                                <div class="justify-around items-center  ">
-
-                                    <h1 :style="{lineHeight:'45px'}">Cutoff date for changing declaration in financial year is
-                                    </h1>
-                                </div>
-                                <div class="col-md-2 d-flex ">
-                                    <div class="justify-around items-center  ml-3">
-                                        <Dropdown v-model="month" :options="cities" optionLabel="name" placeholder="May" class="w-full md:w-7rem" />
-                                    </div>
-                                </div>
-                                <div class="col-md-2 d-flex ">
-                                    <div class="justify-around items-center  ml-3">
-                                        <Dropdown v-model="month" :options="cities" optionLabel="name" placeholder="25" class="w-full md:w-7rem" />
-                                    </div>
-                                </div>
-
+                            <div class="col-md col-7  cd">
+                              <h1  :style="{lineHeight:'45px'}">Cutoff date for changing declaration in financial year is </h1>
                             </div>
-
-                        </div>
-
-
-
-                        <div class="row mt-3">
-                            <div class="col-md col-10  cd">
-                              <h1 >For New Joinee, opting in or out to be done within
-                                <Dropdown v-model="month" :options="cities" optionLabel="name" placeholder="25" class="w-full md:w-7rem" /> days from the date of joining.</h1>
-                            </div>
-                        </div>
-
-                        <div class="row w-full d-flex  justify-around  md">
-                            <div class="col-md col-9  cd">
-                                <h1>Is approval required for any modifications in IT declarations submitted before Feb 27?</h1>
-                           </div>
                             <div class="col-md d-flex">
                                 <div class="justify-around items-center  ">
-                                    <input type="radio" name="HRA-cal" id="">
-                                    <label for="" class="mx-3 text-1xl" :style="{color:'#002f56'}" @click="togglenavy">yes</label>
+
+                                    <Dropdown v-model="month" :options="cities" optionLabel="name" placeholder="May" class="w-full md:w-7rem" />
+
                                 </div>
-                                <div class="justify-around items-center  ml-3">
-                                    <input type="radio" name="HRA-cal" id="">
-                                    <label for="" class="mx-3 text-1xl" :style="{color:'#002f56'}" @click="togglegray">No</label>
+                                <div class="justify-around items-center  ml-4">
+                                    <Dropdown v-model="month" :options="cities" optionLabel="name" placeholder="25" class="w-full md:w-7rem" />
                                 </div>
-                            </div>
-                        </div>
-
-
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="mt-5">
-                <h1 class="mt-5" >Investments Declaration</h1>
-
-                <div class="card w-8 mt-2">
-                    <div class="card-body" :style="{background:'#F7F7F7'}">
-
-                        <div class="row">
-                            <div class="col-md col-12  cd">
-                              <h1 >Employees can update their Investments Declarations anytime during a month prior to month the
-                                <Dropdown v-model="month" :options="cities" optionLabel="name" placeholder="25" class="w-full md:w-7rem" />
-                                    month and before the cut-off period in the financial year, as defined below. </h1>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md d-flex mt-3">
-                                <div class="justify-around items-center  ">
-
-                                    <h1 :style="{lineHeight:'45px'}">Cutoff date for changing declaration in financial year is
-                                    </h1>
-                                </div>
-                                <div class="col-md-2 d-flex ">
-                                    <div class="justify-around items-center  ml-3">
-                                        <Dropdown v-model="month" :options="cities" optionLabel="name" placeholder="May" class="w-full md:w-7rem" />
-                                    </div>
-                                </div>
-                                <div class="col-md-2 d-flex ">
-                                    <div class="justify-around items-center  ml-3">
-                                        <Dropdown v-model="month" :options="cities" optionLabel="name" placeholder="25" class="w-full md:w-7rem" />
-                                    </div>
-                                </div>
-
                             </div>
 
                         </div>
-
 
 
                         <div class="row mt-3">
@@ -296,38 +224,40 @@
             <div class="mt-5">
                 <h1 class="mt-5" >Notification to Employees</h1>
 
-                <div class="card w-8 mt-2">
+                <div class="card w-8 mt-2 card-md-w-100">
                     <div class="card-body" :style="{background:'#F7F7F7'}">
-                        <div class="row d-flex  justify-around align-items-center md">
+                        <div class="row d-flex  justify-around align-items-center ">
 
-                            <div class="col-1 col-lg">
+                            <div class="col-1 col-lg  w-0 mr-3">
                                 <label for=""><input type="checkbox" name="" id=""></label>
                             </div>
-                            <div class="col-8 mr-5">
+                            <div class="col col-sm-10 ">
                             <h1>Notify the employee when the investment Delaration is released. </h1>
                             </div>
                         </div>
-                        <div class="row mt-3">
-                            <div class="col-md col-10  cd">
-                              <h1 >For New Joinee, opting in or out to be done within
-                                <Dropdown v-model="month" :options="cities" optionLabel="name" placeholder="25" class="w-full md:w-7rem" /> days from the date of joining.</h1>
-                            </div>
-                        </div>
 
-                        <div class="row w-full d-flex  justify-around  md">
-                            <div class="col-md col-9  cd">
-                                <h1>Is approval required for any modifications in IT declarations submitted before Feb 27?</h1>
+                        <div class="row w-full d-flex  justify-around md">
+                            <div class="col-md ml-5 col-8    cd ">
+                                <h1> Should we consider sending email remainder to the declare the investments</h1>
                            </div>
-
                             <div class="col-md d-flex">
                                 <div class="justify-around items-center  ">
-                                    <input type="radio" name="HRA-cal" id="">
+                                    <input type="radio" name="HRA-cal" :style="{color:'#002f56'}" id="">
                                     <label for="" class="mx-3 text-1xl" :style="{color:'#002f56'}" @click="togglenavy">yes</label>
                                 </div>
                                 <div class="justify-around items-center  ml-3">
-                                    <input type="radio" name="HRA-cal" id="">
+                                    <input type="radio" name="HRA-cal"  :style="{color:'#002f56'}" id="">
                                     <label for="" class="mx-3 text-1xl" :style="{color:'#002f56'}" @click="togglegray">No</label>
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="row d-flex  justify-around align-items-center">
+                            <div class="col-lg mt-3">
+                                <h1 class="ml-5">If yes,how frequently the should be sent ?</h1>
+                             </div>
+                            <div class="col col-lg">
+                                <Dropdown v-model="month" :options="cities" optionLabel="name" placeholder="Oncee a Week" class="w-full md:w-14rem" />
                             </div>
                         </div>
 
@@ -424,6 +354,10 @@ input:checked{
         position: relative;
         left: -65px;
 
+    }
+    .card{
+        width: 100% !important;
+        border: 1px solid red;
     }
 
 }

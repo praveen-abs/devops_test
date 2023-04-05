@@ -15,6 +15,7 @@
         counter.value--;
         console.log("Counter value : "+counter.value);
     }
+
 </script>
 <template>
     <Card style="width: 25rem; margin-bottom: 2em; background-color: darkcyan;">
