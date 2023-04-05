@@ -304,7 +304,7 @@ class VmtEmployeeOnboardingController extends Controller
 
                     $message = "";
 
-                    if($result->status == "success")
+                    if($result == "success")
                     {
                         $response = [
                             'status' => 'success',
@@ -1198,7 +1198,6 @@ class VmtEmployeeOnboardingController extends Controller
                    $isAllRecordsValid = false;
                }
            }//for each
-
            //Runs only if all excel records are valid
            if ($isAllRecordsValid) {
                foreach ($excelRowdata_row[0]  as $key => $excelRowdata) {

@@ -2586,8 +2586,11 @@ onMounted(() => {
 
   if(url_param_UID)
   {
-    fetchQuickOnboardedEmployeeDetails(url_param_UID).then(function(result){
+    fetchQuickOnboardedEmployeeDetails(url_param_UID).then((result)=>
+    {
         populateQuickOnboardData(result.data);
+
+        console.log("result" + result.data);
     });
   }
   else
@@ -2596,6 +2599,8 @@ onMounted(() => {
   }
 
 });
+
+
 
 
 
@@ -2759,6 +2764,7 @@ const fileUploadValidation = ref(true);
 const employee_name_invalid =ref(false)
 const loading = ref(false)
 
+
 //   Events
 
 const handleSubmit = (isFormValid) => {
@@ -2780,12 +2786,7 @@ const handleSubmit = (isFormValid) => {
     : (EducationCertificateInvalid.value = false);
 
   if (!isFormValid) {
-    // toast.add({
-    //   severity: "error",
-    //   summary: "Error Message",
-    //   detail: "Message Content",
-    //   life: 3000,
-    // });
+
     RequiredDocument.value = true;
     return;
   }
@@ -3077,16 +3078,25 @@ const checkInputFiles = () => {
   }
 };
 
+const checkIsQuickOrNormal = ref()
+
 const user_code_exists = ref(false);
 
 const userCodeExists = () => {
   let user_code = employee_onboarding.employee_code;
 
+  console.log(checkIsQuickOrNormal.value);
+
   axios
     .get(`/user-code-exists/${user_code}`)
     .then((res) => {
       console.log(res.data);
-      user_code_exists.value = res.data;
+      if(checkIsQuickOrNormal.value == 'quick'){
+        console.log("quick onboarding");
+      }else{
+        user_code_exists.value = res.data;
+      }
+
     })
     .catch((err) => {
       console.log(err);
@@ -3671,7 +3681,9 @@ const compensation_yearly = ref([
 function populateQuickOnboardData(emp_data){
     console.log("populateQuickOnboardData : "+ JSON.stringify(emp_data));
 
+     checkIsQuickOrNormal.value = emp_data.onboard_type;
 
+console.log(emp_data.onboard_type);
 
     employee_onboarding.employee_code = ref(emp_data.user_code);
     employee_onboarding.employee_name = ref(emp_data.name);
