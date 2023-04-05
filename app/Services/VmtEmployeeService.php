@@ -75,13 +75,13 @@ class VmtEmployeeService {
         Called this when the normal onboard form is submitted
 
     */
-    public function createOrUpdate_OnboardFormData($data, $can_onboard_employee, $existing_user_id = null, $onboard_type = null)
+    public function createOrUpdate_OnboardFormData($data, $can_onboard_employee, $existing_user_id = null, $onboard_type = null, $onboard_import_type)
     {
 
 
 
 
-        $response = $this->createOrUpdate_User(data: $data, can_onboard_employee : $can_onboard_employee, user_id: $existing_user_id, onboard_type : $onboard_type);
+        $response = $this->createOrUpdate_User(data: $data, can_onboard_employee : $can_onboard_employee, user_id: $existing_user_id, onboard_type : $onboard_type, onboard_import_type : $onboard_import_type);
 
         if(!empty($response) && $response->status == 'success')
         {
@@ -89,14 +89,16 @@ class VmtEmployeeService {
             {
                 $onboard_user = $response->response_object;
 
-                if($onboard_type == "quick")
+                if($onboard_import_type == "excel_quick")
                 {
-                    $this->createOrUpdate_EmployeeDetails( $onboard_user, $data, $onboard_type);
+
+                    $this->createOrUpdate_EmployeeDetails( $onboard_user, $data);
                     $this->createOrUpdate_EmployeeOfficeDetails( $onboard_user->id, $data);
                     $this->createOrUpdate_EmployeeCompensatory( $onboard_user->id, $data);
 
                 }
                 else
+                if($onboard_import_type == "onboard_form")//for normal , quick form onboard
                 {
                     $this->createOrUpdate_EmployeeDetails( $onboard_user, $data);
                     $this->createOrUpdate_EmployeeOfficeDetails( $onboard_user->id, $data);
@@ -188,7 +190,7 @@ class VmtEmployeeService {
         return $newUser;
     }
 
-    private function createOrUpdate_EmployeeDetails($user,$row, $onboard_type= null)
+    private function createOrUpdate_EmployeeDetails($user,$row, $can_onboard_employee)
     {
 
         //Sdd("Inside emp details");
@@ -260,11 +262,7 @@ class VmtEmployeeService {
             $row['marital_status'] = '';
         }
 
-        if($onboard_type == "quick")
-        {
-            //In quick onboard excel upload, we wont upload docs
-        }
-        else
+        if($row['can_upload_docs'] == "1")
         {
             $newEmployee->aadhar_card_file = $this->uploadDocument( $user->id, $row['Aadharfront'], $user->user_code, 'Aadhar Card Front');
             $newEmployee->aadhar_card_backend_file = $this->uploadDocument($user->id,$row['AadharBack'], $user->user_code,'Aadhar Card Back');
@@ -365,6 +363,7 @@ class VmtEmployeeService {
 
     private function createOrUpdate_EmployeeFamilyDetails($user_id, $familyData)
     {
+
         //delete old records
         VmtEmployeeFamilyDetails::where('user_id',$user_id)->delete();
 
@@ -496,9 +495,10 @@ class VmtEmployeeService {
     public function uploadDocument($emp_id,$fileObject, $emp_code, $onboard_document_type){
         if(empty($fileObject))
             return null;
-
+          //dd($onboard_document_type);
         //check if document already uploaded
         $onboard_doc_id = VmtOnboardingDocuments::where('document_name',$onboard_document_type)->first();
+
 
         if( !empty($onboard_doc_id))
         {
