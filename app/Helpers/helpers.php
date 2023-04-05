@@ -455,3 +455,4 @@ function calculateProfileCompleteness($user_id)
     //dd($value);
     return $value;
 }
+

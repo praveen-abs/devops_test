@@ -322,4 +322,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         return $serviceVmtAttendanceService->applyLeaveRequest($request);
     }
 
+
+
 }
+
