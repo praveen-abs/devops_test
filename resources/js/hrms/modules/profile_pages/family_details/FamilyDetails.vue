@@ -1,5 +1,5 @@
 <template>
-    <div class="card mb-2">
+    <div class="mb-2 card">
         <div class="card-body">
             <h6 class="">Family Information
                 <!-- <span class="personal-edit">
@@ -8,10 +8,10 @@
 
                                             </a>
                                     </span> -->
-                <button type="button" class="btn_txt edit-icon" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                <!-- <button type="button" class="btn_txt edit-icon" data-bs-toggle="modal" data-bs-target="#exampleModal"
                     @click="visible = true">
                     <i class="ri-pencil-fill"></i>
-                </button>
+                </button> -->
                 <Dialog v-model:visible="visible" modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }" id="">
                     <template #header>
                         <div>
@@ -22,25 +22,25 @@
                     </template>
 
                     <div class="space-between">
-                        <div class="input_text flex-col">
+                        <div class="flex-col input_text">
                             <span>Name <span class="text-danger">*</span></span>
                             <input type="text" name="familyDetails_Name[]" pattern-data="name" id="familyDetails_Name"
                                 required v-model="familydetails.name">
                         </div>
-                        <div class="input_text flex-col">
+                        <div class="flex-col input_text">
                             <span>Relationship<span class="text-danger">*</span></span>
                             <input type="text" name="familyDetails_Relationship[]" v-model="familydetails.relationship"
                                 id="familyDetails_Relationship" pattern-data="alpha" required>
                         </div>
                     </div>
                     <div class="space-between M-T">
-                        <div class="input_text flex-col">
+                        <div class="flex-col input_text">
                             <span>Date of birth <span class="text-danger">*</span></span>
                             <input type="date" id="datemin" name="familyDetails_dob[]" min="2000-01-02"
                                 v-model="familydetails.dob">
                         </div>
 
-                        <div class="input_text flex-col">
+                        <div class="flex-col input_text">
                             <span>phone<span class="text-danger">*</span></span>
                             <input type="number" minlength="10" maxlength="10" pattern="[1-9]{1}[0-9]{9}" id="familyDetails_phoneNumber"
                                 name="familyDetails_phoneNumber[]" v-model="familydetails.ph_no">
@@ -67,7 +67,7 @@
 
             </h6>
             <div class="table-responsive">
-                <DataTable ref="dt" :value="PersonalDocument" dataKey="id" :paginator="true" :rows="10"
+                <DataTable ref="dt"  dataKey="id" :paginator="true" :rows="10"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 25]"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
@@ -96,6 +96,11 @@
                           {{  slotProps.data.reimbursment_remarks }}
                         </template> -->
                     </Column>
+                    <Column :exportable="false" header="Action" style="min-width:8rem">
+                    <template #body="slotProps">
+                        <Button icon="pi pi-pencil" outlined rounded class="mr-2" @click="editFamilyDetails(slotProps.data)" />
+                    </template>
+                </Column>
 
 
                 </DataTable>
@@ -144,6 +149,9 @@
 import { ref, onMounted, reactive, onUpdated } from 'vue';
 import axios from 'axios'
 import { useToast } from "primevue/usetoast";
+import { employeeService } from '../ProfilePagesService';
+
+// const employee_service = employeeService()
 
 
 const toast = useToast();
@@ -180,9 +188,14 @@ const saveFamilyDetails = () => {
 //     }
 }
 
+// const editFamilyDetails = (family) => {
+//     employee_service.employeeDetails.get_family_details = {...family};
+//     productDialog.value = true;
+// };
+
 
 onMounted(() => {
-    //fetchData();
+ 
 })
 
 
@@ -480,7 +493,7 @@ span {
 {
 <!--
 <template>
-    <div class="card flex justify-content-center">
+    <div class="flex card justify-content-center">
         <Button label="Show" icon="pi pi-external-link" />
         <Dialog v-model:visible="visible" modal header="Header" :style="{ width: '50vw' }">
             <p>

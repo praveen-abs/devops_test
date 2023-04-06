@@ -8,22 +8,27 @@ export const  employeeService = defineStore("employeeService", () => {
 
     const employeeDetails  = ref([])
 
-    const loading = ref(true)
+    const loading_screen = ref(true)
 
     let uid = '174';
 
      axios.get('/profile-pages-getEmpDetails?uid='+uid).then(res =>{
+        loading_screen.value = false
         console.log(res.data);
         employeeDetails.value = res.data
-        loading.value = false
     }).catch(e => console.log(e)).finally(()=>console.log("completed"))
+
+    setTimeout(() => {
+        alert("yes")
+        loading_screen.value = false
+    }, 5000);
 
 
     return {
 
         // varaible Declarations
 
-        employeeDetails,loading
+        employeeDetails,loading_screen
 
     };
 });

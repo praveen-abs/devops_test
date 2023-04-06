@@ -392,7 +392,7 @@ onMounted(() => {
     fetch_data.getBankList().then(res => {
         bankNameList.value = res.data;
     })
-    //fetchFinanceDetails()
+
 });
 
 

@@ -1,4 +1,4 @@
-<template v-if="employee_service.employeeDetails.loading">
+<template >
     <div class="mb-2 card">
         <div class="card-body">
             <h6 class="">General Information
@@ -7,23 +7,23 @@
                     <i class="ri-pencil-fill"></i>
                 </a>
 
-                <Dialog v-model:visible="visible" modal header="General Information" :style="{ width: '50vw', borderTop: '5px solid #002f56' }" >
+                <Dialog v-model:visible="visible" modal header="General Information"
+                    :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
                     <template #header>
-                            <div>
-                                <h5
-                                    :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
-                                    General Information</h5>
-                            </div>
-                   </template>
+                        <div>
+                            <h5
+                                :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
+                                General Information</h5>
+                        </div>
+                    </template>
                     <div class="row">
                         <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
                             <div class="mb-3 form-group">
-                                <label :style="{ marginLeft: '10px' }">Birth Date<span
-                                        class="text-danger">*</span>
+                                <label :style="{ marginLeft: '10px' }">Birth Date<span class="text-danger">*</span>
                                 </label>
                                 <div class="cal-icon">
-                                    <Calendar showIcon class="mb-3 form-selects"
-                                        v-model="general_information.birth_date" placeholder="9999-12-31" />
+                                    <Calendar showIcon class="mb-3 form-selects" v-model="general_information.dob"
+                                        placeholder="9999-12-31" />
                                 </div>
                             </div>
                         </div>
@@ -31,8 +31,8 @@
                             <div class="mb-3 form-group">
                                 <label>Gender<span class="text-danger">*</span></label>
 
-                                <Dropdown v-model="general_information.gender" :options="options_gender"
-                                    optionLabel="name" placeholder="Choose Gender" class="form-selects" />
+                                <Dropdown v-model="general_information.gender" :options="options_gender" optionLabel="name"
+                                    optionValue="value" placeholder="Choose Gender" class="form-selects" />
 
                             </div>
                         </div>
@@ -42,10 +42,10 @@
                                 <label :style="{ marginLeft: '10px' }">Date Of Joining(DOJ)<span
                                         class="text-danger">*</span></label>
                                 <div class="cal-icon">
-                                    <Calendar showIcon class="mb-3 form-selects"
-                                        v-model="general_information.date_of_joining"
+                                    <Calendar showIcon class="mb-3 form-selects" v-model="general_information.doj"
                                         placeholder="9999-12-31" />
                                 </div>
+
                             </div>
                         </div>
 
@@ -53,9 +53,8 @@
                             <div class="mb-3 form-group">
                                 <label>Blood Group<span class="text-danger">*</span></label>
                                 <div class="cal-icon">
-                                    <Dropdown v-model="general_information.blood_group_id"
-                                        :options="options_blood_group" optionLabel="name"
-                                        placeholder="Select Bloodgroup" class="form-selects" />
+                                    <Dropdown v-model="general_information.blood_group_id" :options="options_blood_group"
+                                        optionLabel="name" placeholder="Select Bloodgroup" class="form-selects" />
                                 </div>
 
                             </div>
@@ -65,33 +64,31 @@
                         <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
                             <div class="mb-3 form-group" :style="{ marginLeft: '10px' }">
                                 <label>Marital status <span class="text-danger">*</span></label>
-                                <Dropdown v-model="general_information.marital_status_id"
-                                    :options="option_maritals_status" optionLabel="name"
-                                    placeholder="Select Marital Status" class="form-selects" />
+                                <Dropdown v-model="general_information.marital_status_id" :options="option_maritals_status"
+                                    optionLabel="name" optionValue="name" placeholder="Select Marital Status"
+                                    class="form-selects" />
 
                             </div>
                         </div>
                         <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
                             <div class="mb-3 form-group">
                                 <label>Physically Handicapped</label>
-                                <Dropdown v-model="general_information.phy_handicapped"
-                                    :options="options_phy_challenged" optionLabel="name" placeholder="Select"
-                                    class="form-selects" />
+                                <Dropdown v-model="general_information.physically_challenged"
+                                    :options="options_phy_challenged" optionLabel="name" optionValue="value"
+                                    placeholder="Select" class="form-selects" />
                             </div>
                         </div>
                     </div>
                     <div class="text-right col-12">
-                        <Toast />
-                        <ConfirmDialog></ConfirmDialog>
                         <button id="btn_submit_generalInfo" class="btn btn-border-orange submit-btn"
                             @click="general_information_save()">Save</button>
                     </div>
                 </Dialog>
 
             </h6>
-            <div >
-                <ul class="personal-info" >
-                    <li class="pb-1 border-bottom-liteAsh" >
+            <div>
+                <ul class="personal-info">
+                    <li class="pb-1 border-bottom-liteAsh">
                         <div class="title">Birthday</div>
                         <div class="text">
                             <!-- {{ emp_details.doj.slice(8,10)+ "-" + emp_details.doj.slice(5,7)+"-"+emp_details.doj.slice(0,4) }} -->
@@ -100,7 +97,7 @@
                     </li>
                     <li class="pb-1 border-bottom-liteAsh">
                         <div class="title">Gender </div>
-                        <div class="text" >
+                        <div class="text">
                             <!-- {{ emp_details.gender.name }} -->
                             {{ employee_service.employeeDetails.get_employee_details.gender }}
 
@@ -108,7 +105,7 @@
                         </div>
                     </li>
                     <li class="pb-1 border-bottom-liteAsh">
-                        <div class="title" >Date Of Joining (DOJ)</div>
+                        <div class="title">Date Of Joining (DOJ)</div>
                         <div class="text">
                             <!-- {{ emp_details.doj.slice(8,10)+ "-" + emp_details.doj.slice(5,7)+"-"+emp_details.doj.slice(0,4) }} -->
                             {{ employee_service.employeeDetails.get_employee_details.doj }}
@@ -117,7 +114,7 @@
                     </li>
                     <li class="pb-1 border-bottom-liteAsh">
                         <div class="title">Marital Status </div>
-                        <div class="text text-capitalize" >
+                        <div class="text text-capitalize">
                             <!-- {{ emp_details.marital_status_id.name }} -->
                             {{ employee_service.employeeDetails.get_employee_details.marital_status }}
 
@@ -125,7 +122,7 @@
                     </li>
                     <li class="pb-1 border-bottom-liteAsh">
                         <div class="title"> Blood Group</div>
-                        <div class="text" >
+                        <div class="text">
                             <!-- {{ emp_details.blood_group_id.name }} -->
                             {{ employee_service.employeeDetails.get_employee_details.blood_group_id }}
 
@@ -146,36 +143,37 @@
     </div>
 
 
-    <div  class="mb-2 card">
+    <div class="mb-2 card">
         <div class="card-body">
             <h6 class="">Contact Information
-                <span class="personal-edit"><a href="#" class="edit-icon"
-                        data-bs-target="#personal_info_modal" @click="contactVisible = true"><i class="ri-pencil-fill"></i></a>
+                <span class="personal-edit"><a href="#" class="edit-icon" data-bs-target="#personal_info_modal"
+                        @click="contactVisible = true"><i class="ri-pencil-fill"></i></a>
                 </span>
 
-                <Dialog v-model:visible="contactVisible" modal header="Contact Information" :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
+                <Dialog v-model:visible="contactVisible" modal header="Contact Information"
+                    :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
                     <template #header>
-                            <div>
-                                <h5
-                                    :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
-                                    Contact Information</h5>
-                            </div>
-                   </template>
+                        <div>
+                            <h5
+                                :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
+                                Contact Information</h5>
+                        </div>
+                    </template>
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3 form-group">
                                     <label>Personal Email</label>
-                                    <input type="email" name="present_email"
-                                        class="form-control" v-model="contactinfo.personal_email">
+                                    <input type="email" name="present_email" class="form-control"
+                                        v-model="contactinfo.personal_email">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="mb-3 form-group">
                                     <label> Office Email</label>
-                                    <input type="email"
-                                        class="form-control" name="officical_mail" v-model="contactinfo.office_email">
+                                    <input type="email" class="form-control" name="officical_mail"
+                                        v-model="contactinfo.office_email">
                                 </div>
                             </div>
 
@@ -183,15 +181,15 @@
 
                                 <div class="mb-3 form-group">
                                     <label>Mobile Number</label>
-                                    <input type="text" size=20 maxlength=10 name="mobile_number"
-                                     class="form-control"  v-model="contactinfo.mobile_number">
+                                    <input type="text" size=20 maxlength=10 name="mobile_number" class="form-control"
+                                        v-model="contactinfo.mobile_number">
                                 </div>
                             </div>
 
                             <div class="col-12">
                                 <div class="text-right">
-                                    <button id="btn_submit_contact_info"
-                                        class="btn btn-border-orange submit-btn"  @click="savecontactInfoDetails()">Save</button>
+                                    <button id="btn_submit_contact_info" class="btn btn-border-orange submit-btn"
+                                        @click="savecontactInfoDetails()">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -228,50 +226,51 @@
         </div>
 
     </div>
-    <div  class="mb-2 card">
+    <div class="mb-2 card">
         <div class="card-body">
             <h6 class="">Address
-                <span class="personal-edit"><a href="#" class="edit-icon"
-                        data-bs-target="#edit_addressInfo" @click="addressVisible=true"><i class="ri-pencil-fill"></i></a></span>
+                <span class="personal-edit"><a href="#" class="edit-icon" data-bs-target="#edit_addressInfo"
+                        @click="addressVisible = true"><i class="ri-pencil-fill"></i></a></span>
 
-                        <Dialog v-model:visible="addressVisible" modal header :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
-                            <template #header>
-                                <div>
-                                    <h5
-                                        :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
-                                        Address Information</h5>
-                                </div>
-                            </template>
+                <Dialog v-model:visible="addressVisible" modal header
+                    :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
+                    <template #header>
+                        <div>
+                            <h5
+                                :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
+                                Address Information</h5>
+                        </div>
+                    </template>
 
-                                        <div class="modal-body">
+                    <div class="modal-body">
 
-                                            <div class="col-md-12">
-                                                <div class="mb-3 form-group">
-                                                    <label>Current Address</label>
-                                                    <textarea name="current_address_line_1" id="current_address_line_1" cols="30" rows="3"
-                                                        class="form-control" v-model="Addressinfo.current_address"></textarea>
-                                                </div>
-                                                <div class="mb-3 form-group">
-                                                    <label>Permanent Address </label>
-                                                    <textarea name="permanent_address_line_1" id="permanent_address_line_1" cols="30" rows="3"
-                                                        class="form-control"  v-model="Addressinfo.Permanent_Address"></textarea>
-                                                </div>
-                                            </div>
+                        <div class="col-md-12">
+                            <div class="mb-3 form-group">
+                                <label>Current Address</label>
+                                <textarea name="current_address_line_1" id="current_address_line_1" cols="30" rows="3"
+                                    class="form-control" v-model="Addressinfo.current_address"></textarea>
+                            </div>
+                            <div class="mb-3 form-group">
+                                <label>Permanent Address </label>
+                                <textarea name="permanent_address_line_1" id="permanent_address_line_1" cols="30" rows="3"
+                                    class="form-control" v-model="Addressinfo.Permanent_Address"></textarea>
+                            </div>
+                        </div>
 
-                                            <div class="col-12">
-                                                <div class="text-right">
-                                                    <Toast />
-                                                    <button
-                                                        id="btn_submit_address" class="btn btn-border-orange submit-btn warn" @click="saveAddressinfo" severity="warn">Save</button>
-                                                </div>
-                                            </div>
+                        <div class="col-12">
+                            <div class="text-right">
+                                <Toast />
+                                <button id="btn_submit_address" class="btn btn-border-orange submit-btn warn"
+                                    @click="saveAddressinfo" severity="warn">Save</button>
+                            </div>
+                        </div>
 
-                                        </div>
+                    </div>
 
 
-                        </Dialog>
+                </Dialog>
             </h6>
-            <div >
+            <div>
                 <div class="row">
                     <div class="col-6">
                         <ul class="personal-info">
@@ -299,8 +298,6 @@
 
         </div>
     </div>
-
-
 </template>
 
 
@@ -314,43 +311,43 @@ import { useConfirm } from "primevue/useconfirm";
 import axios from "axios";
 
 import { Service } from "../../Service/Service";
-import {employeeService} from  '../ProfilePagesService'
+import { employeeService } from '../ProfilePagesService'
 
 const fetch_data = Service()
 
-const  employee_service= employeeService()
+const employee_service = employeeService()
 
 
 
 const toast = useToast();
 const Addresstoast = useToast();
 
-    const visible = ref(false);
-    const contactVisible = ref(false);
-    const addressVisible = ref(false);
+const visible = ref(false);
+const contactVisible = ref(false);
+const addressVisible = ref(false);
 
 
 const employee_details = ref()
 
 //Used inside dialog elements
 const general_information = reactive({
-    birth_date: "",
-    gender: "",
-    date_of_joining: "",
-    blood_group_id: "",
-    marital_status_id: "",
-    phy_handicapped: "",
+    dob: '',
+    gender: '',
+    doj: '',
+    blood_group_id: '',
+    marital_status_id: '',
+    physically_challenged: ''
 });
 
 const options_gender = ref([
-    { name: "Male", value: "male" },
-    { name: "Female", value: "female" },
-    { name: "Others", value: "others" },
+    { name: "Male", value: "Male" },
+    { name: "Female", value: "Female" },
+    { name: "Others", value: "Others" },
 ]);
 
 const options_phy_challenged = ref([
-    { name: "Yes", value: "yes" },
-    { name: "No", value: "no" },
+    { name: "yes", value: "yes" },
+    { name: "no", value: "no" },
 ]);
 
 const options_blood_group = ref();
@@ -360,12 +357,12 @@ const confirm = useConfirm();
 
 function saveGeneralInformationDetails() {
     console.log("Called saveGeneralInformationDetails.... ");
-         let id = fetch_data.current_user_id
-        let url =`/profile-pages-update-generalinfo/${id}`
+    let id = fetch_data.current_user_id
+    let url = `/profile-pages-update-generalinfo/${id}`
 
 
     axios
-        .post(url,{
+        .post(url, {
             user_id: general_information.user_id,
             dob: general_information.birth_date,
             gender: general_information.gender,
@@ -386,31 +383,30 @@ function saveGeneralInformationDetails() {
         });
 }
 
-    const general_information_save = ()=>{
+const general_information_save = () => {
 
-        console.log(fetch_data.current_user_id);
+    console.log(fetch_data.current_user_id);
 
-        // location.reload();
-        console.log(general_information);
-        confirm.require({
-                    message: 'Are you sure you want to proceed?',
-                    header: 'Confirmation',
-                    icon: 'pi pi-exclamation-triangle',
-                    accept: () => {
+    // location.reload();
+    console.log(general_information);
+    confirm.require({
+        message: 'Are you sure you want to proceed?',
+        header: 'Confirmation',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
 
-                        saveGeneralInformationDetails();
+            saveGeneralInformationDetails();
 
-                    },
-                    reject: () => {
-                        toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
-                    }
-        });
-    }
+        },
+        reject: () => {
+            toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+        }
+    });
+}
 
 
 onMounted(() => {
-    // console.log("Loading state : "+employee_service.loading);
-    // console.log("employee_service valuesssssssssss : "+employee_service.employeeDetails.get_employee_details.dob);
+
 
     fetch_data.getBloodGroups().then((result) => {
         console.log(result);
@@ -423,6 +419,9 @@ onMounted(() => {
     });
 
 
+    editInfo()
+
+
     //Assign json values into dialog elements also
     // general_information.birth_date = employee_service.employeeDetails.get_employee_details.dob;
     // general_information.date_of_joining = employee_service.employeeDetails.get_employee_details.doj;
@@ -432,15 +431,14 @@ onMounted(() => {
     // general_information.phy_handicapped = employee_service.employeeDetails.get_employee_details.physically_challenged;
 
 
-//    loading.value = true;
 });
 
 const contact_details = ref();
 
 const contactinfo = reactive({
-    personal_email:"",
-    office_email:"",
-    mobile_number:""
+    personal_email: "",
+    office_email: "",
+    mobile_number: ""
 
 });
 
@@ -480,39 +478,39 @@ const contactinfo = reactive({
 const addressUpdateDetails = ref();
 
 const Addressinfo = reactive({
-  current_address:"",
-  Permanent_Address:""
+    current_address: "",
+    Permanent_Address: ""
 });
 
-const saveAddressinfo=()=>{
+const saveAddressinfo = () => {
 
     console.log("calling saveinfoDetails");
-    if(Addressinfo.current_address ==" " || Addressinfo.Permanent_Address == " "){
+    if (Addressinfo.current_address == " " || Addressinfo.Permanent_Address == " ") {
         Addresstoast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
         console.log(Addressinfo);
     }
-    else{
+    else {
         let url = 'http://localhost:3000/Address_details';
         console.log("hello");
-        axios.post(url,{
-        user_id: Addressinfo.user_id,
-        current_address_line_1:Addressinfo.current_address,
-        permanent_address_line_1:Addressinfo.Permanent_Address
-        }).then((res)=>{
-            if(res.data.status == "success"){
+        axios.post(url, {
+            user_id: Addressinfo.user_id,
+            current_address_line_1: Addressinfo.current_address,
+            permanent_address_line_1: Addressinfo.Permanent_Address
+        }).then((res) => {
+            if (res.data.status == "success") {
                 console.log("hi");
-            }else if(res.data.status == "failure"){
+            } else if (res.data.status == "failure") {
                 console.log(res.data.message);
             }
-        }).catch((err)=>{
+        }).catch((err) => {
             console.log(err);
         });
     }
 
 }
 
-const fetchAddressInfoDetails = ()=>{
-    let url ='http://localhost:3000/Address_details'
+const fetchAddressInfoDetails = () => {
+    let url = 'http://localhost:3000/Address_details'
     axios.get(url).then((response) => {
         console.log("Axios : " + response.data);
         console.log(response.data);
@@ -521,7 +519,19 @@ const fetchAddressInfoDetails = ()=>{
     });
 }
 
-
+const editInfo = () => {
+    general_information.dob = employee_service.employeeDetails.get_employee_details.dob
+    general_information.gender = employee_service.employeeDetails.get_employee_details.gender,
+        general_information.doj = employee_service.employeeDetails.get_employee_details.doj,
+        general_information.blood_group_id = employee_service.employeeDetails.get_employee_details.blood_group_id,
+        general_information.marital_status_id = employee_service.employeeDetails.get_employee_details.marital_status_id,
+        general_information.physically_challenged = employee_service.employeeDetails.get_employee_details.physically_challenged
+    contactinfo.personal_email = employee_service.employeeDetails.email
+    contactinfo.mobile_number = employee_service.employeeDetails.get_employee_office_details.official_mobile
+    contactinfo.office_email = employee_service.employeeDetails.get_employee_office_details.officical_mail
+    Addressinfo.current_address = employee_service.employeeDetails.get_employee_details.current_address_line_1
+    Addressinfo.Permanent_Address = employee_service.employeeDetails.get_employee_details.permanent_address_line_1
+}
 
 
 

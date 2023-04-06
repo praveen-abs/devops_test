@@ -1,6 +1,7 @@
 <template>
-    <Dialog header="Header" v-model:visible="employee_service.loading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-        :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
+    <Dialog header="Header" v-model:visible="employee_service.loading_screen"
+        :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
+        :closeOnEscape="false">
         <template #header>
             <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
                 animationDuration="2s" aria-label="Custom ProgressSpinner" />
@@ -13,6 +14,7 @@
         <div class="row">
             <div class="col-3 col-sm-12 col-md-3 col-lg-3 col-xxl-3 col-xl-3">
 
+
                 <div class="mb-0 card top-line ">
                     <div class="card-body">
                         <div class="row">
@@ -21,8 +23,6 @@
                                     data-bs-target="#show_idCard" data-bs-toggle="modal">
                                     <i class="fa fa-id-card text-success" aria-hidden="true"></i>
                                 </button>
-
-                                <!-- {{-- <i class="bi bi-person-vcard"></i> --}} -->
                             </div>
                             <div class="text-center col-12">
 
@@ -182,6 +182,7 @@
 </template>
 
 
+
 <script setup>
 
 import EmployeeDetails from './employee_details/EmployeeDetails.vue'
@@ -192,14 +193,18 @@ import Documents from './documents/documents.vue'
 
 import { Service } from '../Service/Service'
 import { employeeService } from './ProfilePagesService'
-import {  onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 
 const service = Service()
+
+
 
 const employee_service = employeeService()
 
 onMounted(() => {
     Service()
     employeeService()
+
+
 })
 </script>
