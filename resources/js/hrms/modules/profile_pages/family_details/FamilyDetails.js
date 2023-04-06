@@ -38,7 +38,7 @@ import DialogService from 'primevue/dialogservice';
 // Primevue Services
 
 
-import App from '../FamilyDetails.vue'
+import App from './FamilyDetails.vue'
 
 import { createApp } from "vue";
 

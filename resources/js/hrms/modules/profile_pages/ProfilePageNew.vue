@@ -1,4 +1,14 @@
 <template>
+    <Dialog header="Header" v-model:visible="employee_service.loading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+        :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
+        <template #header>
+            <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+                animationDuration="2s" aria-label="Custom ProgressSpinner" />
+        </template>
+        <template #footer>
+            <h5 style="text-align: center">Please wait...</h5>
+        </template>
+    </Dialog>
     <div class="profile_page-wrapper mt-30 container-fluid">
         <div class="row">
             <div class="col-3 col-sm-12 col-md-3 col-lg-3 col-xxl-3 col-xl-3">
@@ -17,7 +27,8 @@
                             <div class="text-center col-12">
 
 
-                                <div class="mx-auto rounded-circle img-xl userActive-status profile-img" style="border:6px solid #c2c2c2c2">
+                                <div class="mx-auto rounded-circle img-xl userActive-status profile-img"
+                                    style="border:6px solid #c2c2c2c2">
 
                                     <a class="edit-icon " data-bs-toggle="modal" data-bs-target="#edit_profileImg" id="">
                                         <i class="fa fa-camera"></i></a>
@@ -29,7 +40,7 @@
                                         <div class="mb-1 text-center">
                                             <h6 class="text-center">
 
-                                                {{service.current_user_name}}
+                                                {{ service.current_user_name }}
                                             </h6>
                                         </div>
                                         <div class="mb-1 d-flex justify-content-between ">
@@ -46,7 +57,7 @@
                                         <p class="mb-2 text-muted f-10 text-start fw-bold">Your profile is completed</p>
                                     </div>
 
-                                    <div class="mb-4 text-center profile-mid-right-content " >
+                                    <div class="mb-4 text-center profile-mid-right-content ">
                                         <div class="py-2 border-bottom-liteAsh">
                                             <p class="text-muted f-12 fw-bold">Employee Status</p>
                                             <p class="text-primary f-15 fw-bold">
@@ -180,23 +191,15 @@ import ExperienceDetails from './experience/ExperienceDetails.vue'
 import Documents from './documents/documents.vue'
 
 import { Service } from '../Service/Service'
-import {employeeService} from  './ProfilePagesService'
-import { onMounted, ref } from 'vue'
+import { employeeService } from './ProfilePagesService'
+import {  onMounted } from 'vue'
 
 const service = Service()
 
-const  employee_service= employeeService()
-
-const emp_details = ref()
-
-
+const employee_service = employeeService()
 
 onMounted(() => {
-
-    console.log("alert");
     Service()
-
-
-
+    employeeService()
 })
 </script>

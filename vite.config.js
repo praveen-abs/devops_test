@@ -7,7 +7,7 @@ export default defineConfig({
         vue(),
         laravel({
             input: [
-  
+
                 'resources/js/app.js',
                 'resources/js/hrms/modules/profile_pages/ProfilePageNew.js',
 
@@ -49,11 +49,12 @@ export default defineConfig({
                 'resources/js/hrms/modules/configurations/holidays/Holidays_Lists.js',
 
 
-                // Profile page
+                // Profile pages
 
-                
+
 
                 // familyinfo_table_page
+               'resources/js/hrms/modules/profile_pages/employee_details/EmployeeDetails.js',
 
                 // 'resources/js/hrms/modules/profile_pages/FamilyDetails.js',
 
