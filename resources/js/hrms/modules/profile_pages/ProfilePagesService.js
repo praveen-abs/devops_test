@@ -10,10 +10,12 @@ export const  employeeService = defineStore("employeeService", () => {
 
     const loading = ref(true)
 
-     axios.get('http://localhost:8000/api/profile-pages-getEmpDetails?user_id=174').then(res =>{
+    let uid = '174';
+
+     axios.get('/profile-pages-getEmpDetails?uid='+uid).then(res =>{
         console.log(res.data);
-        employeeDetails.value = res.data.data[0]
-        loading.value = false
+       // employeeDetails.value = res.data.data[0]
+       // loading.value = false
     }).catch(e => console.log(e)).finally(()=>console.log("completed"))
 
 
@@ -22,7 +24,7 @@ export const  employeeService = defineStore("employeeService", () => {
         const response = await axios.post('/api/profile-pages-getEmpDetails', {
             encr_uid: uid,
           });
-    
+
           return response;
     }
 
@@ -30,7 +32,7 @@ export const  employeeService = defineStore("employeeService", () => {
 
         // varaible Declarations
         employeeDetails,fetchCurrentEmployee,loading
-   
+
 
 
 

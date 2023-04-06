@@ -417,7 +417,7 @@ class VmtProfilePagesController extends Controller
 
         $user_id = $request->uid;
 
-        return $serviceVmtProfilePagesService->getEmployeeProfilePagesDetails($user_id);
+        return $serviceVmtProfilePagesService->getEmployeeProfileDetails($user_id);
     }
 
 }
