@@ -1,4 +1,4 @@
-<template>
+<template v-if="employee_service.employeeDetails.loading">
     <div class="mb-2 card">
         <div class="card-body">
             <h6 class="">General Information
@@ -15,139 +15,138 @@
                                     General Information</h5>
                             </div>
                    </template>
+                    <div class="row">
+                        <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
+                            <div class="mb-3 form-group">
+                                <label :style="{ marginLeft: '10px' }">Birth Date<span
+                                        class="text-danger">*</span>
+                                </label>
+                                <div class="cal-icon">
+                                    <Calendar showIcon class="mb-3 form-selects"
+                                        v-model="general_information.birth_date" placeholder="9999-12-31" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
+                            <div class="mb-3 form-group">
+                                <label>Gender<span class="text-danger">*</span></label>
 
-                                <div class="row">
-                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
-                                        <div class="mb-3 form-group">
-                                            <label :style="{ marginLeft: '10px' }">Birth Date<span
-                                                    class="text-danger">*</span></label>
-                                            <div class="cal-icon">
-                                                <Calendar showIcon class="mb-3 form-selects"
-                                                    v-model="general_information.birth_date" placeholder="9999-12-31" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
-                                        <div class="mb-3 form-group">
-                                            <label>Gender<span class="text-danger">*</span></label>
+                                <Dropdown v-model="general_information.gender" :options="options_gender"
+                                    optionLabel="name" placeholder="Choose Gender" class="form-selects" />
 
-                                            <Dropdown v-model="general_information.gender" :options="options_gender"
-                                                optionLabel="name" placeholder="Choose Gender" class="form-selects" />
+                            </div>
+                        </div>
 
-                                        </div>
-                                    </div>
+                        <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
+                            <div class="mb-3 form-group">
+                                <label :style="{ marginLeft: '10px' }">Date Of Joining(DOJ)<span
+                                        class="text-danger">*</span></label>
+                                <div class="cal-icon">
+                                    <Calendar showIcon class="mb-3 form-selects"
+                                        v-model="general_information.date_of_joining"
+                                        placeholder="9999-12-31" />
+                                </div>
+                            </div>
+                        </div>
 
-                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
-                                        <div class="mb-3 form-group">
-                                            <label :style="{ marginLeft: '10px' }">Date Of Joining(DOJ)<span
-                                                    class="text-danger">*</span></label>
-                                            <div class="cal-icon">
-                                                <Calendar showIcon class="mb-3 form-selects"
-                                                    v-model="general_information.date_of_joining"
-                                                    placeholder="9999-12-31" />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
-                                        <div class="mb-3 form-group">
-                                            <label>Blood Group<span class="text-danger">*</span></label>
-                                            <div class="cal-icon">
-                                                <Dropdown v-model="general_information.blood_group_id"
-                                                    :options="options_blood_group" optionLabel="name"
-                                                    placeholder="Select Bloodgroup" class="form-selects" />
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-
-                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
-                                        <div class="mb-3 form-group" :style="{ marginLeft: '10px' }">
-                                            <label>Marital status <span class="text-danger">*</span></label>
-                                            <Dropdown v-model="general_information.marital_status_id"
-                                                :options="option_maritals_status" optionLabel="name"
-                                                placeholder="Select Marital Status" class="form-selects" />
-
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
-                                        <div class="mb-3 form-group">
-                                            <label>Physically Handicapped</label>
-                                            <Dropdown v-model="general_information.phy_handicapped"
-                                                :options="options_phy_challenged" optionLabel="name" placeholder="Select"
-                                                class="form-selects" />
-                                        </div>
-                                    </div>
+                        <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
+                            <div class="mb-3 form-group">
+                                <label>Blood Group<span class="text-danger">*</span></label>
+                                <div class="cal-icon">
+                                    <Dropdown v-model="general_information.blood_group_id"
+                                        :options="options_blood_group" optionLabel="name"
+                                        placeholder="Select Bloodgroup" class="form-selects" />
                                 </div>
 
-                                <div class="text-right col-12">
-                                    <Toast />
-                                    <ConfirmDialog></ConfirmDialog>
-                                    <button id="btn_submit_generalInfo" class="btn btn-border-orange submit-btn"
-                                        @click="general_information_save()">Save</button>
-                                </div>
+                            </div>
+                        </div>
 
+
+                        <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
+                            <div class="mb-3 form-group" :style="{ marginLeft: '10px' }">
+                                <label>Marital status <span class="text-danger">*</span></label>
+                                <Dropdown v-model="general_information.marital_status_id"
+                                    :options="option_maritals_status" optionLabel="name"
+                                    placeholder="Select Marital Status" class="form-selects" />
+
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
+                            <div class="mb-3 form-group">
+                                <label>Physically Handicapped</label>
+                                <Dropdown v-model="general_information.phy_handicapped"
+                                    :options="options_phy_challenged" optionLabel="name" placeholder="Select"
+                                    class="form-selects" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-right col-12">
+                        <Toast />
+                        <ConfirmDialog></ConfirmDialog>
+                        <button id="btn_submit_generalInfo" class="btn btn-border-orange submit-btn"
+                            @click="general_information_save()">Save</button>
+                    </div>
                 </Dialog>
+
             </h6>
             <div >
-            <ul class="personal-info" >
-                <li class="pb-1 border-bottom-liteAsh" >
-                    <div class="title">Birthday</div>
-                    <div class="text">
-                        <!-- {{ emp_details.doj.slice(8,10)+ "-" + emp_details.doj.slice(5,7)+"-"+emp_details.doj.slice(0,4) }} -->
-                        {{ employee_service.employeeDetails.dob }}
-                    </div>
-                </li>
-                <li class="pb-1 border-bottom-liteAsh">
-                    <div class="title">Gender </div>
-                    <div class="text" >
-                        <!-- {{ emp_details.gender.name }} -->
-                        {{ employee_service.employeeDetails.gender }}
+                <ul class="personal-info" >
+                    <li class="pb-1 border-bottom-liteAsh" >
+                        <div class="title">Birthday</div>
+                        <div class="text">
+                            <!-- {{ emp_details.doj.slice(8,10)+ "-" + emp_details.doj.slice(5,7)+"-"+emp_details.doj.slice(0,4) }} -->
+                            {{ employee_service.employeeDetails.get_employee_details.dob }}
+                        </div>
+                    </li>
+                    <li class="pb-1 border-bottom-liteAsh">
+                        <div class="title">Gender </div>
+                        <div class="text" >
+                            <!-- {{ emp_details.gender.name }} -->
+                            {{ employee_service.employeeDetails.get_employee_details.gender }}
 
 
-                    </div>
-                </li>
-                <li class="pb-1 border-bottom-liteAsh">
-                    <div class="title" >Date Of Joining (DOJ)</div>
-                    <div class="text">
-                        <!-- {{ emp_details.doj.slice(8,10)+ "-" + emp_details.doj.slice(5,7)+"-"+emp_details.doj.slice(0,4) }} -->
-                        {{ employee_service.employeeDetails.doj }}
+                        </div>
+                    </li>
+                    <li class="pb-1 border-bottom-liteAsh">
+                        <div class="title" >Date Of Joining (DOJ)</div>
+                        <div class="text">
+                            <!-- {{ emp_details.doj.slice(8,10)+ "-" + emp_details.doj.slice(5,7)+"-"+emp_details.doj.slice(0,4) }} -->
+                            {{ employee_service.employeeDetails.get_employee_details.doj }}
 
-                    </div>
-                </li>
-                <li class="pb-1 border-bottom-liteAsh">
-                    <div class="title">Marital Status </div>
-                    <div class="text text-capitalize" >
-                        <!-- {{ emp_details.marital_status_id.name }} -->
-                        {{ employee_service.employeeDetails.marital_status }}
+                        </div>
+                    </li>
+                    <li class="pb-1 border-bottom-liteAsh">
+                        <div class="title">Marital Status </div>
+                        <div class="text text-capitalize" >
+                            <!-- {{ emp_details.marital_status_id.name }} -->
+                            {{ employee_service.employeeDetails.get_employee_details.marital_status }}
 
-                    </div>
-                </li>
-                <li class="pb-1 border-bottom-liteAsh">
-                    <div class="title"> Blood Group</div>
-                    <div class="text" >
-                        <!-- {{ emp_details.blood_group_id.name }} -->
-                        {{ employee_service.employeeDetails.blood_group_id }}
+                        </div>
+                    </li>
+                    <li class="pb-1 border-bottom-liteAsh">
+                        <div class="title"> Blood Group</div>
+                        <div class="text" >
+                            <!-- {{ emp_details.blood_group_id.name }} -->
+                            {{ employee_service.employeeDetails.get_employee_details.blood_group_id }}
 
-                    </div>
-                </li>
-                <li class="pb-1 ">
-                    <div class="title">Physically Handicapped</div>
-                    <div class="text">
-                        <!-- {{ emp_details.blood_group_id.physically_challenged }} -->
-                        {{ employee_service.employeeDetails.physically_challenged }}
+                        </div>
+                    </li>
+                    <li class="pb-1 ">
+                        <div class="title">Physically Handicapped</div>
+                        <div class="text">
+                            <!-- {{ emp_details.blood_group_id.physically_challenged }} -->
+                            {{ employee_service.employeeDetails.get_employee_details.physically_challenged }}
 
-                    </div>
-                </li>
-            </ul>
-        </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
 
         </div>
     </div>
 
 
-    <div class="mb-2 card">
+    <div  class="mb-2 card">
         <div class="card-body">
             <h6 class="">Contact Information
                 <span class="personal-edit"><a href="#" class="edit-icon"
@@ -200,36 +199,36 @@
 
                 </Dialog>
             </h6>
+            <div>
+                <ul class="personal-info">
+                    <li class="pb-1 border-bottom-liteAsh">
+                        <div class="title">Personal Email</div>
+                        <div class="text">
+                            {{ employee_service.employeeDetails.email }}
 
-            <ul class="personal-info">
-                <li class="pb-1 border-bottom-liteAsh">
-                    <div class="title">Personal Email</div>
-                    <div class="text">
-                        {{ employee_service.employeeDetails.email }}
+                        </div>
+                    </li>
+                    <li class="pb-1 border-bottom-liteAsh">
+                        <div class="title">Office Email</div>
+                        <div class="text">
+                            {{ employee_service.employeeDetails.get_employee_office_details.officical_mail }}
 
-                    </div>
-                </li>
-                <li class="pb-1 border-bottom-liteAsh">
-                    <div class="title">Office Email</div>
-                    <div class="text">
-                        {{ employee_service.employeeDetails.officical_mail }}
+                        </div>
+                    </li>
+                    <li class="pb-1 ">
+                        <div class="title">Mobile Number</div>
+                        <div class="text">
+                            {{ employee_service.employeeDetails.get_employee_office_details.official_mobile }}
 
-                    </div>
-                </li>
-                <li class="pb-1 ">
-                    <div class="title">Mobile Number</div>
-                    <div class="text">
-                        {{ employee_service.employeeDetails.official_mobile }}
-
-                    </div>
-                </li>
-            </ul>
-
+                        </div>
+                    </li>
+                </ul>
+            </div>
 
         </div>
 
     </div>
-    <div class="mb-2 card">
+    <div  class="mb-2 card">
         <div class="card-body">
             <h6 class="">Address
                 <span class="personal-edit"><a href="#" class="edit-icon"
@@ -272,30 +271,31 @@
 
                         </Dialog>
             </h6>
-            <div class="row">
-                <div class="col-6">
-                    <ul class="personal-info">
-                        <li class="pb-1 border-bottom-liteAsh flex-column">
-                            <div class="title">Current Address </div>
-                            <div class="text">
-                                {{ employee_service.employeeDetails.current_address_line_1 }}
+            <div >
+                <div class="row">
+                    <div class="col-6">
+                        <ul class="personal-info">
+                            <li class="pb-1 border-bottom-liteAsh flex-column">
+                                <div class="title">Current Address </div>
+                                <div class="text">
+                                    {{ employee_service.employeeDetails.get_employee_details.current_address_line_1 }}
 
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-6">
-                    <ul class="personal-info">
-                        <li class="pb-1 border-bottom-liteAsh flex-column">
-                            <div class="title">permanent Address </div>
-                            <div class="text">
-                                {{ employee_service.employeeDetails.permanent_address_line_1 }}
-                            </div>
-                        </li>
-                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-6">
+                        <ul class="personal-info">
+                            <li class="pb-1 border-bottom-liteAsh flex-column">
+                                <div class="title">permanent Address </div>
+                                <div class="text">
+                                    {{ employee_service.employeeDetails.get_employee_details.permanent_address_line_1 }}
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-
 
         </div>
     </div>
@@ -332,6 +332,7 @@ const Addresstoast = useToast();
 
 const employee_details = ref()
 
+//Used inside dialog elements
 const general_information = reactive({
     birth_date: "",
     gender: "",
@@ -407,22 +408,11 @@ function saveGeneralInformationDetails() {
     }
 
 
-  const fetchGeneralInformationDetails = () =>{
-    
-    // let url =`/profile-pages-update-generalinfo/${id}`
-    let url ='';
-    // axios.get('/local').then((response) => {
-    //     console.log("Axios : " + response.data);
-    //     console.log(response.data);
-    //     employee_details.value = response.data;
-    //     // loading.value = false;
-    // });
-}
-
-
 onMounted(() => {
-  fetchGeneralInformationDetails()
-  fetch_data.getBloodGroups().then((result) => {
+    // console.log("Loading state : "+employee_service.loading);
+    // console.log("employee_service valuesssssssssss : "+employee_service.employeeDetails.get_employee_details.dob);
+
+    fetch_data.getBloodGroups().then((result) => {
         console.log(result);
         options_blood_group.value = result.data;
     });
@@ -431,11 +421,18 @@ onMounted(() => {
         console.log(result);
         option_maritals_status.value = result.data;
     });
-    // fetchcontactInfoDetails();
-    // fetchAddressInfoDetails();
 
 
+    //Assign json values into dialog elements also
+    // general_information.birth_date = employee_service.employeeDetails.get_employee_details.dob;
+    // general_information.date_of_joining = employee_service.employeeDetails.get_employee_details.doj;
+    // general_information.marital_status_id = employee_service.employeeDetails.get_employee_details.marital_status;
+    // general_information.gender = employee_service.employeeDetails.get_employee_details.gender;
+    // general_information.blood_group_id = employee_service.employeeDetails.get_employee_details.blood_group_id;
+    // general_information.phy_handicapped = employee_service.employeeDetails.get_employee_details.physically_challenged;
 
+
+//    loading.value = true;
 });
 
 const contact_details = ref();

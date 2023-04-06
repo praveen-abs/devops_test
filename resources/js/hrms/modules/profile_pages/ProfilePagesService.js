@@ -14,28 +14,19 @@ export const  employeeService = defineStore("employeeService", () => {
 
      axios.get('/profile-pages-getEmpDetails?uid='+uid).then(res =>{
         console.log(res.data);
-       // employeeDetails.value = res.data.data[0]
-       // loading.value = false
+        employeeDetails.value = res.data
+        loading.value = false
     }).catch(e => console.log(e)).finally(()=>console.log("completed"))
 
-
-     async function fetchCurrentEmployee(uid){
-
-        const response = await axios.post('/api/profile-pages-getEmpDetails', {
-            encr_uid: uid,
-          });
-
-          return response;
-    }
 
     return {
 
         // varaible Declarations
-        employeeDetails,fetchCurrentEmployee,loading
 
-
-
+        employeeDetails,loading
 
     };
 });
+
+
 

@@ -160,40 +160,40 @@ const familydetails = reactive({
 
 const saveFamilyDetails = () => {
 
-   if(familydetails.name == ''  || familydetails.dob == '' || familydetails.relationship == '' || familydetails.ph_no == " " || familydetails.ph_no.length >=10 ){
-    toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
-   }else{
-    let url = 'http://localhost:3000/posts';
-    toast.add({ severity: 'success', summary: 'Success Message', detail: 'Message Content', life: 3000 });
+//    if(familydetails.name == ''  || familydetails.dob == '' || familydetails.relationship == '' || familydetails.ph_no == " " || familydetails.ph_no.length >=10 ){
+//     toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
+//    }else{
+//     let url = 'http://localhost:3000/posts';
+//     toast.add({ severity: 'success', summary: 'Success Message', detail: 'Message Content', life: 3000 });
 
-visible.value = false
+//     visible.value = false
 
-console.log(familydetails);
+//     console.log(familydetails);
 
-axios.post(url, familydetails).then(res => {
-    console.log("sent sucessfully");
-}).catch(err => {
-    console.log(err);
-}).finally(() => {
-    console.log("completed");
-})
-   }
+//     axios.post(url, familydetails).then(res => {
+//         console.log("sent sucessfully");
+//     }).catch(err => {
+//         console.log(err);
+//     }).finally(() => {
+//         console.log("completed");
+//     })
+//     }
 }
 
 
 onMounted(() => {
-    fetchData();
+    //fetchData();
 })
 
 
-const fetchData= ()=>{
-    let url = 'http://localhost:3000/posts'
-    axios.get(url)
-        .then((response) => {
-            console.log(response.data);
-            PersonalDocument.value = response.data;
-        });
-}
+// const fetchData= ()=>{
+//     let url = 'http://localhost:3000/posts'
+//     axios.get(url)
+//         .then((response) => {
+//             console.log(response.data);
+//             PersonalDocument.value = response.data;
+//         });
+// }
 
 </script>
 
