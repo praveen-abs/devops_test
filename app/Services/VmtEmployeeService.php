@@ -79,9 +79,7 @@ class VmtEmployeeService {
     {
 
 
-
-
-        $response = $this->createOrUpdate_User(data: $data, can_onboard_employee : $can_onboard_employee, user_id: $existing_user_id, onboard_type : $onboard_type, onboard_import_type : $onboard_import_type);
+        $response = $this->createOrUpdate_User(data: $data, can_onboard_employee : $can_onboard_employee, user_id: $existing_user_id, onboard_type : $onboard_type);
 
         if(!empty($response) && $response->status == 'success')
         {
@@ -92,7 +90,7 @@ class VmtEmployeeService {
                 if($onboard_import_type == "excel_quick")
                 {
 
-                    $this->createOrUpdate_EmployeeDetails( $onboard_user, $data);
+                    $this->createOrUpdate_EmployeeDetails( $onboard_user, $data, $onboard_import_type);
                     $this->createOrUpdate_EmployeeOfficeDetails( $onboard_user->id, $data);
                     $this->createOrUpdate_EmployeeCompensatory( $onboard_user->id, $data);
 
@@ -100,7 +98,7 @@ class VmtEmployeeService {
                 else
                 if($onboard_import_type == "onboard_form")//for normal , quick form onboard
                 {
-                    $this->createOrUpdate_EmployeeDetails( $onboard_user, $data);
+                    $this->createOrUpdate_EmployeeDetails( $onboard_user, $data, $onboard_import_type);
                     $this->createOrUpdate_EmployeeOfficeDetails( $onboard_user->id, $data);
                     $this->createOrUpdate_EmployeeStatutoryDetails( $onboard_user->id, $data);
                     $this->createOrUpdate_EmployeeFamilyDetails( $onboard_user->id, $data);
@@ -190,12 +188,13 @@ class VmtEmployeeService {
         return $newUser;
     }
 
-    private function createOrUpdate_EmployeeDetails($user,$row, $can_onboard_employee)
+    private function createOrUpdate_EmployeeDetails($user,$row, $onboard_import_type)
     {
 
         //Sdd("Inside emp details");
         $newEmployee = VmtEmployee::where('userid',$user->id);
-        // dd($newEmployee->exists());
+
+        //dd($newEmployee->exists());
         if($newEmployee->exists())
         {
             $newEmployee = $newEmployee->first();
@@ -262,7 +261,7 @@ class VmtEmployeeService {
             $row['marital_status'] = '';
         }
 
-        if($row['can_upload_docs'] == "1")
+        if($onboard_import_type != "excel_quick")
         {
             $newEmployee->aadhar_card_file = $this->uploadDocument( $user->id, $row['Aadharfront'], $user->user_code, 'Aadhar Card Front');
             $newEmployee->aadhar_card_backend_file = $this->uploadDocument($user->id,$row['AadharBack'], $user->user_code,'Aadhar Card Back');

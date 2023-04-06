@@ -171,6 +171,7 @@ class VmtEmployeeOnboardingController extends Controller
 
             try{
 
+
                 $user_id = Crypt::decrypt($request->encr_uid);
                 $response = $employeeService->getQuickOnboardedEmployeeData($user_id);
 
@@ -228,7 +229,6 @@ class VmtEmployeeOnboardingController extends Controller
 
 
         $data=$request->all();
-        // dd($data);
 
         $user_id =$data['employee_code'];
         //dd( $user_id);
@@ -366,7 +366,7 @@ class VmtEmployeeOnboardingController extends Controller
                 $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $onboard_form_data['can_onboard_employee'], null,"normal","onboard_form");
 
 
-                if($result->status == "success")
+                if($result == "success")
                 {
                     $response = [
                         'status' => 'success',
@@ -1206,7 +1206,6 @@ class VmtEmployeeOnboardingController extends Controller
            if ($isAllRecordsValid) {
                foreach ($excelRowdata_row[0]  as $key => $excelRowdata) {
                    $rowdata_response = $this->storeSingleRecord_QuickEmployee($excelRowdata, $employeeService);
-
                    array_push($data_array, $rowdata_response);
                }
 
@@ -1252,7 +1251,6 @@ class VmtEmployeeOnboardingController extends Controller
                                                                 onboard_type  : "quick",
                                                                 onboard_import_type : "excel_quick"
                                                                 );
-
                $message = "Employee OnBoard was Created   ";
                $VmtGeneralInfo = VmtGeneralInfo::first();
                $image_view = url('/') . $VmtGeneralInfo->logo_img;
