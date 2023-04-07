@@ -38,7 +38,7 @@ import DialogService from 'primevue/dialogservice';
 // Primevue Services
 
 
-import App from '../finance_details/FinanceDetails.vue'
+import App from './finance_details/FinanceDetails.vue'
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";

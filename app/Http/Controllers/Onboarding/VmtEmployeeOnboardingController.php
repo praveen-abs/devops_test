@@ -171,6 +171,7 @@ class VmtEmployeeOnboardingController extends Controller
 
             try{
 
+
                 $user_id = Crypt::decrypt($request->encr_uid);
                 $response = $employeeService->getQuickOnboardedEmployeeData($user_id);
 
@@ -228,7 +229,6 @@ class VmtEmployeeOnboardingController extends Controller
 
 
         $data=$request->all();
-        // dd($data);
 
         $user_id =$data['employee_code'];
         //dd( $user_id);
@@ -244,23 +244,24 @@ class VmtEmployeeOnboardingController extends Controller
         //Check whether we are updating existing user or adding new user.
 
         $existingUser = User::where('user_code',$user_id);
-       // dd($existingUser->exists());
+        //dd($existingUser->exists());
         if($existingUser->exists())
         {
 
             //If current user is Admin, then its normal onboarding or updating existing user details.
             if(Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"])  && $currentLoggedinInUser->onboard_type  == "normal")
             {
+
                 // $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), $existingUser->first()->id);
 
-                $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $onboard_form_data['can_onboard_employee'], $existingUser->first()->id, "normal");
+                $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $onboard_form_data['can_onboard_employee'], $existingUser->first()->id, "normal","onboard_form");
 
                 $message = "";
 
                 if($result == "success")
                 {
 
-                    if($request->input('can_onboard_employee') == "true")
+                    if($request->input('can_onboard_employee') == "1")
                     {
                         $isEmailSent  = $employeeService->attachAppointmentLetterPDF($onboard_form_data);
                         $message="Employee onboarded successfully";
@@ -295,12 +296,13 @@ class VmtEmployeeOnboardingController extends Controller
             else //If the currentuser is quick onboareded emp and not yet onboarded, then save the form.
             if($currentLoggedinInUser->is_onboarded == 0 && $currentLoggedinInUser->onboard_type  == "quick")
             {
+
                 //check whether if emp_code is tampered
                 if($onboard_form_data['employee_code'] == $currentLoggedinInUser->user_code)
                 {
                     //$response = $this->storeEmployeeNormalOnboardForm($onboard_form_data, $request->input('can_onboard_employee'));
 
-                    $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), $existingUser->first()->id,"quick");
+                    $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), $existingUser->first()->id,"quick","onboard_form");
 
                     $message = "";
 
@@ -361,10 +363,10 @@ class VmtEmployeeOnboardingController extends Controller
             if(Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]) )
             {
 
-                $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $onboard_form_data['can_onboard_employee'], null,"normal");
+                $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $onboard_form_data['can_onboard_employee'], null,"normal","onboard_form");
 
 
-                if($result =="success")
+                if($result == "success")
                 {
                     $response = [
                         'status' => 'success',
@@ -426,6 +428,7 @@ class VmtEmployeeOnboardingController extends Controller
             //Check if user already exists
             $user = User::where('email',$row["email"])->first();
 
+
             if(empty($user))
             {
               //  dd("emp doesnt exist");
@@ -454,6 +457,7 @@ class VmtEmployeeOnboardingController extends Controller
 
             if($user)
             {
+
                 //STORE EMPLOYEE DETAILS
                 //Delete old data
                 VmtEmployee::where('userid', $user->id)->delete();
@@ -1202,7 +1206,6 @@ class VmtEmployeeOnboardingController extends Controller
            if ($isAllRecordsValid) {
                foreach ($excelRowdata_row[0]  as $key => $excelRowdata) {
                    $rowdata_response = $this->storeSingleRecord_QuickEmployee($excelRowdata, $employeeService);
-
                    array_push($data_array, $rowdata_response);
                }
 
@@ -1245,9 +1248,9 @@ class VmtEmployeeOnboardingController extends Controller
                 $response = $employeeService->createOrUpdate_OnboardFormData(data: $row,
                                                                 can_onboard_employee:"0",
                                                                 existing_user_id : null,
-                                                                onboard_type  : "quick"
+                                                                onboard_type  : "quick",
+                                                                onboard_import_type : "excel_quick"
                                                                 );
-
                $message = "Employee OnBoard was Created   ";
                $VmtGeneralInfo = VmtGeneralInfo::first();
                $image_view = url('/') . $VmtGeneralInfo->logo_img;
@@ -1296,7 +1299,7 @@ class VmtEmployeeOnboardingController extends Controller
             'message' => 'empty',
         ];
 
-        dd($request->all());
+        //dd($request->all());
 
         //This wont work for super-admin for now.
         $currentEmployeeDetails = VmtEmployee::where('userid', auth()->user()->id)->first();

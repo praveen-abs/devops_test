@@ -18,6 +18,8 @@ import Calendar from 'primevue/calendar';
 import InputText from 'primevue/inputtext';
 import ConfirmDialog from 'primevue/confirmdialog';
 import ConfirmationService from 'primevue/confirmationservice';
+import ProgressSpinner from 'primevue/progressspinner';
+
 
 
 
@@ -35,7 +37,7 @@ import DialogService from 'primevue/dialogservice';
 import ToastService from 'primevue/toastservice';
 
 
-import EmployeeDetails from '../EmployeeDetails.vue'
+import EmployeeDetails from './EmployeeDetails.vue'
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";
@@ -54,6 +56,7 @@ app.component('Dropdown', Dropdown)
 app.component('Calendar',Calendar);
 app.component('InputText',InputText);
 app.component('ConfirmDialog',ConfirmDialog);
+app.component('ProgressSpinner', ProgressSpinner);
 
 
 app.component('useConfirm',useConfirm);

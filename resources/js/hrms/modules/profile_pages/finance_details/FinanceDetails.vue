@@ -155,19 +155,19 @@
                                 <li>
                                     <div class="title">Bank Account No.</div>
                                     <div class="text">
-                                        {{ bank_info.bank_ac_no }}  
-                                       </div>                                 
+                                        {{ bank_info.bank_ac_no }}
+                                       </div>
                                 </li>
                                 <li>
                                     <div class="title">IFSC Code</div>
                                     <div class="text">
-                                        {{ bank_info.ifsc_code }}                                  
+                                        {{ bank_info.ifsc_code }}
                                     </div>
                                 </li>
                                 <li>
                                     <div class="title">PAN No</div>
                                     <div class="text">
-                                        {{ bank_info.pan_no }}                                  
+                                        {{ bank_info.pan_no }}
                                     </div>
                                 </li>
                             </ul>
@@ -376,7 +376,7 @@
 
     </div>
 
-  
+
 </template>
 <script setup>
 import { ref, onMounted, reactive, onUpdated } from 'vue';
@@ -392,7 +392,7 @@ onMounted(() => {
     fetch_data.getBankList().then(res => {
         bankNameList.value = res.data;
     })
-    fetchFinanceDetails()
+
 });
 
 
@@ -422,21 +422,21 @@ const statutory_information = reactive({
 
 
 
-const saveBankDetails = () => {
-    let url = ' http://localhost:3000/FinanceDetails';
+// const saveBankDetails = () => {
+//     let url = ' http://localhost:3000/FinanceDetails';
 
-    visible.value = false
+//     visible.value = false
 
-    console.log(bank_information);
+//     console.log(bank_information);
 
-    axios.post(url, bank_information).then(res => {
-        console.log("sent sucessfully");
-    }).catch(err => {
-        console.log(err);
-    }).finally(() => {
-        console.log("completed");
-    })
-}
+//     axios.post(url, bank_information).then(res => {
+//         console.log("sent sucessfully");
+//     }).catch(err => {
+//         console.log(err);
+//     }).finally(() => {
+//         console.log("completed");
+//     })
+// }
 
 
 const saveStatutoryDetails = () => {

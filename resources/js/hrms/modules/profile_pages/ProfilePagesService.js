@@ -1,17 +1,37 @@
 import axios from "axios";
+import {
+    defineStore
+} from "pinia";
+import { ref } from "vue";
 
-export async function getMaritalStatus(){
-    const response=await axios.get('/fetch-marital-details');
-    return response.data;
-}
+export const  employeeService = defineStore("employeeService", () => {
+
+    const employeeDetails  = ref([])
+
+    const loading_screen = ref(true)
+
+    let uid = '174';
+
+     axios.get('/profile-pages-getEmpDetails?uid='+uid).then(res =>{
+        loading_screen.value = false
+        console.log(res.data);
+        employeeDetails.value = res.data
+    }).catch(e => console.log(e)).finally(()=>console.log("completed"))
+
+    setTimeout(() => {
+        alert("yes")
+        loading_screen.value = false
+    }, 5000);
 
 
-export async function getBloodGroups(){
-    const response=await axios.get('/fetch-blood-groups');
-    return response.data;
-}
+    return {
 
-export async function getCurrentUser(){
-    const response=await axios.get('/currentUser');
-    return response.data;
-}
+        // varaible Declarations
+
+        employeeDetails,loading_screen
+
+    };
+});
+
+
+

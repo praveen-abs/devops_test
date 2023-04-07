@@ -1514,4 +1514,9 @@ class VmtAttendanceController extends Controller
         return $serviceVmtAttendanceService->fetchUnusedCompensatoryOffDays($request->user_id);
     }
 
+    public function employeeProfile(Request $request , VmtAttendanceService $serviceVmtAttendanceService){
+
+        return $serviceVmtAttendanceService->employeeProfile($request);
+    }
+
 }

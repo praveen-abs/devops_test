@@ -2606,7 +2606,7 @@ onMounted(() => {
 
 
 const employee_onboarding = reactive({
-  can_onboard_employee: true,
+  can_onboard_employee: 1,
   employee_code: "",
   doj: "",
   aadhar_number: "",
@@ -2866,7 +2866,7 @@ const fnCalculateAge = () => {
 const SaveEmployeeOnboardingData = () => {
   console.log("Saving onboarding form");
   console.log(employee_onboarding);
-  employee_onboarding.can_onboard_employee = false;
+  employee_onboarding.can_onboard_employee = 0;
   RequiredDocument.value = true
   submit();
   get_id();
@@ -2877,7 +2877,8 @@ const SaveEmployeeOnboardingData = () => {
 };
 
 const SubmitEmployeeOnboardingData = () => {
-  employee_onboarding.can_onboard_employee = true;
+  employee_onboarding.can_onboard_employee = 1;
+
   console.log(employee_onboarding);
   get_id();
   submit();
@@ -2885,7 +2886,7 @@ const SubmitEmployeeOnboardingData = () => {
 };
 
 const submit = () => {
-    loading.value = true
+  loading.value = true
   let currentObj = this;
   const config = {
     headers: { "content-type": "multipart/form-data" },
@@ -3018,6 +3019,7 @@ const submit = () => {
 
   console.log(formData);
 
+
   axios
     .post("/vmt-employee-onboard", formData, config)
     .then((response) => {
@@ -3029,6 +3031,7 @@ const submit = () => {
         Swal.fire(response.data.status, response.data.message, "success");
       }
       employee_onboarding.save_draft_messege = response.data;
+
     })
     .catch(function (error) {
       // currentObj.output = error;
