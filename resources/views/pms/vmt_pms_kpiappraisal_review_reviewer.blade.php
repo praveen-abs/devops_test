@@ -320,22 +320,20 @@
                 <!-- appraisal table -->
                 <div class="card mb-0">
                     <div class="card-body pb-2">
-                        @if ($enableButton)
-                            @if (isset($isAllReviewersSubmittedData) &&
-                                count($isAllReviewersSubmittedData) > 0 &&
-                                $isAllReviewersSubmittedData[Auth::id()] != '1' &&
-                                $assignedGoals->is_assignee_submitted == '1')
+
                                 <div class="row">
                                     <div class="col-12 mt-3">
+                                    @if ($enableButton)
+                                     @if (isset($isAllReviewersSubmittedData) &&
+                                            count($isAllReviewersSubmittedData) > 0 &&
+                                            $isAllReviewersSubmittedData[Auth::id()] != '1' &&
+                                            $assignedGoals->is_assignee_submitted == '1')
                                         <form id="upload_form" enctype="multipart/form-data">
                                             <div class="row pull-right mb-3">
                                                 @csrf
                                                 <input type="hidden" name="kpiFormAssignedId"
                                                     value="{{ $kpiFormAssignedDetails->id }}">
-                                                <div class="col">
-                                                    <a href="{{ route('download.excelsheet.pmsv2.review.form', [$assignedGoals->vmt_pms_kpiform_assigned_id, '2', $assignedGoals->year . '-' . strtoupper($assignedGoals->assignment_period)]) }}"
-                                                        class="btn btn-orange pull-right" id="download-excel">Download</a>
-                                                </div>
+
                                                 <div class="col-auto p-0">
                                                     <input type="file" name="upload_file" id="upload_file"
                                                         accept=".xls,.xlsx" class="form-control" required>
@@ -346,10 +344,15 @@
                                                 </div>
                                             </div>
                                         </form>
+                                        @endif
+                                        @endif
+                                        <div class="col">
+                                            <a href="{{ route('download.excelsheet.pmsv2.review.form', [$assignedGoals->vmt_pms_kpiform_assigned_id, '2', $assignedGoals->year . '-' . strtoupper($assignedGoals->assignment_period)]) }}"
+                                                class="btn btn-orange pull-right" id="download-excel">Download</a>
+                                        </div>
                                     </div>
                                 </div>
-                            @endif
-                        @endif
+
 
                         @if (count($kpiRows) > 0)
                             <form id="employee_self_review" method="POST">
