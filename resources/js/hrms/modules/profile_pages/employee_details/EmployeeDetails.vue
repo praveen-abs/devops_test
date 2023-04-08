@@ -3,11 +3,11 @@
         <div class="card-body">
             <h6 class="">General Information
                 <!-- Button trigger modal -->
-                <a type="button" class="edit-icon" @click="visible = true">
+                <a type="button" class="edit-icon" @click="generalVisible = true">
                     <i class="ri-pencil-fill"></i>
                 </a>
 
-                <Dialog v-model:visible="visible" modal header="General Information"
+                <Dialog v-model:visible="generalVisible" modal header="General Information"
                     :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
                     <template #header>
                         <div>
@@ -16,6 +16,7 @@
                                 General Information</h5>
                         </div>
                     </template>
+
                     <div class="row">
                         <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
                             <div class="mb-3 form-group">
@@ -92,7 +93,7 @@
                         <div class="title">Birthday</div>
                         <div class="text">
                             <!-- {{ emp_details.doj.slice(8,10)+ "-" + emp_details.doj.slice(5,7)+"-"+emp_details.doj.slice(0,4) }} -->
-                            {{ employee_service.employeeDetails.get_employee_details.dob }}
+                            {{ employee_service.employeeDetails.get_employee_details.dob}}
                         </div>
                     </li>
                     <li class="pb-1 border-bottom-liteAsh">
@@ -302,6 +303,7 @@
 
 
 <script setup>
+
 import { ref, onMounted, reactive } from "vue";
 import moment from "moment";
 
@@ -322,7 +324,7 @@ const employee_service = employeeService()
 const toast = useToast();
 const Addresstoast = useToast();
 
-const visible = ref(false);
+const generalVisible = ref(false);
 const contactVisible = ref(false);
 const addressVisible = ref(false);
 
@@ -359,17 +361,21 @@ function saveGeneralInformationDetails() {
     console.log("Called saveGeneralInformationDetails.... ");
     let id = fetch_data.current_user_id
     let url = `/profile-pages-update-generalinfo/${id}`
+    // let url  =
+
+    console.log( general_information);
 
 
     axios
         .post(url, {
             user_id: general_information.user_id,
-            dob: general_information.birth_date,
+            dob: general_information.dob,
             gender: general_information.gender,
             marital_status_id: general_information.marital_status_id,
             doj: general_information.date_of_joining,
             blood_group_id: general_information.blood_group_id,
             physically_challenged: general_information.phy_handicapped,
+
         })
         .then((res) => {
             data_checking.value = false;
@@ -422,13 +428,13 @@ onMounted(() => {
     editInfo()
 
 
-    //Assign json values into dialog elements also
-    // general_information.birth_date = employee_service.employeeDetails.get_employee_details.dob;
-    // general_information.date_of_joining = employee_service.employeeDetails.get_employee_details.doj;
-    // general_information.marital_status_id = employee_service.employeeDetails.get_employee_details.marital_status;
-    // general_information.gender = employee_service.employeeDetails.get_employee_details.gender;
-    // general_information.blood_group_id = employee_service.employeeDetails.get_employee_details.blood_group_id;
-    // general_information.phy_handicapped = employee_service.employeeDetails.get_employee_details.physically_challenged;
+    // Assign json values into dialog elements also
+    general_information.birth_date = employee_service.employeeDetails.get_employee_details.dob;
+    general_information.date_of_joining = employee_service.employeeDetails.get_employee_details.doj;
+    general_information.marital_status_id = employee_service.employeeDetails.get_employee_details.marital_status;
+    general_information.gender = employee_service.employeeDetails.get_employee_details.gender;
+    general_information.blood_group_id = employee_service.employeeDetails.get_employee_details.blood_group_id;
+    general_information.phy_handicapped = employee_service.employeeDetails.get_employee_details.physically_challenged;
 
 
 });

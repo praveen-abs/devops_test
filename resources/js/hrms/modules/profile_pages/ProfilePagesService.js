@@ -18,17 +18,23 @@ export const  employeeService = defineStore("employeeService", () => {
         employeeDetails.value = res.data
     }).catch(e => console.log(e)).finally(()=>console.log("completed"))
 
-    setTimeout(() => {
-        alert("yes")
-        loading_screen.value = false
-    }, 5000);
+    if(loading_screen.value == true){
+        setTimeout(() => {
+            // alert("yes")
+            loading_screen.value = false;
+            console.log("testing "+loading_screen.value);
+        }, 1000);
+        console.log("testing");
+    }
+
 
 
     return {
 
         // varaible Declarations
 
-        employeeDetails,loading_screen
+        employeeDetails
+        ,loading_screen
 
     };
 });

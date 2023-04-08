@@ -1,5 +1,6 @@
 <template>
-    <Dialog header="Header" v-model:visible="employee_service.loading_screen"
+
+    <!-- <Dialog header="Header" v-model:visible="employee_service.loading_screen"
         :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
         :closeOnEscape="false">
         <template #header>
@@ -9,7 +10,8 @@
         <template #footer>
             <h5 style="text-align: center">Please wait...</h5>
         </template>
-    </Dialog>
+    </Dialog> -->
+
     <div class="profile_page-wrapper mt-30 container-fluid">
         <div class="row">
             <div class="col-3 col-sm-12 col-md-3 col-lg-3 col-xxl-3 col-xl-3">
