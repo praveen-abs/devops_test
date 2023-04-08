@@ -149,10 +149,7 @@
 import { ref, onMounted, reactive, onUpdated } from 'vue';
 import axios from 'axios'
 import { useToast } from "primevue/usetoast";
-import { employeeService } from '../ProfilePagesService';
-
-// const employee_service = employeeService()
-
+import { profilePagesStore } from '../stores/ProfilePagesStore';
 
 const toast = useToast();
 
@@ -195,7 +192,7 @@ const saveFamilyDetails = () => {
 
 
 onMounted(() => {
- 
+
 })
 
 

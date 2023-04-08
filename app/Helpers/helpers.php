@@ -10,6 +10,7 @@ use App\Models\VmtBloodGroup;
 use App\Models\VmtLeaves;
 use App\Models\ConfigPms;
 use App\Models\VmtEmployeeOfficeDetails;
+use App\Models\VmtMaritalStatus;
 use Illuminate\Support\Facades\Auth;
 
 function required()
@@ -402,7 +403,7 @@ function calculateProfileCompleteness($user_id)
             'vmt_employee_details.passport_date',
             'vmt_employee_details.nationality',
             'vmt_employee_details.religion',
-            'vmt_employee_details.marital_status',
+            'vmt_employee_details.marital_status_id',
             //'vmt_employee_details.spouse_name',
 
             //Documents
@@ -437,6 +438,7 @@ function calculateProfileCompleteness($user_id)
 
         )->where('users.id', $user_id)->first();
 
+    $user_full_details["marital_status"] = VmtMaritalStatus::find($user_full_details["marital_status_id"] );
     $count_total_fields = count($user_full_details->toArray());
     $count_null_fields = 0;
 
