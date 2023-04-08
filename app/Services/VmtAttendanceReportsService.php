@@ -528,6 +528,7 @@ class VmtAttendanceReportsService{
 
         $reportresponse=array();
         $dates_1 = array(' ',' ',' ',' ');
+        $heading_dates=array("Emp Code","Name","Designation","DOJ");
         $user = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
                       ->join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
                       ->where('is_ssa','0')
@@ -536,6 +537,39 @@ class VmtAttendanceReportsService{
                       ->get(['users.id','users.user_code','users.name','vmt_employee_office_details.designation','vmt_employee_details.doj']);
        // print($user);exit;
         $holidays = vmtHolidays::whereMonth('holiday_date','=',$month)->pluck('holiday_date');
+        $requestedDate = $year . '-' . $month . '-01';
+             $currentDate = Carbon::now();
+             $monthDateObj = Carbon::parse($requestedDate);
+             //dd($monthDateObj);
+             $startOfMonth = Carbon::parse($monthDateObj)->startOfMonth(); //->format('Y-m-d');
+             $endOfMonth   =  Carbon::parse($monthDateObj)->endOfMonth(); //->format('Y-m-d');
+            // dd($endOfMonth);
+             if ($currentDate->lte($endOfMonth)) {
+                 $lastAttendanceDate  = $currentDate; //->format('Y-m-d');
+             } else {
+                 $lastAttendanceDate  = $endOfMonth; //->format('Y-m-d');
+             }
+            //dd($lastAttendanceDate->format('d'));
+             $totalDays  = $lastAttendanceDate->format('d');
+             $firstDateStr  = $monthDateObj->startOfMonth()->toDateString();
+
+             for($i=1 ; $i <=$totalDays ;$i++)
+             {
+
+               $date = "";
+
+               if($i<10)
+                 $date = "0".$i;
+
+               else
+                 $date = $i;
+
+               $fulldate = $year."-".$month."-".$date;
+               array_push($dates_1,$fulldate," "," "," ");
+               array_push($heading_dates,"In Punch","Out Punch","Total Hours","Status");
+             }
+
+
         foreach($user as $singleUser){
 
             $total_present=0;
@@ -559,21 +593,7 @@ class VmtAttendanceReportsService{
 
             $regularTime  = VmtWorkShifts::where('shift_type', 'First Shift')->first();
 
-             $requestedDate = $year . '-' . $month . '-01';
-             $currentDate = Carbon::now();
-             $monthDateObj = Carbon::parse($requestedDate);
-             //dd($monthDateObj);
-             $startOfMonth = Carbon::parse($monthDateObj)->startOfMonth(); //->format('Y-m-d');
-             $endOfMonth   =  Carbon::parse($monthDateObj)->endOfMonth(); //->format('Y-m-d');
-            // dd($endOfMonth);
-             if ($currentDate->lte($endOfMonth)) {
-                 $lastAttendanceDate  = $currentDate; //->format('Y-m-d');
-             } else {
-                 $lastAttendanceDate  = $endOfMonth; //->format('Y-m-d');
-             }
-            //dd($lastAttendanceDate->format('d'));
-             $totalDays  = $lastAttendanceDate->format('d');
-             $firstDateStr  = $monthDateObj->startOfMonth()->toDateString();
+
          //dd($totalDays);
              // attendance details from vmt_staff_attenndance_device table
              $deviceData = [];
@@ -581,7 +601,7 @@ class VmtAttendanceReportsService{
                  // code...
 
                  $dayStr = Carbon::parse($firstDateStr)->addDay($i)->format('l');
-                // dd($dayStr);
+                //dd($dayStr);
                  if ($dayStr != 'Sunday') {
 
                      $dateString  = Carbon::parse($firstDateStr)->addDay($i)->format('Y-m-d');
@@ -641,8 +661,8 @@ class VmtAttendanceReportsService{
 
              //$days_count = cal_days_in_month(CAL_GREGORIAN,$month,$year);
              //dd($totalDays );
-             //For Excel Sheet Headers
-             $heading_dates=array("Emp Code","Name","Designation","DOJ");
+
+
               for($i=1 ; $i <=$totalDays ;$i++)
               {
 
@@ -658,8 +678,8 @@ class VmtAttendanceReportsService{
                // dd($i.' '.substr(Carbon::parse($fulldate)->format('l'),0,1));
               //  $date_day=$i.'  '.substr(Carbon::parse($fulldate)->format('l'),0,1);
               $date_day=$date.' - '.Carbon::parse($fulldate)->format('l');
-                array_push($heading_dates, $date_day);
-                array_push($dates_1,$date_day);
+                // array_push($heading_dates, $date_day);
+
                 $attendanceResponseArray[$fulldate] = array(
                  //"user_id"=>$request->user_id,
                  "user_id"=> $singleUser->id,"DOJ"=>$singleUser->doj,"isAbsent"=>false,"isLeave"=>false,
@@ -671,7 +691,7 @@ class VmtAttendanceReportsService{
                 //echo "Date is ".$fulldate."\n";
                 ///$month_array[""]
               }
-              array_push($heading_dates, "Total Weekoff", "Total Holiday","Total Present", "Total Absent","Total Late LOP","Total Leave","Total Halfday","Total On Duty","Total LC","Total EG","Total Payable Days");
+            //   array_push($heading_dates, "Total Weekoff", "Total Holiday","Total Present", "Total Absent","Total Late LOP","Total Leave","Total Halfday","Total On Duty","Total LC","Total EG","Total Payable Days");
 
 
 
@@ -768,10 +788,11 @@ class VmtAttendanceReportsService{
          $shiftStartTime  = Carbon::parse($regularTime->shift_start_time);
          $shiftEndTime  = Carbon::parse($regularTime->shift_end_time);
             //
-                   if(!array_key_exists('date',$attendanceResponseArray[$key]) )
+
+
              foreach ($attendanceResponseArray as $key => $value) {
                      //Logic For Check week off or not
-
+                     if(!array_key_exists('date',$attendanceResponseArray[$key]) )
                      dd("Missing for : ".$key);
 
                  if(Carbon::parse($attendanceResponseArray[$key]['date'])->format('l')=="Sunday"
@@ -900,9 +921,13 @@ class VmtAttendanceReportsService{
              }
 
 
-      // dd($attendanceResponseArray);
+      dd($attendanceResponseArray);
 
              foreach ($attendanceResponseArray as $key => $value) {
+                array_push($arrayReport,$value['checkin_time']);
+                array_push($arrayReport,$value['checkout_time']);
+                array_push($arrayReport,' ');
+               // dd(strtotime($value['checkout_time'])-strtotime($value['checkin_time']));
                  $current_date=Carbon::parse($attendanceResponseArray[$key]['date']);
                  $doj=Carbon::parse($attendanceResponseArray[$key]['DOJ']);
 
@@ -916,6 +941,7 @@ class VmtAttendanceReportsService{
                     $total_holidays++;
                   }else if($attendanceResponseArray[$key]['isAbsent']&&!$attendanceResponseArray[$key]['isLeave']
                   &&!$attendanceResponseArray[$key]['is_holiday']&&$attendanceResponseArray[$key]['half_day_status']==null){
+                    dd($attendanceResponseArray[$key]);
                      array_push($arrayReport,'A');
                      $total_absent++;
                  }else if($attendanceResponseArray[$key]['half_day_status']=='Approved'){
@@ -945,6 +971,7 @@ class VmtAttendanceReportsService{
                        $total_leave++;
                    }
                  } else if($attendanceResponseArray[$key]['checkin_time']!=null || $attendanceResponseArray[$key]['checkout_time']!=null) {
+
                      if($attendanceResponseArray[$key]['isLC']=='Rejected' || $attendanceResponseArray[$key]['isLC']=='Not Applied'){
                         array_push($arrayReport,'P/LC');
                         $total_present++;
@@ -982,7 +1009,7 @@ class VmtAttendanceReportsService{
            // dd();
             $total_payable_days=($total_weekoff+$total_holidays+$total_present+$total_leave+$total_halfday+$total_OD)-$total_lop;
            //$total_payable_days=$total_weekoff+$total_holidays+$total_present+$total_leave+$total_halfday+$total_OD;
-            array_push($arrayReport,$total_weekoff,$total_holidays,$total_present,$total_absent, $total_lop,$total_leave, $total_halfday,$total_OD,$total_LC,$total_EG, $total_payable_days);
+            //array_push($arrayReport,$total_weekoff,$total_holidays,$total_present,$total_absent, $total_lop,$total_leave, $total_halfday,$total_OD,$total_LC,$total_EG, $total_payable_days);
             array_push($reportresponse,$arrayReport);
 
            // dd( $arrayReport);
@@ -990,7 +1017,7 @@ class VmtAttendanceReportsService{
         }
         //dd($reportresponse);
         $data=array($dates_1,$heading_dates,$reportresponse);
-        dd( $data);
+        //dd( $data);
        return $data;
     }
 
