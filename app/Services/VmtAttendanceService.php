@@ -21,16 +21,15 @@ use Carbon\Carbon;
 class VmtAttendanceService{
 
 
-    public function fetchAttendanceRegularizationData($manager_id = null)
+    public function fetchAttendanceRegularizationData($manager_user_code = null)
     {
-        $allEmployees_lateComing = '';
 
         $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
 
         $allEmployees_lateComing = null;
 
         //If manager ID not set, then show all employees
-        if(empty($manager_id))
+        if(empty($manager_user_code))
         {
             //If manager ID set, then show only the team level employees
 
@@ -40,10 +39,7 @@ class VmtAttendanceService{
         else
         {
 
-            //Get all the employees ID for the given manager_id
-            $manager_emp_code = User::find($manager_id)->user_code;
-
-            $employees_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $manager_emp_code)->pluck('user_id');
+            $employees_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $manager_user_code)->pluck('user_id');
 
             //dd($employees_id);
 
@@ -940,6 +936,79 @@ class VmtAttendanceService{
             'data' => [],
         ];
     }
+
+    public function approveRejectAttendanceRegularization($approver_user_code, $record_id, $status, $status_text)
+    {
+
+        //Get the user_code
+        $query_user = User::where('user_code',$approver_user_code)->first();
+        $user_id = $query_user->id;
+
+        $data = VmtEmployeeAttendanceRegularization::find($record_id);
+        //dd(!empty($data) && $data->exists());
+
+        if (!empty($data) && $data->exists()) {
+            $data->reviewer_id = $user_id;
+            $data->reviewer_reviewed_date = Carbon::today()->setTimezone('Asia/Kolkata');
+            $data->status = $status;
+            $data->reviewer_comments = $status_text ?? '---';
+
+            $data->save();
+
+        }
+        else{
+            return $responseJSON = [
+                'status' => 'failure',
+                'message' => 'Record not found',
+                'mail_status' => '',
+                'data' => [],
+            ];
+        }
+
+        //Send mail to Employee
+
+        $mail_status = "";
+
+        //Get employee details
+        $employee_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+            ->where('users.id', $data->user_id)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
+
+        //dd($employee_details->officical_mail);
+
+
+        $VmtGeneralInfo = VmtGeneralInfo::first();
+        $image_view = url('/') . $VmtGeneralInfo->logo_img;
+        $emp_avatar = json_decode(getEmployeeAvatarOrShortName($query_user->id));
+
+        $isSent    = \Mail::to($employee_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
+            $employee_details->name,
+            $employee_details->user_code,
+            $emp_avatar,
+            $data->attendance_date,
+            $query_user->name,
+            $query_user->user_code,
+            request()->getSchemeAndHttpHost(),
+            $image_view,
+            $status_text,
+            $status
+        ));
+
+        if ($isSent) {
+            $mail_status = "Mail sent successfully";
+        } else {
+            $mail_status = "There was one or more failures.";
+        }
+
+
+
+        return $responseJSON = [
+            'status' => 'success',
+            'message' => 'Regularization done successfully!',
+            'mail_status' => $mail_status,
+            'data' => [],
+        ];
+    }
+
 }
 
 

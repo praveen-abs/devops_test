@@ -98,6 +98,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     //Attendance Regularize
     Route::post('/attendance/apply-att-regularization', [VmtAPIAttendanceController::class, 'applyRequestAttendanceRegularization']);
+    Route::post('/attendance/approveReject-att-regularization', [VmtAPIAttendanceController::class, 'approveRejectAttendanceRegularization']);
+    Route::post('/attendance/getData-att-regularization', [VmtAPIAttendanceController::class, 'getAttendanceRegularizationData']);
 
 
     //Payslip API

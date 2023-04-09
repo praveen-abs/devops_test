@@ -347,7 +347,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
     }
 
     public function applyRequestAttendanceRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
-        //dd("asdf");
+
         //Validate the request
         $validator = Validator::make(
             $request->all(),
@@ -382,5 +382,65 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
     }
 
-}
 
+    public function approveRejectAttendanceRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+
+        //Validate the request
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                'approver_user_code' => 'required|exists:users,user_code',
+                'record_id' => 'required|integer',
+                'status' => 'required',
+                'status_text' => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+                'integer' => 'Field :attribute should be integer',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                    'status' => 'failure',
+                    'message' => $validator->errors()->all()
+            ]);
+        }
+
+        //Fetch the data
+        $response = $serviceVmtAttendanceService->approveRejectAttendanceRegularization($request->approver_user_code, $request->record_id, $request->status, $request->status_text);
+
+        return $response;
+
+    }
+
+    public function getAttendanceRegularizationData(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+
+        //Validate the request
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                'manager_user_code' => 'nullable|exists:users,user_code',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+                'integer' => 'Field :attribute should be integer',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                    'status' => 'failure',
+                    'message' => $validator->errors()->all()
+            ]);
+        }
+
+        //Fetch the data
+        $response = $serviceVmtAttendanceService->fetchAttendanceRegularizationData($request->manager_user_code);
+
+        return $response;
+
+    }
+}
