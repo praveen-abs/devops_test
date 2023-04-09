@@ -90,7 +90,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('attendance_checkout', [VmtAPIAttendanceController::class, 'attendanceCheckout']);
 
     //Leave
-    Route::post('attendance_applyleave', [VmtAPIAttendanceController::class, 'attendanceApplyLeave']);
+    Route::post('/attendance/apply-leave', [VmtAPIAttendanceController::class, 'applyLeaveRequest']);
+    Route::post('/attendance/approveRejectRevoke-att-leave', [VmtAPIAttendanceController::class, 'approveRejectRevokeLeaveRequest']);
+    //Route::post('/attendance/getData-att-leaves', [VmtAPIAttendanceController::class, '']);
 
     //Attendance Reports
     Route::post('/attendance/monthStatsReport', [VmtAPIAttendanceController::class, 'getAttendanceMonthStatsReport']);

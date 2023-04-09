@@ -306,9 +306,86 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
     public function applyLeaveRequest(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
 
+        dd("---");
+        //Need to split the validation based on leave type so that mandatory fields are checked correctly.
 
-        return $serviceVmtAttendanceService->applyLeaveRequest($request);
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                'user_id' => 'required|exists:users,user_code',
+                'leave_request_date' => 'required',
+                // 'start_date' => 'required',
+                // 'end_date' => 'required',
+                // 'hours_diff' => 'required',
+                // 'no_of_days' => 'required',
+                // 'compensatory_work_days_ids' => 'required',
+                // 'leave_session' => 'required',
+                // 'leave_type_name' => 'required',
+                // 'leave_reason' => 'required',
+                // 'notifications_users_id' => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+                'integer' => 'Field :attribute should be integer',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                        'status' => 'failure',
+                        'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        $response = $serviceVmtAttendanceService->applyLeaveRequest( user_id: $request->user_id,
+                                                                    leave_request_date : $request->leave_request_date,
+                                                                    start_date : $request->start_date,
+                                                                    end_date : $request->end_date,
+                                                                    hours_diff : $request->hours_diff,
+                                                                    no_of_days : $request->no_of_days,
+                                                                    compensatory_work_days_ids : $request->compensatory_work_days_ids,
+                                                                    leave_session : $request->leave_session,
+                                                                    leave_type_name : $request->leave_type_name,
+                                                                    leave_reason : $request->leave_reason,
+                                                                    notifications_users_id : $request->notifications_users_id
+                                                );
+
+        return $response;
     }
+
+    public function approveRejectRevokeLeaveRequest(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                'record_id' => 'required|exists:users,user_code',
+                'approver_user_code' => 'required',
+                'status' => 'required',
+                'leave_rejection_text' => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+                'integer' => 'Field :attribute should be integer',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                        'status' => 'failure',
+                        'message' => $validator->errors()->all()
+            ]);
+        }
+
+        //Fetch the data
+        $response = $serviceVmtAttendanceService->approveRejectRevokeLeaveRequest($request->record_id, $request->approver_user_code, $request->status , $request->leave_rejection_text);
+
+        return $response;
+    }
+
+
 
     public function getAttendanceDailyReport_PerMonth(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
         //dd("asdf");

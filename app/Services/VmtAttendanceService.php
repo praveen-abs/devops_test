@@ -14,9 +14,13 @@ use App\Models\VmtWorkShifts;
 use App\Models\VmtGeneralInfo;
 
 use App\Mail\VmtAttendanceMail_Regularization;
+use App\Mail\RequestLeaveMail;
 
 use Carbon\Carbon;
-
+use Carbon\CarbonPeriod;
+use DatePeriod;
+use DateInterval;
+use \Datetime;
 
 class VmtAttendanceService{
 
@@ -211,17 +215,43 @@ class VmtAttendanceService{
 
     }
 
+    /*
+        For VJS Leave Approvals table
 
-    public function  applyLeaveRequest($request){
+        Returns all leave status types
 
+    */
+    private function createLeaveRange($start_date, $end_date){
+        $start_date = new DateTime($start_date);
+        $end_date = new DateTime($end_date);
 
-        $leave_month = date('m',strtotime($request->start_date));
+        $interval = new DateInterval('P1D');
+        $daterange = new DatePeriod($start_date, $interval ,$end_date);
+
+        return $daterange;
+    }
+
+    /*
+
+        $hours_diff : For permission only
+        $no_of_days, $leave_session : For 0.5 and full day leave types
+
+            // compensatory leaves
+            $compensatory_work_days_ids
+
+    */
+    public function  applyLeaveRequest($user_id, $leave_request_date, $start_date, $end_date, $hours_diff, $no_of_days, $compensatory_work_days_ids, $leave_session, $leave_type_name, $leave_reason, $notifications_users_id){
+
+        //Get the user_code
+        $query_user = User::where('id',$user_id)->first();
+
+        $leave_month = date('m',strtotime($start_date));
         $compensatory_leavetype_id = VmtLeaves::where('leave_type','LIKE','%Compensatory%')->value('id');
 
-        $leave_type_id = VmtLeaves::where('leave_type',$request->leave_type_name)->value('id');
+        $leave_type_id = VmtLeaves::where('leave_type',$leave_type_name)->value('id');
         //dd($leave_type_id);
         //get the existing Pending/Approved leaves. No need to check Rejected
-        $existingNonPendingLeaves = VmtEmployeeLeaves::where('user_id', auth::user()->id)
+        $existingNonPendingLeaves = VmtEmployeeLeaves::where('user_id', $user_id)
                                     ->whereMonth('start_date','>=',$leave_month)
                                     ->whereIn('status',['Pending','Approved'])
                                     ->get(['start_date','end_date','status']);
@@ -239,7 +269,7 @@ class VmtAttendanceService{
             foreach ($leave_range as $date) {
                 //if date already exists in previous leaves
                 // if ($processed_leave_start_date->format('Y-m-d') == $date->format('Y-m-d') || $processed_leave_end_date->format('Y-m-d') == $date->format('Y-m-d'))
-                if ($request->start_date == $date->format('Y-m-d') || $request->end_date == $date->format('Y-m-d') )
+                if ($start_date == $date->format('Y-m-d') || $end_date == $date->format('Y-m-d') )
                 {
                     return $response = [
                         'status' => 'failure',
@@ -259,26 +289,26 @@ class VmtAttendanceService{
           //Check if its Leave or Permission
         if (isPermissionLeaveType($leave_type_id)) {
 
-            $diff = $request->hours_diff;
+            $diff = $hours_diff;
             $mailtext_total_leave = $diff . " Hour(s)";
         } else {
             //Now its leave type
 
             ////Check if its 0.5 day leave, then handle separately
 
-            if($request->no_of_days == '0.5')
+            if($no_of_days == '0.5')
             {
-                if($request->leave_session == "FN"){
+                if($leave_session == "FN"){
                     $diff = "Fore-noon ";
                 } else
-                if($request->leave_session == "AN"){
+                if($leave_session == "AN"){
                     $diff = "After-noon ";
                 }
             }
             else
             {
                 //If its not half day leave, then its fullday or custom days
-                $diff = intval($request->no_of_days);
+                $diff = intval($no_of_days);
             }
 
             $mailtext_total_leave = $diff . " Day(s)";
@@ -287,26 +317,27 @@ class VmtAttendanceService{
 
         //Save in DB
         $emp_leave_details =  new VmtEmployeeLeaves;
-        $emp_leave_details->user_id = auth::user()->id;
+        $emp_leave_details->user_id = $user_id;
         $emp_leave_details->leave_type_id = $leave_type_id;
-        $emp_leave_details->leaverequest_date = $request->leave_request_date;
-        $emp_leave_details->start_date = $request->start_date;
-        $emp_leave_details->end_date = $request->end_date;
-        $emp_leave_details->leave_reason = $request->leave_reason;
-        $emp_leave_details->total_leave_datetime = $request->no_of_days." ".$request->leave_session;
+        $emp_leave_details->leaverequest_date = $leave_request_date;
+        $emp_leave_details->start_date = $start_date;
+        $emp_leave_details->end_date = $end_date;
+        $emp_leave_details->leave_reason = $leave_reason;
+        $emp_leave_details->total_leave_datetime = $no_of_days." ".$leave_session;
+
         // $emp_leave_details->total_leave_datetime = $diff;
 
 
         //get manager of this employee
-        $manager_emp_code = VmtEmployeeOfficeDetails::where('user_id', auth::user()->id)->value('l1_manager_code');
+        $manager_emp_code = VmtEmployeeOfficeDetails::where('user_id', $user_id)->value('l1_manager_code');
         $manager_name = User::where('user_code', $manager_emp_code)->value('name');
         $manager_id = User::where('user_code', $manager_emp_code)->value('id');
 
         $emp_leave_details->reviewer_user_id = $manager_id;
-        $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id));
+        $emp_avatar = json_decode(getEmployeeAvatarOrShortName($user_id));
 
-        if (!empty($request->notifications_users_id))
-            $emp_leave_details->notifications_users_id = implode(",", $request->notifications_users_id);
+        if (!empty($notifications_users_id))
+            $emp_leave_details->notifications_users_id = implode(",", $notifications_users_id);
 
         $emp_leave_details->reviewer_comments = "";
         $emp_leave_details->status = "Pending";
@@ -318,7 +349,7 @@ class VmtAttendanceService{
         ////If compensatory leave, then store the comp work days in 'vmt_employee_compensatory_leaves'
         if($leave_type_id == $compensatory_leavetype_id)
         {
-            $array_comp_work_days_ids = $request->compensatory_work_days_ids == '' ? null : $request->compensatory_work_days_ids;
+            $array_comp_work_days_ids = $compensatory_work_days_ids == '' ? null : $compensatory_work_days_ids;
 
 
             if(!empty($array_comp_work_days_ids) && is_array($array_comp_work_days_ids))
@@ -345,22 +376,22 @@ class VmtAttendanceService{
         $image_view = url('/') . $VmtGeneralInfo->logo_img;
 
         // dd($request->leave_type_id);
-        if(!empty($request->notifications_users_id))
-            $notification_mails = VmtEmployeeOfficeDetails::whereIn('user_id',$request->notifications_users_id)->pluck('officical_mail');
+        if(!empty($notifications_users_id))
+            $notification_mails = VmtEmployeeOfficeDetails::whereIn('user_id',$notifications_users_id)->pluck('officical_mail');
         else
             $notification_mails = array();
 
 
         $isSent    = \Mail::to($reviewer_mail)->cc($notification_mails)->send(new RequestLeaveMail(
-                                                    uEmployeeName : auth::user()->name,
-                                                    uEmpCode : auth::user()->user_code,
+                                                    uEmployeeName : $query_user->name,
+                                                    uEmpCode : $query_user->user_code,
                                                     uEmpAvatar : $emp_avatar,
                                                     uManagerName : $manager_name,
-                                                    uLeaveRequestDate : Carbon::parse($request->leave_request_date)->format('M jS Y'),
-                                                    uStartDate : Carbon::parse($request->start_date)->format('M jS Y'),
-                                                    uEndDate : Carbon::parse($request->end_date)->format('M jS Y'),
-                                                    uReason : $request->leave_reason,
-                                                    uLeaveType : $request->leave_type_name,
+                                                    uLeaveRequestDate : Carbon::parse($leave_request_date)->format('M jS Y'),
+                                                    uStartDate : Carbon::parse($start_date)->format('M jS Y'),
+                                                    uEndDate : Carbon::parse($end_date)->format('M jS Y'),
+                                                    uReason : $leave_reason,
+                                                    uLeaveType : $leave_type_name,
                                                     uTotal_leave_datetime : $mailtext_total_leave,
                                                     //Carbon::parse($request->total_leave_datetime)->format('M jS Y \\, h:i:s A'),
                                                     loginLink : request()->getSchemeAndHttpHost(),
@@ -383,6 +414,89 @@ class VmtAttendanceService{
 
         return $response;
 
+    }
+
+    public function approveRejectRevokeLeaveRequest($record_id, $approver_user_code, $status, $review_comment){
+
+        //Get the user_code
+        $query_user = User::where('user_code',$approver_user_code)->first();
+        $approver_user_id = $query_user->id;
+
+        // $approval_status = $request->status;
+        $leave_record = VmtEmployeeLeaves::where('id', $record_id)->first();
+        //dd($leave_record);
+        //dd( $leave_record);
+        //dd( $request->status);
+        if ($status == "Revoked"){
+            $leave_record->is_revoked = "true";
+            $leave_record->status = "Pending";
+        }
+        else
+        {
+            //For Approved or rejected status
+            $leave_record->status = $status;
+
+        }
+
+        $leave_record->reviewer_user_id = $approver_user_id;
+        $leave_record->reviewer_comments = $review_comment;
+        $leave_record->reviewed_date = Carbon::now();
+        $leave_record->save();
+
+        //Send mail to the employee
+        $employee_user_id = $leave_record->user_id;
+        $employee_mail =  VmtEmployeeOfficeDetails::where('user_id', $employee_user_id)->value('officical_mail');
+        $obj_employee = User::where('id', $employee_user_id);
+        $manager_user_id = $leave_record->reviewer_user_id;
+
+        $message = "";
+        $mail_status = "";
+
+        $VmtGeneralInfo = VmtGeneralInfo::first();
+        $image_view = url('/') . $VmtGeneralInfo->logo_img;
+
+        $emp_avatar = json_decode(getEmployeeAvatarOrShortName($approver_user_id));
+
+
+        $isSent    = \Mail::to($employee_mail)->send(
+            new ApproveRejectLeaveMail(
+                $obj_employee->value('name'),
+                $obj_employee->value('user_code'),
+                VmtLeaves::find($leave_record->leave_type_id)->leave_type,
+                User::find($manager_user_id)->name,
+                User::find($manager_user_id)->user_code,
+                request()->getSchemeAndHttpHost(),
+                $image_view,
+                $emp_avatar,
+                $status
+            )
+        );
+
+        if ($isSent) {
+            $mail_status = "Mail sent successfully";
+        } else {
+            $mail_status = "There was one or more failures.";
+        }
+
+        if($status == "Approved")
+            $text_status = "approved";
+        else
+        if($status == "Rejected")
+            $text_status = "rejected";
+        else
+        if($status == "Revoked")
+            $text_status = "revoked";
+
+
+        $response = [
+            'status' => 'success',
+            'message' => 'Leave Request '.$text_status.' successfully',
+            'mail_status' => $mail_status,
+            'error' => '',
+            'error_verbose' => ''
+        ];
+
+        return $response;
     }
 
 
