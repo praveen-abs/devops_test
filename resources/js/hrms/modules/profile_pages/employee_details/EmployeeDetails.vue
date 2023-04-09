@@ -1,13 +1,13 @@
-<template >
+<template>
     <div class="mb-2 card">
         <div class="card-body">
             <h6 class="">General Information
                 <!-- Button trigger modal -->
-                <a type="button" class="edit-icon" @click="visible = true">
+                <a type="button" class="edit-icon" @click="onClick_EditButton_GeneralInfo">
                     <i class="ri-pencil-fill"></i>
                 </a>
 
-                <Dialog v-model:visible="visible" modal header="General Information"
+                <Dialog v-model:visible="is_dialog_generalInfo_visible" modal header="General Information"
                     :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
                     <template #header>
                         <div>
@@ -16,14 +16,15 @@
                                 General Information</h5>
                         </div>
                     </template>
+
                     <div class="row">
                         <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
                             <div class="mb-3 form-group">
                                 <label :style="{ marginLeft: '10px' }">Birth Date<span class="text-danger">*</span>
                                 </label>
                                 <div class="cal-icon">
-                                    <Calendar showIcon class="mb-3 form-selects" v-model="general_information.dob"
-                                        placeholder="9999-12-31" />
+                                    <Calendar showIcon class="mb-3 form-selects" v-model="dialog_general_information.dob"
+                                        placeholder="31/12/9999" />
                                 </div>
                             </div>
                         </div>
@@ -31,7 +32,7 @@
                             <div class="mb-3 form-group">
                                 <label>Gender<span class="text-danger">*</span></label>
 
-                                <Dropdown v-model="general_information.gender" :options="options_gender" optionLabel="name"
+                                <Dropdown v-model="dialog_general_information.gender" :options="options_gender" optionLabel="name"
                                     optionValue="value" placeholder="Choose Gender" class="form-selects" />
 
                             </div>
@@ -42,7 +43,7 @@
                                 <label :style="{ marginLeft: '10px' }">Date Of Joining(DOJ)<span
                                         class="text-danger">*</span></label>
                                 <div class="cal-icon">
-                                    <Calendar showIcon class="mb-3 form-selects" v-model="general_information.doj"
+                                    <Calendar showIcon class="mb-3 form-selects" v-model="dialog_general_information.doj"
                                         placeholder="9999-12-31" />
                                 </div>
 
@@ -53,8 +54,8 @@
                             <div class="mb-3 form-group">
                                 <label>Blood Group<span class="text-danger">*</span></label>
                                 <div class="cal-icon">
-                                    <Dropdown v-model="general_information.blood_group_id" :options="options_blood_group"
-                                        optionLabel="name" placeholder="Select Bloodgroup" class="form-selects" />
+                                    <Dropdown v-model="dialog_general_information.blood_group_id" :options="options_blood_group"
+                                        optionLabel="name" optionValue="id" placeholder="Select Bloodgroup" class="form-selects" />
                                 </div>
 
                             </div>
@@ -64,16 +65,15 @@
                         <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
                             <div class="mb-3 form-group" :style="{ marginLeft: '10px' }">
                                 <label>Marital status <span class="text-danger">*</span></label>
-                                <Dropdown v-model="general_information.marital_status_id" :options="option_maritals_status"
+                                <Dropdown v-model="dialog_general_information.marital_status_id" :options="option_maritals_status"
                                     optionLabel="name" optionValue="name" placeholder="Select Marital Status"
                                     class="form-selects" />
-
                             </div>
                         </div>
                         <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
                             <div class="mb-3 form-group">
                                 <label>Physically Handicapped</label>
-                                <Dropdown v-model="general_information.physically_challenged"
+                                <Dropdown v-model="dialog_general_information.physically_challenged"
                                     :options="options_phy_challenged" optionLabel="name" optionValue="value"
                                     placeholder="Select" class="form-selects" />
                             </div>
@@ -81,7 +81,7 @@
                     </div>
                     <div class="text-right col-12">
                         <button id="btn_submit_generalInfo" class="btn btn-border-orange submit-btn"
-                            @click="general_information_save()">Save</button>
+                            @click="saveGeneralInformationDetails()">Save</button>
                     </div>
                 </Dialog>
 
@@ -92,14 +92,14 @@
                         <div class="title">Birthday</div>
                         <div class="text">
                             <!-- {{ emp_details.doj.slice(8,10)+ "-" + emp_details.doj.slice(5,7)+"-"+emp_details.doj.slice(0,4) }} -->
-                            {{ employee_service.employeeDetails.get_employee_details.dob }}
+                            {{ _instance_profilePagesStore.employeeDetails.get_employee_details.dob}}
                         </div>
                     </li>
                     <li class="pb-1 border-bottom-liteAsh">
                         <div class="title">Gender </div>
                         <div class="text">
                             <!-- {{ emp_details.gender.name }} -->
-                            {{ employee_service.employeeDetails.get_employee_details.gender }}
+                            {{ computedGenderValue }}
 
 
                         </div>
@@ -108,7 +108,7 @@
                         <div class="title">Date Of Joining (DOJ)</div>
                         <div class="text">
                             <!-- {{ emp_details.doj.slice(8,10)+ "-" + emp_details.doj.slice(5,7)+"-"+emp_details.doj.slice(0,4) }} -->
-                            {{ employee_service.employeeDetails.get_employee_details.doj }}
+                            {{ _instance_profilePagesStore.employeeDetails.get_employee_details.doj }}
 
                         </div>
                     </li>
@@ -116,7 +116,7 @@
                         <div class="title">Marital Status </div>
                         <div class="text text-capitalize">
                             <!-- {{ emp_details.marital_status_id.name }} -->
-                            {{ employee_service.employeeDetails.get_employee_details.marital_status }}
+                            {{ _instance_profilePagesStore.employeeDetails.get_employee_details.marital_status }}
 
                         </div>
                     </li>
@@ -124,7 +124,7 @@
                         <div class="title"> Blood Group</div>
                         <div class="text">
                             <!-- {{ emp_details.blood_group_id.name }} -->
-                            {{ employee_service.employeeDetails.get_employee_details.blood_group_id }}
+                            {{ _instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id }}
 
                         </div>
                     </li>
@@ -132,7 +132,7 @@
                         <div class="title">Physically Handicapped</div>
                         <div class="text">
                             <!-- {{ emp_details.blood_group_id.physically_challenged }} -->
-                            {{ employee_service.employeeDetails.get_employee_details.physically_challenged }}
+                            {{ _instance_profilePagesStore.employeeDetails.get_employee_details.physically_challenged }}
 
                         </div>
                     </li>
@@ -202,21 +202,21 @@
                     <li class="pb-1 border-bottom-liteAsh">
                         <div class="title">Personal Email</div>
                         <div class="text">
-                            {{ employee_service.employeeDetails.email }}
+                            {{ _instance_profilePagesStore.employeeDetails.email }}
 
                         </div>
                     </li>
                     <li class="pb-1 border-bottom-liteAsh">
                         <div class="title">Office Email</div>
                         <div class="text">
-                            {{ employee_service.employeeDetails.get_employee_office_details.officical_mail }}
+                            {{ _instance_profilePagesStore.employeeDetails.get_employee_office_details.officical_mail }}
 
                         </div>
                     </li>
                     <li class="pb-1 ">
                         <div class="title">Mobile Number</div>
                         <div class="text">
-                            {{ employee_service.employeeDetails.get_employee_office_details.official_mobile }}
+                            {{ _instance_profilePagesStore.employeeDetails.get_employee_office_details.official_mobile }}
 
                         </div>
                     </li>
@@ -277,7 +277,7 @@
                             <li class="pb-1 border-bottom-liteAsh flex-column">
                                 <div class="title">Current Address </div>
                                 <div class="text">
-                                    {{ employee_service.employeeDetails.get_employee_details.current_address_line_1 }}
+                                    {{ _instance_profilePagesStore.employeeDetails.get_employee_details.current_address_line_1 }}
 
                                 </div>
                             </li>
@@ -288,7 +288,7 @@
                             <li class="pb-1 border-bottom-liteAsh flex-column">
                                 <div class="title">permanent Address </div>
                                 <div class="text">
-                                    {{ employee_service.employeeDetails.get_employee_details.permanent_address_line_1 }}
+                                    {{ _instance_profilePagesStore.employeeDetails.get_employee_details.permanent_address_line_1 }}
                                 </div>
                             </li>
                         </ul>
@@ -302,7 +302,8 @@
 
 
 <script setup>
-import { ref, onMounted, reactive } from "vue";
+
+import { ref, onMounted, reactive, computed } from "vue";
 import moment from "moment";
 
 import { useToast } from "primevue/usetoast";
@@ -311,26 +312,24 @@ import { useConfirm } from "primevue/useconfirm";
 import axios from "axios";
 
 import { Service } from "../../Service/Service";
-import { employeeService } from '../ProfilePagesService'
+import { profilePagesStore } from '../stores/ProfilePagesStore'
 
 const fetch_data = Service()
 
-const employee_service = employeeService()
+const _instance_profilePagesStore = profilePagesStore()
 
 
 
 const toast = useToast();
 const Addresstoast = useToast();
 
-const visible = ref(false);
+const is_dialog_generalInfo_visible = ref(false);
 const contactVisible = ref(false);
 const addressVisible = ref(false);
 
 
-const employee_details = ref()
-
 //Used inside dialog elements
-const general_information = reactive({
+const dialog_general_information = reactive({
     dob: '',
     gender: '',
     doj: '',
@@ -340,14 +339,27 @@ const general_information = reactive({
 });
 
 const options_gender = ref([
-    { name: "Male", value: "Male" },
-    { name: "Female", value: "Female" },
-    { name: "Others", value: "Others" },
+    { name: "Male", value: "male" },
+    { name: "Female", value: "female" },
+    { name: "Others", value: "others" },
 ]);
 
+const computedGenderValue = computed(() => {
+    if(_instance_profilePagesStore.employeeDetails.get_employee_details.gender == 'male')
+        return "Male";
+    else
+    if(_instance_profilePagesStore.employeeDetails.get_employee_details.gender == 'female')
+        return "Female";
+    else
+    if(_instance_profilePagesStore.employeeDetails.get_employee_details.gender == 'others')
+        return "Others"
+    else
+        return "-"
+})
+
 const options_phy_challenged = ref([
-    { name: "yes", value: "yes" },
-    { name: "no", value: "no" },
+    { name: "Yes", value: "yes" },
+    { name: "No", value: "no" },
 ]);
 
 const options_blood_group = ref();
@@ -355,61 +367,11 @@ const option_maritals_status = ref();
 
 const confirm = useConfirm();
 
-function saveGeneralInformationDetails() {
-    console.log("Called saveGeneralInformationDetails.... ");
-    let id = fetch_data.current_user_id
-    let url = `/profile-pages-update-generalinfo/${id}`
-
-
-    axios
-        .post(url, {
-            user_id: general_information.user_id,
-            dob: general_information.birth_date,
-            gender: general_information.gender,
-            marital_status_id: general_information.marital_status_id,
-            doj: general_information.date_of_joining,
-            blood_group_id: general_information.blood_group_id,
-            physically_challenged: general_information.phy_handicapped,
-        })
-        .then((res) => {
-            data_checking.value = false;
-            if (res.data.status == "success") {
-            } else if (res.data.status == "failure") {
-                leave_data.leave_request_error_messege = res.data.message;
-            }
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-}
-
-const general_information_save = () => {
-
-    console.log(fetch_data.current_user_id);
-
-    // location.reload();
-    console.log(general_information);
-    confirm.require({
-        message: 'Are you sure you want to proceed?',
-        header: 'Confirmation',
-        icon: 'pi pi-exclamation-triangle',
-        accept: () => {
-
-            saveGeneralInformationDetails();
-
-        },
-        reject: () => {
-            toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
-        }
-    });
-}
-
 
 onMounted(() => {
 
-
     fetch_data.getBloodGroups().then((result) => {
-        console.log(result);
+        console.log(result.data);
         options_blood_group.value = result.data;
     });
 
@@ -421,17 +383,76 @@ onMounted(() => {
 
     editInfo()
 
+    //_instance_profilePagesStore
 
-    //Assign json values into dialog elements also
-    // general_information.birth_date = employee_service.employeeDetails.get_employee_details.dob;
-    // general_information.date_of_joining = employee_service.employeeDetails.get_employee_details.doj;
-    // general_information.marital_status_id = employee_service.employeeDetails.get_employee_details.marital_status;
-    // general_information.gender = employee_service.employeeDetails.get_employee_details.gender;
-    // general_information.blood_group_id = employee_service.employeeDetails.get_employee_details.blood_group_id;
-    // general_information.phy_handicapped = employee_service.employeeDetails.get_employee_details.physically_challenged;
+
 
 
 });
+
+function onClick_EditButton_GeneralInfo(){
+    console.log("Opening General Info Dialog");
+
+    // Assign json values into dialog elements also
+
+    dialog_general_information.dob = _instance_profilePagesStore.employeeDetails.get_employee_details.dob;
+    dialog_general_information.doj = _instance_profilePagesStore.employeeDetails.get_employee_details.doj;
+    dialog_general_information.marital_status_id = parseInt(_instance_profilePagesStore.employeeDetails.get_employee_details.marital_status_id);
+    dialog_general_information.gender = _instance_profilePagesStore.employeeDetails.get_employee_details.gender;
+    dialog_general_information.blood_group_id = parseInt(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id);
+    dialog_general_information.physically_challenged = _instance_profilePagesStore.employeeDetails.get_employee_details.physically_challenged;
+
+    is_dialog_generalInfo_visible.value = true;
+}
+
+function saveGeneralInformationDetails() {
+    console.log("Called saveGeneralInformationDetails.... ");
+    let id = fetch_data.current_user_id
+    let url = `/profile-pages-update-generalinfo/${id}`
+
+    console.log( dialog_general_information);
+
+
+    axios.post(url, {
+            user_id: dialog_general_information.user_id,
+            dob: dialog_general_information.dob,
+            gender: dialog_general_information.gender,
+            marital_status_id: dialog_general_information.marital_status_id,
+            doj: dialog_general_information.doj,
+            blood_group_id: dialog_general_information.blood_group_id.id,
+            physically_challenged: dialog_general_information.physically_challenged,
+
+        })
+        .then((res) => {
+            data_checking.value = false;
+            if (res.data.status == "success") {
+
+                axios.get('/profile-pages-getEmpDetails?uid='+uid ).then(res =>{
+                    loading_screen.value = false;
+                    console.log(res.data);
+                    employeeDetails.value = res.data
+                }).catch(e => console.log(e)).finally(()=>console.log("completed"))
+
+            // Assign json values into dialog elements also
+
+            // dialog_general_information.birth_date = _instance_profilePagesStore.employeeDetails.get_employee_details.dob;
+            // dialog_general_information.date_of_joining = _instance_profilePagesStore.employeeDetails.get_employee_details.doj;
+            // dialog_general_information.marital_status_id = _instance_profilePagesStore.employeeDetails.get_employee_details.marital_status;
+            // dialog_general_information.gender = _instance_profilePagesStore.employeeDetails.get_employee_details.gender;
+            // dialog_general_information.blood_group_id = _instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id;
+            // dialog_general_information.phy_handicapped = _instance_profilePagesStore.employeeDetails.get_employee_details.physically_challenged;
+
+
+            } else if (res.data.status == "failure") {
+                leave_data.leave_request_error_messege = res.data.message;
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+
+        is_dialog_generalInfo_visible.value = false
+}
 
 const contact_details = ref();
 
@@ -464,16 +485,7 @@ const contactinfo = reactive({
 //         console.log(err);
 //     })
 
-// }
-// const fetchcontactInfoDetails = () =>{
-//     let url ='http://localhost:3000/contact'
-//     axios.get(url).then((response) => {
-//         console.log("Axios : " + response.data);
-//         console.log(response.data);
-//         contact_details.value = response.data;
-//         // loading.value = false;
-//     });
-// }
+
 
 const addressUpdateDetails = ref();
 
@@ -509,28 +521,19 @@ const saveAddressinfo = () => {
 
 }
 
-const fetchAddressInfoDetails = () => {
-    let url = 'http://localhost:3000/Address_details'
-    axios.get(url).then((response) => {
-        console.log("Axios : " + response.data);
-        console.log(response.data);
-        addressUpdateDetails.value = response.data;
-        // loading.value = false;
-    });
-}
-
 const editInfo = () => {
-    general_information.dob = employee_service.employeeDetails.get_employee_details.dob
-    general_information.gender = employee_service.employeeDetails.get_employee_details.gender,
-        general_information.doj = employee_service.employeeDetails.get_employee_details.doj,
-        general_information.blood_group_id = employee_service.employeeDetails.get_employee_details.blood_group_id,
-        general_information.marital_status_id = employee_service.employeeDetails.get_employee_details.marital_status_id,
-        general_information.physically_challenged = employee_service.employeeDetails.get_employee_details.physically_challenged
-    contactinfo.personal_email = employee_service.employeeDetails.email
-    contactinfo.mobile_number = employee_service.employeeDetails.get_employee_office_details.official_mobile
-    contactinfo.office_email = employee_service.employeeDetails.get_employee_office_details.officical_mail
-    Addressinfo.current_address = employee_service.employeeDetails.get_employee_details.current_address_line_1
-    Addressinfo.Permanent_Address = employee_service.employeeDetails.get_employee_details.permanent_address_line_1
+
+    // dialog_general_information.dob = _instance_profilePagesStore.employeeDetails.get_employee_details.dob
+    // dialog_general_information.gender = _instance_profilePagesStore.employeeDetails.get_employee_details.gender,
+    //     dialog_general_information.doj = _instance_profilePagesStore.employeeDetails.get_employee_details.doj,
+    //     dialog_general_information.blood_group_id = _instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id,
+    //     dialog_general_information.marital_status_id = _instance_profilePagesStore.employeeDetails.get_employee_details.marital_status_id,
+    //     dialog_general_information.physically_challenged = _instance_profilePagesStore.employeeDetails.get_employee_details.physically_challenged
+    // contactinfo.personal_email = _instance_profilePagesStore.employeeDetails.email
+    // contactinfo.mobile_number = _instance_profilePagesStore.employeeDetails.get_employee_office_details.official_mobile
+    // contactinfo.office_email = _instance_profilePagesStore.employeeDetails.get_employee_office_details.officical_mail
+    // Addressinfo.current_address = _instance_profilePagesStore.employeeDetails.get_employee_details.current_address_line_1
+    // Addressinfo.Permanent_Address = _instance_profilePagesStore.employeeDetails.get_employee_details.permanent_address_line_1
 }
 
 

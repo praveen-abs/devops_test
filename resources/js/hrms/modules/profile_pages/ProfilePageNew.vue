@@ -1,5 +1,6 @@
 <template>
-    <Dialog header="Header" v-model:visible="employee_service.loading_screen"
+
+    <Dialog header="Header" v-model:visible="_instance_profilePagesStore.loading_screen"
         :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
         :closeOnEscape="false">
         <template #header>
@@ -10,6 +11,7 @@
             <h5 style="text-align: center">Please wait...</h5>
         </template>
     </Dialog>
+
     <div class="profile_page-wrapper mt-30 container-fluid">
         <div class="row">
             <div class="col-3 col-sm-12 col-md-3 col-lg-3 col-xxl-3 col-xl-3">
@@ -69,33 +71,33 @@
                                         <div class="py-2 border-bottom-liteAsh">
                                             <p class="text-muted f-12 fw-bold">Employee Code</p>
                                             <p class="text-primary f-15 fw-bold">
-                                                {{ employee_service.employeeDetails.user_code }}
+                                                {{ _instance_profilePagesStore.employeeDetails.user_code }}
                                             </p>
 
                                         </div>
                                         <div class="py-2 border-bottom-liteAsh">
                                             <p class="text-muted f-12 fw-bold">Designation</p>
                                             <p class="text-primary f-15 fw-bold">
-                                                {{ employee_service.employeeDetails.designation }}
+                                                {{ _instance_profilePagesStore.employeeDetails.designation }}
                                             </p>
 
                                         </div>
                                         <div class="py-2 border-bottom-liteAsh">
                                             <p class="text-muted f-12 fw-bold">Location</p>
                                             <p class="text-primary f-15 fw-bold">
-                                                {{ employee_service.employeeDetails.work_location }}
+                                                {{ _instance_profilePagesStore.employeeDetails.work_location }}
                                             </p>
                                         </div>
                                         <div class="py-2 border-bottom-liteAsh">
                                             <p class="text-muted f-12 fw-bold">Department</p>
                                             <p class="text-primary f-15 fw-bold">
-                                                {{ employee_service.employeeDetails.department }}
+                                                {{ _instance_profilePagesStore.employeeDetails.department }}
                                             </p>
                                         </div>
                                         <div class="py-2 border-bottom-liteAsh">
                                             <p class="text-muted f-12 fw-bold">Reporting To</p>
                                             <p class="text-primary f-15 fw-bold">
-                                                {{ employee_service.employeeDetails.l1_manager_name }}
+                                                {{ _instance_profilePagesStore.employeeDetails.l1_manager_name }}
                                             </p>
                                         </div>
                                     </div>
@@ -148,8 +150,8 @@
 
                 <div class="tab-content " id="pills-tabContent">
 
-                    <div class="tab-pane fade active show" id="employee_details" role="tabpanel" aria-labelledby="">
-                        <EmployeeDetails />
+                    <div class="tab-pane fade active show" id="employee_details" role="tabpanel" aria-labelledby="" >
+                        <div v-if="!_instance_profilePagesStore.loading_screen"><EmployeeDetails /></div>
                     </div>
 
                     <div class="tab-pane fade" id="family_det" role="tabpanel" aria-labelledby="">
@@ -192,19 +194,28 @@ import ExperienceDetails from './experience/ExperienceDetails.vue'
 import Documents from './documents/documents.vue'
 
 import { Service } from '../Service/Service'
-import { employeeService } from './ProfilePagesService'
+import { profilePagesStore } from './stores/ProfilePagesStore'
 import { ref, onMounted } from 'vue'
 
 const service = Service()
 
 
 
-const employee_service = employeeService()
+let _instance_profilePagesStore = profilePagesStore();
 
-onMounted(() => {
-    Service()
-    employeeService()
+onMounted(async () => {
 
+    console.log("Loading screen start : "+_instance_profilePagesStore.loading_screen)
 
+    _instance_profilePagesStore.fetchEmployeeDetails().then(
+        function(value) {
+            console.log("Loading screen end : "+_instance_profilePagesStore.loading_screen)
+
+            console.log("Req done");
+        }
+
+    )
+
+    //console.log("Emp details : "+_instance_profilePagesStore.employeeDetails.get_employee_details);
 })
 </script>
