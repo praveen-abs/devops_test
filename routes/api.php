@@ -78,67 +78,27 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 
     //Main Dashboard Module
-    Route::get('getDashboardData',  [VmtAPIDashboardController::class,'getDashboardData']);
+    Route::get('getDashboardData',  [VmtAPIDashboardController::class, 'getDashboardData']);
 
+    Route::post('save_reimbursement_data', [VmtAPIAttendanceController::class, 'saveReimbursementData']);
 
-    /*
-        get current day attendance API
-        attendanceGetCurrentDay():
-        Input : date
-        DB Table : vmt_employee_attendance
-        Output : success/failure response.
+    ////Attendance
+    Route::get('attendance_getcurrentday', [VmtAPIAttendanceController::class, 'getCurrentDayAttendance']);
 
-    */
-    Route::get('attendance_getcurrentday', [VmtAPIAttendanceController::class,'getCurrentDayAttendance']);
+    //Check-in/ Check-out
+    Route::post('attendance_checkin', [VmtAPIAttendanceController::class, 'attendanceCheckin']);
+    Route::post('attendance_checkout', [VmtAPIAttendanceController::class, 'attendanceCheckout']);
 
-    /*
-        attendanceCheckin():
-        Input : date, checkin_time, shift_type
-        DB Table : vmt_employee_attendance
-        Output : success/failure response.
+    //Leave
+    Route::post('attendance_applyleave', [VmtAPIAttendanceController::class, 'attendanceApplyLeave']);
 
-    */
-    Route::post('attendance_checkin', [VmtAPIAttendanceController::class,
-        'attendanceCheckin']);
-
-    /*
-        attendanceCheckout():
-        Input : date, checkout_time,
-        DB Table : vmt_employee_attendance
-        Output : success/failure response.
-
-    */
-    Route::post('attendance_checkout', [VmtAPIAttendanceController::class,
-        'attendanceCheckout']);
-
-    /*
-        attendanceCheckout():
-        Input : date, checkout_time,
-        DB Table : vmt_employee_attendance
-        Output : success/failure response.
-
-    */
-    Route::post('save_reimbursement_data', [VmtAPIAttendanceController::class,
-        'saveReimbursementData']);
-
-    /*
-        attendanceApplyLeave():
-        Input : date, leave_type_id
-        DB Table : vmt_employee_attendance
-        Output : success/failure response.
-    */
-    Route::post('attendance_applyleave', [VmtAPIAttendanceController::class,
-        'attendanceApplyLeave']);
-
-
-    /*
-        attendanceMonthlyReport():
-        Input : date
-        DB Table : vmt_employee_attendance
-        Output : success/failure response.
-    */
+    //Attendance Reports
     Route::post('/attendance/monthStatsReport', [VmtAPIAttendanceController::class, 'getAttendanceMonthStatsReport']);
     Route::post('/attendance/dailyReport-PerMonth', [VmtAPIAttendanceController::class, 'getAttendanceDailyReport_PerMonth']);
+
+    //Attendance Regularize
+    Route::post('/attendance/apply-att-regularization', [VmtAPIAttendanceController::class, 'applyRequestAttendanceRegularization']);
+
 
     //Payslip API
     Route::get('payslip_getmonthlypayslipdata', [VmtAPIPaySlipController::class, 'getMonthlyPayslipData']);

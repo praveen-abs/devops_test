@@ -235,53 +235,39 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         DB Table : vmt_employee_attendance
         Output : success/failure response.
     */
-    public function getAttendanceMonthStatsReport(Request $request)
+    public function getAttendanceMonthStatsReport(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
     {
-        // code...
-        $workingCount = $onTimeCount = $lateCount = $leftTimelyCount = $leftEarlyCount = $onLeaveCount = $absentCount = 0;
 
-        //$reportMonth  = $request->has('month') ? $request->month : date('m');
+        //Validate the request
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                'user_code' => 'required|exists:users,user_code',
+                'year' => 'required|integer',
+                'month' => 'required|integer',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+                'integer' => 'Field :attribute should be integer',
+            ]
+        );
 
-        $monthlyGroups = VmtEmployeeAttendance::select(\DB::raw('MONTH(date) month'))->where('user_id', auth::user()->id)->groupBy('month')->orderBy('month', 'DESC')->get();
-        $monthlyReport =  [];
-
-        foreach ($monthlyGroups as $key => $value) {
-            // code...
-            //dd($value);
-            $dailyAttendanceReport  = VmtEmployeeAttendance::select('id', 'date', 'user_id', 'checkin_time', 'checkout_time', 'leave_type_id', 'shift_type')
-                ->where('user_id', auth::user()->id)
-                ->whereMonth("date", $value->month)
-                ->orderBy('created_at', 'DESC')
-                ->get();
-
-
-            $workingCount = $dailyAttendanceReport->count();
-            $onLeaveCount = $dailyAttendanceReport->whereNotNull('leave_type_id')->count() ;
-
-            $monthlyReport[]  =  array(
-                                    "year_value" => substr($dailyAttendanceReport[0]["date"],0,4),
-                                    "month_value"  => $value->month,
-                                    "working_days" => $workingCount,
-                                    "on_time" => $onTimeCount,
-                                    "late" => $lateCount,
-                                    "left_timely" => $leftTimelyCount,
-                                    "left_early" => $leftEarlyCount,
-                                    "on_leave" => $onLeaveCount,
-                                    "absent" => $absentCount,
-                                    "daily_attendance_report" => $dailyAttendanceReport
-                                );
+        if ($validator->fails()) {
+            return response()->json([
+                        'status' => 'failure',
+                        'message' => $validator->errors()->all()
+            ]);
         }
 
-
-
+        //Fetch the data
+        $response = $serviceVmtAttendanceService->fetchAttendanceMonthStatsReport($request->user_code,$request->year,$request->month);
 
 
         return response()->json([
             'status' => 'success',
-            'message'=> '',
-            'data'   => [
-                            "month"  => $monthlyReport
-                        ]
+            'message' => '',
+            'data' => $response
         ]);
 
     }
@@ -357,6 +343,42 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
             'message' => '',
             'data' => $response
         ]);
+
+    }
+
+    public function applyRequestAttendanceRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+        //dd("asdf");
+        //Validate the request
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                'user_code' => 'required|exists:users,user_code',
+                'attendance_date' => 'required',
+                'regularization_type' => 'required',
+                'user_time' => 'required',
+                'regularize_time' => 'required',
+                'reason' => 'required',
+                'custom_reason' => 'required', //Send empty string even if no custom reason needed
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+                //'integer' => 'Field :attribute should be integer',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                        'status' => 'failure',
+                        'message' => $validator->errors()->all()
+            ]);
+        }
+
+        //Fetch the data
+        $response = $serviceVmtAttendanceService->applyRequestAttendanceRegularization($request->user_code, $request->attendance_date, $request->regularization_type, $request->user_time, $request->regularize_time, $request->reason, $request->custom_reason);
+
+
+        return $response;
 
     }
 

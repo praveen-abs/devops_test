@@ -11,6 +11,9 @@ use App\Models\VmtEmployeeAttendance;
 use App\Models\VmtEmployeeCompensatoryLeave;
 use App\Models\VmtLeaves;
 use App\Models\VmtWorkShifts;
+use App\Models\VmtGeneralInfo;
+
+use App\Mail\VmtAttendanceMail_Regularization;
 
 use Carbon\Carbon;
 
@@ -745,6 +748,51 @@ class VmtAttendanceService{
         return $attendanceResponseArray;
     }
 
+    public function fetchAttendanceMonthStatsReport($user_code, $year, $month){
+
+        //Get the user_code
+        $query_user = User::where('user_code',$user_code)->first();
+        $user_id = $query_user->id;
+
+          // code...
+          $workingCount = $onTimeCount = $lateCount = $leftTimelyCount = $leftEarlyCount = $onLeaveCount = $absentCount = 0;
+
+          //$reportMonth  = $request->has('month') ? $request->month : date('m');
+
+          $monthlyGroups = VmtEmployeeAttendance::select(\DB::raw('MONTH(date) month'))->where('user_id', $user_id)->groupBy('month')->orderBy('month', 'DESC')->get();
+          $monthlyReport =  [];
+
+          foreach ($monthlyGroups as $key => $value) {
+              // code...
+              //dd($value);
+              $dailyAttendanceReport  = VmtEmployeeAttendance::select('id', 'date', 'user_id', 'checkin_time', 'checkout_time', 'leave_type_id', 'shift_type')
+                  ->where('user_id', $user_id)
+                  ->whereMonth("date", $month)
+                  ->orderBy('created_at', 'DESC')
+                  ->get();
+
+
+              $workingCount = $dailyAttendanceReport->count();
+              $onLeaveCount = $dailyAttendanceReport->whereNotNull('leave_type_id')->count() ;
+
+              $monthlyReport[]  =  array(
+                                      "year_value" => substr($dailyAttendanceReport[0]["date"],0,4),
+                                      "month_value"  => $value->month,
+                                      "working_days" => $workingCount,
+                                      "on_time" => $onTimeCount,
+                                      "late" => $lateCount,
+                                      "left_timely" => $leftTimelyCount,
+                                      "left_early" => $leftEarlyCount,
+                                      "on_leave" => $onLeaveCount,
+                                      "absent" => $absentCount,
+                                      "daily_attendance_report" => $dailyAttendanceReport
+                                  );
+          }
+
+          return $monthlyReport;
+    }
+
+
     private function isRegularizationRequestApplied($user_id, $attendance_date, $regularizeType)
     {
 
@@ -804,6 +852,94 @@ class VmtAttendanceService{
         }
     }
 
+
+    public function applyRequestAttendanceRegularization($user_code, $attendance_date, $regularization_type, $user_time, $regularize_time, $reason, $custom_reason){
+
+        //Get the user_code
+        $query_user = User::where('user_code',$user_code)->first();
+        $user_id = $query_user->id;
+
+        //Check if already request applied
+        $data = VmtEmployeeAttendanceRegularization::where('attendance_date', $attendance_date)
+                                                    ->where('user_id',  $user_id)
+                                                    ->where('regularization_type',  $regularization_type);
+
+        if ($data->exists()) {
+            //dd("Request already applied");
+            return $responseJSON = [
+                'status' => 'failure',
+                'message' => 'Request already applied',
+                'mail_status' => 'failure',
+                'data' => [],
+            ];
+        }
+        else
+        {
+
+                //dd("Request not applied");
+
+            if ($regularization_type == 'MIP' || $regularization_type == 'MOP')
+                $user_time = null;
+
+            $attendanceRegularizationRequest = new VmtEmployeeAttendanceRegularization;
+            $attendanceRegularizationRequest->user_id = $user_id;
+            $attendanceRegularizationRequest->attendance_date = $attendance_date;
+            $attendanceRegularizationRequest->regularization_type =  $regularization_type;
+            $attendanceRegularizationRequest->user_time =  empty($user_time) ? null : Carbon::createFromFormat('H:i:s', $user_time);
+            $attendanceRegularizationRequest->regularize_time = Carbon::createFromFormat('H:i:s', $regularize_time);
+            $attendanceRegularizationRequest->reason_type = $reason;
+            $attendanceRegularizationRequest->custom_reason = $custom_reason ?? '';
+            $attendanceRegularizationRequest->status = 'Pending';
+
+            $attendanceRegularizationRequest->save();
+        }
+
+
+        ////Send mail to Manager
+
+        $mail_status = "";
+
+        //Get manager details
+        $manager_usercode = VmtEmployeeOfficeDetails::where('user_id', $user_id)->value('l1_manager_code');
+        $manager_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+            ->where('users.user_code', $manager_usercode)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
+
+        //dd($manager_details);
+
+
+        $VmtGeneralInfo = VmtGeneralInfo::first();
+        $image_view = url('/') . $VmtGeneralInfo->logo_img;
+
+
+        $emp_avatar = json_decode(getEmployeeAvatarOrShortName($user_id));
+
+
+        $isSent    = \Mail::to($manager_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
+            $query_user->name,
+            $query_user->user_code,
+            $emp_avatar,
+            $attendance_date,
+            $manager_details->name,
+            $manager_details->user_code,
+            request()->getSchemeAndHttpHost(),
+            $image_view,
+            $custom_reason,
+            "Pending"
+        ));
+
+        if ($isSent) {
+            $mail_status = "Mail sent successfully";
+        } else {
+            $mail_status = "There was one or more failures.";
+        }
+
+        return $responseJSON = [
+            'status' => 'success',
+            'message' => 'Request sent successfully!',
+            'mail_status' => $mail_status,
+            'data' => [],
+        ];
+    }
 }
 
 
