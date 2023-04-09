@@ -744,6 +744,10 @@ class VmtAttendanceService{
         return $attendanceResponseArray;
     }
 
+    /*
+        Get attendance stats data for single month
+
+    */
     public function fetchAttendanceMonthStatsReport($user_code, $year, $month){
 
         //Get the user_code
@@ -755,35 +759,43 @@ class VmtAttendanceService{
 
           //$reportMonth  = $request->has('month') ? $request->month : date('m');
 
-          $monthlyGroups = VmtEmployeeAttendance::select(\DB::raw('MONTH(date) month'))->where('user_id', $user_id)->groupBy('month')->orderBy('month', 'DESC')->get();
-          $monthlyReport =  [];
+          //$monthlyGroups = VmtEmployeeAttendance::select(\DB::raw('MONTH(date) month'))->where('user_id', $user_id)->groupBy('month')->orderBy('month', 'DESC')->get();
+          //$monthlyReport =  [];
 
-          foreach ($monthlyGroups as $key => $value) {
+          //foreach ($monthlyGroups as $key => $value) {
               // code...
               //dd($value);
               $dailyAttendanceReport  = VmtEmployeeAttendance::select('id', 'date', 'user_id', 'checkin_time', 'checkout_time', 'leave_type_id', 'shift_type')
                   ->where('user_id', $user_id)
+                  ->whereYear("date", $year)
                   ->whereMonth("date", $month)
                   ->orderBy('created_at', 'DESC')
                   ->get();
 
 
               $workingCount = $dailyAttendanceReport->count();
-              $onLeaveCount = $dailyAttendanceReport->whereNotNull('leave_type_id')->count() ;
 
-              $monthlyReport[]  =  array(
-                                      "year_value" => substr($dailyAttendanceReport[0]["date"],0,4),
-                                      "month_value"  => $value->month,
-                                      "working_days" => $workingCount,
-                                      "on_time" => $onTimeCount,
-                                      "late" => $lateCount,
-                                      "left_timely" => $leftTimelyCount,
-                                      "left_early" => $leftEarlyCount,
-                                      "on_leave" => $onLeaveCount,
-                                      "absent" => $absentCount,
-                                      "daily_attendance_report" => $dailyAttendanceReport
-                                  );
-          }
+              if($workingCount == 0)
+              {
+                return null;
+              }
+              else
+              {
+                    $onLeaveCount = $dailyAttendanceReport->whereNotNull('leave_type_id')->count() ;
+
+                    $monthlyReport  =  array(
+                                            "year_value" => substr($dailyAttendanceReport[0]["date"],0,4),
+                                            "month_value"  => $month,
+                                            "working_days" => $workingCount,
+                                            "on_time" => $onTimeCount,
+                                            "late" => $lateCount,
+                                            "left_timely" => $leftTimelyCount,
+                                            "left_early" => $leftEarlyCount,
+                                            "on_leave" => $onLeaveCount,
+                                            "absent" => $absentCount,
+                                            "daily_attendance_report" => $dailyAttendanceReport
+                                        );
+              }
 
           return $monthlyReport;
     }
