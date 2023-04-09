@@ -27,6 +27,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/auth/register', [AuthController::class, 'createUser']);
 Route::post('/auth/login', [AuthController::class, 'loginUser']);
+Route::post('/auth/updatePassword', [AuthController::class, 'updatePassword']);
 
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
@@ -136,13 +137,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         DB Table : vmt_employee_attendance
         Output : success/failure response.
     */
-    Route::get('attendance_monthlyreport', [VmtAPIAttendanceController::class,
-        'attendanceMonthlyReport']);
-
+    Route::post('/attendance/monthStatsReport', [VmtAPIAttendanceController::class, 'getAttendanceMonthStatsReport']);
+    Route::post('/attendance/dailyReport-PerMonth', [VmtAPIAttendanceController::class, 'getAttendanceDailyReport_PerMonth']);
 
     //Payslip API
-    Route::get('payslip_getmonthlypayslipdata', [VmtAPIPaySlipController::class,
-        'getMonthlyPayslipData']);
+    Route::get('payslip_getmonthlypayslipdata', [VmtAPIPaySlipController::class, 'getMonthlyPayslipData']);
 
 
 ////Profile Pages
@@ -151,5 +150,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 });
 
-Route::get('profile-pages-getEmpDetails', [VmtAPIProfilePagesController::class, 'fetchEmployeeProfileDetails']);
+Route::get('/profile-pages-getEmpDetails', [VmtAPIProfilePagesController::class, 'fetchEmployeeProfileDetails']);
 

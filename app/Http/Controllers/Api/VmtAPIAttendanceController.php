@@ -10,6 +10,8 @@ use App\Models\VmtEmployeeAttendance;
 use App\Models\VmtReimbursements;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use App\Services\VmtAttendanceService;
+use Illuminate\Support\Facades\Validator;
 
 class VmtAPIAttendanceController extends HRMSBaseAPIController
 {
@@ -233,7 +235,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         DB Table : vmt_employee_attendance
         Output : success/failure response.
     */
-    public function attendanceMonthlyReport(Request $request)
+    public function getAttendanceMonthStatsReport(Request $request)
     {
         // code...
         $workingCount = $onTimeCount = $lateCount = $leftTimelyCount = $leftEarlyCount = $onLeaveCount = $absentCount = 0;
@@ -322,7 +324,41 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         return $serviceVmtAttendanceService->applyLeaveRequest($request);
     }
 
+    public function getAttendanceDailyReport_PerMonth(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+        //dd("asdf");
+        //Validate the request
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                'user_code' => 'required|exists:users,user_code',
+                'year' => 'required|integer',
+                'month' => 'required|integer',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+                'integer' => 'Field :attribute should be integer',
+            ]
+        );
 
+        if ($validator->fails()) {
+            return response()->json([
+                        'status' => 'failure',
+                        'message' => $validator->errors()->all()
+            ]);
+        }
+
+        //Fetch the data
+        $response = $serviceVmtAttendanceService->fetchAttendanceDailyReport_PerMonth($request->user_code,$request->year,$request->month);
+
+
+        return response()->json([
+            'status' => 'success',
+            'message' => '',
+            'data' => $response
+        ]);
+
+    }
 
 }
 

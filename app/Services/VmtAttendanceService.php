@@ -10,6 +10,9 @@ use App\Models\vmtHolidays;
 use App\Models\VmtEmployeeAttendance;
 use App\Models\VmtEmployeeCompensatoryLeave;
 use App\Models\VmtLeaves;
+use App\Models\VmtWorkShifts;
+
+use Carbon\Carbon;
 
 
 class VmtAttendanceService{
@@ -187,26 +190,26 @@ class VmtAttendanceService{
         return array_values($map_comp_off_days);
     }
 
-    
+
     public function fetchEmployeeLeaveBalance($user_id)
     {
         $response = array();
 
           $leaveTypes = VmtLeaves::all();
-         $sickLeaveCount =  VmtEmployeeLeaves::where('leave_type_id', '=', '1')->count(); 
-         $CausalLeaveCount =  VmtEmployeeLeaves::where('leave_type_id', '=', '2')->count(); 
-        $earnedleave_count =  VmtEmployeeLeaves::where('leave_type_id', '=', '3')->count(); 
+         $sickLeaveCount =  VmtEmployeeLeaves::where('leave_type_id', '=', '1')->count();
+         $CausalLeaveCount =  VmtEmployeeLeaves::where('leave_type_id', '=', '2')->count();
+        $earnedleave_count =  VmtEmployeeLeaves::where('leave_type_id', '=', '3')->count();
 
         $query_emp_leaves = VmtEmployeeLeaves::join('vmt_leaves','vmt_leaves.id','vmt_employee_leaves.leave_type_id')
                                             ->where('user_id', '=' , '174');
-                                          
+
         foreach($leaveTypes as $singleLeaveType)
         {
             $response[$singleLeaveType->leave_type] = $query_emp_leaves->where('leave_type_id',$singleLeaveType->id)->get()->count();
         }
 
         return $response;
-        
+
     }
 
 
@@ -399,8 +402,408 @@ class VmtAttendanceService{
         return $response;
     }
 
+    public function fetchAttendanceDailyReport_PerMonth($user_code, $year, $month){
+
+        //Get the user_code
+        $user_id = User::where('user_code',$user_code)->first()->id;
+
+        $regularTime  = VmtWorkShifts::where('shift_type', 'First Shift')->first();
+
+        ////Fetch the attendance reports
+        //Create date array
+        $requestedDate = $year . '-' . $month . '-01';
+        $currentDate = Carbon::now();
+        $monthDateObj = Carbon::parse($requestedDate);
+        $startOfMonth = $monthDateObj->startOfMonth(); //->format('Y-m-d');
+        $endOfMonth   = $monthDateObj->endOfMonth(); //->format('Y-m-d');
 
 
+        if ($currentDate->lte($endOfMonth)) {
+            $lastAttendanceDate  = $currentDate; //->format('Y-m-d');
+        } else {
+            $lastAttendanceDate  = $endOfMonth; //->format('Y-m-d');
+        }
+
+        $totalDays  = $lastAttendanceDate->format('d');
+        $firstDateStr  = $monthDateObj->startOfMonth()->toDateString();
+
+
+
+        // attendance details from vmt_staff_attenndance_device table
+        $deviceData = [];
+        for ($i = 0; $i < ($totalDays); $i++) {
+            // code...
+            $dayStr = Carbon::parse($firstDateStr)->addDay($i)->format('l');
+
+            if ($dayStr != 'Sunday') {
+
+                $dateString  = Carbon::parse($firstDateStr)->addDay($i)->format('Y-m-d');
+
+                $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
+                    ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
+                    ->whereDate('date', $dateString)
+                    ->where('direction', 'out')
+                    ->where('user_Id', $user_code)
+                    ->first(['check_out_time']);
+
+                $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
+                    ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
+                    ->whereDate('date', $dateString)
+                    ->where('direction', 'in')
+                    ->where('user_Id', $user_code)
+                    ->first(['check_in_time']);
+
+                $deviceCheckOutTime = empty($attendanceCheckOut->check_out_time) ? null : explode(' ', $attendanceCheckOut->check_out_time)[1];
+                $deviceCheckInTime  = empty($attendanceCheckIn->check_in_time) ? null : explode(' ', $attendanceCheckIn->check_in_time)[1];
+
+                if ($deviceCheckOutTime  != null || $deviceCheckInTime != null) {
+                    $deviceData[] = array(
+                        'date' => $dateString,
+                        'checkin_time' => $deviceCheckInTime,
+                        'checkout_time' => $deviceCheckOutTime,
+                        'attendance_mode_checkin' => 'biometric',
+                        'attendance_mode_checkout' => 'biometric'
+                    );
+                }
+            }
+        }//for
+
+
+
+        // attendance details from vmt_employee_attenndance table
+        $attendance_WebMobile = VmtEmployeeAttendance::where('user_id', $user_id)
+            ->whereMonth('date', $month)
+            ->orderBy('checkin_time', 'asc')
+            ->get(['date', 'checkin_time', 'checkout_time','attendance_mode_checkin','attendance_mode_checkout','selfie_checkin','selfie_checkout']);
+
+            $attendanceResponseArray = [];
+
+            //Create empty month array with all dates.
+
+            if($month < 10)
+                $month = "0" . $month;
+
+
+            $days_count = cal_days_in_month(CAL_GREGORIAN,$month,$year);
+
+             for($i=1 ; $i <=$days_count ;$i++)
+             {
+               $date = "";
+
+               if($i<10)
+                 $date = "0".$i;
+               else
+                 $date = $i;
+
+               $fulldate = $year."-".$month."-".$date;
+
+
+               $attendanceResponseArray[$fulldate] = array( "user_id"=>$user_id,"isAbsent"=>false, "attendance_mode_checkin"=>null, "attendance_mode_checkout"=>null,
+                                                            "absent_status"=>null,"leave_type"=>null,"checkin_time"=>null, "checkout_time"=>null,
+                                                            "selfie_checkin"=>null, "selfie_checkout"=>null,
+                                                            "isLC"=>false, "lc_status"=>null, "lc_reason"=>null,"lc_reason_custom"=>null,
+                                                            "isEG"=>false, "eg_status"=>null, "eg_reason"=>null,"eg_reason_custom"=>null,
+                                                            "isMIP"=>false, "mip_status"=>null, "isMOP"=>false, "mop_status"=>null
+                                                            );
+
+               //echo "Date is ".$fulldate."\n";
+               ///$month_array[""]
+             }
+
+
+            // merging result from both table
+            $merged_attendanceData  = array_merge($deviceData, $attendance_WebMobile->toArray());
+            $dateCollectionObj    =  collect($merged_attendanceData);
+
+            $sortedCollection   =   $dateCollectionObj->sortBy([
+                ['date', 'asc'],
+            ]);
+
+            $dateWiseData         =  $sortedCollection->groupBy('date'); //->all();
+            //dd($merged_attendanceData);
+            //dd($dateWiseData);
+            foreach ($dateWiseData  as $key => $value) {
+
+               // dd($value[0]);
+
+                /*
+                    Here $key is the date. i.e : 2022-10-01
+
+                    $value is ::
+
+                        [
+                            date=>2022-11-05
+                            checkin_time=18:06:00
+                            checkout_time=18:06:00
+                            attendance_mode="web"
+                        ],
+                        [
+                            ....
+                            attendance_mode="biometric"
+
+                        ]
+
+                */
+                //Compare the checkin,checkout time between all attendance modes and get the min(checkin) and max(checkout)
+
+                $checkin_min = null;
+                $checkout_max = null;
+                $attendance_mode_checkin = null;
+                $attendance_mode_checkout = null;
+
+                //dd($value);
+                foreach($value as $singleValue)
+                {
+                    //Find the min of checkin
+                    if ($checkin_min == null) {
+                        $checkin_min = $singleValue["checkin_time"];
+                        $attendance_mode_checkin = $singleValue["attendance_mode_checkin"];
+                    }
+                    else
+                    if ($checkin_min > $singleValue["checkin_time"]) {
+                        $checkin_min = $singleValue["checkin_time"];
+                        $attendance_mode_checkin = $singleValue["attendance_mode_checkin"];
+                    }
+
+                        //dd("Min value found : " . $singleValue["checkin_time"]);
+
+                    //Find the max of checkin
+                    if ($checkout_max == null) {
+                        $checkout_max = $singleValue["checkout_time"];
+                        $attendance_mode_checkout = $singleValue["attendance_mode_checkout"];
+                    }
+                    else
+                    if ($checkout_max < $singleValue["checkout_time"]) {
+                        $checkout_max = $singleValue["checkout_time"];
+                        $attendance_mode_checkout = $singleValue["attendance_mode_checkout"];
+
+                    }
+
+                }
+
+                //dd("end : Check-in : ".$checkin_min." , Check-out : ".$checkout_max);
+
+                //dd($value[0]["attendance_mode"]);
+                $attendanceResponseArray[$key]["checkin_time"] = $checkin_min;
+                $attendanceResponseArray[$key]["checkout_time"] = $checkout_max;
+
+                //TODO :: Based on which checkin, checkout time taken, its corresponding attendance modes has to be assigned here
+                $attendanceResponseArray[$key]["attendance_mode_checkin"] = $attendance_mode_checkin;
+                $attendanceResponseArray[$key]["attendance_mode_checkout"] = $attendance_mode_checkout;
+
+                //selfies
+                //format : http://127.0.0.1:8000/employees/PLIPL068/selfies/checkout.png
+                if($singleValue["checkin_time"] && !empty($singleValue["selfie_checkin"]))
+                    $attendanceResponseArray[$key]["selfie_checkin"] = 'employees/'.$user_code.'/selfies/'.$singleValue["selfie_checkin"];
+
+                if($singleValue["checkout_time"] && !empty($singleValue["selfie_checkout"]))
+                    $attendanceResponseArray[$key]["selfie_checkout"] = 'employees/'.$user_code.'/selfies/'.$singleValue["selfie_checkout"];
+
+            }
+            //dd($attendanceResponseArray);
+
+            $shiftStartTime  = Carbon::parse($regularTime->shift_start_time);
+            $shiftEndTime  = Carbon::parse($regularTime->shift_end_time);
+
+            //dd($regularTime);
+            ////Logic to check LC,EG,MIP,MOP,Leave status
+            foreach ($attendanceResponseArray as $key => $value) {
+
+                $checkin_time = $attendanceResponseArray[$key]["checkin_time"];
+                $checkout_time = $attendanceResponseArray[$key]["checkout_time"];
+
+
+                //LC Check
+                if(!empty($checkin_time))
+                {
+
+                    $parsedCheckIn_time  = Carbon::parse($checkin_time);
+
+                    //Check whether checkin done on-time
+                    $isCheckin_done_ontime = $parsedCheckIn_time->lte($shiftStartTime);
+
+                    if($isCheckin_done_ontime)
+                    {
+                        //employee came on time....
+
+                    }
+                    else
+                    {
+                        //employee came on time....
+                        //dd("Checkin NOT on-time");
+
+                        //then LC
+                        $attendanceResponseArray[$key]["isLC"] = true;
+
+                        //check whether regularization applied.
+                        $regularization_status = $this->isRegularizationRequestApplied($user_id, $key, 'LC');
+
+                        //check regularization status
+                        $attendanceResponseArray[$key]["lc_status"] = $regularization_status;
+
+                    }
+
+                }
+
+
+                //EG Check
+                //check if its EG
+                if(!empty($checkout_time))
+                {
+
+                    $parsedCheckOut_time  = Carbon::parse($checkout_time);
+
+                    //Check whether checkin done on-time
+                    $isCheckOut_doneEarly = $parsedCheckOut_time->lte($shiftEndTime);
+
+                    if($isCheckOut_doneEarly)
+                    {
+                        //employee left early on time....
+
+                        //then EG
+                        $attendanceResponseArray[$key]["isEG"] = true;
+
+                        //check whether regularization applied.
+                        $regularization_status = $this->isRegularizationRequestApplied($user_id, $key, 'EG');
+
+                        //check regularization status
+                        $attendanceResponseArray[$key]["eg_status"] = $regularization_status;
+                    }
+                    else
+                    {
+                        //employee left late
+
+                    }
+
+                }
+
+
+                //for absent
+                if($checkin_time == null && $checkout_time == null){
+                    $attendanceResponseArray[$key]["isAbsent"] = true;
+
+                    //Check whether leave is applied or not.
+                    $t_leaveRequestDetails = $this->isLeaveRequestApplied($user_id, $key,$year,$month);
+
+                    if(empty($t_leaveRequestDetails))
+                    {
+
+                        $attendanceResponseArray[$key]["absent_status"] = "Not Applied";
+                        $attendanceResponseArray[$key]["leave_type"] = null;
+
+                    }
+                    else
+                    {
+                        $attendanceResponseArray[$key]["absent_status"] = $t_leaveRequestDetails->status;
+                        $attendanceResponseArray[$key]["leave_type"] = $t_leaveRequestDetails->leave_type;
+                    }
+
+                }
+                elseif($checkin_time != null && $checkout_time == null)
+                {
+
+                    //Since its MOP
+                    $attendanceResponseArray[$key]["isMOP"] = true;
+
+                    ////Is any permission applied
+                    $attendanceResponseArray[$key]["mop_status"] = $this->isRegularizationRequestApplied($user_id, $key, 'MOP');
+
+                    if($attendanceResponseArray[$key]["mop_status"] == "Approved"){
+
+                        //If Approved, then set the regularize time as checkin time
+                        $attendanceResponseArray[$key]["checkout_time"] =  VmtEmployeeAttendanceRegularization::where('attendance_date', $key)
+                                                     ->where('user_id',  $user_id)->where('regularization_type', 'MOP')->value('regularize_time');
+
+                      //  $attendanceResponseArray[$key]["checkin_time"] = ""
+                    }
+
+
+                }
+                elseif($checkin_time == null && $checkout_time != null){
+
+                    //Since its MIP
+                    $attendanceResponseArray[$key]["isMIP"] = true;
+
+                    ////Is any permission applied
+                    $attendanceResponseArray[$key]["mip_status"] = $this->isRegularizationRequestApplied($user_id, $key, 'MIP');
+
+                    if($attendanceResponseArray[$key]["mip_status"] == "Approved"){
+
+                        //If Approved, then set the regularize time as checkin time
+                        $attendanceResponseArray[$key]["checkin_time"] =  VmtEmployeeAttendanceRegularization::where('attendance_date', $key)
+                                                     ->where('user_id',  $user_id)->where('regularization_type', 'MIP')->value('regularize_time');
+
+                      //  $attendanceResponseArray[$key]["checkin_time"] = ""
+                    }
+
+
+                }
+
+            }//for each
+
+
+        return $attendanceResponseArray;
     }
+
+    private function isRegularizationRequestApplied($user_id, $attendance_date, $regularizeType)
+    {
+
+        $regularize_record = VmtEmployeeAttendanceRegularization::where('attendance_date', $attendance_date)
+            ->where('user_id',  $user_id)->where('regularization_type', $regularizeType);
+
+       // dd($user_id ." , ". $attendance_date." , ".$regularizeType);
+
+        if ($regularize_record->exists())
+        {
+            return $regularize_record->value('status');
+        }
+        else
+        {
+            return "None";
+        }
+    }
+
+    public function isLeaveRequestApplied($user_id, $attendance_date,$year,$month){
+        // dd($year);
+
+        $leave_Details=VmtEmployeeLeaves::join('vmt_leaves','vmt_leaves.id','=','vmt_employee_leaves.leave_type_id')
+                        ->where('user_id',$user_id)
+                        ->whereYear('end_date', $year)
+                        ->whereMonth('end_date',$month)
+                        ->get(['start_date','end_date','status','vmt_leaves.leave_type','total_leave_datetime']);
+
+        if( $leave_Details->count()==0){
+            return null;
+        }else{
+            foreach( $leave_Details as $single_leave_details){
+                        $startDate = Carbon::parse($single_leave_details->start_date)->subDay();
+                        $endDate = Carbon::parse($single_leave_details->end_date);
+                        $currentDate =  Carbon::parse($attendance_date);
+                    // dd($startDate.'-----'.$currentDate.'------------'.$endDate.'-----');
+                            if($currentDate->gt( $startDate) && $currentDate->lte($endDate) ){
+                            // dd($single_leave_details);
+                                    return $single_leave_details;
+
+                            }else{
+                                $single_leave_details=null;
+                            }
+            }
+            return $single_leave_details;
+        }
+
+
+        //check whether leave applied.If yes, check leave status
+        $leave_record = VmtEmployeeLeaves::where('user_id',$user_id)->whereDate('end_date',$attendance_date);
+
+        if($leave_record->exists()){
+            return $leave_record->first();
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+}
 
 
