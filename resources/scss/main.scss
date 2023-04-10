@@ -3,19 +3,33 @@
 @import "./components/card";
 @import "./utilities/helpers";
 
-
-
-
 * {
     // font-size: 1vw;
     font-weight: $font-weight-medium;
     box-sizing: border-box;
 }
 
-label,p,span{
+label,
+p,
+span {
     color: $gray-600;
 }
 
 body {
-    background-color:$bg-body;
+    background-color: $bg-body;
 }
+
+.collapse {
+    visibility: visible !important;
+}
+
+.investment_dropDown .dropdown-toggle:after {
+    display: none;
+}
+
+.investment_dropDown .dropdown-menu {
+    min-width: 120px;
+}
+
+
+
