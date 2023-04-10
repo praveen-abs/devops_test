@@ -7,6 +7,7 @@ use App\Models\Department;
 use App\Models\User;
 use App\Models\Bank;
 use App\Models\Experience;
+use App\Models\gender;
 use App\Models\VmtBloodGroup;
 use App\Models\VmtEmployee;
 use Illuminate\Http\Request;
@@ -142,20 +143,21 @@ class VmtProfilePagesController extends Controller
     }
 
     public function updateGeneralInfo(Request $request) {
-          dd($request->all());
+        // dd($request->all());
          $details = VmtEmployee::where('userid', $request->id )->first();
          $details->dob = $request->input('dob');
-         $details->gender = $request->input(gender['name']);
-         $details->marital_status = $request->input(marital_status_id['name']);
+         $details->gender = $request->input(['gender']);
+         $details->marital_status = $request->input(['marital_status_id']);
          $details->doj=$request->input('doj');
-         $details->blood_group_id = $request->input(blood_group_id['id']);
-         $details->physically_challenged = $request->input(physically_challenged['name']);
+         $details->blood_group_id = $request->input(['blood_group_id']);
+         $details->physically_challenged = $request->input(['physically_challenged']);
 
         $details->save();
 
-
-
-        return dd("success");
+        $response = [
+            'status' => 'success',
+        ];
+        return  $response;
     }
 
     public function updateContactInfo(Request $request)
@@ -417,7 +419,7 @@ class VmtProfilePagesController extends Controller
 
         $user_id = $request->uid;
 
-        return $serviceVmtProfilePagesService->getEmployeeProfilePagesDetails($user_id);
+        return $serviceVmtProfilePagesService->getEmployeeProfileDetails($user_id);
     }
 
 }

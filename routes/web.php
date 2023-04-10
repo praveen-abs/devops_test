@@ -61,6 +61,8 @@ Route::get('/create-holiday', function () {
     return view('createHoliday');
 })->name('create-holiday');
 
+// Route::post('/employee_profile', [App\Http\Controllers\Api\VmtAPIAttendanceController::class, 'employeeProfile'])->name('employeeProfile');
+Route::get('/employee_profile', [App\Http\Controllers\VmtAttendanceController::class, 'employeeProfile'])->name('employeeProfile');
 
 
 Route::middleware(['auth'])->group(function () {
@@ -619,14 +621,15 @@ Route::middleware(['auth'])->group(function () {
 
     //Profile Pages v3
     Route::get('/profile-page',[App\Http\Controllers\VmtProfilePagesController::class,'showProfilePage_v3'])->name('profile-page-v3');
+    Route::get('/profile-pages-getEmpDetails',[App\Http\Controllers\VmtProfilePagesController::class,'fetchEmployeeProfilePagesDetails'])->name('profile-pages-getEmpDetails');
 
 
     //Testing controller
     Route::get('/download-private-file', [App\Http\Controllers\VmtTestingController::class, 'downloadPrivateFile'])->name('downloadPrivateFile');
     Route::get('/view-private-file', [App\Http\Controllers\VmtTestingController::class, 'viewPrivateFile'])->name('viewPrivateFile');
     Route::get('/mail-test/appointment-letter', [App\Http\Controllers\VmtTestingController::class, 'mailTest_sendAppointmentLetter'])->name('mailTest_sendAppointmentLetter');
-    Route::get('/getLeaves', [App\Http\Controllers\VmtAttendanceController::class, 'employeeLeaveBalance'])->name('employeeLeaveBalance'); 
-    Route::post('/postLeaves', [App\Http\Controllers\Api\VmtAPIAttendanceController::class, 'applyLeaveRequest'])->name('applyLeaveRequest');  
+    Route::get('/getLeaves', [App\Http\Controllers\VmtAttendanceController::class, 'employeeLeaveBalance'])->name('employeeLeaveBalance');
+    Route::post('/postLeaves', [App\Http\Controllers\Api\VmtAPIAttendanceController::class, 'applyLeaveRequest'])->name('applyLeaveRequest');
 
 });
 

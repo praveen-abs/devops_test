@@ -1,16 +1,15 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue'
-import FullReload from 'vite-plugin-full-reload'
 
 export default defineConfig({
     plugins: [
-        FullReload(['config/routes.rb', 'app/views/**/*']),
         vue(),
         laravel({
             input: [
 
                 'resources/js/app.js',
+                'resources/js/hrms/modules/profile_pages/ProfilePageNew.js',
 
                 // Dashboard
 
@@ -54,11 +53,12 @@ export default defineConfig({
                 'resources/js/hrms/modules/configurations/holidays/Holidays_Lists.js',
 
 
-                // Profile page
+                // Profile pages
 
-                'resources/js/hrms/modules/profile_pages/ProfilePageNew.js',
+
 
                 // familyinfo_table_page
+               'resources/js/hrms/modules/profile_pages/employee_details/EmployeeDetails.js',
 
                 // 'resources/js/hrms/modules/profile_pages/FamilyDetails.js',
 

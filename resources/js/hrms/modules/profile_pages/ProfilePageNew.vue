@@ -1,28 +1,38 @@
-
-
 <template>
+
+    <Dialog header="Header" v-model:visible="_instance_profilePagesStore.loading_screen"
+        :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
+        :closeOnEscape="false">
+        <template #header>
+            <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+                animationDuration="2s" aria-label="Custom ProgressSpinner" />
+        </template>
+        <template #footer>
+            <h5 style="text-align: center">Please wait...</h5>
+        </template>
+    </Dialog>
+
     <div class="profile_page-wrapper mt-30 container-fluid">
         <div class="row">
             <div class="col-3 col-sm-12 col-md-3 col-lg-3 col-xxl-3 col-xl-3">
 
-                <div class="card top-line mb-0 ">
+
+                <div class="mb-0 card top-line ">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12 text-end">
-                                <button class="btn outline-none border-0 bg-transparent m-0 p-0"
+                                <button class="p-0 m-0 bg-transparent border-0 outline-none btn"
                                     data-bs-target="#show_idCard" data-bs-toggle="modal">
                                     <i class="fa fa-id-card text-success" aria-hidden="true"></i>
                                 </button>
-
-                                <!-- {{-- <i class="bi bi-person-vcard"></i> --}} -->
                             </div>
-                            <div class="col-12 text-center">
+                            <div class="text-center col-12">
 
 
-                                <div class="rounded-circle img-xl
-                                 mx-auto userActive-status profile-img" style="border:6px solid #c2c2c2c2">
+                                <div class="mx-auto rounded-circle img-xl userActive-status profile-img"
+                                    style="border:6px solid #c2c2c2c2">
 
-                                    <a class="edit-icon  " data-bs-toggle="modal" data-bs-target="#edit_profileImg" id="">
+                                    <a class="edit-icon " data-bs-toggle="modal" data-bs-target="#edit_profileImg" id="">
                                         <i class="fa fa-camera"></i></a>
                                 </div>
 
@@ -31,7 +41,8 @@
                                     <div class="progress-wrapper border-bottom-liteAsh ">
                                         <div class="mb-1 text-center">
                                             <h6 class="text-center">
-                                                <!-- {{ $user->name }} -->
+
+                                                {{ service.current_user_name }}
                                             </h6>
                                         </div>
                                         <div class="mb-1 d-flex justify-content-between ">
@@ -40,56 +51,57 @@
 
                                             </span>
                                         </div>
-                                        <div class="progress progress-bar-content mb-2">
-                                            <div class="progress-bar  " role="progressbar" id="profile_progressBar"
+                                        <div class="mb-2 progress progress-bar-content">
+                                            <div class="progress-bar " role="progressbar" id="profile_progressBar"
                                                 aria-valuenow="{{ $profileCompletenessValue }}" aria-valuemin="0"
                                                 aria-valuemax="100"></div>
                                         </div>
-                                        <p class="text-muted f-10 text-start mb-2 fw-bold">Your profile is completed</p>
+                                        <p class="mb-2 text-muted f-10 text-start fw-bold">Your profile is completed</p>
                                     </div>
 
-                                    <div class="profile-mid-right-content mb-4 text-center ">
-                                        <div class="border-bottom-liteAsh py-2">
+                                    <div class="mb-4 text-center profile-mid-right-content ">
+                                        <div class="py-2 border-bottom-liteAsh">
                                             <p class="text-muted f-12 fw-bold">Employee Status</p>
                                             <p class="text-primary f-15 fw-bold">
                                                 <!-- {{ getEmployeeActiveStatus($user->id) ?? '-' }} -->
+                                                <!-- {{ emp }} -->
                                             </p>
 
                                         </div>
-                                        <div class="border-bottom-liteAsh py-2">
+                                        <div class="py-2 border-bottom-liteAsh">
                                             <p class="text-muted f-12 fw-bold">Employee Code</p>
                                             <p class="text-primary f-15 fw-bold">
-                                                <!-- {{ $user_full_details->user_code ?? '-' }} -->
+                                                {{ _instance_profilePagesStore.employeeDetails.user_code }}
                                             </p>
 
                                         </div>
-                                        <div class="border-bottom-liteAsh py-2">
+                                        <div class="py-2 border-bottom-liteAsh">
                                             <p class="text-muted f-12 fw-bold">Designation</p>
                                             <p class="text-primary f-15 fw-bold">
-                                                <!-- {{ $user_full_details->designation }} -->
+                                                {{ _instance_profilePagesStore.employeeDetails.designation }}
                                             </p>
 
                                         </div>
-                                        <div class="border-bottom-liteAsh py-2">
+                                        <div class="py-2 border-bottom-liteAsh">
                                             <p class="text-muted f-12 fw-bold">Location</p>
                                             <p class="text-primary f-15 fw-bold">
-                                                <!-- {{ $user_full_details->work_location ?? '-' }}-->
+                                                {{ _instance_profilePagesStore.employeeDetails.work_location }}
                                             </p>
                                         </div>
-                                        <div class="border-bottom-liteAsh py-2">
+                                        <div class="py-2 border-bottom-liteAsh">
                                             <p class="text-muted f-12 fw-bold">Department</p>
                                             <p class="text-primary f-15 fw-bold">
-                                                <!-- {{ $department ?? '-' }}-->
+                                                {{ _instance_profilePagesStore.employeeDetails.department }}
                                             </p>
                                         </div>
-                                        <div class="border-bottom-liteAsh py-2">
+                                        <div class="py-2 border-bottom-liteAsh">
                                             <p class="text-muted f-12 fw-bold">Reporting To</p>
                                             <p class="text-primary f-15 fw-bold">
-                                                <!-- {{ $user_full_details->l1_manager_name ?? '-' }}-->
+                                                {{ _instance_profilePagesStore.employeeDetails.l1_manager_name }}
                                             </p>
                                         </div>
                                     </div>
-                                    <div class="profile-bottom-right-content  text-center ">
+                                    <div class="text-center profile-bottom-right-content ">
                                         <!-- {{-- <button class="btn btn-danger"><i class="fa fa-sign-out me-2"></i> Logout </button> --}} -->
                                         <button class="btn btn-danger"><i class="fa fa-sign-out me-1"></i> Action </button>
                                     </div>
@@ -138,8 +150,8 @@
 
                 <div class="tab-content " id="pills-tabContent">
 
-                    <div class="tab-pane fade active show" id="employee_details" role="tabpanel" aria-labelledby="">
-                        <EmployeeDetails />
+                    <div class="tab-pane fade active show" id="employee_details" role="tabpanel" aria-labelledby="" >
+                        <div v-if="!_instance_profilePagesStore.loading_screen"><EmployeeDetails /></div>
                     </div>
 
                     <div class="tab-pane fade" id="family_det" role="tabpanel" aria-labelledby="">
@@ -172,6 +184,7 @@
 </template>
 
 
+
 <script setup>
 
 import EmployeeDetails from './employee_details/EmployeeDetails.vue'
@@ -181,12 +194,28 @@ import ExperienceDetails from './experience/ExperienceDetails.vue'
 import Documents from './documents/documents.vue'
 
 import { Service } from '../Service/Service'
-import { onMounted } from 'vue'
+import { profilePagesStore } from './stores/ProfilePagesStore'
+import { ref, onMounted } from 'vue'
+
+const service = Service()
 
 
-onMounted(() => {
 
-    Service()
+let _instance_profilePagesStore = profilePagesStore();
 
+onMounted(async () => {
+
+    console.log("Loading screen start : "+_instance_profilePagesStore.loading_screen)
+
+    _instance_profilePagesStore.fetchEmployeeDetails().then(
+        function(value) {
+            console.log("Loading screen end : "+_instance_profilePagesStore.loading_screen)
+
+            console.log("Req done");
+        }
+
+    )
+
+    //console.log("Emp details : "+_instance_profilePagesStore.employeeDetails.get_employee_details);
 })
 </script>

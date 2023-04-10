@@ -10,6 +10,8 @@ use App\Models\VmtEmployeeAttendance;
 use App\Models\VmtReimbursements;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use App\Services\VmtAttendanceService;
+use Illuminate\Support\Facades\Validator;
 
 class VmtAPIAttendanceController extends HRMSBaseAPIController
 {
@@ -233,53 +235,39 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         DB Table : vmt_employee_attendance
         Output : success/failure response.
     */
-    public function attendanceMonthlyReport(Request $request)
+    public function getAttendanceMonthStatsReport(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
     {
-        // code...
-        $workingCount = $onTimeCount = $lateCount = $leftTimelyCount = $leftEarlyCount = $onLeaveCount = $absentCount = 0;
 
-        //$reportMonth  = $request->has('month') ? $request->month : date('m');
+        //Validate the request
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                'user_code' => 'required|exists:users,user_code',
+                'year' => 'required|integer',
+                'month' => 'required|integer',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+                'integer' => 'Field :attribute should be integer',
+            ]
+        );
 
-        $monthlyGroups = VmtEmployeeAttendance::select(\DB::raw('MONTH(date) month'))->where('user_id', auth::user()->id)->groupBy('month')->orderBy('month', 'DESC')->get();
-        $monthlyReport =  [];
-
-        foreach ($monthlyGroups as $key => $value) {
-            // code...
-            //dd($value);
-            $dailyAttendanceReport  = VmtEmployeeAttendance::select('id', 'date', 'user_id', 'checkin_time', 'checkout_time', 'leave_type_id', 'shift_type')
-                ->where('user_id', auth::user()->id)
-                ->whereMonth("date", $value->month)
-                ->orderBy('created_at', 'DESC')
-                ->get();
-
-
-            $workingCount = $dailyAttendanceReport->count();
-            $onLeaveCount = $dailyAttendanceReport->whereNotNull('leave_type_id')->count() ;
-
-            $monthlyReport[]  =  array(
-                                    "year_value" => substr($dailyAttendanceReport[0]["date"],0,4),
-                                    "month_value"  => $value->month,
-                                    "working_days" => $workingCount,
-                                    "on_time" => $onTimeCount,
-                                    "late" => $lateCount,
-                                    "left_timely" => $leftTimelyCount,
-                                    "left_early" => $leftEarlyCount,
-                                    "on_leave" => $onLeaveCount,
-                                    "absent" => $absentCount,
-                                    "daily_attendance_report" => $dailyAttendanceReport
-                                );
+        if ($validator->fails()) {
+            return response()->json([
+                        'status' => 'failure',
+                        'message' => $validator->errors()->all()
+            ]);
         }
 
-
-
+        //Fetch the data
+        $response = $serviceVmtAttendanceService->fetchAttendanceMonthStatsReport($request->user_code,$request->year,$request->month);
 
 
         return response()->json([
             'status' => 'success',
-            'message'=> '',
-            'data'   => [
-                            "month"  => $monthlyReport
-                        ]
+            'message' => '',
+            'data' => $response
         ]);
 
     }
@@ -318,8 +306,218 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
     public function applyLeaveRequest(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
 
+        dd("---");
+        //Need to split the validation based on leave type so that mandatory fields are checked correctly.
 
-        return $serviceVmtAttendanceService->applyLeaveRequest($request);
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                'user_id' => 'required|exists:users,user_code',
+                'leave_request_date' => 'required',
+                // 'start_date' => 'required',
+                // 'end_date' => 'required',
+                // 'hours_diff' => 'required',
+                // 'no_of_days' => 'required',
+                // 'compensatory_work_days_ids' => 'required',
+                // 'leave_session' => 'required',
+                // 'leave_type_name' => 'required',
+                // 'leave_reason' => 'required',
+                // 'notifications_users_id' => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+                'integer' => 'Field :attribute should be integer',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                        'status' => 'failure',
+                        'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        $response = $serviceVmtAttendanceService->applyLeaveRequest( user_id: $request->user_id,
+                                                                    leave_request_date : $request->leave_request_date,
+                                                                    start_date : $request->start_date,
+                                                                    end_date : $request->end_date,
+                                                                    hours_diff : $request->hours_diff,
+                                                                    no_of_days : $request->no_of_days,
+                                                                    compensatory_work_days_ids : $request->compensatory_work_days_ids,
+                                                                    leave_session : $request->leave_session,
+                                                                    leave_type_name : $request->leave_type_name,
+                                                                    leave_reason : $request->leave_reason,
+                                                                    notifications_users_id : $request->notifications_users_id
+                                                );
+
+        return $response;
     }
 
+    public function approveRejectRevokeLeaveRequest(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                'record_id' => 'required|exists:users,user_code',
+                'approver_user_code' => 'required',
+                'status' => 'required',
+                'leave_rejection_text' => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+                'integer' => 'Field :attribute should be integer',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                        'status' => 'failure',
+                        'message' => $validator->errors()->all()
+            ]);
+        }
+
+        //Fetch the data
+        $response = $serviceVmtAttendanceService->approveRejectRevokeLeaveRequest($request->record_id, $request->approver_user_code, $request->status , $request->leave_rejection_text);
+
+        return $response;
+    }
+
+
+
+    public function getAttendanceDailyReport_PerMonth(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+        //dd("asdf");
+        //Validate the request
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                'user_code' => 'required|exists:users,user_code',
+                'year' => 'required|integer',
+                'month' => 'required|integer',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+                'integer' => 'Field :attribute should be integer',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                        'status' => 'failure',
+                        'message' => $validator->errors()->all()
+            ]);
+        }
+
+        //Fetch the data
+        $response = $serviceVmtAttendanceService->fetchAttendanceDailyReport_PerMonth($request->user_code,$request->year,$request->month);
+
+
+        return response()->json([
+            'status' => 'success',
+            'message' => '',
+            'data' => $response
+        ]);
+
+    }
+
+    public function applyRequestAttendanceRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+
+        //Validate the request
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                'user_code' => 'required|exists:users,user_code',
+                'attendance_date' => 'required',
+                'regularization_type' => 'required',
+                'user_time' => 'required',
+                'regularize_time' => 'required',
+                'reason' => 'required',
+                'custom_reason' => 'required', //Send empty string even if no custom reason needed
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+                //'integer' => 'Field :attribute should be integer',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                        'status' => 'failure',
+                        'message' => $validator->errors()->all()
+            ]);
+        }
+
+        //Fetch the data
+        $response = $serviceVmtAttendanceService->applyRequestAttendanceRegularization($request->user_code, $request->attendance_date, $request->regularization_type, $request->user_time, $request->regularize_time, $request->reason, $request->custom_reason);
+
+
+        return $response;
+
+    }
+
+
+    public function approveRejectAttendanceRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+
+        //Validate the request
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                'approver_user_code' => 'required|exists:users,user_code',
+                'record_id' => 'required|integer',
+                'status' => 'required',
+                'status_text' => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+                'integer' => 'Field :attribute should be integer',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                    'status' => 'failure',
+                    'message' => $validator->errors()->all()
+            ]);
+        }
+
+        //Fetch the data
+        $response = $serviceVmtAttendanceService->approveRejectAttendanceRegularization($request->approver_user_code, $request->record_id, $request->status, $request->status_text);
+
+        return $response;
+
+    }
+
+    public function getAttendanceRegularizationData(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+
+        //Validate the request
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                'manager_user_code' => 'nullable|exists:users,user_code',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+                'integer' => 'Field :attribute should be integer',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                    'status' => 'failure',
+                    'message' => $validator->errors()->all()
+            ]);
+        }
+
+        //Fetch the data
+        $response = $serviceVmtAttendanceService->fetchAttendanceRegularizationData($request->manager_user_code);
+
+        return $response;
+
+    }
 }

@@ -1119,7 +1119,7 @@ class VmtAttendanceController extends Controller
         if(Str::contains(currentLoggedInUserRole(), ['Manager']))
         {
             //fetch team level data
-           $response = $attendanceService->fetchAttendanceRegularizationData(auth()->user()->id);
+           $response = $attendanceService->fetchAttendanceRegularizationData(auth()->user()->user_code);
         }
         else
         {
@@ -1512,6 +1512,11 @@ class VmtAttendanceController extends Controller
         //dd($request->user_id);
         //TODO : Need to get current user_id instead of fetching from req params.
         return $serviceVmtAttendanceService->fetchUnusedCompensatoryOffDays($request->user_id);
+    }
+
+    public function employeeProfile(Request $request , VmtAttendanceService $serviceVmtAttendanceService){
+
+        return $serviceVmtAttendanceService->employeeProfile($request);
     }
 
 }
