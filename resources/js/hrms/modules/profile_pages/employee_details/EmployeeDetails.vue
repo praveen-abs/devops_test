@@ -24,7 +24,7 @@
                                 </label>
                                 <div class="cal-icon">
                                     <Calendar showIcon class="mb-3 form-selects" v-model="dialog_general_information.dob"
-                                        placeholder="31/12/9999" />
+                                        placeholder="YYYY-MM-DD" />
                                 </div>
                             </div>
                         </div>
@@ -126,9 +126,10 @@
                         <div class="title"> Blood Group</div>
                         <div class="text" >
                             <!-- {{ emp_details.blood_group_id.name }} -->
-<!--
-                            {{ _instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id  }} -->
+<!---->
+                         <!-- {{ _instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id  }} -->
                             {{ cmpBldGrp }}
+                            {{  _instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id }}
 
                         </div>
                     </li>
@@ -171,7 +172,7 @@
                                 <div class="mb-3 form-group">
                                     <label>Personal Email</label>
                                     <input type="email" name="present_email" class="form-control"
-                                        v-model="dailog_contactinfo.personal_email">
+                                        v-model="dailog_contactinfo.email">
                                 </div>
                             </div>
 
@@ -179,7 +180,7 @@
                                 <div class="mb-3 form-group">
                                     <label> Office Email</label>
                                     <input type="email" class="form-control" name="officical_mail"
-                                        v-model="dailog_contactinfo.office_email">
+                                        v-model="dailog_contactinfo.official_email">
                                 </div>
                             </div>
 
@@ -189,6 +190,14 @@
                                     <label>Mobile Number</label>
                                     <input type="text" size=20 maxlength=10 name="mobile_number" class="form-control"
                                         v-model="dailog_contactinfo.mobile_number">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+
+                                <div class="mb-3 form-group">
+                                    <label>Official Mobile Number</label>
+                                    <input type="text" size=20 maxlength=10 name="official_mobile_number" class="form-control"
+                                        v-model="dailog_contactinfo.official_mobile_number">
                                 </div>
                             </div>
 
@@ -213,7 +222,7 @@
                         </div>
                     </li>
                     <li class="pb-1 border-bottom-liteAsh">
-                        <div class="title">Office Email</div>
+                        <div class="title">Official Email</div>
                         <div class="text">
                             {{ _instance_profilePagesStore.employeeDetails.get_employee_office_details.officical_mail }}
 
@@ -222,6 +231,15 @@
                     <li class="pb-1 ">
                         <div class="title">Mobile Number</div>
                         <div class="text">
+
+                            {{ _instance_profilePagesStore.employeeDetails.get_employee_details.mobile_number }}
+
+                        </div>
+                    </li>
+                    <li class="pb-1 ">
+                        <div class="title">Official Mobile Number</div>
+                        <div class="text">
+
                             {{ _instance_profilePagesStore.employeeDetails.get_employee_office_details.official_mobile }}
 
                         </div>
@@ -311,6 +329,7 @@
 
 import { ref, onMounted, reactive, computed } from "vue";
 import moment from "moment";
+import { useNow, useDateFormat } from '@vueuse/core'
 
 import { useToast } from "primevue/usetoast";
 import { useConfirm } from "primevue/useconfirm";
@@ -429,9 +448,6 @@ onMounted(() => {
 
     //_instance_profilePagesStore
 
-
-
-
 });
 
 function onClick_EditButton_GeneralInfo(){
@@ -440,15 +456,21 @@ function onClick_EditButton_GeneralInfo(){
     // Assign json values into dialog elements also
 
     dialog_general_information.dob = _instance_profilePagesStore.employeeDetails.get_employee_details.dob;
+
     dialog_general_information.doj = _instance_profilePagesStore.employeeDetails.get_employee_details.doj;
+
     dialog_general_information.marital_status_id = parseInt(_instance_profilePagesStore.employeeDetails.get_employee_details.marital_status_id);
     // dialog_general_information.marital_status_id =4;
 
     dialog_general_information.gender = _instance_profilePagesStore.employeeDetails.get_employee_details.gender;
-    dialog_general_information.blood_group_id = parseInt(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id);
+
+    dialog_general_information.blood_group_id = parseInt( _instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id);
+
+    // dialog_general_information.blood_group_id = 3;
     dialog_general_information.physically_challenged = _instance_profilePagesStore.employeeDetails.get_employee_details.physically_challenged;
 
     is_dialog_generalInfo_visible.value = true;
+
 }
 
 
@@ -458,29 +480,26 @@ function saveGeneralInformationDetails() {
     let id = fetch_data.current_user_id
     let url = `/profile-pages-update-generalinfo/${id}`
 
-    console.log( dialog_general_information);
-
-
     axios.post(url, {
             user_code: _instance_profilePagesStore.employeeDetails.user_code,
             dob: dialog_general_information.dob,
             gender: dialog_general_information.gender,
             marital_status_id: dialog_general_information.marital_status_id,
             doj: dialog_general_information.doj,
-            blood_group_id: dialog_general_information.blood_group_id.id,
+            blood_group_id: dialog_general_information.blood_group_id,
             physically_challenged: dialog_general_information.physically_challenged,
-
         })
         .then((res) => {
-            data_checking.value = false;
+
             if (res.data.status == "success") {
-
-                axios.get('/profile-pages-getEmpDetails?uid='+uid ).then(res =>{
-                    loading_screen.value = false;
-                    console.log(res.data);
-                    employeeDetails.value = res.data
-                }).catch(e => console.log(e)).finally(()=>console.log("completed"))
-
+                _instance_profilePagesStore.employeeDetails.get_employee_details.dob = useDateFormat(dialog_general_information.dob,'YYYY-MM-DD' );
+                // _instance_profilePagesStore.employeeDetails.dob = dialog_general_information.dob;
+                _instance_profilePagesStore.employeeDetails.gender = dialog_general_information.gender;
+                _instance_profilePagesStore.employeeDetails.marital_status_id = dialog_general_information.marital_status_id;
+                // _instance_profilePagesStore.employeeDetails.doj = dialog_general_information.doj;
+                _instance_profilePagesStore.employeeDetails.get_employee_details.doj = dialog_general_information.doj;
+                _instance_profilePagesStore.employeeDetails.blood_group_id = dialog_general_information.blood_group_id;
+                _instance_profilePagesStore.employeeDetails.physically_challenged = dialog_general_information.physically_challenged;
             } else if (res.data.status == "failure") {
                 leave_data.leave_request_error_messege = res.data.message;
             }
@@ -490,25 +509,36 @@ function saveGeneralInformationDetails() {
         });
 
         is_dialog_generalInfo_visible.value = false
+
+
+            // window.location.reload();
+
 }
 
 const contact_details = ref();
 
 const dailog_contactinfo = reactive({
-    personal_email: "",
-    office_email: "",
-    mobile_number: ""
+    email: "",
+    official_email: "",
+    mobile_number: "",
+    official_mobile_number: ""
 
 });
 
 function onClick_EditButtonContacttInfo(){
-    console.log("Opening General Info Dialog");
+    console.log("Opening General Info Dialog : ");
 
     // Assign json values into dialog elements also
 
-    dailog_contactinfo.personal_email = _instance_profilePagesStore.employeeDetails.email;
-    dailog_contactinfo.office_email = _instance_profilePagesStore.employeeDetails.get_employee_office_details.officical_mail;
-    dailog_contactinfo.mobile_number =_instance_profilePagesStore.employeeDetails.get_employee_office_details.official_mobile ;
+    dailog_contactinfo.email = _instance_profilePagesStore.employeeDetails.email;
+    dailog_contactinfo.official_email = _instance_profilePagesStore.employeeDetails.get_employee_office_details.officical_mail;
+    // dailog_contactinfo.mobile_number = _instance_profilePagesStore.employeeDetails.get_employee_office_details.mobile_number;
+    console.log("Mobile number : "+_instance_profilePagesStore.employeeDetails.mobile_number);
+
+    dailog_contactinfo.mobile_number = parseInt(_instance_profilePagesStore.employeeDetails.get_employee_details.mobile_number);
+    dailog_contactinfo.official_mobile_number = parseInt(_instance_profilePagesStore.employeeDetails.get_employee_office_details.official_mobile);
+
+    console.log("testing");
 
     ContactVisible.value = true;
 
@@ -523,20 +553,19 @@ function save_contactinfoDetails(){
 
     axios.post(url, {
         user_code: _instance_profilePagesStore.employeeDetails.user_code,
-        present_email:dailog_contactinfo.personal_email,
-        officical_mail:dailog_contactinfo.office_email,
-        mobile_number:dailog_contactinfo.mobile_number
-
+        email:dailog_contactinfo.email,
+        officical_mail:dailog_contactinfo.official_email,
+        mobile_number:dailog_contactinfo.mobile_number,
+        official_mobile_number:dailog_contactinfo.official_mobile_number
         })
         .then((res) => {
-            data_checking.value = false;
-            if (res.data.status == "success") {
 
-                axios.get('/profile-pages-getEmpDetails?uid='+uid ).then(res =>{
-                    loading_screen.value = false;
-                    console.log(res.data);
-                    contact_details.value = res.data
-                }).catch(e => console.log(e)).finally(()=>console.log("completed"))
+            if (res.data.status == "success") {
+                console.log("Updating mobile number : "+dailog_contactinfo.mobile_number);
+                _instance_profilePagesStore.employeeDetails.email =  dailog_contactinfo.email
+                _instance_profilePagesStore.employeeDetails.get_employee_office_details.officical_mail =  dailog_contactinfo.official_email
+                _instance_profilePagesStore.employeeDetails.get_employee_details.mobile_number =  dailog_contactinfo.mobile_number
+                _instance_profilePagesStore.employeeDetails.get_employee_office_details.official_mobile =  dailog_contactinfo.official_mobile_number
 
             } else if (res.data.status == "failure") {
                 contact_details.leave_request_error_messege = res.data.message;
