@@ -66,7 +66,7 @@
                             <div class="mb-3 form-group" :style="{ marginLeft: '10px' }">
                                 <label>Marital status <span class="text-danger">*</span></label>
                                 <Dropdown v-model="dialog_general_information.marital_status_id" :options="option_maritals_status"
-                                    optionLabel="name" optionValue="name" placeholder="Select Marital Status"
+                                    optionLabel="name" optionValue="id" placeholder="Select Marital Status"
                                     class="form-selects" />
                             </div>
                         </div>
@@ -93,6 +93,7 @@
                         <div class="text">
                             <!-- {{ emp_details.doj.slice(8,10)+ "-" + emp_details.doj.slice(5,7)+"-"+emp_details.doj.slice(0,4) }} -->
                             {{ _instance_profilePagesStore.employeeDetails.get_employee_details.dob}}
+
                         </div>
                     </li>
                     <li class="pb-1 border-bottom-liteAsh">
@@ -116,15 +117,18 @@
                         <div class="title">Marital Status </div>
                         <div class="text text-capitalize">
                             <!-- {{ emp_details.marital_status_id.name }} -->
-                            {{ _instance_profilePagesStore.employeeDetails.get_employee_details.marital_status }}
+                            <!-- {{ _instance_profilePagesStore.employeeDetails.get_employee_details.marital_status_id }} -->
+                            {{ computedMarital_StatusValue }}
 
                         </div>
                     </li>
                     <li class="pb-1 border-bottom-liteAsh">
                         <div class="title"> Blood Group</div>
-                        <div class="text">
+                        <div class="text" >
                             <!-- {{ emp_details.blood_group_id.name }} -->
-                            {{ _instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id }}
+<!--
+                            {{ _instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id  }} -->
+                            {{ cmpBldGrp }}
 
                         </div>
                     </li>
@@ -132,7 +136,9 @@
                         <div class="title">Physically Handicapped</div>
                         <div class="text">
                             <!-- {{ emp_details.blood_group_id.physically_challenged }} -->
-                            {{ _instance_profilePagesStore.employeeDetails.get_employee_details.physically_challenged }}
+                            <!-- {{ _instance_profilePagesStore.employeeDetails.get_employee_details.physically_challenged }} -->
+
+                            {{ computedPhy_challenged }}
 
                         </div>
                     </li>
@@ -146,11 +152,11 @@
     <div class="mb-2 card">
         <div class="card-body">
             <h6 class="">Contact Information
-                <span class="personal-edit"><a href="#" class="edit-icon" data-bs-target="#personal_info_modal"
-                        @click="contactVisible = true"><i class="ri-pencil-fill"></i></a>
+                <span class="personal-edit"><a href="#" class="edit-icon"
+                        @click="onClick_EditButtonContacttInfo" ><i class="ri-pencil-fill"></i></a>
                 </span>
 
-                <Dialog v-model:visible="contactVisible" modal header="Contact Information"
+                <Dialog v-model:visible="ContactVisible"   modal header="Contact Information"
                     :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
                     <template #header>
                         <div>
@@ -165,7 +171,7 @@
                                 <div class="mb-3 form-group">
                                     <label>Personal Email</label>
                                     <input type="email" name="present_email" class="form-control"
-                                        v-model="contactinfo.personal_email">
+                                        v-model="dailog_contactinfo.personal_email">
                                 </div>
                             </div>
 
@@ -173,7 +179,7 @@
                                 <div class="mb-3 form-group">
                                     <label> Office Email</label>
                                     <input type="email" class="form-control" name="officical_mail"
-                                        v-model="contactinfo.office_email">
+                                        v-model="dailog_contactinfo.office_email">
                                 </div>
                             </div>
 
@@ -182,14 +188,14 @@
                                 <div class="mb-3 form-group">
                                     <label>Mobile Number</label>
                                     <input type="text" size=20 maxlength=10 name="mobile_number" class="form-control"
-                                        v-model="contactinfo.mobile_number">
+                                        v-model="dailog_contactinfo.mobile_number">
                                 </div>
                             </div>
 
                             <div class="col-12">
                                 <div class="text-right">
-                                    <button id="btn_submit_contact_info" class="btn btn-border-orange submit-btn"
-                                        @click="savecontactInfoDetails()">Save</button>
+                                    <button  class="btn btn-border-orange submit-btn"
+                                        @click="save_contactinfoDetails">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -229,8 +235,8 @@
     <div class="mb-2 card">
         <div class="card-body">
             <h6 class="">Address
-                <span class="personal-edit"><a href="#" class="edit-icon" data-bs-target="#edit_addressInfo"
-                        @click="addressVisible = true"><i class="ri-pencil-fill"></i></a></span>
+                <span class="personal-edit"><a href="#" class="edit-icon"
+                        @click="onClick_EditButtonAddressInfo"><i class="ri-pencil-fill"></i></a></span>
 
                 <Dialog v-model:visible="addressVisible" modal header
                     :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
@@ -248,12 +254,12 @@
                             <div class="mb-3 form-group">
                                 <label>Current Address</label>
                                 <textarea name="current_address_line_1" id="current_address_line_1" cols="30" rows="3"
-                                    class="form-control" v-model="Addressinfo.current_address"></textarea>
+                                    class="form-control" v-model="diolog_Addressinfo.current_address"></textarea>
                             </div>
                             <div class="mb-3 form-group">
                                 <label>Permanent Address </label>
                                 <textarea name="permanent_address_line_1" id="permanent_address_line_1" cols="30" rows="3"
-                                    class="form-control" v-model="Addressinfo.Permanent_Address"></textarea>
+                                    class="form-control" v-model="diolog_Addressinfo.Permanent_Address"></textarea>
                             </div>
                         </div>
 
@@ -261,7 +267,7 @@
                             <div class="text-right">
                                 <Toast />
                                 <button id="btn_submit_address" class="btn btn-border-orange submit-btn warn"
-                                    @click="saveAddressinfo" severity="warn">Save</button>
+                                    @click="saveAddressinfoDetails" severity="warn">Save</button>
                             </div>
                         </div>
 
@@ -286,7 +292,7 @@
                     <div class="col-6">
                         <ul class="personal-info">
                             <li class="pb-1 border-bottom-liteAsh flex-column">
-                                <div class="title">permanent Address </div>
+                                <div class="title">Permanent Address </div>
                                 <div class="text">
                                     {{ _instance_profilePagesStore.employeeDetails.get_employee_details.permanent_address_line_1 }}
                                 </div>
@@ -324,7 +330,7 @@ const toast = useToast();
 const Addresstoast = useToast();
 
 const is_dialog_generalInfo_visible = ref(false);
-const contactVisible = ref(false);
+const ContactVisible = ref(false);
 const addressVisible = ref(false);
 
 
@@ -350,11 +356,52 @@ const computedGenderValue = computed(() => {
     else
     if(_instance_profilePagesStore.employeeDetails.get_employee_details.gender == 'female')
         return "Female";
+        // return ""
     else
     if(_instance_profilePagesStore.employeeDetails.get_employee_details.gender == 'others')
-        return "Others"
+        return "Others";
+
     else
         return "-"
+
+})
+const computedMarital_StatusValue = computed(()=>{
+    if(_instance_profilePagesStore.employeeDetails.get_employee_details.marital_status_id == 1) return "Unmarried";
+
+    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.marital_status_id == 2) return "Married";
+
+    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.marital_status_id == 3) return "Separated";
+
+    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.marital_status_id == 4) return "Widowed";
+
+    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.marital_status_id == 5) return "Divorced";
+    // "Widowed Divorced"
+})
+const cmpBldGrp =computed(()=>{
+    if(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id  == 1) return "A Negative";
+
+    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id ==2) return "A Positive";
+
+    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id ==3) return "AB Negative";
+
+    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id ==4) return "AB Positive";
+
+    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id ==5) return "B Negative";
+
+    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 6) return "B Positive";
+
+    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 7) return "O Negative";
+
+    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 8) return "O Positive";
+
+})
+
+const computedPhy_challenged = computed(()=>{
+
+if( _instance_profilePagesStore.employeeDetails.get_employee_details.physically_challenged == "no") return "No";
+
+if( _instance_profilePagesStore.employeeDetails.get_employee_details.physically_challenged =="yes") return "Yes";
+
 })
 
 const options_phy_challenged = ref([
@@ -380,9 +427,6 @@ onMounted(() => {
         option_maritals_status.value = result.data;
     });
 
-
-    editInfo()
-
     //_instance_profilePagesStore
 
 
@@ -398,12 +442,16 @@ function onClick_EditButton_GeneralInfo(){
     dialog_general_information.dob = _instance_profilePagesStore.employeeDetails.get_employee_details.dob;
     dialog_general_information.doj = _instance_profilePagesStore.employeeDetails.get_employee_details.doj;
     dialog_general_information.marital_status_id = parseInt(_instance_profilePagesStore.employeeDetails.get_employee_details.marital_status_id);
+    // dialog_general_information.marital_status_id =4;
+
     dialog_general_information.gender = _instance_profilePagesStore.employeeDetails.get_employee_details.gender;
     dialog_general_information.blood_group_id = parseInt(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id);
     dialog_general_information.physically_challenged = _instance_profilePagesStore.employeeDetails.get_employee_details.physically_challenged;
 
     is_dialog_generalInfo_visible.value = true;
 }
+
+
 
 function saveGeneralInformationDetails() {
     console.log("Called saveGeneralInformationDetails.... ");
@@ -414,7 +462,7 @@ function saveGeneralInformationDetails() {
 
 
     axios.post(url, {
-            user_id: dialog_general_information.user_id,
+            user_code: _instance_profilePagesStore.employeeDetails.user_code,
             dob: dialog_general_information.dob,
             gender: dialog_general_information.gender,
             marital_status_id: dialog_general_information.marital_status_id,
@@ -433,16 +481,6 @@ function saveGeneralInformationDetails() {
                     employeeDetails.value = res.data
                 }).catch(e => console.log(e)).finally(()=>console.log("completed"))
 
-            // Assign json values into dialog elements also
-
-            // dialog_general_information.birth_date = _instance_profilePagesStore.employeeDetails.get_employee_details.dob;
-            // dialog_general_information.date_of_joining = _instance_profilePagesStore.employeeDetails.get_employee_details.doj;
-            // dialog_general_information.marital_status_id = _instance_profilePagesStore.employeeDetails.get_employee_details.marital_status;
-            // dialog_general_information.gender = _instance_profilePagesStore.employeeDetails.get_employee_details.gender;
-            // dialog_general_information.blood_group_id = _instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id;
-            // dialog_general_information.phy_handicapped = _instance_profilePagesStore.employeeDetails.get_employee_details.physically_challenged;
-
-
             } else if (res.data.status == "failure") {
                 leave_data.leave_request_error_messege = res.data.message;
             }
@@ -456,84 +494,120 @@ function saveGeneralInformationDetails() {
 
 const contact_details = ref();
 
-const contactinfo = reactive({
+const dailog_contactinfo = reactive({
     personal_email: "",
     office_email: "",
     mobile_number: ""
 
 });
 
-// const savecontactInfoDetails =()=>{
-//     console.log("calling saveinfoDetails");
+function onClick_EditButtonContacttInfo(){
+    console.log("Opening General Info Dialog");
 
+    // Assign json values into dialog elements also
 
-//     let url = 'http://localhost:3000/contact'
+    dailog_contactinfo.personal_email = _instance_profilePagesStore.employeeDetails.email;
+    dailog_contactinfo.office_email = _instance_profilePagesStore.employeeDetails.get_employee_office_details.officical_mail;
+    dailog_contactinfo.mobile_number =_instance_profilePagesStore.employeeDetails.get_employee_office_details.official_mobile ;
 
-//     axios.post(url,{
-//         user_id: contactinfo.user_id,
-//         present_email:contactinfo.personal_email,
-//         officical_mail:contactinfo.office_email,
-//         mobile_number:contactinfo.mobile_number
-//     })
-//     .then((res)=>{
-//             if (res.data.status == "success") {
-//             } else if (res.data.status == "failure") {
-//                 contact_details.leave_request_error_messege = res.data.message;
-//             }
+    ContactVisible.value = true;
 
-//     }).catch((err)=>{
-//         console.log(err);
-//     })
+    // console.log(ContactVisible.value);
+}
+
+function save_contactinfoDetails(){
+    console.log("testing contact");
+
+    let id = fetch_data.current_user_id
+    let url = `/profile-pages-update-contactinfo/${id}`;
+
+    axios.post(url, {
+        user_code: _instance_profilePagesStore.employeeDetails.user_code,
+        present_email:dailog_contactinfo.personal_email,
+        officical_mail:dailog_contactinfo.office_email,
+        mobile_number:dailog_contactinfo.mobile_number
+
+        })
+        .then((res) => {
+            data_checking.value = false;
+            if (res.data.status == "success") {
+
+                axios.get('/profile-pages-getEmpDetails?uid='+uid ).then(res =>{
+                    loading_screen.value = false;
+                    console.log(res.data);
+                    contact_details.value = res.data
+                }).catch(e => console.log(e)).finally(()=>console.log("completed"))
+
+            } else if (res.data.status == "failure") {
+                contact_details.leave_request_error_messege = res.data.message;
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+
+        ContactVisible.value = false;
+
+}
 
 
 
 const addressUpdateDetails = ref();
 
-const Addressinfo = reactive({
+const diolog_Addressinfo = reactive({
     current_address: "",
     Permanent_Address: ""
 });
 
-const saveAddressinfo = () => {
+function onClick_EditButtonAddressInfo(){
+    console.log("Opening General Info Dialog");
 
-    console.log("calling saveinfoDetails");
-    if (Addressinfo.current_address == " " || Addressinfo.Permanent_Address == " ") {
+    // Assign json values into dialog elements also
+
+    diolog_Addressinfo.current_address = _instance_profilePagesStore.employeeDetails.get_employee_details.current_address_line_1;
+    diolog_Addressinfo.Permanent_Address = _instance_profilePagesStore.employeeDetails.get_employee_office_details.officical_mail;
+    addressVisible.value = true;
+
+    // console.log(ContactVisible.value);
+}
+
+const saveAddressinfoDetails = () => {
+
+    if (diolog_Addressinfo.current_address == " " || diolog_Addressinfo.Permanent_Address == " ") {
         Addresstoast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
         console.log(Addressinfo);
     }
     else {
-        let url = 'http://localhost:3000/Address_details';
-        console.log("hello");
-        axios.post(url, {
-            user_id: Addressinfo.user_id,
-            current_address_line_1: Addressinfo.current_address,
-            permanent_address_line_1: Addressinfo.Permanent_Address
-        }).then((res) => {
+        let id = fetch_data.current_user_id
+       let url = `/profile-pages-update-address_info/${id}`;
+
+    axios.post(url, {
+        user_code: _instance_profilePagesStore.employeeDetails.user_code,
+        current_address_line_1: diolog_Addressinfo.current_address,
+        permanent_address_line_1:diolog_Addressinfo.Permanent_Address
+
+        })
+        .then((res) => {
+            data_checking.value = false;
             if (res.data.status == "success") {
-                console.log("hi");
+
+                axios.get('/profile-pages-getEmpDetails?uid='+uid ).then(res =>{
+                    loading_screen.value = false;
+                    console.log(res.data);
+                    addressUpdateDetails.value = res.data
+                }).catch(e => console.log(e)).finally(()=>console.log("completed"))
+
             } else if (res.data.status == "failure") {
-                console.log(res.data.message);
+                addressUpdateDetails.leave_request_error_messege = res.data.message;
             }
-        }).catch((err) => {
+        })
+        .catch((err) => {
             console.log(err);
         });
+
+        addressVisible.value = false;
     }
 
-}
-
-const editInfo = () => {
-
-    // dialog_general_information.dob = _instance_profilePagesStore.employeeDetails.get_employee_details.dob
-    // dialog_general_information.gender = _instance_profilePagesStore.employeeDetails.get_employee_details.gender,
-    //     dialog_general_information.doj = _instance_profilePagesStore.employeeDetails.get_employee_details.doj,
-    //     dialog_general_information.blood_group_id = _instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id,
-    //     dialog_general_information.marital_status_id = _instance_profilePagesStore.employeeDetails.get_employee_details.marital_status_id,
-    //     dialog_general_information.physically_challenged = _instance_profilePagesStore.employeeDetails.get_employee_details.physically_challenged
-    // contactinfo.personal_email = _instance_profilePagesStore.employeeDetails.email
-    // contactinfo.mobile_number = _instance_profilePagesStore.employeeDetails.get_employee_office_details.official_mobile
-    // contactinfo.office_email = _instance_profilePagesStore.employeeDetails.get_employee_office_details.officical_mail
-    // Addressinfo.current_address = _instance_profilePagesStore.employeeDetails.get_employee_details.current_address_line_1
-    // Addressinfo.Permanent_Address = _instance_profilePagesStore.employeeDetails.get_employee_details.permanent_address_line_1
 }
 
 
