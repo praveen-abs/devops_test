@@ -22,9 +22,39 @@ Auth::routes();
 //Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
 
 Route::get('/vuejs', function () {
-
     return view('test_vuejs.app');
 });
+
+Route::get('/create-offer', function () {
+    return view('offer_letter/Create_OfferLetter.blade.php');
+
+})->name('create-offer');
+
+Route::get('/offer-letter' , function () {
+    return view('offer_letter/View_OfferLetter');
+})->name('offer-letter');
+
+
+
+Route::get('/roles', function () {
+    return view('rolesAndPermission');
+})->name('roles');
+
+Route::get('/integrations', function () {
+    return view('Integrations_Auth');
+})->name('integrations');
+
+Route::get('/addPermission', function () {
+    return view('addPermissionTo_role');
+})->name('addPermission');
+
+Route::get('/Add-New', function () {
+    return view('addNew_role');
+})->name('Add-New');
+
+Route::get('/paycheckDashboard', function () {
+    return view('paycheckDashboard');
+})->name('paycheckDashboard');
 
 
 Route::get('/create-holiday', function () {
@@ -54,6 +84,12 @@ Route::middleware(['auth'])->group(function () {
 
         return auth()->user()->id;
     });
+    Route::get('/currentUserName', function() {
+
+        return auth()->user()->name;
+    });
+
+    //Get current logged-in user name
     Route::get('/currentUserName', function() {
 
         return auth()->user()->name;
@@ -243,7 +279,13 @@ Route::middleware(['auth'])->group(function () {
         return view('vmt_vendor');
     })->name('vmt-vendor-route');
 
+    Route::get('/view-offer', function () {
+        return view('offer_letter.View_OfferLetter');
+    })->name('view-offer');
 
+    Route::get('/create-offer', function () {
+        return view('offer_letter.create_offerletter');
+    })->name('create-offer');
 
     Route::get('clients', 'App\Http\Controllers\VmtClientController@showAllClients')->name('vmt-clients-route');;
     Route::get('clients-fetchAll', 'App\Http\Controllers\VmtClientController@fetchAllClients')->name('vmt-clients-fetchall');

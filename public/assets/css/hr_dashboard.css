@@ -162,7 +162,7 @@
 .switch-checkbox {
     position: relative;
     display: inline-block;
-    width: 115px;
+    /* width: 115px; */
     height: 25px;
 }
 
@@ -183,18 +183,14 @@
 .slider-checkbox {
     position: absolute;
     cursor: pointer;
-    top: 0;
-    left: 0;
+    left: 0px;
+    background-color: #008023;
     border: 1px solid #d9d0d0;
-    right: 0;
-    bottom: 0;
-    border-radius: 50px;
-    background-color: white;
-    width: 75px;
+    border-radius: 33px;
+    width: 70px;
     -webkit-transition: 0.4s;
     height: 22px;
-    box-shadow: inset -5px -5px 9px rgb(255 255 255 / 45%), inset 5px 5px 9px rgb(197 197 197 / 30%),
-        rgb(0 0 0 / 16%) 0px 1px 4px;
+
     transition: 0.4s;
 }
 
@@ -203,7 +199,7 @@
 }
 
 .slider-checkbox.check-in:before {
-    background-color: green;
+    background-color: #fff;
 }
 
 input:checked + .slider > .slider-text:after {
@@ -222,7 +218,7 @@ input + .slider > .slider-text:after {
     left: 0px;
     border-radius: 50%;
     bottom: 0px;
-    color: #ffffff;
+    color: #008023;
     background-color: #008000;
     -webkit-transition: 0.4s;
     transition: 0.4s;
@@ -255,7 +251,7 @@ input:checked + .slider-checkbox:before {
     -webkit-transform: translateX(65px);
     -ms-transform: translateX(65px);
     transform: translateX(65px);
-    left: -13px;
+    left: -18px;
     background-color: #f0f0f6;
 }
 
@@ -276,6 +272,7 @@ input:checked + .slider-checkbox > .slider-checkbox-text:after {
 
 input + .slider-checkbox > .slider-checkbox-text:after {
     content: "Check In";
+    color: #fff;
 }
 
 .fc-scroller {
