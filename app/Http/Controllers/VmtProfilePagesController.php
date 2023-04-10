@@ -147,7 +147,7 @@ class VmtProfilePagesController extends Controller
          $details = VmtEmployee::where('userid', $request->id )->first();
          $details->dob = $request->input('dob');
          $details->gender = $request->input(['gender']);
-         $details->marital_status = $request->input(['marital_status_id']);
+         $details->marital_status_id = $request->input(['marital_status_id']);
          $details->doj=$request->input('doj');
          $details->blood_group_id = $request->input(['blood_group_id']);
          $details->physically_challenged = $request->input(['physically_challenged']);
