@@ -1,9 +1,11 @@
 @use "../utilities/variable" as v;
 
 .p-datatable {
+    white-space: nowrap;
     .p-datatable-header {
         border: 0px !important;
         background: none !important;
+
     }
 }
 
@@ -54,6 +56,7 @@
             color: var(--white) !important;
             border: 0 !important;
             border-width: 0 !important;
+            padding: 0.8em 0.6em !important;
             div,span{
                 color: #ffffff;
             }
@@ -91,7 +94,7 @@
         padding: 0.8rem 1rem !important;
         button.p-button {
             padding: 0.6em 1em !important;
-            height: 2.3em !important;
+            height: 2.5em !important;
             span {
                 color: v.$white;
             }

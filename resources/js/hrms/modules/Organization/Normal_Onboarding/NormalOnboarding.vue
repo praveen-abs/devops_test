@@ -99,6 +99,7 @@
                             placeholder="Date of birth"
                             id="doj"
                             name="doj"
+                            @change="fnCalculateAge"
                             class="onboard-form form-control textbox"
                             onfocus="(this.type='date')"
                           />
@@ -206,17 +207,25 @@
                             >Mobile Number<span class="text">*</span></label
                           >
                           <InputText
-                            type="text"
+                            @input="mobileNoExists"
+                            type="number"
                             placeholder="Mobile Number"
                             :class="{
                               'p-invalid': v$.mobile_number.$invalid && submitted,
                             }"
                             v-model="v$.mobile_number.$model"
                             class="form-control textbox"
-                            minlength="10"
-                            maxlength="10"
+                        
+                            
                           />
                         </div>
+
+                        <span v-if="is_mobile_no_exists">
+                               Mobile Number Is Already Exists
+                        </span>
+                        <span v-if="invalid_mobile_no" class="text-danger">
+                             Invalid Mobile Number 
+                        </span>
                         <span
                           v-if="
                             (v$.mobile_number.$invalid && submitted) ||
@@ -271,11 +280,13 @@
                             >Aadhaar Number<span class="text-danger">*</span></label
                           >
                           <!-- <InputText class="onboard-form form-control textbox " id="AadharNumber"
-                                                        placeholder="Aadhaar Number"
-
-                                                        pattern="/^([0-9]{4}[0-9]{4}[0-9]{4}$)|([0-9]{4}\s[0-9]{4}\s[0-9]{4}$)|([0-9]{4}-[0-9]{4}-[0-9]{4}$)/"
-                                                        data-pattern-error="wel" autocomplete="off" type="text" /> -->
+                          placeholder="9999 9999 9999" @input="AadharCardExits" 
+                            v-model="v$.aadhar_number.$model"
+                            :class="{
+                              'p-invalid': v$.aadhar_number.$invalid && submitted,
+                            }"  data-pattern-error="wel" autocomplete="off" type="number" /> -->
                           <InputMask
+                          @focusout="AadharCardExits"
                             id="ssn"
                             mask="9999 9999 9999"
                             placeholder="9999 9999 9999"
@@ -283,7 +294,15 @@
                             :class="{
                               'p-invalid': v$.aadhar_number.$invalid && submitted,
                             }"
+                            
                           />
+
+                          <span v-if="aadhar_card_exists" class="text-danger">
+                            Aadhar Number Is Already Exists
+                          </span>
+                          <span v-if="invalid_aadhar_check" class="text-danger">
+                            Invalid Aadhar Number
+                          </span>
                           <span
                             v-if="
                               (v$.aadhar_number.$invalid && submitted) ||
@@ -308,6 +327,7 @@
                           >
 
                           <InputMask
+                          @focusout="panCardExists"
                             id="serial"
                             mask="aaaaa9999a"
                             v-model="v$.pan_number.$model"
@@ -318,6 +338,14 @@
                               'p-invalid': v$.pan_number.$invalid && submitted,
                             }"
                           />
+
+                          <span v-if="pan_card_exists" class="text-danger">
+                            Pan Number Is Already Exixts
+                          </span>
+
+                          <span v-if="invalid_pan_no" class="text-danger">
+                           Invalid Pan Number 
+                          </span>
 
                           <span
                             v-if="
@@ -1146,7 +1174,9 @@
                       >
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Process<span class="text-danger">*</span></label
+                            >Process
+                            <!-- <span class="text-danger">*</span> -->
+                            </label
                           >
                           <InputText
                             class="onboard-form form-control"
@@ -1419,7 +1449,7 @@
 
               <!-- Family Detials Start -->
 
-              <div class="p-2 my-6 shadow card profile-box card-top-border">
+              <div class="p-2 my-6 shadow card profile-box card-top-border" v-if="family_details_disable">
                 <div class="card-body justify-content-center align-items-center">
                   <div class="header-card-text">
                     <h6 class="mb-0">Family Details</h6>
@@ -2293,7 +2323,7 @@
                         />
                       </div>
                       <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6">
-                        <label for="" class="float-label"> ID</label>
+                        <label for="" class="float-label">Voter ID</label>
 
                         <input
                           type="file"
@@ -2598,6 +2628,10 @@ onMounted(() => {
     console.log("UID not found in req params");
   }
 
+
+  employee_onboarding.nationality = 'Indian'
+  NationalityCheck()
+
 });
 
 
@@ -2763,6 +2797,7 @@ const EducationCertificateInvalid = ref(false);
 const fileUploadValidation = ref(true);
 const employee_name_invalid =ref(false)
 const loading = ref(false)
+const family_details_disable = ref(false)
 
 
 //   Events
@@ -2861,6 +2896,19 @@ const fnCalculateAge = () => {
     var calculatedAge = Math.abs(ageDate.getUTCFullYear() - 1970);
     employee_onboarding.mother_age = calculatedAge;
   }
+  if (employee_onboarding.dob) {
+    var birthDate = new Date(employee_onboarding.dob);
+    console.log(" birthDate" + birthDate);
+    var difference = Date.now() - birthDate.getTime();
+    var ageDate = new Date(difference);
+    var calculatedAge = Math.abs(ageDate.getUTCFullYear() - 1970);
+    console.log("calculated Age" + calculatedAge );
+    if(calculatedAge < 18){
+      console.log("not less than 18");
+      employee_onboarding.dob = ''
+    }
+  }
+  
 };
 
 const SaveEmployeeOnboardingData = () => {
@@ -3096,6 +3144,7 @@ const userCodeExists = () => {
       console.log(res.data);
       if(checkIsQuickOrNormal.value == 'quick'){
         console.log("quick onboarding");
+        family_details_disable.value = true
       }else{
         user_code_exists.value = res.data;
       }
@@ -3110,28 +3159,103 @@ const userCodeExists = () => {
 };
 
 
-const first_second_letter= ()=>{
+// const first_second_letter= ()=>{
 
- let emp=  `${employee_onboarding.employee_name.charAt(0).toUpperCase()}${employee_onboarding.employee_name.charAt(1).toUpperCase()}`
+//  let emp= `${employee_onboarding.employee_name.charAt(0).toUpperCase()}${employee_onboarding.employee_name.charAt(1).toUpperCase()}`
 
- employee_onboarding.employee_name = emp
+//  employee_onboarding.employee_name = emp
 
-                if(employee_onboarding.employee_name.match(1) || employee_onboarding.employee_name.match(2) ||
-                 employee_onboarding.employee_name.match(3) || employee_onboarding.employee_name.match(4 ) ||
-                 employee_onboarding.employee_name.match(5) || employee_onboarding.employee_name.match(6) ||
-                 employee_onboarding.employee_name.match(7) || employee_onboarding.employee_name.match(8) ||
-                 employee_onboarding.employee_name.match(9) || employee_onboarding.employee_name.match(0) ){
-                  employee_name_invalid.value =true
-                }else{
-                  employee_name_invalid.value =false
-                }
+//                 if(employee_onboarding.employee_name.match(1) || employee_onboarding.employee_name.match(2) ||
+//                  employee_onboarding.employee_name.match(3) || employee_onboarding.employee_name.match(4 ) ||
+//                  employee_onboarding.employee_name.match(5) || employee_onboarding.employee_name.match(6) ||
+//                  employee_onboarding.employee_name.match(7) || employee_onboarding.employee_name.match(8) ||
+//                  employee_onboarding.employee_name.match(9) || employee_onboarding.employee_name.match(0) ){
+//                   employee_name_invalid.value =true
+//                 }else{
+//                   employee_name_invalid.value =false
+//                 }
 
 
 
-}
+// }
 
-const personal_mail_exists = ref(false);
+const aadhar_card_exists = ref(false);
+const invalid_aadhar_check = ref(false)
 
+const AadharCardExits = () => {
+  console.log("working");
+  let aadhar_no = employee_onboarding.aadhar_number;
+
+  
+
+    if(employee_onboarding.aadhar_number.length >= 12){
+      var regexp=/^[2-9]{1}[0-9]{3}\s{1}[0-9]{4}\s{1}[0-9]{4}$/;
+           
+           if(regexp.test(employee_onboarding.aadhar_number))
+               {
+                   console.log("Valid Aadhar no.");
+                   axios
+                      .get(`/aadhar-no-exists/${aadhar_no}`)
+                      .then((res) => {
+                        console.log(res.data);
+                        aadhar_card_exists.value = res.data;
+                      })
+                      .catch((err) => {
+                        console.log(err);
+                      })
+                      .finally(() => {
+                        console.log("completed");
+                      });
+                   
+               }
+        else{ console.log("Invalid Aadhar no.");
+             invalid_aadhar_check.value = true
+
+              }
+
+    }else{
+      console.log("checking");
+    }
+
+ 
+};
+
+const pan_card_exists = ref(false);
+const invalid_pan_no = ref(false)
+
+const panCardExists = () => {
+   console.log("pan card checking");
+
+     let pan_no = employee_onboarding.pan_number;
+
+      var regep=/^[A-Z]{5}[0-9]{4}[A-Z]{1}/;
+           
+           if(regep.test(employee_onboarding.pan_number))
+               {
+                   console.log("Valid pan no.");
+                   axios
+                    .get(`/pan-no-exists/${pan_no}`)
+                    .then((res) => {
+                      console.log(res.data);
+                      pan_card_exists.value = res.data;
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    })
+                    .finally(() => {
+                      console.log("completed");
+                    });
+                                    
+               }
+        else{ console.log("Invalid pan no.");
+          invalid_pan_no.value = true
+
+              }
+              console.log("checking");
+
+}; 
+const personal_mail_exists = ref(false);    
+  
 const personalMailExists = () => {
   let mail = employee_onboarding.email;
 
@@ -3147,7 +3271,39 @@ const personalMailExists = () => {
     .finally(() => {
       console.log("completed");
     });
+
+
 };
+
+
+const is_mobile_no_exists = ref(false)
+const invalid_mobile_no = ref(false)
+
+const mobileNoExists = () => {
+  let mobile = employee_onboarding.mobile_number;
+
+ if(employee_onboarding.mobile_number.length <= 10){
+  console.log("mobile no Checking");
+  axios
+    .get(`/mobile-no-exists/${mobile}`)
+    .then((res) => {
+      console.log(res.data);
+      is_mobile_no_exists.value = res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      console.log("completed");
+    });
+ }else{
+   console.log("invalid no");
+   invalid_mobile_no.value = true
+ }
+};
+
+
+
 
 // compensatory Logic
 

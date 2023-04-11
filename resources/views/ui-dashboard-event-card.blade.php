@@ -1,10 +1,10 @@
 <div class="event-wrapper">
-    <div class="card  border-0 mb-0">
+    <div class="card  border-0 mb-0" style="height:270px;
+    overflow-y: auto;
+    overflow-x: hidden;">
         <div class="card-body">
-            <div class=" mb-3  f-18 text-primary" id=""> <span>Events</span>
-            </div>
-            <div class="center d-flex" style="height:210px">
-
+            <h6 class="text-primary">Events</h6>
+            <div class="row ">
                 <?php $anyUpcoming_Current_Events = false; ?>
                 @if ($dashboardEmployeeEventsData['hasData'] == 'true')
                     @foreach ($dashboardEmployeeEventsData['birthday'] as $employee)
@@ -30,31 +30,29 @@
 
                                         <?php
                                         $empAvatar = json_decode(getEmployeeAvatarOrShortName($employee->id));
-                                        // dd($empAvatar->color);
+                                        //dd($empAvatar->type);
                                         ?>
-                                        <div class="d-flex justify-content-center align-items-center mb-2">
-                                            @if ($empAvatar->type == 'shortname')
-                                                <div
-                                                    class=" img-xl  d-flex justify-content-center align-items-center   rounded <?php echo $empAvatar->color; ?>">
-                                                    <span class="text-white fw-bold">
-                                                        {{ $empAvatar->data }}
-                                                    </span>
-                                                </div>
-                                            @elseif($empAvatar->type == 'avatar')
-                                                <?php
-                                                $imageURL = request()->getSchemeAndHttpHost() . '/images/' . $empAvatar->data;
-                                                ?>
+                                        @if ($empAvatar->type == 'shortname')
+                                            <div class="userShort_name img-lg mb-3">
+                                                {{ $empAvatar->data }}
+                                            </div>
+                                        @elseif($empAvatar->type == 'avatar')
+                                            <?php
 
-                                                <img class=" userShort_name rounded img-xl" src="{{ $imageURL }}"
+                                            $imageURL = request()->getSchemeAndHttpHost() . '/images/' . $empAvatar->data;
+
+                                            ?>
+                                            <div class="text-center mb-3">
+                                                <img class=" userShort_name img-lg mb-3" src="{{ $imageURL }}"
                                                     alt="">
-                                            @endif
-                                        </div>
+                                            </div>
+                                        @endif
 
                                         <div class="text-center">
-                                            <p class=" text-muted ">
+                                            <p class="fw-bold f-14 text-muted ">
                                                 {{ $employee->name }}
                                             </p>
-                                            <p class="f-12  text-orange  program-day ">
+                                            <p class="f-12 fw-bold text-orange  program-day ">
                                                 {{ \Carbon\Carbon::parse($employee['dob'])->format('jS M') }}
                                             </p>
                                         </div>
@@ -106,26 +104,21 @@
                                         $empAvatar = json_decode(getEmployeeAvatarOrShortName($employee->id));
                                         //dd($empAvatar);
                                         ?>
-                                        <div class="d-flex justify-content-center align-items-center">
-                                            @if ($empAvatar->type == 'shortname')
-                                                <div
-                                                    class=" img-xl mb-2 d-flex justify-content-center align-items-center   rounded <?php echo $empAvatar->color; ?>">
-                                                    <span class="text-white fw-bold">
-                                                        {{ $empAvatar->data }}
-                                                    </span>
-                                                </div>
-                                            @elseif($empAvatar->type == 'avatar')
-                                                <?php
-                                                $imageURL = request()->getSchemeAndHttpHost() . '/images/' . $empAvatar->data;
-                                                ?>
-                                                <div
-                                                    class="text-center
-                                            mb-3">
-                                                    <img class=" userShort_name rounded img-xl mb-2"
-                                                        src="{{ $imageURL }}" alt="">
-                                                </div>
-                                            @endif
-                                        </div>
+                                        @if ($empAvatar->type == 'shortname')
+                                            <div class="userShort_name img-lg mb-3">
+                                                {{ $empAvatar->data }}
+                                            </div>
+                                        @elseif($empAvatar->type == 'avatar')
+                                            <?php
+
+                                            $imageURL = request()->getSchemeAndHttpHost() . '/images/' . $empAvatar->data;
+
+                                            ?>
+                                            <div class="text-center">
+                                                <img class=" img-lg mb-3  userShort_name" src="{{ $imageURL }}"
+                                                    alt="">
+                                            </div>
+                                        @endif
                                         <div class="text-center">
                                             <p class="fw-bold f-14 text-muted ">
                                                 {{ $employee->name }}
@@ -165,7 +158,6 @@
                         </span>
                     </div>
                 @endif
-
             </div>
         </div>
     </div>
@@ -175,7 +167,7 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-md">
             <div class="modal-content">
                 <div class="modal-header py-2 border-0">
-                    <h6 class="modal-title ">
+                    <h6 class="modal-title " >
                         Wishes Text</h6>
                     <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
                         aria-label="Close">
@@ -195,6 +187,3 @@
         </div>
     </div>
 </div>
-
-
-

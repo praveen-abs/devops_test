@@ -37,7 +37,7 @@
                             @endif
                         </ul>
                     </div>
-                    <div class="col-3 p-  text-end">
+                    <div class="col-3 p-0  text-end">
                         <div class="input-group   me-2">
                             <label class="input-group-text " for="inputGroupSelect01"><i
                                     class="fa fa-calendar text-primary " aria-hidden="true"></i></label>
@@ -48,7 +48,7 @@
                         </div>
 
                     </div>
-                    <div class="col-3p-0  text-end">
+                    <div class="col-3 p-0  text-end">
                         <div>
 
                             <a href="{{ route('attendance-leave-policydocument') }}" id="" class=" btn btn-orange"

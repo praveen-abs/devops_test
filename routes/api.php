@@ -117,13 +117,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('employee_monthly_leave_details', [VmtAPIAttendanceController::class,
     'employeeMonthlyLeaveDetails']);
 
-
+    Route::get('/get-maindashboard-data', [VmtAPIDashboardController::class, 'getMainDashboardData']);
 ////Profile Pages
 
 
 
 });
 
-Route::get('/get-maindashboard-data', [VmtAPIDashboardController::class, 'getMainDashboardData']);
+
 Route::get('/profile-pages-getEmpDetails', [VmtAPIProfilePagesController::class, 'fetchEmployeeProfileDetails']);
 

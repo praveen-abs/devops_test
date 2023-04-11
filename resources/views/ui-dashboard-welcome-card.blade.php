@@ -1,42 +1,83 @@
-<div class="card  w-100  border-0 box-shadow-md">
+<div class="card profile-box flex-fill ">
     <div class="card-body">
+        <div class="d-flex">
+            <div class="status-wrapper page-header-user-dropdown me-3">
+                <?php
+                //dd($currentUser);
+                $t_userAvatarDetails = json_decode(getEmployeeAvatarOrShortName(auth()->user()->id), true);
+                // dd($t_userAvatarDetails);
+                ?>
+                @if ($t_userAvatarDetails['type'] == 'shortname')
+                    <div id=""
+                        class="align-middle fw-600 img-xl text-white  rounded-circle d-flex align-items-center justify-content-center  rounded-circle <?php echo $t_userAvatarDetails['color']; ?>"
+                        style="font-size: 25px">
+                        {{ $t_userAvatarDetails['data'] }}</div>
+                @else
+                    <img class="rounded-circle header-profile-user img-xl"
+                        src=" {{ URL::asset('images/' . $t_userAvatarDetails['data']) }}" alt="user-image">
+                @endif
+            </div>
+            <div class="greet-wrap ">
+                <div class="d-felx ">
+                    <!-- <h4>Welcome Back<b class="ml-1 text-primary">{{ auth()->user()->name }}</b></h4> -->
+                    <p class="text-muted "><span class="f-12 me-1" id="greeting_text">Welcome Back</span><b
+                            class="ml-1 f-15 text-primary">{{ auth()->user()->name }}</b>
+                    </p>
 
-        <div class="row">
-            <div class="col-8 col-sm-8 col-md-8 col-xl-8 col-lg-8 col-xxl-8">
-                <p class="fw-bold f-18 text-primary" id="greeting_text">-</p>
-                <p class="fw-bold fs-16 text-orange my-1">
-                    {{ auth()->user()->name }}
-                </p>
-
-                <div class="my-3"><i class="fa fa-sun-o me-3 text-warning" aria-hidden="true"></i>General Shift <label
-                        class="switch-checkbox f-12 text-muted  ms-3">
-                        <input type="checkbox" id="checkin_function" class="f-13 text-muted"
-                            @if ($checked && $checked->checkin_time) @if ($checked->checkout_time)
-                            @else
-                            checked @endif
-                            @endif>
-                        <span class="slider-checkbox check-in round">
-                            <span class="slider-checkbox-text">
-                            </span>
-                        </span>
-                    </label>
+                    <p class="text-muted f-12 mt-1 m-0">{{ date('d F Y') }}</p>
                 </div>
-                <p class="f-12 text-muted " id="time_duration">Time Duration:
-                    @if ($effective_hours)
-                        <span class="test-primary f-12"> {{ $effective_hours }}</span>
-                    @else
-                        <span class="test-primary f-12"> {{ '-' }}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-xl-12 col-xl-12 my-2   ">
+                <div class="d-flex align-items-center ">
+                    <p class="f-12 text-muted "><i class="f-14 ri-sun-line text-warning me-2"></i>General shift</p>
+                    <p class="f-12 text-muted">
+                        <span>
+                            <label class="switch-checkbox f-12 text-muted  m-0">
+                                <input type="checkbox" id="checkin_function" class="f-13 text-muted"
+                                    @if ($checked && $checked->checkin_time) @if ($checked->checkout_time)
+                                @else
+                                checked @endif
+                                    @endif>
+                                <span class="slider-checkbox check-in round">
+                                    <span class="slider-checkbox-text">
+                                    </span>
+                                </span>
+                            </label>
+                        </span>
+                    </p>
+                </div>
+                <div class="d-flex align-items-center mt-1">
+                    <input type="hidden" class="f-12 text-muted" id="hidden_timer_value" name="hidden_timer_value"
+                        value="0">
+                    @if ($checked && $checked->checkin_time)
+                        @if ($checked->checkout_time)
+                            <i class="ri-time-line text-warning f-14 me-2"></i><span id="check_timing"
+                                class="f-12 me-2 text-muted ">Last Check Out :
+                                {{ date('H:i:s', strtotime($checked->checkout_time)) }}</span>
+                        @else
+                            {{-- If not check_out time, then user havent checked-out yet --}}
+                            <span class="ri-time-line text-warning me-2"></span><span id="check_timing"
+                                class="f-12 text-muted me-2">Check In :
+                                {{ date('H:i:s', strtotime($checked->checkin_time)) }}</span>
+                        @endif
                     @endif
-                    </->
+
+                    <span class="f-12 text-muted " id="time_duration">Time Duration:
+                        @if ($effective_hours) {{ $effective_hours }}
+                        @else
+                            {{ '---' }} @endif
+                    </span>
+
+                </div>
             </div>
-            <div class="col-4 col-sm-4 col-md-4  col-xl-4 col-lg-4 col-xxl-4">
-                <img src="{{ URL::asset('assets/images/dashboard/girl_walk.jpg') }}" class="" alt="girl-walk"
-                    height="145px" width="100%">
-            </div>
+
         </div>
 
     </div>
 </div>
+
 
 <!-- staticBackdrop Modal -->
 <div class="modal fade" id="modal_checkin_confirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -44,7 +85,14 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-body text-center p-1">
-
+                <!--confetti-->
+                <!--lord-icon
+                    src="https://cdn.lordicon.com/lupuorrc.json"
+                    trigger="loop"
+                    colors="primary:#121331,secondary:#08a88a"
+                    style="width:120px;height:120px">
+                </lord-icon-->
+                <!--https://cdn.lordicon.com/pdlhjibh.json-->
                 <div class="check-in-animate">
                     <lord-icon src="https://cdn.lordicon.com/dcfqtwxe.json" trigger="loop" delay="2000"
                         class="gliters" colors="primary:#1aff1a,secondary:#1aff1a">
@@ -79,11 +127,12 @@
 
                 <div class="check-in-animate">
                     <lord-icon src="https://cdn.lordicon.com/dcfqtwxe.json" trigger="loop" delay="2000"
-                        colors="primary:#ff3300,secondary:#ff3300" class="gliters">
+                        colors="primary:#ff3300,secondary:#ff3300"  class="gliters">
                     </lord-icon>
                     <lord-icon src="https://cdn.lordicon.com/twopqjaj.json" trigger="loop" delay="2000"
-                        class="entry-man"
-                        colors="primary:#121331,secondary:#ebe6ef,tertiary:#f9c9c0,quaternary:#ffffff,quinary:#3a3347,senary:#b26836,septenary:#e62e00">
+                    class="entry-man"
+                        colors="primary:#121331,secondary:#ebe6ef,tertiary:#f9c9c0,quaternary:#ffffff,quinary:#3a3347,senary:#b26836,septenary:#e62e00"
+                        >
                     </lord-icon>
 
                 </div>
@@ -103,6 +152,7 @@
         </div>
     </div>
 </div>
+
 
 
 @section('welcome-script')

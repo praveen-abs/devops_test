@@ -52,8 +52,14 @@ class VmtDashboardService{
        // dd($employee_designation);
         //converting profile pic into base64
         $avatar_path = public_path("assets/images/".$employee_details_query[0]['avatar']);
-        $avatar_type = File::mimeType($avatar_path);
-        $profile_pic = "data:".$avatar_type.";base64,".base64_encode(file_get_contents($avatar_path));
+
+        if(File::exists( $avatar_path)){
+            $avatar_type = File::mimeType($avatar_path);
+            $profile_pic = "data:".$avatar_type.";base64,".base64_encode(file_get_contents($avatar_path));
+        }else{
+            $profile_pic=null;
+        }
+
 
         //Get the current year and month
         $year = date("Y");
