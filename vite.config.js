@@ -71,4 +71,14 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    css: {
+        preprocessorOptions: {
+          scss: {
+            additionalData: `
+              @import "./resources/scss/views/main_dashboard.scss";
+              @import "./resources/scss/main.scss";
+            `
+          }
+        }
+      }
 });
