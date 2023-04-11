@@ -100,4 +100,33 @@ class AuthController extends Controller
             ], 500);
         }
     }
+    /*
+        Process :
+        1. First, compare the OTP received with existing OTP .
+        2. If matches, then use $request->new_password to update Users table
+
+
+    */
+    public function updatePassword(Request $request)
+    {
+        // $current_user_id = '';
+
+        // if (isset($request->password)) {
+        //     $currentUser = User::where('id',$current_user_id )->first();
+        //     $currentUser->password = Hash::make($request->password);
+        //     $currentUser->is_default_password_updated = '1';
+        //     $currentUser->save();
+
+        //     return response()->json([
+        //         'status' => 'success',
+        //         'message' => 'Password updated successfully.',
+        //     ]);
+        // } else {
+        //     return response()->json([
+        //         'status' => 'failure',
+        //         'message' => 'Password should not be empty.',
+        //     ]);
+        // }
+    }
+
 }

@@ -11,11 +11,7 @@ class VmtLeavePolicyController extends Controller
 {
 
 
-    public function fetchHolidays(Request $request){
 
-        return vmtHolidays::all();
-
-    }
 
 
 }

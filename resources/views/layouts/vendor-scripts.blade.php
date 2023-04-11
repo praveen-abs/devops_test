@@ -86,6 +86,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
           // console.log("Data : "+response.data);
 
            $('#' + element_id).text(shortName);
+           console.log("Changed shortname is element ID : "+element_id);
         });
 
     }

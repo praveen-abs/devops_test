@@ -534,6 +534,7 @@
 
             $('#selected_frequency').change(function() {
                 frequencyChange();
+                console.log("Updating frequency dropdown");
             });
 
 
@@ -549,7 +550,7 @@
                 if ($('#selected_frequency').val() == 'monthly') {
 
                     if ($('#calendar_type').val() == 'financial_year') {
-                        year = year - 1;
+                        year = year;
                         nextyear = year + 1;
 
                         data =

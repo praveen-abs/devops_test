@@ -14,7 +14,7 @@ $bank_names = \DB::table('vmt_banks')->get();
 
 
     <style>
-        table {
+        table.payslip_table {
             width: 100%;
             vertical-align: middle;
 
@@ -30,11 +30,11 @@ $bank_names = \DB::table('vmt_banks')->get();
             border: 0px !important;
         }
 
-        tr {
+        .payslip_table tr {
             height: 12.55pt;
         }
 
-        td {
+        .payslip_table td {
             width: 81.35pt
         }
 
@@ -84,7 +84,7 @@ $bank_names = \DB::table('vmt_banks')->get();
         <div class="sub-page" style="text-align: justify;">
             <table cellspacing="0" cellpadding="0" class="payslip_table">
                 <tr class="header-row">
-                    <td colspan="8" class="border-less">
+                    <td colspan="7" class="border-less">
                         <div class="header-cotent" style="margin: 1px;">
                             <p class=" text-strong"
                                 style="color: #002f56;
@@ -96,10 +96,10 @@ $bank_names = \DB::table('vmt_banks')->get();
                             <p class="mb-0" style="margin:0px;">Mylapore, Chennai, Tamil Nadu 600004</p>
                         </div>
                     </td>
-                    <td colspan="4" class="border-less">
+                    <td colspan="5" class="border-less">
 
                         <div class="header-img txt-right" style="">
-                            <img src={{ $client_logo }} style="height: 50px;width:150px;margin:10px" title="">
+                            <img src="{{ URL::asset('assets/clients/brandavatar/logos/logo_brandavatar.png') }}" style="height: 60px;width:200px;margin:10px" title="">
                         </div>
 
 
@@ -109,10 +109,10 @@ $bank_names = \DB::table('vmt_banks')->get();
 
                 <tr>
                     <td colspan="12" class=" bg-ash">
-                        <p class="sub-header txt-center text-strong">PAYSLIP FOR THE MONTH OF &ndash;
+                        <p class="sub-header txt-center text-strong">PAYSLIP FOR THE MONTH OF
                             {{-- {{\Carbon\Carbon::parse($employee_payslip->PAYROLL_MONTH)->format('M  y') }} --}}
                             <span style="text-transform:uppercase;">
-                                {{ strtoupper(date('M-Y', strtotime($employee_payslip->PAYROLL_MONTH))) }} </span>
+                                {{ strtoupper(date('F-Y', strtotime($employee_payslip->PAYROLL_MONTH))) }} </span>
                         </p>
                     </td>
                 </tr>
@@ -157,7 +157,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                         <p>LOCATION</p>
                     </td>
                     <td colspan="3">
-                        <p>{{ $employee_payslip->LOCATION }}</p>
+                        <p>{{ $employee_payslip->LOCATION ?? "-"}}</p>
                     </td>
 
                 </tr>
@@ -166,13 +166,13 @@ $bank_names = \DB::table('vmt_banks')->get();
                         <p>EPF NUMBER</p>
                     </td>
                     <td colspan="3">
-                        <p>{{ $employee_details->EPF_Number }}</p>
+                        <p>{{ $employee_statutory_details->epf_number ?? "-" }}</p>
                     </td>
                     <td colspan="3" class="bg-ash text-strong">
                         <p>ESIC NUMBER</p>
                     </td>
                     <td colspan="3">
-                        <p>{{ $employee_details->esic_number }}</p>
+                        <p>{{ $employee_statutory_details->esic_number ?? "-" }}</p>
                     </td>
 
                 </tr>
@@ -181,13 +181,13 @@ $bank_names = \DB::table('vmt_banks')->get();
                         <p>UAN</p>
                     </td>
                     <td colspan="3">
-                        <p>{{ $employee_details->UAN }}</p>
+                        <p>{{ $employee_details->UAN ?? "-" }}</p>
                     </td>
                     <td colspan="3" class="bg-ash text-strong">
                         <p>PAN</p>
                     </td>
                     <td colspan="3">
-                        <p>{{ $employee_details->pan_number }}</p>
+                        <p>{{ $employee_statutory_details->uan_number ?? "-" }}</p>
                     </td>
 
                 </tr>
@@ -308,7 +308,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                         <p class="txt-center text-strong">DESCRIPTION</p>
                     </td>
                     <td colspan="2" class="bg-ash">
-                        <p class="txt-center text-strong">AMOUNT GROSS</p>
+                        <p class="txt-center text-strong">FIXED GROSS</p>
                     </td>
                     <td colspan="2" class="bg-ash">
                         <p class="txt-center text-strong">ARREAR GROSS</p>

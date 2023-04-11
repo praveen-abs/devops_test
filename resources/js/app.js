@@ -3,11 +3,13 @@ import "primevue/resources/themes/lara-light-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
 
+import './bootstrap';
+import '../../public/assets/css/app.css';
+
 
 import { createApp } from "vue";
 import PrimeVue from "primevue/config";
 import AutoComplete from 'primevue/autocomplete';
-import Accordion from 'primevue/accordionv';
 import AccordionTab from 'primevue/accordiontab';
 import Avatar from 'primevue/avatar';
 import AvatarGroup from 'primevue/avatargroup';
@@ -102,14 +104,11 @@ import TreeSelect from 'primevue/treeselect';
 import TreeTable from 'primevue/treetable';
 import TriStateCheckbox from 'primevue/tristatecheckbox';
 import VirtualScroller from 'primevue/virtualscroller';
-import primeTable from './components/primeTable.vue'
 
-import table from './hrms/modules/testings/app.vue'
-//import testbuttonclick from './hrms/modules/testings/TestButtonClick.vue'
-import App from './hrms/modules/testings/praveen/App.vue'
 
-const app = createApp(App);
-//const app2 = createApp(testbuttonclick);
+import leave from './testings/leave.vue'
+
+const app = createApp(leave);
 
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
@@ -124,7 +123,7 @@ app.directive('focustrap', FocusTrap);
 
 app.component('Accordion', Accordion);
 app.component('AccordionTab', AccordionTab);
-app.component('AutoComplete', AutoComplete);
+app.component('AutoComplete', AutoComplete)
 app.component('Avatar', Avatar);
 app.component('AvatarGroup', AvatarGroup);
 app.component('Badge', Badge);

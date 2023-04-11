@@ -19,7 +19,7 @@ $bank_names = \DB::table('vmt_banks')->get();
 
 
     <style>
-        table {
+        table.payslip_table {
             width: 100%;
             vertical-align: middle;
             font-family: sans-serif;
@@ -42,11 +42,11 @@ $bank_names = \DB::table('vmt_banks')->get();
             border: 0px !important;
         }
 
-        tr {
+       .payslip_table  tr {
             height: 12.55pt;
         }
 
-        td {
+       .payslip_table  td {
             width: 81.35pt
         }
 
@@ -107,12 +107,12 @@ $bank_names = \DB::table('vmt_banks')->get();
                     <p class="" style="margin:0px;">Tamil Nadu, India.</p>
                 </div>
             </td>
-            <td colspan="4" class="" style="border-left:0px;" align="">
-                <div class="header-img txt-right"
-                    style="padding-right: 10px;height:55px;width:200px;padding-left:40px;">
+            <td colspan="4" class="" style="border-left:0px;" align="right">
+                <div class="header-img "
+                    style="">
                     {{-- <div class="header-img txt-right" style="padding-right: 10px;"> --}}
                     <img src="{{ URL::asset('assets/images/precede.png') }}" class="" alt="logo"
-                        style="height:100%;width:100%;">
+                        style="padding-right:10px;height:65px;width:200px;">
                 </div>
             </td>
         </tr>
@@ -123,7 +123,7 @@ $bank_names = \DB::table('vmt_banks')->get();
             <td colspan="12" class="bg-ash">
                 <p class="sub-header navy-blue txt-center text-strong">PAYSLIP FOR THE MONTH OF &ndash;
                     {{-- {{ \Carbon\Carbon::parse($employee_payslip->PAYROLL_MONTH)->format('M  y') }} --}}
-                    <span style="text-transform:uppercase;">  {{ strtoupper(date('M-Y', strtotime($employee_payslip->PAYROLL_MONTH))) }} </span>
+                    <span style="text-transform:uppercase;">  {{ strtoupper(date('F-Y', strtotime($employee_payslip->PAYROLL_MONTH))) }} </span>
                 </p>
             </td>
         </tr>
@@ -177,13 +177,13 @@ $bank_names = \DB::table('vmt_banks')->get();
                 <p class="navy-blue">EPF NUMBER</p>
             </td>
             <td colspan="3">
-                <p>{{ $employee_details->epf_number }}</p>
+                <p>{{ $employee_statutory_details->epf_number }}</p>
             </td>
             <td colspan="3" class="bg-ash text-strong">
                 <p class="navy-blue">ESIC NUMBER</p>
             </td>
             <td colspan="3">
-                <p>{{ $employee_details->esic_number }}</p>
+                <p>{{ $employee_statutory_details->esic_number }}</p>
             </td>
 
         </tr>
@@ -192,7 +192,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                 <p class="navy-blue">UAN</p>
             </td>
             <td colspan="3">
-                <p>{{ $employee_details->uan }}</p>
+                <p>{{  $employee_statutory_details->uan_number }}</p>
             </td>
             <td colspan="3" class="bg-ash text-strong">
                 <p class="navy-blue">PAN</p>
@@ -319,7 +319,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                 <p class="txt-center text-strong navy-blue">DESCRIPTION</p>
             </td>
             <td colspan="2" class="bg-ash">
-                <p class="txt-center text-strong navy-blue">AMOUNT GROSS</p>
+                <p class="txt-center text-strong navy-blue">FIXED GROSS</p>
             </td>
             <td colspan="2" class="bg-ash">
                 <p class="txt-center text-strong navy-blue">ARREAR GROSS</p>
@@ -454,7 +454,7 @@ $bank_names = \DB::table('vmt_banks')->get();
             <td colspan="2" class="">
                 <p class="txt-right"><img height="8.5" width="12"
                         src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right" alt=""
-                        style="padding-right:0px;">{{ number_format(round((float) $employee_payslip->PROF_TAX), 2) }}
+                        style="padding-right:0px;">{{ number_format(round((float) $employee_payslip->income_tax), 2) }}
                 </p>
                 <p class="txt-right"></p>
             </td>

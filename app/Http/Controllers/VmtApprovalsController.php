@@ -9,7 +9,9 @@ use App\Models\VmtEmployee;
 use App\Models\VmtEmployeeReimbursements;
 use App\Models\VmtPMS_KPIFormReviewsModel;
 use App\Models\VmtPMS_KPIFormAssignedModel;
+use App\Services\VmtReimbursementsService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class VmtApprovalsController extends Controller
 {
@@ -85,6 +87,51 @@ class VmtApprovalsController extends Controller
         return view('vmt_document_reviews',compact('documents_filenames','user_code', 'docs_reviewed'));
     }
 
+
+    //ajax for fetch uploaded docs
+    public function fetchDocsForUser(Request $request)
+    {
+        $documents_filenames =null ;
+        $user_code =null ;
+        $docs_reviewed =null ;
+
+
+        if(isset($request->user_code))
+        {
+            $user_code = $request->user_code;
+
+
+            $user_id = User::where('user_code',$user_code)->value('id');
+
+            $documents_filenames = VmtEmployee::where('userid',$user_id)
+                                    ->get([
+                                        'aadhar_card_file',
+                                        'aadhar_card_backend_file',
+                                        'pan_card_file',
+                                        'passport_file',
+                                        'voters_id_file',
+                                        'dl_file',
+                                        'education_certificate_file',
+                                        'reliving_letter_file',
+                                        'docs_reviewed'
+                                    ]);
+
+            $docs_reviewed  =  json_decode($documents_filenames[0]-> docs_reviewed);
+            //dd($documents_filenames[0]->aadhar_card_file);
+
+
+        }
+        else
+        {
+            $docs_reviewed =  null;
+        }
+
+        //Get all documents for the given user
+        //dd($docs_reviewed);
+         $response=array($documents_filenames,$user_code,$docs_reviewed);
+
+        return  $response ;
+    }
 
     // Store Document Review in docs_reviewed column
     public function storeDocumentsReviewByAdmin(Request $request){
@@ -171,6 +218,57 @@ class VmtApprovalsController extends Controller
 
     }
 
+    public function fetchApprovals_PMSForms(Request $request)
+    {
+
+        $query_pendingforms = VmtPMS_KPIFormAssignedModel::join('vmt_pms_kpiform_reviews','vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id','=', 'vmt_pms_kpiform_assigned.id')
+                        ->join('users as t1','t1.id','=','vmt_pms_kpiform_assigned.assignee_id')
+                        ->join('users as t2','t2.id','=','vmt_pms_kpiform_assigned.reviewer_id')
+                        ->select('vmt_pms_kpiform_reviews.id as pms_kpiform_review_id',
+                            't1.name as assignee_name','t2.name as reviewer_name',
+                            'vmt_pms_kpiform_assigned.reviewer_id as reviewer_id',
+                            'vmt_pms_kpiform_assigned.assignment_period',
+                            'vmt_pms_kpiform_reviews.is_reviewer_accepted'
+                        )
+                        //->where( 'vmt_pms_kpiform_reviews.is_reviewer_accepted', 'LIKE','%null%')
+                        ->get();
+
+        //Create status value based on 'is_reviewer_accepted' field
+        foreach($query_pendingforms as $singleItem){
+            //Convert string to JSON object
+            $json_isReviewerAccepted = json_decode($singleItem->is_reviewer_accepted, true);
+            //dd($json_isReviewerAccepted[$singleItem->reviewer_id]);
+
+            //Get the value of the key (Reviewer id)
+            //Based on reviewer id, check the status by
+            $t_reviewer_status = $json_isReviewerAccepted[$singleItem->reviewer_id];
+            $final_status = null;
+
+            if($t_reviewer_status == null)
+            {
+                $final_status = 'Pending';
+            }
+            else
+            if($t_reviewer_status == '1')
+            {
+                $final_status = 'Approved';
+            }
+            else
+            if($t_reviewer_status == '0')
+            {
+                $final_status = 'Rejected';
+            }
+
+
+            $singleItem['status'] = $final_status;
+
+        }
+
+        return $query_pendingforms;
+
+
+    }
+
     public function approveRejectPMSForm(Request $request){
 
         $query_review_form = VmtPMS_KPIFormReviewsModel::find($request->kpiform_review_id);
@@ -210,68 +308,86 @@ class VmtApprovalsController extends Controller
 
     function showReimbursementApprovalPage(Request $request){
 
-        return view("vmt_approval_reimbursement");
+        return view("approvals.vmt_approval_reimbursements");
     }
 
-    function fetchPendingReimbursements(Request $request){
+    function fetchAllReimbursements(Request $request){
       $reimbursement_query= VmtEmployeeReimbursements::join('vmt_reimbursements','vmt_reimbursements.id','=','vmt_employee_reimbursements.reimbursement_type_id')
                             ->join('users','users.id','=','vmt_employee_reimbursements.user_id')
-                            ->where('vmt_employee_reimbursements.status','Pending')
                             ->select(
                                 'vmt_employee_reimbursements.id as id',
                                 'users.name as name',
                                 'users.user_code as user_code',
                                 'vmt_employee_reimbursements.date as reimbursement_date',
-                                'vmt_employee_reimbursements.user_data',
+                                'vmt_employee_reimbursements.from',
+                                'vmt_employee_reimbursements.to',
+                                'vmt_employee_reimbursements.vehicle_type',
+                                'vmt_employee_reimbursements.distance_travelled',
                                 'vmt_employee_reimbursements.status',
+                                'vmt_employee_reimbursements.total_expenses',
+
                             )
                             ->get();
 
          return $reimbursement_query;
     }
 
-    function fetchApprovedRejectedReimbursements(Request $request){
+    /*
+        Returns all the reimbursements data for the given month and all emps are
+        grouped together.
 
-        $reimbursement_query= VmtEmployeeReimbursements::join('vmt_reimbursements','vmt_reimbursements.id','=','vmt_employee_reimbursements.reimbursement_type_id')
-                              ->join('users as emp','emp.id','=','vmt_employee_reimbursements.user_id')
-                              ->join('users as reviewer','reviewer.id','=','vmt_employee_reimbursements.reviewer_id')
-                              ->where('vmt_employee_reimbursements.status','<>','Pending')
-                              ->select(
-                                  'vmt_employee_reimbursements.id as id',
-                                  'emp.name as employee_name',
-                                  'emp.user_code as employee_code',
+        [
+            {
+                "employee_name" : "Karthick",
+                "user_code" : "ABS001",
+                "user_id":178,
+                "reimbursement_data":[
+                    { "id": "10","date" : "2023-03-08 00:35:49" , "user_comments":"sdfsdf" ,"status":"Pending" , "from" : "chennai", "to": "bangalore", "vehicle_type": "2-wheeler", "distance_travelled" :"100","total_expenses":"1500" },
+                    { "id": "11","date" : "2023-03-08 00:35:49" , "user_comments":"sdfsdf" ,"status":"Pending" , "from" : "chennai", "to": "bangalore", "vehicle_type": "2-wheeler", "distance_travelled" :"100","total_expenses":"1500" },
+                    { "id": "12","date" : "2023-03-08 00:35:49" , "user_comments":"sdfsdf" ,"status":"Pending" , "from" : "chennai", "to": "bangalore", "vehicle_type": "2-wheeler", "distance_travelled" :"100","total_expenses":"1500" },
+                ]
+            },
+            {
+                "employee_name" : "Narasimma",
+                "user_code" : "ABS002",
+                "user_id":179,
+                "reimbursement_data":[
+                    { "id": "10","date" : "2023-03-08 00:35:49" , "user_comments":"sdfsdf" ,"status":"Pending" , "from" : "chennai", "to": "bangalore", "vehicle_type": "2-wheeler", "distance_travelled" :"100","total_expenses":"1500" },
+                    { "id": "11","date" : "2023-03-08 00:35:49" , "user_comments":"sdfsdf" ,"status":"Pending" , "from" : "chennai", "to": "bangalore", "vehicle_type": "2-wheeler", "distance_travelled" :"100","total_expenses":"1500" },
+                    { "id": "12","date" : "2023-03-08 00:35:49" , "user_comments":"sdfsdf" ,"status":"Pending" , "from" : "chennai", "to": "bangalore", "vehicle_type": "2-wheeler", "distance_travelled" :"100","total_expenses":"1500" },
+                ]
+            },
 
-                                  'reviewer.name as reviewer_name',
-                                  'reviewer.user_code as reviewer_code',
-                                  'vmt_employee_reimbursements.date as reimbursement_date',
-                                  'vmt_employee_reimbursements.status as status',
-                                  'vmt_employee_reimbursements.user_data',
-                                  'vmt_employee_reimbursements.reviewer_comments',
-                                  'vmt_employee_reimbursements.status',
-                              )->get();
+        ]
 
 
+    */
+    function fetchAllReimbursementsAsGroups(Request $request, VmtReimbursementsService $service){
 
-       // dd($reimbursement_query);
+        $year = $request->selected_year;
+        $month = $request->selected_month;
+        $status = $request->selected_status;
+        $reimbursement_type_id = "1"; //Hardcoded Local
+       return  $service->fetchAllReimbursementsAsGroups( $year, $month , $status, $reimbursement_type_id);
+    }
 
-           return $reimbursement_query;
-      }
+    /*
+
+
+    */
+    public function processReimbursementBulkApprovals(Request $request,  VmtReimbursementsService $service){
+        return $service->processReimbursementBulkApprovals($request->all());
+    }
+
 
     function approveRejectReimbursements(Request $request){
-    // dd($request->all());
 
         $query_review_reimbursement = VmtEmployeeReimbursements::find($request->reimbursement_id);
-        $status = null;
        // dd($query_review_reimbursement);
-        if($request->status == "Approve")
-            $status = "Approved";
-        else
-        if($request->status == "Reject")
-            $status = "Rejected";
 
         $query_review_reimbursement->reviewer_id = auth::user()->id;
         $query_review_reimbursement->reviewer_comments = $request->reviewer_comments;
-        $query_review_reimbursement->status = $status;
+        $query_review_reimbursement->status = $request->status;
         $query_review_reimbursement->save();
 
         return "success";

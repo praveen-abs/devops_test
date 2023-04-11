@@ -126,7 +126,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-12 text-right"><button type="button" data="row-6" next="row-6" placeholder="" name="next" id="submit_button" class="btn btn-orange  text-center" value="Submit">Submit</button>
+                                        <div class="col-12 text-right mt-2"><button type="button" data="row-6" next="row-6" placeholder="" name="next" id="submit_button" class="btn btn-orange  text-center" value="Submit">Submit</button>
                                         </div>
                                     </div>
                                 </div>

@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\VmtEmployeeFamilyDetails;
+use App\Models\VmtEmployeeEmergencyContactDetails;
 
 class User extends Authenticatable
 {
@@ -67,4 +69,15 @@ class User extends Authenticatable
     function getKpiAssignedFormReview(){
         return $this->hasMany(VmtPMS_KPIFormReviewsModel::class,'assignee_id');
     }
+
+    function getFamilyDetails() {
+        return $this->hasMany(VmtEmployeeFamilyDetails::class,'user_id');
+    }
+
+
+    function getEmergencyContactsDetails() {
+        return $this->hasMany(VmtEmployeeEmergencyContactDetails::class,'user_id');
+    }
+
+
 }

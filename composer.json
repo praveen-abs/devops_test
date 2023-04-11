@@ -39,7 +39,11 @@
             "app/Helpers/Attendance_helper.php",
             "app/Services/VmtEmployeeService.php",
             "app/Services/VmtEmployeePayslipService.php",
-            "app/Services/VmtEmployeeLeaveService.php"
+            "app/Services/VmtAttendanceService.php",
+            "app/Services/VmtReimbursementsService.php",
+            "app/Services/VmtProfilePagesService.php"
+            "app/Services/VmtDashboardService.php"
+
         ]
     },
     "autoload-dev": {

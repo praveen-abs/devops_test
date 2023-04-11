@@ -54,15 +54,21 @@ if ($query_clientMaster) {
                     <div class="offcanvas-body overflow-hidden p-0">
                         <div
                             class="bg-ash border-bottom-liteAsh d-flex align-items-center justify-content-center flex-column">
-                            @if (empty(Auth::user()->avatar) || !file_exists(public_path('images/' . Auth::user()->avatar)))
-                                <div
-                                    class="bg-primary mb-2 img-lg rounded-circle  d-flex align-items-center justify-content-center text-white fw-bold  ">
-                                    <i class="topbar_username align-middle "></i>
-                                </div>
+                            <?php
+                            //dd($currentUser);
+                            $t_userAvatarDetails = json_decode(getEmployeeAvatarOrShortName(auth()->user()->id), true);
+                            // dd($t_userAvatarDetails);
+                            ?>
+                            @if ($t_userAvatarDetails['type'] == 'shortname')
+                                <div id=""
+                                    class="align-middle fw-600 img-xl text-white  rounded-circle d-flex align-items-center justify-content-center  rounded-circle <?php echo $t_userAvatarDetails['color']; ?>"
+                                    style="font-size: 25px">
+                                    {{ $t_userAvatarDetails['data'] }}</div>
                             @else
-                                <img class="rounded-circle mb-2 img-lg  header-profile-user"
-                                    src=" {{ URL::asset('images/' . Auth::user()->avatar) }}" alt="Header Avatar">
+                                <img class="rounded-circle header-profile-user img-xl"
+                                    src=" {{ URL::asset('images/' . $t_userAvatarDetails['data']) }}" alt="user-image">
                             @endif
+
                             <p class="text-dark text-center  fs-15  mb-1">
                                 {{ Auth::user()->name }}</p>
                             <p class="text-muted text-center mb-1"><span class="">User Id :</span>
@@ -125,14 +131,20 @@ if ($query_clientMaster) {
                 aria-haspopup="true" aria-expanded="false" data-bs-toggle="offcanvas" data-bs-target=".offcanvas"
                 aria-controls="" aria-haspopup="true" aria-expanded="false">
                 <div class="d-flex align-items-center page-header-user-dropdown">
-                    @if (empty(Auth::user()->avatar) || !file_exists(public_path('images/' . Auth::user()->avatar)))
-                        <div
-                            class="bg-primary img-sm rounded-circle d-flex align-items-center justify-content-center text-white fw-bold  ml-2">
-                            <i class="topbar_username" class="align-middle "></i>
-                        </div>
+
+                    <?php
+                    //dd($currentUser);
+                    $t_userAvatarDetails = json_decode(getEmployeeAvatarOrShortName(auth()->user()->id), true);
+                    // dd($t_userAvatarDetails);
+                    ?>
+                    @if ($t_userAvatarDetails['type'] == 'shortname')
+                        <div id=""
+                            class="align-middle img-sm text-white  rounded-circle d-flex align-items-center justify-content-center  rounded-circle <?php echo $t_userAvatarDetails['color']; ?>"
+                            style="height:35px;width:35px;">
+                            {{ $t_userAvatarDetails['data'] }}</div>
                     @else
-                        <img class="rounded-circle img-sm header-profile-user"
-                            src=" {{ URL::asset('images/' . Auth::user()->avatar) }}" alt="user">
+                        <img class="rounded-circle header-profile-user"
+                            src=" {{ URL::asset('images/' . $t_userAvatarDetails['data']) }}" alt="user-image">
                     @endif
 
 
@@ -162,7 +174,7 @@ if ($query_clientMaster) {
         var username =
             '{{ auth()->user()->name ??
                 '
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ' }}';
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ' }}';
         const splitArray = username.split(" ");
         var finalname = "empty111";
 

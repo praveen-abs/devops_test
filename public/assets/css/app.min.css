@@ -182,7 +182,7 @@ a,
 span,input,
 select,button,.accordion-button {
     font-size: 13px;
-    color:#2a2828;
+    /* color:var(--vz-vertical-menu-sub-item-color); */
 }
 
 .f-9{
@@ -6584,14 +6584,6 @@ button {
     line-height: 20px;
 }
 
-.card {
-    margin-bottom: 1.5rem;
-    box-shadow: 0 1px 2px rgba(56, 65, 74, 0.15);
-}
-
-.card-header {
-    border-bottom: 1px solid var(--vz-border-color);
-}
 
 .card-header-dropdown .dropdown-btn {
     padding: 1rem 0;
@@ -16343,7 +16335,7 @@ span.flatpickr-weekday {
 }
 
 .personal-info li .title {
-    color: #afacac;
+    color: #8a8989;
     float: left;
     font-size: 13px;
     width: 50%;
@@ -17538,7 +17530,7 @@ tr:last-child td:last-child {
 
 .table > thead > tr > th,
 .gridjs-table > thead > tr > th {
-    background: #002f56 !important;
+    background: #002f56 ;
     color: #fff !important;
 }
 
