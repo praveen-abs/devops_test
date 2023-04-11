@@ -80,14 +80,10 @@
 <script setup>
 
 import { onMounted } from 'vue'
-import { initFlowbite } from 'flowbite'
+// import { initFlowbite } from 'flowbite'
 import employees_provident_fund from './employees_provident_fund/employees_provident_fund.vue'
 import employees_state_insurance from './employees_state_insurance/employees_state_insurance.vue';
 import abry_scheme from './abry_scheme/abry_scheme.vue';
 import pmrpy_scheme from './pmrpy_scheme/pmrpy_scheme.vue'
 
-// initialize components based on data attribute selectors
-onMounted(() => {
-initFlowbite();
-})
 </script>

@@ -79,15 +79,10 @@
 
 <script setup>
 import { onMounted } from 'vue'
-import { initFlowbite } from 'flowbite'
+
 import earings from './earings/earings.vue';
 import adhoc_componentsVue from './adhoc_components/adhoc_components.vue';
 import reimbursement from './reimbursement/reimbursement.vue';
 import accounting_code from './accounting_code/accounting_code.vue';
 
-
-// initialize components based on data attribute selectors
-onMounted(() => {
-    initFlowbite();
-})
 </script>
