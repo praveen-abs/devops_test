@@ -494,6 +494,7 @@ function saveGeneralInformationDetails() {
         .then((res) => {
 
             if (res.data.status == "success") {
+                 window.location.reload();
                 toast.add({ severity: 'success', summary: 'Updated', detail: 'General information updated', life: 3000 });
                 _instance_profilePagesStore.employeeDetails.get_employee_details.dob = useDateFormat(dialog_general_information.dob,'YYYY-MM-DD' );
                 // _instance_profilePagesStore.employeeDetails.dob = dialog_general_information.dob;

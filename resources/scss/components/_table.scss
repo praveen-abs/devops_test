@@ -54,6 +54,10 @@
             color: var(--white) !important;
             border: 0 !important;
             border-width: 0 !important;
+            div,span{
+                color: #ffffff;
+            }
+
         }
     }
     .p-datatable-tbody {
