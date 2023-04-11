@@ -7,26 +7,27 @@
         <div class="card shadow  left-line mb-2 ">
             <div class="card-body pb-0 pt-1">
                 <ul class="nav nav-pills    nav-tabs-dashed" id="pills-tab" role="tablist">
-                    <li class="nav-item  ember-view mx-4" role="presentation">
-                        <a class="nav-link active ember-view " id="pills-home-tab" data-bs-toggle="pill" href=""
+                    <li class="nav-item   mx-4" role="presentation">
+                        <a class="nav-link active  " id="" data-bs-toggle="pill" href=""
                             data-bs-target="#investment_dec" role="tab" aria-controls="pills-home" aria-selected="true">
                             Declaration</a>
                     </li>
-                    <li class="nav-item  ember-view mx-4" role="presentation">
-                        <a class="nav-link  ember-view " id="pills-home-tab" data-bs-toggle="pill" href=""
+                    <li class="nav-item   mx-4" role="presentation">
+                        <a class="nav-link   " id="" data-bs-toggle="pill" href=""
                             data-bs-target="#exemptions" role="tab" aria-controls="pills-home" aria-selected="true">
                             Investments and Exemptions</a>
                     </li>
-                    <li class="nav-item  ember-view mx-4" role="presentation">
-                        <a class="nav-link  ember-view " id="pills-home-tab" data-bs-toggle="pill" href=""
+                    <li class="nav-item   mx-4" role="presentation">
+                        <a class="nav-link   " id="" data-bs-toggle="pill" href=""
                             data-bs-target="#form_12bb" role="tab" aria-controls="pills-home" aria-selected="true">
                             Form 12 BB</a>
                     </li>
-                    <li class="nav-item  ember-view mx-4" role="presentation">
-                        <a class="nav-link  ember-view " id="" data-bs-toggle="pill" href=""
+                    <li class="nav-item   mx-4" role="presentation">
+                        <a class="nav-link   " id="" data-bs-toggle="pill" href=""
                             data-bs-target="#tax_filling" role="tab" aria-controls="pills-home" aria-selected="true">
                             Tax Filling</a>
                     </li>
+
 
 
                 </ul>
@@ -35,8 +36,7 @@
         <div class="card top-line mb-0">
             <div class="card-body">
                 <div class="tab-content " id="pills-tabContent">
-                    <div class="tab-pane fade active show" id="investment_dec" role="tabpanel"
-                        aria-labelledby="pills-home-tab">
+                    <div class="tab-pane fade active show" id="investment_dec" role="tabpanel" aria-labelledby="">
                         <div class="text-center">
                             <div class="d-flex justify-content-center">
                                 <div style="height: 300px;max-width:500px;" class="">
@@ -65,98 +65,81 @@
                             </div>
                         </div>
                         <div class="widget-card mb-3">
-
-                            <div class="row">
-                                <div class="col-sm-3 col-sm-12 col-xl-3 col-md-3 col-lg-3 d-flex">
-                                    <div class="card box_shadow_0 border-rtb  left-line w-100">
-                                        <div class="card-body text-center">
-                                            <p class="text-ash-medium mb-2 f-13 ">Maximum Limit</p>
-                                            <h6 class="mb-0">-</h6>
-
-                                        </div>
-                                    </div>
+                            <div class="grid md:grid-cols-2 xl:grid-cols-4 lg:grid-cols-4 gap-4">
+                                <div class="tw-card text-center bg-orange-50 border-l-orange-400 border-l-4 ">
+                                    <p class="text-ash-medium mb-2 f-13 ">Maximum Limit</p>
+                                    <h6 class="mb-0 text-gray-500 text-base font-semibold">-</h6>
                                 </div>
-                                <div class="col-sm-3 col-sm-12 col-xl-3 col-md-3 col-lg-3 d-flex">
-                                    <div class="card box_shadow_0 border-rtb  left-line w-100">
-                                        <div class="card-body text-center">
-                                            <p class="text-ash-medium mb-2 f-13 ">Amount Declared</p>
-                                            <h6 class="mb-0">-</h6>
-
-                                        </div>
-                                    </div>
+                                <div class="tw-card text-center bg-indigo-50 border-l-indigo-400 border-l-4 ">
+                                    <p class="text-ash-medium mb-2 f-13 "> Declared Amount</p>
+                                    <h6 class="mb-0 text-gray-500 text-base font-semibold">-</h6>
                                 </div>
-                                <div class="col-sm-3 col-sm-12 col-xl-3 col-md-3 col-lg-3 d-flex">
-                                    <div class="card box_shadow_0 border-rtb  left-line w-100">
-                                        <div class="card-body text-center">
-                                            <p class="text-ash-medium mb-2 f-13 ">Auto Approved Amount</p>
-                                            <h6 class="mb-0">-</h6>
 
-                                        </div>
-                                    </div>
+                                <div class="tw-card text-center bg-green-50 border-l-green-400 border-l-4 ">
+                                    <p class="text-ash-medium mb-2 f-13 ">Status</p>
+                                    <h6 class="mb-0 text-gray-500 text-base font-semibold">Not Submited</h6>
                                 </div>
-                                <div class="col-sm-3 col-sm-12 col-xl-3 col-md-3 col-lg-3 d-flex">
-                                    <div class="card box_shadow_0 border-rtb  left-line w-100">
-                                        <div class="card-body text-center">
-                                            <p class="text-ash-medium mb-2 f-13 ">Amount Accepted</p>
-                                            <h6 class="mb-0">-</h6>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3 col-sm-12 col-xl-3 col-md-3 col-lg-3 d-flex">
-                                    <div class="card box_shadow_0 border-rtb  left-line w-100">
-                                        <div class="card-body text-center">
-                                            <p class="text-ash-medium mb-2 f-13 ">Amount Rejected</p>
-                                            <h6 class="mb-0">-</h6>
-
-                                        </div>
-                                    </div>
+                                <div class="tw-card text-center bg-violet-50 border-l-violet-400 border-l-4 ">
+                                    <p class="text-ash-medium mb-2 f-13 ">Late Date For Submission</p>
+                                    <h6 class="mb-0 text-gray-500 text-base font-semibold">-</h6>
                                 </div>
                             </div>
-
                         </div>
 
                         <div class="card left-line shadow mb-2">
                             <div class="card-body pb-0 pt-1">
                                 <ul class="nav nav-pills    nav-tabs-dashed" id="pills-tab" role="tablist">
-                                    <li class="nav-item  ember-view " role="presentation">
-                                        <a class="nav-link active  ember-view " id="pills-home-tab" data-bs-toggle="pill"
-                                            href="" data-bs-target="#c_cc" role="tab" aria-controls=""
+                                    <li class="nav-item   " role="presentation">
+                                        <a class="nav-link active " id="" data-bs-toggle="pill" href=""
+                                            data-bs-target="#house_property" role="tab" aria-controls=""
                                             aria-selected="true">
+                                            HRA
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item   " role="presentation">
+                                        <a class="nav-link    " id="" data-bs-toggle="pill" href=""
+                                            data-bs-target="#c_cc" role="tab" aria-controls="" aria-selected="true">
                                             Section 80C & 80CCC</a>
                                     </li>
-                                    <li class="nav-item  ember-view " role="presentation">
-                                        <a class="nav-link  ember-view mx-0 mx-xl-3 " id=""
-                                            data-bs-toggle="pill" href="" data-bs-target="#other_exemptions"
-                                            role="tab" aria-controls="" aria-selected="true">
+                                    <li class="nav-item   " role="presentation">
+                                        <a class="nav-link    " id="" data-bs-toggle="pill" href=""
+                                            data-bs-target="#income_loss" role="tab" aria-controls=""
+                                            aria-selected="true">
+                                            Income/Loss from Housing Property</a>
+                                    </li>
+                                    <li class="nav-item   " role="presentation">
+                                        <a class="nav-link   mx-0 mx-xl-3 " id="" data-bs-toggle="pill"
+                                            href="" data-bs-target="#other_exemptions" role="tab"
+                                            aria-controls="" aria-selected="true">
                                             Other Exemptions
                                         </a>
                                     </li>
-                                    <li class="nav-item  ember-view " role="presentation">
-                                        <a class="nav-link  ember-view " id="pills-home-tab" data-bs-toggle="pill"
-                                            href="" data-bs-target="#house_property" role="tab"
+
+                                    <li class="nav-item   " role="presentation">
+                                        <a class="nav-link   mx-0  mx-xl-3 " id="" data-bs-toggle="pill"
+                                            href="" data-bs-target="#reimbursement" role="tab"
                                             aria-controls="" aria-selected="true">
-                                            House Property
-                                        </a>
-                                    </li>
-                                    <li class="nav-item  ember-view " role="presentation">
-                                        <a class="nav-link  ember-view mx-0  mx-xl-3 " id="pills-home-tab"
-                                            data-bs-toggle="pill" href="" data-bs-target="#reimbursement"
-                                            role="tab" aria-controls="" aria-selected="true">
                                             Reimbursement
                                         </a>
                                     </li>
-                                    <li class="nav-item  ember-view " role="presentation">
-                                        <a class="nav-link  ember-view " id="" data-bs-toggle="pill"
-                                            href="" data-bs-target="#previous_income" role="tab"
-                                            aria-controls="" aria-selected="true">
+                                    <li class="nav-item   mx-4" role="presentation">
+                                        <a class="nav-link   " id="" data-bs-toggle="pill" href=""
+                                            data-bs-target="#section24" role="tab" aria-controls="pills-home"
+                                            aria-selected="true">
+                                            Section 24</a>
+                                    </li>
+                                    <li class="nav-item   " role="presentation">
+                                        <a class="nav-link   " id="" data-bs-toggle="pill" href=""
+                                            data-bs-target="#previous_income" role="tab" aria-controls=""
+                                            aria-selected="true">
                                             Previous Employer Income
                                         </a>
                                     </li>
-                                    <li class="nav-item  ember-view " role="presentation">
-                                        <a class="nav-link  ember-view mx-0  mx-xl-3 " id=""
-                                            data-bs-toggle="pill" href="" data-bs-target="#other_income"
-                                            role="tab" aria-controls="" aria-selected="true">
+                                    <li class="nav-item   " role="presentation">
+                                        <a class="nav-link   mx-0  mx-xl-3 " id="" data-bs-toggle="pill"
+                                            href="" data-bs-target="#other_income" role="tab"
+                                            aria-controls="" aria-selected="true">
                                             Other Source Of Income
                                         </a>
                                     </li>
@@ -166,8 +149,154 @@
                         </div>
 
                         <div class="tab-content " id="">
-                            <div class="tab-pane fade active show " id="c_cc" role="tabpanel"
-                                aria-labelledby="pills-home-tab">
+                            <div class="tab-pane fade active show " id="house_property" role="tabpanel"
+                                aria-labelledby="">
+                                <div class="table-responsive mb-3">
+                                    <table class="table investment_table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Sections</th>
+                                                <th scope="col">Particulars</th>
+                                                <th scope="col">References</th>
+                                                <th scope="col">Max Limit</th>
+                                                <th scope="col">Declaration Amount</th>
+                                                <th scope="col">Proofs</th>
+
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Section
+                                                    10(13A)</td>
+                                                <td>House Rent Allowance</td>
+                                                <td>
+
+                                                    <button type="button"
+                                                        class="btn btn-transprarent border-0 outline-none "
+                                                        data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        title="Exemption will be provide the Least of:
+                                                a) Actual HRA paid
+                                                b) Rent paid subtract (-)10% of Basic salary
+                                                c) for Metro 50% of Basic salary (Mumbai, Kolkata, Delhi or Chennai)
+                                                For non metro 40% of Basic salary">
+                                                        <i class="fa fa-exclamation-circle  text-warning"
+                                                            aria-hidden="true"></i>
+                                                    </button>
+                                                </td>
+                                                <td>28800</td>
+                                                <td>
+                                                    {{-- <textarea name="" id="" class="text-box outline-none border-0 form-control resize-none " disabled
+                                                        cols="5" rows="1"></textarea> --}}
+                                                    <button data-bs-target="#AddRendted_modal" data-bs-toggle="modal"
+                                                        class="text-white py-1.5 w-full rounded-md  bg-indigo-800">Add</button>
+                                                </td>
+                                                <td align="">
+
+                                                    <div class="upload_file ">
+
+                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
+                                                                name="" id="" multiple></i>
+
+
+                                                    </div>
+
+                                                </td>
+
+                                                <td>
+                                                    <p>Not Submitted</p>
+                                                </td>
+
+                                                <td>
+
+
+                                                    <div class="dropdown investment_dropDown">
+                                                        <button
+                                                            class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                            type="button" id="dropdownMenuButton"
+                                                            data-bs-toggle="dropdown" aria-haspopup="true"
+                                                            aria-expanded="false">
+                                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                            <a class="dropdown-item" href="#"><i
+                                                                    class="fa fa-pencil-square-o text-info me-2"
+                                                                    aria-hidden="true"></i> Edit</a>
+                                                            <a class="dropdown-item" href="#"><i
+                                                                    class="fa fa-times-circle-o text-danger me-2"
+                                                                    aria-hidden="true"></i> Clear</a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
+                                <div class="tw-card bg-gray-100">
+                                    <div class="flex mb-3 justify-between">
+                                        <span class="text-lg text-indigo-950 font-semibold">Rental Property</span> <button
+                                            class="btn btn-border-orange" data-bs-target="#AddRendted_modal"
+                                            data-bs-toggle="modal"><i class="fa fa-plus-circle me-2"
+                                                aria-hidden="true"></i>
+                                            Add Rented</button>
+                                    </div>
+
+                                    <div class="col-sm-12 col-md-12 col-xl-12 col-xxl-12 col-lg-12 mb-3">
+                                        <div class="table-responsive mb-3">
+                                            <table class="table investment_table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Landlord Name</th>
+                                                        <th scope="col">Landlord PAN</th>
+                                                        <th scope="col">From Month</th>
+                                                        <th scope="col">To Month</th>
+                                                        <th scope="col">City</th>
+                                                        <th scope="col">Total Rent</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+
+                                                        </td>
+                                                        <td>
+
+                                                        </td>
+                                                        <td>
+
+                                                        </td>
+                                                        <td>
+
+                                                        </td>
+                                                        <td>
+
+                                                        </td>
+                                                        <td>
+
+                                                        </td>
+                                                        <td>
+
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                    </div>
+
+
+
+
+                                </div>
+                            </div>
+                            <div class="tab-pane fade  " id="c_cc" role="tabpanel" aria-labelledby="">
                                 <div class="table-responsive">
                                     <table class="table investment_table">
                                         <thead>
@@ -175,8 +304,8 @@
                                                 <th scope="col">Sections</th>
                                                 <th scope="col">Particulars</th>
                                                 <th scope="col">References</th>
-                                                <th scope="col">Maximum Limit <span class="f-12">(<i
-                                                            class="fa fa-rupee mx-1"></i>150000</span>)</th>
+                                                <th scope="col">Maximum Limit (<i class="fa fa-rupee mx-1"></i>150000)
+                                                </th>
                                                 <th scope="col">Declaration Amount</th>
                                                 <th scope="col">Proofs</th>
                                                 {{-- <th scope="col">Upload Document</th> --}}
@@ -1078,318 +1207,8 @@
                                     </table>
                                 </div>
                             </div>
-                            <div class="tab-pane fade  " id="house_property" role="tabpanel"
-                                aria-labelledby="pills-home-tab">
-                                <div class="table-responsive mb-3">
-                                    <table class="table investment_table">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Sections</th>
-                                                <th scope="col">Particulars</th>
-                                                <th scope="col">References</th>
-                                                <th scope="col">Max Limit</th>
-                                                <th scope="col">Declaration Amount</th>
-                                                <th scope="col">Proofs</th>
 
-                                                <th scope="col">Status</th>
-                                                <th scope="col">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Section
-                                                    10(13A)</td>
-                                                <td>House Rent Allowance</td>
-                                                <td>
-
-                                                    <button type="button"
-                                                        class="btn btn-transprarent border-0 outline-none "
-                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        title="Exemption will be provide the Least of:
-                                                    a) Actual HRA paid
-                                                    b) Rent paid subtract (-)10% of Basic salary
-                                                    c) for Metro 50% of Basic salary (Mumbai, Kolkata, Delhi or Chennai)
-                                                    For non metro 40% of Basic salary">
-                                                        <i class="fa fa-exclamation-circle  text-warning"
-                                                            aria-hidden="true"></i>
-                                                    </button>
-                                                </td>
-                                                <td>28800</td>
-                                                <td>
-                                                    <textarea name="" id="" class="text-box outline-none border-0 form-control resize-none " disabled
-                                                        cols="5" rows="1"></textarea>
-                                                </td>
-                                                <td align="">
-
-                                                    <div class="upload_file ">
-
-                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id="" multiple></i>
-
-
-                                                    </div>
-
-                                                </td>
-
-                                                <td>
-                                                    <p>Not Submitted</p>
-                                                </td>
-
-                                                <td>
-
-
-                                                    <div class="dropdown investment_dropDown">
-                                                        <button
-                                                            class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                            type="button" id="dropdownMenuButton"
-                                                            data-bs-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false">
-                                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-pencil-square-o text-info me-2"
-                                                                    aria-hidden="true"></i> Edit</a>
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Clear</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Section 24</td>
-                                                <td>Self Occupied Property</td>
-                                                <td>
-
-                                                    <button type="button"
-                                                        class="btn btn-transprarent border-0 outline-none "
-                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        title="Exemption on Interest on Housing Property:
-
-                                               a) House Property – Self – Maximum limit of Rs.200000/- is eligible.
-                                               b) House Property – Deemed Let-out – (Nominal Rent Received – Municipal Tax)- 30% of (Rent Received – Municipal Tax) – Interest Amount (Maximum Limit up to Rs.200000 ) after considering the calculation
-                                               c) House Property – Let-out – (Rent Received – Municipal Tax)- 30% of (Rent Received – Municipal Tax) – Interest Amount. Interest Amount (Maximum Limit up to Rs.200000 ) after considering the calculation">
-                                                        <i class="fa fa-exclamation-circle  text-warning"
-                                                            aria-hidden="true"></i>
-                                                    </button>
-                                                </td>
-                                                <td>200000</td>
-                                                <td>
-                                                    <textarea name="" id="" class="text-box outline-none border-0 form-control resize-none " disabled
-                                                        cols="5" rows="1"></textarea>
-                                                </td>
-                                                <td align="">
-
-                                                    <div class="upload_file ">
-
-                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id="" multiple></i>
-
-
-                                                    </div>
-
-                                                </td>
-
-
-                                                <td>
-                                                    <p>Not Submitted</p>
-                                                </td>
-
-                                                <td>
-
-
-                                                    <div class="dropdown investment_dropDown">
-                                                        <button
-                                                            class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                            type="button" id="dropdownMenuButton"
-                                                            data-bs-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false">
-                                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-pencil-square-o text-info me-2"
-                                                                    aria-hidden="true"></i> Edit</a>
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Clear</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <div class="card shadow mb-2">
-                                    <div class="card-body pb-0 pt-1">
-                                        <ul class="nav nav-pills    nav-tabs-dashed" id="pills-tab" role="tablist">
-                                            <li class="nav-item  ember-view mx-4" role="presentation">
-                                                <a class="nav-link active ember-view " id="pills-home-tab"
-                                                    data-bs-toggle="pill" href="" data-bs-target="#house_rent"
-                                                    role="tab" aria-controls="" aria-selected="true">
-                                                    Rentel Property</a>
-                                            </li>
-                                            <li class="nav-item  ember-view mx-4" role="presentation">
-                                                <a class="nav-link  ember-view " id="pills-home-tab"
-                                                    data-bs-toggle="pill" href="" data-bs-target="#house_own"
-                                                    role="tab" aria-controls="" aria-selected="true">
-                                                    Owner Property</a>
-                                            </li>
-
-
-                                        </ul>
-                                    </div>
-
-                                </div>
-
-                                <div class="tab-content " id="">
-                                    <div class="tab-pane fade active show" id="house_rent" role="tabpanel"
-                                        aria-labelledby="pills-home-tab">
-                                        <div class="card top-line mb-0 border-bottom-0 border-end-0 border-start-0">
-                                            <div class="card-body">
-                                                <div class="row ">
-                                                    <div class="col-12 text-end mb-3">
-                                                        <button class="btn btn-border-orange"
-                                                            data-bs-target="#AddRendted_modal" data-bs-toggle="modal"><i
-                                                                class="fa fa-plus-circle me-2" aria-hidden="true"></i>
-                                                            Add Rented</button>
-                                                    </div>
-                                                    <div class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-3">
-                                                        <div class="card mb-0 top-line">
-                                                            <div class="card-body">
-
-                                                                <div class="row border-bottom-secondary mb-2 ">
-
-                                                                    <div
-                                                                        class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 ">
-                                                                        <h6 class="mt-1 mb-0">Rental Details</h6>
-                                                                    </div>
-                                                                    <div
-                                                                        class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6  text-end">
-
-                                                                        <span class="badge bg-primary me-2">Rented</span>
-                                                                        <button
-                                                                            class="btn outline-none border-0 bg-transparent"><i
-                                                                                class="fa fa-pencil-square-o text-orange"></i>
-                                                                        </button>
-                                                                    </div>
-                                                                    <div
-                                                                        class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-2">
-                                                                        <label for=""
-                                                                            class="form-label text-primary fw-bold">From</label>
-
-                                                                        <p class="text-muted"> Jun 2022</p>
-
-                                                                    </div>
-                                                                    <div
-                                                                        class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-2">
-
-                                                                        <label for=""
-                                                                            class="form-label text-primary fw-bold">To</label>
-
-                                                                        <p class="text-muted"> Jun 2023</p>
-                                                                    </div>
-
-                                                                    <div
-                                                                        class="col-sm-12 col-md-12 col-xl-12 col-xxl-12 col-lg-12 mb-2">
-                                                                        <label for=""
-                                                                            class="form-label text-primary fw-bold">Address</label>
-                                                                        <p class="text-muted">No:21 joe street,Guindy </p>
-
-
-                                                                    </div>
-                                                                    <div
-                                                                        class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-2">
-                                                                        <label for=""
-                                                                            class="form-label text-primary fw-bold">City</label>
-
-                                                                        <p class="text-muted">Chennai</p>
-
-                                                                    </div>
-                                                                    <div
-                                                                        class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-2">
-                                                                        <label for=""
-                                                                            class="form-label text-primary fw-bold">Rent
-                                                                            Declared</label>
-
-                                                                        <p class="text-muted    "><i
-                                                                                class="fa fa-rupee"></i> 1,00,000</p>
-
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row ">
-
-                                                                    <div
-                                                                        class="col-sm-12 col-md-12 col-xl-12 col-xxl-12 col-lg-12 ">
-                                                                        <h6 class="">Owner Details</h6>
-                                                                    </div>
-                                                                    <div
-                                                                        class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-2">
-                                                                        <label for=""
-                                                                            class="form-label text-primary fw-bold">Name</label>
-
-                                                                        <p class="text-muted">Abdul</p>
-
-                                                                    </div>
-                                                                    <div
-                                                                        class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-2">
-                                                                        <label for=""
-                                                                            class="form-label text-primary fw-bold">PAN
-                                                                            NUMBER</label>
-
-                                                                        <p class="text-muted">eeeDe11n</p>
-
-                                                                    </div>
-                                                                    <div
-                                                                        class="col-sm-12 col-md-12 col-xl-12 col-xxl-12 col-lg-12 ">
-                                                                        <label for=""
-                                                                            class="form-label text-primary fw-bold">Address</label>
-                                                                        <p class="text-muted">No:21 joe street,Guindy </p>
-
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade " id="house_own" role="tabpanel"
-                                        aria-labelledby="pills-home-tab">
-                                        <div class="card top-line mb-0 border-bottom-0 border-end-0 border-start-0">
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <div class="col-12 text-end">
-                                                        <button class="btn btn-border-orange"
-                                                            data-bs-target="#AddOwned_modal" data-bs-toggle="modal"><i
-                                                                class="fa fa-plus-circle me-2" aria-hidden="true"></i>
-                                                            Add Own</button>
-                                                    </div>
-                                                </div>
-                                                <div class="text-center">
-                                                    <div class="d-flex justify-content-center">
-                                                        <div style="height: 300px;max-width:500px;" class="">
-                                                            <img src="{{ URL::asset('assets/images/no_dataFile.svg') }}"
-                                                                class="h-100 w-100" alt="user-pic" </div>
-                                                        </div>
-
-                                                    </div>
-                                                    <h4> <span class="text-orange">Sorry !</span> No data</h4>
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade " id="reimbursement" role="tabpanel"
-                                aria-labelledby="pills-home-tab">
+                            <div class="tab-pane fade " id="reimbursement" role="tabpanel" aria-labelledby="">
 
                                 <div class="card top-line mb-0 border-bottom-0 border-end-0 border-start-0">
                                     <div class="card-body">
@@ -1620,8 +1439,44 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade " id="previous_income" role="tabpanel"
-                                aria-labelledby="pills-home-tab">
+                            <div class="tab-pane fade " id="section24" role="tabpanel" aria-labelledby="">
+                                <div class="text-end py-3">
+                                    <button data-bs-target="#section24_modal" data-bs-toggle="modal"
+                                        class="py-1.5 px-4 text-white text-center rounded-md bg-indigo-600">Add
+                                        New</button>
+
+                                </div>
+                                <div class="table-responsive ">
+                                    <table class="table investment_table">
+                                        <thead>
+                                            <tr>
+
+                                                <th scope="col">Particulars</th>
+                                                <th scope="col">References</th>
+                                                <th scope="col">Max Limit</th>
+                                                <th scope="col">Declaration Amount</th>
+                                                <th scope="col">Proofs</th>
+
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade " id="previous_income" role="tabpanel" aria-labelledby="">
 
                                 <div class="card top-line mb-0 border-bottom-0 border-end-0 border-start-0">
                                     <div class="card-body">
@@ -1903,8 +1758,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade " id="other_income" role="tabpanel"
-                                aria-labelledby="pills-home-tab">
+                            <div class="tab-pane fade " id="other_income" role="tabpanel" aria-labelledby="">
 
                                 <div class="card top-line mb-0 border-bottom-0 border-end-0 border-start-0">
                                     <div class="card-body">
@@ -2117,8 +1971,133 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade " id="other_exemptions" role="tabpanel"
-                                aria-labelledby="pills-home-tab">
+                            <div class="tab-pane fade " id="income_loss" role="tabpanel" aria-labelledby="">
+                                <ul class="nav nav-pills  my-3   nav-tabs-dashed" id="pills-tab" role="tablist">
+                                    <li class="nav-item   " role="presentation">
+                                        <a class="nav-link active " id="" data-bs-toggle="pill"
+                                            href="" data-bs-target="#self_occupied_property" role="tab"
+                                            aria-controls="" aria-selected="true">
+                                            Self Occupied Property
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item  mx-4  " role="presentation">
+                                        <a class="nav-link  " id="" data-bs-toggle="pill" href=""
+                                            data-bs-target="#letOut_property" role="tab" aria-controls=""
+                                            aria-selected="true">
+                                            Let Out Property
+                                        </a>
+                                    </li>
+                                    <li class="nav-item   " role="presentation">
+                                        <a class="nav-link  " id="" data-bs-toggle="pill" href=""
+                                            data-bs-target="#deemed_property" role="tab" aria-controls=""
+                                            aria-selected="true">
+                                            Deemed Let Out Property
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content " id="">
+                                    <div class="tab-pane fade active show" id="self_occupied_property" role="tabpanel"
+                                        aria-labelledby="">
+                                        <div class="tw-card bg-gray-100">
+
+                                            <table class="table investment_table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Lender Name</th>
+                                                        <th scope="col">Lender PAN</th>
+                                                        <th scope="col">Type</th>
+                                                        <th scope="col">Loss From Housing Property</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                    </tr>
+
+                                                </tbody>
+
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade " id="letOut_property" role="tabpanel"
+                                        aria-labelledby="">
+                                        <div class="table-responsive ">
+                                            <table class="table investment_table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Lender Name</th>
+                                                        <th scope="col">Lender PAN</th>
+                                                        <th scope="col">Type</th>
+                                                        <th scope="col">Rent Received</th>
+                                                        <th scope="col">Municipal Tax</th>
+                                                        <th scope="col">Maintenace</th>
+                                                        <th scope="col">Net Value</th>
+                                                        <th scope="col">Interest</th>
+                                                        <th scope="col">Income/Loss</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                    </tr>
+
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade " id="deemed_property" role="tabpanel"
+                                        aria-labelledby="">
+                                        <div class="table-responsive ">
+                                            <table class="table investment_table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Lender Name</th>
+                                                        <th scope="col">Lender PAN</th>
+                                                        <th scope="col">Type</th>
+                                                        <th scope="col">Rent Received</th>
+                                                        <th scope="col">Municipal Tax</th>
+                                                        <th scope="col">Maintenace</th>
+                                                        <th scope="col">Net Value</th>
+                                                        <th scope="col">Interest</th>
+                                                        <th scope="col">Income/Loss</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                    </tr>
+
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade " id="other_exemptions" role="tabpanel" aria-labelledby="">
 
                                 <div class="card top-line mb-0 border-bottom-0 border-end-0 border-start-0">
                                     <div class="card-body">
@@ -2506,7 +2485,7 @@
 
                                                     </tr>
                                                     <tr>
-                                                        <td> DD</td>
+                                                        <td> 80DD</td>
                                                         <td>
                                                             <p> Medical Expenditure for a Disabled Dependant Disability
                                                             </p>
@@ -2590,7 +2569,7 @@
 
                                                     </tr>
                                                     <tr>
-                                                        <td> DDB</td>
+                                                        <td> 80DDB</td>
                                                         <td>
 
                                                             <p> Medical Expenditure on Self or Dependant for Specified
@@ -2766,8 +2745,8 @@
                                                         <td>50000</td>
 
                                                         <td>
-                                                            <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                                cols="5" rows="1"></textarea>
+                                                            <button data-bs-target="#ee_modal" data-bs-toggle="modal"
+                                                                class="text-white py-1.5 w-full rounded-md  bg-indigo-800">Add</button>
                                                         </td>
 
                                                         <td align="">
@@ -2836,8 +2815,10 @@
                                                         <td>150000</td>
 
                                                         <td>
-                                                            <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                                cols="5" rows="1"></textarea>
+                                                            {{-- <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                                cols="5" rows="1"></textarea> --}}
+                                                            <button data-bs-target="#eea_modal" data-bs-toggle="modal"
+                                                                class="text-white py-1.5 w-full rounded-md  bg-indigo-800">Add</button>
                                                         </td>
 
                                                         <td align="">
@@ -2900,8 +2881,10 @@
                                                         <td>150000</td>
 
                                                         <td>
-                                                            <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                                cols="5" rows="1"></textarea>
+                                                            {{-- <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                                cols="5" rows="1"></textarea> --}}
+                                                            <button data-bs-target="#eeb_modal" data-bs-toggle="modal"
+                                                                class="text-white py-1.5 w-full rounded-md  bg-indigo-800">Add</button>
                                                         </td>
 
                                                         <td align="">
@@ -3023,115 +3006,421 @@
                             </div>
                         </div>
                     </div>
+
+
                 </div>
 
             </div>
         </div>
         <div id="AddRendted_modal" class="modal  fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg">
-                <div class="modal-content top-line">
+                <div class="modal-content ">
                     <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                        <h6 class="modal-title mb-1 text-primary">Add new rental details</h6>
+                        <span class="text-lg modal-title text-indigo-950 font-semibold">Add New Rental </span>
                         <button type="button" class="close outline-none bg-transparent border-0 h3"
                             data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
                     <div class="modal-body">
+                        <div class="modal-body">
+                            <form>
+                                <div
+                                    class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-2 2xl:grid-cols-2 sm:grid-cols-1 xl:grid-cols-2 lg:grid-cols-2">
 
+                                    <div class="">
+                                        <label for="lender_type" class="block mb-2  font-medium text-gray-900 ">From
+                                            Month</label>
+                                        <input type="date" id="lender_type"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                            required>
+                                    </div>
+                                    <div class="">
+                                        <label for="lender_type" class="block mb-2  font-medium text-gray-900 ">To
+                                            Month</label>
+                                        <input type="date" id="lender_type"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                            required>
+                                    </div>
+                                    <div class="">
+                                        <label for="lender_type"
+                                            class="block mb-2  font-medium text-gray-900 ">City</label>
+                                        <input type="text" id="lender_type"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                            required>
+                                    </div>
+                                    <div class="">
+                                        <label for="rendPaid_inp" class="block mb-2  font-medium text-gray-900 ">Total
+                                            Rent Paid</label>
+                                        <input type="text" id="rendPaid_inp"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                            required>
+                                    </div>
+                                    <div class="landlord-details" id="landlordDetails" style="display:none">
+                                        <div class="">
+                                            <label for="lender_name"
+                                                class="block mb-2  font-medium text-gray-900 ">Landlord
+                                                Name <span class="text-red-600">*</span> </label>
+                                            <input type="text" id="lender_name"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                                required>
+                                        </div>
+                                        <div class="">
+                                            <label for="lender_name"
+                                                class="block mb-2  font-medium text-gray-900 ">Landlord
+                                                PAN <span class="text-red-600">*</span> </label>
+                                            <input type="text" id="lender_name"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                                required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-end">
+                                    <button
+                                        class="bg-orange-700 text-white py-1.5 rounded-md px-5 text-center">Save</button>
+                                </div>
+                            </form>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="ee_modal" class="modal  fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg">
+                <div class="modal-content ">
+                    <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
+                        <h6 class="modal-title mb-1 text-primary">Add new rental details <span
+                                class="ml-3 text-xs text-gray-400 font-semibold">(The maximum deduction of Rs 50,000 can
+                                be claimed under this section)</span> </h6>
+                        <button type="button" class="close outline-none bg-transparent border-0 h3"
+                            data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
                         <form>
-                            <div class="row">
-                                <div class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-3">
-
-                                    <label for="" class="form-label">From</label>
-                                    <div class="input-group mb-3">
-
-                                        <select class="form-select" id="inputGroupSelect03"
-                                            aria-label="Example select with button addon">
-                                            <option selected hidden disabled>Choose month</option>
-                                            <option value="1">Mar-2022</option>
-                                            <option value="1">Apr-2022</option>
-                                            <option value="1">Jun-2022</option>
-                                            <option value="1">July-2022</option>
-                                            <option value="1">Aug-2022</option>
-                                            <option value="1">Sep-2022</option>
-                                        </select>
-                                        <button class="btn btn-outline-secondary" type="button"><i
-                                                class="fa fa-calendar" aria-hidden="true"></i> </button>
-                                    </div>
-
+                            <div
+                                class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-2 2xl:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3 lg:grid-cols-3">
+                                <div class="">
+                                    <label for="lender_name"
+                                        class="block mb-2  font-medium text-gray-900 ">Limit</label>
+                                    <input type="text" id="lender_name"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
                                 </div>
-                                <div class="col-sm-12 col-md-6 col-xl-6 col-xxl-6 col-lg-6 mb-3">
 
-                                    <label for="" class="form-label">To</label>
-                                    <div class="input-group mb-3">
 
-                                        <select class="form-select" id=""
-                                            aria-label="Example select with button addon">
-                                            <option selected hidden disabled>Choose month</option>
-                                            <option value="1">Mar-2022</option>
-                                            <option value="1">Apr-2022</option>
-                                            <option value="1">Jun-2022</option>
-                                        </select>
-                                        <button class="btn btn-outline-secondary" type="button"><i
-                                                class="fa fa-calendar" aria-hidden="true"></i> </button>
-                                    </div>
 
-                                </div>
-                                <div class="col-sm-12 col-md-12 col-xl-12 col-xxl-12 col-lg-12 mb-3">
+                                <div class="">
 
-                                    <label for="" class="form-label">Address</label>
-                                    <textarea name="" id="" cols="" rows="2" class="resize-none form-control"></textarea>
-                                </div>
-                                <div class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-3">
-
-                                    <label for="" class="form-label">City</label>
-                                    <select class="form-select" id="" aria-label="">
-                                        <option selected>Chennai</option>
+                                    <label for="lender_type" class="block mb-2  font-medium text-gray-900 ">Type</label>
+                                    <select id="lender_type"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                        <option selected>Choose Type</option>
 
                                     </select>
                                 </div>
-                                <div class="col-sm-12 col-md-6 col-xl-6 col-xxl-6 col-lg-6 mb-3">
-
-                                    <label for="" class="form-label">Total Rent</label>
-                                    <div class="input-group mb-3">
-
-                                        <input type="text" name="" id="" class="form-control">
-                                        <button class="btn btn-outline-secondary" type="button"><i
-                                                class="fa fa-rupee"></i></button>
-                                    </div>
-
+                                <div class="">
+                                    <label for="sanction_date" class="block mb-2  font-medium text-gray-900 ">Loan
+                                        Sanction Date</label>
+                                    <input type="date" id="sanction_date"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
                                 </div>
-                                <div class="col-sm-12 col-md-12 col-lg-12 col-xxl-12 col-xl-12 text-end">
-                                    <button class="btn btn-border-orange mt-2" id="">Save</button>
+                                <div class="">
+                                    <label for="property_value" class="block mb-2  font-medium text-gray-900 ">Property
+                                        Value</label>
+                                    <input type="text" id="property_value"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
                                 </div>
+                                <div class="">
+                                    <label for="loan_amount" class="block mb-2  font-medium text-gray-900 ">Loan
+                                        Amount</label>
+                                    <input type="text" id="loan_amount"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-100 focus:outline-none focus:ring outline-1  block w-full p-2.5 "
+                                        required>
+                                </div>
+                                <div class="">
+                                    <label for="declaration_amount"
+                                        class="block mb-2  font-medium text-gray-900 ">Declaration
+                                        Amount</label>
+                                    <input type="text" id="declaration_amount"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+
+                            </div>
+                            <div class="text-end">
+                                <button class="bg-orange-700 text-white py-1.5 rounded-md px-5 text-center">Save</button>
                             </div>
                         </form>
+
+
                     </div>
                 </div>
             </div>
         </div>
-
-        <div id="AddOwned_modal" class="modal  fade" role="dialog">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg" role="document">
-                <div class="modal-content">
+        <div id="eea_modal" class="modal  fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg">
+                <div class="modal-content ">
                     <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                        <h6 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
-                            details</h6>
+                        <h6 class="modal-title mb-1 text-primary">Add new rental details <span
+                                class="ml-3 text-xs text-gray-400 font-semibold">(The maximum deduction available under
+                                this section is Rs. 1.5 Lakhs)</span> </h6>
                         <button type="button" class="close outline-none bg-transparent border-0 h3"
                             data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
                     <div class="modal-body">
+                        <form>
+                            <form>
+                                <div
+                                    class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-2 2xl:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3 lg:grid-cols-3">
+                                    <div class="">
+                                        <label for="lender_name"
+                                            class="block mb-2  font-medium text-gray-900 ">Limit</label>
+                                        <input type="text" id="lender_name"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                            required>
+                                    </div>
+
+
+
+                                    <div class="">
+
+                                        <label for="lender_type"
+                                            class="block mb-2  font-medium text-gray-900 ">Type</label>
+                                        <select id="lender_type"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                            <option selected>Choose Type</option>
+
+                                        </select>
+                                    </div>
+                                    <div class="">
+                                        <label for="sanction_date" class="block mb-2  font-medium text-gray-900 ">Loan
+                                            Sanction Date</label>
+                                        <input type="date" id="sanction_date"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                            required>
+                                    </div>
+                                    <div class="">
+                                        <label for="property_value"
+                                            class="block mb-2  font-medium text-gray-900 ">Property
+                                            Value</label>
+                                        <input type="text" id="property_value"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                            required>
+                                    </div>
+                                    <div class="">
+                                        <label for="loan_amount" class="block mb-2  font-medium text-gray-900 ">Loan
+                                            Amount</label>
+                                        <input type="text" id="loan_amount"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-100 focus:outline-none focus:ring outline-1  block w-full p-2.5 "
+                                            required>
+                                    </div>
+                                    <div class="">
+                                        <label for="declaration_amount"
+                                            class="block mb-2  font-medium text-gray-900 ">Declaration
+                                            Amount</label>
+                                        <input type="text" id="declaration_amount"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                            required>
+                                    </div>
+
+                                </div>
+                                <div class="text-end">
+                                    <button
+                                        class="bg-orange-700 text-white py-1.5 rounded-md px-5 text-center">Save</button>
+                                </div>
+                            </form>
+
 
                     </div>
                 </div>
             </div>
         </div>
+        <div id="eeb_modal" class="modal  fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg">
+                <div class="modal-content ">
+                    <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
+                        <h6 class="modal-title mb-1 text-primary"> <span
+                                class="ml-3 text-xs text-gray-400 font-semibold">(The maximum deduction available under
+                                this section is Rs. 1.5 Lakhs for electric vehicle purchase)</span> </h6>
+                        <button type="button" class="close outline-none bg-transparent border-0 h3"
+                            data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <form>
+                                <div
+                                    class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-2 2xl:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3 lg:grid-cols-3">
+                                    <div class="">
+                                        <label for="lender_name"
+                                            class="block mb-2  font-medium text-gray-900 ">Limit</label>
+                                        <input type="text" id="lender_name"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                            required>
+                                    </div>
+
+
+
+                                    <div class="">
+
+                                        <label for="lender_type"
+                                            class="block mb-2  font-medium text-gray-900 ">Type</label>
+                                        <select id="lender_type"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                            <option selected>Choose Type</option>
+
+                                        </select>
+                                    </div>
+                                    <div class="">
+                                        <label for="sanction_date" class="block mb-2  font-medium text-gray-900 ">Loan
+                                            Sanction Date</label>
+                                        <input type="date" id="sanction_date"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                            required>
+                                    </div>
+                                    <div class="">
+                                        <label for="property_value"
+                                            class="block mb-2  font-medium text-gray-900 ">Property
+                                            Value</label>
+                                        <input type="text" id="property_value"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                            required>
+                                    </div>
+                                    <div class="">
+                                        <label for="loan_amount" class="block mb-2  font-medium text-gray-900 ">Loan
+                                            Amount</label>
+                                        <input type="text" id="loan_amount"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-100 focus:outline-none focus:ring outline-1  block w-full p-2.5 "
+                                            required>
+                                    </div>
+                                    <div class="">
+                                        <label for="declaration_amount"
+                                            class="block mb-2  font-medium text-gray-900 ">Declaration
+                                            Amount</label>
+                                        <input type="text" id="declaration_amount"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                            required>
+                                    </div>
+
+                                </div>
+                                <div class="text-end">
+                                    <button
+                                        class="bg-orange-700 text-white py-1.5 rounded-md px-5 text-center">Save</button>
+                                </div>
+                            </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="section24_modal" class="modal  fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg">
+                <div class="modal-content ">
+                    <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
+                        <h6 class="modal-title mb-1 text-primary">Section 24</h6>
+                        <button type="button" class="close outline-none bg-transparent border-0 h3"
+                            data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <form>
+                                <div
+                                    class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-2 2xl:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3 lg:grid-cols-3">
+                                    <div class="">
+                                        <label for="lender_name"
+                                            class="block mb-2  font-medium text-gray-900 ">Particulars</label>
+                                        <input type="text" id="lender_name"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                            required>
+                                    </div>
+                                    <div class="">
+                                        <label for="lender_name"
+                                            class="block mb-2  font-medium text-gray-900 ">References</label>
+                                        <input type="text" id="lender_name"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                            required>
+                                    </div>
+
+                                    <div class="">
+                                        <label for="sanction_date" class="block mb-2  font-medium text-gray-900 ">Loan
+                                            Max Limit</label>
+                                        <input type="text" id="sanction_date"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                            required>
+                                    </div>
+                                    <div class="">
+                                        <label for="property_value" class="block mb-2  font-medium text-gray-900 ">
+                                            Declartoin Amount</label>
+                                        <input type="text" id="property_value"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                            required>
+                                    </div>
+                                    <div class="">
+                                        <label for="section_proofs" class="block mb-2  font-medium text-gray-900 ">Loan
+                                            Proofs</label>
+                                        <input type="text" id="section_proofs"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-100 focus:outline-none focus:ring outline-1  block w-full p-2.5 "
+                                            required>
+                                    </div>
+
+                                    <div class="">
+                                        <label for="declaration_amount"
+                                            class="block mb-2  font-medium text-gray-900 ">Status
+                                        </label>
+                                        <input type="text" id="declaration_amount"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                            required>
+                                    </div>
+
+                                </div>
+                                <div class="text-end">
+                                    <button
+                                        class="bg-orange-700 text-white py-1.5 rounded-md px-5 text-center">Save</button>
+                                </div>
+                            </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 @endsection
 @section('script')
     <script src="{{ URL::asset('assets/libs/gridjs/gridjs.min.js') }}"></script>
     <script src="{{ URL::asset('/assets/js/pages/dashboard-projects.init.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+
+            $("#rendPaid_inp").keypress(function() {
+                if (this.value >= 100000) {
+                    $('#landlordDetails').css('display', 'block');
+
+                }
+                else if(this.value < 100000 ){
+                    $('#landlordDetails').css('display', 'none');
+                }
+                else{
+                    $('#landlordDetails').css('display', 'none');
+                }
+
+            });
+
+        })
+    </script>
 @endsection
