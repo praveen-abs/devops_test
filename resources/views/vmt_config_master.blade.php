@@ -6,10 +6,10 @@
 
 @section('content')
 
-@component('components.configuration_breadcrumb')
+{{-- @component('components.configuration_breadcrumb')
 @slot('li_1') @endslot
-@endcomponent
-    <div class="master-config-wrapper ">
+@endcomponent --}}
+    <div class="master-config-wrapper mt-30">
         <div class="row ">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
                         <div id="msform">
@@ -140,29 +140,30 @@
                                                 </select>
                                             </div>
                                         </div>
-                                    </div>
+                                        <div class="row mt-1">
+                                            <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
+                                                <label class="" for="selected_head"> Attendance Modes</label>
+                                            </div>
 
-                                    <div class="row mt-1">
-                                        <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
-                                            <label class="" for="selected_head"> Attendance Modes</label>
-                                        </div>
-
-                                        <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
+                                            <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
 
 
-                                            <input name="attendancemode_web" type="checkbox" value="web">
-                                            <label for="attendancemode_web"> Web</label>
-                                            <input name="attendancemode_mobile" type ="checkbox"value="mobile">
-                                            <label for="attendancemode_moblie">  Moblie</label>
-                                            <input name="attendancemode_biometric" type="checkbox" value="biometric">
-                                            <label for="attendancemode_biometric">Biometric</label>
-                                        </div>
-                                        </div>
-                                        <div class="text-primary my-2 header-card-text">
-                                            <div class="col-12 text-right"><button type="submit" data="row-6" next="row-6" placeholder="" id="next" class="btn btn-orange   text-center">Submit</button>
+                                                <input name="attendancemode_web" type="checkbox" value="web">
+                                                <label for="attendancemode_web"> Web</label>
+                                                <input name="attendancemode_mobile" type ="checkbox"value="mobile">
+                                                <label for="attendancemode_moblie">  Moblie</label>
+                                                <input name="attendancemode_biometric" type="checkbox" value="biometric">
+                                                <label for="attendancemode_biometric">Biometric</label>
+                                            </div>
+                                            </div>
+                                            <div class="text-primary my-2 header-card-text">
+                                                <div class="col-12 text-right"><button type="submit" data="row-6" next="row-6" placeholder="" id="next" class="btn btn-orange   text-center">Submit</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+
+
 
                                 </div>
                             </form>

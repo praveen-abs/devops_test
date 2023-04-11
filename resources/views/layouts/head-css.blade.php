@@ -54,7 +54,7 @@
 
 @vite(['resources/scss/main.scss']);
 @vite(['resources/scss/views/main_dashboard.scss']);
-@vite(['resources/scss/views/profile_page.scss']);
-@vite(['resources/scss/views/integrations_auth.scss']);
+{{-- @vite(['resources/scss/views/profile_page.scss']); --}}
+{{-- @vite(['resources/scss/views/integrations_auth.scss']); --}}
 
 @yield('css')
