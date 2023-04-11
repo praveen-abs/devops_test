@@ -2071,7 +2071,7 @@
                     <tr>
                         <td>
                             <div class="logo" style="width:100%;height:fit-content;padding-top:279px;">
-                                <img src="{{ URL::asset('assets/images/footer.jpg') }}" alt=""
+`                                <img src="{{ URL::asset('assets/images/footer.jpg') }}" alt=""
                                     class="" style="height:100%;width:100%;">
                             </div>
                         </td>

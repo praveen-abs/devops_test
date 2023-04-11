@@ -1,0 +1,38 @@
+@use "../utilities/variable" as v;
+
+@mixin search-bar($height, $width: "100%", $padding: 1rem) {
+    height: $height;
+    width: #{$width};
+    padding: {
+        left: $padding;
+        right: $padding;
+        bottom: $padding;
+        top: $padding;
+    }
+    border: 1px solid v.$gray-300;
+}
+
+@mixin colors($key, $color-code) {
+}
+
+@mixin custom-card($height:"auto", $width:"100%", $background: "v.$white", $color: "", $padding:"", $fontSize:"", $boxShadow:"",$radius:"0.5rem") {
+    height: unquote($height);
+    width: $width;
+    background-color: $background;
+    color: $color;
+    padding: $padding;
+    box-shadow: unquote($boxShadow) ;
+    font-size: $fontSize;
+    border-radius:  unquote($radius);
+}
+
+
+@mixin custom-modal($border:"revert",$background: "v.$white", $color: "", $padding:"", $fontSize:"", $boxShadow:"",$radius:"0.5rem") {
+    background-color: $background;
+    color: $color;
+    padding: $padding;
+    box-shadow: unquote($boxShadow) ;
+    font-size: $fontSize;
+    border-radius:  unquote($radius);
+    border:unquote($border) ;
+}
