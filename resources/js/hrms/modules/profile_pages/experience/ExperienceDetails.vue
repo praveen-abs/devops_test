@@ -174,29 +174,42 @@ const saveExperienceDetails =()=>{
         toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
 
    }else{
-    let url = 'http://localhost:3000/Experience';
+    let id = fetch_data.current_user_id
+    let url = `/update-family-info/${id}`
 
-    toast.add({ severity: 'success', summary: 'Success Message', detail: 'Message Content', life: 3000 });
+    axios.post(url, {
+            user_code: _instance_profilePagesStore.employeeDetails.user_code,
+            name: familydetails.name,
+            relationship: familydetails.relationship,
+            dob: familydetails.dob,
+            phone_number: familydetails.phone_number
+        })
+        .then((res) => {
 
+            if (res.data.status == "success") {
+                 window.location.reload();
+                toast.add({ severity: 'success', summary: 'Updated', detail: 'General information updated', life: 3000 });
+                _instance_profilePagesStore.employeeDetails.get_family_details.dob = useDateFormat(familydetails.dob,'YYYY-MM-DD' );
 
-        visible.value = false
+                // _instance_profilePagesStore.employeeDetails.dob = dialog_general_information.dob;
 
+                _instance_profilePagesStore.employeeDetails.get_family_details.name = familydetails.gender;
+                _instance_profilePagesStore.employeeDetails.get_family_details.relationship = familydetails.relationship;
 
-axios.post(url, ExperienceDet).then(res => {
-    console.log("sent sucessfully");
-    console.log(res.status);
+                // _instance_profilePagesStore.employeeDetails.doj = dialog_general_information.doj;
+                _instance_profilePagesStore.employeeDetails.get_family_details.phone_number = familydetails.phone_number;
+            } else if (res.data.status == "failure") {
+                leave_data.leave_request_error_messege = res.data.message;
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+        // window.location.reload();
 
-if(res.status == 201){
-    toast.add({ severity: 'success', summary: 'Success Message', detail: 'Message Content', life: 3000 });
-}
-    // fetchData();
+    }
 
-}).catch(err => {
-    console.log(err);
-}).finally(() => {
-    console.log("completed");
-})
-   }
+        DialogFamilyinfovisible.value = false;
 }
 
 
@@ -205,14 +218,14 @@ onMounted(() => {
 })
 
 
-const fetchData= ()=>{
-    let url = 'http://localhost:3000/Experience'
-    axios.get(url)
-        .then((response) => {
-            console.log(response.data);
-            PersonalDocument.value = response.data;
-        });
-}
+// const fetchData= ()=>{
+//     let url = 'http://localhost:3000/Experience'
+//     axios.get(url)
+//         .then((response) => {
+//             console.log(response.data);
+//             PersonalDocument.value = response.data;
+//         });
+// }
 
 
 
