@@ -547,10 +547,10 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                     </a>
                     <div class="collapse menu-dropdown" id="paycheckDrop-Down">
                         <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="{{ route('paycheckDashboard') }}" class="nav-link sidebar py-1"
                                     role="button"><span>Dashboard</span></a>
-                            </li>
+                            </li> --}}
                             <li class="nav-item">
                                 <a href="{{ route('vmt_salary_details') }}" class="nav-link sidebar py-1"
                                     role="button"><span>Salary
@@ -564,11 +564,6 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                                 <a href="{{ route('vmt_form16_details') }}" class="nav-link sidebar py-1"
                                     role="button"><span>
                                         Form 16</span></a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('integrations') }}" class="nav-link sidebar py-1"
-                                    role="button"><span>
-                                        Auth</span></a>
                             </li>
                         </ul>
                     </div>
@@ -723,11 +718,6 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                                     <a href="{{ route('document_preview') }}" class="nav-link"><span>Document
                                             Template
                                         </span></a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('create-offer') }}" class="nav-link"><span>
-
-                                            create offer</span></a>
                                 </li>
 
                                 {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}

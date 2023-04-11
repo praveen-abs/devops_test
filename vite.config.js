@@ -11,10 +11,6 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/js/hrms/modules/profile_pages/ProfilePageNew.js',
 
-                // Dashboard
-
-                'resources/js/hrms/modules/dashboard/dashboard.js',
-
                 // Leaves
                 'resources/js/hrms/modules/leave_module/leave_apply/LeaveApply.js',
                 'resources/js/hrms/modules/leave_module/org_leave_module/OrgLeaveBalance.js',
@@ -72,9 +68,6 @@ export default defineConfig({
                 // 'resources/js/hrms/modules/approvals/onboarding/review_document.js'
 
             ],
-            define: {
-                'process.env': process.env
-            },
             refresh: true,
         }),
     ],
