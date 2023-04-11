@@ -1,4 +1,5 @@
 <template>
+     <Toast />
     <div class="mb-2 card">
         <div class="card-body">
             <h6 class="">General Information
@@ -24,7 +25,7 @@
                                 </label>
                                 <div class="cal-icon">
                                     <Calendar showIcon class="mb-3 form-selects" v-model="dialog_general_information.dob"
-                                        placeholder="YYYY-MM-DD" />
+                                        placeholder="DD-MM-YYYY" dateFormat="dd-mm-yy" />
                                 </div>
                             </div>
                         </div>
@@ -44,7 +45,7 @@
                                         class="text-danger">*</span></label>
                                 <div class="cal-icon">
                                     <Calendar showIcon class="mb-3 form-selects" v-model="dialog_general_information.doj"
-                                        placeholder="9999-12-31" />
+                                        placeholder="DD-MM-YYYY" dateFormat="dd-mm-yy"  />
                                 </div>
 
                             </div>
@@ -57,6 +58,7 @@
                                     <Dropdown v-model="dialog_general_information.blood_group_id" :options="options_blood_group"
                                         optionLabel="name" optionValue="id" placeholder="Select Bloodgroup" class="form-selects" />
                                 </div>
+                                {{dialog_general_information.blood_group_id  }}
 
                             </div>
                         </div>
@@ -91,8 +93,8 @@
                     <li class="pb-1 border-bottom-liteAsh">
                         <div class="title">Birthday</div>
                         <div class="text">
-                            <!-- {{ emp_details.doj.slice(8,10)+ "-" + emp_details.doj.slice(5,7)+"-"+emp_details.doj.slice(0,4) }} -->
-                            {{ _instance_profilePagesStore.employeeDetails.get_employee_details.dob}}
+                            {{ _instance_profilePagesStore.employeeDetails.get_employee_details.dob.slice(8,10)+ "-" + _instance_profilePagesStore.employeeDetails.get_employee_details.dob.slice(5,7)+"-"+_instance_profilePagesStore.employeeDetails.get_employee_details.dob.slice(0,4) }}
+                            <!-- {{ _instance_profilePagesStore.employeeDetails.get_employee_details.dob}} -->
 
                         </div>
                     </li>
@@ -108,8 +110,8 @@
                     <li class="pb-1 border-bottom-liteAsh">
                         <div class="title">Date Of Joining (DOJ)</div>
                         <div class="text">
-                            <!-- {{ emp_details.doj.slice(8,10)+ "-" + emp_details.doj.slice(5,7)+"-"+emp_details.doj.slice(0,4) }} -->
-                            {{ _instance_profilePagesStore.employeeDetails.get_employee_details.doj }}
+                            {{ _instance_profilePagesStore.employeeDetails.get_employee_details.doj .slice(8,10)+ "-" + _instance_profilePagesStore.employeeDetails.get_employee_details.doj .slice(5,7)+"-"+_instance_profilePagesStore.employeeDetails.get_employee_details.doj.slice(0,4) }}
+                            <!-- {{ _instance_profilePagesStore.employeeDetails.get_employee_details.doj }} -->
 
                         </div>
                     </li>
@@ -129,7 +131,7 @@
 <!---->
                          <!-- {{ _instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id  }} -->
                             {{ cmpBldGrp }}
-                            {{  _instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id }}
+                            <!-- {{  _instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id }} -->
 
                         </div>
                     </li>
@@ -397,21 +399,23 @@ const computedMarital_StatusValue = computed(()=>{
     // "Widowed Divorced"
 })
 const cmpBldGrp =computed(()=>{
-    if(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id  == 1) return "A Negative";
+    if(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id  == 1) return "A Positive";
 
-    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id ==2) return "A Positive";
+    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id ==2) return "A Negative";
+    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 3) return "B Positive";
 
-    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id ==3) return "AB Negative";
+    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id ==4) return "B Negative";
 
-    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id ==4) return "AB Positive";
 
-    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id ==5) return "B Negative";
+    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id ==5) return "AB Positive";
 
-    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 6) return "B Positive";
+    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id ==6) return "AB Negative";
 
-    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 7) return "O Negative";
+    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 7) return "O Positive";
 
-    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 8) return "O Positive";
+    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 8) return "O Negative";
+
+
 
 })
 
@@ -492,6 +496,8 @@ function saveGeneralInformationDetails() {
         .then((res) => {
 
             if (res.data.status == "success") {
+                 window.location.reload();
+                toast.add({ severity: 'success', summary: 'Updated', detail: 'General information updated', life: 3000 });
                 _instance_profilePagesStore.employeeDetails.get_employee_details.dob = useDateFormat(dialog_general_information.dob,'YYYY-MM-DD' );
                 // _instance_profilePagesStore.employeeDetails.dob = dialog_general_information.dob;
                 _instance_profilePagesStore.employeeDetails.gender = dialog_general_information.gender;
@@ -511,7 +517,7 @@ function saveGeneralInformationDetails() {
         is_dialog_generalInfo_visible.value = false
 
 
-            // window.location.reload();
+            window.location.reload();
 
 }
 
@@ -561,7 +567,7 @@ function save_contactinfoDetails(){
         .then((res) => {
 
             if (res.data.status == "success") {
-                console.log("Updating mobile number : "+dailog_contactinfo.mobile_number);
+                console.log("Updating mobile number : "+ dailog_contactinfo.mobile_number);
                 _instance_profilePagesStore.employeeDetails.email =  dailog_contactinfo.email
                 _instance_profilePagesStore.employeeDetails.get_employee_office_details.officical_mail =  dailog_contactinfo.official_email
                 _instance_profilePagesStore.employeeDetails.get_employee_details.mobile_number =  dailog_contactinfo.mobile_number
@@ -576,6 +582,8 @@ function save_contactinfoDetails(){
         });
 
         ContactVisible.value = false;
+
+        window.location.reload();
 
 }
 
@@ -594,7 +602,10 @@ function onClick_EditButtonAddressInfo(){
     // Assign json values into dialog elements also
 
     diolog_Addressinfo.current_address = _instance_profilePagesStore.employeeDetails.get_employee_details.current_address_line_1;
-    diolog_Addressinfo.Permanent_Address = _instance_profilePagesStore.employeeDetails.get_employee_office_details.officical_mail;
+    diolog_Addressinfo.Permanent_Address = _instance_profilePagesStore.employeeDetails.get_employee_details.permanent_address_line_1;
+    // diolog_Addressinfo.Permanent_Address = "testing"
+
+
     addressVisible.value = true;
 
     // console.log(ContactVisible.value);
@@ -620,11 +631,8 @@ const saveAddressinfoDetails = () => {
             data_checking.value = false;
             if (res.data.status == "success") {
 
-                axios.get('/profile-pages-getEmpDetails?uid='+uid ).then(res =>{
-                    loading_screen.value = false;
-                    console.log(res.data);
-                    addressUpdateDetails.value = res.data
-                }).catch(e => console.log(e)).finally(()=>console.log("completed"))
+                _instance_profilePagesStore.employeeDetails.current_address_line_1 =  diolog_Addressinfo.current_address
+                _instance_profilePagesStore.employeeDetails.get_employee_office_details.permanent_address_line_1 =  diolog_Addressinfo.Permanent_Address
 
             } else if (res.data.status == "failure") {
                 addressUpdateDetails.leave_request_error_messege = res.data.message;
@@ -635,6 +643,8 @@ const saveAddressinfoDetails = () => {
         });
 
         addressVisible.value = false;
+
+        window.location.reload();
     }
 
 }

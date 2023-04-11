@@ -1,5 +1,5 @@
 <template>
-
+ <Toast />
     <Dialog header="Header" v-model:visible="_instance_profilePagesStore.loading_screen"
         :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
         :closeOnEscape="false">
