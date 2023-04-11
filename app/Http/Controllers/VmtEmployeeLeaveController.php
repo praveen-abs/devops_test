@@ -12,12 +12,18 @@ class VmtEmployeeLeaveController extends Controller
 
     public function processEmployeeLeaveBalance(Request $request, VmtEmployeeLeaveService $vmtEmployeeLeaveService){
 
-        $user_id = "144";
         $leave_type_id = "1";
+        $response = array();
+        $employees=User::where('is_ssa',0)
+                   ->where('active',1)->get('id')->toArray();
+        $response=array();
+         foreach( $employees as $singleemployee){
+             array_push( $response,$vmtEmployeeLeaveService->processEmployeeLeaveBalance($singleemployee['id'], $leave_type_id));
+         }
 
-        $response = $vmtEmployeeLeaveService->processEmployeeLeaveBalance($user_id, $leave_type_id);
 
-        //dd($response);
+
+
         return $response;
     }
 }

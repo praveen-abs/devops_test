@@ -25,22 +25,24 @@ class VmtEmployeeLeaveService
     private function insertAccrualLeaveRecord($user_id, $date, $leave_type_id, $accrual_leave_count){
         $current_month = Carbon::parse($date)->format('n');
 
-        if(VmtEmployeesLeavesAccrued::whereMonth('date',$current_month)->exists())
+        if(!VmtEmployeesLeavesAccrued::whereMonth('date',$current_month)
+                                      ->where('user_id',$user_id)
+                                      ->exists())
         {
-           // dd("Accrual day already added for month : ".$date);
-            return 0;
+            $claendar_year_start_month=1;
 
-
+            $leavesAccrued = new VmtEmployeesLeavesAccrued;
+            $leavesAccrued->user_id = $user_id;
+            $leavesAccrued->date = $date;
+            $leavesAccrued->leave_type_id = $leave_type_id;
+            $leavesAccrued->accrued_leave_count = $accrual_leave_count;
+            $leavesAccrued->save();
+            return array($date=>'Added');
+        }else{
+            return array($date=>'Alreay Exists');
         }
 
-        $claendar_year_start_month=1;
 
-        $leavesAccrued = new VmtEmployeesLeavesAccrued;
-        $leavesAccrued->user_id = $user_id;
-        $leavesAccrued->date = $date;
-        $leavesAccrued->leave_type_id = $leave_type_id;
-        $leavesAccrued->accrued_leave_count = $accrual_leave_count;
-        $leavesAccrued->save();
 
     }
 
@@ -50,7 +52,7 @@ class VmtEmployeeLeaveService
 
 
         $calendar_type =ConfigPms::first()->calendar_type;
-
+        $employee[$user_id] = array();
         //dd( $calendar_type);
         $accrualLeaveAdd_startDate = 15; //TODO : Move to Leave Settings page
 
@@ -93,7 +95,7 @@ class VmtEmployeeLeaveService
                     $month='0'.$month;
 
                    $date=$year."-".$month."-15";
-                   $this->insertAccrualLeaveRecord($user_id, $date, $leave_type_id, $accrual_leave_count);
+                   $employee[$user_id] = array_merge($employee[$user_id],$this->insertAccrualLeaveRecord($user_id, $date, $leave_type_id, $accrual_leave_count));
 
                     $emp_doj->addMonth();
                 }
@@ -108,7 +110,7 @@ class VmtEmployeeLeaveService
 
                     $date=$year."-".$month."-15";
                     $accrual_leave_count='1';
-                    $this->insertAccrualLeaveRecord($user_id, $date, $leave_type_id, $accrual_leave_count);
+                    $employee[$user_id] = array_merge($employee[$user_id],$this->insertAccrualLeaveRecord($user_id, $date, $leave_type_id, $accrual_leave_count));
                     $financial_year_start_date->addMonth();
                 }
 
@@ -138,7 +140,7 @@ class VmtEmployeeLeaveService
                         $accrual_leave_count='1';
                     }
                     $date="2023"."-0".$i."-15";
-                    $this->insertAccrualLeaveRecord($user_id, $date, $leave_type_id, $accrual_leave_count);
+                    $employee[$user_id] = array_merge($employee[$user_id],$this->insertAccrualLeaveRecord($user_id, $date, $leave_type_id, $accrual_leave_count));
                 }
             }else{
                 $calendar_year_start_month=1;
@@ -147,7 +149,7 @@ class VmtEmployeeLeaveService
                 for($i=$calendar_year_start_month;$i<=$current_month;$i++){
                     $date="2023"."-0".$i."-15";
                     $accrual_leave_count='1';
-                    $this->insertAccrualLeaveRecord($user_id, $date, $leave_type_id, $accrual_leave_count);
+                    $employee[$user_id] = array_merge($employee[$user_id],$this->insertAccrualLeaveRecord($user_id, $date, $leave_type_id, $accrual_leave_count));
                 }
             }
 
@@ -155,12 +157,7 @@ class VmtEmployeeLeaveService
             //$emp_doj_month
         }
 
-        return $response = [
-            'status' => 'success',
-            'message' => 'Accrual Leaves added for the employee : '.$user_id,
-            'error' => '',
-            'error_verbose' => ''
-        ];
+        return $employee;
     }
 
 
