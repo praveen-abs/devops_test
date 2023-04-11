@@ -108,11 +108,22 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('payslip_getmonthlypayslipdata', [VmtAPIPaySlipController::class, 'getMonthlyPayslipData']);
 
 
+        /*
+        employeeMonthlyLeaveDetails()
+        Input : User Id
+        DB Table : vmt_employee_attendance,users
+        Output : success/failure response.
+      */
+    Route::post('employee_monthly_leave_details', [VmtAPIAttendanceController::class,
+    'employeeMonthlyLeaveDetails']);
+
+
 ////Profile Pages
 
 
 
 });
 
+Route::get('/get-maindashboard-data', [VmtAPIDashboardController::class, 'getMainDashboardData']);
 Route::get('/profile-pages-getEmpDetails', [VmtAPIProfilePagesController::class, 'fetchEmployeeProfileDetails']);
 

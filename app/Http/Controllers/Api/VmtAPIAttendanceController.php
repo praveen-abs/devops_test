@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\VmtEmployeeReimbursements;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\HRMSBaseAPIController;
 use App\Models\VmtEmployeeAttendance;
+use App\Models\VmtStaffAttendanceDevice;
 use App\Models\VmtReimbursements;
+use App\Models\VmtEmployeeLeaves;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use App\Services\VmtAttendanceService;
@@ -384,7 +387,6 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
         return $response;
     }
-
 
 
     public function getAttendanceDailyReport_PerMonth(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
