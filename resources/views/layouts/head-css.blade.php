@@ -1,4 +1,6 @@
 {{-- @yield('css') --}}
+
+
 <!-- Bootstrap Css -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
@@ -51,5 +53,15 @@
 <link href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css' rel='stylesheet' type='text/css'>
 
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+<link rel="stylesheet" href="{{ URL::asset('/assets/css/calendar-vanila.css') }}">
+
+{{-- scss files --}}
+@vite(['resources/scss/main.scss']);
+@vite(['resources/scss/views/main_dashboard.scss']);
+@vite(['resources/scss/views/profile_page.scss']);
+@vite(['resources/scss/views/integrations_auth.scss']);
+
+
 
 @yield('css')

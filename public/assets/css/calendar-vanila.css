@@ -3,29 +3,29 @@
     /* width: 300px; */
 }
 
-._container-calendar {
+/* ._container-calendar {
     background: #ffffff;
     padding: 1px;
-    /* max-width: 475px; */
+    max-width: 475px;
     height: 362px;
     margin: 0 auto;
     overflow: auto;
     border-radius: 8px;
-}
+} */
 
 ._table-calendar {
     border-collapse: collapse;
     width: 100%;
     border: 0;
-    margin: 10px 0px;
-    height: 210px;
+    margin: 7px 0px;
+    height: 200px;
 }
 ._table-calendar th {
     font-size: 14px;
 }
 ._table-calendar td,
 ._table-calendar th {
-    padding: 2.5px;
+    padding: 1.5px;
     /* border: 1px solid #e2e2e2; */
     border: 0;
     text-align: center;

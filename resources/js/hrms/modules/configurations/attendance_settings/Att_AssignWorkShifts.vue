@@ -467,9 +467,9 @@ function saveWorkShiftDetails() {
 .p-datatable .p-datatable-tbody > tr > td:nth-child(6) {
   width: 200px;
 }
-.main-content {
-  width: 105%;
-}
+// .main-content {
+//   width: 105%;
+// }
 
 .pending {
   font-weight: 700;

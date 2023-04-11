@@ -256,9 +256,9 @@ span .p-calendar.p-component.p-inputwrapper.p-calendar-w-btn {
     height: 100%;
 
 }
-.main-content {
-    width: 85%;
-}
+// .main-content {
+//     width: 85%;
+// }
 
 .p-datatable .p-datatable-thead>tr>th {
     text-align: center;
