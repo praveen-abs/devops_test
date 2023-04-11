@@ -27,6 +27,7 @@ class VmtEmployeeLeaveService
 
         if(!VmtEmployeesLeavesAccrued::whereMonth('date',$current_month)
                                       ->where('user_id',$user_id)
+                                      ->where('leave_type_id',$leave_type_id)
                                       ->exists())
         {
             $claendar_year_start_month=1;
@@ -39,7 +40,7 @@ class VmtEmployeeLeaveService
             $leavesAccrued->save();
             return array($date=>'Added');
         }else{
-            return array($date=>'Alreay Exists');
+            return array($date=>'Already Exists');
         }
 
 
