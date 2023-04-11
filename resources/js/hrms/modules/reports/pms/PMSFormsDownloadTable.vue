@@ -265,9 +265,9 @@
   .p-datatable .p-datatable-tbody > tr > td:nth-child(1) {
     width: 20%;
   }
-  .main-content{
-    width: 105%;
-  }
+//   .main-content{
+//     width: 105%;
+//   }
 
 .pending {
     font-weight: 700;
