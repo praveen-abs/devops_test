@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Services;
-
+use Illuminate\Support\Facades\File;
 use App\Models\User;
 use App\Models\VmtEmployeeAttendanceRegularization;
 use App\Models\VmtEmployeeLeaves;
@@ -47,6 +47,13 @@ class VmtDashboardService{
     public function getMainDashboardData($user_code , VmtAttendanceService $serviceVmtAttendanceService){
 
         $response = array();
+        $employee_details_query = User::where('user_code',$user_code)->get(['id','name','avatar'])->toArray();
+        $employee_designation = VmtEmployeeOfficeDetails::where('user_id',$employee_details_query[0]['id'])->first()->designation;
+       // dd($employee_designation);
+        //converting profile pic into base64
+        $avatar_path = public_path("assets/images/".$employee_details_query[0]['avatar']);
+        $avatar_type = File::mimeType($avatar_path);
+        $profile_pic = "data:".$avatar_type.";base64,".base64_encode(file_get_contents($avatar_path));
 
         //Get the current year and month
         $year = date("Y");
@@ -78,13 +85,18 @@ class VmtDashboardService{
             }
 
         }
+
+        $response['name']=$employee_details_query[0]['name'];
+        $response['designation']=$employee_designation;
+
+        //Get the employee profile pic
+        $response["profile_pic"] = $profile_pic; //BASE 64
+
+
          //Get the Present, Leave, Absent data from above JSON response
          $response["attendance"]["present_count"] = $present_count;
          $response["attendance"]["absent_count"] = $absent_count;
          $response["attendance"]["leave_count"]= $leave_count;
-
-        //Get the employee profile pic
-        $response["profile_pic"] = ""; //BASE 64
 
 
         return $response;
