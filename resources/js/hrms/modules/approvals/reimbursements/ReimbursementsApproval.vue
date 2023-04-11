@@ -418,9 +418,9 @@ const getSeverity = (status) => {
 </script>
 
 <style lang="scss">
-.main-content {
-    width: 85%;
-}
+// .main-content {
+//     width: 85%;
+// }
 
 .p-datatable .p-datatable-thead>tr>th {
     text-align: center;

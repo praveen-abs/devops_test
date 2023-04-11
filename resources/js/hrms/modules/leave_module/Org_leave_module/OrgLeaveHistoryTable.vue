@@ -296,9 +296,7 @@ function processApproveReject() {
 </script>
 
 <style lang="scss">
-.main-content {
-  width: 101%;
-}
+
 .p-datatable .p-datatable-thead > tr > th {
   text-align: center;
   padding: 1rem 1rem;
