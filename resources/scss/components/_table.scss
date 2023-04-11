@@ -1,4 +1,4 @@
-@import "../utilities/variable";
+@use "../utilities/variable" as v;
 
 .p-datatable {
     .p-datatable-header {
@@ -50,7 +50,7 @@
         }
         th {
             // background-color: var(--#{$prefix-variable}primary) !important;
-            background-color: $primary-blue !important;
+            background-color: v.$primary-blue !important;
             color: var(--white) !important;
             border: 0 !important;
             border-width: 0 !important;
@@ -66,9 +66,13 @@
                 border: 0px !important;
                 // box-shadow: rgb(0 0 0 / 10%) 0px 1px 3px 0px, rgb(0 0 0 / 6%) 0px 1px 2px 0px;
                 box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
-                background-color: $white !important;
+                background-color: v.$white !important;
+                cursor: pointer;
                 > td {
-                    font-weight: 500;
+                    font-weight: v.$font-weight-medium;
+                    >div,span,p{
+                        font-weight: v.$font-weight-medium;
+                    }
                 }
             }
 
@@ -81,6 +85,22 @@
         text-align: center !important;
         font-weight: var(--font-regular);
         padding: 0.8rem 1rem !important;
+        button.p-button {
+            padding: 0.6em 1em !important;
+            height: 2.3em !important;
+            span {
+                color: v.$white;
+            }
+            &-success {
+                background-color: v.$green-darken;
+            }
+            &-danger {
+                background-color: v.$red-darken;
+            }
+        }
+        div,span {
+            font-weight: v.$font-weight-regular;
+        }
     }
 }
 
@@ -100,7 +120,7 @@
     }
 }
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
-    color: $white !important;
+    color: v.$white !important;
     background: #00305663 !important;
 }
 

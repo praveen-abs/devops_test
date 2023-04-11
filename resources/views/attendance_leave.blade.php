@@ -9,12 +9,11 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endsection
 @section('content')
-
     <div class="Leave_dashboard mt-30">
         <div class="card  left-line mb-3">
-            <div class="card-body px-2 py-2">
+            <div class="card-body  pb-0 pt-2">
                 <div class="row">
-                    <div class="col-6 d-flex align-items-center">
+                    <div class="col-6 p-0 ">
                         <ul class="nav nav-pills nav-tabs-dashed" role="tablist">
                             <li class="nav-item text-muted" role="presentation">
                                 <a class="nav-link active pb-2" data-bs-toggle="tab" href="#leave_balance"
@@ -38,19 +37,18 @@
                             @endif
                         </ul>
                     </div>
-                    <div class="col-3  text-end">
-
+                    <div class="col-3 p-  text-end">
                         <div class="input-group   me-2">
                             <label class="input-group-text " for="inputGroupSelect01"><i
                                     class="fa fa-calendar text-primary " aria-hidden="true"></i></label>
                             <select class="form-select btn-line-primary" id="inputGroupSelect01">
-                                <option selected>FY 2022-23</option>
+                                <option selected>FY 2023-24</option>
 
                             </select>
                         </div>
 
                     </div>
-                    <div class="col-3  text-end">
+                    <div class="col-3p-0  text-end">
                         <div>
 
                             <a href="{{ route('attendance-leave-policydocument') }}" id="" class=" btn btn-orange"
@@ -63,9 +61,6 @@
 
             </div>
         </div>
-
-
-
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane show fade active" id="leave_balance" role="tabpanel" aria-labelledby="pills-profile-tab">
                 <div class="card top-line">
@@ -82,8 +77,8 @@
                                         <span class="badge badge-soft-light rounded-circle fs-13 bg-danger">
                                             0</span>
                                     </div> --}}
-                                    @vite('resources/js/hrms/modules/leave_module/leave_apply/LeaveApply.js')
-                                 <div id="vjs_leaveapply"> </div>
+                                @vite('resources/js/hrms/modules/leave_module/leave_apply/LeaveApply.js')
+                                <div id="vjs_leaveapply"> </div>
 
 
                             </div>
@@ -204,8 +199,6 @@
                 </div>
             </div>
         </div>
-
-
         <div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true"
             style="opacity:1; display:none;background:#00000073;">
             <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true"
@@ -243,116 +236,291 @@
             </div>
         </div>
 
-    </div>
-
-    <div id="leave_availed-modal" class="modal custom-modal fade" role="dialog">
-        <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable  modal-xl" role="document">
-            <div class="modal-content top-line">
-                <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h6 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
-                    </h6>
-                    <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
-                        aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="d-flex mb-2 justify-content-between ">
-                        <div class="d-flex">
-                            <button class="btn btn-orange me-2"><i class="fa fa-filter" aria-hidden="true"></i></button>
-                            <button class="btn btn-border-primary me-2">Employee</button>
-                            <button class="btn btn-border-primary me-2">Department</button>
-                            <button class="btn btn-border-primary me-2">Location</button>
-                            <button class="btn btn-border-primary me-2">Job Title</button>
-                            <button class="btn btn-border-primary me-2">Total:20</button>
-                            <label for=""></label>
-                        </div>
-
-                        <div class="input-group  w-25 me-2">
-                            <label class="input-group-text " for="inputGroupSelect01"><i
-                                    class="fa fa-calendar text-primary " aria-hidden="true"></i></label>
-                            <select class="form-select btn-line-primary" id="inputGroupSelect01">
-                                <option selected>FY 2022-23</option>
-
-                            </select>
-                        </div>
+        <div id="leave_availed-modal" class="modal custom-modal fade" role="dialog">
+            <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable  modal-xl" role="document">
+                <div class="modal-content top-line">
+                    <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
+                        <h6 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
+                        </h6>
+                        <button type="button" class="close outline-none bg-transparent border-0 h3"
+                            data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
                     </div>
-                    <div id="emp_leaveHistory">
-                    </div>
+                    <div class="modal-body">
+                        <div class="d-flex mb-2 justify-content-between ">
+                            <div class="d-flex">
+                                <button class="btn btn-orange me-2"><i class="fa fa-filter"
+                                        aria-hidden="true"></i></button>
+                                <button class="btn btn-border-primary me-2">Employee</button>
+                                <button class="btn btn-border-primary me-2">Department</button>
+                                <button class="btn btn-border-primary me-2">Location</button>
+                                <button class="btn btn-border-primary me-2">Job Title</button>
+                                <button class="btn btn-border-primary me-2">Total:20</button>
+                                <label for=""></label>
+                            </div>
 
+                            <div class="input-group  w-25 me-2">
+                                <label class="input-group-text " for="inputGroupSelect01"><i
+                                        class="fa fa-calendar text-primary " aria-hidden="true"></i></label>
+                                <select class="form-select btn-line-primary" id="inputGroupSelect01">
+                                    <option selected>FY 2022-23</option>
 
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="leave_balance-modal" class="modal custom-modal fade" role="dialog">
-        <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable  modal-xl" role="document">
-            <div class="modal-content top-line">
-                <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h6 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
-                    </h6>
-                    <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
-                        aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="d-flex mb-2 justify-content-between ">
-                        <div class="d-flex">
-                            <button class="btn btn-orange me-2"><i class="fa fa-filter" aria-hidden="true"></i></button>
-                            <button class="btn btn-border-primary me-2">Employee</button>
-                            <button class="btn btn-border-primary me-2">Department</button>
-                            <button class="btn btn-border-primary me-2">Location</button>
-                            <button class="btn btn-border-primary me-2">Job Title</button>
-                            <button class="btn btn-border-primary me-2">Total:20</button>
-                            <label for=""></label>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="emp_leaveHistory">
                         </div>
 
-                        <div class="input-group  w-25 me-2">
-                            <label class="input-group-text " for="inputGroupSelect01"><i
-                                    class="fa fa-calendar text-primary " aria-hidden="true"></i></label>
-                            <select class="form-select btn-line-primary" id="inputGroupSelect01">
-                                <option selected>FY 2022-23</option>
 
-                            </select>
-                        </div>
-                    </div>
-                    <div id="viewEmp_history_balance_table" class="custom_gridJs"></div>
-
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="leavepending_modal" class="modal custom-modal fade" role="dialog">
-        <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable  modal-lg" role="document">
-            <div class="modal-content top-line">
-                <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h6 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
-                        Pending Request</h6>
-                    <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
-                        aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-
-                    <div class="show_message d-flex justify-content-center align-items-center">
-                        <h6 class="text-muted">No Request Pending</h6>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div id="leave_balance-modal" class="modal custom-modal fade" role="dialog">
+            <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable  modal-xl" role="document">
+                <div class="modal-content top-line">
+                    <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
+                        <h6 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
+                        </h6>
+                        <button type="button" class="close outline-none bg-transparent border-0 h3"
+                            data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="d-flex mb-2 justify-content-between ">
+                            <div class="d-flex">
+                                <button class="btn btn-orange me-2"><i class="fa fa-filter"
+                                        aria-hidden="true"></i></button>
+                                <button class="btn btn-border-primary me-2">Employee</button>
+                                <button class="btn btn-border-primary me-2">Department</button>
+                                <button class="btn btn-border-primary me-2">Location</button>
+                                <button class="btn btn-border-primary me-2">Job Title</button>
+                                <button class="btn btn-border-primary me-2">Total:20</button>
+                                <label for=""></label>
+                            </div>
+
+                            <div class="input-group  w-25 me-2">
+                                <label class="input-group-text " for="inputGroupSelect01"><i
+                                        class="fa fa-calendar text-primary " aria-hidden="true"></i></label>
+                                <select class="form-select btn-line-primary" id="inputGroupSelect01">
+                                    <option selected>FY 2022-23</option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div id="viewEmp_history_balance_table" class="custom_gridJs"></div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="leavepending_modal" class="modal custom-modal fade" role="dialog">
+            <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable  modal-lg" role="document">
+                <div class="modal-content top-line">
+                    <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
+                        <h6 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
+                            Pending Request</h6>
+                        <button type="button" class="close outline-none bg-transparent border-0 h3"
+                            data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="show_message d-flex justify-content-center align-items-center">
+                            <h6 class="text-muted">No Request Pending</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="error_notify" class="modal custom-modal fade" role="dialog" aria-hidden="true"
+            style="opacity:1; display:none;background:#00000073;">
+            <div class="modal-dialog modal-dialog-centered   modal-md" role="document">
+                <div class="modal-content top-line">
+                    <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
+                        <h6 class="modal-title mb-1 text-primary" id="errors_header"
+                            style="border-bottom:5px solid #d0d4e2;">
+                        </h6>
+                        <button type="button" class="close close-modal outline-none bg-transparent border-0 h3"
+                            data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="errors-body" id="errors_body">
+
+                        </div>
+
+                        <div class="text-end">
+                            <button type="button" class="btn btn-light close-modal"
+                                data-bs-dismiss="modal">Close</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div id="leaveDetails_modal" class="modal custom-modal fade" role="dialog">
+            <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable  modal-lg" role="document">
+                <div class="modal-content top-line">
+                    <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
+                        <h6 class="modal-title mb-1 text-primary">
+                            Leave Request Details</h6>
+                        <button type="button" class="close outline-none bg-transparent border-0 h3"
+                            data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row border-bottom mb-2 pb-3 align-items-center">
+                                    <div class="col-auto">
+                                        <div id="" class="show_img">
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <p class="text-primary f-15 fw-bold" id="employee_name"></p>
+                                        <p class="text-muted f-13 ">Requsted on <span id="leaveRequested_date"></span></p>
+
+                                    </div>
+                                </div>
+                                <div class="d-flex border-bottom mb-2 pb-3 ">
+                                    <div class="date-wrapper text-center rounded shadow-lite  me-2 border-bottom mb-2"
+                                        style="width:75px">
+                                        <p class="bg-primary rounded  text-center text-white py-1" id="leave_start_month">
+                                        </p>
+                                        <p id="leave_start_date"> </p>
+                                        <p id="leave_start_day"> </p>
+                                        {{-- <p id="reviewer_comments"></p> --}}
+                                    </div>
+
+                                    <div class="date-wrapper text-center rounded shadow-lite  me-2 border-bottom mb-2"
+                                        style="width:75px" id="div_leave_end_date">
+                                        <p class="bg-primary rounded  text-center text-white py-1" id="leave_end_month">
+                                        </p>
+                                        <p id="leave_end_date"> </p>
+                                        <p id="leave_end_day"> </p>
+                                        {{-- <p id="reviewer_comments"></p> --}}
+                                    </div>
+
+                                    <div class="content-det">
+                                        <p><span id="totalLeave_days"></span> Day(s) of <span id="leave_type"></span></p>
+                                    </div>
+                                </div>
+
+                                <div class="content-det">
+                                    <p id="">
+                                    <h6 id="reviewercomments"></h6>
+                                    <h6><span id="reviewercomments"></span></h6>
+                                    </p>
+
+                                </div>
+                                <div class="content-det">
+                                    <p id="">
+                                    <h6 id="leavereason"></h6>
+                                    <h6><span id="leavereason"></span></h6>
+                                    </p>
+
+                                </div>
+                            </div>
+
+
+                            <div class="row border-bottom mb-2 pb-3">
+                                <div class="col-12">
+                                    <h6 class="">Notify to</h6>
+                                </div>
+                                <div class="col-4 col-sm-12 col-lg-6 col-md-6 col-xxl-4 col-xl-4 mb-md-0 mb-3">
+                                    <div class="card mb-sm-3 mb-0 mb-sm-3 mb-xxl-0 mb-xl-0">
+                                        <div class="card-body align-items-center  py-1 px-2 d-flex">
+                                            {{-- <img class="float-right rounded-circle img-md"
+                                                src="http://images.equipboard.com/uploads/user/image/524/big_calvin-harris.jpg?v=1466072866"
+                                                alt="" /> --}}
+                                            <div id="" class="show_img">
+                                            </div>
+                                            <div class="profile-details">
+                                                <h5 p id="notifyUser_name"> </h5>
+                                                <div class="description" id="notifyUser_designation"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom mb-2 pb-3">
+                                <div class="col-12">
+                                    <h6 class="">Approved by</h6>
+                                </div>
+                                <div class="col-4 col-sm-12 col-lg-6 col-md-6 col-xxl-4 col-xl-4 mb-md-0 mb-3">
+                                    <div class="card mb-sm-3 mb-0 mb-sm-3 mb-xxl-0 mb-xl-0">
+                                        <div class="card-body align-items-center  py-1 px-2 d-flex">
+                                            <div id="" class="show_img">
+                                            </div>
+
+                                            {{-- <img class="float-right rounded-circle img-md"
+                                                src="http://images.equipboard.com/uploads/user/image/524/big_calvin-harris.jpg?v=1466072866"
+                                                alt="" /> --}}
+                                            <div class="profile-details">
+                                                <h5 p id="approver_name"></h5>
+                                                <div class="description" id="approver_desgination"></div>
+                                                <div class="description">on <span id="reviewed_date"></span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="row ">
+                                <div class="col-12">
+                                    <h6 class="">Reason</h6>
+                                </div>
+                                <div class="col-12 mb-md-0 mb-3">
+                                    <textarea readonly class="form-control mb-2 outline-none border-0 shadow-lite" name=""
+                                        id="textarea_leavecomments" cols="30" rows="3"></textarea>
+
+                                </div>
+                                <div class="col-12 mb-md-0 mb-3 text-end">
+                                    <button class="btn btn-orange" data-leave-id="" id="btn_withdraw">Withdraw</button>
+                                </div>
+
+                                <div class="col-12 mb-md-0 mb-3 text-end">
+                                    <button class="btn btn-orange" data-leave-id="" id="btn_revoke">Revoke</button>
+                                </div>
+
+                                <div class="col-12 mb-md-0 mb-3 text-end">
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        @vite('resources/js/hrms/modules/leave_module/leave_apply/LeaveApply.js')
     </div>
 
-<!-- <div class="modal fade bd-example-modal-xl" tabindex="-10" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true " id="leaveApply_modal" >
-  <div class="modal-dialog modal-xl   modal-dialog-centered" style="z-index:-20 !important">
-     <div class="modal-content">
 
-  </div>
-</div> -->
+
+    <!-- <div class="modal fade bd-example-modal-xl" tabindex="-10" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true " id="leaveApply_modal" >
+                          <div class="modal-dialog modal-xl   modal-dialog-centered" style="z-index:-20 !important">
+                             <div class="modal-content">
+
+                          </div>
+                        </div> -->
 
 
 
@@ -360,191 +528,18 @@
     <!-- <div id="leaveApply_modal" class="modal custom-modal fade" role="dialog">
 
 
-            <div class="modal-dialog  modal-dialog-centered   modal-xl" role="document">
-            <div id="vjs_leaveapply">
+                                    <div class="modal-dialog  modal-dialog-centered   modal-xl" role="document">
+                                    <div id="vjs_leaveapply">
 
-</div>
+                        </div>
 
 
-@vite('resources/js/hrms/modules/leave_module/leave_apply/LeaveApply.js')
 
-            </div>
-    </div> -->
+
+                                    </div>
+                            </div> -->
 
     {{-- error message details --}}
-
-    <div id="error_notify" class="modal custom-modal fade" role="dialog" aria-hidden="true"
-        style="opacity:1; display:none;background:#00000073;">
-        <div class="modal-dialog modal-dialog-centered   modal-md" role="document">
-            <div class="modal-content top-line">
-                <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h6 class="modal-title mb-1 text-primary" id="errors_header"
-                        style="border-bottom:5px solid #d0d4e2;">
-                    </h6>
-                    <button type="button" class="close close-modal outline-none bg-transparent border-0 h3"
-                        data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="errors-body" id="errors_body">
-
-                    </div>
-
-                    <div class="text-end">
-                        <button type="button" class="btn btn-light close-modal" data-bs-dismiss="modal">Close</button>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-    <div id="leaveDetails_modal" class="modal custom-modal fade" role="dialog">
-        <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable  modal-lg" role="document">
-            <div class="modal-content top-line">
-                <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h6 class="modal-title mb-1 text-primary">
-                        Leave Request Details</h6>
-                    <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal"
-                        aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row border-bottom mb-2 pb-3 align-items-center">
-                                <div class="col-auto">
-                                    <div id="" class="show_img">
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <p class="text-primary f-15 fw-bold" id="employee_name"></p>
-                                    <p class="text-muted f-13 ">Requsted on <span id="leaveRequested_date"></span></p>
-
-                                </div>
-                            </div>
-                            <div class="d-flex border-bottom mb-2 pb-3 ">
-                                <div class="date-wrapper text-center rounded shadow-lite  me-2 border-bottom mb-2"
-                                    style="width:75px">
-                                    <p class="bg-primary rounded  text-center text-white py-1" id="leave_start_month">
-                                    </p>
-                                    <p id="leave_start_date"> </p>
-                                    <p id="leave_start_day"> </p>
-                                    {{-- <p id="reviewer_comments"></p> --}}
-                                </div>
-
-                                <div class="date-wrapper text-center rounded shadow-lite  me-2 border-bottom mb-2"
-                                    style="width:75px" id="div_leave_end_date">
-                                    <p class="bg-primary rounded  text-center text-white py-1" id="leave_end_month"> </p>
-                                    <p id="leave_end_date"> </p>
-                                    <p id="leave_end_day"> </p>
-                                    {{-- <p id="reviewer_comments"></p> --}}
-                                </div>
-
-                                <div class="content-det">
-                                    <p><span id="totalLeave_days"></span> Day(s) of <span id="leave_type"></span></p>
-                                </div>
-                            </div>
-
-                            <div class="content-det">
-                                <p id="">
-                                <h6 id="reviewercomments"></h6>
-                                <h6><span id="reviewercomments"></span></h6>
-                                </p>
-
-                            </div>
-                            <div class="content-det">
-                                <p id="">
-                                <h6 id="leavereason"></h6>
-                                <h6><span id="leavereason"></span></h6>
-                                </p>
-
-                            </div>
-                        </div>
-
-
-                        <div class="row border-bottom mb-2 pb-3">
-                            <div class="col-12">
-                                <h6 class="">Notify to</h6>
-                            </div>
-                            <div class="col-4 col-sm-12 col-lg-6 col-md-6 col-xxl-4 col-xl-4 mb-md-0 mb-3">
-                                <div class="card mb-sm-3 mb-0 mb-sm-3 mb-xxl-0 mb-xl-0">
-                                    <div class="card-body align-items-center  py-1 px-2 d-flex">
-                                        {{-- <img class="float-right rounded-circle img-md"
-                                                src="http://images.equipboard.com/uploads/user/image/524/big_calvin-harris.jpg?v=1466072866"
-                                                alt="" /> --}}
-                                        <div id="" class="show_img">
-                                        </div>
-                                        <div class="profile-details">
-                                            <h5 p id="notifyUser_name"> </h5>
-                                            <div class="description" id="notifyUser_designation"></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="row border-bottom mb-2 pb-3">
-                            <div class="col-12">
-                                <h6 class="">Approved by</h6>
-                            </div>
-                            <div class="col-4 col-sm-12 col-lg-6 col-md-6 col-xxl-4 col-xl-4 mb-md-0 mb-3">
-                                <div class="card mb-sm-3 mb-0 mb-sm-3 mb-xxl-0 mb-xl-0">
-                                    <div class="card-body align-items-center  py-1 px-2 d-flex">
-                                        <div id="" class="show_img">
-                                        </div>
-
-                                        {{-- <img class="float-right rounded-circle img-md"
-                                                src="http://images.equipboard.com/uploads/user/image/524/big_calvin-harris.jpg?v=1466072866"
-                                                alt="" /> --}}
-                                        <div class="profile-details">
-                                            <h5 p id="approver_name"></h5>
-                                            <div class="description" id="approver_desgination"></div>
-                                            <div class="description">on <span id="reviewed_date"></span></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <div class="row ">
-                            <div class="col-12">
-                                <h6 class="">Reason</h6>
-                            </div>
-                            <div class="col-12 mb-md-0 mb-3">
-                                <textarea readonly class="form-control mb-2 outline-none border-0 shadow-lite" name=""
-                                    id="textarea_leavecomments" cols="30" rows="3"></textarea>
-
-                            </div>
-                            <div class="col-12 mb-md-0 mb-3 text-end">
-                                <button class="btn btn-orange" data-leave-id="" id="btn_withdraw">Withdraw</button>
-                            </div>
-
-                            <div class="col-12 mb-md-0 mb-3 text-end">
-                                <button class="btn btn-orange" data-leave-id="" id="btn_revoke">Revoke</button>
-                            </div>
-
-                            <div class="col-12 mb-md-0 mb-3 text-end">
-
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    </div>
-
-
-    </div>
 @endsection
 @section('script')
     {{-- @vite(['resources/js/hrms/modules/leave_module/OrgLeaveBalance.js']) --}}
@@ -1169,7 +1164,8 @@
                                         return gridjs.html(total_date_hours +
                                             " Hr(ssss)"); //For permissions, show only hours
                                     else
-                                        return gridjs.html(total_date_hours); //For Leaves, show only days
+                                        return gridjs.html(
+                                            total_date_hours); //For Leaves, show only days
                                 } else {
                                     return gridjs.html('-');
 
