@@ -194,13 +194,20 @@ class VmtProfilePagesController extends Controller
 
     public function updateAddressInfo(Request $request)
     {
+        //  dd($request->all());
+
         $user_id = user::where('user_code', $request->user_code)->first()->id;
         $details = VmtEmployee::where('userid', $user_id)->first();
         $details->current_address_line_1 = $request->input('current_address_line_1');
         $details->permanent_address_line_1 = $request->input('permanent_address_line_1');
         $details->save();
 
-        return redirect()->back();
+        $response = [
+            'status' => 'success',
+        ];
+
+        return  $response;
+
     }
 
     public function deleteFamilyInfo(Request $request)

@@ -66,8 +66,9 @@
 
 
             </h6>
+            {{ _instance_profilePagesStore.employeeDetails.get_emergency_contacts_details }}
             <div class="table-responsive">
-                <DataTable ref="dt"  dataKey="id" :paginator="true" :rows="10"
+                <DataTable ref="dt"  dataKey="id" :paginator="true" :rows="10" :value="_instance_profilePagesStore.employeeDetails.get_emergency_contacts_details"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 25]"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
@@ -91,14 +92,15 @@
                         </template> -->
                     </Column>
 
-                    <Column field="ph_no" header="Phone" style="min-width: 12rem">
+                    <Column field="phone_number_1" header="Phone" style="min-width: 12rem">
                         <!-- <template #body="slotProps">
                           {{  slotProps.data.reimbursment_remarks }}
                         </template> -->
                     </Column>
                     <Column :exportable="false" header="Action" style="min-width:8rem">
-                    <template #body="slotProps">
+                        <template #body="slotProps">
                         <Button icon="pi pi-pencil" outlined rounded class="mr-2" @click="editFamilyDetails(slotProps.data)" />
+                        <Button icon="pi pi-trash" outlined rounded severity="danger" @click="confirmDeleteProduct(slotProps.data)" />
                     </template>
                 </Column>
 
@@ -149,7 +151,12 @@
 import { ref, onMounted, reactive, onUpdated } from 'vue';
 import axios from 'axios'
 import { useToast } from "primevue/usetoast";
-import { profilePagesStore } from '../stores/ProfilePagesStore';
+import { Service } from "../../Service/Service";
+import { profilePagesStore } from '../stores/ProfilePagesStore'
+
+const fetch_data = Service()
+
+const _instance_profilePagesStore = profilePagesStore()
 
 const toast = useToast();
 
@@ -185,10 +192,16 @@ const saveFamilyDetails = () => {
 //     }
 }
 
-// const editFamilyDetails = (family) => {
-//     employee_service.employeeDetails.get_family_details = {...family};
-//     productDialog.value = true;
-// };
+const editFamilyDetails = (family) => {
+    _instance_profilePagesStore.employeeDetails.get_emergency_contacts_details = {...family};
+    console.log(family);
+    familydetails.name = family.name
+    familydetails.relationship = family.relationship
+    familydetails.name = family.name
+    familydetails.name = family.name
+
+    visible.value = true
+};
 
 
 onMounted(() => {

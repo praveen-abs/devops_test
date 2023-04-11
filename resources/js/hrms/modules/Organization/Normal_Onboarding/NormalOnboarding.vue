@@ -50,7 +50,7 @@
 
                           <InputText
                             class="capitalize onboard-form form-control textbox"
-                            type="text" @input="first_second_letter"
+                            type="text"
                             v-model="v$.employee_name.$model"
                             :class="{
                               'p-invalid': v$.employee_name.$invalid && submitted,
@@ -1216,7 +1216,7 @@
                           />
                         </div>
                       </div>
-                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
+                      <!-- <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label">Probation Period</label>
 
@@ -1233,7 +1233,7 @@
                             }"
                           />
                         </div>
-                      </div>
+                      </div> -->
                       <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label"
@@ -1321,7 +1321,7 @@
                           </span>
                         </div>
                       </div>
-                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
+                      <!-- <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label">Holiday Location</label>
 
@@ -1335,7 +1335,7 @@
                             placeholder="Holiday Location"
                           />
                         </div>
-                      </div>
+                      </div> -->
                       <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label">Official Email </label>
@@ -1363,7 +1363,7 @@
                           />
                         </div>
                       </div>
-                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
+                      <!-- <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label"
                             >Employee Notice Period Days</label
@@ -1376,9 +1376,9 @@
                             class="onboard-form form-control textbox"
                           />
                         </div>
-                      </div>
+                      </div> -->
 
-                      <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
+                      <!-- <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label"
                             >Date of confirmation<span class="text-danger">*</span></label
@@ -1409,7 +1409,7 @@
                             }}</span
                           >
                         </div>
-                      </div>
+                      </div> -->
                     </div>
                   </div>
                 </div>
@@ -3112,7 +3112,7 @@ const userCodeExists = () => {
 
 const first_second_letter= ()=>{
 
- let emp=  `${employee_onboarding.employee_name.charAt(0).toUpperCase()} ${employee_onboarding.employee_name.charAt(1).toUpperCase()}`
+ let emp=  `${employee_onboarding.employee_name.charAt(0).toUpperCase()}${employee_onboarding.employee_name.charAt(1).toUpperCase()}`
 
  employee_onboarding.employee_name = emp
 
