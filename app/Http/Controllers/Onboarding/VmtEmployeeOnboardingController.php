@@ -63,6 +63,33 @@ class VmtEmployeeOnboardingController extends Controller
         else
             return false;
     }
+    public function isAadharNoAlreadyExists(Request $request){
+        //dd($request->all());
+        //dd(User::where('email',$request->mail)->exists());
+
+        if(!empty($request->aadhar_number))
+            return User::where('user_code',$request->aadhar_number)->exists() ? "true" : "false";
+        else
+            return false;
+    }
+    public function isPanCardAlreadyExists(Request $request){
+        //dd($request->all());
+        //dd(User::where('email',$request->mail)->exists());
+
+        if(!empty($request->pan_number))
+            return User::where('user_code',$request->pan_number)->exists() ? "true" : "false";
+        else
+            return false;
+    }
+    public function isMobileNoAlreadyExists(Request $request){
+        //dd($request->all());
+        //dd(User::where('email',$request->mail)->exists());
+
+        if(!empty($request->mobile_number))
+            return User::where('user_code',$request->mobile_number)->exists() ? "true" : "false";
+        else
+            return false;
+    }
 
     private function generateEmployeeCode()
     {

@@ -162,12 +162,10 @@ onMounted(() => {
   padding: 1rem 0.6rem;
 }
 .p-datatable .p-datatable-tbody > tr > td:nth-child(1) {
-  width: 200px;
+//   width: 200px;
 }
 
-.main-content {
-  width: 98%;
-}
+
 
 .pending {
   font-weight: 700;

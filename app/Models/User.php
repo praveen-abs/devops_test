@@ -70,7 +70,7 @@ class User extends Authenticatable
         return $this->hasMany(VmtPMS_KPIFormReviewsModel::class,'assignee_id');
     }
 
-    function getFamilyDetails() {
+    public function getFamilyDetails() {
         return $this->hasMany(VmtEmployeeFamilyDetails::class,'user_id');
     }
 
