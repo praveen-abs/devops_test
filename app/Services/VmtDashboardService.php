@@ -57,7 +57,7 @@ class VmtDashboardService{
             $avatar_type = File::mimeType($avatar_path);
             $profile_pic = "data:".$avatar_type.";base64,".base64_encode(file_get_contents($avatar_path));
         }else{
-            $profile_pic=null;
+            $profile_pic='';
         }
 
 
