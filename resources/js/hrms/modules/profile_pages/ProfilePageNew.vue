@@ -97,7 +97,7 @@
 
 
 <script setup>
-import EmployeeCard from './EmloyeeCard/EmloyeeCard.vue'
+import EmployeeCard from './EmployeeCard/EmployeeCard.vue'
 import EmployeeDetails from './employee_details/EmployeeDetails.vue'
 import FamilyDetails from './family_details/FamilyDetails.vue'
 import FinanceDetails from './finance_details/FinanceDetails.vue'
