@@ -1,253 +1,263 @@
 <template>
-<div>
-    <div class="card mb-2">
-        <div class="card-body">
-            <h6 class="">Experience Information
-                <!-- <span class="personal-edit">
+    <div>
+        <div class="mb-2 card">
+            <div class="card-body">
+                <h6 class="">Experience Information
+                    <!-- <span class="personal-edit">
                                         <a href="#" class="edit-icon"
                                             data-bs-toggle="modal" data-bs-target="#edit_familyInfo">
 
                                             </a>
                                     </span> -->
-                <button type="button" class="btn_txt edit-icon" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                    @click="visible = true">
-                    <i class="ri-pencil-fill"></i>
-                </button>
-                <Dialog v-model:visible="visible" modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }" id="">
-                    <template #header>
-                        <div>
-                            <h5
-                                :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
-                                Experience Information</h5>
-                        </div>
-                    </template>
+                    <!-- <button type="button" class="btn_txt edit-icon" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                        @click="visible = true">
+                        <i class="ri-pencil-fill"></i>
+                        
+                    </button> -->
+                    <button type="button" class="float-right btn btn-orange" style="margin-left: 76%"
+                        @click="visible = true">
+                        Add New
+                        <!-- <i class="ri-pencil-fill"></i> -->
+                    </button>
+                    <Dialog v-model:visible="visible" modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }"
+                        id="">
+                        <template #header>
+                            <div>
+                                <h5
+                                    :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
+                                    Experience Information</h5>
+                            </div>
+                        </template>
 
-                    <div  style="box-shadow: 0 1px 2px rgba(56, 65, 74, 0.15); padding: 1rem;">
+                        <div style="box-shadow: 0 1px 2px rgba(56, 65, 74, 0.15); padding: 1rem;">
 
-                        <div class="space-between">
-                            <div class="input_text flex-col">
-                                <span>Company Name <span class="text-danger">*</span></span>
-                                <!-- <input type="text" name="ExperienceDetails_company_name[]" pattern-data="name" id=""
+                            <div class="space-between">
+                                <div class="flex-col input_text">
+                                    <span>Company Name <span class="text-danger">*</span></span>
+                                    <!-- <input type="text" name="ExperienceDetails_company_name[]" pattern-data="name" id=""
                                     required v-model="ExperienceDetails.company_name"> -->
-                                    <InputText type="text"  v-model="ExperienceDet.company_name"  name="ExperienceDetails_company_name[]" required  />
-                            </div>
-                            <div class="input_text flex-col">
-                                <span> Location<span class="text-danger">*</span></span>
-                                <!-- <input type="text"  v-model="ExperienceDet.location"
+                                    <InputText type="text" v-model="ExperienceDet.company_name"
+                                        name="ExperienceDetails_company_name[]" required />
+                                </div>
+                                <div class="flex-col input_text">
+                                    <span> Location<span class="text-danger">*</span></span>
+                                    <!-- <input type="text"  v-model="ExperienceDet.location"
                                     id="familyDetails_Relationship" pattern-data="alpha" required> -->
-                                    <InputText type="text" v-model="ExperienceDet.location" name="experienceDet_location[]"  required />
+                                    <InputText type="text" v-model="ExperienceDet.location" name="experienceDet_location[]"
+                                        required />
 
+                                </div>
                             </div>
-                        </div>
-                        <div class="space-between M-T">
-                            <div class="input_text flex-col">
-                                <span>Job Position <span class="text-danger">*</span></span>
-                                <!-- <input type="text" id="datemin" name="familyDetails_dob[]"
+                            <div class="space-between M-T">
+                                <div class="flex-col input_text">
+                                    <span>Job Position <span class="text-danger">*</span></span>
+                                    <!-- <input type="text" id="datemin" name="familyDetails_dob[]"
                                     v-model="ExperienceDet.job_position"> -->
-                                    <InputText type="text" v-model="ExperienceDet.job_position" name="experienceDet_job_position[]"  required />
+                                    <InputText type="text" v-model="ExperienceDet.job_position"
+                                        name="experienceDet_job_position[]" required />
 
 
                                     <!-- <InputText type="" v-model="ExperienceDet.job_position" name="experienceDet_job_position[]"  required /> -->
 
-                            </div>
+                                </div>
 
-                            <div class="input_text flex-col" style="margin-right: 7px;">
-                                <span :style="{paddingLeft: '6px'}">Period From<span class="text-danger">*</span></span>
-                                <!-- <input type="date"  id="familyDetails_phoneNumber"
+                                <div class="flex-col input_text" style="margin-right: 7px;">
+                                    <span :style="{ paddingLeft: '6px' }">Period From<span
+                                            class="text-danger">*</span></span>
+                                    <!-- <input type="date"  id="familyDetails_phoneNumber"
                                     name="familyDetails_phoneNumber[]" min="2000-01-02" v-model="ExperienceDet.period_from"> -->
-                                    <Calendar  showIcon v-model="ExperienceDet.period_from" :style="{height:' 2.3rem', width:'100%',marginRight:'20px'}"   name="experienceDet_period_from[]"  />
+                                    <Calendar showIcon v-model="ExperienceDet.period_from"
+                                        :style="{ height: ' 2.3rem', width: '100%', marginRight: '20px' }"
+                                        name="experienceDet_period_from[]" />
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="space-between M-T">
-                            <div class="input_text flex-col" :style="{ marginLeft:'-6px'}">
-                                <span :style="{paddingLeft: '6px'}">Period To <span class="text-danger">*</span></span>
-                                <!-- <input type="date" id="datemin" name="familyDetails_dob[]"
+                            <div class="space-between M-T">
+                                <div class="flex-col input_text" :style="{ marginLeft: '-6px' }">
+                                    <span :style="{ paddingLeft: '6px' }">Period To <span
+                                            class="text-danger">*</span></span>
+                                    <!-- <input type="date" id="datemin" name="familyDetails_dob[]"
                                     v-model="ExperienceDet.period_to"> -->
 
-                                    <Calendar  showIcon v-model="ExperienceDet.period_to" class="" :style="{height:' 2.3rem',width:'100%' ,borderRadius:'2px' }"   name="experienceDet_period_to[]" />
+                                    <Calendar showIcon v-model="ExperienceDet.period_to" class=""
+                                        :style="{ height: ' 2.3rem', width: '100%', borderRadius: '2px' }"
+                                        name="experienceDet_period_to[]" />
+                                </div>
                             </div>
+
+
+
                         </div>
 
 
+
+                        <template #footer>
+                            <div>
+                                <Toast />
+                                <button type="button" class="submit_btn success warning" severity="success" id=""
+                                    @click="saveExperienceDetails">submit</button>
+                            </div>
+
+                        </template>
+
+
+                    </Dialog>
+
+
+
+
+
+                </h6>
+                <div class="table-responsive">
+                    <DataTable ref="dt" :value="_instance_profilePagesStore.employeeDetails.get_experience_details"
+                        dataKey="id" :paginator="true" :rows="10"
+                        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                        :rowsPerPageOptions="[5, 10, 25]"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
+                        responsiveLayout="scroll">
+
+                        <Column header="Company Name" field="company_name" style="min-width: 8rem">
+                            <!-- <template #body="slotProps">
+                        {{  slotProps.data.claim_type }}
+                      </template> -->
+                        </Column>
+
+                        <Column field="location" header="Loaction" style="min-width: 12rem">
+                            <!-- <template #body="slotProps">
+                        {{ "&#x20B9;" + slotProps.data.claim_amount }}
+                      </template> -->
+                        </Column>
+
+                        <Column field="job_position" header="Job Position " style="min-width: 12rem">
+                            <!-- <template #body="slotProps">
+                          {{ "&#x20B9;" + slotProps.data.eligible_amount }}
+                        </template> -->
+                        </Column>
+
+                        <Column field="period_from" header="Period from" style="min-width: 12rem">
+                            <!-- <template #body="slotProps">
+                          {{  slotProps.data.reimbursment_remarks }}
+                        </template> -->
+                        </Column>
+
+                        <Column field="period_to" header="Period To" style="min-width: 12rem">
+                            <!-- <template #body="slotProps">
+                          {{  slotProps.data.reimbursment_remarks }}
+                        </template> -->
+                        </Column>
+                        <Column :exportable="false" header="Action" style="min-width:8rem">
+                        <template #body="slotProps">
+
+                            <button class="btn btn-success"  @click="editExperienceDetails(slotProps.data)">Edit</button>
+                        <!-- <Button icon="pi pi-pencil" label="edit" outlined rounded class="mr-2" @click="editFamilyDetails(slotProps.data)" />
+                        <Button icon="pi pi-trash" outlined rounded severity="danger" @click="confirmDeleteProduct(slotProps.data)" /> -->
+                    </template>
+                </Column>
+
+
+                    </DataTable>
 
                 </div>
 
 
-
-                    <template #footer>
-                      <div>
-                        <Toast />
-                        <button type="button" class="submit_btn success warning"  severity="success"  id=""
-                            @click="saveExperienceDetails">submit</button>
-                      </div>
-
-                    </template>
-
-
-                </Dialog>
-
-
-
-
-
-            </h6>
-            <div class="table-responsive">
-                <DataTable ref="dt" :value="PersonalDocument" dataKey="id" :paginator="true" :rows="10"
-                    paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                    :rowsPerPageOptions="[5, 10, 25]"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
-                    responsiveLayout="scroll">
-
-                    <Column header="Company Name" field="company_name" style="min-width: 8rem">
-                        <!-- <template #body="slotProps">
-                        {{  slotProps.data.claim_type }}
-                      </template> -->
-                    </Column>
-
-                    <Column field="location" header="Loaction" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                        {{ "&#x20B9;" + slotProps.data.claim_amount }}
-                      </template> -->
-                    </Column>
-
-                    <Column field="job_position" header="Job Position " style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                          {{ "&#x20B9;" + slotProps.data.eligible_amount }}
-                        </template> -->
-                    </Column>
-
-                    <Column field="period_from" header="Period from" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                          {{  slotProps.data.reimbursment_remarks }}
-                        </template> -->
-                    </Column>
-
-                    <Column field="period_to" header="Period To" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                          {{  slotProps.data.reimbursment_remarks }}
-                        </template> -->
-                    </Column>
-
-
-                </DataTable>
-
+                <!-- </form> -->
             </div>
-
-
-            <!-- </form> -->
         </div>
+
     </div>
-
-</div>
-
-
 </template>
 <script setup>
 
-    import { ref, onMounted, reactive, onUpdated  } from 'vue';
-    import axios from 'axios'
-    import { useToast } from "primevue/usetoast";
-    // import { log } from 'console';
+import { ref, onMounted, reactive, onUpdated } from 'vue';
+import axios from 'axios'
+import { useToast } from "primevue/usetoast";
+import { Service } from "../../Service/Service";
+import { profilePagesStore } from '../stores/ProfilePagesStore'
 
-    const toast = useToast();
-    const toasts = useToast();
+const fetch_data = Service()
+
+const _instance_profilePagesStore = profilePagesStore()
+
+const toast = useToast();
+const toasts = useToast();
 
 
 
-    const PersonalDocument =ref('');
-    const visible = ref(false);
+const PersonalDocument = ref('');
+const visible = ref(false);
 
-    const ExperienceDet = reactive({
+const ExperienceDet = reactive({
     company_name: '',
     location: '',
     job_position: '',
     period_from: '',
-    period_to:''
+    period_to: ''
 
 })
-const saveExperienceDetails =()=>{
+const saveExperienceDetails = () => {
     console.log(ExperienceDet);
 
-    if(ExperienceDet.company_name == ' '  || ExperienceDet.job_position === '' || ExperienceDet.location === '' || ExperienceDet.period_from === " " || ExperienceDet.period_to ===" " ){
+    if (ExperienceDet.company_name == ' ' || ExperienceDet.job_position === '' || ExperienceDet.location === '' || ExperienceDet.period_from === " " || ExperienceDet.period_to === " ") {
 
         toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
 
-   }else{
-    let id = fetch_data.current_user_id
-    let url = `/update-family-info/${id}`
+    } else {
+        let id = fetch_data.current_user_id
+        let url = `/update-family-info/${id}`
 
-    axios.post(url, {
+        axios.post(url, {
             user_code: _instance_profilePagesStore.employeeDetails.user_code,
             name: familydetails.name,
             relationship: familydetails.relationship,
             dob: familydetails.dob,
             phone_number: familydetails.phone_number
         })
-        .then((res) => {
+            .then((res) => {
 
-            if (res.data.status == "success") {
-                 window.location.reload();
-                toast.add({ severity: 'success', summary: 'Updated', detail: 'General information updated', life: 3000 });
-                _instance_profilePagesStore.employeeDetails.get_family_details.dob = useDateFormat(familydetails.dob,'YYYY-MM-DD' );
+                if (res.data.status == "success") {
+                    window.location.reload();
+                    toast.add({ severity: 'success', summary: 'Updated', detail: 'General information updated', life: 3000 });
+                    _instance_profilePagesStore.employeeDetails.get_family_details.dob = useDateFormat(familydetails.dob, 'YYYY-MM-DD');
 
-                // _instance_profilePagesStore.employeeDetails.dob = dialog_general_information.dob;
+                    // _instance_profilePagesStore.employeeDetails.dob = dialog_general_information.dob;
 
-                _instance_profilePagesStore.employeeDetails.get_family_details.name = familydetails.gender;
-                _instance_profilePagesStore.employeeDetails.get_family_details.relationship = familydetails.relationship;
+                    _instance_profilePagesStore.employeeDetails.get_family_details.name = familydetails.gender;
+                    _instance_profilePagesStore.employeeDetails.get_family_details.relationship = familydetails.relationship;
 
-                // _instance_profilePagesStore.employeeDetails.doj = dialog_general_information.doj;
-                _instance_profilePagesStore.employeeDetails.get_family_details.phone_number = familydetails.phone_number;
-            } else if (res.data.status == "failure") {
-                leave_data.leave_request_error_messege = res.data.message;
-            }
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+                    // _instance_profilePagesStore.employeeDetails.doj = dialog_general_information.doj;
+                    _instance_profilePagesStore.employeeDetails.get_family_details.phone_number = familydetails.phone_number;
+                } else if (res.data.status == "failure") {
+                    leave_data.leave_request_error_messege = res.data.message;
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
         // window.location.reload();
 
     }
 
-        DialogFamilyinfovisible.value = false;
+    DialogFamilyinfovisible.value = false;
 }
 
 
 onMounted(() => {
-   // fetchData();
+    // fetchData();
 })
 
 
-// const fetchData= ()=>{
-//     let url = 'http://localhost:3000/Experience'
-//     axios.get(url)
-//         .then((response) => {
-//             console.log(response.data);
-//             PersonalDocument.value = response.data;
-//         });
-// }
 
+const editExperienceDetails = (get_experience_details) => {
+    visible.value = true
+    _instance_profilePagesStore.employeeDetails.get_experience_details = {...get_experience_details};
+    console.log(get_experience_details);
 
-
-
-
-
-
-
-
-
-
-
-    // onMounted(() => {
-    //     // let url = window.location.origin + '/fetch-regularization-approvals';
-    //     // console.log("AJAX URL : " + url);
-    //     // axios.get(url)
-    //     //     .then((response) => {
-    //     //         console.log("Axios : " + response.data);
-    //     //         att_regularization.value = response.data;
-    //     //     });
-    // })
-
+    ExperienceDet.company_name = get_experience_details.company_name
+    ExperienceDet.location = get_experience_details.location
+    ExperienceDet.job_position = get_experience_details.job_position
+    ExperienceDet.period_from = get_experience_details.period_from 
+    ExperienceDet.period_to = get_experience_details.period_to
+};
 
 
 
@@ -255,20 +265,24 @@ onMounted(() => {
 
 <style  lang="scss">
 .p-button.p-component.p-button-icon-only.p-datepicker-trigger {
-height: 100%;}
+    height: 100%;
+}
+
 .p-inputtext.p-component {
     border: 0.1px solid rgb(187, 187, 187);
     width: 100%;
 }
+
 span .p-calendar.p-component.p-inputwrapper.p-calendar-w-btn {
     margin-right: 25px !important;
 }
 
 
-.p-button .p-component .p-button-icon-only .p-datepicker-trigger >button{
+.p-button .p-component .p-button-icon-only .p-datepicker-trigger>button {
     height: 100%;
 
 }
+
 // .main-content {
 //     width: 85%;
 // }
@@ -508,30 +522,36 @@ span .p-calendar.p-component.p-inputwrapper.p-calendar-w-btn {
 
 
 
-       .p-button {
-        height: 2.5em;
-       }
-      .p-button .p-fileupload-choose {
-           height: 2.1em;
-    }
-        i, span ,.tabview-custom{
-            vertical-align: middle;
-        }
+.p-button {
+    height: 2.5em;
+}
 
-        span {
-            margin: 0 .5rem;
-        }
-        .AadharCardFront{
-            margin-left: 20px;
-        }
-        .label{
-            width: 170px;
-        }
+.p-button .p-fileupload-choose {
+    height: 2.1em;
+}
 
-    .p-tabview p {
-        line-height: 1.5;
-        margin: 0;
-    }
+i,
+span,
+.tabview-custom {
+    vertical-align: middle;
+}
+
+span {
+    margin: 0 .5rem;
+}
+
+.AadharCardFront {
+    margin-left: 20px;
+}
+
+.label {
+    width: 170px;
+}
+
+.p-tabview p {
+    line-height: 1.5;
+    margin: 0;
+}
 </style>
 
 
@@ -548,7 +568,7 @@ span .p-calendar.p-component.p-inputwrapper.p-calendar-w-btn {
 
 
 <template>
-    <div class="card flex justify-content-center">
+    <div class="flex card justify-content-center">
         <Toast />
         <div class="flex flex-wrap gap-2">
             <Button label="Success" severity="success" @click="showSuccess" />

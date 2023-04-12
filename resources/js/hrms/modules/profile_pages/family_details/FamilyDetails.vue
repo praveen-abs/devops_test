@@ -2,15 +2,11 @@
     <div class="mb-2 card">
         <div class="card-body">
             <h6 class="">Family Information
-                <!-- <span class="personal-edit">
-                                        <a href="#" class="edit-icon"
-                                            data-bs-toggle="modal" data-bs-target="#edit_familyInfo">
-
-                                            </a>
-                                    </span> -->
-                <button type="button" class="btn_txt edit-icon" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                <button type="button" class="float-right btn btn-orange" 
+                style="margin-left: 79%"
                     @click="onClick_EditButton_familyInfo()">
-                    <i class="ri-pencil-fill"></i>
+                    Add New
+                    <!-- <i class="ri-pencil-fill"></i> -->
                 </button>
                 <Dialog v-model:visible="DialogFamilyinfovisible" modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }" id="">
                     <template #header>
@@ -66,7 +62,7 @@
 
 
             </h6>
-            {{ _instance_profilePagesStore.employeeDetails }}
+            <!-- {{ _instance_profilePagesStore.employeeDetails }} -->
             <div class="table-responsive">
                 <DataTable ref="dt"  dataKey="id" :paginator="true" :rows="10" :value="_instance_profilePagesStore.employeeDetails.get_family_details"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
@@ -95,7 +91,7 @@
                         {{_instance_profilePagesStore.employeeDetails.get_family_details.dob}}
                     </Column>
 
-                    <Column field="phone_number_1" header="Phone" style="min-width: 12rem">
+                    <Column field="phone_number" header="Phone" style="min-width: 12rem">
                         <!-- <template #body="slotProps">
                           {{  slotProps.data.reimbursment_remarks }}
                         </template> -->
@@ -104,46 +100,16 @@
                     </Column>
                     <Column :exportable="false" header="Action" style="min-width:8rem">
                         <template #body="slotProps">
-                        <Button icon="pi pi-pencil" outlined rounded class="mr-2" @click="editFamilyDetails(slotProps.data)" />
-                        <Button icon="pi pi-trash" outlined rounded severity="danger" @click="confirmDeleteProduct(slotProps.data)" />
+
+                            <button class="btn btn-success"  @click="editFamilyDetails(slotProps.data)">Edit</button>
+                        <!-- <Button icon="pi pi-pencil" label="edit" outlined rounded class="mr-2" @click="editFamilyDetails(slotProps.data)" />
+                        <Button icon="pi pi-trash" outlined rounded severity="danger" @click="confirmDeleteProduct(slotProps.data)" /> -->
                     </template>
                 </Column>
 
 
                 </DataTable>
-                <!--<table class="table">
-                                        <thead class="bg-primary">
-                                            <th>
-                                                Name
-                                            </th>
-                                            <th>
-                                                Relationship
-                                            </th>
-                                            <th>
-                                                Date Of Birth
-                                            </th>
-                                            <th>
-                                                Phone
-                                            </th>
-                                        </thead>
-                                        <tbody>
-                                                    <tr>
-                                                        <td>
-                                                        {{ $singledetail->name }}
-                                                        </td>
-                                                        <td>
-                                                         {{ $singledetail->relationship }}
-                                                        </td>
-                                                        <td>
-                                                         {{ date('d-M-Y', strtotime($singledetail->dob)) }}
-                                                        </td>
-                                                        <td>
-                                                         {{ $singledetail->phone_number
-                                                        </td>
-                                                    </tr>
 
-                                        </tbody>
-                                    </table> -->
             </div>
 
 
@@ -241,7 +207,8 @@ const saveFamilyDetails = () => {
 }
 
 const editFamilyDetails = (family) => {
-    _instance_profilePagesStore.employeeDetails.get_emergency_contacts_details = {...family};
+    DialogFamilyinfovisible.value = true
+    _instance_profilePagesStore.employeeDetails.get_family_details = {...family};
     console.log(family);
     familydetails.name = family.name
     familydetails.relationship = family.relationship
@@ -550,7 +517,7 @@ span {
 {
 
     <!-- <template>
-        <div class="card flex justify-content-center">
+        <div class="flex card justify-content-center">
             <Button label="Show" icon="pi pi-external-link" @click="visible = true" />
             <Dialog v-model:visible="visible" modal header="Header" :style="{ width: '50vw' }">
                 <p>

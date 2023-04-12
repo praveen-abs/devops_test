@@ -93,8 +93,8 @@
                     <li class="pb-1 border-bottom-liteAsh">
                         <div class="title">Birthday</div>
                         <div class="text">
-                            {{ _instance_profilePagesStore.employeeDetails.get_employee_details.dob.slice(8,10)+ "-" + _instance_profilePagesStore.employeeDetails.get_employee_details.dob.slice(5,7)+"-"+_instance_profilePagesStore.employeeDetails.get_employee_details.dob.slice(0,4) }}
-                            <!-- {{ _instance_profilePagesStore.employeeDetails.get_employee_details.dob}} -->
+                            <!-- {{ _instance_profilePagesStore.employeeDetails.get_employee_details.dob.slice(8,10)+ "-" + _instance_profilePagesStore.employeeDetails.get_employee_details.dob.slice(5,7)+"-"+_instance_profilePagesStore.employeeDetails.get_employee_details.dob.slice(0,4) }} -->
+                            {{ _instance_profilePagesStore.employeeDetails.get_employee_details.dob}}
 
                         </div>
                     </li>
@@ -110,8 +110,8 @@
                     <li class="pb-1 border-bottom-liteAsh">
                         <div class="title">Date Of Joining (DOJ)</div>
                         <div class="text">
-                            {{ _instance_profilePagesStore.employeeDetails.get_employee_details.doj .slice(8,10)+ "-" + _instance_profilePagesStore.employeeDetails.get_employee_details.doj .slice(5,7)+"-"+_instance_profilePagesStore.employeeDetails.get_employee_details.doj.slice(0,4) }}
-                            <!-- {{ _instance_profilePagesStore.employeeDetails.get_employee_details.doj }} -->
+                            <!-- {{ _instance_profilePagesStore.employeeDetails.get_employee_details.doj .slice(8,10)+ "-" + _instance_profilePagesStore.employeeDetails.get_employee_details.doj .slice(5,7)+"-"+_instance_profilePagesStore.employeeDetails.get_employee_details.doj.slice(0,4) }} -->
+                            {{ _instance_profilePagesStore.employeeDetails.get_employee_details.doj }}
 
                         </div>
                     </li>
