@@ -180,7 +180,7 @@
                     <div class="card-body">
                         <h6 class="">Statutory Information
                             <span class="personal-edit">
-                                <a href="#" class="edit-icon" @click="onClick_EditButton_statutoryInfo ">
+                                <a href="#" class="edit-icon" @click="onClick_EditButton_Statutory_Info ">
                                     <i class="ri-pencil-fill"></i>
                                 </a>
                             </span>
@@ -204,7 +204,7 @@
                                                 Applicable<span class="text-danger">*</span></label>
                                             <select placeholder="PF Applicable" name="pf_applicable" id="pf_applicable"
                                                 class="onboard-form form-control textbox select2_form_without_search"
-                                                required v-model="statutory_information.pf_applicable">
+                                                 v-model="statutory_information.pf_applicable">
                                                 <option value="" hidden selected disabled>PF
                                                     Applicable</option>
                                                 <option value="yes">Yes</option>
@@ -282,12 +282,13 @@
 
                         </Dialog>
 
+                        <!-- {{ _instance_profilePagesStore.employeeDetails.get_statutory_details[0] }} -->
 
-                        <ul class="personal-info"  >
+                        <ul class="personal-info"   >
                             <li>
                                 <div class="title">PF Applicable</div>
                                 <div class="text">
-                                    {{  _instance_profilePagesStore.employeeDetails.get_employee_details.pf_applicable  }}
+                                    {{  _instance_profilePagesStore.employeeDetails.get_statutory_details[0].pf_applicable  }}
 
                                 </div>
                             </li>
@@ -295,7 +296,7 @@
                                 <div class="title">EPF Number</div>
                                 <div class="text">
                                     <!-- {{ statutory_info.epf_no }} -->
-                                {{ _instance_profilePagesStore.employeeDetails.get_employee_details.epf_number }}
+                                {{ _instance_profilePagesStore.employeeDetails.get_statutory_details[0].epf_number }}
 
                                 </div>
                             </li>
@@ -305,7 +306,7 @@
                                 <div class="text">
                                     <!-- {{ statutory_info.uan_no }} -->
 
-                                    {{  _instance_profilePagesStore.employeeDetails.get_employee_details.uan_number }}
+                                    {{  _instance_profilePagesStore.employeeDetails.get_statutory_details[0].uan_number }}
 
                                 </div>
                             </li>
@@ -314,7 +315,7 @@
                                 <div class="title">ESIC Applicable</div>
                                 <div class="text">
                                     <!-- {{ statutory_info.esic_applicable }} -->
-                                    {{  _instance_profilePagesStore.employeeDetails.get_employee_details.pf_applicable }}
+                                    {{  _instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_applicable }}
 
                                 </div>
                             </li>
@@ -323,7 +324,7 @@
                                 <div class="text">
                               <!-- {{ statutory_info.esic_no }} -->
 
-                              {{  _instance_profilePagesStore.employeeDetails.get_employee_details.esic_number }}
+                              {{  _instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_number }}
 
                                 </div>
                             </li>
@@ -460,20 +461,18 @@ const saveBankinfoDetails = () => {
 }
 
 
-function onClick_EditButton_BankInfo(){
+function onClick_EditButton_Statutory_Info(){
     console.log("Opening General Info Dialog");
 
     // Assign json values into dialog elements also
 
-
-     statutory_information.pf_applicable =_instance_profilePagesStore.employeeDetails.get_employee_details.pf_applicable ;
-     statutory_information.epf_no   = _instance_profilePagesStore.employeeDetails.get_employee_details.epf_number ;
-     statutory_information.uan_no   =   _instance_profilePagesStore.employeeDetails.get_employee_details.uan_number ;
-     statutory_information.esic_applicable   =   _instance_profilePagesStore.employeeDetails.get_employee_details.pf_applicable ;
-     statutory_information.esic_no    =   _instance_profilePagesStore.employeeDetails.get_employee_details.esic_number ;
+     statutory_information.pf_applicable =_instance_profilePagesStore.employeeDetails.get_statutory_details[0].pf_applicable ;
+     statutory_information.epf_no   = _instance_profilePagesStore.employeeDetails.get_statutory_details[0].epf_number ;
+     statutory_information.uan_no   =   _instance_profilePagesStore.employeeDetails.get_statutory_details[0].uan_number ;
+     statutory_information.esic_applicable   =   _instance_profilePagesStore.employeeDetails.get_statutory_details[0].pf_applicable ;
+     statutory_information.esic_no    =   _instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_number ;
 
      dialog_statutory_visible.value = true;
-
 }
 
 
@@ -546,6 +545,7 @@ dialog_statutory_visible.value = true;
 
 }
 
+ 
 
 
 

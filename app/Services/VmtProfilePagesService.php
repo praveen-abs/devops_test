@@ -22,6 +22,7 @@ class VmtProfilePagesService{
                                  'getEmployeeOfficeDetails',
                                  'getFamilyDetails',
                                  'getExperienceDetails',
+                                 'getStatutoryDetails',
                                  'getEmergencyContactsDetails']
                     )
                     ->where('users.id',$user_id)
