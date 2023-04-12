@@ -22,39 +22,9 @@ Auth::routes();
 //Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
 
 Route::get('/vuejs', function () {
+
     return view('test_vuejs.app');
 });
-
-Route::get('/create-offer', function () {
-    return view('offer_letter/Create_OfferLetter.blade.php');
-
-})->name('create-offer');
-
-Route::get('/offer-letter' , function () {
-    return view('offer_letter/View_OfferLetter');
-})->name('offer-letter');
-
-
-
-Route::get('/roles', function () {
-    return view('rolesAndPermission');
-})->name('roles');
-
-Route::get('/integrations', function () {
-    return view('Integrations_Auth');
-})->name('integrations');
-
-Route::get('/addPermission', function () {
-    return view('addPermissionTo_role');
-})->name('addPermission');
-
-Route::get('/Add-New', function () {
-    return view('addNew_role');
-})->name('Add-New');
-
-Route::get('/paycheckDashboard', function () {
-    return view('paycheckDashboard');
-})->name('paycheckDashboard');
 
 
 Route::get('/create-holiday', function () {
@@ -89,12 +59,6 @@ Route::middleware(['auth'])->group(function () {
         return auth()->user()->name;
     });
 
-    //Get current logged-in user name
-    Route::get('/currentUserName', function() {
-
-        return auth()->user()->name;
-    });
-
 
 
     //Department
@@ -124,6 +88,8 @@ Route::middleware(['auth'])->group(function () {
         //normal onboarding checks
         Route::get('/personal-mail-exists/{mail}', 'isEmployeePersonalEmailAlreadyExists')->name('personal-mail-exists');
         Route::get('/user-code-exists/{user_code}', 'isEmployeeCodeAlreadyExists')->name('user-code-exists');
+        Route::get('/aadhar-no-exists/{aadhar_number}', 'isAadharNoAlreadyExists')->name('aadhar-no-exists');
+        Route::get('/pan-no-exists/{pan_number}', 'isPanCardAlreadyExists')->name('pan-no-exists');
 
         //Fetch quick onboarded emp details
         Route::post('fetch-quickonboarded-emp-details', 'fetchQuickOnboardedEmployeeData')->name('fetch-quickonboarded-emp-details');
@@ -279,13 +245,7 @@ Route::middleware(['auth'])->group(function () {
         return view('vmt_vendor');
     })->name('vmt-vendor-route');
 
-    Route::get('/view-offer', function () {
-        return view('offer_letter.View_OfferLetter');
-    })->name('view-offer');
 
-    Route::get('/create-offer', function () {
-        return view('offer_letter.create_offerletter');
-    })->name('create-offer');
 
     Route::get('clients', 'App\Http\Controllers\VmtClientController@showAllClients')->name('vmt-clients-route');;
     Route::get('clients-fetchAll', 'App\Http\Controllers\VmtClientController@fetchAllClients')->name('vmt-clients-fetchall');
@@ -478,7 +438,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/getPMSRatingJSON',  [App\Http\Controllers\ConfigPmsController::class, 'getPMSRating'])->name('getPMSRatingJSON');
 
     //PMS Approvals
-    Route::get('/vmt_approval_pms',  [App\Http\Controllers\VmtApprovalsController::class, 'showPMSApprovalPage'])->name('showPMSApprovalPage');
+    Route::get('/approvals_pms',  [App\Http\Controllers\VmtApprovalsController::class, 'showPMSApprovalPage'])->name('showPMSApprovalPage');
     Route::get('/fetch_pending_pmsforms',  [App\Http\Controllers\VmtApprovalsController::class, 'fetchPendingPMSForms'])->name('fetchPendingPMSForms');
     Route::get('/fetch_approvals_pmsforms',  [App\Http\Controllers\VmtApprovalsController::class, 'fetchApprovals_PMSForms'])->name('fetchApprovalsPMSForms');
 

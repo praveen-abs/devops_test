@@ -88,7 +88,7 @@
 
                                                     <Dropdown editable :options="bankNameList" optionLabel="bank_name"
                                                         placeholder="Select Bank Name" class="w-full form-controls "
-                                                        v-model="bank_information.bank_name" />
+                                                        v-model="bank_information.bank_id" />
 
                                                 </div>
                                             </div>
@@ -130,7 +130,7 @@
                                         <div class="col-12">
                                             <div class="text-right">
                                                 <button id="btn_submit_bank_info" class="btn btn-orange submit-btn"
-                                                    @click="saveBankDetails">Submit</button>
+                                                    @click="saveBankinfoDetails">Submit</button>
                                             </div>
                                         </div>
                                     </div>
@@ -382,7 +382,10 @@
 import { ref, onMounted, reactive, onUpdated } from 'vue';
 import axios from 'axios'
 import { useToast } from "primevue/usetoast";
-import { Service } from '../../Service/Service';
+import { Service } from "../../Service/Service";
+import { profilePagesStore } from '../stores/ProfilePagesStore'
+
+const _instance_profilePagesStore = profilePagesStore()
 
 const fetch_data = Service()
 
@@ -405,7 +408,7 @@ const statutory_info_data =ref()
 const bankNameList = ref();
 
 const bank_information = reactive({
-    bank_name: '',
+    bank_id: '',
     bank_ac_no: '',
     ifsc_code: '',
     pan_no: ''
@@ -420,61 +423,64 @@ const statutory_information = reactive({
 })
 
 
+const saveBankinfoDetails = () => {
+
+    let id = fetch_data.current_user_id;
 
 
-// const saveBankDetails = () => {
-//     let url = ' http://localhost:3000/FinanceDetails';
-
-//     visible.value = false
-
-//     console.log(bank_information);
-
-//     axios.post(url, bank_information).then(res => {
-//         console.log("sent sucessfully");
-//     }).catch(err => {
-//         console.log(err);
-//     }).finally(() => {
-//         console.log("completed");
-//     })
-// }
+    let url = `/update-bank-info/${id}`;
 
 
-const saveStatutoryDetails = () => {
 
+    axios.post(url, {
+            user_code: _instance_profilePagesStore.employeeDetails.user_code,
+            bank_id: bank_information.bank_id.id,
+            account_no: bank_information.bank_ac_no,
+            bank_ifsc: bank_information.ifsc_code,
+            pan_no: bank_information.pan_no
+        })
+        .then((res) => {
 
-    let url = ' http://localhost:3000/FinanceDetails';
+            if (res.data.status == "success") {
+                 window.location.reload();
+                toast.add({ severity: 'success', summary: 'Updated', detail: 'General information updated', life: 3000 });
 
-    visible2.value = false
+                _instance_profilePagesStore.employeeDetails.get_employee_details.bank_name = bank_information.bank_name;
 
-    console.log(statutory_information);
+                // _instance_profilePagesStore.employeeDetails.dob = dialog_general_information.dob;
 
-    axios.post(url, statutory_information).then(res => {
-        console.log("sent sucessfully");
-    }).catch(err => {
-        console.log(err);
-    }).finally(() => {
-        console.log("completed");
-    })
+                _instance_profilePagesStore.employeeDetails.get_employee_details.account_no = bank_information.account_no;
+                _instance_profilePagesStore.employeeDetails.get_employee_details.bank_ifsc = bank_information.bank_ifsc;
+
+                // _instance_profilePagesStore.employeeDetails.doj = dialog_general_information.doj;
+                _instance_profilePagesStore.employeeDetails.get_employee_details.pan_no = bank_information.pan_no;
+            } else if (res.data.status == "failure") {
+                leave_data.leave_request_error_messege = res.data.message;
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        });
 
 }
 
 
 
 
-const fetchFinanceDetails = () => {
+// const fetchFinanceDetails = () => {
 
-    // let url = window.location.origin + "/fetch-att-regularization-data";
-    let url = ' http://localhost:3000/FinanceDetails';
+//     // let url = window.location.origin + "/fetch-att-regularization-data";
+//     let url = ' http://localhost:3000/FinanceDetails';
 
-    console.log("AJAX URL : " + url);
+//     console.log("AJAX URL : " + url);
 
-    axios.get(url).then((response) => {
-        console.log("Axios : " + response.data);
-        console.log(response.data);
-        bank_info_data.value = response.data;
-        statutory_info_data.value = response.data;
+//     axios.get(url).then((response) => {
+//         console.log("Axios : " + response.data);
+//         console.log(response.data);
+//         bank_info_data.value = response.data;
+//         statutory_info_data.value = response.data;
 
-    });
+//     });
 
     // let statutory_info = 'http://localhost:3000/Empdetails'
 
@@ -483,7 +489,7 @@ const fetchFinanceDetails = () => {
     //     console.log(response.data);
     //     statutory_info_data.value = response.data;
     // });
-};
+// };
 
 
 

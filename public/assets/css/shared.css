@@ -523,7 +523,7 @@ table.no-padding tr td {
 
 /* by george 70px to 50px  */
 .page-content {
-    padding: calc(45px + 1.5rem) calc(1.5rem / 2) 50px calc(1.5rem / 2);
+    padding: calc(50px + 1.5rem) calc(1.5rem / 2) 50px calc(1.5rem / 2);
 }
 /* sub header (bread-crumb) nav bar */
 .page-title-box {
@@ -1291,7 +1291,7 @@ button.gridjs-sort-desc {
     color: #fff;
 }
 .text-orange {
-    color: #E97951;
+    color: #ee6a04;
 }
 .bg-orange {
     background-color: var(--color-primary_orange);
@@ -1540,6 +1540,13 @@ a.editable-click:hover {
     border-left: 1px solid #cecece;
 }
 
+.switch-checkbox {
+    position: relative;
+    display: inline-block;
+    width: 45px;
+    height: 25px;
+}
+
 .resize-none {
     resize: none;
 }
@@ -1569,7 +1576,7 @@ a.editable-click:hover {
     border-bottom: 1px solid #cecece;
 }
 .border-bottom-liteAsh {
-    border-bottom:1px solid #eae7e773;
+    border-bottom:1px solid #eae7e7;
 }
 .clearfix:after {
     clear: both;

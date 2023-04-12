@@ -87,11 +87,12 @@
         filterDisplay="menu"
         :loading="loading2"
         :globalFilterFields="['name', 'status']"
+        style="white-space: nowrap;"
       >
         <template #empty> No Employee found </template>
         <template #loading> Loading customers data. Please wait. </template>
 
-        <Column field="employee_name" header="Employee Name">
+        <Column field="employee_name" header="Employee Name" style="min-width: 18em;">
           <template #body="slotProps">
             {{ slotProps.data.employee_name }}
           </template>
@@ -105,7 +106,7 @@
             />
           </template>
         </Column>
-        <Column field="leaverequest_date" header="Date" :sortable="true">
+        <Column field="leaverequest_date" header="Date" :sortable="true" >
           <template #body="slotProps">
             <!-- {{ slotProps.data.reimbursement_date }} -->
             {{ dateFormat(slotProps.data.leaverequest_date, "dd-mm-yyyy, h:MM TT") }}
@@ -125,7 +126,7 @@
           </template>
         </Column>
         <!-- <Column field="total_leave_datetime" header="Total"></Column> -->
-        <Column field="leave_reason" header="Leave Reason"></Column>
+        <Column field="leave_reason" header="Leave Reason" style="min-width: 25em;white-space:pre-wrap;"></Column>
         <Column field="reviewer_name" header="Approver Name"></Column>
         <Column field="reviewer_comments" header="Approver Comments"></Column>
 
@@ -399,9 +400,9 @@ function processApproveReject() {
 .p-datatable .p-datatable-tbody > tr > td:nth-child(6) {
   width: 200px;
 }
-.main-content {
-  width: 105%;
-}
+// .main-content {
+//   width: 105%;
+// }
 
 .pending {
   font-weight: 700;

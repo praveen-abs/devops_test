@@ -188,7 +188,6 @@ export default function validation(rules) {
 
         // Office Details Start
         process: {
-            required,
         },
         designation: {
             required,
