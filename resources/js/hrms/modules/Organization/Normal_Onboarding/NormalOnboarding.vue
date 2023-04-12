@@ -541,6 +541,10 @@
                             v-model="v$.AccountNumber.$model"
                           />
 
+                          <span v-if="is_ac_no_exists" class="text-danger">
+                            Account Number Is Already Exixts
+                          </span>
+
                           <span
                             v-if="
                               (v$.AccountNumber.$invalid && submitted) ||
@@ -3338,11 +3342,26 @@ const mobileNoExists = () => {
  }
 };
 
+const is_ac_no_exists = ref(false)
 
 const ValidateAccountNo =()=> {
-              const acn0 = /^[0-9]{9,18}$/;
-               if( acn0.test(employee_onboarding.AccountNumber)){
+
+             let Ac_no = employee_onboarding.AccountNumber
+              const acno = /^[0-9]{9,18}$/;
+               if( acno.test(employee_onboarding.AccountNumber)){
                   console.log("valid");
+                  axios
+              .get(`/ac-no-exists/${Ac_no}`)
+              .then((res) => {
+                console.log(res.data);
+                is_ac_no_exists.value = res.data;
+              })
+              .catch((err) => {
+                console.log(err);
+              })
+              .finally(() => {
+                console.log("completed");
+              });
                }else{
                 console.log("invalid");
                }

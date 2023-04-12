@@ -88,6 +88,15 @@ class VmtEmployeeOnboardingController extends Controller
         else
             return false;
     }
+    public function isAcNoAlreadyExists(Request $request){
+        //dd($request->all());
+        //dd(User::where('email',$request->mail)->exists());
+
+        if(!empty($request->mobile_number))
+            return User::where('user_code',$request->AccountNumber)->exists() ? "true" : "false";
+        else
+            return false;
+    }
 
     private function generateEmployeeCode()
     {

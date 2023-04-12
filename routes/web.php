@@ -127,6 +127,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/aadhar-no-exists/{aadhar_number}', 'isAadharNoAlreadyExists')->name('aadhar-no-exists');
         Route::get('/pan-no-exists/{pan_number}', 'isPanCardAlreadyExists')->name('pan-no-exists');
         Route::get('/mobile-no-exists/{mobile_number}', 'isMobileNoAlreadyExists')->name('mobile-no-exists');
+        Route::get('/ac-no-exists/{ac_no}', 'isAcNoAlreadyExists')->name('ac-no-exists');
 
         //Fetch quick onboarded emp details
         Route::post('fetch-quickonboarded-emp-details', 'fetchQuickOnboardedEmployeeData')->name('fetch-quickonboarded-emp-details');
