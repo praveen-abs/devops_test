@@ -9,7 +9,8 @@
                 <ul class="nav nav-pills    nav-tabs-dashed" id="pills-tab" role="tablist">
                     <li class="nav-item  " role="presentation">
                         <a class="nav-link active  " id="" data-bs-toggle="pill" href=""
-                            data-bs-target="#investment_dec" role="tab" aria-controls="pills-home" aria-selected="true">
+                            data-bs-target="#investment_declaration" role="tab" aria-controls="pills-home"
+                            aria-selected="true">
                             Declaration</a>
                     </li>
                     <li class="nav-item   mx-4" role="presentation">
@@ -36,17 +37,82 @@
         <div class="card top-line mb-0">
             <div class="card-body">
                 <div class="tab-content " id="pills-tabContent">
-                    <div class="tab-pane fade active show" id="investment_dec" role="tabpanel" aria-labelledby="">
-                        <div class="text-center">
-                            <div class="d-flex justify-content-center">
-                                <div style="height: 300px;max-width:500px;" class="">
-                                    <img src="{{ URL::asset('assets/images/no_dataFile.svg') }}" class="h-100 w-100"
-                                        alt="user-pic" </div>
-                                </div>
+                    <div class="tab-pane fade active show" id="investment_declaration" role="tabpanel" aria-labelledby="">
+
+
+                        <h6 class="text-primary text-lg  font-semibold ">Tax Deductions FY 2022-2023</h6>
+
+
+                        <div class="tw-card bg-pink-50 shadow-sm my-4">
+                            Kindly update your <span class="text-indigo-600 font text-base font-semibold">PAN</span> to
+                            avoid
+                            20% TDS deduction (if applicable)
+
+                        </div>
+                        <div class="tw-card bg-gray-100 shadow-sm mb-4 text-justify">
+                            You have the option of either using a new regime(with no tax deductions), or using the same
+                            regime as FY 2019-20. To help you make an informed decision., we are displaying your tax
+                            liability in both these regimes, and you can choose the option that you prefer. For us to
+                            accurately calculate your tax liabilities, please ensure you fill in all the information
+                            requested below, irrespective of the regime that you pick.
+                        </div>
+
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="">
+                                <p class=" text-gray-600">Your current chosen tax regime is <span
+                                        class="text-indigo-600 font text-lg font-semibold change_regime_text">Old Tax Regime
+                                    </span> </p>
+                                <p class="text-gray-400 text-sm">The confirmed old tax regime will be used in future payroll
+                                    calculations</p>
 
                             </div>
-                            <h4> <span class="text-orange">Sorry !</span> No data</h4>
+                            <div class="">
+                                <button class="text-white py-2 px-4 rounded-md  bg-indigo-600 change_regime_text"
+                                    id="regime_button"><i class="fa fa-check-square-o mr-2 text-base"></i> Old Tax
+                                    Regime</button>
+                                <span class="text-gray-600 text-sm align-text-bottom " id="latest_update">Maximum
+                                    benefit</span>
+
+                            </div>
+                            <div class="">
+                                <button data-bs-target="#switchRegime_modal" data-bs-toggle="modal"
+                                    class="py-2 px-4 rounded-md text-indigo-600   border-indigo-600 "
+                                    style="border:1px solid #4b46e4 !important"> Switch Regime</button>
+
+                            </div>
+
+
                         </div>
+
+                        <p class="text-gray-600 text-justify" id="oldRegime_warn" >Choosing Old Regime will give you an additional benefit of
+                            ₹41,220.00 as compared to New Regime. Calculations are based on the latest released payroll -
+                            Jul 2022
+                        </p>
+                        <div class="tw-card bg-pink-50 shadow-sm my-4" style="display:none" id="newRegime_warn">
+                            The tax regime cannot be changed until the financial year 2022-2023 ends. (April 2023-March 2024)
+
+                        </div>
+
+                        <div class="table-responsive my-3">
+                            <table class="table investment_table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Particulars</th>
+                                        <th scope="col">New Tax Regime <i class="fa fa-rupee mx-2"></i></th>
+                                        <th scope="col">Old Tax Regime </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+
+
+                                </tbody>
+                            </table>
+                        </div>
+
+
+
                     </div>
                     <div class="tab-pane fade  " id="exemptions" role="tabpanel">
 
@@ -188,7 +254,7 @@
                                                         cols="5" rows="1"></textarea> --}}
                                                     <div class="flex justify-center">
                                                         <button data-bs-target="#AddRendted_modal" data-bs-toggle="modal"
-                                                            class="text-white py-1.5 w-2/3 rounded-md  bg-indigo-800">Add</button>
+                                                            class="text-white py-2 w-2/3 px-3 rounded-md  bg-indigo-800">Add</button>
                                                     </div>
                                                 </td>
                                                 {{-- <td align="">
@@ -1936,7 +2002,7 @@
                                         <div class="tw-card bg-gray-100">
                                             <div class="text-end">
                                                 <button data-bs-target="#selfOccupied_modal" data-bs-toggle="modal"
-                                                    class="py-1.5 px-4 text-white text-center mb-3  rounded-md bg-indigo-600">Add
+                                                    class="py-2  px-4 text-white text-center mb-3  rounded-md bg-indigo-600">Add
                                                     New</button>
                                             </div>
 
@@ -3140,8 +3206,8 @@
                                     </div>
                                 </div>
                                 <div
-                                    class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-1 2xl:grid-cols-1 sm:grid-cols-1 xl:grid-cols-1 lg:grid-cols-1">
-                                    <label for="lender_name" class="block mb-2  font-medium text-gray-900 ">
+                                    class="grid   mb-6 md:grid-cols-1 2xl:grid-cols-1 sm:grid-cols-1 xl:grid-cols-1 lg:grid-cols-1">
+                                    <label for="lender_name" class="block mb-2 font-medium text-gray-900 ">
                                         Address </label>
                                     <textarea name="" id="" rows="3"
                                         class="bg-gray-50 resize-none border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -3681,13 +3747,45 @@
                 </div>
             </div>
         </div>
+        <div id="switchRegime_modal" class="modal  fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-md">
+                <div class="modal-content ">
+                    <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
+                        <h6 class="modal-title text-lg font-semibold mb-1 text-primary">Confirm Switching Regime</h6>
+                        <button type="button" class="close outline-none bg-transparent border-0 h3"
+                            data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <p class="">Your current switching regime is <span
+                                class="text-primary font-semibold text-lg">New Tax Regime</span> </p>
+
+                        <p class="text-gray-500 text-justify my-3">
+                            Are you sure you want to switch your regime? You cannot change your regime selection once you
+                            have confirmed your selection.
+                        </p>
+                        <p class="text-gray-500 text-justify">
+                            In case of an incorrect selection, your only option will be to change your selection when you
+                            file your tax returns for the current financial year.
+                        </p>
+
+
+                        <div class="text-end mt-5">
+                            <button id="confirm_switchRegime"
+                                class="bg-orange-700 text-white py-2  rounded-md px-4 text-center">Confirm</button>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 @endsection
 @section('script')
-    <script src="{{ URL::asset('assets/libs/gridjs/gridjs.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/js/pages/dashboard-projects.init.js') }}"></script>
-
     <script>
         $(document).ready(function() {
 
@@ -3702,6 +3800,23 @@
                 }
 
             });
+
+            $('#confirm_switchRegime').click(function() {
+                const switchedDate = new Date();
+                const date=switchedDate.getDate();
+                const month=switchedDate.getMonth();
+                $('.change_regime_text').text("New Tax Regime");
+
+                $('#latest_update').text('Last Updated :' + (('' +date ).length < 2 ?
+                        '0' : '')+date + '/' +
+                    (('' +month ).length < 2 ? '0' : '') + month+'/' +
+                    (('' + switchedDate.getFullYear())));
+
+
+                    $('#newRegime_warn').css('display', 'block');
+                    $('#oldRegime_warn').css('display','none');
+
+            })
 
         })
     </script>
