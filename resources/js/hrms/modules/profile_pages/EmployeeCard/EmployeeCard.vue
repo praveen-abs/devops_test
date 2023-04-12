@@ -62,26 +62,26 @@
                                 <div class="py-2 border-bottom-liteAsh">
                                     <p class="text-muted f-12 fw-bold">Designation</p>
                                     <p class="f-15 fw-bold">
-                                        {{
+                                        <!-- {{
                                             _instance_profilePagesStore.employeeDetails.get_employee_office_details.designation
-                                        }}
+                                        }} -->
                                     </p>
 
                                 </div>
                                 <div class="py-2 border-bottom-liteAsh">
                                     <p class="text-muted f-12 fw-bold">Location</p>
                                     <p class=" f-15 fw-bold">
-                                        {{
+                                        <!-- {{
                                             _instance_profilePagesStore.employeeDetails.get_employee_office_details.work_location
-                                        }}
+                                        }} -->
                                     </p>
                                 </div>
                                 <div class="py-2 border-bottom-liteAsh">
                                     <p class="text-muted f-12 fw-bold">Department</p>
                                     <p class=" f-15 fw-bold">
-                                        {{
+                                        <!-- {{
                                             _instance_profilePagesStore.employeeDetails.get_employee_office_details.department_id
-                                        }}
+                                        }} -->
                                     </p>
                                 </div>
                                 <div class="py-2 border-bottom-liteAsh">
