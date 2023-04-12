@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\VmtEmployeeReimbursements;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\HRMSBaseAPIController;
 use App\Models\VmtEmployeeAttendance;
+use App\Models\VmtStaffAttendanceDevice;
 use App\Models\VmtReimbursements;
+use App\Models\VmtEmployeeLeaves;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use App\Services\VmtAttendanceService;
@@ -16,8 +19,8 @@ use Illuminate\Support\Facades\Validator;
 class VmtAPIAttendanceController extends HRMSBaseAPIController
 {
 
-    private $cost_per_km_2wheeler = 3.5;
-    private $cost_per_km_4wheeler = 6;
+    private $cost_per_km_2wheeler = 3;
+    private $cost_per_km_4wheeler = 4;
 
     /*
         get current day attendance details
@@ -384,7 +387,6 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
         return $response;
     }
-
 
 
     public function getAttendanceDailyReport_PerMonth(Request $request, VmtAttendanceService $serviceVmtAttendanceService){

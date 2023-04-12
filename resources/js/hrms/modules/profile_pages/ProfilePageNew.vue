@@ -1,5 +1,5 @@
 <template>
-
+ <Toast />
     <Dialog header="Header" v-model:visible="_instance_profilePagesStore.loading_screen"
         :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
         :closeOnEscape="false">
@@ -42,6 +42,8 @@
                                         <div class="mb-1 text-center">
                                             <h6 class="text-center">
 
+                                                <!-- {{_instance_profilePagesStore.employeeDetails  }} -->
+
                                                 {{ service.current_user_name }}
                                             </h6>
                                         </div>
@@ -62,9 +64,11 @@
                                     <div class="mb-4 text-center profile-mid-right-content ">
                                         <div class="py-2 border-bottom-liteAsh">
                                             <p class="text-muted f-12 fw-bold">Employee Status</p>
-                                            <p class="text-primary f-15 fw-bold">
-                                                <!-- {{ getEmployeeActiveStatus($user->id) ?? '-' }} -->
-                                                <!-- {{ emp }} -->
+                                            <p v-if="_instance_profilePagesStore.employeeDetails.active == 1" class="text-primary f-15 fw-bold">
+                                              Active
+                                            </p>
+                                            <p v-else class="text-primary f-15 fw-bold">
+                                             Not Active
                                             </p>
 
                                         </div>
@@ -78,14 +82,14 @@
                                         <div class="py-2 border-bottom-liteAsh">
                                             <p class="text-muted f-12 fw-bold">Designation</p>
                                             <p class="text-primary f-15 fw-bold">
-                                                {{ _instance_profilePagesStore.employeeDetails.designation }}
+                                                <!-- {{ _instance_profilePagesStore.employeeDetails.get_employee_office_details.designation }} -->
                                             </p>
 
                                         </div>
                                         <div class="py-2 border-bottom-liteAsh">
                                             <p class="text-muted f-12 fw-bold">Location</p>
                                             <p class="text-primary f-15 fw-bold">
-                                                {{ _instance_profilePagesStore.employeeDetails.work_location }}
+                                                <!-- {{ _instance_profilePagesStore.employeeDetails.get_employee_office_details.work_location }} -->
                                             </p>
                                         </div>
                                         <div class="py-2 border-bottom-liteAsh">
@@ -97,7 +101,7 @@
                                         <div class="py-2 border-bottom-liteAsh">
                                             <p class="text-muted f-12 fw-bold">Reporting To</p>
                                             <p class="text-primary f-15 fw-bold">
-                                                {{ _instance_profilePagesStore.employeeDetails.l1_manager_name }}
+                                                <!-- {{ _instance_profilePagesStore.employeeDetails.get_employee_office_details.l1_manager_name }} -->
                                             </p>
                                         </div>
                                     </div>
@@ -166,13 +170,15 @@
 
                     </div>
                     <div class="tab-pane fade" id="finance_det" role="tabpanel" aria-labelledby="">
-                        <FinanceDetails />
+                        <div v-if="!_instance_profilePagesStore.loading_screen"><FinanceDetails /></div>
 
 
                     </div>
                     <div class="tab-pane fade" id="document_det" role="tabpanel" aria-labelledby="">
 
-                        <Documents />
+                        <div v-if="!_instance_profilePagesStore.loading_screen"> <Documents /></div>
+
+                        <!-- <Documents /> -->
 
                     </div>
 
@@ -181,6 +187,7 @@
             </div>
         </div>
     </div>
+
 </template>
 
 

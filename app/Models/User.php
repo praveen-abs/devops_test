@@ -10,6 +10,9 @@ use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use App\Models\VmtEmployeeFamilyDetails;
 use App\Models\VmtEmployeeEmergencyContactDetails;
+use App\Models\Experience;
+use App\Models\VmtEmployeeStatutoryDetails;
+
 
 class User extends Authenticatable
 {
@@ -70,7 +73,7 @@ class User extends Authenticatable
         return $this->hasMany(VmtPMS_KPIFormReviewsModel::class,'assignee_id');
     }
 
-    function getFamilyDetails() {
+    public function getFamilyDetails() {
         return $this->hasMany(VmtEmployeeFamilyDetails::class,'user_id');
     }
 
@@ -78,6 +81,12 @@ class User extends Authenticatable
     function getEmergencyContactsDetails() {
         return $this->hasMany(VmtEmployeeEmergencyContactDetails::class,'user_id');
     }
+    function getExperienceDetails() {
+        return $this->hasMany(Experience::class,'user_id');
+    }
+    function getStatutoryDetails() {
+        return $this->hasMany(VmtEmployeeStatutoryDetails::class,'user_id');
+    }
 
-
+    
 }

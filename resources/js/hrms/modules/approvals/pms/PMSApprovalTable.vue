@@ -88,6 +88,7 @@
         filterDisplay="menu"
         :loading="loading2"
         :globalFilterFields="['name', 'status']"
+        style="white-space: nowrap;"
       >
         <template #empty> No PMS forms found. </template>
         <template #loading> Loading PMS forms data. Please wait. </template>
@@ -283,7 +284,7 @@ function processApproveReject() {
 
 .p-datatable .p-datatable-thead > tr > th {
   text-align: center;
-  padding: 1.3rem 1rem;
+  padding: 1rem 0.5rem;
   border: 1px solid #dee2e6;
   border-top-width: 1px;
   border-right-width: 1px;
@@ -353,9 +354,7 @@ function processApproveReject() {
 .p-datatable .p-datatable-tbody > tr > td:nth-child(1) {
   width: 20%;
 }
-.main-content {
-  width: 110%;
-}
+
 
 .pending {
   font-weight: 700;

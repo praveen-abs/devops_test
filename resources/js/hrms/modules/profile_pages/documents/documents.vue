@@ -1,18 +1,18 @@
 <template>
     <div class="table-responsive">
-        <DataTable ref="dt" :value="Documents" dataKey="id" :paginator="true" :rows="10"
+        <DataTable ref="dt"  dataKey="id" :paginator="true" :rows="10"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             :rowsPerPageOptions="[5, 10, 25]"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
 
             <Column header="File Name" field="name" style="min-width: 8rem">
                 <!-- <template #body="slotProps">
-                        {{  slotProps.data.claim_type }}
+                        {{  slotProps.data.aadhar_card_backend_file }}
                       </template> -->
             </Column>
 
             <Column field="Status" header="Status" style="min-width: 12rem">
-    
+
             </Column>
 
             <Column field="dob" header="Reason " style="min-width: 12rem">
@@ -40,6 +40,13 @@
 <script setup>
 import axios from "axios";
 import { ref } from "vue";
+
+import { Service } from "../../Service/Service";
+import { profilePagesStore } from '../stores/ProfilePagesStore'
+
+const _instance_profilePagesStore = profilePagesStore()
+
+const fetch_data = Service()
 
 
 

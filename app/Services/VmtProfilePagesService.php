@@ -21,6 +21,8 @@ class VmtProfilePagesService{
         $response = User::with([ 'getEmployeeDetails',
                                  'getEmployeeOfficeDetails',
                                  'getFamilyDetails',
+                                 'getExperienceDetails',
+                                 'getStatutoryDetails',
                                  'getEmergencyContactsDetails']
                     )
                     ->where('users.id',$user_id)
