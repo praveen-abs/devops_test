@@ -799,7 +799,7 @@ class VmtEmployeeOnboardingController extends Controller
                 'child_name' => 'nullable|required_unless:no_of_child,null,0|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'child_dob' => 'nullable||required_unless:no_of_child,null,0|date',
                 'department' => 'required',
-                'process' => 'required',
+                'process' => 'nullable',
                 'designation' => 'required',
                 'cost_center' => 'nullable',
                 'confirmation_period' => 'nullable|date',
