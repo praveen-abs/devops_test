@@ -195,13 +195,14 @@ const ExperienceInfo = reactive({
 
 })
 const saveExperienceDetails = () => {
+
     console.log(ExperienceInfo);
 
-    if (ExperienceInfo.company_name == ' ' || ExperienceInfo.job_position === '' || ExperienceInfo.location === '' || ExperienceInfo.period_from === " " || ExperienceInfo.period_to === " ") {
+    // if (ExperienceInfo.company_name == ' ' || ExperienceInfo.job_position === '' || ExperienceInfo.location === '' || ExperienceInfo.period_from === " " || ExperienceInfo.period_to === " ") {
 
-        toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
+    //     toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
 
-    } else {
+    // } else {
         let id = fetch_data.current_user_id
         let url = `/update-experience-info/${id}`
 
@@ -236,7 +237,7 @@ const saveExperienceDetails = () => {
     }
 
     dialog_ExperienceInfovisible.value = false;
-}
+// }
 
 
 onMounted(() => {
@@ -247,14 +248,23 @@ onMounted(() => {
 
 const editExperienceDetails = (get_experience_details) => {
     dialog_ExperienceInfovisible.value = true
+
     _instance_profilePagesStore.employeeDetails.get_experience_details = {...get_experience_details};
     console.log(get_experience_details);
+
+    // ExperienceInfo.company_name =  _instance_profilePagesStore.employeeDetails.get_experience_details.company_name
 
     ExperienceInfo.company_name = get_experience_details.company_name
     ExperienceInfo.location = get_experience_details.location
     ExperienceInfo.job_position = get_experience_details.job_position
     ExperienceInfo.period_from = get_experience_details.period_from
     ExperienceInfo.period_to = get_experience_details.period_to
+
+    // ExperienceInfo.location =  _instance_profilePagesStore.employeeDetails.get_experience_details.location
+    // ExperienceInfo.job_position =   _instance_profilePagesStore.employeeDetails.get_experience_details.job_position
+    // ExperienceInfo.period_from =   _instance_profilePagesStore.employeeDetails.get_experience_details.period_from
+    // ExperienceInfo.period_to =   _instance_profilePagesStore.employeeDetails.get_experience_details.period_to
+
 };
 
 

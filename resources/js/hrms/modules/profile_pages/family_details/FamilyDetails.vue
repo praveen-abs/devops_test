@@ -4,7 +4,7 @@
             <h6 class="">Family Information
                 <button type="button" class="float-right btn btn-orange"
                 style="margin-left: 79%"
-                    @click="onClick_EditButton_familyInfo()">
+                    @click="DialogFamilyinfovisible=true">
                     Add New
                     <!-- <i class="ri-pencil-fill"></i> -->
                 </button>
@@ -62,7 +62,7 @@
 
 
             </h6>
-            <!-- {{ _instance_profilePagesStore.employeeDetails }} -->
+            {{ _instance_profilePagesStore.employeeDetails.get_family_details }}
             <div class="table-responsive">
                 <DataTable ref="dt"  dataKey="id" :paginator="true" :rows="10" :value="_instance_profilePagesStore.employeeDetails.get_family_details"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
@@ -164,7 +164,7 @@ function onClick_EditButton_familyInfo(){
 
 const saveFamilyDetails = () => {
 
-   if(familydetails.name == ''  || familydetails.dob == '' || familydetails.relationship == '' || familydetails.phone_number == " " || familydetails.phone_number.length >=10 ){
+   if(familydetails.name == ''  || familydetails.dob == '' || familydetails.relationship == '' || familydetails.phone_number == " " ){
     toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
    }else{
     let id = fetch_data.current_user_id
