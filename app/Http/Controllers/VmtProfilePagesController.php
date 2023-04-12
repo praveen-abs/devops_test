@@ -460,7 +460,15 @@ class VmtProfilePagesController extends Controller
 
     public function fetchEmployeeProfilePagesDetails(Request $request, VmtProfilePagesService $serviceVmtProfilePagesService){
 
-        $user_id = $request->uid;
+        $user_id = null;
+
+        //If empty, then show current user profile page
+        if (empty($request->uid)) {
+            $user_id = auth()->user()->id;
+        } else {
+            $user_id = User::find(Crypt::decryptString($request->uid))->id;
+            //dd("Enc User details from request : ".$user);
+        }
 
         return $serviceVmtProfilePagesService->getEmployeeProfileDetails($user_id);
     }
