@@ -11,6 +11,7 @@ use Spatie\Permission\Traits\HasRoles;
 use App\Models\VmtEmployeeFamilyDetails;
 use App\Models\VmtEmployeeEmergencyContactDetails;
 use App\Models\Experience;
+use App\Models\VmtEmployeeStatutoryDetails;
 
 
 class User extends Authenticatable
@@ -83,6 +84,9 @@ class User extends Authenticatable
     function getExperienceDetails() {
         return $this->hasMany(Experience::class,'user_id');
     }
+    function getStatutoryDetails() {
+        return $this->hasMany(VmtEmployeeStatutoryDetails::class,'user_id');
+    }
 
-
+    
 }
