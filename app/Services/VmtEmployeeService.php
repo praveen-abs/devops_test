@@ -240,23 +240,9 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
         $newEmployee->bank_ifsc_code  = $row["bank_ifsc"] ?? '';
         $newEmployee->bank_account_number  = $row["account_no"] ?? '';
 
-
-        // if (!empty($row['marital_status'])) {
-        //     if ($row['marital_status'] <> 1) {
-        //         $newEmployee->no_of_children   = $row["no_of_children"] ?? 0;
-
-        //         if (!empty($row['no_of_children']) && $row['no_of_children'] > 0) {
-        //             // $newEmployee->kid_name   = json_encode($row["child_name"]);
-        //             // $newEmployee->kid_age  = json_encode($row["child_dob"]);
-        //         }
-        //     }
-        // } else {
-        //     $row['marital_status'] ='unmarried';
-        //}
-
         $newEmployee->save();
 
-//store employeeoffice details
+            //store employeeoffice details
           $empOffice = VmtEmployeeOfficeDetails::where('user_id',$user_id);
 
           if($empOffice->exists())
@@ -274,7 +260,6 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
            //$empOffice->department_id = $department_id ?? ''; // => "lk"
            $empOffice->process = $row["process"] ?? ''; // => "k"
            $empOffice->designation = $row["designation"] ?? ''; // => "k"
-           $empOffice->designation = $row["work_location"] ?? ''; // => "k"
            $empOffice->l1_manager_code  = $row["reporting_manager_emp_code"] ?? ''; // => "k"
 
            if ( !empty($row["l1_manager_code"]) && $this->isUserExist($row["l1_manager_code"]))
