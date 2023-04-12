@@ -237,6 +237,7 @@ function getUserShortName($user_id)
 {
 
     $username = User::find($user_id)->name;
+    $username = trim($username);
     $dotPattern = preg_split('/\.+/', $username);
     $whiteSpacePattern = preg_split('/\s+/', $username);
     $singleWordPattern = str_split($username);

@@ -214,28 +214,39 @@ class VmtProfilePagesController extends Controller
     {
         $user_id = user::where('user_code', $request->user_code)->first()->id;
         $familyDetails = VmtEmployeeFamilyDetails::where('user_id', $user_id)->delete();
-        return redirect()->back();
+
+        $response = [
+            'status' => 'success',
+        ];
+
+        return  $response;
     }
     public function updateFamilyInfo(Request $request)
     {
-        //dd($request->all());
+        // dd($request->all());
         $user_id = user::where('user_code', $request->user_code)->first()->id;
         $familyDetails = VmtEmployeeFamilyDetails::where('user_id', $user_id)->delete();
 
-        $count = sizeof($request->input('name'));
+        $family_member_name=array($request->input('name'));
+        $count = sizeof($family_member_name);
+
         for ($i = 0; $i < $count; $i++) {
+
             $emp_familydetails = new VmtEmployeeFamilyDetails;
-
+            // dd($request->id);
             $emp_familydetails->user_id = $request->id;
-            $emp_familydetails->name = $request->input('name')[$i];
-            $emp_familydetails->relationship = $request->input('relationship')[$i];
-            $emp_familydetails->dob = $request->input('dob')[$i];
-            $emp_familydetails->phone_number = $request->input('phone_number')[$i];
-
+            $emp_familydetails->name = $request->input('name');
+            $emp_familydetails->relationship = $request->input('relationship');
+            $emp_familydetails->dob = $request->input('dob');
+            $emp_familydetails->phone_number = $request->input('phone_number');
             $emp_familydetails->save();
         }
 
-        return redirect()->back();
+        $response = [
+            'status' => 'success',
+        ];
+
+        return  $response;
     }
 
     public function updateExperienceInfo(Request $request)
@@ -264,20 +275,33 @@ class VmtProfilePagesController extends Controller
         }
 
 
-        return redirect()->back();
+        $response = [
+            'status' => 'success',
+        ];
+
+        return  $response;
     }
 
 
     public function updateBankInfo(Request $request)
     {
+
+    //    dd($request->all());
+
         $reDetails = VmtEmployee::where('userid', $request->id)->first();
         $details = VmtEmployee::find($reDetails->id);
-        $details->bank_id = Bank::where('bank_name', $request->input('bank_name'))->value('id');
+        $details->bank_id = $request->input('bank_id');
         $details->bank_ifsc_code = $request->input('bank_ifsc');
         $details->bank_account_number = $request->input('account_no');
         $details->pan_number = $request->input('pan_no');
         $details->save();
-        return redirect()->back();
+
+        $response = [
+            'status' => 'success',
+        ];
+
+        return  $response;
+
     }
 
 
@@ -329,7 +353,11 @@ class VmtProfilePagesController extends Controller
             $statutory->save();
         }
 
-         return  redirect()->back();
+        $response = [
+            'status' => 'success',
+        ];
+
+        return  $response;
     }
 
 

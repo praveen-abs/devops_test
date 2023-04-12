@@ -7,6 +7,8 @@ export default defineConfig({
         vue(),
         laravel({
             input: [
+                'resources/scss/main.scss',
+                'resources/scss/views/main_dashboard.scss',
 
                 'resources/js/app.js',
                 'resources/js/hrms/modules/profile_pages/ProfilePageNew.js',
@@ -71,4 +73,14 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    // css: {
+    //     preprocessorOptions: {
+    //       scss: {
+    //         additionalData: `
+    //           @import "./resources/scss/views/main_dashboard.scss";
+    //           @import "./resources/scss/main.scss";
+    //         `
+    //       }
+    //     }
+    //   }
 });
