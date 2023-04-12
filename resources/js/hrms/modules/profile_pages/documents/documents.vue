@@ -12,7 +12,7 @@
             </Column>
 
             <Column field="Status" header="Status" style="min-width: 12rem">
-    
+
             </Column>
 
             <Column field="dob" header="Reason " style="min-width: 12rem">

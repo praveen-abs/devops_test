@@ -175,7 +175,10 @@
 
                     </div>
                     <div class="tab-pane fade" id="document_det" role="tabpanel" aria-labelledby="">
-                        <div v-if="!_instance_profilePagesStore.loading_screen"><Documents /></div>
+
+                        <div v-if="!_instance_profilePagesStore.loading_screen"> <Documents /></div>
+
+                        <!-- <Documents /> -->
 
                     </div>
 
