@@ -98,8 +98,8 @@
                                                     <div class="cal-icon">
 
                                                     </div>
-                                                    <InputNumber class="form-controls onboard-form" inputId="integeronly"
-                                                        name="account_no" :min="0" :max="100"
+                                                    <InputText class="form-controls onboard-form" inputId="integeronly"
+                                                        name="account_no" :min="0" :max="100" type="number"
                                                         v-model="bank_information.bank_ac_no" />
                                                 </div>
 
@@ -135,39 +135,37 @@
                                         </div>
                                     </div>
                                 </div>
-
-
-
-
-
                             </Dialog>
 
 
 
-                    <div  v-for="bank_info in bank_info_data" :key="bank_info.id" >
-                        <ul class="personal-info" >
-                                <li>
+                    <div  >
+                        <ul class="personal-info"   >
+                                <li  >
                                     <div class="title">Bank Name</div>
                                     <div class="text">
                                         <!-- {{ bank_information.bank_id }} -->
+                                        <!-- {{ bank_info.bank_id }} -->
                                         {{  _instance_profilePagesStore.employeeDetails.get_employee_details.bank_id  }}
 
                                     </div>
                                 </li>
-                                <li>
+                                <li  >
                                     <div class="title">Bank Account No.</div>
                                     <div class="text">
+                                        <!-- {{ bank_info.pan_no }} -->
+
                                         {{ _instance_profilePagesStore.employeeDetails.get_employee_details.bank_account_number }}
 
                                        </div>
                                 </li>
-                                <li>
+                                <li  >
                                     <div class="title">IFSC Code</div>
                                     <div class="text">
                                         {{ _instance_profilePagesStore.employeeDetails.get_employee_details.bank_ifsc_code }}
                                     </div>
                                 </li>
-                                <li>
+                                <li >
                                     <div class="title">PAN No</div>
                                     <div class="text">
                                         {{  _instance_profilePagesStore.employeeDetails.get_employee_details.pan_number }}
@@ -412,7 +410,7 @@ const bank_information = reactive({
     bank_id: '',
     bank_ac_no: '',
     ifsc_code: '',
-    pan_no: ''
+    pan_no: '',
 })
 
 const statutory_information = reactive({
@@ -470,12 +468,12 @@ function onClick_EditButton_FamilyInfo(){
 
     bank_information.bank_id = _instance_profilePagesStore.employeeDetails.get_employee_details.bank_id;
 
-    bank_information.account_no = _instance_profilePagesStore.employeeDetails.get_employee_details.account_no;
+    bank_information.bank_ac_no = _instance_profilePagesStore.employeeDetails.get_employee_details.bank_account_number;
 
-    bank_information.bank_ifsc = _instance_profilePagesStore.employeeDetails.get_employee_details.bank_ifsc;
+    bank_information.ifsc_code = _instance_profilePagesStore.employeeDetails.get_employee_details.bank_ifsc_code;
     // dialog_general_information.marital_status_id =4;
 
-    bank_information.pan_no = _instance_profilePagesStore.employeeDetails.get_employee_details.pan_no;
+    bank_information.pan_no = _instance_profilePagesStore.employeeDetails.get_employee_details.pan_number;
 
     dialog_Bankvisible.value = true;
 
