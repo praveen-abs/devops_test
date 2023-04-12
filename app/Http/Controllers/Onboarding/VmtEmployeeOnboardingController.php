@@ -79,7 +79,7 @@ class VmtEmployeeOnboardingController extends Controller
         else
             return false;
     }
-    public function isMobileN0AlreadyExists(Request $request){
+    public function isMobileNoAlreadyExists(Request $request){
         //dd($request->all());
         //dd(User::where('email',$request->mail)->exists());
 

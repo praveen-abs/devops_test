@@ -94,7 +94,7 @@
                           <label for="" class="float-label">Date of Birth</label>
                           <input
                             type="text"
-                            max="9999-12-31"
+                            max="2004-12-31"
                             v-model="v$.dob.$model"
                             placeholder="Date of birth"
                             id="doj"
@@ -148,7 +148,7 @@
 
                           <InputText
                             type="text"
-                            max="9999-12-31"
+                            min="2023-01-01"
                             v-model="v$.doj.$model"
                             placeholder="Date of Joining"
                             id="doj"
@@ -535,6 +535,7 @@
                               'p-invalid': v$.AccountNumber.$invalid && submitted,
                             }"
                             maxlength="18"
+                            @focusout="ValidateAccountNo"
                             class="onboard-form form-control textbox"
                             type="text"
                             v-model="v$.AccountNumber.$model"
@@ -560,17 +561,31 @@
                           <label for="" class="float-label"
                             >Bank IFSC Code<span class="text-danger">*</span></label
                           >
-                          <InputText
+                          <!-- <InputText
                             type="text"
                             v-model="v$.bank_ifsc.$model"
                             :class="{
                               'p-invalid': v$.bank_ifsc.$invalid && submitted,
                             }"
-                            class="form-control textbox"
+                            class=" onboard-form form-control textbox"
                             pattern="^[A-Z]{4}0[A-Z0-9]{6}$"
                             minlength="11"
                             maxlength="12"
+                            style="text-transform: uppercase"
                             placeholder="Bank IFSC Code"
+                           
+                          /> -->
+
+                          <InputMask
+                            id="serial"
+                            mask="aaaa0999999"
+                            v-model="v$.bank_ifsc.$model"
+                            placeholder="AHFC123489"
+                            style="text-transform: uppercase"
+                            class="form-control textbox"
+                            :class="{
+                              'p-invalid': v$.bank_ifsc.$invalid && submitted,
+                            }"
                           />
 
                           <span
@@ -1892,7 +1907,7 @@
                         >
                           <div class="mt-2 form-check form-check-inline">
                             <label
-                              class="-ml-4 form-check-label leave_type"
+                              class="-ml-4 font-bold form-check-label leave_type"
                               for="compensation_monthly"
                             >
                               Enter Monthly Gross</label
@@ -1906,7 +1921,7 @@
                               v-model="employee_onboarding.cic"
                               id="cic"
                               @input="compensatory_calculation"
-                              class="onboard-form form-control textbox"
+                              class=" onboard-form form-control textbox"
                               step="0.01"
                               required
                             />
@@ -1915,7 +1930,7 @@
 
 
                               <p>
-                                <strong>Annual Gross</strong> (Cost to Company) :
+                                <strong class="font-bold">Annual Gross</strong> (Cost to Company) :
                               <strong v-if="employee_onboarding.total_ctc < 0">0</strong>
                               <strong v-else-if="employee_onboarding.total_ctc > 0">{{
                                 Math.floor(employee_onboarding.total_ctc)
@@ -2400,12 +2415,12 @@
 
                   <div class="row">
                     <div class="text-right col-12">
-                      <input
+                      <!-- <input
                         type="button"
                         value="sample"
                         @click="Sampledata"
                         class="mr-4 text-center btn btn-orange processOnboardForm"
-                      />
+                      /> -->
 
                       <button
                         type="button"
@@ -2475,7 +2490,7 @@
         employee_onboarding.employee_name.length < 0
       "
     >
-      Employee As Per Name is Required
+      Employee Name As Per is Required
     </li>
     <li class="my-4"
       v-if="
@@ -2916,10 +2931,24 @@ const SaveEmployeeOnboardingData = () => {
   console.log(employee_onboarding);
   employee_onboarding.can_onboard_employee = 0;
   RequiredDocument.value = true
-  submit();
-  get_id();
-  checkInputFiles();
-  handleSubmit();
+  if(!employee_onboarding.employee_code.length > 0 &&
+      !employee_onboarding.aadhar_number.length > 0 ||
+      !employee_onboarding.employee_name.length > 0 &&
+      !employee_onboarding.email.length > 0   ||
+      !employee_onboarding.mobile_number.length > 0 &&
+      !employee_onboarding.dob.length > 0){
+
+        RequiredDocument.value = true
+
+      }else{
+
+        submit();
+        get_id();
+        checkInputFiles();
+        handleSubmit();
+        
+      }
+
 
   console.log(employee_onboarding);
 };
@@ -3206,6 +3235,9 @@ const AadharCardExits = () => {
                       .finally(() => {
                         console.log("completed");
                       });
+
+                      invalid_aadhar_check.value = false
+
                    
                }
         else{ console.log("Invalid Aadhar no.");
@@ -3220,6 +3252,8 @@ const AadharCardExits = () => {
  
 };
 
+
+
 const pan_card_exists = ref(false);
 const invalid_pan_no = ref(false)
 
@@ -3228,7 +3262,7 @@ const panCardExists = () => {
 
      let pan_no = employee_onboarding.pan_number;
 
-      var regep=/^[A-Z]{5}[0-9]{4}[A-Z]{1}/;
+      var regep=/^([a-zA-Z]){3}([Pp]){1}([a-zA-Z]){1}([0-9]){4}([a-zA-Z]){1}?$/;
            
            if(regep.test(employee_onboarding.pan_number))
                {
@@ -3245,9 +3279,11 @@ const panCardExists = () => {
                     .finally(() => {
                       console.log("completed");
                     });
+
+                    invalid_pan_no.value = false
                                     
                }
-        else{ console.log("Invalid pan no.");
+          else{ console.log("Invalid pan no.");
           invalid_pan_no.value = true
 
               }
@@ -3301,6 +3337,27 @@ const mobileNoExists = () => {
    invalid_mobile_no.value = true
  }
 };
+
+
+const ValidateAccountNo =()=> {
+              const acn0 = /^[0-9]{9,18}$/;
+               if( acn0.test(employee_onboarding.AccountNumber)){
+                  console.log("valid");
+               }else{
+                console.log("invalid");
+               }
+    }
+
+  const ifsc = ref(false)
+const ValidateIfscNo =()=> {
+              const ifsc = /^[A-Z]{4}0[A-Z0-9]{6}$/;
+               if( acn0.test(employee_onboarding.bank_ifsc)){
+                  console.log("valid");
+
+               }else{
+                console.log("invalid");
+               }
+    }
 
 
 
