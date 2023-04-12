@@ -15,7 +15,7 @@ class VmtProfilePagesService{
 
     */
 
-    public function getEmployeeProfileDetails($user_id)
+    public function getEmployeeProfileDetails(int $user_id)
     {
 
         $response = User::with([ 'getEmployeeDetails',
