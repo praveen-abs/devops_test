@@ -469,7 +469,7 @@ function onClick_EditButton_BankInfo(){
      statutory_information.pf_applicable =_instance_profilePagesStore.employeeDetails.get_employee_details.pf_applicable ;
      statutory_information.epf_no   = _instance_profilePagesStore.employeeDetails.get_employee_details.epf_number ;
      statutory_information.uan_no   =   _instance_profilePagesStore.employeeDetails.get_employee_details.uan_number ;
-     statutory_information.esic_applicable   =   _instance_profilePagesStore.employeeDetails.get_employee_details.pf_applicable ;
+     statutory_information.esic_applicable   =   _instance_profilePagesStore.employeeDetails.get_employee_details.esic_applicable ;
      statutory_information.esic_no    =   _instance_profilePagesStore.employeeDetails.get_employee_details.esic_number ;
 
      dialog_statutory_visible.value = true;
