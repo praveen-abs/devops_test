@@ -7,26 +7,28 @@
         <div class="card shadow  left-line mb-2 ">
             <div class="card-body pb-0 pt-1">
                 <ul class="nav nav-pills    nav-tabs-dashed" id="pills-tab" role="tablist">
-                    <li class="nav-item  ember-view mx-4" role="presentation">
-                        <a class="nav-link active ember-view " id="pills-home-tab" data-bs-toggle="pill" href=""
-                            data-bs-target="#investment_dec" role="tab" aria-controls="pills-home" aria-selected="true">
+                    <li class="nav-item  " role="presentation">
+                        <a class="nav-link active  " id="" data-bs-toggle="pill" href=""
+                            data-bs-target="#investment_declaration" role="tab" aria-controls="pills-home"
+                            aria-selected="true">
                             Declaration</a>
                     </li>
-                    <li class="nav-item  ember-view mx-4" role="presentation">
-                        <a class="nav-link  ember-view " id="pills-home-tab" data-bs-toggle="pill" href=""
+                    <li class="nav-item   mx-4" role="presentation">
+                        <a class="nav-link   " id="" data-bs-toggle="pill" href=""
                             data-bs-target="#exemptions" role="tab" aria-controls="pills-home" aria-selected="true">
                             Investments and Exemptions</a>
                     </li>
-                    <li class="nav-item  ember-view mx-4" role="presentation">
-                        <a class="nav-link  ember-view " id="pills-home-tab" data-bs-toggle="pill" href=""
+                    <li class="nav-item  " role="presentation">
+                        <a class="nav-link   " id="" data-bs-toggle="pill" href=""
                             data-bs-target="#form_12bb" role="tab" aria-controls="pills-home" aria-selected="true">
                             Form 12 BB</a>
                     </li>
-                    <li class="nav-item  ember-view mx-4" role="presentation">
-                        <a class="nav-link  ember-view " id="" data-bs-toggle="pill" href=""
+                    <li class="nav-item   mx-4" role="presentation">
+                        <a class="nav-link   " id="" data-bs-toggle="pill" href=""
                             data-bs-target="#tax_filling" role="tab" aria-controls="pills-home" aria-selected="true">
                             Tax Filling</a>
                     </li>
+
 
 
                 </ul>
@@ -35,18 +37,82 @@
         <div class="card top-line mb-0">
             <div class="card-body">
                 <div class="tab-content " id="pills-tabContent">
-                    <div class="tab-pane fade active show" id="investment_dec" role="tabpanel"
-                        aria-labelledby="pills-home-tab">
-                        <div class="text-center">
-                            <div class="d-flex justify-content-center">
-                                <div style="height: 300px;max-width:500px;" class="">
-                                    <img src="{{ URL::asset('assets/images/no_dataFile.svg') }}" class="h-100 w-100"
-                                        alt="user-pic" </div>
-                                </div>
+                    <div class="tab-pane fade active show" id="investment_declaration" role="tabpanel" aria-labelledby="">
+
+
+                        <h6 class="text-primary text-lg  font-semibold ">Tax Deductions FY 2022-2023</h6>
+
+
+                        <div class="tw-card bg-pink-50 shadow-sm my-4">
+                            Kindly update your <span class="text-indigo-600 font text-base font-semibold">PAN</span> to
+                            avoid
+                            20% TDS deduction (if applicable)
+
+                        </div>
+                        <div class="tw-card bg-gray-100 shadow-sm mb-4 text-justify">
+                            You have the option of either using a new regime(with no tax deductions), or using the same
+                            regime as FY 2019-20. To help you make an informed decision., we are displaying your tax
+                            liability in both these regimes, and you can choose the option that you prefer. For us to
+                            accurately calculate your tax liabilities, please ensure you fill in all the information
+                            requested below, irrespective of the regime that you pick.
+                        </div>
+
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="">
+                                <p class=" text-gray-600">Your current chosen tax regime is <span
+                                        class="text-indigo-600 font text-lg font-semibold change_regime_text">Old Tax Regime
+                                    </span> </p>
+                                <p class="text-gray-400 text-sm">The confirmed old tax regime will be used in future payroll
+                                    calculations</p>
 
                             </div>
-                            <h4> <span class="text-orange">Sorry !</span> No data</h4>
+                            <div class="">
+                                <button class="text-white py-2 px-4 rounded-md  bg-indigo-600 change_regime_text"
+                                    id="regime_button"><i class="fa fa-check-square-o mr-2 text-base"></i> Old Tax
+                                    Regime</button>
+                                <span class="text-gray-600 text-sm align-text-bottom " id="latest_update">Maximum
+                                    benefit</span>
+
+                            </div>
+                            <div class="">
+                                <button data-bs-target="#switchRegime_modal" data-bs-toggle="modal"
+                                    class="py-2 px-4 rounded-md text-indigo-600   border-indigo-600 "
+                                    style="border:1px solid #4b46e4 !important"> Switch Regime</button>
+
+                            </div>
+
+
                         </div>
+
+                        <p class="text-gray-600 text-justify" id="oldRegime_warn" >Choosing Old Regime will give you an additional benefit of
+                            ₹41,220.00 as compared to New Regime. Calculations are based on the latest released payroll -
+                            Jul 2022
+                        </p>
+                        <div class="tw-card bg-pink-50 shadow-sm my-4" style="display:none" id="newRegime_warn">
+                            The tax regime cannot be changed until the financial year 2022-2023 ends. (April 2023-March 2024)
+
+                        </div>
+
+                        <div class="table-responsive my-3">
+                            <table class="table investment_table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Particulars</th>
+                                        <th scope="col">New Tax Regime <i class="fa fa-rupee mx-2"></i></th>
+                                        <th scope="col">Old Tax Regime </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+
+
+                                </tbody>
+                            </table>
+                        </div>
+
+
+
                     </div>
                     <div class="tab-pane fade  " id="exemptions" role="tabpanel">
 
@@ -65,98 +131,78 @@
                             </div>
                         </div>
                         <div class="widget-card mb-3">
-
-                            <div class="row">
-                                <div class="col-sm-3 col-sm-12 col-xl-3 col-md-3 col-lg-3 d-flex">
-                                    <div class="card box_shadow_0 border-rtb  left-line w-100">
-                                        <div class="card-body text-center">
-                                            <p class="text-ash-medium mb-2 f-13 ">Maximum Limit</p>
-                                            <h6 class="mb-0">-</h6>
-
-                                        </div>
-                                    </div>
+                            <div class="grid md:grid-cols-2 xl:grid-cols-4 lg:grid-cols-4 gap-4">
+                                <div class="tw-card text-center bg-orange-50 border-l-orange-400 border-l-4 ">
+                                    <p class="text-ash-medium mb-2 f-13 ">Maximum Limit</p>
+                                    <h6 class="mb-0 text-gray-500 text-base font-semibold">-</h6>
                                 </div>
-                                <div class="col-sm-3 col-sm-12 col-xl-3 col-md-3 col-lg-3 d-flex">
-                                    <div class="card box_shadow_0 border-rtb  left-line w-100">
-                                        <div class="card-body text-center">
-                                            <p class="text-ash-medium mb-2 f-13 ">Amount Declared</p>
-                                            <h6 class="mb-0">-</h6>
-
-                                        </div>
-                                    </div>
+                                <div class="tw-card text-center bg-indigo-50 border-l-indigo-400 border-l-4 ">
+                                    <p class="text-ash-medium mb-2 f-13 "> Declared Amount</p>
+                                    <h6 class="mb-0 text-gray-500 text-base font-semibold">-</h6>
                                 </div>
-                                <div class="col-sm-3 col-sm-12 col-xl-3 col-md-3 col-lg-3 d-flex">
-                                    <div class="card box_shadow_0 border-rtb  left-line w-100">
-                                        <div class="card-body text-center">
-                                            <p class="text-ash-medium mb-2 f-13 ">Auto Approved Amount</p>
-                                            <h6 class="mb-0">-</h6>
 
-                                        </div>
-                                    </div>
+                                <div class="tw-card text-center bg-green-50 border-l-green-400 border-l-4 ">
+                                    <p class="text-ash-medium mb-2 f-13 ">Status</p>
+                                    <h6 class="mb-0 text-gray-500 text-base font-semibold">Not Submited</h6>
                                 </div>
-                                <div class="col-sm-3 col-sm-12 col-xl-3 col-md-3 col-lg-3 d-flex">
-                                    <div class="card box_shadow_0 border-rtb  left-line w-100">
-                                        <div class="card-body text-center">
-                                            <p class="text-ash-medium mb-2 f-13 ">Amount Accepted</p>
-                                            <h6 class="mb-0">-</h6>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3 col-sm-12 col-xl-3 col-md-3 col-lg-3 d-flex">
-                                    <div class="card box_shadow_0 border-rtb  left-line w-100">
-                                        <div class="card-body text-center">
-                                            <p class="text-ash-medium mb-2 f-13 ">Amount Rejected</p>
-                                            <h6 class="mb-0">-</h6>
-
-                                        </div>
-                                    </div>
+                                <div class="tw-card text-center bg-violet-50 border-l-violet-400 border-l-4 ">
+                                    <p class="text-ash-medium mb-2 f-13 ">Late Date For Submission</p>
+                                    <h6 class="mb-0 text-gray-500 text-base font-semibold">-</h6>
                                 </div>
                             </div>
-
                         </div>
 
                         <div class="card left-line shadow mb-2">
                             <div class="card-body pb-0 pt-1">
                                 <ul class="nav nav-pills    nav-tabs-dashed" id="pills-tab" role="tablist">
-                                    <li class="nav-item  ember-view " role="presentation">
-                                        <a class="nav-link active  ember-view " id="pills-home-tab" data-bs-toggle="pill"
-                                            href="" data-bs-target="#c_cc" role="tab" aria-controls=""
+                                    <li class="nav-item   " role="presentation">
+                                        <a class="nav-link active " id="" data-bs-toggle="pill" href=""
+                                            data-bs-target="#house_property" role="tab" aria-controls=""
                                             aria-selected="true">
+                                            HRA
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item  mx-3 " role="presentation">
+                                        <a class="nav-link    " id="" data-bs-toggle="pill" href=""
+                                            data-bs-target="#c_cc" role="tab" aria-controls="" aria-selected="true">
                                             Section 80C & 80CCC</a>
                                     </li>
-                                    <li class="nav-item  ember-view " role="presentation">
-                                        <a class="nav-link  ember-view mx-0 mx-xl-3 " id=""
-                                            data-bs-toggle="pill" href="" data-bs-target="#other_exemptions"
-                                            role="tab" aria-controls="" aria-selected="true">
+                                    <li class="nav-item   " role="presentation">
+                                        <a class="nav-link   mx-0 mx-xl-3 " id="" data-bs-toggle="pill"
+                                            href="" data-bs-target="#other_exemptions" role="tab"
+                                            aria-controls="" aria-selected="true">
                                             Other Exemptions
                                         </a>
                                     </li>
-                                    <li class="nav-item  ember-view " role="presentation">
-                                        <a class="nav-link  ember-view " id="pills-home-tab" data-bs-toggle="pill"
-                                            href="" data-bs-target="#house_property" role="tab"
-                                            aria-controls="" aria-selected="true">
-                                            House Property
-                                        </a>
+                                    <li class="nav-item  mx-3 " role="presentation">
+                                        <a class="nav-link    " id="" data-bs-toggle="pill" href=""
+                                            data-bs-target="#income_loss" role="tab" aria-controls=""
+                                            aria-selected="true">
+                                            House Property</a>
                                     </li>
-                                    <li class="nav-item  ember-view " role="presentation">
-                                        <a class="nav-link  ember-view mx-0  mx-xl-3 " id="pills-home-tab"
-                                            data-bs-toggle="pill" href="" data-bs-target="#reimbursement"
-                                            role="tab" aria-controls="" aria-selected="true">
+
+
+                                    <li class="nav-item   " role="presentation">
+                                        <a class="nav-link   mx-0  mx-xl-3 " id="" data-bs-toggle="pill"
+                                            href="" data-bs-target="#reimbursement" role="tab"
+                                            aria-controls="" aria-selected="true">
                                             Reimbursement
                                         </a>
                                     </li>
-                                    <li class="nav-item  ember-view " role="presentation">
-                                        <a class="nav-link  ember-view " id="" data-bs-toggle="pill"
-                                            href="" data-bs-target="#previous_income" role="tab"
-                                            aria-controls="" aria-selected="true">
+                                    <li class="nav-item mx-3  " role="presentation">
+                                        <a class="nav-link   " id="" data-bs-toggle="pill" href=""
+                                            data-bs-target="#previous_income" role="tab" aria-controls=""
+                                            aria-selected="true">
                                             Previous Employer Income
                                         </a>
                                     </li>
-                                    <li class="nav-item  ember-view " role="presentation">
-                                        <a class="nav-link  ember-view mx-0  mx-xl-3 " id=""
-                                            data-bs-toggle="pill" href="" data-bs-target="#other_income"
-                                            role="tab" aria-controls="" aria-selected="true">
+
+
+                                    <li class="nav-item   " role="presentation">
+                                        <a class="nav-link   mx-0  mx-xl-3 " id="" data-bs-toggle="pill"
+                                            href="" data-bs-target="#other_income" role="tab"
+                                            aria-controls="" aria-selected="true">
                                             Other Source Of Income
                                         </a>
                                     </li>
@@ -166,8 +212,162 @@
                         </div>
 
                         <div class="tab-content " id="">
-                            <div class="tab-pane fade active show " id="c_cc" role="tabpanel"
-                                aria-labelledby="pills-home-tab">
+                            <div class="tab-pane fade active show " id="house_property" role="tabpanel"
+                                aria-labelledby="">
+                                <div class="table-responsive mb-3">
+                                    <table class="table investment_table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Sections</th>
+                                                <th scope="col">Particulars</th>
+                                                <th scope="col">References</th>
+                                                <th scope="col">Max Limit</th>
+                                                <th scope="col">Declaration Amount</th>
+                                                {{-- <th scope="col">Proofs</th>
+
+                                                <th scope="col">Status</th> --}}
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Section
+                                                    10(13A)</td>
+                                                <td>House Rent Allowance</td>
+                                                <td>
+
+                                                    <button type="button"
+                                                        class="btn btn-transprarent border-0 outline-none "
+                                                        data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        title="Exemption will be provide the Least of:
+                                                a) Actual HRA paid
+                                                b) Rent paid subtract (-)10% of Basic salary
+                                                c) for Metro 50% of Basic salary (Mumbai, Kolkata, Delhi or Chennai)
+                                                For non metro 40% of Basic salary">
+                                                        <i class="fa fa-exclamation-circle  text-warning"
+                                                            aria-hidden="true"></i>
+                                                    </button>
+                                                </td>
+                                                <td></td>
+                                                <td class="text-end">
+                                                    {{-- <textarea name="" id="" class="text-box outline-none border-0 form-control resize-none " disabled
+                                                        cols="5" rows="1"></textarea> --}}
+                                                    <div class="flex justify-center">
+                                                        <button data-bs-target="#AddRendted_modal" data-bs-toggle="modal"
+                                                            class="text-white py-2 w-2/3 px-3 rounded-md  bg-indigo-800">Add</button>
+                                                    </div>
+                                                </td>
+                                                {{-- <td align="">
+
+                                                    <div class="upload_file ">
+
+                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
+                                                                name="" id="" multiple></i>
+
+
+                                                    </div>
+
+                                                </td>
+
+                                                <td>
+                                                    <p>Not Submitted</p>
+                                                </td> --}}
+
+                                                <td>
+
+
+                                                    <div class="dropdown investment_dropDown">
+                                                        <button
+                                                            class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                            type="button" id="dropdownMenuButton"
+                                                            data-bs-toggle="dropdown" aria-haspopup="true"
+                                                            aria-expanded="false">
+                                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                            <a class="dropdown-item" href="#"><i
+                                                                    class="fa fa-pencil-square-o text-info me-2"
+                                                                    aria-hidden="true"></i> Edit</a>
+                                                            <a class="dropdown-item" href="#"><i
+                                                                    class="fa fa-times-circle-o text-danger me-2"
+                                                                    aria-hidden="true"></i> Clear</a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
+                                <div class="tw-card bg-gray-100">
+                                    <div class="flex mb-3 justify-between">
+                                        <span class="text-lg text-indigo-950 font-semibold">Rental Property</span> <button
+                                            class="btn btn-border-orange" data-bs-target="#AddRendted_modal"
+                                            data-bs-toggle="modal"><i class="fa fa-plus-circle me-2"
+                                                aria-hidden="true"></i>
+                                            Add Rented</button>
+                                    </div>
+
+                                    <div class="col-sm-12 col-md-12 col-xl-12 col-xxl-12 col-lg-12 mb-3">
+                                        <div class="table-responsive mb-3">
+                                            <table class="table investment_table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Landlord Name</th>
+                                                        <th scope="col">Landlord PAN</th>
+                                                        <th scope="col">From Month</th>
+                                                        <th scope="col">To Month</th>
+                                                        <th scope="col">City</th>
+                                                        <th scope="col">Total Rent</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+
+                                                        </td>
+                                                        <td>
+
+                                                        </td>
+                                                        <td>
+
+                                                        </td>
+                                                        <td>
+
+                                                        </td>
+                                                        <td>
+
+                                                        </td>
+                                                        <td>
+
+                                                        </td>
+                                                        <td>
+
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                    </div>
+
+
+
+
+                                </div>
+                                <div class="text-end my-3">
+                                    <button
+                                        class="bg-orange-700 text-white me-4 py-1.5 rounded-md px-5 text-center">Save</button>
+                                    <button
+                                        class="bg-transparent  border border-orange-700 text-orange-600 py-1.5 rounded-md px-5 text-center">Next</button>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade  " id="c_cc" role="tabpanel" aria-labelledby="">
                                 <div class="table-responsive">
                                     <table class="table investment_table">
                                         <thead>
@@ -175,10 +375,10 @@
                                                 <th scope="col">Sections</th>
                                                 <th scope="col">Particulars</th>
                                                 <th scope="col">References</th>
-                                                <th scope="col">Maximum Limit <span class="f-12">(<i
-                                                            class="fa fa-rupee mx-1"></i>150000</span>)</th>
+                                                <th scope="col">Maximum Limit (<i class="fa fa-rupee mx-1"></i>150000)
+                                                </th>
                                                 <th scope="col">Declaration Amount</th>
-                                                <th scope="col">Proofs</th>
+                                                {{-- <th scope="col">Proofs</th> --}}
                                                 {{-- <th scope="col">Upload Document</th> --}}
                                                 <th scope="col">Status</th>
                                                 <th scope="col">Action</th>
@@ -204,7 +404,7 @@
                                                         cols="5" rows="1"></textarea>
                                                 </td>
 
-                                                <td align="">
+                                                {{-- <td align="">
 
                                                     <div class="upload_file ">
 
@@ -214,7 +414,7 @@
 
                                                     </div>
 
-                                                </td>
+                                                </td> --}}
 
                                                 <td>
                                                     <p>Not Submitted</p>
@@ -245,7 +445,7 @@
                                             </tr>
                                             <tr>
                                                 <td rowspan=""> 80C</td>
-                                                <td>Voluntary Provident Fund (Deducted from Salary)</td>
+                                                <td>Voluntary Provident Fund (VPF) </td>
                                                 <td>
 
                                                     <button type="button"
@@ -263,7 +463,7 @@
                                                         cols="5" rows="1"></textarea>
                                                 </td>
 
-                                                <td align="">
+                                                {{-- <td align="">
 
                                                     <div class="upload_file ">
                                                         <i class="fa fa-upload" aria-hidden="true"><input type="file"
@@ -271,7 +471,7 @@
 
                                                     </div>
 
-                                                </td>
+                                                </td> --}}
                                                 <td>
                                                     <p>Not Submitted</p>
                                                 </td>
@@ -300,7 +500,7 @@
                                             </tr>
                                             <tr>
                                                 <td>80c</td>
-                                                <td>Public Provident Fund</td>
+                                                <td>Public Provident Fund (PPF)</td>
                                                 <td>
 
                                                     <button type="button"
@@ -316,7 +516,7 @@
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
                                                 </td>
-
+                                                {{--
                                                 <td align="">
 
                                                     <div class="upload_file ">
@@ -327,7 +527,7 @@
 
                                                     </div>
 
-                                                </td>
+                                                </td> --}}
                                                 <td>
                                                     <p>Not Submitted</p>
                                                 </td>
@@ -355,65 +555,10 @@
                                                 </td>
                                             </tr>
 
+
                                             <tr>
                                                 <td>80C</td>
-                                                <td>Previous PF</td>
-                                                <td>
-
-                                                    <button type="button"
-                                                        class="btn btn-transprarent border-0 outline-none "
-                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        title="Provident Fund deducted by the previous Employer">
-                                                        <i class="fa fa-exclamation-circle  text-warning"
-                                                            aria-hidden="true"></i>
-                                                    </button>
-                                                </td>
-                                                <td></td>
-                                                <td>
-                                                    <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                        cols="5" rows="1"></textarea>
-                                                </td>
-                                                <td align="">
-
-                                                    <div class="upload_file ">
-
-                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id="" multiple></i>
-
-
-                                                    </div>
-
-                                                </td>
-
-                                                <td>
-                                                    <p>Not Submitted</p>
-                                                </td>
-                                                <td>
-
-
-                                                    <div class="dropdown investment_dropDown">
-                                                        <button
-                                                            class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                            type="button" id="dropdownMenuButton"
-                                                            data-bs-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false">
-                                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-pencil-square-o text-info me-2"
-                                                                    aria-hidden="true"></i> Edit</a>
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Clear</a>
-
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>80C</td>
-                                                <td>Life Insurance Pol+B53icy</td>
+                                                <td>Life Insurance Premium (LIP)</td>
                                                 <td>
 
                                                     <button type="button"
@@ -429,17 +574,15 @@
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
                                                 </td>
-                                                <td align="">
-
+                                                {{-- <td align="">
                                                     <div class="upload_file ">
 
                                                         <i class="fa fa-upload" aria-hidden="true"><input type="file"
                                                                 name="" id="" multiple></i>
 
-
                                                     </div>
 
-                                                </td>
+                                                </td> --}}
 
                                                 <td>
                                                     <p>Not Submitted</p>
@@ -468,7 +611,7 @@
                                             </tr>
                                             <tr>
                                                 <td>80C</td>
-                                                <td>Housing Loan Principal</td>
+                                                <td>Stamp Duty & Registration Charges Deduction</td>
                                                 <td>
 
                                                     <button type="button"
@@ -485,7 +628,7 @@
                                                         cols="5" rows="1"></textarea>
                                                 </td>
 
-                                                <td align="">
+                                                {{-- <td align="">
 
                                                     <div class="upload_file ">
 
@@ -495,7 +638,7 @@
 
                                                     </div>
 
-                                                </td>
+                                                </td> --}}
                                                 <td>
                                                     <p>Not Submitted</p>
                                                 </td>
@@ -523,7 +666,7 @@
                                             </tr>
                                             <tr>
                                                 <td>80C</td>
-                                                <td>Mutual Funds</td>
+                                                <td>Mutual Funds (Equity Linked Saving Scheme)</td>
                                                 <td>
 
                                                     <button type="button"
@@ -539,8 +682,7 @@
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
                                                 </td>
-
-                                                <td align="">
+                                                {{-- <td align="">
 
                                                     <div class="upload_file ">
 
@@ -550,7 +692,8 @@
 
                                                     </div>
 
-                                                </td>
+                                                </td> --}}
+
                                                 <td>
                                                     <p>Not Submitted</p>
                                                 </td>
@@ -578,7 +721,7 @@
                                             </tr>
                                             <tr>
                                                 <td>80C</td>
-                                                <td>National Saving Certificate</td>
+                                                <td>National Saving Certificate (NSC)</td>
                                                 <td>
 
                                                     <button type="button"
@@ -595,7 +738,7 @@
                                                         cols="5" rows="1"></textarea>
                                                 </td>
 
-                                                <td align="">
+                                                {{-- <td align="">
 
                                                     <div class="upload_file ">
 
@@ -605,7 +748,7 @@
 
                                                     </div>
 
-                                                </td>
+                                                </td> --}}
                                                 <td>
                                                     <p>Not Submitted</p>
                                                 </td>
@@ -633,7 +776,7 @@
                                             </tr>
                                             <tr>
                                                 <td>80C</td>
-                                                <td>Unit Linked Investment Plan</td>
+                                                <td>Unit Linked Insurance Plan (ULIP)</td>
                                                 <td>
 
                                                     <button type="button"
@@ -649,7 +792,7 @@
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
                                                 </td>
-                                                <td align="">
+                                                {{-- <td align="">
 
                                                     <div class="upload_file ">
 
@@ -659,7 +802,7 @@
 
                                                     </div>
 
-                                                </td>
+                                                </td> --}}
 
                                                 <td>
                                                     <p>Not Submitted</p>
@@ -688,7 +831,7 @@
                                             </tr>
                                             <tr>
                                                 <td>80C</td>
-                                                <td>Tuition Fees</td>
+                                                <td>Children's Tuition Fees</td>
                                                 <td>
 
                                                     <button type="button"
@@ -705,7 +848,7 @@
                                                         cols="5" rows="1"></textarea>
                                                 </td>
 
-                                                <td align="">
+                                                {{-- <td align="">
 
                                                     <div class="upload_file ">
 
@@ -715,7 +858,7 @@
 
                                                     </div>
 
-                                                </td>
+                                                </td> --}}
                                                 <td>
                                                     <p>Not Submitted</p>
                                                 </td>
@@ -743,7 +886,7 @@
                                             </tr>
                                             <tr>
                                                 <td>80C</td>
-                                                <td>Fixed Deposit</td>
+                                                <td>5 Year Tax Saving FDR</td>
                                                 <td>
 
                                                     <button type="button"
@@ -760,7 +903,7 @@
                                                         cols="5" rows="1"></textarea>
                                                 </td>
 
-                                                <td align="">
+                                                {{-- <td align="">
 
                                                     <div class="upload_file ">
 
@@ -770,7 +913,7 @@
 
                                                     </div>
 
-                                                </td>
+                                                </td> --}}
                                                 <td>
                                                     <p>Not Submitted</p>
                                                 </td>
@@ -798,7 +941,7 @@
                                             </tr>
                                             <tr>
                                                 <td>80C</td>
-                                                <td>Deferred Annuity</td>
+                                                <td>Deferred Annuity Plan</td>
                                                 <td>
 
                                                     <button type="button"
@@ -816,7 +959,7 @@
                                                 </td>
 
                                                 </td>
-                                                <td align="">
+                                                {{-- <td align="">
 
                                                     <div class="upload_file ">
 
@@ -826,7 +969,7 @@
 
                                                     </div>
 
-                                                </td>
+                                                </td> --}}
                                                 <td>
                                                     <p>Not Submitted</p>
                                                 </td>
@@ -871,7 +1014,7 @@
                                                         cols="5" rows="1"></textarea>
                                                 </td>
 
-                                                <td align="">
+                                                {{-- <td align="">
 
                                                     <div class="upload_file ">
 
@@ -881,7 +1024,7 @@
 
                                                     </div>
 
-                                                </td>
+                                                </td> --}}
                                                 <td>
                                                     <p>Not Submitted</p>
                                                 </td>
@@ -909,7 +1052,7 @@
                                             </tr>
                                             <tr>
                                                 <td>80c</td>
-                                                <td>Sukanya Samriddhi Scheme</td>
+                                                <td>Sukanya Samriddhi Yojana(SSY) Account</td>
                                                 <td>
 
                                                     <button type="button"
@@ -925,7 +1068,7 @@
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
                                                 </td>
-                                                <td align="">
+                                                {{-- <td align="">
 
                                                     <div class="upload_file ">
 
@@ -935,7 +1078,7 @@
 
                                                     </div>
 
-                                                </td>
+                                                </td> --}}
 
                                                 <td>
                                                     <p>Not Submitted</p>
@@ -964,7 +1107,7 @@
                                             </tr>
                                             <tr>
                                                 <td>80C</td>
-                                                <td>NABARD Notified Bonds</td>
+                                                <td>Subscription to bonds issued by NABARD</td>
                                                 <td>
 
                                                     <button type="button"
@@ -980,7 +1123,7 @@
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
                                                 </td>
-                                                <td align="">
+                                                {{-- <td align="">
 
                                                     <div class="upload_file ">
 
@@ -990,7 +1133,7 @@
 
                                                     </div>
 
-                                                </td>
+                                                </td> --}}
 
                                                 <td>
                                                     <p>Not Submitted</p>
@@ -1019,7 +1162,7 @@
                                             </tr>
                                             <tr>
                                                 <td>80CCC</td>
-                                                <td>Mutual Pension Scheme</td>
+                                                <td>Specific Pension Funds</td>
                                                 <td>
 
                                                     <button type="button"
@@ -1035,17 +1178,13 @@
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
                                                 </td>
-                                                <td align="">
-
+                                                {{-- <td align="">
                                                     <div class="upload_file ">
-
                                                         <i class="fa fa-upload" aria-hidden="true"><input type="file"
                                                                 name="" id="" multiple></i>
-
-
                                                     </div>
 
-                                                </td>
+                                                </td> --}}
 
                                                 </td>
                                                 <td>
@@ -1077,319 +1216,17 @@
                                         </tbody>
                                     </table>
                                 </div>
-                            </div>
-                            <div class="tab-pane fade  " id="house_property" role="tabpanel"
-                                aria-labelledby="pills-home-tab">
-                                <div class="table-responsive mb-3">
-                                    <table class="table investment_table">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Sections</th>
-                                                <th scope="col">Particulars</th>
-                                                <th scope="col">References</th>
-                                                <th scope="col">Max Limit</th>
-                                                <th scope="col">Declaration Amount</th>
-                                                <th scope="col">Proofs</th>
-
-                                                <th scope="col">Status</th>
-                                                <th scope="col">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Section
-                                                    10(13A)</td>
-                                                <td>House Rent Allowance</td>
-                                                <td>
-
-                                                    <button type="button"
-                                                        class="btn btn-transprarent border-0 outline-none "
-                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        title="Exemption will be provide the Least of:
-                                                    a) Actual HRA paid
-                                                    b) Rent paid subtract (-)10% of Basic salary
-                                                    c) for Metro 50% of Basic salary (Mumbai, Kolkata, Delhi or Chennai)
-                                                    For non metro 40% of Basic salary">
-                                                        <i class="fa fa-exclamation-circle  text-warning"
-                                                            aria-hidden="true"></i>
-                                                    </button>
-                                                </td>
-                                                <td>28800</td>
-                                                <td>
-                                                    <textarea name="" id="" class="text-box outline-none border-0 form-control resize-none " disabled
-                                                        cols="5" rows="1"></textarea>
-                                                </td>
-                                                <td align="">
-
-                                                    <div class="upload_file ">
-
-                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id="" multiple></i>
-
-
-                                                    </div>
-
-                                                </td>
-
-                                                <td>
-                                                    <p>Not Submitted</p>
-                                                </td>
-
-                                                <td>
-
-
-                                                    <div class="dropdown investment_dropDown">
-                                                        <button
-                                                            class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                            type="button" id="dropdownMenuButton"
-                                                            data-bs-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false">
-                                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-pencil-square-o text-info me-2"
-                                                                    aria-hidden="true"></i> Edit</a>
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Clear</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Section 24</td>
-                                                <td>Self Occupied Property</td>
-                                                <td>
-
-                                                    <button type="button"
-                                                        class="btn btn-transprarent border-0 outline-none "
-                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        title="Exemption on Interest on Housing Property:
-
-                                               a) House Property – Self – Maximum limit of Rs.200000/- is eligible.
-                                               b) House Property – Deemed Let-out – (Nominal Rent Received – Municipal Tax)- 30% of (Rent Received – Municipal Tax) – Interest Amount (Maximum Limit up to Rs.200000 ) after considering the calculation
-                                               c) House Property – Let-out – (Rent Received – Municipal Tax)- 30% of (Rent Received – Municipal Tax) – Interest Amount. Interest Amount (Maximum Limit up to Rs.200000 ) after considering the calculation">
-                                                        <i class="fa fa-exclamation-circle  text-warning"
-                                                            aria-hidden="true"></i>
-                                                    </button>
-                                                </td>
-                                                <td>200000</td>
-                                                <td>
-                                                    <textarea name="" id="" class="text-box outline-none border-0 form-control resize-none " disabled
-                                                        cols="5" rows="1"></textarea>
-                                                </td>
-                                                <td align="">
-
-                                                    <div class="upload_file ">
-
-                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id="" multiple></i>
-
-
-                                                    </div>
-
-                                                </td>
-
-
-                                                <td>
-                                                    <p>Not Submitted</p>
-                                                </td>
-
-                                                <td>
-
-
-                                                    <div class="dropdown investment_dropDown">
-                                                        <button
-                                                            class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                            type="button" id="dropdownMenuButton"
-                                                            data-bs-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false">
-                                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-pencil-square-o text-info me-2"
-                                                                    aria-hidden="true"></i> Edit</a>
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Clear</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <div class="card shadow mb-2">
-                                    <div class="card-body pb-0 pt-1">
-                                        <ul class="nav nav-pills    nav-tabs-dashed" id="pills-tab" role="tablist">
-                                            <li class="nav-item  ember-view mx-4" role="presentation">
-                                                <a class="nav-link active ember-view " id="pills-home-tab"
-                                                    data-bs-toggle="pill" href="" data-bs-target="#house_rent"
-                                                    role="tab" aria-controls="" aria-selected="true">
-                                                    Rentel Property</a>
-                                            </li>
-                                            <li class="nav-item  ember-view mx-4" role="presentation">
-                                                <a class="nav-link  ember-view " id="pills-home-tab"
-                                                    data-bs-toggle="pill" href="" data-bs-target="#house_own"
-                                                    role="tab" aria-controls="" aria-selected="true">
-                                                    Owner Property</a>
-                                            </li>
-
-
-                                        </ul>
-                                    </div>
-
-                                </div>
-
-                                <div class="tab-content " id="">
-                                    <div class="tab-pane fade active show" id="house_rent" role="tabpanel"
-                                        aria-labelledby="pills-home-tab">
-                                        <div class="card top-line mb-0 border-bottom-0 border-end-0 border-start-0">
-                                            <div class="card-body">
-                                                <div class="row ">
-                                                    <div class="col-12 text-end mb-3">
-                                                        <button class="btn btn-border-orange"
-                                                            data-bs-target="#AddRendted_modal" data-bs-toggle="modal"><i
-                                                                class="fa fa-plus-circle me-2" aria-hidden="true"></i>
-                                                            Add Rented</button>
-                                                    </div>
-                                                    <div class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-3">
-                                                        <div class="card mb-0 top-line">
-                                                            <div class="card-body">
-
-                                                                <div class="row border-bottom-secondary mb-2 ">
-
-                                                                    <div
-                                                                        class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 ">
-                                                                        <h6 class="mt-1 mb-0">Rental Details</h6>
-                                                                    </div>
-                                                                    <div
-                                                                        class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6  text-end">
-
-                                                                        <span class="badge bg-primary me-2">Rented</span>
-                                                                        <button
-                                                                            class="btn outline-none border-0 bg-transparent"><i
-                                                                                class="fa fa-pencil-square-o text-orange"></i>
-                                                                        </button>
-                                                                    </div>
-                                                                    <div
-                                                                        class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-2">
-                                                                        <label for=""
-                                                                            class="form-label text-primary fw-bold">From</label>
-
-                                                                        <p class="text-muted"> Jun 2022</p>
-
-                                                                    </div>
-                                                                    <div
-                                                                        class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-2">
-
-                                                                        <label for=""
-                                                                            class="form-label text-primary fw-bold">To</label>
-
-                                                                        <p class="text-muted"> Jun 2023</p>
-                                                                    </div>
-
-                                                                    <div
-                                                                        class="col-sm-12 col-md-12 col-xl-12 col-xxl-12 col-lg-12 mb-2">
-                                                                        <label for=""
-                                                                            class="form-label text-primary fw-bold">Address</label>
-                                                                        <p class="text-muted">No:21 joe street,Guindy </p>
-
-
-                                                                    </div>
-                                                                    <div
-                                                                        class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-2">
-                                                                        <label for=""
-                                                                            class="form-label text-primary fw-bold">City</label>
-
-                                                                        <p class="text-muted">Chennai</p>
-
-                                                                    </div>
-                                                                    <div
-                                                                        class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-2">
-                                                                        <label for=""
-                                                                            class="form-label text-primary fw-bold">Rent
-                                                                            Declared</label>
-
-                                                                        <p class="text-muted    "><i
-                                                                                class="fa fa-rupee"></i> 1,00,000</p>
-
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row ">
-
-                                                                    <div
-                                                                        class="col-sm-12 col-md-12 col-xl-12 col-xxl-12 col-lg-12 ">
-                                                                        <h6 class="">Owner Details</h6>
-                                                                    </div>
-                                                                    <div
-                                                                        class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-2">
-                                                                        <label for=""
-                                                                            class="form-label text-primary fw-bold">Name</label>
-
-                                                                        <p class="text-muted">Abdul</p>
-
-                                                                    </div>
-                                                                    <div
-                                                                        class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-2">
-                                                                        <label for=""
-                                                                            class="form-label text-primary fw-bold">PAN
-                                                                            NUMBER</label>
-
-                                                                        <p class="text-muted">eeeDe11n</p>
-
-                                                                    </div>
-                                                                    <div
-                                                                        class="col-sm-12 col-md-12 col-xl-12 col-xxl-12 col-lg-12 ">
-                                                                        <label for=""
-                                                                            class="form-label text-primary fw-bold">Address</label>
-                                                                        <p class="text-muted">No:21 joe street,Guindy </p>
-
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade " id="house_own" role="tabpanel"
-                                        aria-labelledby="pills-home-tab">
-                                        <div class="card top-line mb-0 border-bottom-0 border-end-0 border-start-0">
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <div class="col-12 text-end">
-                                                        <button class="btn btn-border-orange"
-                                                            data-bs-target="#AddOwned_modal" data-bs-toggle="modal"><i
-                                                                class="fa fa-plus-circle me-2" aria-hidden="true"></i>
-                                                            Add Own</button>
-                                                    </div>
-                                                </div>
-                                                <div class="text-center">
-                                                    <div class="d-flex justify-content-center">
-                                                        <div style="height: 300px;max-width:500px;" class="">
-                                                            <img src="{{ URL::asset('assets/images/no_dataFile.svg') }}"
-                                                                class="h-100 w-100" alt="user-pic" </div>
-                                                        </div>
-
-                                                    </div>
-                                                    <h4> <span class="text-orange">Sorry !</span> No data</h4>
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-                                    </div>
+                                <div class="text-end my-3">
+                                    <button
+                                        class="bg-orange-700 text-white me-4 py-1.5 rounded-md px-5 text-center">Save</button>
+                                    <button
+                                        class="bg-transparent border-orange-700 me-4 text-orange-600 py-1.5 rounded-md px-5 text-center">Previous</button>
+                                    <button
+                                        class="bg-transparent border-orange-700 text-orange-600 py-1.5 rounded-md px-5 text-center">Next</button>
                                 </div>
                             </div>
-                            <div class="tab-pane fade " id="reimbursement" role="tabpanel"
-                                aria-labelledby="pills-home-tab">
+
+                            <div class="tab-pane fade " id="reimbursement" role="tabpanel" aria-labelledby="">
 
                                 <div class="card top-line mb-0 border-bottom-0 border-end-0 border-start-0">
                                     <div class="card-body">
@@ -1402,8 +1239,7 @@
                                                         <th scope="col">References</th>
                                                         <th scope="col">Max Limit</th>
                                                         <th scope="col">Declaration Amount</th>
-                                                        <th scope="col">Proofs</th>
-
+                                                        {{-- <th scope="col">Proofs</th> --}}
                                                         <th scope="col">Status</th>
                                                         <th scope="col">Action</th>
                                                     </tr>
@@ -1451,7 +1287,7 @@
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-                                                        <td align="">
+                                                        {{-- <td align="">
 
                                                             <div class="upload_file ">
 
@@ -1462,7 +1298,7 @@
 
                                                             </div>
 
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
                                                             <p>Not Submitted</p>
                                                         </td>
@@ -1512,7 +1348,7 @@
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-                                                        <td align="">
+                                                        {{-- <td align="">
 
                                                             <div class="upload_file ">
 
@@ -1523,7 +1359,7 @@
 
                                                             </div>
 
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
                                                             <p>Not Submitted</p>
                                                         </td>
@@ -1573,18 +1409,16 @@
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-                                                        <td align="">
+                                                        {{-- <td align="">
 
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
                                                                         type="file" name="" id=""
                                                                         multiple></i>
-
-
                                                             </div>
 
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
                                                             <p>Not Submitted</p>
                                                         </td>
@@ -1619,9 +1453,18 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="text-end my-3">
+                                    <button
+                                        class="bg-orange-700 text-white py-1.5 rounded-md px-5 text-center">Save</button>
+                                    <button
+                                        class="bg-transparent border-orange-700 mx-4 text-orange-600 py-1.5 rounded-md px-5 text-center">Previous</button>
+                                    <button
+                                        class="bg-transparent border-orange-700 text-orange-600 py-1.5 rounded-md px-5 text-center  border ">Next</button>
+                                </div>
+
                             </div>
-                            <div class="tab-pane fade " id="previous_income" role="tabpanel"
-                                aria-labelledby="pills-home-tab">
+
+                            <div class="tab-pane fade " id="previous_income" role="tabpanel" aria-labelledby="">
 
                                 <div class="card top-line mb-0 border-bottom-0 border-end-0 border-start-0">
                                     <div class="card-body">
@@ -1634,7 +1477,7 @@
                                                         <th scope="col">References</th>
                                                         <th scope="col">Max Limit</th>
                                                         <th scope="col">Declaration Amount</th>
-                                                        <th scope="col">Status</th>
+                                                        {{-- <th scope="col">Status</th> --}}
                                                         <th scope="col">Action</th>
                                                     </tr>
                                                 </thead>
@@ -1661,11 +1504,9 @@
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-
-
-                                                        <td>
+                                                        {{-- <td>
                                                             <p>-</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -1715,9 +1556,9 @@
                                                         </td>
 
 
-                                                        <td>
+                                                        {{-- <td>
                                                             <p>-</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -1766,10 +1607,10 @@
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-
+                                                        {{--
                                                         <td>
                                                             <p>-</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -1817,9 +1658,9 @@
                                                         </td>
 
 
-                                                        <td>
+                                                        {{-- <td>
                                                             <p>-</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -1867,9 +1708,9 @@
                                                         </td>
 
 
-                                                        <td>
+                                                        {{-- <td>
                                                             <p>-</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -1902,9 +1743,16 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="text-end my-3">
+                                    <button
+                                        class="bg-orange-700 text-white  py-1.5 rounded-md px-5 text-center">Save</button>
+                                    <button
+                                        class="bg-transparent border-orange-700 x-4 text-orange-600 py-1.5 rounded-md px-5 text-center">Previous</button>
+                                    <button
+                                        class="bg-transparent border-orange-700 text-orange-600 py-1.5 rounded-md px-5 text-center">Next</button>
+                                </div>
                             </div>
-                            <div class="tab-pane fade " id="other_income" role="tabpanel"
-                                aria-labelledby="pills-home-tab">
+                            <div class="tab-pane fade " id="other_income" role="tabpanel" aria-labelledby="">
 
                                 <div class="card top-line mb-0 border-bottom-0 border-end-0 border-start-0">
                                     <div class="card-body">
@@ -1917,9 +1765,9 @@
                                                         <th scope="col">References</th>
                                                         <th scope="col">Max Limit</th>
                                                         <th scope="col">Declaration Amount</th>
-                                                        <th scope="col">Proofs</th>
+                                                        {{-- <th scope="col">Proofs</th>
 
-                                                        <th scope="col">Status</th>
+                                                        <th scope="col">Status</th> --}}
                                                         <th scope="col">Action</th>
                                                     </tr>
                                                 </thead>
@@ -1944,7 +1792,7 @@
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-                                                        <td align="">
+                                                        {{-- <td align="">
 
                                                             <div class="upload_file ">
 
@@ -1958,7 +1806,7 @@
                                                         </td>
                                                         <td>
                                                             <p>-</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -1988,7 +1836,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>Sec 80TTA</td>
-                                                        <td>Interest from Savings</td>
+                                                        <td>Interest from Saving(Senior Citizen)</td>
                                                         <td>
 
                                                             <button type="button"
@@ -1999,28 +1847,25 @@
                                                                     aria-hidden="true"></i>
                                                             </button>
                                                         </td>
-                                                        <td></td>
+                                                        <td>10000</td>
 
                                                         <td>
                                                             <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-                                                        <td align="">
-
-                                                            <div class="upload_file ">
+                                                        {{-- <td align="">                                                            <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
                                                                         type="file" name="" id=""
                                                                         multiple></i>
-
 
                                                             </div>
 
                                                         </td>
                                                         <td>
                                                             <p>-</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -2061,14 +1906,14 @@
                                                                     aria-hidden="true"></i>
                                                             </button>
                                                         </td>
-                                                        <td></td>
+                                                        <td>50000</td>
 
                                                         <td>
                                                             <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-                                                        <td align="">
+                                                        {{-- <td align="">
 
                                                             <div class="upload_file ">
 
@@ -2082,7 +1927,7 @@
                                                         </td>
                                                         <td>
                                                             <p>-</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -2116,9 +1961,248 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="text-end my-3">
+                                    <button
+                                        class="bg-orange-700 text-white  py-1.5 rounded-md px-5 text-center">Save</button>
+                                    <button
+                                        class="bg-transparent border-orange-700 mx-4 text-orange-600 py-1.5 rounded-md px-5 text-center">Previous</button>
+                                    <button
+                                        class="bg-transparent border-orange-700 text-orange-600 py-1.5 rounded-md px-5 text-center">Next</button>
+                                </div>
                             </div>
-                            <div class="tab-pane fade " id="other_exemptions" role="tabpanel"
-                                aria-labelledby="pills-home-tab">
+
+                            <div class="tab-pane fade " id="income_loss" role="tabpanel" aria-labelledby="">
+                                <ul class="nav nav-pills  my-3   nav-tabs-dashed" id="pills-tab" role="tablist">
+                                    <li class="nav-item   " role="presentation">
+                                        <a class="nav-link active " id="" data-bs-toggle="pill"
+                                            href="" data-bs-target="#self_occupied_property" role="tab"
+                                            aria-controls="" aria-selected="true">
+                                            Self Occupied Property
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item  mx-4  " role="presentation">
+                                        <a class="nav-link  " id="" data-bs-toggle="pill" href=""
+                                            data-bs-target="#letOut_property" role="tab" aria-controls=""
+                                            aria-selected="true">
+                                            Let Out Property
+                                        </a>
+                                    </li>
+                                    <li class="nav-item   " role="presentation">
+                                        <a class="nav-link  " id="" data-bs-toggle="pill" href=""
+                                            data-bs-target="#deemed_property" role="tab" aria-controls=""
+                                            aria-selected="true">
+                                            Deemed Let Out Property
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content " id="">
+                                    <div class="tab-pane fade active show" id="self_occupied_property" role="tabpanel"
+                                        aria-labelledby="">
+                                        <div class="tw-card bg-gray-100">
+                                            <div class="text-end">
+                                                <button data-bs-target="#selfOccupied_modal" data-bs-toggle="modal"
+                                                    class="py-2  px-4 text-white text-center mb-3  rounded-md bg-indigo-600">Add
+                                                    New</button>
+                                            </div>
+
+                                            <div class="table-responsive">
+
+                                                <table class="table investment_table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Lender Name</th>
+                                                            <th scope="col">Lender PAN</th>
+                                                            <th scope="col">Lender Type</th>
+                                                            <th scope="col">Loss From Housing Property</th>
+                                                            <th scope="col">Action</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>
+                                                                <div class="dropdown investment_dropDown">
+                                                                    <button
+                                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                        type="button" id="dropdownMenuButton"
+                                                                        data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                        aria-expanded="false">
+                                                                        <i class="fa fa-ellipsis-v"
+                                                                            aria-hidden="true"></i>
+                                                                    </button>
+                                                                    <div class="dropdown-menu"
+                                                                        aria-labelledby="dropdownMenuButton">
+                                                                        <a class="dropdown-item" href="#"><i
+                                                                                class="fa fa-pencil-square-o text-info me-2"
+                                                                                aria-hidden="true"></i> Edit</a>
+                                                                        <a class="dropdown-item" href="#"><i
+                                                                                class="fa fa-times-circle-o text-danger me-2"
+                                                                                aria-hidden="true"></i> Clear</a>
+                                                                        <a class="dropdown-item" href="#"></a>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+
+                                                        </tr>
+
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade " id="letOut_property" role="tabpanel"
+                                        aria-labelledby="">
+                                        <div class="tw-card bg-gray-100">
+                                            <div class="text-end">
+                                                <button data-bs-target="#letOut_property_modal" data-bs-toggle="modal"
+                                                    class="py-1.5 px-4 text-white text-center mb-3  rounded-md bg-indigo-600">Add
+                                                    New</button>
+                                            </div>
+
+                                            <div class="table-responsive ">
+                                                <table class="table investment_table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Lender Name</th>
+                                                            <th scope="col">Lender PAN</th>
+                                                            <th scope="col">Lender Type</th>
+                                                            <th scope="col">Rent Received</th>
+                                                            <th scope="col">Municipal Tax</th>
+                                                            <th scope="col">Maintenace</th>
+                                                            <th scope="col">Net Value</th>
+                                                            <th scope="col">Interest</th>
+                                                            <th scope="col">Income/Loss</th>
+                                                            <th scope="col">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>
+                                                                <div class="dropdown investment_dropDown">
+                                                                    <button
+                                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                        type="button" id="dropdownMenuButton"
+                                                                        data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                        aria-expanded="false">
+                                                                        <i class="fa fa-ellipsis-v"
+                                                                            aria-hidden="true"></i>
+                                                                    </button>
+                                                                    <div class="dropdown-menu"
+                                                                        aria-labelledby="dropdownMenuButton">
+                                                                        <a class="dropdown-item" href="#"><i
+                                                                                class="fa fa-pencil-square-o text-info me-2"
+                                                                                aria-hidden="true"></i> Edit</a>
+                                                                        <a class="dropdown-item" href="#"><i
+                                                                                class="fa fa-times-circle-o text-danger me-2"
+                                                                                aria-hidden="true"></i> Clear</a>
+                                                                        <a class="dropdown-item" href="#"></a>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+
+                                                        </tr>
+
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade " id="deemed_property" role="tabpanel"
+                                        aria-labelledby="">
+                                        <div class="tw-card bg-gray-100">
+                                            <div class="text-end">
+                                                <button data-bs-target="#deemedOut_property_modal"
+                                                    data-bs-toggle="modal"
+                                                    class="py-1.5 px-4 text-white text-center mb-3 float-right rounded-md bg-indigo-600">Add
+                                                    New</button>
+                                            </div>
+                                            <div class="table-responsive ">
+                                                <table class="table investment_table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Lender Name</th>
+                                                            <th scope="col">Lender PAN</th>
+                                                            <th scope="col">Lender Type</th>
+                                                            <th scope="col">Rent Received</th>
+                                                            <th scope="col">Municipal Tax</th>
+                                                            <th scope="col">Maintenace</th>
+                                                            <th scope="col">Net Value</th>
+                                                            <th scope="col">Interest</th>
+                                                            <th scope="col">Income/Loss</th>
+                                                            <th scope="col">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>
+                                                                <div class="dropdown investment_dropDown">
+                                                                    <button
+                                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                        type="button" id="dropdownMenuButton"
+                                                                        data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                        aria-expanded="false">
+                                                                        <i class="fa fa-ellipsis-v"
+                                                                            aria-hidden="true"></i>
+                                                                    </button>
+                                                                    <div class="dropdown-menu"
+                                                                        aria-labelledby="dropdownMenuButton">
+                                                                        <a class="dropdown-item" href="#"><i
+                                                                                class="fa fa-pencil-square-o text-info me-2"
+                                                                                aria-hidden="true"></i> Edit</a>
+                                                                        <a class="dropdown-item" href="#"><i
+                                                                                class="fa fa-times-circle-o text-danger me-2"
+                                                                                aria-hidden="true"></i> Clear</a>
+                                                                        <a class="dropdown-item" href="#"></a>
+                                                                    </div>
+                                                                </div>
+
+                                                            </td>
+
+                                                        </tr>
+
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-end my-3">
+                                    <button
+                                        class="bg-orange-700 text-white py-1.5 rounded-md px-5 text-center">Save</button>
+                                    <button
+                                        class="bg-transparent border-orange-700 mx-4 text-orange-600 py-1.5 rounded-md px-5 text-center">Previous</button>
+                                    <button
+                                        class="bg-transparent border-orange-700 text-orange-600 py-1.5 rounded-md px-5 text-center">Next</button>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade " id="other_exemptions" role="tabpanel" aria-labelledby="">
 
                                 <div class="card top-line mb-0 border-bottom-0 border-end-0 border-start-0">
                                     <div class="card-body">
@@ -2131,16 +2215,20 @@
                                                         <th scope="col">References</th>
                                                         <th scope="col">Max Limit</th>
                                                         <th scope="col">Declaration Amount</th>
-                                                        <th scope="col">Proofs</th>
+                                                        {{-- <th scope="col">Proofs</th>
 
-                                                        <th scope="col">Status</th>
+                                                        <th scope="col">Status</th> --}}
                                                         <th scope="col">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td> 80CCD (1B)</td>
-                                                        <td>NPS Employee Contribution</td>
+                                                        <td> 80CCD (1)</td>
+                                                        <td>
+                                                            <p> Employee contributions to National Pension Scheme (NPS)</p>
+                                                            <span class="text-sm text-gray-400">(Up to 10% of salary +
+                                                                dearness allowance (DA))</span>
+                                                        </td>
                                                         <td>
 
                                                             <button type="button"
@@ -2151,28 +2239,25 @@
                                                                     aria-hidden="true"></i>
                                                             </button>
                                                         </td>
-                                                        <td>50000</td>
+                                                        <td></td>
 
                                                         <td>
                                                             <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-                                                        <td align="">
-
+                                                        {{-- <td align="">
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
                                                                         type="file" name="" id=""
                                                                         multiple></i>
-
-
                                                             </div>
 
                                                         </td>
                                                         <td>
                                                             <p>Not Submitted</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -2201,7 +2286,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td> 80CCD (2)</td>
-                                                        <td>NPS Employer Contribution</td>
+                                                        <td> Employer contributions to National Pension Scheme (NPS)</td>
                                                         <td>
 
                                                             <button type="button"
@@ -2219,7 +2304,7 @@
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-                                                        <td align="">
+                                                        {{-- <td align="">
 
                                                             <div class="upload_file ">
 
@@ -2233,7 +2318,7 @@
                                                         </td>
                                                         <td>
                                                             <p>Not Submitted</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -2261,8 +2346,69 @@
 
                                                     </tr>
                                                     <tr>
+                                                        <td> 80CCD (1B)</td>
+                                                        <td>Self-contributions to National Pension Scheme (NPS)</td>
+                                                        <td>
+
+                                                            <button type="button"
+                                                                class="btn btn-transprarent border-0 outline-none "
+                                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="Additional exemption up to Rs 50,000 in NPS is eligible for income tax deduction. It is irrespective of the type of employment, i.e., a government employee, a private sector employee, or self-employed can claim benefit of Rs 50,000 under Section 80CCD(1B).">
+                                                                <i class="fa fa-exclamation-circle  text-warning"
+                                                                    aria-hidden="true"></i>
+                                                            </button>
+                                                        </td>
+                                                        <td>50000</td>
+
+                                                        <td>
+                                                            <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                                cols="5" rows="1"></textarea>
+                                                        </td>
+
+                                                        {{-- <td align="">
+                                                            <div class="upload_file ">
+                                                                <i class="fa fa-upload" aria-hidden="true"><input
+                                                                        type="file" name="" id=""
+                                                                        multiple></i>
+                                                            </div>
+
+                                                        </td>
+                                                        <td>
+                                                            <p>Not Submitted</p>
+                                                        </td> --}}
+                                                        <td>
+
+
+                                                            <div class="dropdown investment_dropDown">
+                                                                <button
+                                                                    class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                    type="button" id="dropdownMenuButton"
+                                                                    data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                    aria-expanded="false">
+                                                                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                                                </button>
+                                                                <div class="dropdown-menu"
+                                                                    aria-labelledby="dropdownMenuButton">
+                                                                    <a class="dropdown-item" href="#"><i
+                                                                            class="fa fa-pencil-square-o text-info me-2"
+                                                                            aria-hidden="true"></i> Edit</a>
+                                                                    <a class="dropdown-item" href="#"><i
+                                                                            class="fa fa-times-circle-o text-danger me-2"
+                                                                            aria-hidden="true"></i> Clear</a>
+                                                                    <a class="dropdown-item" href="#"></a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+
+
+                                                    </tr>
+
+                                                    <tr>
                                                         <td> 80D </td>
-                                                        <td>Medical Insurance Premium</td>
+                                                        <td>
+                                                            <p> Medical Insurance Premium </p>
+                                                            <span class="text-sm text-gray-400">(Self,Spouse,Kids)</span>
+                                                        </td>
                                                         <td>
 
                                                             <button type="button"
@@ -2273,28 +2419,24 @@
                                                                     aria-hidden="true"></i>
                                                             </button>
                                                         </td>
-                                                        <td></td>
+                                                        <td>25000</td>
 
                                                         <td>
                                                             <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-                                                        <td align="">
-
+                                                        {{-- <td align="">
                                                             <div class="upload_file ">
-
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
                                                                         type="file" name="" id=""
                                                                         multiple></i>
-
-
                                                             </div>
 
                                                         </td>
                                                         <td>
                                                             <p>Not Submitted</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -2334,14 +2476,14 @@
                                                                     aria-hidden="true"></i>
                                                             </button>
                                                         </td>
-                                                        <td></td>
+                                                        <td>5000</td>
 
                                                         <td>
                                                             <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-                                                        <td align="">
+                                                        {{-- <td align="">
 
                                                             <div class="upload_file ">
 
@@ -2355,7 +2497,7 @@
                                                         </td>
                                                         <td>
                                                             <p>Not Submitted</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -2382,68 +2524,7 @@
 
 
                                                     </tr>
-                                                    <tr>
-                                                        <td>80D</td>
-                                                        <td>Parents Medical Insurance Premium</td>
-                                                        <td>
 
-                                                            <button type="button"
-                                                                class="btn btn-transprarent border-0 outline-none "
-                                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="You can claim a deduction up to Rs. 25,000 per year for medical insurance premium for your parents. In case, your father or mother, or either of them is a senior citizen, you can claim a deduction up to Rs. 50,000.">
-                                                                <i class="fa fa-exclamation-circle  text-warning"
-                                                                    aria-hidden="true"></i>
-                                                            </button>
-                                                        </td>
-                                                        <td>
-
-                                                        <td>
-                                                            <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                                cols="5" rows="1"></textarea>
-                                                        </td>
-
-                                                        <td align="">
-
-                                                            <div class="upload_file ">
-
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name="" id=""
-                                                                        multiple></i>
-
-
-                                                            </div>
-
-                                                        </td>
-                                                        <td>
-                                                            <p>-</p>
-                                                        </td>
-                                                        <td>
-
-
-                                                            <div class="dropdown investment_dropDown">
-                                                                <button
-                                                                    class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                                    type="button" id="dropdownMenuButton"
-                                                                    data-bs-toggle="dropdown" aria-haspopup="true"
-                                                                    aria-expanded="false">
-                                                                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                                </button>
-                                                                <div class="dropdown-menu"
-                                                                    aria-labelledby="dropdownMenuButton">
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-secondary me-2"
-                                                                            aria-hidden="true"></i> Edit</a>
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Clear</a>
-                                                                    <a class="dropdown-item" href="#"></a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-
-
-                                                        </td>
-                                                    </tr>
                                                     <tr>
                                                         <td>80D</td>
                                                         <td>Parents Preventive Health Check Up</td>
@@ -2457,28 +2538,24 @@
                                                                     aria-hidden="true"></i>
                                                             </button>
                                                         </td>
-                                                        <td></td>
+                                                        <td>5000</td>
 
                                                         <td>
                                                             <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-                                                        <td align="">
-
+                                                        {{-- <td align="">
                                                             <div class="upload_file ">
-
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
                                                                         type="file" name="" id=""
                                                                         multiple></i>
-
-
                                                             </div>
 
                                                         </td>
                                                         <td>
                                                             <p>-</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td class="">
 
 
@@ -2506,9 +2583,10 @@
 
                                                     </tr>
                                                     <tr>
-                                                        <td> DD</td>
+                                                        <td> 80DD</td>
                                                         <td>
-                                                            <p> Medical Expenditure for a Disabled Dependant Disability
+                                                            <p>
+                                                                Medical Treatment of Disabled Dependent
                                                             </p>
                                                             <div class="d-flex justify-content-center">
                                                                 <div class="form-check me-2">
@@ -2548,7 +2626,7 @@
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-                                                        <td align="">
+                                                        {{-- <td align="">
 
                                                             <div class="upload_file ">
 
@@ -2562,7 +2640,7 @@
                                                         </td>
                                                         <td>
                                                             <p>Not Submitted</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -2590,12 +2668,12 @@
 
                                                     </tr>
                                                     <tr>
-                                                        <td> DDB</td>
+                                                        <td> 80DDB</td>
                                                         <td>
 
                                                             <p> Medical Expenditure on Self or Dependant for Specified
                                                                 Disease
-                                                                Age
+
                                                             </p>
                                                             <div class="d-flex justify-content-center">
                                                                 <div class="form-check me-2">
@@ -2639,7 +2717,7 @@
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-                                                        <td align="">
+                                                        {{-- <td align="">
 
                                                             <div class="upload_file ">
 
@@ -2653,7 +2731,7 @@
                                                         </td>
                                                         <td>
                                                             <p>Not Submitted</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -2702,7 +2780,7 @@
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-                                                        <td align="">
+                                                        {{-- <td align="">
 
                                                             <div class="upload_file ">
 
@@ -2716,7 +2794,7 @@
                                                         </td>
                                                         <td>
                                                             <p>Not Submitted</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -2766,11 +2844,14 @@
                                                         <td>50000</td>
 
                                                         <td>
-                                                            <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                                cols="5" rows="1"></textarea>
+                                                            <div class="flex justify-center">
+                                                                <button data-bs-target="#ee_modal"
+                                                                    data-bs-toggle="modal"
+                                                                    class="text-white py-1.5 w-2/3 rounded-md  bg-indigo-800">Add</button>
+                                                            </div>
                                                         </td>
 
-                                                        <td align="">
+                                                        {{-- <td align="">
 
                                                             <div class="upload_file ">
 
@@ -2784,7 +2865,7 @@
                                                         </td>
                                                         <td>
                                                             <p>Not Submitted</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -2836,11 +2917,17 @@
                                                         <td>150000</td>
 
                                                         <td>
-                                                            <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                                cols="5" rows="1"></textarea>
+                                                            {{-- <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                                cols="5" rows="1"></textarea> --}}
+
+                                                            <div class="flex justify-center">
+                                                                <button data-bs-target="#eea_modal"
+                                                                    data-bs-toggle="modal"
+                                                                    class="text-white py-1.5 w-2/3 rounded-md  bg-indigo-800">Add</button>
+                                                            </div>
                                                         </td>
 
-                                                        <td align="">
+                                                        {{-- <td align="">
 
                                                             <div class="upload_file ">
 
@@ -2854,7 +2941,7 @@
                                                         </td>
                                                         <td>
                                                             <p>Not Submitted</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -2900,11 +2987,18 @@
                                                         <td>150000</td>
 
                                                         <td>
-                                                            <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                                cols="5" rows="1"></textarea>
+                                                            {{-- <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                                cols="5" rows="1"></textarea> --}}
+                                                            {{-- <button data-bs-target="#eeb_modal" data-bs-toggle="modal"
+                                                                class="text-white py-1.5 w-full rounded-md  bg-indigo-800">Add</button> --}}
+                                                            <div class="flex justify-center">
+                                                                <button data-bs-target="#eeb_modal"
+                                                                    data-bs-toggle="modal"
+                                                                    class="text-white py-1.5 w-2/3 rounded-md  bg-indigo-800">Add</button>
+                                                            </div>
                                                         </td>
 
-                                                        <td align="">
+                                                        {{-- <td align="">
 
                                                             <div class="upload_file ">
 
@@ -2918,7 +3012,7 @@
                                                         </td>
                                                         <td>
                                                             <p>Not Submitted</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -2949,6 +3043,14 @@
                                             </table>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="text-end my-3">
+                                    <button
+                                        class="bg-orange-700 text-white  py-1.5 rounded-md px-5 text-center">Save</button>
+                                    <button
+                                        class="bg-transparent border-orange-700 mx-4 text-orange-600 py-1.5 rounded-md px-5 text-center">Previous</button>
+                                    <button
+                                        class="bg-transparent border-orange-700 text-orange-600 py-1.5 rounded-md px-5 text-center">Next</button>
                                 </div>
                             </div>
                         </div>
@@ -3023,15 +3125,188 @@
                             </div>
                         </div>
                     </div>
+
+
                 </div>
 
             </div>
         </div>
         <div id="AddRendted_modal" class="modal  fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg">
-                <div class="modal-content top-line">
+                <div class="modal-content ">
                     <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                        <h6 class="modal-title mb-1 text-primary">Add new rental details</h6>
+                        <span class="text-lg modal-title text-indigo-950 font-semibold">Add New Rental </span>
+                        <button type="button" class="close outline-none bg-transparent border-0 h3"
+                            data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-body">
+                            <form>
+                                <div
+                                    class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-2 2xl:grid-cols-2 sm:grid-cols-1 xl:grid-cols-2 lg:grid-cols-2">
+
+                                    <div class="">
+                                        <label for="rentFrom_month" class="block mb-2  font-medium text-gray-900 ">From
+                                            Month</label>
+                                        <input type="date" id="rentFrom_month"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                            required>
+                                    </div>
+                                    <div class="">
+                                        <label for="toFrom_month" class="block mb-2  font-medium text-gray-900 ">To
+                                            Month</label>
+                                        <input type="date" id="toFrom_month
+                                        "
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                            required>
+                                    </div>
+                                    <div class="">
+                                        <label for="metro_city"
+                                            class="block mb-2  font-medium text-gray-900 ">City</label>
+                                        {{-- <input type="text" id="lender_type"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                            required> --}}
+                                        <select id="metro_city"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                            <option selected disabled hiddedn>Choose Metro</option>
+                                            <option>Chennai</option>
+                                            <option>Mumbai</option>
+                                            <option>Hyderabad</option>
+                                            <option>Kolkatta</option>
+                                            <option>Other Non Metro</option>
+
+                                        </select>
+                                    </div>
+                                    <div class="">
+                                        <label for="rendPaid_inp" class="block mb-2  font-medium text-gray-900 ">Total
+                                            Rent Paid</label>
+                                        <input type="text" id="rendPaid_inp"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                            required>
+                                    </div>
+
+                                </div>
+                                <div
+                                    class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-2 2xl:grid-cols-2 sm:grid-cols-1 xl:grid-cols-2 lg:grid-cols-2">
+                                    <div class="">
+                                        <label for="lender_name" class="block mb-2  font-medium text-gray-900 ">Landlord
+                                            Name <span class="text-red-600">*</span> </label>
+                                        <input type="text" id="lender_name"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                            required>
+                                    </div>
+                                    <div class="">
+                                        <label for="lender_name" class="block mb-2  font-medium text-gray-900 ">Landlord
+                                            PAN <span class="text-red-600">*</span> </label>
+                                        <input type="text" id="lender_name"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                            required>
+                                    </div>
+                                </div>
+                                <div
+                                    class="grid   mb-6 md:grid-cols-1 2xl:grid-cols-1 sm:grid-cols-1 xl:grid-cols-1 lg:grid-cols-1">
+                                    <label for="lender_name" class="block mb-2 font-medium text-gray-900 ">
+                                        Address </label>
+                                    <textarea name="" id="" rows="3"
+                                        class="bg-gray-50 resize-none border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required></textarea>
+                                </div>
+                                <div class="text-end">
+                                    <button
+                                        class="bg-orange-700 text-white py-1.5 rounded-md px-5 text-center">Save</button>
+                                </div>
+                            </form>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="ee_modal" class="modal  fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg">
+                <div class="modal-content ">
+                    <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
+                        <h6 class="modal-title mb-1 text-primary">80EE<span
+                                class="ml-3 text-xs text-gray-400 font-semibold">(The maximum deduction of Rs 50,000 can
+                                be claimed under this section)</span> </h6>
+                        <button type="button" class="close outline-none bg-transparent border-0 h3"
+                            data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div
+                                class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-2 2xl:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3 lg:grid-cols-3">
+
+                                <div class="">
+                                    <label for="sanction_date" class="block mb-2  font-medium text-gray-900 ">Loan
+                                        Sanction Date</label>
+                                    <input type="date" id="sanction_date"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+
+
+
+                                <div class="">
+
+                                    <label for="lender_type" class="block mb-2  font-medium text-gray-900 ">Lender
+                                        Type</label>
+                                    <select id="lender_type"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                        <option selected>Choose Type</option>
+                                        <option>Others</option>
+                                        <option>Financial Institution</option>
+
+                                    </select>
+                                </div>
+
+                                <div class="">
+                                    <label for="property_value" class="block mb-2  font-medium text-gray-900 ">Property
+                                        Value</label>
+                                    <input type="text" id="property_value"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+                                <div class="">
+                                    <label for="loan_amount" class="block mb-2  font-medium text-gray-900 ">Loan
+                                        Amount</label>
+                                    <input type="text" id="loan_amount"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-100 focus:outline-none focus:ring outline-1  block w-full p-2.5 "
+                                        required>
+                                </div>
+                                <div class="">
+                                    <label for="declaration_amount"
+                                        class="block mb-2  font-medium text-gray-900 ">Interest
+                                        Amount Paid</label>
+                                    <input type="text" id="declaration_amount"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+
+                            </div>
+                            <div class="text-end">
+                                <button class="bg-orange-700 text-white py-1.5 rounded-md px-5 text-center">Save</button>
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="eea_modal" class="modal  fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg">
+                <div class="modal-content ">
+                    <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
+                        <h6 class="modal-title mb-1 text-primary">80EEA <span
+                                class="ml-3 text-xs text-gray-400 font-semibold">(The maximum deduction available under
+                                this section is Rs. 1.5 Lakhs)</span> </h6>
                         <button type="button" class="close outline-none bg-transparent border-0 h3"
                             data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
@@ -3040,84 +3315,168 @@
                     <div class="modal-body">
 
                         <form>
-                            <div class="row">
-                                <div class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-3">
+                            <div
+                                class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-2 2xl:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3 lg:grid-cols-3">
 
-                                    <label for="" class="form-label">From</label>
-                                    <div class="input-group mb-3">
-
-                                        <select class="form-select" id="inputGroupSelect03"
-                                            aria-label="Example select with button addon">
-                                            <option selected hidden disabled>Choose month</option>
-                                            <option value="1">Mar-2022</option>
-                                            <option value="1">Apr-2022</option>
-                                            <option value="1">Jun-2022</option>
-                                            <option value="1">July-2022</option>
-                                            <option value="1">Aug-2022</option>
-                                            <option value="1">Sep-2022</option>
-                                        </select>
-                                        <button class="btn btn-outline-secondary" type="button"><i
-                                                class="fa fa-calendar" aria-hidden="true"></i> </button>
-                                    </div>
-
+                                <div class="">
+                                    <label for="sanction_date" class="block mb-2  font-medium text-gray-900 ">Loan
+                                        Sanction Date</label>
+                                    <input type="date" id="sanction_date"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
                                 </div>
-                                <div class="col-sm-12 col-md-6 col-xl-6 col-xxl-6 col-lg-6 mb-3">
 
-                                    <label for="" class="form-label">To</label>
-                                    <div class="input-group mb-3">
 
-                                        <select class="form-select" id=""
-                                            aria-label="Example select with button addon">
-                                            <option selected hidden disabled>Choose month</option>
-                                            <option value="1">Mar-2022</option>
-                                            <option value="1">Apr-2022</option>
-                                            <option value="1">Jun-2022</option>
-                                        </select>
-                                        <button class="btn btn-outline-secondary" type="button"><i
-                                                class="fa fa-calendar" aria-hidden="true"></i> </button>
-                                    </div>
 
-                                </div>
-                                <div class="col-sm-12 col-md-12 col-xl-12 col-xxl-12 col-lg-12 mb-3">
+                                <div class="">
 
-                                    <label for="" class="form-label">Address</label>
-                                    <textarea name="" id="" cols="" rows="2" class="resize-none form-control"></textarea>
-                                </div>
-                                <div class="col-sm-12 col-md-6 col-xl-6 col-xxl 6 col-lg-6 mb-3">
-
-                                    <label for="" class="form-label">City</label>
-                                    <select class="form-select" id="" aria-label="">
-                                        <option selected>Chennai</option>
+                                    <label for="lender_type" class="block mb-2  font-medium text-gray-900 ">Lender
+                                        Type</label>
+                                    <select id="lender_type"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                        <option selected>Choose Type</option>
+                                        <option>Others</option>
+                                        <option>Financial Institution</option>
 
                                     </select>
                                 </div>
-                                <div class="col-sm-12 col-md-6 col-xl-6 col-xxl-6 col-lg-6 mb-3">
 
-                                    <label for="" class="form-label">Total Rent</label>
-                                    <div class="input-group mb-3">
-
-                                        <input type="text" name="" id="" class="form-control">
-                                        <button class="btn btn-outline-secondary" type="button"><i
-                                                class="fa fa-rupee"></i></button>
-                                    </div>
-
+                                <div class="">
+                                    <label for="property_value" class="block mb-2  font-medium text-gray-900 ">Property
+                                        Value</label>
+                                    <input type="text" id="property_value"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
                                 </div>
-                                <div class="col-sm-12 col-md-12 col-lg-12 col-xxl-12 col-xl-12 text-end">
-                                    <button class="btn btn-border-orange mt-2" id="">Save</button>
+                                <div class="">
+                                    <label for="loan_amount" class="block mb-2  font-medium text-gray-900 ">Loan
+                                        Amount</label>
+                                    <input type="text" id="loan_amount"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-100 focus:outline-none focus:ring outline-1  block w-full p-2.5 "
+                                        required>
                                 </div>
+                                <div class="">
+                                    <label for="declaration_amount"
+                                        class="block mb-2  font-medium text-gray-900 ">Interest
+                                        Amount Paid</label>
+                                    <input type="text" id="declaration_amount"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+
+                            </div>
+                            <div class="text-end">
+                                <button class="bg-orange-700 text-white py-1.5 rounded-md px-5 text-center">Save</button>
                             </div>
                         </form>
+
+
                     </div>
                 </div>
             </div>
         </div>
-
-        <div id="AddOwned_modal" class="modal  fade" role="dialog">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg" role="document">
-                <div class="modal-content">
+        <div id="eeb_modal" class="modal  fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg">
+                <div class="modal-content ">
                     <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                        <h6 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
-                            details</h6>
+                        <h6 class="modal-title mb-1 text-primary"> 80EEB<span
+                                class="ml-3 text-xs text-gray-400 font-semibold">(The maximum deduction available under
+                                this section is Rs. 1.5 Lakhs for electric vehicle purchase)</span> </h6>
+                        <button type="button" class="close outline-none bg-transparent border-0 h3"
+                            data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <form>
+                                <div
+                                    class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-2 2xl:grid-cols-2 sm:grid-cols-1 xl:grid-cols-2 lg:grid-cols-2">
+                                    <div class="">
+                                        <label for="sanction_date" class="block mb-2  font-medium text-gray-900 ">Loan
+                                            Sanction Date</label>
+                                        <input type="date" id="sanction_date"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                            required>
+                                    </div>
+
+
+
+                                    <div class="">
+
+                                        <label for="vechicle_brand"
+                                            class="block mb-2  font-medium text-gray-900 ">Vechicle Brand</label>
+                                        <select id="vechicle_brand"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                            <option selected hidden disabled>Choose Vechicle</option>
+                                            <option value="">TATA</option>
+                                            <option value="">Hyundai</option>
+                                            <option value="">Mahindra</option>
+                                            <option value="">Kia</option>
+                                            <option value="">MG</option>
+
+                                        </select>
+                                    </div>
+
+                                    <div class="">
+                                        <label for="vechicle_model"
+                                            class="block mb-2  font-medium text-gray-900 ">Vechicle Model
+                                        </label>
+                                        {{-- <input type="text" id=""
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                            required> --}}
+                                        <select id="vechicle_model"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                            <option selected hidden selected>Choose Model</option>
+                                            <option value="">Tata Tiago</option>
+                                            <option value="">Tata Tigor</option>
+                                            <option value="">Tata Nexon</option>
+                                            <option value="">Tata AVINYA</option>
+                                            <option value="">Tata Punch</option>
+                                            <option value="">Tata CURVV SUV Coupe</option>
+                                            <option value="">Mahindra eVerito</option>
+                                            <option value="">Mahindra e2oPlus</option>
+                                            <option value="">Mahindra eSupro</option>
+                                            <option value="">Mahindra Treo</option>
+                                            <option value="">Mahindra Treo Zor</option>
+                                            <option value="">Mahindra eAlfa Mini</option>
+                                            <option value="">Hyundai Kona Electric</option>
+                                            <option value="">Hyundai IONIQ 5</option>
+                                            <option value="">Mahindra XUV400 EV</option>
+                                            <option value="">Mahindra E Verito</option>
+                                            <option value="">Kia EV6</option>
+                                            <option value="">MG ZS EV</option>
+
+
+                                        </select>
+                                    </div>
+
+                                    <div class="">
+                                        <label for="declaration_amount"
+                                            class="block mb-2  font-medium text-gray-900 ">Interest
+                                            Amount Paid</label>
+                                        <input type="text" id="declaration_amount"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                            required>
+                                    </div>
+
+                                </div>
+                                <div class="text-end">
+                                    <button
+                                        class="bg-orange-700 text-white py-1.5 rounded-md px-5 text-center">Save</button>
+                                </div>
+                            </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="letOut_property_modal" class="modal  fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg">
+                <div class="modal-content ">
+                    <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
+                        <h6 class="modal-title mb-1 text-primary">Let Out Property</h6>
                         <button type="button" class="close outline-none bg-transparent border-0 h3"
                             data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
@@ -3125,13 +3484,340 @@
                     </div>
                     <div class="modal-body">
 
+                        <form>
+                            <div
+                                class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-2 2xl:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3 lg:grid-cols-3">
+                                <div class="">
+                                    <label for="lender_name" class="block mb-2  font-medium text-gray-900 ">Lender
+                                        Name</label>
+                                    <input type="text" id="lender_name"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+                                <div class="">
+                                    <label for="lender_pan" class="block mb-2  font-medium text-gray-900 ">Lender
+                                        PAN</label>
+                                    <input type="text" id="lender_pan"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+
+
+                                <div class="">
+
+                                    <label for="lender_type" class="block mb-2  font-medium text-gray-900 ">Lender
+                                        Type</label>
+                                    <select id="lender_type"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                        <option selected>Choose Type</option>
+                                        <option>Others</option>
+                                        <option>Financial Institution</option>
+
+                                    </select>
+                                </div>
+
+                                <div class="">
+                                    <label for="rend_received" class="block mb-2  font-medium text-gray-900 ">Rent
+                                        Received</label>
+                                    <input type="text" id="rend_received"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+                                <div class="">
+
+                                    <label for="municipal_tax" class="block mb-2  font-medium text-gray-900 ">Municipal
+                                        Tax</label>
+
+                                    <input type="text" id="municipal_tax"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+                                <div class="">
+                                    <label for="maintenance"
+                                        class="block mb-2  font-medium text-gray-900 ">Maintenance</label>
+                                    <input type="text" id="maintenance"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+                                <div class="">
+                                    <label for="Net_Value" class="block mb-2  font-medium text-gray-900 ">Net
+                                        Value</label>
+                                    <input type="text" id="Net_Value"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-100 focus:outline-none focus:ring outline-1  block w-full p-2.5 "
+                                        required>
+                                </div>
+                                <div class="">
+                                    <label for="Interest"
+                                        class="block mb-2  font-medium text-gray-900 ">Interest</label>
+                                    <input type="text" id="Interest"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+                                <div class="">
+                                    <label for="Income/Loss"
+                                        class="block mb-2  font-medium text-gray-900 ">Income/Loss</label>
+                                    <input type="text" id="Income/Loss"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                <button class="bg-orange-700 text-white py-1.5 rounded-md px-5 text-center">Save</button>
+                            </div>
+                        </form>
+
+
                     </div>
                 </div>
             </div>
         </div>
+        <div id="deemedOut_property_modal" class="modal  fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg">
+                <div class="modal-content ">
+                    <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
+                        <h6 class="modal-title mb-1 text-primary">Deemed Let Out Property</h6>
+                        <button type="button" class="close outline-none bg-transparent border-0 h3"
+                            data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div
+                                class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-2 2xl:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3 lg:grid-cols-3">
+                                <div class="">
+                                    <label for="lender_name" class="block mb-2  font-medium text-gray-900 ">Lender
+                                        Name</label>
+                                    <input type="text" id="lender_name"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+                                <div class="">
+                                    <label for="lender_pan" class="block mb-2  font-medium text-gray-900 ">Lender
+                                        PAN</label>
+                                    <input type="text" id="lender_pan"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+
+
+                                <div class="">
+
+                                    <label for="lender_type" class="block mb-2  font-medium text-gray-900 ">Lender
+                                        Type</label>
+                                    <select id="lender_type"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                        <option selected>Choose Type</option>
+                                        <option>Others</option>
+                                        <option>Financial Institution</option>
+
+                                    </select>
+                                </div>
+
+                                <div class="">
+                                    <label for="rend_received" class="block mb-2  font-medium text-gray-900 ">Rent
+                                        Received</label>
+                                    <input type="text" id="rend_received"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+                                <div class="">
+
+                                    <label for="municipal_tax" class="block mb-2  font-medium text-gray-900 ">Municipal
+                                        Tax</label>
+                                    {{-- <select id="municipal_tax"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                        <option selected>Choose Municipal</option>
+
+                                    </select> --}}
+                                    <input type="text" id="municipal_tax"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+                                <div class="">
+                                    <label for="maintenance"
+                                        class="block mb-2  font-medium text-gray-900 ">Maintenance</label>
+                                    <input type="text" id="maintenance"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+                                <div class="">
+                                    <label for="Net_Value" class="block mb-2  font-medium text-gray-900 ">Net
+                                        Value</label>
+                                    <input type="text" id="Net_Value"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-100 focus:outline-none focus:ring outline-1  block w-full p-2.5 "
+                                        required>
+                                </div>
+                                <div class="">
+                                    <label for="Interest"
+                                        class="block mb-2  font-medium text-gray-900 ">Interest</label>
+                                    <input type="text" id="Interest"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+                                <div class="">
+                                    <label for="Income/Loss"
+                                        class="block mb-2  font-medium text-gray-900 ">Income/Loss</label>
+                                    <input type="text" id="Income/Loss"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                <button class="bg-orange-700 text-white py-1.5 rounded-md px-5 text-center">Save</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="selfOccupied_modal" class="modal  fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg">
+                <div class="modal-content ">
+                    <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
+                        <h6 class="modal-title mb-1 text-primary">Self Occupied Property</h6>
+                        <button type="button" class="close outline-none bg-transparent border-0 h3"
+                            data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <form>
+                            <div
+                                class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-2 2xl:grid-cols-2 sm:grid-cols-1 xl:grid-cols-2 lg:grid-cols-2">
+                                <div class="">
+                                    <label for="lender_name" class="block mb-2  font-medium text-gray-900 ">Lender
+                                        Name</label>
+                                    <input type="text" id="lender_name"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+                                <div class="">
+                                    <label for="lender_name" class="block mb-2  font-medium text-gray-900 ">Lender
+                                        PAN</label>
+                                    <input type="text" id="lender_name"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+
+
+
+                                <div class="">
+
+                                    <label for="lender_type" class="block mb-2  font-medium text-gray-900 ">Lender
+                                        Type</label>
+                                    <select id="lender_type"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                        <option selected>Choose Type</option>
+                                        <option>Others</option>
+                                        <option>Financial Institution</option>
+
+                                    </select>
+                                </div>
+                                <div class="">
+                                    <label for="lender_name" class="block mb-2  font-medium text-gray-900 ">Loss
+                                        From Housing Property</label>
+                                    <input type="text" id="lender_name"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+                            </div>
+                            <div
+                                class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-1 2xl:grid-cols-1 sm:grid-cols-1 xl:grid-cols-1 lg:grid-cols-1">
+                                <div class="">
+                                    <label for="lender_name" class="block mb-2  font-medium text-gray-900 ">
+                                        Address</label>
+                                    {{-- <input type="text" id="lender_name"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                            required> --}}
+                                    <textarea name="" id="" rows="3"
+                                        class="bg-gray-50 resize-none border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required></textarea>
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                <button class="bg-orange-700 text-white py-1.5 rounded-md px-5 text-center">Save</button>
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="switchRegime_modal" class="modal  fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-md">
+                <div class="modal-content ">
+                    <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
+                        <h6 class="modal-title text-lg font-semibold mb-1 text-primary">Confirm Switching Regime</h6>
+                        <button type="button" class="close outline-none bg-transparent border-0 h3"
+                            data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <p class="">Your current switching regime is <span
+                                class="text-primary font-semibold text-lg">New Tax Regime</span> </p>
+
+                        <p class="text-gray-500 text-justify my-3">
+                            Are you sure you want to switch your regime? You cannot change your regime selection once you
+                            have confirmed your selection.
+                        </p>
+                        <p class="text-gray-500 text-justify">
+                            In case of an incorrect selection, your only option will be to change your selection when you
+                            file your tax returns for the current financial year.
+                        </p>
+
+
+                        <div class="text-end mt-5">
+                            <button id="confirm_switchRegime"
+                                class="bg-orange-700 text-white py-2  rounded-md px-4 text-center">Confirm</button>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 @endsection
 @section('script')
-    <script src="{{ URL::asset('assets/libs/gridjs/gridjs.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/js/pages/dashboard-projects.init.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+
+            $("#rendPaid_inp").keypress(function() {
+                if (this.value >= 100000) {
+                    $('#landlordDetails').css('display', 'block');
+
+                } else if (this.value < 100000) {
+                    $('#landlordDetails').css('display', 'none');
+                } else {
+                    $('#landlordDetails').css('display', 'none');
+                }
+
+            });
+
+            $('#confirm_switchRegime').click(function() {
+                const switchedDate = new Date();
+                const date=switchedDate.getDate();
+                const month=switchedDate.getMonth();
+                $('.change_regime_text').text("New Tax Regime");
+
+                $('#latest_update').text('Last Updated :' + (('' +date ).length < 2 ?
+                        '0' : '')+date + '/' +
+                    (('' +month ).length < 2 ? '0' : '') + month+'/' +
+                    (('' + switchedDate.getFullYear())));
+
+
+                    $('#newRegime_warn').css('display', 'block');
+                    $('#oldRegime_warn').css('display','none');
+
+            })
+
+        })
+    </script>
 @endsection
