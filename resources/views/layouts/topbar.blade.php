@@ -127,8 +127,8 @@ if ($query_clientMaster) {
             </div>
 
 
-            <button type="button" class="btn bg-transparent border-0 mx-1 py-1 " id="page-header-user-dropdown"
-                aria-haspopup="true" aria-expanded="false" data-bs-toggle="offcanvas" data-bs-target=".offcanvas"
+            <a role="button"   href="{{ route('pages-profile-new') }}"  type="button" class="btn bg-transparent border-0 mx-1 py-1 " id="page-header-user-dropdown"
+                aria-haspopup="true" aria-expanded="false"
                 aria-controls="" aria-haspopup="true" aria-expanded="false">
                 <div class="d-flex align-items-center page-header-user-dropdown">
 
@@ -149,7 +149,7 @@ if ($query_clientMaster) {
 
 
                 </div>
-            </button>
+            </a>
 
         </div>
     </div>

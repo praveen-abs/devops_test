@@ -62,7 +62,7 @@
 
 
             </h6>
-            {{ _instance_profilePagesStore.employeeDetails.get_family_details }}
+            <!-- {{ _instance_profilePagesStore.employeeDetails.get_family_details }} -->
             <div class="table-responsive">
                 <DataTable ref="dt"  dataKey="id" :paginator="true" :rows="10" :value="_instance_profilePagesStore.employeeDetails.get_family_details"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
