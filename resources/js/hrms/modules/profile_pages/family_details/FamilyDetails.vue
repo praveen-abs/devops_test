@@ -2,7 +2,7 @@
     <div class="mb-2 card">
         <div class="card-body">
             <h6 class="">Family Information
-                <button type="button" class="float-right btn btn-orange" 
+                <button type="button" class="float-right btn btn-orange"
                 style="margin-left: 79%"
                     @click="onClick_EditButton_familyInfo()">
                     Add New
@@ -160,7 +160,6 @@ function onClick_EditButton_familyInfo(){
     console.log(Object.entries(_instance_profilePagesStore.employeeDetails));
 
     DialogFamilyinfovisible.value = true;
-
 }
 
 const saveFamilyDetails = () => {

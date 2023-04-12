@@ -12,14 +12,14 @@
                     <!-- <button type="button" class="btn_txt edit-icon" data-bs-toggle="modal" data-bs-target="#exampleModal"
                         @click="visible = true">
                         <i class="ri-pencil-fill"></i>
-                        
+
                     </button> -->
                     <button type="button" class="float-right btn btn-orange" style="margin-left: 76%"
-                        @click="visible = true">
+                        @click="dialog_ExperienceInfovisible = true">
                         Add New
                         <!-- <i class="ri-pencil-fill"></i> -->
                     </button>
-                    <Dialog v-model:visible="visible" modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }"
+                    <Dialog v-model:visible="dialog_ExperienceInfovisible" modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }"
                         id="">
                         <template #header>
                             <div>
@@ -36,14 +36,14 @@
                                     <span>Company Name <span class="text-danger">*</span></span>
                                     <!-- <input type="text" name="ExperienceDetails_company_name[]" pattern-data="name" id=""
                                     required v-model="ExperienceDetails.company_name"> -->
-                                    <InputText type="text" v-model="ExperienceDet.company_name"
+                                    <InputText type="text" v-model="ExperienceInfo.company_name"
                                         name="ExperienceDetails_company_name[]" required />
                                 </div>
                                 <div class="flex-col input_text">
                                     <span> Location<span class="text-danger">*</span></span>
                                     <!-- <input type="text"  v-model="ExperienceDet.location"
                                     id="familyDetails_Relationship" pattern-data="alpha" required> -->
-                                    <InputText type="text" v-model="ExperienceDet.location" name="experienceDet_location[]"
+                                    <InputText type="text" v-model="ExperienceInfo.location" name="experienceDet_location[]"
                                         required />
 
                                 </div>
@@ -53,7 +53,7 @@
                                     <span>Job Position <span class="text-danger">*</span></span>
                                     <!-- <input type="text" id="datemin" name="familyDetails_dob[]"
                                     v-model="ExperienceDet.job_position"> -->
-                                    <InputText type="text" v-model="ExperienceDet.job_position"
+                                    <InputText type="text" v-model="ExperienceInfo.job_position"
                                         name="experienceDet_job_position[]" required />
 
 
@@ -66,7 +66,7 @@
                                             class="text-danger">*</span></span>
                                     <!-- <input type="date"  id="familyDetails_phoneNumber"
                                     name="familyDetails_phoneNumber[]" min="2000-01-02" v-model="ExperienceDet.period_from"> -->
-                                    <Calendar showIcon v-model="ExperienceDet.period_from"
+                                    <Calendar showIcon v-model="ExperienceInfo.period_from"
                                         :style="{ height: ' 2.3rem', width: '100%', marginRight: '20px' }"
                                         name="experienceDet_period_from[]" />
                                 </div>
@@ -79,7 +79,7 @@
                                     <!-- <input type="date" id="datemin" name="familyDetails_dob[]"
                                     v-model="ExperienceDet.period_to"> -->
 
-                                    <Calendar showIcon v-model="ExperienceDet.period_to" class=""
+                                    <Calendar showIcon v-model="ExperienceInfo.period_to" class=""
                                         :style="{ height: ' 2.3rem', width: '100%', borderRadius: '2px' }"
                                         name="experienceDet_period_to[]" />
                                 </div>
@@ -184,9 +184,9 @@ const toasts = useToast();
 
 
 const PersonalDocument = ref('');
-const visible = ref(false);
+const dialog_ExperienceInfovisible = ref(false);
 
-const ExperienceDet = reactive({
+const ExperienceInfo = reactive({
     company_name: '',
     location: '',
     job_position: '',
@@ -195,37 +195,35 @@ const ExperienceDet = reactive({
 
 })
 const saveExperienceDetails = () => {
-    console.log(ExperienceDet);
+    console.log(ExperienceInfo);
 
-    if (ExperienceDet.company_name == ' ' || ExperienceDet.job_position === '' || ExperienceDet.location === '' || ExperienceDet.period_from === " " || ExperienceDet.period_to === " ") {
+    if (ExperienceInfo.company_name == ' ' || ExperienceInfo.job_position === '' || ExperienceInfo.location === '' || ExperienceInfo.period_from === " " || ExperienceInfo.period_to === " ") {
 
         toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
 
     } else {
         let id = fetch_data.current_user_id
-        let url = `/update-family-info/${id}`
+        let url = `/update-experience-info/${id}`
 
         axios.post(url, {
             user_code: _instance_profilePagesStore.employeeDetails.user_code,
-            name: familydetails.name,
-            relationship: familydetails.relationship,
-            dob: familydetails.dob,
-            phone_number: familydetails.phone_number
+            company_name: ExperienceInfo.company_name,
+            experience_location:ExperienceInfo.location,
+            job_position:ExperienceInfo.job_position,
+            period_from: ExperienceInfo.period_from,
+            period_to: ExperienceInfo.period_to
         })
             .then((res) => {
 
                 if (res.data.status == "success") {
                     window.location.reload();
                     toast.add({ severity: 'success', summary: 'Updated', detail: 'General information updated', life: 3000 });
-                    _instance_profilePagesStore.employeeDetails.get_family_details.dob = useDateFormat(familydetails.dob, 'YYYY-MM-DD');
+                    _instance_profilePagesStore.employeeDetails.get_experience_details.company_name = ExperienceInfo.company_name
 
-                    // _instance_profilePagesStore.employeeDetails.dob = dialog_general_information.dob;
-
-                    _instance_profilePagesStore.employeeDetails.get_family_details.name = familydetails.gender;
-                    _instance_profilePagesStore.employeeDetails.get_family_details.relationship = familydetails.relationship;
-
-                    // _instance_profilePagesStore.employeeDetails.doj = dialog_general_information.doj;
-                    _instance_profilePagesStore.employeeDetails.get_family_details.phone_number = familydetails.phone_number;
+                    _instance_profilePagesStore.employeeDetails.get_experience_details.location = ExperienceInfo.location;
+                    _instance_profilePagesStore.employeeDetails.get_experience_details.job_position = ExperienceInfo.job_position;
+                    _instance_profilePagesStore.employeeDetails.get_experience_details.period_from = ExperienceInfo.period_from;
+                    _instance_profilePagesStore.employeeDetails.get_experience_details.period_to = ExperienceInfo.period_to;
                 } else if (res.data.status == "failure") {
                     leave_data.leave_request_error_messege = res.data.message;
                 }
@@ -237,7 +235,7 @@ const saveExperienceDetails = () => {
 
     }
 
-    DialogFamilyinfovisible.value = false;
+    dialog_ExperienceInfovisible.value = false;
 }
 
 
@@ -248,15 +246,15 @@ onMounted(() => {
 
 
 const editExperienceDetails = (get_experience_details) => {
-    visible.value = true
+    dialog_ExperienceInfovisible.value = true
     _instance_profilePagesStore.employeeDetails.get_experience_details = {...get_experience_details};
     console.log(get_experience_details);
 
-    ExperienceDet.company_name = get_experience_details.company_name
-    ExperienceDet.location = get_experience_details.location
-    ExperienceDet.job_position = get_experience_details.job_position
-    ExperienceDet.period_from = get_experience_details.period_from 
-    ExperienceDet.period_to = get_experience_details.period_to
+    ExperienceInfo.company_name = get_experience_details.company_name
+    ExperienceInfo.location = get_experience_details.location
+    ExperienceInfo.job_position = get_experience_details.job_position
+    ExperienceInfo.period_from = get_experience_details.period_from
+    ExperienceInfo.period_to = get_experience_details.period_to
 };
 
 
