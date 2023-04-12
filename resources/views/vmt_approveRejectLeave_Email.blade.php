@@ -97,6 +97,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                                                         <table>
                                                             <tbody>
                                                                 <tr></tr>
+                                                                    <?php $empAvatar = json_decode($empAvatar, true) ?>
                                                                     @if ($empAvatar->type == 'shortname')
                                                                         <td align="center"
                                                                             style="height: 100px;

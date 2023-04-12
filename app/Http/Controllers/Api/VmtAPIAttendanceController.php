@@ -19,8 +19,8 @@ use Illuminate\Support\Facades\Validator;
 class VmtAPIAttendanceController extends HRMSBaseAPIController
 {
 
-    private $cost_per_km_2wheeler = 3.5;
-    private $cost_per_km_4wheeler = 6;
+    private $cost_per_km_2wheeler = 3;
+    private $cost_per_km_4wheeler = 4;
 
     /*
         get current day attendance details
