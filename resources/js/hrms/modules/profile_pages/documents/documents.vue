@@ -1,6 +1,6 @@
 <template>
     <div class="table-responsive">
-        <DataTable ref="dt" :value="Documents" dataKey="id" :paginator="true" :rows="10"
+        <DataTable ref="dt" :value="_instance_profilePagesStore.employeeDetails.get_employee_details" dataKey="id" :paginator="true" :rows="10"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             :rowsPerPageOptions="[5, 10, 25]"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
@@ -40,6 +40,13 @@
 <script setup>
 import axios from "axios";
 import { ref } from "vue";
+
+import { Service } from "../../Service/Service";
+import { profilePagesStore } from '../stores/ProfilePagesStore'
+
+const _instance_profilePagesStore = profilePagesStore()
+
+const fetch_data = Service()
 
 
 

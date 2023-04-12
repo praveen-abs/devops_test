@@ -170,7 +170,7 @@
 
                     </div>
                     <div class="tab-pane fade" id="finance_det" role="tabpanel" aria-labelledby="">
-                        <FinanceDetails />
+                        <div v-if="!_instance_profilePagesStore.loading_screen"><FinanceDetails /></div>
 
 
                     </div>
