@@ -460,6 +460,20 @@ const saveBankinfoDetails = () => {
 
 }
 
+function onClick_EditButton_BankInfo(){
+    console.log("Opening General Info Dialog");
+
+    // Assign json values into dialog elements also
+
+     bank_information.bank_id = _instance_profilePagesStore.employeeDetails.get_employee_details.bank_id  ;
+     bank_information.bank_ac_no   =   _instance_profilePagesStore.employeeDetails.get_employee_details.bank_account_number ;
+     bank_information.ifsc_code   =  _instance_profilePagesStore.employeeDetails.get_employee_details.bank_ifsc_code;
+     bank_information.pan_no   =   _instance_profilePagesStore.employeeDetails.get_employee_details.pan_number ;
+
+
+     dialog_Bankvisible.value = true;
+}
+
 
 function onClick_EditButton_Statutory_Info(){
     console.log("Opening General Info Dialog");
@@ -529,25 +543,6 @@ axios.post(url, {
     dialog_statutory_visible.value = false;
 
 }
-
-function onClick_EditButton_statutoryInfo(){
-console.log("Opening General Info Dialog");
-
-// Assign json values into dialog elements also
-
-            statutory_information.pf_applicable =_instance_profilePagesStore.employeeDetails.get_employee_details.pf_applicable
-            statutory_information.epf_no = _instance_profilePagesStore.employeeDetails.get_employee_details.epf_number
-            statutory_information.uan_no = _instance_profilePagesStore.employeeDetails.get_employee_details.uan_number
-            statutory_information.esic_applicable = _instance_profilePagesStore.employeeDetails.get_employee_details.esic_applicable
-            statutory_information.esic_no = _instance_profilePagesStore.employeeDetails.get_employee_details.esic_number
-
-dialog_statutory_visible.value = true;
-
-}
-
-
-
-
 
 
 

@@ -771,7 +771,8 @@ class VmtEmployeeOnboardingController extends Controller
             $rules = [
                 'employee_code' => 'nullable|unique:users,user_code',
                 'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'email' => 'nullable|email:strict|unique:users,email',
+                //'email' => 'nullable|email:strict|unique:users,email',
+                'email' => 'nullable',
                 'gender' => 'required|in:Male,male,Female,female,other',
                 'doj' => 'required|date',
                 'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',

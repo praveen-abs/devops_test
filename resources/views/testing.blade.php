@@ -19,7 +19,9 @@
 </head>
 <body>
     <?php
-        //$encr_userCode = Crypt::encryptString();
+        $encr_userCode = Crypt::encryptString('186');
+        echo "Encr UserCode : ". $encr_userCode;
+
         $encr_userCode =  Crypt::encryptString("ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddAdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddAdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddAdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddAdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddAddddddddddddddddddddddddddddddddddddddddddddddddddddddddA");
        // echo  request()->getSchemeAndHttpHost()."/".$encr_userCode;
        echo "<br/> Content <p>".$encr_userCode."</p>";
