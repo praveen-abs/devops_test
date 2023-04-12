@@ -6,15 +6,18 @@ use Illuminate\Support\Collection;
 use Illuminate\Session\SessionManager;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use \DateTime;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use App\Models\VmtGeneralInfo;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use \stdClass;
-
 use App\Models\User;
 use App\Models\VmtEmployee;
+use App\Models\Department;
+use App\Models\VmtMaritalStatus;
+use App\Models\Bank;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\Compensatory;
 use App\Models\VmtEmployeeStatutoryDetails;
@@ -79,6 +82,7 @@ class VmtEmployeeService {
     {
 
 
+
         $response = $this->createOrUpdate_User(data: $data, can_onboard_employee : $can_onboard_employee, user_id: $existing_user_id, onboard_type : $onboard_type);
 
         if(!empty($response) && $response->status == 'success')
@@ -96,12 +100,20 @@ class VmtEmployeeService {
 
                 }
                 else
+                if($onboard_import_type == "excel_bulk")
+                {
+
+                    //validate date fields before saving in table
+                    $this->Upload_BulkOnboardDetail( $onboard_user, $data,$onboard_user->id);
+
+                }
+                else
                 if($onboard_import_type == "onboard_form")//for normal , quick form onboard
                 {
                     $this->createOrUpdate_EmployeeDetails( $onboard_user, $data, $onboard_import_type);
                     $this->createOrUpdate_EmployeeOfficeDetails( $onboard_user->id, $data);
                     $this->createOrUpdate_EmployeeStatutoryDetails( $onboard_user->id, $data);
-                    $this->createOrUpdate_EmployeeFamilyDetails( $onboard_user->id, $data);
+                    $this->createOrUpdate_EmployeeFamilyDetails( $onboard_user->id, $data,$onboard_import_type);
                     $this->createOrUpdate_EmployeeCompensatory( $onboard_user->id, $data);
                 }
 
@@ -133,7 +145,9 @@ class VmtEmployeeService {
 
                 //Update existing user
                 $newUser->name = $data['employee_name'];
-                $newUser->email = $data["email"];
+                if(!empty($data["email"])){
+                    $newUser->email = $data["email"];
+                }
                 //$newUser->password = Hash::make('Abs@123123');
                 //$newUser->avatar = $data['employee_code'] . '_avatar.jpg';
                 $newUser->user_code = strtoupper($data['employee_code']);
@@ -168,9 +182,13 @@ class VmtEmployeeService {
 
     private function CreateNewUser($data, $can_onboard_employee, $onboard_type)
     {
+
         $newUser = new User;
         $newUser->name =$data['employee_name'];
-        $newUser->email = $data["email"];
+        if(!empty($data["email"])){
+            $newUser->email = $data["email"];
+        }
+
         $newUser->password = Hash::make('Abs@123123');
         //$newUser->avatar = $data['employee_code'] . '_avatar.jpg';
         $newUser->user_code = strtoupper($data['employee_code']);
@@ -188,9 +206,227 @@ class VmtEmployeeService {
         return $newUser;
     }
 
+    //for bulck onboard
+private function Upload_BulkOnboardDetail($user,$row,$user_id){
+
+//store employee details
+        $newEmployee = VmtEmployee::where('userid',$user->id);
+
+        if($newEmployee->exists())
+        {
+            $newEmployee = $newEmployee->first();
+        }
+        else
+        {
+            $newEmployee = new VmtEmployee;
+        }
+
+        $doj=$row["doj"] ?? '';
+        $dob=$row["dob"] ?? '';
+
+        $newEmployee->userid   =    $user_id;
+        $newEmployee->gender   =    $row["gender"] ?? '';
+        $newEmployee->doj   =  $doj ? $this->getdateFormatForDb($doj) : '';
+        $newEmployee->dol   =  $doj ? $this->getdateFormatForDb($doj) : '';
+        $newEmployee->dob   =  $dob ? $this->getdateFormatForDb($dob) : '';
+        $newEmployee->location   =    $row["work_location"] ?? '';
+        $newEmployee->pan_number   =  isset($row["pan_number"]) ? ($row["pan_number"]) : "";
+        $newEmployee->aadhar_number = $row["aadhar"] ?? '';
+        $marital_status_id=VmtMaritalStatus::where('name',$row["marital_status"] )->first()->id; // to get marital status id
+        $newEmployee->marital_status_id = $marital_status_id ?? '';
+        $bank_id=Bank::where('bank_name',$row['bank_name'])->first()->id;  // to get bank id
+        $newEmployee->bank_id   = $bank_id ?? '';
+        $newEmployee->bank_ifsc_code  = $row["bank_ifsc"] ?? '';
+        $newEmployee->bank_account_number  = $row["account_no"] ?? '';
+
+
+        // if (!empty($row['marital_status'])) {
+        //     if ($row['marital_status'] <> 1) {
+        //         $newEmployee->no_of_children   = $row["no_of_children"] ?? 0;
+
+        //         if (!empty($row['no_of_children']) && $row['no_of_children'] > 0) {
+        //             // $newEmployee->kid_name   = json_encode($row["child_name"]);
+        //             // $newEmployee->kid_age  = json_encode($row["child_dob"]);
+        //         }
+        //     }
+        // } else {
+        //     $row['marital_status'] ='unmarried';
+        //}
+        $newEmployee->save();
+
+//store employeeoffice details
+          $empOffice = VmtEmployeeOfficeDetails::where('user_id',$user_id);
+
+          if($empOffice->exists())
+          {
+              $empOffice = $empOffice->first();
+
+          }
+          else
+          {
+              $empOffice = new VmtEmployeeOfficeDetails;
+          }
+           $empOffice->user_id = $user_id; //Link between USERS and VmtEmployeeOfficeDetails table
+           $department_id=Department::where('name',$row['department'])->first()->id;
+           $empOffice->department_id = $department_id ?? ''; // => "lk"
+           $empOffice->process = $row["process"] ?? ''; // => "k"
+           $empOffice->designation = $row["designation"] ?? ''; // => "k"
+           $empOffice->designation = $row["work_location"] ?? ''; // => "k"
+           $empOffice->l1_manager_code  = $row["reporting_manager_emp_code"] ?? ''; // => "k"
+           if ( !empty($row["l1_manager_code"]) && $this->isUserExist($row["l1_manager_code"]))
+           {
+               $empOffice->l1_manager_code  = $row["l1_manager_code"];
+               updateUserRole($empOffice->l1_manager_code,"Manager");
+
+           }
+
+           $empOffice->save();
+
+//store employee_statutoryDetails details
+
+           $newEmployee_statutoryDetails = VmtEmployeeStatutoryDetails::where('user_id',$user_id);
+
+          if($newEmployee_statutoryDetails->exists())
+          {
+            $newEmployee_statutoryDetails = $newEmployee_statutoryDetails->first();
+          }
+          else
+          {
+              $newEmployee_statutoryDetails = new VmtEmployeeStatutoryDetails;
+          }
+          $newEmployee_statutoryDetails->user_id = $user_id;
+          $newEmployee_statutoryDetails->uan_number = $row["uan_number"] ?? '';
+          $newEmployee_statutoryDetails->epf_number = $row["epf_number"] ?? '';
+          $newEmployee_statutoryDetails->esic_number = $row["esic_number"] ?? '';
+          $newEmployee_statutoryDetails->save();
+
+//store employee_familyDetails details
+
+          VmtEmployeeFamilyDetails::where('user_id',$user_id)->delete();
+
+          if(!empty($row['father_name'])){
+
+              $familyMember =  new VmtEmployeeFamilyDetails;
+              $familyMember->user_id  = $user_id;
+              $familyMember->name =   $row['father_name'];
+              $familyMember->relationship = 'Father';
+              $familyMember->gender = 'Male';
+                 if(!empty($row["father_dob"])){
+                      $dob_father=$row["father_dob"];
+                      $familyMember->dob = $this->getdateFormatForDb( $dob_father);
+                  }
+              $familyMember->save();
+          }
+             if(!empty($row['mother_name'])){
+              $familyMember =  new VmtEmployeeFamilyDetails;
+              $familyMember->user_id  = $user_id;
+              $familyMember->name =   $row['mother_name'];
+              $familyMember->relationship = 'Mother';
+              $familyMember->gender = 'Female';
+  //for bulk onboarding
+                  if(!empty($row["mother_dob"])){
+                      $dob_mother=$row["mother_dob"];
+                      $familyMember->dob = $this->getdateFormatForDb( $dob_mother) ;
+                  }
+              $familyMember->save();
+          }
+
+          if (!empty($row['marital_status']) && $row['marital_status'] != 1) {
+              $familyMember =  new VmtEmployeeFamilyDetails;
+              $familyMember->user_id  = $user_id;
+              $familyMember->name =   $row['spouse_name'];
+              $familyMember->relationship = 'Spouse';
+              $familyMember->gender = $row['spouse_gender'] ?? '';
+  //for bulk onboarding
+                  if(!empty($row["spouse_dob"])){
+                  $dob_spouse =  $row["spouse_dob"];
+                  $familyMember->dob = $this->getdateFormatForDb(  $dob_spouse);
+                  }
+                }
+                $familyMember->save();
+
+              if (!empty($row['child_1'])) {
+                  $familyMember =  new VmtEmployeeFamilyDetails;
+                  $familyMember->user_id  = $user_id;
+                  $familyMember->name =  $row['child_1'];
+                  $familyMember->relationship = 'Children';
+                  $familyMember->gender = '---';
+
+                  if(!empty($row["child_1_dob"]))
+                  $child_dob= $row["child_1_dob"];
+                  $familyMember->dob = $this->getdateFormatForDb( $child_dob) ;
+              }
+              $familyMember->save();
+
+              if (!empty($row['child_2'])) {
+                $familyMember =  new VmtEmployeeFamilyDetails;
+                $familyMember->user_id  = $user_id;
+                $familyMember->name =   $row['child_2'];
+                $familyMember->relationship = 'Children';
+                $familyMember->gender = '---';
+
+                if(!empty($row["child_2_dob"]))
+                $child_dob= $row["child_2_dob"];
+                $familyMember->dob = $this->getdateFormatForDb( $child_dob) ;
+            }
+            $familyMember->save();
+
+            if (!empty($row['child_3'])) {
+                $familyMember =  new VmtEmployeeFamilyDetails;
+                $familyMember->user_id  = $user_id;
+                $familyMember->name =   $row['child_3'];
+                $familyMember->relationship = 'Children';
+                $familyMember->gender = '---';
+
+                if(!empty($row["child_3_dob"]))
+                $child_dob= $row["child_3_dob"];
+                $familyMember->dob = $this->getdateFormatForDb( $child_dob) ;
+            }
+
+            $familyMember->save();
+
+//store employee_compensatory Details details
+
+     $compensatory = Compensatory::where('user_id',$user_id);
+
+        if($compensatory->exists())
+        {
+            $compensatory = $compensatory->first();
+        }
+        else
+        {
+            $compensatory = new Compensatory;
+        }
+
+        $compensatory->user_id = $user_id;
+        $compensatory->basic = $row["basic"] ?? '';
+        $compensatory->hra = $row["hra"] ?? '';
+        $compensatory->Statutory_bonus = $row["statutory_bonus"] ?? '' ;
+        $compensatory->child_education_allowance = $row["child_education_allowance"] ?? '' ;
+        $compensatory->food_coupon = $row["food_coupon"] ?? '' ;
+        $compensatory->lta = $row["lta"] ?? '' ;
+        $compensatory->special_allowance = $row["special_allowance"] ?? '' ;
+        $compensatory->other_allowance = $row["other_allowance"] ?? '' ;
+        $compensatory->gross = $row["fixed_gross"] ?? '' ;
+        $compensatory->epf_employer_contribution = $row["epf_employer_contribution"] ?? '' ;
+        $compensatory->esic_employer_contribution = $row["esic_employer_contribution"] ?? '' ;
+        $compensatory->insurance = $row["insurance"] ?? '' ;
+        $compensatory->graduity = $row["graduity"] ?? '' ;
+        $compensatory->dearness_allowance = $row["dearness_allowance"] ?? '' ;
+        $compensatory->cic = $row["ctc_cost_to_company"] ?? '' ;
+        $compensatory->epf_employee = $row["epf_employee"] ?? '' ;
+        $compensatory->esic_employee = $row["esic_employee"] ?? '' ;
+        $compensatory->professional_tax = $row["professional_tax"] ?? '' ;
+        $compensatory->net_income = $row["net_salary"] ?? '' ;
+        $compensatory->save();
+        
+
+}
+
+
+
     private function createOrUpdate_EmployeeDetails($user,$row, $onboard_import_type)
     {
-
         //Sdd("Inside emp details");
         $newEmployee = VmtEmployee::where('userid',$user->id);
 
@@ -210,11 +446,12 @@ class VmtEmployeeService {
 
         $newEmployee->userid   =    $user->id;
         $newEmployee->gender   =    $row["gender"] ?? '';
+
         $newEmployee->doj   =  $doj ? $this->getdateFormatForDb($doj) : '';
         $newEmployee->dol   =  $doj ? $this->getdateFormatForDb($doj) : '';
         $newEmployee->dob   =  $dob ? $this->getdateFormatForDb($dob) : '';
         $newEmployee->location   =    $row["work_location"] ?? '';
-        $newEmployee->pan_number   =  isset($row["pan_number"]) ? ($row["pan_number"]) : "";
+        $newEmployee->pan_number   =  isset($row["pan_no"]) ? ($row["pan_no"]) : "";
         $newEmployee->dl_no   =  $row["dl_no"] ?? '';
         $newEmployee->passport_number = $row["passport_no"] ?? '';
         $newEmployee->passport_date =  $passport_date ? $this->getdateFormatForDb( $passport_date) : '';
@@ -222,7 +459,7 @@ class VmtEmployeeService {
         //$newEmployee->pan_ack   =    $row["pan_ack"];
         $newEmployee->aadhar_number = $row["aadhar_number"] ?? '';
 
-        $newEmployee->marital_status = $row["marital_status_id"] ?? '';
+        $newEmployee->marital_status_id = $row["marital_status"] ?? '';
 
         $newEmployee->nationality = $row["nationality"] ?? '';
         $data_mobile_number = empty($row["mobile_number"]) ? "" : strval($row["mobile_number"]);
@@ -261,7 +498,7 @@ class VmtEmployeeService {
             $row['marital_status'] = '';
         }
 
-        if($onboard_import_type != "excel_quick")
+        if($onboard_import_type != "excel_quick" && $onboard_import_type != "excel_bulk")
         {
             $newEmployee->aadhar_card_file = $this->uploadDocument( $user->id, $row['Aadharfront'], $user->user_code, 'Aadhar Card Front');
             $newEmployee->aadhar_card_backend_file = $this->uploadDocument($user->id,$row['AadharBack'], $user->user_code,'Aadhar Card Back');
@@ -300,6 +537,7 @@ class VmtEmployeeService {
         if($empOffice->exists())
         {
             $empOffice = $empOffice->first();
+
         }
         else
         {
@@ -313,6 +551,7 @@ class VmtEmployeeService {
          $empOffice->designation = $row["designation"] ?? ''; // => "k"
          $empOffice->cost_center = $row["cost_center"] ?? ''; // => "k"
          $empOffice->probation_period  = $row['probation_period'] ?? ''; // => "k"
+         //dd("conf date: " .$confirmation_period);
          $empOffice->confirmation_period  = $confirmation_period ? $this->getdateFormatForDb( $confirmation_period) : ''; // => "k"
          $empOffice->holiday_location  = $row["holiday_location"] ?? ''; // => "k"
          $empOffice->l1_manager_code  = $row["l1_manager_code_id"] ?? ''; // => "k"
@@ -360,9 +599,8 @@ class VmtEmployeeService {
 
     }
 
-    private function createOrUpdate_EmployeeFamilyDetails($user_id, $familyData)
+    private function createOrUpdate_EmployeeFamilyDetails($user_id, $familyData,$onboard_import_type)
     {
-
         //delete old records
         VmtEmployeeFamilyDetails::where('user_id',$user_id)->delete();
 
@@ -375,13 +613,19 @@ class VmtEmployeeService {
             $familyMember->gender = $familyData['father_gender'];
 
 
-            //dd($familyData["dob_father"]);
-            if(!empty($familyData["dob_father"]))
+//for bulk onboarding
+            if($onboard_import_type == "excel_bulk"){
+                if(!empty($familyData["father_dob"])){
+                    $dob_father=$familyData["father_dob"];
+                    $familyMember->dob = $this->getdateFormatForDb( $dob_father);
+                }
+            }else//for others
+              if(!empty($familyData["dob_father"])){
                 $dob_father=$familyData["dob_father"];
                 $familyMember->dob = $this->getdateFormatForDb( $dob_father);
-
+            }
             $familyMember->save();
-           // dd($familyMember);
+
 
         }
 
@@ -391,15 +635,21 @@ class VmtEmployeeService {
             $familyMember->name =   $familyData['mother_name'];
             $familyMember->relationship = 'Mother';
             $familyMember->gender = $familyData['mother_gender'];
-
-            if(!empty($familyData["dob_mother"]))
-            $dob_mother=$familyData["dob_mother"];
+//for bulk onboarding
+            if($onboard_import_type == "excel_bulk"){
+                if(!empty($familyData["mother_dob"])){
+                    $dob_mother=$familyData["mother_dob"];
+                    $familyMember->dob = $this->getdateFormatForDb( $dob_mother) ;
+                }
+            }else//for others
+              if(!empty($familyData["dob_mother"])){
+                $dob_mother=$familyData["dob_mother"];
                 $familyMember->dob = $this->getdateFormatForDb( $dob_mother) ;
-            //$familyData["mother_dob"];
 
+            }
             $familyMember->save();
         }
-        //dd($familyData);
+
 
         if (!empty($familyData['marital_status']) && $familyData['marital_status'] != 1) {
             $familyMember =  new VmtEmployeeFamilyDetails;
@@ -407,10 +657,17 @@ class VmtEmployeeService {
             $familyMember->name =   $familyData['spouse_name'];
             $familyMember->relationship = 'Spouse';
             $familyMember->gender = $familyData['spouse_gender'] ?? '';
-
-            if(!empty($familyData["dob_spouse"]))
-            $dob_spouse =  $familyData["dob_spouse"];
+//for bulk onboarding
+            if($onboard_import_type == "excel_bulk"){
+                if(!empty($familyData["spouse_dob"])){
+                $dob_spouse =  $familyData["spouse_dob"];
                 $familyMember->dob = $this->getdateFormatForDb(  $dob_spouse);
+                }
+            }else//for others
+             if(!empty($familyData["dob_spouse"])){
+               $dob_spouse =  $familyData["dob_spouse"];
+                $familyMember->dob = $this->getdateFormatForDb(  $dob_spouse);
+            }
 
             if(!empty($familyData["wedding_date"]))
                $wedding_date = $familyData["wedding_date"];
@@ -428,7 +685,7 @@ class VmtEmployeeService {
 
                 if(isset($familyData["child_dob"]))
                 $child_dob= $familyData["child_dob"];
-                    $familyMember->dob = $this->getdateFormatForDb( $child_dob) ;
+                $familyMember->dob = $this->getdateFormatForDb( $child_dob) ;
                 //$familyData["child_dob"];
 
                 $familyMember->save();
@@ -636,24 +893,32 @@ class VmtEmployeeService {
     }
 
     private function getdateFormatForDb($date){
-          //Check if its in proper format
-          $processed_date = \DateTime::createFromFormat('d-m-Y', $date);
 
-          //If date is in 'd-m-y' format, then convert into one
-          if( $processed_date)
-          {
-              //Then convert to Y-m-d
-              $processed_date =  $processed_date->format('Y-m-d');
-          }
-          else
-          {
-              //If date is not in 'd-m-y' format, then convert into 'd-m-y'
 
-              $processed_date = \DateTime::createFromFormat('Y-m-d', $date)->format('Y-m-d');
+        try{
+            //Check if its in proper format
+            $processed_date = \DateTime::createFromFormat('d-m-Y', $date);
 
-          }
+            //If date is in 'd-m-y' format, then convert into one
+            if( $processed_date)
+            {
+                //Then convert to Y-m-d
+                $processed_date =  $processed_date->format('Y-m-d');
 
-        return $processed_date;
+            }
+            else
+            {
+                //If date is not in 'd-m-y' format, then convert into 'd-m-y'
+
+                $processed_date = DateTime::createFromFormat('Y-m-d', $date)->format('Y-m-d');
+
+            }
+
+            return $processed_date;
+        }
+        catch(\Exception $e){
+            dd("Error for input date : ".$date);
+        }
     }
 
     public function getQuickOnboardedEmployeeData($user_id){

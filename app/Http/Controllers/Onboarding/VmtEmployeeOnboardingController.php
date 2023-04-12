@@ -10,6 +10,8 @@ use App\Models\State;
 use App\Models\Department;
 use App\Models\VmtBloodGroup;
 use App\Models\Bank;
+use App\Models\VmtEmployee;
+use App\Models\VmtMaritalStatus;
 use App\Imports\VmtEmployeeManagerImport;
 use Illuminate\Support\Facades\Auth;
 use App\Notifications\ViewNotification;
@@ -720,7 +722,7 @@ class VmtEmployeeOnboardingController extends Controller
     }
 
     // store employeess from excel sheet to database
-    public function importBulkOnboardEmployeesExcelData(Request $request)
+    public function importBulkOnboardEmployeesExcelData(Request $request,VmtEmployeeService $employeeService)
     {
 
         $validator =    Validator::make(
@@ -731,7 +733,7 @@ class VmtEmployeeOnboardingController extends Controller
 
         if ($validator->passes()) {
             $importDataArry = \Excel::toArray(new VmtEmployeeImport, request()->file('file'));
-            return $this->storeBulkOnboardEmployees($importDataArry);
+            return $this->storeBulkOnboardEmployees($importDataArry,$employeeService);
         } else {
             $data['failed'] = $validator->errors()->all();
             return response()->json($data);
@@ -743,8 +745,9 @@ class VmtEmployeeOnboardingController extends Controller
     /*
         For bulk upload employees
     */
-    private function storeBulkOnboardEmployees($data)
+    private function storeBulkOnboardEmployees($data,$employeeService)
     {
+
         ini_set('max_execution_time', 300);
         //For output jsonresponse
         $data_array = [];
@@ -768,27 +771,27 @@ class VmtEmployeeOnboardingController extends Controller
             $rules = [
                 'employee_code' => 'nullable|unique:users,user_code',
                 'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'email' => 'required|email:strict|unique:users,email',
+                'email' => 'nullable|email:strict|unique:users,email',
                 'gender' => 'required|in:Male,male,Female,female,other',
                 'doj' => 'required|date',
                 'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'dob' => 'required|date|before:-18 years',
                 'father_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'father_gender' => 'required|in:Male,male,Female,female,other',
+                'father_gender' => 'nullable|in:Male,male,Female,female,other',
                 'father_dob' => 'required|date',
 
                 'pan_no' => 'nullable|required_if:pan_ack,null|regex:/(^([A-Z]){3}P([A-Z]){1}([0-9]){4}([A-Z]){1}$)/u',
                 'pan_ack' => 'required_if:pan_no,null',
                 'aadhar' => 'required|regex:/(^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$)/u',
                 'marital_status' => 'required|in:unmarried,married,widowed,separated,divorced',
-                'mobile_no' => 'required|regex:/^([0-9]{10})?$/u|numeric',
+                'mobile_no' => 'nullable|regex:/^([0-9]{10})?$/u|numeric',
                 'bank_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'bank_ifsc' => 'required|regex:/(^([A-Z]){4}0([A-Z0-9]){6}?$)/u',
                 'account_no' => 'required',
-                'current_address' => 'required',
-                'permanent_address' => 'required',
+                'current_address' => 'nullable',
+                'permanent_address' => 'nullable',
                 'mother_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'mother_gender' => 'required|in:Male,male,Female,female,other',
+                'mother_gender' => 'nullable|in:Male,male,Female,female,other',
                 'mother_dob' => 'required|date',
                 'spouse_name' => 'nullable|required_unless:marital_status,unmarried|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'spouse_dob' => 'nullable|required_unless:marital_status,unmarried|date',
@@ -798,15 +801,15 @@ class VmtEmployeeOnboardingController extends Controller
                 'department' => 'required',
                 'process' => 'required',
                 'designation' => 'required',
-                'cost_center' => 'required',
-                'confirmation_period' => 'required|numeric',
-                'holiday_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'cost_center' => 'nullable',
+                'confirmation_period' => 'nullable|date',
+                'holiday_location' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'l1_manager_code' => 'nullable|regex:/(^([a-zA-z0-9.]+)(\d+)?$)/u',
                 'l1_manager_name' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'official_mail' => 'required|email',
+                'official_mail' => 'nullable|email',
                 'official_mobile' => 'nullable|regex:/^([0-9]{10})?$/u|numeric',
-                'emp_notice' => 'required|numeric',
+                'emp_notice' => 'nullable|numeric',
                 'basic' => 'required|numeric',
                 'hra' => 'required|numeric',
                 'statutory_bonus' => 'required|numeric',
@@ -821,15 +824,15 @@ class VmtEmployeeOnboardingController extends Controller
                 'epf_employee' => 'required|numeric',
                 'esic_employee' => 'required|numeric',
                 'professional_tax' => 'required|numeric',
-                'labour_welfare_fund' => 'required|numeric',
+                'labour_welfare_fund' => 'nullable|numeric',
                 'uan_number' => 'required|numeric',
-                'pf_applicable' => 'required|in:yes,Yes,no,No',
-                'esic_applicable' => 'required|in:yes,Yes,no,No',
-                'ptax_location' => 'required',
-                'tax_regime' => 'required|in:old,Old,new,New',
-                'lwf_location' => 'required',
+                'pf_applicable' => 'nullable|in:yes,Yes,no,No',
+                'esic_applicable' => 'nullable|in:yes,Yes,no,No',
+                'ptax_location' => 'nullable',
+                'tax_regime' => 'nullable|in:old,Old,new,New',
+                'lwf_location' => 'nullable',
                 'esic_employer_contribution' => 'required|numeric',
-
+                 'dearness_allowance' => 'required|numeric',
             ];
 
             $messages = [
@@ -867,13 +870,14 @@ class VmtEmployeeOnboardingController extends Controller
         //Runs only if all excel records are valid
         if ($isAllRecordsValid) {
             foreach ($excelRowdata_row[0]  as $key => $excelRowdata) {
-                $rowdata_response = $this->storeSingleRecord_BulkEmployee($excelRowdata);
+                $rowdata_response = $this->storeSingleRecord_BulkEmployee($excelRowdata, $employeeService);
 
                 array_push($data_array, $rowdata_response);
             }
 
             $responseJSON['status'] = 'success';
             $responseJSON['message'] = "Excelsheet data import success";
+            $responseJSON['mail_status'] =$rowdata_response['mail_status'];
             $responseJSON['data'] = $data_array;
         } else {
             $responseJSON['status'] = 'failure';
@@ -891,185 +895,211 @@ class VmtEmployeeOnboardingController extends Controller
 
         $outputArray should be passed from parent function.
     */
-    private function storeSingleRecord_BulkEmployee($row)
+    private function storeSingleRecord_BulkEmployee($row, $employeeService)
     {
         //DB level validation
 
-        if (isset($row['employee_code'])) {
-            $empNo = $row['employee_code'];
-        } else {
-            $clientData  = VmtClientMaster::first();
-            $maxId  = VmtEmployee::max('id') + 1;
-            if ($clientData) {
-                $empNo = $clientData->client_code . $maxId;
-            } else {
-                $empNo = $maxId;
-            }
-        }
+          try{
 
+            $response = $employeeService->createOrUpdate_OnboardFormData(data: $row,
+                                                            can_onboard_employee:"0",
+                                                            existing_user_id : null,
+                                                            onboard_type  : "bulk",
+                                                            onboard_import_type : "excel_bulk"
+                                                             );
 
-        try {
-            $user =  User::create([
-                'name' => $row['employee_name'],
-                'email' => $row["email"],
-                'password' => Hash::make('Abs@123123'),
-                'avatar' =>  $row['employee_name'] . '_avatar.jpg',
-                'user_code' =>  strtoupper($empNo),
-                'can_login' => '1',
-                'active' => '0',
-                'is_onboarded' => '0',
-                'onboard_type' => 'bulk',
-                'is_ssa' => '0',
-                'org_role' =>'5', //employee role
-                'is_default_password_updated' => '0'
-            ]);
-            $user->save();
+        if(!empty($row["email"])){
+                     $message = "Employee OnBoard was Created   ";
+                     $VmtGeneralInfo = VmtGeneralInfo::first();
+                     $image_view = url('/') . $VmtGeneralInfo->logo_img;
+               \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), $image_view));
 
-            // var_dump($row['dob']);
-            //  dd($row['dob'];
-            $newEmployee = new VmtEmployee;
-            $newEmployee->userid = $user->id;
-            $newEmployee->emp_no   =    $empNo;
-            $newEmployee->gender   =    $row["gender"];
-            $newEmployee->doj   =   \DateTime::createFromFormat('d-m-Y', $row['doj'])->format('Y-m-d');
-            $newEmployee->dol   =   \DateTime::createFromFormat('d-m-Y', $row['doj'])->format('Y-m-d');
-            $newEmployee->location   =    $row["work_location"];
-            $newEmployee->dob   =   \DateTime::createFromFormat('d-m-Y', $row['dob'])->format('Y-m-d');
-            $newEmployee->father_name   =  $row["father_name"];
-            $newEmployee->father_gender   =  $row["father_gender"];
-            $newEmployee->father_dob   =  $row['father_dob'];
-
-            $newEmployee->pan_number   =  isset($row["pan_no"]) ? ($row["pan_no"]) : "";
-            //$newEmployee->pan_ack   =    $row["pan_ack"];
-            $newEmployee->aadhar_number = $row["aadhar"];
-            $newEmployee->marital_status = $row["marital_status"];
-            $newEmployee->mobile_number  = strval($row["mobile_no"]);
-            $newEmployee->bank_id   = Bank::where('bank_name',$row['bank_name'])->first()->id;
-            $newEmployee->bank_ifsc_code  = $row["bank_ifsc"];
-            $newEmployee->bank_account_number  = $row["account_no"];
-            $newEmployee->current_address_line_1   = $row["current_address"];
-            $newEmployee->permanent_address_line_1   = $row["permanent_address"];
-            $newEmployee->mother_name   = $row["mother_name"];
-            $newEmployee->mother_gender   = $row["mother_gender"];
-            $newEmployee->mother_dob   = $row["mother_dob"];
-
-
-            if ($row['marital_status'] <> 'unmarried') {
-                $newEmployee->spouse_name   = $row["spouse_name"];
-                $newEmployee->spouse_age   = $row["spouse_dob"];
-                if ($row['no_of_child'] > 0) {
-                    $newEmployee->no_of_children = $row['no_of_child'];
-                    $newEmployee->kid_name   = json_encode($row["child_name"]);
-                    $newEmployee->kid_age  = json_encode($row["child_dob"]);
+                    return  $rowdata_response = [
+                     'row_number' => '',
+                      'status' => 'success',
+                      'message' => $row['employee_code'] . ' added successfully<br/>',
+                      'mail_status' => 'success',
+                      'error_fields' => [],
+                                       ];
+          } else{
+                    return $rowdata_response = [
+                        'row_number' => '',
+                        'status' => 'success',
+                        'message' => $row['employee_code'] . ' added successfully<br/>',
+                        'mail_status' => 'failure',
+                        'error_fields' => [],
+                      ];
                 }
-            }
-            $docReviewArray = array(
-                'aadhar_card_file' => -1,
-                'aadhar_card_backend_file' => -1,
-                'pan_card_file' => -1,
-                'passport_file' => -1,
-                'voters_id_file' => -1,
-                'dl_file' => -1,
-                'education_certificate_file' => -1,
-                'reliving_letter_file' => -1
-            );
-            $newEmployee->docs_reviewed = json_encode($docReviewArray);
-            $newEmployee->save();
+            } catch(\Exception $e) {
+                //dd($e);
+               // $this->deleteUser($user->id);
 
-            // Storing family member in vmt_employee_family_details
-            $this->storeEmployeeFamilyMembers($row, $user->id);
-
-            if ($newEmployee) {
-                $empOffice  = new VmtEmployeeOfficeDetails;
-                $empOffice->user_id = $newEmployee->userid;
-                $empOffice->department_id = $row["department"];
-                $empOffice->process = $row["process"];
-                $empOffice->designation = $row["designation"];
-                $empOffice->cost_center = $row["cost_center"];
-                $empOffice->confirmation_period  = $row['confirmation_period'];
-                $empOffice->holiday_location  = $row["holiday_location"];
-
-                if ( !empty($row["l1_manager_code"]))
-                {
-                    $empOffice->l1_manager_code  = $row["l1_manager_code"];
-
-                    if($this->isUserExist($row["l1_manager_code"]))
-                        updateUserRole($empOffice->l1_manager_code,"Manager");
-                }
-
-                // $empOffice->l1_manager_name  = $row["l1_manager_name"];
-                $empOffice->work_location  = $row["work_location"];
-                $empOffice->officical_mail  = $row["official_mail"];
-                $empOffice->official_mobile  = $row["official_mobile"];
-                $empOffice->emp_notice  = $row["emp_notice"];
-                $empOffice->save();
+                return $rowdata_response = [
+                    'row_number' => '',
+                    'status' => 'failure',
+                    'message' => $row['employee_code'] . ' not added<br/>',
+                    'error_fields' => json_encode(['error' => $e->getMessage()]),
+                ];
             }
 
-            if ($empOffice) {
-
-                //Statutory Details
-                $newEmployee_statutoryDetails = new VmtEmployeeStatutoryDetails;
-                $newEmployee_statutoryDetails->user_id = $user->id;
-                $newEmployee_statutoryDetails->uan_number = $row["uan_number"];
-                $newEmployee_statutoryDetails->epf_number = $row["epf_number"] ?? '';
-                $newEmployee_statutoryDetails->esic_number = $row["esic_number"] ?? '';
-                $newEmployee_statutoryDetails->pf_applicable = $row["pf_applicable"];
-                $newEmployee_statutoryDetails->esic_applicable = $row["esic_applicable"];
-                $newEmployee_statutoryDetails->ptax_location_state_id = $row["ptax_location"];
-                $newEmployee_statutoryDetails->tax_regime = $row["tax_regime"];
-                $newEmployee_statutoryDetails->lwf_location_state_id = $row["lwf_location"];
-                $newEmployee_statutoryDetails->save();
-
-                $compensatory = new Compensatory;
-                $compensatory->user_id = $newEmployee->userid;
-                $compensatory->basic = $row["basic"];
-                $compensatory->hra = $row["hra"];
-                $compensatory->Statutory_bonus = $row["statutory_bonus"];
-                $compensatory->child_education_allowance = $row["child_education_allowance"];
-                $compensatory->food_coupon = $row["food_coupon"];
-                $compensatory->lta = $row["lta"];
-                $compensatory->special_allowance = $row["special_allowance"];
-                $compensatory->other_allowance = $row["other_allowance"];
-                $compensatory->gross = $row["basic"] + $row["hra"] + $row["statutory_bonus"] + $row["child_education_allowance"] + $row["food_coupon"] + $row["lta"] + $row["special_allowance"] + $row["other_allowance"];
-                $compensatory->epf_employer_contribution = $row["epf_employer_contribution"];
-                $compensatory->esic_employer_contribution = $row["esic_employer_contribution"];
-                $compensatory->insurance = $row["insurance"];
-                $compensatory->graduity = $row["graduity"];
-                $compensatory->cic = $compensatory->gross + $row["epf_employer_contribution"] + $row["esic_employer_contribution"] + $row["insurance"] + $row["graduity"];
-                $compensatory->epf_employee = $row["epf_employee"];
-                $compensatory->esic_employee = $row["esic_employee"];
-                $compensatory->professional_tax = $row["professional_tax"];
-                $compensatory->labour_welfare_fund = $row["labour_welfare_fund"];
-                $compensatory->net_income = $compensatory->gross + $row["epf_employee"] + $row["esic_employee"] + $row["professional_tax"] + $row["labour_welfare_fund"] - ($row["epf_employer_contribution"] - $row["esic_employer_contribution"] - $row["insurance"] - $row["graduity"]);
-                $compensatory->save();
-            }
-
-            //Add new items into $row
-            $row['net_income'] = $compensatory->gross + $row["epf_employee"] + $row["esic_employee"] + $row["professional_tax"] + $row["labour_welfare_fund"] - ($row["epf_employer_contribution"] - $row["esic_employer_contribution"] - $row["insurance"] - $row["graduity"]);
 
 
-            if (fetchMasterConfigValue("can_send_appointmentmail_after_onboarding") == "true") {
-                $isEmailSent  = $this->attachAppointmentLetterPDF($row);
-            }
 
-            return $rowdata_response = [
-                'row_number' => '',
-                'status' => 'success',
-                'message' => $empNo . ' added successfully<br/>',
-                'error_fields' => [],
-            ];
-        } catch (\Exception $e) {
-            //dd($e);
-            $this->deleteUser($user->id);
+        // if (isset($row['employee_code'])) {
+        //     $empNo = $row['employee_code'];
+        // } else {
+        //     $clientData  = VmtClientMaster::first();
+        //     $maxId  = VmtEmployee::max('id') + 1;
+        //     if ($clientData) {
+        //         $empNo = $clientData->client_code . $maxId;
+        //     } else {
+        //         $empNo = $maxId;
+        //     }
+        // }
 
 
-            return $rowdata_response = [
-                'row_number' => '',
-                'status' => 'failure',
-                'message' => $empNo . ' not added',
-                'error_fields' => json_encode(['error' => $e->getMessage()]),
-            ];
-        }
+        // try {
+        //     $user =  User::create([
+        //         'name' => $row['employee_name'],
+        //         'email' => $row["email"],
+        //         'password' => Hash::make('Abs@123123'),
+        //         'avatar' =>  $row['employee_name'] . '_avatar.jpg',
+        //         'user_code' =>  strtoupper($empNo),
+        //         'can_login' => '1',
+        //         'active' => '0',
+        //         'is_onboarded' => '0',
+        //         'onboard_type' => 'bulk',
+        //         'is_ssa' => '0',
+        //         'org_role' =>'5', //employee role
+        //         'is_default_password_updated' => '0'
+        //     ]);
+        //     $user->save();
+        //     $marital_status_id=VmtMaritalStatus::where('name',ucfirst( $row["marital_status"]))->first()->id;   //to get id of marital_status
+        //     // var_dump($row['dob']);
+        //     //  dd($row['dob'];
+        //     $newEmployee = new VmtEmployee;
+        //     $newEmployee->userid = $user->id;
+        //    // $newEmployee->emp_no   = $row["emp_no"] ?? '';
+        //     $newEmployee->gender   =    $row["gender"];
+        //     $newEmployee->doj   =   \DateTime::createFromFormat('d-m-Y', $row['doj'])->format('Y-m-d');
+        //     $newEmployee->dol   =   \DateTime::createFromFormat('d-m-Y', $row['doj'])->format('Y-m-d');
+        //     $newEmployee->location   =    $row["work_location"];
+        //     $newEmployee->dob   =   \DateTime::createFromFormat('d-m-Y', $row['dob'])->format('Y-m-d');
+        //    // $newEmployee->father_name   =  $row["father_name"];
+        //    // $newEmployee->father_gender   =  $row["father_gender"];
+        //    // $newEmployee->father_dob   =  $row['father_dob'];
+
+        //     $newEmployee->pan_number   =  isset($row["pan_no"]) ? ($row["pan_no"]) : "";
+        //     //$newEmployee->pan_ack   =    $row["pan_ack"];
+        //     $newEmployee->aadhar_number = $row["aadhar"];
+        //     $newEmployee->marital_status_id = $marital_status_id;
+        //     $newEmployee->mobile_number  = strval($row["mobile_no"]);
+        //     $newEmployee->bank_id   = Bank::where('bank_name',$row['bank_name'])->first()->id;
+        //     $newEmployee->bank_ifsc_code  = $row["bank_ifsc"];
+        //     $newEmployee->bank_account_number  = $row["account_no"];
+        //     $newEmployee->current_address_line_1   = $row["current_address"];
+        //     $newEmployee->permanent_address_line_1   = $row["permanent_address"];
+        //    // $newEmployee->mother_name   = $row["mother_name"];
+        //    // $newEmployee->mother_gender   = $row["mother_gender"];
+        //    // $newEmployee->mother_dob   = $row["mother_dob"];
+
+
+        //     if ($row['marital_status'] <> 'unmarried') {
+        //        // $newEmployee->spouse_name   = $row["spouse_name"];
+        //        // $newEmployee->spouse_age   = $row["spouse_dob"];
+        //         if ($row['no_of_child'] > 0) {
+        //            // $newEmployee->no_of_children = $row['no_of_child'];
+        //             //$newEmployee->kid_name   = json_encode($row["child_name"]);
+        //            // $newEmployee->kid_age  = json_encode($row["child_dob"]);
+        //         }
+        //     }
+        //     $docReviewArray = array(
+        //         'aadhar_card_file' => -1,
+        //         'aadhar_card_backend_file' => -1,
+        //         'pan_card_file' => -1,
+        //         'passport_file' => -1,
+        //         'voters_id_file' => -1,
+        //         'dl_file' => -1,
+        //         'education_certificate_file' => -1,
+        //         'reliving_letter_file' => -1
+        //     );
+        //     $newEmployee->docs_reviewed = json_encode($docReviewArray);
+        //     $newEmployee->save();
+
+        //     // Storing family member in vmt_employee_family_details
+        //     $this->storeEmployeeFamilyMembers($row, $user->id);
+
+        //     if ($newEmployee) {
+        //         $empOffice  = new VmtEmployeeOfficeDetails;
+        //         $empOffice->user_id = $newEmployee->userid;
+        //         $empOffice->department_id = $row["department"];
+        //         $empOffice->process = $row["process"];
+        //         $empOffice->designation = $row["designation"];
+        //         $empOffice->cost_center = $row["cost_center"];
+        //         $empOffice->confirmation_period  = $row['confirmation_period'];
+        //         $empOffice->holiday_location  = $row["holiday_location"];
+
+        //         if ( !empty($row["l1_manager_code"]))
+        //         {
+        //             $empOffice->l1_manager_code  = $row["l1_manager_code"];
+
+        //             if($this->isUserExist($row["l1_manager_code"]))
+        //                 updateUserRole($empOffice->l1_manager_code,"Manager");
+        //         }
+
+        //         // $empOffice->l1_manager_name  = $row["l1_manager_name"];
+        //         $empOffice->work_location  = $row["work_location"];
+        //         $empOffice->officical_mail  = $row["official_mail"];
+        //         $empOffice->official_mobile  = $row["official_mobile"];
+        //         $empOffice->emp_notice  = $row["emp_notice"];
+        //         $empOffice->save();
+        //     }
+
+        //     if ($empOffice) {
+
+        //         //Statutory Details
+        //         $newEmployee_statutoryDetails = new VmtEmployeeStatutoryDetails;
+        //         $newEmployee_statutoryDetails->user_id = $user->id;
+        //         $newEmployee_statutoryDetails->uan_number = $row["uan_number"];
+        //         $newEmployee_statutoryDetails->epf_number = $row["epf_number"] ?? '';
+        //         $newEmployee_statutoryDetails->esic_number = $row["esic_number"] ?? '';
+        //         $newEmployee_statutoryDetails->pf_applicable = $row["pf_applicable"];
+        //         $newEmployee_statutoryDetails->esic_applicable = $row["esic_applicable"];
+        //         $newEmployee_statutoryDetails->ptax_location_state_id = $row["ptax_location"];
+        //         $newEmployee_statutoryDetails->tax_regime = $row["tax_regime"];
+        //         $newEmployee_statutoryDetails->lwf_location_state_id = $row["lwf_location"];
+        //         $newEmployee_statutoryDetails->save();
+
+        //         $compensatory = new Compensatory;
+        //         $compensatory->user_id = $newEmployee->userid;
+        //         $compensatory->basic = $row["basic"];
+        //         $compensatory->hra = $row["hra"];
+        //         $compensatory->Statutory_bonus = $row["statutory_bonus"];
+        //         $compensatory->child_education_allowance = $row["child_education_allowance"];
+        //         $compensatory->food_coupon = $row["food_coupon"];
+        //         $compensatory->lta = $row["lta"];
+        //         $compensatory->special_allowance = $row["special_allowance"];
+        //         $compensatory->other_allowance = $row["other_allowance"];
+        //         $compensatory->gross = $row["basic"] + $row["hra"] + $row["statutory_bonus"] + $row["child_education_allowance"] + $row["food_coupon"] + $row["lta"] + $row["special_allowance"] + $row["other_allowance"];
+        //         $compensatory->epf_employer_contribution = $row["epf_employer_contribution"];
+        //         $compensatory->esic_employer_contribution = $row["esic_employer_contribution"];
+        //         $compensatory->insurance = $row["insurance"];
+        //         $compensatory->graduity = $row["graduity"];
+        //         $compensatory->cic = $compensatory->gross + $row["epf_employer_contribution"] + $row["esic_employer_contribution"] + $row["insurance"] + $row["graduity"];
+        //         $compensatory->epf_employee = $row["epf_employee"];
+        //         $compensatory->esic_employee = $row["esic_employee"];
+        //         $compensatory->professional_tax = $row["professional_tax"];
+        //         $compensatory->labour_welfare_fund = $row["labour_welfare_fund"];
+        //         $compensatory->net_income = $compensatory->gross + $row["epf_employee"] + $row["esic_employee"] + $row["professional_tax"] + $row["labour_welfare_fund"] - ($row["epf_employer_contribution"] - $row["esic_employer_contribution"] - $row["insurance"] - $row["graduity"]);
+        //         $compensatory->save();
+        //     }
+
+        //     //Add new items into $row
+        //     $row['net_income'] = $compensatory->gross + $row["epf_employee"] + $row["esic_employee"] + $row["professional_tax"] + $row["labour_welfare_fund"] - ($row["epf_employer_contribution"] - $row["esic_employer_contribution"] - $row["insurance"] - $row["graduity"]);
+
+
+
+
     }
 
 

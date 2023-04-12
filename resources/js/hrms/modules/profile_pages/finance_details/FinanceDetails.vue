@@ -63,12 +63,12 @@
                     <div class="card-body">
                             <h6 class="">Bank Information
                                 <span class="personal-edit">
-                                    <a href="#" class="edit-icon" @click="visible = true"><i class="ri-pencil-fill"></i>
+                                    <a href="#" class="edit-icon" @click="onClick_EditButton_FamilyInfo"><i class="ri-pencil-fill"></i>
                                     </a>
                                 </span>
                             </h6>
 
-                            <Dialog v-model:visible="visible" modal header="Header"
+                            <Dialog v-model:visible="dialog_Bankvisible" modal header="Header"
                             :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
                                 <template #header>
                                     <div>
@@ -144,30 +144,33 @@
 
 
 
-                    <div v-for="bank_info in bank_info_data" :key="bank_info.id">
+                    <div  v-for="bank_info in bank_info_data" :key="bank_info.id" >
                         <ul class="personal-info" >
                                 <li>
                                     <div class="title">Bank Name</div>
                                     <div class="text">
-                                        {{ bank_info.bank_name }}
+                                        <!-- {{ bank_information.bank_id }} -->
+                                        {{  _instance_profilePagesStore.employeeDetails.get_employee_details.bank_id  }}
+
                                     </div>
                                 </li>
                                 <li>
                                     <div class="title">Bank Account No.</div>
                                     <div class="text">
-                                        {{ bank_info.bank_ac_no }}
+                                        {{ _instance_profilePagesStore.employeeDetails.get_employee_details.bank_account_number }}
+
                                        </div>
                                 </li>
                                 <li>
                                     <div class="title">IFSC Code</div>
                                     <div class="text">
-                                        {{ bank_info.ifsc_code }}
+                                        {{ _instance_profilePagesStore.employeeDetails.get_employee_details.bank_ifsc_code }}
                                     </div>
                                 </li>
                                 <li>
                                     <div class="title">PAN No</div>
                                     <div class="text">
-                                        {{ bank_info.pan_no }}
+                                        {{  _instance_profilePagesStore.employeeDetails.get_employee_details.pan_number }}
                                     </div>
                                 </li>
                             </ul>
@@ -184,8 +187,6 @@
                                 </a>
                             </span>
                         </h6>
-
-
 
                         <Dialog v-model:visible="visible2" modal header="Statutory Details"
                             :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
@@ -399,7 +400,7 @@ onMounted(() => {
 });
 
 
-const visible = ref(false);
+const dialog_Bankvisible = ref(false);
 const visible2 = ref(false);
 
 const bank_info_data =ref()
@@ -445,15 +446,11 @@ const saveBankinfoDetails = () => {
                  window.location.reload();
                 toast.add({ severity: 'success', summary: 'Updated', detail: 'General information updated', life: 3000 });
 
-                _instance_profilePagesStore.employeeDetails.get_employee_details.bank_name = bank_information.bank_name;
-
-                // _instance_profilePagesStore.employeeDetails.dob = dialog_general_information.dob;
-
+                _instance_profilePagesStore.employeeDetails.get_employee_details.bank_id = bank_information.bank_id;
                 _instance_profilePagesStore.employeeDetails.get_employee_details.account_no = bank_information.account_no;
-                _instance_profilePagesStore.employeeDetails.get_employee_details.bank_ifsc = bank_information.bank_ifsc;
-
-                // _instance_profilePagesStore.employeeDetails.doj = dialog_general_information.doj;
+                _instance_profilePagesStore.employeeDetails.get_employee_details.bank_ifsc = bank_information.bank_ifsc ;
                 _instance_profilePagesStore.employeeDetails.get_employee_details.pan_no = bank_information.pan_no;
+
             } else if (res.data.status == "failure") {
                 leave_data.leave_request_error_messege = res.data.message;
             }
@@ -461,6 +458,26 @@ const saveBankinfoDetails = () => {
         .catch((err) => {
             console.log(err);
         });
+
+        dialog_Bankvisible.value = false;
+
+}
+
+function onClick_EditButton_FamilyInfo(){
+    console.log("Opening General Info Dialog");
+
+    // Assign json values into dialog elements also
+
+    bank_information.bank_id = _instance_profilePagesStore.employeeDetails.get_employee_details.bank_id;
+
+    bank_information.account_no = _instance_profilePagesStore.employeeDetails.get_employee_details.account_no;
+
+    bank_information.bank_ifsc = _instance_profilePagesStore.employeeDetails.get_employee_details.bank_ifsc;
+    // dialog_general_information.marital_status_id =4;
+
+    bank_information.pan_no = _instance_profilePagesStore.employeeDetails.get_employee_details.pan_no;
+
+    dialog_Bankvisible.value = true;
 
 }
 
