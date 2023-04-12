@@ -17,7 +17,7 @@ export const profilePagesStore = defineStore("employeeService", () => {
 
     const loading_screen = ref(true)
 
-    let uid = '174';
+    let uid = '145';
 
 
     async function fetchEmployeeDetails(){
