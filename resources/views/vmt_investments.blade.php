@@ -7,7 +7,7 @@
         <div class="card shadow  left-line mb-2 ">
             <div class="card-body pb-0 pt-1">
                 <ul class="nav nav-pills    nav-tabs-dashed" id="pills-tab" role="tablist">
-                    <li class="nav-item   mx-4" role="presentation">
+                    <li class="nav-item  " role="presentation">
                         <a class="nav-link active  " id="" data-bs-toggle="pill" href=""
                             data-bs-target="#investment_dec" role="tab" aria-controls="pills-home" aria-selected="true">
                             Declaration</a>
@@ -17,7 +17,7 @@
                             data-bs-target="#exemptions" role="tab" aria-controls="pills-home" aria-selected="true">
                             Investments and Exemptions</a>
                     </li>
-                    <li class="nav-item   mx-4" role="presentation">
+                    <li class="nav-item  " role="presentation">
                         <a class="nav-link   " id="" data-bs-toggle="pill" href=""
                             data-bs-target="#form_12bb" role="tab" aria-controls="pills-home" aria-selected="true">
                             Form 12 BB</a>
@@ -97,16 +97,10 @@
                                         </a>
                                     </li>
 
-                                    <li class="nav-item   " role="presentation">
+                                    <li class="nav-item  mx-3 " role="presentation">
                                         <a class="nav-link    " id="" data-bs-toggle="pill" href=""
                                             data-bs-target="#c_cc" role="tab" aria-controls="" aria-selected="true">
                                             Section 80C & 80CCC</a>
-                                    </li>
-                                    <li class="nav-item   " role="presentation">
-                                        <a class="nav-link    " id="" data-bs-toggle="pill" href=""
-                                            data-bs-target="#income_loss" role="tab" aria-controls=""
-                                            aria-selected="true">
-                                            Income/Loss from Housing Property</a>
                                     </li>
                                     <li class="nav-item   " role="presentation">
                                         <a class="nav-link   mx-0 mx-xl-3 " id="" data-bs-toggle="pill"
@@ -115,6 +109,13 @@
                                             Other Exemptions
                                         </a>
                                     </li>
+                                    <li class="nav-item  mx-3 " role="presentation">
+                                        <a class="nav-link    " id="" data-bs-toggle="pill" href=""
+                                            data-bs-target="#income_loss" role="tab" aria-controls=""
+                                            aria-selected="true">
+                                            House Property</a>
+                                    </li>
+
 
                                     <li class="nav-item   " role="presentation">
                                         <a class="nav-link   mx-0  mx-xl-3 " id="" data-bs-toggle="pill"
@@ -123,19 +124,15 @@
                                             Reimbursement
                                         </a>
                                     </li>
-                                    <li class="nav-item   mx-4" role="presentation">
-                                        <a class="nav-link   " id="" data-bs-toggle="pill" href=""
-                                            data-bs-target="#section24" role="tab" aria-controls="pills-home"
-                                            aria-selected="true">
-                                            Section 24</a>
-                                    </li>
-                                    <li class="nav-item   " role="presentation">
+                                    <li class="nav-item mx-3  " role="presentation">
                                         <a class="nav-link   " id="" data-bs-toggle="pill" href=""
                                             data-bs-target="#previous_income" role="tab" aria-controls=""
                                             aria-selected="true">
                                             Previous Employer Income
                                         </a>
                                     </li>
+
+
                                     <li class="nav-item   " role="presentation">
                                         <a class="nav-link   mx-0  mx-xl-3 " id="" data-bs-toggle="pill"
                                             href="" data-bs-target="#other_income" role="tab"
@@ -160,9 +157,9 @@
                                                 <th scope="col">References</th>
                                                 <th scope="col">Max Limit</th>
                                                 <th scope="col">Declaration Amount</th>
-                                                <th scope="col">Proofs</th>
+                                                {{-- <th scope="col">Proofs</th>
 
-                                                <th scope="col">Status</th>
+                                                <th scope="col">Status</th> --}}
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>
@@ -185,14 +182,16 @@
                                                             aria-hidden="true"></i>
                                                     </button>
                                                 </td>
-                                                <td>28800</td>
-                                                <td>
+                                                <td></td>
+                                                <td class="text-end">
                                                     {{-- <textarea name="" id="" class="text-box outline-none border-0 form-control resize-none " disabled
                                                         cols="5" rows="1"></textarea> --}}
-                                                    <button data-bs-target="#AddRendted_modal" data-bs-toggle="modal"
-                                                        class="text-white py-1.5 w-full rounded-md  bg-indigo-800">Add</button>
+                                                    <div class="flex justify-center">
+                                                        <button data-bs-target="#AddRendted_modal" data-bs-toggle="modal"
+                                                            class="text-white py-1.5 w-2/3 rounded-md  bg-indigo-800">Add</button>
+                                                    </div>
                                                 </td>
-                                                <td align="">
+                                                {{-- <td align="">
 
                                                     <div class="upload_file ">
 
@@ -206,7 +205,7 @@
 
                                                 <td>
                                                     <p>Not Submitted</p>
-                                                </td>
+                                                </td> --}}
 
                                                 <td>
 
@@ -295,6 +294,12 @@
 
 
                                 </div>
+                                <div class="text-end my-3">
+                                    <button
+                                        class="bg-orange-700 text-white me-4 py-1.5 rounded-md px-5 text-center">Save</button>
+                                    <button
+                                        class="bg-transparent  border border-orange-700 text-orange-600 py-1.5 rounded-md px-5 text-center">Next</button>
+                                </div>
                             </div>
                             <div class="tab-pane fade  " id="c_cc" role="tabpanel" aria-labelledby="">
                                 <div class="table-responsive">
@@ -307,7 +312,7 @@
                                                 <th scope="col">Maximum Limit (<i class="fa fa-rupee mx-1"></i>150000)
                                                 </th>
                                                 <th scope="col">Declaration Amount</th>
-                                                <th scope="col">Proofs</th>
+                                                {{-- <th scope="col">Proofs</th> --}}
                                                 {{-- <th scope="col">Upload Document</th> --}}
                                                 <th scope="col">Status</th>
                                                 <th scope="col">Action</th>
@@ -333,7 +338,7 @@
                                                         cols="5" rows="1"></textarea>
                                                 </td>
 
-                                                <td align="">
+                                                {{-- <td align="">
 
                                                     <div class="upload_file ">
 
@@ -343,7 +348,7 @@
 
                                                     </div>
 
-                                                </td>
+                                                </td> --}}
 
                                                 <td>
                                                     <p>Not Submitted</p>
@@ -374,7 +379,7 @@
                                             </tr>
                                             <tr>
                                                 <td rowspan=""> 80C</td>
-                                                <td>Voluntary Provident Fund (Deducted from Salary)</td>
+                                                <td>Voluntary Provident Fund (VPF) </td>
                                                 <td>
 
                                                     <button type="button"
@@ -392,7 +397,7 @@
                                                         cols="5" rows="1"></textarea>
                                                 </td>
 
-                                                <td align="">
+                                                {{-- <td align="">
 
                                                     <div class="upload_file ">
                                                         <i class="fa fa-upload" aria-hidden="true"><input type="file"
@@ -400,7 +405,7 @@
 
                                                     </div>
 
-                                                </td>
+                                                </td> --}}
                                                 <td>
                                                     <p>Not Submitted</p>
                                                 </td>
@@ -429,7 +434,7 @@
                                             </tr>
                                             <tr>
                                                 <td>80c</td>
-                                                <td>Public Provident Fund</td>
+                                                <td>Public Provident Fund (PPF)</td>
                                                 <td>
 
                                                     <button type="button"
@@ -445,7 +450,7 @@
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
                                                 </td>
-
+                                                {{--
                                                 <td align="">
 
                                                     <div class="upload_file ">
@@ -456,7 +461,7 @@
 
                                                     </div>
 
-                                                </td>
+                                                </td> --}}
                                                 <td>
                                                     <p>Not Submitted</p>
                                                 </td>
@@ -484,65 +489,10 @@
                                                 </td>
                                             </tr>
 
+
                                             <tr>
                                                 <td>80C</td>
-                                                <td>Previous PF</td>
-                                                <td>
-
-                                                    <button type="button"
-                                                        class="btn btn-transprarent border-0 outline-none "
-                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        title="Provident Fund deducted by the previous Employer">
-                                                        <i class="fa fa-exclamation-circle  text-warning"
-                                                            aria-hidden="true"></i>
-                                                    </button>
-                                                </td>
-                                                <td></td>
-                                                <td>
-                                                    <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                        cols="5" rows="1"></textarea>
-                                                </td>
-                                                <td align="">
-
-                                                    <div class="upload_file ">
-
-                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id="" multiple></i>
-
-
-                                                    </div>
-
-                                                </td>
-
-                                                <td>
-                                                    <p>Not Submitted</p>
-                                                </td>
-                                                <td>
-
-
-                                                    <div class="dropdown investment_dropDown">
-                                                        <button
-                                                            class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                            type="button" id="dropdownMenuButton"
-                                                            data-bs-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false">
-                                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-pencil-square-o text-info me-2"
-                                                                    aria-hidden="true"></i> Edit</a>
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Clear</a>
-
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>80C</td>
-                                                <td>Life Insurance Pol+B53icy</td>
+                                                <td>Life Insurance Premium (LIP)</td>
                                                 <td>
 
                                                     <button type="button"
@@ -558,17 +508,15 @@
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
                                                 </td>
-                                                <td align="">
-
+                                                {{-- <td align="">
                                                     <div class="upload_file ">
 
                                                         <i class="fa fa-upload" aria-hidden="true"><input type="file"
                                                                 name="" id="" multiple></i>
 
-
                                                     </div>
 
-                                                </td>
+                                                </td> --}}
 
                                                 <td>
                                                     <p>Not Submitted</p>
@@ -597,7 +545,7 @@
                                             </tr>
                                             <tr>
                                                 <td>80C</td>
-                                                <td>Housing Loan Principal</td>
+                                                <td>Stamp Duty & Registration Charges Deduction</td>
                                                 <td>
 
                                                     <button type="button"
@@ -614,7 +562,7 @@
                                                         cols="5" rows="1"></textarea>
                                                 </td>
 
-                                                <td align="">
+                                                {{-- <td align="">
 
                                                     <div class="upload_file ">
 
@@ -624,7 +572,7 @@
 
                                                     </div>
 
-                                                </td>
+                                                </td> --}}
                                                 <td>
                                                     <p>Not Submitted</p>
                                                 </td>
@@ -652,7 +600,7 @@
                                             </tr>
                                             <tr>
                                                 <td>80C</td>
-                                                <td>Mutual Funds</td>
+                                                <td>Mutual Funds (Equity Linked Saving Scheme)</td>
                                                 <td>
 
                                                     <button type="button"
@@ -668,8 +616,7 @@
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
                                                 </td>
-
-                                                <td align="">
+                                                {{-- <td align="">
 
                                                     <div class="upload_file ">
 
@@ -679,7 +626,8 @@
 
                                                     </div>
 
-                                                </td>
+                                                </td> --}}
+
                                                 <td>
                                                     <p>Not Submitted</p>
                                                 </td>
@@ -707,7 +655,7 @@
                                             </tr>
                                             <tr>
                                                 <td>80C</td>
-                                                <td>National Saving Certificate</td>
+                                                <td>National Saving Certificate (NSC)</td>
                                                 <td>
 
                                                     <button type="button"
@@ -724,7 +672,7 @@
                                                         cols="5" rows="1"></textarea>
                                                 </td>
 
-                                                <td align="">
+                                                {{-- <td align="">
 
                                                     <div class="upload_file ">
 
@@ -734,7 +682,7 @@
 
                                                     </div>
 
-                                                </td>
+                                                </td> --}}
                                                 <td>
                                                     <p>Not Submitted</p>
                                                 </td>
@@ -762,7 +710,7 @@
                                             </tr>
                                             <tr>
                                                 <td>80C</td>
-                                                <td>Unit Linked Investment Plan</td>
+                                                <td>Unit Linked Insurance Plan (ULIP)</td>
                                                 <td>
 
                                                     <button type="button"
@@ -778,7 +726,7 @@
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
                                                 </td>
-                                                <td align="">
+                                                {{-- <td align="">
 
                                                     <div class="upload_file ">
 
@@ -788,7 +736,7 @@
 
                                                     </div>
 
-                                                </td>
+                                                </td> --}}
 
                                                 <td>
                                                     <p>Not Submitted</p>
@@ -817,7 +765,7 @@
                                             </tr>
                                             <tr>
                                                 <td>80C</td>
-                                                <td>Tuition Fees</td>
+                                                <td>Children's Tuition Fees</td>
                                                 <td>
 
                                                     <button type="button"
@@ -834,7 +782,7 @@
                                                         cols="5" rows="1"></textarea>
                                                 </td>
 
-                                                <td align="">
+                                                {{-- <td align="">
 
                                                     <div class="upload_file ">
 
@@ -844,7 +792,7 @@
 
                                                     </div>
 
-                                                </td>
+                                                </td> --}}
                                                 <td>
                                                     <p>Not Submitted</p>
                                                 </td>
@@ -872,7 +820,7 @@
                                             </tr>
                                             <tr>
                                                 <td>80C</td>
-                                                <td>Fixed Deposit</td>
+                                                <td>5 Year Tax Saving FDR</td>
                                                 <td>
 
                                                     <button type="button"
@@ -889,7 +837,7 @@
                                                         cols="5" rows="1"></textarea>
                                                 </td>
 
-                                                <td align="">
+                                                {{-- <td align="">
 
                                                     <div class="upload_file ">
 
@@ -899,7 +847,7 @@
 
                                                     </div>
 
-                                                </td>
+                                                </td> --}}
                                                 <td>
                                                     <p>Not Submitted</p>
                                                 </td>
@@ -927,7 +875,7 @@
                                             </tr>
                                             <tr>
                                                 <td>80C</td>
-                                                <td>Deferred Annuity</td>
+                                                <td>Deferred Annuity Plan</td>
                                                 <td>
 
                                                     <button type="button"
@@ -945,7 +893,7 @@
                                                 </td>
 
                                                 </td>
-                                                <td align="">
+                                                {{-- <td align="">
 
                                                     <div class="upload_file ">
 
@@ -955,7 +903,7 @@
 
                                                     </div>
 
-                                                </td>
+                                                </td> --}}
                                                 <td>
                                                     <p>Not Submitted</p>
                                                 </td>
@@ -1000,7 +948,7 @@
                                                         cols="5" rows="1"></textarea>
                                                 </td>
 
-                                                <td align="">
+                                                {{-- <td align="">
 
                                                     <div class="upload_file ">
 
@@ -1010,7 +958,7 @@
 
                                                     </div>
 
-                                                </td>
+                                                </td> --}}
                                                 <td>
                                                     <p>Not Submitted</p>
                                                 </td>
@@ -1038,7 +986,7 @@
                                             </tr>
                                             <tr>
                                                 <td>80c</td>
-                                                <td>Sukanya Samriddhi Scheme</td>
+                                                <td>Sukanya Samriddhi Yojana(SSY) Account</td>
                                                 <td>
 
                                                     <button type="button"
@@ -1054,7 +1002,7 @@
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
                                                 </td>
-                                                <td align="">
+                                                {{-- <td align="">
 
                                                     <div class="upload_file ">
 
@@ -1064,7 +1012,7 @@
 
                                                     </div>
 
-                                                </td>
+                                                </td> --}}
 
                                                 <td>
                                                     <p>Not Submitted</p>
@@ -1093,7 +1041,7 @@
                                             </tr>
                                             <tr>
                                                 <td>80C</td>
-                                                <td>NABARD Notified Bonds</td>
+                                                <td>Subscription to bonds issued by NABARD</td>
                                                 <td>
 
                                                     <button type="button"
@@ -1109,7 +1057,7 @@
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
                                                 </td>
-                                                <td align="">
+                                                {{-- <td align="">
 
                                                     <div class="upload_file ">
 
@@ -1119,7 +1067,7 @@
 
                                                     </div>
 
-                                                </td>
+                                                </td> --}}
 
                                                 <td>
                                                     <p>Not Submitted</p>
@@ -1148,7 +1096,7 @@
                                             </tr>
                                             <tr>
                                                 <td>80CCC</td>
-                                                <td>Mutual Pension Scheme</td>
+                                                <td>Specific Pension Funds</td>
                                                 <td>
 
                                                     <button type="button"
@@ -1164,17 +1112,13 @@
                                                     <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                         cols="5" rows="1"></textarea>
                                                 </td>
-                                                <td align="">
-
+                                                {{-- <td align="">
                                                     <div class="upload_file ">
-
                                                         <i class="fa fa-upload" aria-hidden="true"><input type="file"
                                                                 name="" id="" multiple></i>
-
-
                                                     </div>
 
-                                                </td>
+                                                </td> --}}
 
                                                 </td>
                                                 <td>
@@ -1206,6 +1150,14 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                <div class="text-end my-3">
+                                    <button
+                                        class="bg-orange-700 text-white me-4 py-1.5 rounded-md px-5 text-center">Save</button>
+                                    <button
+                                        class="bg-transparent border-orange-700 me-4 text-orange-600 py-1.5 rounded-md px-5 text-center">Previous</button>
+                                    <button
+                                        class="bg-transparent border-orange-700 text-orange-600 py-1.5 rounded-md px-5 text-center">Next</button>
+                                </div>
                             </div>
 
                             <div class="tab-pane fade " id="reimbursement" role="tabpanel" aria-labelledby="">
@@ -1221,8 +1173,7 @@
                                                         <th scope="col">References</th>
                                                         <th scope="col">Max Limit</th>
                                                         <th scope="col">Declaration Amount</th>
-                                                        <th scope="col">Proofs</th>
-
+                                                        {{-- <th scope="col">Proofs</th> --}}
                                                         <th scope="col">Status</th>
                                                         <th scope="col">Action</th>
                                                     </tr>
@@ -1270,7 +1221,7 @@
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-                                                        <td align="">
+                                                        {{-- <td align="">
 
                                                             <div class="upload_file ">
 
@@ -1281,7 +1232,7 @@
 
                                                             </div>
 
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
                                                             <p>Not Submitted</p>
                                                         </td>
@@ -1331,7 +1282,7 @@
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-                                                        <td align="">
+                                                        {{-- <td align="">
 
                                                             <div class="upload_file ">
 
@@ -1342,7 +1293,7 @@
 
                                                             </div>
 
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
                                                             <p>Not Submitted</p>
                                                         </td>
@@ -1392,18 +1343,16 @@
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-                                                        <td align="">
+                                                        {{-- <td align="">
 
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
                                                                         type="file" name="" id=""
                                                                         multiple></i>
-
-
                                                             </div>
 
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
                                                             <p>Not Submitted</p>
                                                         </td>
@@ -1438,44 +1387,17 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="tab-pane fade " id="section24" role="tabpanel" aria-labelledby="">
-                                <div class="text-end py-3">
-                                    <button data-bs-target="#section24_modal" data-bs-toggle="modal"
-                                        class="py-1.5 px-4 text-white text-center rounded-md bg-indigo-600">Add
-                                        New</button>
-
+                                <div class="text-end my-3">
+                                    <button
+                                        class="bg-orange-700 text-white py-1.5 rounded-md px-5 text-center">Save</button>
+                                    <button
+                                        class="bg-transparent border-orange-700 mx-4 text-orange-600 py-1.5 rounded-md px-5 text-center">Previous</button>
+                                    <button
+                                        class="bg-transparent border-orange-700 text-orange-600 py-1.5 rounded-md px-5 text-center  border ">Next</button>
                                 </div>
-                                <div class="table-responsive ">
-                                    <table class="table investment_table">
-                                        <thead>
-                                            <tr>
 
-                                                <th scope="col">Particulars</th>
-                                                <th scope="col">References</th>
-                                                <th scope="col">Max Limit</th>
-                                                <th scope="col">Declaration Amount</th>
-                                                <th scope="col">Proofs</th>
-
-                                                <th scope="col">Status</th>
-                                                <th scope="col">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-
-                                                <td>-</td>
-                                                <td>-</td>
-                                                <td>-</td>
-                                                <td>-</td>
-                                                <td>-</td>
-                                                <td>-</td>
-                                                <td>-</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
                             </div>
+
                             <div class="tab-pane fade " id="previous_income" role="tabpanel" aria-labelledby="">
 
                                 <div class="card top-line mb-0 border-bottom-0 border-end-0 border-start-0">
@@ -1489,7 +1411,7 @@
                                                         <th scope="col">References</th>
                                                         <th scope="col">Max Limit</th>
                                                         <th scope="col">Declaration Amount</th>
-                                                        <th scope="col">Status</th>
+                                                        {{-- <th scope="col">Status</th> --}}
                                                         <th scope="col">Action</th>
                                                     </tr>
                                                 </thead>
@@ -1516,11 +1438,9 @@
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-
-
-                                                        <td>
+                                                        {{-- <td>
                                                             <p>-</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -1570,9 +1490,9 @@
                                                         </td>
 
 
-                                                        <td>
+                                                        {{-- <td>
                                                             <p>-</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -1621,10 +1541,10 @@
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-
+                                                        {{--
                                                         <td>
                                                             <p>-</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -1672,9 +1592,9 @@
                                                         </td>
 
 
-                                                        <td>
+                                                        {{-- <td>
                                                             <p>-</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -1722,9 +1642,9 @@
                                                         </td>
 
 
-                                                        <td>
+                                                        {{-- <td>
                                                             <p>-</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -1757,6 +1677,14 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="text-end my-3">
+                                    <button
+                                        class="bg-orange-700 text-white  py-1.5 rounded-md px-5 text-center">Save</button>
+                                    <button
+                                        class="bg-transparent border-orange-700 x-4 text-orange-600 py-1.5 rounded-md px-5 text-center">Previous</button>
+                                    <button
+                                        class="bg-transparent border-orange-700 text-orange-600 py-1.5 rounded-md px-5 text-center">Next</button>
+                                </div>
                             </div>
                             <div class="tab-pane fade " id="other_income" role="tabpanel" aria-labelledby="">
 
@@ -1771,9 +1699,9 @@
                                                         <th scope="col">References</th>
                                                         <th scope="col">Max Limit</th>
                                                         <th scope="col">Declaration Amount</th>
-                                                        <th scope="col">Proofs</th>
+                                                        {{-- <th scope="col">Proofs</th>
 
-                                                        <th scope="col">Status</th>
+                                                        <th scope="col">Status</th> --}}
                                                         <th scope="col">Action</th>
                                                     </tr>
                                                 </thead>
@@ -1798,7 +1726,7 @@
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-                                                        <td align="">
+                                                        {{-- <td align="">
 
                                                             <div class="upload_file ">
 
@@ -1812,7 +1740,7 @@
                                                         </td>
                                                         <td>
                                                             <p>-</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -1842,7 +1770,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>Sec 80TTA</td>
-                                                        <td>Interest from Savings</td>
+                                                        <td>Interest from Saving(Senior Citizen)</td>
                                                         <td>
 
                                                             <button type="button"
@@ -1853,28 +1781,25 @@
                                                                     aria-hidden="true"></i>
                                                             </button>
                                                         </td>
-                                                        <td></td>
+                                                        <td>10000</td>
 
                                                         <td>
                                                             <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-                                                        <td align="">
-
-                                                            <div class="upload_file ">
+                                                        {{-- <td align="">                                                            <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
                                                                         type="file" name="" id=""
                                                                         multiple></i>
-
 
                                                             </div>
 
                                                         </td>
                                                         <td>
                                                             <p>-</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -1915,14 +1840,14 @@
                                                                     aria-hidden="true"></i>
                                                             </button>
                                                         </td>
-                                                        <td></td>
+                                                        <td>50000</td>
 
                                                         <td>
                                                             <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-                                                        <td align="">
+                                                        {{-- <td align="">
 
                                                             <div class="upload_file ">
 
@@ -1936,7 +1861,7 @@
                                                         </td>
                                                         <td>
                                                             <p>-</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -1970,7 +1895,16 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="text-end my-3">
+                                    <button
+                                        class="bg-orange-700 text-white  py-1.5 rounded-md px-5 text-center">Save</button>
+                                    <button
+                                        class="bg-transparent border-orange-700 mx-4 text-orange-600 py-1.5 rounded-md px-5 text-center">Previous</button>
+                                    <button
+                                        class="bg-transparent border-orange-700 text-orange-600 py-1.5 rounded-md px-5 text-center">Next</button>
+                                </div>
                             </div>
+
                             <div class="tab-pane fade " id="income_loss" role="tabpanel" aria-labelledby="">
                                 <ul class="nav nav-pills  my-3   nav-tabs-dashed" id="pills-tab" role="tablist">
                                     <li class="nav-item   " role="presentation">
@@ -2000,101 +1934,206 @@
                                     <div class="tab-pane fade active show" id="self_occupied_property" role="tabpanel"
                                         aria-labelledby="">
                                         <div class="tw-card bg-gray-100">
+                                            <div class="text-end">
+                                                <button data-bs-target="#selfOccupied_modal" data-bs-toggle="modal"
+                                                    class="py-1.5 px-4 text-white text-center mb-3  rounded-md bg-indigo-600">Add
+                                                    New</button>
+                                            </div>
 
-                                            <table class="table investment_table">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">Lender Name</th>
-                                                        <th scope="col">Lender PAN</th>
-                                                        <th scope="col">Type</th>
-                                                        <th scope="col">Loss From Housing Property</th>
+                                            <div class="table-responsive">
 
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>-</td>
-                                                        <td>-</td>
-                                                        <td>-</td>
-                                                        <td>-</td>
-                                                    </tr>
+                                                <table class="table investment_table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Lender Name</th>
+                                                            <th scope="col">Lender PAN</th>
+                                                            <th scope="col">Lender Type</th>
+                                                            <th scope="col">Loss From Housing Property</th>
+                                                            <th scope="col">Action</th>
 
-                                                </tbody>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>
+                                                                <div class="dropdown investment_dropDown">
+                                                                    <button
+                                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                        type="button" id="dropdownMenuButton"
+                                                                        data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                        aria-expanded="false">
+                                                                        <i class="fa fa-ellipsis-v"
+                                                                            aria-hidden="true"></i>
+                                                                    </button>
+                                                                    <div class="dropdown-menu"
+                                                                        aria-labelledby="dropdownMenuButton">
+                                                                        <a class="dropdown-item" href="#"><i
+                                                                                class="fa fa-pencil-square-o text-info me-2"
+                                                                                aria-hidden="true"></i> Edit</a>
+                                                                        <a class="dropdown-item" href="#"><i
+                                                                                class="fa fa-times-circle-o text-danger me-2"
+                                                                                aria-hidden="true"></i> Clear</a>
+                                                                        <a class="dropdown-item" href="#"></a>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
 
-                                            </table>
+                                                        </tr>
+
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
 
                                         </div>
                                     </div>
                                     <div class="tab-pane fade " id="letOut_property" role="tabpanel"
                                         aria-labelledby="">
-                                        <div class="table-responsive ">
-                                            <table class="table investment_table">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">Lender Name</th>
-                                                        <th scope="col">Lender PAN</th>
-                                                        <th scope="col">Type</th>
-                                                        <th scope="col">Rent Received</th>
-                                                        <th scope="col">Municipal Tax</th>
-                                                        <th scope="col">Maintenace</th>
-                                                        <th scope="col">Net Value</th>
-                                                        <th scope="col">Interest</th>
-                                                        <th scope="col">Income/Loss</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>-</td>
-                                                        <td>-</td>
-                                                        <td>-</td>
-                                                        <td>-</td>
-                                                        <td>-</td>
-                                                        <td>-</td>
-                                                        <td>-</td>
-                                                        <td>-</td>
-                                                        <td>-</td>
-                                                    </tr>
+                                        <div class="tw-card bg-gray-100">
+                                            <div class="text-end">
+                                                <button data-bs-target="#letOut_property_modal" data-bs-toggle="modal"
+                                                    class="py-1.5 px-4 text-white text-center mb-3  rounded-md bg-indigo-600">Add
+                                                    New</button>
+                                            </div>
 
-                                                </tbody>
+                                            <div class="table-responsive ">
+                                                <table class="table investment_table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Lender Name</th>
+                                                            <th scope="col">Lender PAN</th>
+                                                            <th scope="col">Lender Type</th>
+                                                            <th scope="col">Rent Received</th>
+                                                            <th scope="col">Municipal Tax</th>
+                                                            <th scope="col">Maintenace</th>
+                                                            <th scope="col">Net Value</th>
+                                                            <th scope="col">Interest</th>
+                                                            <th scope="col">Income/Loss</th>
+                                                            <th scope="col">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>
+                                                                <div class="dropdown investment_dropDown">
+                                                                    <button
+                                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                        type="button" id="dropdownMenuButton"
+                                                                        data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                        aria-expanded="false">
+                                                                        <i class="fa fa-ellipsis-v"
+                                                                            aria-hidden="true"></i>
+                                                                    </button>
+                                                                    <div class="dropdown-menu"
+                                                                        aria-labelledby="dropdownMenuButton">
+                                                                        <a class="dropdown-item" href="#"><i
+                                                                                class="fa fa-pencil-square-o text-info me-2"
+                                                                                aria-hidden="true"></i> Edit</a>
+                                                                        <a class="dropdown-item" href="#"><i
+                                                                                class="fa fa-times-circle-o text-danger me-2"
+                                                                                aria-hidden="true"></i> Clear</a>
+                                                                        <a class="dropdown-item" href="#"></a>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
 
-                                            </table>
+                                                        </tr>
+
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="tab-pane fade " id="deemed_property" role="tabpanel"
                                         aria-labelledby="">
-                                        <div class="table-responsive ">
-                                            <table class="table investment_table">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">Lender Name</th>
-                                                        <th scope="col">Lender PAN</th>
-                                                        <th scope="col">Type</th>
-                                                        <th scope="col">Rent Received</th>
-                                                        <th scope="col">Municipal Tax</th>
-                                                        <th scope="col">Maintenace</th>
-                                                        <th scope="col">Net Value</th>
-                                                        <th scope="col">Interest</th>
-                                                        <th scope="col">Income/Loss</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>-</td>
-                                                        <td>-</td>
-                                                        <td>-</td>
-                                                        <td>-</td>
-                                                        <td>-</td>
-                                                        <td>-</td>
-                                                        <td>-</td>
-                                                        <td>-</td>
-                                                        <td>-</td>
-                                                    </tr>
+                                        <div class="tw-card bg-gray-100">
+                                            <div class="text-end">
+                                                <button data-bs-target="#deemedOut_property_modal"
+                                                    data-bs-toggle="modal"
+                                                    class="py-1.5 px-4 text-white text-center mb-3 float-right rounded-md bg-indigo-600">Add
+                                                    New</button>
+                                            </div>
+                                            <div class="table-responsive ">
+                                                <table class="table investment_table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Lender Name</th>
+                                                            <th scope="col">Lender PAN</th>
+                                                            <th scope="col">Lender Type</th>
+                                                            <th scope="col">Rent Received</th>
+                                                            <th scope="col">Municipal Tax</th>
+                                                            <th scope="col">Maintenace</th>
+                                                            <th scope="col">Net Value</th>
+                                                            <th scope="col">Interest</th>
+                                                            <th scope="col">Income/Loss</th>
+                                                            <th scope="col">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>
+                                                                <div class="dropdown investment_dropDown">
+                                                                    <button
+                                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                        type="button" id="dropdownMenuButton"
+                                                                        data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                        aria-expanded="false">
+                                                                        <i class="fa fa-ellipsis-v"
+                                                                            aria-hidden="true"></i>
+                                                                    </button>
+                                                                    <div class="dropdown-menu"
+                                                                        aria-labelledby="dropdownMenuButton">
+                                                                        <a class="dropdown-item" href="#"><i
+                                                                                class="fa fa-pencil-square-o text-info me-2"
+                                                                                aria-hidden="true"></i> Edit</a>
+                                                                        <a class="dropdown-item" href="#"><i
+                                                                                class="fa fa-times-circle-o text-danger me-2"
+                                                                                aria-hidden="true"></i> Clear</a>
+                                                                        <a class="dropdown-item" href="#"></a>
+                                                                    </div>
+                                                                </div>
 
-                                                </tbody>
+                                                            </td>
 
-                                            </table>
+                                                        </tr>
+
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="text-end my-3">
+                                    <button
+                                        class="bg-orange-700 text-white py-1.5 rounded-md px-5 text-center">Save</button>
+                                    <button
+                                        class="bg-transparent border-orange-700 mx-4 text-orange-600 py-1.5 rounded-md px-5 text-center">Previous</button>
+                                    <button
+                                        class="bg-transparent border-orange-700 text-orange-600 py-1.5 rounded-md px-5 text-center">Next</button>
                                 </div>
                             </div>
                             <div class="tab-pane fade " id="other_exemptions" role="tabpanel" aria-labelledby="">
@@ -2110,16 +2149,20 @@
                                                         <th scope="col">References</th>
                                                         <th scope="col">Max Limit</th>
                                                         <th scope="col">Declaration Amount</th>
-                                                        <th scope="col">Proofs</th>
+                                                        {{-- <th scope="col">Proofs</th>
 
-                                                        <th scope="col">Status</th>
+                                                        <th scope="col">Status</th> --}}
                                                         <th scope="col">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td> 80CCD (1B)</td>
-                                                        <td>NPS Employee Contribution</td>
+                                                        <td> 80CCD (1)</td>
+                                                        <td>
+                                                            <p> Employee contributions to National Pension Scheme (NPS)</p>
+                                                            <span class="text-sm text-gray-400">(Up to 10% of salary +
+                                                                dearness allowance (DA))</span>
+                                                        </td>
                                                         <td>
 
                                                             <button type="button"
@@ -2130,28 +2173,25 @@
                                                                     aria-hidden="true"></i>
                                                             </button>
                                                         </td>
-                                                        <td>50000</td>
+                                                        <td></td>
 
                                                         <td>
                                                             <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-                                                        <td align="">
-
+                                                        {{-- <td align="">
                                                             <div class="upload_file ">
 
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
                                                                         type="file" name="" id=""
                                                                         multiple></i>
-
-
                                                             </div>
 
                                                         </td>
                                                         <td>
                                                             <p>Not Submitted</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -2180,7 +2220,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td> 80CCD (2)</td>
-                                                        <td>NPS Employer Contribution</td>
+                                                        <td> Employer contributions to National Pension Scheme (NPS)</td>
                                                         <td>
 
                                                             <button type="button"
@@ -2198,7 +2238,7 @@
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-                                                        <td align="">
+                                                        {{-- <td align="">
 
                                                             <div class="upload_file ">
 
@@ -2212,7 +2252,7 @@
                                                         </td>
                                                         <td>
                                                             <p>Not Submitted</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -2240,8 +2280,69 @@
 
                                                     </tr>
                                                     <tr>
+                                                        <td> 80CCD (1B)</td>
+                                                        <td>Self-contributions to National Pension Scheme (NPS)</td>
+                                                        <td>
+
+                                                            <button type="button"
+                                                                class="btn btn-transprarent border-0 outline-none "
+                                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="Additional exemption up to Rs 50,000 in NPS is eligible for income tax deduction. It is irrespective of the type of employment, i.e., a government employee, a private sector employee, or self-employed can claim benefit of Rs 50,000 under Section 80CCD(1B).">
+                                                                <i class="fa fa-exclamation-circle  text-warning"
+                                                                    aria-hidden="true"></i>
+                                                            </button>
+                                                        </td>
+                                                        <td>50000</td>
+
+                                                        <td>
+                                                            <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                                cols="5" rows="1"></textarea>
+                                                        </td>
+
+                                                        {{-- <td align="">
+                                                            <div class="upload_file ">
+                                                                <i class="fa fa-upload" aria-hidden="true"><input
+                                                                        type="file" name="" id=""
+                                                                        multiple></i>
+                                                            </div>
+
+                                                        </td>
+                                                        <td>
+                                                            <p>Not Submitted</p>
+                                                        </td> --}}
+                                                        <td>
+
+
+                                                            <div class="dropdown investment_dropDown">
+                                                                <button
+                                                                    class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                    type="button" id="dropdownMenuButton"
+                                                                    data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                    aria-expanded="false">
+                                                                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                                                </button>
+                                                                <div class="dropdown-menu"
+                                                                    aria-labelledby="dropdownMenuButton">
+                                                                    <a class="dropdown-item" href="#"><i
+                                                                            class="fa fa-pencil-square-o text-info me-2"
+                                                                            aria-hidden="true"></i> Edit</a>
+                                                                    <a class="dropdown-item" href="#"><i
+                                                                            class="fa fa-times-circle-o text-danger me-2"
+                                                                            aria-hidden="true"></i> Clear</a>
+                                                                    <a class="dropdown-item" href="#"></a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+
+
+                                                    </tr>
+
+                                                    <tr>
                                                         <td> 80D </td>
-                                                        <td>Medical Insurance Premium</td>
+                                                        <td>
+                                                            <p> Medical Insurance Premium </p>
+                                                            <span class="text-sm text-gray-400">(Self,Spouse,Kids)</span>
+                                                        </td>
                                                         <td>
 
                                                             <button type="button"
@@ -2252,28 +2353,24 @@
                                                                     aria-hidden="true"></i>
                                                             </button>
                                                         </td>
-                                                        <td></td>
+                                                        <td>25000</td>
 
                                                         <td>
                                                             <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-                                                        <td align="">
-
+                                                        {{-- <td align="">
                                                             <div class="upload_file ">
-
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
                                                                         type="file" name="" id=""
                                                                         multiple></i>
-
-
                                                             </div>
 
                                                         </td>
                                                         <td>
                                                             <p>Not Submitted</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -2313,14 +2410,14 @@
                                                                     aria-hidden="true"></i>
                                                             </button>
                                                         </td>
-                                                        <td></td>
+                                                        <td>5000</td>
 
                                                         <td>
                                                             <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-                                                        <td align="">
+                                                        {{-- <td align="">
 
                                                             <div class="upload_file ">
 
@@ -2334,7 +2431,7 @@
                                                         </td>
                                                         <td>
                                                             <p>Not Submitted</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -2361,68 +2458,7 @@
 
 
                                                     </tr>
-                                                    <tr>
-                                                        <td>80D</td>
-                                                        <td>Parents Medical Insurance Premium</td>
-                                                        <td>
 
-                                                            <button type="button"
-                                                                class="btn btn-transprarent border-0 outline-none "
-                                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="You can claim a deduction up to Rs. 25,000 per year for medical insurance premium for your parents. In case, your father or mother, or either of them is a senior citizen, you can claim a deduction up to Rs. 50,000.">
-                                                                <i class="fa fa-exclamation-circle  text-warning"
-                                                                    aria-hidden="true"></i>
-                                                            </button>
-                                                        </td>
-                                                        <td>
-
-                                                        <td>
-                                                            <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                                cols="5" rows="1"></textarea>
-                                                        </td>
-
-                                                        <td align="">
-
-                                                            <div class="upload_file ">
-
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name="" id=""
-                                                                        multiple></i>
-
-
-                                                            </div>
-
-                                                        </td>
-                                                        <td>
-                                                            <p>-</p>
-                                                        </td>
-                                                        <td>
-
-
-                                                            <div class="dropdown investment_dropDown">
-                                                                <button
-                                                                    class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                                    type="button" id="dropdownMenuButton"
-                                                                    data-bs-toggle="dropdown" aria-haspopup="true"
-                                                                    aria-expanded="false">
-                                                                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                                </button>
-                                                                <div class="dropdown-menu"
-                                                                    aria-labelledby="dropdownMenuButton">
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-secondary me-2"
-                                                                            aria-hidden="true"></i> Edit</a>
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Clear</a>
-                                                                    <a class="dropdown-item" href="#"></a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-
-
-                                                        </td>
-                                                    </tr>
                                                     <tr>
                                                         <td>80D</td>
                                                         <td>Parents Preventive Health Check Up</td>
@@ -2436,28 +2472,24 @@
                                                                     aria-hidden="true"></i>
                                                             </button>
                                                         </td>
-                                                        <td></td>
+                                                        <td>5000</td>
 
                                                         <td>
                                                             <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-                                                        <td align="">
-
+                                                        {{-- <td align="">
                                                             <div class="upload_file ">
-
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
                                                                         type="file" name="" id=""
                                                                         multiple></i>
-
-
                                                             </div>
 
                                                         </td>
                                                         <td>
                                                             <p>-</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td class="">
 
 
@@ -2487,7 +2519,8 @@
                                                     <tr>
                                                         <td> 80DD</td>
                                                         <td>
-                                                            <p> Medical Expenditure for a Disabled Dependant Disability
+                                                            <p>
+                                                                Medical Treatment of Disabled Dependent
                                                             </p>
                                                             <div class="d-flex justify-content-center">
                                                                 <div class="form-check me-2">
@@ -2527,7 +2560,7 @@
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-                                                        <td align="">
+                                                        {{-- <td align="">
 
                                                             <div class="upload_file ">
 
@@ -2541,7 +2574,7 @@
                                                         </td>
                                                         <td>
                                                             <p>Not Submitted</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -2574,7 +2607,7 @@
 
                                                             <p> Medical Expenditure on Self or Dependant for Specified
                                                                 Disease
-                                                                Age
+
                                                             </p>
                                                             <div class="d-flex justify-content-center">
                                                                 <div class="form-check me-2">
@@ -2618,7 +2651,7 @@
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-                                                        <td align="">
+                                                        {{-- <td align="">
 
                                                             <div class="upload_file ">
 
@@ -2632,7 +2665,7 @@
                                                         </td>
                                                         <td>
                                                             <p>Not Submitted</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -2681,7 +2714,7 @@
                                                                 cols="5" rows="1"></textarea>
                                                         </td>
 
-                                                        <td align="">
+                                                        {{-- <td align="">
 
                                                             <div class="upload_file ">
 
@@ -2695,7 +2728,7 @@
                                                         </td>
                                                         <td>
                                                             <p>Not Submitted</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -2745,11 +2778,14 @@
                                                         <td>50000</td>
 
                                                         <td>
-                                                            <button data-bs-target="#ee_modal" data-bs-toggle="modal"
-                                                                class="text-white py-1.5 w-full rounded-md  bg-indigo-800">Add</button>
+                                                            <div class="flex justify-center">
+                                                                <button data-bs-target="#ee_modal"
+                                                                    data-bs-toggle="modal"
+                                                                    class="text-white py-1.5 w-2/3 rounded-md  bg-indigo-800">Add</button>
+                                                            </div>
                                                         </td>
 
-                                                        <td align="">
+                                                        {{-- <td align="">
 
                                                             <div class="upload_file ">
 
@@ -2763,7 +2799,7 @@
                                                         </td>
                                                         <td>
                                                             <p>Not Submitted</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -2817,11 +2853,15 @@
                                                         <td>
                                                             {{-- <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea> --}}
-                                                            <button data-bs-target="#eea_modal" data-bs-toggle="modal"
-                                                                class="text-white py-1.5 w-full rounded-md  bg-indigo-800">Add</button>
+
+                                                            <div class="flex justify-center">
+                                                                <button data-bs-target="#eea_modal"
+                                                                    data-bs-toggle="modal"
+                                                                    class="text-white py-1.5 w-2/3 rounded-md  bg-indigo-800">Add</button>
+                                                            </div>
                                                         </td>
 
-                                                        <td align="">
+                                                        {{-- <td align="">
 
                                                             <div class="upload_file ">
 
@@ -2835,7 +2875,7 @@
                                                         </td>
                                                         <td>
                                                             <p>Not Submitted</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -2883,11 +2923,16 @@
                                                         <td>
                                                             {{-- <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea> --}}
-                                                            <button data-bs-target="#eeb_modal" data-bs-toggle="modal"
-                                                                class="text-white py-1.5 w-full rounded-md  bg-indigo-800">Add</button>
+                                                            {{-- <button data-bs-target="#eeb_modal" data-bs-toggle="modal"
+                                                                class="text-white py-1.5 w-full rounded-md  bg-indigo-800">Add</button> --}}
+                                                            <div class="flex justify-center">
+                                                                <button data-bs-target="#eeb_modal"
+                                                                    data-bs-toggle="modal"
+                                                                    class="text-white py-1.5 w-2/3 rounded-md  bg-indigo-800">Add</button>
+                                                            </div>
                                                         </td>
 
-                                                        <td align="">
+                                                        {{-- <td align="">
 
                                                             <div class="upload_file ">
 
@@ -2901,7 +2946,7 @@
                                                         </td>
                                                         <td>
                                                             <p>Not Submitted</p>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
 
 
@@ -2932,6 +2977,14 @@
                                             </table>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="text-end my-3">
+                                    <button
+                                        class="bg-orange-700 text-white  py-1.5 rounded-md px-5 text-center">Save</button>
+                                    <button
+                                        class="bg-transparent border-orange-700 mx-4 text-orange-600 py-1.5 rounded-md px-5 text-center">Previous</button>
+                                    <button
+                                        class="bg-transparent border-orange-700 text-orange-600 py-1.5 rounded-md px-5 text-center">Next</button>
                                 </div>
                             </div>
                         </div>
@@ -3029,25 +3082,36 @@
                                     class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-2 2xl:grid-cols-2 sm:grid-cols-1 xl:grid-cols-2 lg:grid-cols-2">
 
                                     <div class="">
-                                        <label for="lender_type" class="block mb-2  font-medium text-gray-900 ">From
+                                        <label for="rentFrom_month" class="block mb-2  font-medium text-gray-900 ">From
                                             Month</label>
-                                        <input type="date" id="lender_type"
+                                        <input type="date" id="rentFrom_month"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                                             required>
                                     </div>
                                     <div class="">
-                                        <label for="lender_type" class="block mb-2  font-medium text-gray-900 ">To
+                                        <label for="toFrom_month" class="block mb-2  font-medium text-gray-900 ">To
                                             Month</label>
-                                        <input type="date" id="lender_type"
+                                        <input type="date" id="toFrom_month
+                                        "
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                                             required>
                                     </div>
                                     <div class="">
-                                        <label for="lender_type"
+                                        <label for="metro_city"
                                             class="block mb-2  font-medium text-gray-900 ">City</label>
-                                        <input type="text" id="lender_type"
+                                        {{-- <input type="text" id="lender_type"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                                            required>
+                                            required> --}}
+                                        <select id="metro_city"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                            <option selected disabled hiddedn>Choose Metro</option>
+                                            <option>Chennai</option>
+                                            <option>Mumbai</option>
+                                            <option>Hyderabad</option>
+                                            <option>Kolkatta</option>
+                                            <option>Other Non Metro</option>
+
+                                        </select>
                                     </div>
                                     <div class="">
                                         <label for="rendPaid_inp" class="block mb-2  font-medium text-gray-900 ">Total
@@ -3056,24 +3120,32 @@
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                                             required>
                                     </div>
-                                    <div class="landlord-details" id="landlordDetails" style="display:none">
-                                        <div class="">
-                                            <label for="lender_name"
-                                                class="block mb-2  font-medium text-gray-900 ">Landlord
-                                                Name <span class="text-red-600">*</span> </label>
-                                            <input type="text" id="lender_name"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                                                required>
-                                        </div>
-                                        <div class="">
-                                            <label for="lender_name"
-                                                class="block mb-2  font-medium text-gray-900 ">Landlord
-                                                PAN <span class="text-red-600">*</span> </label>
-                                            <input type="text" id="lender_name"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                                                required>
-                                        </div>
+
+                                </div>
+                                <div
+                                    class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-2 2xl:grid-cols-2 sm:grid-cols-1 xl:grid-cols-2 lg:grid-cols-2">
+                                    <div class="">
+                                        <label for="lender_name" class="block mb-2  font-medium text-gray-900 ">Landlord
+                                            Name <span class="text-red-600">*</span> </label>
+                                        <input type="text" id="lender_name"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                            required>
                                     </div>
+                                    <div class="">
+                                        <label for="lender_name" class="block mb-2  font-medium text-gray-900 ">Landlord
+                                            PAN <span class="text-red-600">*</span> </label>
+                                        <input type="text" id="lender_name"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                            required>
+                                    </div>
+                                </div>
+                                <div
+                                    class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-1 2xl:grid-cols-1 sm:grid-cols-1 xl:grid-cols-1 lg:grid-cols-1">
+                                    <label for="lender_name" class="block mb-2  font-medium text-gray-900 ">
+                                        Address </label>
+                                    <textarea name="" id="" rows="3"
+                                        class="bg-gray-50 resize-none border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required></textarea>
                                 </div>
                                 <div class="text-end">
                                     <button
@@ -3092,7 +3164,7 @@
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg">
                 <div class="modal-content ">
                     <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                        <h6 class="modal-title mb-1 text-primary">Add new rental details <span
+                        <h6 class="modal-title mb-1 text-primary">80EE<span
                                 class="ml-3 text-xs text-gray-400 font-semibold">(The maximum deduction of Rs 50,000 can
                                 be claimed under this section)</span> </h6>
                         <button type="button" class="close outline-none bg-transparent border-0 h3"
@@ -3104,25 +3176,7 @@
                         <form>
                             <div
                                 class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-2 2xl:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3 lg:grid-cols-3">
-                                <div class="">
-                                    <label for="lender_name"
-                                        class="block mb-2  font-medium text-gray-900 ">Limit</label>
-                                    <input type="text" id="lender_name"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                                        required>
-                                </div>
 
-
-
-                                <div class="">
-
-                                    <label for="lender_type" class="block mb-2  font-medium text-gray-900 ">Type</label>
-                                    <select id="lender_type"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
-                                        <option selected>Choose Type</option>
-
-                                    </select>
-                                </div>
                                 <div class="">
                                     <label for="sanction_date" class="block mb-2  font-medium text-gray-900 ">Loan
                                         Sanction Date</label>
@@ -3130,6 +3184,22 @@
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                                         required>
                                 </div>
+
+
+
+                                <div class="">
+
+                                    <label for="lender_type" class="block mb-2  font-medium text-gray-900 ">Lender
+                                        Type</label>
+                                    <select id="lender_type"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                        <option selected>Choose Type</option>
+                                        <option>Others</option>
+                                        <option>Financial Institution</option>
+
+                                    </select>
+                                </div>
+
                                 <div class="">
                                     <label for="property_value" class="block mb-2  font-medium text-gray-900 ">Property
                                         Value</label>
@@ -3146,8 +3216,8 @@
                                 </div>
                                 <div class="">
                                     <label for="declaration_amount"
-                                        class="block mb-2  font-medium text-gray-900 ">Declaration
-                                        Amount</label>
+                                        class="block mb-2  font-medium text-gray-900 ">Interest
+                                        Amount Paid</label>
                                     <input type="text" id="declaration_amount"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                                         required>
@@ -3168,7 +3238,7 @@
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg">
                 <div class="modal-content ">
                     <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                        <h6 class="modal-title mb-1 text-primary">Add new rental details <span
+                        <h6 class="modal-title mb-1 text-primary">80EEA <span
                                 class="ml-3 text-xs text-gray-400 font-semibold">(The maximum deduction available under
                                 this section is Rs. 1.5 Lakhs)</span> </h6>
                         <button type="button" class="close outline-none bg-transparent border-0 h3"
@@ -3177,67 +3247,62 @@
                         </button>
                     </div>
                     <div class="modal-body">
+
                         <form>
-                            <form>
-                                <div
-                                    class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-2 2xl:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3 lg:grid-cols-3">
-                                    <div class="">
-                                        <label for="lender_name"
-                                            class="block mb-2  font-medium text-gray-900 ">Limit</label>
-                                        <input type="text" id="lender_name"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                                            required>
-                                    </div>
+                            <div
+                                class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-2 2xl:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3 lg:grid-cols-3">
 
-
-
-                                    <div class="">
-
-                                        <label for="lender_type"
-                                            class="block mb-2  font-medium text-gray-900 ">Type</label>
-                                        <select id="lender_type"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
-                                            <option selected>Choose Type</option>
-
-                                        </select>
-                                    </div>
-                                    <div class="">
-                                        <label for="sanction_date" class="block mb-2  font-medium text-gray-900 ">Loan
-                                            Sanction Date</label>
-                                        <input type="date" id="sanction_date"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                                            required>
-                                    </div>
-                                    <div class="">
-                                        <label for="property_value"
-                                            class="block mb-2  font-medium text-gray-900 ">Property
-                                            Value</label>
-                                        <input type="text" id="property_value"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                                            required>
-                                    </div>
-                                    <div class="">
-                                        <label for="loan_amount" class="block mb-2  font-medium text-gray-900 ">Loan
-                                            Amount</label>
-                                        <input type="text" id="loan_amount"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-100 focus:outline-none focus:ring outline-1  block w-full p-2.5 "
-                                            required>
-                                    </div>
-                                    <div class="">
-                                        <label for="declaration_amount"
-                                            class="block mb-2  font-medium text-gray-900 ">Declaration
-                                            Amount</label>
-                                        <input type="text" id="declaration_amount"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                                            required>
-                                    </div>
-
+                                <div class="">
+                                    <label for="sanction_date" class="block mb-2  font-medium text-gray-900 ">Loan
+                                        Sanction Date</label>
+                                    <input type="date" id="sanction_date"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
                                 </div>
-                                <div class="text-end">
-                                    <button
-                                        class="bg-orange-700 text-white py-1.5 rounded-md px-5 text-center">Save</button>
+
+
+
+                                <div class="">
+
+                                    <label for="lender_type" class="block mb-2  font-medium text-gray-900 ">Lender
+                                        Type</label>
+                                    <select id="lender_type"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                        <option selected>Choose Type</option>
+                                        <option>Others</option>
+                                        <option>Financial Institution</option>
+
+                                    </select>
                                 </div>
-                            </form>
+
+                                <div class="">
+                                    <label for="property_value" class="block mb-2  font-medium text-gray-900 ">Property
+                                        Value</label>
+                                    <input type="text" id="property_value"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+                                <div class="">
+                                    <label for="loan_amount" class="block mb-2  font-medium text-gray-900 ">Loan
+                                        Amount</label>
+                                    <input type="text" id="loan_amount"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-100 focus:outline-none focus:ring outline-1  block w-full p-2.5 "
+                                        required>
+                                </div>
+                                <div class="">
+                                    <label for="declaration_amount"
+                                        class="block mb-2  font-medium text-gray-900 ">Interest
+                                        Amount Paid</label>
+                                    <input type="text" id="declaration_amount"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+
+                            </div>
+                            <div class="text-end">
+                                <button class="bg-orange-700 text-white py-1.5 rounded-md px-5 text-center">Save</button>
+                            </div>
+                        </form>
 
 
                     </div>
@@ -3248,7 +3313,7 @@
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg">
                 <div class="modal-content ">
                     <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                        <h6 class="modal-title mb-1 text-primary"> <span
+                        <h6 class="modal-title mb-1 text-primary"> 80EEB<span
                                 class="ml-3 text-xs text-gray-400 font-semibold">(The maximum deduction available under
                                 this section is Rs. 1.5 Lakhs for electric vehicle purchase)</span> </h6>
                         <button type="button" class="close outline-none bg-transparent border-0 h3"
@@ -3260,27 +3325,7 @@
                         <form>
                             <form>
                                 <div
-                                    class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-2 2xl:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3 lg:grid-cols-3">
-                                    <div class="">
-                                        <label for="lender_name"
-                                            class="block mb-2  font-medium text-gray-900 ">Limit</label>
-                                        <input type="text" id="lender_name"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                                            required>
-                                    </div>
-
-
-
-                                    <div class="">
-
-                                        <label for="lender_type"
-                                            class="block mb-2  font-medium text-gray-900 ">Type</label>
-                                        <select id="lender_type"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
-                                            <option selected>Choose Type</option>
-
-                                        </select>
-                                    </div>
+                                    class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-2 2xl:grid-cols-2 sm:grid-cols-1 xl:grid-cols-2 lg:grid-cols-2">
                                     <div class="">
                                         <label for="sanction_date" class="block mb-2  font-medium text-gray-900 ">Loan
                                             Sanction Date</label>
@@ -3288,25 +3333,62 @@
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                                             required>
                                     </div>
+
+
+
                                     <div class="">
-                                        <label for="property_value"
-                                            class="block mb-2  font-medium text-gray-900 ">Property
-                                            Value</label>
-                                        <input type="text" id="property_value"
+
+                                        <label for="vechicle_brand"
+                                            class="block mb-2  font-medium text-gray-900 ">Vechicle Brand</label>
+                                        <select id="vechicle_brand"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                            <option selected hidden disabled>Choose Vechicle</option>
+                                            <option value="">TATA</option>
+                                            <option value="">Hyundai</option>
+                                            <option value="">Mahindra</option>
+                                            <option value="">Kia</option>
+                                            <option value="">MG</option>
+
+                                        </select>
+                                    </div>
+
+                                    <div class="">
+                                        <label for="vechicle_model"
+                                            class="block mb-2  font-medium text-gray-900 ">Vechicle Model
+                                        </label>
+                                        {{-- <input type="text" id=""
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                                            required>
+                                            required> --}}
+                                        <select id="vechicle_model"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                            <option selected hidden selected>Choose Model</option>
+                                            <option value="">Tata Tiago</option>
+                                            <option value="">Tata Tigor</option>
+                                            <option value="">Tata Nexon</option>
+                                            <option value="">Tata AVINYA</option>
+                                            <option value="">Tata Punch</option>
+                                            <option value="">Tata CURVV SUV Coupe</option>
+                                            <option value="">Mahindra eVerito</option>
+                                            <option value="">Mahindra e2oPlus</option>
+                                            <option value="">Mahindra eSupro</option>
+                                            <option value="">Mahindra Treo</option>
+                                            <option value="">Mahindra Treo Zor</option>
+                                            <option value="">Mahindra eAlfa Mini</option>
+                                            <option value="">Hyundai Kona Electric</option>
+                                            <option value="">Hyundai IONIQ 5</option>
+                                            <option value="">Mahindra XUV400 EV</option>
+                                            <option value="">Mahindra E Verito</option>
+                                            <option value="">Kia EV6</option>
+                                            <option value="">MG ZS EV</option>
+
+
+                                        </select>
                                     </div>
-                                    <div class="">
-                                        <label for="loan_amount" class="block mb-2  font-medium text-gray-900 ">Loan
-                                            Amount</label>
-                                        <input type="text" id="loan_amount"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-100 focus:outline-none focus:ring outline-1  block w-full p-2.5 "
-                                            required>
-                                    </div>
+
                                     <div class="">
                                         <label for="declaration_amount"
-                                            class="block mb-2  font-medium text-gray-900 ">Declaration
-                                            Amount</label>
+                                            class="block mb-2  font-medium text-gray-900 ">Interest
+                                            Amount Paid</label>
                                         <input type="text" id="declaration_amount"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                                             required>
@@ -3324,11 +3406,110 @@
                 </div>
             </div>
         </div>
-        <div id="section24_modal" class="modal  fade" role="dialog">
+        <div id="letOut_property_modal" class="modal  fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg">
                 <div class="modal-content ">
                     <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                        <h6 class="modal-title mb-1 text-primary">Section 24</h6>
+                        <h6 class="modal-title mb-1 text-primary">Let Out Property</h6>
+                        <button type="button" class="close outline-none bg-transparent border-0 h3"
+                            data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <form>
+                            <div
+                                class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-2 2xl:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3 lg:grid-cols-3">
+                                <div class="">
+                                    <label for="lender_name" class="block mb-2  font-medium text-gray-900 ">Lender
+                                        Name</label>
+                                    <input type="text" id="lender_name"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+                                <div class="">
+                                    <label for="lender_pan" class="block mb-2  font-medium text-gray-900 ">Lender
+                                        PAN</label>
+                                    <input type="text" id="lender_pan"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+
+
+                                <div class="">
+
+                                    <label for="lender_type" class="block mb-2  font-medium text-gray-900 ">Lender
+                                        Type</label>
+                                    <select id="lender_type"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                        <option selected>Choose Type</option>
+                                        <option>Others</option>
+                                        <option>Financial Institution</option>
+
+                                    </select>
+                                </div>
+
+                                <div class="">
+                                    <label for="rend_received" class="block mb-2  font-medium text-gray-900 ">Rent
+                                        Received</label>
+                                    <input type="text" id="rend_received"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+                                <div class="">
+
+                                    <label for="municipal_tax" class="block mb-2  font-medium text-gray-900 ">Municipal
+                                        Tax</label>
+
+                                    <input type="text" id="municipal_tax"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+                                <div class="">
+                                    <label for="maintenance"
+                                        class="block mb-2  font-medium text-gray-900 ">Maintenance</label>
+                                    <input type="text" id="maintenance"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+                                <div class="">
+                                    <label for="Net_Value" class="block mb-2  font-medium text-gray-900 ">Net
+                                        Value</label>
+                                    <input type="text" id="Net_Value"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-100 focus:outline-none focus:ring outline-1  block w-full p-2.5 "
+                                        required>
+                                </div>
+                                <div class="">
+                                    <label for="Interest"
+                                        class="block mb-2  font-medium text-gray-900 ">Interest</label>
+                                    <input type="text" id="Interest"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+                                <div class="">
+                                    <label for="Income/Loss"
+                                        class="block mb-2  font-medium text-gray-900 ">Income/Loss</label>
+                                    <input type="text" id="Income/Loss"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                <button class="bg-orange-700 text-white py-1.5 rounded-md px-5 text-center">Save</button>
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="deemedOut_property_modal" class="modal  fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg">
+                <div class="modal-content ">
+                    <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
+                        <h6 class="modal-title mb-1 text-primary">Deemed Let Out Property</h6>
                         <button type="button" class="close outline-none bg-transparent border-0 h3"
                             data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
@@ -3336,61 +3517,164 @@
                     </div>
                     <div class="modal-body">
                         <form>
-                            <form>
-                                <div
-                                    class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-2 2xl:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3 lg:grid-cols-3">
-                                    <div class="">
-                                        <label for="lender_name"
-                                            class="block mb-2  font-medium text-gray-900 ">Particulars</label>
-                                        <input type="text" id="lender_name"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                                            required>
-                                    </div>
-                                    <div class="">
-                                        <label for="lender_name"
-                                            class="block mb-2  font-medium text-gray-900 ">References</label>
-                                        <input type="text" id="lender_name"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                                            required>
-                                    </div>
-
-                                    <div class="">
-                                        <label for="sanction_date" class="block mb-2  font-medium text-gray-900 ">Loan
-                                            Max Limit</label>
-                                        <input type="text" id="sanction_date"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                                            required>
-                                    </div>
-                                    <div class="">
-                                        <label for="property_value" class="block mb-2  font-medium text-gray-900 ">
-                                            Declartoin Amount</label>
-                                        <input type="text" id="property_value"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                                            required>
-                                    </div>
-                                    <div class="">
-                                        <label for="section_proofs" class="block mb-2  font-medium text-gray-900 ">Loan
-                                            Proofs</label>
-                                        <input type="text" id="section_proofs"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-100 focus:outline-none focus:ring outline-1  block w-full p-2.5 "
-                                            required>
-                                    </div>
-
-                                    <div class="">
-                                        <label for="declaration_amount"
-                                            class="block mb-2  font-medium text-gray-900 ">Status
-                                        </label>
-                                        <input type="text" id="declaration_amount"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                                            required>
-                                    </div>
-
+                            <div
+                                class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-2 2xl:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3 lg:grid-cols-3">
+                                <div class="">
+                                    <label for="lender_name" class="block mb-2  font-medium text-gray-900 ">Lender
+                                        Name</label>
+                                    <input type="text" id="lender_name"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
                                 </div>
-                                <div class="text-end">
-                                    <button
-                                        class="bg-orange-700 text-white py-1.5 rounded-md px-5 text-center">Save</button>
+                                <div class="">
+                                    <label for="lender_pan" class="block mb-2  font-medium text-gray-900 ">Lender
+                                        PAN</label>
+                                    <input type="text" id="lender_pan"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
                                 </div>
-                            </form>
+
+
+                                <div class="">
+
+                                    <label for="lender_type" class="block mb-2  font-medium text-gray-900 ">Lender
+                                        Type</label>
+                                    <select id="lender_type"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                        <option selected>Choose Type</option>
+                                        <option>Others</option>
+                                        <option>Financial Institution</option>
+
+                                    </select>
+                                </div>
+
+                                <div class="">
+                                    <label for="rend_received" class="block mb-2  font-medium text-gray-900 ">Rent
+                                        Received</label>
+                                    <input type="text" id="rend_received"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+                                <div class="">
+
+                                    <label for="municipal_tax" class="block mb-2  font-medium text-gray-900 ">Municipal
+                                        Tax</label>
+                                    {{-- <select id="municipal_tax"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                        <option selected>Choose Municipal</option>
+
+                                    </select> --}}
+                                    <input type="text" id="municipal_tax"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+                                <div class="">
+                                    <label for="maintenance"
+                                        class="block mb-2  font-medium text-gray-900 ">Maintenance</label>
+                                    <input type="text" id="maintenance"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+                                <div class="">
+                                    <label for="Net_Value" class="block mb-2  font-medium text-gray-900 ">Net
+                                        Value</label>
+                                    <input type="text" id="Net_Value"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-100 focus:outline-none focus:ring outline-1  block w-full p-2.5 "
+                                        required>
+                                </div>
+                                <div class="">
+                                    <label for="Interest"
+                                        class="block mb-2  font-medium text-gray-900 ">Interest</label>
+                                    <input type="text" id="Interest"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+                                <div class="">
+                                    <label for="Income/Loss"
+                                        class="block mb-2  font-medium text-gray-900 ">Income/Loss</label>
+                                    <input type="text" id="Income/Loss"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                <button class="bg-orange-700 text-white py-1.5 rounded-md px-5 text-center">Save</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="selfOccupied_modal" class="modal  fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg">
+                <div class="modal-content ">
+                    <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
+                        <h6 class="modal-title mb-1 text-primary">Self Occupied Property</h6>
+                        <button type="button" class="close outline-none bg-transparent border-0 h3"
+                            data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <form>
+                            <div
+                                class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-2 2xl:grid-cols-2 sm:grid-cols-1 xl:grid-cols-2 lg:grid-cols-2">
+                                <div class="">
+                                    <label for="lender_name" class="block mb-2  font-medium text-gray-900 ">Lender
+                                        Name</label>
+                                    <input type="text" id="lender_name"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+                                <div class="">
+                                    <label for="lender_name" class="block mb-2  font-medium text-gray-900 ">Lender
+                                        PAN</label>
+                                    <input type="text" id="lender_name"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+
+
+
+                                <div class="">
+
+                                    <label for="lender_type" class="block mb-2  font-medium text-gray-900 ">Lender
+                                        Type</label>
+                                    <select id="lender_type"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                        <option selected>Choose Type</option>
+                                        <option>Others</option>
+                                        <option>Financial Institution</option>
+
+                                    </select>
+                                </div>
+                                <div class="">
+                                    <label for="lender_name" class="block mb-2  font-medium text-gray-900 ">Loss
+                                        From Housing Property</label>
+                                    <input type="text" id="lender_name"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required>
+                                </div>
+                            </div>
+                            <div
+                                class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-1 2xl:grid-cols-1 sm:grid-cols-1 xl:grid-cols-1 lg:grid-cols-1">
+                                <div class="">
+                                    <label for="lender_name" class="block mb-2  font-medium text-gray-900 ">
+                                        Address</label>
+                                    {{-- <input type="text" id="lender_name"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                            required> --}}
+                                    <textarea name="" id="" rows="3"
+                                        class="bg-gray-50 resize-none border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                        required></textarea>
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                <button class="bg-orange-700 text-white py-1.5 rounded-md px-5 text-center">Save</button>
+                            </div>
+                        </form>
 
 
                     </div>
@@ -3411,11 +3695,9 @@
                 if (this.value >= 100000) {
                     $('#landlordDetails').css('display', 'block');
 
-                }
-                else if(this.value < 100000 ){
+                } else if (this.value < 100000) {
                     $('#landlordDetails').css('display', 'none');
-                }
-                else{
+                } else {
                     $('#landlordDetails').css('display', 'none');
                 }
 
