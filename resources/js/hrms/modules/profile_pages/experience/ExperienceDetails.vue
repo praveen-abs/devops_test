@@ -195,13 +195,14 @@ const ExperienceInfo = reactive({
 
 })
 const saveExperienceDetails = () => {
+
     console.log(ExperienceInfo);
 
-    if (ExperienceInfo.company_name == ' ' || ExperienceInfo.job_position === '' || ExperienceInfo.location === '' || ExperienceInfo.period_from === " " || ExperienceInfo.period_to === " ") {
+    // if (ExperienceInfo.company_name == ' ' || ExperienceInfo.job_position === '' || ExperienceInfo.location === '' || ExperienceInfo.period_from === " " || ExperienceInfo.period_to === " ") {
 
-        toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
+    //     toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
 
-    } else {
+    // } else {
         let id = fetch_data.current_user_id
         let url = `/update-experience-info/${id}`
 
@@ -236,7 +237,7 @@ const saveExperienceDetails = () => {
     }
 
     dialog_ExperienceInfovisible.value = false;
-}
+// }
 
 
 onMounted(() => {

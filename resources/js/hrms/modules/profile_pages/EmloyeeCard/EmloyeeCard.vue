@@ -1,0 +1,117 @@
+<template>
+       <div class="mb-0 card top-line ">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 text-end">
+                        <button class="p-0 m-0 bg-transparent border-0 outline-none btn" data-bs-target="#show_idCard"
+                            data-bs-toggle="modal">
+                            <i class="fa fa-id-card text-success" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="text-center col-12">
+
+
+                        <div class="mx-auto rounded-circle img-xl userActive-status profile-img"
+                            style="border:6px solid #c2c2c2c2">
+
+                            <a class="edit-icon " data-bs-toggle="modal" data-bs-target="#edit_profileImg" id="">
+                                <i class="fa fa-camera"></i></a>
+                        </div>
+
+
+                        <div class="mt-4">
+                            <div class="progress-wrapper border-bottom-liteAsh ">
+                                <div class="mb-1 text-center">
+                                    <h6 class="text-center">
+                                        {{ service.current_user_name }}
+                                    </h6>
+                                </div>
+                                <div class="mx-auto mb-1 d-flex justify-content-between">
+                                    <span class="text-muted f-12">Profile Completeness</span>
+                                    <span class="text-muted text-end f-12 fw-bold" id="prograssBar_percentage">
+
+                                    </span>
+                                </div>
+                                <div class="mb-2 progress progress-bar-content">
+                                    <div class="progress-bar " role="progressbar" id="profile_progressBar"
+                                        aria-valuenow="{{ 100 }}" aria-valuemin="0"
+                                        aria-valuemax="100"></div>
+                                </div>
+                                <p class="mb-2 text-muted f-10 text-start fw-bold">Your profile is completed</p>
+                            </div>
+
+                            <div class="mb-4 text-center profile-mid-right-content ">
+                                <div class="py-2 border-bottom-liteAsh">
+                                    <p class="text-muted f-12 fw-bold">Employee Status</p>
+                                    <p v-if="_instance_profilePagesStore.employeeDetails.active == 1"
+                                        class=" f-15 fw-bold">
+                                        Active
+                                    </p>
+                                    <p v-else class="text-danger f-15 fw-bold">
+                                        Not Active
+                                    </p>
+
+                                </div>
+                                <div class="py-2 border-bottom-liteAsh">
+                                    <p class="text-muted f-12 fw-bold">Employee Code</p>
+                                    <p class=" f-15 fw-bold">
+                                        {{ _instance_profilePagesStore.employeeDetails.user_code }}
+                                    </p>
+
+                                </div>
+                                <div class="py-2 border-bottom-liteAsh">
+                                    <p class="text-muted f-12 fw-bold">Designation</p>
+                                    <p class="f-15 fw-bold">
+                                        {{
+                                            _instance_profilePagesStore.employeeDetails.get_employee_office_details.designation
+                                        }}
+                                    </p>
+
+                                </div>
+                                <div class="py-2 border-bottom-liteAsh">
+                                    <p class="text-muted f-12 fw-bold">Location</p>
+                                    <p class=" f-15 fw-bold">
+                                        {{
+                                            _instance_profilePagesStore.employeeDetails.get_employee_office_details.work_location
+                                        }}
+                                    </p>
+                                </div>
+                                <div class="py-2 border-bottom-liteAsh">
+                                    <p class="text-muted f-12 fw-bold">Department</p>
+                                    <p class=" f-15 fw-bold">
+                                        {{
+                                            _instance_profilePagesStore.employeeDetails.get_employee_office_details.department_id
+                                        }}
+                                    </p>
+                                </div>
+                                <div class="py-2 border-bottom-liteAsh">
+                                    <p class="text-muted f-12 fw-bold">Reporting To</p>
+                                    <p class=" f-15 fw-bold">
+                                        {{
+                                            _instance_profilePagesStore.employeeDetails.get_employee_office_details.l1_manager_name
+                                        }}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="text-center profile-bottom-right-content ">
+                                <!-- {{-- <button class="btn btn-danger"><i class="fa fa-sign-out me-2"></i> Logout </button> --}} -->
+                                <button class="btn btn-danger"><i class="fa fa-sign-out me-1"></i> Action </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+</template>
+
+
+<script setup>
+import { Service } from '../../Service/Service'
+import { profilePagesStore } from '../stores/ProfilePagesStore'
+
+const service = Service()
+
+let _instance_profilePagesStore = profilePagesStore();
+</script>
