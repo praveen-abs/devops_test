@@ -224,29 +224,30 @@ class VmtProfilePagesController extends Controller
     public function updateFamilyInfo(Request $request)
     {
         // dd($request->all());
-        $user_id = user::where('user_code', $request->user_code)->first()->id;
-        $familyDetails = VmtEmployeeFamilyDetails::where('user_id', $user_id)->delete();
-
-        $family_member_name=array($request->input('name'));
-        $count = sizeof($family_member_name);
-
-        for ($i = 0; $i < $count; $i++) {
-
-            $emp_familydetails = new VmtEmployeeFamilyDetails;
-            // dd($request->id);
-            $emp_familydetails->user_id = $request->id;
+        try{
+            // dd($request->all());
+            $user_id = user::where('user_code', $request->user_code)->first()->id;
+            $emp_familydetails = VmtEmployeeFamilyDetails::where('user_id',$user_id)->first()->name;
+            $emp_familydetails->user_id =$user_id;
             $emp_familydetails->name = $request->input('name');
             $emp_familydetails->relationship = $request->input('relationship');
             $emp_familydetails->dob = $request->input('dob');
             $emp_familydetails->phone_number = $request->input('phone_number');
             $emp_familydetails->save();
+
+            $responseJSON = [
+                'status' => 'success',
+            ];
+        }
+        catch(\Exception $e){
+            $responseJSON = [
+                'status' => 'failure',
+                'message'=>'Error While Updateing Family Information',
+                'error_message'=>$e->getMesage()
+            ];
         }
 
-        $response = [
-            'status' => 'success',
-        ];
-
-        return  $response;
+             return response()->json($responseJSON);
     }
 
     public function updateExperienceInfo(Request $request)

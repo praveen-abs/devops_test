@@ -34,15 +34,11 @@
                             <div class="space-between">
                                 <div class="flex-col input_text">
                                     <span>Company Name <span class="text-danger">*</span></span>
-                                    <!-- <input type="text" name="ExperienceDetails_company_name[]" pattern-data="name" id=""
-                                    required v-model="ExperienceDetails.company_name"> -->
                                     <InputText type="text" v-model="ExperienceInfo.company_name"
                                         name="ExperienceDetails_company_name[]" required />
                                 </div>
                                 <div class="flex-col input_text">
                                     <span> Location<span class="text-danger">*</span></span>
-                                    <!-- <input type="text"  v-model="ExperienceDet.location"
-                                    id="familyDetails_Relationship" pattern-data="alpha" required> -->
                                     <InputText type="text" v-model="ExperienceInfo.location" name="experienceDet_location[]"
                                         required />
 
@@ -51,21 +47,13 @@
                             <div class="space-between M-T">
                                 <div class="flex-col input_text">
                                     <span>Job Position <span class="text-danger">*</span></span>
-                                    <!-- <input type="text" id="datemin" name="familyDetails_dob[]"
-                                    v-model="ExperienceDet.job_position"> -->
                                     <InputText type="text" v-model="ExperienceInfo.job_position"
                                         name="experienceDet_job_position[]" required />
-
-
-                                    <!-- <InputText type="" v-model="ExperienceDet.job_position" name="experienceDet_job_position[]"  required /> -->
-
                                 </div>
 
                                 <div class="flex-col input_text" style="margin-right: 7px;">
                                     <span :style="{ paddingLeft: '6px' }">Period From<span
                                             class="text-danger">*</span></span>
-                                    <!-- <input type="date"  id="familyDetails_phoneNumber"
-                                    name="familyDetails_phoneNumber[]" min="2000-01-02" v-model="ExperienceDet.period_from"> -->
                                     <Calendar showIcon v-model="ExperienceInfo.period_from"
                                         :style="{ height: ' 2.3rem', width: '100%', marginRight: '20px' }"
                                         name="experienceDet_period_from[]" />
@@ -76,9 +64,6 @@
                                 <div class="flex-col input_text" :style="{ marginLeft: '-6px' }">
                                     <span :style="{ paddingLeft: '6px' }">Period To <span
                                             class="text-danger">*</span></span>
-                                    <!-- <input type="date" id="datemin" name="familyDetails_dob[]"
-                                    v-model="ExperienceDet.period_to"> -->
-
                                     <Calendar showIcon v-model="ExperienceInfo.period_to" class=""
                                         :style="{ height: ' 2.3rem', width: '100%', borderRadius: '2px' }"
                                         name="experienceDet_period_to[]" />
@@ -102,10 +87,6 @@
 
 
                     </Dialog>
-
-
-
-
 
                 </h6>
                 <div class="table-responsive">
@@ -234,9 +215,13 @@ const saveExperienceDetails = () => {
             });
         // window.location.reload();
 
+        dialog_ExperienceInfovisible.value = false;
+
+
+
     }
 
-    dialog_ExperienceInfovisible.value = false;
+
 // }
 
 

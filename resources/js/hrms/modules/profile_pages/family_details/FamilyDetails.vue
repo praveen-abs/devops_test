@@ -4,10 +4,11 @@
             <h6 class="">Family Information
                 <button type="button" class="float-right btn btn-orange"
                 style="margin-left: 79%"
-                    @click="DialogFamilyinfovisible=true">
+                    @click="DialogFamilyinfovisible = true" >
                     Add New
                     <!-- <i class="ri-pencil-fill"></i> -->
                 </button>
+
                 <Dialog v-model:visible="DialogFamilyinfovisible" modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }" id="">
                     <template #header>
                         <div>
@@ -21,7 +22,7 @@
                         <div class="flex-col input_text">
                             <span>Name <span class="text-danger">*</span></span>
                             <input type="text" name="familyDetails_Name[]" pattern-data="name" id="familyDetails_Name"
-                                required v-model="familydetails.name">
+                                required  v-model="familydetails.name">
                         </div>
                         <div class="flex-col input_text">
                             <span>Relationship<span class="text-danger">*</span></span>
@@ -101,7 +102,59 @@
                     <Column :exportable="false" header="Action" style="min-width:8rem">
                         <template #body="slotProps">
 
-                            <button class="btn btn-success"  @click="editFamilyDetails(slotProps.data)">Edit</button>
+                            <button class="btn btn-success"  @click="diolog_EditFamilyDetails(slotProps.data)">Edit</button>
+
+
+                        <template>
+
+
+                            <Dialog v-model:visible="DialogEditInfovisible" modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }" >
+                                    <template #header>
+                                        <div>
+                                            <h5
+                                                :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
+                                                Family Information</h5>
+                                        </div>
+                                    </template>
+
+                                    <div class="space-between">
+                                        <div class="flex-col input_text">
+                                            <span>Name <span class="text-danger">*</span></span>
+                                            <input type="text" name="familyDetails_Name[]" pattern-data="name" v-model="Editfamilydetails.name"
+                                                required >
+                                        </div>
+                                        <div class="flex-col input_text">
+                                            <span>Relationship<span class="text-danger">*</span></span>
+                                            <input type="text" name="familyDetails_Relationship[]"
+                                                 pattern-data="alpha" v-model="Editfamilydetails.relationship" required>
+                                        </div>
+                                    </div>
+                                    <div class="space-between M-T">
+                                        <div class="flex-col input_text">
+                                            <span>Date of birth <span class="text-danger">*</span></span>
+                                            <input type="date" id="datemin" name="familyDetails_dob[]" min="2000-01-02"
+                                             v-model="Editfamilydetails.dob" >
+                                        </div>
+
+                                        <div class="flex-col input_text">
+                                            <span>phone<span class="text-danger">*</span></span>
+                                            <input type="number" minlength="10" maxlength="10" pattern="[1-9]{1}[0-9]{9}" id="familyDetails_phoneNumber"
+                                                name="familyDetails_phoneNumber[]"  v-model="Editfamilydetails.phone_number" >
+                                        </div>
+                                    </div>
+
+                                    <template #footer>
+                                        <Toast/>
+                                    <div>
+                                        <button type="button" class="submit_btn warning success" id="submit_button_family_details"
+                                            @click="EditFamilyDetails">submit</button>
+                                    </div>
+
+                                    </template>
+
+
+                           </Dialog>
+                        </template>
                         <!-- <Button icon="pi pi-pencil" label="edit" outlined rounded class="mr-2" @click="editFamilyDetails(slotProps.data)" />
                         <Button icon="pi pi-trash" outlined rounded severity="danger" @click="confirmDeleteProduct(slotProps.data)" /> -->
                     </template>
@@ -135,12 +188,22 @@ const toast = useToast();
 const PersonalDocument = ref('');
 const DialogFamilyinfovisible = ref(false);
 
+const DialogEditInfovisible = ref(false);
+
 const familydetails = reactive({
     name: '',
     relationship: '',
     dob: '',
     phone_number: ''
 })
+const Editfamilydetails = reactive({
+    name: '',
+    relationship: '',
+    dob: '',
+    phone_number: ''
+})
+
+const current_table_id = ref()
 
 function onClick_EditButton_familyInfo(){
     console.log("Opening General Info Dialog");
@@ -164,11 +227,11 @@ function onClick_EditButton_familyInfo(){
 
 const saveFamilyDetails = () => {
 
-   if(familydetails.name == ''  || familydetails.dob == '' || familydetails.relationship == '' || familydetails.phone_number == " " ){
-    toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
-   }else{
+//    if(familydetails.name == ''  || familydetails.dob == '' || familydetails.relationship == '' || familydetails.phone_number == " " ){
+//     toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
+//    }else{
     let id = fetch_data.current_user_id
-    let url = `/update-family-info/${id}`
+    let url = `/add-family-info/${id}`;
 
     axios.post(url, {
             user_code: _instance_profilePagesStore.employeeDetails.user_code,
@@ -199,21 +262,79 @@ const saveFamilyDetails = () => {
             console.log(err);
         });
         // window.location.reload();
-
+        DialogFamilyinfovisible.value = false;
     }
 
-        DialogFamilyinfovisible.value = false;
-}
 
-const editFamilyDetails = (family) => {
-    DialogFamilyinfovisible.value = true
-    _instance_profilePagesStore.employeeDetails.get_family_details = {...family};
-    console.log(family);
-    familydetails.name = family.name
-    familydetails.relationship = family.relationship
-    familydetails.name = family.name
-    familydetails.phone_number = family.phone_number
+// }
+
+const diolog_EditFamilyDetails = (family) => {
+
+    DialogEditInfovisible.value = true;
+
+    console.log(family.id);
+
+    current_table_id.value= family.id
+   console.log(current_table_id.value);
+
+   Editfamilydetails.name = family.name
+   Editfamilydetails.relationship = family.relationship
+   Editfamilydetails.dob = family.dob
+   Editfamilydetails.phone_number = family.phone_number
+
+
+    console.log("HHIIHIHIIHHIHIHIHIHIHH");
+
+    console.log( DialogEditInfovisible.value = true);
+
 };
+
+ const EditFamilyDetails = (user)=>{
+            // console.log(id);
+            let id = fetch_data.current_user_id
+    let url =`/update-family-info/${id}`;
+
+    console.log(user.id,"hi");
+
+    console.log(_instance_profilePagesStore.employeeDetails.get_family_details.id);
+
+    console.log( _instance_profilePagesStore.employeeDetails.user_code);
+
+
+
+    axios.post(url, {
+            user_code: _instance_profilePagesStore.employeeDetails.user_code,
+            current_table_id: current_table_id.value,
+            name: Editfamilydetails.name,
+            relationship: Editfamilydetails.relationship,
+            dob: Editfamilydetails.dob,
+            phone_number: Editfamilydetails.phone_number
+        })
+        .then((res) => {
+
+            if (res.data.status == "success") {
+                 window.location.reload();
+                toast.add({ severity: 'success', summary: 'Updated', detail: 'General information updated', life: 3000 });
+                _instance_profilePagesStore.employeeDetails.get_family_details.dob = useDateFormat(Editfamilydetails.dob,'YYYY-MM-DD' );
+
+                // _instance_profilePagesStore.employeeDetails.dob = dialog_general_information.dob;
+
+                _instance_profilePagesStore.employeeDetails.get_family_details.name = Editfamilydetails.gender;
+                _instance_profilePagesStore.employeeDetails.get_family_details.relationship = familydetails.relationship;
+
+                // _instance_profilePagesStore.employeeDetails.doj = dialog_general_information.doj;
+                _instance_profilePagesStore.employeeDetails.get_family_details.phone_number = Editfamilydetails.phone_number;
+            } else if (res.data.status == "failure") {
+                leave_data.leave_request_error_messege = res.data.message;
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+        // window.location.reload();
+        DialogEditInfovisible.value = false;
+    }
+
 
 const data = ref()
 
@@ -531,7 +652,29 @@ span {
     import { ref } from "vue";
 
     const visible = ref(false);
-    </script> -->
+    </script>
+
+<template>
+    <div class="card flex justify-content-center">
+        <Button label="Show" icon="pi pi-external-link" @click="visible = true" />
+        <Dialog v-model:visible="visible" modal header="Header" :style="{ width: '50vw' }">
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+        </Dialog>
+    </div>
+</template>
+
+<script setup>
+import { ref } from "vue";
+
+const visible = ref(false);
+</script>
+
+
+
+-->
 
 
 }

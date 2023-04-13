@@ -38,13 +38,14 @@
         </DataTable>
 
         <Dialog v-model:visible="visible" modal header="Documents" :style="{ width: '40vw' }">
-            <img v-if="view_document.document_url" :src="`https://localhost/${view_document.document_url}`"
+            <img v-if="view_document.document_url" :src="`employee/emp_B090/documents/${view_document.document_url}`"
                 :alt="view_document.document_url" class="block pb-3 m-auto" />
 
         </Dialog>
         <!-- {{ _instance_profilePagesStore.employeeDetails.get_employee_details }} -->
-    </div>
+    </div>  
 </template>
+
 
 
 <script setup>
@@ -64,7 +65,7 @@ const visible = ref(false)
 
 const documents = ref([
     {
-        document_name: "Aadhar Front", document_url: 'doc_BA011_aadhar_card_backend_file_1664774711.pdf', status: "pending"
+        document_name: "Aadhar Front", document_url: 'voterIdB090_22-03-2023 15-47-22.jpg', status: "pending"
     },
     {
         document_name: "Aadhar back", document_url: 'doc_BA011_education_certificate_file_1664774711.JPG', status: "pending"
