@@ -1220,9 +1220,9 @@
                                     <button
                                         class="bg-orange-700 text-white me-4 py-2 rounded-md px-4 text-center">Save</button>
                                     <button
-                                        class="bg-transparent border-orange-700 me-4 text-orange-600 py-2 rounded-md px-4 text-center">Previous</button>
+                                        class="bg-transparent border-orange-700 me-4 text-orange-600 border py-2 rounded-md px-4 text-center">Previous</button>
                                     <button
-                                        class="bg-transparent border-orange-700 text-orange-600 py-2 rounded-md px-4 text-center">Next</button>
+                                        class="bg-transparent border-orange-700 text-orange-600 border py-2 rounded-md px-4 text-center">Next</button>
                                 </div>
                             </div>
 
@@ -1457,9 +1457,9 @@
                                     <button
                                         class="bg-orange-700 text-white py-2 rounded-md px-4 text-center">Save</button>
                                     <button
-                                        class="bg-transparent border-orange-700 mx-4 text-orange-600 py-2 rounded-md px-4 text-center">Previous</button>
+                                        class="bg-transparent border-orange-700 mx-4 text-orange-600 border py-2 rounded-md px-4 text-center">Previous</button>
                                     <button
-                                        class="bg-transparent border-orange-700 text-orange-600 py-2 rounded-md px-4 text-center  border ">Next</button>
+                                        class="bg-transparent border-orange-700 text-orange-600 border py-2 rounded-md px-4 text-center  border ">Next</button>
                                 </div>
 
                             </div>
@@ -1747,9 +1747,9 @@
                                     <button
                                         class="bg-orange-700 text-white  py-2 rounded-md px-4 text-center">Save</button>
                                     <button
-                                        class="bg-transparent border-orange-700 x-4 text-orange-600 py-2 rounded-md px-4 text-center">Previous</button>
+                                        class="bg-transparent border-orange-700 x-4 text-orange-600 border py-2 rounded-md px-4 text-center">Previous</button>
                                     <button
-                                        class="bg-transparent border-orange-700 text-orange-600 py-2 rounded-md px-4 text-center">Next</button>
+                                        class="bg-transparent border-orange-700 text-orange-600 border py-2 rounded-md px-4 text-center">Next</button>
                                 </div>
                             </div>
                             <div class="tab-pane fade " id="other_income" role="tabpanel" aria-labelledby="">
@@ -1965,9 +1965,9 @@
                                     <button
                                         class="bg-orange-700 text-white  py-2 rounded-md px-4 text-center">Save</button>
                                     <button
-                                        class="bg-transparent border-orange-700 mx-4 text-orange-600 py-2 rounded-md px-4 text-center">Previous</button>
+                                        class="bg-transparent border-orange-700 mx-4 text-orange-600 border py-2 rounded-md px-4 text-center">Previous</button>
                                     <button
-                                        class="bg-transparent border-orange-700 text-orange-600 py-2 rounded-md px-4 text-center">Next</button>
+                                        class="bg-transparent border-orange-700 text-orange-600 border py-2 rounded-md px-4 text-center">Next</button>
                                 </div>
                             </div>
 
@@ -2197,9 +2197,9 @@
                                     <button
                                         class="bg-orange-700 text-white py-2 rounded-md px-4 text-center">Save</button>
                                     <button
-                                        class="bg-transparent border-orange-700 mx-4 text-orange-600 py-2 rounded-md px-4 text-center">Previous</button>
+                                        class="bg-transparent border-orange-700 mx-4 text-orange-600 border py-2 rounded-md px-4 text-center">Previous</button>
                                     <button
-                                        class="bg-transparent border-orange-700 text-orange-600 py-2 rounded-md px-4 text-center">Next</button>
+                                        class="bg-transparent border-orange-700 text-orange-600 border py-2 rounded-md px-4 text-center">Next</button>
                                 </div>
                             </div>
                             <div class="tab-pane fade " id="other_exemptions" role="tabpanel" aria-labelledby="">
@@ -3048,9 +3048,9 @@
                                     <button
                                         class="bg-orange-700 text-white  py-2 rounded-md px-4 text-center">Save</button>
                                     <button
-                                        class="bg-transparent border-orange-700 mx-4 text-orange-600 py-2 rounded-md px-4 text-center">Previous</button>
+                                        class="bg-transparent border-orange-700 mx-4 text-orange-600 border py-2 rounded-md px-4 text-center">Previous</button>
                                     <button
-                                        class="bg-transparent border-orange-700 text-orange-600 py-2 rounded-md px-4 text-center">Next</button>
+                                        class="bg-transparent border-orange-700 text-orange-600 border py-2 rounded-md px-4 text-center">Next</button>
                                 </div>
                             </div>
                         </div>
