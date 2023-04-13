@@ -38,12 +38,18 @@
         </DataTable>
 
         <Dialog v-model:visible="visible" modal header="Documents" :style="{ width: '40vw' }">
-            <img v-if="view_document.document_url" :src="`employee/emp_B090/documents/${view_document.document_url}`"
+            <!-- <img v-if="view_document.document_url" :src="`employee/emp_B090/documents/${view_document.document_url}`"
+                :alt="view_document.document_url" class="block pb-3 m-auto" /> -->
+
+                <img v-if="view_document.document_url" :src="`http://127.0.0.1:8000/view-private-file/${view_document.document_url}`"
                 :alt="view_document.document_url" class="block pb-3 m-auto" />
+<!--
+                /view-private-file -->
+                <a href=""></a>
 
         </Dialog>
         <!-- {{ _instance_profilePagesStore.employeeDetails.get_employee_details }} -->
-    </div>  
+    </div>
 </template>
 
 
