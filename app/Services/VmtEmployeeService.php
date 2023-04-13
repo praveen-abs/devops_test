@@ -80,9 +80,7 @@ class VmtEmployeeService {
     */
     public function createOrUpdate_OnboardFormData($data, $can_onboard_employee, $existing_user_id = null, $onboard_type = null, $onboard_import_type)
     {
-
-
-
+        //dd("heeey");
         $response = $this->createOrUpdate_User(data: $data, can_onboard_employee : $can_onboard_employee, user_id: $existing_user_id, onboard_type : $onboard_type);
 
         if(!empty($response) && $response->status == 'success')
@@ -102,10 +100,8 @@ class VmtEmployeeService {
                 else
                 if($onboard_import_type == "excel_bulk")
                 {
-
                     //validate date fields before saving in table
-                    $this->Upload_BulkOnboardDetail( $onboard_user, $data,$onboard_user->id);
-
+                   $t_response =  $this->Upload_BulkOnboardDetail( $onboard_user, $data,$onboard_user->id);
                 }
                 else
                 if($onboard_import_type == "onboard_form")//for normal , quick form onboard
@@ -126,7 +122,11 @@ class VmtEmployeeService {
                 return "failure : ".$e;
             }
         }
+        else{
+            dd("ERROR : createOrUpdate_User() response is ".$response);
+        }
 
+        dd("End of createOrUpdate_OnboardFormData()");
         return "Normal Onboarding : Failure in TRY or CATCH method";
     }
 
@@ -139,12 +139,11 @@ class VmtEmployeeService {
             if(! empty($user_id))
             {
 
-                $newUser = User::where('id',$user_id);
-
-                $newUser = $newUser->first();
+                $newUser = User::where('id',$user_id)->first();;
 
                 //Update existing user
                 $newUser->name = $data['employee_name'];
+
                 if(!empty($data["email"])){
                     $newUser->email = $data["email"];
                 }
@@ -208,207 +207,221 @@ class VmtEmployeeService {
 
     //for bulck onboard
 private function Upload_BulkOnboardDetail($user,$row,$user_id){
-    //    dd($user_id);
-//store employee details
-        $newEmployee = VmtEmployee::where('userid',$user->id);
 
-        if($newEmployee->exists())
-        {
-            $newEmployee = $newEmployee->first();
-        }else{
-            $newEmployee = new VmtEmployee;
-        }
+    try{
+            // $test = VmtMaritalStatus::where('name',"asdf" )->first()->id;
+            // dd("Test : ".$test);
 
-        $doj=$row["doj"] ?? '';
-        $dob=$row["dob"] ?? '';
+            //    dd($user_id);
+        //store employee details
+                $newEmployee = VmtEmployee::where('userid',$user->id);
 
-        $newEmployee->userid   =    $user_id;
-        $newEmployee->gender   =    $row["gender"] ?? '';
-        $newEmployee->doj   =  $doj ? $this->getdateFormatForDb($doj) : '';
-        $newEmployee->dol   =  $doj ? $this->getdateFormatForDb($doj) : '';
-        $newEmployee->dob   =  $dob ? $this->getdateFormatForDb($dob) : '';
-        $newEmployee->location   =    $row["work_location"] ?? '';
-        $newEmployee->pan_number   =  isset($row["pan_number"]) ? ($row["pan_number"]) : "";
-        $newEmployee->aadhar_number = $row["aadhar"] ?? '';
-       // dd($row["marital_status"]);
-        $marital_status_id=VmtMaritalStatus::where('name',ucfirst($row["marital_status"]) )->first()->id; // to get marital status id
-        //dd( $marital_status_id);
-        $newEmployee->marital_status_id = $marital_status_id ?? '';
-       // dd($newEmployee);
-        $bank_id=Bank::where('bank_name',$row['bank_name'])->first()->id;  // to get bank id
-        $newEmployee->bank_id   = $bank_id ?? '';
-        $newEmployee->bank_ifsc_code  = $row["bank_ifsc"] ?? '';
-        $newEmployee->bank_account_number  = $row["account_no"] ?? '';
-
-        $newEmployee->save();
-
-            //store employeeoffice details
-          $empOffice = VmtEmployeeOfficeDetails::where('user_id',$user_id);
-
-          if($empOffice->exists())
-          {
-              $empOffice = $empOffice->first();
-
-          }
-          else
-          {
-              $empOffice = new VmtEmployeeOfficeDetails;
-          }
-           $empOffice->user_id = $user_id; //Link between USERS and VmtEmployeeOfficeDetails table
-
-           //$department_id=Department::where('name',$row['department'])->first()->id;
-           //$empOffice->department_id = $department_id ?? ''; // => "lk"
-           $empOffice->process = $row["process"] ?? ''; // => "k"
-           $empOffice->designation = $row["designation"] ?? ''; // => "k"
-           $empOffice->l1_manager_code  = $row["reporting_manager_emp_code"] ?? ''; // => "k"
-
-           if ( !empty($row["l1_manager_code"]) && $this->isUserExist($row["l1_manager_code"]))
-           {
-               $empOffice->l1_manager_code  = $row["l1_manager_code"];
-               updateUserRole($empOffice->l1_manager_code,"Manager");
-
-           }
-
-           $empOffice->save();
-
-//store employee_statutoryDetails details
-
-           $newEmployee_statutoryDetails = VmtEmployeeStatutoryDetails::where('user_id',$user_id);
-
-          if($newEmployee_statutoryDetails->exists())
-          {
-            $newEmployee_statutoryDetails = $newEmployee_statutoryDetails->first();
-          }
-          else
-          {
-              $newEmployee_statutoryDetails = new VmtEmployeeStatutoryDetails;
-          }
-          $newEmployee_statutoryDetails->user_id = $user_id;
-          $newEmployee_statutoryDetails->uan_number = $row["uan_number"] ?? '';
-          $newEmployee_statutoryDetails->epf_number = $row["epf_number"] ?? '';
-          $newEmployee_statutoryDetails->esic_number = $row["esic_number"] ?? '';
-          $newEmployee_statutoryDetails->save();
-
-//store employee_familyDetails details
-
-          VmtEmployeeFamilyDetails::where('user_id',$user_id)->delete();
-
-          if(!empty($row['father_name'])){
-
-              $familyMember =  new VmtEmployeeFamilyDetails;
-              $familyMember->user_id  = $user_id;
-              $familyMember->name =   $row['father_name'];
-              $familyMember->relationship = 'Father';
-              $familyMember->gender = 'Male';
-                 if(!empty($row["father_dob"])){
-                      $dob_father=$row["father_dob"];
-                      $familyMember->dob = $this->getdateFormatForDb( $dob_father);
-                  }
-              $familyMember->save();
-          }
-             if(!empty($row['mother_name'])){
-              $familyMember =  new VmtEmployeeFamilyDetails;
-              $familyMember->user_id  = $user_id;
-              $familyMember->name =   $row['mother_name'];
-              $familyMember->relationship = 'Mother';
-              $familyMember->gender = 'Female';
-  //for bulk onboarding
-                  if(!empty($row["mother_dob"])){
-                      $dob_mother=$row["mother_dob"];
-                      $familyMember->dob = $this->getdateFormatForDb( $dob_mother) ;
-                  }
-              $familyMember->save();
-          }
-
-          if (($row['marital_status'])=='married') {
-              $familyMember =  new VmtEmployeeFamilyDetails;
-              $familyMember->user_id  = $user_id;
-              $familyMember->name =   $row['spouse_name'];
-              $familyMember->relationship = 'Spouse';
-              $familyMember->gender = $row['spouse_gender'] ?? '';
-  //for bulk onboarding
-                  if(!empty($row["spouse_dob"])){
-                  $dob_spouse =  $row["spouse_dob"];
-                  $familyMember->dob = $this->getdateFormatForDb(  $dob_spouse);
-                  }
+                if($newEmployee->exists())
+                {
+                    $newEmployee = $newEmployee->first();
+                }else{
+                    $newEmployee = new VmtEmployee;
                 }
-                $familyMember->save();
 
-              if (!empty($row['child_1'])) {
-                  $familyMember =  new VmtEmployeeFamilyDetails;
-                  $familyMember->user_id  = $user_id;
-                  $familyMember->name =  $row['child_1'];
-                  $familyMember->relationship = 'Children';
-                  $familyMember->gender = '---';
+                $doj=$row["doj"] ?? '';
+                $dob=$row["dob"] ?? '';
 
-                  if(!empty($row["child_1_dob"]))
-                  $child_dob= $row["child_1_dob"];
-                //   $familyMember->dob = $this->getdateFormatForDb($child_dob) ;
-              }
-              $familyMember->save();
+                $newEmployee->userid   =    $user_id;
+                $newEmployee->gender   =    $row["gender"] ?? '';
+                $newEmployee->doj   =  $doj ? $this->getdateFormatForDb($doj) : '';
+                $newEmployee->dol   =  $doj ? $this->getdateFormatForDb($doj) : '';
+                $newEmployee->dob   =  $dob ? $this->getdateFormatForDb($dob) : '';
+                $newEmployee->location   =    $row["work_location"] ?? '';
+                $newEmployee->pan_number   =  isset($row["pan_number"]) ? ($row["pan_number"]) : "";
+                $newEmployee->aadhar_number = $row["aadhar"] ?? '';
+            // dd($row["marital_status"]);
+                $marital_status_id=VmtMaritalStatus::where('name',ucfirst($row["marital_status"]) )->first()->id; // to get marital status id
+                //dd( $marital_status_id);
+                $newEmployee->marital_status_id = $marital_status_id ?? '';
+            // dd($newEmployee);
+                $bank_id=Bank::where('bank_name',$row['bank_name'])->first()->id;  // to get bank id
+                $newEmployee->bank_id   = $bank_id ?? '';
+                $newEmployee->bank_ifsc_code  = $row["bank_ifsc"] ?? '';
+                $newEmployee->bank_account_number  = $row["account_no"] ?? '';
 
-              if (!empty($row['child_2'])) {
-                $familyMember =  new VmtEmployeeFamilyDetails;
-                $familyMember->user_id  = $user_id;
-                $familyMember->name =   $row['child_2'];
-                $familyMember->relationship = 'Children';
-                $familyMember->gender = '---';
+                $newEmployee->save();
 
-                if(!empty($row["child_2_dob"]))
-                $child_dob= $row["child_2_dob"];
-                // $familyMember->dob = $this->getdateFormatForDb( $child_dob) ;
-            }
-            $familyMember->save();
+                    //store employeeoffice details
+                $empOffice = VmtEmployeeOfficeDetails::where('user_id',$user_id);
 
-            if (!empty($row['child_3'])) {
-                $familyMember =  new VmtEmployeeFamilyDetails;
-                $familyMember->user_id  = $user_id;
-                $familyMember->name =   $row['child_3'];
-                $familyMember->relationship = 'Children';
-                $familyMember->gender = '---';
+                if($empOffice->exists())
+                {
+                    $empOffice = $empOffice->first();
 
-                if(!empty($row["child_3_dob"]))
-                $child_dob= $row["child_3_dob"];
-                // $familyMember->dob = $this->getdateFormatForDb( $child_dob) ;
-            }
+                }
+                else
+                {
+                    $empOffice = new VmtEmployeeOfficeDetails;
+                }
+                $empOffice->user_id = $user_id; //Link between USERS and VmtEmployeeOfficeDetails table
 
-            $familyMember->save();
+                //$department_id=Department::where('name',$row['department'])->first()->id;
+                //$empOffice->department_id = $department_id ?? ''; // => "lk"
+                $empOffice->process = $row["process"] ?? ''; // => "k"
+                $empOffice->designation = $row["designation"] ?? ''; // => "k"
+                $empOffice->l1_manager_code  = $row["reporting_manager_emp_code"] ?? ''; // => "k"
 
-//store employee_compensatory Details details
+                if ( !empty($row["l1_manager_code"]) && $this->isUserExist($row["l1_manager_code"]))
+                {
+                    $empOffice->l1_manager_code  = $row["l1_manager_code"];
+                    updateUserRole($empOffice->l1_manager_code,"Manager");
 
-     $compensatory = Compensatory::where('user_id',$user_id);
+                }
 
-        if($compensatory->exists())
-        {
-            $compensatory = $compensatory->first();
-        }
-        else
-        {
-            $compensatory = new Compensatory;
-        }
+                $empOffice->save();
 
-        $compensatory->user_id = $user_id;
-        $compensatory->basic = $row["basic"] ?? '';
-        $compensatory->hra = $row["hra"] ?? '';
-        $compensatory->Statutory_bonus = $row["statutory_bonus"] ?? '' ;
-        $compensatory->child_education_allowance = $row["child_education_allowance"] ?? '' ;
-        $compensatory->food_coupon = $row["food_coupon"] ?? '' ;
-        $compensatory->lta = $row["lta"] ?? '' ;
-        $compensatory->special_allowance = $row["special_allowance"] ?? '' ;
-        $compensatory->other_allowance = $row["other_allowance"] ?? '' ;
-        $compensatory->gross = $row["fixed_gross"] ?? '' ;
-        $compensatory->epf_employer_contribution = $row["epf_employer_contribution"] ?? '' ;
-        $compensatory->esic_employer_contribution = $row["esic_employer_contribution"] ?? '' ;
-        $compensatory->insurance = $row["insurance"] ?? '' ;
-        $compensatory->graduity = $row["graduity"] ?? '' ;
-        $compensatory->dearness_allowance = $row["dearness_allowance"] ?? '' ;
-        $compensatory->cic = $row["ctc_cost_to_company"] ?? '' ;
-        $compensatory->epf_employee = $row["epf_employee"] ?? '' ;
-        $compensatory->esic_employee = $row["esic_employee"] ?? '' ;
-        $compensatory->professional_tax = $row["professional_tax"] ?? '' ;
-        $compensatory->net_income = $row["net_salary"] ?? '' ;
-        $compensatory->save();
+        //store employee_statutoryDetails details
 
+                $newEmployee_statutoryDetails = VmtEmployeeStatutoryDetails::where('user_id',$user_id);
+
+                if($newEmployee_statutoryDetails->exists())
+                {
+                    $newEmployee_statutoryDetails = $newEmployee_statutoryDetails->first();
+                }
+                else
+                {
+                    $newEmployee_statutoryDetails = new VmtEmployeeStatutoryDetails;
+                }
+                $newEmployee_statutoryDetails->user_id = $user_id;
+                $newEmployee_statutoryDetails->uan_number = $row["uan_number"] ?? '';
+                $newEmployee_statutoryDetails->epf_number = $row["epf_number"] ?? '';
+                $newEmployee_statutoryDetails->esic_number = $row["esic_number"] ?? '';
+                $newEmployee_statutoryDetails->save();
+
+        //store employee_familyDetails details
+
+                VmtEmployeeFamilyDetails::where('user_id',$user_id)->delete();
+
+                if(!empty($row['father_name'])){
+
+                    $familyMember =  new VmtEmployeeFamilyDetails;
+                    $familyMember->user_id  = $user_id;
+                    $familyMember->name =   $row['father_name'];
+                    $familyMember->relationship = 'Father';
+                    $familyMember->gender = 'Male';
+                        if(!empty($row["father_dob"])){
+                            $dob_father=$row["father_dob"];
+                            $familyMember->dob = $this->getdateFormatForDb( $dob_father);
+                        }
+                    $familyMember->save();
+                }
+                    if(!empty($row['mother_name'])){
+                    $familyMember =  new VmtEmployeeFamilyDetails;
+                    $familyMember->user_id  = $user_id;
+                    $familyMember->name =   $row['mother_name'];
+                    $familyMember->relationship = 'Mother';
+                    $familyMember->gender = 'Female';
+        //for bulk onboarding
+                        if(!empty($row["mother_dob"])){
+                            $dob_mother=$row["mother_dob"];
+                            $familyMember->dob = $this->getdateFormatForDb( $dob_mother) ;
+                        }
+                    $familyMember->save();
+                }
+
+                if (($row['marital_status'])=='married') {
+                    $familyMember =  new VmtEmployeeFamilyDetails;
+                    $familyMember->user_id  = $user_id;
+                    $familyMember->name =   $row['spouse_name'];
+                    $familyMember->relationship = 'Spouse';
+                    $familyMember->gender = $row['spouse_gender'] ?? '';
+        //for bulk onboarding
+                        if(!empty($row["spouse_dob"])){
+                        $dob_spouse =  $row["spouse_dob"];
+                        $familyMember->dob = $this->getdateFormatForDb(  $dob_spouse);
+                        }
+                        }
+                        $familyMember->save();
+
+                    if (!empty($row['child_1'])) {
+                        $familyMember =  new VmtEmployeeFamilyDetails;
+                        $familyMember->user_id  = $user_id;
+                        $familyMember->name =  $row['child_1'];
+                        $familyMember->relationship = 'Children';
+                        $familyMember->gender = '---';
+
+                        if(!empty($row["child_1_dob"]))
+                        $child_dob= $row["child_1_dob"];
+                        //   $familyMember->dob = $this->getdateFormatForDb($child_dob) ;
+                    }
+                    $familyMember->save();
+
+                    if (!empty($row['child_2'])) {
+                        $familyMember =  new VmtEmployeeFamilyDetails;
+                        $familyMember->user_id  = $user_id;
+                        $familyMember->name =   $row['child_2'];
+                        $familyMember->relationship = 'Children';
+                        $familyMember->gender = '---';
+
+                        if(!empty($row["child_2_dob"]))
+                        $child_dob= $row["child_2_dob"];
+                        // $familyMember->dob = $this->getdateFormatForDb( $child_dob) ;
+                    }
+                    $familyMember->save();
+
+                    if (!empty($row['child_3'])) {
+                        $familyMember =  new VmtEmployeeFamilyDetails;
+                        $familyMember->user_id  = $user_id;
+                        $familyMember->name =   $row['child_3'];
+                        $familyMember->relationship = 'Children';
+                        $familyMember->gender = '---';
+
+                        if(!empty($row["child_3_dob"]))
+                        $child_dob= $row["child_3_dob"];
+                        // $familyMember->dob = $this->getdateFormatForDb( $child_dob) ;
+                    }
+
+                    $familyMember->save();
+
+        //store employee_compensatory Details details
+
+            $compensatory = Compensatory::where('user_id',$user_id);
+
+                if($compensatory->exists())
+                {
+                    $compensatory = $compensatory->first();
+                }
+                else
+                {
+                    $compensatory = new Compensatory;
+                }
+
+                $compensatory->user_id = $user_id;
+                $compensatory->basic = $row["basic"] ?? '';
+                $compensatory->hra = $row["hra"] ?? '';
+                $compensatory->Statutory_bonus = $row["statutory_bonus"] ?? '' ;
+                $compensatory->child_education_allowance = $row["child_education_allowance"] ?? '' ;
+                $compensatory->food_coupon = $row["food_coupon"] ?? '' ;
+                $compensatory->lta = $row["lta"] ?? '' ;
+                $compensatory->special_allowance = $row["special_allowance"] ?? '' ;
+                $compensatory->other_allowance = $row["other_allowance"] ?? '' ;
+                $compensatory->gross = $row["fixed_gross"] ?? '' ;
+                $compensatory->epf_employer_contribution = $row["epf_employer_contribution"] ?? '' ;
+                $compensatory->esic_employer_contribution = $row["esic_employer_contribution"] ?? '' ;
+                $compensatory->insurance = $row["insurance"] ?? '' ;
+                $compensatory->graduity = $row["graduity"] ?? '' ;
+                $compensatory->dearness_allowance = $row["dearness_allowance"] ?? '' ;
+                $compensatory->cic = $row["ctc_cost_to_company"] ?? '' ;
+                $compensatory->epf_employee = $row["epf_employee"] ?? '' ;
+                $compensatory->esic_employee = $row["esic_employee"] ?? '' ;
+                $compensatory->professional_tax = $row["professional_tax"] ?? '' ;
+                $compensatory->net_income = $row["net_salary"] ?? '' ;
+                $compensatory->save();
+
+
+
+
+            return "bulk onboard success";
+    }
+    catch(\Exception $e)
+    {
+        dd("Error while saving record : ".$e);
+    }
 
 }
 

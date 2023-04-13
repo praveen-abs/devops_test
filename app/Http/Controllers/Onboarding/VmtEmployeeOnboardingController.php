@@ -913,15 +913,15 @@ class VmtEmployeeOnboardingController extends Controller
                      $message = "Employee OnBoard was Created   ";
                      $VmtGeneralInfo = VmtGeneralInfo::first();
                      $image_view = url('/') . $VmtGeneralInfo->logo_img;
-               \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), $image_view));
+              // \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), $image_view));
 
                     return  $rowdata_response = [
-                     'row_number' => '',
-                      'status' => 'success',
-                      'message' => $row['employee_code'] . ' added successfully<br/>',
-                      'mail_status' => 'success',
-                      'error_fields' => [],
-                                       ];
+                            'row_number' => '',
+                            'status' => 'success',
+                            'message' => $row['employee_code'] . ' added successfully<br/>',
+                            'mail_status' => 'success',
+                            'error_fields' => [],
+                    ];
           } else{
                     return $rowdata_response = [
                         'row_number' => '',
