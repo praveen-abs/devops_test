@@ -109,7 +109,7 @@ class VmtAttendanceController extends Controller
     }
 
 
-    public function approveRejectRevokeLeaveRequest(Request $request)
+    public function approveRejetRevokeLeaveRequest(Request $request)
     {
 
         // $approval_status = $request->status;
@@ -336,6 +336,11 @@ class VmtAttendanceController extends Controller
     }
 
     public function applyLeaveRequest(Request $request){
+
+
+        // dd($request ->all());
+
+
         $leave_month = date('m',strtotime($request->start_date));
         $compensatory_leavetype_id = VmtLeaves::where('leave_type','LIKE','%Compensatory%')->value('id');
 
