@@ -601,6 +601,7 @@ Route::middleware(['auth'])->group(function () {
 
     //Vmt Correction Controller
     Route::get('/processsExpense',  [App\Http\Controllers\VmtCorrectionController::class, 'processsExpense'])->name('processsExpense');
+    Route::get('/adding-reimbursement-data',  [App\Http\Controllers\VmtCorrectionController::class, 'addingReimbursementsDataForSpecificMonth'])->name('addingReimbursementsDataForSpecificMonth');
 
 
 
