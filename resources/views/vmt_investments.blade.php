@@ -362,9 +362,9 @@
                                 </div>
                                 <div class="text-end my-3">
                                     <button
-                                        class="bg-orange-700 text-white me-4 py-1.5 rounded-md px-5 text-center">Save</button>
+                                        class="bg-orange-700 text-white me-4 py-2 rounded-md px-4 text-center">Save</button>
                                     <button
-                                        class="bg-transparent  border border-orange-700 text-orange-600 py-1.5 rounded-md px-5 text-center">Next</button>
+                                        class="bg-transparent  border border-orange-700 text-orange-600 py-2 rounded-md px-4 text-center">Next</button>
                                 </div>
                             </div>
                             <div class="tab-pane fade  " id="c_cc" role="tabpanel" aria-labelledby="">
@@ -1218,11 +1218,11 @@
                                 </div>
                                 <div class="text-end my-3">
                                     <button
-                                        class="bg-orange-700 text-white me-4 py-1.5 rounded-md px-5 text-center">Save</button>
+                                        class="bg-orange-700 text-white me-4 py-2 rounded-md px-4 text-center">Save</button>
                                     <button
-                                        class="bg-transparent border-orange-700 me-4 text-orange-600 py-1.5 rounded-md px-5 text-center">Previous</button>
+                                        class="bg-transparent border-orange-700 me-4 text-orange-600 py-2 rounded-md px-4 text-center">Previous</button>
                                     <button
-                                        class="bg-transparent border-orange-700 text-orange-600 py-1.5 rounded-md px-5 text-center">Next</button>
+                                        class="bg-transparent border-orange-700 text-orange-600 py-2 rounded-md px-4 text-center">Next</button>
                                 </div>
                             </div>
 
@@ -1455,11 +1455,11 @@
                                 </div>
                                 <div class="text-end my-3">
                                     <button
-                                        class="bg-orange-700 text-white py-1.5 rounded-md px-5 text-center">Save</button>
+                                        class="bg-orange-700 text-white py-2 rounded-md px-4 text-center">Save</button>
                                     <button
-                                        class="bg-transparent border-orange-700 mx-4 text-orange-600 py-1.5 rounded-md px-5 text-center">Previous</button>
+                                        class="bg-transparent border-orange-700 mx-4 text-orange-600 py-2 rounded-md px-4 text-center">Previous</button>
                                     <button
-                                        class="bg-transparent border-orange-700 text-orange-600 py-1.5 rounded-md px-5 text-center  border ">Next</button>
+                                        class="bg-transparent border-orange-700 text-orange-600 py-2 rounded-md px-4 text-center  border ">Next</button>
                                 </div>
 
                             </div>
@@ -1745,11 +1745,11 @@
                                 </div>
                                 <div class="text-end my-3">
                                     <button
-                                        class="bg-orange-700 text-white  py-1.5 rounded-md px-5 text-center">Save</button>
+                                        class="bg-orange-700 text-white  py-2 rounded-md px-4 text-center">Save</button>
                                     <button
-                                        class="bg-transparent border-orange-700 x-4 text-orange-600 py-1.5 rounded-md px-5 text-center">Previous</button>
+                                        class="bg-transparent border-orange-700 x-4 text-orange-600 py-2 rounded-md px-4 text-center">Previous</button>
                                     <button
-                                        class="bg-transparent border-orange-700 text-orange-600 py-1.5 rounded-md px-5 text-center">Next</button>
+                                        class="bg-transparent border-orange-700 text-orange-600 py-2 rounded-md px-4 text-center">Next</button>
                                 </div>
                             </div>
                             <div class="tab-pane fade " id="other_income" role="tabpanel" aria-labelledby="">
@@ -1963,11 +1963,11 @@
                                 </div>
                                 <div class="text-end my-3">
                                     <button
-                                        class="bg-orange-700 text-white  py-1.5 rounded-md px-5 text-center">Save</button>
+                                        class="bg-orange-700 text-white  py-2 rounded-md px-4 text-center">Save</button>
                                     <button
-                                        class="bg-transparent border-orange-700 mx-4 text-orange-600 py-1.5 rounded-md px-5 text-center">Previous</button>
+                                        class="bg-transparent border-orange-700 mx-4 text-orange-600 py-2 rounded-md px-4 text-center">Previous</button>
                                     <button
-                                        class="bg-transparent border-orange-700 text-orange-600 py-1.5 rounded-md px-5 text-center">Next</button>
+                                        class="bg-transparent border-orange-700 text-orange-600 py-2 rounded-md px-4 text-center">Next</button>
                                 </div>
                             </div>
 
@@ -2062,7 +2062,7 @@
                                         <div class="tw-card bg-gray-100">
                                             <div class="text-end">
                                                 <button data-bs-target="#letOut_property_modal" data-bs-toggle="modal"
-                                                    class="py-1.5 px-4 text-white text-center mb-3  rounded-md bg-indigo-600">Add
+                                                    class="py-2 px-4 text-white text-center mb-3  rounded-md bg-indigo-600">Add
                                                     New</button>
                                             </div>
 
@@ -2130,7 +2130,7 @@
                                             <div class="text-end">
                                                 <button data-bs-target="#deemedOut_property_modal"
                                                     data-bs-toggle="modal"
-                                                    class="py-1.5 px-4 text-white text-center mb-3 float-right rounded-md bg-indigo-600">Add
+                                                    class="py-2 px-4 text-white text-center mb-3 rounded-md bg-indigo-600">Add
                                                     New</button>
                                             </div>
                                             <div class="table-responsive ">
@@ -2195,11 +2195,11 @@
                                 </div>
                                 <div class="text-end my-3">
                                     <button
-                                        class="bg-orange-700 text-white py-1.5 rounded-md px-5 text-center">Save</button>
+                                        class="bg-orange-700 text-white py-2 rounded-md px-4 text-center">Save</button>
                                     <button
-                                        class="bg-transparent border-orange-700 mx-4 text-orange-600 py-1.5 rounded-md px-5 text-center">Previous</button>
+                                        class="bg-transparent border-orange-700 mx-4 text-orange-600 py-2 rounded-md px-4 text-center">Previous</button>
                                     <button
-                                        class="bg-transparent border-orange-700 text-orange-600 py-1.5 rounded-md px-5 text-center">Next</button>
+                                        class="bg-transparent border-orange-700 text-orange-600 py-2 rounded-md px-4 text-center">Next</button>
                                 </div>
                             </div>
                             <div class="tab-pane fade " id="other_exemptions" role="tabpanel" aria-labelledby="">
@@ -2847,7 +2847,7 @@
                                                             <div class="flex justify-center">
                                                                 <button data-bs-target="#ee_modal"
                                                                     data-bs-toggle="modal"
-                                                                    class="text-white py-1.5 w-2/3 rounded-md  bg-indigo-800">Add</button>
+                                                                    class="text-white py-2 w-2/3 rounded-md  bg-indigo-800">Add</button>
                                                             </div>
                                                         </td>
 
@@ -2923,7 +2923,7 @@
                                                             <div class="flex justify-center">
                                                                 <button data-bs-target="#eea_modal"
                                                                     data-bs-toggle="modal"
-                                                                    class="text-white py-1.5 w-2/3 rounded-md  bg-indigo-800">Add</button>
+                                                                    class="text-white py-2 w-2/3 rounded-md  bg-indigo-800">Add</button>
                                                             </div>
                                                         </td>
 
@@ -2990,11 +2990,11 @@
                                                             {{-- <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea> --}}
                                                             {{-- <button data-bs-target="#eeb_modal" data-bs-toggle="modal"
-                                                                class="text-white py-1.5 w-full rounded-md  bg-indigo-800">Add</button> --}}
+                                                                class="text-white py-2 w-full rounded-md  bg-indigo-800">Add</button> --}}
                                                             <div class="flex justify-center">
                                                                 <button data-bs-target="#eeb_modal"
                                                                     data-bs-toggle="modal"
-                                                                    class="text-white py-1.5 w-2/3 rounded-md  bg-indigo-800">Add</button>
+                                                                    class="text-white py-2 w-2/3 rounded-md  bg-indigo-800">Add</button>
                                                             </div>
                                                         </td>
 
@@ -3046,11 +3046,11 @@
                                 </div>
                                 <div class="text-end my-3">
                                     <button
-                                        class="bg-orange-700 text-white  py-1.5 rounded-md px-5 text-center">Save</button>
+                                        class="bg-orange-700 text-white  py-2 rounded-md px-4 text-center">Save</button>
                                     <button
-                                        class="bg-transparent border-orange-700 mx-4 text-orange-600 py-1.5 rounded-md px-5 text-center">Previous</button>
+                                        class="bg-transparent border-orange-700 mx-4 text-orange-600 py-2 rounded-md px-4 text-center">Previous</button>
                                     <button
-                                        class="bg-transparent border-orange-700 text-orange-600 py-1.5 rounded-md px-5 text-center">Next</button>
+                                        class="bg-transparent border-orange-700 text-orange-600 py-2 rounded-md px-4 text-center">Next</button>
                                 </div>
                             </div>
                         </div>
@@ -3215,7 +3215,7 @@
                                 </div>
                                 <div class="text-end">
                                     <button
-                                        class="bg-orange-700 text-white py-1.5 rounded-md px-5 text-center">Save</button>
+                                        class="bg-orange-700 text-white py-2 rounded-md px-4 text-center">Save</button>
                                 </div>
                             </form>
 
@@ -3291,7 +3291,7 @@
 
                             </div>
                             <div class="text-end">
-                                <button class="bg-orange-700 text-white py-1.5 rounded-md px-5 text-center">Save</button>
+                                <button class="bg-orange-700 text-white py-2 rounded-md px-4 text-center">Save</button>
                             </div>
                         </form>
 
@@ -3366,7 +3366,7 @@
 
                             </div>
                             <div class="text-end">
-                                <button class="bg-orange-700 text-white py-1.5 rounded-md px-5 text-center">Save</button>
+                                <button class="bg-orange-700 text-white py-2 rounded-md px-4 text-center">Save</button>
                             </div>
                         </form>
 
@@ -3463,7 +3463,7 @@
                                 </div>
                                 <div class="text-end">
                                     <button
-                                        class="bg-orange-700 text-white py-1.5 rounded-md px-5 text-center">Save</button>
+                                        class="bg-orange-700 text-white py-2 rounded-md px-4 text-center">Save</button>
                                 </div>
                             </form>
 
@@ -3562,7 +3562,7 @@
                                 </div>
                             </div>
                             <div class="text-end">
-                                <button class="bg-orange-700 text-white py-1.5 rounded-md px-5 text-center">Save</button>
+                                <button class="bg-orange-700 text-white py-2 rounded-md px-4 text-center">Save</button>
                             </div>
                         </form>
 
@@ -3664,7 +3664,7 @@
                                 </div>
                             </div>
                             <div class="text-end">
-                                <button class="bg-orange-700 text-white py-1.5 rounded-md px-5 text-center">Save</button>
+                                <button class="bg-orange-700 text-white py-2 rounded-md px-4 text-center">Save</button>
                             </div>
                         </form>
 
@@ -3738,7 +3738,7 @@
                                 </div>
                             </div>
                             <div class="text-end">
-                                <button class="bg-orange-700 text-white py-1.5 rounded-md px-5 text-center">Save</button>
+                                <button class="bg-orange-700 text-white py-2 rounded-md px-4 text-center">Save</button>
                             </div>
                         </form>
 
