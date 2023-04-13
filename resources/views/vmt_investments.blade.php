@@ -4,260 +4,241 @@
 @endsection
 @section('content')
     <div class=" mt-30 investments-wrapper">
-        <div class="card shadow  left-line mb-2 ">
-            <div class="card-body pb-0 pt-1">
-                <ul class="nav nav-pills    nav-tabs-dashed" id="pills-tab" role="tablist">
-                    <li class="nav-item  " role="presentation">
-                        <a class="nav-link active  " id="" data-bs-toggle="pill" href=""
-                            data-bs-target="#investment_declaration" role="tab" aria-controls="pills-home"
-                            aria-selected="true">
-                            Declaration</a>
-                    </li>
-                    <li class="nav-item   mx-4" role="presentation">
-                        <a class="nav-link   " id="" data-bs-toggle="pill" href=""
-                            data-bs-target="#exemptions" role="tab" aria-controls="pills-home" aria-selected="true">
-                            Investments and Exemptions</a>
-                    </li>
-                    <li class="nav-item  " role="presentation">
-                        <a class="nav-link   " id="" data-bs-toggle="pill" href=""
-                            data-bs-target="#form_12bb" role="tab" aria-controls="pills-home" aria-selected="true">
-                            Form 12 BB</a>
-                    </li>
-                    <li class="nav-item   mx-4" role="presentation">
-                        <a class="nav-link   " id="" data-bs-toggle="pill" href=""
-                            data-bs-target="#tax_filling" role="tab" aria-controls="pills-home" aria-selected="true">
-                            Tax Filling</a>
-                    </li>
+        <div class="tw-card left-line shadow-none pt-1 pb-0 mb-3">
+
+            <ul class="nav nav-pills  divide-x divide-solid   nav-tabs-dashed" id="pills-tab" role="tablist">
+                <li class="nav-item  " role="presentation">
+                    <a class="nav-link active mx-4  " id="" data-bs-toggle="pill" href=""
+                        data-bs-target="#investment_declaration" role="tab" aria-controls="pills-home"
+                        aria-selected="true">
+                        Declaration</a>
+                </li>
+                <li class="nav-item   " role="presentation">
+                    <a class="nav-link  mx-4 " id="" data-bs-toggle="pill" href=""
+                        data-bs-target="#exemptions" role="tab" aria-controls="pills-home" aria-selected="true">
+                        Investments and Exemptions</a>
+                </li>
+                <li class="nav-item  " role="presentation">
+                    <a class="nav-link mx-4   " id="" data-bs-toggle="pill" href=""
+                        data-bs-target="#form_12bb" role="tab" aria-controls="pills-home" aria-selected="true">
+                        Form 12 BB</a>
+                </li>
+                <li class="nav-item   " role="presentation">
+                    <a class="nav-link  mx-4 " id="" data-bs-toggle="pill" href=""
+                        data-bs-target="#tax_filling" role="tab" aria-controls="pills-home" aria-selected="true">
+                        Tax Filling</a>
+                </li>
 
 
 
-                </ul>
-            </div>
+            </ul>
+
         </div>
-        <div class="card top-line mb-0">
-            <div class="card-body">
-                <div class="tab-content " id="pills-tabContent">
-                    <div class="tab-pane fade active show" id="investment_declaration" role="tabpanel" aria-labelledby="">
 
+        <div class="tab-content " id="pills-tabContent">
+            <div class="tab-pane fade active show" id="investment_declaration" role="tabpanel" aria-labelledby="">
+                <div class="tw-card">
+                    <h6 class="text-primary text-lg  font-semibold ">Tax Deductions FY 2022-2023</h6>
+                    <div class="tw-card bg-pink-50 shadow-sm my-4">
+                        Kindly update your <span class="text-indigo-600 font text-base font-semibold">PAN</span> to
+                        avoid
+                        20% TDS deduction (if applicable)
 
-                        <h6 class="text-primary text-lg  font-semibold ">Tax Deductions FY 2022-2023</h6>
+                    </div>
+                    <div class="tw-card bg-gray-100 shadow-sm mb-4 text-justify">
+                        You have the option of either using a new regime(with no tax deductions), or using the same
+                        regime as FY 2019-20. To help you make an informed decision., we are displaying your tax
+                        liability in both these regimes, and you can choose the option that you prefer. For us to
+                        accurately calculate your tax liabilities, please ensure you fill in all the information
+                        requested below, irrespective of the regime that you pick.
+                    </div>
 
-
-                        <div class="tw-card bg-pink-50 shadow-sm my-4">
-                            Kindly update your <span class="text-indigo-600 font text-base font-semibold">PAN</span> to
-                            avoid
-                            20% TDS deduction (if applicable)
-
-                        </div>
-                        <div class="tw-card bg-gray-100 shadow-sm mb-4 text-justify">
-                            You have the option of either using a new regime(with no tax deductions), or using the same
-                            regime as FY 2019-20. To help you make an informed decision., we are displaying your tax
-                            liability in both these regimes, and you can choose the option that you prefer. For us to
-                            accurately calculate your tax liabilities, please ensure you fill in all the information
-                            requested below, irrespective of the regime that you pick.
-                        </div>
-
-                        <div class="flex items-center justify-between mb-3">
-                            <div class="">
-                                <p class=" text-gray-600">Your current chosen tax regime is <span
-                                        class="text-indigo-600 font text-lg font-semibold change_regime_text">Old Tax Regime
-                                    </span> </p>
-                                <p class="text-gray-400 text-sm">The confirmed old tax regime will be used in future payroll
-                                    calculations</p>
-
-                            </div>
-                            <div class="">
-                                <button class="text-white py-2 px-4 rounded-md  bg-indigo-600 change_regime_text"
-                                    id="regime_button"><i class="fa fa-check-square-o mr-2 text-base"></i> Old Tax
-                                    Regime</button>
-                                <span class="text-gray-600 text-sm align-text-bottom " id="latest_update">Maximum
-                                    benefit</span>
-
-                            </div>
-                            <div class="">
-                                <button data-bs-target="#switchRegime_modal" data-bs-toggle="modal"
-                                    class="py-2 px-4 rounded-md text-indigo-600   border-indigo-600 "
-                                    style="border:1px solid #4b46e4 !important"> Switch Regime</button>
-
-                            </div>
-
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="">
+                            <p class=" text-gray-600">Your current chosen tax regime is <span
+                                    class="text-indigo-600 font text-lg font-semibold change_regime_text">Old Tax Regime
+                                </span> </p>
+                            <p class="text-gray-400 text-sm">The confirmed old tax regime will be used in future payroll
+                                calculations</p>
 
                         </div>
-
-                        <p class="text-gray-600 text-justify" id="oldRegime_warn" >Choosing Old Regime will give you an additional benefit of
-                            ₹41,220.00 as compared to New Regime. Calculations are based on the latest released payroll -
-                            Jul 2022
-                        </p>
-                        <div class="tw-card bg-pink-50 shadow-sm my-4" style="display:none" id="newRegime_warn">
-                            The tax regime cannot be changed until the financial year 2022-2023 ends. (April 2023-March 2024)
+                        <div class="">
+                            <button class="text-white py-2 px-4 rounded-md  bg-indigo-600 change_regime_text"
+                                id="regime_button"><i class="fa fa-check-square-o mr-2 text-base"></i> Old Tax
+                                Regime</button>
+                            <span class="text-gray-600 text-sm align-text-bottom " id="latest_update">Maximum
+                                benefit</span>
 
                         </div>
+                        <div class="">
+                            <button data-bs-target="#switchRegime_modal" data-bs-toggle="modal"
+                                class="py-2 px-4 rounded-md text-indigo-600   border-indigo-600 "
+                                style="border:1px solid #4b46e4 !important"> Switch Regime</button>
 
-                        <div class="table-responsive my-3">
-                            <table class="table investment_table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Particulars</th>
-                                        <th scope="col">New Tax Regime <i class="fa fa-rupee mx-2"></i></th>
-                                        <th scope="col">Old Tax Regime </th>
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-
-
-                                </tbody>
-                            </table>
                         </div>
-
 
 
                     </div>
-                    <div class="tab-pane fade  " id="exemptions" role="tabpanel">
 
-                        <div class="row mb-3">
-                            <div class="col-sm-12 col-md-6 col-lg-6 col-xxl-6 col-xl-6">
-                                <h6>Tax Saving Investment </h6>
+                    <p class="text-gray-600 text-justify" id="oldRegime_warn">Choosing Old Regime will give you an
+                        additional benefit of
+                        ₹41,220.00 as compared to New Regime. Calculations are based on the latest released payroll -
+                        Jul 2022
+                    </p>
+                    <div class="tw-card bg-pink-50 shadow-sm my-4" style="display:none" id="newRegime_warn">
+                        The tax regime cannot be changed until the financial year 2022-2023 ends. (April 2023-March 2024)
+
+                    </div>
+
+                    <div class="table-responsive my-3">
+                        <table class="table investment_table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Particulars</th>
+                                    <th scope="col">New Tax Regime <i class="fa fa-rupee mx-2"></i></th>
+                                    <th scope="col">Old Tax Regime </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="tab-pane fade  " id="exemptions" role="tabpanel">
+
+                <div class="tw-card mb-3">
+                    <div class="items-center flex justify-between mb-3">
+                        <h6 class="text-lg font-semibold ">Tax Saving Investment </h6>
+                        <select name="" id="" class="border-orange w-1/6 form-select disabled_focus">
+                            <option value="" selected hidden disabled>Apr 2022 - Mar 2023 </option>
+                        </select>
+                    </div>
+                    <div class="widget-card mb-3">
+                        <div class="grid md:grid-cols-2 xl:grid-cols-4 lg:grid-cols-4 gap-4">
+                            <div class="tw-card text-center bg-orange-50 border-l-orange-400 border-l-4 ">
+                                <p class="text-ash-medium mb-2 f-13 ">Maximum Limit</p>
+                                <h6 class="mb-0 text-gray-500 text-base font-semibold">-</h6>
+                            </div>
+                            <div class="tw-card text-center bg-indigo-50 border-l-indigo-400 border-l-4 ">
+                                <p class="text-ash-medium mb-2 f-13 "> Declared Amount</p>
+                                <h6 class="mb-0 text-gray-500 text-base font-semibold">-</h6>
                             </div>
 
-                            <div class="col-sm-12 col-md-6 col-lg-6 col-xxl-6 col-xl-6">
-                                <div class="d-flex justify-content-end">
-                                    <select name="" id=""
-                                        class="border-orange w-50 form-select disabled_focus">
-                                        <option value="" selected hidden disabled>Apr 2022 - Mar 2023 </option>
-                                    </select>
-                                </div>
+                            <div class="tw-card text-center bg-green-50 border-l-green-400 border-l-4 ">
+                                <p class="text-ash-medium mb-2 f-13 ">Status</p>
+                                <h6 class="mb-0 text-gray-500 text-base font-semibold">Not Submited</h6>
                             </div>
-                        </div>
-                        <div class="widget-card mb-3">
-                            <div class="grid md:grid-cols-2 xl:grid-cols-4 lg:grid-cols-4 gap-4">
-                                <div class="tw-card text-center bg-orange-50 border-l-orange-400 border-l-4 ">
-                                    <p class="text-ash-medium mb-2 f-13 ">Maximum Limit</p>
-                                    <h6 class="mb-0 text-gray-500 text-base font-semibold">-</h6>
-                                </div>
-                                <div class="tw-card text-center bg-indigo-50 border-l-indigo-400 border-l-4 ">
-                                    <p class="text-ash-medium mb-2 f-13 "> Declared Amount</p>
-                                    <h6 class="mb-0 text-gray-500 text-base font-semibold">-</h6>
-                                </div>
-
-                                <div class="tw-card text-center bg-green-50 border-l-green-400 border-l-4 ">
-                                    <p class="text-ash-medium mb-2 f-13 ">Status</p>
-                                    <h6 class="mb-0 text-gray-500 text-base font-semibold">Not Submited</h6>
-                                </div>
-                                <div class="tw-card text-center bg-violet-50 border-l-violet-400 border-l-4 ">
-                                    <p class="text-ash-medium mb-2 f-13 ">Late Date For Submission</p>
-                                    <h6 class="mb-0 text-gray-500 text-base font-semibold">-</h6>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card left-line shadow mb-2">
-                            <div class="card-body pb-0 pt-1">
-                                <ul class="nav nav-pills    nav-tabs-dashed" id="pills-tab" role="tablist">
-                                    <li class="nav-item   " role="presentation">
-                                        <a class="nav-link active " id="" data-bs-toggle="pill" href=""
-                                            data-bs-target="#house_property" role="tab" aria-controls=""
-                                            aria-selected="true">
-                                            HRA
-                                        </a>
-                                    </li>
-
-                                    <li class="nav-item  mx-3 " role="presentation">
-                                        <a class="nav-link    " id="" data-bs-toggle="pill" href=""
-                                            data-bs-target="#c_cc" role="tab" aria-controls="" aria-selected="true">
-                                            Section 80C & 80CCC</a>
-                                    </li>
-                                    <li class="nav-item   " role="presentation">
-                                        <a class="nav-link   mx-0 mx-xl-3 " id="" data-bs-toggle="pill"
-                                            href="" data-bs-target="#other_exemptions" role="tab"
-                                            aria-controls="" aria-selected="true">
-                                            Other Exemptions
-                                        </a>
-                                    </li>
-                                    <li class="nav-item  mx-3 " role="presentation">
-                                        <a class="nav-link    " id="" data-bs-toggle="pill" href=""
-                                            data-bs-target="#income_loss" role="tab" aria-controls=""
-                                            aria-selected="true">
-                                            House Property</a>
-                                    </li>
-
-
-                                    <li class="nav-item   " role="presentation">
-                                        <a class="nav-link   mx-0  mx-xl-3 " id="" data-bs-toggle="pill"
-                                            href="" data-bs-target="#reimbursement" role="tab"
-                                            aria-controls="" aria-selected="true">
-                                            Reimbursement
-                                        </a>
-                                    </li>
-                                    <li class="nav-item mx-3  " role="presentation">
-                                        <a class="nav-link   " id="" data-bs-toggle="pill" href=""
-                                            data-bs-target="#previous_income" role="tab" aria-controls=""
-                                            aria-selected="true">
-                                            Previous Employer Income
-                                        </a>
-                                    </li>
-
-
-                                    <li class="nav-item   " role="presentation">
-                                        <a class="nav-link   mx-0  mx-xl-3 " id="" data-bs-toggle="pill"
-                                            href="" data-bs-target="#other_income" role="tab"
-                                            aria-controls="" aria-selected="true">
-                                            Other Source Of Income
-                                        </a>
-                                    </li>
-
-                                </ul>
+                            <div class="tw-card text-center bg-violet-50 border-l-violet-400 border-l-4 ">
+                                <p class="text-ash-medium mb-2 f-13 ">Late Date For Submission</p>
+                                <h6 class="mb-0 text-gray-500 text-base font-semibold">-</h6>
                             </div>
                         </div>
+                    </div>
+                </div>
 
-                        <div class="tab-content " id="">
-                            <div class="tab-pane fade active show " id="house_property" role="tabpanel"
-                                aria-labelledby="">
-                                <div class="table-responsive mb-3">
-                                    <table class="table investment_table">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Sections</th>
-                                                <th scope="col">Particulars</th>
-                                                <th scope="col">References</th>
-                                                <th scope="col">Max Limit</th>
-                                                <th scope="col">Declaration Amount</th>
-                                                {{-- <th scope="col">Proofs</th>
+                <div class="tw-card left-line pt-1 pb-0 mb-3">
+
+                    <ul class="nav nav-pills  divide-x divide-solid   nav-tabs-dashed" id="pills-tab" role="tablist">
+                        <li class="nav-item  " role="presentation">
+                            <a class="nav-link active " id="" data-bs-toggle="pill" href=""
+                                data-bs-target="#house_property" role="tab" aria-controls="" aria-selected="true">
+                                HRA
+                            </a>
+                        </li>
+
+                        <li class="nav-item  mx-3 " role="presentation">
+                            <a class="nav-link    " id="" data-bs-toggle="pill" href=""
+                                data-bs-target="#c_cc" role="tab" aria-controls="" aria-selected="true">
+                                Section 80C & 80CCC</a>
+                        </li>
+                        <li class="nav-item   " role="presentation">
+                            <a class="nav-link   mx-0 mx-xl-3 " id="" data-bs-toggle="pill" href=""
+                                data-bs-target="#other_exemptions" role="tab" aria-controls="" aria-selected="true">
+                                Other Exemptions
+                            </a>
+                        </li>
+                        <li class="nav-item  mx-3 " role="presentation">
+                            <a class="nav-link    " id="" data-bs-toggle="pill" href=""
+                                data-bs-target="#income_loss" role="tab" aria-controls="" aria-selected="true">
+                                House Property</a>
+                        </li>
+
+
+                        <li class="nav-item   " role="presentation">
+                            <a class="nav-link   mx-0  mx-xl-3 " id="" data-bs-toggle="pill" href=""
+                                data-bs-target="#reimbursement" role="tab" aria-controls="" aria-selected="true">
+                                Reimbursement
+                            </a>
+                        </li>
+                        <li class="nav-item mx-3  " role="presentation">
+                            <a class="nav-link   " id="" data-bs-toggle="pill" href=""
+                                data-bs-target="#previous_income" role="tab" aria-controls="" aria-selected="true">
+                                Previous Employer Income
+                            </a>
+                        </li>
+
+
+                        <li class="nav-item   " role="presentation">
+                            <a class="nav-link   mx-0  mx-xl-3 " id="" data-bs-toggle="pill" href=""
+                                data-bs-target="#other_income" role="tab" aria-controls="" aria-selected="true">
+                                Other Source Of Income
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <div class="tw-card">
+                    <div class="tab-content " id="">
+                        <div class="tab-pane fade active show " id="house_property" role="tabpanel" aria-labelledby="">
+                            <div class="tw-card bg-gray-50 mb-4">
+                                <table class="table  investment_table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Sections</th>
+                                            <th scope="col">Particulars</th>
+                                            <th scope="col">References</th>
+                                            <th scope="col">Max Limit</th>
+                                            <th scope="col">Declaration Amount</th>
+                                            {{-- <th scope="col">Proofs</th>
 
                                                 <th scope="col">Status</th> --}}
-                                                <th scope="col">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Section
-                                                    10(13A)</td>
-                                                <td>House Rent Allowance</td>
-                                                <td>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Section
+                                                10(13A)</td>
+                                            <td>House Rent Allowance</td>
+                                            <td>
 
-                                                    <button type="button"
-                                                        class="btn btn-transprarent border-0 outline-none "
-                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        title="Exemption will be provide the Least of:
+                                                <button type="button" class="btn btn-transprarent border-0 outline-none "
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    title="Exemption will be provide the Least of:
                                                 a) Actual HRA paid
                                                 b) Rent paid subtract (-)10% of Basic salary
                                                 c) for Metro 50% of Basic salary (Mumbai, Kolkata, Delhi or Chennai)
                                                 For non metro 40% of Basic salary">
-                                                        <i class="fa fa-exclamation-circle  text-warning"
-                                                            aria-hidden="true"></i>
-                                                    </button>
-                                                </td>
-                                                <td></td>
-                                                <td class="text-end">
-                                                    {{-- <textarea name="" id="" class="text-box outline-none border-0 form-control resize-none " disabled
+                                                    <i class="fa fa-exclamation-circle  text-warning"
+                                                        aria-hidden="true"></i>
+                                                </button>
+                                            </td>
+                                            <td></td>
+                                            <td class="text-end">
+                                                {{-- <textarea name="" id="" class="text-box outline-none border-0 form-control resize-none " disabled
                                                         cols="5" rows="1"></textarea> --}}
-                                                    <div class="flex justify-center">
-                                                        <button data-bs-target="#AddRendted_modal" data-bs-toggle="modal"
-                                                            class="text-white py-2 w-2/3 px-3 rounded-md  bg-indigo-800">Add</button>
-                                                    </div>
-                                                </td>
-                                                {{-- <td align="">
+                                                <div class="flex justify-center">
+                                                    <button data-bs-target="#AddRendted_modal" data-bs-toggle="modal"
+                                                        class="text-white py-2 w-2/3 px-3 rounded-md  bg-indigo-800">Add</button>
+                                                </div>
+                                            </td>
+                                            {{-- <td align="">
 
                                                     <div class="upload_file ">
 
@@ -273,138 +254,135 @@
                                                     <p>Not Submitted</p>
                                                 </td> --}}
 
-                                                <td>
+                                            <td>
 
 
-                                                    <div class="dropdown investment_dropDown">
-                                                        <button
-                                                            class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                            type="button" id="dropdownMenuButton"
-                                                            data-bs-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false">
-                                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-pencil-square-o text-info me-2"
-                                                                    aria-hidden="true"></i> Edit</a>
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Clear</a>
-                                                        </div>
+                                                <div class="dropdown investment_dropDown">
+                                                    <button
+                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                        type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <a class="dropdown-item" href="#"><i
+                                                                class="fa fa-pencil-square-o text-info me-2"
+                                                                aria-hidden="true"></i> Edit</a>
+                                                        <a class="dropdown-item" href="#"><i
+                                                                class="fa fa-times-circle-o text-danger me-2"
+                                                                aria-hidden="true"></i> Clear</a>
                                                     </div>
-                                                </td>
-                                            </tr>
+                                                </div>
+                                            </td>
+                                        </tr>
 
-                                        </tbody>
-                                    </table>
-                                </div>
-
-
-                                <div class="tw-card bg-gray-100">
-                                    <div class="flex mb-3 justify-between">
-                                        <span class="text-lg text-indigo-950 font-semibold">Rental Property</span> <button
-                                            class="btn btn-border-orange" data-bs-target="#AddRendted_modal"
-                                            data-bs-toggle="modal"><i class="fa fa-plus-circle me-2"
-                                                aria-hidden="true"></i>
-                                            Add Rented</button>
-                                    </div>
-
-                                    <div class="col-sm-12 col-md-12 col-xl-12 col-xxl-12 col-lg-12 mb-3">
-                                        <div class="table-responsive mb-3">
-                                            <table class="table investment_table">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">Landlord Name</th>
-                                                        <th scope="col">Landlord PAN</th>
-                                                        <th scope="col">From Month</th>
-                                                        <th scope="col">To Month</th>
-                                                        <th scope="col">City</th>
-                                                        <th scope="col">Total Rent</th>
-                                                        <th scope="col">Action</th>
-                                                    </tr>
-                                                </thead>
-
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-
-                                                        </td>
-                                                        <td>
-
-                                                        </td>
-                                                        <td>
-
-                                                        </td>
-                                                        <td>
-
-                                                        </td>
-                                                        <td>
-
-                                                        </td>
-                                                        <td>
-
-                                                        </td>
-                                                        <td>
-
-                                                        </td>
-                                                    </tr>
-
-                                                </tbody>
-
-                                            </table>
-                                        </div>
-                                    </div>
-
-
-
-
-                                </div>
-                                <div class="text-end my-3">
-                                    <button
-                                        class="bg-orange-700 text-white me-4 py-2 rounded-md px-4 text-center">Save</button>
-                                    <button
-                                        class="bg-transparent  border border-orange-700 text-orange-600 py-2 rounded-md px-4 text-center">Next</button>
-                                </div>
+                                    </tbody>
+                                </table>
                             </div>
-                            <div class="tab-pane fade  " id="c_cc" role="tabpanel" aria-labelledby="">
-                                <div class="table-responsive">
-                                    <table class="table investment_table">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Sections</th>
-                                                <th scope="col">Particulars</th>
-                                                <th scope="col">References</th>
-                                                <th scope="col">Maximum Limit (<i class="fa fa-rupee mx-1"></i>150000)
-                                                </th>
-                                                <th scope="col">Declaration Amount</th>
-                                                {{-- <th scope="col">Proofs</th> --}}
-                                                {{-- <th scope="col">Upload Document</th> --}}
-                                                <th scope="col">Status</th>
-                                                <th scope="col">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td rowspan="">80C</td>
-                                                <td>Employee PF (Deducted from Salary)</td>
-                                                <td>
 
-                                                    <button type="button"
-                                                        class="btn btn-transprarent border-0 outline-none "
-                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        title="Employee’s PF contribution is eligible for deduction under section 80C of Income tax Act. This means that your PF contribution is exempted under section 80C. Maximum exemption of 1.5 lakh per annum is fixed for all investments under Section 80C.">
-                                                        <i class="fa fa-exclamation-circle  text-warning"
-                                                            aria-hidden="true"></i>
-                                                    </button>
-                                                </td>
-                                                <td></td>
-                                                <td>
-                                                    <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                        cols="5" rows="1"></textarea>
-                                                </td>
 
-                                                {{-- <td align="">
+                            <div class="tw-card bg-gray-50">
+                                <div class="flex mb-3 justify-between">
+                                    <span class="text-lg text-indigo-950 font-semibold">Rental Property</span> <button
+                                        class="btn btn-border-orange" data-bs-target="#AddRendted_modal"
+                                        data-bs-toggle="modal"><i class="fa fa-plus-circle me-2" aria-hidden="true"></i>
+                                        Add Rented</button>
+                                </div>
+
+                                <div class="col-sm-12 col-md-12 col-xl-12 col-xxl-12 col-lg-12 mb-3">
+                                    <div class="table-responsive mb-3">
+                                        <table class="table investment_table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Landlord Name</th>
+                                                    <th scope="col">Landlord PAN</th>
+                                                    <th scope="col">From Month</th>
+                                                    <th scope="col">To Month</th>
+                                                    <th scope="col">City</th>
+                                                    <th scope="col">Total Rent</th>
+                                                    <th scope="col">Action</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+
+                                                    </td>
+                                                    <td>
+
+                                                    </td>
+                                                    <td>
+
+                                                    </td>
+                                                    <td>
+
+                                                    </td>
+                                                    <td>
+
+                                                    </td>
+                                                    <td>
+
+                                                    </td>
+                                                    <td>
+
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+
+
+
+
+                            </div>
+                            <div class="text-end my-3">
+                                <button
+                                    class="bg-orange-700 text-white me-4 py-2 rounded-md px-4 text-center">Save</button>
+                                <button
+                                    class="bg-transparent  border border-orange-700 text-orange-600 py-2 rounded-md px-4 text-center">Next</button>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade  " id="c_cc" role="tabpanel" aria-labelledby="">
+                            <div class="table-responsive">
+                                <table class="table investment_table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Sections</th>
+                                            <th scope="col">Particulars</th>
+                                            <th scope="col">References</th>
+                                            <th scope="col">Maximum Limit (<i class="fa fa-rupee mx-1"></i>150000)
+                                            </th>
+                                            <th scope="col">Declaration Amount</th>
+                                            {{-- <th scope="col">Proofs</th> --}}
+                                            {{-- <th scope="col">Upload Document</th> --}}
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td rowspan="">80C</td>
+                                            <td>Employee PF (Deducted from Salary)</td>
+                                            <td>
+
+                                                <button type="button" class="btn btn-transprarent border-0 outline-none "
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    title="Employee’s PF contribution is eligible for deduction under section 80C of Income tax Act. This means that your PF contribution is exempted under section 80C. Maximum exemption of 1.5 lakh per annum is fixed for all investments under Section 80C.">
+                                                    <i class="fa fa-exclamation-circle  text-warning"
+                                                        aria-hidden="true"></i>
+                                                </button>
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                    cols="5" rows="1"></textarea>
+                                            </td>
+
+                                            {{-- <td align="">
 
                                                     <div class="upload_file ">
 
@@ -416,54 +394,52 @@
 
                                                 </td> --}}
 
-                                                <td>
-                                                    <p>Not Submitted</p>
-                                                </td>
+                                            <td>
+                                                <p>Not Submitted</p>
+                                            </td>
 
-                                                <td>
+                                            <td>
 
 
-                                                    <div class="dropdown investment_dropDown">
-                                                        <button
-                                                            class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                            type="button" id="dropdownMenuButton"
-                                                            data-bs-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false">
-                                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-pencil-square-o text-info me-2"
-                                                                    aria-hidden="true"></i> Edit</a>
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Clear</a>
-
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td rowspan=""> 80C</td>
-                                                <td>Voluntary Provident Fund (VPF) </td>
-                                                <td>
-
-                                                    <button type="button"
-                                                        class="btn btn-transprarent border-0 outline-none "
-                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        title="Employee’s VPF contribution is eligible for deduction under section 80C of Income tax Act. This means that your VPF contribution is exempted under section 80C. Maximum exemption of 1.5 lakh per annum is fixed for all investments under Section 80C.">
-                                                        <i class="fa fa-exclamation-circle  text-warning"
-                                                            aria-hidden="true"></i>
+                                                <div class="dropdown investment_dropDown">
+                                                    <button
+                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                        type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                     </button>
-                                                </td>
-                                                <td></td>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <a class="dropdown-item" href="#"><i
+                                                                class="fa fa-pencil-square-o text-info me-2"
+                                                                aria-hidden="true"></i> Edit</a>
+                                                        <a class="dropdown-item" href="#"><i
+                                                                class="fa fa-times-circle-o text-danger me-2"
+                                                                aria-hidden="true"></i> Clear</a>
 
-                                                <td>
-                                                    <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                        cols="5" rows="1"></textarea>
-                                                </td>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td rowspan=""> 80C</td>
+                                            <td>Voluntary Provident Fund (VPF) </td>
+                                            <td>
 
-                                                {{-- <td align="">
+                                                <button type="button" class="btn btn-transprarent border-0 outline-none "
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    title="Employee’s VPF contribution is eligible for deduction under section 80C of Income tax Act. This means that your VPF contribution is exempted under section 80C. Maximum exemption of 1.5 lakh per annum is fixed for all investments under Section 80C.">
+                                                    <i class="fa fa-exclamation-circle  text-warning"
+                                                        aria-hidden="true"></i>
+                                                </button>
+                                            </td>
+                                            <td></td>
+
+                                            <td>
+                                                <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                    cols="5" rows="1"></textarea>
+                                            </td>
+
+                                            {{-- <td align="">
 
                                                     <div class="upload_file ">
                                                         <i class="fa fa-upload" aria-hidden="true"><input type="file"
@@ -472,51 +448,49 @@
                                                     </div>
 
                                                 </td> --}}
-                                                <td>
-                                                    <p>Not Submitted</p>
-                                                </td>
-                                                <td>
+                                            <td>
+                                                <p>Not Submitted</p>
+                                            </td>
+                                            <td>
 
 
-                                                    <div class="dropdown investment_dropDown">
-                                                        <button
-                                                            class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                            type="button" id="dropdownMenuButton"
-                                                            data-bs-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false">
-                                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-pencil-square-o text-info me-2"
-                                                                    aria-hidden="true"></i> Edit</a>
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Clear</a>
-
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>80c</td>
-                                                <td>Public Provident Fund (PPF)</td>
-                                                <td>
-
-                                                    <button type="button"
-                                                        class="btn btn-transprarent border-0 outline-none "
-                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        title="All deposits made in Public Provident Fund (PPF) are deductible under Section 80C of the Income Tax Act. Also, the accumulated amount and interest is exempted from tax at the time of withdrawal.">
-                                                        <i class="fa fa-exclamation-circle  text-warning"
-                                                            aria-hidden="true"></i>
+                                                <div class="dropdown investment_dropDown">
+                                                    <button
+                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                        type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                     </button>
-                                                </td>
-                                                <td></td>
-                                                <td>
-                                                    <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                        cols="5" rows="1"></textarea>
-                                                </td>
-                                                {{--
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <a class="dropdown-item" href="#"><i
+                                                                class="fa fa-pencil-square-o text-info me-2"
+                                                                aria-hidden="true"></i> Edit</a>
+                                                        <a class="dropdown-item" href="#"><i
+                                                                class="fa fa-times-circle-o text-danger me-2"
+                                                                aria-hidden="true"></i> Clear</a>
+
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>80c</td>
+                                            <td>Public Provident Fund (PPF)</td>
+                                            <td>
+
+                                                <button type="button" class="btn btn-transprarent border-0 outline-none "
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    title="All deposits made in Public Provident Fund (PPF) are deductible under Section 80C of the Income Tax Act. Also, the accumulated amount and interest is exempted from tax at the time of withdrawal.">
+                                                    <i class="fa fa-exclamation-circle  text-warning"
+                                                        aria-hidden="true"></i>
+                                                </button>
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                    cols="5" rows="1"></textarea>
+                                            </td>
+                                            {{--
                                                 <td align="">
 
                                                     <div class="upload_file ">
@@ -528,53 +502,51 @@
                                                     </div>
 
                                                 </td> --}}
-                                                <td>
-                                                    <p>Not Submitted</p>
-                                                </td>
-                                                <td>
+                                            <td>
+                                                <p>Not Submitted</p>
+                                            </td>
+                                            <td>
 
 
-                                                    <div class="dropdown investment_dropDown">
-                                                        <button
-                                                            class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                            type="button" id="dropdownMenuButton"
-                                                            data-bs-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false">
-                                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-pencil-square-o text-info me-2"
-                                                                    aria-hidden="true"></i> Edit</a>
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Clear</a>
-
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td>80C</td>
-                                                <td>Life Insurance Premium (LIP)</td>
-                                                <td>
-
-                                                    <button type="button"
-                                                        class="btn btn-transprarent border-0 outline-none "
-                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        title="You can claim deduction from your taxable income on account of premium paid towards life insurance for self, spouse or children. In case of insurance policies issued on or after 1st April, 2012, deduction of 10% of the sum assured will be allowed up to a maximum of Rs. 1.5 lac.">
-                                                        <i class="fa fa-exclamation-circle  text-warning"
-                                                            aria-hidden="true"></i>
+                                                <div class="dropdown investment_dropDown">
+                                                    <button
+                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                        type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                     </button>
-                                                </td>
-                                                <td></td>
-                                                <td>
-                                                    <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                        cols="5" rows="1"></textarea>
-                                                </td>
-                                                {{-- <td align="">
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <a class="dropdown-item" href="#"><i
+                                                                class="fa fa-pencil-square-o text-info me-2"
+                                                                aria-hidden="true"></i> Edit</a>
+                                                        <a class="dropdown-item" href="#"><i
+                                                                class="fa fa-times-circle-o text-danger me-2"
+                                                                aria-hidden="true"></i> Clear</a>
+
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+
+                                        <tr>
+                                            <td>80C</td>
+                                            <td>Life Insurance Premium (LIP)</td>
+                                            <td>
+
+                                                <button type="button" class="btn btn-transprarent border-0 outline-none "
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    title="You can claim deduction from your taxable income on account of premium paid towards life insurance for self, spouse or children. In case of insurance policies issued on or after 1st April, 2012, deduction of 10% of the sum assured will be allowed up to a maximum of Rs. 1.5 lac.">
+                                                    <i class="fa fa-exclamation-circle  text-warning"
+                                                        aria-hidden="true"></i>
+                                                </button>
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                    cols="5" rows="1"></textarea>
+                                            </td>
+                                            {{-- <td align="">
                                                     <div class="upload_file ">
 
                                                         <i class="fa fa-upload" aria-hidden="true"><input type="file"
@@ -584,51 +556,49 @@
 
                                                 </td> --}}
 
-                                                <td>
-                                                    <p>Not Submitted</p>
-                                                </td>
-                                                <td>
+                                            <td>
+                                                <p>Not Submitted</p>
+                                            </td>
+                                            <td>
 
 
-                                                    <div class="dropdown investment_dropDown">
-                                                        <button
-                                                            class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                            type="button" id="dropdownMenuButton"
-                                                            data-bs-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false">
-                                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-pencil-square-o text-info me-2"
-                                                                    aria-hidden="true"></i> Edit</a>
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Clear</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>80C</td>
-                                                <td>Stamp Duty & Registration Charges Deduction</td>
-                                                <td>
-
-                                                    <button type="button"
-                                                        class="btn btn-transprarent border-0 outline-none "
-                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        title="For Home Loan, u/s 80C, deduction upto Rs. 1,50,000 is allowed on Principal repayment, stamp duty & registration charges, in the year in which actual principal amount is paid.C43:C50">
-                                                        <i class="fa fa-exclamation-circle  text-warning"
-                                                            aria-hidden="true"></i>
+                                                <div class="dropdown investment_dropDown">
+                                                    <button
+                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                        type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                     </button>
-                                                </td>
-                                                <td></td>
-                                                <td>
-                                                    <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                        cols="5" rows="1"></textarea>
-                                                </td>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <a class="dropdown-item" href="#"><i
+                                                                class="fa fa-pencil-square-o text-info me-2"
+                                                                aria-hidden="true"></i> Edit</a>
+                                                        <a class="dropdown-item" href="#"><i
+                                                                class="fa fa-times-circle-o text-danger me-2"
+                                                                aria-hidden="true"></i> Clear</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>80C</td>
+                                            <td>Stamp Duty & Registration Charges Deduction</td>
+                                            <td>
 
-                                                {{-- <td align="">
+                                                <button type="button" class="btn btn-transprarent border-0 outline-none "
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    title="For Home Loan, u/s 80C, deduction upto Rs. 1,50,000 is allowed on Principal repayment, stamp duty & registration charges, in the year in which actual principal amount is paid.C43:C50">
+                                                    <i class="fa fa-exclamation-circle  text-warning"
+                                                        aria-hidden="true"></i>
+                                                </button>
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                    cols="5" rows="1"></textarea>
+                                            </td>
+
+                                            {{-- <td align="">
 
                                                     <div class="upload_file ">
 
@@ -639,50 +609,48 @@
                                                     </div>
 
                                                 </td> --}}
-                                                <td>
-                                                    <p>Not Submitted</p>
-                                                </td>
-                                                <td>
+                                            <td>
+                                                <p>Not Submitted</p>
+                                            </td>
+                                            <td>
 
 
-                                                    <div class="dropdown investment_dropDown">
-                                                        <button
-                                                            class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                            type="button" id="dropdownMenuButton"
-                                                            data-bs-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false">
-                                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-pencil-square-o text-info me-2"
-                                                                    aria-hidden="true"></i> Edit</a>
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Clear</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>80C</td>
-                                                <td>Mutual Funds (Equity Linked Saving Scheme)</td>
-                                                <td>
-
-                                                    <button type="button"
-                                                        class="btn btn-transprarent border-0 outline-none "
-                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        title="Investment in mutual funds for tax saving purpose is called Equity Linked Saving Schemes (ELSS) which qualifies for Section 80C deduction. Not all mutual funds can provide 80C deduction. Examples of ELSS: SBI Magnum Tax Gain, HDFC Tax Saver, Fidelity Tax Advantage, etc.">
-                                                        <i class="fa fa-exclamation-circle  text-warning"
-                                                            aria-hidden="true"></i>
+                                                <div class="dropdown investment_dropDown">
+                                                    <button
+                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                        type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                     </button>
-                                                </td>
-                                                <td></td>
-                                                <td>
-                                                    <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                        cols="5" rows="1"></textarea>
-                                                </td>
-                                                {{-- <td align="">
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <a class="dropdown-item" href="#"><i
+                                                                class="fa fa-pencil-square-o text-info me-2"
+                                                                aria-hidden="true"></i> Edit</a>
+                                                        <a class="dropdown-item" href="#"><i
+                                                                class="fa fa-times-circle-o text-danger me-2"
+                                                                aria-hidden="true"></i> Clear</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>80C</td>
+                                            <td>Mutual Funds (Equity Linked Saving Scheme)</td>
+                                            <td>
+
+                                                <button type="button" class="btn btn-transprarent border-0 outline-none "
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    title="Investment in mutual funds for tax saving purpose is called Equity Linked Saving Schemes (ELSS) which qualifies for Section 80C deduction. Not all mutual funds can provide 80C deduction. Examples of ELSS: SBI Magnum Tax Gain, HDFC Tax Saver, Fidelity Tax Advantage, etc.">
+                                                    <i class="fa fa-exclamation-circle  text-warning"
+                                                        aria-hidden="true"></i>
+                                                </button>
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                    cols="5" rows="1"></textarea>
+                                            </td>
+                                            {{-- <td align="">
 
                                                     <div class="upload_file ">
 
@@ -694,51 +662,49 @@
 
                                                 </td> --}}
 
-                                                <td>
-                                                    <p>Not Submitted</p>
-                                                </td>
-                                                <td>
+                                            <td>
+                                                <p>Not Submitted</p>
+                                            </td>
+                                            <td>
 
 
-                                                    <div class="dropdown investment_dropDown">
-                                                        <button
-                                                            class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                            type="button" id="dropdownMenuButton"
-                                                            data-bs-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false">
-                                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-pencil-square-o text-info me-2"
-                                                                    aria-hidden="true"></i> Edit</a>
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Clear</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>80C</td>
-                                                <td>National Saving Certificate (NSC)</td>
-                                                <td>
-
-                                                    <button type="button"
-                                                        class="btn btn-transprarent border-0 outline-none "
-                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        title="The National Savings Certificate (NSC) is an investment scheme floated by the Government of India. It offers guaranteed interest and capital protection. NSC can be bought from most post offices in India, and is easily accessible. Investments of up to Rs 1.5 lakh in the scheme qualifies for deduction u/s 80C of the Income Tax Act. Furthermore, the interest earned on the certificates are also added back to the initial investment and qualify for a tax exemption as well.">
-                                                        <i class="fa fa-exclamation-circle  text-warning"
-                                                            aria-hidden="true"></i>
+                                                <div class="dropdown investment_dropDown">
+                                                    <button
+                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                        type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                     </button>
-                                                </td>
-                                                <td></td>
-                                                <td>
-                                                    <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                        cols="5" rows="1"></textarea>
-                                                </td>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <a class="dropdown-item" href="#"><i
+                                                                class="fa fa-pencil-square-o text-info me-2"
+                                                                aria-hidden="true"></i> Edit</a>
+                                                        <a class="dropdown-item" href="#"><i
+                                                                class="fa fa-times-circle-o text-danger me-2"
+                                                                aria-hidden="true"></i> Clear</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>80C</td>
+                                            <td>National Saving Certificate (NSC)</td>
+                                            <td>
 
-                                                {{-- <td align="">
+                                                <button type="button" class="btn btn-transprarent border-0 outline-none "
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    title="The National Savings Certificate (NSC) is an investment scheme floated by the Government of India. It offers guaranteed interest and capital protection. NSC can be bought from most post offices in India, and is easily accessible. Investments of up to Rs 1.5 lakh in the scheme qualifies for deduction u/s 80C of the Income Tax Act. Furthermore, the interest earned on the certificates are also added back to the initial investment and qualify for a tax exemption as well.">
+                                                    <i class="fa fa-exclamation-circle  text-warning"
+                                                        aria-hidden="true"></i>
+                                                </button>
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                    cols="5" rows="1"></textarea>
+                                            </td>
+
+                                            {{-- <td align="">
 
                                                     <div class="upload_file ">
 
@@ -749,326 +715,48 @@
                                                     </div>
 
                                                 </td> --}}
-                                                <td>
-                                                    <p>Not Submitted</p>
-                                                </td>
-                                                <td>
+                                            <td>
+                                                <p>Not Submitted</p>
+                                            </td>
+                                            <td>
 
 
-                                                    <div class="dropdown investment_dropDown">
-                                                        <button
-                                                            class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                            type="button" id="dropdownMenuButton"
-                                                            data-bs-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false">
-                                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-pencil-square-o text-info me-2"
-                                                                    aria-hidden="true"></i> Edit</a>
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Clear</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>80C</td>
-                                                <td>Unit Linked Insurance Plan (ULIP)</td>
-                                                <td>
-
-                                                    <button type="button"
-                                                        class="btn btn-transprarent border-0 outline-none "
-                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        title="Unit Linked Insurance Plan (ULIP) is a combination of insurance and investment. The goal of ULIP is to provide wealth creation along with life cover. ULIP provider invests a portion of your investment towards life insurance and rest into a fund. All ULIPs qualify as life insurance policy and the premiums are exempted from income tax benefit. Deduction is available on ULIPS under Section 80C, provided the sum assured is at least 10 times the annual premium.">
-                                                        <i class="fa fa-exclamation-circle  text-warning"
-                                                            aria-hidden="true"></i>
+                                                <div class="dropdown investment_dropDown">
+                                                    <button
+                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                        type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                     </button>
-                                                </td>
-                                                <td></td>
-                                                <td>
-                                                    <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                        cols="5" rows="1"></textarea>
-                                                </td>
-                                                {{-- <td align="">
-
-                                                    <div class="upload_file ">
-
-                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id="" multiple></i>
-
-
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <a class="dropdown-item" href="#"><i
+                                                                class="fa fa-pencil-square-o text-info me-2"
+                                                                aria-hidden="true"></i> Edit</a>
+                                                        <a class="dropdown-item" href="#"><i
+                                                                class="fa fa-times-circle-o text-danger me-2"
+                                                                aria-hidden="true"></i> Clear</a>
                                                     </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>80C</td>
+                                            <td>Unit Linked Insurance Plan (ULIP)</td>
+                                            <td>
 
-                                                </td> --}}
-
-                                                <td>
-                                                    <p>Not Submitted</p>
-                                                </td>
-                                                <td>
-
-
-                                                    <div class="dropdown investment_dropDown">
-                                                        <button
-                                                            class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                            type="button" id="dropdownMenuButton"
-                                                            data-bs-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false">
-                                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-pencil-square-o text-info me-2"
-                                                                    aria-hidden="true"></i> Edit</a>
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Clear</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>80C</td>
-                                                <td>Children's Tuition Fees</td>
-                                                <td>
-
-                                                    <button type="button"
-                                                        class="btn btn-transprarent border-0 outline-none "
-                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        title="Any amount paid as tuition fee for the education of the first two children of the employee/tax payer is eligible for deduction u/s 80C of Income Tax Act. A parent can claim a deduction on the amount paid as tuition fees to any university, college, school or any other educational institution. Other components of fees such as development fees, transport fees are not eligible for deduction u/s 80C. Only tuition fees part of the total fees paid is allowed for deduction.">
-                                                        <i class="fa fa-exclamation-circle  text-warning"
-                                                            aria-hidden="true"></i>
-                                                    </button>
-                                                </td>
-                                                <td></td>
-                                                <td>
-                                                    <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                        cols="5" rows="1"></textarea>
-                                                </td>
-
-                                                {{-- <td align="">
-
-                                                    <div class="upload_file ">
-
-                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id="" multiple></i>
-
-
-                                                    </div>
-
-                                                </td> --}}
-                                                <td>
-                                                    <p>Not Submitted</p>
-                                                </td>
-                                                <td>
-
-
-                                                    <div class="dropdown investment_dropDown">
-                                                        <button
-                                                            class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                            type="button" id="dropdownMenuButton"
-                                                            data-bs-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false">
-                                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-pencil-square-o text-info me-2"
-                                                                    aria-hidden="true"></i> Edit</a>
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Clear</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>80C</td>
-                                                <td>5 Year Tax Saving FDR</td>
-                                                <td>
-
-                                                    <button type="button"
-                                                        class="btn btn-transprarent border-0 outline-none "
-                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        title="The amount invested in Scheduled Bank FD is exempted u/s 80C of the Income Tax Act. There is a compulsory lock-in of five years under Scheduled Bank FD and the fund cannot be withdrawn before completion of the period. Also, the interest earned under an FD is taxable under 'income from other sources'">
-                                                        <i class="fa fa-exclamation-circle  text-warning"
-                                                            aria-hidden="true"></i>
-                                                    </button>
-                                                </td>
-                                                <td></td>
-                                                <td>
-                                                    <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                        cols="5" rows="1"></textarea>
-                                                </td>
-
-                                                {{-- <td align="">
-
-                                                    <div class="upload_file ">
-
-                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id="" multiple></i>
-
-
-                                                    </div>
-
-                                                </td> --}}
-                                                <td>
-                                                    <p>Not Submitted</p>
-                                                </td>
-                                                <td>
-
-
-                                                    <div class="dropdown investment_dropDown">
-                                                        <button
-                                                            class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                            type="button" id="dropdownMenuButton"
-                                                            data-bs-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false">
-                                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-pencil-square-o text-info me-2"
-                                                                    aria-hidden="true"></i> Edit</a>
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Clear</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>80C</td>
-                                                <td>Deferred Annuity Plan</td>
-                                                <td>
-
-                                                    <button type="button"
-                                                        class="btn btn-transprarent border-0 outline-none "
-                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        title="Sum paid under non-commutable deferred annuity for an individual on the life of the taxpayer, spouse or any child is allowed for deduction. This is nothing but a standard pension plan eligible for tax exemption under Section 80C. Example of such schemes are, Jeevan Dhara, Jeevan Akshay, Jeeven Suraksha etc. by LIC or Pension Plus plan by HDFC Standard Life.">
-                                                        <i class="fa fa-exclamation-circle  text-warning"
-                                                            aria-hidden="true"></i>
-                                                    </button>
-                                                </td>
-                                                <td></td>
-                                                <td>
-                                                    <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                        cols="5" rows="1"></textarea>
-                                                </td>
-
-                                                </td>
-                                                {{-- <td align="">
-
-                                                    <div class="upload_file ">
-
-                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id="" multiple></i>
-
-
-                                                    </div>
-
-                                                </td> --}}
-                                                <td>
-                                                    <p>Not Submitted</p>
-                                                </td>
-                                                <td>
-
-
-                                                    <div class="dropdown investment_dropDown">
-                                                        <button
-                                                            class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                            type="button" id="dropdownMenuButton"
-                                                            data-bs-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false">
-                                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-pencil-square-o text-info me-2"
-                                                                    aria-hidden="true"></i> Edit</a>
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Clear</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>80C</td>
-                                                <td>Super Annuation Fund</td>
-                                                <td>
-
-                                                    <button type="button"
-                                                        class="btn btn-transprarent border-0 outline-none "
-                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        title="A superannuation fund is a retirement fund offered by your employer. The employer contributes 15% of your basic salary to this fund. It is not mandatory for you as an employee to contribute to the fund, but you may do so if you wish. Employee’s contribution is exempt from taxation u/s 80C of Income Tax Act.">
-                                                        <i class="fa fa-exclamation-circle  text-warning"
-                                                            aria-hidden="true"></i>
-                                                    </button>
-                                                </td>
-                                                <td></td>
-                                                <td>
-                                                    <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                        cols="5" rows="1"></textarea>
-                                                </td>
-
-                                                {{-- <td align="">
-
-                                                    <div class="upload_file ">
-
-                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
-                                                                name="" id="" multiple></i>
-
-
-                                                    </div>
-
-                                                </td> --}}
-                                                <td>
-                                                    <p>Not Submitted</p>
-                                                </td>
-                                                <td>
-
-
-                                                    <div class="dropdown investment_dropDown">
-                                                        <button
-                                                            class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                            type="button" id="dropdownMenuButton"
-                                                            data-bs-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false">
-                                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-pencil-square-o text-info me-2"
-                                                                    aria-hidden="true"></i> Edit</a>
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Clear</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>80c</td>
-                                                <td>Sukanya Samriddhi Yojana(SSY) Account</td>
-                                                <td>
-
-                                                    <button type="button"
-                                                        class="btn btn-transprarent border-0 outline-none "
-                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        title="Also referred to as the girl child prosperity scheme. Only one account per girl child is allowed to a maximum of two girl children.">
-                                                        <i class="fa fa-exclamation-circle  text-warning"
-                                                            aria-hidden="true"></i>
-                                                    </button>
-                                                </td>
-                                                <td></td>
-                                                <td>
-                                                    <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                        cols="5" rows="1"></textarea>
-                                                </td>
-                                                {{-- <td align="">
+                                                <button type="button" class="btn btn-transprarent border-0 outline-none "
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    title="Unit Linked Insurance Plan (ULIP) is a combination of insurance and investment. The goal of ULIP is to provide wealth creation along with life cover. ULIP provider invests a portion of your investment towards life insurance and rest into a fund. All ULIPs qualify as life insurance policy and the premiums are exempted from income tax benefit. Deduction is available on ULIPS under Section 80C, provided the sum assured is at least 10 times the annual premium.">
+                                                    <i class="fa fa-exclamation-circle  text-warning"
+                                                        aria-hidden="true"></i>
+                                                </button>
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                    cols="5" rows="1"></textarea>
+                                            </td>
+                                            {{-- <td align="">
 
                                                     <div class="upload_file ">
 
@@ -1080,50 +768,261 @@
 
                                                 </td> --}}
 
-                                                <td>
-                                                    <p>Not Submitted</p>
-                                                </td>
-                                                <td>
+                                            <td>
+                                                <p>Not Submitted</p>
+                                            </td>
+                                            <td>
 
 
-                                                    <div class="dropdown investment_dropDown">
-                                                        <button
-                                                            class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                            type="button" id="dropdownMenuButton"
-                                                            data-bs-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false">
-                                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-pencil-square-o text-info me-2"
-                                                                    aria-hidden="true"></i> Edit</a>
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Clear</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>80C</td>
-                                                <td>Subscription to bonds issued by NABARD</td>
-                                                <td>
-
-                                                    <button type="button"
-                                                        class="btn btn-transprarent border-0 outline-none "
-                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        title="NABARD is an apex development institution, owned by Government of India and works towards the development and upliftment of rural India. The bonds are issued by NABARD (National Bank for Agriculture and Rural Development) and an Investment in NABARD Rural Bonds or NABARD tax free bonds qualifies for Deduction u/s 80 C.">
-                                                        <i class="fa fa-exclamation-circle  text-warning"
-                                                            aria-hidden="true"></i>
+                                                <div class="dropdown investment_dropDown">
+                                                    <button
+                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                        type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                     </button>
-                                                </td>
-                                                <td></td>
-                                                <td>
-                                                    <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                        cols="5" rows="1"></textarea>
-                                                </td>
-                                                {{-- <td align="">
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <a class="dropdown-item" href="#"><i
+                                                                class="fa fa-pencil-square-o text-info me-2"
+                                                                aria-hidden="true"></i> Edit</a>
+                                                        <a class="dropdown-item" href="#"><i
+                                                                class="fa fa-times-circle-o text-danger me-2"
+                                                                aria-hidden="true"></i> Clear</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>80C</td>
+                                            <td>Children's Tuition Fees</td>
+                                            <td>
+
+                                                <button type="button" class="btn btn-transprarent border-0 outline-none "
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    title="Any amount paid as tuition fee for the education of the first two children of the employee/tax payer is eligible for deduction u/s 80C of Income Tax Act. A parent can claim a deduction on the amount paid as tuition fees to any university, college, school or any other educational institution. Other components of fees such as development fees, transport fees are not eligible for deduction u/s 80C. Only tuition fees part of the total fees paid is allowed for deduction.">
+                                                    <i class="fa fa-exclamation-circle  text-warning"
+                                                        aria-hidden="true"></i>
+                                                </button>
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                    cols="5" rows="1"></textarea>
+                                            </td>
+
+                                            {{-- <td align="">
+
+                                                    <div class="upload_file ">
+
+                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
+                                                                name="" id="" multiple></i>
+
+
+                                                    </div>
+
+                                                </td> --}}
+                                            <td>
+                                                <p>Not Submitted</p>
+                                            </td>
+                                            <td>
+
+
+                                                <div class="dropdown investment_dropDown">
+                                                    <button
+                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                        type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <a class="dropdown-item" href="#"><i
+                                                                class="fa fa-pencil-square-o text-info me-2"
+                                                                aria-hidden="true"></i> Edit</a>
+                                                        <a class="dropdown-item" href="#"><i
+                                                                class="fa fa-times-circle-o text-danger me-2"
+                                                                aria-hidden="true"></i> Clear</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>80C</td>
+                                            <td>5 Year Tax Saving FDR</td>
+                                            <td>
+
+                                                <button type="button" class="btn btn-transprarent border-0 outline-none "
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    title="The amount invested in Scheduled Bank FD is exempted u/s 80C of the Income Tax Act. There is a compulsory lock-in of five years under Scheduled Bank FD and the fund cannot be withdrawn before completion of the period. Also, the interest earned under an FD is taxable under 'income from other sources'">
+                                                    <i class="fa fa-exclamation-circle  text-warning"
+                                                        aria-hidden="true"></i>
+                                                </button>
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                    cols="5" rows="1"></textarea>
+                                            </td>
+
+                                            {{-- <td align="">
+
+                                                    <div class="upload_file ">
+
+                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
+                                                                name="" id="" multiple></i>
+
+
+                                                    </div>
+
+                                                </td> --}}
+                                            <td>
+                                                <p>Not Submitted</p>
+                                            </td>
+                                            <td>
+
+
+                                                <div class="dropdown investment_dropDown">
+                                                    <button
+                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                        type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <a class="dropdown-item" href="#"><i
+                                                                class="fa fa-pencil-square-o text-info me-2"
+                                                                aria-hidden="true"></i> Edit</a>
+                                                        <a class="dropdown-item" href="#"><i
+                                                                class="fa fa-times-circle-o text-danger me-2"
+                                                                aria-hidden="true"></i> Clear</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>80C</td>
+                                            <td>Deferred Annuity Plan</td>
+                                            <td>
+
+                                                <button type="button" class="btn btn-transprarent border-0 outline-none "
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    title="Sum paid under non-commutable deferred annuity for an individual on the life of the taxpayer, spouse or any child is allowed for deduction. This is nothing but a standard pension plan eligible for tax exemption under Section 80C. Example of such schemes are, Jeevan Dhara, Jeevan Akshay, Jeeven Suraksha etc. by LIC or Pension Plus plan by HDFC Standard Life.">
+                                                    <i class="fa fa-exclamation-circle  text-warning"
+                                                        aria-hidden="true"></i>
+                                                </button>
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                    cols="5" rows="1"></textarea>
+                                            </td>
+
+                                            </td>
+                                            {{-- <td align="">
+
+                                                    <div class="upload_file ">
+
+                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
+                                                                name="" id="" multiple></i>
+
+
+                                                    </div>
+
+                                                </td> --}}
+                                            <td>
+                                                <p>Not Submitted</p>
+                                            </td>
+                                            <td>
+
+
+                                                <div class="dropdown investment_dropDown">
+                                                    <button
+                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                        type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <a class="dropdown-item" href="#"><i
+                                                                class="fa fa-pencil-square-o text-info me-2"
+                                                                aria-hidden="true"></i> Edit</a>
+                                                        <a class="dropdown-item" href="#"><i
+                                                                class="fa fa-times-circle-o text-danger me-2"
+                                                                aria-hidden="true"></i> Clear</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>80C</td>
+                                            <td>Super Annuation Fund</td>
+                                            <td>
+
+                                                <button type="button" class="btn btn-transprarent border-0 outline-none "
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    title="A superannuation fund is a retirement fund offered by your employer. The employer contributes 15% of your basic salary to this fund. It is not mandatory for you as an employee to contribute to the fund, but you may do so if you wish. Employee’s contribution is exempt from taxation u/s 80C of Income Tax Act.">
+                                                    <i class="fa fa-exclamation-circle  text-warning"
+                                                        aria-hidden="true"></i>
+                                                </button>
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                    cols="5" rows="1"></textarea>
+                                            </td>
+
+                                            {{-- <td align="">
+
+                                                    <div class="upload_file ">
+
+                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
+                                                                name="" id="" multiple></i>
+
+
+                                                    </div>
+
+                                                </td> --}}
+                                            <td>
+                                                <p>Not Submitted</p>
+                                            </td>
+                                            <td>
+
+
+                                                <div class="dropdown investment_dropDown">
+                                                    <button
+                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                        type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <a class="dropdown-item" href="#"><i
+                                                                class="fa fa-pencil-square-o text-info me-2"
+                                                                aria-hidden="true"></i> Edit</a>
+                                                        <a class="dropdown-item" href="#"><i
+                                                                class="fa fa-times-circle-o text-danger me-2"
+                                                                aria-hidden="true"></i> Clear</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>80c</td>
+                                            <td>Sukanya Samriddhi Yojana(SSY) Account</td>
+                                            <td>
+
+                                                <button type="button" class="btn btn-transprarent border-0 outline-none "
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    title="Also referred to as the girl child prosperity scheme. Only one account per girl child is allowed to a maximum of two girl children.">
+                                                    <i class="fa fa-exclamation-circle  text-warning"
+                                                        aria-hidden="true"></i>
+                                                </button>
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                    cols="5" rows="1"></textarea>
+                                            </td>
+                                            {{-- <td align="">
 
                                                     <div class="upload_file ">
 
@@ -1135,50 +1034,101 @@
 
                                                 </td> --}}
 
-                                                <td>
-                                                    <p>Not Submitted</p>
-                                                </td>
-                                                <td>
+                                            <td>
+                                                <p>Not Submitted</p>
+                                            </td>
+                                            <td>
 
 
-                                                    <div class="dropdown investment_dropDown">
-                                                        <button
-                                                            class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                            type="button" id="dropdownMenuButton"
-                                                            data-bs-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false">
-                                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-pencil-square-o text-info me-2"
-                                                                    aria-hidden="true"></i> Edit</a>
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Clear</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>80CCC</td>
-                                                <td>Specific Pension Funds</td>
-                                                <td>
-
-                                                    <button type="button"
-                                                        class="btn btn-transprarent border-0 outline-none "
-                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        title="There are a few retirement schemes from mutual funds that would help you to save taxes under Section 80C. Example of such schemes are, Franklin India Pension Fund, UTI Retirement Benefit Pension Fund, Reliance Retirement Fund, HDFC Retirement Savings Fund and Tata Retirement Savings Fund.">
-                                                        <i class="fa fa-exclamation-circle  text-warning"
-                                                            aria-hidden="true"></i>
+                                                <div class="dropdown investment_dropDown">
+                                                    <button
+                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                        type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                     </button>
-                                                </td>
-                                                <td></td>
-                                                <td>
-                                                    <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                        cols="5" rows="1"></textarea>
-                                                </td>
-                                                {{-- <td align="">
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <a class="dropdown-item" href="#"><i
+                                                                class="fa fa-pencil-square-o text-info me-2"
+                                                                aria-hidden="true"></i> Edit</a>
+                                                        <a class="dropdown-item" href="#"><i
+                                                                class="fa fa-times-circle-o text-danger me-2"
+                                                                aria-hidden="true"></i> Clear</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>80C</td>
+                                            <td>Subscription to bonds issued by NABARD</td>
+                                            <td>
+
+                                                <button type="button" class="btn btn-transprarent border-0 outline-none "
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    title="NABARD is an apex development institution, owned by Government of India and works towards the development and upliftment of rural India. The bonds are issued by NABARD (National Bank for Agriculture and Rural Development) and an Investment in NABARD Rural Bonds or NABARD tax free bonds qualifies for Deduction u/s 80 C.">
+                                                    <i class="fa fa-exclamation-circle  text-warning"
+                                                        aria-hidden="true"></i>
+                                                </button>
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                    cols="5" rows="1"></textarea>
+                                            </td>
+                                            {{-- <td align="">
+
+                                                    <div class="upload_file ">
+
+                                                        <i class="fa fa-upload" aria-hidden="true"><input type="file"
+                                                                name="" id="" multiple></i>
+
+
+                                                    </div>
+
+                                                </td> --}}
+
+                                            <td>
+                                                <p>Not Submitted</p>
+                                            </td>
+                                            <td>
+
+
+                                                <div class="dropdown investment_dropDown">
+                                                    <button
+                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                        type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <a class="dropdown-item" href="#"><i
+                                                                class="fa fa-pencil-square-o text-info me-2"
+                                                                aria-hidden="true"></i> Edit</a>
+                                                        <a class="dropdown-item" href="#"><i
+                                                                class="fa fa-times-circle-o text-danger me-2"
+                                                                aria-hidden="true"></i> Clear</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>80CCC</td>
+                                            <td>Specific Pension Funds</td>
+                                            <td>
+
+                                                <button type="button" class="btn btn-transprarent border-0 outline-none "
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    title="There are a few retirement schemes from mutual funds that would help you to save taxes under Section 80C. Example of such schemes are, Franklin India Pension Fund, UTI Retirement Benefit Pension Fund, Reliance Retirement Fund, HDFC Retirement Savings Fund and Tata Retirement Savings Fund.">
+                                                    <i class="fa fa-exclamation-circle  text-warning"
+                                                        aria-hidden="true"></i>
+                                                </button>
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                    cols="5" rows="1"></textarea>
+                                            </td>
+                                            {{-- <td align="">
                                                     <div class="upload_file ">
                                                         <i class="fa fa-upload" aria-hidden="true"><input type="file"
                                                                 name="" id="" multiple></i>
@@ -1186,108 +1136,106 @@
 
                                                 </td> --}}
 
-                                                </td>
-                                                <td>
-                                                    <p>Not Submitted</p>
-                                                </td>
-                                                <td>
+                                            </td>
+                                            <td>
+                                                <p>Not Submitted</p>
+                                            </td>
+                                            <td>
 
 
-                                                    <div class="dropdown investment_dropDown">
-                                                        <button
-                                                            class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                            type="button" id="dropdownMenuButton"
-                                                            data-bs-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false">
-                                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-pencil-square-o text-info me-2"
-                                                                    aria-hidden="true"></i> Edit</a>
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fa fa-times-circle-o text-danger me-2"
-                                                                    aria-hidden="true"></i> Clear</a>
-                                                        </div>
+                                                <div class="dropdown investment_dropDown">
+                                                    <button
+                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                        type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <a class="dropdown-item" href="#"><i
+                                                                class="fa fa-pencil-square-o text-info me-2"
+                                                                aria-hidden="true"></i> Edit</a>
+                                                        <a class="dropdown-item" href="#"><i
+                                                                class="fa fa-times-circle-o text-danger me-2"
+                                                                aria-hidden="true"></i> Clear</a>
                                                     </div>
-                                                </td>
-                                            </tr>
+                                                </div>
+                                            </td>
+                                        </tr>
 
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="text-end my-3">
-                                    <button
-                                        class="bg-orange-700 text-white me-4 py-2 rounded-md px-4 text-center">Save</button>
-                                    <button
-                                        class="bg-transparent border-orange-700 me-4 text-orange-600 border py-2 rounded-md px-4 text-center">Previous</button>
-                                    <button
-                                        class="bg-transparent border-orange-700 text-orange-600 border py-2 rounded-md px-4 text-center">Next</button>
-                                </div>
+                                    </tbody>
+                                </table>
                             </div>
+                            <div class="text-end my-3">
+                                <button
+                                    class="bg-orange-700 text-white me-4 py-2 rounded-md px-4 text-center">Save</button>
+                                <button
+                                    class="bg-transparent border-orange-700 me-4 text-orange-600 border py-2 rounded-md px-4 text-center">Previous</button>
+                                <button
+                                    class="bg-transparent border-orange-700 text-orange-600 border py-2 rounded-md px-4 text-center">Next</button>
+                            </div>
+                        </div>
 
-                            <div class="tab-pane fade " id="reimbursement" role="tabpanel" aria-labelledby="">
+                        <div class="tab-pane fade " id="reimbursement" role="tabpanel" aria-labelledby="">
 
-                                <div class="card top-line mb-0 border-bottom-0 border-end-0 border-start-0">
-                                    <div class="card-body">
-                                        <div class="table-responsive">
-                                            <table class="table investment_table">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">Sections</th>
-                                                        <th scope="col">Particulars</th>
-                                                        <th scope="col">References</th>
-                                                        <th scope="col">Max Limit</th>
-                                                        <th scope="col">Declaration Amount</th>
-                                                        {{-- <th scope="col">Proofs</th> --}}
-                                                        <th scope="col">Status</th>
-                                                        <th scope="col">Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
 
-                                                    <tr>
-                                                        <td> 17(2)</td>
-                                                        <td class="noWhite-space">
+                                    <div class="table-responsive">
+                                        <table class="table investment_table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Sections</th>
+                                                    <th scope="col">Particulars</th>
+                                                    <th scope="col">References</th>
+                                                    <th scope="col">Max Limit</th>
+                                                    <th scope="col">Declaration Amount</th>
+                                                    {{-- <th scope="col">Proofs</th> --}}
+                                                    <th scope="col">Status</th>
+                                                    <th scope="col">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
 
-                                                            <p>Vehicle Reimbursement</p>
-                                                            <div class="d-flex justify-content-center">
-                                                                <div class="form-check me-2">
-                                                                    <input class="form-check-input" type="radio"
-                                                                        name="cc" id="below_cc">
-                                                                    <label class="form-check-label" for="below_cc">
-                                                                        Below 1600 CC
-                                                                    </label>
-                                                                </div>
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="radio"
-                                                                        name="cc" id="above_cc">
-                                                                    <label class="form-check-label" for="above_cc">
+                                                <tr>
+                                                    <td> 17(2)</td>
+                                                    <td class="noWhite-space">
 
-                                                                        Above 2400 CC
-                                                                    </label>
-                                                                </div>
-
+                                                        <p>Vehicle Reimbursement</p>
+                                                        <div class="d-flex justify-content-center">
+                                                            <div class="form-check me-2">
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="cc" id="below_cc">
+                                                                <label class="form-check-label" for="below_cc">
+                                                                    Below 1600 CC
+                                                                </label>
                                                             </div>
-                                                        </td>
-                                                        <td>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="cc" id="above_cc">
+                                                                <label class="form-check-label" for="above_cc">
 
-                                                            <button type="button"
-                                                                class="btn btn-transprarent border-0 outline-none "
-                                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="If Cubic Capacity is below 1.6 ltrs (1600CC) expenses can be considered upto 1800pm & If Cubic Capacity is above 1.6 ltrs then  expenses can be considered upto 2400pm">
-                                                                <i class="fa fa-exclamation-circle  text-warning"
-                                                                    aria-hidden="true"></i>
-                                                            </button>
-                                                        </td>
-                                                        <td>28800</td>
+                                                                    Above 2400 CC
+                                                                </label>
+                                                            </div>
 
-                                                        <td>
-                                                            <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                                cols="5" rows="1"></textarea>
-                                                        </td>
+                                                        </div>
+                                                    </td>
+                                                    <td>
 
-                                                        {{-- <td align="">
+                                                        <button type="button"
+                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            title="If Cubic Capacity is below 1.6 ltrs (1600CC) expenses can be considered upto 1800pm & If Cubic Capacity is above 1.6 ltrs then  expenses can be considered upto 2400pm">
+                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                                aria-hidden="true"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td>28800</td>
+
+                                                    <td>
+                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                            cols="5" rows="1"></textarea>
+                                                    </td>
+
+                                                    {{-- <td align="">
 
                                                             <div class="upload_file ">
 
@@ -1299,56 +1247,56 @@
                                                             </div>
 
                                                         </td> --}}
-                                                        <td>
-                                                            <p>Not Submitted</p>
-                                                        </td>
-                                                        <td>
+                                                    <td>
+                                                        <p>Not Submitted</p>
+                                                    </td>
+                                                    <td>
 
 
-                                                            <div class="dropdown investment_dropDown">
-                                                                <button
-                                                                    class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                                    type="button" id="dropdownMenuButton"
-                                                                    data-bs-toggle="dropdown" aria-haspopup="true"
-                                                                    aria-expanded="false">
-                                                                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                                </button>
-                                                                <div class="dropdown-menu"
-                                                                    aria-labelledby="dropdownMenuButton">
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-info me-2"
-                                                                            aria-hidden="true"></i> Edit</a>
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Clear</a>
-                                                                    <a class="dropdown-item" href="#"></a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td> 17(2)</td>
-                                                        <td>Driver Reimbursement</td>
-                                                        <td>
-
-                                                            <button type="button"
-                                                                class="btn btn-transprarent border-0 outline-none "
-                                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="Maximum exemption will be restricted to Rs.900/- per month or amount paid under CTC  whichever is less.">
-                                                                <i class="fa fa-exclamation-circle  text-warning"
-                                                                    aria-hidden="true"></i>
+                                                        <div class="dropdown investment_dropDown">
+                                                            <button
+                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                type="button" id="dropdownMenuButton"
+                                                                data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                             </button>
-                                                        </td>
-                                                        <td>10800</td>
+                                                            <div class="dropdown-menu"
+                                                                aria-labelledby="dropdownMenuButton">
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-pencil-square-o text-info me-2"
+                                                                        aria-hidden="true"></i> Edit</a>
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-times-circle-o text-danger me-2"
+                                                                        aria-hidden="true"></i> Clear</a>
+                                                                <a class="dropdown-item" href="#"></a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
 
-                                                        <td>
-                                                            <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                                cols="5" rows="1"></textarea>
-                                                        </td>
 
-                                                        {{-- <td align="">
+                                                </tr>
+                                                <tr>
+                                                    <td> 17(2)</td>
+                                                    <td>Driver Reimbursement</td>
+                                                    <td>
+
+                                                        <button type="button"
+                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            title="Maximum exemption will be restricted to Rs.900/- per month or amount paid under CTC  whichever is less.">
+                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                                aria-hidden="true"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td>10800</td>
+
+                                                    <td>
+                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                            cols="5" rows="1"></textarea>
+                                                    </td>
+
+                                                    {{-- <td align="">
 
                                                             <div class="upload_file ">
 
@@ -1360,56 +1308,56 @@
                                                             </div>
 
                                                         </td> --}}
-                                                        <td>
-                                                            <p>Not Submitted</p>
-                                                        </td>
-                                                        <td>
+                                                    <td>
+                                                        <p>Not Submitted</p>
+                                                    </td>
+                                                    <td>
 
 
-                                                            <div class="dropdown investment_dropDown">
-                                                                <button
-                                                                    class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                                    type="button" id="dropdownMenuButton"
-                                                                    data-bs-toggle="dropdown" aria-haspopup="true"
-                                                                    aria-expanded="false">
-                                                                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                                </button>
-                                                                <div class="dropdown-menu"
-                                                                    aria-labelledby="dropdownMenuButton">
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-info me-2"
-                                                                            aria-hidden="true"></i> Edit</a>
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Clear</a>
-                                                                    <a class="dropdown-item" href="#"></a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td> 17(2)</td>
-                                                        <td>Vehicle Reimbursement</td>
-                                                        <td>
-
-                                                            <button type="button"
-                                                                class="btn btn-transprarent border-0 outline-none "
-                                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="Exemption will be restricted to the extend of bills provided or as per CTC, whichever is less. Maximum amount of exemption is ">
-                                                                <i class="fa fa-exclamation-circle  text-warning"
-                                                                    aria-hidden="true"></i>
+                                                        <div class="dropdown investment_dropDown">
+                                                            <button
+                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                type="button" id="dropdownMenuButton"
+                                                                data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                             </button>
-                                                        </td>
-                                                        <td>36000</td>
+                                                            <div class="dropdown-menu"
+                                                                aria-labelledby="dropdownMenuButton">
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-pencil-square-o text-info me-2"
+                                                                        aria-hidden="true"></i> Edit</a>
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-times-circle-o text-danger me-2"
+                                                                        aria-hidden="true"></i> Clear</a>
+                                                                <a class="dropdown-item" href="#"></a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
 
-                                                        <td>
-                                                            <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                                cols="5" rows="1"></textarea>
-                                                        </td>
 
-                                                        {{-- <td align="">
+                                                </tr>
+                                                <tr>
+                                                    <td> 17(2)</td>
+                                                    <td>Vehicle Reimbursement</td>
+                                                    <td>
+
+                                                        <button type="button"
+                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            title="Exemption will be restricted to the extend of bills provided or as per CTC, whichever is less. Maximum amount of exemption is ">
+                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                                aria-hidden="true"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td>36000</td>
+
+                                                    <td>
+                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                            cols="5" rows="1"></textarea>
+                                                    </td>
+
+                                                    {{-- <td align="">
 
                                                             <div class="upload_file ">
 
@@ -1419,397 +1367,604 @@
                                                             </div>
 
                                                         </td> --}}
-                                                        <td>
-                                                            <p>Not Submitted</p>
-                                                        </td>
-                                                        <td>
+                                                    <td>
+                                                        <p>Not Submitted</p>
+                                                    </td>
+                                                    <td>
 
 
-                                                            <div class="dropdown investment_dropDown">
-                                                                <button
-                                                                    class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                                    type="button" id="dropdownMenuButton"
-                                                                    data-bs-toggle="dropdown" aria-haspopup="true"
-                                                                    aria-expanded="false">
-                                                                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                                </button>
-                                                                <div class="dropdown-menu"
-                                                                    aria-labelledby="dropdownMenuButton">
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-info me-2"
-                                                                            aria-hidden="true"></i> Edit</a>
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Clear</a>
-                                                                    <a class="dropdown-item" href="#"></a>
-                                                                </div>
+                                                        <div class="dropdown investment_dropDown">
+                                                            <button
+                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                type="button" id="dropdownMenuButton"
+                                                                data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                                            </button>
+                                                            <div class="dropdown-menu"
+                                                                aria-labelledby="dropdownMenuButton">
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-pencil-square-o text-info me-2"
+                                                                        aria-hidden="true"></i> Edit</a>
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-times-circle-o text-danger me-2"
+                                                                        aria-hidden="true"></i> Clear</a>
+                                                                <a class="dropdown-item" href="#"></a>
                                                             </div>
-                                                        </td>
+                                                        </div>
+                                                    </td>
 
 
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                </div>
-                                <div class="text-end my-3">
-                                    <button
-                                        class="bg-orange-700 text-white py-2 rounded-md px-4 text-center">Save</button>
-                                    <button
-                                        class="bg-transparent border-orange-700 mx-4 text-orange-600 border py-2 rounded-md px-4 text-center">Previous</button>
-                                    <button
-                                        class="bg-transparent border-orange-700 text-orange-600 border py-2 rounded-md px-4 text-center  border ">Next</button>
-                                </div>
 
+                            <div class="text-end my-3">
+                                <button class="bg-orange-700 text-white py-2 rounded-md px-4 text-center">Save</button>
+                                <button
+                                    class="bg-transparent border-orange-700 mx-4 text-orange-600 border py-2 rounded-md px-4 text-center">Previous</button>
+                                <button
+                                    class="bg-transparent border-orange-700 text-orange-600 border py-2 rounded-md px-4 text-center  border ">Next</button>
                             </div>
 
-                            <div class="tab-pane fade " id="previous_income" role="tabpanel" aria-labelledby="">
+                        </div>
 
-                                <div class="card top-line mb-0 border-bottom-0 border-end-0 border-start-0">
-                                    <div class="card-body">
-                                        <div class="table-responsive">
-                                            <table class="table investment_table">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">Sections</th>
-                                                        <th scope="col">Particulars</th>
-                                                        <th scope="col">References</th>
-                                                        <th scope="col">Max Limit</th>
-                                                        <th scope="col">Declaration Amount</th>
-                                                        {{-- <th scope="col">Status</th> --}}
-                                                        <th scope="col">Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
+                        <div class="tab-pane fade " id="previous_income" role="tabpanel" aria-labelledby="">
 
-                                                    <tr>
-                                                        <td>Previous Employer Income</td>
-                                                        <td>Previous Employer Gross</td>
-                                                        <td>
 
-                                                            <button type="button"
-                                                                class="btn btn-transprarent border-0 outline-none "
-                                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="Please refer 'Gross Income' in your last month Tax Sheet provided by your previous employer">
-                                                                <i class="fa fa-exclamation-circle  text-warning"
-                                                                    aria-hidden="true"></i>
-                                                            </button>
-                                                        </td>
-                                                        <td>
+                                    <div class="table-responsive">
+                                        <table class="table investment_table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Sections</th>
+                                                    <th scope="col">Particulars</th>
+                                                    <th scope="col">References</th>
+                                                    <th scope="col">Max Limit</th>
+                                                    <th scope="col">Declaration Amount</th>
+                                                    {{-- <th scope="col">Status</th> --}}
+                                                    <th scope="col">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
 
-                                                        </td>
-                                                        <td>
-                                                            <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                                cols="5" rows="1"></textarea>
-                                                        </td>
+                                                <tr>
+                                                    <td>Previous Employer Income</td>
+                                                    <td>Previous Employer Gross</td>
+                                                    <td>
 
-                                                        {{-- <td>
+                                                        <button type="button"
+                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            title="Please refer 'Gross Income' in your last month Tax Sheet provided by your previous employer">
+                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                                aria-hidden="true"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td>
+
+                                                    </td>
+                                                    <td>
+                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                            cols="5" rows="1"></textarea>
+                                                    </td>
+
+                                                    {{-- <td>
                                                             <p>-</p>
                                                         </td> --}}
-                                                        <td>
+                                                    <td>
 
 
-                                                            <div class="dropdown investment_dropDown">
-                                                                <button
-                                                                    class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                                    type="button" id="dropdownMenuButton"
-                                                                    data-bs-toggle="dropdown" aria-haspopup="true"
-                                                                    aria-expanded="false">
-                                                                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                                </button>
-                                                                <div class="dropdown-menu"
-                                                                    aria-labelledby="dropdownMenuButton">
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-info me-2"
-                                                                            aria-hidden="true"></i> Edit</a>
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Clear</a>
-                                                                    <a class="dropdown-item" href="#"></a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-
-
-
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>Previous Employer Income</td>
-                                                        <td>Previous Employer Standard Deduction</td>
-                                                        <td>
-
-                                                            <button type="button"
-                                                                class="btn btn-transprarent border-0 outline-none "
-                                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="Please refer 'Standard Deduction Column' in your last month Tax Sheet provided by your previous employer">
-                                                                <i class="fa fa-exclamation-circle  text-warning"
-                                                                    aria-hidden="true"></i>
+                                                        <div class="dropdown investment_dropDown">
+                                                            <button
+                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                type="button" id="dropdownMenuButton"
+                                                                data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                             </button>
-                                                        </td>
-                                                        <td></td>
+                                                            <div class="dropdown-menu"
+                                                                aria-labelledby="dropdownMenuButton">
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-pencil-square-o text-info me-2"
+                                                                        aria-hidden="true"></i> Edit</a>
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-times-circle-o text-danger me-2"
+                                                                        aria-hidden="true"></i> Clear</a>
+                                                                <a class="dropdown-item" href="#"></a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
 
-                                                        <td>
-                                                            <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                                cols="5" rows="1"></textarea>
-                                                        </td>
 
 
-                                                        {{-- <td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Previous Employer Income</td>
+                                                    <td>Previous Employer Standard Deduction</td>
+                                                    <td>
+
+                                                        <button type="button"
+                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            title="Please refer 'Standard Deduction Column' in your last month Tax Sheet provided by your previous employer">
+                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                                aria-hidden="true"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td></td>
+
+                                                    <td>
+                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                            cols="5" rows="1"></textarea>
+                                                    </td>
+
+
+                                                    {{-- <td>
                                                             <p>-</p>
                                                         </td> --}}
-                                                        <td>
+                                                    <td>
 
 
-                                                            <div class="dropdown investment_dropDown">
-                                                                <button
-                                                                    class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                                    type="button" id="dropdownMenuButton"
-                                                                    data-bs-toggle="dropdown" aria-haspopup="true"
-                                                                    aria-expanded="false">
-                                                                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                                </button>
-                                                                <div class="dropdown-menu"
-                                                                    aria-labelledby="dropdownMenuButton">
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-info me-2"
-                                                                            aria-hidden="true"></i> Edit</a>
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Clear</a>
-                                                                    <a class="dropdown-item" href="#"></a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-
-
-
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>Previous Employer Income</td>
-                                                        <td>Previous Employer PT</td>
-                                                        <td>
-
-                                                            <button type="button"
-                                                                class="btn btn-transprarent border-0 outline-none "
-                                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="Please refer 'Profession Tax' in your last month Tax Sheet provided by your previous employer">
-                                                                <i class="fa fa-exclamation-circle  text-warning"
-                                                                    aria-hidden="true"></i>
+                                                        <div class="dropdown investment_dropDown">
+                                                            <button
+                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                type="button" id="dropdownMenuButton"
+                                                                data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                             </button>
-                                                        </td>
-                                                        <td></td>
+                                                            <div class="dropdown-menu"
+                                                                aria-labelledby="dropdownMenuButton">
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-pencil-square-o text-info me-2"
+                                                                        aria-hidden="true"></i> Edit</a>
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-times-circle-o text-danger me-2"
+                                                                        aria-hidden="true"></i> Clear</a>
+                                                                <a class="dropdown-item" href="#"></a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
 
-                                                        <td>
-                                                            <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                                cols="5" rows="1"></textarea>
-                                                        </td>
 
-                                                        {{--
+
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Previous Employer Income</td>
+                                                    <td>Previous Employer PT</td>
+                                                    <td>
+
+                                                        <button type="button"
+                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            title="Please refer 'Profession Tax' in your last month Tax Sheet provided by your previous employer">
+                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                                aria-hidden="true"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td></td>
+
+                                                    <td>
+                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                            cols="5" rows="1"></textarea>
+                                                    </td>
+
+                                                    {{--
                                                         <td>
                                                             <p>-</p>
                                                         </td> --}}
-                                                        <td>
+                                                    <td>
 
 
-                                                            <div class="dropdown investment_dropDown">
-                                                                <button
-                                                                    class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                                    type="button" id="dropdownMenuButton"
-                                                                    data-bs-toggle="dropdown" aria-haspopup="true"
-                                                                    aria-expanded="false">
-                                                                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                                </button>
-                                                                <div class="dropdown-menu"
-                                                                    aria-labelledby="dropdownMenuButton">
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-info me-2"
-                                                                            aria-hidden="true"></i> Edit</a>
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Clear</a>
-                                                                    <a class="dropdown-item" href="#"></a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Previous Employer Income</td>
-                                                        <td>Previous Employer PF</td>
-                                                        <td>
-
-                                                            <button type="button"
-                                                                class="btn btn-transprarent border-0 outline-none "
-                                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="Please refer 'Employee PF Deduction' in your last month Tax Sheet provided by your previous employer">
-                                                                <i class="fa fa-exclamation-circle  text-warning"
-                                                                    aria-hidden="true"></i>
+                                                        <div class="dropdown investment_dropDown">
+                                                            <button
+                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                type="button" id="dropdownMenuButton"
+                                                                data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                             </button>
-                                                        </td>
-                                                        <td></td>
+                                                            <div class="dropdown-menu"
+                                                                aria-labelledby="dropdownMenuButton">
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-pencil-square-o text-info me-2"
+                                                                        aria-hidden="true"></i> Edit</a>
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-times-circle-o text-danger me-2"
+                                                                        aria-hidden="true"></i> Clear</a>
+                                                                <a class="dropdown-item" href="#"></a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
 
-                                                        <td>
-                                                            <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                                cols="5" rows="1"></textarea>
-                                                        </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>Previous Employer Income</td>
+                                                    <td>Previous Employer PF</td>
+                                                    <td>
+
+                                                        <button type="button"
+                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            title="Please refer 'Employee PF Deduction' in your last month Tax Sheet provided by your previous employer">
+                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                                aria-hidden="true"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td></td>
+
+                                                    <td>
+                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                            cols="5" rows="1"></textarea>
+                                                    </td>
 
 
-                                                        {{-- <td>
+                                                    {{-- <td>
                                                             <p>-</p>
                                                         </td> --}}
-                                                        <td>
+                                                    <td>
 
 
-                                                            <div class="dropdown investment_dropDown">
-                                                                <button
-                                                                    class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                                    type="button" id="dropdownMenuButton"
-                                                                    data-bs-toggle="dropdown" aria-haspopup="true"
-                                                                    aria-expanded="false">
-                                                                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                                </button>
-                                                                <div class="dropdown-menu"
-                                                                    aria-labelledby="dropdownMenuButton">
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-info me-2"
-                                                                            aria-hidden="true"></i> Edit</a>
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Clear</a>
-                                                                    <a class="dropdown-item" href="#"></a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Previous Employer Income</td>
-                                                        <td>Previous Employer TDS</td>
-                                                        <td>
-
-                                                            <button type="button"
-                                                                class="btn btn-transprarent border-0 outline-none "
-                                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="Please refer 'TDS Deducted' in your last month Tax Sheet provided by your previous employer">
-                                                                <i class="fa fa-exclamation-circle  text-warning"
-                                                                    aria-hidden="true"></i>
+                                                        <div class="dropdown investment_dropDown">
+                                                            <button
+                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                type="button" id="dropdownMenuButton"
+                                                                data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                             </button>
-                                                        </td>
-                                                        <td></td>
+                                                            <div class="dropdown-menu"
+                                                                aria-labelledby="dropdownMenuButton">
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-pencil-square-o text-info me-2"
+                                                                        aria-hidden="true"></i> Edit</a>
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-times-circle-o text-danger me-2"
+                                                                        aria-hidden="true"></i> Clear</a>
+                                                                <a class="dropdown-item" href="#"></a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
 
-                                                        <td>
-                                                            <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                                cols="5" rows="1"></textarea>
-                                                        </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>Previous Employer Income</td>
+                                                    <td>Previous Employer TDS</td>
+                                                    <td>
+
+                                                        <button type="button"
+                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            title="Please refer 'TDS Deducted' in your last month Tax Sheet provided by your previous employer">
+                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                                aria-hidden="true"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td></td>
+
+                                                    <td>
+                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                            cols="5" rows="1"></textarea>
+                                                    </td>
 
 
-                                                        {{-- <td>
+                                                    {{-- <td>
                                                             <p>-</p>
                                                         </td> --}}
-                                                        <td>
+                                                    <td>
 
 
-                                                            <div class="dropdown investment_dropDown">
-                                                                <button
-                                                                    class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                                    type="button" id="dropdownMenuButton"
-                                                                    data-bs-toggle="dropdown" aria-haspopup="true"
-                                                                    aria-expanded="false">
-                                                                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                                </button>
-                                                                <div class="dropdown-menu"
-                                                                    aria-labelledby="dropdownMenuButton">
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-info me-2"
-                                                                            aria-hidden="true"></i> Edit</a>
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Clear</a>
-                                                                    <a class="dropdown-item" href="#"></a>
-                                                                </div>
+                                                        <div class="dropdown investment_dropDown">
+                                                            <button
+                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                type="button" id="dropdownMenuButton"
+                                                                data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                                            </button>
+                                                            <div class="dropdown-menu"
+                                                                aria-labelledby="dropdownMenuButton">
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-pencil-square-o text-info me-2"
+                                                                        aria-hidden="true"></i> Edit</a>
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-times-circle-o text-danger me-2"
+                                                                        aria-hidden="true"></i> Clear</a>
+                                                                <a class="dropdown-item" href="#"></a>
                                                             </div>
-                                                        </td>
+                                                        </div>
+                                                    </td>
 
 
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                                </tr>
+                                            </tbody>
+                                        </table>
 
-                                        </div>
                                     </div>
-                                </div>
-                                <div class="text-end my-3">
-                                    <button
-                                        class="bg-orange-700 text-white  py-2 rounded-md px-4 text-center">Save</button>
-                                    <button
-                                        class="bg-transparent border-orange-700 x-4 text-orange-600 border py-2 rounded-md px-4 text-center">Previous</button>
-                                    <button
-                                        class="bg-transparent border-orange-700 text-orange-600 border py-2 rounded-md px-4 text-center">Next</button>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade " id="other_income" role="tabpanel" aria-labelledby="">
 
-                                <div class="card top-line mb-0 border-bottom-0 border-end-0 border-start-0">
-                                    <div class="card-body">
-                                        <div class="table-responsive">
-                                            <table class="table investment_table">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">Sections</th>
-                                                        <th scope="col">Particulars</th>
-                                                        <th scope="col">References</th>
-                                                        <th scope="col">Max Limit</th>
-                                                        <th scope="col">Declaration Amount</th>
-                                                        {{-- <th scope="col">Proofs</th>
+                            <div class="text-end my-3">
+                                <button class="bg-orange-700 text-white  py-2 rounded-md px-4 text-center">Save</button>
+                                <button
+                                    class="bg-transparent border-orange-700 mx-4 text-orange-600 border py-2 rounded-md px-4 text-center">Previous</button>
+                                <button
+                                    class="bg-transparent border-orange-700 text-orange-600 border py-2 rounded-md px-4 text-center">Next</button>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade " id="other_income" role="tabpanel" aria-labelledby="">
+
+                                    <div class="table-responsive">
+                                        <table class="table investment_table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Sections</th>
+                                                    <th scope="col">Particulars</th>
+                                                    <th scope="col">References</th>
+                                                    <th scope="col">Max Limit</th>
+                                                    <th scope="col">Declaration Amount</th>
+                                                    {{-- <th scope="col">Proofs</th>
 
                                                         <th scope="col">Status</th> --}}
+                                                    <th scope="col">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Other Income</td>
+                                                    <td>Income earned from other sources</td>
+                                                    <td>
+
+                                                        <button type="button"
+                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            title="Income earned from other sources within the financial year">
+                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                                aria-hidden="true"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td></td>
+
+                                                    <td>
+                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                            cols="5" rows="1"></textarea>
+                                                    </td>
+
+                                                    {{-- <td align="">
+
+                                                            <div class="upload_file ">
+
+                                                                <i class="fa fa-upload" aria-hidden="true"><input
+                                                                        type="file" name="" id=""
+                                                                        multiple></i>
+
+
+                                                            </div>
+
+                                                        </td>
+                                                        <td>
+                                                            <p>-</p>
+                                                        </td> --}}
+                                                    <td>
+
+
+                                                        <div class="dropdown investment_dropDown">
+                                                            <button
+                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                type="button" id="dropdownMenuButton"
+                                                                data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                                            </button>
+                                                            <div class="dropdown-menu"
+                                                                aria-labelledby="dropdownMenuButton">
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-pencil-square-o text-info me-2"
+                                                                        aria-hidden="true"></i> Edit</a>
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-times-circle-o text-danger me-2"
+                                                                        aria-hidden="true"></i> Clear</a>
+                                                                <a class="dropdown-item" href="#"></a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+
+
+
+                                                </tr>
+                                                <tr>
+                                                    <td>Sec 80TTA</td>
+                                                    <td>Interest from Saving(Senior Citizen)</td>
+                                                    <td>
+
+                                                        <button type="button"
+                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            title="Interest income earned from a saving account, Post office and FD">
+                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                                aria-hidden="true"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td>10000</td>
+
+                                                    <td>
+                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                            cols="5" rows="1"></textarea>
+                                                    </td>
+
+                                                    {{-- <td align="">                                                            <div class="upload_file ">
+
+                                                                <i class="fa fa-upload" aria-hidden="true"><input
+                                                                        type="file" name="" id=""
+                                                                        multiple></i>
+
+                                                            </div>
+
+                                                        </td>
+                                                        <td>
+                                                            <p>-</p>
+                                                        </td> --}}
+                                                    <td>
+
+
+                                                        <div class="dropdown investment_dropDown">
+                                                            <button
+                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                type="button" id="dropdownMenuButton"
+                                                                data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                                            </button>
+                                                            <div class="dropdown-menu"
+                                                                aria-labelledby="dropdownMenuButton">
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-pencil-square-o text-info me-2"
+                                                                        aria-hidden="true"></i> Edit</a>
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-times-circle-o text-danger me-2"
+                                                                        aria-hidden="true"></i> Clear</a>
+                                                                <a class="dropdown-item" href="#"></a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+
+
+
+                                                </tr>
+                                                <tr>
+                                                    <td>Sec 80TTB</td>
+                                                    <td>Interest from Savings</td>
+                                                    <td>
+
+                                                        <button type="button"
+                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            title="Interest income earned from a saving account, Post office and FD Senior Citizen">
+                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                                aria-hidden="true"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td>50000</td>
+
+                                                    <td>
+                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                            cols="5" rows="1"></textarea>
+                                                    </td>
+
+                                                    {{-- <td align="">
+
+                                                            <div class="upload_file ">
+
+                                                                <i class="fa fa-upload" aria-hidden="true"><input
+                                                                        type="file" name="" id=""
+                                                                        multiple></i>
+
+
+                                                            </div>
+
+                                                        </td>
+                                                        <td>
+                                                            <p>-</p>
+                                                        </td> --}}
+                                                    <td>
+
+
+                                                        <div class="dropdown investment_dropDown">
+                                                            <button
+                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                type="button" id="dropdownMenuButton"
+                                                                data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                                            </button>
+                                                            <div class="dropdown-menu"
+                                                                aria-labelledby="dropdownMenuButton">
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-pencil-square-o text-info me-2"
+                                                                        aria-hidden="true"></i> Edit</a>
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-times-circle-o text-danger me-2"
+                                                                        aria-hidden="true"></i> Clear</a>
+                                                                <a class="dropdown-item" href="#"></a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+
+                                    </div>
+
+                            <div class="text-end my-3">
+                                <button class="bg-orange-700 text-white  py-2 rounded-md px-4 text-center">Save</button>
+                                <button
+                                    class="bg-transparent border-orange-700 mx-4 text-orange-600 border py-2 rounded-md px-4 text-center">Previous</button>
+                                <button
+                                    class="bg-transparent border-orange-700 text-orange-600 border py-2 rounded-md px-4 text-center">Next</button>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade " id="income_loss" role="tabpanel" aria-labelledby="">
+                            <ul class="nav nav-pills divide-x divide-solid  mb-3   nav-tabs-dashed" id="pills-tab" role="tablist">
+                                <li class="nav-item  " role="presentation">
+                                    <a class="nav-link active mx-4 " id="" data-bs-toggle="pill" href=""
+                                        data-bs-target="#self_occupied_property" role="tab" aria-controls=""
+                                        aria-selected="true">
+                                        Self Occupied Property
+                                    </a>
+                                </li>
+
+                                <li class="nav-item    " role="presentation">
+                                    <a class="nav-link  mx-4 " id="" data-bs-toggle="pill" href=""
+                                        data-bs-target="#letOut_property" role="tab" aria-controls=""
+                                        aria-selected="true">
+                                        Let Out Property
+                                    </a>
+                                </li>
+                                <li class="nav-item  " role="presentation">
+                                    <a class="nav-link  mx-4 " id="" data-bs-toggle="pill" href=""
+                                        data-bs-target="#deemed_property" role="tab" aria-controls=""
+                                        aria-selected="true">
+                                        Deemed Let Out Property
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content " id="">
+                                <div class="tab-pane fade active show" id="self_occupied_property" role="tabpanel"
+                                    aria-labelledby="">
+                                    <div class="tw-card bg-gray-100">
+                                        <div class="text-end">
+                                            <button data-bs-target="#selfOccupied_modal" data-bs-toggle="modal"
+                                                class="py-2  px-4 text-white text-center mb-3  rounded-md bg-indigo-600">Add
+                                                New</button>
+                                        </div>
+
+                                        <div class="table-responsive">
+
+                                            <table class="table investment_table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Lender Name</th>
+                                                        <th scope="col">Lender PAN</th>
+                                                        <th scope="col">Lender Type</th>
+                                                        <th scope="col">Loss From Housing Property</th>
                                                         <th scope="col">Action</th>
+
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td>Other Income</td>
-                                                        <td>Income earned from other sources</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
                                                         <td>
-
-                                                            <button type="button"
-                                                                class="btn btn-transprarent border-0 outline-none "
-                                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="Income earned from other sources within the financial year">
-                                                                <i class="fa fa-exclamation-circle  text-warning"
-                                                                    aria-hidden="true"></i>
-                                                            </button>
-                                                        </td>
-                                                        <td></td>
-
-                                                        <td>
-                                                            <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                                cols="5" rows="1"></textarea>
-                                                        </td>
-
-                                                        {{-- <td align="">
-
-                                                            <div class="upload_file ">
-
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name="" id=""
-                                                                        multiple></i>
-
-
-                                                            </div>
-
-                                                        </td>
-                                                        <td>
-                                                            <p>-</p>
-                                                        </td> --}}
-                                                        <td>
-
-
                                                             <div class="dropdown investment_dropDown">
                                                                 <button
                                                                     class="btn  bg-transparent outline-none border-0 dropdown-toggle"
@@ -1831,436 +1986,51 @@
                                                             </div>
                                                         </td>
 
-
-
                                                     </tr>
-                                                    <tr>
-                                                        <td>Sec 80TTA</td>
-                                                        <td>Interest from Saving(Senior Citizen)</td>
-                                                        <td>
 
-                                                            <button type="button"
-                                                                class="btn btn-transprarent border-0 outline-none "
-                                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="Interest income earned from a saving account, Post office and FD">
-                                                                <i class="fa fa-exclamation-circle  text-warning"
-                                                                    aria-hidden="true"></i>
-                                                            </button>
-                                                        </td>
-                                                        <td>10000</td>
-
-                                                        <td>
-                                                            <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                                cols="5" rows="1"></textarea>
-                                                        </td>
-
-                                                        {{-- <td align="">                                                            <div class="upload_file ">
-
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name="" id=""
-                                                                        multiple></i>
-
-                                                            </div>
-
-                                                        </td>
-                                                        <td>
-                                                            <p>-</p>
-                                                        </td> --}}
-                                                        <td>
-
-
-                                                            <div class="dropdown investment_dropDown">
-                                                                <button
-                                                                    class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                                    type="button" id="dropdownMenuButton"
-                                                                    data-bs-toggle="dropdown" aria-haspopup="true"
-                                                                    aria-expanded="false">
-                                                                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                                </button>
-                                                                <div class="dropdown-menu"
-                                                                    aria-labelledby="dropdownMenuButton">
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-info me-2"
-                                                                            aria-hidden="true"></i> Edit</a>
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Clear</a>
-                                                                    <a class="dropdown-item" href="#"></a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-
-
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Sec 80TTB</td>
-                                                        <td>Interest from Savings</td>
-                                                        <td>
-
-                                                            <button type="button"
-                                                                class="btn btn-transprarent border-0 outline-none "
-                                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="Interest income earned from a saving account, Post office and FD Senior Citizen">
-                                                                <i class="fa fa-exclamation-circle  text-warning"
-                                                                    aria-hidden="true"></i>
-                                                            </button>
-                                                        </td>
-                                                        <td>50000</td>
-
-                                                        <td>
-                                                            <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                                cols="5" rows="1"></textarea>
-                                                        </td>
-
-                                                        {{-- <td align="">
-
-                                                            <div class="upload_file ">
-
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name="" id=""
-                                                                        multiple></i>
-
-
-                                                            </div>
-
-                                                        </td>
-                                                        <td>
-                                                            <p>-</p>
-                                                        </td> --}}
-                                                        <td>
-
-
-                                                            <div class="dropdown investment_dropDown">
-                                                                <button
-                                                                    class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                                    type="button" id="dropdownMenuButton"
-                                                                    data-bs-toggle="dropdown" aria-haspopup="true"
-                                                                    aria-expanded="false">
-                                                                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                                </button>
-                                                                <div class="dropdown-menu"
-                                                                    aria-labelledby="dropdownMenuButton">
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-info me-2"
-                                                                            aria-hidden="true"></i> Edit</a>
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Clear</a>
-                                                                    <a class="dropdown-item" href="#"></a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-
-
-                                                    </tr>
                                                 </tbody>
+
                                             </table>
-
-
                                         </div>
+
                                     </div>
                                 </div>
-                                <div class="text-end my-3">
-                                    <button
-                                        class="bg-orange-700 text-white  py-2 rounded-md px-4 text-center">Save</button>
-                                    <button
-                                        class="bg-transparent border-orange-700 mx-4 text-orange-600 border py-2 rounded-md px-4 text-center">Previous</button>
-                                    <button
-                                        class="bg-transparent border-orange-700 text-orange-600 border py-2 rounded-md px-4 text-center">Next</button>
-                                </div>
-                            </div>
-
-                            <div class="tab-pane fade " id="income_loss" role="tabpanel" aria-labelledby="">
-                                <ul class="nav nav-pills  my-3   nav-tabs-dashed" id="pills-tab" role="tablist">
-                                    <li class="nav-item   " role="presentation">
-                                        <a class="nav-link active " id="" data-bs-toggle="pill"
-                                            href="" data-bs-target="#self_occupied_property" role="tab"
-                                            aria-controls="" aria-selected="true">
-                                            Self Occupied Property
-                                        </a>
-                                    </li>
-
-                                    <li class="nav-item  mx-4  " role="presentation">
-                                        <a class="nav-link  " id="" data-bs-toggle="pill" href=""
-                                            data-bs-target="#letOut_property" role="tab" aria-controls=""
-                                            aria-selected="true">
-                                            Let Out Property
-                                        </a>
-                                    </li>
-                                    <li class="nav-item   " role="presentation">
-                                        <a class="nav-link  " id="" data-bs-toggle="pill" href=""
-                                            data-bs-target="#deemed_property" role="tab" aria-controls=""
-                                            aria-selected="true">
-                                            Deemed Let Out Property
-                                        </a>
-                                    </li>
-                                </ul>
-                                <div class="tab-content " id="">
-                                    <div class="tab-pane fade active show" id="self_occupied_property" role="tabpanel"
-                                        aria-labelledby="">
-                                        <div class="tw-card bg-gray-100">
-                                            <div class="text-end">
-                                                <button data-bs-target="#selfOccupied_modal" data-bs-toggle="modal"
-                                                    class="py-2  px-4 text-white text-center mb-3  rounded-md bg-indigo-600">Add
-                                                    New</button>
-                                            </div>
-
-                                            <div class="table-responsive">
-
-                                                <table class="table investment_table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">Lender Name</th>
-                                                            <th scope="col">Lender PAN</th>
-                                                            <th scope="col">Lender Type</th>
-                                                            <th scope="col">Loss From Housing Property</th>
-                                                            <th scope="col">Action</th>
-
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>-</td>
-                                                            <td>-</td>
-                                                            <td>-</td>
-                                                            <td>-</td>
-                                                            <td>
-                                                                <div class="dropdown investment_dropDown">
-                                                                    <button
-                                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                                        type="button" id="dropdownMenuButton"
-                                                                        data-bs-toggle="dropdown" aria-haspopup="true"
-                                                                        aria-expanded="false">
-                                                                        <i class="fa fa-ellipsis-v"
-                                                                            aria-hidden="true"></i>
-                                                                    </button>
-                                                                    <div class="dropdown-menu"
-                                                                        aria-labelledby="dropdownMenuButton">
-                                                                        <a class="dropdown-item" href="#"><i
-                                                                                class="fa fa-pencil-square-o text-info me-2"
-                                                                                aria-hidden="true"></i> Edit</a>
-                                                                        <a class="dropdown-item" href="#"><i
-                                                                                class="fa fa-times-circle-o text-danger me-2"
-                                                                                aria-hidden="true"></i> Clear</a>
-                                                                        <a class="dropdown-item" href="#"></a>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-
-                                                        </tr>
-
-                                                    </tbody>
-
-                                                </table>
-                                            </div>
-
+                                <div class="tab-pane fade " id="letOut_property" role="tabpanel" aria-labelledby="">
+                                    <div class="tw-card bg-gray-100">
+                                        <div class="text-end">
+                                            <button data-bs-target="#letOut_property_modal" data-bs-toggle="modal"
+                                                class="py-2 px-4 text-white text-center mb-3  rounded-md bg-indigo-600">Add
+                                                New</button>
                                         </div>
-                                    </div>
-                                    <div class="tab-pane fade " id="letOut_property" role="tabpanel"
-                                        aria-labelledby="">
-                                        <div class="tw-card bg-gray-100">
-                                            <div class="text-end">
-                                                <button data-bs-target="#letOut_property_modal" data-bs-toggle="modal"
-                                                    class="py-2 px-4 text-white text-center mb-3  rounded-md bg-indigo-600">Add
-                                                    New</button>
-                                            </div>
 
-                                            <div class="table-responsive ">
-                                                <table class="table investment_table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">Lender Name</th>
-                                                            <th scope="col">Lender PAN</th>
-                                                            <th scope="col">Lender Type</th>
-                                                            <th scope="col">Rent Received</th>
-                                                            <th scope="col">Municipal Tax</th>
-                                                            <th scope="col">Maintenace</th>
-                                                            <th scope="col">Net Value</th>
-                                                            <th scope="col">Interest</th>
-                                                            <th scope="col">Income/Loss</th>
-                                                            <th scope="col">Action</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>-</td>
-                                                            <td>-</td>
-                                                            <td>-</td>
-                                                            <td>-</td>
-                                                            <td>-</td>
-                                                            <td>-</td>
-                                                            <td>-</td>
-                                                            <td>-</td>
-                                                            <td>-</td>
-                                                            <td>
-                                                                <div class="dropdown investment_dropDown">
-                                                                    <button
-                                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                                        type="button" id="dropdownMenuButton"
-                                                                        data-bs-toggle="dropdown" aria-haspopup="true"
-                                                                        aria-expanded="false">
-                                                                        <i class="fa fa-ellipsis-v"
-                                                                            aria-hidden="true"></i>
-                                                                    </button>
-                                                                    <div class="dropdown-menu"
-                                                                        aria-labelledby="dropdownMenuButton">
-                                                                        <a class="dropdown-item" href="#"><i
-                                                                                class="fa fa-pencil-square-o text-info me-2"
-                                                                                aria-hidden="true"></i> Edit</a>
-                                                                        <a class="dropdown-item" href="#"><i
-                                                                                class="fa fa-times-circle-o text-danger me-2"
-                                                                                aria-hidden="true"></i> Clear</a>
-                                                                        <a class="dropdown-item" href="#"></a>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-
-                                                        </tr>
-
-                                                    </tbody>
-
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade " id="deemed_property" role="tabpanel"
-                                        aria-labelledby="">
-                                        <div class="tw-card bg-gray-100">
-                                            <div class="text-end">
-                                                <button data-bs-target="#deemedOut_property_modal"
-                                                    data-bs-toggle="modal"
-                                                    class="py-2 px-4 text-white text-center mb-3 rounded-md bg-indigo-600">Add
-                                                    New</button>
-                                            </div>
-                                            <div class="table-responsive ">
-                                                <table class="table investment_table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">Lender Name</th>
-                                                            <th scope="col">Lender PAN</th>
-                                                            <th scope="col">Lender Type</th>
-                                                            <th scope="col">Rent Received</th>
-                                                            <th scope="col">Municipal Tax</th>
-                                                            <th scope="col">Maintenace</th>
-                                                            <th scope="col">Net Value</th>
-                                                            <th scope="col">Interest</th>
-                                                            <th scope="col">Income/Loss</th>
-                                                            <th scope="col">Action</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>-</td>
-                                                            <td>-</td>
-                                                            <td>-</td>
-                                                            <td>-</td>
-                                                            <td>-</td>
-                                                            <td>-</td>
-                                                            <td>-</td>
-                                                            <td>-</td>
-                                                            <td>-</td>
-                                                            <td>
-                                                                <div class="dropdown investment_dropDown">
-                                                                    <button
-                                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                                        type="button" id="dropdownMenuButton"
-                                                                        data-bs-toggle="dropdown" aria-haspopup="true"
-                                                                        aria-expanded="false">
-                                                                        <i class="fa fa-ellipsis-v"
-                                                                            aria-hidden="true"></i>
-                                                                    </button>
-                                                                    <div class="dropdown-menu"
-                                                                        aria-labelledby="dropdownMenuButton">
-                                                                        <a class="dropdown-item" href="#"><i
-                                                                                class="fa fa-pencil-square-o text-info me-2"
-                                                                                aria-hidden="true"></i> Edit</a>
-                                                                        <a class="dropdown-item" href="#"><i
-                                                                                class="fa fa-times-circle-o text-danger me-2"
-                                                                                aria-hidden="true"></i> Clear</a>
-                                                                        <a class="dropdown-item" href="#"></a>
-                                                                    </div>
-                                                                </div>
-
-                                                            </td>
-
-                                                        </tr>
-
-                                                    </tbody>
-
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="text-end my-3">
-                                    <button
-                                        class="bg-orange-700 text-white py-2 rounded-md px-4 text-center">Save</button>
-                                    <button
-                                        class="bg-transparent border-orange-700 mx-4 text-orange-600 border py-2 rounded-md px-4 text-center">Previous</button>
-                                    <button
-                                        class="bg-transparent border-orange-700 text-orange-600 border py-2 rounded-md px-4 text-center">Next</button>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade " id="other_exemptions" role="tabpanel" aria-labelledby="">
-
-                                <div class="card top-line mb-0 border-bottom-0 border-end-0 border-start-0">
-                                    <div class="card-body">
                                         <div class="table-responsive ">
                                             <table class="table investment_table">
                                                 <thead>
                                                     <tr>
-                                                        <th scope="col">Sections</th>
-                                                        <th scope="col">Particulars</th>
-                                                        <th scope="col">References</th>
-                                                        <th scope="col">Max Limit</th>
-                                                        <th scope="col">Declaration Amount</th>
-                                                        {{-- <th scope="col">Proofs</th>
-
-                                                        <th scope="col">Status</th> --}}
+                                                        <th scope="col">Lender Name</th>
+                                                        <th scope="col">Lender PAN</th>
+                                                        <th scope="col">Lender Type</th>
+                                                        <th scope="col">Rent Received</th>
+                                                        <th scope="col">Municipal Tax</th>
+                                                        <th scope="col">Maintenace</th>
+                                                        <th scope="col">Net Value</th>
+                                                        <th scope="col">Interest</th>
+                                                        <th scope="col">Income/Loss</th>
                                                         <th scope="col">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td> 80CCD (1)</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
                                                         <td>
-                                                            <p> Employee contributions to National Pension Scheme (NPS)</p>
-                                                            <span class="text-sm text-gray-400">(Up to 10% of salary +
-                                                                dearness allowance (DA))</span>
-                                                        </td>
-                                                        <td>
-
-                                                            <button type="button"
-                                                                class="btn btn-transprarent border-0 outline-none "
-                                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="Additional exemption up to Rs 50,000 in NPS is eligible for income tax deduction. It is irrespective of the type of employment, i.e., a government employee, a private sector employee, or self-employed can claim benefit of Rs 50,000 under Section 80CCD(1B).">
-                                                                <i class="fa fa-exclamation-circle  text-warning"
-                                                                    aria-hidden="true"></i>
-                                                            </button>
-                                                        </td>
-                                                        <td></td>
-
-                                                        <td>
-                                                            <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                                cols="5" rows="1"></textarea>
-                                                        </td>
-
-                                                        {{-- <td align="">
-                                                            <div class="upload_file ">
-
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name="" id=""
-                                                                        multiple></i>
-                                                            </div>
-
-                                                        </td>
-                                                        <td>
-                                                            <p>Not Submitted</p>
-                                                        </td> --}}
-                                                        <td>
-
-
                                                             <div class="dropdown investment_dropDown">
                                                                 <button
                                                                     class="btn  bg-transparent outline-none border-0 dropdown-toggle"
@@ -2282,46 +2052,49 @@
                                                             </div>
                                                         </td>
 
-
                                                     </tr>
+
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade " id="deemed_property" role="tabpanel" aria-labelledby="">
+                                    <div class="tw-card bg-gray-100">
+                                        <div class="text-end">
+                                            <button data-bs-target="#deemedOut_property_modal" data-bs-toggle="modal"
+                                                class="py-2 px-4 text-white text-center mb-3 rounded-md bg-indigo-600">Add
+                                                New</button>
+                                        </div>
+                                        <div class="table-responsive ">
+                                            <table class="table investment_table">
+                                                <thead>
                                                     <tr>
-                                                        <td> 80CCD (2)</td>
-                                                        <td> Employer contributions to National Pension Scheme (NPS)</td>
+                                                        <th scope="col">Lender Name</th>
+                                                        <th scope="col">Lender PAN</th>
+                                                        <th scope="col">Lender Type</th>
+                                                        <th scope="col">Rent Received</th>
+                                                        <th scope="col">Municipal Tax</th>
+                                                        <th scope="col">Maintenace</th>
+                                                        <th scope="col">Net Value</th>
+                                                        <th scope="col">Interest</th>
+                                                        <th scope="col">Income/Loss</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
                                                         <td>
-
-                                                            <button type="button"
-                                                                class="btn btn-transprarent border-0 outline-none "
-                                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="Employer’s contribution up to 10% of (Basic + DA) is eligible for deduction under this section, it is an additional deduction as it is not part of deduction under section 80CCE = [80C + 80CCC + 80CCD(1)]. In the Union Budget 2020, It has been proposed that an aggregate limit of Rs 7.5 lakh covering employer contributions to the Provident fund (PF), National Pension System (NPS) and superannuation fund. Any contribution beyond this limit will, therefore, will be taxable">
-                                                                <i class="fa fa-exclamation-circle  text-warning"
-                                                                    aria-hidden="true"></i>
-                                                            </button>
-                                                        </td>
-                                                        <td></td>
-
-                                                        <td>
-                                                            <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                                cols="5" rows="1"></textarea>
-                                                        </td>
-
-                                                        {{-- <td align="">
-
-                                                            <div class="upload_file ">
-
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name="" id=""
-                                                                        multiple></i>
-
-
-                                                            </div>
-
-                                                        </td>
-                                                        <td>
-                                                            <p>Not Submitted</p>
-                                                        </td> --}}
-                                                        <td>
-
-
                                                             <div class="dropdown investment_dropDown">
                                                                 <button
                                                                     class="btn  bg-transparent outline-none border-0 dropdown-toggle"
@@ -2341,32 +2114,72 @@
                                                                     <a class="dropdown-item" href="#"></a>
                                                                 </div>
                                                             </div>
-                                                        </td>
 
+                                                        </td>
 
                                                     </tr>
-                                                    <tr>
-                                                        <td> 80CCD (1B)</td>
-                                                        <td>Self-contributions to National Pension Scheme (NPS)</td>
-                                                        <td>
 
-                                                            <button type="button"
-                                                                class="btn btn-transprarent border-0 outline-none "
-                                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="Additional exemption up to Rs 50,000 in NPS is eligible for income tax deduction. It is irrespective of the type of employment, i.e., a government employee, a private sector employee, or self-employed can claim benefit of Rs 50,000 under Section 80CCD(1B).">
-                                                                <i class="fa fa-exclamation-circle  text-warning"
-                                                                    aria-hidden="true"></i>
-                                                            </button>
-                                                        </td>
-                                                        <td>50000</td>
+                                                </tbody>
 
-                                                        <td>
-                                                            <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                                cols="5" rows="1"></textarea>
-                                                        </td>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-end my-3">
+                                <button class="bg-orange-700 text-white py-2 rounded-md px-4 text-center">Save</button>
+                                <button
+                                    class="bg-transparent border-orange-700 mx-4 text-orange-600 border py-2 rounded-md px-4 text-center">Previous</button>
+                                <button
+                                    class="bg-transparent border-orange-700 text-orange-600 border py-2 rounded-md px-4 text-center">Next</button>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade " id="other_exemptions" role="tabpanel" aria-labelledby="">
 
-                                                        {{-- <td align="">
+
+                                    <div class="table-responsive ">
+                                        <table class="table investment_table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Sections</th>
+                                                    <th scope="col">Particulars</th>
+                                                    <th scope="col">References</th>
+                                                    <th scope="col">Max Limit</th>
+                                                    <th scope="col">Declaration Amount</th>
+                                                    {{-- <th scope="col">Proofs</th>
+
+                                                        <th scope="col">Status</th> --}}
+                                                    <th scope="col">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td> 80CCD (1)</td>
+                                                    <td>
+                                                        <p> Employee contributions to National Pension Scheme (NPS)</p>
+                                                        <span class="text-sm text-gray-400">(Up to 10% of salary +
+                                                            dearness allowance (DA))</span>
+                                                    </td>
+                                                    <td>
+
+                                                        <button type="button"
+                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            title="Additional exemption up to Rs 50,000 in NPS is eligible for income tax deduction. It is irrespective of the type of employment, i.e., a government employee, a private sector employee, or self-employed can claim benefit of Rs 50,000 under Section 80CCD(1B).">
+                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                                aria-hidden="true"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td></td>
+
+                                                    <td>
+                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                            cols="5" rows="1"></textarea>
+                                                    </td>
+
+                                                    {{-- <td align="">
                                                             <div class="upload_file ">
+
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
                                                                         type="file" name="" id=""
                                                                         multiple></i>
@@ -2376,114 +2189,53 @@
                                                         <td>
                                                             <p>Not Submitted</p>
                                                         </td> --}}
-                                                        <td>
+                                                    <td>
 
 
-                                                            <div class="dropdown investment_dropDown">
-                                                                <button
-                                                                    class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                                    type="button" id="dropdownMenuButton"
-                                                                    data-bs-toggle="dropdown" aria-haspopup="true"
-                                                                    aria-expanded="false">
-                                                                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                                </button>
-                                                                <div class="dropdown-menu"
-                                                                    aria-labelledby="dropdownMenuButton">
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-info me-2"
-                                                                            aria-hidden="true"></i> Edit</a>
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Clear</a>
-                                                                    <a class="dropdown-item" href="#"></a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-
-
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td> 80D </td>
-                                                        <td>
-                                                            <p> Medical Insurance Premium </p>
-                                                            <span class="text-sm text-gray-400">(Self,Spouse,Kids)</span>
-                                                        </td>
-                                                        <td>
-
-                                                            <button type="button"
-                                                                class="btn btn-transprarent border-0 outline-none "
-                                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="You can claim a deduction up to Rs. 25,000 per year for medical insurance premium. The premium can be for you, your spouse, and dependent children. In case, you or your spouse is 60 years or above, you can claim a deduction up to Rs. 50,000.">
-                                                                <i class="fa fa-exclamation-circle  text-warning"
-                                                                    aria-hidden="true"></i>
+                                                        <div class="dropdown investment_dropDown">
+                                                            <button
+                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                type="button" id="dropdownMenuButton"
+                                                                data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                             </button>
-                                                        </td>
-                                                        <td>25000</td>
-
-                                                        <td>
-                                                            <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                                cols="5" rows="1"></textarea>
-                                                        </td>
-
-                                                        {{-- <td align="">
-                                                            <div class="upload_file ">
-                                                                <i class="fa fa-upload" aria-hidden="true"><input
-                                                                        type="file" name="" id=""
-                                                                        multiple></i>
+                                                            <div class="dropdown-menu"
+                                                                aria-labelledby="dropdownMenuButton">
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-pencil-square-o text-info me-2"
+                                                                        aria-hidden="true"></i> Edit</a>
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-times-circle-o text-danger me-2"
+                                                                        aria-hidden="true"></i> Clear</a>
+                                                                <a class="dropdown-item" href="#"></a>
                                                             </div>
-
-                                                        </td>
-                                                        <td>
-                                                            <p>Not Submitted</p>
-                                                        </td> --}}
-                                                        <td>
+                                                        </div>
+                                                    </td>
 
 
-                                                            <div class="dropdown investment_dropDown">
-                                                                <button
-                                                                    class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                                    type="button" id="dropdownMenuButton"
-                                                                    data-bs-toggle="dropdown" aria-haspopup="true"
-                                                                    aria-expanded="false">
-                                                                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                                </button>
-                                                                <div class="dropdown-menu"
-                                                                    aria-labelledby="dropdownMenuButton">
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-secondary me-2"
-                                                                            aria-hidden="true"></i> Edit</a>
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Clear</a>
-                                                                    <a class="dropdown-item" href="#"></a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                    <td> 80CCD (2)</td>
+                                                    <td> Employer contributions to National Pension Scheme (NPS)</td>
+                                                    <td>
 
+                                                        <button type="button"
+                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            title="Employer’s contribution up to 10% of (Basic + DA) is eligible for deduction under this section, it is an additional deduction as it is not part of deduction under section 80CCE = [80C + 80CCC + 80CCD(1)]. In the Union Budget 2020, It has been proposed that an aggregate limit of Rs 7.5 lakh covering employer contributions to the Provident fund (PF), National Pension System (NPS) and superannuation fund. Any contribution beyond this limit will, therefore, will be taxable">
+                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                                aria-hidden="true"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td></td>
 
-                                                    </tr>
-                                                    <tr>
-                                                        <td>80D</td>
-                                                        <td>Preventive Health Check Up</td>
-                                                        <td>
+                                                    <td>
+                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                            cols="5" rows="1"></textarea>
+                                                    </td>
 
-                                                            <button type="button"
-                                                                class="btn btn-transprarent border-0 outline-none "
-                                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="You can claim deduction up to Rs. 5,000 per year on preventive health check-ups.">
-                                                                <i class="fa fa-exclamation-circle  text-warning"
-                                                                    aria-hidden="true"></i>
-                                                            </button>
-                                                        </td>
-                                                        <td>5000</td>
-
-                                                        <td>
-                                                            <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                                cols="5" rows="1"></textarea>
-                                                        </td>
-
-                                                        {{-- <td align="">
+                                                    {{-- <td align="">
 
                                                             <div class="upload_file ">
 
@@ -2498,54 +2250,233 @@
                                                         <td>
                                                             <p>Not Submitted</p>
                                                         </td> --}}
-                                                        <td>
+                                                    <td>
 
 
-                                                            <div class="dropdown investment_dropDown">
-                                                                <button
-                                                                    class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                                    type="button" id="dropdownMenuButton"
-                                                                    data-bs-toggle="dropdown" aria-haspopup="true"
-                                                                    aria-expanded="false">
-                                                                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                                </button>
-                                                                <div class="dropdown-menu"
-                                                                    aria-labelledby="dropdownMenuButton">
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-info me-2"
-                                                                            aria-hidden="true"></i> Edit</a>
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Clear</a>
-                                                                    <a class="dropdown-item" href="#"></a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-
-
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>80D</td>
-                                                        <td>Parents Preventive Health Check Up</td>
-                                                        <td>
-
-                                                            <button type="button"
-                                                                class="btn btn-transprarent border-0 outline-none "
-                                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="You can claim deduction up to Rs. 5,000 per year on preventive health check-ups.">
-                                                                <i class="fa fa-exclamation-circle  text-warning"
-                                                                    aria-hidden="true"></i>
+                                                        <div class="dropdown investment_dropDown">
+                                                            <button
+                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                type="button" id="dropdownMenuButton"
+                                                                data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                             </button>
-                                                        </td>
-                                                        <td>5000</td>
+                                                            <div class="dropdown-menu"
+                                                                aria-labelledby="dropdownMenuButton">
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-pencil-square-o text-info me-2"
+                                                                        aria-hidden="true"></i> Edit</a>
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-times-circle-o text-danger me-2"
+                                                                        aria-hidden="true"></i> Clear</a>
+                                                                <a class="dropdown-item" href="#"></a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
 
+
+                                                </tr>
+                                                <tr>
+                                                    <td> 80CCD (1B)</td>
+                                                    <td>Self-contributions to National Pension Scheme (NPS)</td>
+                                                    <td>
+
+                                                        <button type="button"
+                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            title="Additional exemption up to Rs 50,000 in NPS is eligible for income tax deduction. It is irrespective of the type of employment, i.e., a government employee, a private sector employee, or self-employed can claim benefit of Rs 50,000 under Section 80CCD(1B).">
+                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                                aria-hidden="true"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td>50000</td>
+
+                                                    <td>
+                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                            cols="5" rows="1"></textarea>
+                                                    </td>
+
+                                                    {{-- <td align="">
+                                                            <div class="upload_file ">
+                                                                <i class="fa fa-upload" aria-hidden="true"><input
+                                                                        type="file" name="" id=""
+                                                                        multiple></i>
+                                                            </div>
+
+                                                        </td>
                                                         <td>
-                                                            <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                                cols="5" rows="1"></textarea>
-                                                        </td>
+                                                            <p>Not Submitted</p>
+                                                        </td> --}}
+                                                    <td>
 
-                                                        {{-- <td align="">
+
+                                                        <div class="dropdown investment_dropDown">
+                                                            <button
+                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                type="button" id="dropdownMenuButton"
+                                                                data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                                            </button>
+                                                            <div class="dropdown-menu"
+                                                                aria-labelledby="dropdownMenuButton">
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-pencil-square-o text-info me-2"
+                                                                        aria-hidden="true"></i> Edit</a>
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-times-circle-o text-danger me-2"
+                                                                        aria-hidden="true"></i> Clear</a>
+                                                                <a class="dropdown-item" href="#"></a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+
+
+                                                </tr>
+
+                                                <tr>
+                                                    <td> 80D </td>
+                                                    <td>
+                                                        <p> Medical Insurance Premium </p>
+                                                        <span class="text-sm text-gray-400">(Self,Spouse,Kids)</span>
+                                                    </td>
+                                                    <td>
+
+                                                        <button type="button"
+                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            title="You can claim a deduction up to Rs. 25,000 per year for medical insurance premium. The premium can be for you, your spouse, and dependent children. In case, you or your spouse is 60 years or above, you can claim a deduction up to Rs. 50,000.">
+                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                                aria-hidden="true"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td>25000</td>
+
+                                                    <td>
+                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                            cols="5" rows="1"></textarea>
+                                                    </td>
+
+                                                    {{-- <td align="">
+                                                            <div class="upload_file ">
+                                                                <i class="fa fa-upload" aria-hidden="true"><input
+                                                                        type="file" name="" id=""
+                                                                        multiple></i>
+                                                            </div>
+
+                                                        </td>
+                                                        <td>
+                                                            <p>Not Submitted</p>
+                                                        </td> --}}
+                                                    <td>
+
+
+                                                        <div class="dropdown investment_dropDown">
+                                                            <button
+                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                type="button" id="dropdownMenuButton"
+                                                                data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                                            </button>
+                                                            <div class="dropdown-menu"
+                                                                aria-labelledby="dropdownMenuButton">
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-pencil-square-o text-secondary me-2"
+                                                                        aria-hidden="true"></i> Edit</a>
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-times-circle-o text-danger me-2"
+                                                                        aria-hidden="true"></i> Clear</a>
+                                                                <a class="dropdown-item" href="#"></a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+
+
+                                                </tr>
+                                                <tr>
+                                                    <td>80D</td>
+                                                    <td>Preventive Health Check Up</td>
+                                                    <td>
+
+                                                        <button type="button"
+                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            title="You can claim deduction up to Rs. 5,000 per year on preventive health check-ups.">
+                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                                aria-hidden="true"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td>5000</td>
+
+                                                    <td>
+                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                            cols="5" rows="1"></textarea>
+                                                    </td>
+
+                                                    {{-- <td align="">
+
+                                                            <div class="upload_file ">
+
+                                                                <i class="fa fa-upload" aria-hidden="true"><input
+                                                                        type="file" name="" id=""
+                                                                        multiple></i>
+
+
+                                                            </div>
+
+                                                        </td>
+                                                        <td>
+                                                            <p>Not Submitted</p>
+                                                        </td> --}}
+                                                    <td>
+
+
+                                                        <div class="dropdown investment_dropDown">
+                                                            <button
+                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                type="button" id="dropdownMenuButton"
+                                                                data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                                            </button>
+                                                            <div class="dropdown-menu"
+                                                                aria-labelledby="dropdownMenuButton">
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-pencil-square-o text-info me-2"
+                                                                        aria-hidden="true"></i> Edit</a>
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-times-circle-o text-danger me-2"
+                                                                        aria-hidden="true"></i> Clear</a>
+                                                                <a class="dropdown-item" href="#"></a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+
+
+                                                </tr>
+
+                                                <tr>
+                                                    <td>80D</td>
+                                                    <td>Parents Preventive Health Check Up</td>
+                                                    <td>
+
+                                                        <button type="button"
+                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            title="You can claim deduction up to Rs. 5,000 per year on preventive health check-ups.">
+                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                                aria-hidden="true"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td>5000</td>
+
+                                                    <td>
+                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                            cols="5" rows="1"></textarea>
+                                                    </td>
+
+                                                    {{-- <td align="">
                                                             <div class="upload_file ">
                                                                 <i class="fa fa-upload" aria-hidden="true"><input
                                                                         type="file" name="" id=""
@@ -2556,77 +2487,77 @@
                                                         <td>
                                                             <p>-</p>
                                                         </td> --}}
-                                                        <td class="">
+                                                    <td class="">
 
 
-                                                            <div class="dropdown investment_dropDown">
-                                                                <button
-                                                                    class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                                    type="button" id="dropdownMenuButton"
-                                                                    data-bs-toggle="dropdown" aria-haspopup="true"
-                                                                    aria-expanded="false">
-                                                                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                                </button>
-                                                                <div class="dropdown-menu"
-                                                                    aria-labelledby="dropdownMenuButton">
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-secondary me-2"
-                                                                            aria-hidden="true"></i> Edit</a>
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Clear</a>
-                                                                    <a class="dropdown-item" href="#"></a>
-                                                                </div>
+                                                        <div class="dropdown investment_dropDown">
+                                                            <button
+                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                type="button" id="dropdownMenuButton"
+                                                                data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                                            </button>
+                                                            <div class="dropdown-menu"
+                                                                aria-labelledby="dropdownMenuButton">
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-pencil-square-o text-secondary me-2"
+                                                                        aria-hidden="true"></i> Edit</a>
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-times-circle-o text-danger me-2"
+                                                                        aria-hidden="true"></i> Clear</a>
+                                                                <a class="dropdown-item" href="#"></a>
                                                             </div>
-                                                        </td>
+                                                        </div>
+                                                    </td>
 
 
-                                                    </tr>
-                                                    <tr>
-                                                        <td> 80DD</td>
-                                                        <td>
-                                                            <p>
-                                                                Medical Treatment of Disabled Dependent
-                                                            </p>
-                                                            <div class="d-flex justify-content-center">
-                                                                <div class="form-check me-2">
-                                                                    <input class="form-check-input" type="radio"
-                                                                        name="cc" id="below_cc">
-                                                                    <label class="form-check-label" for="below_cc">
-                                                                        40% To 80%
-                                                                    </label>
-                                                                </div>
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="radio"
-                                                                        name="cc" id="above_cc">
-                                                                    <label class="form-check-label" for="above_cc">
-                                                                        More than 80%
-                                                                    </label>
-                                                                </div>
-
+                                                </tr>
+                                                <tr>
+                                                    <td> 80DD</td>
+                                                    <td>
+                                                        <p>
+                                                            Medical Treatment of Disabled Dependent
+                                                        </p>
+                                                        <div class="d-flex justify-content-center">
+                                                            <div class="form-check me-2">
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="cc" id="below_cc">
+                                                                <label class="form-check-label" for="below_cc">
+                                                                    40% To 80%
+                                                                </label>
                                                             </div>
-                                                        </td>
-                                                        <td>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="cc" id="above_cc">
+                                                                <label class="form-check-label" for="above_cc">
+                                                                    More than 80%
+                                                                </label>
+                                                            </div>
 
-                                                            <button type="button"
-                                                                class="btn btn-transprarent border-0 outline-none "
-                                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="• Deduction allowed up to Rs.75,000 for taking care of disabled persons with 40% or more of one or more disability.
+                                                        </div>
+                                                    </td>
+                                                    <td>
+
+                                                        <button type="button"
+                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            title="• Deduction allowed up to Rs.75,000 for taking care of disabled persons with 40% or more of one or more disability.
                                                            • Deduction allowed up to Rs.1.25 lakhs p.a. for taking care of disabled persons with 80% or more of one or more disability.
                                                            • Dependents imply spouse, children, siblings or parents of an individual or any member of the family in an HUF.
                                                            ">
-                                                                <i class="fa fa-exclamation-circle  text-warning"
-                                                                    aria-hidden="true"></i>
-                                                            </button>
-                                                        </td>
-                                                        <td>75000</td>
+                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                                aria-hidden="true"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td>75000</td>
 
-                                                        <td>
-                                                            <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                                cols="5" rows="1"></textarea>
-                                                        </td>
+                                                    <td>
+                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                            cols="5" rows="1"></textarea>
+                                                    </td>
 
-                                                        {{-- <td align="">
+                                                    {{-- <td align="">
 
                                                             <div class="upload_file ">
 
@@ -2641,83 +2572,83 @@
                                                         <td>
                                                             <p>Not Submitted</p>
                                                         </td> --}}
-                                                        <td>
+                                                    <td>
 
 
-                                                            <div class="dropdown investment_dropDown">
-                                                                <button
-                                                                    class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                                    type="button" id="dropdownMenuButton"
-                                                                    data-bs-toggle="dropdown" aria-haspopup="true"
-                                                                    aria-expanded="false">
-                                                                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                                </button>
-                                                                <div class="dropdown-menu"
-                                                                    aria-labelledby="dropdownMenuButton">
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-info me-2"
-                                                                            aria-hidden="true"></i> Edit</a>
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Clear</a>
-
-                                                                </div>
-                                                            </div>
-                                                        </td>
-
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td> 80DDB</td>
-                                                        <td>
-
-                                                            <p> Medical Expenditure on Self or Dependant for Specified
-                                                                Disease
-
-                                                            </p>
-                                                            <div class="d-flex justify-content-center">
-                                                                <div class="form-check me-2">
-                                                                    <input class="form-check-input" type="radio"
-                                                                        name="cc" id="below_cc">
-                                                                    <label class="form-check-label" for="below_cc">
-                                                                        Age Below 60
-                                                                    </label>
-                                                                </div>
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="radio"
-                                                                        name="cc" id="above_cc">
-                                                                    <label class="form-check-label" for="above_cc">
-                                                                        Age More than 60
-                                                                    </label>
-                                                                </div>
+                                                        <div class="dropdown investment_dropDown">
+                                                            <button
+                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                type="button" id="dropdownMenuButton"
+                                                                data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                                            </button>
+                                                            <div class="dropdown-menu"
+                                                                aria-labelledby="dropdownMenuButton">
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-pencil-square-o text-info me-2"
+                                                                        aria-hidden="true"></i> Edit</a>
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-times-circle-o text-danger me-2"
+                                                                        aria-hidden="true"></i> Clear</a>
 
                                                             </div>
+                                                        </div>
+                                                    </td>
 
-                                                        </td>
 
-                                                        <td>
+                                                </tr>
+                                                <tr>
+                                                    <td> 80DDB</td>
+                                                    <td>
 
-                                                            <button type="button"
-                                                                class="btn btn-transprarent border-0 outline-none "
-                                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="Deduction under section 80DDB is allowed for medical expenses incurred for medical treatment of specified diseases or ailments. The nature of diseases and ailments which are included for deduction under Section 80DDB are mentioned below:
+                                                        <p> Medical Expenditure on Self or Dependant for Specified
+                                                            Disease
+
+                                                        </p>
+                                                        <div class="d-flex justify-content-center">
+                                                            <div class="form-check me-2">
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="cc" id="below_cc">
+                                                                <label class="form-check-label" for="below_cc">
+                                                                    Age Below 60
+                                                                </label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="cc" id="above_cc">
+                                                                <label class="form-check-label" for="above_cc">
+                                                                    Age More than 60
+                                                                </label>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </td>
+
+                                                    <td>
+
+                                                        <button type="button"
+                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            title="Deduction under section 80DDB is allowed for medical expenses incurred for medical treatment of specified diseases or ailments. The nature of diseases and ailments which are included for deduction under Section 80DDB are mentioned below:
                                                              1. Neurological Diseases as identified by a specialist ,where the level of disability has been certified to be of 40% and above and covers Dementia, Dystonia Musculorum Deformans, Chorea, Motor Neuron Disease, Ataxia, Aphasia, Parkinson’s Disease and Hemiballismus.
                                                              2. Malignant Cancer
                                                              3. AIDS- Acquired Immuno-Deficiency Syndrome
                                                              4. Chronic Renal failure
                                                              5. Hematological disorders like Hemophilia or Thalassaemia.">
-                                                                <i class="fa fa-exclamation-circle  text-warning"
-                                                                    aria-hidden="true"></i>
-                                                            </button>
-                                                        </td>
-                                                        <td>100000</td>
+                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                                aria-hidden="true"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td>100000</td>
 
-                                                        <td>
-                                                            <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                                cols="5" rows="1"></textarea>
-                                                        </td>
+                                                    <td>
+                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                            cols="5" rows="1"></textarea>
+                                                    </td>
 
-                                                        {{-- <td align="">
+                                                    {{-- <td align="">
 
                                                             <div class="upload_file ">
 
@@ -2732,55 +2663,55 @@
                                                         <td>
                                                             <p>Not Submitted</p>
                                                         </td> --}}
-                                                        <td>
+                                                    <td>
 
 
-                                                            <div class="dropdown investment_dropDown">
-                                                                <button
-                                                                    class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                                    type="button" id="dropdownMenuButton"
-                                                                    data-bs-toggle="dropdown" aria-haspopup="true"
-                                                                    aria-expanded="false">
-                                                                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                                </button>
-                                                                <div class="dropdown-menu"
-                                                                    aria-labelledby="dropdownMenuButton">
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-info me-2"
-                                                                            aria-hidden="true"></i> Edit</a>
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Clear</a>
+                                                        <div class="dropdown investment_dropDown">
+                                                            <button
+                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                type="button" id="dropdownMenuButton"
+                                                                data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                                            </button>
+                                                            <div class="dropdown-menu"
+                                                                aria-labelledby="dropdownMenuButton">
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-pencil-square-o text-info me-2"
+                                                                        aria-hidden="true"></i> Edit</a>
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-times-circle-o text-danger me-2"
+                                                                        aria-hidden="true"></i> Clear</a>
 
-                                                                </div>
                                                             </div>
-                                                        </td>
+                                                        </div>
+                                                    </td>
 
 
-                                                    </tr>
-                                                    <tr>
-                                                        <td> 80E</td>
-                                                        <td>Repayment of Interest on Higher Education</td>
-                                                        <td>
+                                                </tr>
+                                                <tr>
+                                                    <td> 80E</td>
+                                                    <td>Repayment of Interest on Higher Education</td>
+                                                    <td>
 
-                                                            <button type="button"
-                                                                class="btn btn-transprarent border-0 outline-none "
-                                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="You can claim deduction of Interest paid on a loan taken for pursuing higher education from taxable* income under section 80E of the Income Tax Act, 1961*.
+                                                        <button type="button"
+                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            title="You can claim deduction of Interest paid on a loan taken for pursuing higher education from taxable* income under section 80E of the Income Tax Act, 1961*.
                                                            According to Section 80E*, the deduction is allowed on the total interest amount of the EMI paid during the financial year. The loan has to be taken from a bank or financial institution to pursue higher studies.
                                                            Interest amount paid during the financial year is allowable as deduction from taxable* income. There is no limit on the deduction amount. The benefit of deduction is available for a maximum of 8 years or till the interest is paid- whichever is earlier. It is applicable even when you have taken an education loan for your spouse, children or for a student for whom you are legal guardian.">
-                                                                <i class="fa fa-exclamation-circle  text-warning"
-                                                                    aria-hidden="true"></i>
-                                                            </button>
-                                                        </td>
-                                                        <td></td>
+                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                                aria-hidden="true"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td></td>
 
-                                                        <td>
-                                                            <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
-                                                                cols="5" rows="1"></textarea>
-                                                        </td>
+                                                    <td>
+                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                            cols="5" rows="1"></textarea>
+                                                    </td>
 
-                                                        {{-- <td align="">
+                                                    {{-- <td align="">
 
                                                             <div class="upload_file ">
 
@@ -2795,63 +2726,62 @@
                                                         <td>
                                                             <p>Not Submitted</p>
                                                         </td> --}}
-                                                        <td>
+                                                    <td>
 
 
-                                                            <div class="dropdown investment_dropDown">
-                                                                <button
-                                                                    class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                                    type="button" id="dropdownMenuButton"
-                                                                    data-bs-toggle="dropdown" aria-haspopup="true"
-                                                                    aria-expanded="false">
-                                                                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                                </button>
-                                                                <div class="dropdown-menu"
-                                                                    aria-labelledby="dropdownMenuButton">
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-info me-2"
-                                                                            aria-hidden="true"></i> Edit</a>
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Clear</a>
-                                                                    <a class="dropdown-item" href="#"></a>
-                                                                </div>
+                                                        <div class="dropdown investment_dropDown">
+                                                            <button
+                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                type="button" id="dropdownMenuButton"
+                                                                data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                                            </button>
+                                                            <div class="dropdown-menu"
+                                                                aria-labelledby="dropdownMenuButton">
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-pencil-square-o text-info me-2"
+                                                                        aria-hidden="true"></i> Edit</a>
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-times-circle-o text-danger me-2"
+                                                                        aria-hidden="true"></i> Clear</a>
+                                                                <a class="dropdown-item" href="#"></a>
                                                             </div>
-                                                        </td>
+                                                        </div>
+                                                    </td>
 
 
-                                                    </tr>
-                                                    <tr>
-                                                        <td> 80EE</td>
-                                                        <td>Additional Relief on home loan interest (First-home Buyers FY
-                                                            2016-2017)
-                                                        </td>
-                                                        <td>
+                                                </tr>
+                                                <tr>
+                                                    <td> 80EE</td>
+                                                    <td>Additional Relief on home loan interest (First-home Buyers FY
+                                                        2016-2017)
+                                                    </td>
+                                                    <td>
 
-                                                            <button type="button"
-                                                                class="btn btn-transprarent border-0 outline-none "
-                                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="• The deduction is up to Rs 50,000. It is over and above the Rs 2 lakh limit under Section 24 of the Income Tax Act.
+                                                        <button type="button"
+                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            title="• The deduction is up to Rs 50,000. It is over and above the Rs 2 lakh limit under Section 24 of the Income Tax Act.
                                                            • Value of the House should be Rs.50 Lacs or less
                                                            • Loan taken for the house must be Rs.35 lakhs or less
                                                            • The loan must be sanctioned by a financial institution or a housing finance company
                                                            • The loan must be sanctioned between FY 01.04.2016 to 31.03.2017 (AY 2017 – 2018) and the deduction is allowed for up to Rs.50000 per year until the loan is repaid.
                                                            ">
-                                                                <i class="fa fa-exclamation-circle  text-warning"
-                                                                    aria-hidden="true"></i>
-                                                            </button>
-                                                        </td>
-                                                        <td>50000</td>
+                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                                aria-hidden="true"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td>50000</td>
 
-                                                        <td>
-                                                            <div class="flex justify-center">
-                                                                <button data-bs-target="#ee_modal"
-                                                                    data-bs-toggle="modal"
-                                                                    class="text-white py-2 w-2/3 rounded-md  bg-indigo-800">Add</button>
-                                                            </div>
-                                                        </td>
+                                                    <td>
+                                                        <div class="flex justify-center">
+                                                            <button data-bs-target="#ee_modal" data-bs-toggle="modal"
+                                                                class="text-white py-2 w-2/3 rounded-md  bg-indigo-800">Add</button>
+                                                        </div>
+                                                    </td>
 
-                                                        {{-- <td align="">
+                                                    {{-- <td align="">
 
                                                             <div class="upload_file ">
 
@@ -2866,43 +2796,43 @@
                                                         <td>
                                                             <p>Not Submitted</p>
                                                         </td> --}}
-                                                        <td>
+                                                    <td>
 
 
-                                                            <div class="dropdown investment_dropDown">
-                                                                <button
-                                                                    class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                                    type="button" id="dropdownMenuButton"
-                                                                    data-bs-toggle="dropdown" aria-haspopup="true"
-                                                                    aria-expanded="false">
-                                                                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                                </button>
-                                                                <div class="dropdown-menu"
-                                                                    aria-labelledby="dropdownMenuButton">
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-info me-2"
-                                                                            aria-hidden="true"></i> Edit</a>
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Clear</a>
+                                                        <div class="dropdown investment_dropDown">
+                                                            <button
+                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                type="button" id="dropdownMenuButton"
+                                                                data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                                            </button>
+                                                            <div class="dropdown-menu"
+                                                                aria-labelledby="dropdownMenuButton">
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-pencil-square-o text-info me-2"
+                                                                        aria-hidden="true"></i> Edit</a>
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-times-circle-o text-danger me-2"
+                                                                        aria-hidden="true"></i> Clear</a>
 
-                                                                </div>
                                                             </div>
-                                                        </td>
+                                                        </div>
+                                                    </td>
 
 
-                                                    </tr>
-                                                    <tr>
-                                                        <td>80EEA</td>
-                                                        <td>Additional Relief on home loan interest (First-home Buyers FY
-                                                            2019-2020)
-                                                        </td>
-                                                        <td>
+                                                </tr>
+                                                <tr>
+                                                    <td>80EEA</td>
+                                                    <td>Additional Relief on home loan interest (First-home Buyers FY
+                                                        2019-2020)
+                                                    </td>
+                                                    <td>
 
-                                                            <button type="button"
-                                                                class="btn btn-transprarent border-0 outline-none "
-                                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="• Section 80EEA has been inserted to allow for an interest deduction from FY - 1st April 2019 and 31st March 2022.
+                                                        <button type="button"
+                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            title="• Section 80EEA has been inserted to allow for an interest deduction from FY - 1st April 2019 and 31st March 2022.
                                                           • A deduction for interest payments up to Rs 1,50,000 is available under Section 80EEA. This deduction is over and above the deduction of Rs 2 lakh for interest payments available under Section 24(b) of the Income Tax Act.
                                                           • Housing loan must be taken from a financial institution or a housing finance company for buying a residential house property.
                                                           • The loan should be sanctioned during the period 1st April 2019 and 31st March 2022.
@@ -2910,24 +2840,23 @@
                                                           • The individual taxpayer should not be eligible to claim deduction under the existing Section 80EE.
                                                           • The taxpayer should be a first-time home buyer. The taxpayer should not own any residential house property as on the date of sanction of the loan.
                                                           • This deduction can be claimed until you have repaid the housing loan.">
-                                                                <i class="fa fa-exclamation-circle  text-warning"
-                                                                    aria-hidden="true"></i>
-                                                            </button>
-                                                        </td>
-                                                        <td>150000</td>
+                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                                aria-hidden="true"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td>150000</td>
 
-                                                        <td>
-                                                            {{-- <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                    <td>
+                                                        {{-- <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea> --}}
 
-                                                            <div class="flex justify-center">
-                                                                <button data-bs-target="#eea_modal"
-                                                                    data-bs-toggle="modal"
-                                                                    class="text-white py-2 w-2/3 rounded-md  bg-indigo-800">Add</button>
-                                                            </div>
-                                                        </td>
+                                                        <div class="flex justify-center">
+                                                            <button data-bs-target="#eea_modal" data-bs-toggle="modal"
+                                                                class="text-white py-2 w-2/3 rounded-md  bg-indigo-800">Add</button>
+                                                        </div>
+                                                    </td>
 
-                                                        {{-- <td align="">
+                                                    {{-- <td align="">
 
                                                             <div class="upload_file ">
 
@@ -2942,63 +2871,62 @@
                                                         <td>
                                                             <p>Not Submitted</p>
                                                         </td> --}}
-                                                        <td>
+                                                    <td>
 
 
-                                                            <div class="dropdown investment_dropDown">
-                                                                <button
-                                                                    class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                                    type="button" id="dropdownMenuButton"
-                                                                    data-bs-toggle="dropdown" aria-haspopup="true"
-                                                                    aria-expanded="false">
-                                                                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                                </button>
-                                                                <div class="dropdown-menu"
-                                                                    aria-labelledby="dropdownMenuButton">
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-info me-2"
-                                                                            aria-hidden="true"></i> Edit</a>
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Clear</a>
+                                                        <div class="dropdown investment_dropDown">
+                                                            <button
+                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                type="button" id="dropdownMenuButton"
+                                                                data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                                            </button>
+                                                            <div class="dropdown-menu"
+                                                                aria-labelledby="dropdownMenuButton">
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-pencil-square-o text-info me-2"
+                                                                        aria-hidden="true"></i> Edit</a>
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-times-circle-o text-danger me-2"
+                                                                        aria-hidden="true"></i> Clear</a>
 
-                                                                </div>
                                                             </div>
-                                                        </td>
+                                                        </div>
+                                                    </td>
 
 
-                                                    </tr>
-                                                    <tr>
-                                                        <td> 80EEB</td>
-                                                        <td>Dedution of Interest on loan acquiring Electric Vehicle</td>
-                                                        <td>
+                                                </tr>
+                                                <tr>
+                                                    <td> 80EEB</td>
+                                                    <td>Dedution of Interest on loan acquiring Electric Vehicle</td>
+                                                    <td>
 
-                                                            <button type="button"
-                                                                class="btn btn-transprarent border-0 outline-none "
-                                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="a) The loan must be taken from a financial institution or a non-banking financial company for buying an electric vehicle.
+                                                        <button type="button"
+                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            title="a) The loan must be taken from a financial institution or a non-banking financial company for buying an electric vehicle.
                                                            b) The loan must be sanctioned anytime during the period starting from 1 April 2019 till 31 March 2023.
                                                            c) “Electric vehicle” has been defined to mean a vehicle which is powered exclusively by an electric motor whose traction energy is supplied exclusively by traction battery installed in the vehicle and has such electric regenerative braking system, which during braking provides for the conversion of vehicle kinetic energy into electrical energy.
                                                            d) A deduction for interest payments up to Rs 1,50,000 is available under Section 80EEB">
-                                                                <i class="fa fa-exclamation-circle  text-warning"
-                                                                    aria-hidden="true"></i>
-                                                            </button>
-                                                        </td>
-                                                        <td>150000</td>
+                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                                aria-hidden="true"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td>150000</td>
 
-                                                        <td>
-                                                            {{-- <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                    <td>
+                                                        {{-- <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
                                                                 cols="5" rows="1"></textarea> --}}
-                                                            {{-- <button data-bs-target="#eeb_modal" data-bs-toggle="modal"
+                                                        {{-- <button data-bs-target="#eeb_modal" data-bs-toggle="modal"
                                                                 class="text-white py-2 w-full rounded-md  bg-indigo-800">Add</button> --}}
-                                                            <div class="flex justify-center">
-                                                                <button data-bs-target="#eeb_modal"
-                                                                    data-bs-toggle="modal"
-                                                                    class="text-white py-2 w-2/3 rounded-md  bg-indigo-800">Add</button>
-                                                            </div>
-                                                        </td>
+                                                        <div class="flex justify-center">
+                                                            <button data-bs-target="#eeb_modal" data-bs-toggle="modal"
+                                                                class="text-white py-2 w-2/3 rounded-md  bg-indigo-800">Add</button>
+                                                        </div>
+                                                    </td>
 
-                                                        {{-- <td align="">
+                                                    {{-- <td align="">
 
                                                             <div class="upload_file ">
 
@@ -3013,62 +2941,61 @@
                                                         <td>
                                                             <p>Not Submitted</p>
                                                         </td> --}}
-                                                        <td>
+                                                    <td>
 
 
-                                                            <div class="dropdown investment_dropDown">
-                                                                <button
-                                                                    class="btn  bg-transparent outline-none border-0 dropdown-toggle"
-                                                                    type="button" id="dropdownMenuButton"
-                                                                    data-bs-toggle="dropdown" aria-haspopup="true"
-                                                                    aria-expanded="false">
-                                                                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                                </button>
-                                                                <div class="dropdown-menu"
-                                                                    aria-labelledby="dropdownMenuButton">
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-pencil-square-o text-info me-2"
-                                                                            aria-hidden="true"></i> Edit</a>
-                                                                    <a class="dropdown-item" href="#"><i
-                                                                            class="fa fa-times-circle-o text-danger me-2"
-                                                                            aria-hidden="true"></i> Clear</a>
-                                                                    <a class="dropdown-item" href="#"></a>
-                                                                </div>
+                                                        <div class="dropdown investment_dropDown">
+                                                            <button
+                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                type="button" id="dropdownMenuButton"
+                                                                data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                                            </button>
+                                                            <div class="dropdown-menu"
+                                                                aria-labelledby="dropdownMenuButton">
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-pencil-square-o text-info me-2"
+                                                                        aria-hidden="true"></i> Edit</a>
+                                                                <a class="dropdown-item" href="#"><i
+                                                                        class="fa fa-times-circle-o text-danger me-2"
+                                                                        aria-hidden="true"></i> Clear</a>
+                                                                <a class="dropdown-item" href="#"></a>
                                                             </div>
-                                                        </td>
+                                                        </div>
+                                                    </td>
 
 
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                </div>
-                                <div class="text-end my-3">
-                                    <button
-                                        class="bg-orange-700 text-white  py-2 rounded-md px-4 text-center">Save</button>
-                                    <button
-                                        class="bg-transparent border-orange-700 mx-4 text-orange-600 border py-2 rounded-md px-4 text-center">Previous</button>
-                                    <button
-                                        class="bg-transparent border-orange-700 text-orange-600 border py-2 rounded-md px-4 text-center">Next</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade  " id="form_12bb" role="tabpanel">
-                        <div class="text-center">
-                            <div class="d-flex justify-content-center">
-                                <div style="height: 300px;max-width:500px;" class="">
-                                    <img src="{{ URL::asset('assets/images/no_dataFile.svg') }}" class="h-100 w-100"
-                                        alt="user-pic" </div>
-                                </div>
 
+                            <div class="text-end my-3">
+                                <button class="bg-orange-700 text-white  py-2 rounded-md px-4 text-center">Save</button>
+                                <button
+                                    class="bg-transparent border-orange-700 mx-4 text-orange-600 border py-2 rounded-md px-4 text-center">Previous</button>
+                                <button
+                                    class="bg-transparent border-orange-700 text-orange-600 border py-2 rounded-md px-4 text-center">Next</button>
                             </div>
-                            <h4> <span class="text-orange">Sorry !</span> No data</h4>
                         </div>
                     </div>
-                    <div class="tab-pane fade " id="tax_filling" role="tabpanel">
-                        {{-- <div class="text-center">
+                </div>
+            </div>
+            <div class="tab-pane fade  " id="form_12bb" role="tabpanel">
+                <div class="text-center">
+                    <div class="d-flex justify-content-center">
+                        <div style="height: 300px;max-width:500px;" class="">
+                            <img src="{{ URL::asset('assets/images/no_dataFile.svg') }}" class="h-100 w-100"
+                                alt="user-pic" </div>
+                        </div>
+
+                    </div>
+                    <h4> <span class="text-orange">Sorry !</span> No data</h4>
+                </div>
+            </div>
+            <div class="tab-pane fade " id="tax_filling" role="tabpanel">
+                {{-- <div class="text-center">
                             <div class="d-flex justify-content-center">
                                 <div style="height: 300px;max-width:500px;" class="">
                                     <img src="{{ URL::asset('assets/images/no_dataFile.svg') }}" class="h-100 w-100"
@@ -3079,58 +3006,56 @@
                             <h4> <span class="text-orange">Sorry !</span> No data</h4>
                         </div> --}}
 
-                        <div class="row">
-                            <div class=" col-sm-12 col-md-12 col-xl-6 col-xxl-6 col-lg-6 mb-2">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-12 mb-2">
-                                                <h6 class="modal-title">E-filing </h6>
-                                            </div>
-                                            <div class="col-4">
-                                                <img src="{{ URL::asset('assets/images/e-filing.svg') }}" height="60px"
-                                                    width="200px" class="" alt="">
-                                            </div>
-                                            <div class="col-8 d-flex align-items-center justify-content-center">
-                                                <a class="btn btn-border-orange" type="button"
-                                                    href="https://eportal.incometax.gov.in/iec/foservices/#/login"
-                                                    target="_blank"><i class="fa fa-hand-pointer-o me-1"
-                                                        aria-hidden="true"></i> Click here</a>
-                                            </div>
-                                        </div>
+                <div class="row">
+                    <div class=" col-sm-12 col-md-12 col-xl-6 col-xxl-6 col-lg-6 mb-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12 mb-2">
+                                        <h6 class="modal-title">E-filing </h6>
                                     </div>
-                                </div>
-                            </div>
-                            <div class=" col-sm-12 col-md-12 col-xl-6 col-xxl-6 col-lg-6">
-                                <div class="card">
-                                    <div class="card-body">
-
-                                        <div class="row">
-                                            <div class="col-12 mb-2">
-                                                <h6 class="modal-title">Clear Tax</h6>
-                                            </div>
-                                            <div class="col-4">
-                                                <img src="{{ URL::asset('assets/images/ClearTax-Logo.svg') }}"
-                                                    height="60px" width="200px" class="" alt="">
-                                            </div>
-                                            <div class="col-8 d-flex align-items-center justify-content-center">
-                                                <a class="btn btn-border-orange" type="button"
-                                                    href="https://cleartax.in/income-tax-efiling" target="_blank"> <i
-                                                        class="fa fa-hand-pointer-o me-1" aria-hidden="true"></i>Click
-                                                    here</a>
-                                            </div>
-                                        </div>
+                                    <div class="col-4">
+                                        <img src="{{ URL::asset('assets/images/e-filing.svg') }}" height="60px"
+                                            width="200px" class="" alt="">
+                                    </div>
+                                    <div class="col-8 d-flex align-items-center justify-content-center">
+                                        <a class="btn btn-border-orange" type="button"
+                                            href="https://eportal.incometax.gov.in/iec/foservices/#/login"
+                                            target="_blank"><i class="fa fa-hand-pointer-o me-1"
+                                                aria-hidden="true"></i> Click here</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class=" col-sm-12 col-md-12 col-xl-6 col-xxl-6 col-lg-6">
+                        <div class="card">
+                            <div class="card-body">
 
-
+                                <div class="row">
+                                    <div class="col-12 mb-2">
+                                        <h6 class="modal-title">Clear Tax</h6>
+                                    </div>
+                                    <div class="col-4">
+                                        <img src="{{ URL::asset('assets/images/ClearTax-Logo.svg') }}" height="60px"
+                                            width="200px" class="" alt="">
+                                    </div>
+                                    <div class="col-8 d-flex align-items-center justify-content-center">
+                                        <a class="btn btn-border-orange" type="button"
+                                            href="https://cleartax.in/income-tax-efiling" target="_blank"> <i
+                                                class="fa fa-hand-pointer-o me-1" aria-hidden="true"></i>Click
+                                            here</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
             </div>
+
+
         </div>
+
         <div id="AddRendted_modal" class="modal  fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg">
                 <div class="modal-content ">
@@ -3803,18 +3728,18 @@
 
             $('#confirm_switchRegime').click(function() {
                 const switchedDate = new Date();
-                const date=switchedDate.getDate();
-                const month=switchedDate.getMonth();
+                const date = switchedDate.getDate();
+                const month = switchedDate.getMonth();
                 $('.change_regime_text').text("New Tax Regime");
 
-                $('#latest_update').text('Last Updated :' + (('' +date ).length < 2 ?
-                        '0' : '')+date + '/' +
-                    (('' +month ).length < 2 ? '0' : '') + month+'/' +
+                $('#latest_update').text('Last Updated :' + (('' + date).length < 2 ?
+                        '0' : '') + date + '/' +
+                    (('' + month).length < 2 ? '0' : '') + month + '/' +
                     (('' + switchedDate.getFullYear())));
 
 
-                    $('#newRegime_warn').css('display', 'block');
-                    $('#oldRegime_warn').css('display','none');
+                $('#newRegime_warn').css('display', 'block');
+                $('#oldRegime_warn').css('display', 'none');
 
             })
 
