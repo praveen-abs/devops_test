@@ -51,6 +51,19 @@ export default defineConfig({
                 'resources/js/hrms/modules/configurations/holidays/Holidays_Lists.js',
 
 
+                // Paycheck
+
+                'resources/js/hrms/modules/paycheck/investments/investment.js',
+
+                // Declaration
+
+                'resources/js/hrms/modules/paycheck/investments/declaration/declaration.js',
+
+                // invenstments and exemption
+
+                'resources/js/hrms/modules/paycheck/investments/investments_and_exemption/investments_and_exemption.js',
+
+
                 // Profile pages
 
 
