@@ -76,7 +76,7 @@ class VmtEmployeeLeaveService
 
                if($emp_doj->between($financial_year_start_date, $financial_year_end_date)){
 
-                while(Carbon::now()->gte($emp_doj)){
+                while($financial_year_end_date->gte($emp_doj)){
                     $year=$emp_doj->format('Y');
                     $month=$emp_doj->format('n');
 
@@ -102,7 +102,13 @@ class VmtEmployeeLeaveService
                 }
 
                }else{
-                while(Carbon::now()->gte($financial_year_start_date)){
+                     if(Carbon::now()->lte($financial_year_end_date)){
+                         //till this date accured leave will be added
+                         $end_date = Carbon::now();
+                     }else{
+                        $end_date = $financial_year_end_date;
+                     }
+                while($end_date->gte($financial_year_start_date)){
                     $year=$financial_year_start_date->format('Y');
                     $month=$financial_year_start_date->format('n');
 
