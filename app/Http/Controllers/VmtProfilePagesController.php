@@ -158,6 +158,7 @@ class VmtProfilePagesController extends Controller
 
          $response = [
             'status' => 'success',
+            'message' =>"General details updated successfully"
          ];
     }catch(\Exception $e){
          $response = [
@@ -196,6 +197,7 @@ class VmtProfilePagesController extends Controller
 
          $response = [
             'status' => 'success',
+            'message' =>"Contact details updated successfully"
          ];
     }catch(\Exception $e){
          $response = [
@@ -274,6 +276,7 @@ class VmtProfilePagesController extends Controller
         $familyDetails = VmtEmployeeFamilyDetails::where('id',$request->current_table_id )->delete();
         $response = [
             'status' => 'success',
+            'message' =>"Family details Added successfully"
          ];
     }catch(\Exception $e){
          $response = [
@@ -315,35 +318,7 @@ class VmtProfilePagesController extends Controller
              return response()->json($response);
     }
 
-    public function addFamilyInfo(Request $request)
-    {
 
-    try{
-        // dd($request->all());
-        $user_id = user::where('user_code', $request->user_code)->first()->id;
-        $emp_familydetails = new VmtEmployeeFamilyDetails;
-        $emp_familydetails->user_id = $user_id;
-        $emp_familydetails->name = $request->input('name');
-        $emp_familydetails->relationship = $request->input('relationship');
-        $emp_familydetails->dob = $request->input('dob');
-        $emp_familydetails->phone_number = $request->input('phone_number');
-        $emp_familydetails->save();
-
-         $response = [
-            'status' => 'success',
-            'message' => 'Family Details Added Successfully ',
-         ];
-    }catch(\Exception $e){
-         $response = [
-            'status' => 'failure',
-            'message' => 'Error while Adding Family Information ',
-            'error_message' => $e->getMessage()
-         ];
-    }
-
-         return response()->json($response);
-
-}
 public function addExperienceInfo(Request $request)
 {
 
@@ -358,17 +333,11 @@ public function addExperienceInfo(Request $request)
             $exp->period_from = $request->input('period_from');
             $exp->period_to = $request->input('period_to');
             $exp->save();
-        $responseJSON = [
+        $response = [
             'status' => 'success',
+            'message' =>"Experiance details Added successfully"
         ];
-    }catch(\Exception $e){
-         $response = [
-            'status' => 'failure',
-            'message' => 'Error while Add Experience Information ',
-            'error_message' => $e->getMessage()
-        ];
-    }
-    catch(\Exception $e){
+    } catch(\Exception $e){
         $response = [
             'status' => 'failure',
             'message' => 'Error while updateing Family Information ',
@@ -393,6 +362,7 @@ public function addExperienceInfo(Request $request)
                 $exp->save();
             $responseJSON = [
                 'status' => 'success',
+                'message' =>"Experiance details updated successfully"
             ];
         }catch(\Exception $e){
              $response = [
@@ -403,13 +373,14 @@ public function addExperienceInfo(Request $request)
          }
             return response()->json($responseJSON);
     }
+
     public function deleteExperienceInfo(Request $request)
     {
-        //dd($request->all());
+    try{
         $familyDetails = Experience::where('id',$request->exp_current_table_id)->delete();
         $response = [
             'status' => 'success',
-            'message' =>"Experiance details updated successfully"
+            'message' =>"Experiance details deleted successfully"
           ];
     }catch(\Exception $e){
          $response = [
@@ -425,11 +396,10 @@ public function addExperienceInfo(Request $request)
 
     public function updateBankInfo(Request $request)
     {
-
-        //    dd($request->all());
+       // dd($request->all());
         try{
             $user_id = user::where('user_code', $request->user_code)->first()->id;
-            $details = VmtEmployee::find($user_id);
+            $details = VmtEmployee::where('userid', $user_id)->first();
             $details->bank_id = $request->input('bank_id');
             $details->bank_ifsc_code = $request->input('bank_ifsc');
             $details->bank_account_number = $request->input('account_no');
@@ -468,16 +438,13 @@ public function addExperienceInfo(Request $request)
     public function updateStatutoryInfo(Request $request)
     {
        //  dd($request->all());
-
-        $statutory = VmtEmployeeStatutoryDetails::where('user_id', $request->id);
-
-
-      // dd($statutory);
-
+       try{
+        $user_id = user::where('user_code', $request->user_code)->first()->id;
+        $statutory = VmtEmployeeStatutoryDetails::where('user_id', $user_id );
 
        if ($statutory->exists()) {
             $statutory = $statutory->first();
-            $statutory->user_id= $request->id;
+            $statutory->user_id=  $user_id;
             $statutory->pf_applicable=$request->input('pf_applicable');
             $statutory->epf_number=$request->input('epf_number');
             $statutory->uan_number=$request->input('uan_number');
@@ -490,7 +457,7 @@ public function addExperienceInfo(Request $request)
         else
         {
             $statutory = new VmtEmployeeStatutoryDetails;
-            $statutory->user_id= $request->id;
+            $statutory->user_id=  $user_id;
             $statutory->pf_applicable=$request->input('pf_applicable');
             $statutory->epf_number=$request->input('epf_number');
             $statutory->uan_number=$request->input('uan_number');
@@ -501,11 +468,21 @@ public function addExperienceInfo(Request $request)
             $statutory->save();
         }
 
-        $response = [
+     $response = [
             'status' => 'success',
+            'message'=>'statutory details updated successfully'
         ];
+    }catch(\Exception $e){
+        $response = [
+        'status' => 'failure',
+        'message' => 'Error while statutory Information ',
+        'error_message' => $e->getMessage()
+        ];
+    }
 
-        return  $response;
+     return response()->json($response);
+
+
     }
 
 
