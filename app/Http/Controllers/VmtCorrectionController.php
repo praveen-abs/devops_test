@@ -44,7 +44,7 @@ class VmtCorrectionController extends Controller
                 $new_record->reimbursement_type_id = $single_data['reimbursement_type_id'];
                 $new_record->date = Carbon::parse($single_data['date'])->addMonth()->toDateString();
                 $new_record->reviewer_id = $single_data['reviewer_id'];
-                $new_record->reimbursement_type_id = 'Pending';
+                $new_record->status = 'Pending';
                 $new_record->from = $single_data['from'];
                 $new_record->to = $single_data['to'];
                 $new_record->vehicle_type = $single_data['vehicle_type'];
