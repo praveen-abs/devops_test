@@ -38,6 +38,10 @@ export default defineConfig({
 
                 'resources/js/hrms/modules/payroll/payroll_setting/work_location/work_location_setup/work_location_setup.js',
 
+                // work location
+
+                // resources\js\hrms\modules\payroll\payroll_setting\work_location\work_location_setup\work_location_setup.js
+
 
                 ////Reimbursements Module
                 //Employee Reimbursements
