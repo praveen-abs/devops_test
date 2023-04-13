@@ -220,6 +220,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/profile-pages-update-generalinfo/{id}',[App\Http\Controllers\VmtProfilePagesController::class,'updateGeneralInfo'])->name('updateGeneralInfo');
     Route::post('/profile-pages-update-contactinfo/{id}',[App\Http\Controllers\VmtProfilePagesController::class,'updateContactInfo'])->name('updateContactInfo');
     Route::post('/profile-pages-update-address_info/{id}',[App\Http\Controllers\VmtProfilePagesController::class,'updateAddressInfo'])->name('addressInfo');
+    Route::post('/add-family-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'addFamilyInfo'])->name('addFamilyInfo');
     Route::post('/update-family-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'updateFamilyInfo'])->name('updateFamilyInfo');
     Route::post('/delete-family-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'deleteFamilyInfo'])->name('deleteFamilyInfo');
     Route::post('/update-experience-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'updateExperienceInfo'])->name('updateExperienceInfo');
