@@ -42,6 +42,7 @@ class QuickOnboardLink extends Mailable
     public function build()
     {
         return $this->view('vmt_quickonboard_email')
+                    ->subject('Onboard Link')
                     ->with('employeeName', $this->employeeName)
                     ->with('employeeEmpCode', $this->employeeEmpCode)
                     ->with('employeePassword', $this->employeePassword)

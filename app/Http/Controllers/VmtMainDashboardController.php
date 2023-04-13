@@ -39,6 +39,7 @@ use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Crypt;
 
 class VmtMainDashboardController extends Controller
 {
@@ -50,17 +51,21 @@ class VmtMainDashboardController extends Controller
 
     public function index(Request $request)
     {
+
         if(auth()->user()->active == 0)
         {
+
             if(auth()->user()->is_onboarded == 0)
             {
+
                 if(auth()->user()->onboard_type == 'quick')
                 {
+
                     //User record already exists. So fetch it and show in normal onboard form
+                    $encr_user_id = Crypt::encrypt(auth()->user()->id);
 
-                    $vmtEmpController = new VmtEmployeeController;
+                    return redirect()->route('employee-onboarding-v2', ['uid' =>$encr_user_id]);
 
-                    return $vmtEmpController->showEmployeeOnboardingPage(auth()->user()->id);
                 }
                 else
                 if(auth()->user()->onboard_type == 'bulk')

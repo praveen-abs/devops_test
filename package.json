@@ -14,7 +14,7 @@
         "json-server": "^0.17.2",
         "lodash": "^4.17.21",
         "postcss": "^8.4.21",
-        "sass": "^1.58.3",
+        "sass": "^1.61.0",
         "tailwindcss": "^3.2.7"
     },
     "dependencies": {
@@ -23,6 +23,7 @@
         "@vuelidate/core": "^2.0.0",
         "@vuelidate/validators": "^2.0.0",
         "@vuepic/vue-datepicker": "^4.2.0",
+        "@vueuse/core": "^9.13.0",
         "bootstrap": "^5.2.3",
         "bootstrap-vue": "^2.23.1",
         "built": "^1.3.2",

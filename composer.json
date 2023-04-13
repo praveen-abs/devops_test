@@ -40,7 +40,9 @@
             "app/Services/VmtEmployeeService.php",
             "app/Services/VmtEmployeePayslipService.php",
             "app/Services/VmtAttendanceService.php",
-            "app/Services/VmtReimbursementsService.php"
+            "app/Services/VmtReimbursementsService.php",
+            "app/Services/VmtProfilePagesService.php"
+            "app/Services/VmtDashboardService.php"
 
         ]
     },

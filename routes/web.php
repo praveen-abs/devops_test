@@ -22,15 +22,47 @@ Auth::routes();
 //Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
 
 Route::get('/vuejs', function () {
-
     return view('test_vuejs.app');
 });
+
+Route::get('/create-offer', function () {
+    return view('offer_letter/Create_OfferLetter.blade.php');
+
+})->name('create-offer');
+
+Route::get('/offer-letter' , function () {
+    return view('offer_letter/View_OfferLetter');
+})->name('offer-letter');
+
+
+
+Route::get('/roles', function () {
+    return view('rolesAndPermission');
+})->name('roles');
+
+Route::get('/integrations', function () {
+    return view('Integrations_Auth');
+})->name('integrations');
+
+Route::get('/addPermission', function () {
+    return view('addPermissionTo_role');
+})->name('addPermission');
+
+Route::get('/Add-New', function () {
+    return view('addNew_role');
+})->name('Add-New');
+
+Route::get('/paycheckDashboard', function () {
+    return view('paycheckDashboard');
+})->name('paycheckDashboard');
 
 
 Route::get('/create-holiday', function () {
     return view('createHoliday');
 })->name('create-holiday');
 
+// Route::post('/employee_profile', [App\Http\Controllers\Api\VmtAPIAttendanceController::class, 'employeeProfile'])->name('employeeProfile');
+Route::get('/employee_profile', [App\Http\Controllers\VmtAttendanceController::class, 'employeeProfile'])->name('employeeProfile');
 
 
 Route::middleware(['auth'])->group(function () {
@@ -51,6 +83,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/currentUser', function() {
 
         return auth()->user()->id;
+    });
+    Route::get('/currentUserName', function() {
+
+        return auth()->user()->name;
+    });
+
+    //Get current logged-in user name
+    Route::get('/currentUserName', function() {
+
+        return auth()->user()->name;
     });
 
 
@@ -82,6 +124,13 @@ Route::middleware(['auth'])->group(function () {
         //normal onboarding checks
         Route::get('/personal-mail-exists/{mail}', 'isEmployeePersonalEmailAlreadyExists')->name('personal-mail-exists');
         Route::get('/user-code-exists/{user_code}', 'isEmployeeCodeAlreadyExists')->name('user-code-exists');
+        Route::get('/aadhar-no-exists/{aadhar_number}', 'isAadharNoAlreadyExists')->name('aadhar-no-exists');
+        Route::get('/pan-no-exists/{pan_number}', 'isPanCardAlreadyExists')->name('pan-no-exists');
+        Route::get('/mobile-no-exists/{mobile_number}', 'isMobileNoAlreadyExists')->name('mobile-no-exists');
+        Route::get('/ac-no-exists/{ac_no}', 'isAcNoAlreadyExists')->name('ac-no-exists');
+
+        //Fetch quick onboarded emp details
+        Route::post('fetch-quickonboarded-emp-details', 'fetchQuickOnboardedEmployeeData')->name('fetch-quickonboarded-emp-details');
 
     });
 
@@ -234,7 +283,13 @@ Route::middleware(['auth'])->group(function () {
         return view('vmt_vendor');
     })->name('vmt-vendor-route');
 
+    Route::get('/view-offer', function () {
+        return view('offer_letter.View_OfferLetter');
+    })->name('view-offer');
 
+    Route::get('/create-offer', function () {
+        return view('offer_letter.create_offerletter');
+    })->name('create-offer');
 
     Route::get('clients', 'App\Http\Controllers\VmtClientController@showAllClients')->name('vmt-clients-route');;
     Route::get('clients-fetchAll', 'App\Http\Controllers\VmtClientController@fetchAllClients')->name('vmt-clients-fetchall');
@@ -311,6 +366,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('vmt-employee-store', 'App\Http\Controllers\VmtEmployeeController@storeEmployeeData');
 
     Route::post('/vmt-employee-onboard', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@processEmployeeOnboardForm_Normal_Quick');
+
 
     Route::get('bulkEmployeeOnboarding', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@showBulkOnboardUploadPage')->name('bulkEmployeeOnboarding');
     Route::post('vmt-employess/bulk-upload', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@importBulkOnboardEmployeesExcelData');
@@ -426,7 +482,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/getPMSRatingJSON',  [App\Http\Controllers\ConfigPmsController::class, 'getPMSRating'])->name('getPMSRatingJSON');
 
     //PMS Approvals
-    Route::get('/vmt_approval_pms',  [App\Http\Controllers\VmtApprovalsController::class, 'showPMSApprovalPage'])->name('showPMSApprovalPage');
+    Route::get('/approvals_pms',  [App\Http\Controllers\VmtApprovalsController::class, 'showPMSApprovalPage'])->name('showPMSApprovalPage');
     Route::get('/fetch_pending_pmsforms',  [App\Http\Controllers\VmtApprovalsController::class, 'fetchPendingPMSForms'])->name('fetchPendingPMSForms');
     Route::get('/fetch_approvals_pmsforms',  [App\Http\Controllers\VmtApprovalsController::class, 'fetchApprovals_PMSForms'])->name('fetchApprovalsPMSForms');
 
@@ -579,10 +635,18 @@ Route::middleware(['auth'])->group(function () {
    Route::post('holiday/create_holidaylocation', [App\Http\Controllers\VmtHolidaysController::class, 'createHolidayLocation'])->name('holiday-create-holidaylocation');
    Route::get('/holidays/add_holidayslocation',[App\Http\Controllers\VmtHolidaysController::class, 'fetchlocation'])->name('add-holidays-location');
 
+
+    //Profile Pages v3
+    Route::get('/profile-page',[App\Http\Controllers\VmtProfilePagesController::class,'showProfilePage_v3'])->name('profile-page-v3');
+    Route::get('/profile-pages-getEmpDetails',[App\Http\Controllers\VmtProfilePagesController::class,'fetchEmployeeProfilePagesDetails'])->name('profile-pages-getEmpDetails');
+
+
     //Testing controller
     Route::get('/download-private-file', [App\Http\Controllers\VmtTestingController::class, 'downloadPrivateFile'])->name('downloadPrivateFile');
     Route::get('/view-private-file', [App\Http\Controllers\VmtTestingController::class, 'viewPrivateFile'])->name('viewPrivateFile');
     Route::get('/mail-test/appointment-letter', [App\Http\Controllers\VmtTestingController::class, 'mailTest_sendAppointmentLetter'])->name('mailTest_sendAppointmentLetter');
+    Route::get('/getLeaves', [App\Http\Controllers\VmtAttendanceController::class, 'employeeLeaveBalance'])->name('employeeLeaveBalance');
+    Route::post('/postLeaves', [App\Http\Controllers\Api\VmtAPIAttendanceController::class, 'applyLeaveRequest'])->name('applyLeaveRequest');
 
 });
 

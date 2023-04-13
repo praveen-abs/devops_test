@@ -47,6 +47,16 @@ export async function getBloodGroups(){
     return response.data
 }
 
+export async function fetchQuickOnboardedEmployeeDetails(uid){
+
+    const response = await axios.post('/fetch-quickonboarded-emp-details', {
+        encr_uid: uid,
+      });
+
+      return response;
+}
+
+
 // Validation
 
 export default function validation(rules) {
@@ -55,7 +65,7 @@ export default function validation(rules) {
         employee_code: {},
         dob: {},
         gender: {},
-        passport_number: {  
+        passport_number: {
             required,
         ValidateAadhar(value) {
             const regex = /^(?!^0+$)[a-zA-Z0-9]{3,20}$/;
@@ -85,7 +95,7 @@ export default function validation(rules) {
         },
         employee_name: {
             required,
-           
+
         },
         gender: {
             required,
@@ -178,7 +188,6 @@ export default function validation(rules) {
 
         // Office Details Start
         process: {
-            required,
         },
         designation: {
             required,

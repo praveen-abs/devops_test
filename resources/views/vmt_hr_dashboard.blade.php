@@ -26,13 +26,13 @@
     <div class="hr-dashboar-wrpper mt-30 ">
         <!-- Content top -->
         <div class="row">
-            <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4 col-xxl-4">
+            <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4 col-xxl-4 mb-3">
                 @include('ui-dashboard-welcome-card')
             </div>
-            <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4  d-flex col-xxl-4">
+            <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4  d-flex col-xxl-4 mb-3">
                 @include('ui-dashboard-action-card')
             </div>
-            <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4 d-flex col-xxl4">
+            <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4 d-flex col-xxl-4 mb-3">
                 @include('ui-dashboard-holiday-card')
             </div>
         </div>
@@ -41,7 +41,7 @@
             <div class="col-sm-12 col-md-12 col-xl-8 col-lg-8 col-xxl-8">
                 @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
                     <div class="row mb-n4">
-                        <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
+                        <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4 mb-3">
                             <a class="" data-bs-toggle="modal">
                                 <div class="card shadow profile-box top-line">
                                     <div class="card-body text-center d-flex flex-column">
@@ -54,7 +54,7 @@
                             </a>
 
                         </div>
-                        <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
+                        <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4 mb-3">
                             <a class="" data-bs-toggle="modal">
                                 <div class="card shadow  profile-box top-line ">
                                     <div class="card-body d-flex text-center  flex-column">
@@ -66,7 +66,7 @@
                                 </div>
                             </a>
                         </div>
-                        <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
+                        <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4 mb-3">
                             <div class=" card shadow profile-box top-line ">
 
                                 <div class="card-body d-flex text-center  flex-column">
@@ -78,7 +78,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
+                        <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4 mb-3">
                             <div class="card  profile-box top-line ">
                                 <div class="card-body d-flex text-center  flex-column">
                                     <h6 class="">Employees on Leave</h6>
@@ -88,7 +88,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div onClick="showOnlineUsers(this)" class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
+                        <div onClick="showOnlineUsers(this)" class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4 mb-3">
                             <div class="card shadow profile-box topOrange-line  ">
                                 <div class="card-body d-flex text-center  flex-column">
                                     <h6 class="fw-bold title">Online</h6>
@@ -97,7 +97,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
+                        <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4 mb-3">
                             <div class="card shadow  profile-box top-line">
                                 <div class="card-body d-flex text-center  flex-column">
                                     <h6 class="">Future Joiners</h6>
@@ -148,7 +148,7 @@
 
                 @endif
 
-                <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 col-xxl-12">
+                <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 col-xxl-12 mb-3">
                     <div class="card profile-box flex-fill card-top-border w-100">
                         <!-- <div class="p-1 bg-primary" ></div> -->
                         <div class="card-body ">

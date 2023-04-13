@@ -179,10 +179,11 @@ textarea {
 }
 .shadow-lite {
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+
 }
 
 th.gridjs-th-sort:hover{
-    background-color: #000358;
+    background-color: #003056 !important;
 }
 
 .img-sm {
@@ -523,7 +524,7 @@ table.no-padding tr td {
 
 /* by george 70px to 50px  */
 .page-content {
-    padding: calc(70px + 1.5rem) calc(1.5rem / 2) 50px calc(1.5rem / 2);
+    padding: calc(50px + 1.5rem) calc(1.5rem / 2) 50px calc(1.5rem / 2);
 }
 /* sub header (bread-crumb) nav bar */
 .page-title-box {
@@ -793,10 +794,7 @@ th.gridjs-th {
     color: var(--vz-body-color);
     background-color: rgba(var(--vz-light-rgb), 0.75);
 }
-th.gridjs-th-sort:focus,
-th.gridjs-th-sort:hover {
-    background-color:transparent !important;
-}
+
 .gridjs-head {
     width: 100% !important;
     text-align: end;
