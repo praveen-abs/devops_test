@@ -17,12 +17,17 @@ export const profilePagesStore = defineStore("employeeService", () => {
 
     const loading_screen = ref(true)
 
-    let uid = '174';
+    const urlParams = new URLSearchParams(window.location.search);
+
+    let url = '/profile-pages-getEmpDetails';
+
+    if(urlParams.has('uid'))
+        url = url +'?uid='+urlParams.get('uid');
 
 
     async function fetchEmployeeDetails(){
         console.log("Getting employee details")
-        await axios.get('/profile-pages-getEmpDetails?uid='+uid).then(res =>{
+        await axios.get(url).then(res =>{
             console.log("fetchEmployeeDetails() : "+res.data);
 
             loading_screen.value = false

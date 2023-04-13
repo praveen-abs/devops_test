@@ -179,10 +179,11 @@ textarea {
 }
 .shadow-lite {
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+
 }
 
 th.gridjs-th-sort:hover{
-    background-color: #000358;
+    background-color: #003056 !important;
 }
 
 .img-sm {
@@ -793,10 +794,7 @@ th.gridjs-th {
     color: var(--vz-body-color);
     background-color: rgba(var(--vz-light-rgb), 0.75);
 }
-th.gridjs-th-sort:focus,
-th.gridjs-th-sort:hover {
-    background-color:transparent !important;
-}
+
 .gridjs-head {
     width: 100% !important;
     text-align: end;
