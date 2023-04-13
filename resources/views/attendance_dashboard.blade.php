@@ -9,7 +9,6 @@
 @endsection
 
 @section('content')
-
     <div class="cotainer-fluid attandance-wrapper mt-30">
         <div class="card mb-2">
             <div class="py-1 card-body">
@@ -58,6 +57,16 @@
                                     <option value="" selected hidden disabled>Locations</option>
                                 </select>
                             </div>
+
+
+
+                            <div>
+
+                                <a class="btn btn-orange" href="{{ route('attendanceReport') }}">
+                                    Download Report </a>
+                            </div>
+
+
                         </div>
                         <div class="row">
                             <div class="col-sm-3 col-sm-12 col-xl-3 col-md-4 col-lg-3 d-flex">
@@ -844,7 +853,6 @@
     </div>
 @endsection
 @section('script')
-
     <script>
         $(document).ready(function() {
             if (document.getElementById("leaveAnalytics_table")) {
@@ -1149,15 +1157,16 @@
             }
         });
 
-        var xLabels =  ["ENBL001", "ENBL002", "ENBL003", "ENBL004", "ENBL005", "ENBL005", "ENBL007", "ENBL008",
-                    "ENBL009", "ENBL0010", "ENBL0011", "ENBL0012", "ENBL0013", "ENBL0014", "ENBL0015"];
+        var xLabels = ["ENBL001", "ENBL002", "ENBL003", "ENBL004", "ENBL005", "ENBL005", "ENBL007", "ENBL008",
+            "ENBL009", "ENBL0010", "ENBL0011", "ENBL0012", "ENBL0013", "ENBL0014", "ENBL0015"
+        ];
         var donut = document.getElementById("employeePercentageChart");
         var myChart = new Chart(donut, {
             type: 'doughnut',
             data: {
-                labels:xLabels,
+                labels: xLabels,
                 datasets: [{
-                    data: [20, 50, 100,30,10,44,90,100,200,50,120,150,60,54,10],
+                    data: [20, 50, 100, 30, 10, 44, 90, 100, 200, 50, 120, 150, 60, 54, 10],
                     backgroundColor: [
                         'rgb(255, 99, 132)',
                         'rgb(54, 162, 235)',

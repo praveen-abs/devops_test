@@ -271,7 +271,8 @@ class VmtProfilePagesController extends Controller
         $emp_familydetails->phone_number = $request->input('phone_number');
         $emp_familydetails->save();
 
-         $response = [
+        $familyDetails = VmtEmployeeFamilyDetails::where('id',$request->current_table_id )->delete();
+        $response = [
             'status' => 'success',
          ];
     }catch(\Exception $e){
@@ -287,25 +288,84 @@ class VmtProfilePagesController extends Controller
 
     public function updateFamilyInfo(Request $request)
     {
+        try{
+           //dd($request->all());
+            $user_id = user::where('user_code', $request->user_code)->first()->id;
+            $emp_familydetails = VmtEmployeeFamilyDetails::where('id',$request->current_table_id)->first();
+            $emp_familydetails->user_id =$user_id;
+            $emp_familydetails->name = $request->input('name');
+            $emp_familydetails->relationship = $request->input('relationship');
+            $emp_familydetails->dob = $request->input('dob');
+            $emp_familydetails->phone_number = $request->input('phone_number');
+            $emp_familydetails->save();
+
+            $response = [
+                'status' => 'success',
+                'message' => 'Family Details Upadated Successfully ',
+            ];
+        }
+        catch(\Exception $e){
+            $response = [
+                'status' => 'failure',
+                'message' => 'Error while updateing Family Information ',
+                'error_message' => $e->getMessage()
+            ];
+        }
+
+             return response()->json($response);
+    }
+
+    public function addFamilyInfo(Request $request)
+    {
 
     try{
         // dd($request->all());
         $user_id = user::where('user_code', $request->user_code)->first()->id;
-        $emp_mem_name = VmtEmployeeFamilyDetails::where('user_id',$user_id)->first()->name;
-        if (!empty($emp_mem_name)) {
-            $emp_familydetails = VmtEmployeeFamilyDetails::where('name',$emp_mem_name )->first();
-        } else {
-            $emp_familydetails = new VmtEmployeeFamilyDetails;
-        }
-        $emp_familydetails->user_id =$user_id;
+        $emp_familydetails = new VmtEmployeeFamilyDetails;
+        $emp_familydetails->user_id = $user_id;
         $emp_familydetails->name = $request->input('name');
         $emp_familydetails->relationship = $request->input('relationship');
         $emp_familydetails->dob = $request->input('dob');
         $emp_familydetails->phone_number = $request->input('phone_number');
         $emp_familydetails->save();
 
-        $response = [
+         $response = [
             'status' => 'success',
+            'message' => 'Family Details Added Successfully ',
+         ];
+    }catch(\Exception $e){
+         $response = [
+            'status' => 'failure',
+            'message' => 'Error while Adding Family Information ',
+            'error_message' => $e->getMessage()
+         ];
+    }
+
+         return response()->json($response);
+
+}
+public function addExperienceInfo(Request $request)
+{
+
+    try{
+        //  dd($request->all());
+        $user_id = user::where('user_code', $request->user_code)->first()->id;
+            $exp = new Experience;
+            $exp->user_id = $user_id;
+            $exp->company_name = $request->input('company_name');
+            $exp->location = $request->input('experience_location');
+            $exp->job_position = $request->input('job_position');
+            $exp->period_from = $request->input('period_from');
+            $exp->period_to = $request->input('period_to');
+            $exp->save();
+        $responseJSON = [
+            'status' => 'success',
+        ];
+    }catch(\Exception $e){
+         $response = [
+            'status' => 'failure',
+            'message' => 'Error while Add Experience Information ',
+            'error_message' => $e->getMessage()
         ];
     }
     catch(\Exception $e){
@@ -320,25 +380,34 @@ class VmtProfilePagesController extends Controller
     }
 
     public function updateExperienceInfo(Request $request)
+    {// dd($request->all());
+        try{
+            $user_id = user::where('user_code', $request->user_code)->first()->id;
+                $exp = Experience::where('id',$request->exp_current_table_id)->first();;
+                $exp->user_id = $user_id;
+                $exp->company_name = $request->input('company_name');
+                $exp->location = $request->input('experience_location');
+                $exp->job_position = $request->input('job_position');
+                $exp->period_from = $request->input('period_from');
+                $exp->period_to = $request->input('period_to');
+                $exp->save();
+            $responseJSON = [
+                'status' => 'success',
+            ];
+        }catch(\Exception $e){
+             $response = [
+                'status' => 'failure',
+                'message' => 'Error while updateing Experience Information ',
+                'error_message' => $e->getMessage()
+            ];
+         }
+            return response()->json($responseJSON);
+    }
+    public function deleteExperienceInfo(Request $request)
     {
-        // dd($request->all());
-    try{
-        $user_id = user::where('user_code', $request->user_code)->first()->id;
-
-            if (!empty($user_id)) {
-                $exp = Experience::find($user_id);
-            } else {
-                $exp = new Experience;
-            }
-            $exp->user_id = $user_id;
-            $exp->company_name = $request->input('company_name');
-            $exp->location = $request->input('experience_location');
-            $exp->job_position = $request->input('job_position');
-            $exp->period_from = $request->input('period_from');
-            $exp->period_to = $request->input('period_to');
-            $exp->save();
-
-         $responseJSON = [
+        //dd($request->all());
+        $familyDetails = Experience::where('id',$request->exp_current_table_id)->delete();
+        $response = [
             'status' => 'success',
             'message' =>"Experiance details updated successfully"
           ];

@@ -45,7 +45,7 @@ class VmtTestingController extends Controller
     public function viewPrivateFile(){
         $private_file = "B090/onboarding_documents/voterIdB090_22-03-2023 15-47-22.jpg";
         //dd(file(storage_path('employees/'.$private_file)));
-        return response()->file(storage_path('employees/'.$private_file));
+        return response()->{file(storage_path('employees/'.$private_file))};
     }
 
     public function testingpdf(){
