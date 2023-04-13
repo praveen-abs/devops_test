@@ -432,7 +432,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/investments_details',  [App\Http\Controllers\VmtPayCheckController::class, 'showInvestmentsPage'])->name('vmt_investments_details');
     Route::get('/form16_details',  [App\Http\Controllers\VmtPayCheckController::class, 'showForm16Page'])->name('vmt_form16_details');
     Route::get('/employee_payslip/{user_id?}',  [App\Http\Controllers\VmtPayCheckController::class, 'showPaySlip_HTMLView'])->name('vmt_paycheck_employee_payslip_htmlview');
-    Route::get('/pdfview/{emp_code?}/{selectedPaySlipMonth?}',[App\Http\Controllers\VmtPayCheckController::class, 'showPaySlip_PDFView'])->name('vmt_paycheck_employee_payslip_pdf');
+    Route::get('/pdfview/{emp_code?}/{selectedPaySliMonth?}',[App\Http\Controllers\VmtPayCheckController::class, 'showPaySlip_PDFView'])->name('vmt_paycheck_employee_payslip_pdf');
 
     // testing template
     Route::get('/testingController',[App\Http\Controllers\VmtTestingController::class, 'index'])->name('testingController');
@@ -573,15 +573,28 @@ Route::middleware(['auth'])->group(function () {
     //Ajax For Fetch Month For Given Year for payroll
      Route::get('/fetch-payroll-month-for-given-year', [App\Http\Controllers\Reports\VmtPayrollReportsController::class, 'fetchPayrollMonthForGivenYear'])->name('fetchPayrollMonthForGivenYear');
 
-    //pms reviwes report
-    Route::get('/reports/pmsreviews',  [App\Http\Controllers\Reports\VmtPMSReportsController::class, 'showPmsReviewsReportPage'])->name('showPmsReviewsReportPage');
-    Route::get('/reports/generatePmsReviewsReports',  [App\Http\Controllers\Reports\VmtPMSReportsController::class, 'generatePmsReviewsReports'])->name('generatePmsReviewsReports');
-    Route::get('/pms-filter-info', [App\Http\Controllers\Reports\VmtPMSReportsController::class, 'filterPmsReport'])->name('pms-filter-info');
 
-    //Reimbursements Reports
-    Route::get('/reports/generate-employee-reimbursements-reports',  [App\Http\Controllers\VmtReportsController::class, 'generateEmployeeReimbursementsReports'])->name('generateEmployeeReimbursementsReports');
-    Route::get('/reports/generate-manager-reimbursements-reports',  [App\Http\Controllers\VmtReportsController::class, 'generateManagerReimbursementsReports'])->name('generateManagerReimbursementsReports');
-    Route::get('/reports/fetch-manager-reimbursements-reports',  [App\Http\Controllers\VmtReportsController::class, 'fetchManagerReimbursementsReports'])->name('fetchManagerReimbursementsReports');
+    //Attendance Reports
+    Route::get('/reports/attendance',  [App\Http\Controllers\VmtReportsController::class, 'showAttendanceReport'])->name('showAttendanceReport');
+    Route::get('/reports/basic-attendance-report',  [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showBasicAttendanceReport'])->name('showBasicAttendanceReport');
+    Route::get('/reports/generate-detailed-attendance-report',  [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'generateDetailedAttendanceReports'])->name('generateDetailedAttendanceReports');
+
+    //basic Attedance Report
+    Route::get('/reports/generate-basic-attendance',  [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'basicAttendanceReport'])->name('basicAttendanceReport');
+    Route::get('fetch-attendance-month-for-given-year',  [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'fetchAttendanceMonthForGivenYear'])->name('fetchAttendanceMonthForGivenYear');
+     //Ajax Part
+     Route::get('/attendance-filter-info', [App\Http\Controllers\VmtReportsController::class, 'fetchAttendanceInfo'])->name('fetchAttendanceInfo');
+     //Ajax For Fetch Month For Given Year fetchAttendanceForGivenYear
+     Route::get('/fetch-attendance-for-given-year', [App\Http\Controllers\VmtReportsController::class, 'fetchAttendanceForGivenYear'])->name('fetchAttendanceForGivenYear');
+
+    //pms reviwes report
+
+    Route::get('/reports/pmsreviews',  [App\Http\Controllers\VmtReportsController::class, 'showPmsReviewsReportPage'])->name('showPmsReviewsReportPage');
+    Route::get('/reports/generatePmsReviewsReports',  [App\Http\Controllers\VmtReportsController::class, 'generatePmsReviewsReports'])->name('generatePmsReviewsReports');
+
+
+    //Ajax Part fetchPmsInfo
+    Route::get('/pms-filter-info', [App\Http\Controllers\VmtReportsController::class, 'filterPmsReport'])->name('pms-filter-info');
 
     //Vmt Correction Controller
     Route::get('/processsExpense',  [App\Http\Controllers\VmtCorrectionController::class, 'processsExpense'])->name('processsExpense');
