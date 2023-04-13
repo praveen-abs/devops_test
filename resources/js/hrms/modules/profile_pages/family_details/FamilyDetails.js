@@ -2,6 +2,7 @@ import "primeflex/primeflex.css";
 import "primevue/resources/themes/lara-light-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
+
 import PrimeVue from "primevue/config";
 
 
@@ -49,7 +50,8 @@ app.directive('ripple', Ripple);
 app.directive('styleclass', StyleClass);
 app.directive('focustrap', FocusTrap);
 
-app.component('Button', Button);
+
+app.component('Button', Button)
 app.component('DataTable', DataTable);
 app.component('Column', Column);
 app.component('ColumnGroup', ColumnGroup)

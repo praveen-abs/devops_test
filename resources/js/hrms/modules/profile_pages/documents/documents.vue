@@ -1,27 +1,30 @@
 <template>
     <div class="table-responsive">
-        <DataTable ref="dt" :value="Documents" dataKey="id" :paginator="true" :rows="10"
+        <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10" :value="documents"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             :rowsPerPageOptions="[5, 10, 25]"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
 
-            <Column header="File Name" field="name" style="min-width: 8rem">
-                <!-- <template #body="slotProps">
-                        {{  slotProps.data.claim_type }}
-                      </template> -->
+            <Column header="File Name" field="document_name" style="min-width: 8rem">
             </Column>
 
-            <Column field="Status" header="Status" style="min-width: 12rem">
-    
+            <Column field="status" header="Status" style="min-width: 12rem">
+
             </Column>
 
-            <Column field="dob" header="Reason " style="min-width: 12rem">
+            <Column field="document_url" header="Reason " style="min-width: 12rem">
             </Column>
 
-            <Column style="width: 300px" field="" header="Action">
+            <Column field="" header="View " style="min-width: 12rem">
                 <template #body="slotProps">
-                    <!-- <Button icon="pi pi-check" class="p-button-success"  @click="confirmDialog(slotProps.data,'Approved')" label="Approval" />
-                        <Button icon="pi pi-times" class="p-button-danger" @click="confirmDialog(slotProps.data,'Rejected')" label="Rejected" /> -->
+                    <Button type="button" icon="pi pi-eye" class="p-button-success Button" label="view"
+                        @click="showDocument(slotProps.data)" style="height: 2em" />
+                </template>
+
+            </Column>
+
+            <!-- <Column style="width: 300px" field="" header="view">
+                <template #body="slotProps">
                     <span v-if="slotProps.data.status == 'Pending'">
                         <Button type="button" icon="pi pi-check-circle" class="p-button-success Button" label="Approval"
                             @click="showConfirmDialog(slotProps.data, 'Approve')" style="height: 2em" />
@@ -29,37 +32,52 @@
                             style="margin-left: 8px; height: 2em" @click="showConfirmDialog(slotProps.data, 'Reject')" />
                     </span>
                 </template>
-            </Column>
+            </Column> -->
 
 
         </DataTable>
+
+        <Dialog v-model:visible="visible" modal header="Documents" :style="{ width: '40vw' }">
+            <img v-if="view_document.document_url" :src="`https://localhost/${view_document.document_url}`"
+                :alt="view_document.document_url" class="block pb-3 m-auto" />
+
+        </Dialog>
+        <!-- {{ _instance_profilePagesStore.employeeDetails.get_employee_details }} -->
     </div>
 </template>
 
 
 <script setup>
 import axios from "axios";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 
+import { Service } from "../../Service/Service";
+import { profilePagesStore } from '../stores/ProfilePagesStore'
 
+const _instance_profilePagesStore = profilePagesStore()
 
+const fetch_data = Service()
 
-const Documents = ref()
+const view_document = ref({})
 
-const fetchDocuments = () => {
+const visible = ref(false)
 
-    let url = "http://localhost:3000/Empdetails"
+const documents = ref([
+    {
+        document_name: "Aadhar Front", document_url: 'doc_BA011_aadhar_card_backend_file_1664774711.pdf', status: "pending"
+    },
+    {
+        document_name: "Aadhar back", document_url: 'doc_BA011_education_certificate_file_1664774711.JPG', status: "pending"
+    }
+]
+)
 
-    console.log("Axios:" + url);
+const showDocument = (document) => {
 
-    axios.get(url).then((response) => {
-        console.log("Axios : " + response.data);
-        console.log(response.data);
-        Documents.value = response.data;
-        // loading.value = false;
-    });
+    view_document.value = { ...document }
+    console.log(view_document.value);
+    visible.value = true
+
 }
-
-
 
 </script>

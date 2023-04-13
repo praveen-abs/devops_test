@@ -1,8 +1,6 @@
 .hierarchy-wrapper {
     position: relative;
     width: -webkit-fill-available;
-
-
 }
 .hierarchy-wrapper .department-wise {
     position: absolute;
@@ -40,7 +38,8 @@
     position: relative;
     top: -50px;
 }
-.orgchart .node:not(:only-child)::after,.orgchart .node:not(:only-child)::before {
+.orgchart .node:not(:only-child)::after,
+.orgchart .node:not(:only-child)::before {
     background-color: #002f56 !important;
 }
 .orgchart .node:not(:only-child)::after {
@@ -48,7 +47,6 @@
     height: 14px;
 }
 .orgchart .node:not(:only-child)::before {
-
     top: 48px;
     height: 12px !important;
     content: "";
@@ -64,7 +62,7 @@
     position: absolute;
     left: calc(50% - 1px);
     height: 9px;
-    background-color: #002f56 ;
+    background-color: #002f56;
     top: 36px;
     height: 14px !important;
     margin: 0px 0px;
@@ -108,7 +106,7 @@
     /* overflow: hidden; */
     color: #003156;
     margin: 9px 20px;
-    border-radius: 50px ;
+    border-radius: 50px;
     box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
 }
 .orgchart .node .title {
@@ -176,12 +174,16 @@
     margin: 0px 0px 0px 55px;
     background-color: transparent !important;
     border: 0px !important;
-    height: 100%;
-
-    /* text-overflow: ellipsis; */
+    /* height: 100%; */
+    text-overflow: ellipsis;
     overflow: hidden;
     text-align: start !important;
-    white-space: break-spaces;
+}
+
+.node:hover .content {
+    height: 100%;
+    white-space: pre-wrap;
+
 }
 
 .orgchart .node .title .symbol {
@@ -191,7 +193,7 @@
     background-color: none !important;
 }
 
-.orgchart .hierarchy::after{
+.orgchart .hierarchy::after {
     content: "";
     position: absolute;
     bottom: -11px;
@@ -203,10 +205,7 @@
     top: -16px;
     height: 20px !important;
     margin: 5px 0px;
-
 }
-
-
 
 .oc-export-btn {
     background-color: transparent;
@@ -221,8 +220,8 @@
     border: 1px solid #003256;
     color: #ee6a04;
 }
-.orgchart .hierarchy::before{
-    border-top:2px solid #003256;
+.orgchart .hierarchy::before {
+    border-top: 2px solid #003256;
 }
 
 .hirarchy-wrapper {
@@ -234,8 +233,6 @@
     bottom: 5px;
     display: flex;
 }
-
-
 
 .orgchart .hierarchy:not(.hidden):only-child::before {
     width: 0px !important;

@@ -5,729 +5,430 @@
 @section('css')
     <link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/holiday.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('/assets/css/calendar-vanila.css') }}">
     <script src="{{ URL::asset('assets/js/calendar-vanila.js') }}" defer></script>
-
 
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 @endsection
 
+@section('loading')
+    <section id="loading">
+        <div class='face'>
+            <div class='loader-container'>
+                <img id="loader-image" src="{{ URL::asset('assets/images/abs logo.png') }}" />
+                <span class='loading'></span>
+            </div>
+        </div>
+    </section>
+@endsection
 
 @section('content')
-    <div class="dashboard-wrapper mt-30">
-        <div class="card  left-line mb-2">
-            <div class="card-body  pb-0 pt-1">
-                <ul class="nav nav-pills nav-tabs-dashed" role="tablist">
-                    <li class="nav-item text-muted me-5" role="presentation">
-                        <a class="nav-link active  pb-2" data-bs-toggle="tab" href="#dashboard" aria-selected="true"
-                            role="tab">
-                            Dashboard
-                        </a>
-                    </li>
-
-                    <li class="nav-item text-muted" role="presentation">
-                        <a class="nav-link  pb-2" data-bs-toggle="tab" href="#hrDashboard" aria-selected="true"
-                            role="tab">
-                            HR Dashboard
-                        </a>
-                    </li>
-                </ul>
+    <div class="hr-dashboar-wrpper mt-30 ">
+        <!-- Content top -->
+        <div class="row">
+            <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4 col-xxl-4 mb-3">
+                @include('ui-dashboard-welcome-card')
+            </div>
+            <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4  d-flex col-xxl-4 mb-3">
+                @include('ui-dashboard-action-card')
+            </div>
+            <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4 d-flex col-xxl-4 mb-3">
+                @include('ui-dashboard-holiday-card')
             </div>
         </div>
+        <!-- content middle -->
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-xl-8 col-lg-8 col-xxl-8">
+                @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
+                    <div class="row mb-n4">
+                        <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4 mb-3">
+                            <a class="" data-bs-toggle="modal">
+                                <div class="card shadow profile-box top-line">
+                                    <div class="card-body text-center d-flex flex-column">
+                                        <h6 class="">New Employees</h6>
+                                        <p class="number-increment text-muted f-15 fw-bold">
+                                            {{ json_decode($json_dashboardCountersData)->newEmployeesCount }}</p>
 
-        <div class="tab-content" id="pills-tabContent">
-            <div class="tab-pane show fade  active " id="dashboard" role="tabpanel" aria-labelledby="pills-profile-tab">
-                <div class="row">
-                    <div class="col-sm-12 col-md-6  col-xl-4 col-lg-4 col-xxl-4">
-                        @include('ui-dashboard-welcome-card')
-                    </div>
-                    <div class="col-sm-12 col-md-6  col-xl-4 col-lg-4  d-flex col-xxl-4">
-                        <div class="attendance-wrapper card w-100  border-0 box-shadow-md">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class=" text-primary ">Current Month</span>
-                                    <a role="button"><span class="text-primary fs-11">View All</span></a>
+                                    </div>
+                                </div>
+                            </a>
+
+                        </div>
+                        <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4 mb-3">
+                            <a class="" data-bs-toggle="modal">
+                                <div class="card shadow  profile-box top-line ">
+                                    <div class="card-body d-flex text-center  flex-column">
+
+                                        <h6 class="">Offline</h6>
+                                        <p class="number-increment text-muted f-15 fw-bold">0</p>
+
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4 mb-3">
+                            <div class=" card shadow profile-box top-line ">
+
+                                <div class="card-body d-flex text-center  flex-column">
+
+                                    <h6 class="">Total Employees</h6>
+                                    <p class="number-increment text-muted f-15 fw-bold">
+                                        {{ json_decode($json_dashboardCountersData)->totalEmployeesCount }}</span>
 
                                 </div>
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-4  col-xl-4 col-lg-4 col-xxl-4">
-                                        <div class="card   border-0 box-shadow-sm  bg-green-lighten">
-                                            <div class="py-2 card-body text-center mx-auto">
-                                                <img src="{{ URL::asset('assets/images/dashboard/present.svg') }}"
-                                                    class="" alt="present-icon" height="20px" width="20px">
-                                                <div class="d-flex">
-                                                    <span class="h1">0</span><span class="fs-12 ms-1 mt-4">days</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4 mb-3">
+                            <div class="card  profile-box top-line ">
+                                <div class="card-body d-flex text-center  flex-column">
+                                    <h6 class="">Employees on Leave</h6>
+                                    <p class="number-increment text-muted f-15 fw-bold">
+                                        {{ json_decode($json_dashboardCountersData)->todayEmployeesOnLeaveCount }}</p>
 
-                                                </div>
-                                                <p class="text-primary   ">Present</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4  col-xl-4 col-lg-4 col-xxl-4">
-                                        <div class="card   border-0 box-shadow-sm bg-pink-lighten">
-                                            <div class="py-2 card-body text-center mx-auto">
-                                                <img src="{{ URL::asset('assets/images/dashboard/leave.svg') }}"
-                                                    class="" alt="leave-icon" height="20px" width="20px">
-                                                <div class="d-flex">
-                                                    <span class="h1">0</span><span class="fs-12 ms-1 mt-4">days</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div onClick="showOnlineUsers(this)" class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4 mb-3">
+                            <div class="card shadow profile-box topOrange-line  ">
+                                <div class="card-body d-flex text-center  flex-column">
+                                    <h6 class="fw-bold title">Online</h6>
+                                    <p class="number-increment text-muted f-15 fw-bold">
+                                        {{ json_decode($json_dashboardCountersData)->todayEmployeesCheckedInCount }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4 mb-3">
+                            <div class="card shadow  profile-box top-line">
+                                <div class="card-body d-flex text-center  flex-column">
+                                    <h6 class="">Future Joiners</h6>
+                                    <p class="number-increment text-muted f-15 fw-bold">0</p>
 
-                                                </div>
-                                                <p class="text-primary   ">Leave</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4  col-xl-4 col-lg-4 col-xxl-4">
-                                        <div class="card   border-0 box-shadow-sm bg-sky-lighten">
-                                            <div class="py-2 card-body text-center mx-auto">
-
-                                                <img src="{{ URL::asset('assets/images/dashboard/absent.svg') }}"
-                                                    class="" alt="absent-icon" height="20px" width="20px">
-                                                <div class="d-flex">
-                                                    <span class="h1">0</span><span class="fs-12 ms-1 mt-4">days</span>
-
-                                                </div>
-                                                <p class="text-primary   ">Absent </p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                @endif
+                @if (Str::contains(currentLoggedInUserRole(), ['Manager']))
+                <div class="row mb-n4">
+                    <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
+                        <div class="card shadow profile-box card-top-border">
+                            <!-- <div class="p-1 bg-primary" > -->
+                            <div class="card-body d-flex justify-content-center align-items-center">
+                                <div class="text-center">
+                                    <h6 class="fw-bold title">Team Employees</h6>
+                                    <span class="number-increment text-muted f-15 fw-bold">
+                                        {{ json_decode($json_dashboardCountersData)->todayTeamEmployeesCount }}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6  col-xl-4 col-lg-4 d-flex col-xxl-4">
-                        @include('ui-dashboard-holiday-card')
-                    </div>
-                </div>
-                <div class="row ">
-                    <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4 col-xxl-4">
-                        <div class="notification-wrapper card w-100  border-0 box-shadow-md">
-                            <div class="card-body ">
-                                <div class=" mb-3 card-title d-flex align-items-center justify-content-between f-18 text-primary"
-                                    id=""> <span>Notifications</span> <i type="button"
-                                        class=" position-relative fa fa-bell">
-
-                                        {{-- <span
-                                            class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-danger">
-                                            5+
-                                            <span class="visually-hidden">unread messages</span>
-                                        </span> --}}
-                                    </i> </div>
-                                <div class="contents  ">
-                                    <div class="card mb-0 border-left-orange mb-3 bg-orange-lighten border-0 box-shadow-sm">
-                                        <div class="card-body p-2">
-                                            <div class="notify-content ">
-                                                <p class="orange-median align-items-center d-flex justify-content-between mb-1"><span
-                                                        class="  ">Leave</span><span
-                                                        class="fs-11  ">Request Approved</span></p>
-                                                <div class="notify-message">
-                                                    <p class="fs-10">
-                                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut, alias.
-                                                    </p>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card mb-0 border-left-skyBlue mb-3 bg-sky-lighten border-0 box-shadow-sm">
-                                        <div class="card-body p-2">
-                                            <div class="notify-content ">
-                                                <p class="sky-median d-flex justify-content-between mb-1"><span
-                                                        class="  ">Leave</span><span
-                                                        class="fs-11  ">Request Approved</span></p>
-                                                <div class="notify-message">
-                                                    <p class="fs-10">
-                                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut, alias.
-                                                    </p>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="card mb-0 border-left-green mb-3 bg-green-lighten border-0 box-shadow-sm">
-                                        <div class="card-body p-2">
-                                            <div class="notify-content ">
-                                                <p class="green-median d-flex justify-content-between mb-1"><span
-                                                        class="  ">Leave</span><span
-                                                        class="fs-11  ">Request Approved</span></p>
-                                                <div class="notify-message">
-                                                    <p class="fs-10">
-                                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut, alias.
-                                                    </p>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="card mb-0 border-left-blue  border-0 box-shadow-sm">
-                                        <div class="card-body p-2">
-                                            <div class="notify-content ">
-                                                <p class="blue-median d-flex justify-content-between mb-1"><span
-                                                        class="  ">Leave</span><span
-                                                        class="fs-11  ">Request Approved</span></p>
-                                                <div class="notify-message">
-                                                    <p class="fs-10">
-                                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut, alias.
-                                                    </p>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                    <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
+                        <div class="card shadow  profile-box card-top-border ">
+                            <!-- <div class="p-1 bg-primary" > -->
+                            <div class="card-body d-flex justify-content-center align-items-center">
+                                <div class="text-center">
+                                    <h6 class="fw-bold title">Offline</h6>
+                                    <span class="number-increment text-muted f-15 fw-bold">0</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6  col-xl-4 col-lg-4   col-xxl-4">
+                    <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
+                        <div class="card shadow profile-box orange-top-border ">
+                            <!-- <div class="p-1 bg-danger" > -->
+                            <div class="card-body d-flex justify-content-center align-items-center">
+                                <div class="text-center">
+                                    <h6 class="fw-bold title">Online</h6>
+                                    <span class="number-increment text-muted f-15 fw-bold">
+                                        {{ json_decode($json_dashboardCountersData)->todayEmployeesCheckedInCount }}</span>
 
-                        <div class="leave-balance-wrapper card w-100 border-0 box-shadow-md">
-                            <div class="card-body ">
-                                <div class=" mb-3 card-title d-flex align-items-center justify-content-between f-18 text-primary"
-                                    id=""> <span>Leave Balance</span>
                                 </div>
-
-                                <div class="contents">
-                                    <div class="card leave-balance-card">
-                                        <div class="card-body p-0">
-                                            <div class="d-flex leave-balance-content">
-                                                <div
-                                                    class="col-sm-3 col-md-3  col-xl-3 col-lg-3   col-xxl-3  leave-balance-container">
-                                                    <div class="m-auto   leave-balance-available">
-                                                        <span class=" ">9</span>
-                                                        <span class=" ">/</span>
-                                                        <span class="">1</span>
-                                                    </div>
-
-                                                </div>
-                                                <div
-                                                    class="col-sm-9 col-md-9  col-xl-9 col-lg-9  d-flex col-xxl-9 leave-balance-type">
-                                                    <p class="text-primary">Casual Leave</p>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card leave-balance-card">
-                                        <div class="card-body p-0">
-                                            <div class="d-flex leave-balance-content">
-                                                <div
-                                                    class="col-sm-3 col-md-3  col-xl-3 col-lg-3   col-xxl-3  leave-balance-container">
-                                                    <div class="m-auto   leave-balance-available">
-                                                        <span class=" ">9</span>
-                                                        <span class=" ">/</span>
-                                                        <span class="">1</span>
-                                                    </div>
-
-                                                </div>
-                                                <div
-                                                    class="col-sm-9 col-md-9  col-xl-9 col-lg-9  d-flex col-xxl-9 leave-balance-type">
-                                                    <p class="text-primary">Casual Leave</p>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card leave-balance-card">
-                                        <div class="card-body p-0">
-                                            <div class="d-flex leave-balance-content">
-                                                <div
-                                                    class="col-sm-3 col-md-3  col-xl-3 col-lg-3   col-xxl-3  leave-balance-container">
-                                                    <div class="m-auto   leave-balance-available">
-                                                        <span class=" ">9</span>
-                                                        <span class=" ">/</span>
-                                                        <span class="">1</span>
-                                                    </div>
-
-                                                </div>
-                                                <div
-                                                    class="col-sm-9 col-md-9  col-xl-9 col-lg-9  d-flex col-xxl-9 leave-balance-type">
-                                                    <p class="text-primary">Casual Leave</p>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card leave-balance-card">
-                                        <div class="card-body p-0">
-                                            <div class="d-flex leave-balance-content">
-                                                <div
-                                                    class="col-sm-3 col-md-3  col-xl-3 col-lg-3   col-xxl-3  leave-balance-container">
-                                                    <div class="m-auto   leave-balance-available">
-                                                        <span class=" ">9</span>
-                                                        <span class=" ">/</span>
-                                                        <span class="">1</span>
-                                                    </div>
-
-                                                </div>
-                                                <div
-                                                    class="col-sm-9 col-md-9  col-xl-9 col-lg-9  d-flex col-xxl-9 leave-balance-type">
-                                                    <p class="text-primary">Sick Leave</p>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6  col-xl-4 col-lg-4 d-flex col-xxl-4">
-                        <div class="calendar-wrapper card  border-0 w-100">
-                            <div class="card-body p-0">
-                                <div class="_wrapper">
-                                    <div class=" _container-calendar">
-                                        <div
-                                            class="_button-container-calendar d-flex align-items-center justify-content-between">
-                                            <button id="_previous" onclick="previous()" class="previous"><i
-                                                    class="fa fa-chevron-left"></i></button>
-                                            <h6 id="_monthAndYear" class="_monthAndYear text-white"></h6>
-                                            <button id="_next" onclick="next()" class="next"><i
-                                                    class="fa fa-chevron-right"></i></button>
-                                        </div>
-                                        <table class="_table-calendar" id="_calendar" data-lang="en">
+
+                @endif
+
+                <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 col-xxl-12 mb-3">
+                    <div class="card profile-box flex-fill card-top-border w-100">
+                        <!-- <div class="p-1 bg-primary" ></div> -->
+                        <div class="card-body ">
 
 
-                                            <thead id="_thead-month"></thead>
-                                            <tbody id="_calendar-body">
 
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
+                                            <ul class="nav sub-topnav mb-2">
+                                                <li class="title  topbarNav fw-bold active" id="post">
+                                                    <a>Post</a>
+                                                </li>
+                                                <li class="title topbarNav  fw-bold" id="announcement">
+                                                    <a>Announcement</a>
+                                                </li>
+                                                <li class="title topbarNav fw-bold" id="poll"><a>Poll</a>
+                                                </li>
+                                                <li class="title topbarNav fw-bold" id="praise"><a>Praise</a>
+                                                </li>
+                                            </ul>
+
+                                            <div class="topbarContent emp-post">
+
+                                                    <div class="my-2 scrollBar">
+                                                        <textarea name="post_menu" id="post_menu" class="form-control outline-none w-100 h-100" placeholder="Write your Post here"></textarea>
+                                                    </div>
+                                                    <div class="post-contents d-flex align-items-center mx-4">
+                                                        <div class="img-contents">
+                                                            <i class="ri-image-2-fill"></i>
+                                                            <input type="file" class="filestyle" name="image_src"
+                                                                id="image_src" data-input="false" multiple
+                                                                accept="image/*" data-iconName="fa fa-upload"
+                                                                data-buttonText="Upload File" />
+                                                            <span class="tooltiptext">Image</span>
+
+                                                        </div>
+
+                                                        <div class="emoji-content mx-3">
+                                                            <i class="ri-user-smile-line "></i>
+                                                            <span class="tooltiptext">Emoji</span>
+
+                                                        </div>
+
+
+                                                    </div>
+                                                    <button class="btn btn-primary  float-end" type="submit">
+                                                        Create Post
+                                                    </button>
+
+                                            </div>
+                                            <div class="topbarContent emp-announcement " style="display:none;">
+                                                <div>
+                                                    <form id="announcement-form-submit">
+                                                        <div class="announcement-content scrollBar">
+
+                                                            <input class="form-control mb-2   w-100 h-100"
+
+                                                                placeholder="Title of the Announcement"
+                                                                type="text" id="title_data" name="title_data">
+
+                                                            <textarea class="form-control  mb-2 w-100 h-100" placeholder="Details of Announcement"
+                                                                aria-label="default input example" type="text" name="details_data" id="details_data" required></textarea>
+
+
+                                                            <div class="bottom-content d-flex mx-2">
+
+                                                                <div class="row">
+                                                                    <div
+                                                                        class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                                                                        <div class="form-check ps-0">
+                                                                            <input
+                                                                                class="form-check-input check-box me-1"
+                                                                                type="checkbox" value="1"
+                                                                                id="notifyEmp"
+                                                                                name="notify_employees">
+                                                                            <label class="form-check-label"
+                                                                                for="notifyEmp">
+                                                                                Notify employees
+                                                                            </label>
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                                                                        <div class="form-check ps-0">
+                                                                            <input
+                                                                                class="form-check-input check-box  me-1"
+                                                                                type="checkbox" value="1"
+                                                                                id="requireAcknowledge"
+                                                                                name="require_acknowledgement">
+                                                                            <label class="form-check-label"
+                                                                                for="requireAcknowledge">
+                                                                                Require Acknowledgement
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="col-sm-6 col-md-6 col-lg-6 col-xl-6  col-xxl-6 ">
+                                                                        <div class="form-check ps-0">
+                                                                            <input
+                                                                                class="form-check-input check-box me-1"
+                                                                                type="checkbox" value="1"
+                                                                                id="hideAfter" name="hide_after">
+                                                                            <label class="form-check-label"
+                                                                                for="hideAfter">
+                                                                                Hide After
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                                                                        <div class="form-check ps-0">
+                                                                            <input
+                                                                                class="form-control me-1 anounce-date "
+                                                                                type="date" name="date"
+                                                                                placeholder="Select date"
+                                                                                id="" required
+                                                                                style="background-color:#e9ecef">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-primary float-end"
+                                                            id="annon_menu_submit" type="submit">
+                                                            Submit
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <div class="topbarContent emp-poll" style="display:none;">
+                                                <div>
+                                                    <div class="poll-content">
+                                                        <form id="polling-questions-form-submit">
+                                                            <input type="text" name="question" id=""
+                                                                class="form-control outline-none"
+                                                                placeholder="What this poll is about" required>
+                                                            <hr>
+                                                            <div class="content-container">
+                                                                <div class="mt-3 d-flex align-items-center">
+                                                                    <input type="text" name="options[]"
+                                                                        id="" class="form-control "
+                                                                        placeholder="Add option here" required>
+                                                                </div>
+                                                                <div class="mt-3 d-flex align-items-center">
+                                                                    <input type="text" name="options[]"
+                                                                        id="" class="form-control "
+                                                                        placeholder="Add option here" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="text-end my-2">
+                                                                <!-- <button class="btn btn-secondary outline-none border-0"><i class=" ri-add-circle-line mr-2">Add More</i></button> -->
+                                                                <button
+                                                                    class="btn text-primary p-0 bg-transparent outline-none border-0 f-12 plus-sign"
+                                                                    type="button"><i
+                                                                        class="f-12 me-1 fa  fa-plus-circle"
+                                                                        aria-hidden="true"></i>Add
+                                                                    More</i></button>
+                                                            </div>
+
+                                                            <div class="bottom-content">
+                                                                <div class="row">
+                                                                    <div
+                                                                        class="col-sm-6 col-md-6 col-xl-4 col-lg-4 mt-1">
+                                                                        <div class=" d-flex align-items-center">
+                                                                            <label for=""
+                                                                                class="me-1 mb-0">Poll
+                                                                                Expires
+                                                                                On</label>
+                                                                            <input
+                                                                                class=" me-1 anounce-date form-control"
+                                                                                name="date" type="date"
+                                                                                placeholder="Select date"
+                                                                                id="" required
+                                                                                style="background-color:#e9ecef">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="col-sm-6 col-md-6 col-xl-4 col-lg-4 mt-1">
+
+                                                                        <input
+                                                                            class="form-check-input check-box me-1"
+                                                                            type="checkbox"
+                                                                            name="notify_employees"
+                                                                            id="notifyEmp2" value="1">
+                                                                        <label class="form-check-label"
+                                                                            for="notifyEmp2">
+                                                                            Notify employees
+                                                                        </label>
+
+                                                                    </div>
+                                                                    <div
+                                                                        class="col-sm-6 col-md-6 col-xl-4 col-lg-4 mt-1">
+
+                                                                        <input
+                                                                            class="form-check-input check-box me-1"
+                                                                            type="checkbox" name="anonymous_poll"
+                                                                            value="1" id="anonymous">
+                                                                        <label class="form-check-label"
+                                                                            for="anonymous">
+                                                                            Anonymous Poll
+                                                                        </label>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mt-2 text-end">
+                                                                <button class="btn btn-primary"
+                                                                    id="polling-cancel-btn"
+                                                                    type="button">Cancel</button>
+                                                                <button class="btn btn-primary"
+                                                                    id="polling-submit-btn"
+                                                                    type="submit">Post</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="topbarContent emp-praise" style="display:none;">
+                                                <div>
+                                                    <form id="praise-form-submit">
+                                                        <div>
+                                                            <div class="px-20 p-16 row no-gutters scrollBar">
+                                                                <textarea name="praise_data" id="" placeholder="Praise..." cols="30" rows="3" class=" form-control outline-none w-100"
+                                                                    required></textarea>
+                                                            </div>
+                                                            <div class="text-end mt-2">
+                                                                <button id="praise-submit-btn" type="submit"
+                                                                    class="btn btn-primary py-1 px-4  float-right">
+                                                                    Submit
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+
+
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="tab-pane show fade  " id="hrDashboard" role="tabpanel"
-                aria-labelledby="pills-profile-tab">
-                <div class="hr-dashboard">
-                    <div class="row">
-                        <div class="col-sm-12  col-md-6  col-xl-9 col-lg-9  col-xxl-9">
-                            <div class="row ">
-                                <div class="col-sm-6 col-6   col-md-6   col-xl-3 col-lg-3  col-xxl-3">
-                                    <div class="card">
-                                        <div class="card-body px-1 d-flex align-items-center">
-                                            <div class=" me-2">
-                                                <div class="icons  bg-blue-lighten">
-                                                    <i class='fas fa-users blue-darken'></i>
-                                                </div>
 
-                                            </div>
 
-                                            <div class="">
-                                                <p class="fs-13 text-muted  mb-1 text-center">Total Employees</p>
-                                                <p class="text-primary fs-17  text-center">100</p>
-                                            </div>
-
-                                        </div>
-                                    </div>
+            </div>
+            <!-- content bpttom -->
+            <div class="col-sm-12 col-md-12 col-xl-4 col-lg-4 col-xxl-4 mb-3">
+                <div class="calendar-wrapper card mb-0 border-0">
+                    <div class="card-body p-0">
+                        <div class="_wrapper">
+                            <div class="h-100  _container-calendar">
+                                <div class="_button-container-calendar d-flex align-items-center justify-content-between">
+                                    <button id="_previous" onclick="previous()" class="previous"><i
+                                            class="fa fa-chevron-left"></i></button>
+                                    <h6 id="_monthAndYear" class="_monthAndYear text-white"></h6>
+                                    <button id="_next" onclick="next()" class="next"><i
+                                            class="fa fa-chevron-right"></i></button>
                                 </div>
-
-                                <div class="col-sm-6 col-6   col-md-6   col-xl-3 col-lg-3  col-xxl-3">
-                                    <div class="card">
-                                        <div class="card-body px-1 d-flex align-items-center">
-                                            <div class=" me-2">
-                                                <div class="icons  bg-green-lighten">
-                                                    <i class='fas fa-user-plus  green-median'></i>
-                                                </div>
-
-                                            </div>
-
-                                            <div class="">
-                                                <p class="fs-13 text-muted mb-1 text-center">New Employees</p>
-                                                <p class="text-primary fs-17  text-center">100</p>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-6 col-6   col-md-6   col-xl-3 col-lg-3  col-xxl-3">
-                                    <div class="card">
-                                        <div class="card-body px-1 d-flex align-items-center">
-                                            <div class=" me-2">
-                                                <div class="icons  bg-pink-lighten ">
-                                                    <i class='fas fa-user-check  pink-median'></i>
-                                                </div>
-
-                                            </div>
-
-                                            <div class="">
-                                                <p class="fs-13 text-muted  mb-1 text-center"> Employees Present</p>
-                                                <p class="text-primary fs-17  text-center">100</p>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-6 col-6   col-md-6   col-xl-3 col-lg-3  col-xxl-3">
-                                    <div class="card">
-                                        <div class="card-body px-1 d-flex align-items-center">
-                                            <div class=" me-2">
-                                                <div class="icons  bg-sky-lighten">
-                                                    <i class='fas fa-user-minus  sky-median'></i>
-                                                </div>
-
-                                            </div>
-
-                                            <div class="">
-                                                <p class="fs-13 text-muted mb-1 text-center"> Employees On Leave
-                                                </p>
-                                                <p class="text-primary fs-17  text-center">100</p>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
+                                <table class="_table-calendar" id="_calendar" data-lang="en">
 
 
-                            </div>
+                                    <thead id="_thead-month"></thead>
+                                    <tbody id="_calendar-body">
 
-                            <div class="row">
-                                <div class="col-sm-12  col-md-12  col-xl-5 col-lg-5 col-xxl-5">
-                                    <div class="task-wrapper card w-100 border-0 box-shadow-md">
-                                        <div class="card-body ">
-                                            <div class=" mb-3 card-title d-flex align-items-center justify-content-between f-18 text-primary"
-                                                id=""> <span>Task</span>
-                                            </div>
-                                            <div class="contents  contents-h-445">
-                                                <div class="card task-card  border-left-orange bg-orange-lighten">
-                                                    <div class="card-body p-2">
-                                                        <div class="notify-content ">
-                                                            <div
-                                                                class="orange-median d-flex align-items-center justify-content-between mb-1">
-                                                                <span class="">Interview
-                                                                    Scheduled</span><span class="fs-11 ">1:00 PM -
-                                                                    2:00 PM</span>
-                                                            </div>
-                                                            <div class="notify-message">
-                                                                <p class="fs-10">
-                                                                    Lorem, ipsum dolor sit amet consectetur
-                                                                    adipisicing elit. Ut, alias.
-                                                                </p>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="card task-card border-left-skyBlue bg-sky-lighten">
-                                                    <div class="card-body p-2">
-                                                        <div class="notify-content ">
-                                                            <p
-                                                                class="sky-median  align-items-center d-flex justify-content-between mb-1">
-                                                                <span class="">Meeting</span><span
-                                                                    class="fs-11">1:00 PM - 2:00 PM</span>
-                                                            </p>
-                                                            <div class="notify-message">
-                                                                <p class="fs-10">
-                                                                    Lorem, ipsum dolor sit amet consectetur
-                                                                    adipisicing elit. Ut, alias.
-
-                                                                    Lorem, ipsum dolor sit amet consectetur
-                                                                    adipisicing elit. Ut, alias. </p>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="card task-card border-left-green bg-green-lighten ">
-                                                    <div class="card-body p-2">
-                                                        <div class="notify-content ">
-                                                            <p class="green-median d-flex justify-content-between mb-1">
-                                                                <span class=" ">Leave</span><span
-                                                                    class="fs-11">Request Approved</span>
-                                                            </p>
-                                                            <div class="notify-message">
-                                                                <p class="fs-10">
-                                                                    Lorem, ipsum dolor sit amet consectetur
-                                                                    adipisicing elit. Ut, alias.
-                                                                </p>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="card task-card border-left-blue  ">
-                                                    <div class="card-body p-2">
-                                                        <div class="notify-content ">
-                                                            <p class="blue-median d-flex justify-content-between mb-1">
-                                                                <span class=" ">Leave</span><span
-                                                                    class="fs-11">Request Approved</span>
-                                                            </p>
-                                                            <div class="notify-message">
-                                                                <p class="fs-10">
-                                                                    Lorem, ipsum dolor sit amet consectetur
-                                                                    adipisicing elit. Ut, alias.
-                                                                </p>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <div class="col-sm-12  col-md-12  col-xl-7 col-lg-7  col-xxl-7">
-                                    <div class="row">
-                                        <div class="col-sm-12  col-md-12  col-xl-12 col-lg-12  col-xxl-12">
-                                            <div class="card">
-                                                <div class="card-body ">
-                                                    <div class=" card-title d-flex align-items-center justify-content-between f-18 text-primary"
-                                                        id=""> <span>Employee Status</span>
-                                                    </div>
-                                                    <div class="employee-status-content">
-                                                        <canvas id="employeeStatus"
-                                                            style="width:100%;height:260px"></canvas>
-
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-12  col-md-12  col-xl-12 col-lg-12  col-xxl-12">
-                                            <div class="card">
-                                                <div class="card-body ">
-                                                    <div class="  card-title d-flex align-items-center justify-content-between  "
-                                                        id=""> <span class="text-primary">Leave Request</span>
-                                                    </div>
-                                                    <ul class="leave-request-wrapper ">
-                                                        <li class="leave-request-content">
-                                                            <div class="d-flex align-items-center justify-content-between">
-                                                                <div class=" d-flex align-items-center">
-                                                                    <div class="user-img">
-                                                                        <div class="icons  bg-blue-lighten">
-                                                                            <i class='fas fa-users blue-darken'></i>
-                                                                        </div>
-
-                                                                    </div>
-                                                                    <div class=" leave-request-user  mx-2">
-                                                                        <p class="f-14 text-primary ">Anto</p>
-                                                                        <p class="fs-10">Technical Lead</p>
-                                                                    </div>
-
-                                                                </div>
-
-                                                                <div class="mx-3 leave-request-date">
-                                                                    <p class="rounded-pill  px-3">
-                                                                        2 days Casual Leave
-                                                                    </p>
-                                                                    <p class="fs-10 text-center text-muted">13 jan - 16 jan
-                                                                    </p>
-                                                                </div>
-                                                                <a role="button"
-                                                                    class="btn border-primary leave-request-view">View</a>
-
-                                                            </div>
-
-
-                                                        </li>
-                                                        <li class="leave-request-content">
-                                                            <div class="d-flex align-items-center justify-content-between">
-                                                                <div class=" d-flex align-items-center">
-                                                                    <div class="user-img">
-                                                                        <div class="icons  bg-blue-lighten">
-                                                                            <i class='fas fa-users blue-darken'></i>
-                                                                        </div>
-
-                                                                    </div>
-                                                                    <div class=" leave-request-user  mx-2">
-                                                                        <p class="f-14 text-primary ">Karthikeyan
-                                                                        </p>
-                                                                        <p class="fs-10">Technical Lead</p>
-                                                                    </div>
-
-                                                                </div>
-
-                                                                <div class="mx-3 leave-request-date">
-                                                                    <p class="rounded-pill  px-3">
-                                                                        2 days Casual Leave
-                                                                    </p>
-                                                                    <p class="fs-10 text-center text-muted">13 jan - 16 jan
-                                                                    </p>
-                                                                </div>
-                                                                <a role="button"
-                                                                    class="btn border-primary leave-request-view">View</a>
-
-                                                            </div>
-
-
-                                                        </li>
-                                                    </ul>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-sm-12 col-md-6  col-xl-3 col-lg-3  col-xxl-3">
-                            <div class="request-wrapper card w-100 mb-3 border-0 box-shadow-md">
-                                <div class="card-body ">
-                                    <div class=" mb-3 card-title d-flex align-items-center justify-content-between f-18 text-primary"
-                                        id=""> <span>Request</span>
-                                    </div>
-                                    <div class="contents  ">
-                                        <div class="card mb-0  mb-3 bg-orange-lighten border-0 box-shadow-sm">
-                                            <div class="card-body p-2">
-                                                <div
-                                                    class="request-content d-flex align-items-center justify-content-between">
-
-                                                    <p class="fs-12  text-muted">Document Update</p>
-                                                    <div class="d-flex align-items-center">
-                                                        <span class=" me-1">20</span>
-                                                        <i class="fa fa-arrow-up  arrow-cross-down"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card mb-0  mb-3 bg-sky-lighten border-0 box-shadow-sm">
-                                            <div class="card-body p-2">
-                                                <div
-                                                    class="request-content d-flex align-items-center justify-content-between">
-
-                                                    <p class="fs-12  text-muted">Document Update</p>
-                                                    <div class="d-flex align-items-center">
-                                                        <span class=" me-1">20</span>
-                                                        <i class="fa fa-arrow-up arrow-cross-down"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card mb-0  mb-3 bg-yellow-lighten border-0 box-shadow-sm">
-                                            <div class="card-body p-2">
-                                                <div
-                                                    class="request-content d-flex align-items-center justify-content-between">
-
-                                                    <p class="fs-12  text-muted">Document Update</p>
-                                                    <div class="d-flex align-items-center">
-                                                        <span class=" me-1">20</span>
-                                                        <i class="fa fa-arrow-up arrow-cross-down"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card mb-0  mb-3 bg-blue-lighten border-0 box-shadow-sm">
-                                            <div class="card-body p-2">
-                                                <div
-                                                    class="request-content d-flex align-items-center justify-content-between">
-
-                                                    <p class="fs-12  text-muted">Reimbursement</p>
-                                                    <div class="d-flex align-items-center">
-                                                        <span class=" me-1">5</span>
-                                                        <i class="fa fa-arrow-up arrow-cross-down"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card mb-0  mb-3 bg-orange-lighten border-0 box-shadow-sm">
-                                            <div class="card-body p-2">
-                                                <div
-                                                    class="request-content d-flex align-items-center justify-content-between">
-
-                                                    <p class="fs-12  text-muted">Leave Request</p>
-                                                    <div class="d-flex align-items-center">
-                                                        <span class=" me-1">10</span>
-                                                        <i class="fa fa-arrow-up arrow-cross-down"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="employee-wrapper card w-100 mb-3 border-0 box-shadow-md">
-                                <div class="card-body ">
-                                    <div class=" mb-3 card-title d-flex align-items-center justify-content-between f-18 text-primary"
-                                        id=""> <span>Employee</span>
-                                    </div>
-                                    <div class="contents list-style-none  employee-contents">
-                                        <div class="card mb-0 border  mb-3  box-shadow-sm">
-                                            <div class="card-body p-2">
-                                                <div
-                                                    class="employee-content d-flex align-items-center justify-content-between">
-                                                    <div class="">
-                                                        <p class="fs-13  text-dark">Design Team</p>
-                                                        <p class="fs-10 text-muted">Total Members:10</p>
-                                                    </div>
-                                                    <div class="zee-cards-wrapper">
-                                                        <ul class="zee-cards ">
-                                                            <li>
-                                                                <div class="user-img">
-                                                                    <div class="icons  img-xs  bg-blue-lighten">
-                                                                        <i class='fas fa-users blue-darken'></i>
-                                                                    </div>
-
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="user-img">
-                                                                    <div class="icons  img-xs  bg-green-lighten">
-                                                                        <i class='fas fa-users blue-darken'></i>
-                                                                    </div>
-
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="user-img">
-                                                                    <div class="icons  img-xs bg-pink-lighten">
-                                                                        <i class='fas fa-users blue-darken'></i>
-                                                                    </div>
-
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="user-img">
-                                                                    <div class="icons  img-xs  bg-blue-lighten">
-                                                                        <i class='fas fa-users blue-darken'></i>
-                                                                    </div>
-
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="user-img ">
-                                                                    <div class="icons img-xs  bg-green-lighten">
-                                                                        <i class='fas fa-users blue-darken'></i>
-                                                                    </div>
-
-                                                                </div>
-                                                            </li>
-
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
 
+
+        <!-- content-bottom -->
         <div class="row">
             <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 col-xxl-12">
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 ipad-query">
+                        {{-- @foreach ($dashboardEmployeeEventsData['birthday'] as $key)
+                            @include('ui-dashboard-event-card',['date' => $key->dob])
+                    @endforeach --}}
                         @include('ui-dashboard-event-card', [
                             'dashboardEmployeeEventsData' => $dashboardEmployeeEventsData,
                         ])
@@ -738,8 +439,9 @@
 
 
         </div>
-
     </div>
+
+    <!--  -->
 @endsection
 @section('script')
     <!--Nice select-->
@@ -1072,74 +774,6 @@
 
 
 
-        });
-
-
-        // var yLabels = {
-        //     0: '9:00 AM',
-        //     2: '10:00 AM',
-        //     4: '11:00 AM',
-        //     6: '12:00 PM',
-        //     8: '1:00 PM',
-        //     10: '2:00 PM',
-        //     12: '3:00 PM',
-
-
-        // }
-
-        var ctx = document.getElementById("employeeStatus");
-
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ["Male", "Female", "Active", "Yet To Active", "Resigned",
-                    "Surving Notice Period"
-                ],
-                datasets: [{
-                    data: [12, 19, 3, 10, 12, 19],
-                    backgroundColor: [
-                        'rgba(255, 159, 64, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(255, 159, 64, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(255, 159, 64, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(255, 159, 64, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-
-                    ],
-
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                legend: {
-                    display: false
-                },
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true,
-                            display: false,
-                            // callback: function(value, index, values) {
-                            //     return yLabels[value];
-                            // }
-                        }
-
-                    }]
-                },
-                title: {
-                    display: true,
-                    // text: 'Employees Arrival Status Chart'
-                }
-            }
         });
     </script>
 @endsection

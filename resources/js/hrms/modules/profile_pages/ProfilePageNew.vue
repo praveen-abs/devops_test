@@ -1,5 +1,5 @@
 <template>
-
+ <Toast />
     <Dialog header="Header" v-model:visible="_instance_profilePagesStore.loading_screen"
         :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
         :closeOnEscape="false">
@@ -12,107 +12,15 @@
         </template>
     </Dialog>
 
+   
+
     <div class="profile_page-wrapper mt-30 container-fluid">
         <div class="row">
-            <div class="col-3 col-sm-12 col-md-3 col-lg-3 col-xxl-3 col-xl-3">
-
-
-                <div class="mb-0 card top-line ">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12 text-end">
-                                <button class="p-0 m-0 bg-transparent border-0 outline-none btn"
-                                    data-bs-target="#show_idCard" data-bs-toggle="modal">
-                                    <i class="fa fa-id-card text-success" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="text-center col-12">
-
-
-                                <div class="mx-auto rounded-circle img-xl userActive-status profile-img"
-                                    style="border:6px solid #c2c2c2c2">
-
-                                    <a class="edit-icon " data-bs-toggle="modal" data-bs-target="#edit_profileImg" id="">
-                                        <i class="fa fa-camera"></i></a>
-                                </div>
-
-
-                                <div class="mt-4">
-                                    <div class="progress-wrapper border-bottom-liteAsh ">
-                                        <div class="mb-1 text-center">
-                                            <h6 class="text-center">
-
-                                                {{ service.current_user_name }}
-                                            </h6>
-                                        </div>
-                                        <div class="mb-1 d-flex justify-content-between ">
-                                            <span class="text-muted f-12">Profile Completeness</span>
-                                            <span class="text-muted text-end f-12 fw-bold" id="prograssBar_percentage">
-
-                                            </span>
-                                        </div>
-                                        <div class="mb-2 progress progress-bar-content">
-                                            <div class="progress-bar " role="progressbar" id="profile_progressBar"
-                                                aria-valuenow="{{ $profileCompletenessValue }}" aria-valuemin="0"
-                                                aria-valuemax="100"></div>
-                                        </div>
-                                        <p class="mb-2 text-muted f-10 text-start fw-bold">Your profile is completed</p>
-                                    </div>
-
-                                    <div class="mb-4 text-center profile-mid-right-content ">
-                                        <div class="py-2 border-bottom-liteAsh">
-                                            <p class="text-muted f-12 fw-bold">Employee Status</p>
-                                            <p class="text-primary f-15 fw-bold">
-                                                <!-- {{ getEmployeeActiveStatus($user->id) ?? '-' }} -->
-                                                <!-- {{ emp }} -->
-                                            </p>
-
-                                        </div>
-                                        <div class="py-2 border-bottom-liteAsh">
-                                            <p class="text-muted f-12 fw-bold">Employee Code</p>
-                                            <p class="text-primary f-15 fw-bold">
-                                                {{ _instance_profilePagesStore.employeeDetails.user_code }}
-                                            </p>
-
-                                        </div>
-                                        <div class="py-2 border-bottom-liteAsh">
-                                            <p class="text-muted f-12 fw-bold">Designation</p>
-                                            <p class="text-primary f-15 fw-bold">
-                                                {{ _instance_profilePagesStore.employeeDetails.designation }}
-                                            </p>
-
-                                        </div>
-                                        <div class="py-2 border-bottom-liteAsh">
-                                            <p class="text-muted f-12 fw-bold">Location</p>
-                                            <p class="text-primary f-15 fw-bold">
-                                                {{ _instance_profilePagesStore.employeeDetails.work_location }}
-                                            </p>
-                                        </div>
-                                        <div class="py-2 border-bottom-liteAsh">
-                                            <p class="text-muted f-12 fw-bold">Department</p>
-                                            <p class="text-primary f-15 fw-bold">
-                                                {{ _instance_profilePagesStore.employeeDetails.department }}
-                                            </p>
-                                        </div>
-                                        <div class="py-2 border-bottom-liteAsh">
-                                            <p class="text-muted f-12 fw-bold">Reporting To</p>
-                                            <p class="text-primary f-15 fw-bold">
-                                                {{ _instance_profilePagesStore.employeeDetails.l1_manager_name }}
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="text-center profile-bottom-right-content ">
-                                        <!-- {{-- <button class="btn btn-danger"><i class="fa fa-sign-out me-2"></i> Logout </button> --}} -->
-                                        <button class="btn btn-danger"><i class="fa fa-sign-out me-1"></i> Action </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
+            <!-- <div v-if="!_instance_profilePagesStore.loading_screen"> <EmployeeCard /></div> -->
+            <div v-if="!_instance_profilePagesStore.loading_screen" class="col-3 col-sm-12 col-md-3 col-lg-3 col-xxl-3 col-xl-3">
+                <EmployeeCard />
                 </div>
-
-            </div>
+           
             <div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xxl-9 col-xl-9">
                 <div class="mb-2 card top-line">
                     <div class="pt-1 pb-0 card-body">
@@ -166,13 +74,15 @@
 
                     </div>
                     <div class="tab-pane fade" id="finance_det" role="tabpanel" aria-labelledby="">
-                        <FinanceDetails />
+                        <div v-if="!_instance_profilePagesStore.loading_screen"><FinanceDetails /></div>
 
 
                     </div>
                     <div class="tab-pane fade" id="document_det" role="tabpanel" aria-labelledby="">
 
-                        <Documents />
+                       <Documents />
+
+                        <!-- <Documents /> -->
 
                     </div>
 
@@ -181,12 +91,13 @@
             </div>
         </div>
     </div>
+
 </template>
 
 
 
 <script setup>
-
+import EmployeeCard from './EmployeeCard/EmployeeCard.vue'
 import EmployeeDetails from './employee_details/EmployeeDetails.vue'
 import FamilyDetails from './family_details/FamilyDetails.vue'
 import FinanceDetails from './finance_details/FinanceDetails.vue'
@@ -214,8 +125,5 @@ onMounted(async () => {
             console.log("Req done");
         }
 
-    )
-
-    //console.log("Emp details : "+_instance_profilePagesStore.employeeDetails.get_employee_details);
-})
+    )})
 </script>
