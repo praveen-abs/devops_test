@@ -3,7 +3,7 @@ import "primevue/resources/themes/lara-light-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
 import '../../../.././../../public/assets/css/tailwind.css';
-
+import '../../../assests/tailwind.css'
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";
