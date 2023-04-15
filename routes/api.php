@@ -77,9 +77,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('saveReviewerReviews', 'App\Http\Controllers\Api\VmtAPIPMSModuleController@saveReviewerReviews');
 
 
-    //Main Dashboard Module
-    Route::get('getDashboardData',  [VmtAPIDashboardController::class, 'getDashboardData']);
-
     Route::post('save_reimbursement_data', [VmtAPIAttendanceController::class, 'saveReimbursementData']);
 
     ////Attendance
@@ -117,7 +114,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('employee_monthly_leave_details', [VmtAPIAttendanceController::class,
     'employeeMonthlyLeaveDetails']);
 
-    Route::get('/get-maindashboard-data', [VmtAPIDashboardController::class, 'getMainDashboardData']);
+    Route::post('/get-maindashboard-data', [VmtAPIDashboardController::class, 'getMainDashboardData']);
 ////Profile Pages
 
 

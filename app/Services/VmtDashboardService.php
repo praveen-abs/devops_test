@@ -47,19 +47,27 @@ class VmtDashboardService{
     public function getMainDashboardData($user_code , VmtAttendanceService $serviceVmtAttendanceService){
 
         $response = array();
-        $employee_details_query = User::where('user_code',$user_code)->get(['id','name','avatar'])->toArray();
-        $employee_designation = VmtEmployeeOfficeDetails::where('user_id',$employee_details_query[0]['id'])->first()->designation;
-       // dd($employee_designation);
-        //converting profile pic into base64
-        $avatar_path = public_path("assets/images/".$employee_details_query[0]['avatar']);
+        $employee_details_query = User::where('user_code',$user_code)->get(['id','name','avatar'])->first();
+        $employee_designation = VmtEmployeeOfficeDetails::where('user_id',$employee_details_query->id)->first()->designation;
 
-        if(File::exists( $avatar_path)){
-            $avatar_type = File::mimeType($avatar_path);
-            $profile_pic = "data:".$avatar_type.";base64,".base64_encode(file_get_contents($avatar_path));
-        }else{
+
+        //If AVATAR filename present in DB column....
+        $emp_avatar = $employee_details_query->avatar;
+
+        if(!empty($emp_avatar))
+        {
+            //converting profile pic into base64
+            $avatar_path = public_path("assets/images/".$emp_avatar);
+
+            if(File::exists( $avatar_path)){
+                $avatar_type = File::mimeType($avatar_path);
+                $profile_pic = "data:".$avatar_type.";base64,".base64_encode(file_get_contents($avatar_path));
+            }
+        }
+        else
+        {
             $profile_pic='';
         }
-
 
         //Get the current year and month
         $year = date("Y");
@@ -71,7 +79,9 @@ class VmtDashboardService{
 
         //Get monthly attendance report data
         $attendance_DailyReport_PerMonth = $serviceVmtAttendanceService->fetchAttendanceDailyReport_PerMonth($user_code, $year, $month);
-        for($i=01;$i<=$day;$i++){
+
+        for($i=01;$i<=$day;$i++)
+        {
             $month = date('m');
             if($i<10){
                 $i='0'.$i;
@@ -92,7 +102,7 @@ class VmtDashboardService{
 
         }
 
-        $response['name']=$employee_details_query[0]['name'];
+        $response['name']=$employee_details_query->name;
         $response['designation']=$employee_designation;
 
         //Get the employee profile pic
