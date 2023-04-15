@@ -30,11 +30,18 @@
             <img v-if="view_document.doc_url" :src="documentPath"
                 :alt="view_document.doc_url" class="block pb-3 m-auto" />
 
+                <img v-if="view_document.document_url" :src="`http://127.0.0.1:8000/view-private-file`"
+                :alt="view_document.document_url" class="block pb-3 m-auto" />
+<!--
+                /view-private-file -->
+                <!-- `http://127.0.0.1:8000/view-private-file/${view_document.document_url}` -->
+
 
         </Dialog>
         <!-- {{ _instance_profilePagesStore.employeeDetails.user_code }} -->
     </div>
 </template>
+<!-- <a href="http://127.0.0.1:8000/view-private-file/">link</a> -->
 
 
 
