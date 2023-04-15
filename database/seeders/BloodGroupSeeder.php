@@ -15,7 +15,8 @@ class BloodGroupSeeder extends Seeder
      */
     public function run()
     {
-       
+        DB::table('vmt_bloodgroup')->truncate();
+
         DB::table('vmt_bloodgroup')->insert([
             ['name'=> 'A Positive'],
             ['name'=> 'A Negative'],

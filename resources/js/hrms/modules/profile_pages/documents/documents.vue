@@ -41,16 +41,18 @@
             <!-- <img v-if="view_document.document_url" :src="`employee/emp_B090/documents/${view_document.document_url}`"
                 :alt="view_document.document_url" class="block pb-3 m-auto" /> -->
 
-                <img v-if="view_document.document_url" :src="`http://127.0.0.1:8000/view-private-file/${view_document.document_url}`"
+                <img v-if="view_document.document_url" :src="`http://127.0.0.1:8000/view-private-file`"
                 :alt="view_document.document_url" class="block pb-3 m-auto" />
 <!--
                 /view-private-file -->
-                <a href=""></a>
+                <!-- `http://127.0.0.1:8000/view-private-file/${view_document.document_url}` -->
+
 
         </Dialog>
         <!-- {{ _instance_profilePagesStore.employeeDetails.get_employee_details }} -->
     </div>
 </template>
+<!-- <a href="http://127.0.0.1:8000/view-private-file/">link</a> -->
 
 
 

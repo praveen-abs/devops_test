@@ -102,7 +102,8 @@
                     <Column :exportable="false" header="Action" style="min-width:8rem">
                         <template #body="slotProps">
 
-                            <button class="btn btn-success"  @click="diolog_EditFamilyDetails(slotProps.data)">Edit</button>
+                            <button class="btn btn-success mr-3"  @click="diolog_EditFamilyDetails(slotProps.data)">Edit</button>
+                            <button class="btn btn-danger"  @click="diolog_DeleteFamilyDetails(slotProps.data)">Delete</button>
 
 
                         <template>
@@ -201,29 +202,10 @@ const Editfamilydetails = reactive({
     relationship: '',
     dob: '',
     phone_number: ''
-})
+});
 
 const current_table_id = ref()
 
-function onClick_EditButton_familyInfo(){
-    console.log("Opening General Info Dialog");
-
-    // Assign json values into dialog elements also
-
-    familydetails.name = _instance_profilePagesStore.employeeDetails.get_family_details.name;
-
-    familydetails.relationship = _instance_profilePagesStore.employeeDetails.get_family_details.relationship;
-
-    familydetails.dob = _instance_profilePagesStore.employeeDetails.get_family_details.dob;
-
-    familydetails.phone_number = _instance_profilePagesStore.employeeDetails.get_family_details.phone_number;
-
-
-    console.log(typeof(_instance_profilePagesStore.employeeDetails.get_family_details));
-    console.log(Object.entries(_instance_profilePagesStore.employeeDetails));
-
-    DialogFamilyinfovisible.value = true;
-}
 
 const saveFamilyDetails = () => {
 
@@ -272,10 +254,7 @@ const diolog_EditFamilyDetails = (family) => {
 
     DialogEditInfovisible.value = true;
 
-    console.log(family.id);
-
-    current_table_id.value= family.id
-   console.log(current_table_id.value);
+    current_table_id.value= family.id;
 
    Editfamilydetails.name = family.name
    Editfamilydetails.relationship = family.relationship
@@ -283,25 +262,48 @@ const diolog_EditFamilyDetails = (family) => {
    Editfamilydetails.phone_number = family.phone_number
 
 
-    console.log("HHIIHIHIIHHIHIHIHIHIHH");
-
-    console.log( DialogEditInfovisible.value = true);
-
 };
+
+const diolog_DeleteFamilyDetails = (family) => {
+
+
+    current_table_id.value = family.id
+
+    let id = fetch_data.current_user_id
+    let url = ` /delete-family-info/${id}`;
+
+    axios.post(url, {
+        current_table_id: current_table_id.value,
+        })
+        .then((res) => {
+
+            if (res.data.status == "success") {
+                 window.location.reload();
+                toast.add({ severity: 'success', summary: 'Deleted', detail: 'General information updated', life: 3000 });
+                _instance_profilePagesStore.employeeDetails.get_family_details.dob = useDateFormat(familydetails.dob,'YYYY-MM-DD' );
+
+                // _instance_profilePagesStore.employeeDetails.dob = dialog_general_information.dob;
+
+                _instance_profilePagesStore.employeeDetails.get_family_details.name = familydetails.gender;
+                _instance_profilePagesStore.employeeDetails.get_family_details.relationship = familydetails.relationship;
+
+                // _instance_profilePagesStore.employeeDetails.doj = dialog_general_information.doj;
+                _instance_profilePagesStore.employeeDetails.get_family_details.phone_number = familydetails.phone_number;
+            } else if (res.data.status == "failure") {
+                leave_data.leave_request_error_messege = res.data.message;
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+
+
+}
 
  const EditFamilyDetails = (user)=>{
             // console.log(id);
             let id = fetch_data.current_user_id
     let url =`/update-family-info/${id}`;
-
-    console.log(user.id,"hi");
-
-    console.log(_instance_profilePagesStore.employeeDetails.get_family_details.id);
-
-    console.log( _instance_profilePagesStore.employeeDetails.user_code);
-
-
-
     axios.post(url, {
             user_code: _instance_profilePagesStore.employeeDetails.user_code,
             current_table_id: current_table_id.value,
@@ -342,15 +344,6 @@ onMounted(() => {
     data.value = _instance_profilePagesStore.employeeDetails
 })
 
-
-// const fetchData= ()=>{
-//     let url = 'http://localhost:3000/posts'
-//     axios.get(url)
-//         .then((response) => {
-//             console.log(response.data);
-//             PersonalDocument.value = response.data;
-//         });
-// }
 
 </script>
 

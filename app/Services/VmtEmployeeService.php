@@ -453,7 +453,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
         $newEmployee->dol   =  $doj ? $this->getdateFormatForDb($doj) : '';
         $newEmployee->dob   =  $dob ? $this->getdateFormatForDb($dob) : '';
         $newEmployee->location   =    $row["work_location"] ?? '';
-        $newEmployee->pan_number   =  isset($row["pan_no"]) ? ($row["pan_no"]) : "";
+        $newEmployee->pan_number   =  isset($row["pan_number"]) ? ($row["pan_number"]) : "";
         $newEmployee->dl_no   =  $row["dl_no"] ?? '';
         $newEmployee->passport_number = $row["passport_no"] ?? '';
         $newEmployee->passport_date =  $passport_date ? $this->getdateFormatForDb( $passport_date) : '';
@@ -944,12 +944,9 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
     */
     function fetchAllEmployeesDocumentsAsGroups(Request $request){
 
-
-
         $json_response = array();
 
         $array_unique_users = User::where('is_onboarded' ,0)->get(['id','user_code','name']);
-
 
         foreach($array_unique_users as $single_user){
 
