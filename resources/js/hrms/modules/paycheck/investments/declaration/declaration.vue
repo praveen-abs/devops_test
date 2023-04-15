@@ -96,6 +96,10 @@
 
     </Dialog>
 
+<input type="number" v-model="test" name="" class="form-control" id="">
+{{ test }}<br>
+<button @click="formula.taxCalculation(test)">click</button>
+
     
 </template>
 
@@ -103,14 +107,11 @@
 
 <script setup>
 import { onMounted, ref } from 'vue'
+import {investmentFormulaStore} from '../../stores/investmetnFormulaStore'
 
+const formula = investmentFormulaStore()
 
-
-
-
-
-
-
+const test =ref()
 
 
 
@@ -122,7 +123,7 @@ import { onMounted, ref } from 'vue'
 const tax_deduction = ref([
     {id:'1',particulars:'Earings',old_regime :'0' ,new_regime:'0'},
     {id:'2',particulars:'Exemption',old_regime :'0' ,new_regime:'0'},
-    {id:'3',particulars:'Standard Deduction',old_regime :'50000' ,new_regime:'0'},
+    {id:'3',particulars:'Standard Deduction',old_regime :'50000' ,new_regime:'50000'},
     {id:'4',particulars:'Deduction',old_regime :'0' ,new_regime:'0'},
     {id:'5',particulars:'Taxable Income',old_regime :'0' ,new_regime:'0'},
     {id:'6',particulars:'Total Tax Liability',old_regime :'0' ,new_regime:'0'},
