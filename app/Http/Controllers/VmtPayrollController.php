@@ -55,4 +55,17 @@ class VmtPayrollController extends Controller
         return view('runpayRoll');
 
     }
+
+    public function showManagePayslipsPage(Request $request){
+        return view('payroll.manage_payslips');
+
+    }
+
+    public function fetchEmployeePayslipDetails(Request $request, VmtEmployeePayslipService $employeePaySlipService){
+
+         return $employeePaySlipService->fetchEmployeePayslipDetails($request->year, $request->month);
+
+    }
+
+
 }
