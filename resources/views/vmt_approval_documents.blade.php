@@ -14,14 +14,14 @@
 
 <div class=" approval_documents-wrapper card mt-30">
     <div class="card-body">
-        <h6 class="">Documents Approvals</h6>
-        <div class="table-responsive">
-            <div class="px-2 bg-white container-fluid" style="position:relative;">
+        <h6 class="mb-3 text-lg font-semibold">Documents Approvals</h6>
+
+
                @vite('resources/js/hrms/modules/approvals/onboarding/review_document.js')
                <div id="ReviewDocuments"></div>
 
-            </div>
-        </div>
+
+
     </div>
 </div>
 
