@@ -386,6 +386,7 @@ function calculateProfileCompleteness($user_id)
         ->leftjoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
         ->leftjoin('vmt_employee_family_details', 'vmt_employee_family_details.user_id', '=', 'users.id')
         ->leftjoin('vmt_employee_emergency_contact_details', 'vmt_employee_emergency_contact_details.user_id', '=', 'users.id')
+        ->leftjoin('vmt_marital_status','vmt_marital_status.id','=', 'vmt_employee_details.marital_status_id')
 
         //Employee info
 
@@ -402,7 +403,7 @@ function calculateProfileCompleteness($user_id)
             'vmt_employee_details.passport_date',
             'vmt_employee_details.nationality',
             'vmt_employee_details.religion',
-            'vmt_employee_details.marital_status',
+            'vmt_marital_status.name',
             //'vmt_employee_details.spouse_name',
 
             //Documents

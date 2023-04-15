@@ -89,7 +89,7 @@ Route::middleware(['auth'])->group(function () {
         return auth()->user()->name;
     });
 
-    
+
 
 
 
