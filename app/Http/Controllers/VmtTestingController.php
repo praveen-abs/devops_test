@@ -120,7 +120,7 @@ class VmtTestingController extends Controller
     {
         $pathToFile = storage_path('uploads\employee\emp_B090\documents/' . "voterIdB090_21-03-2023 12-32-42.png");
         //     dd( $pathToFile);
-        //     dd(Storage::disk('local')->getAdapter()->applyPathPrefix('\employee\emp_B090\documents'));
+            dd(Storage::disk('local')->getAdapter()->applyPathPrefix('\employee\emp_B090\documents'));
         //     dd(Storage::disk('private')->path(''));
         //     dd(Storage::disk('private')->getAdapter()->setprefixer());
         //     dd(Storage::disk('private')->get('voterIdB090_21-03-2023 12-32-42.png'));
