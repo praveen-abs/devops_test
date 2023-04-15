@@ -6,6 +6,8 @@ use App\Models\VmtEmployee;
 use Carbon\Carbon;
 use App\Models\VmtEmployeesLeavesAccrued;
 use App\Models\ConfigPms;
+use App\Models\VmtOrgTimePeriod;
+use App\Models\VmtTimePeriod;
 
 class VmtEmployeeLeaveService
 {
@@ -30,7 +32,6 @@ class VmtEmployeeLeaveService
                                       ->where('leave_type_id',$leave_type_id)
                                       ->exists())
         {
-            $claendar_year_start_month=1;
 
             $leavesAccrued = new VmtEmployeesLeavesAccrued;
             $leavesAccrued->user_id = $user_id;
@@ -68,10 +69,18 @@ class VmtEmployeeLeaveService
         // dd($empDateArray['month']);
 
         if($calendar_type=='financial_year'){
-               $year=ConfigPms::first()->year;
-               preg_match_all('!\d+!', $year, $years);
-               $financial_year_start_date=Carbon::parse($years[0]['0'].'-04-01');
-               $financial_year_end_date=Carbon::parse($years[0]['1'].'-03-31');
+                $time_period_current_year = VmtOrgTimePeriod::whereYear('year',Carbon::now()->format('Y'))->first();
+                $time_period = VmtTimePeriod::where('id',  $time_period_current_year->vmt_time_period_id)->first();
+                $time_period_start_month = Carbon::parse($time_period->start_month)->format('m');
+                $time_period_start_day = Carbon::parse($time_period->start_month)->format('d');
+                $financial_year_start_date =Carbon::parse( $time_period_current_year->year.'-'.$time_period_start_month.'-'.$time_period_start_day);
+                $time_period_end_year = Carbon::parse( $time_period_current_year->year.'-'.$time_period_start_month.'-'.$time_period_start_day)->addYear()->format('Y');
+                $time_period_end_month = Carbon::parse($time_period->end_month)->format('m');
+                $time_period_end_day = Carbon::parse($time_period->end_month)->format('d');
+                $financial_year_end_date = Carbon::parse($time_period_end_year.'-'.$time_period_end_month.'-'.$time_period_end_day);
+
+
+
                $emp_doj = Carbon::parse($emp_doj);
 
                if($emp_doj->between($financial_year_start_date, $financial_year_end_date)){
