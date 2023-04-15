@@ -4,27 +4,27 @@
 @endsection
 @section('content')
     <div class=" mt-30 investments-wrapper">
-        <div class="tw-card left-line shadow-none pt-1 pb-0 mb-3">
+        <div class="pt-1 pb-0 mb-3 shadow-none tw-card left-line">
 
-            <ul class="nav nav-pills  divide-x divide-solid   nav-tabs-dashed" id="pills-tab" role="tablist">
-                <li class="nav-item  " role="presentation">
-                    <a class="nav-link active mx-4  " id="" data-bs-toggle="pill" href=""
+            <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed" id="pills-tab" role="tablist">
+                <li class="nav-item " role="presentation">
+                    <a class="mx-4 nav-link active " id="" data-bs-toggle="pill" href=""
                         data-bs-target="#investment_declaration" role="tab" aria-controls="pills-home"
                         aria-selected="true">
                         Declaration</a>
                 </li>
-                <li class="nav-item   " role="presentation">
-                    <a class="nav-link  mx-4 " id="" data-bs-toggle="pill" href=""
+                <li class="nav-item " role="presentation">
+                    <a class="mx-4 nav-link " id="" data-bs-toggle="pill" href=""
                         data-bs-target="#exemptions" role="tab" aria-controls="pills-home" aria-selected="true">
                         Investments and Exemptions</a>
                 </li>
-                <li class="nav-item  " role="presentation">
-                    <a class="nav-link mx-4   " id="" data-bs-toggle="pill" href=""
+                <li class="nav-item " role="presentation">
+                    <a class="mx-4 nav-link " id="" data-bs-toggle="pill" href=""
                         data-bs-target="#form_12bb" role="tab" aria-controls="pills-home" aria-selected="true">
                         Form 12 BB</a>
                 </li>
-                <li class="nav-item   " role="presentation">
-                    <a class="nav-link  mx-4 " id="" data-bs-toggle="pill" href=""
+                <li class="nav-item " role="presentation">
+                    <a class="mx-4 nav-link " id="" data-bs-toggle="pill" href=""
                         data-bs-target="#tax_filling" role="tab" aria-controls="pills-home" aria-selected="true">
                         Tax Filling</a>
                 </li>
@@ -38,14 +38,14 @@
         <div class="tab-content " id="pills-tabContent">
             <div class="tab-pane fade active show" id="investment_declaration" role="tabpanel" aria-labelledby="">
                 <div class="tw-card">
-                    <h6 class="text-primary text-lg  font-semibold ">Tax Deductions FY 2022-2023</h6>
-                    <div class="tw-card bg-pink-50 shadow-sm my-4">
-                        Kindly update your <span class="text-indigo-600 font text-base font-semibold">PAN</span> to
+                    <h6 class="text-lg font-semibold text-primary ">Tax Deductions FY 2022-2023</h6>
+                    <div class="my-4 shadow-sm tw-card bg-pink-50">
+                        Kindly update your <span class="text-base font-semibold text-indigo-600 font">PAN</span> to
                         avoid
                         20% TDS deduction (if applicable)
 
                     </div>
-                    <div class="tw-card bg-gray-100 shadow-sm mb-4 text-justify">
+                    <div class="mb-4 text-justify bg-gray-100 shadow-sm tw-card">
                         You have the option of either using a new regime(with no tax deductions), or using the same
                         regime as FY 2019-20. To help you make an informed decision., we are displaying your tax
                         liability in both these regimes, and you can choose the option that you prefer. For us to
@@ -55,24 +55,24 @@
 
                     <div class="flex items-center justify-between mb-3">
                         <div class="">
-                            <p class=" text-gray-600">Your current chosen tax regime is <span
-                                    class="text-indigo-600 font text-lg font-semibold change_regime_text">Old Tax Regime
+                            <p class="text-gray-600 ">Your current chosen tax regime is <span
+                                    class="text-lg font-semibold text-indigo-600 font change_regime_text">Old Tax Regime
                                 </span> </p>
-                            <p class="text-gray-400 text-sm">The confirmed old tax regime will be used in future payroll
+                            <p class="text-sm text-gray-400">The confirmed old tax regime will be used in future payroll
                                 calculations</p>
 
                         </div>
                         <div class="">
-                            <button class="text-white py-2 px-4 rounded-md  bg-indigo-600 change_regime_text"
-                                id="regime_button"><i class="fa fa-check-square-o mr-2 text-base"></i> Old Tax
+                            <button class="px-4 py-2 text-white bg-indigo-600 rounded-md change_regime_text"
+                                id="regime_button"><i class="mr-2 text-base fa fa-check-square-o"></i> Old Tax
                                 Regime</button>
-                            <span class="text-gray-600 text-sm align-text-bottom " id="latest_update">Maximum
+                            <span class="text-sm text-gray-600 align-text-bottom " id="latest_update">Maximum
                                 benefit</span>
 
                         </div>
                         <div class="">
                             <button data-bs-target="#switchRegime_modal" data-bs-toggle="modal"
-                                class="py-2 px-4 rounded-md text-indigo-600   border-indigo-600 "
+                                class="px-4 py-2 text-indigo-600 border-indigo-600 rounded-md "
                                 style="border:1px solid #4b46e4 !important"> Switch Regime</button>
 
                         </div>
@@ -80,22 +80,22 @@
 
                     </div>
 
-                    <p class="text-gray-600 text-justify" id="oldRegime_warn">Choosing Old Regime will give you an
+                    <p class="text-justify text-gray-600" id="oldRegime_warn">Choosing Old Regime will give you an
                         additional benefit of
                         ₹41,220.00 as compared to New Regime. Calculations are based on the latest released payroll -
                         Jul 2022
                     </p>
-                    <div class="tw-card bg-pink-50 shadow-sm my-4" style="display:none" id="newRegime_warn">
+                    <div class="my-4 shadow-sm tw-card bg-pink-50" style="display:none" id="newRegime_warn">
                         The tax regime cannot be changed until the financial year 2022-2023 ends. (April 2023-March 2024)
 
                     </div>
 
-                    <div class="table-responsive my-3">
+                    <div class="my-3 table-responsive">
                         <table class="table investment_table">
                             <thead>
                                 <tr>
                                     <th scope="col">Particulars</th>
-                                    <th scope="col">New Tax Regime <i class="fa fa-rupee mx-2"></i></th>
+                                    <th scope="col">New Tax Regime <i class="mx-2 fa fa-rupee"></i></th>
                                     <th scope="col">Old Tax Regime </th>
 
                                 </tr>
@@ -108,82 +108,82 @@
 
             </div>
 
-            <div class="tab-pane fade  " id="exemptions" role="tabpanel">
+            <div class="tab-pane fade " id="exemptions" role="tabpanel">
 
-                <div class="tw-card mb-3">
-                    <div class="items-center flex justify-between mb-3">
+                <div class="mb-3 tw-card">
+                    <div class="flex items-center justify-between mb-3">
                         <h6 class="text-lg font-semibold ">Tax Saving Investment </h6>
-                        <select name="" id="" class="border-orange w-1/6 form-select disabled_focus">
+                        <select name="" id="" class="w-1/6 border-orange form-select disabled_focus">
                             <option value="" selected hidden disabled>Apr 2022 - Mar 2023 </option>
                         </select>
                     </div>
-                    <div class="widget-card mb-3">
-                        <div class="grid md:grid-cols-2 xl:grid-cols-4 lg:grid-cols-4 gap-4">
-                            <div class="tw-card text-center bg-orange-50 border-l-orange-400 border-l-4 ">
-                                <p class="text-ash-medium mb-2 f-13 ">Maximum Limit</p>
-                                <h6 class="mb-0 text-gray-500 text-base font-semibold">-</h6>
+                    <div class="mb-3 widget-card">
+                        <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4 lg:grid-cols-4">
+                            <div class="text-center border-l-4 tw-card bg-orange-50 border-l-orange-400 ">
+                                <p class="mb-2 text-ash-medium f-13 ">Maximum Limit</p>
+                                <h6 class="mb-0 text-base font-semibold text-gray-500">-</h6>
                             </div>
-                            <div class="tw-card text-center bg-indigo-50 border-l-indigo-400 border-l-4 ">
-                                <p class="text-ash-medium mb-2 f-13 "> Declared Amount</p>
-                                <h6 class="mb-0 text-gray-500 text-base font-semibold">-</h6>
+                            <div class="text-center border-l-4 tw-card bg-indigo-50 border-l-indigo-400 ">
+                                <p class="mb-2 text-ash-medium f-13 "> Declared Amount</p>
+                                <h6 class="mb-0 text-base font-semibold text-gray-500">-</h6>
                             </div>
 
-                            <div class="tw-card text-center bg-green-50 border-l-green-400 border-l-4 ">
-                                <p class="text-ash-medium mb-2 f-13 ">Status</p>
-                                <h6 class="mb-0 text-gray-500 text-base font-semibold">Not Submited</h6>
+                            <div class="text-center border-l-4 tw-card bg-green-50 border-l-green-400 ">
+                                <p class="mb-2 text-ash-medium f-13 ">Status</p>
+                                <h6 class="mb-0 text-base font-semibold text-gray-500">Not Submited</h6>
                             </div>
-                            <div class="tw-card text-center bg-violet-50 border-l-violet-400 border-l-4 ">
-                                <p class="text-ash-medium mb-2 f-13 ">Late Date For Submission</p>
-                                <h6 class="mb-0 text-gray-500 text-base font-semibold">-</h6>
+                            <div class="text-center border-l-4 tw-card bg-violet-50 border-l-violet-400 ">
+                                <p class="mb-2 text-ash-medium f-13 ">Late Date For Submission</p>
+                                <h6 class="mb-0 text-base font-semibold text-gray-500">-</h6>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="tw-card left-line pt-1 pb-0 mb-3">
+                <div class="pt-1 pb-0 mb-3 tw-card left-line">
 
-                    <ul class="nav nav-pills  divide-x divide-solid   nav-tabs-dashed" id="pills-tab" role="tablist">
-                        <li class="nav-item  " role="presentation">
+                    <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed" id="pills-tab" role="tablist">
+                        <li class="nav-item " role="presentation">
                             <a class="nav-link active " id="" data-bs-toggle="pill" href=""
                                 data-bs-target="#house_property" role="tab" aria-controls="" aria-selected="true">
                                 HRA
                             </a>
                         </li>
 
-                        <li class="nav-item  mx-3 " role="presentation">
-                            <a class="nav-link    " id="" data-bs-toggle="pill" href=""
+                        <li class="mx-3 nav-item " role="presentation">
+                            <a class="nav-link " id="" data-bs-toggle="pill" href=""
                                 data-bs-target="#c_cc" role="tab" aria-controls="" aria-selected="true">
                                 Section 80C & 80CCC</a>
                         </li>
-                        <li class="nav-item   " role="presentation">
-                            <a class="nav-link   mx-0 mx-xl-3 " id="" data-bs-toggle="pill" href=""
+                        <li class="nav-item " role="presentation">
+                            <a class="mx-0 nav-link mx-xl-3 " id="" data-bs-toggle="pill" href=""
                                 data-bs-target="#other_exemptions" role="tab" aria-controls="" aria-selected="true">
                                 Other Exemptions
                             </a>
                         </li>
-                        <li class="nav-item  mx-3 " role="presentation">
-                            <a class="nav-link    " id="" data-bs-toggle="pill" href=""
+                        <li class="mx-3 nav-item " role="presentation">
+                            <a class="nav-link " id="" data-bs-toggle="pill" href=""
                                 data-bs-target="#income_loss" role="tab" aria-controls="" aria-selected="true">
                                 House Property</a>
                         </li>
 
 
-                        <li class="nav-item   " role="presentation">
-                            <a class="nav-link   mx-0  mx-xl-3 " id="" data-bs-toggle="pill" href=""
+                        <li class="nav-item " role="presentation">
+                            <a class="mx-0 nav-link mx-xl-3 " id="" data-bs-toggle="pill" href=""
                                 data-bs-target="#reimbursement" role="tab" aria-controls="" aria-selected="true">
                                 Reimbursement
                             </a>
                         </li>
-                        <li class="nav-item mx-3  " role="presentation">
-                            <a class="nav-link   " id="" data-bs-toggle="pill" href=""
+                        <li class="mx-3 nav-item " role="presentation">
+                            <a class="nav-link " id="" data-bs-toggle="pill" href=""
                                 data-bs-target="#previous_income" role="tab" aria-controls="" aria-selected="true">
                                 Previous Employer Income
                             </a>
                         </li>
 
 
-                        <li class="nav-item   " role="presentation">
-                            <a class="nav-link   mx-0  mx-xl-3 " id="" data-bs-toggle="pill" href=""
+                        <li class="nav-item " role="presentation">
+                            <a class="mx-0 nav-link mx-xl-3 " id="" data-bs-toggle="pill" href=""
                                 data-bs-target="#other_income" role="tab" aria-controls="" aria-selected="true">
                                 Other Source Of Income
                             </a>
@@ -196,8 +196,8 @@
                 <div class="tw-card">
                     <div class="tab-content " id="">
                         <div class="tab-pane fade active show " id="house_property" role="tabpanel" aria-labelledby="">
-                            <div class="tw-card bg-gray-50 mb-4">
-                                <table class="table  investment_table">
+                            <div class="mb-4 tw-card bg-gray-50">
+                                <table class="table investment_table">
                                     <thead>
                                         <tr>
                                             <th scope="col">Sections</th>
@@ -218,24 +218,24 @@
                                             <td>House Rent Allowance</td>
                                             <td>
 
-                                                <button type="button" class="btn btn-transprarent border-0 outline-none "
+                                                <button type="button" class="border-0 outline-none btn btn-transprarent "
                                                     data-bs-toggle="tooltip" data-bs-placement="top"
                                                     title="Exemption will be provide the Least of:
                                                 a) Actual HRA paid
                                                 b) Rent paid subtract (-)10% of Basic salary
                                                 c) for Metro 50% of Basic salary (Mumbai, Kolkata, Delhi or Chennai)
                                                 For non metro 40% of Basic salary">
-                                                    <i class="fa fa-exclamation-circle  text-warning"
+                                                    <i class="fa fa-exclamation-circle text-warning"
                                                         aria-hidden="true"></i>
                                                 </button>
                                             </td>
                                             <td></td>
                                             <td class="text-end">
-                                                {{-- <textarea name="" id="" class="text-box outline-none border-0 form-control resize-none " disabled
+                                                {{-- <textarea name="" id="" class="border-0 outline-none resize-none text-box form-control " disabled
                                                         cols="5" rows="1"></textarea> --}}
                                                 <div class="flex justify-center">
                                                     <button data-bs-target="#AddRendted_modal" data-bs-toggle="modal"
-                                                        class="text-white py-2 w-2/3 px-3 rounded-md  bg-indigo-800">Add</button>
+                                                        class="w-2/3 px-3 py-2 text-white bg-indigo-800 rounded-md">Add</button>
                                                 </div>
                                             </td>
                                             {{-- <td align="">
@@ -259,7 +259,7 @@
 
                                                 <div class="dropdown investment_dropDown">
                                                     <button
-                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                        class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                         type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">
                                                         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
@@ -282,15 +282,15 @@
 
 
                             <div class="tw-card bg-gray-50">
-                                <div class="flex mb-3 justify-between">
-                                    <span class="text-lg text-indigo-950 font-semibold">Rental Property</span> <button
+                                <div class="flex justify-between mb-3">
+                                    <span class="text-lg font-semibold text-indigo-950">Rental Property</span> <button
                                         class="btn btn-border-orange" data-bs-target="#AddRendted_modal"
                                         data-bs-toggle="modal"><i class="fa fa-plus-circle me-2" aria-hidden="true"></i>
                                         Add Rented</button>
                                 </div>
 
-                                <div class="col-sm-12 col-md-12 col-xl-12 col-xxl-12 col-lg-12 mb-3">
-                                    <div class="table-responsive mb-3">
+                                <div class="mb-3 col-sm-12 col-md-12 col-xl-12 col-xxl-12 col-lg-12">
+                                    <div class="mb-3 table-responsive">
                                         <table class="table investment_table">
                                             <thead>
                                                 <tr>
@@ -339,14 +339,14 @@
 
 
                             </div>
-                            <div class="text-end my-3">
+                            <div class="my-3 text-end">
                                 <button
-                                    class="bg-orange-700 text-white me-4 py-2 rounded-md px-4 text-center">Save</button>
+                                    class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4">Save</button>
                                 <button
-                                    class="bg-transparent  border border-orange-700 text-orange-600 py-2 rounded-md px-4 text-center">Next</button>
+                                    class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md">Next</button>
                             </div>
                         </div>
-                        <div class="tab-pane fade  " id="c_cc" role="tabpanel" aria-labelledby="">
+                        <div class="tab-pane fade " id="c_cc" role="tabpanel" aria-labelledby="">
                             <div class="table-responsive">
                                 <table class="table investment_table">
                                     <thead>
@@ -354,7 +354,7 @@
                                             <th scope="col">Sections</th>
                                             <th scope="col">Particulars</th>
                                             <th scope="col">References</th>
-                                            <th scope="col">Maximum Limit (<i class="fa fa-rupee mx-1"></i>150000)
+                                            <th scope="col">Maximum Limit (<i class="mx-1 fa fa-rupee"></i>150000)
                                             </th>
                                             <th scope="col">Declaration Amount</th>
                                             {{-- <th scope="col">Proofs</th> --}}
@@ -369,16 +369,16 @@
                                             <td>Employee PF (Deducted from Salary)</td>
                                             <td>
 
-                                                <button type="button" class="btn btn-transprarent border-0 outline-none "
+                                                <button type="button" class="border-0 outline-none btn btn-transprarent "
                                                     data-bs-toggle="tooltip" data-bs-placement="top"
                                                     title="Employee’s PF contribution is eligible for deduction under section 80C of Income tax Act. This means that your PF contribution is exempted under section 80C. Maximum exemption of 1.5 lakh per annum is fixed for all investments under Section 80C.">
-                                                    <i class="fa fa-exclamation-circle  text-warning"
+                                                    <i class="fa fa-exclamation-circle text-warning"
                                                         aria-hidden="true"></i>
                                                 </button>
                                             </td>
                                             <td></td>
                                             <td>
-                                                <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                     cols="5" rows="1"></textarea>
                                             </td>
 
@@ -403,7 +403,7 @@
 
                                                 <div class="dropdown investment_dropDown">
                                                     <button
-                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                        class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                         type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">
                                                         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
@@ -425,17 +425,17 @@
                                             <td>Voluntary Provident Fund (VPF) </td>
                                             <td>
 
-                                                <button type="button" class="btn btn-transprarent border-0 outline-none "
+                                                <button type="button" class="border-0 outline-none btn btn-transprarent "
                                                     data-bs-toggle="tooltip" data-bs-placement="top"
                                                     title="Employee’s VPF contribution is eligible for deduction under section 80C of Income tax Act. This means that your VPF contribution is exempted under section 80C. Maximum exemption of 1.5 lakh per annum is fixed for all investments under Section 80C.">
-                                                    <i class="fa fa-exclamation-circle  text-warning"
+                                                    <i class="fa fa-exclamation-circle text-warning"
                                                         aria-hidden="true"></i>
                                                 </button>
                                             </td>
                                             <td></td>
 
                                             <td>
-                                                <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                     cols="5" rows="1"></textarea>
                                             </td>
 
@@ -456,7 +456,7 @@
 
                                                 <div class="dropdown investment_dropDown">
                                                     <button
-                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                        class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                         type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">
                                                         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
@@ -478,16 +478,16 @@
                                             <td>Public Provident Fund (PPF)</td>
                                             <td>
 
-                                                <button type="button" class="btn btn-transprarent border-0 outline-none "
+                                                <button type="button" class="border-0 outline-none btn btn-transprarent "
                                                     data-bs-toggle="tooltip" data-bs-placement="top"
                                                     title="All deposits made in Public Provident Fund (PPF) are deductible under Section 80C of the Income Tax Act. Also, the accumulated amount and interest is exempted from tax at the time of withdrawal.">
-                                                    <i class="fa fa-exclamation-circle  text-warning"
+                                                    <i class="fa fa-exclamation-circle text-warning"
                                                         aria-hidden="true"></i>
                                                 </button>
                                             </td>
                                             <td></td>
                                             <td>
-                                                <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                     cols="5" rows="1"></textarea>
                                             </td>
                                             {{--
@@ -510,7 +510,7 @@
 
                                                 <div class="dropdown investment_dropDown">
                                                     <button
-                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                        class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                         type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">
                                                         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
@@ -534,16 +534,16 @@
                                             <td>Life Insurance Premium (LIP)</td>
                                             <td>
 
-                                                <button type="button" class="btn btn-transprarent border-0 outline-none "
+                                                <button type="button" class="border-0 outline-none btn btn-transprarent "
                                                     data-bs-toggle="tooltip" data-bs-placement="top"
                                                     title="You can claim deduction from your taxable income on account of premium paid towards life insurance for self, spouse or children. In case of insurance policies issued on or after 1st April, 2012, deduction of 10% of the sum assured will be allowed up to a maximum of Rs. 1.5 lac.">
-                                                    <i class="fa fa-exclamation-circle  text-warning"
+                                                    <i class="fa fa-exclamation-circle text-warning"
                                                         aria-hidden="true"></i>
                                                 </button>
                                             </td>
                                             <td></td>
                                             <td>
-                                                <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                     cols="5" rows="1"></textarea>
                                             </td>
                                             {{-- <td align="">
@@ -564,7 +564,7 @@
 
                                                 <div class="dropdown investment_dropDown">
                                                     <button
-                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                        class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                         type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">
                                                         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
@@ -585,16 +585,16 @@
                                             <td>Stamp Duty & Registration Charges Deduction</td>
                                             <td>
 
-                                                <button type="button" class="btn btn-transprarent border-0 outline-none "
+                                                <button type="button" class="border-0 outline-none btn btn-transprarent "
                                                     data-bs-toggle="tooltip" data-bs-placement="top"
                                                     title="For Home Loan, u/s 80C, deduction upto Rs. 1,50,000 is allowed on Principal repayment, stamp duty & registration charges, in the year in which actual principal amount is paid.C43:C50">
-                                                    <i class="fa fa-exclamation-circle  text-warning"
+                                                    <i class="fa fa-exclamation-circle text-warning"
                                                         aria-hidden="true"></i>
                                                 </button>
                                             </td>
                                             <td></td>
                                             <td>
-                                                <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                     cols="5" rows="1"></textarea>
                                             </td>
 
@@ -617,7 +617,7 @@
 
                                                 <div class="dropdown investment_dropDown">
                                                     <button
-                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                        class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                         type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">
                                                         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
@@ -638,16 +638,16 @@
                                             <td>Mutual Funds (Equity Linked Saving Scheme)</td>
                                             <td>
 
-                                                <button type="button" class="btn btn-transprarent border-0 outline-none "
+                                                <button type="button" class="border-0 outline-none btn btn-transprarent "
                                                     data-bs-toggle="tooltip" data-bs-placement="top"
                                                     title="Investment in mutual funds for tax saving purpose is called Equity Linked Saving Schemes (ELSS) which qualifies for Section 80C deduction. Not all mutual funds can provide 80C deduction. Examples of ELSS: SBI Magnum Tax Gain, HDFC Tax Saver, Fidelity Tax Advantage, etc.">
-                                                    <i class="fa fa-exclamation-circle  text-warning"
+                                                    <i class="fa fa-exclamation-circle text-warning"
                                                         aria-hidden="true"></i>
                                                 </button>
                                             </td>
                                             <td></td>
                                             <td>
-                                                <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                     cols="5" rows="1"></textarea>
                                             </td>
                                             {{-- <td align="">
@@ -670,7 +670,7 @@
 
                                                 <div class="dropdown investment_dropDown">
                                                     <button
-                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                        class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                         type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">
                                                         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
@@ -691,16 +691,16 @@
                                             <td>National Saving Certificate (NSC)</td>
                                             <td>
 
-                                                <button type="button" class="btn btn-transprarent border-0 outline-none "
+                                                <button type="button" class="border-0 outline-none btn btn-transprarent "
                                                     data-bs-toggle="tooltip" data-bs-placement="top"
                                                     title="The National Savings Certificate (NSC) is an investment scheme floated by the Government of India. It offers guaranteed interest and capital protection. NSC can be bought from most post offices in India, and is easily accessible. Investments of up to Rs 1.5 lakh in the scheme qualifies for deduction u/s 80C of the Income Tax Act. Furthermore, the interest earned on the certificates are also added back to the initial investment and qualify for a tax exemption as well.">
-                                                    <i class="fa fa-exclamation-circle  text-warning"
+                                                    <i class="fa fa-exclamation-circle text-warning"
                                                         aria-hidden="true"></i>
                                                 </button>
                                             </td>
                                             <td></td>
                                             <td>
-                                                <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                     cols="5" rows="1"></textarea>
                                             </td>
 
@@ -723,7 +723,7 @@
 
                                                 <div class="dropdown investment_dropDown">
                                                     <button
-                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                        class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                         type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">
                                                         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
@@ -744,16 +744,16 @@
                                             <td>Unit Linked Insurance Plan (ULIP)</td>
                                             <td>
 
-                                                <button type="button" class="btn btn-transprarent border-0 outline-none "
+                                                <button type="button" class="border-0 outline-none btn btn-transprarent "
                                                     data-bs-toggle="tooltip" data-bs-placement="top"
                                                     title="Unit Linked Insurance Plan (ULIP) is a combination of insurance and investment. The goal of ULIP is to provide wealth creation along with life cover. ULIP provider invests a portion of your investment towards life insurance and rest into a fund. All ULIPs qualify as life insurance policy and the premiums are exempted from income tax benefit. Deduction is available on ULIPS under Section 80C, provided the sum assured is at least 10 times the annual premium.">
-                                                    <i class="fa fa-exclamation-circle  text-warning"
+                                                    <i class="fa fa-exclamation-circle text-warning"
                                                         aria-hidden="true"></i>
                                                 </button>
                                             </td>
                                             <td></td>
                                             <td>
-                                                <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                     cols="5" rows="1"></textarea>
                                             </td>
                                             {{-- <td align="">
@@ -776,7 +776,7 @@
 
                                                 <div class="dropdown investment_dropDown">
                                                     <button
-                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                        class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                         type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">
                                                         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
@@ -797,16 +797,16 @@
                                             <td>Children's Tuition Fees</td>
                                             <td>
 
-                                                <button type="button" class="btn btn-transprarent border-0 outline-none "
+                                                <button type="button" class="border-0 outline-none btn btn-transprarent "
                                                     data-bs-toggle="tooltip" data-bs-placement="top"
                                                     title="Any amount paid as tuition fee for the education of the first two children of the employee/tax payer is eligible for deduction u/s 80C of Income Tax Act. A parent can claim a deduction on the amount paid as tuition fees to any university, college, school or any other educational institution. Other components of fees such as development fees, transport fees are not eligible for deduction u/s 80C. Only tuition fees part of the total fees paid is allowed for deduction.">
-                                                    <i class="fa fa-exclamation-circle  text-warning"
+                                                    <i class="fa fa-exclamation-circle text-warning"
                                                         aria-hidden="true"></i>
                                                 </button>
                                             </td>
                                             <td></td>
                                             <td>
-                                                <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                     cols="5" rows="1"></textarea>
                                             </td>
 
@@ -829,7 +829,7 @@
 
                                                 <div class="dropdown investment_dropDown">
                                                     <button
-                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                        class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                         type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">
                                                         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
@@ -850,16 +850,16 @@
                                             <td>5 Year Tax Saving FDR</td>
                                             <td>
 
-                                                <button type="button" class="btn btn-transprarent border-0 outline-none "
+                                                <button type="button" class="border-0 outline-none btn btn-transprarent "
                                                     data-bs-toggle="tooltip" data-bs-placement="top"
                                                     title="The amount invested in Scheduled Bank FD is exempted u/s 80C of the Income Tax Act. There is a compulsory lock-in of five years under Scheduled Bank FD and the fund cannot be withdrawn before completion of the period. Also, the interest earned under an FD is taxable under 'income from other sources'">
-                                                    <i class="fa fa-exclamation-circle  text-warning"
+                                                    <i class="fa fa-exclamation-circle text-warning"
                                                         aria-hidden="true"></i>
                                                 </button>
                                             </td>
                                             <td></td>
                                             <td>
-                                                <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                     cols="5" rows="1"></textarea>
                                             </td>
 
@@ -882,7 +882,7 @@
 
                                                 <div class="dropdown investment_dropDown">
                                                     <button
-                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                        class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                         type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">
                                                         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
@@ -903,16 +903,16 @@
                                             <td>Deferred Annuity Plan</td>
                                             <td>
 
-                                                <button type="button" class="btn btn-transprarent border-0 outline-none "
+                                                <button type="button" class="border-0 outline-none btn btn-transprarent "
                                                     data-bs-toggle="tooltip" data-bs-placement="top"
                                                     title="Sum paid under non-commutable deferred annuity for an individual on the life of the taxpayer, spouse or any child is allowed for deduction. This is nothing but a standard pension plan eligible for tax exemption under Section 80C. Example of such schemes are, Jeevan Dhara, Jeevan Akshay, Jeeven Suraksha etc. by LIC or Pension Plus plan by HDFC Standard Life.">
-                                                    <i class="fa fa-exclamation-circle  text-warning"
+                                                    <i class="fa fa-exclamation-circle text-warning"
                                                         aria-hidden="true"></i>
                                                 </button>
                                             </td>
                                             <td></td>
                                             <td>
-                                                <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                     cols="5" rows="1"></textarea>
                                             </td>
 
@@ -936,7 +936,7 @@
 
                                                 <div class="dropdown investment_dropDown">
                                                     <button
-                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                        class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                         type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">
                                                         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
@@ -957,16 +957,16 @@
                                             <td>Super Annuation Fund</td>
                                             <td>
 
-                                                <button type="button" class="btn btn-transprarent border-0 outline-none "
+                                                <button type="button" class="border-0 outline-none btn btn-transprarent "
                                                     data-bs-toggle="tooltip" data-bs-placement="top"
                                                     title="A superannuation fund is a retirement fund offered by your employer. The employer contributes 15% of your basic salary to this fund. It is not mandatory for you as an employee to contribute to the fund, but you may do so if you wish. Employee’s contribution is exempt from taxation u/s 80C of Income Tax Act.">
-                                                    <i class="fa fa-exclamation-circle  text-warning"
+                                                    <i class="fa fa-exclamation-circle text-warning"
                                                         aria-hidden="true"></i>
                                                 </button>
                                             </td>
                                             <td></td>
                                             <td>
-                                                <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                     cols="5" rows="1"></textarea>
                                             </td>
 
@@ -989,7 +989,7 @@
 
                                                 <div class="dropdown investment_dropDown">
                                                     <button
-                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                        class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                         type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">
                                                         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
@@ -1010,16 +1010,16 @@
                                             <td>Sukanya Samriddhi Yojana(SSY) Account</td>
                                             <td>
 
-                                                <button type="button" class="btn btn-transprarent border-0 outline-none "
+                                                <button type="button" class="border-0 outline-none btn btn-transprarent "
                                                     data-bs-toggle="tooltip" data-bs-placement="top"
                                                     title="Also referred to as the girl child prosperity scheme. Only one account per girl child is allowed to a maximum of two girl children.">
-                                                    <i class="fa fa-exclamation-circle  text-warning"
+                                                    <i class="fa fa-exclamation-circle text-warning"
                                                         aria-hidden="true"></i>
                                                 </button>
                                             </td>
                                             <td></td>
                                             <td>
-                                                <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                     cols="5" rows="1"></textarea>
                                             </td>
                                             {{-- <td align="">
@@ -1042,7 +1042,7 @@
 
                                                 <div class="dropdown investment_dropDown">
                                                     <button
-                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                        class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                         type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">
                                                         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
@@ -1063,16 +1063,16 @@
                                             <td>Subscription to bonds issued by NABARD</td>
                                             <td>
 
-                                                <button type="button" class="btn btn-transprarent border-0 outline-none "
+                                                <button type="button" class="border-0 outline-none btn btn-transprarent "
                                                     data-bs-toggle="tooltip" data-bs-placement="top"
                                                     title="NABARD is an apex development institution, owned by Government of India and works towards the development and upliftment of rural India. The bonds are issued by NABARD (National Bank for Agriculture and Rural Development) and an Investment in NABARD Rural Bonds or NABARD tax free bonds qualifies for Deduction u/s 80 C.">
-                                                    <i class="fa fa-exclamation-circle  text-warning"
+                                                    <i class="fa fa-exclamation-circle text-warning"
                                                         aria-hidden="true"></i>
                                                 </button>
                                             </td>
                                             <td></td>
                                             <td>
-                                                <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                     cols="5" rows="1"></textarea>
                                             </td>
                                             {{-- <td align="">
@@ -1095,7 +1095,7 @@
 
                                                 <div class="dropdown investment_dropDown">
                                                     <button
-                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                        class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                         type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">
                                                         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
@@ -1116,16 +1116,16 @@
                                             <td>Specific Pension Funds</td>
                                             <td>
 
-                                                <button type="button" class="btn btn-transprarent border-0 outline-none "
+                                                <button type="button" class="border-0 outline-none btn btn-transprarent "
                                                     data-bs-toggle="tooltip" data-bs-placement="top"
                                                     title="There are a few retirement schemes from mutual funds that would help you to save taxes under Section 80C. Example of such schemes are, Franklin India Pension Fund, UTI Retirement Benefit Pension Fund, Reliance Retirement Fund, HDFC Retirement Savings Fund and Tata Retirement Savings Fund.">
-                                                    <i class="fa fa-exclamation-circle  text-warning"
+                                                    <i class="fa fa-exclamation-circle text-warning"
                                                         aria-hidden="true"></i>
                                                 </button>
                                             </td>
                                             <td></td>
                                             <td>
-                                                <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                     cols="5" rows="1"></textarea>
                                             </td>
                                             {{-- <td align="">
@@ -1145,7 +1145,7 @@
 
                                                 <div class="dropdown investment_dropDown">
                                                     <button
-                                                        class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                        class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                         type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">
                                                         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
@@ -1165,13 +1165,13 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="text-end my-3">
+                            <div class="my-3 text-end">
                                 <button
-                                    class="bg-orange-700 text-white me-4 py-2 rounded-md px-4 text-center">Save</button>
+                                    class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4">Save</button>
                                 <button
-                                    class="bg-transparent border-orange-700 me-4 text-orange-600 border py-2 rounded-md px-4 text-center">Previous</button>
+                                    class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md me-4">Previous</button>
                                 <button
-                                    class="bg-transparent border-orange-700 text-orange-600 border py-2 rounded-md px-4 text-center">Next</button>
+                                    class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md">Next</button>
                             </div>
                         </div>
 
@@ -1221,17 +1221,17 @@
                                                     <td>
 
                                                         <button type="button"
-                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            class="border-0 outline-none btn btn-transprarent "
                                                             data-bs-toggle="tooltip" data-bs-placement="top"
                                                             title="If Cubic Capacity is below 1.6 ltrs (1600CC) expenses can be considered upto 1800pm & If Cubic Capacity is above 1.6 ltrs then  expenses can be considered upto 2400pm">
-                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                            <i class="fa fa-exclamation-circle text-warning"
                                                                 aria-hidden="true"></i>
                                                         </button>
                                                     </td>
                                                     <td>28800</td>
 
                                                     <td>
-                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                        <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                             cols="5" rows="1"></textarea>
                                                     </td>
 
@@ -1255,7 +1255,7 @@
 
                                                         <div class="dropdown investment_dropDown">
                                                             <button
-                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                                 type="button" id="dropdownMenuButton"
                                                                 data-bs-toggle="dropdown" aria-haspopup="true"
                                                                 aria-expanded="false">
@@ -1282,17 +1282,17 @@
                                                     <td>
 
                                                         <button type="button"
-                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            class="border-0 outline-none btn btn-transprarent "
                                                             data-bs-toggle="tooltip" data-bs-placement="top"
                                                             title="Maximum exemption will be restricted to Rs.900/- per month or amount paid under CTC  whichever is less.">
-                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                            <i class="fa fa-exclamation-circle text-warning"
                                                                 aria-hidden="true"></i>
                                                         </button>
                                                     </td>
                                                     <td>10800</td>
 
                                                     <td>
-                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                        <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                             cols="5" rows="1"></textarea>
                                                     </td>
 
@@ -1316,7 +1316,7 @@
 
                                                         <div class="dropdown investment_dropDown">
                                                             <button
-                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                                 type="button" id="dropdownMenuButton"
                                                                 data-bs-toggle="dropdown" aria-haspopup="true"
                                                                 aria-expanded="false">
@@ -1343,17 +1343,17 @@
                                                     <td>
 
                                                         <button type="button"
-                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            class="border-0 outline-none btn btn-transprarent "
                                                             data-bs-toggle="tooltip" data-bs-placement="top"
                                                             title="Exemption will be restricted to the extend of bills provided or as per CTC, whichever is less. Maximum amount of exemption is ">
-                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                            <i class="fa fa-exclamation-circle text-warning"
                                                                 aria-hidden="true"></i>
                                                         </button>
                                                     </td>
                                                     <td>36000</td>
 
                                                     <td>
-                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                        <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                             cols="5" rows="1"></textarea>
                                                     </td>
 
@@ -1375,7 +1375,7 @@
 
                                                         <div class="dropdown investment_dropDown">
                                                             <button
-                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                                 type="button" id="dropdownMenuButton"
                                                                 data-bs-toggle="dropdown" aria-haspopup="true"
                                                                 aria-expanded="false">
@@ -1400,12 +1400,12 @@
                                         </table>
                                     </div>
 
-                            <div class="text-end my-3">
-                                <button class="bg-orange-700 text-white py-2 rounded-md px-4 text-center">Save</button>
+                            <div class="my-3 text-end">
+                                <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md">Save</button>
                                 <button
-                                    class="bg-transparent border-orange-700 mx-4 text-orange-600 border py-2 rounded-md px-4 text-center">Previous</button>
+                                    class="px-4 py-2 mx-4 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md">Previous</button>
                                 <button
-                                    class="bg-transparent border-orange-700 text-orange-600 border py-2 rounded-md px-4 text-center  border ">Next</button>
+                                    class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md ">Next</button>
                             </div>
 
                         </div>
@@ -1434,10 +1434,10 @@
                                                     <td>
 
                                                         <button type="button"
-                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            class="border-0 outline-none btn btn-transprarent "
                                                             data-bs-toggle="tooltip" data-bs-placement="top"
                                                             title="Please refer 'Gross Income' in your last month Tax Sheet provided by your previous employer">
-                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                            <i class="fa fa-exclamation-circle text-warning"
                                                                 aria-hidden="true"></i>
                                                         </button>
                                                     </td>
@@ -1445,7 +1445,7 @@
 
                                                     </td>
                                                     <td>
-                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                        <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                             cols="5" rows="1"></textarea>
                                                     </td>
 
@@ -1457,7 +1457,7 @@
 
                                                         <div class="dropdown investment_dropDown">
                                                             <button
-                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                                 type="button" id="dropdownMenuButton"
                                                                 data-bs-toggle="dropdown" aria-haspopup="true"
                                                                 aria-expanded="false">
@@ -1486,17 +1486,17 @@
                                                     <td>
 
                                                         <button type="button"
-                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            class="border-0 outline-none btn btn-transprarent "
                                                             data-bs-toggle="tooltip" data-bs-placement="top"
                                                             title="Please refer 'Standard Deduction Column' in your last month Tax Sheet provided by your previous employer">
-                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                            <i class="fa fa-exclamation-circle text-warning"
                                                                 aria-hidden="true"></i>
                                                         </button>
                                                     </td>
                                                     <td></td>
 
                                                     <td>
-                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                        <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                             cols="5" rows="1"></textarea>
                                                     </td>
 
@@ -1509,7 +1509,7 @@
 
                                                         <div class="dropdown investment_dropDown">
                                                             <button
-                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                                 type="button" id="dropdownMenuButton"
                                                                 data-bs-toggle="dropdown" aria-haspopup="true"
                                                                 aria-expanded="false">
@@ -1538,17 +1538,17 @@
                                                     <td>
 
                                                         <button type="button"
-                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            class="border-0 outline-none btn btn-transprarent "
                                                             data-bs-toggle="tooltip" data-bs-placement="top"
                                                             title="Please refer 'Profession Tax' in your last month Tax Sheet provided by your previous employer">
-                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                            <i class="fa fa-exclamation-circle text-warning"
                                                                 aria-hidden="true"></i>
                                                         </button>
                                                     </td>
                                                     <td></td>
 
                                                     <td>
-                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                        <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                             cols="5" rows="1"></textarea>
                                                     </td>
 
@@ -1561,7 +1561,7 @@
 
                                                         <div class="dropdown investment_dropDown">
                                                             <button
-                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                                 type="button" id="dropdownMenuButton"
                                                                 data-bs-toggle="dropdown" aria-haspopup="true"
                                                                 aria-expanded="false">
@@ -1588,17 +1588,17 @@
                                                     <td>
 
                                                         <button type="button"
-                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            class="border-0 outline-none btn btn-transprarent "
                                                             data-bs-toggle="tooltip" data-bs-placement="top"
                                                             title="Please refer 'Employee PF Deduction' in your last month Tax Sheet provided by your previous employer">
-                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                            <i class="fa fa-exclamation-circle text-warning"
                                                                 aria-hidden="true"></i>
                                                         </button>
                                                     </td>
                                                     <td></td>
 
                                                     <td>
-                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                        <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                             cols="5" rows="1"></textarea>
                                                     </td>
 
@@ -1611,7 +1611,7 @@
 
                                                         <div class="dropdown investment_dropDown">
                                                             <button
-                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                                 type="button" id="dropdownMenuButton"
                                                                 data-bs-toggle="dropdown" aria-haspopup="true"
                                                                 aria-expanded="false">
@@ -1638,17 +1638,17 @@
                                                     <td>
 
                                                         <button type="button"
-                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            class="border-0 outline-none btn btn-transprarent "
                                                             data-bs-toggle="tooltip" data-bs-placement="top"
                                                             title="Please refer 'TDS Deducted' in your last month Tax Sheet provided by your previous employer">
-                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                            <i class="fa fa-exclamation-circle text-warning"
                                                                 aria-hidden="true"></i>
                                                         </button>
                                                     </td>
                                                     <td></td>
 
                                                     <td>
-                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                        <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                             cols="5" rows="1"></textarea>
                                                     </td>
 
@@ -1661,7 +1661,7 @@
 
                                                         <div class="dropdown investment_dropDown">
                                                             <button
-                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                                 type="button" id="dropdownMenuButton"
                                                                 data-bs-toggle="dropdown" aria-haspopup="true"
                                                                 aria-expanded="false">
@@ -1687,12 +1687,12 @@
 
                                     </div>
 
-                            <div class="text-end my-3">
-                                <button class="bg-orange-700 text-white  py-2 rounded-md px-4 text-center">Save</button>
+                            <div class="my-3 text-end">
+                                <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md">Save</button>
                                 <button
-                                    class="bg-transparent border-orange-700 mx-4 text-orange-600 border py-2 rounded-md px-4 text-center">Previous</button>
+                                    class="px-4 py-2 mx-4 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md">Previous</button>
                                 <button
-                                    class="bg-transparent border-orange-700 text-orange-600 border py-2 rounded-md px-4 text-center">Next</button>
+                                    class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md">Next</button>
                             </div>
                         </div>
                         <div class="tab-pane fade " id="other_income" role="tabpanel" aria-labelledby="">
@@ -1719,17 +1719,17 @@
                                                     <td>
 
                                                         <button type="button"
-                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            class="border-0 outline-none btn btn-transprarent "
                                                             data-bs-toggle="tooltip" data-bs-placement="top"
                                                             title="Income earned from other sources within the financial year">
-                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                            <i class="fa fa-exclamation-circle text-warning"
                                                                 aria-hidden="true"></i>
                                                         </button>
                                                     </td>
                                                     <td></td>
 
                                                     <td>
-                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                        <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                             cols="5" rows="1"></textarea>
                                                     </td>
 
@@ -1753,7 +1753,7 @@
 
                                                         <div class="dropdown investment_dropDown">
                                                             <button
-                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                                 type="button" id="dropdownMenuButton"
                                                                 data-bs-toggle="dropdown" aria-haspopup="true"
                                                                 aria-expanded="false">
@@ -1781,17 +1781,17 @@
                                                     <td>
 
                                                         <button type="button"
-                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            class="border-0 outline-none btn btn-transprarent "
                                                             data-bs-toggle="tooltip" data-bs-placement="top"
                                                             title="Interest income earned from a saving account, Post office and FD">
-                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                            <i class="fa fa-exclamation-circle text-warning"
                                                                 aria-hidden="true"></i>
                                                         </button>
                                                     </td>
                                                     <td>10000</td>
 
                                                     <td>
-                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                        <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                             cols="5" rows="1"></textarea>
                                                     </td>
 
@@ -1812,7 +1812,7 @@
 
                                                         <div class="dropdown investment_dropDown">
                                                             <button
-                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                                 type="button" id="dropdownMenuButton"
                                                                 data-bs-toggle="dropdown" aria-haspopup="true"
                                                                 aria-expanded="false">
@@ -1840,17 +1840,17 @@
                                                     <td>
 
                                                         <button type="button"
-                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            class="border-0 outline-none btn btn-transprarent "
                                                             data-bs-toggle="tooltip" data-bs-placement="top"
                                                             title="Interest income earned from a saving account, Post office and FD Senior Citizen">
-                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                            <i class="fa fa-exclamation-circle text-warning"
                                                                 aria-hidden="true"></i>
                                                         </button>
                                                     </td>
                                                     <td>50000</td>
 
                                                     <td>
-                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                        <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                             cols="5" rows="1"></textarea>
                                                     </td>
 
@@ -1874,7 +1874,7 @@
 
                                                         <div class="dropdown investment_dropDown">
                                                             <button
-                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                                 type="button" id="dropdownMenuButton"
                                                                 data-bs-toggle="dropdown" aria-haspopup="true"
                                                                 aria-expanded="false">
@@ -1901,34 +1901,34 @@
 
                                     </div>
 
-                            <div class="text-end my-3">
-                                <button class="bg-orange-700 text-white  py-2 rounded-md px-4 text-center">Save</button>
+                            <div class="my-3 text-end">
+                                <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md">Save</button>
                                 <button
-                                    class="bg-transparent border-orange-700 mx-4 text-orange-600 border py-2 rounded-md px-4 text-center">Previous</button>
+                                    class="px-4 py-2 mx-4 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md">Previous</button>
                                 <button
-                                    class="bg-transparent border-orange-700 text-orange-600 border py-2 rounded-md px-4 text-center">Next</button>
+                                    class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md">Next</button>
                             </div>
                         </div>
 
                         <div class="tab-pane fade " id="income_loss" role="tabpanel" aria-labelledby="">
-                            <ul class="nav nav-pills divide-x divide-solid  mb-3   nav-tabs-dashed" id="pills-tab" role="tablist">
-                                <li class="nav-item  " role="presentation">
-                                    <a class="nav-link active mx-4 " id="" data-bs-toggle="pill" href=""
+                            <ul class="mb-3 divide-x nav nav-pills divide-solid nav-tabs-dashed" id="pills-tab" role="tablist">
+                                <li class="nav-item " role="presentation">
+                                    <a class="mx-4 nav-link active " id="" data-bs-toggle="pill" href=""
                                         data-bs-target="#self_occupied_property" role="tab" aria-controls=""
                                         aria-selected="true">
                                         Self Occupied Property
                                     </a>
                                 </li>
 
-                                <li class="nav-item    " role="presentation">
-                                    <a class="nav-link  mx-4 " id="" data-bs-toggle="pill" href=""
+                                <li class="nav-item " role="presentation">
+                                    <a class="mx-4 nav-link " id="" data-bs-toggle="pill" href=""
                                         data-bs-target="#letOut_property" role="tab" aria-controls=""
                                         aria-selected="true">
                                         Let Out Property
                                     </a>
                                 </li>
-                                <li class="nav-item  " role="presentation">
-                                    <a class="nav-link  mx-4 " id="" data-bs-toggle="pill" href=""
+                                <li class="nav-item " role="presentation">
+                                    <a class="mx-4 nav-link " id="" data-bs-toggle="pill" href=""
                                         data-bs-target="#deemed_property" role="tab" aria-controls=""
                                         aria-selected="true">
                                         Deemed Let Out Property
@@ -1938,10 +1938,10 @@
                             <div class="tab-content " id="">
                                 <div class="tab-pane fade active show" id="self_occupied_property" role="tabpanel"
                                     aria-labelledby="">
-                                    <div class="tw-card bg-gray-100">
+                                    <div class="bg-gray-100 tw-card">
                                         <div class="text-end">
                                             <button data-bs-target="#selfOccupied_modal" data-bs-toggle="modal"
-                                                class="py-2  px-4 text-white text-center mb-3  rounded-md bg-indigo-600">Add
+                                                class="px-4 py-2 mb-3 text-center text-white bg-indigo-600 rounded-md">Add
                                                 New</button>
                                         </div>
 
@@ -1967,7 +1967,7 @@
                                                         <td>
                                                             <div class="dropdown investment_dropDown">
                                                                 <button
-                                                                    class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                    class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                                     type="button" id="dropdownMenuButton"
                                                                     data-bs-toggle="dropdown" aria-haspopup="true"
                                                                     aria-expanded="false">
@@ -1996,10 +1996,10 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane fade " id="letOut_property" role="tabpanel" aria-labelledby="">
-                                    <div class="tw-card bg-gray-100">
+                                    <div class="bg-gray-100 tw-card">
                                         <div class="text-end">
                                             <button data-bs-target="#letOut_property_modal" data-bs-toggle="modal"
-                                                class="py-2 px-4 text-white text-center mb-3  rounded-md bg-indigo-600">Add
+                                                class="px-4 py-2 mb-3 text-center text-white bg-indigo-600 rounded-md">Add
                                                 New</button>
                                         </div>
 
@@ -2033,7 +2033,7 @@
                                                         <td>
                                                             <div class="dropdown investment_dropDown">
                                                                 <button
-                                                                    class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                    class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                                     type="button" id="dropdownMenuButton"
                                                                     data-bs-toggle="dropdown" aria-haspopup="true"
                                                                     aria-expanded="false">
@@ -2061,10 +2061,10 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane fade " id="deemed_property" role="tabpanel" aria-labelledby="">
-                                    <div class="tw-card bg-gray-100">
+                                    <div class="bg-gray-100 tw-card">
                                         <div class="text-end">
                                             <button data-bs-target="#deemedOut_property_modal" data-bs-toggle="modal"
-                                                class="py-2 px-4 text-white text-center mb-3 rounded-md bg-indigo-600">Add
+                                                class="px-4 py-2 mb-3 text-center text-white bg-indigo-600 rounded-md">Add
                                                 New</button>
                                         </div>
                                         <div class="table-responsive ">
@@ -2097,7 +2097,7 @@
                                                         <td>
                                                             <div class="dropdown investment_dropDown">
                                                                 <button
-                                                                    class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                    class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                                     type="button" id="dropdownMenuButton"
                                                                     data-bs-toggle="dropdown" aria-haspopup="true"
                                                                     aria-expanded="false">
@@ -2126,12 +2126,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="text-end my-3">
-                                <button class="bg-orange-700 text-white py-2 rounded-md px-4 text-center">Save</button>
+                            <div class="my-3 text-end">
+                                <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md">Save</button>
                                 <button
-                                    class="bg-transparent border-orange-700 mx-4 text-orange-600 border py-2 rounded-md px-4 text-center">Previous</button>
+                                    class="px-4 py-2 mx-4 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md">Previous</button>
                                 <button
-                                    class="bg-transparent border-orange-700 text-orange-600 border py-2 rounded-md px-4 text-center">Next</button>
+                                    class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md">Next</button>
                             </div>
                         </div>
                         <div class="tab-pane fade " id="other_exemptions" role="tabpanel" aria-labelledby="">
@@ -2163,17 +2163,17 @@
                                                     <td>
 
                                                         <button type="button"
-                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            class="border-0 outline-none btn btn-transprarent "
                                                             data-bs-toggle="tooltip" data-bs-placement="top"
                                                             title="Additional exemption up to Rs 50,000 in NPS is eligible for income tax deduction. It is irrespective of the type of employment, i.e., a government employee, a private sector employee, or self-employed can claim benefit of Rs 50,000 under Section 80CCD(1B).">
-                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                            <i class="fa fa-exclamation-circle text-warning"
                                                                 aria-hidden="true"></i>
                                                         </button>
                                                     </td>
                                                     <td></td>
 
                                                     <td>
-                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                        <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                             cols="5" rows="1"></textarea>
                                                     </td>
 
@@ -2194,7 +2194,7 @@
 
                                                         <div class="dropdown investment_dropDown">
                                                             <button
-                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                                 type="button" id="dropdownMenuButton"
                                                                 data-bs-toggle="dropdown" aria-haspopup="true"
                                                                 aria-expanded="false">
@@ -2221,17 +2221,17 @@
                                                     <td>
 
                                                         <button type="button"
-                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            class="border-0 outline-none btn btn-transprarent "
                                                             data-bs-toggle="tooltip" data-bs-placement="top"
                                                             title="Employer’s contribution up to 10% of (Basic + DA) is eligible for deduction under this section, it is an additional deduction as it is not part of deduction under section 80CCE = [80C + 80CCC + 80CCD(1)]. In the Union Budget 2020, It has been proposed that an aggregate limit of Rs 7.5 lakh covering employer contributions to the Provident fund (PF), National Pension System (NPS) and superannuation fund. Any contribution beyond this limit will, therefore, will be taxable">
-                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                            <i class="fa fa-exclamation-circle text-warning"
                                                                 aria-hidden="true"></i>
                                                         </button>
                                                     </td>
                                                     <td></td>
 
                                                     <td>
-                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                        <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                             cols="5" rows="1"></textarea>
                                                     </td>
 
@@ -2255,7 +2255,7 @@
 
                                                         <div class="dropdown investment_dropDown">
                                                             <button
-                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                                 type="button" id="dropdownMenuButton"
                                                                 data-bs-toggle="dropdown" aria-haspopup="true"
                                                                 aria-expanded="false">
@@ -2282,17 +2282,17 @@
                                                     <td>
 
                                                         <button type="button"
-                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            class="border-0 outline-none btn btn-transprarent "
                                                             data-bs-toggle="tooltip" data-bs-placement="top"
                                                             title="Additional exemption up to Rs 50,000 in NPS is eligible for income tax deduction. It is irrespective of the type of employment, i.e., a government employee, a private sector employee, or self-employed can claim benefit of Rs 50,000 under Section 80CCD(1B).">
-                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                            <i class="fa fa-exclamation-circle text-warning"
                                                                 aria-hidden="true"></i>
                                                         </button>
                                                     </td>
                                                     <td>50000</td>
 
                                                     <td>
-                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                        <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                             cols="5" rows="1"></textarea>
                                                     </td>
 
@@ -2312,7 +2312,7 @@
 
                                                         <div class="dropdown investment_dropDown">
                                                             <button
-                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                                 type="button" id="dropdownMenuButton"
                                                                 data-bs-toggle="dropdown" aria-haspopup="true"
                                                                 aria-expanded="false">
@@ -2343,17 +2343,17 @@
                                                     <td>
 
                                                         <button type="button"
-                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            class="border-0 outline-none btn btn-transprarent "
                                                             data-bs-toggle="tooltip" data-bs-placement="top"
                                                             title="You can claim a deduction up to Rs. 25,000 per year for medical insurance premium. The premium can be for you, your spouse, and dependent children. In case, you or your spouse is 60 years or above, you can claim a deduction up to Rs. 50,000.">
-                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                            <i class="fa fa-exclamation-circle text-warning"
                                                                 aria-hidden="true"></i>
                                                         </button>
                                                     </td>
                                                     <td>25000</td>
 
                                                     <td>
-                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                        <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                             cols="5" rows="1"></textarea>
                                                     </td>
 
@@ -2373,7 +2373,7 @@
 
                                                         <div class="dropdown investment_dropDown">
                                                             <button
-                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                                 type="button" id="dropdownMenuButton"
                                                                 data-bs-toggle="dropdown" aria-haspopup="true"
                                                                 aria-expanded="false">
@@ -2400,17 +2400,17 @@
                                                     <td>
 
                                                         <button type="button"
-                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            class="border-0 outline-none btn btn-transprarent "
                                                             data-bs-toggle="tooltip" data-bs-placement="top"
                                                             title="You can claim deduction up to Rs. 5,000 per year on preventive health check-ups.">
-                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                            <i class="fa fa-exclamation-circle text-warning"
                                                                 aria-hidden="true"></i>
                                                         </button>
                                                     </td>
                                                     <td>5000</td>
 
                                                     <td>
-                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                        <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                             cols="5" rows="1"></textarea>
                                                     </td>
 
@@ -2434,7 +2434,7 @@
 
                                                         <div class="dropdown investment_dropDown">
                                                             <button
-                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                                 type="button" id="dropdownMenuButton"
                                                                 data-bs-toggle="dropdown" aria-haspopup="true"
                                                                 aria-expanded="false">
@@ -2462,17 +2462,17 @@
                                                     <td>
 
                                                         <button type="button"
-                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            class="border-0 outline-none btn btn-transprarent "
                                                             data-bs-toggle="tooltip" data-bs-placement="top"
                                                             title="You can claim deduction up to Rs. 5,000 per year on preventive health check-ups.">
-                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                            <i class="fa fa-exclamation-circle text-warning"
                                                                 aria-hidden="true"></i>
                                                         </button>
                                                     </td>
                                                     <td>5000</td>
 
                                                     <td>
-                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                        <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                             cols="5" rows="1"></textarea>
                                                     </td>
 
@@ -2492,7 +2492,7 @@
 
                                                         <div class="dropdown investment_dropDown">
                                                             <button
-                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                                 type="button" id="dropdownMenuButton"
                                                                 data-bs-toggle="dropdown" aria-haspopup="true"
                                                                 aria-expanded="false">
@@ -2540,20 +2540,20 @@
                                                     <td>
 
                                                         <button type="button"
-                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            class="border-0 outline-none btn btn-transprarent "
                                                             data-bs-toggle="tooltip" data-bs-placement="top"
                                                             title="• Deduction allowed up to Rs.75,000 for taking care of disabled persons with 40% or more of one or more disability.
                                                            • Deduction allowed up to Rs.1.25 lakhs p.a. for taking care of disabled persons with 80% or more of one or more disability.
                                                            • Dependents imply spouse, children, siblings or parents of an individual or any member of the family in an HUF.
                                                            ">
-                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                            <i class="fa fa-exclamation-circle text-warning"
                                                                 aria-hidden="true"></i>
                                                         </button>
                                                     </td>
                                                     <td>75000</td>
 
                                                     <td>
-                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                        <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                             cols="5" rows="1"></textarea>
                                                     </td>
 
@@ -2577,7 +2577,7 @@
 
                                                         <div class="dropdown investment_dropDown">
                                                             <button
-                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                                 type="button" id="dropdownMenuButton"
                                                                 data-bs-toggle="dropdown" aria-haspopup="true"
                                                                 aria-expanded="false">
@@ -2629,7 +2629,7 @@
                                                     <td>
 
                                                         <button type="button"
-                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            class="border-0 outline-none btn btn-transprarent "
                                                             data-bs-toggle="tooltip" data-bs-placement="top"
                                                             title="Deduction under section 80DDB is allowed for medical expenses incurred for medical treatment of specified diseases or ailments. The nature of diseases and ailments which are included for deduction under Section 80DDB are mentioned below:
                                                              1. Neurological Diseases as identified by a specialist ,where the level of disability has been certified to be of 40% and above and covers Dementia, Dystonia Musculorum Deformans, Chorea, Motor Neuron Disease, Ataxia, Aphasia, Parkinson’s Disease and Hemiballismus.
@@ -2637,14 +2637,14 @@
                                                              3. AIDS- Acquired Immuno-Deficiency Syndrome
                                                              4. Chronic Renal failure
                                                              5. Hematological disorders like Hemophilia or Thalassaemia.">
-                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                            <i class="fa fa-exclamation-circle text-warning"
                                                                 aria-hidden="true"></i>
                                                         </button>
                                                     </td>
                                                     <td>100000</td>
 
                                                     <td>
-                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                        <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                             cols="5" rows="1"></textarea>
                                                     </td>
 
@@ -2668,7 +2668,7 @@
 
                                                         <div class="dropdown investment_dropDown">
                                                             <button
-                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                                 type="button" id="dropdownMenuButton"
                                                                 data-bs-toggle="dropdown" aria-haspopup="true"
                                                                 aria-expanded="false">
@@ -2695,19 +2695,19 @@
                                                     <td>
 
                                                         <button type="button"
-                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            class="border-0 outline-none btn btn-transprarent "
                                                             data-bs-toggle="tooltip" data-bs-placement="top"
                                                             title="You can claim deduction of Interest paid on a loan taken for pursuing higher education from taxable* income under section 80E of the Income Tax Act, 1961*.
                                                            According to Section 80E*, the deduction is allowed on the total interest amount of the EMI paid during the financial year. The loan has to be taken from a bank or financial institution to pursue higher studies.
                                                            Interest amount paid during the financial year is allowable as deduction from taxable* income. There is no limit on the deduction amount. The benefit of deduction is available for a maximum of 8 years or till the interest is paid- whichever is earlier. It is applicable even when you have taken an education loan for your spouse, children or for a student for whom you are legal guardian.">
-                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                            <i class="fa fa-exclamation-circle text-warning"
                                                                 aria-hidden="true"></i>
                                                         </button>
                                                     </td>
                                                     <td></td>
 
                                                     <td>
-                                                        <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                        <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                             cols="5" rows="1"></textarea>
                                                     </td>
 
@@ -2731,7 +2731,7 @@
 
                                                         <div class="dropdown investment_dropDown">
                                                             <button
-                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                                 type="button" id="dropdownMenuButton"
                                                                 data-bs-toggle="dropdown" aria-haspopup="true"
                                                                 aria-expanded="false">
@@ -2760,7 +2760,7 @@
                                                     <td>
 
                                                         <button type="button"
-                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            class="border-0 outline-none btn btn-transprarent "
                                                             data-bs-toggle="tooltip" data-bs-placement="top"
                                                             title="• The deduction is up to Rs 50,000. It is over and above the Rs 2 lakh limit under Section 24 of the Income Tax Act.
                                                            • Value of the House should be Rs.50 Lacs or less
@@ -2768,7 +2768,7 @@
                                                            • The loan must be sanctioned by a financial institution or a housing finance company
                                                            • The loan must be sanctioned between FY 01.04.2016 to 31.03.2017 (AY 2017 – 2018) and the deduction is allowed for up to Rs.50000 per year until the loan is repaid.
                                                            ">
-                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                            <i class="fa fa-exclamation-circle text-warning"
                                                                 aria-hidden="true"></i>
                                                         </button>
                                                     </td>
@@ -2777,7 +2777,7 @@
                                                     <td>
                                                         <div class="flex justify-center">
                                                             <button data-bs-target="#ee_modal" data-bs-toggle="modal"
-                                                                class="text-white py-2 w-2/3 rounded-md  bg-indigo-800">Add</button>
+                                                                class="w-2/3 py-2 text-white bg-indigo-800 rounded-md">Add</button>
                                                         </div>
                                                     </td>
 
@@ -2801,7 +2801,7 @@
 
                                                         <div class="dropdown investment_dropDown">
                                                             <button
-                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                                 type="button" id="dropdownMenuButton"
                                                                 data-bs-toggle="dropdown" aria-haspopup="true"
                                                                 aria-expanded="false">
@@ -2830,7 +2830,7 @@
                                                     <td>
 
                                                         <button type="button"
-                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            class="border-0 outline-none btn btn-transprarent "
                                                             data-bs-toggle="tooltip" data-bs-placement="top"
                                                             title="• Section 80EEA has been inserted to allow for an interest deduction from FY - 1st April 2019 and 31st March 2022.
                                                           • A deduction for interest payments up to Rs 1,50,000 is available under Section 80EEA. This deduction is over and above the deduction of Rs 2 lakh for interest payments available under Section 24(b) of the Income Tax Act.
@@ -2840,19 +2840,19 @@
                                                           • The individual taxpayer should not be eligible to claim deduction under the existing Section 80EE.
                                                           • The taxpayer should be a first-time home buyer. The taxpayer should not own any residential house property as on the date of sanction of the loan.
                                                           • This deduction can be claimed until you have repaid the housing loan.">
-                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                            <i class="fa fa-exclamation-circle text-warning"
                                                                 aria-hidden="true"></i>
                                                         </button>
                                                     </td>
                                                     <td>150000</td>
 
                                                     <td>
-                                                        {{-- <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                        {{-- <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                                 cols="5" rows="1"></textarea> --}}
 
                                                         <div class="flex justify-center">
                                                             <button data-bs-target="#eea_modal" data-bs-toggle="modal"
-                                                                class="text-white py-2 w-2/3 rounded-md  bg-indigo-800">Add</button>
+                                                                class="w-2/3 py-2 text-white bg-indigo-800 rounded-md">Add</button>
                                                         </div>
                                                     </td>
 
@@ -2876,7 +2876,7 @@
 
                                                         <div class="dropdown investment_dropDown">
                                                             <button
-                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                                 type="button" id="dropdownMenuButton"
                                                                 data-bs-toggle="dropdown" aria-haspopup="true"
                                                                 aria-expanded="false">
@@ -2903,26 +2903,26 @@
                                                     <td>
 
                                                         <button type="button"
-                                                            class="btn btn-transprarent border-0 outline-none "
+                                                            class="border-0 outline-none btn btn-transprarent "
                                                             data-bs-toggle="tooltip" data-bs-placement="top"
                                                             title="a) The loan must be taken from a financial institution or a non-banking financial company for buying an electric vehicle.
                                                            b) The loan must be sanctioned anytime during the period starting from 1 April 2019 till 31 March 2023.
                                                            c) “Electric vehicle” has been defined to mean a vehicle which is powered exclusively by an electric motor whose traction energy is supplied exclusively by traction battery installed in the vehicle and has such electric regenerative braking system, which during braking provides for the conversion of vehicle kinetic energy into electrical energy.
                                                            d) A deduction for interest payments up to Rs 1,50,000 is available under Section 80EEB">
-                                                            <i class="fa fa-exclamation-circle  text-warning"
+                                                            <i class="fa fa-exclamation-circle text-warning"
                                                                 aria-hidden="true"></i>
                                                         </button>
                                                     </td>
                                                     <td>150000</td>
 
                                                     <td>
-                                                        {{-- <textarea name="" id="" class="text-box form-control resize-none" placeholder="type here"
+                                                        {{-- <textarea name="" id="" class="resize-none text-box form-control" placeholder="type here"
                                                                 cols="5" rows="1"></textarea> --}}
                                                         {{-- <button data-bs-target="#eeb_modal" data-bs-toggle="modal"
-                                                                class="text-white py-2 w-full rounded-md  bg-indigo-800">Add</button> --}}
+                                                                class="w-full py-2 text-white bg-indigo-800 rounded-md">Add</button> --}}
                                                         <div class="flex justify-center">
                                                             <button data-bs-target="#eeb_modal" data-bs-toggle="modal"
-                                                                class="text-white py-2 w-2/3 rounded-md  bg-indigo-800">Add</button>
+                                                                class="w-2/3 py-2 text-white bg-indigo-800 rounded-md">Add</button>
                                                         </div>
                                                     </td>
 
@@ -2946,7 +2946,7 @@
 
                                                         <div class="dropdown investment_dropDown">
                                                             <button
-                                                                class="btn  bg-transparent outline-none border-0 dropdown-toggle"
+                                                                class="bg-transparent border-0 outline-none btn dropdown-toggle"
                                                                 type="button" id="dropdownMenuButton"
                                                                 data-bs-toggle="dropdown" aria-haspopup="true"
                                                                 aria-expanded="false">
@@ -2971,18 +2971,18 @@
                                         </table>
                                     </div>
 
-                            <div class="text-end my-3">
-                                <button class="bg-orange-700 text-white  py-2 rounded-md px-4 text-center">Save</button>
+                            <div class="my-3 text-end">
+                                <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md">Save</button>
                                 <button
-                                    class="bg-transparent border-orange-700 mx-4 text-orange-600 border py-2 rounded-md px-4 text-center">Previous</button>
+                                    class="px-4 py-2 mx-4 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md">Previous</button>
                                 <button
-                                    class="bg-transparent border-orange-700 text-orange-600 border py-2 rounded-md px-4 text-center">Next</button>
+                                    class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md">Next</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade  " id="form_12bb" role="tabpanel">
+            <div class="tab-pane fade " id="form_12bb" role="tabpanel">
                 <div class="text-center">
                     <div class="d-flex justify-content-center">
                         <div style="height: 300px;max-width:500px;" class="">
@@ -3007,11 +3007,11 @@
                         </div> --}}
 
                 <div class="row">
-                    <div class=" col-sm-12 col-md-12 col-xl-6 col-xxl-6 col-lg-6 mb-2">
+                    <div class="mb-2  col-sm-12 col-md-12 col-xl-6 col-xxl-6 col-lg-6">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-12 mb-2">
+                                    <div class="mb-2 col-12">
                                         <h6 class="modal-title">E-filing </h6>
                                     </div>
                                     <div class="col-4">
@@ -3033,7 +3033,7 @@
                             <div class="card-body">
 
                                 <div class="row">
-                                    <div class="col-12 mb-2">
+                                    <div class="mb-2 col-12">
                                         <h6 class="modal-title">Clear Tax</h6>
                                     </div>
                                     <div class="col-4">
@@ -3056,12 +3056,12 @@
 
         </div>
 
-        <div id="AddRendted_modal" class="modal  fade" role="dialog">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg">
+        <div id="AddRendted_modal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
                 <div class="modal-content ">
-                    <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                        <span class="text-lg modal-title text-indigo-950 font-semibold">Add New Rental </span>
-                        <button type="button" class="close outline-none bg-transparent border-0 h3"
+                    <div class="py-2 border-0 modal-header new-role-header d-flex align-items-center">
+                        <span class="text-lg font-semibold modal-title text-indigo-950">Add New Rental </span>
+                        <button type="button" class="bg-transparent border-0 outline-none close h3"
                             data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
@@ -3070,17 +3070,17 @@
                         <div class="modal-body">
                             <form>
                                 <div
-                                    class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-2 2xl:grid-cols-2 sm:grid-cols-1 xl:grid-cols-2 lg:grid-cols-2">
+                                    class="grid mb-6 gap-y-4 gap-x-6 md:grid-cols-2 2xl:grid-cols-2 sm:grid-cols-1 xl:grid-cols-2 lg:grid-cols-2">
 
                                     <div class="">
-                                        <label for="rentFrom_month" class="block mb-2  font-medium text-gray-900 ">From
+                                        <label for="rentFrom_month" class="block mb-2 font-medium text-gray-900 ">From
                                             Month</label>
                                         <input type="date" id="rentFrom_month"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                                             required>
                                     </div>
                                     <div class="">
-                                        <label for="toFrom_month" class="block mb-2  font-medium text-gray-900 ">To
+                                        <label for="toFrom_month" class="block mb-2 font-medium text-gray-900 ">To
                                             Month</label>
                                         <input type="date" id="toFrom_month
                                         "
@@ -3089,7 +3089,7 @@
                                     </div>
                                     <div class="">
                                         <label for="metro_city"
-                                            class="block mb-2  font-medium text-gray-900 ">City</label>
+                                            class="block mb-2 font-medium text-gray-900 ">City</label>
                                         {{-- <input type="text" id="lender_type"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                                             required> --}}
@@ -3105,7 +3105,7 @@
                                         </select>
                                     </div>
                                     <div class="">
-                                        <label for="rendPaid_inp" class="block mb-2  font-medium text-gray-900 ">Total
+                                        <label for="rendPaid_inp" class="block mb-2 font-medium text-gray-900 ">Total
                                             Rent Paid</label>
                                         <input type="text" id="rendPaid_inp"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -3114,16 +3114,16 @@
 
                                 </div>
                                 <div
-                                    class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-2 2xl:grid-cols-2 sm:grid-cols-1 xl:grid-cols-2 lg:grid-cols-2">
+                                    class="grid mb-6 gap-y-4 gap-x-6 md:grid-cols-2 2xl:grid-cols-2 sm:grid-cols-1 xl:grid-cols-2 lg:grid-cols-2">
                                     <div class="">
-                                        <label for="lender_name" class="block mb-2  font-medium text-gray-900 ">Landlord
+                                        <label for="lender_name" class="block mb-2 font-medium text-gray-900 ">Landlord
                                             Name <span class="text-red-600">*</span> </label>
                                         <input type="text" id="lender_name"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                                             required>
                                     </div>
                                     <div class="">
-                                        <label for="lender_name" class="block mb-2  font-medium text-gray-900 ">Landlord
+                                        <label for="lender_name" class="block mb-2 font-medium text-gray-900 ">Landlord
                                             PAN <span class="text-red-600">*</span> </label>
                                         <input type="text" id="lender_name"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -3131,7 +3131,7 @@
                                     </div>
                                 </div>
                                 <div
-                                    class="grid   mb-6 md:grid-cols-1 2xl:grid-cols-1 sm:grid-cols-1 xl:grid-cols-1 lg:grid-cols-1">
+                                    class="grid mb-6 md:grid-cols-1 2xl:grid-cols-1 sm:grid-cols-1 xl:grid-cols-1 lg:grid-cols-1">
                                     <label for="lender_name" class="block mb-2 font-medium text-gray-900 ">
                                         Address </label>
                                     <textarea name="" id="" rows="3"
@@ -3140,7 +3140,7 @@
                                 </div>
                                 <div class="text-end">
                                     <button
-                                        class="bg-orange-700 text-white py-2 rounded-md px-4 text-center">Save</button>
+                                        class="px-4 py-2 text-center text-white bg-orange-700 rounded-md">Save</button>
                                 </div>
                             </form>
 
@@ -3151,14 +3151,14 @@
                 </div>
             </div>
         </div>
-        <div id="ee_modal" class="modal  fade" role="dialog">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg">
+        <div id="ee_modal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
                 <div class="modal-content ">
-                    <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                        <h6 class="modal-title mb-1 text-primary">80EE<span
-                                class="ml-3 text-xs text-gray-400 font-semibold">(The maximum deduction of Rs 50,000 can
+                    <div class="py-2 border-0 modal-header new-role-header d-flex align-items-center">
+                        <h6 class="mb-1 modal-title text-primary">80EE<span
+                                class="ml-3 text-xs font-semibold text-gray-400">(The maximum deduction of Rs 50,000 can
                                 be claimed under this section)</span> </h6>
-                        <button type="button" class="close outline-none bg-transparent border-0 h3"
+                        <button type="button" class="bg-transparent border-0 outline-none close h3"
                             data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
@@ -3166,10 +3166,10 @@
                     <div class="modal-body">
                         <form>
                             <div
-                                class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-2 2xl:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3 lg:grid-cols-3">
+                                class="grid mb-6 gap-y-4 gap-x-6 md:grid-cols-2 2xl:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3 lg:grid-cols-3">
 
                                 <div class="">
-                                    <label for="sanction_date" class="block mb-2  font-medium text-gray-900 ">Loan
+                                    <label for="sanction_date" class="block mb-2 font-medium text-gray-900 ">Loan
                                         Sanction Date</label>
                                     <input type="date" id="sanction_date"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -3180,7 +3180,7 @@
 
                                 <div class="">
 
-                                    <label for="lender_type" class="block mb-2  font-medium text-gray-900 ">Lender
+                                    <label for="lender_type" class="block mb-2 font-medium text-gray-900 ">Lender
                                         Type</label>
                                     <select id="lender_type"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
@@ -3192,14 +3192,14 @@
                                 </div>
 
                                 <div class="">
-                                    <label for="property_value" class="block mb-2  font-medium text-gray-900 ">Property
+                                    <label for="property_value" class="block mb-2 font-medium text-gray-900 ">Property
                                         Value</label>
                                     <input type="text" id="property_value"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                                         required>
                                 </div>
                                 <div class="">
-                                    <label for="loan_amount" class="block mb-2  font-medium text-gray-900 ">Loan
+                                    <label for="loan_amount" class="block mb-2 font-medium text-gray-900 ">Loan
                                         Amount</label>
                                     <input type="text" id="loan_amount"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-100 focus:outline-none focus:ring outline-1  block w-full p-2.5 "
@@ -3207,7 +3207,7 @@
                                 </div>
                                 <div class="">
                                     <label for="declaration_amount"
-                                        class="block mb-2  font-medium text-gray-900 ">Interest
+                                        class="block mb-2 font-medium text-gray-900 ">Interest
                                         Amount Paid</label>
                                     <input type="text" id="declaration_amount"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -3216,7 +3216,7 @@
 
                             </div>
                             <div class="text-end">
-                                <button class="bg-orange-700 text-white py-2 rounded-md px-4 text-center">Save</button>
+                                <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md">Save</button>
                             </div>
                         </form>
 
@@ -3225,14 +3225,14 @@
                 </div>
             </div>
         </div>
-        <div id="eea_modal" class="modal  fade" role="dialog">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg">
+        <div id="eea_modal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
                 <div class="modal-content ">
-                    <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                        <h6 class="modal-title mb-1 text-primary">80EEA <span
-                                class="ml-3 text-xs text-gray-400 font-semibold">(The maximum deduction available under
+                    <div class="py-2 border-0 modal-header new-role-header d-flex align-items-center">
+                        <h6 class="mb-1 modal-title text-primary">80EEA <span
+                                class="ml-3 text-xs font-semibold text-gray-400">(The maximum deduction available under
                                 this section is Rs. 1.5 Lakhs)</span> </h6>
-                        <button type="button" class="close outline-none bg-transparent border-0 h3"
+                        <button type="button" class="bg-transparent border-0 outline-none close h3"
                             data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
@@ -3241,10 +3241,10 @@
 
                         <form>
                             <div
-                                class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-2 2xl:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3 lg:grid-cols-3">
+                                class="grid mb-6 gap-y-4 gap-x-6 md:grid-cols-2 2xl:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3 lg:grid-cols-3">
 
                                 <div class="">
-                                    <label for="sanction_date" class="block mb-2  font-medium text-gray-900 ">Loan
+                                    <label for="sanction_date" class="block mb-2 font-medium text-gray-900 ">Loan
                                         Sanction Date</label>
                                     <input type="date" id="sanction_date"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -3255,7 +3255,7 @@
 
                                 <div class="">
 
-                                    <label for="lender_type" class="block mb-2  font-medium text-gray-900 ">Lender
+                                    <label for="lender_type" class="block mb-2 font-medium text-gray-900 ">Lender
                                         Type</label>
                                     <select id="lender_type"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
@@ -3267,14 +3267,14 @@
                                 </div>
 
                                 <div class="">
-                                    <label for="property_value" class="block mb-2  font-medium text-gray-900 ">Property
+                                    <label for="property_value" class="block mb-2 font-medium text-gray-900 ">Property
                                         Value</label>
                                     <input type="text" id="property_value"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                                         required>
                                 </div>
                                 <div class="">
-                                    <label for="loan_amount" class="block mb-2  font-medium text-gray-900 ">Loan
+                                    <label for="loan_amount" class="block mb-2 font-medium text-gray-900 ">Loan
                                         Amount</label>
                                     <input type="text" id="loan_amount"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-100 focus:outline-none focus:ring outline-1  block w-full p-2.5 "
@@ -3282,7 +3282,7 @@
                                 </div>
                                 <div class="">
                                     <label for="declaration_amount"
-                                        class="block mb-2  font-medium text-gray-900 ">Interest
+                                        class="block mb-2 font-medium text-gray-900 ">Interest
                                         Amount Paid</label>
                                     <input type="text" id="declaration_amount"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -3291,7 +3291,7 @@
 
                             </div>
                             <div class="text-end">
-                                <button class="bg-orange-700 text-white py-2 rounded-md px-4 text-center">Save</button>
+                                <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md">Save</button>
                             </div>
                         </form>
 
@@ -3300,14 +3300,14 @@
                 </div>
             </div>
         </div>
-        <div id="eeb_modal" class="modal  fade" role="dialog">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg">
+        <div id="eeb_modal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
                 <div class="modal-content ">
-                    <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                        <h6 class="modal-title mb-1 text-primary"> 80EEB<span
-                                class="ml-3 text-xs text-gray-400 font-semibold">(The maximum deduction available under
+                    <div class="py-2 border-0 modal-header new-role-header d-flex align-items-center">
+                        <h6 class="mb-1 modal-title text-primary"> 80EEB<span
+                                class="ml-3 text-xs font-semibold text-gray-400">(The maximum deduction available under
                                 this section is Rs. 1.5 Lakhs for electric vehicle purchase)</span> </h6>
-                        <button type="button" class="close outline-none bg-transparent border-0 h3"
+                        <button type="button" class="bg-transparent border-0 outline-none close h3"
                             data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
@@ -3316,9 +3316,9 @@
                         <form>
                             <form>
                                 <div
-                                    class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-2 2xl:grid-cols-2 sm:grid-cols-1 xl:grid-cols-2 lg:grid-cols-2">
+                                    class="grid mb-6 gap-y-4 gap-x-6 md:grid-cols-2 2xl:grid-cols-2 sm:grid-cols-1 xl:grid-cols-2 lg:grid-cols-2">
                                     <div class="">
-                                        <label for="sanction_date" class="block mb-2  font-medium text-gray-900 ">Loan
+                                        <label for="sanction_date" class="block mb-2 font-medium text-gray-900 ">Loan
                                             Sanction Date</label>
                                         <input type="date" id="sanction_date"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -3330,7 +3330,7 @@
                                     <div class="">
 
                                         <label for="vechicle_brand"
-                                            class="block mb-2  font-medium text-gray-900 ">Vechicle Brand</label>
+                                            class="block mb-2 font-medium text-gray-900 ">Vechicle Brand</label>
                                         <select id="vechicle_brand"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                                             <option selected hidden disabled>Choose Vechicle</option>
@@ -3345,7 +3345,7 @@
 
                                     <div class="">
                                         <label for="vechicle_model"
-                                            class="block mb-2  font-medium text-gray-900 ">Vechicle Model
+                                            class="block mb-2 font-medium text-gray-900 ">Vechicle Model
                                         </label>
                                         {{-- <input type="text" id=""
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -3378,7 +3378,7 @@
 
                                     <div class="">
                                         <label for="declaration_amount"
-                                            class="block mb-2  font-medium text-gray-900 ">Interest
+                                            class="block mb-2 font-medium text-gray-900 ">Interest
                                             Amount Paid</label>
                                         <input type="text" id="declaration_amount"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -3388,7 +3388,7 @@
                                 </div>
                                 <div class="text-end">
                                     <button
-                                        class="bg-orange-700 text-white py-2 rounded-md px-4 text-center">Save</button>
+                                        class="px-4 py-2 text-center text-white bg-orange-700 rounded-md">Save</button>
                                 </div>
                             </form>
 
@@ -3397,12 +3397,12 @@
                 </div>
             </div>
         </div>
-        <div id="letOut_property_modal" class="modal  fade" role="dialog">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg">
+        <div id="letOut_property_modal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
                 <div class="modal-content ">
-                    <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                        <h6 class="modal-title mb-1 text-primary">Let Out Property</h6>
-                        <button type="button" class="close outline-none bg-transparent border-0 h3"
+                    <div class="py-2 border-0 modal-header new-role-header d-flex align-items-center">
+                        <h6 class="mb-1 modal-title text-primary">Let Out Property</h6>
+                        <button type="button" class="bg-transparent border-0 outline-none close h3"
                             data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
@@ -3411,16 +3411,16 @@
 
                         <form>
                             <div
-                                class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-2 2xl:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3 lg:grid-cols-3">
+                                class="grid mb-6 gap-y-4 gap-x-6 md:grid-cols-2 2xl:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3 lg:grid-cols-3">
                                 <div class="">
-                                    <label for="lender_name" class="block mb-2  font-medium text-gray-900 ">Lender
+                                    <label for="lender_name" class="block mb-2 font-medium text-gray-900 ">Lender
                                         Name</label>
                                     <input type="text" id="lender_name"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                                         required>
                                 </div>
                                 <div class="">
-                                    <label for="lender_pan" class="block mb-2  font-medium text-gray-900 ">Lender
+                                    <label for="lender_pan" class="block mb-2 font-medium text-gray-900 ">Lender
                                         PAN</label>
                                     <input type="text" id="lender_pan"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -3430,7 +3430,7 @@
 
                                 <div class="">
 
-                                    <label for="lender_type" class="block mb-2  font-medium text-gray-900 ">Lender
+                                    <label for="lender_type" class="block mb-2 font-medium text-gray-900 ">Lender
                                         Type</label>
                                     <select id="lender_type"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
@@ -3442,7 +3442,7 @@
                                 </div>
 
                                 <div class="">
-                                    <label for="rend_received" class="block mb-2  font-medium text-gray-900 ">Rent
+                                    <label for="rend_received" class="block mb-2 font-medium text-gray-900 ">Rent
                                         Received</label>
                                     <input type="text" id="rend_received"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -3450,7 +3450,7 @@
                                 </div>
                                 <div class="">
 
-                                    <label for="municipal_tax" class="block mb-2  font-medium text-gray-900 ">Municipal
+                                    <label for="municipal_tax" class="block mb-2 font-medium text-gray-900 ">Municipal
                                         Tax</label>
 
                                     <input type="text" id="municipal_tax"
@@ -3459,13 +3459,13 @@
                                 </div>
                                 <div class="">
                                     <label for="maintenance"
-                                        class="block mb-2  font-medium text-gray-900 ">Maintenance</label>
+                                        class="block mb-2 font-medium text-gray-900 ">Maintenance</label>
                                     <input type="text" id="maintenance"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                                         required>
                                 </div>
                                 <div class="">
-                                    <label for="Net_Value" class="block mb-2  font-medium text-gray-900 ">Net
+                                    <label for="Net_Value" class="block mb-2 font-medium text-gray-900 ">Net
                                         Value</label>
                                     <input type="text" id="Net_Value"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-100 focus:outline-none focus:ring outline-1  block w-full p-2.5 "
@@ -3473,21 +3473,21 @@
                                 </div>
                                 <div class="">
                                     <label for="Interest"
-                                        class="block mb-2  font-medium text-gray-900 ">Interest</label>
+                                        class="block mb-2 font-medium text-gray-900 ">Interest</label>
                                     <input type="text" id="Interest"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                                         required>
                                 </div>
                                 <div class="">
                                     <label for="Income/Loss"
-                                        class="block mb-2  font-medium text-gray-900 ">Income/Loss</label>
+                                        class="block mb-2 font-medium text-gray-900 ">Income/Loss</label>
                                     <input type="text" id="Income/Loss"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                                         required>
                                 </div>
                             </div>
                             <div class="text-end">
-                                <button class="bg-orange-700 text-white py-2 rounded-md px-4 text-center">Save</button>
+                                <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md">Save</button>
                             </div>
                         </form>
 
@@ -3496,12 +3496,12 @@
                 </div>
             </div>
         </div>
-        <div id="deemedOut_property_modal" class="modal  fade" role="dialog">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg">
+        <div id="deemedOut_property_modal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
                 <div class="modal-content ">
-                    <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                        <h6 class="modal-title mb-1 text-primary">Deemed Let Out Property</h6>
-                        <button type="button" class="close outline-none bg-transparent border-0 h3"
+                    <div class="py-2 border-0 modal-header new-role-header d-flex align-items-center">
+                        <h6 class="mb-1 modal-title text-primary">Deemed Let Out Property</h6>
+                        <button type="button" class="bg-transparent border-0 outline-none close h3"
                             data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
@@ -3509,16 +3509,16 @@
                     <div class="modal-body">
                         <form>
                             <div
-                                class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-2 2xl:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3 lg:grid-cols-3">
+                                class="grid mb-6 gap-y-4 gap-x-6 md:grid-cols-2 2xl:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3 lg:grid-cols-3">
                                 <div class="">
-                                    <label for="lender_name" class="block mb-2  font-medium text-gray-900 ">Lender
+                                    <label for="lender_name" class="block mb-2 font-medium text-gray-900 ">Lender
                                         Name</label>
                                     <input type="text" id="lender_name"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                                         required>
                                 </div>
                                 <div class="">
-                                    <label for="lender_pan" class="block mb-2  font-medium text-gray-900 ">Lender
+                                    <label for="lender_pan" class="block mb-2 font-medium text-gray-900 ">Lender
                                         PAN</label>
                                     <input type="text" id="lender_pan"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -3528,7 +3528,7 @@
 
                                 <div class="">
 
-                                    <label for="lender_type" class="block mb-2  font-medium text-gray-900 ">Lender
+                                    <label for="lender_type" class="block mb-2 font-medium text-gray-900 ">Lender
                                         Type</label>
                                     <select id="lender_type"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
@@ -3540,7 +3540,7 @@
                                 </div>
 
                                 <div class="">
-                                    <label for="rend_received" class="block mb-2  font-medium text-gray-900 ">Rent
+                                    <label for="rend_received" class="block mb-2 font-medium text-gray-900 ">Rent
                                         Received</label>
                                     <input type="text" id="rend_received"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -3548,7 +3548,7 @@
                                 </div>
                                 <div class="">
 
-                                    <label for="municipal_tax" class="block mb-2  font-medium text-gray-900 ">Municipal
+                                    <label for="municipal_tax" class="block mb-2 font-medium text-gray-900 ">Municipal
                                         Tax</label>
                                     {{-- <select id="municipal_tax"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
@@ -3561,13 +3561,13 @@
                                 </div>
                                 <div class="">
                                     <label for="maintenance"
-                                        class="block mb-2  font-medium text-gray-900 ">Maintenance</label>
+                                        class="block mb-2 font-medium text-gray-900 ">Maintenance</label>
                                     <input type="text" id="maintenance"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                                         required>
                                 </div>
                                 <div class="">
-                                    <label for="Net_Value" class="block mb-2  font-medium text-gray-900 ">Net
+                                    <label for="Net_Value" class="block mb-2 font-medium text-gray-900 ">Net
                                         Value</label>
                                     <input type="text" id="Net_Value"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-100 focus:outline-none focus:ring outline-1  block w-full p-2.5 "
@@ -3575,21 +3575,21 @@
                                 </div>
                                 <div class="">
                                     <label for="Interest"
-                                        class="block mb-2  font-medium text-gray-900 ">Interest</label>
+                                        class="block mb-2 font-medium text-gray-900 ">Interest</label>
                                     <input type="text" id="Interest"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                                         required>
                                 </div>
                                 <div class="">
                                     <label for="Income/Loss"
-                                        class="block mb-2  font-medium text-gray-900 ">Income/Loss</label>
+                                        class="block mb-2 font-medium text-gray-900 ">Income/Loss</label>
                                     <input type="text" id="Income/Loss"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                                         required>
                                 </div>
                             </div>
                             <div class="text-end">
-                                <button class="bg-orange-700 text-white py-2 rounded-md px-4 text-center">Save</button>
+                                <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md">Save</button>
                             </div>
                         </form>
 
@@ -3597,12 +3597,12 @@
                 </div>
             </div>
         </div>
-        <div id="selfOccupied_modal" class="modal  fade" role="dialog">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-lg">
+        <div id="selfOccupied_modal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
                 <div class="modal-content ">
-                    <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                        <h6 class="modal-title mb-1 text-primary">Self Occupied Property</h6>
-                        <button type="button" class="close outline-none bg-transparent border-0 h3"
+                    <div class="py-2 border-0 modal-header new-role-header d-flex align-items-center">
+                        <h6 class="mb-1 modal-title text-primary">Self Occupied Property</h6>
+                        <button type="button" class="bg-transparent border-0 outline-none close h3"
                             data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
@@ -3611,16 +3611,16 @@
 
                         <form>
                             <div
-                                class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-2 2xl:grid-cols-2 sm:grid-cols-1 xl:grid-cols-2 lg:grid-cols-2">
+                                class="grid mb-6 gap-y-4 gap-x-6 md:grid-cols-2 2xl:grid-cols-2 sm:grid-cols-1 xl:grid-cols-2 lg:grid-cols-2">
                                 <div class="">
-                                    <label for="lender_name" class="block mb-2  font-medium text-gray-900 ">Lender
+                                    <label for="lender_name" class="block mb-2 font-medium text-gray-900 ">Lender
                                         Name</label>
                                     <input type="text" id="lender_name"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                                         required>
                                 </div>
                                 <div class="">
-                                    <label for="lender_name" class="block mb-2  font-medium text-gray-900 ">Lender
+                                    <label for="lender_name" class="block mb-2 font-medium text-gray-900 ">Lender
                                         PAN</label>
                                     <input type="text" id="lender_name"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -3631,7 +3631,7 @@
 
                                 <div class="">
 
-                                    <label for="lender_type" class="block mb-2  font-medium text-gray-900 ">Lender
+                                    <label for="lender_type" class="block mb-2 font-medium text-gray-900 ">Lender
                                         Type</label>
                                     <select id="lender_type"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
@@ -3642,7 +3642,7 @@
                                     </select>
                                 </div>
                                 <div class="">
-                                    <label for="lender_name" class="block mb-2  font-medium text-gray-900 ">Loss
+                                    <label for="lender_name" class="block mb-2 font-medium text-gray-900 ">Loss
                                         From Housing Property</label>
                                     <input type="text" id="lender_name"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -3650,9 +3650,9 @@
                                 </div>
                             </div>
                             <div
-                                class="grid gap-y-4 gap-x-6 mb-6 md:grid-cols-1 2xl:grid-cols-1 sm:grid-cols-1 xl:grid-cols-1 lg:grid-cols-1">
+                                class="grid mb-6 gap-y-4 gap-x-6 md:grid-cols-1 2xl:grid-cols-1 sm:grid-cols-1 xl:grid-cols-1 lg:grid-cols-1">
                                 <div class="">
-                                    <label for="lender_name" class="block mb-2  font-medium text-gray-900 ">
+                                    <label for="lender_name" class="block mb-2 font-medium text-gray-900 ">
                                         Address</label>
                                     {{-- <input type="text" id="lender_name"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -3663,7 +3663,7 @@
                                 </div>
                             </div>
                             <div class="text-end">
-                                <button class="bg-orange-700 text-white py-2 rounded-md px-4 text-center">Save</button>
+                                <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md">Save</button>
                             </div>
                         </form>
 
@@ -3672,12 +3672,14 @@
                 </div>
             </div>
         </div>
-        <div id="switchRegime_modal" class="modal  fade" role="dialog">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-md">
+
+
+        <div id="switchRegime_modal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-md">
                 <div class="modal-content ">
-                    <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                        <h6 class="modal-title text-lg font-semibold mb-1 text-primary">Confirm Switching Regime</h6>
-                        <button type="button" class="close outline-none bg-transparent border-0 h3"
+                    <div class="py-2 border-0 modal-header new-role-header d-flex align-items-center">
+                        <h6 class="mb-1 text-lg font-semibold modal-title text-primary">Confirm Switching Regime</h6>
+                        <button type="button" class="bg-transparent border-0 outline-none close h3"
                             data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
@@ -3685,21 +3687,21 @@
                     <div class="modal-body">
 
                         <p class="">Your current switching regime is <span
-                                class="text-primary font-semibold text-lg">New Tax Regime</span> </p>
+                                class="text-lg font-semibold text-primary">New Tax Regime</span> </p>
 
-                        <p class="text-gray-500 text-justify my-3">
+                        <p class="my-3 text-justify text-gray-500">
                             Are you sure you want to switch your regime? You cannot change your regime selection once you
                             have confirmed your selection.
                         </p>
-                        <p class="text-gray-500 text-justify">
+                        <p class="text-justify text-gray-500">
                             In case of an incorrect selection, your only option will be to change your selection when you
                             file your tax returns for the current financial year.
                         </p>
 
 
-                        <div class="text-end mt-5">
+                        <div class="mt-5 text-end">
                             <button id="confirm_switchRegime"
-                                class="bg-orange-700 text-white py-2  rounded-md px-4 text-center">Confirm</button>
+                                class="px-4 py-2 text-center text-white bg-orange-700 rounded-md">Confirm</button>
                         </div>
 
 

@@ -2,24 +2,24 @@
     <div class=" mt-30 investments-wrapper">
         <div class="mb-2 shadow card left-line ">
             <div class="pt-1 pb-0 card-body">
-                <ul class="nav nav-pills nav-tabs-dashed" id="pills-tab" role="tablist">
+                <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed" id="pills-tab" role="tablist">
                     <li class="mx-4 nav-item ember-view" role="presentation">
                         <a class="nav-link active ember-view " id="pills-home-tab" data-bs-toggle="pill" href=""
                             data-bs-target="#investment_dec" role="tab" aria-controls="pills-home" aria-selected="true">
                             Declaration</a>
                     </li>
                     <li class="mx-4 nav-item ember-view" role="presentation">
-                        <a class="nav-link ember-view " id="pills-home-tab" data-bs-toggle="pill" href=""
+                        <a class="mx-4 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill" href=""
                             data-bs-target="#exemptions" role="tab" aria-controls="pills-home" aria-selected="true">
                             Investments and Exemptions</a>
                     </li>
                     <li class="mx-4 nav-item ember-view" role="presentation">
-                        <a class="nav-link ember-view " id="pills-home-tab" data-bs-toggle="pill" href=""
+                        <a class="mx-4 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill" href=""
                             data-bs-target="#form_12bb" role="tab" aria-controls="pills-home" aria-selected="true">
                             Form 12 BB</a>
                     </li>
                     <li class="mx-4 nav-item ember-view" role="presentation">
-                        <a class="nav-link ember-view " id="" data-bs-toggle="pill" href="" data-bs-target="#tax_filling"
+                        <a class="mx-4 nav-link ember-view" id="" data-bs-toggle="pill" href="" data-bs-target="#tax_filling"
                             role="tab" aria-controls="pills-home" aria-selected="true">
                             Tax Filling</a>
                     </li>
