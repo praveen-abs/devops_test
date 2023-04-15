@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 use App\Exports\VmtPayrollReports;
 use App\Exports\VmtPmsReviewsReport;
 use App\Exports\ManagerReimbursementsExport;
-use App\Exports\EmployeeReimbursementsExport;
+use App\Models\VmtEmployeeAttendance;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -304,15 +304,54 @@ class VmtReportsController extends Controller
 
     }
 
-    public function generateEmployeeReimbursementsReports(Request $request){
-        $reimbursements_employee_details=VmtEmployeeReimbursements::join('users','users.id','=',
-                                                                  'vmt_employee_reimbursements.user_id')
-                                                                  ->whereYear('vmt_employee_reimbursements.date','2023')
-                                                                  ->select('users.id','users.user_code','users.name');
-         dd( auth()->user());
-         dd($reimbursements_employee_details->get());
-       return $reimbursements_employee_details;
+    public function showAttendanceReport(Request $request){
+        $attendance_year=VmtEmployeeAttendance::groupby('date')->pluck('date');
+
+        for($i=0; $i < count($attendance_year); $i++)
+        {
+            $attendance_year[$i] = date("Y",strtotime($attendance_year[$i]));
+        }
+
+        $attendance_available_years = array_unique($attendance_year->toArray());
+
+        return view('reports.vmt_attendance_reports',compact('attendance_available_years'));
     }
+
+    /*
+        Retrieves all months attendance for the
+        given Year
+
+    */
+    public function fetchAttendanceForGivenYear(Request $request){
+
+        $attendance_month=VmtEmployeeAttendance::whereYear('vmt_employee_attendance.date',$request->attendance_year)->groupby('date')->pluck('date');
+        for($i=0; $i < count($attendance_month); $i++)
+        {
+
+            $attendance_month[$i] = date("m",strtotime($attendance_month[$i]));
+        }
+        $attendance_available_months = array_unique($attendance_month->toArray());
+
+        return $attendance_available_months;
+
+    }
+
+    public function fetchAttendanceInfo(Request $request){
+        //    dd($request->attendance_year);
+        $attendance_data= VmtEmployeeAttendance::leftJoin('users as us', 'us.id', '=', 'vmt_employee_attendance.user_id')
+        ->leftjoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=','us.id')
+        ->leftjoin('vmt_employee_attendance_regularizations','vmt_employee_attendance_regularizations.user_id','=','us.id')
+       ->whereYear('vmt_employee_attendance.date',$request->attendance_year)
+        ->select('user_code','name','designation','checkin_time','checkout_time',
+                       'regularization_type','status');
+        //dd($attendance_data);
+        if($request->attendance_month!="All"){
+            $attendance_data=$attendance_data->whereMonth('vmt_employee_attendance.date',$request->attendance_month);
+        }
+
+        return $attendance_data->get();
+    }
+
 
     private function getManagerReimbursementsReports($year,$month,$status){
        //dd($year);

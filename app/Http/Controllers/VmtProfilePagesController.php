@@ -143,6 +143,8 @@ class VmtProfilePagesController extends Controller
     }
 
     public function updateGeneralInfo(Request $request) {
+
+    try{
          $user_id = user::where('user_code', $request->user_code)->first()->id;
          $details = VmtEmployee::where('userid', $user_id )->first();
          $details->dob = $request->input('dob');
@@ -154,15 +156,25 @@ class VmtProfilePagesController extends Controller
 
         $details->save();
 
-        $response = [
+         $response = [
             'status' => 'success',
-        ];
-        return  $response;
+            'message' =>"General details updated successfully"
+         ];
+    }catch(\Exception $e){
+         $response = [
+            'status' => 'failure',
+            'message' => 'Error while updateing General Information ',
+            'error_message' => $e->getMessage()
+         ];
+    }
+         return response()->json($response);
+
     }
 
     public function updateContactInfo(Request $request)
     {
         //dd($request->all());
+    try{
         $user_id = user::where('user_code', $request->user_code)->first()->id;
         $user = User::find($user_id);
 
@@ -183,124 +195,230 @@ class VmtProfilePagesController extends Controller
             $details->save();
         }
 
-        $response = [
+         $response = [
             'status' => 'success',
-        ];
-
-        return  $response;
+            'message' =>"Contact details updated successfully"
+         ];
+    }catch(\Exception $e){
+         $response = [
+            'status' => 'failure',
+            'message' => 'Error while updateing Contact Information ',
+            'error_message' => $e->getMessage()
+         ];
     }
 
+         return response()->json($response);
+
+    }
 
 
     public function updateAddressInfo(Request $request)
     {
         //  dd($request->all());
-
+    try{
         $user_id = user::where('user_code', $request->user_code)->first()->id;
         $details = VmtEmployee::where('userid', $user_id)->first();
         $details->current_address_line_1 = $request->input('current_address_line_1');
         $details->permanent_address_line_1 = $request->input('permanent_address_line_1');
         $details->save();
 
-        $response = [
+         $response = [
             'status' => 'success',
-        ];
+            'message' =>"Address details updated successfully"
+         ];
+    }catch(\Exception $e){
+         $response = [
+            'status' => 'failure',
+            'message' => 'Error while updateing Address Information ',
+            'error_message' => $e->getMessage()
+         ];
+    }
 
-        return  $response;
+         return response()->json($response);
 
     }
 
     public function deleteFamilyInfo(Request $request)
     {
-        $user_id = user::where('user_code', $request->user_code)->first()->id;
-        $familyDetails = VmtEmployeeFamilyDetails::where('user_id', $user_id)->delete();
 
-        $response = [
+    try{
+        $familyDetails = VmtEmployeeFamilyDetails::where('id',$request->current_table_id)->delete();
+
+         $response = [
             'status' => 'success',
-        ];
+            'message' =>"Family details deleted successfully"
+         ];
 
-        return  $response;
+    }catch(\Exception $e){
+         $response = [
+            'status' => 'failure',
+            'message' => 'Error while Deletining Family Information ',
+            'error_message' => $e->getMessage()
+         ];
     }
-    public function updateFamilyInfo(Request $request)
+
+         return response()->json($response);
+    }
+
+    public function addFamilyInfo(Request $request)
     {
+    try{
         // dd($request->all());
         $user_id = user::where('user_code', $request->user_code)->first()->id;
-        $familyDetails = VmtEmployeeFamilyDetails::where('user_id', $user_id)->delete();
+        $emp_familydetails = new VmtEmployeeFamilyDetails;
+        $emp_familydetails->user_id = $user_id;
+        $emp_familydetails->name = $request->input('name');
+        $emp_familydetails->relationship = $request->input('relationship');
+        $emp_familydetails->dob = $request->input('dob');
+        $emp_familydetails->phone_number = $request->input('phone_number');
+        $emp_familydetails->save();
 
-        $family_member_name=array($request->input('name'));
-        $count = sizeof($family_member_name);
+        $familyDetails = VmtEmployeeFamilyDetails::where('id',$request->current_table_id )->delete();
+        $response = [
+            'status' => 'success',
+            'message' =>"Family details Added successfully"
+         ];
+    }catch(\Exception $e){
+         $response = [
+            'status' => 'failure',
+            'message' => 'Error while Adding Family Information ',
+            'error_message' => $e->getMessage()
+         ];
+    }
 
-        for ($i = 0; $i < $count; $i++) {
+         return response()->json($response);
+    }
 
-            $emp_familydetails = new VmtEmployeeFamilyDetails;
-            // dd($request->id);
-            $emp_familydetails->user_id = $request->id;
+    public function updateFamilyInfo(Request $request)
+    {
+        try{
+           //dd($request->all());
+            $user_id = user::where('user_code', $request->user_code)->first()->id;
+            $emp_familydetails = VmtEmployeeFamilyDetails::where('id',$request->current_table_id)->first();
+            $emp_familydetails->user_id =$user_id;
             $emp_familydetails->name = $request->input('name');
             $emp_familydetails->relationship = $request->input('relationship');
             $emp_familydetails->dob = $request->input('dob');
             $emp_familydetails->phone_number = $request->input('phone_number');
             $emp_familydetails->save();
+
+            $response = [
+                'status' => 'success',
+                'message' => 'Family Details Upadated Successfully ',
+            ];
+        }
+        catch(\Exception $e){
+            $response = [
+                'status' => 'failure',
+                'message' => 'Error while updateing Family Information ',
+                'error_message' => $e->getMessage()
+            ];
         }
 
+             return response()->json($response);
+    }
+
+
+public function addExperienceInfo(Request $request)
+{
+
+    try{
+        //  dd($request->all());
+        $user_id = user::where('user_code', $request->user_code)->first()->id;
+            $exp = new Experience;
+            $exp->user_id = $user_id;
+            $exp->company_name = $request->input('company_name');
+            $exp->location = $request->input('experience_location');
+            $exp->job_position = $request->input('job_position');
+            $exp->period_from = $request->input('period_from');
+            $exp->period_to = $request->input('period_to');
+            $exp->save();
         $response = [
             'status' => 'success',
+            'message' =>"Experiance details Added successfully"
         ];
+    } catch(\Exception $e){
+        $response = [
+            'status' => 'failure',
+            'message' => 'Error while updateing Family Information ',
+            'error_message' => $e->getMessage()
+        ];
+    }
 
-        return  $response;
+         return response()->json($response);
     }
 
     public function updateExperienceInfo(Request $request)
+    {// dd($request->all());
+        try{
+            $user_id = user::where('user_code', $request->user_code)->first()->id;
+                $exp = Experience::where('id',$request->exp_current_table_id)->first();;
+                $exp->user_id = $user_id;
+                $exp->company_name = $request->input('company_name');
+                $exp->location = $request->input('experience_location');
+                $exp->job_position = $request->input('job_position');
+                $exp->period_from = $request->input('period_from');
+                $exp->period_to = $request->input('period_to');
+                $exp->save();
+            $responseJSON = [
+                'status' => 'success',
+                'message' =>"Experiance details updated successfully"
+            ];
+        }catch(\Exception $e){
+             $response = [
+                'status' => 'failure',
+                'message' => 'Error while updateing Experience Information ',
+                'error_message' => $e->getMessage()
+            ];
+         }
+            return response()->json($responseJSON);
+    }
+
+    public function deleteExperienceInfo(Request $request)
     {
-        // dd($request->all());
-
-        $idArr = $request->input('ids');
-        $companyNameArr = $request->input('company_name');
-        $locationArr = $request->input('experience_location');
-        $jobPositionArr = $request->input('job_position');
-        $periodFromArr = $request->input('period_from');
-        $periodToArr = $request->input('period_to');
-        foreach ($request->input('company_name') as $k => $val) {
-            if ($idArr[$k] && $idArr[$k] > 0) {
-                $exp = Experience::find($idArr[$k]);
-            } else {
-                $exp = new Experience;
-            }
-            $exp->user_id = $request->id;
-            $exp->company_name = $companyNameArr[$k];
-            $exp->location = $locationArr[$k];
-            $exp->job_position = $jobPositionArr[$k];
-            $exp->period_from = $periodFromArr[$k];
-            $exp->period_to = $periodToArr[$k];
-            $exp->save();
-        }
-
-
+    try{
+        $familyDetails = Experience::where('id',$request->exp_current_table_id)->delete();
         $response = [
             'status' => 'success',
-        ];
+            'message' =>"Experiance details deleted successfully"
+          ];
+    }catch(\Exception $e){
+         $response = [
+            'status' => 'failure',
+            'message' => 'Error while updateing Experience Information ',
+            'error_message' => $e->getMessage()
+         ];
+    }
+        return response()->json($response);
 
-        return  $response;
     }
 
 
     public function updateBankInfo(Request $request)
     {
+       // dd($request->all());
+        try{
+            $user_id = user::where('user_code', $request->user_code)->first()->id;
+            $details = VmtEmployee::where('userid', $user_id)->first();
+            $details->bank_id = $request->input('bank_id');
+            $details->bank_ifsc_code = $request->input('bank_ifsc');
+            $details->bank_account_number = $request->input('account_no');
+            $details->pan_number = $request->input('pan_no');
+            $details->save();
 
-    //    dd($request->all());
+            $response = [
+                'status' => 'success',
+                'message' =>"Bank details updated successfully"
+            ];
+        }catch(\Exception $e){
+            $response = [
+            'status' => 'failure',
+            'message' => 'Error while updateing Bank Information ',
+            'error_message' => $e->getMessage()
+            ];
+        }
 
-        $reDetails = VmtEmployee::where('userid', $request->id)->first();
-        $details = VmtEmployee::find($reDetails->id);
-        $details->bank_id = $request->input('bank_id');
-        $details->bank_ifsc_code = $request->input('bank_ifsc');
-        $details->bank_account_number = $request->input('account_no');
-        $details->pan_number = $request->input('pan_no');
-        $details->save();
-
-        $response = [
-            'status' => 'success',
-        ];
-
-        return  $response;
+         return response()->json($response);
 
     }
 
@@ -320,16 +438,13 @@ class VmtProfilePagesController extends Controller
     public function updateStatutoryInfo(Request $request)
     {
        //  dd($request->all());
-
-        $statutory = VmtEmployeeStatutoryDetails::where('user_id', $request->id);
-
-
-      // dd($statutory);
-
+       try{
+        $user_id = user::where('user_code', $request->user_code)->first()->id;
+        $statutory = VmtEmployeeStatutoryDetails::where('user_id', $user_id );
 
        if ($statutory->exists()) {
             $statutory = $statutory->first();
-            $statutory->user_id= $request->id;
+            $statutory->user_id=  $user_id;
             $statutory->pf_applicable=$request->input('pf_applicable');
             $statutory->epf_number=$request->input('epf_number');
             $statutory->uan_number=$request->input('uan_number');
@@ -342,7 +457,7 @@ class VmtProfilePagesController extends Controller
         else
         {
             $statutory = new VmtEmployeeStatutoryDetails;
-            $statutory->user_id= $request->id;
+            $statutory->user_id=  $user_id;
             $statutory->pf_applicable=$request->input('pf_applicable');
             $statutory->epf_number=$request->input('epf_number');
             $statutory->uan_number=$request->input('uan_number');
@@ -353,11 +468,21 @@ class VmtProfilePagesController extends Controller
             $statutory->save();
         }
 
-        $response = [
+     $response = [
             'status' => 'success',
+            'message'=>'statutory details updated successfully'
         ];
+    }catch(\Exception $e){
+        $response = [
+        'status' => 'failure',
+        'message' => 'Error while statutory Information ',
+        'error_message' => $e->getMessage()
+        ];
+    }
 
-        return  $response;
+     return response()->json($response);
+
+
     }
 
 
