@@ -44,6 +44,10 @@ export default defineConfig({
 
                 'resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_master.js',
 
+                // Client Onboarding
+
+                'resources/js/hrms/modules/configurations/client_onboarding/client_onboarding_master.js',
+
                 // Assign Shift
                 'resources/js/hrms/modules/configurations/attendance_settings/Att_AssignWorkShifts.js',
 
