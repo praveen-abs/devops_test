@@ -118,11 +118,13 @@ class VmtDashboardService{
 
         //Get current day attendance checkin/checkout status
         $current_day_attendance = VmtEmployeeAttendance::where('user_id',$user_id)
+                                ->join('vmt_work_shifts','vmt_work_shifts.id','=','vmt_employee_attendance.vmt_employee_workshift_id')
                                 ->where('date',date("Y-m-d"))
-                                ->first(['work_mode','checkin_time','checkout_time','attendance_mode_checkin','attendance_mode_checkout',
+                                ->first(['vmt_work_shifts.shift_type','vmt_work_shifts.shift_start_time','vmt_work_shifts.shift_end_time',
+                                        'work_mode','checkin_time','checkout_time','attendance_mode_checkin','attendance_mode_checkout',
                                         'selfie_checkin','selfie_checkout']);
 
-        //dd($current_day_attendance);
+       // dd($current_day_attendance);
 
         // "id" => 1
         // "user_id" => "182"
