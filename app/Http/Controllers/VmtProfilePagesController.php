@@ -372,12 +372,13 @@ public function addExperienceInfo(Request $request)
 
     public function updateStatutoryInfo(Request $request)
     {
-       //  dd($request->all());
+        // dd($request->all());
 
         $statutory = VmtEmployeeStatutoryDetails::where('user_id', $request->id);
 
 
-      // dd($statutory);
+    //   dd($statutory);
+      dd($request->all());
 
 
        if ($statutory->exists()) {
