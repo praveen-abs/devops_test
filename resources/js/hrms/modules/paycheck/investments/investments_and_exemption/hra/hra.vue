@@ -21,8 +21,8 @@
 
     <div class="tw-card bg-gray-50">
         <div class="flex justify-between mb-3">
-            <span class="text-lg font-semibold text-indigo-950">Rental Property</span> <button
-                class="btn btn-border-orange" @click="visible =true"><i class="fa fa-plus-circle me-2" aria-hidden="true"></i>
+            <span class="text-lg font-semibold text-indigo-950">Rental Property</span> <button class="btn btn-border-orange"
+                @click="visible = true"><i class="fa fa-plus-circle me-2" aria-hidden="true"></i>
                 Add Rented</button>
         </div>
 
@@ -46,9 +46,7 @@
     </div>
     <div class="my-3 text-end">
         <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4">Save</button>
-        {{ investmentStore.investment_exemption_steps  }}
         <button @click="investmentStore.investment_exemption_steps++"
-      
             class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md">Next</button>
     </div>
 
@@ -72,7 +70,7 @@
                 <label for="toFrom_month" class="block mb-2 font-medium text-gray-900 ">To
                     Month</label>
                 <input type="date" id="toFrom_month
-                                                    "
+                                                        "
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                     required>
             </div>
