@@ -215,8 +215,8 @@
                             }"
                             v-model="v$.mobile_number.$model"
                             class="form-control textbox"
-                        
-                            
+
+
                           />
                         </div>
 
@@ -224,7 +224,7 @@
                                Mobile Number Is Already Exists
                         </span>
                         <span v-if="invalid_mobile_no" class="text-danger">
-                             Invalid Mobile Number 
+                             Invalid Mobile Number
                         </span>
                         <span
                           v-if="
@@ -280,7 +280,7 @@
                             >Aadhaar Number<span class="text-danger">*</span></label
                           >
                           <!-- <InputText class="onboard-form form-control textbox " id="AadharNumber"
-                          placeholder="9999 9999 9999" @input="AadharCardExits" 
+                          placeholder="9999 9999 9999" @input="AadharCardExits"
                             v-model="v$.aadhar_number.$model"
                             :class="{
                               'p-invalid': v$.aadhar_number.$invalid && submitted,
@@ -294,7 +294,7 @@
                             :class="{
                               'p-invalid': v$.aadhar_number.$invalid && submitted,
                             }"
-                            
+
                           />
 
                           <span v-if="aadhar_card_exists" class="text-danger">
@@ -344,7 +344,7 @@
                           </span>
 
                           <span v-if="invalid_pan_no" class="text-danger">
-                           Invalid Pan Number 
+                           Invalid Pan Number
                           </span>
 
                           <span
@@ -577,7 +577,7 @@
                             maxlength="12"
                             style="text-transform: uppercase"
                             placeholder="Bank IFSC Code"
-                           
+
                           /> -->
 
                           <InputMask
@@ -2419,12 +2419,12 @@
 
                   <div class="row">
                     <div class="text-right col-12">
-                      <!-- <input
+                     <input
                         type="button"
                         value="sample"
                         @click="Sampledata"
                         class="mr-4 text-center btn btn-orange processOnboardForm"
-                      /> -->
+                      />
 
                       <button
                         type="button"
@@ -2927,7 +2927,7 @@ const fnCalculateAge = () => {
       employee_onboarding.dob = ''
     }
   }
-  
+
 };
 
 const SaveEmployeeOnboardingData = () => {
@@ -2950,7 +2950,7 @@ const SaveEmployeeOnboardingData = () => {
         get_id();
         checkInputFiles();
         handleSubmit();
-        
+
       }
 
 
@@ -3219,11 +3219,11 @@ const AadharCardExits = () => {
   console.log("working");
   let aadhar_no = employee_onboarding.aadhar_number;
 
-  
+
 
     if(employee_onboarding.aadhar_number.length >= 12){
       var regexp=/^[2-9]{1}[0-9]{3}\s{1}[0-9]{4}\s{1}[0-9]{4}$/;
-           
+
            if(regexp.test(employee_onboarding.aadhar_number))
                {
                    console.log("Valid Aadhar no.");
@@ -3242,7 +3242,7 @@ const AadharCardExits = () => {
 
                       invalid_aadhar_check.value = false
 
-                   
+
                }
         else{ console.log("Invalid Aadhar no.");
              invalid_aadhar_check.value = true
@@ -3253,7 +3253,7 @@ const AadharCardExits = () => {
       console.log("checking");
     }
 
- 
+
 };
 
 
@@ -3267,7 +3267,7 @@ const panCardExists = () => {
      let pan_no = employee_onboarding.pan_number;
 
       var regep=/^([a-zA-Z]){3}([Pp]){1}([a-zA-Z]){1}([0-9]){4}([a-zA-Z]){1}?$/;
-           
+
            if(regep.test(employee_onboarding.pan_number))
                {
                    console.log("Valid pan no.");
@@ -3285,7 +3285,7 @@ const panCardExists = () => {
                     });
 
                     invalid_pan_no.value = false
-                                    
+
                }
           else{ console.log("Invalid pan no.");
           invalid_pan_no.value = true
@@ -3293,9 +3293,9 @@ const panCardExists = () => {
               }
               console.log("checking");
 
-}; 
-const personal_mail_exists = ref(false);    
-  
+};
+const personal_mail_exists = ref(false);
+
 const personalMailExists = () => {
   let mail = employee_onboarding.email;
 

@@ -58,7 +58,7 @@
                                     <Dropdown v-model="dialog_general_information.blood_group_id" :options="options_blood_group"
                                         optionLabel="name" optionValue="id" placeholder="Select Bloodgroup" class="form-selects" />
                                 </div>
-                                <!-- {{dialog_general_information.blood_group_id  }} -->
+                                {{dialog_general_information.blood_group_id  }}
 
                             </div>
                         </div>
