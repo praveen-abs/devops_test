@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('vmt_time_period', function (Blueprint $table) {
+        Schema::create('vmt_time_period', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('name');
-            $table->text('abbrevation');
+            $table->text('type');
             $table->date('start_month');
             $table->date('end_month');
+            $table->text('abbrevation');
         });
     }
 

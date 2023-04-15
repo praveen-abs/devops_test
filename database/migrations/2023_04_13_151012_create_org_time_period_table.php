@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('vmt_org_time_period', function (Blueprint $table) {
+        Schema::create('vmt_org_time_period', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('vmt_time_period_id');
             $table->date('year');
