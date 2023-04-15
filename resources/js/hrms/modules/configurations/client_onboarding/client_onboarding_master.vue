@@ -24,7 +24,7 @@
         </div>
         <div class="tab-content " id="pills-tabContent">
             <div class="tab-pane fade active show" id="client-list" role="tabpanel" aria-labelledby="">
-                @include('vmt_client')
+                <ClientList />
             </div>
             <div class="tab-pane fade " id="client-onboarding" role="tabpanel" aria-labelledby="">
                 <ClientOnboarding />
@@ -36,7 +36,7 @@
 
 
 <script setup>
-
+import ClientList from './client_list/client_list.vue';
 import ClientOnboarding from './client_onboarding/client_onboarding.vue'
 
 

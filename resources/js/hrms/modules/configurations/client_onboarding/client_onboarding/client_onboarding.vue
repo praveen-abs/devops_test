@@ -1,7 +1,7 @@
 <template>
-    <div class="shadow card profile-box card-top-border">
+    <div class="my-4 shadow card profile-box card-top-border">
         <div class="mb-2 card-body justify-content-center align-items-center">
-            <div class="p-2 form-card">
+            <div class="p-2 my-4 form-card">
 
                 <div class="mt-1 row">
                     <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-xl-3 col-lg-3 dashBoard">
@@ -311,6 +311,7 @@ const client_onboarding = reactive({
     authorised_person_contact_mail: "",
     billing_address: "",
     shipping_address: "",
+    subscription_type:'',
     doc_uploads:""
 
 })
@@ -344,6 +345,8 @@ const submit = () => {
     formData.append('billing_address', client_onboarding.billing_address)
     formData.append('shipping_address', client_onboarding.shipping_address)
     formData.append('doc_uploads', client_onboarding.doc_uploads)
+    formData.append('subscription_type', client_onboarding.subscription_type)
+
 
     console.log(formData);
 
