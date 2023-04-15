@@ -73,19 +73,19 @@ class VmtEmployeeLeaveService
                 $time_period = VmtTimePeriod::where('id',  $time_period_current_year->vmt_time_period_id)->first();
                 $time_period_start_month = Carbon::parse($time_period->start_month)->format('m');
                 $time_period_start_day = Carbon::parse($time_period->start_month)->format('d');
-                $financial_year_start_date =Carbon::parse( $time_period_current_year->year.'-'.$time_period_start_month.'-'.$time_period_start_day);
+                $accrued_leave_start_date =Carbon::parse( $time_period_current_year->year.'-'.$time_period_start_month.'-'.$time_period_start_day);
                 $time_period_end_year = Carbon::parse( $time_period_current_year->year.'-'.$time_period_start_month.'-'.$time_period_start_day)->addYear()->format('Y');
                 $time_period_end_month = Carbon::parse($time_period->end_month)->format('m');
                 $time_period_end_day = Carbon::parse($time_period->end_month)->format('d');
-                $financial_year_end_date = Carbon::parse($time_period_end_year.'-'.$time_period_end_month.'-'.$time_period_end_day);
+                $ $accrued_leave_end_date = Carbon::parse($time_period_end_year.'-'.$time_period_end_month.'-'.$time_period_end_day);
 
 
 
                $emp_doj = Carbon::parse($emp_doj);
 
-               if($emp_doj->between($financial_year_start_date, $financial_year_end_date)){
+               if($emp_doj->between( $accrued_leave_start_date, $accrued_leave_end_date)){
 
-                while($financial_year_end_date->gte($emp_doj)){
+                while($accrued_leave_end_date->gte($emp_doj)){
                     $year=$emp_doj->format('Y');
                     $month=$emp_doj->format('n');
 
@@ -111,15 +111,15 @@ class VmtEmployeeLeaveService
                 }
 
                }else{
-                     if(Carbon::now()->lte($financial_year_end_date)){
+                     if(Carbon::now()->lte( $accrued_leave_end_date)){
                          //till this date accured leave will be added
                          $end_date = Carbon::now();
                      }else{
-                        $end_date = $financial_year_end_date;
+                        $end_date =  $accrued_leave_end_date;
                      }
-                while($end_date->gte($financial_year_start_date)){
-                    $year=$financial_year_start_date->format('Y');
-                    $month=$financial_year_start_date->format('n');
+                while($end_date->gte( $accrued_leave_start_date)){
+                    $year= $accrued_leave_start_date->format('Y');
+                    $month= $accrued_leave_start_date->format('n');
 
                     if($month<10)
                      $month='0'.$month;
@@ -127,7 +127,7 @@ class VmtEmployeeLeaveService
                     $date=$year."-".$month."-15";
                     $accrual_leave_count='1';
                     $employee[$user_id] = array_merge($employee[$user_id],$this->insertAccrualLeaveRecord($user_id, $date, $leave_type_id, $accrual_leave_count));
-                    $financial_year_start_date->addMonth();
+                    $accrued_leave_start_date->addMonth();
                 }
 
                }
