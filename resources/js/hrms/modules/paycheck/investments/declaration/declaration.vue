@@ -107,11 +107,11 @@
 
 <script setup>
 import { onMounted, ref } from 'vue'
-import {investmentFormulaStore} from '../../stores/investmetnFormulaStore'
+import {investmentFormulaStore} from '../../stores/investmentFormulaStore'
 
 const formula = investmentFormulaStore()
 
-const test =ref()
+
 
 
 

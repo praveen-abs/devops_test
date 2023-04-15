@@ -84,9 +84,9 @@
     <div class="my-3 text-end">
         <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md">Save</button>
         <button
-            class="px-4 py-2 mx-4 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md">Previous</button>
+            class="px-4 py-2 mx-4 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md" @click="investmentStore.investment_exemption_steps--">Previous</button>
         <button
-            class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md">Next</button>
+            class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md" @click="investmentStore.investment_exemption_steps++">Next</button>
     </div>
 
     <Dialog v-model:visible="visible" modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
@@ -330,6 +330,9 @@
 
 <script setup>
 import { ref } from "vue";
+import { investmentMainStore } from "../../../stores/investmentMainStore";
+
+const investmentStore = investmentMainStore()
 
 const visible = ref(false)
 const visible1 = ref(false)
