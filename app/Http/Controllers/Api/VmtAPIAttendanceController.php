@@ -511,7 +511,44 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         //Fetch the data
         $response = $serviceVmtAttendanceService->fetchAttendanceRegularizationData(manager_user_code: $request->manager_user_code, month: $request->month, year: $request->year);
 
-        return $response;
+        return response()->json([
+            'status' => 'success',
+            'message' => '',
+            'data' => $response
+        ]);
+    }
+
+    public function getUnusedCompensatoryDays(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                'user_code' => 'required|exists:users,user_code',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        //fetch the data
+        $user_id = User::where('user_code', $request->user_code)->first()->id;
+
+        $response = $serviceVmtAttendanceService->fetchUnusedCompensatoryOffDays($user_id);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => '',
+            'data' => $response
+        ]);
 
     }
 }

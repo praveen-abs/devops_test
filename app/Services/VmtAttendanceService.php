@@ -86,12 +86,13 @@ class VmtAttendanceService{
         }
 
        // dd($allEmployees_lateComing);
-        return [
-            "status"=>"success",
-            "message"=>"",
-            "data"=>$allEmployees_lateComing
-        ];
+        // return [
+        //     "status"=>"success",
+        //     "message"=>"",
+        //     "data"=>$allEmployees_lateComing
+        // ];
 
+        return $allEmployees_lateComing;
     }
 
     /*
@@ -212,10 +213,7 @@ class VmtAttendanceService{
     {
         $response = array();
 
-          $leaveTypes = VmtLeaves::all();
-         $sickLeaveCount =  VmtEmployeeLeaves::where('leave_type_id', '=', '1')->count();
-         $CausalLeaveCount =  VmtEmployeeLeaves::where('leave_type_id', '=', '2')->count();
-        $earnedleave_count =  VmtEmployeeLeaves::where('leave_type_id', '=', '3')->count();
+        $leaveTypes = VmtLeaves::all();
 
         $query_emp_leaves = VmtEmployeeLeaves::join('vmt_leaves','vmt_leaves.id','vmt_employee_leaves.leave_type_id')
                                             ->where('user_id', '=' , '174');
