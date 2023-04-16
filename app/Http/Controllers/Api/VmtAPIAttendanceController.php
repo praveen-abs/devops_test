@@ -424,10 +424,10 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
                 'user_code' => 'required|exists:users,user_code',
                 'attendance_date' => 'required',
                 'regularization_type' => 'required',
-                'user_time' => 'required',
+                'user_time' => 'nullable', //For MIP,MOP : its null
                 'regularize_time' => 'required',
                 'reason' => 'required',
-                'custom_reason' => 'required', //Send empty string even if no custom reason needed
+                'custom_reason' => 'nullable', //Send empty string even if no custom reason needed
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',

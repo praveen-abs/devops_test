@@ -38,13 +38,13 @@ class VmtAttendanceService{
         //If manager ID not set, then show all employees
         if(empty($manager_user_code))
         {
-            //If manager ID set, then show only the team level employees
 
             $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::all();
 
         }
         else
         {
+            //If manager ID set, then show only the team level employees
 
             $employees_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $manager_user_code)->pluck('user_id');
 
