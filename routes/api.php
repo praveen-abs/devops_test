@@ -80,14 +80,14 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('save_reimbursement_data', [VmtAPIAttendanceController::class, 'saveReimbursementData']);
 
     ////Attendance
-    Route::get('attendance_getcurrentday', [VmtAPIAttendanceController::class, 'getCurrentDayAttendance']);
 
     //Check-in/ Check-out
     Route::post('attendance_checkin', [VmtAPIAttendanceController::class, 'attendanceCheckin']);
     Route::post('attendance_checkout', [VmtAPIAttendanceController::class, 'attendanceCheckout']);
+    Route::post('/attendance/get_attendance_status', [VmtAPIAttendanceController::class, 'getAttendanceStatus']);
 
     //Leave
-    Route::post('/attendance/apply-leave', [VmtAPIAttendanceController::class, 'applyLeaveRequest']);
+    Route::post('/attendance/apply_leave', [VmtAPIAttendanceController::class, 'applyLeaveRequest']);
     Route::post('/attendance/approveRejectRevoke-att-leave', [VmtAPIAttendanceController::class, 'approveRejectRevokeLeaveRequest']);
     //Route::post('/attendance/getData-att-leaves', [VmtAPIAttendanceController::class, '']);
 
