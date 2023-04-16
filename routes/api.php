@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\HRMSBaseAPIController;
 use App\Http\Controllers\Api\VmtAPIPMSModuleController;
 use App\Http\Controllers\Api\VmtAPIDashboardController;
 use App\Http\Controllers\Api\VmtAPIAttendanceController;
@@ -33,7 +34,7 @@ Route::post('/auth/updatePassword', [AuthController::class, 'updatePassword']);
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
     //Route::get('viewAssigneeReviewList', 'App\Http\Controllers\VmtAPIPMSModuleController@showEmployeeApraisalReviewList');
-
+    Route::get('/getAllUsers',[HRMSBaseAPIController::class, 'getAllUsers']);
 
     /*
         getAssigneeKPIForms():

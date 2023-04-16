@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\DB;
 class VmtAttendanceService{
 
 
-    public function fetchAttendanceRegularizationData($manager_user_code = null)
+    public function fetchAttendanceRegularizationData($manager_user_code = null, $month, $year)
     {
 
         $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
@@ -38,9 +38,12 @@ class VmtAttendanceService{
         //If manager ID not set, then show all employees
         if(empty($manager_user_code))
         {
-
-            $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::all();
-
+            if(empty($month) && empty($year))
+                $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::all();
+            else
+                $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereYear('attendance_date', $year)
+                                                                            ->whereMonth('attendance_date', $month)
+                                                                            ->get();
         }
         else
         {
@@ -48,10 +51,14 @@ class VmtAttendanceService{
 
             $employees_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $manager_user_code)->pluck('user_id');
 
-            //dd($employees_id);
 
-            $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereIn('user_id',$employees_id)->get();
-            //dd($allEmployees_lateComing);
+            if(empty($month) && empty($year))
+                $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereIn('user_id',$employees_id)->get();
+            else
+                $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereIn('user_id',$employees_id)
+                                                                                ->whereYear('attendance_date', $year)
+                                                                                ->whereMonth('attendance_date', $month)
+                                                                                ->get();
 
         }
 
@@ -79,7 +86,11 @@ class VmtAttendanceService{
         }
 
        // dd($allEmployees_lateComing);
-        return $allEmployees_lateComing;
+        return [
+            "status"=>"success",
+            "message"=>"",
+            "data"=>$allEmployees_lateComing
+        ];
 
     }
 

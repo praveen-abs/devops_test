@@ -491,6 +491,8 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
             $request->all(),
             $rules = [
                 'manager_user_code' => 'nullable|exists:users,user_code',
+                'month' => 'required',
+                'year' => 'required'
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
@@ -507,7 +509,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         }
 
         //Fetch the data
-        $response = $serviceVmtAttendanceService->fetchAttendanceRegularizationData($request->manager_user_code);
+        $response = $serviceVmtAttendanceService->fetchAttendanceRegularizationData(manager_user_code: $request->manager_user_code, month: $request->month, year: $request->year);
 
         return $response;
 
