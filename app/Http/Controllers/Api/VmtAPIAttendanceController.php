@@ -22,30 +22,6 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
     private $cost_per_km_2wheeler = 3;
     private $cost_per_km_4wheeler = 4;
 
-    /*
-        get current day attendance details
-        attendanceGetCurrentDay():
-        Input : date
-        DB Table : vmt_employee_attendance
-        Output : success/failure response.
-    */
-    public function getCurrentDayAttendance(Request $request)
-    {
-        // code...
-        $attendanceDate  = $request->date;
-
-        $data  = VmtEmployeeAttendance::select("date", "checkin_time",  "checkout_time","shift_type","leave_type_id")
-                ->where('user_id', auth::user()->id)
-                ->where('date', $attendanceDate)
-                ->first();
-
-        return response()->json([
-            'status' => 'success',
-            'message'=> '',
-            'data'   => $data
-        ]);
-    }
-
 
     /*
         attendanceCheckin():
@@ -172,6 +148,37 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
     }
 
+    /*
+        Get the attendance status of the given user
+        for the given date
+
+
+    */
+    public function getAttendanceStatus(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+                "date" => "required",
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid"
+            ]
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                    'status' => 'failure',
+                    'message' => $validator->errors()->all()
+            ]);
+        }
+
+        $response = $serviceVmtAttendanceService->fetchAttendanceStatus($request->user_code, $request->date);
+
+        return $response;
+    }
+
     public function saveReimbursementData(Request $request){
 
 
@@ -207,30 +214,6 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
     }
 
-
-    /*
-        attendanceApplyLeave():
-        Input : date, leave_type_id
-        DB Table : vmt_employee_attendance
-        Output : success/failure response.
-    */
-    public function attendanceApplyLeave(Request $request)
-    {
-        // code...
-        $attendanceLeave = new VmtEmployeeAttendance;
-        $attendanceLeave->date  = $request->date;
-        $attendanceLeave->leave_type_id  = $request->leave_type_id;
-        $attendanceLeave->leave_comments = $request->leave_comments;
-        $attendanceLeave->user_id  = auth::user()->id;
-        $attendanceLeave->save();
-        $emptyObj  = new \stdClass;
-
-        return response()->json([
-            'status' => 'success',
-            'message'=> 'Leave success',
-            'data'   => $emptyObj
-        ]);
-    }
 
     /*
         attendanceMonthlyReport():
@@ -309,14 +292,20 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
     public function applyLeaveRequest(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
 
-        dd("---");
-        //Need to split the validation based on leave type so that mandatory fields are checked correctly.
-
         $validator = Validator::make(
             $request->all(),
             $rules = [
-                'user_id' => 'required|exists:users,user_code',
+                'user_code' => 'required|exists:users,user_code',
                 'leave_request_date' => 'required',
+                'leave_reason' => 'required',
+                'leave_type_name' => 'required|exists:vmt_leaves,leave_type',
+
+                'start_date' => 'required',
+                'end_date' => 'required',
+
+                'no_of_days' => 'required',
+
+
                 // 'start_date' => 'required',
                 // 'end_date' => 'required',
                 // 'hours_diff' => 'required',
@@ -341,8 +330,9 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
             ]);
         }
 
+        $user_id = User::where('user_code', $request->user_code)->first()->id;
 
-        $response = $serviceVmtAttendanceService->applyLeaveRequest( user_id: $request->user_id,
+        $response = $serviceVmtAttendanceService->applyLeaveRequest( user_id: $user_id,
                                                                     leave_request_date : $request->leave_request_date,
                                                                     start_date : $request->start_date,
                                                                     end_date : $request->end_date,
@@ -434,10 +424,10 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
                 'user_code' => 'required|exists:users,user_code',
                 'attendance_date' => 'required',
                 'regularization_type' => 'required',
-                'user_time' => 'required',
+                'user_time' => 'nullable', //For MIP,MOP : its null
                 'regularize_time' => 'required',
                 'reason' => 'required',
-                'custom_reason' => 'required', //Send empty string even if no custom reason needed
+                'custom_reason' => 'nullable', //Send empty string even if no custom reason needed
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
@@ -501,6 +491,8 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
             $request->all(),
             $rules = [
                 'manager_user_code' => 'nullable|exists:users,user_code',
+                'month' => 'required',
+                'year' => 'required'
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
@@ -517,9 +509,46 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         }
 
         //Fetch the data
-        $response = $serviceVmtAttendanceService->fetchAttendanceRegularizationData($request->manager_user_code);
+        $response = $serviceVmtAttendanceService->fetchAttendanceRegularizationData(manager_user_code: $request->manager_user_code, month: $request->month, year: $request->year);
 
-        return $response;
+        return response()->json([
+            'status' => 'success',
+            'message' => '',
+            'data' => $response
+        ]);
+    }
+
+    public function getUnusedCompensatoryDays(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                'user_code' => 'required|exists:users,user_code',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        //fetch the data
+        $user_id = User::where('user_code', $request->user_code)->first()->id;
+
+        $response = $serviceVmtAttendanceService->fetchUnusedCompensatoryOffDays($user_id);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => '',
+            'data' => $response
+        ]);
 
     }
 }

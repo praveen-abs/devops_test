@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\HRMSBaseAPIController;
 use App\Http\Controllers\Api\VmtAPIPMSModuleController;
 use App\Http\Controllers\Api\VmtAPIDashboardController;
 use App\Http\Controllers\Api\VmtAPIAttendanceController;
@@ -33,7 +34,7 @@ Route::post('/auth/updatePassword', [AuthController::class, 'updatePassword']);
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
     //Route::get('viewAssigneeReviewList', 'App\Http\Controllers\VmtAPIPMSModuleController@showEmployeeApraisalReviewList');
-
+    Route::get('/getAllUsers',[HRMSBaseAPIController::class, 'getAllUsers']);
 
     /*
         getAssigneeKPIForms():
@@ -80,15 +81,16 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('save_reimbursement_data', [VmtAPIAttendanceController::class, 'saveReimbursementData']);
 
     ////Attendance
-    Route::get('attendance_getcurrentday', [VmtAPIAttendanceController::class, 'getCurrentDayAttendance']);
 
     //Check-in/ Check-out
     Route::post('attendance_checkin', [VmtAPIAttendanceController::class, 'attendanceCheckin']);
     Route::post('attendance_checkout', [VmtAPIAttendanceController::class, 'attendanceCheckout']);
+    Route::post('/attendance/get_attendance_status', [VmtAPIAttendanceController::class, 'getAttendanceStatus']);
 
     //Leave
-    Route::post('/attendance/apply-leave', [VmtAPIAttendanceController::class, 'applyLeaveRequest']);
+    Route::post('/attendance/apply_leave', [VmtAPIAttendanceController::class, 'applyLeaveRequest']);
     Route::post('/attendance/approveRejectRevoke-att-leave', [VmtAPIAttendanceController::class, 'approveRejectRevokeLeaveRequest']);
+    Route::post('/attendance/getData-att-unused-compensatory-days', [VmtAPIAttendanceController::class, 'getUnusedCompensatoryDays']);
     //Route::post('/attendance/getData-att-leaves', [VmtAPIAttendanceController::class, '']);
 
     //Attendance Reports
