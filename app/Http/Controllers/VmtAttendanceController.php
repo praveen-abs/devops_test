@@ -23,6 +23,8 @@ use Illuminate\Support\Str;
 use App\Mail\WelcomeMail;
 use App\Models\VmtWorkShifts;
 use App\Models\VmtEmployeeAttendanceRegularization;
+use App\Models\VmtOrgTimePeriod;
+use App\Models\VmtTimePeriod;
 use \Datetime;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
@@ -57,6 +59,15 @@ class VmtAttendanceController extends Controller
         $leaveData_currentUser = getLeaveCountDetails(auth::user()->id);
 
         //dd($leaveData_currentUser->toArray());
+
+        //Accrued Leave Years
+        $time_periods_of_year_query = VmtTimePeriod::get(['start_month','end_month','abbrevation']);
+        foreach($time_periods_of_year_query  as $single_time_periods){
+              dd(Carbon::parse($single_time_periods->start_month)->format('M'));
+            // $starting_of_time_period =
+            // $ending_of_time_period =
+        }
+
 
         //Generate Team leave data
         if (Str::contains(currentLoggedInUserRole(), ['Manager'])) {
