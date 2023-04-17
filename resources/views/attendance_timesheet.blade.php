@@ -1644,11 +1644,10 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
                                     else{
                                         cell.innerHTML = " <div class='p-2 w-100 h-100' style='background: #fad8d8;'><p class='show_date' >" + date +
-                                                "</p>  <div class='mt-2 d-flex flex-column bio_check align-items-start'><div class='mt-2 w-100 d-flex check-out f-10 text-danger'><span style='margin-left: 45px;font-size: 13px;color: red;font-weight: 700;' class='f-11' id='checkout_time_" +
+                                                "</p>  <div class='mt-2 d-flex flex-column bio_check align-items-start'><div class='mt-2 w-100 d-flex check-out f-10 text-danger' style='position: relative;top: -34px;'><span style='margin-left: 45px;font-size: 13px;color: red;font-weight: 700;' class='f-11' id='checkout_time_" +
                                                 year + "-" + (month + 1) + "-" + dateText +
-                                                "'>Absent</span><span style='margin-left: 7px'><i class='fa fa-exclamation-circle fs-15 text-warning me-2' title='Not Applied'></i></span>";
+                                                "'>Absent</span><span style='margin-left: 7px'><i class='fa fa-exclamation-circle fs-15 text-warning me-2' title='Not Applied'></i></span></div></div><div><button class='btn btn-orange' style='margin-top: -20px;'><a  style='font-weight: 700' href='/attendance-leave'>Apply Leave</a></button></div>";
 
-                                                console.log("attendence_mode"+ajax_data_currentdate.attendance_mode_checkin)
                                     }
 
                                     }

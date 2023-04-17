@@ -24,11 +24,11 @@
    <div id="ManageEmployee"></div> --}} -->
 
 
-    @vite('resources/js/hrms/modules/paycheck/investments/investment.js')
-   <div id="Investments"></div>
+    <!-- @vite('resources/js/hrms/modules/paycheck/investments/investment.js')
+   <div id="Investments"></div> -->
 
-   <!-- @vite('resources/js/hrms/modules/salary_loan_setting/salary_loan_setting.js')
-   <div id="SalaryAdvanceLoan"></div> -->
+   @vite('resources/js/hrms/modules/salary_loan_setting/salary_loan_setting.js')
+   <div id="SalaryAdvanceLoan"></div>
 
    
 </body>
