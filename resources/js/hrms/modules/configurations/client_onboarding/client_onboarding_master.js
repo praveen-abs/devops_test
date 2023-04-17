@@ -2,6 +2,7 @@ import "primeflex/primeflex.css";
 import "primevue/resources/themes/lara-light-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
+// import '../../../../../public/assets/css/tailwind.css'
 
 
 import { createApp } from "vue";
@@ -24,8 +25,6 @@ import Dropdown from 'primevue/dropdown';
 import ConfirmationService from 'primevue/confirmationservice';
 import ToastService from 'primevue/toastservice';
 import ProgressSpinner from 'primevue/progressspinner';
-import ProgressBar from 'primevue/progressbar';
-
 import InputText from 'primevue/inputtext'
 import Row from 'primevue/row'
 import ColumnGroup from 'primevue/columngroup'
@@ -33,11 +32,11 @@ import Calendar from 'primevue/calendar'
 import Textarea from 'primevue/textarea'
 import Chips from 'primevue/chips'
 import MultiSelect from 'primevue/multiselect';
+import InputNumber from 'primevue/inputnumber'
 
 
-import ManageEmployee from './manage_employee.vue'
-
-const app = createApp(ManageEmployee);
+import clientOnboarding from './client_onboarding_master.vue'  
+const app = createApp(clientOnboarding);
 const pinia=createPinia()
 
 app.use(PrimeVue, { ripple: true });
@@ -68,7 +67,7 @@ app.component('Calendar', Calendar)
 app.component('Textarea', Textarea)
 app.component('Chips', Chips)
 app.component('MultiSelect', MultiSelect)
-app.component('ProgressBar', ProgressBar)
+app.component('InputNumber', InputNumber)
 
-app.mount("#ManageEmployee");
+app.mount("#clientOnboarding");
 

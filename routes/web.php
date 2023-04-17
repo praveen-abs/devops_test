@@ -412,7 +412,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/getEmployeeName',  [App\Http\Controllers\VmtEmployeeController::class, 'getEmployeeName'])->name('get-employee-name');
 
 
-        Route::get('/employeeOnboarding',  [App\Http\Controllers\VmtEmployeeOnboardingController::class, 'showEmployeeOnboardingPage'])->name('employeeOnboarding');
+        Route::get('/employeeOnboarding',  [App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController::class, 'showEmployeeOnboardingPage'])->name('employeeOnboarding');
         Route::post('/state',  [App\Http\Controllers\VmtEmployeeController::class, 'getState'])->name('state');
 
     //Normal Onboarding v2
@@ -650,7 +650,7 @@ Route::middleware(['auth'])->group(function () {
 
     //Testing controller
     Route::get('/download-private-file', [App\Http\Controllers\VmtTestingController::class, 'downloadPrivateFile'])->name('downloadPrivateFile');
-    Route::get('/view-private-file', [App\Http\Controllers\VmtTestingController::class, 'viewPrivateFile'])->name('viewPrivateFile');
+    Route::post('/view-profile-private-file', [App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController::class, 'viewProfilePagePrivateFile'])->name('viewprofileprivatefile');
     Route::get('/mail-test/appointment-letter', [App\Http\Controllers\VmtTestingController::class, 'mailTest_sendAppointmentLetter'])->name('mailTest_sendAppointmentLetter');
     Route::get('/getLeaves', [App\Http\Controllers\VmtAttendanceController::class, 'employeeLeaveBalance'])->name('employeeLeaveBalance');
     Route::post('/postLeaves', [App\Http\Controllers\Api\VmtAPIAttendanceController::class, 'applyLeaveRequest'])->name('applyLeaveRequest');

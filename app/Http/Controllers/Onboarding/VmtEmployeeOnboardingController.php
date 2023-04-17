@@ -36,7 +36,7 @@ use PDF;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Crypt;
-
+use Illuminate\Support\Facades\Storage;
 use App\Models\VmtEmployeeFamilyDetails;
 use App\Services\VmtEmployeeService;
 
@@ -943,7 +943,7 @@ class VmtEmployeeOnboardingController extends Controller
                 ];
             }
 
-
+        }
 
 
         // if (isset($row['employee_code'])) {
@@ -1101,7 +1101,7 @@ class VmtEmployeeOnboardingController extends Controller
 
 
 
-    }
+
 
 
        // Generate Employee Apoinment PDF after onboarding
@@ -1434,4 +1434,11 @@ class VmtEmployeeOnboardingController extends Controller
         }
     }
 
+    public function viewProfilePagePrivateFile(Request $request){
+    
+        $private_file = 'employees/'.$request->user_code."/onboarding_documents";
+        // dd(file(storage_path('employees'.$private_file)));
+       return response()->file(storage_path($private_file));
+
+}
 }

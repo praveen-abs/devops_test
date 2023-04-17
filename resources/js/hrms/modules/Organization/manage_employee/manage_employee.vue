@@ -30,18 +30,15 @@
                     <div class="tab-pane show fade active" id="active_employees" role="tabpanel"
                         aria-labelledby="pills-profile-tab">
                         <ActiveEmployees />
-                        <!-- <div id="active-directory-table" class="noCustomize_gridjs"></div> -->
                     </div>
 
                     <div class="tab-pane fade " id="not_active_employees" role="tabpanel"
                         aria-labelledby="pills-profile-tab">
                         <YetToActiveEmployees />
-                        <!-- <div id="yet-to-active-directory-table" class="noCustomize_gridjs"></div> -->
                     </div>
                     <div class="tab-pane fade " id="exit_employees" role="tabpanel"
                         aria-labelledby="pills-profile-tab">
                         <ExitEmployees />
-                        <!-- <div id="exit_employeeTable" class="noCustomize_gridjs"></div> -->
                     </div>
                 </div>
             </div>
@@ -54,8 +51,7 @@ import ActiveEmployees from './active_employees/active_employees.vue'
 import YetToActiveEmployees from './yet_to_active_employees/yet_to_active_employees.vue'
 import ExitEmployees from './exit_employees/exit_employees.vue'
 
-import { Service } from './manage_service';
-import { onMounted } from 'vue';
+
 
 
 
