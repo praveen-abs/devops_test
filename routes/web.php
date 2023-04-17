@@ -84,6 +84,8 @@ Route::middleware(['auth'])->group(function () {
 
         return auth()->user()->id;
     });
+
+    //Get current logged-in user name
     Route::get('/currentUserName', function() {
 
         return auth()->user()->name;
@@ -94,6 +96,8 @@ Route::middleware(['auth'])->group(function () {
 
         return auth()->user()->name;
     });
+
+
 
 
 
@@ -427,7 +431,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('payroll/claims',  [App\Http\Controllers\VmtPayrollController::class, 'showPayrollClaimsPage'])->name('showPayrollClaimsPage');
     Route::get('payroll/analytics',  [App\Http\Controllers\VmtPayrollController::class, 'showPayrollAnalyticsPage'])->name('showPayrollAnalyticsPage');
     Route::get('payroll/run',  [App\Http\Controllers\VmtPayrollController::class, 'showPayrollRunPage'])->name('showPayrollRunPage');
-
+    Route::get('payroll/setup',  [App\Http\Controllers\VmtPayrollController::class, 'showPayrollSetup'])->name('showPayrollSetup');
+    Route::get('payroll/work_location',  [App\Http\Controllers\VmtPayrollController::class, 'showWorkLocationSetup'])->name('showWorkLocationSetup');
 
 //Pay Check module
     Route::get('/paycheckDashboard',  [App\Http\Controllers\VmtPayCheckController::class, 'showPaycheckDashboard'])->name('paycheckDashboard');
