@@ -180,7 +180,7 @@
                     <div class="card-body">
                         <h6 class="">Statutory Information
                             <span class="personal-edit">
-                                <a href="#" class="edit-icon" @click="onClick_EditButton_Statutory_Info ">
+                                <a href="#" class="edit-icon" @click="onClick_EditButton_Statutory_Info() ">
                                     <i class="ri-pencil-fill"></i>
                                 </a>
                             </span>
@@ -288,7 +288,8 @@
                             <li>
                                 <div class="title">PF Applicable</div>
                                 <div class="text">
-                                    {{  _instance_profilePagesStore.employeeDetails.get_statutory_details[0].pf_applicable  }}
+                                    <!-- {{  _instance_profilePagesStore.employeeDetails.get_statutory_details[0].pf_applicable  }} -->
+                                    {{ pf_applicable }}
 
                                 </div>
                             </li>
@@ -315,16 +316,19 @@
                                 <div class="title">ESIC Applicable</div>
                                 <div class="text">
                                     <!-- {{ statutory_info.esic_applicable }} -->
-                                    {{  _instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_applicable }}
+                                    <!-- {{   _instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_applicable }} -->
+                                    {{ esic_applicable }}
 
                                 </div>
                             </li>
                             <li>
                                 <div class="title">ESIC Number</div>
-                                <div class="text">
+                                <div class="text" >
                               <!-- {{ statutory_info.esic_no }} -->
 
-                              {{  _instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_number }}
+                              <!-- {{  _instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_number }} -->
+                              {{_instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_number   }}
+                              <!-- {{ esic_number }} -->
 
                                 </div>
                             </li>
@@ -383,9 +387,10 @@
     </div>
 
 
+
 </template>
 <script setup>
-import { ref, onMounted, reactive, onUpdated } from 'vue';
+import { ref, onMounted, reactive, onUpdated ,computed} from 'vue';
 import axios from 'axios'
 import { useToast } from "primevue/usetoast";
 import { Service } from "../../Service/Service";
@@ -418,6 +423,20 @@ const bank_information = reactive({
     bank_ac_no: '',
     ifsc_code: '',
     pan_no: '',
+})
+
+
+const  esic_applicable =computed(()=>{
+   if(_instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_applicable  == "no") return "No";
+   if(_instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_applicable == "yes") return "Yes";
+})
+
+const pf_applicable =computed(()=>{
+
+   if( _instance_profilePagesStore.employeeDetails.get_statutory_details[0].pf_applicable == "no") return "No" ;
+   if( _instance_profilePagesStore.employeeDetails.get_statutory_details[0].pf_applicable == "yes") return "Yes" ;
+
+
 })
 
 
@@ -469,9 +488,9 @@ function onClick_EditButton_BankInfo(){
      bank_information.bank_ac_no   =   _instance_profilePagesStore.employeeDetails.get_employee_details.bank_account_number ;
      bank_information.ifsc_code   =  _instance_profilePagesStore.employeeDetails.get_employee_details.bank_ifsc_code;
      bank_information.pan_no   =   _instance_profilePagesStore.employeeDetails.get_employee_details.pan_number ;
-
-
      dialog_Bankvisible.value = true;
+
+
 }
 
 
@@ -486,6 +505,10 @@ function onClick_EditButton_Statutory_Info(){
      statutory_information.esic_applicable   =   _instance_profilePagesStore.employeeDetails.get_statutory_details[0].pf_applicable ;
      statutory_information.esic_no    =   _instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_number ;
 
+console.log( _instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_number);
+console.log(_instance_profilePagesStore.employeeDetails.get_statutory_details[0].pf_applicable);
+// if( statutory_information.pf_applicable =_instance_profilePagesStore.employeeDetails.get_statutory_details[0].pf_applicable=="no")return"No";
+// if( statutory_information.esic_no    =   _instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_number == typeof(Number) ) return "No";
      dialog_statutory_visible.value = true;
 }
 
@@ -526,11 +549,6 @@ axios.post(url, {
              window.location.reload();
             toast.add({ severity: 'success', summary: 'Updated', detail: 'General information updated', life: 3000 });
 
-            _instance_profilePagesStore.employeeDetails.get_employee_details.pf_applicable = statutory_information.pf_applicable;
-            _instance_profilePagesStore.employeeDetails.get_employee_details.epf_number = statutory_information.epf_no;
-            _instance_profilePagesStore.employeeDetails.get_employee_details.uan_number = statutory_information.uan_no;
-            _instance_profilePagesStore.employeeDetails.get_employee_details.esic_applicable = statutory_information.esic_applicable;
-            _instance_profilePagesStore.employeeDetails.get_employee_details.esic_number = statutory_information.esic_no
 
         } else if (res.data.status == "failure") {
             leave_data.leave_request_error_messege = res.data.message;

@@ -24,6 +24,8 @@ import Dropdown from 'primevue/dropdown';
 import ConfirmationService from 'primevue/confirmationservice';
 import ToastService from 'primevue/toastservice';
 import ProgressSpinner from 'primevue/progressspinner';
+import ProgressBar from 'primevue/progressbar';
+
 import InputText from 'primevue/inputtext'
 import Row from 'primevue/row'
 import ColumnGroup from 'primevue/columngroup'
@@ -66,6 +68,7 @@ app.component('Calendar', Calendar)
 app.component('Textarea', Textarea)
 app.component('Chips', Chips)
 app.component('MultiSelect', MultiSelect)
+app.component('ProgressBar', ProgressBar)
 
 app.mount("#ManageEmployee");
 

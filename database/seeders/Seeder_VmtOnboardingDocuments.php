@@ -15,6 +15,8 @@ class Seeder_VmtOnboardingDocuments extends Seeder
      */
     public function run()
     {
+        DB::table('vmt_onboarding_documents')->truncate();
+
         DB::table('vmt_onboarding_documents')->insert([
             ['id'=>'1','document_name'=>'Aadhar Card Front','is_mandatory'=>'1'],
             ['id'=>'2','document_name'=>'Aadhar Card Back','is_mandatory'=>'1'],

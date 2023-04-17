@@ -1,8 +1,7 @@
 @import "./components/table";
 @import "./utilities/variable";
-// @import "./components/card";
+@import "./components/card";
 // @import "./utilities/helpers";
-@import "./components/buttons";
 
 * {
     // font-size: 1vw;
@@ -19,4 +18,18 @@ span {
 body {
     background-color: $bg-body;
 }
+
+.collapse {
+    visibility: visible !important;
+}
+
+.investment_dropDown .dropdown-toggle:after {
+    display: none;
+}
+
+.investment_dropDown .dropdown-menu {
+    min-width: 120px;
+}
+
+
 

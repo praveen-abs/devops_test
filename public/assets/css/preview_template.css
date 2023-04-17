@@ -68,7 +68,11 @@ table.payslip_table tr,
 table.payslip_table tr td {
     border: 2px solid #0087c1;
 }
-
+table.payslip_table.ardens tr,
+table.payslip_table.ardens tr td
+{
+    border: 2px solid #ff530a;
+}
 .border-less {
     border: 0px !important;
 }
@@ -91,6 +95,7 @@ table.payslip_table tr td p {
 .txt-left {
     text-align: left !important;
 }
+
 
 .txt-right {
     text-align: right !important;

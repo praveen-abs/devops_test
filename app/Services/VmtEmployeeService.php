@@ -453,7 +453,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
         $newEmployee->dol   =  $doj ? $this->getdateFormatForDb($doj) : '';
         $newEmployee->dob   =  $dob ? $this->getdateFormatForDb($dob) : '';
         $newEmployee->location   =    $row["work_location"] ?? '';
-        $newEmployee->pan_number   =  isset($row["pan_no"]) ? ($row["pan_no"]) : "";
+        $newEmployee->pan_number   =  isset($row["pan_number"]) ? ($row["pan_number"]) : "";
         $newEmployee->dl_no   =  $row["dl_no"] ?? '';
         $newEmployee->passport_number = $row["passport_no"] ?? '';
         $newEmployee->passport_date =  $passport_date ? $this->getdateFormatForDb( $passport_date) : '';
@@ -502,26 +502,26 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
 
         if($onboard_import_type != "excel_quick" && $onboard_import_type != "excel_bulk")
         {
-            $newEmployee->aadhar_card_file = $this->uploadDocument( $user->id, $row['Aadharfront'], $user->user_code, 'Aadhar Card Front');
-            $newEmployee->aadhar_card_backend_file = $this->uploadDocument($user->id,$row['AadharBack'], $user->user_code,'Aadhar Card Back');
-            $newEmployee->pan_card_file = $this->uploadDocument($user->id,$row['panDoc'], $user->user_code,'Pan Card');
-            $newEmployee->passport_file = $this->uploadDocument($user->id,$row['passport'], $user->user_code,'Passport');
-            $newEmployee->voters_id_file = $this->uploadDocument($user->id,$row['voterId'], $user->user_code,'Voter ID');
-            $newEmployee->dl_file = $this->uploadDocument($user->id,$row['dlDoc'], $user->user_code,'Driving License');
-            $newEmployee->education_certificate_file = $this->uploadDocument($user->id,$row['eductionDoc'], $user->user_code,'Education Certificate');
-            $newEmployee->reliving_letter_file = $this->uploadDocument($user->id,$row['releivingDoc'],$user->user_code,'Relieving Letter');
+            $this->uploadDocument($user->id, $row['Aadharfront'], $user->user_code, 'Aadhar Card Front');
+            $this->uploadDocument($user->id, $row['AadharBack'], $user->user_code,'Aadhar Card Back');
+            $this->uploadDocument($user->id, $row['panDoc'], $user->user_code,'Pan Card');
+            $this->uploadDocument($user->id, $row['passport'], $user->user_code,'Passport');
+            $this->uploadDocument($user->id, $row['voterId'], $user->user_code,'Voter ID');
+            $this->uploadDocument($user->id, $row['dlDoc'], $user->user_code,'Driving License');
+            $this->uploadDocument($user->id, $row['eductionDoc'], $user->user_code,'Education Certificate');
+            $this->uploadDocument($user->id, $row['releivingDoc'],$user->user_code,'Relieving Letter');
 
-            $docReviewArray = array(
-                'aadhar_card_file' => -1,
-                'aadhar_card_backend_file' => -1,
-                'pan_card_file' => -1,
-                'passport_file' => -1,
-                'voters_id_file' => -1,
-                'dl_file' => -1,
-                'education_certificate_file' => -1,
-                'reliving_letter_file' => -1
-            );
-            $newEmployee->docs_reviewed = json_encode($docReviewArray);
+            // $docReviewArray = array(
+            //     'aadhar_card_file' => -1,
+            //     'aadhar_card_backend_file' => -1,
+            //     'pan_card_file' => -1,
+            //     'passport_file' => -1,
+            //     'voters_id_file' => -1,
+            //     'dl_file' => -1,
+            //     'education_certificate_file' => -1,
+            //     'reliving_letter_file' => -1
+            // );
+          //  $newEmployee->docs_reviewed = json_encode($docReviewArray);
 
 
         }
@@ -533,7 +533,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
 
     private function createOrUpdate_EmployeeOfficeDetails($user_id,$row)
     {
-
+          
         $empOffice = VmtEmployeeOfficeDetails::where('user_id',$user_id);
 
         if($empOffice->exists())
@@ -944,13 +944,9 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
     */
     function fetchAllEmployeesDocumentsAsGroups(Request $request){
 
-
-
         $json_response = array();
 
-        $array_unique_users = User::where('is_onboarded' ,0)->get(['id','user_code','name']);
-
-
+        $array_unique_users = User::where('is_onboarded' ,1)->get(['id','user_code','name']);
         foreach($array_unique_users as $single_user){
 
             //dd($single_user->user_id);
@@ -969,7 +965,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
 
                 $item["doc_url"] = "employees/". $single_user->user_code."/onboarding_documents/".$item["doc_url"];
                   //dd($item["doc_url"]);
-                });
+            });
 
 
 
@@ -987,6 +983,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
         return $json_response;
 
     }
+
 
     public function processEmployeeDocumentsBulkApprovals($data){
         $reimbursement_data = $data['reimbursement_id']["reimbursement_data"];

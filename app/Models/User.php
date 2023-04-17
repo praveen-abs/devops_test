@@ -77,7 +77,6 @@ class User extends Authenticatable
         return $this->hasMany(VmtEmployeeFamilyDetails::class,'user_id');
     }
 
-
     function getEmergencyContactsDetails() {
         return $this->hasMany(VmtEmployeeEmergencyContactDetails::class,'user_id');
     }
@@ -87,6 +86,10 @@ class User extends Authenticatable
     function getStatutoryDetails() {
         return $this->hasMany(VmtEmployeeStatutoryDetails::class,'user_id');
     }
+    function getEmployeeDocuments() {
+        return $this->hasMany(VmtEmployeeDocuments::class,'user_id');
+    }
 
-    
+
+
 }

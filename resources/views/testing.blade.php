@@ -18,38 +18,19 @@
 
 </head>
 <body>
-    <?php
-        $encr_userCode = Crypt::encryptString('186');
-        echo "Encr UserCode : ". $encr_userCode;
-
-        $encr_userCode =  Crypt::encryptString("ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddAdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddAdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddAdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddAdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddAddddddddddddddddddddddddddddddddddddddddddddddddddddddddA");
-       // echo  request()->getSchemeAndHttpHost()."/".$encr_userCode;
-       echo "<br/> Content <p>".$encr_userCode."</p>";
-
-        echo "<br/> Length ".strlen($encr_userCode);
-
-        $compressed_string = gzcompress("Praveen",9);
-        echo "<br/> Compressed String : ".$compressed_string ." Length : ".strlen($compressed_string);
-
-        $uncompressed_string = gzuncompress($compressed_string,9);
-
-        echo "<br/> Uncompressed String : ".$uncompressed_string ." Length : ".strlen($uncompressed_string);
 
 
+   <!-- {{-- @vite('resources/js/hrms/modules/Organization/manage_employee/manage_employee.js')
+   <div id="ManageEmployee"></div> --}} -->
 
-        $test_payload = "eyJpdiIss6IkRpODhqUXZmNGRYcE1NT0VTenU0M1E9PSIsInZhbHVlIjoielluRUtmYVozN0N3eEZtUmJBTkVrdz09IiwibWFjIjoiNzUxNDQ2M2UzOTU2ZTlkMjBhYTI0MjIzM2NmMTJlMGQyNjJiMDE2ODU3YzIyYWMxMWNhNmNjNWQwMjBkYjM1NiIsInRhZyI6IiJ9";
 
-        try{
-            echo "<br /><br/>Decrypted payload : ".Crypt::decrypt($test_payload);
-        }
-        catch(\Exception $e)
-        {
-            echo "Decrypt Error : ".$e->getMessage();
-        }
-    ?>
+    @vite('resources/js/hrms/modules/paycheck/investments/investment.js')
+   <div id="Investments"></div>
 
-   {{-- @vite('resources/js/hrms/modules/Organization/manage_employee/manage_employee.js')
-   <div id="ManageEmployee"></div> --}}
+   <!-- @vite('resources/js/hrms/modules/salary_loan_setting/salary_loan_setting.js')
+   <div id="SalaryAdvanceLoan"></div> -->
+
+   
 </body>
 </html>
 @endsection

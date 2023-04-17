@@ -37,30 +37,29 @@ class VmtClientController extends Controller
      */
     public function store(Request $request)
     {
-                 $VmtGeneralInfo = VmtGeneralInfo::where('id','1')->orderBy('created_at', 'DESC')->first();
 
-        //
+       $VmtGeneralInfo = VmtGeneralInfo::where('id','1')->orderBy('created_at', 'DESC')->first();
        try
        {
             $vmtClient  =  new VmtClientMaster;
             $vmtClient->client_code  = $request->client_code;
             $vmtClient->client_name  = $request->client_name;
-            $vmtClient->contract_start_date  = $request->csd;
-            $vmtClient->contract_end_date  = $request->ced;
-            $vmtClient->cin_number  = $request->cin_no;
-            $vmtClient->company_tan  = $request->com_tan;
-            $vmtClient->company_pan  = $request->com_pan;
+            $vmtClient->contract_start_date  = $request->contract_start_date;
+            $vmtClient->contract_end_date  = $request->contract_end_date;
+            $vmtClient->cin_number  = $request->cin_number;
+            $vmtClient->company_tan  = $request->company_tan;
+            $vmtClient->company_pan  = $request->company_pan;
             $vmtClient->gst_no  = $request->gst_no;
-            $vmtClient->epf_reg_number  = $request->epf;
-            $vmtClient->esic_reg_number  = $request->esic.
-            $vmtClient->prof_tax_reg_number  = $request->professional_tax;
-            $vmtClient->lwf_reg_number  = $request->lwf;
-            $vmtClient->authorised_person_name  = $request->auth_person_name;
-            $vmtClient->authorised_person_designation  = $request->auth_person_desig;
-            $vmtClient->authorised_person_contact_number  = $request->auth_person_contact;
-            $vmtClient->authorised_person_contact_email  = $request->auth_person_email;
-            $vmtClient->billing_address  = $request->billing_add;
-            $vmtClient->shipping_address  = $request->shipping_add;
+            $vmtClient->epf_reg_number  = $request->epf_reg_number;
+            $vmtClient->esic_reg_number  = $request->esic_reg_number.
+            $vmtClient->prof_tax_reg_number  = $request->prof_tax_reg_number;
+            $vmtClient->lwf_reg_number  = $request->lwf_reg_number;
+            $vmtClient->authorised_person_name  = $request->authorised_person_name;
+            $vmtClient->authorised_person_designation  = $request->authorised_person_designation;
+            $vmtClient->authorised_person_contact_number  = $request->authorised_person_contact_number;
+            $vmtClient->authorised_person_contact_email  = $request->authorised_person_contact_email;
+            $vmtClient->billing_address  = $request->billing_address;
+            $vmtClient->shipping_address  = $request->shipping_address;
             if (request()->has('doc_uploads')) {
                 $docUploads = request()->file('doc_uploads');
                 $docUploadsName = 'doc_'.time() . '.' . $docUploads->getClientOriginalExtension();
@@ -88,7 +87,7 @@ class VmtClientController extends Controller
             }
         }
         catch (\Throwable $e) {
-            return "Error";
+            return "Error".$e;
         }
     }
 

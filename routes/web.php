@@ -86,6 +86,8 @@ Route::middleware(['auth'])->group(function () {
 
         return auth()->user()->id;
     });
+
+    //Get current logged-in user name
     Route::get('/currentUserName', function() {
 
         return auth()->user()->name;
@@ -96,6 +98,8 @@ Route::middleware(['auth'])->group(function () {
 
         return auth()->user()->name;
     });
+
+
 
 
 
@@ -222,9 +226,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/profile-pages-update-generalinfo/{id}',[App\Http\Controllers\VmtProfilePagesController::class,'updateGeneralInfo'])->name('updateGeneralInfo');
     Route::post('/profile-pages-update-contactinfo/{id}',[App\Http\Controllers\VmtProfilePagesController::class,'updateContactInfo'])->name('updateContactInfo');
     Route::post('/profile-pages-update-address_info/{id}',[App\Http\Controllers\VmtProfilePagesController::class,'updateAddressInfo'])->name('addressInfo');
+    Route::post('/add-family-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'addFamilyInfo'])->name('addFamilyInfo');
     Route::post('/update-family-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'updateFamilyInfo'])->name('updateFamilyInfo');
     Route::post('/delete-family-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'deleteFamilyInfo'])->name('deleteFamilyInfo');
+    Route::post('/add-experience-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'addExperienceInfo'])->name('addExperienceInfo');
     Route::post('/update-experience-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'updateExperienceInfo'])->name('updateExperienceInfo');
+    Route::post('/delete-experience-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'deleteExperienceInfo'])->name('deleteExperienceInfo');
     Route::post('/update-bank-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'updateBankInfo'])->name('updateBankInfo');
     Route::post('/update-statutory-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'updateStatutoryInfo'])->name('updateStatutoryInfo');
     Route::post('/store-personal-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'storePersonalInfo'])->name('updatePersonalInformation');
@@ -411,7 +418,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/getEmployeeName',  [App\Http\Controllers\VmtEmployeeController::class, 'getEmployeeName'])->name('get-employee-name');
 
 
-        Route::get('/employeeOnboarding',  [App\Http\Controllers\VmtEmployeeOnboardingController::class, 'showEmployeeOnboardingPage'])->name('employeeOnboarding');
+        Route::get('/employeeOnboarding',  [App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController::class, 'showEmployeeOnboardingPage'])->name('employeeOnboarding');
         Route::post('/state',  [App\Http\Controllers\VmtEmployeeController::class, 'getState'])->name('state');
 
     //Normal Onboarding v2
@@ -427,7 +434,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('payroll/analytics',  [App\Http\Controllers\VmtPayrollController::class, 'showPayrollAnalyticsPage'])->name('showPayrollAnalyticsPage');
     Route::get('payroll/run',  [App\Http\Controllers\VmtPayrollController::class, 'showPayrollRunPage'])->name('showPayrollRunPage');
     Route::get('payroll/showManagePayslipsPage',  [App\Http\Controllers\VmtPayrollController::class, 'showManagePayslipsPage'])->name('showManagePayslipsPage');
-
+    Route::get('payroll/setup',  [App\Http\Controllers\VmtPayrollController::class, 'showPayrollSetup'])->name('showPayrollSetup');
+    Route::get('payroll/work_location',  [App\Http\Controllers\VmtPayrollController::class, 'showWorkLocationSetup'])->name('showWorkLocationSetup');
 
 //Pay Check module
     Route::get('/paycheckDashboard',  [App\Http\Controllers\VmtPayCheckController::class, 'showPaycheckDashboard'])->name('paycheckDashboard');
@@ -582,6 +590,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/reports/basic-attendance-report',  [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showBasicAttendanceReport'])->name('showBasicAttendanceReport');
     Route::get('/reports/generate-detailed-attendance-report',  [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'generateDetailedAttendanceReports'])->name('generateDetailedAttendanceReports');
 
+    //Reimbursements Reports
+    Route::get('/reports/generate-manager-reimbursements-reports',  [App\Http\Controllers\VmtReportsController::class, 'generateManagerReimbursementsReports'])->name(' generateManagerReimbursementsReports');
+
     //basic Attedance Report
     Route::get('/reports/generate-basic-attendance',  [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'basicAttendanceReport'])->name('basicAttendanceReport');
     Route::get('fetch-attendance-month-for-given-year',  [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'fetchAttendanceMonthForGivenYear'])->name('fetchAttendanceMonthForGivenYear');
@@ -601,6 +612,7 @@ Route::middleware(['auth'])->group(function () {
 
     //Vmt Correction Controller
     Route::get('/processsExpense',  [App\Http\Controllers\VmtCorrectionController::class, 'processsExpense'])->name('processsExpense');
+    Route::get('/adding-reimbursement-data',  [App\Http\Controllers\VmtCorrectionController::class, 'addingReimbursementsDataForSpecificMonth'])->name('addingReimbursementsDataForSpecificMonth');
 
 
 
@@ -646,7 +658,7 @@ Route::middleware(['auth'])->group(function () {
 
     //Testing controller
     Route::get('/download-private-file', [App\Http\Controllers\VmtTestingController::class, 'downloadPrivateFile'])->name('downloadPrivateFile');
-    Route::get('/view-private-file', [App\Http\Controllers\VmtTestingController::class, 'viewPrivateFile'])->name('viewPrivateFile');
+    Route::post('/view-profile-private-file', [App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController::class, 'viewProfilePagePrivateFile'])->name('viewprofileprivatefile');
     Route::get('/mail-test/appointment-letter', [App\Http\Controllers\VmtTestingController::class, 'mailTest_sendAppointmentLetter'])->name('mailTest_sendAppointmentLetter');
     Route::get('/getLeaves', [App\Http\Controllers\VmtAttendanceController::class, 'employeeLeaveBalance'])->name('employeeLeaveBalance');
     Route::post('/postLeaves', [App\Http\Controllers\Api\VmtAPIAttendanceController::class, 'applyLeaveRequest'])->name('applyLeaveRequest');
