@@ -4,31 +4,31 @@
 
         <!-- Navigation Bar -->
 
-        <div class="pt-1 pb-0 mb-3 tw-card left-line ">
+        <div class="p-2 pb-0 mb-3 rounded-lg shadow tw-card left-line">
 
             <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed " id="pills-tab" role="tablist">
                 <li class="nav-item " role="presentation"  >
-                    <a class="nav-link " id="" data-bs-toggle="pill" href="" 
+                    <a class="mx-4 nav-link" id="" data-bs-toggle="pill" href="" 
                         role="tab" aria-controls="" aria-selected="true" @click="investmentStore.investment_exemption_steps = 1" :class="[investmentStore.investment_exemption_steps === 1 ? 'active' : '']">
                         HRA
                     </a>
                 </li>
 
                 <li class="mx-3 nav-item " role="presentation"  >
-                    <a class="nav-link " id="" data-bs-toggle="pill" href="" @click="investmentStore.investment_exemption_steps = 2" :class="[investmentStore.investment_exemption_steps === 2 ? 'active' : '']" role="tab"
+                    <a class="mx-4 nav-link " id="" data-bs-toggle="pill" href="" @click="investmentStore.investment_exemption_steps = 2" :class="[investmentStore.investment_exemption_steps === 2 ? 'active' : '']" role="tab"
                         aria-controls="" aria-selected="true">
                         Section 80C & 80CCC
                         </a>
                 </li>
                 <li class="nav-item " role="presentation"  >
-                    <a class="mx-0 nav-link mx-xl-3 " id="" data-bs-toggle="pill" href=""  @click="investmentStore.investment_exemption_steps = 3" :class="[investmentStore.investment_exemption_steps === 3 ? 'active' : '']"
+                    <a class="mx-4 nav-link mx-xl-3 " id="" data-bs-toggle="pill" href=""  @click="investmentStore.investment_exemption_steps = 3" :class="[investmentStore.investment_exemption_steps === 3 ? 'active' : '']"
                         role="tab" aria-controls="" aria-selected="true">
                         
                         Other Exemptions
                     </a>
                 </li>
                 <li class="mx-3 nav-item " role="presentation" >
-                    <a class="nav-link " id="" data-bs-toggle="pill" href=""  @click="investmentStore.investment_exemption_steps = 4" :class="[investmentStore.investment_exemption_steps === 4 ? 'active' : '']" role="tab"
+                    <a class="mx-4 nav-link " id="" data-bs-toggle="pill" href=""  @click="investmentStore.investment_exemption_steps = 4" :class="[investmentStore.investment_exemption_steps === 4 ? 'active' : '']" role="tab"
                         aria-controls="" aria-selected="true">
                         House Property
                         </a>
@@ -36,13 +36,13 @@
 
 
                 <li class="nav-item " role="presentation" >
-                    <a class="mx-0 nav-link mx-xl-3 " id="" data-bs-toggle="pill" href=""  @click="investmentStore.investment_exemption_steps = 5" :class="[investmentStore.investment_exemption_steps === 5 ? 'active' : '']"
+                    <a class="mx-4 nav-link mx-xl-3 " id="" data-bs-toggle="pill" href=""  @click="investmentStore.investment_exemption_steps = 5" :class="[investmentStore.investment_exemption_steps === 5 ? 'active' : '']"
                         role="tab" aria-controls="" aria-selected="true">
                         Reimbursement
                     </a>
                 </li>
                 <li class="mx-3 nav-item " role="presentation"  >
-                    <a class="nav-link " id="" data-bs-toggle="pill" href="" @click="investmentStore.investment_exemption_steps = 6" :class="[investmentStore.investment_exemption_steps === 6 ? 'active' : '']" role="tab"
+                    <a class="mx-4 nav-link" id="" data-bs-toggle="pill" href="" @click="investmentStore.investment_exemption_steps = 6" :class="[investmentStore.investment_exemption_steps === 6 ? 'active' : '']" role="tab"
                         aria-controls="" aria-selected="true">
                         Previous Employer Income
                     </a>
@@ -50,7 +50,7 @@
 
 
                 <li class="nav-item " role="presentation"  >
-                    <a class="mx-0 nav-link mx-xl-3 " id="" data-bs-toggle="pill" href="" @click="investmentStore.investment_exemption_steps = 7" :class="[investmentStore.investment_exemption_steps === 7 ? 'active' : '']"
+                    <a class="mx-4 nav-link mx-xl-3 " id="" data-bs-toggle="pill" href="" @click="investmentStore.investment_exemption_steps = 7" :class="[investmentStore.investment_exemption_steps === 7 ? 'active' : '']"
                         role="tab" aria-controls="" aria-selected="true">
                         Other Source Of Income
                     </a>
