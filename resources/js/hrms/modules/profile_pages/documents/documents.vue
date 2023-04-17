@@ -27,10 +27,10 @@
         </DataTable>
 
         <Dialog v-model:visible="visible" modal header="Documents" :style="{ width: '40vw' }">
-            <img v-if="view_document.doc_url" :src="documentPath"
-                :alt="view_document.doc_url" class="block pb-3 m-auto" />
+            <!-- <img v-if="view_document.doc_url" :src="documentPath"
+                :alt="view_document.doc_url" class="block pb-3 m-auto" /> -->
 
-                <img v-if="view_document.document_url" :src="`http://127.0.0.1:8000/view-private-file`"
+                <img v-if="view_document.document_url" :src="`employees/${_instance_profilePagesStore.employeeDetails.user_code}/onboarding_documents/${view_document.document_url}`"
                 :alt="view_document.document_url" class="block pb-3 m-auto" />
 <!--
                 /view-private-file -->
@@ -77,18 +77,18 @@ const showDocument = (document) => {
 
     view_document.value = { ...document }
     console.log(view_document.value);
-    console.log(view_document.value.doc_url);
+    <!-- console.log(view_document.value.doc_url); -->
     visible.value = true
 
 
-    axios.post('/view-profile-private-file',{
+    <!-- axios.post('/view-profile-private-file',{
         user_code: _instance_profilePagesStore.employeeDetails.user_code,
         doc_url:view_document.value.doc_url
         }).then(res=>{
             console.log(res.data);
             documentPath.value = res.data
         console.log("data sent");
-    })
+    }) -->
 
 }
 
