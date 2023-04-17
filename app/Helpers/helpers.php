@@ -365,7 +365,7 @@ function getEmployeeAvatarOrShortName($user_id)
 function isAppointmentLetterTemplateAvailable()
 {
 
-    $client_name = str_replace(' ', '', sessionGetSelectedClientName());
+    $client_name = Str::lower(str_replace(' ', '', sessionGetSelectedClientName()));
 
     //$client_name = Str::lower(str_replace(' ', '', getCurrentClientName()) );
     $viewfile_appointmentletter = 'mailtemplate_appointmentletter_' . $client_name;
