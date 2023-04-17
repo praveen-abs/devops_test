@@ -4,7 +4,7 @@
         <strong>table</strong>
         <!-- <thead>
              <tr>
-                
+
                                             <th scope="col">Sections</th>
                                             <th scope="col">Particulars</th>
                                             <th scope="col">References</th>
@@ -53,7 +53,7 @@
     <Dialog v-model:visible="visible" modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
 
         <template #header>
-            <span class="text-lg font-semibold modal-title text-indigo-950">Add New Rental </span>
+            <span class="text-lg font-semibold modal-title text-indigo-950">Add New Rental</span>
 
         </template>
 
@@ -64,7 +64,7 @@
                     Month</label>
                 <input type="date" id="rentFrom_month"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                    required>
+                    v-model="Dialog_Add_New_Rental.from_Month" required>
             </div>
             <div class="">
                 <label for="toFrom_month" class="block mb-2 font-medium text-gray-900 ">To
@@ -72,7 +72,7 @@
                 <input type="date" id="toFrom_month
                                                         "
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                    required>
+                    v-model="Dialog_Add_New_Rental.To_Month"  required>
             </div>
             <div class="">
                 <label for="metro_city" class="block mb-2 font-medium text-gray-900 ">City</label>
@@ -84,7 +84,7 @@
                     <option selected disabled hiddedn>Choose Metro</option>
                     <option>Chennai</option>
                     <option>Mumbai</option>
-                    <option>Hyderabad</option>
+                    <option  @click="save_Dialog_Add_New_Rental()">Hyderabad</option>
                     <option>Kolkatta</option>
                     <option>Other Non Metro</option>
 
@@ -95,7 +95,7 @@
                     Rent Paid</label>
                 <input type="text" id="rendPaid_inp"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                    required>
+                    v-model="Dialog_Add_New_Rental.Total_Rent_Paid"  required>
             </div>
 
         </div>
@@ -105,22 +105,24 @@
                     Name <span class="text-red-600">*</span> </label>
                 <input type="text" id="lender_name"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                    required>
+                    v-model="Dialog_Add_New_Rental.Landlord_Name" required>
             </div>
+
             <div class="">
                 <label for="lender_name" class="block mb-2 font-medium text-gray-900 ">Landlord
                     PAN <span class="text-red-600">*</span> </label>
                 <input type="text" id="lender_name"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                    required>
+                    v-model="Dialog_Add_New_Rental.Landlord_PAN" required>
             </div>
+
         </div>
         <div class="grid mb-6 md:grid-cols-1 2xl:grid-cols-1 sm:grid-cols-1 xl:grid-cols-1 lg:grid-cols-1">
             <label for="lender_name" class="block mb-2 font-medium text-gray-900 ">
                 Address </label>
             <textarea name="" id="" rows="3"
                 class="bg-gray-50 resize-none border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                required></textarea>
+                v-model="Dialog_Add_New_Rental.Address" required></textarea>
         </div>
         <div class="text-end">
             <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md">Save</button>
@@ -142,5 +144,23 @@ onMounted(() => {
 
 
 const visible = ref(false)
+
+
+const Dialog_Add_New_Rental =ref({
+
+    from_Month:"",
+    To_Month:"",
+    City:"",
+    Total_Rent_Paid:"",
+    Landlord_Name:"",
+    Landlord_PAN:"",
+    Address:""
+
+})
+const save_Dialog_Add_New_Rental=()=>{
+    console.log(Add_New_Rental);
+}
+
+
 
 </script>
