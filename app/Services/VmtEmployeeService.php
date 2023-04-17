@@ -123,7 +123,8 @@ class VmtEmployeeService {
             }
         }
         else{
-            dd("ERROR : createOrUpdate_User() response is ".$response);
+            var_dump("ERROR : createOrUpdate_User() response is ");
+            //dd($response);
         }
 
         dd("End of createOrUpdate_OnboardFormData()");
@@ -291,6 +292,11 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                 $newEmployee_statutoryDetails->uan_number = $row["uan_number"] ?? '';
                 $newEmployee_statutoryDetails->epf_number = $row["epf_number"] ?? '';
                 $newEmployee_statutoryDetails->esic_number = $row["esic_number"] ?? '';
+                $newEmployee_statutoryDetails->pf_applicable = $row["pf_applicable"] ?? '';
+                $newEmployee_statutoryDetails->esic_applicable = $row["esic_applicable"] ?? '';
+                $newEmployee_statutoryDetails->ptax_location_state_id = $row["ptax_location"] ?? '';
+                $newEmployee_statutoryDetails->tax_regime = $row["tax_regime"] ?? '';
+                $newEmployee_statutoryDetails->lwf_location_state_id = $row["lwf_location"] ?? '';
                 $newEmployee_statutoryDetails->save();
 
         //store employee_familyDetails details
@@ -533,7 +539,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
 
     private function createOrUpdate_EmployeeOfficeDetails($user_id,$row)
     {
-          
+
         $empOffice = VmtEmployeeOfficeDetails::where('user_id',$user_id);
 
         if($empOffice->exists())
@@ -588,6 +594,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
         }
 
         //Statutory Details
+
         $newEmployee_statutoryDetails->user_id = $user_id;
         $newEmployee_statutoryDetails->uan_number = $row["uan_number"] ?? '';
         $newEmployee_statutoryDetails->epf_number = $row["epf_number"] ?? '';

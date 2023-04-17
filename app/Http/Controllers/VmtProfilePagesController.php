@@ -437,12 +437,15 @@ public function addExperienceInfo(Request $request)
 
     public function updateStatutoryInfo(Request $request)
     {
-       //  dd($request->all());
+        // dd($request->all());
        try{
         $user_id = user::where('user_code', $request->user_code)->first()->id;
         $statutory = VmtEmployeeStatutoryDetails::where('user_id', $user_id );
 
+
+
        if ($statutory->exists()) {
+        dd('hiii');
             $statutory = $statutory->first();
             $statutory->user_id=  $user_id;
             $statutory->pf_applicable=$request->input('pf_applicable');
@@ -456,6 +459,7 @@ public function addExperienceInfo(Request $request)
         }
         else
         {
+            dd('huuuu');
             $statutory = new VmtEmployeeStatutoryDetails;
             $statutory->user_id=  $user_id;
             $statutory->pf_applicable=$request->input('pf_applicable');

@@ -56,6 +56,19 @@ class VmtPayrollController extends Controller
 
     }
 
+    public function showManagePayslipsPage(Request $request){
+        return view('payroll.manage_payslips');
+
+    }
+
+    public function fetchEmployeePayslipDetails(Request $request, VmtEmployeePayslipService $employeePaySlipService){
+
+         return $employeePaySlipService->fetchEmployeePayslipDetails($request->year, $request->month);
+
+    }
+
+
+
     public function showPayrollSetup(Request $request){
         return view('payroll.vmt_payroll_setup');
     }
@@ -63,5 +76,5 @@ class VmtPayrollController extends Controller
     public function showWorkLocationSetup(Request $request){
         return view('payroll.vmt_work_location');
     }
-    
+
 }

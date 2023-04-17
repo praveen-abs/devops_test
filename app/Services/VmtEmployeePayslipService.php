@@ -529,4 +529,10 @@ class VmtEmployeePayslipService {
 
     }
 
+
+    public function fetchEmployeePayslipDetails($user_id, $year, $month){
+
+
+    }
+
 }

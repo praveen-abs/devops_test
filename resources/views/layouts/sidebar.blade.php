@@ -504,10 +504,16 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                                             Analytics</span>
                                     </a>
                                 </li>
-                                <a href="{{ route('showPayRunPage') }}" class="nav-link sidebar py-1"
-                                    role="button"><span>Pay
-                                        Run</span></a>
 
+                                <li class="nav-item">
+                                    <a href="{{ route('showPayRunPage') }}" class="nav-link sidebar py-1"
+                                        role="button"><span>Pay
+                                            Run</span></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('showManagePayslipsPage') }}" class="nav-link sidebar py-1"
+                                        role="button"><span>Manage Payslip</span></a>
+                                </li>
                                 <li class="nav-item">
                                     <a href="{{ route('showPayrollClaimsPage') }}" class="nav-link sidebar py-1"
                                         role="button"><span>

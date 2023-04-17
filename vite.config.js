@@ -94,6 +94,9 @@ export default defineConfig({
 
                 // 'resources/js/hrms/modules/approvals/onboarding/review_document.js'
 
+                //Payroll
+                'resources/js/hrms/modules/manage_payslips/ManagePayslips.js'
+
             ],
             refresh: true,
         }),
