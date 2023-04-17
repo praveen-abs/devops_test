@@ -20,12 +20,15 @@
 <body>
 
 
-    <!-- @vite('resources/js/hrms/modules/Organization/manage_employee/manage_employee.js')
-   <div id="ManageEmployee"></div>  -->
+   <!-- {{-- @vite('resources/js/hrms/modules/Organization/manage_employee/manage_employee.js')
+   <div id="ManageEmployee"></div> --}} -->
 
 
-    @vite('resources/js/hrms/modules/configurations/client_onboarding/client_onboarding_master.js')
-   <div id="clientOnboarding"></div> 
+    @vite('resources/js/hrms/modules/paycheck/investments/investment.js')
+   <div id="Investments"></div>
+
+   <!-- @vite('resources/js/hrms/modules/salary_loan_setting/salary_loan_setting.js')
+   <div id="SalaryAdvanceLoan"></div> -->
 
    
 </body>

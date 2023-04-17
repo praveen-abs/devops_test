@@ -10,7 +10,6 @@ use App\Models\VmtBloodGroup;
 use App\Models\VmtLeaves;
 use App\Models\ConfigPms;
 use App\Models\VmtEmployeeOfficeDetails;
-use App\Models\VmtMaritalStatus;
 use Illuminate\Support\Facades\Auth;
 
 function required()
@@ -237,7 +236,6 @@ function getUserShortName($user_id)
 {
 
     $username = User::find($user_id)->name;
-    $username = trim($username);
     $dotPattern = preg_split('/\.+/', $username);
     $whiteSpacePattern = preg_split('/\s+/', $username);
     $singleWordPattern = str_split($username);
@@ -388,6 +386,7 @@ function calculateProfileCompleteness($user_id)
         ->leftjoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
         ->leftjoin('vmt_employee_family_details', 'vmt_employee_family_details.user_id', '=', 'users.id')
         ->leftjoin('vmt_employee_emergency_contact_details', 'vmt_employee_emergency_contact_details.user_id', '=', 'users.id')
+        ->leftjoin('vmt_marital_status','vmt_marital_status.id','=', 'vmt_employee_details.marital_status_id')
 
         //Employee info
 
@@ -404,7 +403,7 @@ function calculateProfileCompleteness($user_id)
             'vmt_employee_details.passport_date',
             'vmt_employee_details.nationality',
             'vmt_employee_details.religion',
-            'vmt_employee_details.marital_status_id',
+            'vmt_marital_status.name',
             //'vmt_employee_details.spouse_name',
 
             //Documents
@@ -439,7 +438,6 @@ function calculateProfileCompleteness($user_id)
 
         )->where('users.id', $user_id)->first();
 
-    $user_full_details["marital_status"] = VmtMaritalStatus::find($user_full_details["marital_status_id"] );
     $count_total_fields = count($user_full_details->toArray());
     $count_null_fields = 0;
 
@@ -458,4 +456,3 @@ function calculateProfileCompleteness($user_id)
     //dd($value);
     return $value;
 }
-

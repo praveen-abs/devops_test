@@ -469,7 +469,7 @@ table.no-padding tr td {
     font-size: 13px;
 }
 .btn-orange {
-    background-color: #ee6a04;
+    background-color: #ee6a04 !important;
     border-color: #ee6a04;
     color: #fff;
 }

@@ -26,7 +26,7 @@
             </template>
         </Dialog>
         <div>
-            <DataTable :value="data_review_documents" :paginator="true" :rows="10" class="mt-6 " dataKey="user_id"
+            <DataTable :value="data_review_documents" :paginator="true" :rows="10" class=" " dataKey="user_id"
                 @rowExpand="onRowExpand" @rowCollapse="onRowCollapse" v-model:expandedRows="expandedRows"
                 v-model:selection="selectedAllEmployee" :selectAll="selectAll" @select-all-change="onSelectAllChange"
                 @row-select="onRowSelect" @row-unselect="onRowUnselect"
@@ -395,9 +395,6 @@ const getSeverity = (status) => {
 </script>
 
 <style lang="scss">
-.main-content {
-    width: 85%;
-}
 
 .p-datatable .p-datatable-thead>tr>th {
     text-align: center;

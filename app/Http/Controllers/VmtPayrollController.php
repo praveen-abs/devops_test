@@ -55,4 +55,13 @@ class VmtPayrollController extends Controller
         return view('runpayRoll');
 
     }
+
+    public function showPayrollSetup(Request $request){
+        return view('payroll.vmt_payroll_setup');
+    }
+
+    public function showWorkLocationSetup(Request $request){
+        return view('payroll.vmt_work_location');
+    }
+    
 }

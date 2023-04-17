@@ -11,6 +11,9 @@ export default defineConfig({
                 'resources/scss/views/main_dashboard.scss',
 
                 'resources/js/app.js',
+
+                // Profile Page new
+
                 'resources/js/hrms/modules/profile_pages/ProfilePageNew.js',
 
                 // Leaves
@@ -37,6 +40,7 @@ export default defineConfig({
 
 
                 ////Reimbursements Module
+
                 //Employee Reimbursements
                 'resources/js/hrms/modules/reimbursements/employee_reimbursements/EmployeeReimbursements.js',
 
@@ -55,12 +59,29 @@ export default defineConfig({
                 'resources/js/hrms/modules/configurations/holidays/Holidays_Lists.js',
 
 
+                // Paycheck
+
+                'resources/js/hrms/modules/paycheck/investments/investment.js',
+
+                // Salary Advance and Loan Setting
+
+                'resources/js/hrms/modules/salary_loan_setting/salary_loan_setting.js',
+
+                // Declaration
+
+                'resources/js/hrms/modules/paycheck/investments/declaration/declaration.js',
+
+                // invenstments and exemption
+
+                'resources/js/hrms/modules/paycheck/investments/investments_and_exemption/investments_and_exemption.js',
+
+
                 // Profile pages
 
 
 
                 // familyinfo_table_page
-               'resources/js/hrms/modules/profile_pages/employee_details/EmployeeDetails.js',
+                'resources/js/hrms/modules/profile_pages/employee_details/EmployeeDetails.js',
 
                 // 'resources/js/hrms/modules/profile_pages/FamilyDetails.js',
 
