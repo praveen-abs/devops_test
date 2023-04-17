@@ -77,18 +77,18 @@ const showDocument = (document) => {
 
     view_document.value = { ...document }
     console.log(view_document.value);
-    <!-- console.log(view_document.value.doc_url); -->
+    // <!-- console.log(view_document.value.doc_url); -->
     visible.value = true
 
 
-    <!-- axios.post('/view-profile-private-file',{
-        user_code: _instance_profilePagesStore.employeeDetails.user_code,
-        doc_url:view_document.value.doc_url
-        }).then(res=>{
-            console.log(res.data);
-            documentPath.value = res.data
-        console.log("data sent");
-    }) -->
+    // <!-- axios.post('/view-profile-private-file',{
+    //     user_code: _instance_profilePagesStore.employeeDetails.user_code,
+    //     doc_url:view_document.value.doc_url
+    //     }).then(res=>{
+    //         console.log(res.data);
+    //         documentPath.value = res.data
+    //     console.log("data sent");
+    // }) -->
 
 }
 
