@@ -285,7 +285,7 @@
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
                 responsiveLayout="scroll"
               >
-                <Column :exportable="false" style="min-width: 8rem">
+                <!-- <Column :exportable="false" style="min-width: 8rem">
                   <template #body="slotProps">
                     <Button
                       icon="pi pi-trash"
@@ -295,7 +295,7 @@
                       @click="confirmDeleteProduct(slotProps.data)"
                     />
                   </template>
-                </Column>
+                </Column> -->
 
                 <Column
                   field="reimbursement_date"
@@ -398,6 +398,7 @@
                   optionValue="value"
                   placeholder="Select Mode Of Transport"
                   class="w-full"
+                  @change="employee_service.amountperKm(employee_service.employee_local_conveyance.mode_of_transport)"
                 />
               </div>
 
@@ -429,7 +430,7 @@
                   <label for="Eligible Amount">Amt/Km</label>
                   <InputText
                     v-model="
-                      employee_service.employee_local_conveyance.total_distance_travelled
+                      employee_service.employee_local_conveyance.Amt_km
                     "
                   />
                 </div>
