@@ -17,7 +17,6 @@ use App\Models\VmtEmployeeStatutoryDetails;
 use App\Models\VmtEmployeePaySlip;
 use App\Services\VmtEmployeePayslipService;
 use App\Services\VmtProfilePagesService;
-
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 
@@ -597,5 +596,14 @@ public function addExperienceInfo(Request $request)
 
         return $serviceVmtProfilePagesService->getEmployeeProfileDetails($user_id);
     }
+
+    public function getEmployeePrivateDocumentFile(Request $request,VmtProfilePagesService $profilepagesservice){
+
+
+        $response = $profilepagesservice->getEmployeePrivateDocumentFile($request->user_code,$request->document_name);
+        return $response;
+
+    }
+
 
 }
