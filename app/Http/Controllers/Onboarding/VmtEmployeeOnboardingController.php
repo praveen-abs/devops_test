@@ -1360,6 +1360,7 @@ class VmtEmployeeOnboardingController extends Controller
     */
     public function storeEmployeeDocuments(Request $request)
     {
+        dd($request->all());
         $rowdata_response = [
             'status' => 'empty',
             'message' => 'empty',
@@ -1367,60 +1368,69 @@ class VmtEmployeeOnboardingController extends Controller
 
         //dd($request->all());
 
-        //This wont work for super-admin for now.
-        $currentEmployeeDetails = VmtEmployee::where('userid', auth()->user()->id)->first();
 
-        //dd($currentEmployeeDetails->toArray());
 
         try
         {
-            if(isset($request->aadhar_card_file))
-                $currentEmployeeDetails->aadhar_card_file = $this->fileUpload('aadhar_card_file',auth()->user()->user_code);
-
-            if(isset($request->aadhar_card_backend_file))
-                $currentEmployeeDetails->aadhar_card_backend_file = $this->fileUpload('aadhar_card_backend_file',auth()->user()->user_code);
-
-            if(isset($request->pan_card_file))
-                $currentEmployeeDetails->pan_card_file = $this->fileUpload('pan_card_file',auth()->user()->user_code);
-
-            if(isset($request->passport_file))
-                $currentEmployeeDetails->passport_file = $this->fileUpload('passport_file',auth()->user()->user_code);
-
-            if(isset($request->voters_id_file))
-                $currentEmployeeDetails->voters_id_file = $this->fileUpload('voters_id_file',auth()->user()->user_code);
-
-            if(isset($request->dl_file))
-                $currentEmployeeDetails->dl_file = $this->fileUpload('dl_file',auth()->user()->user_code);
-
-            if(isset($request->education_certificate_file))
-                $currentEmployeeDetails->education_certificate_file = $this->fileUpload('education_certificate_file',auth()->user()->user_code);
-
-            if(isset($request->reliving_letter_file))
-                $currentEmployeeDetails->reliving_letter_file = $this->fileUpload('reliving_letter_file',auth()->user()->user_code);
-
-            $currentEmployeeDetails->save();
-
-            if( $this->isAllDocumentsUploaded(auth()->user()->id) == 1)
+            if(isset($request->Aadharfront))
             {
+                $result =   $employeeService->uploadDocument(auth()->user()->id,$request->Aadharfront, 'Aadhar Card Front');
+            }else
+                dd("aadhar not given");
 
-                // //set the onboard status to 1
-                $currentUser = User::where('id', auth()->user()->id)->first();
-                $currentUser->is_onboarded = '1';
-                $currentUser->save();
+            return $rowdata_response = [
+                'status' => 'success',
+                'message' => 'All documents uploaded. You have been successfully onboarded',
+            ];
 
-                return $rowdata_response = [
-                    'status' => 'success',
-                    'message' => 'All documents uploaded. You have been successfully onboarded',
-                ];
-            }
-            else
-            {
 
-                return $rowdata_response = [
-                    'status' => 'success',
-                    'message' => 'Documents uploaded. Please upload the remaining documents to successfully onboard',
-                ];
-            }
+        //     if(isset($request->aadhar_card_file))
+        //         $currentEmployeeDetails->aadhar_card_file = $this->fileUpload('aadhar_card_file',auth()->user()->user_code);
+
+        //     if(isset($request->aadhar_card_backend_file))
+        //         $currentEmployeeDetails->aadhar_card_backend_file = $this->fileUpload('aadhar_card_backend_file',auth()->user()->user_code);
+
+        //     if(isset($request->pan_card_file))
+        //         $currentEmployeeDetails->pan_card_file = $this->fileUpload('pan_card_file',auth()->user()->user_code);
+
+        //     if(isset($request->passport_file))
+        //         $currentEmployeeDetails->passport_file = $this->fileUpload('passport_file',auth()->user()->user_code);
+
+        //     if(isset($request->voters_id_file))
+        //         $currentEmployeeDetails->voters_id_file = $this->fileUpload('voters_id_file',auth()->user()->user_code);
+
+        //     if(isset($request->dl_file))
+        //         $currentEmployeeDetails->dl_file = $this->fileUpload('dl_file',auth()->user()->user_code);
+
+        //     if(isset($request->education_certificate_file))
+        //         $currentEmployeeDetails->education_certificate_file = $this->fileUpload('education_certificate_file',auth()->user()->user_code);
+
+        //     if(isset($request->reliving_letter_file))
+        //         $currentEmployeeDetails->reliving_letter_file = $this->fileUpload('reliving_letter_file',auth()->user()->user_code);
+
+        //     $currentEmployeeDetails->save();
+
+        //     if( $this->isAllDocumentsUploaded(auth()->user()->id) == 1)
+        //     {
+
+        //         // //set the onboard status to 1
+        //         $currentUser = User::where('id', auth()->user()->id)->first();
+        //         $currentUser->is_onboarded = '1';
+        //         $currentUser->save();
+
+        //         return $rowdata_response = [
+        //             'status' => 'success',
+        //             'message' => 'All documents uploaded. You have been successfully onboarded',
+        //         ];
+        //     }
+        //     else
+        //     {
+
+        //         return $rowdata_response = [
+        //             'status' => 'success',
+        //             'message' => 'Documents uploaded. Please upload the remaining documents to successfully onboard',
+        //         ];
+        //     }
 
         }
         catch (\Throwable $e) {
