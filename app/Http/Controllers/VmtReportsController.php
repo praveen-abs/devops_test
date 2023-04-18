@@ -15,12 +15,14 @@ use Illuminate\Support\Facades\DB;
 use App\Exports\VmtPayrollReports;
 use App\Exports\VmtPmsReviewsReport;
 use App\Exports\ManagerReimbursementsExport;
+use App\Exports\EmployeeReimbursementsExport;
 use App\Models\VmtEmployeeAttendance;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use App\Models\VmtEmployeeReimbursements;
 use App\Services\VmtReimbursementsService;
+use Carbon\Carbon;
 
 class VmtReportsController extends Controller
 {
@@ -434,18 +436,26 @@ class VmtReportsController extends Controller
                                 ->join('vmt_department AS dep','dep.id','=','office.department_id')
                                 ->where('users.id',auth()->user()->id)
                                 ->select('users.user_code','users.name AS name','dep.name AS department','details.location')->get();
-
         foreach($reimbursementService->fetchEmployeeReimbursement($user_id,$year,$month) as $single_data){
-            $single_reimbursement_data=array('date'=>$single_data->date,);
+            $single_reimbursement_data=array(Carbon::parse($single_data->date)->format('d-M-y'),
+                                             $single_data->reimbursement_type, $single_data->from,
+                                             $single_data->to,$single_data->vehicle_type,
+                                             $single_data->distance_travelled);
          if($single_data->vehicle_type=='2-Wheeler'){
-
+              array_push( $single_reimbursement_data,3.50);
          }else if($single_data->vehicle_type='4-Wheeler'){
-
+              array_push($single_reimbursement_data,6);
          }else{
-
+             array_push($single_reimbursement_data,' ');
          }
 
+         //dd($single_data->user_comments);
+         array_push($single_reimbursement_data,$single_data->total_expenses,$single_data->user_comments);
+         array_push($reimbursement_data,$single_reimbursement_data);
+         unset($single_reimbursement_data);
         }
+
+        // dd($reimbursement_data);
 
 
         $client_name=sessionGetSelectedClientName();
@@ -461,6 +471,8 @@ class VmtReportsController extends Controller
 
 
 
-        return  $reimbursementService->fetchEmployeeReimbursement($user_id,$year,$month);
+        return  Excel::download(new EmployeeReimbursementsExport($reimbursement_data,$legal_entity,
+                                                                $month_name,$year,$client_name),
+                                                                $file_name.'Reimbursements Reports.xlsx');
     }
 }
