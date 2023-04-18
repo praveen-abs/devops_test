@@ -20,6 +20,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use App\Models\VmtEmployeeReimbursements;
+use App\Services\VmtReimbursementsService;
 
 class VmtReportsController extends Controller
 {
@@ -419,6 +420,47 @@ class VmtReportsController extends Controller
         $year="12";
         $status="Pending";
         return  $this->getManagerReimbursementsReports($year,$month,$status);
+    }
 
+    public function generateEmployeeReimbursementsReports(Request $request,VmtReimbursementsService $reimbursementService){
+        $user_id = auth()->user()->id;
+        $year = 2023;
+        $month = 03;
+        $reimbursement_data=array();
+
+        $employee_details=User::join('vmt_employee_details AS details','details.userid','=','users.id')
+                                ->join('vmt_employee_office_details AS office','office.user_id','=',
+                                'users.id')
+                                ->join('vmt_department AS dep','dep.id','=','office.department_id')
+                                ->where('users.id',auth()->user()->id)
+                                ->select('users.user_code','users.name AS name','dep.name AS department','details.location')->get();
+
+        foreach($reimbursementService->fetchEmployeeReimbursement($user_id,$year,$month) as $single_data){
+            $single_reimbursement_data=array('date'=>$single_data->date,);
+         if($single_data->vehicle_type=='2-Wheeler'){
+
+         }else if($single_data->vehicle_type='4-Wheeler'){
+
+         }else{
+
+         }
+
+        }
+
+
+        $client_name=sessionGetSelectedClientName();
+        if( $client_name=='Protocol'){
+           $legal_entity='PROTOCOL LABELS INDIA PRIVATE LIMITED';
+           $client_name=strtolower( $client_name);
+        }else{
+           $legal_entity=  $client_name;
+           $client_name=strtolower( $client_name);
+        }
+        $file_name=date("F", strtotime('00-'.$month.'-01'))."-".$year;
+        $month_name=strtoupper(date("F", strtotime('00-'.$month.'-01')));
+
+
+
+        return  $reimbursementService->fetchEmployeeReimbursement($user_id,$year,$month);
     }
 }

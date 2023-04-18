@@ -592,6 +592,7 @@ Route::middleware(['auth'])->group(function () {
 
     //Reimbursements Reports
     Route::get('/reports/generate-manager-reimbursements-reports',  [App\Http\Controllers\VmtReportsController::class, 'generateManagerReimbursementsReports'])->name(' generateManagerReimbursementsReports');
+    Route::get('/reports/generate-employee-reimbursements-reports',  [App\Http\Controllers\VmtReportsController::class, 'generateEmployeeReimbursementsReports'])->name('generateEmployeeReimbursementsReports');
 
     //basic Attedance Report
     Route::get('/reports/generate-basic-attendance',  [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'basicAttendanceReport'])->name('basicAttendanceReport');
