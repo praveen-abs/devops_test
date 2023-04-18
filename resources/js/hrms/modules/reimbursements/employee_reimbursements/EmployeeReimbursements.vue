@@ -379,18 +379,20 @@
               :modal="true"
               class="p-fluid"
             >
+
               <div class="field">
-                <label for="name">Date</label>
+                <label for="name">Date <span class="text-danger">*</span></label>
                 <Calendar
                   inputId="dateformat"
                   v-model="employee_service.employee_local_conveyance.travelled_date"
                   dateFormat="dd/mm/yy"
                 />
+
                 <!-- {{ employee_local_conveyance.travelled_date }} -->
               </div>
 
               <div class="field col">
-                <label for="Claim Amount">Mode of transport</label>
+                <label for="Claim Amount">Mode of transport <span class="text-danger">*</span> </label>
                 <Dropdown
                   v-model="employee_service.employee_local_conveyance.mode_of_transport"
                   :options="employee_service.local_Conveyance_Mode_of_transport"
@@ -404,13 +406,13 @@
 
               <div class="grid formgrid">
                 <div class="field col">
-                  <label for="Eligible Amount">From</label>
+                  <label for="Eligible Amount">From <span class="text-danger">*</span> </label>
                   <InputText
                     v-model="employee_service.employee_local_conveyance.travel_from"
                   />
                 </div>
                 <div class="field col">
-                  <label for="Claim Amount">To</label>
+                  <label for="Claim Amount">To <span class="text-danger">*</span> </label>
                   <InputText
                     v-model="employee_service.employee_local_conveyance.travel_to"
                   />
@@ -418,7 +420,7 @@
               </div>
               <div class="grid formgrid">
                 <div class="field col">
-                  <label for="Eligible Amount">Total Distance</label>
+                  <label for="Eligible Amount">Total Distance <span class="text-danger">*</span> </label>
                   <InputText
                     v-model="
                       employee_service.employee_local_conveyance.total_distance_travelled
@@ -426,9 +428,23 @@
                     @input="employee_service.amount_calculation"
                   />
                 </div>
-                <div class="field col">
-                  <label for="Eligible Amount">Amt/Km</label>
-                  <InputText
+                <div class="field col" v-if="employee_service.employee_local_conveyance.mode_of_transport == 'Public Transport'">
+                  <label for="Eligible Amount">Actual Amount <span class="text-danger">*</span> </label>
+                  <InputText  :readonly="employee_service.employee_local_conveyance.mode_of_transport ==
+                  'Public Transport'
+                    ? false
+                    : true"
+                    v-model="
+                      employee_service.employee_local_conveyance.Amt_km
+                    "
+                  />
+                </div>
+                <div class="field col" v-else>
+                  <label for="Eligible Amount">Amt/Km <span class="text-danger">*</span></label>
+                  <InputText  :readonly="employee_service.employee_local_conveyance.mode_of_transport ==
+                  'Public Transport'
+                    ? false
+                    : true"
                     v-model="
                       employee_service.employee_local_conveyance.Amt_km
                     "
@@ -441,12 +457,12 @@
                 :hidden="
                   employee_service.employee_local_conveyance.mode_of_transport ==
                   'Public Transport'
-                    ? false
-                    : true
+                    ? true
+                    : false
                 "
               >
-                <label for="Eligible Amount">Amount</label>
-                <InputText
+                <label for="Eligible Amount">Amount <span class="text-danger">*</span> </label>
+                <InputText   @input="employee_service.amountperKm"
                   v-model="
                     employee_service.employee_local_conveyance
                       .local_convenyance_total_amount
@@ -473,7 +489,7 @@
                   class="p-button-text"
                   @click="employee_service.hideDialog"
                 />
-                <Button
+                <Button :disabled="!employee_service.employee_local_conveyance.travelled_date == '' &&  !employee_service.employee_local_conveyance.mode_of_transport == ''  ? false : true "
                   label="Save"
                   icon="pi pi-check"
                   style="height: 30px; background: rgb(255 135 38); color: white"
@@ -489,10 +505,21 @@
 </template>
 
 <script setup>
+// import { useVuelidate } from "@vuelidate/core";
+// import { required, email, maxLength } from "@vuelidate/validators";
 import {ref, onMounted, reactive} from "vue";
 import {employee_reimbursment_service} from "./EmployeeReimbursementsService";
 import ABS_loading_spinner from "../../../components/ABS_loading_spinner.vue";
 import moment from 'moment'
+
+// const v$ = useVuelidate(validation, employee_onboarding);
+
+// const handleSubmit = (isFormValid) => {
+//     if (!isFormValid) {
+// return;
+// }
+
+// }
 
 const employee_service = employee_reimbursment_service();
 
