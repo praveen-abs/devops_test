@@ -176,6 +176,7 @@ export const employee_reimbursment_service = defineStore(
         };
 
         const data_local_convergance = ref([]);
+        const disableAmt = ref(true)
 
         const fetch_data_for_local_convergance = () => {
             let url_all_reimbursements = window.location.origin + "/fetch_employee_reimbursement_data";
@@ -262,13 +263,16 @@ export const employee_reimbursment_service = defineStore(
 
             if(data == 'Car'){
                 employee_local_conveyance.Amt_km = 6
+                employee_local_conveyance.local_convenyance_total_amount =  6 * employee_local_conveyance.total_distance_travelled
                 console.log("car");
             }else
             if(data == 'Bike'){
                 employee_local_conveyance.Amt_km = 3.5
+                employee_local_conveyance.local_convenyance_total_amount =  3 * employee_local_conveyance.total_distance_travelled
                 console.log("Bike");
             }else{
                  console.log("public transport");
+                 employee_local_conveyance.Amt_km = ''
             }
 
         }
@@ -304,6 +308,7 @@ export const employee_reimbursment_service = defineStore(
             fetch_data_for_local_convergance,
             onclickSwitchToLocalCoverganceTab,
             data_local_convergance,
+            disableAmt,
             local_Conveyance_Mode_of_transport,
             amountperKm,
 

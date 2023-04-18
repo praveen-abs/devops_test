@@ -379,13 +379,15 @@
               :modal="true"
               class="p-fluid"
             >
+
               <div class="field">
-                <label for="name">Date</label>
+                <label for="name">Date <span class="text-danger">*</span></label>
                 <Calendar
-                  inputId="dateformat"
+                  inputId="dateformat" :class="[employee_service.employee_local_conveyance.travelled_date == '' ? 'p-invalid' : '']"
                   v-model="employee_service.employee_local_conveyance.travelled_date"
                   dateFormat="dd/mm/yy"
                 />
+
                 <!-- {{ employee_local_conveyance.travelled_date }} -->
               </div>
 
@@ -397,7 +399,7 @@
                   optionLabel="label"
                   optionValue="value"
                   placeholder="Select Mode Of Transport"
-                  class="w-full"
+                  class="w-full"   :class="[employee_service.employee_local_conveyance.travelled_mode_of_transportate == '' ? 'p-invalid' : '']"
                   @change="employee_service.amountperKm(employee_service.employee_local_conveyance.mode_of_transport)"
                 />
               </div>
@@ -405,7 +407,7 @@
               <div class="grid formgrid">
                 <div class="field col">
                   <label for="Eligible Amount">From</label>
-                  <InputText
+                  <InputText   :class="[employee_service.employee_local_conveyance.travel_from == '' ? 'p-invalid' : '']"
                     v-model="employee_service.employee_local_conveyance.travel_from"
                   />
                 </div>
@@ -426,9 +428,23 @@
                     @input="employee_service.amount_calculation"
                   />
                 </div>
-                <div class="field col">
+                <div class="field col" v-if="employee_service.employee_local_conveyance.mode_of_transport == 'Public Transport'">
+                  <label for="Eligible Amount">Actual Amount</label>
+                  <InputText  :readonly="employee_service.employee_local_conveyance.mode_of_transport ==
+                  'Public Transport'
+                    ? false
+                    : true"
+                    v-model="
+                      employee_service.employee_local_conveyance.Amt_km
+                    "
+                  />
+                </div>
+                <div class="field col" v-else>
                   <label for="Eligible Amount">Amt/Km</label>
-                  <InputText
+                  <InputText  :readonly="employee_service.employee_local_conveyance.mode_of_transport ==
+                  'Public Transport'
+                    ? false
+                    : true"
                     v-model="
                       employee_service.employee_local_conveyance.Amt_km
                     "
@@ -441,12 +457,12 @@
                 :hidden="
                   employee_service.employee_local_conveyance.mode_of_transport ==
                   'Public Transport'
-                    ? false
-                    : true
+                    ? true
+                    : false
                 "
               >
                 <label for="Eligible Amount">Amount</label>
-                <InputText
+                <InputText   @input="employee_service.amountperKm"
                   v-model="
                     employee_service.employee_local_conveyance
                       .local_convenyance_total_amount
@@ -473,7 +489,7 @@
                   class="p-button-text"
                   @click="employee_service.hideDialog"
                 />
-                <Button
+                <Button :disabled="!employee_service.employee_local_conveyance.travelled_date == '' &&  !employee_service.employee_local_conveyance.mode_of_transport == ''  ? false : true "
                   label="Save"
                   icon="pi pi-check"
                   style="height: 30px; background: rgb(255 135 38); color: white"
@@ -489,10 +505,21 @@
 </template>
 
 <script setup>
+// import { useVuelidate } from "@vuelidate/core";
+// import { required, email, maxLength } from "@vuelidate/validators";
 import {ref, onMounted, reactive} from "vue";
 import {employee_reimbursment_service} from "./EmployeeReimbursementsService";
 import ABS_loading_spinner from "../../../components/ABS_loading_spinner.vue";
 import moment from 'moment'
+
+// const v$ = useVuelidate(validation, employee_onboarding);
+
+// const handleSubmit = (isFormValid) => {
+//     if (!isFormValid) {
+// return;
+// }
+
+// }
 
 const employee_service = employee_reimbursment_service();
 
