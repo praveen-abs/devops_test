@@ -509,6 +509,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/getLocalConveyanceCost',[App\Http\Controllers\VmtReimbursementController::class ,'getLocalConveyanceCost'])->name('getLocalConveyanceCost');
     Route::post('/testCreateLocalCovergance',[App\Http\Controllers\VmtReimbursementController::class ,'testCreateLocalCovergance'])->name('testCreateLocalCovergance');
 
+     //Employee Wise Reimbursement Data
+     Route::get('/fetch_employee_reimbursement_data',[App\Http\Controllers\VmtReimbursementController::class,'fetchEmployeeReimbursement'])->name('fetchReimbursementsData');
 
 
 
