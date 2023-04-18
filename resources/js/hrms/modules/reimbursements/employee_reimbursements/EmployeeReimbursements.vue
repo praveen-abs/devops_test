@@ -383,7 +383,7 @@
               <div class="field">
                 <label for="name">Date <span class="text-danger">*</span></label>
                 <Calendar
-                  inputId="dateformat" :class="[employee_service.employee_local_conveyance.travelled_date == '' ? 'p-invalid' : '']"
+                  inputId="dateformat"
                   v-model="employee_service.employee_local_conveyance.travelled_date"
                   dateFormat="dd/mm/yy"
                 />
@@ -392,27 +392,27 @@
               </div>
 
               <div class="field col">
-                <label for="Claim Amount">Mode of transport</label>
+                <label for="Claim Amount">Mode of transport <span class="text-danger">*</span> </label>
                 <Dropdown
                   v-model="employee_service.employee_local_conveyance.mode_of_transport"
                   :options="employee_service.local_Conveyance_Mode_of_transport"
                   optionLabel="label"
                   optionValue="value"
                   placeholder="Select Mode Of Transport"
-                  class="w-full"   :class="[employee_service.employee_local_conveyance.travelled_mode_of_transportate == '' ? 'p-invalid' : '']"
+                  class="w-full"
                   @change="employee_service.amountperKm(employee_service.employee_local_conveyance.mode_of_transport)"
                 />
               </div>
 
               <div class="grid formgrid">
                 <div class="field col">
-                  <label for="Eligible Amount">From</label>
-                  <InputText   :class="[employee_service.employee_local_conveyance.travel_from == '' ? 'p-invalid' : '']"
+                  <label for="Eligible Amount">From <span class="text-danger">*</span> </label>
+                  <InputText
                     v-model="employee_service.employee_local_conveyance.travel_from"
                   />
                 </div>
                 <div class="field col">
-                  <label for="Claim Amount">To</label>
+                  <label for="Claim Amount">To <span class="text-danger">*</span> </label>
                   <InputText
                     v-model="employee_service.employee_local_conveyance.travel_to"
                   />
@@ -420,7 +420,7 @@
               </div>
               <div class="grid formgrid">
                 <div class="field col">
-                  <label for="Eligible Amount">Total Distance</label>
+                  <label for="Eligible Amount">Total Distance <span class="text-danger">*</span> </label>
                   <InputText
                     v-model="
                       employee_service.employee_local_conveyance.total_distance_travelled
@@ -429,7 +429,7 @@
                   />
                 </div>
                 <div class="field col" v-if="employee_service.employee_local_conveyance.mode_of_transport == 'Public Transport'">
-                  <label for="Eligible Amount">Actual Amount</label>
+                  <label for="Eligible Amount">Actual Amount <span class="text-danger">*</span> </label>
                   <InputText  :readonly="employee_service.employee_local_conveyance.mode_of_transport ==
                   'Public Transport'
                     ? false
@@ -440,7 +440,7 @@
                   />
                 </div>
                 <div class="field col" v-else>
-                  <label for="Eligible Amount">Amt/Km</label>
+                  <label for="Eligible Amount">Amt/Km <span class="text-danger">*</span></label>
                   <InputText  :readonly="employee_service.employee_local_conveyance.mode_of_transport ==
                   'Public Transport'
                     ? false
@@ -461,7 +461,7 @@
                     : false
                 "
               >
-                <label for="Eligible Amount">Amount</label>
+                <label for="Eligible Amount">Amount <span class="text-danger">*</span> </label>
                 <InputText   @input="employee_service.amountperKm"
                   v-model="
                     employee_service.employee_local_conveyance

@@ -69,27 +69,12 @@ class VmtReimbursementsService {
     }
 
 
-    public function createReimbursement_LocalConveyance($reimbursement_type_id, $date, $user_comments, $from, $to, $vehicle_type, $distance_travelled ){
+    public function createReimbursement_LocalConveyance($local_conveyance_data)
+    {
 
+       dd($local_conveyance_data);
 
         try{
-            //Get KMS cost based on vehicle type
-            $current_kmsCost_vehicle = $this->getLocalConveyanceCost($vehicle_type);
-
-
-            if($current_kmsCost_vehicle)
-            {
-              $total_amount= $current_kmsCost_vehicle *  $distance_travelled;
-            }
-            else
-            {
-
-                return [
-                    "status" => "failure",
-                    "message" => "Vehicle type is invalid"
-                ];
-
-            }
 
             //Save in DB
             $emp_reimbursements = new VmtEmployeeReimbursements;
