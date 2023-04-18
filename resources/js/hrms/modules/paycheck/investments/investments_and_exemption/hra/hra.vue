@@ -46,19 +46,24 @@
                 </Column>
                 <Column field="" header="Action" style="min-width: 12rem">
 
-                    <template #body>
+                    <template #body="slotProps">
                         <button class="m-auto bg-transparent border-0 outline-none " type="button" aria-haspopup="true"
                             @click="toggle" aria-expanded="false">
                             <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                         </button>
 
+                        <Button icon="pi pi-pencil" outlined rounded severity="danger"
+                            @click="investmentStore.editHraNewRental(slotProps.data)" />
+
+
+
                         <OverlayPanel ref="op" class="p-4">
                             <div class="p-3 mx-4">
-                                <a class="py-4 my-4 dropdown-item" href="#"><i
+                                <button class="py-4 my-4" @click="investmentStore.editHraNewRental"><i
                                         class="py-2 my-4 fa fa-pencil-square-o text-info me-2" aria-hidden="true"></i>
-                                    Edit</a>
-                                <a class="dropdown-item" href="#"><i class="my-4 fa fa-times-circle-o text-danger me-2"
-                                        aria-hidden="true"></i> Clear</a>
+                                    Edit</button>
+                                <button class=""><i class="my-4 fa fa-times-circle-o text-danger me-2"
+                                        aria-hidden="true"></i> Clear</button>
                             </div>
                         </OverlayPanel>
 
@@ -77,63 +82,68 @@
             <button class="my-3 mr-4 btn btn-border-orange" @click="investmentStore.dailogAddNewRental = true"><i
                     class="fa fa-plus-circle me-2" aria-hidden="true"></i>
                 Add Rented</button>
-           </div>
+        </div>
 
         <div class="mb-3 col-sm-12 col-md-12 col-xl-12 col-xxl-12 col-lg-12">
             <div class="mb-3 table-responsive">
-             
-                <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10" :value="sample"
+
+                <!-- {{ investmentStore.hra_data }} -->
+
+                <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10" :value="investmentStore.hra_data"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 25]"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
                     responsiveLayout="scroll">
 
-                    <Column header="Landlord Name" field="section" style="min-width: 8rem">
+                    <Column header="Landlord Name" field="landlord_name" style="min-width: 8rem">
                         <!-- <template #body="slotProps">
                         {{  slotProps.data.claim_type }}
                       </template> -->
                     </Column>
 
-                    <Column field="particular" header="Landlord PAN" style="min-width: 12rem">
+                    <Column field="landlord_PAN" header="Landlord PAN" style="min-width: 12rem">
                         <!-- <template #body="slotProps">
                         {{ "&#x20B9;" + slotProps.data.claim_amount }}
                       </template> -->
                     </Column>
 
-                    <Column field="ref" header="From Month " style="min-width: 12rem">
+                    <Column field="from_month" header="From Month " style="min-width: 12rem">
                         <!-- <template #body="slotProps">
                           {{ "&#x20B9;" + slotProps.data.eligible_amount }}
                         </template> -->
                     </Column>
 
-                    <Column field="max_limit" header="To Month" style="min-width: 12rem">
+                    <Column field="to_month" header="To Month" style="min-width: 12rem">
                         <!-- <template #body="slotProps">
                           {{  slotProps.data.reimbursment_remarks }}
                         </template> -->
                     </Column>
 
-                    <Column field="Declaration Amount" header="City" style="min-width: 12rem">
+                    <Column field="city" header="City" style="min-width: 12rem">
                         <template #body="slotProps">
                             {{ slotProps.data.reimbursment_remarks }}
                         </template>
                     </Column>
-                    <Column field="Status" header="Total Rent" style="min-width: 12rem">
+                    <Column field="total_rent_paid" header="Total Rent" style="min-width: 12rem">
                         <!-- <template #body="slotProps">
                           {{  slotProps.data.reimbursment_remarks }}
                         </template> -->
                     </Column>
                     <Column field="" header="Action" style="min-width: 12rem">
 
-                        <template #body>
+                        <template #body="slotProps">
                             <button class="m-auto bg-transparent border-0 outline-none " type="button" aria-haspopup="true"
                                 @click="toggle" aria-expanded="false">
                                 <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                             </button>
 
+                            <Button icon="pi pi-pencil" outlined rounded severity="danger"
+                                @click="investmentStore.editHraNewRental(slotProps.data)" />
+
                             <OverlayPanel ref="op">
-                                <a class="dropdown-item" href="#"><i class="fa fa-pencil-square-o text-info me-2"
+                                <a class="dropdown-item"><i class="fa fa-pencil-square-o text-info me-2"
                                         aria-hidden="true"></i> Edit</a>
-                                <a class="dropdown-item" href="#"><i class="fa fa-times-circle-o text-danger me-2"
+                                <a class="dropdown-item"><i class="fa fa-times-circle-o text-danger me-2"
                                         aria-hidden="true"></i> Clear</a>
                             </OverlayPanel>
 
@@ -147,7 +157,8 @@
 
     </div>
     <div class="my-3 text-end">
-        <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4">Save</button>
+        <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4"
+            @click="investmentStore.saveHRA">Save</button>
         <button @click="investmentStore.investment_exemption_steps++"
             class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md">Next</button>
     </div>
@@ -160,7 +171,7 @@
 
         </template>
 
-        <div class="grid mb-6 gap-y-4 gap-x-6 md:grid-cols-2 2xl:grid-cols-2 sm:grid-cols-1 xl:grid-cols-2 lg:grid-cols-2">
+        <div class="grid my-4 mb-6 gap-y-4 gap-x-6 md:grid-cols-2 2xl:grid-cols-2 sm:grid-cols-1 xl:grid-cols-2 lg:grid-cols-2">
 
             <div class="">
                 <label for="rentFrom_month" class="block mb-2 font-medium text-gray-900 ">From
@@ -173,7 +184,7 @@
                 <label for="toFrom_month" class="block mb-2 font-medium text-gray-900 ">To
                     Month</label>
                 <input type="date" id="toFrom_month
-                                                                        "
+                                                                                "
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                     v-model="investmentStore.hra.to_month" required>
             </div>
@@ -232,6 +243,18 @@
                 @click="investmentStore.saveHraNewRental">Save</button>
         </div>
     </Dialog>
+
+    <Dialog header="Header" v-model:visible="investmentStore.canShowLoading"
+        :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
+        :closeOnEscape="false">
+        <template #header>
+            <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+                animationDuration="2s" aria-label="Custom ProgressSpinner" />
+        </template>
+        <template #footer>
+            <h5 style="text-align: center">Please wait...</h5>
+        </template>
+    </Dialog>
 </template>
 
 
@@ -241,12 +264,20 @@ import { investmentMainStore } from "../../../stores/investmentMainStore";
 
 import { ref } from "vue";
 
+const test = () => {
+    alert("test")
+}
+
 const op = ref();
 const toggle = (event) => {
     op.value.toggle(event);
 }
 
 const investmentStore = investmentMainStore()
+
+onMounted(() => {
+    investmentStore.fetchHraNewRental()
+})
 
 const sample = ref([
     { id: 1, section: "Section 10(13A)", particular: "House Rent Allowance", ref: 'data', max: '1000' }
