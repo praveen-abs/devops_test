@@ -51,8 +51,9 @@
                             @click="toggle" aria-expanded="false">
                             <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                         </button>
-
-                        <Button icon="pi pi-pencil" outlined rounded severity="danger"
+ 
+                        <Button icon="pi pi-check" aria-label="Filter" />
+                        <Button icon="pi pi-pencil" outlined rounded  severity="danger" class="p-2"
                             @click="investmentStore.editHraNewRental(slotProps.data)" />
 
 
@@ -108,15 +109,15 @@
                     </Column>
 
                     <Column field="from_month" header="From Month " style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                          {{ "&#x20B9;" + slotProps.data.eligible_amount }}
-                        </template> -->
+                        <template #body="slotProps">
+                          {{  moment(slotProps.data.from_month).format('DD-MM-YYYY') }}
+                        </template>
                     </Column>
 
                     <Column field="to_month" header="To Month" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                          {{  slotProps.data.reimbursment_remarks }}
-                        </template> -->
+                        <template #body="slotProps">
+                            {{  moment(slotProps.data.to_month).format('DD-MM-YYYY') }}
+                        </template>
                     </Column>
 
                     <Column field="city" header="City" style="min-width: 12rem">
@@ -263,6 +264,7 @@ import { onMounted } from "vue";
 import { investmentMainStore } from "../../../stores/investmentMainStore";
 
 import { ref } from "vue";
+import moment from "moment";
 
 const test = () => {
     alert("test")

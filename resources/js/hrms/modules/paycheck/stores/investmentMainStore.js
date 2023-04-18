@@ -19,7 +19,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const toast = useToast();
     // Steps for Investment and exemption tab's  Next and Previous Button
 
-    const investment_exemption_steps = ref(4)
+    const investment_exemption_steps = ref(3)
 
     // loading Spinner
 
@@ -40,7 +40,13 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     1) HRA                  - hra
     2)Section 80C & 80CCC    - sec_80cc
     3)Other Exemptions        - other_Exe
+
     4)House Property          - house_props
+    
+          1)sop - self occupied property
+          1)lop - let out property
+          1)dlop -Demmed let out property
+
     5)Reimbursement           - reimbursment
     6)Previous Employer Income - pre_emp_income
     7)Other Source Of Income    - oth_sour_of_income
@@ -158,19 +164,48 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         interest_amount_paid: ''
     })
 
+    const other_exe_80EE = reactive({
+        loan_sanction_date: '',
+        lender_type: '',
+        property_value: '',
+        loan_amount: '',
+        interest_amount_paid: '',
+    })
+    const other_exe_80EEA = reactive({
+        loan_sanction_date: '',
+        lender_type: '',
+        property_value: '',
+        loan_amount: '',
+        interest_amount_paid: '',
+    })
+    const other_exe_80EEB = reactive({
+        loan_sanction_date: '',
+        lender_type: '',
+        property_value: '',
+        loan_amount: '',
+        interest_amount_paid: '',
+        vechicle_brand: '',
+        vechicle_model: '',
+        interest_amount_paid: ''
+    })
+
+    const dailog_80EE = ref(false)
+    const dailog_80EEA = ref(false)
+    const dailog_80EEB = ref(false)
+
     const save80EE = () => {
         console.log("Saving Other exemption 80EE");
-        console.log(other_Exe);
+        console.log(other_exe_80EE);
     }
 
     const save80EEA = () => {
         console.log("Saving Other exemption 80EEA");
-        console.log(other_Exe);
+        console.log(other_exe_80EEA);
     }
 
     const save80EEB = () => {
         console.log("Saving Other exemption 80EEB");
-        console.log(other_Exe);
+        console.log(other_exe_80EEB);
     }
 
     // Other Exemptions  Ends
@@ -185,7 +220,20 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const dailog_LetOutProperty = ref(false)
     const dailog_DeemedLetOutProperty = ref(false)
 
-    const house_props = reactive({
+    // Self Occupied Property
+
+    const sop = reactive({
+        lender_name: '',
+        lender_pan: '',
+        lender_type: '',
+        loss_from_housing_property: '',
+        address: '',
+        property_type:'Self Occupied Property'
+    })
+
+    // Let Out Property
+
+    const lop = reactive({
         lender_name: '',
         lender_pan: '',
         lender_type: '',
@@ -197,9 +245,51 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         net_value: '',
         interest: '',
         income_loss: '',
+        property_type:'Let Out Property'
     })
 
+    // Deemed Let Out Property
+
+    const dlop = reactive({
+        lender_name: '',
+        lender_pan: '',
+        lender_type: '',
+        loss_from_housing_property: '',
+        address: '',
+        rent_received: '',
+        municipal_tax: '',
+        maintenance: '',
+        net_value: '',
+        interest: '',
+        income_loss: '',
+        property_type:'Deemed Let Out Property'
+    })
+
+
+ 
+    const income_loss_calculation = () =>{
+      const lop_maintenance =  formula.maintenance_cal(lop.lender_type,lop.rent_received,lop.municipal_tax)
+      const dlop_maintenance =  formula.maintenance_cal(dlop.lender_type,dlop.rent_received,dlop.municipal_tax)
+      lop.maintenance = lop_maintenance
+      dlop.maintenance = dlop_maintenance
+      console.log("lop:"+lop_maintenance);
+      console.log("dlop:"+dlop_maintenance);
+     setTimeout(() => {
+        const lop_net =  formula.net_value_cal(lop.rent_received,lop.municipal_tax,lop.maintenance)
+        console.log(lop_net);
+        lop.net_value = lop_net;
+        const dlop_net =  formula.net_value_cal(dlop.rent_received,dlop.municipal_tax,dlop.maintenance)
+        console.log(dlop_net);
+        dlop.net_value = dlop_net;
+     }, 1000);
+     lop.income_loss = formula.income_loss_cal(lop.interest,lop.net_value)
+     dlop.income_loss = formula.income_loss_cal(dlop.interest,dlop.net_value)
+      
+
+    }
+
     const fetchSelfOccupiedProperty = () => {
+      
         axios.get('http://localhost:3000/investment').then(res=>{
             console.log(res.data);
             house_props_data.value = res.data
@@ -208,24 +298,29 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
     const saveSelfOccupiedProperty = () => {
         dailog_SelfOccupiedProperty.value = false
-        console.log(house_props);
-        axios.post('http://localhost:3000/investment',house_props).then(res=>{
+        console.log(sop);
+        axios.post('http://localhost:3000/investment',sop).then(res=>{
             console.log(res.data);
+            fetchSelfOccupiedProperty()
         })
     }
     const saveLetOutProperty = () => {
-        console.log(house_props);
+        console.log(lop);
         dailog_LetOutProperty.value = false
-        axios.post('http://localhost:3000/investment',house_props).then(res=>{
+        axios.post('http://localhost:3000/investment',
+            lop).then(res=>{
             console.log(res.data);
+            fetchSelfOccupiedProperty()
         })
     }
     const saveDeemedLetOutProperty = () => {
-        console.log(house_props);
+        console.log(dlop);
         dailog_DeemedLetOutProperty.value = false
-        axios.post('http://localhost:3000/investment',house_props).then(res=>{
+        axios.post('http://localhost:3000/investment',dlop).then(res=>{
             console.log(res.data);
+            fetchSelfOccupiedProperty()
         })
+
     }
 
 
@@ -256,14 +351,14 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
         // Other exemptiom Begins
 
-        other_Exe, save80EE, save80EEA, save80EEB,
+        other_Exe,dailog_80EE,dailog_80EEA,dailog_80EEB,other_exe_80EE,other_exe_80EEA,other_exe_80EEB, save80EE, save80EEA, save80EEB,
 
         // Other exemptiom Ends
 
         // House Property Begins
 
-        house_props,house_props_data, dailog_SelfOccupiedProperty, dailog_DeemedLetOutProperty, dailog_LetOutProperty,
-        fetchSelfOccupiedProperty,saveSelfOccupiedProperty,saveLetOutProperty,saveDeemedLetOutProperty,
+        house_props_data, dailog_SelfOccupiedProperty, dailog_DeemedLetOutProperty, dailog_LetOutProperty,income_loss_calculation,
+        fetchSelfOccupiedProperty,saveSelfOccupiedProperty,saveLetOutProperty,saveDeemedLetOutProperty,lop,sop,dlop,
 
 
         // House Property End

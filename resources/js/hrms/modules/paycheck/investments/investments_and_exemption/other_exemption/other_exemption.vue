@@ -35,17 +35,17 @@
                 <Column field="Declaration Amount" header="Declaration Amount" style="min-width: 12rem">
                     <template #body="slotProps">
                         <div v-if="slotProps.data.section == '80EE'">
-                            <button @click="visible = true"
+                            <button @click="investmentStore.dailog_80EE = true"
                                 class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4">Add
                                 80EE</button>
                         </div>
                         <div v-else-if="slotProps.data.section == '80EEA'">
-                            <button @click="visible1 = true"
+                            <button @click="investmentStore.dailog_80EEA = true"
                                 class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4">Add
                                 80EEA</button>
                         </div>
                         <div v-else-if="slotProps.data.section == '80EEB'">
-                            <button @click="visible2 = true"
+                            <button @click="investmentStore.dailog_80EEB = true"
                                 class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4">Add
                                 80EEB</button>
                         </div>
@@ -99,7 +99,7 @@
 
 
 
-        <Dialog v-model:visible="visible" modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
+        <Dialog v-model:visible="investmentStore.dailog_80EE" modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
             <template #header>
                 <h6 class="mb-1 modal-title text-primary">80EE<span class="ml-3 text-xs font-semibold text-gray-400">(The
                         maximum deduction of Rs 50,000 can
@@ -111,7 +111,7 @@
                 <div class="">
                     <label for="sanction_date" class="block mb-2 font-medium text-gray-900 ">Loan
                         Sanction Date</label>
-                    <input type="date" id="sanction_date" v-model="investmentStore.other_Exe.loan_sanction_date"
+                    <input type="date" id="sanction_date" v-model="investmentStore.other_exe_80EE.loan_sanction_date"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                         required>
                 </div>
@@ -122,33 +122,36 @@
 
                     <label for="lender_type" class="block mb-2 font-medium text-gray-900 ">Lender
                         Type</label>
-                    <select id="lender_type"  v-model="investmentStore.other_Exe.lender_type"
+                        <Dropdown class="w-full text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50"
+                        v-model="investmentStore.other_exe_80EE.lender_type" :options="lender_types" optionLabel="name"
+                        optionValue="code" placeholder="Select a Property" />
+                    <!-- <select id="lender_type"  v-model="investmentStore.other_exe_80EE.lender_type"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                         <option selected>Choose Type</option>
                         <option>Others</option>
                         <option>Financial Institution</option>
 
-                    </select>
+                    </select> -->
                 </div>
 
                 <div class="">
                     <label for="property_value" class="block mb-2 font-medium text-gray-900 ">Property
                         Value</label>
-                    <input type="text" id="property_value"  v-model="investmentStore.other_Exe.property_value"
+                    <input type="text" id="property_value"  v-model="investmentStore.other_exe_80EE.property_value"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                         required>
                 </div>
                 <div class="">
                     <label for="loan_amount" class="block mb-2 font-medium text-gray-900 ">Loan
                         Amount</label>
-                    <input type="text" id="loan_amount" v-model="investmentStore.other_Exe.loan_amount"
+                    <input type="text" id="loan_amount" v-model="investmentStore.other_exe_80EE.loan_amount"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-100 focus:outline-none focus:ring outline-1  block w-full p-2.5 "
                         required>
                 </div>
                 <div class="">
                     <label for="declaration_amount" class="block mb-2 font-medium text-gray-900 ">Interest
                         Amount Paid</label>
-                    <input type="text" id="declaration_amount" v-model="investmentStore.other_Exe.interest_amount_paid"
+                    <input type="text" id="declaration_amount" v-model="investmentStore.other_exe_80EE.interest_amount_paid"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                         required>
                 </div>
@@ -162,7 +165,7 @@
         </Dialog>
 
 
-        <Dialog v-model:visible="visible1" modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
+        <Dialog v-model:visible="investmentStore.dailog_80EEA" modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
             <template #header>
                 <h6 class="mb-1 modal-title text-primary">80EEA <span class="ml-3 text-xs font-semibold text-gray-400">(The
                         maximum deduction available under
@@ -175,7 +178,7 @@
                 <div class="">
                     <label for="sanction_date" class="block mb-2 font-medium text-gray-900 ">Loan
                         Sanction Date</label>
-                    <input type="date" id="sanction_date"  v-model="investmentStore.other_Exe.loan_sanction_date"
+                    <input type="date" id="sanction_date"  v-model="investmentStore.other_exe_80EEA.loan_sanction_date"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                         required>
                 </div>
@@ -186,33 +189,36 @@
 
                     <label for="lender_type" class="block mb-2 font-medium text-gray-900 ">Lender
                         Type</label>
-                    <select id="lender_type"  v-model="investmentStore.other_Exe.lender_type"
+                        <Dropdown class="w-full text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50"
+                        v-model="investmentStore.other_exe_80EEA.lender_type" :options="lender_types" optionLabel="name"
+                        optionValue="code" placeholder="Select a Property" />
+                    <!-- <select id="lender_type"  v-model="investmentStore.other_exe_80EEA.lender_type"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                         <option selected>Choose Type</option>
                         <option>Others</option>
                         <option>Financial Institution</option>
 
-                    </select>
+                    </select> -->
                 </div>
 
                 <div class="">
                     <label for="property_value" class="block mb-2 font-medium text-gray-900 ">Property
                         Value</label>
-                    <input type="text" id="property_value"  v-model="investmentStore.other_Exe.property_value"
+                    <input type="text" id="property_value"  v-model="investmentStore.other_exe_80EEA.property_value"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                         required>
                 </div>
                 <div class="">
                     <label for="loan_amount" class="block mb-2 font-medium text-gray-900 ">Loan
                         Amount</label>
-                    <input type="text" id="loan_amount"  v-model="investmentStore.other_Exe.loan_amount"
+                    <input type="text" id="loan_amount"  v-model="investmentStore.other_exe_80EEA.loan_amount"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-100 focus:outline-none focus:ring outline-1  block w-full p-2.5 "
                         required>
                 </div>
                 <div class="">
                     <label for="declaration_amount" class="block mb-2 font-medium text-gray-900 ">Interest
                         Amount Paid</label>
-                    <input type="text" id="declaration_amount" v-model="investmentStore.other_Exe.interest_amount_paid"
+                    <input type="text" id="declaration_amount" v-model="investmentStore.other_exe_80EEA.interest_amount_paid"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                         required>
                 </div>
@@ -226,7 +232,7 @@
 
 
 
-        <Dialog v-model:visible="visible2" modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
+        <Dialog v-model:visible="investmentStore.dailog_80EEB" modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
 
             <template #header>
                 <h6 class="mb-1 modal-title text-primary"> 80EEB<span class="ml-3 text-xs font-semibold text-gray-400">(The
@@ -243,7 +249,7 @@
                 <div class="">
                     <label for="sanction_date" class="block mb-2 font-medium text-gray-900 ">Loan
                         Sanction Date</label>
-                    <input type="date" id="sanction_date" v-model="investmentStore.other_Exe.loan_sanction_date"
+                    <input type="date" id="sanction_date" v-model="investmentStore.other_exe_80EEB.loan_sanction_date"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                         required>
                 </div>
@@ -253,7 +259,10 @@
                 <div class="">
 
                     <label for="vechicle_brand" class="block mb-2 font-medium text-gray-900 ">Vechicle Brand</label>
-                    <select id="vechicle_brand" v-model="investmentStore.other_Exe.vechicle_brand"
+                    <Dropdown class="w-full text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50" @change="switchVechileModel(investmentStore.other_exe_80EEB.vechicle_brand)"
+                        v-model="investmentStore.other_exe_80EEB.vechicle_brand" :options="vechicle_types" optionLabel="vechicle_model"
+                        optionValue="value" placeholder="Select a Vechicle Brand" />
+                    <!-- <select id="vechicle_brand" v-model="investmentStore.other_exe_80EEB.vechicle_brand"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                         <option selected hidden disabled>Choose Vechicle</option>
                         <option value="">TATA</option>
@@ -262,16 +271,19 @@
                         <option value="">Kia</option>
                         <option value="">MG</option>
 
-                    </select>
+                    </select> -->
                 </div>
 
                 <div class="">
                     <label for="vechicle_model" class="block mb-2 font-medium text-gray-900 ">Vechicle Model
                     </label>
+                    <Dropdown class="w-full text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50"
+                        v-model="investmentStore.other_exe_80EEB.vechicle_model" :options="vechicle_model_options"  optionLabel="vechicle_model"
+                        optionValue="value" placeholder="Select a Vechicle Model" />
                     <!-- {{-- <input type="text" id=""
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                                             required> --}} -->
-                    <select id="vechicle_model" v-model="investmentStore.other_Exe.vechicle_model"
+                    <!-- <select id="vechicle_model" v-model="investmentStore.other_exe_80EEB.vechicle_model"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                         <option selected hidden>Choose Model</option>
                         <option value="">Tata Tiago</option>
@@ -294,20 +306,20 @@
                         <option value="">MG ZS EV</option>
 
 
-                    </select>
+                    </select> -->
                 </div>
 
                 <div class="">
                     <label for="declaration_amount" class="block mb-2 font-medium text-gray-900 ">Interest
                         Amount Paid</label>
-                    <input type="text" id="declaration_amount" v-model="investmentStore.other_Exe.interest_amount_paid"
+                    <input type="text" id="declaration_amount" v-model="investmentStore.other_exe_80EEB.interest_amount_paid"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                         required>
                 </div>
 
             </div>
             <div class="text-end">
-                <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md" @click="investmentStore.save80EEB">Save</button>
+                <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md" @click="investmentStore.other_exe_80EEB">Save</button>
             </div>
 
 
@@ -323,9 +335,89 @@ import { investmentMainStore } from "../../../stores/investmentMainStore";
 
 const investmentStore = investmentMainStore()
 
-const visible = ref(false)
-const visible1 = ref(false)
-const visible2 = ref(false)
+
+const vechicle_model_options =ref()
+
+
+const vechicle_types =ref([
+    {id:1,vechicle_model:'Tata',value :'Tata'}, 
+    {id:2,vechicle_model:'Mahindra',value :'Mahindra'},
+    {id:3,vechicle_model:'Hyundai',value :'Hyundai'},
+    {id:4,vechicle_model:'Kia',value :'Kia'},
+    {id:5,vechicle_model:'MG',value :'MG'},
+])
+
+
+const switchVechileModel = (vechicle_brand) =>{
+
+   console.log("function called");
+
+   console.log(vechicle_brand);
+
+    if(vechicle_brand == 'Tata'){
+
+        console.log("tata");
+        vechicle_model_options.value =[
+        {id:1,vechicle_model:'Tata Tigor',value :'Tata Tigor'},
+        {id:2,vechicle_model:'Tata Nexon',value :'Tata Nexon'},
+        {id:3,vechicle_model:'Tata AVINYA',value :'Tata AVINYA'},
+        {id:4,vechicle_model:'Tata Punch',value :'Tata Punch'},
+        {id:5,vechicle_model:'Tata CURVV SUV Coupe',value :'Tata CURVV SUV Coupe'},
+        {id:6,vechicle_model:'Tata Tiago',value :'Tata Tiago'},
+    ]
+    }else{
+
+    if(vechicle_brand == 'Mahindra'){
+  
+        vechicle_model_options.value =[
+        {id:1,vechicle_model:'Mahindra eVerito',value :'Mahindra eVerito'},
+        {id:2,vechicle_model:'Mahindra e2oPlus',value :'Mahindra e2oPlus'},
+        {id:3,vechicle_model:'Mahindra eSupro',value :'Mahindra eSupro'},
+        {id:4,vechicle_model:'Mahindra Treo',value :'Mahindra Treo'},
+        {id:5,vechicle_model:'Mahindra Treo Zor',value :'Mahindra Treo Zor'},
+        {id:6,vechicle_model:'Mahindra eAlfa Mini',value :'Mahindra eAlfa Mini'},
+        {id:7,vechicle_model:'Mahindra  XUV400 EV',value :'Mahindra  XUV400 EV'},
+        {id:8,vechicle_model:'Mahindra  Mahindra E Verito',value :'Mahindra  Mahindra E Verito'},
+       
+    ]
+    }else
+    if(vechicle_brand == 'Hyundai'){
+        vechicle_model_options.value =[
+        {id:1,vechicle_model:'Hyundai Kona Electric',value :'Hyundai Kona Electric'},
+        {id:2,vechicle_model:'Hyundai IONIQ 5',value :'Hyundai IONIQ 5'},
+        {id:3,vechicle_model:'Mahindra eSupro',value :'Mahindra eSupro'},
+        ]
+    }else
+    if(vechicle_brand == 'Kia'){
+        vechicle_model_options.value =[
+        {id:1,vechicle_model:'Kia EV6',value :'Kia EV6'},
+        ]
+    }else
+    if(vechicle_brand == 'MG'){
+        vechicle_model_options.value =[
+        {id:1,vechicle_model:'MG ZS EV',value :'MG ZS EV'},
+        ]
+    }else{
+        console.log("no more Brand");
+    }
+
+}
+
+}
+
+
+
+
+
+
+
+
+
+const lender_types = ref([
+    { name: 'Financial Institution', code: 'Financial Institution' },
+    { name: 'Others', code: 'Others' },
+
+]);
 
 
 
@@ -337,6 +429,9 @@ const sample = ref([
     { id: 5, section: "80EEA", particular: "House Rent Allowance", ref: 'data', max: '1000' },
     { id: 6, section: "80EEB", particular: "House Rent Allowance", ref: 'data', max: '1000' },
 ])
+
+
+
 
 
 const text = ref()
