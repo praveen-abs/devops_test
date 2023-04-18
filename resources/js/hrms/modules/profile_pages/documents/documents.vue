@@ -1,6 +1,7 @@
 <template>
     <div class="table-responsive">
-        <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10" :value="documents"
+        {{ _instance_profilePagesStore.employeeDetails }}
+        <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10" :value="_instance_profilePagesStore.employeeDetails.employee_documents "
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             :rowsPerPageOptions="[5, 10, 25]"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
@@ -20,7 +21,7 @@
                     <Button type="button" icon="pi pi-eye" class="p-button-success Button" label="view"
                         @click="showDocument(slotProps.data)" style="height: 2em" />
                     <!-- <a :href="`employees/${_instance_profilePagesStore.employeeDetails.user_code}/onboarding_documents/${slotProps.data.doc_url}`">click</a> -->
-                    <a :href="view-profile-private-file">click</a>
+                    <!-- <a :href="view-profile-private-file">click</a> -->
                 </template>
 
             </Column>
@@ -62,7 +63,7 @@
                 <a href=""></a>
 
         </Dialog>
-        <!-- {{ _instance_profilePagesStore.employeeDetails.get_employee_details }} -->
+        <!-- {{ _instance_profilePagesStore.employeeDetails.employee_documents }} -->
         <!-- {{ _instance_profilePagesStore.employeeDetails.get_employee_details }} -->
     </div>
 </template>
