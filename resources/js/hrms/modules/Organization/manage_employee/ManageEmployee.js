@@ -35,7 +35,7 @@ import Chips from 'primevue/chips'
 import MultiSelect from 'primevue/multiselect';
 
 
-import ManageEmployee from './manage_employee.vue'
+import ManageEmployee from './ManageEmployee.vue'
 
 const app = createApp(ManageEmployee);
 const pinia=createPinia()

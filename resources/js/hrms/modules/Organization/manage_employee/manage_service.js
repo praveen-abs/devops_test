@@ -19,7 +19,7 @@ export const Service = defineStore("Service", () => {
 
     const ajax_active_employees_data = () => {
 
-        let url = window.location.origin + "/vmt-yet-to-activeemployees-fetchall";
+        let url = window.location.origin + "/vmt-activeemployees-fetchall";
 
         console.log("AJAX URL : " + url);
 
