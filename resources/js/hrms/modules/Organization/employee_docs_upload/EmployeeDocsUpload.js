@@ -35,9 +35,9 @@ import Chips from 'primevue/chips'
 import MultiSelect from 'primevue/multiselect';
 
 
-import ManageEmployee from './manage_employee.vue'
+import EmployeeDocsUpload from './EmployeeDocsUpload.vue'
 
-const app = createApp(ManageEmployee);
+const app = createApp(EmployeeDocsUpload);
 const pinia=createPinia()
 
 app.use(PrimeVue, { ripple: true });
@@ -70,5 +70,5 @@ app.component('Chips', Chips)
 app.component('MultiSelect', MultiSelect)
 app.component('ProgressBar', ProgressBar)
 
-app.mount("#ManageEmployee");
+app.mount("#EmployeeDocsUpload");
 
