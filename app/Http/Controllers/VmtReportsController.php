@@ -447,17 +447,9 @@ class VmtReportsController extends Controller
             $single_reimbursement_data=array(Carbon::parse($single_data->date)->format('d-M-y'),
                                              $single_data->reimbursement_type, $single_data->from,
                                              $single_data->to,$single_data->vehicle_type,
-                                             $single_data->distance_travelled);
-         if($single_data->vehicle_type=='2-Wheeler'){
-              array_push( $single_reimbursement_data,3.50);
-         }else if($single_data->vehicle_type='4-Wheeler'){
-              array_push($single_reimbursement_data,6);
-         }else{
-             array_push($single_reimbursement_data,' ');
-         }
-
+                                             $single_data->distance_travelled,$single_data->amt_per_km,
+                                             $single_data->total_expenses,$single_data->user_comments);
          //dd($single_data->user_comments);
-         array_push($single_reimbursement_data,$single_data->total_expenses,$single_data->user_comments);
          array_push($reimbursement_data,$single_reimbursement_data);
          $totals = array("Total"=>"Total","overall_distance"=>$overall_distance,"overall_Expense"=> $overall_expense);
          unset($single_reimbursement_data);

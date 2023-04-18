@@ -70,13 +70,13 @@ export const employee_reimbursment_service = defineStore(
             localconverganceScreen.value = true;
         };
 
-        const formatDate = (value) => {
-            return value.toLocaleDateString("es-PE", {
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric",
-            });
-        };
+        // const formatDate = (value) => {
+        //     return value.toLocaleDateString("es-PE", {
+        //         day: "2-digit",
+        //         month: "2-digit",
+        //         year: "numeric",
+        //     });
+        // };
 
         const submitted = ref(false);
         const reimbursment_claim_types = ref([
@@ -183,7 +183,7 @@ export const employee_reimbursment_service = defineStore(
             console.log("AJAX URL : " + url_all_reimbursements);
 
             axios.get(url_all_reimbursements).then((response) => {
-                // data_local_convergance.value = response.data;
+                data_local_convergance.value = response.data;
                 console.log(response.data);
                 loading_spinner.value = false;
             });
@@ -285,7 +285,6 @@ export const employee_reimbursment_service = defineStore(
             fetch_data_from_reimbursment,
             data_reimbursements,
             loading_spinner,
-            formatDate,
             amount_calculation,
 
             // employee_reimbursement

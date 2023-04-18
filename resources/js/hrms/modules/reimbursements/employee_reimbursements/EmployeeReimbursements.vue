@@ -273,7 +273,7 @@
                   <h5 style="text-align: center">Please wait...</h5>
                 </template>
               </Dialog> -->
-
+<!-- {{ employee_service.data_local_convergance }} -->
               <DataTable
                 ref="dt"
                 :value="employee_service.data_local_convergance"
@@ -298,62 +298,62 @@
                 </Column> -->
 
                 <Column
-                  field="reimbursement_date"
+                  field="date"
                   header="Date"
                   style="min-width: 12rem"
                   dataType="date"
                 >
                   <template #body="slotProps">
-                    {{ employee_service.formatDate(slotProps.data.travelled_date) }}
+                    {{ moment(slotProps.data.date).format('DD-MMM-YYYY') }}
                   </template>
                 </Column>
                 <Column header="Mode Of Transport" style="min-width: 12rem">
                   <template #body="slotProps">
-                    {{ slotProps.data.mode_of_transport }}
+                    {{ slotProps.data.vehicle_type }}
                   </template>
                 </Column>
 
-                <Column field="travel_from" header="From " style="min-width: 8rem">
+                <Column field="from" header="From " style="min-width: 8rem">
                   <template #body="slotProps">
-                    {{ slotProps.data.travel_from }}
+                    {{ slotProps.data.from }}
                   </template>
                 </Column>
-                <Column field="travel_to" header="To" style="min-width: 8rem">
+                <Column field="to" header="To" style="min-width: 8rem">
                   <template #body="slotProps">
-                    {{ slotProps.data.travel_to }}
+                    {{ slotProps.data.to }}
                   </template>
                 </Column>
                 <Column
-                  field="total_distance_travelled"
+                  field="distance_travelled"
                   header="Total Distance"
                   style="min-width: 12rem"
                 >
                   <template #body="slotProps">
-                    {{ slotProps.data.total_distance_travelled }}
+                    {{ slotProps.data.distance_travelled }}
                   </template>
                 </Column>
                 <Column field="Amt_km" header="Amt/Km" style="min-width: 12rem">
                   <template #body="slotProps">
-                    {{ slotProps.data.Amt_km }}
+                    {{ slotProps.data.amt_per_km }}
                   </template>
                 </Column>
 
                 <Column
-                  field="local_convenyance_total_amount"
+                  field="total_expenses"
                   header="Amount"
                   style="min-width: 12rem"
                 >
                   <template #body="slotProps">
-                    {{ slotProps.data.local_convenyance_total_amount }}
+                    {{ slotProps.data.total_expenses }}
                   </template>
                 </Column>
                 <Column
-                  field="local_conveyance_remarks"
+                  field="user_comments"
                   header="Remarks"
                   style="min-width: 12rem"
                 >
                   <template #body="slotProps">
-                    {{ slotProps.data.local_conveyance_remarks }}
+                    {{ slotProps.data.user_comments }}
                   </template>
                 </Column>
                 <template #footer>
@@ -492,6 +492,7 @@
 import {ref, onMounted, reactive} from "vue";
 import {employee_reimbursment_service} from "./EmployeeReimbursementsService";
 import ABS_loading_spinner from "../../../components/ABS_loading_spinner.vue";
+import moment from 'moment'
 
 const employee_service = employee_reimbursment_service();
 

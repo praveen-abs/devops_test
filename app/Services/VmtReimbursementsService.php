@@ -218,6 +218,18 @@ class VmtReimbursementsService {
                                                                       ->whereMonth('date',$month)
                                                                       ->get(['date','vmt_reimbursements.reimbursement_type','from','to','vehicle_type',
                                                                        'distance_travelled','total_expenses','user_comments']);
+            foreach( $employee_reimbursement_data_query as $single_data){
+                if($single_data['vehicle_type']=='2-Wheeler'){
+                    $single_data['amt_per_km']=3.5;
+                }else if($single_data['vehicle_type']=='4-Wheeler'){
+                     $single_data['amt_per_km']=3.5;
+                }else{
+                    $single_data['amt_per_km']='';
+                }
+
+            }
+
+
             return $employee_reimbursement_data_query;
     }
 }
