@@ -660,8 +660,9 @@ Route::middleware(['auth'])->group(function () {
 
 
     //Testing controller
+    Route::get('/view-private-file', [App\Http\Controllers\VmtTestingController::class, 'viewPrivateFile'])->name('viewPrivateFile');
     Route::get('/download-private-file', [App\Http\Controllers\VmtTestingController::class, 'downloadPrivateFile'])->name('downloadPrivateFile');
-    Route::post('/view-profile-private-file', [App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController::class, 'viewProfilePagePrivateFile'])->name('viewprofileprivatefile');
+    Route::post('/view-profile-private-file', [App\Http\Controllers\VmtProfilePagesController::class, 'getEmployeePrivateDocumentFile'])->name('viewprofileprivatefile');
     Route::get('/mail-test/appointment-letter', [App\Http\Controllers\VmtTestingController::class, 'mailTest_sendAppointmentLetter'])->name('mailTest_sendAppointmentLetter');
     Route::get('/getLeaves', [App\Http\Controllers\VmtAttendanceController::class, 'employeeLeaveBalance'])->name('employeeLeaveBalance');
     Route::post('/postLeaves', [App\Http\Controllers\Api\VmtAPIAttendanceController::class, 'applyLeaveRequest'])->name('applyLeaveRequest');

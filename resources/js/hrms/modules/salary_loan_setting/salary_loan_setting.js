@@ -32,11 +32,14 @@ import Calendar from 'primevue/calendar'
 import Textarea from 'primevue/textarea'
 import Chips from 'primevue/chips'
 import MultiSelect from 'primevue/multiselect';
-import InputNumber from 'primevue/inputnumber'
+import InputNumber from 'primevue/inputnumber';
+import SelectButton from 'primevue/selectbutton';
+import RadioButton from 'primevue/radiobutton';
 
 
-import SalaryAdvanceLoan from './salary_loan_setting.vue'  
-  
+
+import SalaryAdvanceLoan from './salary_loan_setting.vue'
+
 const app = createApp(SalaryAdvanceLoan);
 const pinia=createPinia()
 
@@ -54,6 +57,7 @@ app.directive('styleclass', StyleClass);
 app.directive('focustrap', FocusTrap);
 
 app.component('Button', Button);
+app.component('RadioButton',RadioButton);
 app.component('DataTable', DataTable);
 app.component('Column', Column);
 app.component('ColumnGroup', ColumnGroup)
@@ -69,6 +73,7 @@ app.component('Textarea', Textarea)
 app.component('Chips', Chips)
 app.component('MultiSelect', MultiSelect)
 app.component('InputNumber', InputNumber)
+app.component('SelectButton' ,SelectButton)
 
 app.mount("#SalaryAdvanceLoan");
 
