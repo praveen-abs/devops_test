@@ -43,7 +43,8 @@ class VmtTestingController extends Controller
 
     */
     public function viewPrivateFile(){
-        $private_file = "B090/onboarding_documents/AadharCardBack_B090_13-04-2023_18-23-34.jpg";
+        //$private_file = "B090/onboarding_documents/AadharCardBack_B090_13-04-2023_18-23-34.jpg";
+        $private_file = "/PLIPL068/onboarding_documents/voterIdB090_22-03-2023 15-47-22.jpg";
         //dd(file(storage_path('employees/'.$private_file)));
         return response()->file(storage_path('employees/'.$private_file));
     }

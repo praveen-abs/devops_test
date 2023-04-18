@@ -100,7 +100,7 @@ class VmtReimbursementsService {
             $emp_reimbursements->from = $from ;
             $emp_reimbursements->to = $to;
             $emp_reimbursements->distance_travelled = $distance_travelled;
-            // $emp_reimbursements->save();
+             $emp_reimbursements->save();
 
             return [
                 "status" => "success",
@@ -209,5 +209,15 @@ class VmtReimbursementsService {
              }
 
 
+    }
+
+    public function fetchEmployeeReimbursement($user_id,$year,$month){
+        $employee_reimbursement_data_query = VmtEmployeeReimbursements::join('vmt_reimbursements','vmt_reimbursements.id','=','reimbursement_type_id')
+                                                                      ->where('user_id',$user_id)
+                                                                      ->whereYear('date',$year)
+                                                                      ->whereMonth('date',$month)
+                                                                      ->get(['date','vmt_reimbursements.reimbursement_type','from','to','vehicle_type',
+                                                                       'distance_travelled','total_expenses','user_comments']);
+            return $employee_reimbursement_data_query;
     }
 }

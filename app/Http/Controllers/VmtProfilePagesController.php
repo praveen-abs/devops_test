@@ -17,7 +17,6 @@ use App\Models\VmtEmployeeStatutoryDetails;
 use App\Models\VmtEmployeePaySlip;
 use App\Services\VmtEmployeePayslipService;
 use App\Services\VmtProfilePagesService;
-
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 
@@ -445,7 +444,6 @@ public function addExperienceInfo(Request $request)
 
 
        if ($statutory->exists()) {
-        dd('hiii');
             $statutory = $statutory->first();
             $statutory->user_id=  $user_id;
             $statutory->pf_applicable=$request->input('pf_applicable');
@@ -459,7 +457,6 @@ public function addExperienceInfo(Request $request)
         }
         else
         {
-            dd('huuuu');
             $statutory = new VmtEmployeeStatutoryDetails;
             $statutory->user_id=  $user_id;
             $statutory->pf_applicable=$request->input('pf_applicable');
@@ -601,5 +598,14 @@ public function addExperienceInfo(Request $request)
 
         return $serviceVmtProfilePagesService->getEmployeeProfileDetails($user_id);
     }
+
+    public function getEmployeePrivateDocumentFile(Request $request,VmtProfilePagesService $profilepagesservice){
+
+
+        $response = $profilepagesservice->getEmployeePrivateDocumentFile($request->user_code,$request->document_name);
+        return $response;
+
+    }
+
 
 }

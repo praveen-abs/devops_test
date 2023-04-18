@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
     <div >
         <div class="row d-flex justify-content-start align-items-center px-5">
           <div class="flex">
@@ -175,10 +176,27 @@ const ingredient = ref('');
 }
 .cancel_btn{
     border: 1px solid var(--navy); padding: 7px 30px ; border-radius: 4px 0 0 4px;
+=======
+    <button class="w-1 p-2 font-bold text-white bg-orange-400 rounded-sm" style="border-radius: 4px 0 0 4px;" :class="[activetab === 2 ? 'text-red-600': '']" @click="activetab = 1">on</button>
+    <button class="w-1 p-2 font-bold rounded-sm " style="border-radius: 0 4px 4px 0;" :class="[activetab === 2 ? 'bg-green-700 text-white' : '']" @click="activetab = 2">off</button>
+</template>
+
+<script setup>
+import { ref } from "vue";
+
+
+const activetab = ref(1)
+</script>
+
+<style>
+
+.toggleButton{
+>>>>>>> bd827c61bef6dee4187b43a3f3faa978c9ecccab
 
 }
 
 
+<<<<<<< HEAD
 </style>
 
 <!--
@@ -209,3 +227,6 @@ const value2 = ref(null);
 
 
 } -->
+=======
+</style>
+>>>>>>> bd827c61bef6dee4187b43a3f3faa978c9ecccab

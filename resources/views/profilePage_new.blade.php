@@ -9,10 +9,7 @@
     <link rel="stylesheet" href="{{ URL::asset('/assets/css/payCheck.css') }}">
 @endsection
 @section('content')
-@vite('resources/js/hrms/modules/profile_pages/ProfilePageNew.js')
-<div id="profilePage"></div>
     @vite('resources/js/hrms/modules/profile_pages/ProfilePageNew.js')
     <div id="profilePage"></div>
 @endsection
-
 

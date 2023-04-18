@@ -771,8 +771,7 @@ class VmtEmployeeOnboardingController extends Controller
             $rules = [
                 'employee_code' => 'nullable|unique:users,user_code',
                 'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                //'email' => 'nullable|email:strict|unique:users,email',
-                'email' => 'nullable',
+                'email' => 'nullable|email:strict|unique:users,email',
                 'gender' => 'required|in:Male,male,Female,female,other',
                 'doj' => 'required|date',
                 'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
@@ -1435,7 +1434,7 @@ class VmtEmployeeOnboardingController extends Controller
     }
 
     public function viewProfilePagePrivateFile(Request $request){
-    
+
         $private_file = 'employees/'.$request->user_code."/onboarding_documents";
         // dd(file(storage_path('employees'.$private_file)));
        return response()->file(storage_path($private_file));

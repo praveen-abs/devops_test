@@ -15,13 +15,13 @@
         <Dialog header="Confirmation" v-model:visible="canShowConfirmation"
             :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '350px' }" :modal="true">
             <div class="confirmation-content">
-                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
                 <span>Are you sure you want to {{ currentlySelectedStatus }}?</span>
             </div>
             <template #footer>
-                <Button label="Yes" icon="pi pi-check" @click="processApproveReject()" class="p-button-text text-white"
+                <Button label="Yes" icon="pi pi-check" @click="processApproveReject()" class="text-white p-button-text"
                     autofocus />
-                <Button label="No" icon="pi pi-times" @click="hideConfirmDialog(true)" class="p-button-text text-white" />
+                <Button label="No" icon="pi pi-times" @click="hideConfirmDialog(true)" class="text-white p-button-text" />
             </template>
         </Dialog>
         <div>
@@ -46,18 +46,19 @@
                 <Column field="leave_type" header="Leave Type" style="min-width: 8rem;"></Column>
                 <Column field="start_date" header="Start Date">
                     <template #body="slotProps">
-                        {{ slotProps.data.start_date.slice(0, 10) }}
+                        {{ moment(slotProps.data.start_date).format('DD-MM-YYYY') }}
                     </template>
                 </Column>
                 <Column field="end_date" header="End Date" dataType="date">
                     <template #body="slotProps">
-                        {{ slotProps.data.end_date.slice(0, 10) }}
+                        
+                        {{ moment(slotProps.data.end_date).format('DD-MM-YYYY') }}
                     </template>
                 </Column>
                 <Column field="leave_reason" header="Leave Reason" style="min-width: 12rem;">
                     <template #body="slotProps">
                         <div v-if="slotProps.data.leave_reason.length > 70">
-                            <p @click="toggle" class="text-orange-400 underline font-medium cursor-pointer">explore more...
+                            <p @click="toggle" class="font-medium text-orange-400 underline cursor-pointer">explore more...
                             </p>
                             <OverlayPanel ref="overlayPanel" style="height: 80px;">
                                 {{ slotProps.data.leave_reason }}
@@ -84,7 +85,8 @@
                                 <span v-else>{{ slotProps.placeholder }}</span>
                             </template>
                             <template #option="slotProps">
-                                <span :class="'customer-badge status-' + slotProps.option">{{
+                                <span :class="'customer-badge status-' + slotProps.option">
+                                    {{
                                     slotProps.option
                                 }}</span>
                             </template>
@@ -98,7 +100,7 @@
                             <Button type="button" icon="pi pi-check-circle"
                                 class="p-button-success text-white Button py-2.5" label="Approve"
                                 @click="showConfirmDialog(slotProps.data, 'Approve')" style="height: 2em" />
-                            <Button type="button" icon="pi pi-times-circle" class="p-button-danger text-white Button"
+                            <Button type="button" icon="pi pi-times-circle" class="text-white p-button-danger Button"
                                 label="Reject" style="margin-left: 8px; height: 2em"
                                 @click="showConfirmDialog(slotProps.data, 'Reject')" />
                         </span>
@@ -118,6 +120,7 @@ import axios from "axios";
 import { FilterMatchMode, FilterOperator } from "primevue/api";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
+import moment from "moment";
 
 const Leave_data = ref();
 const Employee_Avatar = ref();
