@@ -30,16 +30,20 @@ class EmployeeReimbursementsExport implements FromArray,ShouldAutoSize,WithHeadi
 
     protected $reimbursements_details;
     protected $legal_entity;
+    protected $totals;
     protected $month_name;
     protected $year;
     protected $client_name;
+    protected $employee_details;
 
-    function __construct($reimbursement_data,$legal_entity,$month_name,$year,$client_name){
+    function __construct($employee_details,$reimbursement_data,$legal_entity,$month_name,$year,$client_name,$totals){
+        $this->employee_details = $employee_details;
         $this->reimbursements_details = $reimbursement_data;
         $this->legal_entity = $legal_entity;
         $this->month_name = $month_name;
         $this->year = $year;
         $this->client_name = $client_name;
+        $this->totals=$totals;
         $this->total_row=count($this->reimbursements_details)+6;
     }
 
@@ -87,36 +91,55 @@ class EmployeeReimbursementsExport implements FromArray,ShouldAutoSize,WithHeadi
         //For Second Row
         $sheet->mergeCells('A2:D2')->setCellValue('A2', "Month : ".$this->month_name.' - '.$this->year);
         $sheet->getStyle('A2:D2')->getFont()->setBold(true);
-        $sheet->getStyle('A2:G2')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('A2:I2')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
 
-        //Color and Font For 5th Row
-        $sheet->getStyle('A5:G5')->getFill()
+        //For Third Row
+        $sheet->mergeCells('A3:B3')->setCellValue('A3','Employee ID',);
+        $sheet->mergeCells('C3:D3')->setCellValue('C3','Employee Name');
+        $sheet->mergeCells('E3:F3')->setCellValue('E3','Department');
+        $sheet->mergeCells('G3:I3')->setCellValue('G3','Location');
+        $sheet->getStyle('A3:I3')->getFill()
         ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
         ->getStartColor()->setRGB('002164');
-        $sheet->getStyle('A5:G5')->getFont()->setBold(true)
-                            ->getColor()->setRGB('ffffff');
-        //For Logo
-        $sheet->mergeCells('E1:G2');
-        $sheet->getStyle('E1:G2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-
-        //Color NAd Font For Last Row
-        $sheet->mergeCells('A'.$this->total_row.':D'.$this->total_row)->setCellValue('A'.$this->total_row,$this->totals['Total']);
-        $sheet->setCellValue('E'.$this->total_row,$this->totals['overall_distance']);
-        $sheet->setCellValue('F'.$this->total_row,$this->totals['overall_Expense']);
-        $sheet->getStyle('A'.$this->total_row.':G'.$this->total_row)->getFill()
-        ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
-        ->getStartColor()->setRGB('002164');
-        $sheet->getStyle('A'.$this->total_row.':G'.$this->total_row)->getFont()->setBold(true)
+        $sheet->getStyle('A3:I3')->getFont()->setBold(true)
         ->getColor()->setRGB('ffffff');
 
-        $sheet->setCellValue('C'.($this->total_row+2), "Human Resource Manager Signature");
-        $sheet->getStyle('C'.($this->total_row+2))->getFont()->setBold(true)->setUnderline(true);
+        //For Fourth Row
+        $sheet->mergeCells('A4:B4')->setCellValue('A4',$this->employee_details['user_code']);
+        $sheet->mergeCells('C4:D4')->setCellValue('C4',$this->employee_details['name']);
+        $sheet->mergeCells('E4:F4')->setCellValue('E4',$this->employee_details['department']);
+        $sheet->mergeCells('G4:I4')->setCellValue('G4',$this->employee_details['location']);
+        $sheet->getStyle('A4:I4')->getFont()->setBold(true);
 
-        $sheet->mergeCells('E'.($this->total_row+2).':F'.($this->total_row+2))->setCellValue('E'.($this->total_row+2),"Finance Manager Signature");
-        $sheet->getStyle('E'.($this->total_row+2))->getFont()->setBold(true)->setUnderline(true);
+
+        //Color and Font For 5th Row
+        $sheet->getStyle('A5:I5')->getFill()
+        ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+        ->getStartColor()->setRGB('002164');
+        $sheet->getStyle('A5:I5')->getFont()->setBold(true)
+                            ->getColor()->setRGB('ffffff');
+        //For Logo
+        $sheet->mergeCells('G1:I2');
+        $sheet->getStyle('G1:I2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+        //Color and  Font For Last Row
+        $sheet->mergeCells('A'.$this->total_row.':D'.$this->total_row)->setCellValue('A'.$this->total_row,$this->totals['Total']);
+        $sheet->setCellValue('F'.$this->total_row,$this->totals['overall_distance']);
+        $sheet->setCellValue('H'.$this->total_row,$this->totals['overall_Expense']);
+        $sheet->getStyle('A'.$this->total_row.':I'.$this->total_row)->getFill()
+        ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+        ->getStartColor()->setRGB('002164');
+        $sheet->getStyle('A'.$this->total_row.':I'.$this->total_row)->getFont()->setBold(true)
+        ->getColor()->setRGB('ffffff');
+
+        $sheet->setCellValue('D'.($this->total_row+2), "Human Resource Manager Signature");
+        $sheet->getStyle('D'.($this->total_row+2))->getFont()->setBold(true)->setUnderline(true);
+
+        $sheet->mergeCells('F'.($this->total_row+2).':G'.($this->total_row+2))->setCellValue('F'.($this->total_row+2),"Finance Manager Signature");
+        $sheet->getStyle('F'.($this->total_row+2))->getFont()->setBold(true)->setUnderline(true);
 
         //For Allignment Centre
-        $sheet->getStyle('A3:G'.($this->total_row+2))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A3:I'.($this->total_row+2))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
          //For Allignment Centre
          $sheet->getStyle('E1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
@@ -144,7 +167,7 @@ class EmployeeReimbursementsExport implements FromArray,ShouldAutoSize,WithHeadi
           $drawing->setPath(public_path('assets/images/'.$this->client_name.'_logo.jpg'));
           $drawing->setHeight(60);
           $drawing->setWidth(65);
-          $drawing->setCoordinates('F1');
+          $drawing->setCoordinates('H1');
 
           return $drawing;
       }
