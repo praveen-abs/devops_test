@@ -444,7 +444,6 @@ public function addExperienceInfo(Request $request)
 
 
        if ($statutory->exists()) {
-        dd('hiii');
             $statutory = $statutory->first();
             $statutory->user_id=  $user_id;
             $statutory->pf_applicable=$request->input('pf_applicable');
@@ -458,7 +457,6 @@ public function addExperienceInfo(Request $request)
         }
         else
         {
-            dd('huuuu');
             $statutory = new VmtEmployeeStatutoryDetails;
             $statutory->user_id=  $user_id;
             $statutory->pf_applicable=$request->input('pf_applicable');
