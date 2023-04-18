@@ -146,7 +146,7 @@ onMounted(() => {
 const visible = ref(false)
 
 
-const Dialog_Add_New_Rental =ref({
+const dialog_Add_New_Rental =ref({
 
     from_Month:"",
     To_Month:"",
