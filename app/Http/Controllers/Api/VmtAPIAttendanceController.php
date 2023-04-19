@@ -23,129 +23,65 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
     private $cost_per_km_4wheeler = 4;
 
 
-    /*
-        attendanceCheckin():
-        Input : date, checkin_time, shift_type
-        DB Table : vmt_employee_attendance
-        Output : success/failure response.
-    */
-    public function attendanceCheckin(Request $request){
+    public function performAttendanceCheckIn(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
 
-        //Check if user already checked-in
-        $attendanceCheckin  = VmtEmployeeAttendance::where('user_id', auth::user()->id)->where("date", $request->date)->first();
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+                "date" => "required",
+                "checkin_time" => "required",
+                "work_mode" => "required", //office, work
+                "attendance_mode_checkin" => "required", //mobile, web
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid"
+            ]
+        );
 
-        if($attendanceCheckin)
-        {
 
-            $emptyObj  = new \stdClass;
-
+        if($validator->fails()){
             return response()->json([
-                'status' => 'failure',
-                'message'=> 'Check in already done',
-                'data'   => $emptyObj
+                    'status' => 'failure',
+                    'message' => $validator->errors()->all()
             ]);
         }
-        else
-        {
 
-            $attendanceCheckin           = new VmtEmployeeAttendance;
-            $attendanceCheckin->date          = $request->date;
-            $attendanceCheckin->checkin_time  = $request->checkin_time;
-            $attendanceCheckin->user_id       = auth::user()->id;
-            $attendanceCheckin->shift_type    = $request->shift_type;
-            $attendanceCheckin->work_mode      = $request->work_mode;
-            //$attendanceCheckin->selfie_checkin = $request->selfie_checkin; ////Need to save the image in folder and add path here
-            $attendanceCheckin->checkin_comments = $request->checkin_comments;
-            $attendanceCheckin->attendance_mode_checkin = "mobile";
-            $attendanceCheckin->save();
+        $response =  $serviceVmtAttendanceService->performAttendanceCheckIn($request->user_code, $request->date, $request->checkin_time, $request->selfie_checkin, $request->shift_type, $request->work_mode, $request->attendance_mode_checkin);
 
-
-            // processing and storing base64 files in public/selfies folder
-            if($request->has('selfie_checkin')){
-
-                $emp_selfiedir_path = public_path('employees/'.auth::user()->user_code.'/selfies/');
-
-                // dd($emp_document_path);
-                if(!File::isDirectory($emp_selfiedir_path))
-                    File::makeDirectory($emp_selfiedir_path, 0777, true, true);
-
-
-                $selfieFileEncoded  =  $request->selfie_checkin;
-
-                $fileName = $attendanceCheckin->id.'_checkin.png';
-
-                \File::put($emp_selfiedir_path.$fileName, base64_decode($selfieFileEncoded));
-
-                $attendanceCheckin->selfie_checkin = $fileName;
-                $attendanceCheckin->save();
-            }
-
-            $emptyObj  = new \stdClass;
-
-            return response()->json([
-                'status' => 'success',
-                'message'=> 'Check in success',
-                'data'   => $emptyObj
-            ]);
-
-        }
-
-
-
+        return $response;
     }
 
-    /*
-        attendanceCheckout():
-        Input : date, checkout_time,
-        DB Table : vmt_employee_attendance
-        Output : success/failure response.
-    */
-    public function attendanceCheckout(Request $request){
-        $reqDate  = $request->date;
-        $attendanceCheckout  = VmtEmployeeAttendance::where('user_id', auth::user()->id)->where("date", $reqDate)->first();
-        $attendanceCheckout->checkout_time = $request->checkout_time;
-        //$attendanceCheckout->selfie_checkout = $request->selfie_checkout; //Need to save the image in folder and add path here
-        $attendanceCheckout->checkout_comments = $request->checkout_comments;
-        $attendanceCheckout->attendance_mode_checkout = "mobile";
 
-        $attendanceCheckout->save();
+    public function performAttendanceCheckOut(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
 
-        // processing and storing base64 files in public/selfies folder
-        if($request->has('selfie_checkout')){
-
-            $emp_selfiedir_path = public_path('employees/'.auth::user()->user_code.'/selfies/');
-
-            // dd($emp_document_path);
-            if(!File::isDirectory($emp_selfiedir_path))
-                File::makeDirectory($emp_selfiedir_path, 0777, true, true);
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+                "date" => "required",
+                "checkout_time" => "required",
+                "work_mode" => "required", //office, work
+                "attendance_mode_checkout" => "required", //mobile, web
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid"
+            ]
+        );
 
 
-            $selfieFileEncoded  =  $request->selfie_checkout;
-
-            $fileName = $attendanceCheckout->id.'_checkout.png';
-
-            \File::put($emp_selfiedir_path.$fileName, base64_decode($selfieFileEncoded));
-
-            $attendanceCheckout->selfie_checkout = $fileName;
-            $attendanceCheckout->save();
+        if($validator->fails()){
+            return response()->json([
+                    'status' => 'failure',
+                    'message' => $validator->errors()->all()
+            ]);
         }
 
-        ////Store Reimbursement details if available
-        $reimbursement_type = $request->reimbursement_type;
+        $response =  $serviceVmtAttendanceService->performAttendanceCheckOut($request->user_code, $request->date, $request->checkout_time, $request->selfie_checkout, $request->shift_type, $request->work_mode, $request->attendance_mode_checkout);
 
-
-        //Get the reimbursement type
-
-
-
-
-        $emptyObj  = new \stdClass;
-        return response()->json([
-            'status' => 'success',
-            'message'=> 'Check out success',
-            'data'   => $emptyObj
-        ]);
-
+        return $response;
     }
 
     /*
@@ -176,7 +112,11 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
         $response = $serviceVmtAttendanceService->fetchAttendanceStatus($request->user_code, $request->date);
 
-        return $response;
+        return response()->json([
+            'status' => 'success',
+            'message' => $validator->errors()->all(),
+            'data' => $response
+        ]);
     }
 
     public function saveReimbursementData(Request $request){
