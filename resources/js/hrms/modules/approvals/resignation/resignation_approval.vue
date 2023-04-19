@@ -29,10 +29,10 @@
         <div class="mb-0 card">
             <div class="card-body">
                 <div class="tab-content " id="pills-tabContent">
-                    <div class="tab-pane fade active" id="team-resignation" role="tabpanel" aria-labelledby="pills-home-tab">
+                    <div class="tab-pane fade active show " id="team-resignation" role="tabpanel" aria-labelledby="pills-home-tab">
                         <TeamApproval />
                     </div>
-                    <div class="tab-pane fade " id="org-resignation" role="tabpanel" aria-labelledby="pills-home-tab">
+                    <div class="tab-pane fade" id="org-resignation" role="tabpanel" aria-labelledby="pills-home-tab">
                         <OrgApproval />
                     </div>
                  </div>
