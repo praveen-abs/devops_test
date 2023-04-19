@@ -879,7 +879,7 @@ class VmtEmployeeOnboardingController extends Controller
 
             $responseJSON['status'] = 'success';
             $responseJSON['message'] = "Excelsheet data import success";
-            $responseJSON['mail_status'] =$rowdata_response['mail_status'];
+            $responseJSON['mail_status'] =$rowdata_response['mail_status'] ?? "failure";
             $responseJSON['data'] = $data_array;
         } else {
             $responseJSON['status'] = 'failure';
@@ -914,7 +914,7 @@ class VmtEmployeeOnboardingController extends Controller
                      $message = "Employee OnBoard was Created   ";
                      $VmtGeneralInfo = VmtGeneralInfo::first();
                      $image_view = url('/') . $VmtGeneralInfo->logo_img;
-              // \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), $image_view));
+               \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), $image_view));
 
                     return  $rowdata_response = [
                             'row_number' => '',
