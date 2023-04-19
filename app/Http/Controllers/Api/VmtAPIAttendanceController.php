@@ -176,7 +176,11 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
         $response = $serviceVmtAttendanceService->fetchAttendanceStatus($request->user_code, $request->date);
 
-        return $response;
+        return response()->json([
+            'status' => 'success',
+            'message' => $validator->errors()->all(),
+            'data' => $response
+        ]);
     }
 
     public function saveReimbursementData(Request $request){

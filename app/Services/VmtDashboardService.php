@@ -118,34 +118,8 @@ class VmtDashboardService{
         $response["attendance"]["leave_count"]= $leave_count;
 
         //Get current day attendance checkin/checkout status
-        $current_day_attendance = VmtEmployeeAttendance::where('user_id',$user_id)
-                                ->join('vmt_work_shifts','vmt_work_shifts.id','=','vmt_employee_attendance.vmt_employee_workshift_id')
-                                ->where('date',date("Y-m-d"))
-                                ->first(['vmt_work_shifts.shift_type','vmt_work_shifts.shift_start_time','vmt_work_shifts.shift_end_time',
-                                        'work_mode','checkin_time','checkout_time','attendance_mode_checkin','attendance_mode_checkout',
-                                        'selfie_checkin','selfie_checkout']);
 
-       // dd($current_day_attendance);
-
-        // "id" => 1
-        // "user_id" => "182"
-        // "vmt_employee_workshift_id" => 0
-        // "date" => "2023-04-15"
-        // "checkin_time" => "09:49:24"
-        // "checkout_time" => "14:49:26"
-        // "shift_type" => null
-        // "leave_type_id" => null
-        // "created_at" => "2023-03-29 20:19:24"
-        // "updated_at" => "2023-03-29 20:19:26"
-        // "work_mode" => "office"
-        // "leave_comments" => null
-        // "selfie_checkin" => null
-        // "selfie_checkout" => null
-        // "checkin_comments" => null
-        // "checkout_comments" => null
-        // "attendance_mode_checkin" => "web"
-        // "attendance_mode_checkout" => "web"
-        $response["attendance"]["current_day_attendance_status"] = $current_day_attendance;
+        $response["attendance"]["current_day_attendance_status"] = $serviceVmtAttendanceService->fetchAttendanceStatus($user_code, date("Y-m-d"));
 
 
 
