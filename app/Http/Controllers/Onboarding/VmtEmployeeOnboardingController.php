@@ -778,7 +778,7 @@ class VmtEmployeeOnboardingController extends Controller
                 'doj' => 'required|date',
                 'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'dob' => 'required|date|before:-18 years',
-                'father_name' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'father_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'father_gender' => 'nullable|in:Male,male,Female,female,other',
                 'father_dob' => 'nullable|date',
 
@@ -792,14 +792,14 @@ class VmtEmployeeOnboardingController extends Controller
                 'account_no' => 'required',
                 'current_address' => 'nullable',
                 'permanent_address' => 'nullable',
-                'mother_name' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'mother_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'mother_gender' => 'nullable|in:Male,male,Female,female,other',
                 'mother_dob' => 'nullable|date',
                 'spouse_name' => 'nullable|required_unless:marital_status,unmarried|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'spouse_dob' => 'nullable|required_unless:marital_status,unmarried|date',
                 'no_of_child' => 'nullable|numeric',
                 'child_name' => 'nullable|required_unless:no_of_child,null,0|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'child_dob' => 'nullable||required_unless:no_of_child,null,0|date',
+                'child_dob' => 'nullable|required_unless:no_of_child,null,0|date',
                 'department' => 'required',
                 'process' => 'nullable',
                 'designation' => 'required',
@@ -834,7 +834,7 @@ class VmtEmployeeOnboardingController extends Controller
                 'tax_regime' => 'nullable|in:old,Old,new,New',
                 'lwf_location' => 'nullable',
                 'esic_employer_contribution' => 'required|numeric',
-                 'dearness_allowance' => 'required|numeric',
+                 'dearness_allowance' => 'nullable|numeric',
             ];
 
             $messages = [
@@ -879,7 +879,7 @@ class VmtEmployeeOnboardingController extends Controller
 
             $responseJSON['status'] = 'success';
             $responseJSON['message'] = "Excelsheet data import success";
-            $responseJSON['mail_status'] =$rowdata_response['mail_status'];
+            $responseJSON['mail_status'] =$rowdata_response['mail_status'] ?? "failure";
             $responseJSON['data'] = $data_array;
         } else {
             $responseJSON['status'] = 'failure';
@@ -914,7 +914,7 @@ class VmtEmployeeOnboardingController extends Controller
                      $message = "Employee OnBoard was Created   ";
                      $VmtGeneralInfo = VmtGeneralInfo::first();
                      $image_view = url('/') . $VmtGeneralInfo->logo_img;
-              // \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), $image_view));
+               \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), $image_view));
 
                     return  $rowdata_response = [
                             'row_number' => '',

@@ -210,7 +210,8 @@ class VmtEmployeeService {
 private function Upload_BulkOnboardDetail($user,$row,$user_id){
 
     try{
-            // $test = VmtMaritalStatus::where('name',"asdf" )->first()->id;
+        //dd($row);
+        // $test = VmtMaritalStatus::where('name',"asdf" )->first()->id;
             // dd("Test : ".$test);
 
             //    dd($user_id);
@@ -233,7 +234,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                 $newEmployee->dol   =  $doj ? $this->getdateFormatForDb($doj) : '';
                 $newEmployee->dob   =  $dob ? $this->getdateFormatForDb($dob) : '';
                 $newEmployee->location   =    $row["work_location"] ?? '';
-                $newEmployee->pan_number   =  isset($row["pan_number"]) ? ($row["pan_number"]) : "";
+                $newEmployee->pan_number   =  isset($row["pan_no"]) ? ($row["pan_no"]) : "";
                 $newEmployee->aadhar_number = $row["aadhar"] ?? '';
             // dd($row["marital_status"]);
                 $marital_status_id=VmtMaritalStatus::where('name',ucfirst($row["marital_status"]) )->first()->id; // to get marital status id
@@ -244,7 +245,10 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                 $newEmployee->bank_id   = $bank_id ?? '';
                 $newEmployee->bank_ifsc_code  = $row["bank_ifsc"] ?? '';
                 $newEmployee->bank_account_number  = $row["account_no"] ?? '';
-
+                $newEmployee->current_address_line_1   = $row["current_address"] ?? '';
+                $newEmployee->permanent_address_line_1   = $row["permanent_address"] ?? '';
+                $data_mobile_number = empty($row["mobile_number"]) ? "" : strval($row["mobile_number"]);
+                $newEmployee->mobile_number  = $data_mobile_number;
                 $newEmployee->save();
 
                     //store employeeoffice details
@@ -265,7 +269,10 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                 //$empOffice->department_id = $department_id ?? ''; // => "lk"
                 $empOffice->process = $row["process"] ?? ''; // => "k"
                 $empOffice->designation = $row["designation"] ?? ''; // => "k"
-                $empOffice->l1_manager_code  = $row["reporting_manager_emp_code"] ?? ''; // => "k"
+                $empOffice->cost_center = $row["cost_center"] ?? '';
+                $empOffice->confirmation_period  =$row['confirmation_period']??'';
+                $empOffice->holiday_location  = $row["holiday_location"] ?? ''; // => "k"
+                $empOffice->l1_manager_code  = $row["l1_manager_code"] ?? ''; // => "k"
 
                 if ( !empty($row["l1_manager_code"]) && $this->isUserExist($row["l1_manager_code"]))
                 {
@@ -273,7 +280,10 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                     updateUserRole($empOffice->l1_manager_code,"Manager");
 
                 }
-
+                $empOffice->l1_manager_name  = $row["l1_manager_name"] ?? ''; // => "k"
+                $empOffice->officical_mail  = $row["official_mail"] ?? ''; // => "k@k.in"
+                $empOffice->official_mobile  = $row["official_mobile"] ?? ''; // => "1234567890"
+                $empOffice->emp_notice  = $row["emp_notice"] ?? ''; // => "0"
                 $empOffice->save();
 
         //store employee_statutoryDetails details
@@ -344,41 +354,41 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                         }
                         $familyMember->save();
 
-                    if (!empty($row['child_1'])) {
+                    if (!empty($row['child_name'])) {
                         $familyMember =  new VmtEmployeeFamilyDetails;
                         $familyMember->user_id  = $user_id;
-                        $familyMember->name =  $row['child_1'];
+                        $familyMember->name =  $row['child_name'];
                         $familyMember->relationship = 'Children';
                         $familyMember->gender = '---';
 
-                        if(!empty($row["child_1_dob"]))
-                        $child_dob= $row["child_1_dob"];
+                        if(!empty($row["child_dob"]))
+                        $child_dob= $row["child_dob"];
                         //   $familyMember->dob = $this->getdateFormatForDb($child_dob) ;
                     }
                     $familyMember->save();
 
-                    if (!empty($row['child_2'])) {
+                    if (!empty($row['child_name'])) {
                         $familyMember =  new VmtEmployeeFamilyDetails;
                         $familyMember->user_id  = $user_id;
-                        $familyMember->name =   $row['child_2'];
+                        $familyMember->name =   $row['child_name'];
                         $familyMember->relationship = 'Children';
                         $familyMember->gender = '---';
 
-                        if(!empty($row["child_2_dob"]))
-                        $child_dob= $row["child_2_dob"];
+                        if(!empty($row["child_dob"]))
+                        $child_dob= $row["child_dob"];
                         // $familyMember->dob = $this->getdateFormatForDb( $child_dob) ;
                     }
                     $familyMember->save();
 
-                    if (!empty($row['child_3'])) {
+                    if (!empty($row['child_name'])) {
                         $familyMember =  new VmtEmployeeFamilyDetails;
                         $familyMember->user_id  = $user_id;
-                        $familyMember->name =   $row['child_3'];
+                        $familyMember->name =   $row['child_name'];
                         $familyMember->relationship = 'Children';
                         $familyMember->gender = '---';
 
-                        if(!empty($row["child_3_dob"]))
-                        $child_dob= $row["child_3_dob"];
+                        if(!empty($row["child_dob"]))
+                        $child_dob= $row["child_dob"];
                         // $familyMember->dob = $this->getdateFormatForDb( $child_dob) ;
                     }
 
@@ -416,7 +426,8 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                 $compensatory->epf_employee = $row["epf_employee"] ?? '' ;
                 $compensatory->esic_employee = $row["esic_employee"] ?? '' ;
                 $compensatory->professional_tax = $row["professional_tax"] ?? '' ;
-                $compensatory->net_income = $row["net_salary"] ?? '' ;
+                $compensatory->labour_welfare_fund = $row["labour_welfare_fund"] ?? '' ;
+                $compensatory->net_income = $row["net_income"] ?? '' ;
                 $compensatory->save();
 
 
@@ -741,7 +752,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
         $compensatory->esic_employee = $row["esic_employee"] ?? '' ;
         $compensatory->professional_tax = $row["professional_tax"] ?? '' ;
         $compensatory->labour_welfare_fund = $row["labour_welfare_fund"] ?? '' ;
-        $compensatory->net_income = $row["net_income"] ?? '' ;
+        $compensatory->net_income = $row["net_salary"] ?? '' ;
         $compensatory->save();
 
     }
@@ -785,7 +796,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                 //fetch the existing document and delete its file from STORAGE folder
                 $file_exists_status = Storage::disk('private')->exists($file_path);
                 if($file_exists_status){
-    
+
                     //delete the file
                     Storage::disk('private')->delete($file_path);
 
