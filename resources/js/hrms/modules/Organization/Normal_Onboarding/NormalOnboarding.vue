@@ -17,7 +17,7 @@
 
               <div class="p-2 shadow card profile-box card-top-border">
                 <div class="card-body justify-content-center align-items-center">
-                  <div class="header-card-text">
+                  <div class="my-4 header-card-text">
                     <h6>Personal Details</h6>
                   </div>
 
@@ -26,9 +26,9 @@
                       <div class="mb-2 col-md -6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label">Employee Code</label>
-                          <InputText
+                          <InputText 
                             class="capitalize form-onboard-form form-control textbox"
-                            type="text"
+                            type="text" :readonly="is_emp_code_quick"
                             v-model="v$.employee_code.$model"
                             placeholder="Employee Code"
                             @input="userCodeExists"
@@ -50,7 +50,7 @@
 
                           <InputText
                             class="capitalize onboard-form form-control textbox"
-                            type="text"
+                            type="text"  :readonly="is_emp_name_quick"
                             v-model="v$.employee_name.$model"
                             :class="{
                               'p-invalid': v$.employee_name.$invalid && submitted,
@@ -92,9 +92,9 @@
                       <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label">Date of Birth</label>
-                          <input
+                          <input :readonly="is_doj_quick"
                             type="text"
-                            max="2004-12-31"
+                            min="2004-12-31"
                             v-model="v$.dob.$model"
                             placeholder="Date of birth"
                             id="doj"
@@ -112,7 +112,7 @@
                           <label for="" class="float-label"
                             >Marital Status <span class="text-danger">*</span></label
                           >
-                          <Dropdown
+                          <Dropdown editable
                             v-model="v$.marital_status.$model"
                             :options="maritalDetails"
                             optionLabel="name"
@@ -132,7 +132,7 @@
                             "
                             class="p-error"
                             >{{
-                              v$.marital_status.required.$message.replace(
+                              v$.marital_status.required.$messagbe.replace(
                                 "Value",
                                 "Marital Status"
                               )
@@ -176,7 +176,7 @@
                           <label for="" class="float-label"
                             >Gender<span class="text-danger">*</span></label
                           >
-                          <Dropdown
+                          <Dropdown editable
                             v-model="v$.gender.$model"
                             :options="Gender"
                             optionLabel="name"
@@ -206,9 +206,25 @@
                           <label for="" class="float-label"
                             >Mobile Number<span class="text">*</span></label
                           >
-                          <InputText
+                          <!-- <InputText
+                        
+                          type="number" min="10" max="10"
                             @input="mobileNoExists"
-                            type="number"
+                             :readonly="is_mob_quick"
+                            placeholder="Mobile Number"
+                            :class="{
+                              'p-invalid': v$.mobile_number.$invalid && submitted,
+                            }"
+                            v-model="v$.mobile_number.$model"
+                            class="form-control textbox"
+
+
+                          /> -->
+                          <InputMask
+                         
+                            mask="9999999999"
+                            @focusout="mobileNoExists"
+                             :readonly="is_mob_quick"
                             placeholder="Mobile Number"
                             :class="{
                               'p-invalid': v$.mobile_number.$invalid && submitted,
@@ -246,12 +262,12 @@
                             >Email<span class="text-danger">*</span></label
                           >
                           <InputText
-                            type="text"
+                            type="text" :readonly="is_email_quick"
                             placeholder="Email ID"
                             :class="{
                               'p-invalid': v$.email.$invalid && submitted,
                             }"
-                            @input="personalMailExists"
+                            @focusout="personalMailExists"
                             v-model="v$.email.$model"
                             class="form-control textbox"
                             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
@@ -387,7 +403,7 @@
                           <label for="" class="float-label"
                             >Choose nationality<span class="text-danger">*</span></label
                           >
-                          <Dropdown
+                          <Dropdown editable
                             v-model="v$.nationality.$model"
                             :options="Nationality"
                             optionLabel="name"
@@ -467,7 +483,7 @@
                         <div class="floating">
                           <label for="" class="float-label">Blood Group</label>
 
-                          <Dropdown
+                          <Dropdown editable
                             v-model="v$.blood_group_name.$model"
                             :options="bloodGroups"
                             optionLabel="name"
@@ -480,7 +496,7 @@
                         <div class="floating">
                           <label for="" class="float-label">Physically Challenged</label>
 
-                          <Dropdown
+                          <Dropdown editable
                             v-model="v$.physically_challenged.$model"
                             :options="PhyChallenged"
                             optionLabel="name"
@@ -727,7 +743,7 @@
               <div class="p-2 my-6 shadow card profile-box card-top-border">
                 <div class="card-body justify-content-center align-items-center">
                   <div class="form-card">
-                    <div class="header-card-text">
+                    <div class="my-4 header-card-text">
                       <h6>Current Address</h6>
                     </div>
                     <div class="mt-1 row">
@@ -1162,7 +1178,7 @@
 
               <div class="p-2 shadow card profile-box card-top-border">
                 <div class="card-body justify-content-center align-items-center">
-                  <div class="header-card-text">
+                  <div class="my-4 header-card-text">
                     <h6 class="">Official Details</h6>
                   </div>
                   <div class="form-card">
@@ -1470,7 +1486,7 @@
 
               <div class="p-2 my-6 shadow card profile-box card-top-border" v-if="family_details_disable">
                 <div class="card-body justify-content-center align-items-center">
-                  <div class="header-card-text">
+                  <div class="my-4 header-card-text">
                     <h6 class="mb-0">Family Details</h6>
                   </div>
                   <div class="form-card">
@@ -1858,7 +1874,7 @@
 
               <div class="p-2 my-6 shadow card profile-box card-top-border">
                 <div class="card-body justify-content-center align-items-center">
-                  <div class="header-card-text">
+                  <div class="my-4 header-card-text">
                     <h6>Compensatory</h6>
                   </div>
 
@@ -1906,10 +1922,10 @@
 
                         </div>-->
 
-                        <div
+                        <div 
                           class="my-5 mb-3 col-md-12 col-sm-12 col-lg-12 col-xl-12 col-xxl-12 mb-md-0"
                         >
-                          <div class="mt-2 form-check form-check-inline">
+                          <div class="mt-2 form-check form-check-inline" v-if="compen_disable">
                             <label
                               class="-ml-4 font-bold form-check-label leave_type"
                               for="compensation_monthly"
@@ -1917,7 +1933,7 @@
                               Enter Monthly Gross</label
                             >
                           </div>
-                          <div class=" form-check form-check-inline">
+                          <div class=" form-check form-check-inline" v-if="compen_disable">
                             <input
                               type="number"
                               placeholder="Enter Monthly Gross"
@@ -1934,7 +1950,7 @@
 
 
                               <p>
-                                <strong class="font-bold">Annual Gross</strong> (Cost to Company) :
+                                <strong class="font-bold">Monthly CTC</strong> (Cost to Company) :
                               <strong v-if="employee_onboarding.total_ctc < 0">0</strong>
                               <strong v-else-if="employee_onboarding.total_ctc > 0">{{
                                 Math.floor(employee_onboarding.total_ctc)
@@ -1979,8 +1995,8 @@
                       <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label">Statutory Bonus</label>
-                          <input
-                            type="number"
+                          <input :readonly="readonly.statutory"
+                            type="number" 
                             placeholder="Statutory Bonus"
                             name="statutory_bonus"
                             v-model="employee_onboarding.statutory_bonus"
@@ -1995,7 +2011,7 @@
                           <label for="" class="float-label"
                             >Child Education Allowance</label
                           >
-                          <input
+                          <input  :readonly="readonly.child"
                             type="number"
                             placeholder="Child Education Allowance"
                             name="child_education_allowance"
@@ -2009,7 +2025,7 @@
                       <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label">Food Coupon</label>
-                          <input
+                          <input  :readonly="readonly.fdc"
                             type="number"
                             placeholder="Food Coupon"
                             name="food_coupon"
@@ -2023,7 +2039,7 @@
                       <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label">LTA</label>
-                          <input
+                          <input  :readonly="readonly.lta"
                             type="number"
                             placeholder="LTA"
                             name="lta"
@@ -2052,7 +2068,7 @@
                         <div class="floating">
                           <label for="" class="float-label">Other Allowance</label>
 
-                          <input
+                          <input  :readonly="readonly.other"
                             type="number"
                             placeholder="Other Allowance"
                             name="other_allowance"
@@ -2235,7 +2251,7 @@
 
               <div class="p-2 my-6 mb-0 shadow card profile-box card-top-border">
                 <div class="card-body justify-content-center align-items-center">
-                  <div class="header-card-text">
+                  <div class="my-4 header-card-text">
                     <h6 class="mb-0">Personal Documents</h6>
                   </div>
                   <div class="mb-2 form-card">
@@ -2419,12 +2435,14 @@
 
                   <div class="row">
                     <div class="text-right col-12">
-                     <input
+                     <!-- <input
                         type="button"
                         value="sample"
                         @click="Sampledata"
                         class="mr-4 text-center btn btn-orange processOnboardForm"
                       />
+
+                      <input class="btn btn-orange" type="button" value="check" @click="compensatoryCalWhileQuick"> -->
 
                       <button
                         type="button"
@@ -2639,6 +2657,8 @@ onMounted(() => {
     {
         populateQuickOnboardData(result.data);
 
+        
+
         console.log("result" + result.data);
     });
   }
@@ -2646,6 +2666,8 @@ onMounted(() => {
   {
     console.log("UID not found in req params");
   }
+
+
 
 
   employee_onboarding.nationality = 'Indian'
@@ -2817,6 +2839,12 @@ const fileUploadValidation = ref(true);
 const employee_name_invalid =ref(false)
 const loading = ref(false)
 const family_details_disable = ref(false)
+const is_emp_code_quick = ref(false)
+const is_emp_name_quick = ref(false)
+const is_doj_quick = ref(false)
+const is_mob_quick = ref(false)
+const is_email_quick = ref(false)
+const compen_disable = ref(true)
 
 
 //   Events
@@ -3178,8 +3206,14 @@ const userCodeExists = () => {
       if(checkIsQuickOrNormal.value == 'quick'){
         console.log("quick onboarding");
         family_details_disable.value = true
+        is_emp_code_quick.value = true
+        is_doj_quick.value = true
+        is_emp_name_quick.value = true
+        is_mob_quick.value = true
+        is_email_quick.value = true
       }else{
         user_code_exists.value = res.data;
+       
       }
 
     })
@@ -3303,7 +3337,14 @@ const personalMailExists = () => {
     .get(`/personal-mail-exists/${mail}`)
     .then((res) => {
       console.log(res.data);
-      personal_mail_exists.value = res.data;
+      if(checkIsQuickOrNormal.value == 'quick'){
+        console.log("quick onboarding");
+      }else{
+        personal_mail_exists.value = res.data;
+       
+      }
+
+    
     })
     .catch((err) => {
       console.log(err);
@@ -3328,7 +3369,13 @@ const mobileNoExists = () => {
     .get(`/mobile-no-exists/${mobile}`)
     .then((res) => {
       console.log(res.data);
-      is_mobile_no_exists.value = res.data;
+      if(checkIsQuickOrNormal.value == 'quick'){
+        console.log("quick onboarding");
+      }else{
+        is_mobile_no_exists.value = res.data;
+       
+      }
+      
     })
     .catch((err) => {
       console.log(err);
@@ -3652,6 +3699,26 @@ const epf_esic_calculation = () => {
   }
 };
 
+const compensatoryCalWhileQuick = () =>{
+  compen_disable.value = false
+  
+  let gross = employee_onboarding.basic + employee_onboarding.hra +employee_onboarding.statutory_bonus +employee_onboarding.child_education_allowance +employee_onboarding.food_coupon +employee_onboarding.lta +employee_onboarding.special_allowance +employee_onboarding.other_allowance 
+  console.log(gross);
+  employee_onboarding.gross = gross
+
+  let net =     employee_onboarding.gross -
+    employee_onboarding.epf_employee -
+    employee_onboarding.esic_employee;
+
+  console.log(net);  
+
+  let ctc = employee_onboarding.gross + employee_onboarding.epf_employer_contribution + employee_onboarding.esic_employer_contribution + employee_onboarding.insurance+ employee_onboarding.graduity
+
+  employee_onboarding.total_ctc = ctc
+
+  console.log(ctc);
+}
+
 const mon = ref(false);
 const year = ref(false);
 
@@ -3911,12 +3978,39 @@ const compensation_yearly = ref([
 
 //function
 
+const readonly = reactive({
+    statutory:false,
+    child:false,
+    fdc:false,
+    lta:false,
+    other:false,
+
+})
+
 
 // Sample testong Data
 function populateQuickOnboardData(emp_data){
+  console.log("populate data");
     console.log("populateQuickOnboardData : "+ JSON.stringify(emp_data));
 
      checkIsQuickOrNormal.value = emp_data.onboard_type;
+
+     if(emp_data.onboard_type == 'quick'){
+        compensatoryCalWhileQuick()
+        family_details_disable.value = true
+        is_emp_code_quick.value = true
+        is_doj_quick.value = true
+        is_emp_name_quick.value = true
+        is_mob_quick.value = true
+        is_email_quick.value = true
+        readonly.statutory = true
+        readonly.child = true
+        readonly.fdc = true
+        readonly.lta = true
+        readonly.other = true
+     }else{
+      console.log("normal onboarding");
+     }
 
 console.log(emp_data.onboard_type);
 
@@ -4004,7 +4098,27 @@ const Sampledata = () => {
   employee_onboarding.spouse_gender = ref("female");
   employee_onboarding.dob_spouse = ref("12-8-1995");
   employee_onboarding.spouse_name = ref("priyanka");
-  employee_onboarding.no_of_children = ref("5");
+  employee_onboarding.basic = ref(13205);
+  employee_onboarding.hra = ref(6603);
+  employee_onboarding.statutory_bonus = ref(0);
+  employee_onboarding.other_allowance = ref(0);
+  employee_onboarding.child_education_allowance = ref(0);
+  employee_onboarding.food_coupon = ref(0);
+  employee_onboarding.lta = ref(0);
+  employee_onboarding.special_allowance = ref(2200);
+  // employee_onboarding.gross = ref(1000);
+  employee_onboarding.epf_employee= ref(1000);
+  employee_onboarding.epf_employer_contribution = ref(1000);
+  employee_onboarding.esic_employee = ref(1000);
+  employee_onboarding.esic_employer_contribution = ref(1000);
+  employee_onboarding.professional_tax = ref(1000);
+  employee_onboarding.labour_welfare_fund = ref(1000);
+  employee_onboarding.net_income = ref(1000);
+  employee_onboarding.total_ctc = ref(1000);
+  employee_onboarding.graduity = ref(1000);
+  employee_onboarding.insurance = ref(1000);
+ 
+  
 };
 </script>
 

@@ -125,7 +125,7 @@
         //     }
         // });
 
- 
+
 
         $('#form-1').validate({
             errorPlacement: function(error, element) {
