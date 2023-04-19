@@ -36,44 +36,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //Route::get('viewAssigneeReviewList', 'App\Http\Controllers\VmtAPIPMSModuleController@showEmployeeApraisalReviewList');
     Route::get('/getAllUsers',[HRMSBaseAPIController::class, 'getAllUsers']);
 
-    /*
-        getAssigneeKPIForms():
-        DB Table : vmt_pms_kpiform_assigned
-        Input : assignee_id
-        Output : JSON containing the list of all forms assigned to the given LoggedInUserId
-
-    */
+    //PMS Forms
     Route::post('getAssigneeKPIForms', [VmtAPIPMSModuleController::class,'getAssigneeKPIForms']);
-       Route::post('getKPIFormDetails', [VmtAPIPMSModuleController::class,'getKPIFormDetails']);
-
-    /*
-        getReviewerKPIForms():
-        DB Table : vmt_pms_kpiform_assigned
-        Input : assignee_id
-        Output : JSON containing the list of all forms which reviewed by given LoggedInUserId
-
-    */
+    Route::post('getKPIFormDetails', [VmtAPIPMSModuleController::class,'getKPIFormDetails']);
     Route::post('getReviewerKPIForms', [VmtAPIPMSModuleController::class,'getReviewerKPIForms']);
-
-    /*
-        getAssigneeReviews():
-        Input : assignee_id, vmt_pms_kpiform_assigned_id
-        DB Table : vmt_pms_kpiform_reviews
-        Output : JSON containing kpi review of the form assigned to the given assignee id.
-
-    */
     Route::get('getAssigneeReviews', 'App\Http\Controllers\Api\VmtAPIPMSModuleController@getAssigneeReviews');
-
-    /*
-        saveAssigneeReviews():
-        Input : assignee_id, assigned form id, JSON data of KPI reviews.
-        DB Table : vmt_pms_kpiform_reviews
-        Output : success/failure response.
-
-    */
     Route::post('saveAssigneeReviews', 'App\Http\Controllers\Api\VmtAPIPMSModuleController@saveAssigneeReviews');
-
-
     Route::get('getReviewerReviews', 'App\Http\Controllers\Api\VmtAPIPMSModuleController@getReviewerReviews');
     Route::post('saveReviewerReviews', 'App\Http\Controllers\Api\VmtAPIPMSModuleController@saveReviewerReviews');
 
@@ -83,8 +51,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     ////Attendance
 
     //Check-in/ Check-out
-    Route::post('attendance_checkin', [VmtAPIAttendanceController::class, 'attendanceCheckin']);
-    Route::post('attendance_checkout', [VmtAPIAttendanceController::class, 'attendanceCheckout']);
+    Route::post('attendance_checkin', [VmtAPIAttendanceController::class, 'performAttendanceCheckIn']);
+    Route::post('attendance_checkout', [VmtAPIAttendanceController::class, 'performAttendanceCheckOut']);
     Route::post('/attendance/get_attendance_status', [VmtAPIAttendanceController::class, 'getAttendanceStatus']);
 
     //Leave
@@ -106,23 +74,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //Payslip API
     Route::get('payslip_getmonthlypayslipdata', [VmtAPIPaySlipController::class, 'getMonthlyPayslipData']);
 
-
-        /*
-        employeeMonthlyLeaveDetails()
-        Input : User Id
-        DB Table : vmt_employee_attendance,users
-        Output : success/failure response.
-      */
     Route::post('employee_monthly_leave_details', [VmtAPIAttendanceController::class,
     'employeeMonthlyLeaveDetails']);
 
     Route::post('/get-maindashboard-data', [VmtAPIDashboardController::class, 'getMainDashboardData']);
-////Profile Pages
-
-
+    Route::get('/profile-pages-getEmpDetails', [VmtAPIProfilePagesController::class, 'fetchEmployeeProfileDetails']);
 
 });
 
 
-Route::get('/profile-pages-getEmpDetails', [VmtAPIProfilePagesController::class, 'fetchEmployeeProfileDetails']);
 

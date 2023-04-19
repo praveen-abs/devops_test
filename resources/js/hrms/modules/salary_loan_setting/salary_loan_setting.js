@@ -35,6 +35,11 @@ import MultiSelect from 'primevue/multiselect';
 import InputNumber from 'primevue/inputnumber';
 import SelectButton from 'primevue/selectbutton';
 import RadioButton from 'primevue/radiobutton';
+import ToastService from 'primevue/toastservice';
+import Toast from 'primevue/toast';
+
+
+
 
 
 
@@ -47,7 +52,9 @@ app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
+app.use(ToastService);
 app.use(pinia)
+
 
 
 app.directive('tooltip', Tooltip);
@@ -74,6 +81,8 @@ app.component('Chips', Chips)
 app.component('MultiSelect', MultiSelect)
 app.component('InputNumber', InputNumber)
 app.component('SelectButton' ,SelectButton)
+app.component('Toast',Toast)
+
 
 app.mount("#SalaryAdvanceLoan");
 

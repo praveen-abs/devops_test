@@ -1,231 +1,217 @@
 <template>
-    <h2>Upload Documents</h2>
-    <br/>
-    <div class="p-2 shadow card profile-box card-top-border">
-        <div class="card-body justify-content-center align-items-center">
-            <div class="header-card-text">
-            <h6 class="mb-0">Personal Documents</h6>
-            </div>
-            <div class="mb-2 form-card">
-            <div class="mt-1 row">
-                <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6">
-                <label for="" class="float-label"
-                    >Aadhar Card Front<span class="text-danger">*</span></label
-                >
+  <h2>Upload Documents</h2>
+  <br />
+  <div class="p-2 shadow card profile-box card-top-border">
+    <div class="card-body justify-content-center align-items-center">
+      <div class="header-card-text">
+        <h6 class="mb-0">Personal Documents</h6>
+      </div>
+      <div class="mb-2 form-card">
+        <div class="mt-1 row">
+          <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6">
+            <label for="" class="float-label"
+              >Aadhar Card Front<span class="text-danger">*</span></label
+            >
+            <input
+              v-if="!AadharDocFrontInvalid"
+              type="file"
+              accept="image/png, image/gif, image/jpeg"
+              ref="AadharCardFront"
+              class="onboard-form form-control file"
+              @change="AadharFront($event)"
+            />
+            <span class="p-error" v-if="AadharDocFrontInvalid"
+              >Aadhar Card Front is required</span
+            >
+          </div>
+          <div
+            class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6"
+            id="aadhar_card_backend_content"
+          >
+            <label for="" class="float-label">
+              Aadhar Card Back<span class="text-danger">*</span></label
+            >
+            <input
+              v-if="!AadharDocBackInvalid"
+              type="file"
+              accept="image/png, image/gif, image/jpeg"
+              ref="AadharCardBack"
+              @change="AadharBack($event)"
+              class="onboard-form form-control file"
+            />
 
-                <input
-                    v-if="AadharDocFrontInvalid"
-                    type="file"
-                    accept="image/png, image/gif, image/jpeg"
-                    ref="AadharCardFront"
-                    class="onboard-form form-control file is-invalid"
-                    @change="AadharFront($event)"
-                />
-                <input
-                    v-if="!AadharDocFrontInvalid"
-                    type="file"
-                    accept="image/png, image/gif, image/jpeg"
-                    ref="AadharCardFront"
-                    class="onboard-form form-control file"
-                    @change="AadharFront($event)"
-                />
-                <span class="p-error" v-if="AadharDocFrontInvalid"
-                    >Aadhar Card Front is required</span
-                >
-                </div>
-                <div
-                class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6"
-                id="aadhar_card_backend_content"
-                >
-                <label for="" class="float-label">
-                    Aadhar Card Back<span class="text-danger">*</span></label
-                >
+            <span v-if="AadharDocBackInvalid" class="p-error"
+              >Aadhar Card Back is Required</span
+            >
+          </div>
+          <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6">
+            <label for="" class="float-label">
+              Pan Card<span class="text-danger">*</span></label
+            >
 
-                <input
-                    v-if="AadharDocBackInvalid"
-                    type="file"
-                    accept="image/png, image/gif, image/jpeg"
-                    ref="AadharCardBack"
-                    @change="AadharBack($event)"
-                    class="onboard-form form-control file is-invalid"
-                />
-                <input
-                    v-if="!AadharDocBackInvalid"
-                    type="file"
-                    accept="image/png, image/gif, image/jpeg"
-                    ref="AadharCardBack"
-                    @change="AadharBack($event)"
-                    class="onboard-form form-control file"
-                />
+            <input
+              v-if="!PancardInvalid"
+              type="file"
+              accept="image/png, image/gif, image/jpeg"
+              placeholder="Pan Card"
+              name="pan_card_file"
+              id="pan_card_file"
+              ref="PanCardDoc"
+              @change="PanCard($event)"
+              class="onboard-form form-control file"
+            />
 
-                <span v-if="AadharDocBackInvalid" class="p-error"
-                    >Aadhar Card Back is Required</span
-                >
-                </div>
-                <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6">
-                <label for="" class="float-label">
-                    Pan Card<span class="text-danger">*</span></label
-                >
+            <span v-if="PancardInvalid" class="p-error"
+              >Pan Card is Required</span
+            >
+          </div>
+          <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6">
+            <label for="" class="float-label"> Passport</label>
 
-                <input
-                    v-if="PancardInvalid"
-                    type="file"
-                    accept="image/png, image/gif, image/jpeg"
-                    placeholder="Pan Card"
-                    name="pan_card_file"
-                    id="pan_card_file"
-                    ref="PanCardDoc"
-                    @change="PanCard($event)"
-                    class="onboard-form form-control file is-invalid"
-                />
+            <input
+              type="file"
+              accept="image/png, image/gif, image/jpeg"
+              ref="PassportDoc"
+              placeholder="Passport"
+              name="passport_file"
+              id="passport_file"
+              @change="Passport($event)"
+              class="onboard-form form-control file"
+            />
+          </div>
+          <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6">
+            <label for="" class="float-label">Voter ID</label>
 
-                <input
-                    v-if="!PancardInvalid"
-                    type="file"
-                    accept="image/png, image/gif, image/jpeg"
-                    placeholder="Pan Card"
-                    name="pan_card_file"
-                    id="pan_card_file"
-                    ref="PanCardDoc"
-                    @change="PanCard($event)"
-                    class="onboard-form form-control file"
-                />
+            <input
+              type="file"
+              accept="image/png, image/gif, image/jpeg"
+              ref="VoterIdDoc"
+              placeholder="Voters ID"
+              name="voters_id_file"
+              id="voters_id_file"
+              @change="VoterId($event)"
+              class="onboard-form form-control file"
+            />
+          </div>
+          <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6">
+            <label for="" class="float-label"> Driving License</label>
 
-                <span v-if="PancardInvalid" class="p-error"
-                    >Pan Card is Required</span
-                >
-                </div>
-                <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6">
-                <label for="" class="float-label"> Passport</label>
+            <input
+              type="file"
+              accept="image/png, image/gif, image/jpeg"
+              placeholder="Driving License"
+              name="dl_file"
+              id="dl_file"
+              @change="DrivingLisence($event)"
+              ref="DrivingLicenseDoc"
+              class="onboard-form form-control file"
+            />
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+            <label for="" class="float-label">Educations Certificate</label>
+            <input
+              type="file"
+              accept="image/png, image/gif, image/jpeg"
+              placeholder="Educations Certificate"
+              name="education_certificate_file"
+              @change="EductionCertifacte($event)"
+              v-if="EducationCertificateInvalid"
+              id="education_certificate_file"
+              ref="EductionDoc"
+              class="onboard-form form-control file is-invalid"
+            />
 
-                <input
-                    type="file"
-                    accept="image/png, image/gif, image/jpeg"
-                    ref="PassportDoc"
-                    placeholder="Passport"
-                    name="passport_file"
-                    id="passport_file"
-                    @change="Passport($event)"
-                    class="onboard-form form-control file"
-                />
-                </div>
-                <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6">
-                <label for="" class="float-label">Voter ID</label>
+            <input
+              type="file"
+              accept="image/png, image/gif, image/jpeg"
+              placeholder="Educations Certificate"
+              name="education_certificate_file"
+              @change="EductionCertifacte($event)"
+              v-if="!EducationCertificateInvalid"
+              id="education_certificate_file"
+              ref="EductionDoc"
+              class="onboard-form form-control file"
+            />
 
-                <input
-                    type="file"
-                    accept="image/png, image/gif, image/jpeg"
-                    ref="VoterIdDoc"
-                    placeholder="Voters ID"
-                    name="voters_id_file"
-                    id="voters_id_file"
-                    @change="VoterId($event)"
-                    class="onboard-form form-control file"
-                />
-                </div>
-                <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6">
-                <label for="" class="float-label"> Driving License</label>
-
-                <input
-                    type="file"
-                    accept="image/png, image/gif, image/jpeg"
-                    placeholder="Driving License"
-                    name="dl_file"
-                    id="dl_file"
-                    @change="DrivingLisence($event)"
-                    ref="DrivingLicenseDoc"
-                    class="onboard-form form-control file"
-                />
-                </div>
-                <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
-                <label for="" class="float-label"
-                    >Educations Certificate<span class="text-danger">*</span></label
-                >
-                <input
-                    type="file"
-                    accept="image/png, image/gif, image/jpeg"
-                    placeholder="Educations Certificate"
-                    name="education_certificate_file"
-                    @change="EductionCertifacte($event)"
-                    v-if="EducationCertificateInvalid"
-                    id="education_certificate_file"
-                    ref="EductionDoc"
-                    class="onboard-form form-control file is-invalid"
-                />
-
-                <input
-                    type="file"
-                    accept="image/png, image/gif, image/jpeg"
-                    placeholder="Educations Certificate"
-                    name="education_certificate_file"
-                    @change="EductionCertifacte($event)"
-                    v-if="!EducationCertificateInvalid"
-                    id="education_certificate_file"
-                    ref="EductionDoc"
-                    class="onboard-form form-control file"
-                />
-
-                <span v-if="EducationCertificateInvalid" class="p-error"
-                    >Eduction Certifacte is Required</span
-                >
-                </div>
-                <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
-                <label for="" class="float-label"> Relieving Letter</label>
-                <input
-                    type="file"
-                    accept="image/png, image/gif, image/jpeg"
-                    placeholder="Relieving Letter"
-                    name="reliving_letter_file"
-                    id="reliving_letter_file"
-                    @change="ReleivingLetter($event)"
-                    ref="ReleivingLetterDoc"
-                    class="onboard-form form-control file"
-                />
-                </div>
-            </div>
-            </div>
-
-            <div class="row">
-            <div class="text-right col-12">
-                <button
-                type="submit"
-                data="row-6"
-                next="row-6"
-                placeholder=""
-                name="submit_form"
-                id="msform"
-                class="text-center btn btn-orange processOnboardForm"
-                value="Submit"
-                :disabled="fileUploadValidation"
-                @click="SubmitEmployeeDocsUpload()"
-                >
-                Submit
-                </button>
-            </div>
-            </div>
+            <span v-if="EducationCertificateInvalid" class="p-error"
+              >Eduction Certifacte is Required</span
+            >
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+            <label for="" class="float-label"> Relieving Letter</label>
+            <input
+              type="file"
+              accept="image/png, image/gif, image/jpeg"
+              placeholder="Relieving Letter"
+              name="reliving_letter_file"
+              id="reliving_letter_file"
+              @change="ReleivingLetter($event)"
+              ref="RelievingLetterDoc"
+              class="onboard-form form-control file"
+            />
+          </div>
         </div>
+      </div>
+
+      <div class="row">
+        <template>
+          <div class="card flex justify-content-center">
+            <!-- <Toast position="top-left" group="tl" />
+                        <Toast position="bottom-left" group="bl" /> -->
+
+            <!-- <div class="flex flex-wrap gap-2">
+                            <Button label="Top Left" class="mr-2" @click="showTopLeft" />
+                            <Button label="Bottom Left" severity="warning" @click="showBottomLeft" />
+                            <Button label="Bottom Right" severity="success" @click="showBottomRight" />
+                        </div> -->
+          </div>
+        </template>
+
+        <div class="text-right col-12">
+          <Toast />
+          <button
+            severity="warn"
+            type="submit"
+            data="row-6"
+            next="row-6"
+            placeholder=""
+            name="submit_form"
+            id="msform"
+            class="text-center btn btn-orange processOnboardForm warn"
+            value="Submit"
+            :disabled="fileUploadValidation"
+            @click="SubmitEmployeeDocsUpload"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script setup>
-import { ref ,reactive } from 'vue';
+import { ref, reactive } from "vue";
 import axios from "axios";
+import { useToast } from "primevue/usetoast";
+import { inject } from "vue";
 
+const swal = inject("$swal");
 
+const toast = useToast();
 
 // const fetch_data = Service();
 
 const EmployeeDocs_upload = ref({
-
-  AadharCardFront: "",
-  AadharCardBack: "",
-  PanCardDoc: "",
-  DrivingLicenseDoc: "",
-  EductionDoc: "",
-  VoterIdDoc: "",
-  ReleivingLetterDoc: "",
-  PassportDoc: "",
-  save_draft_messege: ""
+  AadharCardFront: null,
+  AadharCardBack: null,
+  PanCardDoc: null,
+  DrivingLicenseDoc: null,
+  EductionDoc: null,
+  VoterIdDoc: null,
+  RelievingLetterDoc: null,
+  PassportDoc: null,
+  save_draft_messege: null,
 });
 
 const AadharDocFrontInvalid = ref(false);
@@ -233,45 +219,61 @@ const AadharDocBackInvalid = ref(false);
 const PancardInvalid = ref(false);
 const EducationCertificateInvalid = ref(false);
 
+const SubmitEmployeeDocsUpload = () => {
 
+  let formData = new FormData();
 
+  if (EmployeeDocs_upload.AadharCardFront != undefined)
+    formData.append("Aadhar_Card_Front", EmployeeDocs_upload.AadharCardFront);
 
-  const SubmitEmployeeDocsUpload=()=>{
+  if (EmployeeDocs_upload.AadharCardBack != undefined)
+    formData.append("Aadhar_Card_Back", EmployeeDocs_upload.AadharCardBack);
 
-    let formData = new FormData();
+  if (EmployeeDocs_upload.PanCardDoc != undefined)
+    formData.append("Pan_Card", EmployeeDocs_upload.PanCardDoc);
 
-  formData.append("Aadharfront", EmployeeDocs_upload.AadharCardFront);
-  formData.append("AadharBack", EmployeeDocs_upload.AadharCardBack);
-  formData.append("panDoc", EmployeeDocs_upload.PanCardDoc);
-  formData.append("eductionDoc", EmployeeDocs_upload.EductionDoc);
-  formData.append("releivingDoc", EmployeeDocs_upload.ReleivingLetterDoc);
-  formData.append("voterId", EmployeeDocs_upload.VoterIdDoc);
-  formData.append("passport", EmployeeDocs_upload.PassportDoc);
-  formData.append("dlDoc", EmployeeDocs_upload.DrivingLicenseDoc);
+  if (EmployeeDocs_upload.PassportDoc != undefined)
+    formData.append("Passport", EmployeeDocs_upload.PassportDoc);
 
+  if (EmployeeDocs_upload.VoterIdDoc != undefined)
+    formData.append("Voter_ID", EmployeeDocs_upload.VoterIdDoc);
+
+  if (EmployeeDocs_upload.DrivingLicenseDoc != undefined)
+    formData.append("Driving_License", EmployeeDocs_upload.DrivingLicenseDoc);
+
+  if (EmployeeDocs_upload.EductionDoc != undefined)
+    formData.append("Education_Certificate", EmployeeDocs_upload.EductionDoc);
+
+  if (EmployeeDocs_upload.RelievingLetterDoc != undefined)
+    formData.append("Relieving_Letter", EmployeeDocs_upload.RelievingLetterDoc);
 
   console.log(formData);
 
-        // const id = fetch_data;
-        // let url = `/vmt-documents-route/${id}`;
+  // const id = fetch_data;
+  // let url = `/vmt-documents-route/${id}`;
 
-        axios.post("/vmt-documents-route/", formData)
+  axios
+    .post("/vmt-documents-route/", formData)
     .then((response) => {
       // currentObj.success = response.data.success;
       console.log("response" + response.data);
+
       console.log(Object(response.data));
-      loading.value = false
+
       if (response.data.status == "success") {
         Swal.fire(response.data.status, response.data.message, "success");
-      }
-      EmployeeDocs_upload.save_draft_messege = response.data;
 
+      }
+
+      if (response.data.status == "failure") {
+        Swal.fire(response.data.status, response.data.message, "error");
+
+      }
     })
     .catch(function (error) {
       // currentObj.output = error;
       console.log(error);
     });
-
 };
 
 const checkInputFiles = () => {
@@ -476,32 +478,89 @@ const ReleivingLetter = (e) => {
   // Check if file is selected
   if (e.target.files && e.target.files[0]) {
     // Get uploaded file
-    (EmployeeDocs_upload.ReleivingLetterDoc = e.target.files[0]),
+    (EmployeeDocs_upload.RelievingLetterDoc = e.target.files[0]),
       // Get file size
-      (EmployeeDocs_upload.ReleivingLetterDoc.fileSize =
+      (EmployeeDocs_upload.RelievingLetterDoc.fileSize =
         Math.round(
-          (EmployeeDocs_upload.ReleivingLetterDoc.size / 1024 / 1024) * 100
+          (EmployeeDocs_upload.RelievingLetterDoc.size / 1024 / 1024) * 100
         ) / 100),
       // Get file extension
-      (EmployeeDocs_upload.ReleivingLetterDoc.fileExtention =
-        EmployeeDocs_upload.ReleivingLetterDoc.name.split(".").pop()),
+      (EmployeeDocs_upload.RelievingLetterDoc.fileExtention =
+        EmployeeDocs_upload.RelievingLetterDoc.name.split(".").pop()),
       // Get file name
-      (EmployeeDocs_upload.ReleivingLetterDoc.fileName =
-        EmployeeDocs_upload.ReleivingLetterDoc.name.split(".").shift()),
+      (EmployeeDocs_upload.RelievingLetterDoc.fileName =
+        EmployeeDocs_upload.RelievingLetterDoc.name.split(".").shift()),
       // Check if file is an image
-      (EmployeeDocs_upload.ReleivingLetterDoc.isImage = [
+      (EmployeeDocs_upload.RelievingLetterDoc.isImage = [
         "jpg",
         "jpeg",
         "png",
         "gif",
-      ].includes(EmployeeDocs_upload.ReleivingLetterDoc.fileExtention));
+      ].includes(EmployeeDocs_upload.RelievingLetterDoc.fileExtention));
     // Print to console
-    console.log(EmployeeDocs_upload.ReleivingLetterDoc);
+    //console.log(EmployeeDocs_upload.ReleivingLetterDoc);
   }
 };
-
-
-
-
-
 </script>
+
+<!-- {
+
+<template>
+    <div class="card">
+        <Message severity="success">Success Message Content</Message>
+        <Message severity="info">Info Message Content</Message>
+        <Message severity="warn">Warning Message Content</Message>
+        <Message severity="error">Error Message Content</Message>
+    </div>
+</template>
+
+<script setup>
+</script>
+
+
+<template>
+    <div class="card">
+        <Message severity="success">Success Message Content</Message>
+        <Message severity="info">Info Message Content</Message>
+        <Message severity="warn">Warning Message Content</Message>
+        <Message severity="error">Error Message Content</Message>
+    </div>
+</template>
+
+<script setup>
+</script>
+
+
+<template>
+    <div class="card flex justify-content-center">
+        <Toast position="top-left" group="tl" />
+        <Toast position="bottom-left" group="bl" />
+        <Toast position="bottom-right" group="br" />
+
+        <div class="flex flex-wrap gap-2">
+            <Button label="Top Left" class="mr-2" @click="showTopLeft" />
+            <Button label="Bottom Left" severity="warning" @click="showBottomLeft" />
+            <Button label="Bottom Right" severity="success" @click="showBottomRight" />
+        </div>
+    </div>
+</template>
+
+<script setup>
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
+
+const showTopLeft = () => {
+    toast.add({ severity: 'info', summary: 'Info Message', detail: 'Message Content', group: 'tl', life: 3000 });
+};
+
+const showBottomLeft = () => {
+    toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', group: 'bl', life: 3000 });
+};
+
+const showBottomRight = () => {
+    toast.add({ severity: 'success', summary: 'Success Message', detail: 'Message Content', group: 'br', life: 3000 });
+};
+</script>
+
+
+} -->

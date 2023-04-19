@@ -518,6 +518,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
             $this->uploadDocument($user->id, $row['releivingDoc'],'Relieving Letter');
 
             // $docReviewArray = array(
+
             //     'aadhar_card_file' => -1,
             //     'aadhar_card_backend_file' => -1,
             //     'pan_card_file' => -1,
@@ -758,59 +759,63 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
     }
 
     public function uploadDocument($emp_id,$fileObject, $onboard_document_type){
-        //dd($fileObject);
-        if(empty($fileObject))
-            return null;
-          //dd($onboard_document_type);
-        //check if document already uploaded
 
-        $onboard_doc_id = VmtOnboardingDocuments::where('document_name',$onboard_document_type)->first();
-        $emp_code = User::find($emp_id)->user_code;
+        try{
+            $emp_code = User::find($emp_id)->user_code;
 
-        if( !empty($onboard_doc_id))
-        {
-            $onboard_doc_id = $onboard_doc_id->id;
-        }
+            if(empty($fileObject))
+                return null;
 
-        $employee_documents = VmtEmployeeDocuments::where('user_id', $emp_id)->where('doc_id',$onboard_doc_id);
+            $onboard_doc_id = VmtOnboardingDocuments::where('document_name',$onboard_document_type);
 
-        //check if document already uploaded
-        if( $employee_documents->exists()){
-            $employee_documents = $employee_documents->first();
+            if($onboard_doc_id->exists())
+                $onboard_doc_id = $onboard_doc_id->first()->id;
+            else
+                return null;
 
-            $file_path = '/'.$emp_code.'/onboarding_documents'.'/'.$employee_documents->doc_url;
+            $employee_documents = VmtEmployeeDocuments::where('user_id', $emp_id)->where('doc_id',$onboard_doc_id);
 
-            //fetch the existing document and delete its file from STORAGE folder
-            $file_exists_status = Storage::disk('private')->exists($file_path);
+            //check if document already uploaded
+            if( $employee_documents->exists()){
 
-            if($file_exists_status){
+                $employee_documents = $employee_documents->first();
 
-                //delete the file
-                Storage::disk('private')->delete($file_path);
+                $file_path = '/'.$emp_code.'/onboarding_documents'.'/'.$employee_documents->doc_url;
+
+                //fetch the existing document and delete its file from STORAGE folder
+                $file_exists_status = Storage::disk('private')->exists($file_path);
+                if($file_exists_status){
+    
+                    //delete the file
+                    Storage::disk('private')->delete($file_path);
+
+                }
 
             }
+            else
+            {
+                $employee_documents = new VmtEmployeeDocuments;
+                $employee_documents->user_id = $emp_id;
+                $employee_documents->doc_id = $onboard_doc_id;
+            }
 
+
+            $date = date('d-m-Y_H-i-s');
+            $fileName =  str_replace(' ', '', $onboard_document_type).'_'.$emp_code.'_'.$date.'.'.$fileObject->extension();
+            $path = $emp_code.'/onboarding_documents';
+            $filePath = $fileObject->storeAs($path,$fileName, 'private');
+
+
+            $employee_documents->doc_url = $fileName;
+            $employee_documents->status = 'Pending';
+
+            $employee_documents->save();
         }
-        else
-        {
-            $employee_documents = new VmtEmployeeDocuments;
-            $employee_documents->user_id = $emp_id;
-            $employee_documents->doc_id = $onboard_doc_id;
+        catch(\Exception $e){
+            dd("Error :: uploadDocument() ".$e);
         }
 
-
-        $date = date('d-m-Y_H-i-s');
-        $fileName =  str_replace(' ', '', $onboard_document_type).'_'.$emp_code.'_'.$date.'.'.$fileObject->extension();
-        $path = $emp_code.'/onboarding_documents';
-        $filePath = $fileObject->storeAs($path,$fileName, 'private');
-
-
-        $employee_documents->doc_url = $fileName;
-        $employee_documents->status = 'Pending';
-
-        $employee_documents->save();
-
-        return $fileName;
+        return "success";
 
     }
 
