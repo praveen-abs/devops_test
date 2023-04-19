@@ -30,9 +30,10 @@ export default defineConfig({
                 'resources/js/hrms/modules/Organization/manage_employee/manage_employee.js',
                 'resources/js/hrms/modules/Organization/Normal_Onboarding/NormalOnboarding.js',
 
-                // Approval Module
+                // Approval Module   
                 'resources/js/hrms/modules/approvals/att_regularization/AttRegularizationApproval.js',
                 'resources/js/hrms/modules/approvals/reimbursements/ReimbursementsApproval.js',
+                'resources/js/hrms/modules/approvals/resignation/resignation_approval.js',
                 'resources/js/hrms/modules/approvals/onboarding/review_document.js',
                 'resources/js/hrms/modules/approvals/leaves/LeaveApproval.js',
                 'resources/js/hrms/modules/approvals/pms/PMSApprovalTable.js',
@@ -95,7 +96,15 @@ export default defineConfig({
                 // 'resources/js/hrms/modules/approvals/onboarding/review_document.js'
 
                 //Payroll
-                'resources/js/hrms/modules/manage_payslips/ManagePayslips.js'
+                'resources/js/hrms/modules/manage_payslips/ManagePayslips.js',
+
+                // Exit
+
+
+
+                'resources/js/hrms/modules/exit/exit.js'
+
+
 
             ],
             refresh: true,

@@ -174,7 +174,30 @@
       "id": 6
     }
   ],
-  "profile": {
-    "name": "typicode"
-  }
+  "exit": [
+    {
+      "dori": "06-Mar-1972",
+      "resignation": "",
+      "npd": "1988-07-04",
+      "elwd": "",
+      "ped": "2003-12-15",
+      "id": 1
+    },
+    {
+      "dori": "06-Mar-1972",
+      "resignation": "",
+      "npd": "1988-07-04",
+      "elwd": "",
+      "ped": "2003-12-15",
+      "id": 2
+    },
+    {
+      "dori": "05-Dec-2012",
+      "resignation": "Marriage & Relocating",
+      "npd": "2021-12-19",
+      "elwd": "",
+      "ped": "2020-05-16",
+      "id": 3
+    }
+  ]
 }
