@@ -52,6 +52,7 @@ class VmtDashboardService{
         $employee_details_query = User::where('user_code',$user_code)->get(['id','name','avatar'])->first();
         $employee_designation = VmtEmployeeOfficeDetails::where('user_id',$employee_details_query->id)->first()->designation;
 
+        $profile_pic = null;
 
         //If AVATAR filename present in DB column....
         $emp_avatar = $employee_details_query->avatar;

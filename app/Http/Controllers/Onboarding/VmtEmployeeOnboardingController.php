@@ -1421,43 +1421,18 @@ class VmtEmployeeOnboardingController extends Controller
                 $result =   $employeeService->uploadDocument(auth()->user()->id, $request->aadhar_card_file, 'Relieving Letter');
             }
 
-
+            // //set the onboard status to 1.
+            $currentUser = User::where('id', auth()->user()->id)->first();
+            $currentUser->is_onboarded = '1';
+            $currentUser->save();
 
             return $rowdata_response = [
                 'status' => 'success',
                 'message' => 'All documents uploaded. You have been successfully onboarded',
             ];
 
-            // if(isset($request->aadhar_card_backend_file))
-            //     $currentEmployeeDetails->aadhar_card_backend_file = $this->fileUpload('aadhar_card_backend_file',);
 
-            // if(isset($request->pan_card_file))
-            //     $currentEmployeeDetails->pan_card_file = $this->fileUpload('pan_card_file',auth()->user()->user_code);
 
-            // if(isset($request->passport_file))
-            //     $currentEmployeeDetails->passport_file = $this->fileUpload('passport_file',auth()->user()->user_code);
-
-            // if(isset($request->voters_id_file))
-            //     $currentEmployeeDetails->voters_id_file = $this->fileUpload('voters_id_file',auth()->user()->user_code);
-
-            // if(isset($request->dl_file))
-            //     $currentEmployeeDetails->dl_file = $this->fileUpload('dl_file',auth()->user()->user_code);
-
-            // if(isset($request->education_certificate_file))
-            //     $currentEmployeeDetails->education_certificate_file = $this->fileUpload('education_certificate_file',auth()->user()->user_code);
-
-            // if(isset($request->reliving_letter_file))
-            //     $currentEmployeeDetails->reliving_letter_file = $this->fileUpload('reliving_letter_file',auth()->user()->user_code);
-
-            //Need to update this old logic. Use VmtEmployeeDocuments to check mandatory docs
-            /*
-            if( $this->isAllDocumentsUploaded(auth()->user()->id) == 1)
-            {
-
-                // //set the onboard status to 1.
-                $currentUser = User::where('id', auth()->user()->id)->first();
-                $currentUser->is_onboarded = '1';
-                $currentUser->save();
 
         //     $currentEmployeeDetails->save();
 
@@ -1500,5 +1475,5 @@ class VmtEmployeeOnboardingController extends Controller
         // dd(file(storage_path('employees'.$private_file)));
        return response()->file(storage_path($private_file));
 
-}
+    }
 }
