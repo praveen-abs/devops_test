@@ -1360,12 +1360,12 @@ class VmtEmployeeOnboardingController extends Controller
     */
     public function storeEmployeeDocuments(Request $request, VmtEmployeeService $employeeService)
     {
+        dd($request->all());
         $rowdata_response = [
             'status' => 'empty',
             'message' => 'empty',
         ];
 
-        //dd($currentEmployeeDetails->toArray());
 
         try
         {
@@ -1451,20 +1451,30 @@ class VmtEmployeeOnboardingController extends Controller
                 $currentUser->is_onboarded = '1';
                 $currentUser->save();
 
-                return $rowdata_response = [
-                    'status' => 'success',
-                    'message' => 'All documents uploaded. You have been successfully onboarded',
-                ];
-            }
-            else
-            {
+        //     $currentEmployeeDetails->save();
 
-                return $rowdata_response = [
-                    'status' => 'success',
-                    'message' => 'Documents uploaded. Please upload the remaining documents to successfully onboard',
-                ];
-            }
-            */
+        //     if( $this->isAllDocumentsUploaded(auth()->user()->id) == 1)
+        //     {
+
+        //         // //set the onboard status to 1
+        //         $currentUser = User::where('id', auth()->user()->id)->first();
+        //         $currentUser->is_onboarded = '1';
+        //         $currentUser->save();
+
+        //         return $rowdata_response = [
+        //             'status' => 'success',
+        //             'message' => 'All documents uploaded. You have been successfully onboarded',
+        //         ];
+        //     }
+        //     else
+        //     {
+
+        //         return $rowdata_response = [
+        //             'status' => 'success',
+        //             'message' => 'Documents uploaded. Please upload the remaining documents to successfully onboard',
+        //         ];
+        //     }
+
         }
         catch (\Throwable $e) {
             //dd("error! ".$e);

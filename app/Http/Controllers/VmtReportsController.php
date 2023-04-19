@@ -428,6 +428,8 @@ class VmtReportsController extends Controller
         $user_id = auth()->user()->id;
         $year = 2023;
         $month = 03;
+        $overall_distance=0;
+        $overall_expense=0;
         $reimbursement_data=array();
 
         $employee_details=User::join('vmt_employee_details AS details','details.userid','=','users.id')
@@ -435,27 +437,25 @@ class VmtReportsController extends Controller
                                 'users.id')
                                 ->join('vmt_department AS dep','dep.id','=','office.department_id')
                                 ->where('users.id',auth()->user()->id)
-                                ->select('users.user_code','users.name AS name','dep.name AS department','details.location')->get();
+                                ->select('users.user_code','users.name AS name','dep.name AS department','details.location')->first();
         foreach($reimbursementService->fetchEmployeeReimbursement($user_id,$year,$month) as $single_data){
+
+            $overall_distance = $overall_distance+$single_data->distance_travelled;
+            $overall_expense = $overall_expense+ $single_data->total_expenses;
+
+
             $single_reimbursement_data=array(Carbon::parse($single_data->date)->format('d-M-y'),
                                              $single_data->reimbursement_type, $single_data->from,
                                              $single_data->to,$single_data->vehicle_type,
-                                             $single_data->distance_travelled);
-         if($single_data->vehicle_type=='2-Wheeler'){
-              array_push( $single_reimbursement_data,3.50);
-         }else if($single_data->vehicle_type='4-Wheeler'){
-              array_push($single_reimbursement_data,6);
-         }else{
-             array_push($single_reimbursement_data,' ');
-         }
-
+                                             $single_data->distance_travelled,$single_data->amt_per_km,
+                                             $single_data->total_expenses,$single_data->user_comments);
          //dd($single_data->user_comments);
-         array_push($single_reimbursement_data,$single_data->total_expenses,$single_data->user_comments);
          array_push($reimbursement_data,$single_reimbursement_data);
+         $totals = array("Total"=>"Total","overall_distance"=>$overall_distance,"overall_Expense"=> $overall_expense);
          unset($single_reimbursement_data);
         }
 
-        // dd($reimbursement_data);
+        //dd($reimbursement_data);
 
 
         $client_name=sessionGetSelectedClientName();
@@ -469,10 +469,10 @@ class VmtReportsController extends Controller
         $file_name=date("F", strtotime('00-'.$month.'-01'))."-".$year;
         $month_name=strtoupper(date("F", strtotime('00-'.$month.'-01')));
 
+        //dd($employee_details);
 
-
-        return  Excel::download(new EmployeeReimbursementsExport($reimbursement_data,$legal_entity,
-                                                                $month_name,$year,$client_name),
+        return  Excel::download(new EmployeeReimbursementsExport($employee_details,$reimbursement_data,$legal_entity,
+                                                                $month_name,$year,$client_name,$totals),
                                                                 $file_name.'Reimbursements Reports.xlsx');
     }
 }

@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD
     <div >
         <div class="row d-flex justify-content-start align-items-center px-5">
           <div class="flex">
@@ -139,23 +138,6 @@ const activetab1 = ref(1)
 const ingredient = ref('');
 
 
-// const styleObject = reactive({
-//     background: 'rgb(30, 216, 101)',
-//     border_color:'rgb(30, 216, 101) ',
-//     color: 'white',
-//     });
-
-// const Salary_Advance_Feature_enable = ()=>{
-
-//     const styleObject = {
-//     background: 'rgb(30, 216, 101)',
-//     color: 'white',
-//     };
-
-//     console.log("hello world",styleObject);
-
-// };
-
 </script>
 <style>
 :root{
@@ -176,57 +158,7 @@ const ingredient = ref('');
 }
 .cancel_btn{
     border: 1px solid var(--navy); padding: 7px 30px ; border-radius: 4px 0 0 4px;
-=======
-    <button class="w-1 p-2 font-bold text-white bg-orange-400 rounded-sm" style="border-radius: 4px 0 0 4px;" :class="[activetab === 2 ? 'text-red-600': '']" @click="activetab = 1">on</button>
-    <button class="w-1 p-2 font-bold rounded-sm " style="border-radius: 0 4px 4px 0;" :class="[activetab === 2 ? 'bg-green-700 text-white' : '']" @click="activetab = 2">off</button>
-</template>
-
-<script setup>
-import { ref } from "vue";
-
-
-const activetab = ref(1)
-</script>
-
-<style>
-
-.toggleButton{
->>>>>>> bd827c61bef6dee4187b43a3f3faa978c9ecccab
 
 }
-
-
-<<<<<<< HEAD
 </style>
 
-<!--
-{
-
-
-<template>
-    <div class="card flex flex-wrap justify-content-center gap-3">
-        <span class="p-input-icon-left">
-            <i class="pi pi-search" />
-            <InputText v-model="value1" placeholder="Search" />
-            </span>
-
-            <span class="p-input-icon-right">
-                <i class="pi pi-spin pi-spinner" />
-            <InputText v-model="value2" />
-        </span>
-    </div>
-</template>
-
-<script setup>
-import { ref } from 'vue';
-
-const value1 = ref(null);
-const value2 = ref(null);
-</script>
-
-
-
-} -->
-=======
-</style>
->>>>>>> bd827c61bef6dee4187b43a3f3faa978c9ecccab

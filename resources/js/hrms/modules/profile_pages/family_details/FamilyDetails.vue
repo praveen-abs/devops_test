@@ -72,32 +72,15 @@
                     responsiveLayout="scroll">
 
                     <Column header="Name" field="name" style="min-width: 8rem">
-                        <!-- <template #body="slotProps">
-                        {{  slotProps.data.claim_type }}
-                      </template> -->
-                      {{  _instance_profilePagesStore.employeeDetails.get_family_details.name  }}
                     </Column>
 
                     <Column field="relationship" header="Relationship" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                        {{ "&#x20B9;" + slotProps.data.claim_amount }}
-                      </template> -->
-                      {{  _instance_profilePagesStore.employeeDetails.get_family_details.relationship  }}
                     </Column>
 
                     <Column field="dob" header="Date of Birth " style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                          {{ "&#x20B9;" + slotProps.data.eligible_amount }}
-                        </template> -->
-                        {{_instance_profilePagesStore.employeeDetails.get_family_details.dob}}
                     </Column>
 
                     <Column field="phone_number" header="Phone" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                          {{  slotProps.data.reimbursment_remarks }}
-                        </template> -->
-                        {{    _instance_profilePagesStore.employeeDetails.get_emergency_contacts_details.phone_number  }}
-
                     </Column>
                     <Column :exportable="false" header="Action" style="min-width:8rem">
                         <template #body="slotProps">
@@ -338,10 +321,10 @@ const diolog_DeleteFamilyDetails = (family) => {
     }
 
 
-const data = ref()
+
 
 onMounted(() => {
-    data.value = _instance_profilePagesStore.employeeDetails
+
 })
 
 
