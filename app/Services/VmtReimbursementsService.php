@@ -69,43 +69,32 @@ class VmtReimbursementsService {
     }
 
 
-    public function createReimbursement_LocalConveyance($reimbursement_type_id, $date, $user_comments, $from, $to, $vehicle_type, $distance_travelled ){
+    public function createReimbursement_LocalConveyance($local_conveyance_data)
+    {
 
+       //dd($local_conveyance_data['date']);
 
         try{
-            //Get KMS cost based on vehicle type
-            $current_kmsCost_vehicle = $this->getLocalConveyanceCost($vehicle_type);
-
-
-            if($current_kmsCost_vehicle)
-            {
-              $total_amount= $current_kmsCost_vehicle *  $distance_travelled;
-            }
-            else
-            {
-
-                return [
-                    "status" => "failure",
-                    "message" => "Vehicle type is invalid"
-                ];
-
-            }
 
             //Save in DB
             $emp_reimbursements = new VmtEmployeeReimbursements;
-            $emp_reimbursements->reimbursement_type_id = $reimbursement_type_id ;
-            $emp_reimbursements->date = $date;
-            $emp_reimbursements->user_comments = $user_comments;
-            $emp_reimbursements->vehicle_type = $vehicle_type;
-            $emp_reimbursements->from = $from ;
-            $emp_reimbursements->to = $to;
-            $emp_reimbursements->distance_travelled = $distance_travelled;
-             $emp_reimbursements->save();
+            $emp_reimbursements->user_id = $local_conveyance_data['user_id'];
+            $emp_reimbursements->reimbursement_type_id = $local_conveyance_data['reimbursement_type_id'];
+            $emp_reimbursements->date = $local_conveyance_data['date'];
+            if($local_conveyance_data['user_comments']!=null){
+            $emp_reimbursements->user_comments = $local_conveyance_data['user_comments'];
+            }
+            $emp_reimbursements->status = $local_conveyance_data['status'];
+            $emp_reimbursements->vehicle_type = $local_conveyance_data['vehicle_type'];
+            $emp_reimbursements->from =  $local_conveyance_data['from'];
+            $emp_reimbursements->to = $local_conveyance_data['to'];
+            $emp_reimbursements->distance_travelled = $local_conveyance_data['distance_travelled'];
+            $emp_reimbursements->total_expenses = $local_conveyance_data['total_expenses'];
+            $emp_reimbursements->save();
 
             return [
                 "status" => "success",
-                "message" => "Reimbursement data saved",
-                "total_amount" => $total_amount
+                "message" => "Reimbursement data saved"
             ];
 
 

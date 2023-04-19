@@ -51,9 +51,10 @@ class VmtMainDashboardController extends Controller
 
     public function index(Request $request)
     {
-
+       
         if(auth()->user()->active == 0)
         {
+
 
             if(auth()->user()->is_onboarded == 0)
             {

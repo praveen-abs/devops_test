@@ -197,7 +197,7 @@
                 class="text-center btn btn-orange processOnboardForm"
                 value="Submit"
                 :disabled="fileUploadValidation"
-                @click="SubmitEmployeeOnboardingData"
+                @click="SubmitEmployeeDocsUpload()"
                 >
                 Submit
                 </button>
@@ -208,6 +208,299 @@
 </template>
 
 <script setup>
+import { ref ,reactive } from 'vue';
+import axios from "axios";
+
+
+
+// const fetch_data = Service();
+
+const EmployeeDocs_upload = ref({
+
+  AadharCardFront: "",
+  AadharCardBack: "",
+  PanCardDoc: "",
+  DrivingLicenseDoc: "",
+  EductionDoc: "",
+  VoterIdDoc: "",
+  ReleivingLetterDoc: "",
+  PassportDoc: "",
+  save_draft_messege: ""
+});
+
+const AadharDocFrontInvalid = ref(false);
+const AadharDocBackInvalid = ref(false);
+const PancardInvalid = ref(false);
+const EducationCertificateInvalid = ref(false);
+
+
+
+
+  const SubmitEmployeeDocsUpload=()=>{
+
+    let formData = new FormData();
+
+  formData.append("Aadharfront", EmployeeDocs_upload.AadharCardFront);
+  formData.append("AadharBack", EmployeeDocs_upload.AadharCardBack);
+  formData.append("panDoc", EmployeeDocs_upload.PanCardDoc);
+  formData.append("eductionDoc", EmployeeDocs_upload.EductionDoc);
+  formData.append("releivingDoc", EmployeeDocs_upload.ReleivingLetterDoc);
+  formData.append("voterId", EmployeeDocs_upload.VoterIdDoc);
+  formData.append("passport", EmployeeDocs_upload.PassportDoc);
+  formData.append("dlDoc", EmployeeDocs_upload.DrivingLicenseDoc);
+
+
+  console.log(formData);
+
+        // const id = fetch_data;
+        // let url = `/vmt-documents-route/${id}`;
+
+        axios.post("/vmt-documents-route/", formData)
+    .then((response) => {
+      // currentObj.success = response.data.success;
+      console.log("response" + response.data);
+      console.log(Object(response.data));
+      loading.value = false
+      if (response.data.status == "success") {
+        Swal.fire(response.data.status, response.data.message, "success");
+      }
+      EmployeeDocs_upload.save_draft_messege = response.data;
+
+    })
+    .catch(function (error) {
+      // currentObj.output = error;
+      console.log(error);
+    });
+
+};
+
+const checkInputFiles = () => {
+  if (
+    EmployeeDocs_upload.AadharCardFront.fileName == undefined ||
+    EmployeeDocs_upload.AadharCardBack.fileName == undefined ||
+    EmployeeDocs_upload.PanCardDoc.fileName == undefined ||
+    EmployeeDocs_upload.EductionDoc.fileName == undefined
+  ) {
+    fileUploadValidation.value = true;
+  } else {
+    fileUploadValidation.value = false;
+  }
+};
+
+const AadharFront = (e) => {
+  // Check if file is selected
+  if (e.target.files && e.target.files[0]) {
+    // Get uploaded file
+    (EmployeeDocs_upload.AadharCardFront = e.target.files[0]),
+      // Get file size
+      (EmployeeDocs_upload.AadharCardFront.fileSize =
+        Math.round(
+          (EmployeeDocs_upload.AadharCardFront.size / 1024 / 1024) * 100
+        ) / 100),
+      // Get file extension
+      (EmployeeDocs_upload.AadharCardFront.fileExtention =
+        EmployeeDocs_upload.AadharCardFront.name.split(".").pop()),
+      // Get file name
+      (EmployeeDocs_upload.AadharCardFront.fileName =
+        EmployeeDocs_upload.AadharCardFront.name.split(".").shift()),
+      // Check if file is an image
+      (EmployeeDocs_upload.AadharCardFront.isImage = [
+        "jpg",
+        "jpeg",
+        "png",
+        "gif",
+      ].includes(EmployeeDocs_upload.AadharCardFront.fileExtention));
+    // Print to console
+    console.log(EmployeeDocs_upload.AadharCardFront);
+  }
+};
+const AadharBack = (e) => {
+  // Check if file is selected
+  if (e.target.files && e.target.files[0]) {
+    // Get uploaded file
+    (EmployeeDocs_upload.AadharCardBack = e.target.files[0]),
+      // Get file size
+      (EmployeeDocs_upload.AadharCardBack.fileSize =
+        Math.round(
+          (EmployeeDocs_upload.AadharCardBack.size / 1024 / 1024) * 100
+        ) / 100),
+      // Get file extension
+      (EmployeeDocs_upload.AadharCardBack.fileExtention =
+        EmployeeDocs_upload.AadharCardBack.name.split(".").pop()),
+      // Get file name
+      (EmployeeDocs_upload.AadharCardBack.fileName =
+        EmployeeDocs_upload.AadharCardBack.name.split(".").shift()),
+      // Check if file is an image
+      (EmployeeDocs_upload.AadharCardBack.isImage = [
+        "jpg",
+        "jpeg",
+        "png",
+        "gif",
+      ].includes(EmployeeDocs_upload.AadharCardBack.fileExtention));
+    // Print to console
+    console.log(EmployeeDocs_upload.AadharCardBack);
+  }
+};
+const PanCard = (e) => {
+  // Check if file is selected
+  if (e.target.files && e.target.files[0]) {
+    // Get uploaded file
+    (EmployeeDocs_upload.PanCardDoc = e.target.files[0]),
+      // Get file size
+      (EmployeeDocs_upload.PanCardDoc.fileSize =
+        Math.round((EmployeeDocs_upload.PanCardDoc.size / 1024 / 1024) * 100) /
+        100),
+      // Get file extension
+      (EmployeeDocs_upload.PanCardDoc.fileExtention =
+        EmployeeDocs_upload.PanCardDoc.name.split(".").pop()),
+      // Get file name
+      (EmployeeDocs_upload.PanCardDoc.fileName =
+        EmployeeDocs_upload.PanCardDoc.name.split(".").shift()),
+      // Check if file is an image
+      (EmployeeDocs_upload.PanCardDoc.isImage = [
+        "jpg",
+        "jpeg",
+        "png",
+        "gif",
+      ].includes(EmployeeDocs_upload.PanCardDoc.fileExtention));
+    // Print to console
+    console.log(EmployeeDocs_upload.PanCardDoc);
+  }
+};
+const Passport = (e) => {
+  // Check if file is selected
+  if (e.target.files && e.target.files[0]) {
+    // Get uploaded file
+    (EmployeeDocs_upload.PassportDoc = e.target.files[0]),
+      // Get file size
+      (EmployeeDocs_upload.PassportDoc.fileSize =
+        Math.round((EmployeeDocs_upload.PassportDoc.size / 1024 / 1024) * 100) /
+        100),
+      // Get file extension
+      (EmployeeDocs_upload.PassportDoc.fileExtention =
+        EmployeeDocs_upload.PassportDoc.name.split(".").pop()),
+      // Get file name
+      (EmployeeDocs_upload.PassportDoc.fileName =
+        EmployeeDocs_upload.PassportDoc.name.split(".").shift()),
+      // Check if file is an image
+      (EmployeeDocs_upload.PassportDoc.isImage = [
+        "jpg",
+        "jpeg",
+        "png",
+        "gif",
+      ].includes(EmployeeDocs_upload.PassportDoc.fileExtention));
+    // Print to console
+    console.log(EmployeeDocs_upload.PassportDoc);
+  }
+};
+const DrivingLisence = (e) => {
+  // Check if file is selected
+  if (e.target.files && e.target.files[0]) {
+    // Get uploaded file
+    (EmployeeDocs_upload.DrivingLicenseDoc = e.target.files[0]),
+      // Get file size
+      (EmployeeDocs_upload.DrivingLicenseDoc.fileSize =
+        Math.round(
+          (EmployeeDocs_upload.DrivingLicenseDoc.size / 1024 / 1024) * 100
+        ) / 100),
+      // Get file extension
+      (EmployeeDocs_upload.DrivingLicenseDoc.fileExtention =
+        EmployeeDocs_upload.DrivingLicenseDoc.name.split(".").pop()),
+      // Get file name
+      (EmployeeDocs_upload.DrivingLicenseDoc.fileName =
+        EmployeeDocs_upload.DrivingLicenseDoc.name.split(".").shift()),
+      // Check if file is an image
+      (EmployeeDocs_upload.DrivingLicenseDoc.isImage = [
+        "jpg",
+        "jpeg",
+        "png",
+        "gif",
+      ].includes(EmployeeDocs_upload.DrivingLicenseDoc.fileExtention));
+    // Print to console
+    console.log(EmployeeDocs_upload.DrivingLicenseDoc);
+  }
+};
+const VoterId = (e) => {
+  // Check if file is selected
+  if (e.target.files && e.target.files[0]) {
+    // Get uploaded file
+    (EmployeeDocs_upload.VoterIdDoc = e.target.files[0]),
+      // Get file size
+      (EmployeeDocs_upload.VoterIdDoc.fileSize =
+        Math.round((EmployeeDocs_upload.VoterIdDoc.size / 1024 / 1024) * 100) /
+        100),
+      // Get file extension
+      (EmployeeDocs_upload.VoterIdDoc.fileExtention =
+        EmployeeDocs_upload.VoterIdDoc.name.split(".").pop()),
+      // Get file name
+      (EmployeeDocs_upload.VoterIdDoc.fileName =
+        EmployeeDocs_upload.VoterIdDoc.name.split(".").shift()),
+      // Check if file is an image
+      (EmployeeDocs_upload.VoterIdDoc.isImage = [
+        "jpg",
+        "jpeg",
+        "png",
+        "gif",
+      ].includes(EmployeeDocs_upload.VoterIdDoc.fileExtention));
+    // Print to console
+    console.log(EmployeeDocs_upload.VoterIdDoc);
+  }
+};
+const EductionCertifacte = (e) => {
+  // Check if file is selected
+  if (e.target.files && e.target.files[0]) {
+    // Get uploaded file
+    (EmployeeDocs_upload.EductionDoc = e.target.files[0]),
+      // Get file size
+      (EmployeeDocs_upload.EductionDoc.fileSize =
+        Math.round((EmployeeDocs_upload.EductionDoc.size / 1024 / 1024) * 100) /
+        100),
+      // Get file extension
+      (EmployeeDocs_upload.EductionDoc.fileExtention =
+        EmployeeDocs_upload.EductionDoc.name.split(".").pop()),
+      // Get file name
+      (EmployeeDocs_upload.EductionDoc.fileName =
+        EmployeeDocs_upload.EductionDoc.name.split(".").shift()),
+      // Check if file is an image
+      (EmployeeDocs_upload.EductionDoc.isImage = [
+        "jpg",
+        "jpeg",
+        "png",
+        "gif",
+      ].includes(EmployeeDocs_upload.EductionDoc.fileExtention));
+    // Print to console
+    console.log(EmployeeDocs_upload.EductionDoc);
+  }
+};
+const ReleivingLetter = (e) => {
+  // Check if file is selected
+  if (e.target.files && e.target.files[0]) {
+    // Get uploaded file
+    (EmployeeDocs_upload.ReleivingLetterDoc = e.target.files[0]),
+      // Get file size
+      (EmployeeDocs_upload.ReleivingLetterDoc.fileSize =
+        Math.round(
+          (EmployeeDocs_upload.ReleivingLetterDoc.size / 1024 / 1024) * 100
+        ) / 100),
+      // Get file extension
+      (EmployeeDocs_upload.ReleivingLetterDoc.fileExtention =
+        EmployeeDocs_upload.ReleivingLetterDoc.name.split(".").pop()),
+      // Get file name
+      (EmployeeDocs_upload.ReleivingLetterDoc.fileName =
+        EmployeeDocs_upload.ReleivingLetterDoc.name.split(".").shift()),
+      // Check if file is an image
+      (EmployeeDocs_upload.ReleivingLetterDoc.isImage = [
+        "jpg",
+        "jpeg",
+        "png",
+        "gif",
+      ].includes(EmployeeDocs_upload.ReleivingLetterDoc.fileExtention));
+    // Print to console
+    console.log(EmployeeDocs_upload.ReleivingLetterDoc);
+  }
+};
+
+
 
 
 
