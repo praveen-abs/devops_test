@@ -426,8 +426,9 @@ class VmtReportsController extends Controller
 
     public function generateEmployeeReimbursementsReports(Request $request,VmtReimbursementsService $reimbursementService){
         $user_id = auth()->user()->id;
-        $year = 2023;
-        $month = 03;
+        //dd($request->all());
+        $year = $request->selected_year;
+        $month = $request->selected_month;
         $overall_distance=0;
         $overall_expense=0;
         $reimbursement_data=array();
@@ -440,8 +441,8 @@ class VmtReportsController extends Controller
                                 ->select('users.user_code','users.name AS name','dep.name AS department','details.location')->first();
         foreach($reimbursementService->fetchEmployeeReimbursement($user_id,$year,$month) as $single_data){
 
-            $overall_distance = $overall_distance+$single_data->distance_travelled;
-            $overall_expense = $overall_expense+ $single_data->total_expenses;
+            $overall_distance = $overall_distance+(int)$single_data->distance_travelled;
+            $overall_expense = $overall_expense+(int) $single_data->total_expenses;
 
 
             $single_reimbursement_data=array(Carbon::parse($single_data->date)->format('d-M-y'),

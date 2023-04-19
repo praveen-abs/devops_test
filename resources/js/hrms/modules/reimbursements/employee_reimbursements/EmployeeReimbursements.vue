@@ -40,13 +40,14 @@
           <div
             class="col-sm-12 col-md-5 col-lg-5 col-xl-5 col-xxl-5 d-flex justify-content-end"
           >
-            <Calendar
-              v-model="date"
-              view="month"
-              dateFormat="mm/yy"
-              class="mr-4"
-              placeholder="Select Month"
-            />
+          <Calendar v-model="selected_date" view="month" dateFormat="mm/yy" class=""
+                style=" border: 1px solid orange; border-radius: 7px;" />
+
+            <button label="Submit" class="btn btn-primary" severity="danger"
+                :disabled="!selected_date == '' ? false : true" @click="generate_ajax"> <i class="fa fa-cog me-2"></i>
+                Generate</button>
+                <button class="btn btn-primary" :disabled="data_reimbursements == '' ? true : false" severity="success"
+            @click="download_ajax"><i class="fas fa-file-download me-2"></i>Download</button>
             <button
               v-if="employee_service.reimbursementsScreen"
               @click="employee_service.onclickOpenReimbursmentDailog"
@@ -511,6 +512,7 @@ import {ref, onMounted, reactive} from "vue";
 import {employee_reimbursment_service} from "./EmployeeReimbursementsService";
 import ABS_loading_spinner from "../../../components/ABS_loading_spinner.vue";
 import moment from 'moment'
+import axios from "axios";
 
 // const v$ = useVuelidate(validation, employee_onboarding);
 
@@ -523,9 +525,64 @@ import moment from 'moment'
 
 const employee_service = employee_reimbursment_service();
 
+const selected_date = ref()
+const generate_ajax = () => {
+
+    console.log(selected_date.value);
+
+let filter_date = new Date(selected_date.value);
+
+let year = filter_date.getFullYear();
+let month = filter_date.getMonth() + 1;
+
+console.log((selected_date.value).toString());
+
+
+//show_table.value=true
+
+//data_checking.value = true
+  console.log(month);
+
+
+  axios.get(window.location.origin + "/fetch_employee_reimbursement_data", {
+       params: {
+        selected_year: year,
+        selected_month: month
+       }
+     }).then(res => {
+             console.log("data sent");
+             console.log("data from " + res.employee_name);
+             data_reimbursements.value = res.data
+             get_data.value = res.data
+             //data_checking.value = false
+    }).catch(err => {
+              console.log(err);
+     })
+
+  }
+
+  const download_ajax = () => {
+    let filter_date = new Date(selected_date.value);
+
+
+    let year = filter_date.getFullYear();
+    let month = filter_date.getMonth() + 1;
+
+
+    let URL = '/reports/generate-employee-reimbursements-reports?selected_year=' + year + '&selected_month=' +
+    month + '&_token={{ csrf_token() }}';
+    window.location = URL;
+    setTimeout(greet, 1000);
+
+}
+
+
+
+
 onMounted(() => {
   //    employee_service.fetch_data_from_reimbursment()
   employee_service.fetch_data_for_local_convergance();
+  selected_date.value = new Date()
 });
 </script>
 

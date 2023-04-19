@@ -511,6 +511,7 @@ Route::middleware(['auth'])->group(function () {
 
      //Employee Wise Reimbursement Data
      Route::get('/fetch_employee_reimbursement_data',[App\Http\Controllers\VmtReimbursementController::class,'fetchEmployeeReimbursement'])->name('fetchReimbursementsData');
+     //Route::post('/fetch_employee_reimbursement_data',[App\Http\Controllers\VmtReimbursementController::class,'fetchEmployeeReimbursement'])->name('fetchReimbursementsData');
 
 
 
