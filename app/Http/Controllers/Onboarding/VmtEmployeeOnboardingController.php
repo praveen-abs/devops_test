@@ -1308,16 +1308,24 @@ class VmtEmployeeOnboardingController extends Controller
         //            $empNo = $maxId;
         //        }
         //    }
-
-           try {
-
-                $response = $employeeService->createOrUpdate_OnboardFormData(data: $row,
+            $message = $row['employee_code']  ." not imported ";
+            $status = 'failure';
+            try {
+               $response = $employeeService->createOrUpdate_OnboardFormData(data: $row,
                                                                 can_onboard_employee:"0",
                                                                 existing_user_id : null,
                                                                 onboard_type  : "quick",
                                                                 onboard_import_type : "excel_quick"
                                                                 );
-               $message = "Employee OnBoard was Created   ";
+
+                $status = $response;
+
+               if($response == "success")
+                    $message =  $row['employee_code']  . ' added successfully';
+                else
+                    $message =  $row['employee_code']  . ' has failed';
+
+               //Sending mail
                $VmtGeneralInfo = VmtGeneralInfo::first();
                $image_view = url('/') . $VmtGeneralInfo->logo_img;
 
@@ -1325,21 +1333,21 @@ class VmtEmployeeOnboardingController extends Controller
 
                return $rowdata_response = [
                    'row_number' => '',
-                   'status' => 'success',
-                   'message' => $row['employee_code']  . ' added successfully',
+                   'status' => $status,
+                   'message' => $message,
                    'error_fields' => [],
                ];
 
 
-           } catch (\Exception $e) {
+           }
+           catch (\Exception $e) {
 
               // $this->deleteUser($user->id);
 
-
                return $rowdata_response = [
                    'row_number' => '',
-                   'status' => 'failure',
-                   'message' => $row['employee_code'] . ' not added',
+                   'status' => $status,
+                   'message' => $message,
                    'error_fields' => json_encode(['error' => $e->getMessage()]),
                ];
 

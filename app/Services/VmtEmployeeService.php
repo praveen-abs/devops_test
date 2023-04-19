@@ -125,9 +125,9 @@ class VmtEmployeeService {
         else{
             var_dump("ERROR : createOrUpdate_User() response is ");
             //dd($response);
+            return "failure :: createOrUpdate_User() response obj is null ".__LINE__;
         }
 
-        dd("End of createOrUpdate_OnboardFormData()");
         return "Normal Onboarding : Failure in TRY or CATCH method";
     }
 
