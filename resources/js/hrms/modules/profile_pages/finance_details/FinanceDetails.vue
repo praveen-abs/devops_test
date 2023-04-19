@@ -297,7 +297,7 @@
                                 <div class="title">EPF Number</div>
                                 <div class="text">
                                     <!-- {{ statutory_info.epf_no }} -->
-                                {{ _instance_profilePagesStore.employeeDetails.get_statutory_details.epf_number }}
+                                {{ _instance_profilePagesStore.employeeDetails.get_statutory_details[0].epf_number }}
 
                                 </div>
                             </li>
@@ -307,7 +307,7 @@
                                 <div class="text">
                                     <!-- {{ statutory_info.uan_no }} -->
 
-                                    {{  _instance_profilePagesStore.employeeDetails.get_statutory_details.uan_number }}
+                                    {{  _instance_profilePagesStore.employeeDetails.get_statutory_details[0].uan_number }}
 
                                 </div>
                             </li>
@@ -327,7 +327,7 @@
                               <!-- {{ statutory_info.esic_no }} -->
 
                               <!-- {{  _instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_number }} -->
-                              {{_instance_profilePagesStore.employeeDetails.get_statutory_details.esic_number   }}
+                              {{_instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_number   }}
                               <!-- {{ esic_number }} -->
 
                                 </div>
@@ -427,14 +427,14 @@ const bank_information = reactive({
 
 
 const  esic_applicable =computed(()=>{
-   if(_instance_profilePagesStore.employeeDetails.get_statutory_details.esic_applicable  == "no") return "No";
-   if(_instance_profilePagesStore.employeeDetails.get_statutory_details.esic_applicable == "yes") return "Yes";
+   if(_instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_applicable  == "no") return "No";
+   if(_instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_applicable == "yes") return "Yes";
 })
 
 const pf_applicable =computed(()=>{
 
-   if( _instance_profilePagesStore.employeeDetails.get_statutory_details.pf_applicable == "no") return "No" ;
-   if( _instance_profilePagesStore.employeeDetails.get_statutory_details.pf_applicable == "yes") return "Yes" ;
+   if( _instance_profilePagesStore.employeeDetails.get_statutory_details[0].pf_applicable == "no") return "No" ;
+   if( _instance_profilePagesStore.employeeDetails.get_statutory_details[0].pf_applicable == "yes") return "Yes" ;
 
 
 })
@@ -500,11 +500,11 @@ function onClick_EditButton_Statutory_Info(){
 
     // Assign json values into dialog elements also
 
-     statutory_information.pf_applicable =_instance_profilePagesStore.employeeDetails.get_statutory_details.pf_applicable ;
-     statutory_information.epf_no   = _instance_profilePagesStore.employeeDetails.get_statutory_details.epf_number ;
-     statutory_information.uan_no   =   _instance_profilePagesStore.employeeDetails.get_statutory_details.uan_number ;
-     statutory_information.esic_applicable   =   _instance_profilePagesStore.employeeDetails.get_statutory_details.pf_applicable ;
-     statutory_information.esic_no    =   _instance_profilePagesStore.employeeDetails.get_statutory_details.esic_number ;
+     statutory_information.pf_applicable =_instance_profilePagesStore.employeeDetails.get_statutory_details[0].pf_applicable ;
+     statutory_information.epf_no   = _instance_profilePagesStore.employeeDetails.get_statutory_details[0].epf_number ;
+     statutory_information.uan_no   =   _instance_profilePagesStore.employeeDetails.get_statutory_details[0].uan_number ;
+     statutory_information.esic_applicable   =   _instance_profilePagesStore.employeeDetails.get_statutory_details[0].pf_applicable ;
+     statutory_information.esic_no    =   _instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_number ;
 
 
      dialog_statutory_visible.value = true;
@@ -545,7 +545,7 @@ axios.post(url, {
     .then((res) => {
 
         if (res.data.status == "success") {
-           s
+
             toast.add({ severity: 'success', summary: 'Updated', detail: 'General information updated', life: 3000 });
 
 
