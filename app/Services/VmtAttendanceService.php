@@ -21,6 +21,8 @@ use Carbon\CarbonPeriod;
 use DatePeriod;
 use DateInterval;
 use \Datetime;
+use Illuminate\Support\Facades\File;
+
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
@@ -1272,6 +1274,125 @@ class VmtAttendanceService{
         return $query_response;
     }
 
+    public function performAttendanceCheckIn($user_code, $date, $checkin_time, $selfie_checkin, $work_mode, $attendance_mode_checkin)
+    {
+
+            $user_id = User::where('user_code', $user_code)->first()->id;
+
+            //Check if user already checked-in
+            $attendanceCheckin  = VmtEmployeeAttendance::where('user_id', $user_id)->where("date", $date)->first();
+
+            if($attendanceCheckin)
+            {
+                return response()->json([
+                    'status' => 'failure',
+                    'message'=> 'Check-in already done',
+                    'data'   => ""
+                ]);
+            }
+
+
+            //If check-in not done already , then create new record
+
+            $attendanceCheckin           = new VmtEmployeeAttendance;
+            $attendanceCheckin->date          = $date;
+            $attendanceCheckin->checkin_time  = $checkin_time;
+            $attendanceCheckin->user_id       = $user_id;
+            //$attendanceCheckin->shift_type    = $shift_type; Todo : Need to remove in table
+            $attendanceCheckin->work_mode      = $work_mode;//office, home
+            $attendanceCheckin->checkin_comments = "";
+            $attendanceCheckin->attendance_mode_checkin = $attendance_mode_checkin;
+            $attendanceCheckin->vmt_employee_workshift_id = "1"; //TODO : Need to fetch from 'vmt_employee_workshifts'
+            $attendanceCheckin->save();
+
+            // processing and storing base64 files in public/selfies folder
+            if(!empty('selfie_checkin')){
+
+                $emp_selfiedir_path = public_path('employees/'.$user_code.'/selfies/');
+
+                // dd($emp_document_path);
+                if(!File::isDirectory($emp_selfiedir_path))
+                    File::makeDirectory($emp_selfiedir_path, 0777, true, true);
+
+
+                $selfieFileEncoded  =  $selfie_checkin;
+
+                $fileName = $attendanceCheckin->id.'_checkin.png';
+
+                \File::put($emp_selfiedir_path.$fileName, base64_decode($selfieFileEncoded));
+
+                $attendanceCheckin->selfie_checkin = $fileName;
+            }
+
+            $attendanceCheckin->save();
+
+
+            return response()->json([
+                'status' => 'success',
+                'message'=> 'Check-in success',
+                'data'   => ''
+            ]);
+
+
+    }
+
+    public function performAttendanceCheckOut($user_code, $date, $checkout_time, $selfie_checkout, $work_mode, $attendance_mode_checkout)
+    {
+
+            $user_id = User::where('user_code', $user_code)->first()->id;
+
+            //Check if user already checked-in
+            $attendanceCheckout  = VmtEmployeeAttendance::where('user_id', $user_id)->where("date", $date)->first();
+
+            if($attendanceCheckout)
+            {
+
+                //Update existing record
+                $attendanceCheckout->checkout_time = $checkout_time;
+                $attendanceCheckout->checkout_comments = "";
+                $attendanceCheckout->attendance_mode_checkout = $attendance_mode_checkout;
+
+                $attendanceCheckout->save();
+
+
+                // processing and storing base64 files in public/selfies folder
+                if(!empty('selfie_checkout')){
+
+                    $emp_selfiedir_path = public_path('employees/'.$user_code.'/selfies/');
+
+                    // dd($emp_document_path);
+                    if(!File::isDirectory($emp_selfiedir_path))
+                        File::makeDirectory($emp_selfiedir_path, 0777, true, true);
+
+
+                    $selfieFileEncoded  =  $selfie_checkout;
+
+                    $fileName = $attendanceCheckout->id.'_checkout.png';
+
+                    \File::put($emp_selfiedir_path.$fileName, base64_decode($selfieFileEncoded));
+
+                    $attendanceCheckout->selfie_checkout = $fileName;
+                }
+
+                $attendanceCheckout->save();
+
+
+                return response()->json([
+                    'status' => 'success',
+                    'message'=> 'Check-out success',
+                    'data'   => ''
+                ]);
+            }
+            else
+            {
+                return response()->json([
+                    'status' => 'failure',
+                    'message'=> 'Unable to check-out since Check-in is not done for the given date',
+                    'data'   => ""
+                ]);
+            }
+
+    }
 }
 
 
