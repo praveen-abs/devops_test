@@ -12,15 +12,6 @@
                 <label for="" class="float-label"
                     >Aadhar Card Front<span class="text-danger">*</span></label
                 >
-
-                <input
-                    v-if="AadharDocFrontInvalid"
-                    type="file"
-                    accept="image/png, image/gif, image/jpeg"
-                    ref="AadharCardFront"
-                    class="onboard-form form-control file is-invalid"
-                    @change="AadharFront($event)"
-                />
                 <input
                     v-if="!AadharDocFrontInvalid"
                     type="file"
@@ -40,15 +31,6 @@
                 <label for="" class="float-label">
                     Aadhar Card Back<span class="text-danger">*</span></label
                 >
-
-                <input
-                    v-if="AadharDocBackInvalid"
-                    type="file"
-                    accept="image/png, image/gif, image/jpeg"
-                    ref="AadharCardBack"
-                    @change="AadharBack($event)"
-                    class="onboard-form form-control file is-invalid"
-                />
                 <input
                     v-if="!AadharDocBackInvalid"
                     type="file"
@@ -66,18 +48,6 @@
                 <label for="" class="float-label">
                     Pan Card<span class="text-danger">*</span></label
                 >
-
-                <input
-                    v-if="PancardInvalid"
-                    type="file"
-                    accept="image/png, image/gif, image/jpeg"
-                    placeholder="Pan Card"
-                    name="pan_card_file"
-                    id="pan_card_file"
-                    ref="PanCardDoc"
-                    @change="PanCard($event)"
-                    class="onboard-form form-control file is-invalid"
-                />
 
                 <input
                     v-if="!PancardInvalid"
@@ -178,7 +148,7 @@
                     name="reliving_letter_file"
                     id="reliving_letter_file"
                     @change="ReleivingLetter($event)"
-                    ref="ReleivingLetterDoc"
+                    ref="RelievingLetterDoc"
                     class="onboard-form form-control file"
                 />
                 </div>
@@ -197,7 +167,7 @@
                 class="text-center btn btn-orange processOnboardForm"
                 value="Submit"
                 :disabled="fileUploadValidation"
-                @click="SubmitEmployeeDocsUpload()"
+                @click="SubmitEmployeeDocsUpload"
                 >
                 Submit
                 </button>
@@ -217,15 +187,15 @@ import axios from "axios";
 
 const EmployeeDocs_upload = ref({
 
-  AadharCardFront: "",
-  AadharCardBack: "",
-  PanCardDoc: "",
-  DrivingLicenseDoc: "",
-  EductionDoc: "",
-  VoterIdDoc: "",
-  ReleivingLetterDoc: "",
-  PassportDoc: "",
-  save_draft_messege: ""
+  AadharCardFront: null,
+  AadharCardBack: null,
+  PanCardDoc: null,
+  DrivingLicenseDoc: null,
+  EductionDoc: null,
+  VoterIdDoc: null,
+  RelievingLetterDoc: null,
+  PassportDoc: null,
+  save_draft_messege: null
 });
 
 const AadharDocFrontInvalid = ref(false);
@@ -240,14 +210,31 @@ const EducationCertificateInvalid = ref(false);
 
     let formData = new FormData();
 
-  formData.append("Aadharfront", EmployeeDocs_upload.AadharCardFront);
-  formData.append("AadharBack", EmployeeDocs_upload.AadharCardBack);
-  formData.append("panDoc", EmployeeDocs_upload.PanCardDoc);
-  formData.append("eductionDoc", EmployeeDocs_upload.EductionDoc);
-  formData.append("releivingDoc", EmployeeDocs_upload.ReleivingLetterDoc);
-  formData.append("voterId", EmployeeDocs_upload.VoterIdDoc);
-  formData.append("passport", EmployeeDocs_upload.PassportDoc);
-  formData.append("dlDoc", EmployeeDocs_upload.DrivingLicenseDoc);
+    if(EmployeeDocs_upload.AadharCardFront != undefined)
+        formData.append("Aadhar_Card_Front", EmployeeDocs_upload.AadharCardFront);
+
+    if(EmployeeDocs_upload.AadharCardBack != undefined)
+        formData.append("Aadhar_Card_Back", EmployeeDocs_upload.AadharCardBack);
+
+    if(EmployeeDocs_upload.PanCardDoc != undefined)
+        formData.append("Pan_Card", EmployeeDocs_upload.PanCardDoc);
+
+    if(EmployeeDocs_upload.PassportDoc != undefined)
+        formData.append("Passport", EmployeeDocs_upload.PassportDoc);
+
+    if(EmployeeDocs_upload.VoterIdDoc != undefined)
+        formData.append("Voter_ID", EmployeeDocs_upload.VoterIdDoc);
+
+    if(EmployeeDocs_upload.DrivingLicenseDoc != undefined)
+        formData.append("Driving_License", EmployeeDocs_upload.DrivingLicenseDoc);
+
+    if(EmployeeDocs_upload.EductionDoc != undefined)
+        formData.append("Education_Certificate", EmployeeDocs_upload.EductionDoc);
+
+    if(EmployeeDocs_upload.RelievingLetterDoc != undefined)
+        formData.append("Relieving_Letter", EmployeeDocs_upload.RelievingLetterDoc);
+
+
 
 
   console.log(formData);
@@ -476,27 +463,27 @@ const ReleivingLetter = (e) => {
   // Check if file is selected
   if (e.target.files && e.target.files[0]) {
     // Get uploaded file
-    (EmployeeDocs_upload.ReleivingLetterDoc = e.target.files[0]),
+    (EmployeeDocs_upload.RelievingLetterDoc = e.target.files[0]),
       // Get file size
-      (EmployeeDocs_upload.ReleivingLetterDoc.fileSize =
+      (EmployeeDocs_upload.RelievingLetterDoc.fileSize =
         Math.round(
-          (EmployeeDocs_upload.ReleivingLetterDoc.size / 1024 / 1024) * 100
+          (EmployeeDocs_upload.RelievingLetterDoc.size / 1024 / 1024) * 100
         ) / 100),
       // Get file extension
-      (EmployeeDocs_upload.ReleivingLetterDoc.fileExtention =
-        EmployeeDocs_upload.ReleivingLetterDoc.name.split(".").pop()),
+      (EmployeeDocs_upload.RelievingLetterDoc.fileExtention =
+        EmployeeDocs_upload.RelievingLetterDoc.name.split(".").pop()),
       // Get file name
-      (EmployeeDocs_upload.ReleivingLetterDoc.fileName =
-        EmployeeDocs_upload.ReleivingLetterDoc.name.split(".").shift()),
+      (EmployeeDocs_upload.RelievingLetterDoc.fileName =
+        EmployeeDocs_upload.RelievingLetterDoc.name.split(".").shift()),
       // Check if file is an image
-      (EmployeeDocs_upload.ReleivingLetterDoc.isImage = [
+      (EmployeeDocs_upload.RelievingLetterDoc.isImage = [
         "jpg",
         "jpeg",
         "png",
         "gif",
-      ].includes(EmployeeDocs_upload.ReleivingLetterDoc.fileExtention));
+      ].includes(EmployeeDocs_upload.RelievingLetterDoc.fileExtention));
     // Print to console
-    console.log(EmployeeDocs_upload.ReleivingLetterDoc);
+    //console.log(EmployeeDocs_upload.ReleivingLetterDoc);
   }
 };
 

@@ -18,6 +18,8 @@ use App\Notifications\ViewNotification;
 use Illuminate\Support\Facades\Notification;
 use App\Imports\VmtEmployeeImport;
 use App\Models\VmtEmployeeStatutoryDetails;
+use App\Models\VmtOnboardingDocuments;
+use App\Models\VmtEmployeeDocuments;
 use App\Models\VmtClientMaster;
 use App\Models\VmtMasterConfig;
 use App\Models\VmtGeneralInfo;
@@ -1368,7 +1370,9 @@ class VmtEmployeeOnboardingController extends Controller
     */
     public function storeEmployeeDocuments(Request $request, VmtEmployeeService $employeeService)
     {
-        dd($request->all());
+       //dd($request->all());
+
+        $bulkonboard_docs = $request->all();
         $rowdata_response = [
             'status' => 'empty',
             'message' => 'empty',
@@ -1385,40 +1389,13 @@ class VmtEmployeeOnboardingController extends Controller
             // $this->uploadDocument($user->id, $row['dlDoc'], 'Driving License');
             // $this->uploadDocument($user->id, $row['eductionDoc'], 'Education Certificate');
             // $this->uploadDocument($user->id, $row['releivingDoc'],'Relieving Letter');
+            $doc_upload_status = array();
 
+            foreach( $bulkonboard_docs as $doc_name => $doc_obj){
 
-            if(isset($request->Adharfront))
-            {
-                $result =   $employeeService->uploadDocument(auth()->user()->id, $request->Adharfront, 'Aadhar Card Front');
-            }
+               $processed_doc_name = str_replace('_',' ',$doc_name);
 
-            if(isset($request->aadhar_card_file))
-            {
-                $result =   $employeeService->uploadDocument(auth()->user()->id, $request->aadhar_card_file, 'Aadhar Card Back');
-            }
-            if(isset($request->aadhar_card_file))
-            {
-                $result =   $employeeService->uploadDocument(auth()->user()->id, $request->aadhar_card_file, 'Pan Card');
-            }
-            if(isset($request->aadhar_card_file))
-            {
-                $result =   $employeeService->uploadDocument(auth()->user()->id, $request->aadhar_card_file, 'Passport');
-            }
-            if(isset($request->aadhar_card_file))
-            {
-                $result =   $employeeService->uploadDocument(auth()->user()->id, $request->aadhar_card_file, 'Voter ID');
-            }
-            if(isset($request->aadhar_card_file))
-            {
-                $result =   $employeeService->uploadDocument(auth()->user()->id, $request->aadhar_card_file, 'Driving License');
-            }
-            if(isset($request->aadhar_card_file))
-            {
-                $result =   $employeeService->uploadDocument(auth()->user()->id, $request->aadhar_card_file, 'Education Certificate');
-            }
-            if(isset($request->aadhar_card_file))
-            {
-                $result =   $employeeService->uploadDocument(auth()->user()->id, $request->aadhar_card_file, 'Relieving Letter');
+               $doc_upload_status[$doc_name] = $employeeService->uploadDocument(auth()->user()->id, $doc_obj, $processed_doc_name);
             }
 
             // //set the onboard status to 1.
@@ -1426,37 +1403,43 @@ class VmtEmployeeOnboardingController extends Controller
             $currentUser->is_onboarded = '1';
             $currentUser->save();
 
-            return $rowdata_response = [
-                'status' => 'success',
-                'message' => 'All documents uploaded. You have been successfully onboarded',
-            ];
+            //Check if all mandatory docs are uploaded by user
+            $mandatory_doc_ids = VmtOnboardingDocuments::where('is_mandatory','1')->pluck('id');
+            $user_uploaded_docs_ids = VmtEmployeeDocuments::whereIn('doc_id',$mandatory_doc_ids)
+                                                           ->where('vmt_employee_documents.user_id',auth()->user()->id)
+                                                           ->pluck('doc_id');
+
+            $missing_mandatory_doc_ids = array_diff($mandatory_doc_ids->toArray(), $user_uploaded_docs_ids->toArray());
 
 
+            // foreach($missing_mandatory_doc_ids as $single_mandatory_id){
+
+            //     $missing_mandatory_doc_name[] = VmtOnboardingDocuments::where('id',$single_mandatory_id)->first()->document_name;
+            // }
+            //dd("DOc upload status : ".$pending_docs);
 
 
-        //     $currentEmployeeDetails->save();
+            if(count($mandatory_doc_ids) == count($user_uploaded_docs_ids))
+            {
+                // //set the onboard status to 1
+                $currentUser = User::where('id', auth()->user()->id)->first();
+                $currentUser->is_onboarded = '1';
+                $currentUser->save();
 
-        //     if( $this->isAllDocumentsUploaded(auth()->user()->id) == 1)
-        //     {
+                return $rowdata_response = [
+                    'status' => 'success',
+                    'message' => 'All documents uploaded. You have been successfully onboarded',
+                    'data' => $doc_upload_status
+                ];
+            }
+            else
+            {
 
-        //         // //set the onboard status to 1
-        //         $currentUser = User::where('id', auth()->user()->id)->first();
-        //         $currentUser->is_onboarded = '1';
-        //         $currentUser->save();
-
-        //         return $rowdata_response = [
-        //             'status' => 'success',
-        //             'message' => 'All documents uploaded. You have been successfully onboarded',
-        //         ];
-        //     }
-        //     else
-        //     {
-
-        //         return $rowdata_response = [
-        //             'status' => 'success',
-        //             'message' => 'Documents uploaded. Please upload the remaining documents to successfully onboard',
-        //         ];
-        //     }
+                return $rowdata_response = [
+                    'status' => 'failure',
+                    'message' => 'Documents uploaded. Please upload the remaining documents to successfully onboard',
+                ];
+            }
 
         }
         catch (\Throwable $e) {
