@@ -61,9 +61,10 @@ export default defineConfig({
                 'resources/js/hrms/modules/configurations/holidays/Holidays_Lists.js',
 
 
-                // Paycheck
+                // Paycheck 
 
                 'resources/js/hrms/modules/paycheck/investments/investment.js',
+                'resources/js/hrms/modules/paycheck/salary_advance_loan/employee_salary_loan.js',
 
                 // Salary Advance and Loan Setting
 

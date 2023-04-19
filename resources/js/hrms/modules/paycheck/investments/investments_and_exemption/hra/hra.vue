@@ -60,8 +60,8 @@
 
                         <OverlayPanel ref="op" class="p-4">
                             <div class="p-3 mx-4">
-                                <button class="py-4 my-4" @click="investmentStore.editHraNewRental"><i
-                                        class="py-2 my-4 fa fa-pencil-square-o text-info me-2" aria-hidden="true"></i>
+                                <button class="py-4 my-4" @click="investmentStore.editHraNewRental">
+                                    <i class="py-2 my-4 fa fa-pencil-square-o text-info me-2" aria-hidden="true"></i>
                                     Edit</button>
                                 <button class=""><i class="my-4 fa fa-times-circle-o text-danger me-2"
                                         aria-hidden="true"></i> Clear</button>
