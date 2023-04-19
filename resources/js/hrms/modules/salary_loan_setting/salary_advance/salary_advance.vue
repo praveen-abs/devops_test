@@ -45,40 +45,47 @@
                 <div class="col-10 ">
                   <span class="p-input-icon-left">
                     <i class="pi pi-search" />
-                    <InputText placeholder="Search" class="h-15" />
+                    <InputText placeholder="Search" class="h-15 " />
                   </span>
                 </div>
                 <div class="col-12">
                   <div class="px-2 row">
                     <div class="col">
-                      <Dropdown v-model="opt" editable :options="op" optionLabel="dep" optionValue="dep"
-                        placeholder="Department" class="w-full text-red-500 md: border-color" />
-                      {{ opt }}
+
+                        <div style="padding: 10px ;" class="rounded d-flex border justify-content-start align-items-center border-color" >
+                            <input type="checkbox" class="mr-3" style="width:20px ; height: 20px;">
+                            <h1>Clear Filters</h1>
+                        </div>
+
+                      <!-- <Dropdown v-model="opt" editable :options="op" optionLabel="dep" optionValue="dep"
+                        placeholder="Department" class="w-full text-red-500 md: border-color" /> -->
+
+                      <!-- {{ opt }} -->
                     </div>
                     <div class="col">
                       <Dropdown v-model="selectedCity" editable :options="cities" optionLabel="name"
-                        placeholder="Department" class="w-full md:" />
+                        placeholder="Department" class="w-full md: border-color" />
                     </div>
                     <div class="col">
                       <Dropdown v-model="selectedCity" editable :options="cities" optionLabel="name"
-                        placeholder="Designation" class="w-full md:" />
+                        placeholder="Designation" class="w-full md: border-color" />
                     </div>
                     <div class="col">
                       <Dropdown v-model="selectedCity" editable :options="cities" optionLabel="name"
-                        placeholder="Location" class="w-full md:" />
+                        placeholder="Location" class="w-full md: border-color" />
                     </div>
                     <div class="col">
                       <Dropdown v-model="selectedCity" editable :options="cities" optionLabel="name" placeholder="State"
-                        class="w-full md:" />
+                        class="w-full md: border-color" />
                     </div>
                     <div class="col">
                       <Dropdown v-model="selectedCity" editable :options="cities" optionLabel="name" placeholder="Branch"
-                        class="w-full md:" />
+                        class="w-full md: border-color" />
 
                     </div>
                     <div class="col">
                       <Dropdown v-model="selectedCity" editable :options="cities" optionLabel="name"
-                        placeholder="Legal Entity" class="w-full md:" />
+                        placeholder="Legal Entity" class="w-full md: border-color" />
                     </div>
                   </div>
                 </div>
@@ -237,6 +244,7 @@ const activetab = ref(1)
 const activetab1 = ref(1)
 
 const ingredient = ref('');
+const checked = ref(false);
 
 const opt = ref()
 const op = ref([
@@ -284,7 +292,8 @@ onMounted(() => {
 
 .border-color {
   color: #003154;
-  border: 2px solid #003154;
+  /* border: 2px solid #3B82F6 !important; */
+   border: 2px solid #003487 !important;
 }
 
 .border-color::placeholder {
@@ -302,4 +311,11 @@ input[type=radio] {
 .p-dropdown-label.p-inputtext {
   color: var(--navy);
 }</style>
+
+{
+
+
+
+
+}
 
