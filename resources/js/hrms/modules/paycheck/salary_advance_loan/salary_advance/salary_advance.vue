@@ -9,7 +9,7 @@
 
         <div class="float-right ">
           <button class="btn btn-border-orange">View Report</button>
-          <button class="mx-4 btn btn-orange"><i class="mx-2 fa fa-plus" aria-hidden="true"></i>New Request</button>
+          <button @click="openPosition('top')" class="mx-4 btn btn-orange"><i class="mx-2 fa fa-plus" aria-hidden="true"></i>New Request</button>
         </div>
       </div>
 
@@ -86,13 +86,45 @@
 
 
 
-<!-- 
-  <Dialog visible="false" modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
 
+  <Dialog v-model:visible="visible" modal :position="position" :style="{ width: '70vw', borderTop: '5px solid #002f56',height:'100vh' }">
+    <template #header>
+      <h1 class="mx-3 font-semibold text-xxl">New Salary Advance Request</h1>
+    </template>
+
+    <div class="flex pb-2 bg-gray-100 rounded-lg gap-7">
+      <div class="w-5 p-4 ">
+        <span class="font-semibold">Your Monthly Income</span>
+        <input id="rentFrom_month"
+          class="my-2  border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+      </div>
+      <div class="w-5 p-4 mx-4">
+        <span class="font-semibold">Required Amount</span>
+        <input id="rentFrom_month"
+          class="my-2  border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+        <p class="text-sm font-semibold text-gray-500">Max Eligible Amount : 20,000</p>
+      </div>
+    </div>
+
+    <div class="p-4 my-6 bg-gray-100 rounded-lg gap-7">
+      <span class="font-semibold ">Repayment</span>
+      <p class="my-2 font-semibold text-gray-500 text-md ">The advance amount will be deducted from the next month's
+        salary <strong class="font-semibold text-black">(ie, March 31, 2023)</strong></p>
+    </div>
+
+    <div class="p-4 my-6 bg-gray-100 rounded-lg gap-7">
+      <span class="font-semibold ">Reason</span>
+      <Textarea  class="my-4 capitalize form-control textbox" autoResize type="text" rows="3" />
+    </div>
+
+    <div class="float-right ">
+          <button class="btn btn-border-orange">Cancel</button>
+          <button  class="mx-4 btn btn-orange">Submit</button>
+        </div>
 
   </Dialog>
 
-  <Dialog header="Header" visible="false" :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }"
+  <!-- <Dialog header="Header" visible="visible" :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }"
     :modal="true" :closable="false" :closeOnEscape="false">
     <template #header>
       <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
@@ -106,6 +138,7 @@
 <script setup>
 import { ref, reactive } from 'vue';
 
+const visible = ref(false)
 const value = ref();
 const options = ref(['Off', 'On']);
 
@@ -113,6 +146,14 @@ const activetab = ref(1)
 const activetab1 = ref(1)
 
 const ingredient = ref('');
+
+
+const position = ref('center');
+
+const openPosition = (pos) => {
+    position.value = pos;
+    visible.value = true;
+}
 
 
 </script>
