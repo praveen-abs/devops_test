@@ -33,8 +33,19 @@ Route::post('/auth/updatePassword', [AuthController::class, 'updatePassword']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
-    //Route::get('viewAssigneeReviewList', 'App\Http\Controllers\VmtAPIPMSModuleController@showEmployeeApraisalReviewList');
+    //CORE
     Route::get('/getAllUsers',[HRMSBaseAPIController::class, 'getAllUsers']);
+
+
+    //HOLIDAYS
+    Route::get('/holidays/getAllHolidays',[HRMSBaseAPIController::class, 'getAllHolidays']);
+
+
+
+
+
+
+
 
     //PMS Forms
     Route::post('getAssigneeKPIForms', [VmtAPIPMSModuleController::class,'getAssigneeKPIForms']);
@@ -78,7 +89,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     'employeeMonthlyLeaveDetails']);
 
     Route::post('/get-maindashboard-data', [VmtAPIDashboardController::class, 'getMainDashboardData']);
-    Route::get('/profile-pages-getEmpDetails', [VmtAPIProfilePagesController::class, 'fetchEmployeeProfileDetails']);
+    Route::post('/profile-pages-getEmpDetails', [VmtAPIProfilePagesController::class, 'fetchEmployeeProfileDetails']);
 
 });
 
