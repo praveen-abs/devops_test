@@ -444,6 +444,7 @@ public function addExperienceInfo(Request $request)
 
 
        if ($statutory->exists()) {
+        // dd($request->all());
             $statutory = $statutory->first();
             $statutory->user_id=  $user_id;
             $statutory->pf_applicable=$request->input('pf_applicable');
