@@ -1310,16 +1310,24 @@ class VmtEmployeeOnboardingController extends Controller
         //            $empNo = $maxId;
         //        }
         //    }
-
-           try {
-
-                $response = $employeeService->createOrUpdate_OnboardFormData(data: $row,
+            $message = $row['employee_code']  ." not imported ";
+            $status = 'failure';
+            try {
+               $response = $employeeService->createOrUpdate_OnboardFormData(data: $row,
                                                                 can_onboard_employee:"0",
                                                                 existing_user_id : null,
                                                                 onboard_type  : "quick",
                                                                 onboard_import_type : "excel_quick"
                                                                 );
-               $message = "Employee OnBoard was Created   ";
+
+                $status = $response;
+
+               if($response == "success")
+                    $message =  $row['employee_code']  . ' added successfully';
+                else
+                    $message =  $row['employee_code']  . ' has failed';
+
+               //Sending mail
                $VmtGeneralInfo = VmtGeneralInfo::first();
                $image_view = url('/') . $VmtGeneralInfo->logo_img;
 
@@ -1327,21 +1335,21 @@ class VmtEmployeeOnboardingController extends Controller
 
                return $rowdata_response = [
                    'row_number' => '',
-                   'status' => 'success',
-                   'message' => $row['employee_code']  . ' added successfully',
+                   'status' => $status,
+                   'message' => $message,
                    'error_fields' => [],
                ];
 
 
-           } catch (\Exception $e) {
+           }
+           catch (\Exception $e) {
 
               // $this->deleteUser($user->id);
 
-
                return $rowdata_response = [
                    'row_number' => '',
-                   'status' => 'failure',
-                   'message' => $row['employee_code'] . ' not added',
+                   'status' => $status,
+                   'message' => $message,
                    'error_fields' => json_encode(['error' => $e->getMessage()]),
                ];
 
@@ -1390,13 +1398,17 @@ class VmtEmployeeOnboardingController extends Controller
                $doc_upload_status[$doc_name] = $employeeService->uploadDocument(auth()->user()->id, $doc_obj, $processed_doc_name);
             }
 
+            // //set the onboard status to 1.
+            $currentUser = User::where('id', auth()->user()->id)->first();
+            $currentUser->is_onboarded = '1';
+            $currentUser->save();
 
             //Check if all mandatory docs are uploaded by user
             $mandatory_doc_ids = VmtOnboardingDocuments::where('is_mandatory','1')->pluck('id');
             $user_uploaded_docs_ids = VmtEmployeeDocuments::whereIn('doc_id',$mandatory_doc_ids)
                                                            ->where('vmt_employee_documents.user_id',auth()->user()->id)
                                                            ->pluck('doc_id');
-        
+
             $missing_mandatory_doc_ids = array_diff($mandatory_doc_ids->toArray(), $user_uploaded_docs_ids->toArray());
 
 
@@ -1446,5 +1458,5 @@ class VmtEmployeeOnboardingController extends Controller
         // dd(file(storage_path('employees'.$private_file)));
        return response()->file(storage_path($private_file));
 
-}
+    }
 }

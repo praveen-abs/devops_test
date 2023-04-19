@@ -8,9 +8,9 @@
     <div class="mb-2 card left-line">
       <div class="pt-1 pb-1 card-body">
         <div class="row">
-          <div class="col-sm-12 col-md-7 col-lg-7 col-xl-7 col-xxl-7">
+          <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
             <ul class="nav nav-pills nav-tabs-dashed" role="tablist">
-              <li class="nav-item text-muted" role="presentation">
+              <!-- <li class="nav-item text-muted" role="presentation">
                 <a
                   class="pb-2 nav-link active"
                   data-bs-toggle="tab"
@@ -21,11 +21,11 @@
                 >
                   Reimbursement
                 </a>
-              </li>
+              </li> -->
 
               <li class="nav-item text-muted ms-5" role="presentation">
                 <a
-                  class="pb-2 nav-link"
+                  class="pb-2 nav-link active"
                   data-bs-toggle="tab"
                   href="#localConveyance"
                   aria-selected="true"
@@ -38,27 +38,27 @@
             </ul>
           </div>
           <div
-            class="col-sm-12 col-md-5 col-lg-5 col-xl-5 col-xxl-5 d-flex justify-content-end"
+            class="col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8 d-flex justify-content-end"
           >
-            <Calendar
-              v-model="date"
-              view="month"
-              dateFormat="mm/yy"
-              class="mr-4"
-              placeholder="Select Month"
-            />
-            <button
+          <Calendar v-model="employee_service.selected_date" view="month" dateFormat="mm/yy" class="mx-4"
+                style=" border: 1px solid orange; border-radius: 7px;" />
+
+            <button label="Submit" class="btn btn-primary mx-4" severity="danger"
+                :disabled="!employee_service.selected_date == '' ? false : true" @click="employee_service.generate_ajax"> <i class="fa fa-cog me-2"></i>
+                Generate</button>
+                <button class="btn btn-primary" :disabled="employee_service.data_local_convergance == '' ? true : false" severity="success"
+            @click="employee_service.download_ajax"><i class="fas fa-file-download me-2"></i>Download</button>
+            <!-- <button
               v-if="employee_service.reimbursementsScreen"
               @click="employee_service.onclickOpenReimbursmentDailog"
-              class="btn btn-orange"
+              class="btn btn-orange mx-4"
             >
               <i class="fa fa-plus-circle me-1"></i>Add Claim
-            </button>
+            </button> -->
 
             <button
-              v-if="employee_service.localconverganceScreen"
               @click="employee_service.onclickOpenLocalConverganceDailog"
-              class="btn btn-orange"
+              class="btn btn-orange mx-4"
             >
               <i class="fa fa-plus-circle me-1"></i>Add Claim
             </button>
@@ -69,9 +69,9 @@
 
     <div class="card">
       <div class="card-body">
-        <div class="tab-content" id="pills-tabContent">
+        <!--<div class="tab-content" id="pills-tabContent">
           <div
-            class="tab-pane show fade active"
+            class="tab-pane  fade active"
             id="reimbursement"
             role="tabpanel"
             aria-labelledby="pills-profile-tab"
@@ -238,13 +238,13 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <!-- ----------------------------------------------------------------------------------------------------------------------------------------- -->
 
         <!-- Local conveyance -->
         <div
-          class="tab-pane fade"
+          class="tab-pane fade show"
           id="localConveyance"
           role="tabpanel"
           aria-labelledby="pills-profile-tab"
@@ -302,6 +302,7 @@
                   header="Date"
                   style="min-width: 12rem"
                   dataType="date"
+                  sortable
                 >
                   <template #body="slotProps">
                     {{ moment(slotProps.data.date).format('DD-MMM-YYYY') }}
@@ -356,7 +357,7 @@
                     {{ slotProps.data.user_comments }}
                   </template>
                 </Column>
-                <template #footer>
+                <!-- <template #footer>
                   <div
                     class="text-center"
                     v-if="!employee_service.data_local_convergance.length == 0"
@@ -368,7 +369,7 @@
                       style="background: #003056"
                     />
                   </div>
-                </template>
+                </template> -->
               </DataTable>
             </div>
 
@@ -404,7 +405,7 @@
                 />
               </div>
 
-              <div class="grid formgrid">
+              <div class=" formgrid flex">
                 <div class="field col">
                   <label for="Eligible Amount">From <span class="text-danger">*</span> </label>
                   <InputText
@@ -418,7 +419,7 @@
                   />
                 </div>
               </div>
-              <div class="grid formgrid">
+              <div class="flex formgrid">
                 <div class="field col">
                   <label for="Eligible Amount">Total Distance <span class="text-danger">*</span> </label>
                   <InputText
@@ -435,7 +436,7 @@
                     ? false
                     : true"
                     v-model="
-                      employee_service.employee_local_conveyance.Amt_km
+                      employee_service.employee_local_conveyance.local_convenyance_total_amount
                     "
                   />
                 </div>
@@ -511,6 +512,7 @@ import {ref, onMounted, reactive} from "vue";
 import {employee_reimbursment_service} from "./EmployeeReimbursementsService";
 import ABS_loading_spinner from "../../../components/ABS_loading_spinner.vue";
 import moment from 'moment'
+import axios from "axios";
 
 // const v$ = useVuelidate(validation, employee_onboarding);
 
@@ -523,9 +525,65 @@ import moment from 'moment'
 
 const employee_service = employee_reimbursment_service();
 
+const selected_date = ref()
+const generate_ajax = () => {
+
+    employee_service.loading_spinner = true
+
+    console.log(selected_date.value);
+
+let filter_date = new Date(selected_date.value);
+
+let year = filter_date.getFullYear();
+let month = filter_date.getMonth() + 1;
+
+console.log((selected_date.value).toString());
+
+
+//show_table.value=true
+
+//data_checking.value = true
+  console.log(month);
+
+
+  axios.get(window.location.origin + "/fetch_employee_reimbursement_data", {
+       params: {
+        selected_year: year,
+        selected_month: month
+       }
+     }).then(res => {
+             console.log("data sent");
+             console.log("data from " + res.employee_name);
+             employee_service.data_local_convergance = res.data
+            employee_service.loading_spinner = false
+    }).catch(err => {
+              console.log(err);
+     })
+
+  }
+
+  const download_ajax = () => {
+    let filter_date = new Date(selected_date.value);
+
+
+    let year = filter_date.getFullYear();
+    let month = filter_date.getMonth() + 1;
+
+
+    let URL = '/reports/generate-employee-reimbursements-reports?selected_year=' + year + '&selected_month=' +
+    month + '&_token={{ csrf_token() }}';
+    window.location = URL;
+    setTimeout(greet, 1000);
+
+}
+
+
+
+
 onMounted(() => {
   //    employee_service.fetch_data_from_reimbursment()
-  employee_service.fetch_data_for_local_convergance();
+//   employee_service.fetch_data_for_local_convergance();
+employee_service.selected_date = new Date()
 });
 </script>
 
