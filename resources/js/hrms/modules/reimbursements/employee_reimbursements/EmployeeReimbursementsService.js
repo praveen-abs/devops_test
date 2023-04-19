@@ -16,14 +16,14 @@ export const employee_reimbursment_service = defineStore(
         const reimbursements_dailog = ref(false);
 
         const employee_reimbursement = reactive({
-            type_id:1,
+            type_id: 1,
             claim_type: "",
             claim_amount: Number,
             eligible_amount: Number,
             date_of_dispatch: "",
             proof_of_delivery: "",
             reimbursment_remarks: "",
-            employee_reimbursement_attachment:''
+            employee_reimbursement_attachment: ''
         });
 
 
@@ -42,7 +42,7 @@ export const employee_reimbursment_service = defineStore(
         const localconvergance_dailog = ref(false);
 
         const employee_local_conveyance = reactive({
-            type_id:1,
+            type_id: 1,
             travelled_date: "",
             mode_of_transport: "",
             travel_from: "",
@@ -100,18 +100,18 @@ export const employee_reimbursment_service = defineStore(
 
         const employee_reimbursement_attachment_upload = (e) => {
 
-                // Get uploaded file
-                employee_reimbursement.employee_reimbursement_attachment = e.target.files[0];
+            // Get uploaded file
+            employee_reimbursement.employee_reimbursement_attachment = e.target.files[0];
 
-                // Print to console
-                console.log(employee_reimbursement.employee_reimbursement_attachment.file);
-            }
+            // Print to console
+            console.log(employee_reimbursement.employee_reimbursement_attachment.file);
+        }
 
 
         // Fetching
 
         const data_reimbursements = ref();
-        const loading_spinner = ref(true);
+        const loading_spinner = ref(false);
 
         const fetch_data_from_reimbursment = () => {
             let url_all_reimbursements =
@@ -140,26 +140,26 @@ export const employee_reimbursment_service = defineStore(
             console.log(data);
 
             e.preventDefault();
-                let currentObj = this;
+            let currentObj = this;
 
-                const config = {
-                    headers: { 'content-type': 'multipart/form-data' }
-                }
+            const config = {
+                headers: { 'content-type': 'multipart/form-data' }
+            }
 
-                let formData = new FormData();
-                formData.append('reimbursement_type_id', employee_reimbursement.type_id)
-                formData.append('file', employee_reimbursement.employee_reimbursement_attachment);
-                formData.append('claim_type', employee_reimbursement.claim_type);
-                formData.append('claim_amount', employee_reimbursement.claim_amount);
-                formData.append('eligible_amount', employee_reimbursement.eligible_amount);
-                formData.append('remarks', employee_reimbursement.reimbursment_remarks);
-                formData.append('date_of_dispatch', employee_reimbursement.date_of_dispatch);
-                formData.append('proof_of_delivery', employee_reimbursement.proof_of_delivery);
+            let formData = new FormData();
+            formData.append('reimbursement_type_id', employee_reimbursement.type_id)
+            formData.append('file', employee_reimbursement.employee_reimbursement_attachment);
+            formData.append('claim_type', employee_reimbursement.claim_type);
+            formData.append('claim_amount', employee_reimbursement.claim_amount);
+            formData.append('eligible_amount', employee_reimbursement.eligible_amount);
+            formData.append('remarks', employee_reimbursement.reimbursment_remarks);
+            formData.append('date_of_dispatch', employee_reimbursement.date_of_dispatch);
+            formData.append('proof_of_delivery', employee_reimbursement.proof_of_delivery);
 
             let url_all_reimbursements =
                 window.location.origin + "/saveReimbursementsData";
             axios
-                .post(url_all_reimbursements,formData )
+                .post(url_all_reimbursements, formData)
                 .then((response) => {
                     currentObj.success = response.data.success;
                 })
@@ -188,7 +188,7 @@ export const employee_reimbursment_service = defineStore(
             axios.get(url_all_reimbursements).then((response) => {
                 data_local_convergance.value = response.data;
                 console.log(response.data);
-                loading_spinner.value = false;
+                // loading_spinner.value = false;
             });
         };
 
@@ -204,38 +204,40 @@ export const employee_reimbursment_service = defineStore(
             let formData = new FormData();
 
             formData.append('reimbursement_type_id', employee_local_conveyance.type_id)
-            formData.append('date',moment(employee_local_conveyance.travelled_date).format('YYYY-MM-DD'))
-            formData.append('user_comments',employee_local_conveyance.local_conveyance_remarks)
-            formData.append('from',employee_local_conveyance.travel_from)
-            formData.append('to',employee_local_conveyance.travel_to)
-            formData.append('total_expenses',employee_local_conveyance.local_convenyance_total_amount)
-            formData.append('vehicle_type',employee_local_conveyance.mode_of_transport)
-            formData.append('distance_travelled',employee_local_conveyance.total_distance_travelled)
+            formData.append('date', moment(employee_local_conveyance.travelled_date).format('YYYY-MM-DD'))
+            formData.append('user_comments', employee_local_conveyance.local_conveyance_remarks)
+            formData.append('from', employee_local_conveyance.travel_from)
+            formData.append('to', employee_local_conveyance.travel_to)
+            formData.append('total_expenses', employee_local_conveyance.local_convenyance_total_amount)
+            formData.append('vehicle_type', employee_local_conveyance.mode_of_transport)
+            formData.append('distance_travelled', employee_local_conveyance.total_distance_travelled)
 
 
             let url_all_local_convergance = window.location.origin + '/saveReimbursementsData';
 
             console.log("AJAX URL : " + url_all_local_convergance);
 
-            axios.post(url_all_local_convergance,formData)
+            axios.post(url_all_local_convergance, formData)
                 .then((response) => {
-                employee_local_conveyance.local_convenyance_total_amount = response.data.total_amount;
-                 console.log(response);
-                 currentObj.success = response.data.success;
-              }).catch(err=>{
-                currentObj.output = err;
-                console.log(err)})
-              .finally(res =>{
-                console.log(res);
-              });
+                    employee_local_conveyance.local_convenyance_total_amount = response.data.total_amount;
+                    console.log(response);
+
+                }).catch(err => {
+                    currentObj.output = err;
+                    console.log(err)
+                })
+                .finally(res => {
+                    console.log(res);
+                    generate_ajax();
+                });
             localconvergance_dailog.value = false;
 
             console.log(employee_local_conveyance.value);
             data_local_convergance.value.push(employee_local_conveyance);
             toast.add({
                 severity: "success",
-                summary: "Draft",
-                detail: "Draft Saved",
+                summary: "Saved",
+                detail: "Local Coveyance Added",
                 life: 3000,
             });
 
@@ -262,21 +264,73 @@ export const employee_reimbursment_service = defineStore(
         };
 
 
-        const amountperKm = (data) =>{
+        const amountperKm = (data) => {
 
-            if(data == '4-Wheeler'){
+            if (data == '4-Wheeler') {
                 employee_local_conveyance.Amt_km = 6
-                employee_local_conveyance.local_convenyance_total_amount =  6 * employee_local_conveyance.total_distance_travelled
+                employee_local_conveyance.local_convenyance_total_amount = 6 * employee_local_conveyance.total_distance_travelled
                 console.log("car");
-            }else
-            if(data == '2-Wheeler'){
-                employee_local_conveyance.Amt_km = 3.5
-                employee_local_conveyance.local_convenyance_total_amount =  3.5 * employee_local_conveyance.total_distance_travelled
-                console.log("Bike");
-            }else{
-                 console.log("public transport");
-                 employee_local_conveyance.Amt_km = ''
-            }
+            } else
+                if (data == '2-Wheeler') {
+                    employee_local_conveyance.Amt_km = 3.5
+                    employee_local_conveyance.local_convenyance_total_amount = 3.5 * employee_local_conveyance.total_distance_travelled
+                    console.log("Bike");
+                } else {
+                    console.log("public transport");
+                    employee_local_conveyance.Amt_km = ''
+                }
+
+        }
+
+        const selected_date = ref()
+        const generate_ajax = () => {
+
+            loading_spinner.value = true
+
+            console.log(selected_date.value);
+
+            let filter_date = new Date(selected_date.value);
+
+            let year = filter_date.getFullYear();
+            let month = filter_date.getMonth() + 1;
+
+            console.log((selected_date.value).toString());
+
+
+            //show_table.value=true
+
+            //data_checking.value = true
+            console.log(month);
+
+
+            axios.get(window.location.origin + "/fetch_employee_reimbursement_data", {
+                params: {
+                    selected_year: year,
+                    selected_month: month
+                }
+            }).then(res => {
+                console.log("data sent");
+                console.log("data from " + res.employee_name);
+                data_local_convergance.value = res.data
+                loading_spinner.value = false
+            }).catch(err => {
+                console.log(err);
+            })
+
+        }
+
+        const download_ajax = () => {
+            let filter_date = new Date(selected_date.value);
+
+
+            let year = filter_date.getFullYear();
+            let month = filter_date.getMonth() + 1;
+
+
+            let URL = '/reports/generate-employee-reimbursements-reports?selected_year=' + year + '&selected_month=' +
+                month + '&_token={{ csrf_token() }}';
+            window.location = URL;
+            setTimeout(greet, 1000);
 
         }
 
@@ -314,6 +368,10 @@ export const employee_reimbursment_service = defineStore(
             disableAmt,
             local_Conveyance_Mode_of_transport,
             amountperKm,
+
+            // PDF Download
+
+            generate_ajax,download_ajax,selected_date
 
         };
     }

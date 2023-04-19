@@ -83,8 +83,8 @@ class VmtReimbursementController extends Controller
        public function fetchEmployeeReimbursement(Request $request,VmtReimbursementsService $reimbursementService){
        // dd($request->all());
         $user_id = auth()->user()->id;
-        $year = 2023;
-        $month = 03;
+        $year = $request->selected_year;
+        $month = $request->selected_month;
         return  $reimbursementService->fetchEmployeeReimbursement($user_id,$year,$month);
        }
 }
