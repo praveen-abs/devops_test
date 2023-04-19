@@ -1523,10 +1523,9 @@ class VmtEmployeeController extends Controller
             $currentUser->save();
 
             return view('vmt_profile_under_review');
+
         }else
             return view('vmt_documents',compact('existing_doc_filenames'));
-
-
     }
 
     /*

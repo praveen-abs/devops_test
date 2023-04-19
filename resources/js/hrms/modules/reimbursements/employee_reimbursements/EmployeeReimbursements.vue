@@ -435,7 +435,7 @@
                     ? false
                     : true"
                     v-model="
-                      employee_service.employee_local_conveyance.Amt_km
+                      employee_service.employee_local_conveyance.local_convenyance_total_amount
                     "
                   />
                 </div>

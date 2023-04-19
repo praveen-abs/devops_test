@@ -508,14 +508,14 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
 
         if($onboard_import_type != "excel_quick" && $onboard_import_type != "excel_bulk")
         {
-            $this->uploadDocument($user->id, $row['Aadharfront'], $user->user_code, 'Aadhar Card Front');
-            $this->uploadDocument($user->id, $row['AadharBack'], $user->user_code,'Aadhar Card Back');
-            $this->uploadDocument($user->id, $row['panDoc'], $user->user_code,'Pan Card');
-            $this->uploadDocument($user->id, $row['passport'], $user->user_code,'Passport');
-            $this->uploadDocument($user->id, $row['voterId'], $user->user_code,'Voter ID');
-            $this->uploadDocument($user->id, $row['dlDoc'], $user->user_code,'Driving License');
-            $this->uploadDocument($user->id, $row['eductionDoc'], $user->user_code,'Education Certificate');
-            $this->uploadDocument($user->id, $row['releivingDoc'],$user->user_code,'Relieving Letter');
+            $this->uploadDocument($user->id, $row['Aadharfront'], 'Aadhar Card Front');
+            $this->uploadDocument($user->id, $row['AadharBack'],'Aadhar Card Back');
+            $this->uploadDocument($user->id, $row['panDoc'],'Pan Card');
+            $this->uploadDocument($user->id, $row['passport'],'Passport');
+            $this->uploadDocument($user->id, $row['voterId'],'Voter ID');
+            $this->uploadDocument($user->id, $row['dlDoc'],'Driving License');
+            $this->uploadDocument($user->id, $row['eductionDoc'],'Education Certificate');
+            $this->uploadDocument($user->id, $row['releivingDoc'],'Relieving Letter');
 
             // $docReviewArray = array(
             //     'aadhar_card_file' => -1,
@@ -757,13 +757,15 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
 
     }
 
-    public function uploadDocument($emp_id,$fileObject, $emp_code, $onboard_document_type){
+    public function uploadDocument($emp_id,$fileObject, $onboard_document_type){
+        //dd($fileObject);
         if(empty($fileObject))
             return null;
           //dd($onboard_document_type);
         //check if document already uploaded
-        $onboard_doc_id = VmtOnboardingDocuments::where('document_name',$onboard_document_type)->first();
 
+        $onboard_doc_id = VmtOnboardingDocuments::where('document_name',$onboard_document_type)->first();
+        $emp_code = User::find($emp_id)->user_code;
 
         if( !empty($onboard_doc_id))
         {
