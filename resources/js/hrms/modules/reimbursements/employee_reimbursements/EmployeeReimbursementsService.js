@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { ref, onMounted, reactive } from "vue";
 import { useToast } from "primevue/usetoast";
 import axios from "axios";
+import moment from "moment/moment";
 
 export const employee_reimbursment_service = defineStore(
     "employee_reimbursment_service",
@@ -70,13 +71,13 @@ export const employee_reimbursment_service = defineStore(
             localconverganceScreen.value = true;
         };
 
-        const formatDate = (value) => {
-            return value.toLocaleDateString("es-PE", {
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric",
-            });
-        };
+        // const formatDate = (value) => {
+        //     return value.toLocaleDateString("es-PE", {
+        //         day: "2-digit",
+        //         month: "2-digit",
+        //         year: "numeric",
+        //     });
+        // };
 
         const submitted = ref(false);
         const reimbursment_claim_types = ref([
@@ -90,8 +91,8 @@ export const employee_reimbursment_service = defineStore(
 
         const local_Conveyance_Mode_of_transport = ref([
             { label: "Public Transport", value: "Public Transport" },
-            { label: "Car", value: "Car" },
-            { label: "Bike", value: "Bike" },
+            { label: "Car", value: "4-Wheeler" },
+            { label: "Bike", value: "2-Wheeler" },
         ]);
 
 
@@ -175,15 +176,17 @@ export const employee_reimbursment_service = defineStore(
             });
         };
 
+
         const data_local_convergance = ref([]);
+        const disableAmt = ref(true)
 
         const fetch_data_for_local_convergance = () => {
-            let url_all_reimbursements = window.location.origin + "/fetch_all_reimbursements";
+            let url_all_reimbursements = window.location.origin + "/fetch_employee_reimbursement_data";
 
             console.log("AJAX URL : " + url_all_reimbursements);
 
             axios.get(url_all_reimbursements).then((response) => {
-                // data_local_convergance.value = response.data;
+                data_local_convergance.value = response.data;
                 console.log(response.data);
                 loading_spinner.value = false;
             });
@@ -201,10 +204,11 @@ export const employee_reimbursment_service = defineStore(
             let formData = new FormData();
 
             formData.append('reimbursement_type_id', employee_local_conveyance.type_id)
-            formData.append('date',employee_local_conveyance.travelled_date)
+            formData.append('date',moment(employee_local_conveyance.travelled_date).format('YYYY-MM-DD'))
             formData.append('user_comments',employee_local_conveyance.local_conveyance_remarks)
             formData.append('from',employee_local_conveyance.travel_from)
             formData.append('to',employee_local_conveyance.travel_to)
+            formData.append('total_expenses',employee_local_conveyance.local_convenyance_total_amount)
             formData.append('vehicle_type',employee_local_conveyance.mode_of_transport)
             formData.append('distance_travelled',employee_local_conveyance.total_distance_travelled)
 
@@ -240,7 +244,7 @@ export const employee_reimbursment_service = defineStore(
 
         const amount_calculation = () => {
             console.log(employee_local_conveyance.mode_of_transport);
-            if (employee_local_conveyance.mode_of_transport == "Car") {
+            if (employee_local_conveyance.mode_of_transport == "4-Wheeler") {
                 console.log("Car");
 
                 employee_local_conveyance.local_convenyance_total_amount =
@@ -248,7 +252,7 @@ export const employee_reimbursment_service = defineStore(
                 console.log(
                     employee_local_conveyance.local_convenyance_total_amount
                 );
-            } else if (employee_local_conveyance.mode_of_transport == "Bike") {
+            } else if (employee_local_conveyance.mode_of_transport == "2-Wheeler") {
                 employee_local_conveyance.local_convenyance_total_amount =
                     employee_local_conveyance.total_distance_travelled * 3.5;
                 console.log("Bike");
@@ -256,6 +260,25 @@ export const employee_reimbursment_service = defineStore(
                 employee_local_conveyance.local_convenyance_total_amount = null;
             }
         };
+
+
+        const amountperKm = (data) =>{
+
+            if(data == '4-Wheeler'){
+                employee_local_conveyance.Amt_km = 6
+                employee_local_conveyance.local_convenyance_total_amount =  6 * employee_local_conveyance.total_distance_travelled
+                console.log("car");
+            }else
+            if(data == '2-Wheeler'){
+                employee_local_conveyance.Amt_km = 3.5
+                employee_local_conveyance.local_convenyance_total_amount =  3.5 * employee_local_conveyance.total_distance_travelled
+                console.log("Bike");
+            }else{
+                 console.log("public transport");
+                 employee_local_conveyance.Amt_km = ''
+            }
+
+        }
 
         return {
             hideDialog,
@@ -269,7 +292,6 @@ export const employee_reimbursment_service = defineStore(
             fetch_data_from_reimbursment,
             data_reimbursements,
             loading_spinner,
-            formatDate,
             amount_calculation,
 
             // employee_reimbursement
@@ -289,7 +311,9 @@ export const employee_reimbursment_service = defineStore(
             fetch_data_for_local_convergance,
             onclickSwitchToLocalCoverganceTab,
             data_local_convergance,
+            disableAmt,
             local_Conveyance_Mode_of_transport,
+            amountperKm,
 
         };
     }

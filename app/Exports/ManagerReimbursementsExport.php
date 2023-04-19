@@ -154,43 +154,4 @@ class ManagerReimbursementsExport implements FromArray,ShouldAutoSize,WithHeadin
     }
 
 
-
-    // public function registerEvents(): array {
-    //     return [
-    //         AfterSheet::class => function(AfterSheet $event) {
-    //             /** @var Sheet $sheet */
-    //             $sheet = $event->sheet;
-
-    //             $sheet->mergeCells('A1:F1');
-    //          //  $sheet2->mergeCells('A2:F2');
-    //             $sheet->setCellValue('A1', "Legal Entity:");
-    //           //$sheet2->setCellValue('A2:F2',"Month");
-
-
-    //             $styleArray = [
-    //                 'alignment' => [
-    //                     'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-    //                 ],
-    //                 'borders' => [
-    //                     'outline' => [
-    //                         'borderStyle' => Border::BORDER_THICK,
-    //                         'color' => array('argb' => '00000000'),
-    //                     ],
-    //                 ],
-    //                 'fill' => [
-    //                     'fillType' => Fill::FILL_SOLID,
-    //                     'startColor' => array('argb' => 'ffff31')
-    //                     ]
-
-    //             ];
-    //             $cellRange = 'A1:F1'; // All headers
-    //             //$cellRange2='A2;F2';
-    //             $event->sheet->getDelegate()->getStyle($cellRange)->applyFromArray($styleArray);
-    //            // $event->sheet2->getDelegate()->getStyle($cellRange2)->applyFromArray($styleArray);
-
-
-    //         },
-    //     ];
-    // }
-
 }

@@ -24,21 +24,24 @@ class VmtReimbursementController extends Controller
 
     public function saveReimbursementsData(Request $request, VmtReimbursementsService $reimbursementService){
 
-
+        $user_id = auth()->user()->id;
+        $status = 'Pending';
         $reimbursementTypeId=$request->reimbursement_type_id;
 
         if($reimbursementTypeId == 1){
 
-            return $reimbursementService->createReimbursement($request->reimbursement_type_id,
-                                                                        $request->claim_type,
-                                                                         $request->claim_amount,
-                                                                        $request->eligible_amount,
-                                                                         $request->user_comments,
-                                                                        $request->status,
-                                                                        $request->date_of_dispatch,
-                                                                        $request->proof_of_delivery);
+            // /dd($request->all());
+            $local_conveyance_data = array('user_id'=>$user_id,'reimbursement_type_id'=>$request->reimbursement_type_id,
+                                           'date'=>$request->date,'user_comments'=>$request->user_comments,'status'=>'Pending',
+                                           'from'=>$request->from,'to'=>$request->to,'vehicle_type'=>$request->vehicle_type,
+                                           'distance_travelled'=>$request->distance_travelled,'total_expenses'=>$request->total_expenses);
 
 
+            $response =$reimbursementService->createReimbursement_LocalConveyance($local_conveyance_data);
+
+                dd(  $response);
+
+             return $response;
         }
         else
         if($reimbursementTypeId == 2){
@@ -75,5 +78,12 @@ class VmtReimbursementController extends Controller
     //    $request->save();
 
 
+       }
+
+       public function fetchEmployeeReimbursement(Request $request,VmtReimbursementsService $reimbursementService){
+        $user_id = auth()->user()->id;
+        $year = 2023;
+        $month = 03;
+        return  $reimbursementService->fetchEmployeeReimbursement($user_id,$year,$month);
        }
 }

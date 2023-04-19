@@ -2,7 +2,6 @@ import "primeflex/primeflex.css";
 import "primevue/resources/themes/lara-light-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
-import '../../assests/tailwind.css';
 
 
 import { createApp } from "vue";
@@ -25,6 +24,8 @@ import Dropdown from 'primevue/dropdown';
 import ConfirmationService from 'primevue/confirmationservice';
 import ToastService from 'primevue/toastservice';
 import ProgressSpinner from 'primevue/progressspinner';
+import ProgressBar from 'primevue/progressbar';
+
 import InputText from 'primevue/inputtext'
 import Row from 'primevue/row'
 import ColumnGroup from 'primevue/columngroup'
@@ -32,15 +33,11 @@ import Calendar from 'primevue/calendar'
 import Textarea from 'primevue/textarea'
 import Chips from 'primevue/chips'
 import MultiSelect from 'primevue/multiselect';
-import InputNumber from 'primevue/inputnumber';
-import SelectButton from 'primevue/selectbutton';
-import RadioButton from 'primevue/radiobutton';
 
 
+import ManageEmployee from './ManageEmployee.vue'
 
-import SalaryAdvanceLoan from './salary_loan_setting.vue'
-
-const app = createApp(SalaryAdvanceLoan);
+const app = createApp(ManageEmployee);
 const pinia=createPinia()
 
 app.use(PrimeVue, { ripple: true });
@@ -57,7 +54,6 @@ app.directive('styleclass', StyleClass);
 app.directive('focustrap', FocusTrap);
 
 app.component('Button', Button);
-app.component('RadioButton',RadioButton);
 app.component('DataTable', DataTable);
 app.component('Column', Column);
 app.component('ColumnGroup', ColumnGroup)
@@ -72,8 +68,7 @@ app.component('Calendar', Calendar)
 app.component('Textarea', Textarea)
 app.component('Chips', Chips)
 app.component('MultiSelect', MultiSelect)
-app.component('InputNumber', InputNumber)
-app.component('SelectButton' ,SelectButton)
+app.component('ProgressBar', ProgressBar)
 
-app.mount("#SalaryAdvanceLoan");
+app.mount("#ManageEmployee");
 

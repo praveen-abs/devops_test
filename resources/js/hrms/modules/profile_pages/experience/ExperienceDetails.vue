@@ -89,7 +89,7 @@
                     </Dialog>
 
                 </h6>
-                <div class="table-responsive">
+                <div class="table-responsive my-6">
                     <DataTable ref="dt" :value="_instance_profilePagesStore.employeeDetails.get_experience_details"
                         dataKey="id" :paginator="true" :rows="10"
                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"

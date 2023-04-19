@@ -27,8 +27,9 @@ export default defineConfig({
 
                 //Organization Module
 
-                'resources/js/hrms/modules/Organization/manage_employee/manage_employee.js',
+                'resources/js/hrms/modules/Organization/manage_employee/ManageEmployee.js',
                 'resources/js/hrms/modules/Organization/Normal_Onboarding/NormalOnboarding.js',
+                'resources/js/hrms/modules/Organization/employee_docs_upload/EmployeeDocsUpload.js',
 
                 // Approval Module   
                 'resources/js/hrms/modules/approvals/att_regularization/AttRegularizationApproval.js',
