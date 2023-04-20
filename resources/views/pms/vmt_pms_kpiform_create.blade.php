@@ -395,7 +395,7 @@ $(document).ready(function(){
                             var test = '<input type="hidden" name="'+valueNotAvailable+'">';
                             dataResult += test;
                         });
-                        $('.content-container').append('<tr class="addition-content cursor-pointer" id="content'+length+'"><td class="text-box-td "><span  name="numbers" id="" class="tableInp" >'+length+'</span><div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div></td>'+dataResult+'</tr>');
+                        $('.content-container').append('<tr class="addition-content cursor-pointer" id="content'+length+'">'+dataResult+'</tr>');
                             length++;
                     });
                     if(validationCheck == true){
