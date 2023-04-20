@@ -19,7 +19,7 @@
                 <div class="card-body justify-content-center align-items-center">
                   <div class=" header-card-text">
                     <!-- <img src="../../../assests/images/man(1).png" class="w-1 h-14" alt=""> -->
-                   
+
 
                     <!-- <h6 class="mx-3 my-auto">Personal Details</h6> -->
                     <h6 class="my-2" ><i class="fa fa-user" aria-hidden="true"></i> Personal Details</h6>
@@ -30,7 +30,7 @@
                       <div class="mb-2 col-md -6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label">Employee Code</label>
-                          <InputText 
+                          <InputText
                             class="capitalize form-onboard-form form-control textbox"
                             type="text" :readonly="is_emp_code_quick"
                             v-model="v$.employee_code.$model"
@@ -66,7 +66,7 @@
                           >
 
 
-                     
+
 
                           <span
                             v-if="
@@ -86,7 +86,7 @@
                       <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label">Date of Birth</label>
-                          <input 
+                          <input
                             type="text"
                             min="2004-12-31"
                             v-model="v$.dob.$model"
@@ -203,7 +203,7 @@
                             >Mobile Number<span class="text-danger">*</span></label
                           >
                           <!-- <InputText
-                        
+
                           type="number" min="10" max="10"
                             @input="mobileNoExists"
                              :readonly="is_mob_quick"
@@ -230,7 +230,7 @@
                               'p-invalid': v$.mobile_number.$invalid && submitted,
                             }"
                           />
-                       
+
                         </div>
 
                         <span v-if="is_mobile_no_exists">
@@ -1179,8 +1179,8 @@
                     <!-- <img src="../../../assests/images/office-building.png" class="w-1 h-14" alt=""> -->
                     <h6 class="my-2 "><i class="fa fa-briefcase" aria-hidden="true"></i> Official Details</h6>
                   </div>
-                  
-                  
+
+
                   <div class="form-card">
                     <div class="mt-1 row">
                       <div
@@ -1511,11 +1511,11 @@
               <div class="p-2 my-6 shadow card profile-box card-top-border" v-if="family_details_disable">
                 <div class="card-body justify-content-center align-items-center">
                   <div class="flex my-4 header-card-text">
-                    <img src="../../../assests/images/family (1).png" alt="" style="height: 20px;">
+                    <img src="../../../assests/images/family_image.png" alt="" style="height: 20px;">
                     <h6 class="mx-2 my-auto">Family Details</h6>
                   </div>
 
-                  
+
                   <div class="form-card">
                     <div class="mt-1 row">
                       <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
@@ -1906,7 +1906,7 @@
                     <h6 class="m-2"><i class="fa fa-money" aria-hidden="true"></i> Compensatory</h6>
                   </div>
 
-                
+
 
                   <div class="form-card">
                     <div class="row">
@@ -1952,7 +1952,7 @@
 
                         </div>-->
 
-                        <div 
+                        <div
                           class="my-2 mb-3 col-md-12 col-sm-12 col-lg-12 col-xl-12 col-xxl-12 mb-md-0"
                         >
                           <div class="mt-2 form-check form-check-inline" v-if="compen_disable">
@@ -2026,7 +2026,7 @@
                         <div class="floating">
                           <label for="" class="float-label">Statutory Bonus</label>
                           <input :readonly="readonly.statutory"
-                            type="number" 
+                            type="number"
                             placeholder="Statutory Bonus"
                             name="statutory_bonus"
                             v-model="employee_onboarding.statutory_bonus"
@@ -2265,7 +2265,7 @@
                             v-model="employee_onboarding.net_income"
                             class="onboard-form form-control textbox"
                             step="0.01"
-                          
+
                             readonly
                           />
                         </div>
@@ -2285,14 +2285,14 @@
                     <!-- <img src="../../../assests/images/folder.png" class="w-1 h-14" alt=""> -->
                     <h6 class="my-2"><i class="fa fa-file-image-o" aria-hidden="true"></i> Personal Documents</h6>
                   </div>
-                
+
                   <div class="mb-2 form-card">
                     <div class="mt-1 row">
                       <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6">
                         <label for="" class="float-label"
                           >Aadhar Card Front<span class="text-danger">*</span></label
                         >
-                      
+
 
 
 
@@ -2533,7 +2533,7 @@
     :breakpoints="{'960px': '75vw', '640px': '90vw'}"
     :style="{width: '50vw'}"
   >
-  
+
   <div class="flex my-4"
       v-if="
         employee_onboarding.employee_code == '' ||
@@ -2541,7 +2541,7 @@
       "
     >
        <img src="../../../assests/images/requirement.png" class="w-1 h-9" alt=""><span class="my-auto">Employee Code is Required </span>
-    </div>  
+    </div>
     <div class="flex my-4"
       v-if="
         employee_onboarding.employee_name == '' ||
@@ -2549,7 +2549,7 @@
       "
     >
       <img src="../../../assests/images/requirement.png" class="w-1 h-9" alt=""><span class="my-auto">Employee Name As Per Aadhar is Required</span>
-    </div> 
+    </div>
     <div class="flex my-4"
       v-if="
         employee_onboarding.mobile_number == '' ||
@@ -2678,7 +2678,7 @@ onMounted(() => {
     {
         populateQuickOnboardData(result.data);
 
-        
+
 
         console.log("result" + result.data);
     });
@@ -3264,7 +3264,7 @@ const userCodeExists = () => {
         compensatoryCalWhileQuick()
       }else{
         user_code_exists.value = res.data;
-       
+
       }
 
     })
@@ -3392,10 +3392,10 @@ const personalMailExists = () => {
         console.log("quick onboarding");
         compensatoryCalWhileQuick()
       }else{
-        personal_mail_exists.value = res.data;      
+        personal_mail_exists.value = res.data;
       }
 
-    
+
     })
     .catch((err) => {
       console.log(err);
@@ -3425,9 +3425,9 @@ const mobileNoExists = () => {
         console.log("quick onboarding");
       }else{
         is_mobile_no_exists.value = res.data;
-       
+
       }
-      
+
     })
     .catch((err) => {
       console.log(err);
@@ -3756,7 +3756,7 @@ const epf_esic_calculation = () => {
 const compensatoryCalWhileQuick = () =>{
   compen_disable.value = false
   family_details_disable.value = true
-  let gross = employee_onboarding.basic + employee_onboarding.hra +employee_onboarding.statutory_bonus +employee_onboarding.child_education_allowance +employee_onboarding.food_coupon +employee_onboarding.lta +employee_onboarding.special_allowance +employee_onboarding.other_allowance 
+  let gross = employee_onboarding.basic + employee_onboarding.hra +employee_onboarding.statutory_bonus +employee_onboarding.child_education_allowance +employee_onboarding.food_coupon +employee_onboarding.lta +employee_onboarding.special_allowance +employee_onboarding.other_allowance
   console.log(gross);
   employee_onboarding.gross = gross
 
@@ -3764,7 +3764,7 @@ const compensatoryCalWhileQuick = () =>{
     employee_onboarding.epf_employee -
     employee_onboarding.esic_employee;
 
-  console.log(net);  
+  console.log(net);
 
   let ctc = employee_onboarding.gross + employee_onboarding.epf_employer_contribution + employee_onboarding.esic_employer_contribution + employee_onboarding.insurance+ employee_onboarding.graduity
 
@@ -3788,7 +3788,7 @@ const compensatoryCalWhileQuick = () =>{
 
 
 
-  
+
 }
 
 const mon = ref(false);
@@ -4200,8 +4200,8 @@ const Sampledata = () => {
   employee_onboarding.insurance = ref(1000);
 
 
- 
-  
+
+
 };
 </script>
 
