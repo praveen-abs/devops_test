@@ -90,8 +90,8 @@ class LoginController extends Controller
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-       
-       // dd($request->all());
+
+     
         $request->validate([
             'user_code' => 'required',
             'password' => 'required',

@@ -260,13 +260,15 @@ const SubmitEmployeeDocsUpload = () => {
 
       console.log(Object(response.data));
 
-      if (response.data.status == "success") {
+      if (response.data.status == "Success") {
         Swal.fire(response.data.status, response.data.message, "success");
+        window.location.reload()
 
       }
 
-      if (response.data.status == "failure") {
-        Swal.fire(response.data.status, response.data.message, "error");
+      if (response.data.status == "Failure") {
+        + Swal.fire(response.data.status, response.data.message, "error");
+         window.location.reload()
 
       }
     })

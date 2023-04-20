@@ -208,7 +208,6 @@ class VmtEmployeeService {
 
     //for bulck onboard
 private function Upload_BulkOnboardDetail($user,$row,$user_id){
-
     try{
         //dd($row);
         // $test = VmtMaritalStatus::where('name',"asdf" )->first()->id;
@@ -233,12 +232,10 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                 $newEmployee->doj   =  $doj ? $this->getdateFormatForDb($doj) : '';
                 $newEmployee->dol   =  $doj ? $this->getdateFormatForDb($doj) : '';
                 $newEmployee->dob   =  $dob ? $this->getdateFormatForDb($dob) : '';
-                $newEmployee->location   =    $row["work_location"] ?? '';
+               // $newEmployee->location   =    $row["work_location"] ?? '';
                 $newEmployee->pan_number   =  isset($row["pan_no"]) ? ($row["pan_no"]) : "";
                 $newEmployee->aadhar_number = $row["aadhar"] ?? '';
-            // dd($row["marital_status"]);
                 $marital_status_id=VmtMaritalStatus::where('name',ucfirst($row["marital_status"]) )->first()->id; // to get marital status id
-                //dd( $marital_status_id);
                 $newEmployee->marital_status_id = $marital_status_id ?? '';
             // dd($newEmployee);
                 $bank_id=Bank::where('bank_name',$row['bank_name'])->first()->id;  // to get bank id
@@ -247,6 +244,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                 $newEmployee->bank_account_number  = $row["account_no"] ?? '';
                 $newEmployee->current_address_line_1   = $row["current_address"] ?? '';
                 $newEmployee->permanent_address_line_1   = $row["permanent_address"] ?? '';
+                $newEmployee->no_of_children = $row["no_of_child"] ?? '';
                 $data_mobile_number = empty($row["mobile_number"]) ? "" : strval($row["mobile_number"]);
                 $newEmployee->mobile_number  = $data_mobile_number;
                 $newEmployee->save();
@@ -282,6 +280,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                 }
                 $empOffice->l1_manager_name  = $row["l1_manager_name"] ?? ''; // => "k"
                 $empOffice->officical_mail  = $row["official_mail"] ?? ''; // => "k@k.in"
+                $empOffice->work_location  = $row["work_location"] ?? ''; // => "k"
                 $empOffice->official_mobile  = $row["official_mobile"] ?? ''; // => "1234567890"
                 $empOffice->emp_notice  = $row["emp_notice"] ?? ''; // => "0"
                 $empOffice->save();
@@ -340,7 +339,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                     $familyMember->save();
                 }
 
-                if (($row['marital_status'])=='married') {
+                if ((strtolower($row['marital_status']))=='married') {
                     $familyMember =  new VmtEmployeeFamilyDetails;
                     $familyMember->user_id  = $user_id;
                     $familyMember->name =   $row['spouse_name'];
@@ -354,41 +353,41 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                         }
                         $familyMember->save();
 
-                    if (!empty($row['child_name'])) {
+                    if (!empty($row['child_1_name'])) {
                         $familyMember =  new VmtEmployeeFamilyDetails;
                         $familyMember->user_id  = $user_id;
-                        $familyMember->name =  $row['child_name'];
+                        $familyMember->name =  $row['child_1_name'];
                         $familyMember->relationship = 'Children';
                         $familyMember->gender = '---';
 
-                        if(!empty($row["child_dob"]))
-                        $child_dob= $row["child_dob"];
+                        if(!empty($row["child_1_dob"]))
+                        $child_dob= $row["child_1_dob"];
                         //   $familyMember->dob = $this->getdateFormatForDb($child_dob) ;
                     }
                     $familyMember->save();
 
-                    if (!empty($row['child_name'])) {
+                    if (!empty($row['child_2_name'])) {
                         $familyMember =  new VmtEmployeeFamilyDetails;
                         $familyMember->user_id  = $user_id;
-                        $familyMember->name =   $row['child_name'];
+                        $familyMember->name =   $row['child_2_name'];
                         $familyMember->relationship = 'Children';
                         $familyMember->gender = '---';
 
-                        if(!empty($row["child_dob"]))
-                        $child_dob= $row["child_dob"];
+                        if(!empty($row["child_2_dob"]))
+                        $child_dob= $row["child_2_dob"];
                         // $familyMember->dob = $this->getdateFormatForDb( $child_dob) ;
                     }
                     $familyMember->save();
 
-                    if (!empty($row['child_name'])) {
+                    if (!empty($row['child_3_name'])) {
                         $familyMember =  new VmtEmployeeFamilyDetails;
                         $familyMember->user_id  = $user_id;
-                        $familyMember->name =   $row['child_name'];
+                        $familyMember->name =   $row['child_3_name'];
                         $familyMember->relationship = 'Children';
                         $familyMember->gender = '---';
 
-                        if(!empty($row["child_dob"]))
-                        $child_dob= $row["child_dob"];
+                        if(!empty($row["child_3_dob"]))
+                        $child_dob= $row["child_3_dob"];
                         // $familyMember->dob = $this->getdateFormatForDb( $child_dob) ;
                     }
 
@@ -477,9 +476,8 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
 
         //$newEmployee->pan_ack   =    $row["pan_ack"];
         $newEmployee->aadhar_number = $row["aadhar_number"] ?? '';
-
-        $newEmployee->marital_status_id = $row["marital_status"] ?? '';
-
+        $marital_status_id=VmtMaritalStatus::where('name',ucfirst($row["marital_status"]) )->first()->id; // to get marital status id
+        $newEmployee->marital_status_id = $marital_status_id ?? '';;
         $newEmployee->nationality = $row["nationality"] ?? '';
         $data_mobile_number = empty($row["mobile_number"]) ? "" : strval($row["mobile_number"]);
 
@@ -505,7 +503,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
         $newEmployee->permanent_pincode   = $row["permanent_pincode"] ?? '';
 
         if (!empty($row['marital_status'])) {
-            if ($row['marital_status'] <> 1) {
+            if (strtolower($row['marital_status']) <> 1) {
                 $newEmployee->no_of_children   = $row["no_of_children"] ?? 0;
 
                 if (!empty($row['no_of_children']) && $row['no_of_children'] > 0) {
