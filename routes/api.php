@@ -35,6 +35,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     //CORE
     Route::get('/getAllUsers', [HRMSBaseAPIController::class, 'getAllUsers']);
+    Route::get('/getAllBloodgroups', [HRMSBaseAPIController::class, 'getAllBloodgroups']);
+    Route::get('/getAllMaritalStatus', [HRMSBaseAPIController::class, 'getAllMaritalStatus']);
 
 
     //HOLIDAYS
