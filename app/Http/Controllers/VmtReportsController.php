@@ -475,6 +475,6 @@ class VmtReportsController extends Controller
 
         return  Excel::download(new EmployeeReimbursementsExport($employee_details,$reimbursement_data,$legal_entity,
                                                                 $month_name,$year,$client_name,$totals),
-                                                                $file_name.' Reimbursements Reports.xlsx');
+                                                                $employee_details['user_code'].'_'. $employee_details['name'].'_'.$file_name.' Reimbursements Reports.xlsx');
     }
 }
