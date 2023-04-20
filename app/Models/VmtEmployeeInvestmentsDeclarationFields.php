@@ -9,5 +9,5 @@ class VmtEmployeeInvestmentsDeclarationFields extends Model
 {
     use HasFactory;
 
-    protected $table="vmt_employee_investments_declaration_fields"
+    protected $table="vmt_emp_investments_dec_fields";
 }

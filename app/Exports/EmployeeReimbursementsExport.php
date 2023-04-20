@@ -13,6 +13,7 @@ use Maatwebsite\Excel\Sheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\Style;
@@ -21,6 +22,10 @@ use PhpOffice\PhpSpreadsheet\Style\Border;
 use Maatwebsite\Excel\Concerns\WithDrawings;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use PhpOffice\PhpSpreadsheet\Style\Protection;
+use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
+use Maatwebsite\Excel\Events\BeforeExport;
+use Maatwebsite\Excel\Events\BeforeWriting;
+use Maatwebsite\Excel\Events\BeforeSheet;
 
 class EmployeeReimbursementsExport implements FromArray,ShouldAutoSize,WithHeadings,WithCustomStartCell,WithStyles,WithEvents,WithDrawings
 {
@@ -79,8 +84,20 @@ class EmployeeReimbursementsExport implements FromArray,ShouldAutoSize,WithHeadi
         ];
     }
 
+    // public static function beforeSheet(BeforeSheet $event)
+    // {
+    //      $event->sheet->getActiveSheet()->getPageSetup()
+    //            ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+    //      $event->sheet->getActiveSheet()->getPageSetup()
+    //            ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);
+    //      $event->$sheet->setPageMargin(0);
+    // }
+
     public function styles(Worksheet $sheet)
     {
+        $sheet->getParent()->getActiveSheet()->getPageSetup()->setpaperSize(1);
+        $sheet->getParent()->getActiveSheet()->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+        $sheet->getParent()->getActiveSheet()->getPageSetup()->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A3);
 
         ///$sheet->getParent()->getActiveSheet()->getProtection()->setSheet(true);
 
@@ -144,8 +161,18 @@ class EmployeeReimbursementsExport implements FromArray,ShouldAutoSize,WithHeadi
          //For Allignment Centre
          $sheet->getStyle('E1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
+         // For Can not edit sheet without unprortect sheet without password
+         $sheet->getParent()->getActiveSheet()->getProtection()->setSheet(true);
+         $sheet->getParent()->getActiveSheet()->getProtection()->setPassword('Abs@123');
+         $sheet->getParent()->getActiveSheet()->getProtection()->setSort(true);
+         $sheet->getParent()->getActiveSheet()->getProtection()->setInsertRows(true);
+         $sheet->getParent()->getActiveSheet()->getProtection()->setFormatCells(true);
+         $sheet->getParent()->getSecurity()->setLockWindows(true);
+         $sheet->getParent()->getSecurity()->setLockStructure(true);
+         $sheet->getParent()->getSecurity()->setWorkbookPassword("Abs@123");
 
-       // $sheet->getStyle('A1:G'.($this->total_row+2))->getBorders()->getOutline()->setBorderStyle(Border::BORDER_THICK);
+         // Text Wrapping
+        //  $sheet->getStyle('I19')->getAlignment()->setWrapText(true);
 
     }
 

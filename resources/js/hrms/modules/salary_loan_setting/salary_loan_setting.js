@@ -39,6 +39,9 @@ import Checkbox from 'primevue/checkbox';
 
 
 
+
+
+
 import SalaryAdvanceLoan from './salary_loan_setting.vue'
 
 const app = createApp(SalaryAdvanceLoan);
@@ -48,7 +51,9 @@ app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
+app.use(ToastService);
 app.use(pinia)
+
 
 
 app.directive('tooltip', Tooltip);
@@ -76,6 +81,7 @@ app.component('MultiSelect', MultiSelect)
 app.component('InputNumber', InputNumber)
 app.component('SelectButton' ,SelectButton)
 app.component('Checkbox' ,Checkbox)
+
 
 app.mount("#SalaryAdvanceLoan");
 

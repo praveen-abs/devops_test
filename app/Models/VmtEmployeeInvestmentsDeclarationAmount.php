@@ -9,5 +9,5 @@ class VmtEmployeeInvestmentsDeclarationAmount extends Model
 {
     use HasFactory;
 
-    protected $table = "vmt_employee_investments_declaration_amount";
+    protected $table = "vmt_emp_investments_dec_amt";
 }
