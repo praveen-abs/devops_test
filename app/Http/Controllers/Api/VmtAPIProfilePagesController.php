@@ -134,4 +134,142 @@ class VmtAPIProfilePagesController extends HRMSBaseAPIController
             'data'   => $response
         ]);
     }
+    public function addEmployeeFamilyDetails(Request $request, VmtProfilePagesService $serviceVmtProfilePagesService)
+    {
+
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+
+                "name" => 'required',
+                "relationship"  => 'required',
+                "dob"  => 'required',
+                "phone_number"  => 'required',
+
+
+
+
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid",
+                "email" => "Field :attribute is invalid"
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        $response = $serviceVmtProfilePagesService->addFamilyDetails(
+            user_code: $request->user_code,
+            name: $request->name,
+            relationship: $request->relationship,
+            dob: $request->dob,
+            phone_number: $request->phone_number
+
+
+        );
+
+        return response()->json([
+            'status' => 'success',
+            'message' => '',
+            'data'   => $response
+        ]);
+    }
+    public function updateEmployeeFamilyDetails(Request $request, VmtProfilePagesService $serviceVmtProfilePagesService)
+    {
+
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                "user_code" => 'required|exists:users,user_code', //not used now
+                "record_id" => 'required',
+                "name" => 'required',
+                "relationship"  => 'required',
+                "dob"  => 'required',
+                "phone_number"  => 'required',
+
+
+
+
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid",
+                "email" => "Field :attribute is invalid"
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        $response = $serviceVmtProfilePagesService->updateFamilyDetails(
+            record_id: $request->record_id,
+            name: $request->name,
+            relationship: $request->relationship,
+            dob: $request->dob,
+            phone_number: $request->phone_number
+
+
+        );
+
+        return response()->json([
+            'status' => 'success',
+            'message' => '',
+            'data'   => $response
+        ]);
+    }
+    public function deleteEmployeeFamilyDetails(Request $request, VmtProfilePagesService $serviceVmtProfilePagesService)
+    {
+
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                "user_code" => 'required|exists:users,user_code', //not used now
+                "record_id" => 'required',
+
+
+
+
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid",
+                "email" => "Field :attribute is invalid"
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        $response = $serviceVmtProfilePagesService->deleteFamilyDetails(
+            user_code:$request->user_code,
+            record_id: $request->record_id,
+
+
+
+        );
+
+        return response()->json([
+            'status' => 'success',
+            'message' => '',
+            'data'   => $response
+        ]);
+    }
 }
