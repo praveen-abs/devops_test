@@ -65,4 +65,8 @@ class VmtProfilePagesService{
 
     }
 
+    public function updateEmployeeGeneralInformation($user_code, $birthday, $gender, $doj, $marital_status, $blood_group, $phy_challenged){
+
+    }
+
 }

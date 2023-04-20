@@ -41,4 +41,48 @@ class VmtAPIProfilePagesController extends HRMSBaseAPIController
             'data'   => $data
         ]);
     }
+
+public function updateEmployeeGeneralInformation(Request $request, VmtProfilePagesService $serviceVmtProfilePagesService){
+
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+                "birthday" => 'required',
+                "gender"  => 'required',
+                "doj"  => 'required',
+                "marital_status"  => 'required',
+                "blood_group"  => 'required',
+                "phy_challenged" => 'required',
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid"
+            ]
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                    'status' => 'failure',
+                    'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        $data = $serviceVmtProfilePagesService->updateEmployeeGeneralInformation(user_code: $request->user_code,
+                                                                                birthday : $request->birthday,
+                                                                                gender : $request->gender,
+                                                                                doj: $request->doj,
+                                                                                marital_status: $request->marital_status,
+                                                                                blood_group: $request->blood_group,
+                                                                                phy_challenged: $request->phy_challenged);
+
+        return response()->json([
+            'status' => 'success',
+            'message'=> '',
+            'data'   => $data
+        ]);
+
+
+    }
 }

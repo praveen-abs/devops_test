@@ -89,7 +89,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     'employeeMonthlyLeaveDetails']);
 
     Route::post('/get-maindashboard-data', [VmtAPIDashboardController::class, 'getMainDashboardData']);
+
+    //Profile pages
     Route::post('/profile-pages-getEmpDetails', [VmtAPIProfilePagesController::class, 'fetchEmployeeProfileDetails']);
+    Route::post('/profile-pages/updateEmployeeGeneralInformation', [VmtAPIProfilePagesController::class, 'updateEmployeeGeneralInformation']);
 
 });
 
