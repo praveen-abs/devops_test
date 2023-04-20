@@ -17,8 +17,9 @@
 
               <div class="p-2 shadow card profile-box card-top-border">
                 <div class="card-body justify-content-center align-items-center">
-                  <div class="my-4 header-card-text">
-                    <h6>Personal Details</h6>
+                  <div class="flex my-3 header-card-text">
+                    <img src="../../../assests/images/man(1).png" class="w-1 h-14" alt="">
+                    <h6 class="mx-3 my-auto">Personal Details</h6>
                   </div>
 
                   <div class="form-card">
@@ -62,17 +63,7 @@
                           >
 
 
-                          <!-- <InputMask
-                            id="serial"
-                            mask="a"
-                            v-model="v$.pan_number.$model"
-                            placeholder="AHFCS1234F"
-                            style="text-transform: uppercase"
-                            class="form-control textbox"
-                            :class="{
-                              'p-invalid': v$.pan_number.$invalid && submitted,
-                            }"
-                          /> -->
+                     
 
                           <span
                             v-if="
@@ -92,7 +83,7 @@
                       <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label">Date of Birth</label>
-                          <input :readonly="is_doj_quick"
+                          <input 
                             type="text"
                             min="2004-12-31"
                             v-model="v$.dob.$model"
@@ -132,7 +123,7 @@
                             "
                             class="p-error"
                             >{{
-                              v$.marital_status.required.$messagbe.replace(
+                              v$.marital_status.required.$message.replace(
                                 "Value",
                                 "Marital Status"
                               )
@@ -158,6 +149,7 @@
                             }"
                             class="form-control textbox"
                             onfocus="(this.type='date')"
+                            :readonly="is_doj_quick"
                           />
 
                           <span
@@ -204,7 +196,7 @@
                       <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Mobile Number<span class="text">*</span></label
+                            >Mobile Number<span class="text-danger">*</span></label
                           >
                           <!-- <InputText
                         
@@ -219,21 +211,21 @@
                             class="form-control textbox"
 
 
+
                           /> -->
                           <InputMask
-                         
+                          @focusout="mobileNoExists"
+                            id="serial"
                             mask="9999999999"
-                            @focusout="mobileNoExists"
-                             :readonly="is_mob_quick"
+                            v-model="v$.mobile_number.$model"
                             placeholder="Mobile Number"
+                            style="text-transform: uppercase"
+                            class="form-control textbox"
                             :class="{
                               'p-invalid': v$.mobile_number.$invalid && submitted,
                             }"
-                            v-model="v$.mobile_number.$model"
-                            class="form-control textbox"
-
-
                           />
+                       
                         </div>
 
                         <span v-if="is_mobile_no_exists">
@@ -345,7 +337,7 @@
                           <InputMask
                           @focusout="panCardExists"
                             id="serial"
-                            mask="aaaaa9999a"
+                            mask="aaaPa9999a"
                             v-model="v$.pan_number.$model"
                             placeholder="AHFCS1234F"
                             style="text-transform: uppercase"
@@ -743,8 +735,9 @@
               <div class="p-2 my-6 shadow card profile-box card-top-border">
                 <div class="card-body justify-content-center align-items-center">
                   <div class="form-card">
-                    <div class="my-4 header-card-text">
-                      <h6>Current Address</h6>
+                    <div class="flex my-3 header-card-text">
+                      <img src="../../../assests/images/gps.png" class="w-1 h-14" alt="">
+                      <h6 class="mx-3 my-auto">Current Address</h6>
                     </div>
                     <div class="mt-1 row">
                       <div class="mb-2 col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6">
@@ -1178,9 +1171,12 @@
 
               <div class="p-2 shadow card profile-box card-top-border">
                 <div class="card-body justify-content-center align-items-center">
-                  <div class="my-4 header-card-text">
-                    <h6 class="">Official Details</h6>
+                  <div class="flex my-4 header-card-text">
+                    <img src="../../../assests/images/office-building.png" class="w-1 h-14" alt="">
+                    <h6 class="mx-3 my-auto">Official Details</h6>
                   </div>
+                  
+                  
                   <div class="form-card">
                     <div class="mt-1 row">
                       <div
@@ -1339,6 +1335,8 @@
                           >
 
                           <Dropdown
+                            editable
+                            :readonly="readonly.l1_code"
                             :options="Managerdetails"
                             optionLabel="name"
                             placeholder="Reporting Manager Name"
@@ -1489,6 +1487,8 @@
                   <div class="my-4 header-card-text">
                     <h6 class="mb-0">Family Details</h6>
                   </div>
+
+                  
                   <div class="form-card">
                     <div class="mt-1 row">
                       <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
@@ -1874,9 +1874,12 @@
 
               <div class="p-2 my-6 shadow card profile-box card-top-border">
                 <div class="card-body justify-content-center align-items-center">
-                  <div class="my-4 header-card-text">
-                    <h6>Compensatory</h6>
+                  <div class="flex my-4 header-card-text">
+                    <img src="../../../assests/images/wages.png" class="w-1 h-14" alt="">
+                    <h6 class="mx-3 my-auto">Compensatory</h6>
                   </div>
+
+                
 
                   <div class="form-card">
                     <div class="row">
@@ -1943,10 +1946,10 @@
                               @input="compensatory_calculation"
                               class=" onboard-form form-control textbox"
                               step="0.01"
-                              required
+
                             />
                           </div>
-                          <div class=" form-check form-check-inline">
+                          <div class="-ml-3 form-check form-check-inline">
 
 
                               <p>
@@ -2235,7 +2238,7 @@
                             v-model="employee_onboarding.net_income"
                             class="onboard-form form-control textbox"
                             step="0.01"
-                            required
+                          
                             readonly
                           />
                         </div>
@@ -2251,22 +2254,27 @@
 
               <div class="p-2 my-6 mb-0 shadow card profile-box card-top-border">
                 <div class="card-body justify-content-center align-items-center">
-                  <div class="my-4 header-card-text">
-                    <h6 class="mb-0">Personal Documents</h6>
+                  <div class="flex my-4 header-card-text">
+                    <img src="../../../assests/images/folder.png" class="w-1 h-14" alt="">
+                    <h6 class="mx-3 my-auto">Personal Documents</h6>
                   </div>
+                
                   <div class="mb-2 form-card">
                     <div class="mt-1 row">
                       <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6">
                         <label for="" class="float-label"
                           >Aadhar Card Front<span class="text-danger">*</span></label
                         >
+                      
+
+
 
                         <input
                           v-if="AadharDocFrontInvalid"
                           type="file"
                           accept="image/png, image/gif, image/jpeg"
-                          ref="AadharCardFront"
-                          class="onboard-form form-control file is-invalid"
+                          ref="AadharCardFront" id="formFile"
+                          class="onboard-form form-control is-invalid"
                           @change="AadharFront($event)"
                         />
                         <input
@@ -2435,14 +2443,14 @@
 
                   <div class="row">
                     <div class="text-right col-12">
-                     <!-- <input
+                     <input
                         type="button"
                         value="sample"
                         @click="Sampledata"
                         class="mr-4 text-center btn btn-orange processOnboardForm"
                       />
 
-                      <input class="btn btn-orange" type="button" value="check" @click="compensatoryCalWhileQuick"> -->
+                      <input class="btn btn-orange" type="button" value="check" @click="compensatoryCalWhileQuick">
 
                       <button
                         type="button"
@@ -2493,58 +2501,44 @@
       !employee_onboarding.mobile_number.length > 0 &&
       !employee_onboarding.dob.length > 0
     "
-    header="Documents Required"
+    header="Information Required"
     v-model:visible="RequiredDocument"
     :breakpoints="{'960px': '75vw', '640px': '90vw'}"
     :style="{width: '50vw'}"
   >
-  <li class="my-4"
+  
+  <div class="flex my-4"
       v-if="
         employee_onboarding.employee_code == '' ||
         employee_onboarding.employee_code.length < 0
       "
     >
-      Employee Code is Required
-    </li>
-    <li class="my-4"
+       <img src="../../../assests/images/requirement.png" class="w-1 h-9" alt=""><span class="my-auto">Employee Code is Required </span>
+    </div>  
+    <div class="flex my-4"
       v-if="
         employee_onboarding.employee_name == '' ||
         employee_onboarding.employee_name.length < 0
       "
     >
-      Employee Name As Per is Required
-    </li>
-    <li class="my-4"
-      v-if="
-        employee_onboarding.aadhar_number == '' ||
-        employee_onboarding.aadhar_number.length < 0
-      "
-    >
-      Aadhaar Number is Required
-    </li>
-    <li class="my-4"
-      v-if="
-        employee_onboarding.pan_number == '' || employee_onboarding.pan_number.length < 0
-      "
-    >
-      Pan Number is Required
-    </li>
-    <li class="my-4"
+      <img src="../../../assests/images/requirement.png" class="w-1 h-9" alt=""><span class="my-auto">Employee Name As Per Aadhar is Required</span>
+    </div> 
+    <div class="flex my-4"
       v-if="
         employee_onboarding.mobile_number == '' ||
         employee_onboarding.mobile_number.length < 0
       "
     >
-      Mobile Number is Required
-    </li>
-    <li class="my-4"
+      <img src="../../../assests/images/requirement.png" class="w-1 h-9" alt=""><span class="my-auto">Mobile Number is Required</span>
+    </div>
+    <div class="flex my-4"
       v-if="
         employee_onboarding.email == '' ||
         employee_onboarding.email.length < 0
       "
     >
-      Email is  Required
-    </li>
+      <img src="../../../assests/images/requirement.png" class="w-1 h-9" alt=""><span class="my-auto">Email is  Required</span>
+    </div>
   </Dialog>
 
   <Dialog
@@ -2964,13 +2958,12 @@ const SaveEmployeeOnboardingData = () => {
   employee_onboarding.can_onboard_employee = 0;
   RequiredDocument.value = true
   if(!employee_onboarding.employee_code.length > 0 &&
-      !employee_onboarding.aadhar_number.length > 0 ||
-      !employee_onboarding.employee_name.length > 0 &&
-      !employee_onboarding.email.length > 0   ||
-      !employee_onboarding.mobile_number.length > 0 &&
-      !employee_onboarding.dob.length > 0){
-
-        RequiredDocument.value = true
+      !employee_onboarding.employee_name.length > 0 ||
+      !employee_onboarding.email.length > 0   &&
+      !employee_onboarding.mobile_number.length > 0 ){
+      RequiredDocument.value = true
+      checkInputFiles();
+        handleSubmit();
 
       }else{
 
@@ -3203,14 +3196,9 @@ const userCodeExists = () => {
     .get(`/user-code-exists/${user_code}`)
     .then((res) => {
       console.log(res.data);
-      if(checkIsQuickOrNormal.value == 'quick'){
+      if(checkIsQuickOrNormal.value == 'quick' || emp_data.onboard_type == 'bulk' ){
         console.log("quick onboarding");
         family_details_disable.value = true
-        is_emp_code_quick.value = true
-        is_doj_quick.value = true
-        is_emp_name_quick.value = true
-        is_mob_quick.value = true
-        is_email_quick.value = true
       }else{
         user_code_exists.value = res.data;
        
@@ -3337,11 +3325,10 @@ const personalMailExists = () => {
     .get(`/personal-mail-exists/${mail}`)
     .then((res) => {
       console.log(res.data);
-      if(checkIsQuickOrNormal.value == 'quick'){
+      if(checkIsQuickOrNormal.value == 'quick' || emp_data.onboard_type == 'bulk' ){
         console.log("quick onboarding");
       }else{
-        personal_mail_exists.value = res.data;
-       
+        personal_mail_exists.value = res.data;      
       }
 
     
@@ -3369,7 +3356,7 @@ const mobileNoExists = () => {
     .get(`/mobile-no-exists/${mobile}`)
     .then((res) => {
       console.log(res.data);
-      if(checkIsQuickOrNormal.value == 'quick'){
+      if(checkIsQuickOrNormal.value == 'quick' || emp_data.onboard_type == 'bulk' ){
         console.log("quick onboarding");
       }else{
         is_mobile_no_exists.value = res.data;
@@ -3414,7 +3401,7 @@ const ValidateAccountNo =()=> {
                }
     }
 
-  const ifsc = ref(false)
+const ifsc = ref(false)
 const ValidateIfscNo =()=> {
               const ifsc = /^[A-Z]{4}0[A-Z0-9]{6}$/;
                if( acn0.test(employee_onboarding.bank_ifsc)){
@@ -3717,6 +3704,20 @@ const compensatoryCalWhileQuick = () =>{
   employee_onboarding.total_ctc = ctc
 
   console.log(ctc);
+
+        family_details_disable.value = true
+        is_emp_code_quick.value = true
+        is_doj_quick.value = true
+        is_emp_name_quick.value = true
+        is_mob_quick.value = true
+        is_email_quick.value = true
+        readonly.statutory = true
+        readonly.child = true
+        readonly.fdc = true
+        readonly.lta = true
+        readonly.other = true
+
+  
 }
 
 const mon = ref(false);
@@ -3984,6 +3985,7 @@ const readonly = reactive({
     fdc:false,
     lta:false,
     other:false,
+    l1_code:false
 
 })
 
@@ -3995,8 +3997,7 @@ function populateQuickOnboardData(emp_data){
 
      checkIsQuickOrNormal.value = emp_data.onboard_type;
 
-     if(emp_data.onboard_type == 'quick'){
-        compensatoryCalWhileQuick()
+     if(emp_data.onboard_type == 'quick' || emp_data.onboard_type == 'bulk'  ){
         family_details_disable.value = true
         is_emp_code_quick.value = true
         is_doj_quick.value = true
@@ -4008,6 +4009,10 @@ function populateQuickOnboardData(emp_data){
         readonly.fdc = true
         readonly.lta = true
         readonly.other = true
+        readonly.l1_code = true
+        setTimeout(() => {
+          compensatoryCalWhileQuick()
+        }, 5000);
      }else{
       console.log("normal onboarding");
      }
@@ -4059,7 +4064,7 @@ const Sampledata = () => {
   employee_onboarding.nationality = ref("Indian");
   employee_onboarding.gender = ref("Male");
   employee_onboarding.marital_status = ref("Married");
-  employee_onboarding.mobile_number = ref("897898797");
+  employee_onboarding.mobile_number = ref('8248023344');
   employee_onboarding.current_address_line_1 = ref("45/21 2nd Avenue,chennai");
   employee_onboarding.current_address_line_2 = ref("45/21 2nd Avenue,chennai");
   employee_onboarding.current_country = ref("India");
