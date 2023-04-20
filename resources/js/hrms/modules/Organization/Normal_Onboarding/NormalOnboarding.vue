@@ -2166,7 +2166,7 @@
                           <input
                             type="number"
                             placeholder="Insurance"
-                            name="insurance" :class="[is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']"
+                            name="insurance" :class="[is_emp_code_quick ? 'bg-gray-200' : '']"
                             v-model="employee_onboarding.insurance"
                             @input="insurance"
                             class="onboard-form form-control textbox calculation_data cic_data"
@@ -2180,7 +2180,7 @@
                           <input
                             type="number"
                             placeholder="Graduity"
-                            name="graduity"  :class="[is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']"
+                            name="graduity"  :class="[is_emp_code_quick ? 'bg-gray-200' : '']"
                             v-model="employee_onboarding.graduity"
                             @input="graduity"
                             class="onboard-form form-control textbox calculation_data cic_data"
@@ -3774,19 +3774,19 @@ const compensatoryCalWhileQuick = () =>{
 
   console.log(ctc);
 
-        family_details_disable.value = true
-        is_emp_code_quick.value = true
-        is_doj_quick.value = true
-        is_emp_name_quick.value = true
-        is_mob_quick.value = true
-        is_email_quick.value = true
-        readonly.statutory = true
-        readonly.child = true
-        readonly.fdc = true
-        readonly.lta = true
-        readonly.other = true
-        readonly.mobile = true
-        readonly.designation = true
+        // family_details_disable.value = true
+        // is_emp_code_quick.value = true
+        // is_doj_quick.value = true
+        // is_emp_name_quick.value = true
+        // is_mob_quick.value = true
+        // is_email_quick.value = true
+        // readonly.statutory = true
+        // readonly.child = true
+        // readonly.fdc = true
+        // readonly.lta = true
+        // readonly.other = true
+        // readonly.mobile = true
+        // readonly.designation = true
 
 
 
@@ -4074,6 +4074,7 @@ function populateQuickOnboardData(emp_data){
 
      if(emp_data.onboard_type == 'quick' || emp_data.onboard_type == 'bulk'  ){
       console.log( emp_data.onboard_type + "Onboarding");
+ 
         family_details_disable.value = true
         is_emp_code_quick.value = true
         is_doj_quick.value = true
@@ -4085,7 +4086,7 @@ function populateQuickOnboardData(emp_data){
         readonly.fdc = true
         readonly.lta = true
         readonly.other = true
-        readonly.l1_code = true
+        readonly.mobile = true
         readonly.designation = true
         setTimeout(() => {
           compensatoryCalWhileQuick()
