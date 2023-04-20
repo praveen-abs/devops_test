@@ -42,7 +42,8 @@
             "app/Services/VmtAttendanceService.php",
             "app/Services/VmtReimbursementsService.php",
             "app/Services/VmtProfilePagesService.php",
-            "app/Services/VmtDashboardService.php"
+            "app/Services/VmtDashboardService.php",
+            "app/Services/VmtInvestmentsService.php"
 
         ]
     },

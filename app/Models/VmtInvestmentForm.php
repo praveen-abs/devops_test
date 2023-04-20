@@ -9,5 +9,5 @@ class VmtInvestmentForm extends Model
 {
     use HasFactory;
 
-    protected $table="vmt_investment_form";
+    protected $table="vmt_investment_forms";
 }
