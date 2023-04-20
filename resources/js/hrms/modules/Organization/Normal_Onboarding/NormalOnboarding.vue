@@ -220,6 +220,7 @@
                           <InputMask
                           @focusout="mobileNoExists"
                             id="serial"
+                            :readonly="readonly.mobile"
                             mask="9999999999"
                             v-model="v$.mobile_number.$model"
                             placeholder="Mobile Number"
@@ -1413,12 +1414,22 @@
                             class="textbox form-control"
                             v-model="v$.officical_mail.$model"
                           />
+                          <span
+                            v-if="
+                              (v$.officical_mail.$invalid && submitted) ||
+                              v$.officical_mail.$pending.$response
+                            "
+                            class="p-error"
+                            >{{
+                              v$.officical_mail.required.$message.replace("Value", "Email")
+                            }}</span
+                          >
                         </div>
                       </div>
                       <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label">Official Mobile</label>
-                          <input
+                          <!-- <input
                             type="text"
                             minlength="10"
                             maxlength="10"
@@ -1427,6 +1438,17 @@
                             name="official_mobile"
                             id="official_mobile"
                             class="textbox onboard-form form-control"
+                          /> -->
+                          <InputMask
+                            id="serial"
+                            mask="9999999999"
+                            v-model="v$.official_mobile.$model"
+                            placeholder="Mobile Number"
+                            style="text-transform: uppercase"
+                            class="form-control textbox"
+                            :class="{
+                              'p-invalid': v$.official_mobile.$invalid && submitted,
+                            }"
                           />
                         </div>
                       </div>
@@ -1489,7 +1511,7 @@
               <div class="p-2 my-6 shadow card profile-box card-top-border" v-if="family_details_disable">
                 <div class="card-body justify-content-center align-items-center">
                   <div class="flex my-4 header-card-text">
-                    <img src="../../../assests/images/family(1).png" alt="" style="height: 26px;">
+                    <img src="../../../assests/images/family (1).png" alt="" style="height: 20px;">
                     <h6 class="mx-2 my-auto">Family Details</h6>
                   </div>
 
@@ -2669,6 +2691,20 @@ onMounted(() => {
 
   employee_onboarding.nationality = 'Indian'
   NationalityCheck()
+  compensatoryCalWhileQuick()
+  spouseEnable()
+
+  Sampledata()
+
+  setTimeout(() => {
+    if(checkIsQuickOrNormal.value == 'quick' || checkIsQuickOrNormal.value == 'bulk'){
+    console.log("calculation performs");
+     compensatoryCalWhileQuick()
+     spouseEnable()
+  }else{
+    console.log("no calculation performs");
+  }
+  }, 6000);
 
 
 
@@ -2889,10 +2925,12 @@ const spouseDisable = () => {
 const spouseEnable = () => {
   console.log("status checking");
   console.log(employee_onboarding.marital_status);
-  if (employee_onboarding.marital_status == "Married" || employee_onboarding.marital_status == "married"  ) {
+  if (employee_onboarding.marital_status.includes('married') || employee_onboarding.marital_status.includes('Married'))  {
+    console.log("married");
     sposeData.value = true;
   } else {
     sposeData.value = false;
+    console.log("unmarried");
   }
 };
 
@@ -2973,13 +3011,21 @@ const SaveEmployeeOnboardingData = () => {
   console.log(employee_onboarding);
   employee_onboarding.can_onboard_employee = 0;
   RequiredDocument.value = true
+  compensatoryCalWhileQuick()
+
+  // if(checkIsQuickOrNormal.value == 'quick' || checkIsQuickOrNormal.value == 'bulk'){
+  //   console.log("calculation performs");
+  //    compensatoryCalWhileQuick()
+  // }else{
+  //   console.log("no calculation performs");
+  // }
   if(!employee_onboarding.employee_code.length > 0 &&
       !employee_onboarding.employee_name.length > 0 ||
       !employee_onboarding.email.length > 0   &&
       !employee_onboarding.mobile_number.length > 0 ){
       RequiredDocument.value = true
       checkInputFiles();
-        handleSubmit();
+      handleSubmit();
 
       }else{
 
@@ -3199,7 +3245,7 @@ const checkInputFiles = () => {
   }
 };
 
-const checkIsQuickOrNormal = ref()
+const checkIsQuickOrNormal = ref('quick')
 
 const user_code_exists = ref(false);
 
@@ -3710,8 +3756,6 @@ const epf_esic_calculation = () => {
 const compensatoryCalWhileQuick = () =>{
   compen_disable.value = false
   family_details_disable.value = true
-  spouseEnable()
-  
   let gross = employee_onboarding.basic + employee_onboarding.hra +employee_onboarding.statutory_bonus +employee_onboarding.child_education_allowance +employee_onboarding.food_coupon +employee_onboarding.lta +employee_onboarding.special_allowance +employee_onboarding.other_allowance 
   console.log(gross);
   employee_onboarding.gross = gross
@@ -3739,6 +3783,7 @@ const compensatoryCalWhileQuick = () =>{
         readonly.fdc = true
         readonly.lta = true
         readonly.other = true
+        readonly.mobile = true
         readonly.designation = true
 
 
@@ -4012,7 +4057,8 @@ const readonly = reactive({
     lta:false,
     other:false,
     l1_code:false,
-    designation:false
+    designation:false,
+    mobile:false
 
 })
 
@@ -4041,6 +4087,7 @@ function populateQuickOnboardData(emp_data){
         readonly.designation = true
         setTimeout(() => {
           compensatoryCalWhileQuick()
+          spouseEnable()
         }, 3000);
      }else{
       console.log("normal onboarding");

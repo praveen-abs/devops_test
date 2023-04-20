@@ -195,7 +195,10 @@ export default function validation(rules) {
         cost_center: {},
         probation_period: {},
         holiday_location: {},
-        officical_mail: {},
+        officical_mail: {
+            // required,
+            email
+        },
         official_mobile: {},
         probation_period: {},
         emp_notice: {},
