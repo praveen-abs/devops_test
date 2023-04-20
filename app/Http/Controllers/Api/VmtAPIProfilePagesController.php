@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use App\Models\User;
+
 use App\Services\VmtProfilePagesService;
 
 class VmtAPIProfilePagesController extends HRMSBaseAPIController
@@ -11,15 +14,26 @@ class VmtAPIProfilePagesController extends HRMSBaseAPIController
 
     public function fetchEmployeeProfileDetails(Request $request , VmtProfilePagesService $serviceVmtProfilePagesService){
 
-        if( !$request->has('user_id'))
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid"
+            ]
+        );
+
+        if($validator->fails()){
             return response()->json([
-                'status' => 'failure',
-                'message'=> 'user_id is missing',
-                'data'   => ''
+                    'status' => 'failure',
+                    'message' => $validator->errors()->all()
             ]);
+        }
 
-
-        $data = $serviceVmtProfilePagesService->getEmployeeProfileDetails($request->user_id);
+        $user_id = User::where('user_code', $request->user_code)->first()->id;
+        $data = $serviceVmtProfilePagesService->getEmployeeProfileDetails($user_id);
 
         return response()->json([
             'status' => 'success',
