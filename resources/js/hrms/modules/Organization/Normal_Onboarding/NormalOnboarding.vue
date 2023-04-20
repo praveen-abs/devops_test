@@ -2542,7 +2542,7 @@
         employee_onboarding.employee_code.length < 0
       "
     >
-       <img src="../../../assests/images/requirement.png" class="w-1 h-9" alt=""><span class="my-auto">Employee Code is Required </span>
+       <img src="../../../assests/images/requirement.png" style="height: 25px;width: 38px;" alt=""><span class="my-auto">Employee Code is Required </span>
     </div>
     <div class="flex my-4"
       v-if="
@@ -2550,7 +2550,7 @@
         employee_onboarding.employee_name.length < 0
       "
     >
-      <img src="../../../assests/images/requirement.png" class="w-1 h-9" alt=""><span class="my-auto">Employee Name As Per Aadhar is Required</span>
+      <img src="../../../assests/images/requirement.png" style="height: 25px;width: 38px;" alt=""><span class="my-auto">Employee Name As Per Aadhar is Required</span>
     </div>
     <div class="flex my-4"
       v-if="
@@ -2558,7 +2558,7 @@
         employee_onboarding.mobile_number.length < 0
       "
     >
-      <img src="../../../assests/images/requirement.png" class="w-1 h-9" alt=""><span class="my-auto">Mobile Number is Required</span>
+      <img src="../../../assests/images/requirement.png" style="height: 25px;width: 38px;" alt=""><span class="my-auto">Mobile Number is Required</span>
     </div>
     <div class="flex my-4"
       v-if="
@@ -2566,7 +2566,7 @@
         employee_onboarding.email.length < 0
       "
     >
-      <img src="../../../assests/images/requirement.png" class="w-1 h-9" alt=""><span class="my-auto">Email is  Required</span>
+      <img src="../../../assests/images/requirement.png" style="height: 25px;width: 38px;" alt=""><span class="my-auto">Email is  Required</span>
     </div>
   </Dialog>
 
