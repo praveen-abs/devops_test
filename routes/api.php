@@ -34,11 +34,11 @@ Route::post('/auth/updatePassword', [AuthController::class, 'updatePassword']);
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
     //CORE
-    Route::get('/getAllUsers',[HRMSBaseAPIController::class, 'getAllUsers']);
+    Route::get('/getAllUsers', [HRMSBaseAPIController::class, 'getAllUsers']);
 
 
     //HOLIDAYS
-    Route::get('/holidays/getAllHolidays',[HRMSBaseAPIController::class, 'getAllHolidays']);
+    Route::get('/holidays/getAllHolidays', [HRMSBaseAPIController::class, 'getAllHolidays']);
 
 
 
@@ -48,9 +48,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 
     //PMS Forms
-    Route::post('getAssigneeKPIForms', [VmtAPIPMSModuleController::class,'getAssigneeKPIForms']);
-    Route::post('getKPIFormDetails', [VmtAPIPMSModuleController::class,'getKPIFormDetails']);
-    Route::post('getReviewerKPIForms', [VmtAPIPMSModuleController::class,'getReviewerKPIForms']);
+    Route::post('getAssigneeKPIForms', [VmtAPIPMSModuleController::class, 'getAssigneeKPIForms']);
+    Route::post('getKPIFormDetails', [VmtAPIPMSModuleController::class, 'getKPIFormDetails']);
+    Route::post('getReviewerKPIForms', [VmtAPIPMSModuleController::class, 'getReviewerKPIForms']);
     Route::get('getAssigneeReviews', 'App\Http\Controllers\Api\VmtAPIPMSModuleController@getAssigneeReviews');
     Route::post('saveAssigneeReviews', 'App\Http\Controllers\Api\VmtAPIPMSModuleController@saveAssigneeReviews');
     Route::get('getReviewerReviews', 'App\Http\Controllers\Api\VmtAPIPMSModuleController@getReviewerReviews');
@@ -85,13 +85,15 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //Payslip API
     Route::get('payslip_getmonthlypayslipdata', [VmtAPIPaySlipController::class, 'getMonthlyPayslipData']);
 
-    Route::post('employee_monthly_leave_details', [VmtAPIAttendanceController::class,
-    'employeeMonthlyLeaveDetails']);
+    Route::post('employee_monthly_leave_details', [
+        VmtAPIAttendanceController::class,
+        'employeeMonthlyLeaveDetails'
+    ]);
 
     Route::post('/get-maindashboard-data', [VmtAPIDashboardController::class, 'getMainDashboardData']);
+
+    //Profile pages
     Route::post('/profile-pages-getEmpDetails', [VmtAPIProfilePagesController::class, 'fetchEmployeeProfileDetails']);
-
+    Route::post('/profile-pages/updateEmployeeGeneralInformation', [VmtAPIProfilePagesController::class, 'updateEmployeeGeneralInformation']);
+    Route::post('/profile-pages/updateEmployeeContactInformation', [VmtAPIProfilePagesController::class, 'updateEmployeeContactInformation']);
 });
-
-
-
