@@ -23,6 +23,7 @@ use DateInterval;
 use \Datetime;
 
 use App\Services\VmtAttendanceService;
+use App\Services\VmtHolidayService;
 
 
 class VmtDashboardService{
@@ -44,7 +45,7 @@ class VmtDashboardService{
 
     }
 
-    public function getMainDashboardData($user_code , VmtAttendanceService $serviceVmtAttendanceService){
+    public function getMainDashboardData($user_code , VmtAttendanceService $serviceVmtAttendanceService, VmtHolidayService $serviceHolidayService){
 
         $response = array();
         $user_id = User::where('user_code',$user_code)->first()->id;
@@ -120,13 +121,24 @@ class VmtDashboardService{
         //Get current day attendance checkin/checkout status
 
         $response["attendance"]["current_day_attendance_status"] = $serviceVmtAttendanceService->fetchAttendanceStatus($user_code, date("Y-m-d"));
-
-
-
+        $response["holidays"] = $serviceHolidayService->getAllHolidays();
+        $response["all_employee_details"] = $this->getAllUsersDOJ_DOB();
 
         return $response;
     }
 
+    public function getAllUsersDOJ_DOB(){
+        return User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
+            ->get(['users.name','users.name','vmt_employee_details.doj','vmt_employee_details.dob']);
+    }
+
+    private function getAllEmployeeBirthdayDetails(){
+
+    }
+
+    private function getAllHolidays(){
+
+    }
 }
 
 

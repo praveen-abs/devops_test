@@ -33,13 +33,26 @@ Route::post('/auth/updatePassword', [AuthController::class, 'updatePassword']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
-    //Route::get('viewAssigneeReviewList', 'App\Http\Controllers\VmtAPIPMSModuleController@showEmployeeApraisalReviewList');
-    Route::get('/getAllUsers',[HRMSBaseAPIController::class, 'getAllUsers']);
+    //CORE
+    Route::get('/getAllUsers', [HRMSBaseAPIController::class, 'getAllUsers']);
+    Route::get('/getAllBloodgroups', [HRMSBaseAPIController::class, 'getAllBloodgroups']);
+    Route::get('/getAllMaritalStatus', [HRMSBaseAPIController::class, 'getAllMaritalStatus']);
+
+
+    //HOLIDAYS
+    Route::get('/holidays/getAllHolidays', [HRMSBaseAPIController::class, 'getAllHolidays']);
+
+
+
+
+
+
+
 
     //PMS Forms
-    Route::post('getAssigneeKPIForms', [VmtAPIPMSModuleController::class,'getAssigneeKPIForms']);
-    Route::post('getKPIFormDetails', [VmtAPIPMSModuleController::class,'getKPIFormDetails']);
-    Route::post('getReviewerKPIForms', [VmtAPIPMSModuleController::class,'getReviewerKPIForms']);
+    Route::post('getAssigneeKPIForms', [VmtAPIPMSModuleController::class, 'getAssigneeKPIForms']);
+    Route::post('getKPIFormDetails', [VmtAPIPMSModuleController::class, 'getKPIFormDetails']);
+    Route::post('getReviewerKPIForms', [VmtAPIPMSModuleController::class, 'getReviewerKPIForms']);
     Route::get('getAssigneeReviews', 'App\Http\Controllers\Api\VmtAPIPMSModuleController@getAssigneeReviews');
     Route::post('saveAssigneeReviews', 'App\Http\Controllers\Api\VmtAPIPMSModuleController@saveAssigneeReviews');
     Route::get('getReviewerReviews', 'App\Http\Controllers\Api\VmtAPIPMSModuleController@getReviewerReviews');
@@ -51,8 +64,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     ////Attendance
 
     //Check-in/ Check-out
-    Route::post('attendance_checkin', [VmtAPIAttendanceController::class, 'attendanceCheckin']);
-    Route::post('attendance_checkout', [VmtAPIAttendanceController::class, 'attendanceCheckout']);
+    Route::post('attendance_checkin', [VmtAPIAttendanceController::class, 'performAttendanceCheckIn']);
+    Route::post('attendance_checkout', [VmtAPIAttendanceController::class, 'performAttendanceCheckOut']);
     Route::post('/attendance/get_attendance_status', [VmtAPIAttendanceController::class, 'getAttendanceStatus']);
 
     //Leave
@@ -74,13 +87,15 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //Payslip API
     Route::get('payslip_getmonthlypayslipdata', [VmtAPIPaySlipController::class, 'getMonthlyPayslipData']);
 
-    Route::post('employee_monthly_leave_details', [VmtAPIAttendanceController::class,
-    'employeeMonthlyLeaveDetails']);
+    Route::post('employee_monthly_leave_details', [
+        VmtAPIAttendanceController::class,
+        'employeeMonthlyLeaveDetails'
+    ]);
 
     Route::post('/get-maindashboard-data', [VmtAPIDashboardController::class, 'getMainDashboardData']);
-    Route::get('/profile-pages-getEmpDetails', [VmtAPIProfilePagesController::class, 'fetchEmployeeProfileDetails']);
 
+    //Profile pages
+    Route::post('/profile-pages-getEmpDetails', [VmtAPIProfilePagesController::class, 'fetchEmployeeProfileDetails']);
+    Route::post('/profile-pages/updateEmployeeGeneralInformation', [VmtAPIProfilePagesController::class, 'updateEmployeeGeneralInformation']);
+    Route::post('/profile-pages/updateEmployeeContactInformation', [VmtAPIProfilePagesController::class, 'updateEmployeeContactInformation']);
 });
-
-
-

@@ -13,6 +13,7 @@ use Maatwebsite\Excel\Sheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\Style;
@@ -22,6 +23,9 @@ use Maatwebsite\Excel\Concerns\WithDrawings;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use PhpOffice\PhpSpreadsheet\Style\Protection;
 use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
+use Maatwebsite\Excel\Events\BeforeExport;
+use Maatwebsite\Excel\Events\BeforeWriting;
+use Maatwebsite\Excel\Events\BeforeSheet;
 
 class EmployeeReimbursementsExport implements FromArray,ShouldAutoSize,WithHeadings,WithCustomStartCell,WithStyles,WithEvents,WithDrawings
 {
@@ -80,8 +84,20 @@ class EmployeeReimbursementsExport implements FromArray,ShouldAutoSize,WithHeadi
         ];
     }
 
+    // public static function beforeSheet(BeforeSheet $event)
+    // {
+    //      $event->sheet->getActiveSheet()->getPageSetup()
+    //            ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+    //      $event->sheet->getActiveSheet()->getPageSetup()
+    //            ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);
+    //      $event->$sheet->setPageMargin(0);
+    // }
+
     public function styles(Worksheet $sheet)
     {
+        $sheet->getParent()->getActiveSheet()->getPageSetup()->setpaperSize(1);
+        $sheet->getParent()->getActiveSheet()->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+        $sheet->getParent()->getActiveSheet()->getPageSetup()->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A3);
 
         ///$sheet->getParent()->getActiveSheet()->getProtection()->setSheet(true);
 
