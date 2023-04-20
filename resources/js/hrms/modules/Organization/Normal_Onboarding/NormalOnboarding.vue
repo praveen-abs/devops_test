@@ -3245,7 +3245,7 @@ const checkInputFiles = () => {
   }
 };
 
-const checkIsQuickOrNormal = ref('quick')
+const checkIsQuickOrNormal = ref()
 
 const user_code_exists = ref(false);
 
