@@ -43,6 +43,7 @@
             "app/Services/VmtReimbursementsService.php",
             "app/Services/VmtProfilePagesService.php",
             "app/Services/VmtDashboardService.php",
+            "app/Services/VmtInvestmentsService.php",
             "app/Services/VmtHolidayService.php"
 
         ]

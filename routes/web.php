@@ -708,6 +708,10 @@ Route::post('vmt-pms-appraisal-review', 'App\Http\Controllers\VmtApraisalControl
     Route::get('/profile-pages-getEmpDetails',[App\Http\Controllers\VmtProfilePagesController::class,'fetchEmployeeProfilePagesDetails'])->name('profile-pages-getEmpDetails');
 
 
+    //Investments
+
+    Route::get('/get-investments-form-details', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'getInvestmentsFormDetails'])->name('getInvestmentsFormDetails');
+
     //Testing controller
     Route::get('/view-private-file', [App\Http\Controllers\VmtTestingController::class, 'viewPrivateFile'])->name('viewPrivateFile');
     Route::get('/download-private-file', [App\Http\Controllers\VmtTestingController::class, 'downloadPrivateFile'])->name('downloadPrivateFile');
@@ -715,6 +719,8 @@ Route::post('vmt-pms-appraisal-review', 'App\Http\Controllers\VmtApraisalControl
     Route::get('/mail-test/appointment-letter', [App\Http\Controllers\VmtTestingController::class, 'mailTest_sendAppointmentLetter'])->name('mailTest_sendAppointmentLetter');
     Route::get('/getLeaves', [App\Http\Controllers\VmtAttendanceController::class, 'employeeLeaveBalance'])->name('employeeLeaveBalance');
     Route::post('/postLeaves', [App\Http\Controllers\Api\VmtAPIAttendanceController::class, 'applyLeaveRequest'])->name('applyLeaveRequest');
+
+    Route::get('/testinginvestment', [App\Http\Controllers\VmtTestingController::class, 'investmenttesting']);
 
 });
 

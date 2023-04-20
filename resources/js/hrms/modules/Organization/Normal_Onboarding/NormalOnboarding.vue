@@ -30,7 +30,7 @@
                       <div class="mb-2 col-md -6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label">Employee Code</label>
-                          <InputText
+                          <InputText   :class="[is_emp_code_quick ? 'bg-gray-200' : '']"
                             class="capitalize form-onboard-form form-control textbox"
                             type="text" :readonly="is_emp_code_quick"
                             v-model="v$.employee_code.$model"
@@ -55,10 +55,11 @@
                           <InputText
                             class="capitalize onboard-form form-control textbox"
                             type="text"  :readonly="is_emp_name_quick"
-                            v-model="v$.employee_name.$model"
-                            :class="{
+                            v-model="v$.employee_name.$model" 
+                            :class="[{
                               'p-invalid': v$.employee_name.$invalid && submitted,
-                            }"
+                            },
+                            is_emp_name_quick ? 'bg-gray-200' : '']"
                             placeholder="Employee Name as per Aadhar "
                           />
                           <span v-if="employee_name_invalid" class="p-error"
@@ -148,9 +149,10 @@
                             placeholder="Date of Joining"
                             id="doj"
                             name="doj"
-                            :class="{
+                            :class="[{
                               'p-invalid': v$.doj.$invalid && submitted,
-                            }"
+                            },
+                            is_doj_quick ? 'bg-gray-200' : '']"
                             class="form-control textbox"
                             onfocus="(this.type='date')"
                             :readonly="is_doj_quick"
@@ -226,9 +228,9 @@
                             placeholder="Mobile Number"
                             style="text-transform: uppercase"
                             class="form-control textbox"
-                            :class="{
+                            :class="[{
                               'p-invalid': v$.mobile_number.$invalid && submitted,
-                            }"
+                            }, readonly.mobile ? 'bg-gray-200' : '']"
                           />
 
                         </div>
@@ -261,9 +263,9 @@
                           <InputText
                             type="text" :readonly="is_email_quick"
                             placeholder="Email ID"
-                            :class="{
+                            :class="[{
                               'p-invalid': v$.email.$invalid && submitted,
-                            }"
+                            }, is_email_quick ? 'bg-gray-200' : '']"
                             @focusout="personalMailExists"
                             v-model="v$.email.$model"
                             class="form-control textbox"
@@ -952,7 +954,7 @@
 
                       <!-- Permanent Address Start -->
                       <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 col-xl-12">
-                        <h6>Permanent Address</h6>
+                        <h6><i class="fa fa-address-card" aria-hidden="true"></i> Permanent Address</h6>
                         <div class="mt-1 row">
                           <div
                             class="mb-2 col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6"
@@ -1248,9 +1250,9 @@
                             type="text"
                             :readonly="readonly.designation"
                             placeholder="Designation"
-                            :class="{
+                            :class="[{
                               'p-invalid': v$.designation.$invalid && submitted,
-                            }"
+                            },readonly.designation ? 'bg-gray-200' : '']"
                             v-model="v$.designation.$model"
                           />
 
@@ -1998,7 +2000,7 @@
                           <input
                             type="number"
                             placeholder="Basic Salary"
-                            name="basic"
+                            name="basic" :class="[is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']"
                             v-model="employee_onboarding.basic"
                             class="textbox onboard-form form-control calculation_data gross_data"
                             step="0.01"
@@ -2014,10 +2016,10 @@
                           <input
                             type="number"
                             placeholder="HRA"
-                            name="hra"
+                            name="hra" 
                             v-model="employee_onboarding.hra"
                             class="onboard-form form-control textbox calculation_data gross_data"
-                            step="0.01"
+                            step="0.01" :class="[is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']"
                             readonly
                           />
                         </div>
@@ -2032,7 +2034,7 @@
                             v-model="employee_onboarding.statutory_bonus"
                             @input="statutory_bonus"
                             class="onboard-form form-control textbox calculation_data gross_data"
-                            step="0.01"
+                            step="0.01" :class="[readonly.statutory ? 'bg-gray-200' : '']"
                           />
                         </div>
                       </div>
@@ -2047,7 +2049,7 @@
                             name="child_education_allowance"
                             v-model="employee_onboarding.child_education_allowance"
                             class="onboard-form form-control textbox calculation_data gross_data"
-                            step="0.01"
+                            step="0.01" :class="[readonly.child ? 'bg-gray-200' : '']"
                             @input="child_allowance"
                           />
                         </div>
@@ -2056,7 +2058,7 @@
                         <div class="floating">
                           <label for="" class="float-label">Food Coupon</label>
                           <input  :readonly="readonly.fdc"
-                            type="number"
+                            type="number" :class="[readonly.fdc ? 'bg-gray-200' : '']"
                             placeholder="Food Coupon"
                             name="food_coupon"
                             v-model="employee_onboarding.food_coupon"
@@ -2070,7 +2072,7 @@
                         <div class="floating">
                           <label for="" class="float-label">LTA</label>
                           <input  :readonly="readonly.lta"
-                            type="number"
+                            type="number" :class="[readonly.lta ? 'bg-gray-200' : '']"
                             placeholder="LTA"
                             name="lta"
                             v-model="employee_onboarding.lta"
@@ -2083,7 +2085,7 @@
                       <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label">Special Allowance</label>
-                          <input
+                          <input :class="[is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']"
                             type="number"
                             placeholder="Special Allowance"
                             name="special_allowance"
@@ -2099,7 +2101,7 @@
                           <label for="" class="float-label">Other Allowance</label>
 
                           <input  :readonly="readonly.other"
-                            type="number"
+                            type="number" :class="[readonly.other ? 'bg-gray-200' : '']"
                             placeholder="Other Allowance"
                             name="other_allowance"
                             v-model="employee_onboarding.other_allowance"
@@ -2115,7 +2117,7 @@
                           <label for="" class="float-label">Gross Salary</label>
 
                           <input
-                            type="number"
+                            type="number" :class="[is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']"
                             placeholder="Gross Salary"
                             name="gross"
                             v-model="employee_onboarding.gross"
@@ -2132,7 +2134,7 @@
                           >
 
                           <input
-                            type="number"
+                            type="number" :class="[is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']"
                             placeholder="EPF employer contribution"
                             name="epf_employer_contribution"
                             v-model="employee_onboarding.epf_employer_contribution"
@@ -2148,7 +2150,7 @@
                             >ESIC employer contribution</label
                           >
                           <input
-                            type="number"
+                            type="number" :class="[is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']"
                             placeholder="ESIC employer contribution"
                             name="esic_employer_contribution"
                             v-model="employee_onboarding.esic_employer_contribution"
@@ -2164,7 +2166,7 @@
                           <input
                             type="number"
                             placeholder="Insurance"
-                            name="insurance"
+                            name="insurance" :class="[is_emp_code_quick ? 'bg-gray-200' : '']"
                             v-model="employee_onboarding.insurance"
                             @input="insurance"
                             class="onboard-form form-control textbox calculation_data cic_data"
@@ -2178,7 +2180,7 @@
                           <input
                             type="number"
                             placeholder="Graduity"
-                            name="graduity"
+                            name="graduity"  :class="[is_emp_code_quick ? 'bg-gray-200' : '']"
                             v-model="employee_onboarding.graduity"
                             @input="graduity"
                             class="onboard-form form-control textbox calculation_data cic_data"
@@ -2203,7 +2205,7 @@
                           <label for="" class="float-label">EPF Employee</label>
 
                           <input
-                            type="number"
+                            type="number" :class="[is_emp_code_quick? 'bg-gray-200' : 'bg-gray-200']"
                             placeholder="EPF Employee"
                             name="epf_employee"
                             v-model="employee_onboarding.epf_employee"
@@ -2220,7 +2222,7 @@
                           <input
                             type="number"
                             placeholder="ESIC Employee"
-                            name="esic_employee"
+                            name="esic_employee"  :class="[is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']"
                             v-model="employee_onboarding.esic_employee"
                             class="textbox onboard-form form-control calculation_data net_data"
                             step="0.01"
@@ -2259,7 +2261,7 @@
                           <label for="" class="float-label">Net Income</label>
 
                           <input
-                            type="number"
+                            type="number"  :class="[is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']"
                             placeholder="Net Income"
                             name="net_income"
                             v-model="employee_onboarding.net_income"
@@ -2540,7 +2542,7 @@
         employee_onboarding.employee_code.length < 0
       "
     >
-       <img src="../../../assests/images/requirement.png" class="w-1 h-9" alt=""><span class="my-auto">Employee Code is Required </span>
+       <img src="../../../assests/images/requirement.png" style="height: 25px;width: 38px;" alt=""><span class="my-auto">Employee Code is Required </span>
     </div>
     <div class="flex my-4"
       v-if="
@@ -2548,7 +2550,7 @@
         employee_onboarding.employee_name.length < 0
       "
     >
-      <img src="../../../assests/images/requirement.png" class="w-1 h-9" alt=""><span class="my-auto">Employee Name As Per Aadhar is Required</span>
+      <img src="../../../assests/images/requirement.png" style="height: 25px;width: 38px;" alt=""><span class="my-auto">Employee Name As Per Aadhar is Required</span>
     </div>
     <div class="flex my-4"
       v-if="
@@ -2556,7 +2558,7 @@
         employee_onboarding.mobile_number.length < 0
       "
     >
-      <img src="../../../assests/images/requirement.png" class="w-1 h-9" alt=""><span class="my-auto">Mobile Number is Required</span>
+      <img src="../../../assests/images/requirement.png" style="height: 25px;width: 38px;" alt=""><span class="my-auto">Mobile Number is Required</span>
     </div>
     <div class="flex my-4"
       v-if="
@@ -2564,7 +2566,7 @@
         employee_onboarding.email.length < 0
       "
     >
-      <img src="../../../assests/images/requirement.png" class="w-1 h-9" alt=""><span class="my-auto">Email is  Required</span>
+      <img src="../../../assests/images/requirement.png" style="height: 25px;width: 38px;" alt=""><span class="my-auto">Email is  Required</span>
     </div>
   </Dialog>
 
@@ -2691,10 +2693,10 @@ onMounted(() => {
 
   employee_onboarding.nationality = 'Indian'
   NationalityCheck()
-  compensatoryCalWhileQuick()
-  spouseEnable()
+  // compensatoryCalWhileQuick()
+  // spouseEnable()
 
-  Sampledata()
+  // Sampledata()
 
   setTimeout(() => {
     if(checkIsQuickOrNormal.value == 'quick' || checkIsQuickOrNormal.value == 'bulk'){
@@ -3772,19 +3774,19 @@ const compensatoryCalWhileQuick = () =>{
 
   console.log(ctc);
 
-        family_details_disable.value = true
-        is_emp_code_quick.value = true
-        is_doj_quick.value = true
-        is_emp_name_quick.value = true
-        is_mob_quick.value = true
-        is_email_quick.value = true
-        readonly.statutory = true
-        readonly.child = true
-        readonly.fdc = true
-        readonly.lta = true
-        readonly.other = true
-        readonly.mobile = true
-        readonly.designation = true
+        // family_details_disable.value = true
+        // is_emp_code_quick.value = true
+        // is_doj_quick.value = true
+        // is_emp_name_quick.value = true
+        // is_mob_quick.value = true
+        // is_email_quick.value = true
+        // readonly.statutory = true
+        // readonly.child = true
+        // readonly.fdc = true
+        // readonly.lta = true
+        // readonly.other = true
+        // readonly.mobile = true
+        // readonly.designation = true
 
 
 
@@ -4072,6 +4074,7 @@ function populateQuickOnboardData(emp_data){
 
      if(emp_data.onboard_type == 'quick' || emp_data.onboard_type == 'bulk'  ){
       console.log( emp_data.onboard_type + "Onboarding");
+ 
         family_details_disable.value = true
         is_emp_code_quick.value = true
         is_doj_quick.value = true
@@ -4083,7 +4086,7 @@ function populateQuickOnboardData(emp_data){
         readonly.fdc = true
         readonly.lta = true
         readonly.other = true
-        readonly.l1_code = true
+        readonly.mobile = true
         readonly.designation = true
         setTimeout(() => {
           compensatoryCalWhileQuick()
