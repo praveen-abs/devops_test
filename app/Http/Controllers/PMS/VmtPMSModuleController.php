@@ -496,6 +496,10 @@ class VmtPMSModuleController extends Controller
 
     }
 
+    public function numToAlpha($num){
+        return chr(substr("000".($num+65),-3));
+    }
+
     /*
         Generate Sample KPI excel-sheet based on the columns
         enabled in the ConfigPMS table
@@ -518,11 +522,14 @@ class VmtPMSModuleController extends Controller
             }
         }
 
+        $end_of_the_column=$this->numToAlpha(count($array_selectedKPIColumnsHeader)-1);
+
         if(count($array_selectedKPIColumnsHeader) > 0){
-            return \Excel::download(new SampleKPIFormExport($array_selectedKPIColumnsHeader,$selectedYear), 'Template_SampleKPIForm.xlsx');
+            return \Excel::download(new SampleKPIFormExport($array_selectedKPIColumnsHeader,$selectedYear,$end_of_the_column), 'Template_SampleKPIForm.xlsx');
         }else{
             return '';
         }
+
 
    }
 
@@ -684,7 +691,7 @@ class VmtPMSModuleController extends Controller
                                                        $request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),
                                                        $receiverName,
                                                        $comments_employee,
-                                                       $login_Link));    
+                                                       $login_Link));
                     }
                 }
             }
@@ -877,7 +884,7 @@ class VmtPMSModuleController extends Controller
                                     ->cc($hr_details->officical_mail)
                                     ->send(new VmtPMSMail_NotifyManager($assigneeUser->name,
                                                                         $currentUser_empDetails->designation,
-                                                                        $userEmployeeDetails->name, 
+                                                                        $userEmployeeDetails->name,
                                                                         $assignment_period, request()->getSchemeAndHttpHost() ));
 
                             $message = "Employee has submitted KPI Assessment.  ";
@@ -1245,7 +1252,7 @@ class VmtPMSModuleController extends Controller
                     \Mail::to($mailingList)
                             ->cc($hr_details->officical_mail)
                             ->send(new VmtPMSMail_Reviewer("approved",
-                                                            
+
                                                              $receiverDetails->name,
                                                              $request->hidden_calendar_year,
                                                              $vmtAssignedDetails->year." - ".strtoupper($vmtAssignedDetails->assignment_period) ,
