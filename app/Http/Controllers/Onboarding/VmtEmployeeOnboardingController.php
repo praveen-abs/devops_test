@@ -42,7 +42,6 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\VmtEmployeeFamilyDetails;
 use App\Services\VmtEmployeeService;
 
-
 class VmtEmployeeOnboardingController extends Controller
 {
 
@@ -767,8 +766,9 @@ class VmtEmployeeOnboardingController extends Controller
         $excelRowdata_row = $data;
         $currentRowInExcel = 0;
         foreach ($excelRowdata_row[0]  as $key => $excelRowdata) {
-            // dd($excelRowdata);
+            //dd($excelRowdata);
             $currentRowInExcel++;
+
             //Validation
             $rules = [
                 'employee_code' => 'nullable|unique:users,user_code',
@@ -778,7 +778,7 @@ class VmtEmployeeOnboardingController extends Controller
                 'doj' => 'required|date',
                 'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'dob' => 'required|date|before:-18 years',
-                'father_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'father_name' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'father_gender' => 'nullable|in:Male,male,Female,female,other',
                 'father_dob' => 'nullable|date',
 
@@ -792,14 +792,18 @@ class VmtEmployeeOnboardingController extends Controller
                 'account_no' => 'required',
                 'current_address' => 'nullable',
                 'permanent_address' => 'nullable',
-                'mother_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'mother_name' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'mother_gender' => 'nullable|in:Male,male,Female,female,other',
                 'mother_dob' => 'nullable|date',
                 'spouse_name' => 'nullable|required_unless:marital_status,unmarried|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'spouse_dob' => 'nullable|required_unless:marital_status,unmarried|date',
                 'no_of_child' => 'nullable|numeric',
-                'child_name' => 'nullable|required_unless:no_of_child,null,0|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'child_dob' => 'nullable|required_unless:no_of_child,null,0|date',
+                'child_1_name' => 'nullable|required_unless:no_of_child,null,0|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'child_1_dob' => 'nullable|required_unless:no_of_child,null,0|date',
+                'child_2_name' => 'nullable|required_unless:no_of_child,null,0|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'child_2_dob' => 'nullable|required_unless:no_of_child,null,0|date',
+                'child_3_name' => 'nullable|required_unless:no_of_child,null,0|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'child_3_dob' => 'nullable|required_unless:no_of_child,null,0|date',
                 'department' => 'required',
                 'process' => 'nullable',
                 'designation' => 'required',
@@ -850,6 +854,7 @@ class VmtEmployeeOnboardingController extends Controller
                 'pan_no.required_if' =>'Field <b>:attribute</b> is required if <b>pan ack</b> not provided ',
                 'pan_ack.required_if' =>'Field <b>:attribute</b> is required if <b>pan no</b> not provided ',
                 'required_unless' => 'Field <b>:attribute</b> is invalid',
+               
             ];
 
             $validator = Validator::make($excelRowdata, $rules, $messages);
@@ -931,7 +936,7 @@ class VmtEmployeeOnboardingController extends Controller
                         'mail_status' => 'failure',
                         'error_fields' => [],
                       ];
-                }
+                 }
             } catch(\Exception $e) {
                 //dd($e);
                // $this->deleteUser($user->id);
@@ -1277,6 +1282,7 @@ class VmtEmployeeOnboardingController extends Controller
                    array_push($data_array, $rowdata_response);
                }
 
+
                $responseJSON['status'] = 'success';
                $responseJSON['message'] = "Excelsheet data import success";
                $responseJSON['data'] = $data_array;
@@ -1370,7 +1376,6 @@ class VmtEmployeeOnboardingController extends Controller
     */
     public function storeEmployeeDocuments(Request $request, VmtEmployeeService $employeeService)
     {
-       //dd($request->all());
 
         $bulkonboard_docs = $request->all();
         $rowdata_response = [
@@ -1398,10 +1403,6 @@ class VmtEmployeeOnboardingController extends Controller
                $doc_upload_status[$doc_name] = $employeeService->uploadDocument(auth()->user()->id, $doc_obj, $processed_doc_name);
             }
 
-            // //set the onboard status to 1.
-            $currentUser = User::where('id', auth()->user()->id)->first();
-            $currentUser->is_onboarded = '1';
-            $currentUser->save();
 
             //Check if all mandatory docs are uploaded by user
             $mandatory_doc_ids = VmtOnboardingDocuments::where('is_mandatory','1')->pluck('id');
@@ -1417,29 +1418,30 @@ class VmtEmployeeOnboardingController extends Controller
             //     $missing_mandatory_doc_name[] = VmtOnboardingDocuments::where('id',$single_mandatory_id)->first()->document_name;
             // }
             //dd("DOc upload status : ".$pending_docs);
-
+  //dd(count($mandatory_doc_ids) == count($user_uploaded_docs_ids));
 
             if(count($mandatory_doc_ids) == count($user_uploaded_docs_ids))
-            {
-                // //set the onboard status to 1
-                $currentUser = User::where('id', auth()->user()->id)->first();
-                $currentUser->is_onboarded = '1';
-                $currentUser->save();
+              {
+                  //set the onboard status to 1
+                  $currentUser = User::where('id', auth()->user()->id)->first();
+                  $currentUser->is_onboarded = '1';
+                  $currentUser->save();
 
-                return $rowdata_response = [
-                    'status' => 'success',
+                return  $rowdata_response = [
+                    'status' => 'Success',
                     'message' => 'All documents uploaded. You have been successfully onboarded',
                     'data' => $doc_upload_status
                 ];
-            }
-            else
-            {
 
+             }
+            else
+             {
                 return $rowdata_response = [
-                    'status' => 'failure',
+                    'status' => 'Failure',
                     'message' => 'Documents uploaded. Please upload the remaining documents to successfully onboard',
                 ];
-            }
+
+             }
 
         }
         catch (\Throwable $e) {

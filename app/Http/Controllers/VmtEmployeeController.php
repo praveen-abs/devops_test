@@ -1512,10 +1512,19 @@ class VmtEmployeeController extends Controller
             'reliving_letter_file',
             ]);
 
-        //dd($existing_doc_filenames);
+        //Check if all necessary docs are uploaded
+        $is_emp_onboarded = User::where('id', auth()->user()->id)->first()->is_onboarded;
+        //dd($is_emp_onboarded);
+        if( $is_emp_onboarded == '1'){
 
+            return redirect()->route('index');
+
+        }else{
 
             return view('vmt_documents',compact('existing_doc_filenames'));
+        }
+
+
     }
 
     /*
